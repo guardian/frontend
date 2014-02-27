@@ -1,13 +1,13 @@
 .competitions-date,
 .football-table-header {
-    padding-top: $baseline*2;
+    padding-top: ($gs-baseline/3)*2;
     background-color: #efefe7;
 }
 
 .competitions-date {
     background-color: $c-sportMid;
     color: #ffffff;
-    margin-bottom: $baseline;
+    margin-bottom: $gs-baseline/3;
     padding: 9px $gutter/2;
 }
 
@@ -49,7 +49,7 @@ a.competition-title {
 }
 
 .competition {
-    margin-bottom: $baseline*2;
+    margin-bottom: ($gs-baseline/3)*2;
 }
 
 .match {
@@ -61,7 +61,7 @@ a.competition-title {
 
     a {
         display: block;
-        padding: $baseline*2;
+        padding: ($gs-baseline/3)*2;
 
         &:active {
             background: $c-neutral5;
@@ -146,7 +146,7 @@ a.competition-title {
 }
 
 .matches {
-    margin-bottom: $baseline;
+    margin-bottom: $gs-baseline/3;
 }
 
 .matches {
@@ -158,11 +158,11 @@ a.competition-title {
 }
 
 .competition-table {
-    padding: $baseline*2 0 0 0;
+    padding: ($gs-baseline/3)*2 0 0 0;
 }
 
 .competition-table h3 {
-    margin-bottom: $baseline*3;
+    margin-bottom: $gs-baseline;
 }
 
 .matches-nav a {
@@ -172,7 +172,7 @@ a.competition-title {
     &.cta {
         display: block;
         color: #545454;
-        margin-bottom: $baseline*2;
+        margin-bottom: ($gs-baseline/3)*2;
 
         &:before {
             content: "+ ";
@@ -185,7 +185,7 @@ a.competition-title {
 }
 
 .league-table {
-    margin-bottom: $baseline*2;
+    margin-bottom: ($gs-baseline/3)*2;
 }
 
 //These are nasty... blame the designers!
@@ -201,7 +201,7 @@ a.competition-title {
 
 // styling for non-ajax match nav
 .js-not-ajax {
-    padding: $baseline*2 0;
+    padding: ($gs-baseline/3)*2 0;
 
     .match-next {
         float: right;
@@ -230,16 +230,16 @@ a.competition-title {
 
 .football-nav {
     clear: left;
-    padding-bottom: $baseline*4;
+    padding-bottom: ($gs-baseline/3)*4;
 }
 
 // football-filters is the dropdown list
 
 .football-filters {
-    margin-bottom: $baseline*4;
+    margin-bottom: ($gs-baseline/3)*4;
 
     .football-filter + & {
-        margin-top: $baseline*-4;
+        margin-top: ($gs-baseline/3)*-4;
     }
 
     > li {
@@ -252,7 +252,7 @@ a.competition-title {
         font-size: 14px;
         font-size: 1.4rem;
         color: #ffffff;
-        padding-bottom: $baseline;
+        padding-bottom: $gs-baseline/3;
         margin-top: 10px;
     }
     li:first-child h2 {
@@ -268,8 +268,8 @@ a.competition-title {
     }
     .cta {
         background: $c-sportDark;
-        margin-bottom: $baseline*2;
-        margin-top: $baseline*4;
+        margin-bottom: ($gs-baseline/3)*2;
+        margin-top: ($gs-baseline/3)*4;
         padding: 15px 0;
     }
 }
@@ -282,8 +282,8 @@ a.competition-title {
     background: #ffffff;
     border: 1px solid $c-neutral5;
     display: block;
-    margin-bottom: $baseline*4;
-    padding: $baseline*3 48px 10px 8px;
+    margin-bottom: ($gs-baseline/3)*4;
+    padding: $gs-baseline 48px 10px 8px;
     position: relative;
 
     &,
@@ -317,9 +317,9 @@ a.competition-title {
 
 .live-matches-dateline {
     display: block;
-    padding-bottom: $baseline*3;
+    padding-bottom: $gs-baseline;
 
     .has-localnav & {
-        padding-top: $baseline*3;
+        padding-top: $gs-baseline;
     }
 }

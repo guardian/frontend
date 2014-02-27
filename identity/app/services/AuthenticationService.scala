@@ -17,11 +17,15 @@ class AuthenticationService @Inject()(cookieDecoder: FrontendIdentityCookieDecod
                                       idRequestParser: IdRequestParser,
                                       identityUrlBuilder: IdentityUrlBuilder) extends Logging {
   def handleAuthenticatedRequest[A](request: Request[A]): Either[SimpleResult, AuthRequest[A]] = {
-    request.cookies.get("SC_GU_U").flatMap { cookie =>
-      cookieDecoder.getUserDataForScGuU(cookie.value).map { user =>
-        AuthRequest(request, user, new ScGuU(cookie.value))
-      }
-    } match {
+    val authRequestOpt = for {
+      scGuU <- request.cookies.get("SC_GU_U")
+      guU <- request.cookies.get("GU_U")
+      minimalSecureUser <- cookieDecoder.getUserDataForScGuU(scGuU.value)
+      guUCookieData <- cookieDecoder.getUserDataForGuU(guU.value)
+      fullUser = guUCookieData.getUser if (fullUser.getId == minimalSecureUser.getId)
+    } yield AuthRequest(request, fullUser, new ScGuU(scGuU.value))
+
+    authRequestOpt match {
       case Some(authRequest) => {
         logger.trace("user is logged in")
         Right(authRequest)

@@ -219,6 +219,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
   object faciatool {
     lazy val contentApiPostEndpoint: Option[String] = configuration.getStringProperty("contentapi.post.endpoint")
     lazy val frontPressQueueUrl: Option[String] = configuration.getStringProperty("frontpress.sqs.queue")
+    lazy val configBeforePressTimeout: Int = 1000
   }
 
   object pa {

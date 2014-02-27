@@ -22,8 +22,8 @@ define([
             img.className = 'media-primary media-primary--full-width';
             img.setAttribute('src', 'http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/2/26/1393435299650/Antarcticaleadimage.jpg');
             bonzo(img).insertBefore(qwery('.article__columning-wrapper', this.container));
-            bonzo(imgs[1]).addClass('img--supporting');
-            bonzo(imgs[4]).addClass('img--supporting');
+            bonzo(imgs[0]).addClass('img--supporting');
+            bonzo(imgs[3]).addClass('img--supporting');
             videos.each(function(vid) {
                 vid.removeAttribute('controls');
                 vid.setAttribute('loop', 'loop');

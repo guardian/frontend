@@ -45,7 +45,11 @@ target/
 That can then be transfered to our S3 bucket, 
 
 ```
-s3cmd put -m text/html --acl-public --recursive target/cache/ s3://aws-frontend-archive/
+s3cmd put -m text/html \
+  --add-header 'Cache-Control: max-age=60' \
+  --acl-public \
+  --recursive \
+  target/cache/www.theguardian.com/ s3://aws-frontend-archive/www.theguardian.com/
 ```
 
 ## Testing 
