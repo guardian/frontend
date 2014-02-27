@@ -742,6 +742,10 @@ button {
     border-bottom: 1px solid #CCCCCC;
 }
 
+.cnf-front .title {
+    cursor: pointer;
+}
+
 .cnf-front.isProvisional {
     background: #CCCCCC;
 }
