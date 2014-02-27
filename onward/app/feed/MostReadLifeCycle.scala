@@ -10,8 +10,8 @@ trait MostReadLifecycle extends GlobalSettings {
 
     Jobs.deschedule("MostReadAgentRefreshJob")
 
-    // update every 15 min
-    Jobs.schedule("MostReadAgentRefreshJob",  "0 0/20 * * * ?") {
+    // update every 30 min
+    Jobs.schedule("MostReadAgentRefreshJob",  "0 0/30 * * * ?") {
       MostReadAgent.update()
     }
 

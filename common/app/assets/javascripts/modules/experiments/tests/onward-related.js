@@ -20,15 +20,20 @@ define([
             {
                 id: 'contextual',
                 test: function (context, config) {
-                    var specialTags = ["sport/cricket", "sport/football", "football/football", "sport/rugby-union", "sport/rugbyleague",
-                        "sport/tennis", "sport/cycling", "sport/us-sport", "sport/formulaone", "sport/motorsports",
-                        "sport/golf", "sport/horse-racing", "sport/boxing"];
+                    var sportTags = ["sport/cricket", "sport/rugby-union", "sport/rugbyleague", "sport/formulaone",
+                        "sport/tennis", "sport/cycling", "sport/motorsports", "sport/golf", "sport/horse-racing",
+                        "sport/boxing", "sport/us-sport", "sport/australia-sport"];
+                    var footballTags = [ "football/championsleague", "football/premierleague", "football/championship",
+                        "football/europeanfootball", "football/world-cup-2014"];
+                    var footballTeams = ["football/manchester-united", "football/chelsea", "football/arsenal",
+                        "football/manchestercity", "football/tottenham-hotspur", "football/liverpool" ];
+                    var allWhitelistedTags = Array.prototype.concat(sportTags, footballTags, footballTeams);
                     var tags = config.page.keywordIds.split(',');
 
-                    var match = _intersection(specialTags, tags);
+                    var match = _intersection(allWhitelistedTags, tags);
                     if (match.length > 0) {
                         var url = '/popular-in-tag/' + match[0] + '.json';
-                        related(config, context, url);
+                        related(config, context, url, true);
                     } else {
                         related(config, context);
                     }

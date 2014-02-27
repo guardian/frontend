@@ -13,7 +13,7 @@ object MostReadAgent extends Logging with ExecutionContexts {
     log.info("Refreshing most read.")
 
     // limiting to sport/football section for popular/related ABTest
-    val ophanQuery = OphanApi.getMostReadInSection("sport,football", 7, 400)
+    val ophanQuery = OphanApi.getMostReadInSection("sport,football", 2, 1000)
 
     ophanQuery.map{ ophanResults =>
 
