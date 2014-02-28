@@ -120,6 +120,10 @@ object Switches extends Collections {
   val EffectiveMeasureSwitch = Switch("Commercial Tags", "effective-measure",
     "Enable the Effective Measure audience segment tracking.",
     safeState = Off, sellByDate = endOfQ4)
+  
+  val ForeseeSwitch = Switch("Commercial Tags", "Foresee",
+    "Enable Forsee surveys for a sample of our audience",
+    safeState = Off, sellByDate = endOfQ4)
 
   // Commercial Feeds
 
@@ -495,6 +499,7 @@ object Switches extends Collections {
     AmaaSwitch,
     EffectiveMeasureSwitch,
     ImrWorldwideSwitch,
+    ForeseeSwitch,
     DiagnosticsRequestLogging,
     DiagnosticsJavascriptErrorLogging,
     TravelOffersFeedSwitch,
