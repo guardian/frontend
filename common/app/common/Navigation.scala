@@ -1,7 +1,6 @@
 package common
 
-import model.{Tag, MetaData}
-import com.gu.management.IndexPage
+import model.{Section, Tag, MetaData}
 
 case class SectionLink(zone: String, title: String, href: String,newWindow: Boolean = false) {
   def currentFor(page: MetaData): Boolean = page.url == href ||
@@ -169,7 +168,8 @@ object Navigation {
     .map(_.links).filter(_.nonEmpty)
 
   def sectionOverride(page: MetaData, localNav: NavItem, currentSublink: Option[SectionLink]): String = page match {
-    case p:Tag => currentSublink.map(_.title).getOrElse(localNav.name.title)
+    case p: Tag => currentSublink.map(_.title).getOrElse(localNav.name.title)
+    case p: Section => currentSublink.map(_.title).getOrElse(localNav.name.title)
     case _ => localNav.name.title
   }
 }
