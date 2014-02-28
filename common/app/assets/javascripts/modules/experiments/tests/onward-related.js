@@ -21,7 +21,7 @@ define([
         this.idealOutcome = 'Measurable increase in page view per visit for whitelisted content, and increase in trail CTR over story packages.';
 
         this.canRun = function(config) {
-            return config.page.contentType.match(/Gallery|Article|ImageContent|Video/);
+            return config.page.contentType && config.page.contentType.match(/Gallery|Article|ImageContent|Video/);
         };
         this.variants = [
             {
