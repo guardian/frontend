@@ -17,15 +17,7 @@ then
 fi
 jsCommonResult=$?
 
-#Analyse css if changed
-SRC_PATTERN=".scss"
-git diff --cached --name-only | if grep "$SRC_PATTERN"
-then
-    grunt analyse:css
-fi
-cssAnalysisResult=$?
-
 
 # Exit code 1 means don't commit and 0 means do commit
-[ $jsLintResult -ne 0 ] || [ $cssAnalysisResult -ne 0 ] || [ $jsCommonResult -ne 0 ] && exit 1
+[ $jsLintResult -ne 0 ] || [ $jsCommonResult -ne 0 ] && exit 1
 exit 0
