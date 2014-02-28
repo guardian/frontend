@@ -54,11 +54,19 @@
 
 .football-match__status {
     width: 20%;
+
+    @include mq($to: tablet) {
+        width: auto;
+    }
 }
 
 .football-match__details {
     width: 60%;
     text-align: center;
+
+    @include mq($to: tablet) {
+        width: 100%;
+    }
 }
 
 .football-match__report {
@@ -70,6 +78,10 @@
         @include fs-data(2);
         text-decoration: underline;
         visibility: hidden;
+    }
+
+    @include mq($to: tablet) {
+        display: none;
     }
 }
 
