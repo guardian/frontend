@@ -81,6 +81,7 @@
 .details__versus,
 .details__score {
     display: inline-block;
+    overflow: hidden;
     width: 15%;
 }
 
