@@ -25,7 +25,7 @@ object MatchStatus extends Logging {
 
   private val statuses = Map(
 
-    ("KO", "1<sup>st</sup>"), // The Match has started (Kicked Off).
+    ("KO", "1st"), // The Match has started (Kicked Off).
 
     ("HT", "HT"), // The Referee has blown the whistle for Half Time.
 

@@ -17,7 +17,7 @@ class FixturesFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         findFirst(".football-filter__label").getText should be("All fixtures")
 
         Then("I should see todays live matches")
-        val matches = $(".match-desc").getTexts
+        val matches = $(".details__match-teams").getTexts
         matches should contain ("Arsenal 1-0 Spurs")
 
         And("The next 3 days fixtures")
@@ -37,7 +37,7 @@ class FixturesFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         findFirst("[data-link-name=next]").click()
 
         Then("I should see the next set of upcoming matches")
-        $(".match-desc").getTexts should contain ("Swansea v Reading")
+        $(".details__match-teams").getTexts should contain ("Swansea v Reading")
 
       }
     }

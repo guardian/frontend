@@ -16,7 +16,7 @@ class ResultsFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         import browser._
 
         Then("I should see todays live matches")
-        val matches = $(".match-desc").getTexts
+        val matches = $(".details__match-teams").getTexts
         matches should contain ("Arsenal 1-0 Spurs")
 
         And("I should see results for previous days")
@@ -36,7 +36,7 @@ class ResultsFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         findFirst("[data-link-name=previous]").click()
 
         Then("I should see earlier results")
-        $(".match-desc").getTexts should contain ("Stoke 1-1 Villa")
+        $(".details__match-teams").getTexts should contain ("Stoke 1-1 Villa")
       }
     }
 
@@ -52,10 +52,10 @@ class ResultsFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         browser.await()
 
         Then("I should navigate to the premier league results page")
-        $(".match-desc").getTexts should contain("Arsenal 1-0 Spurs")
+        $(".details__match-teams").getTexts should contain("Arsenal 1-0 Spurs")
 
         And("I should not see other leagues results")
-        $(".match-desc").getTexts should not contain("Bolton 1-1 Derby")
+        $(".details__match-teams").getTexts should not contain("Bolton 1-1 Derby")
       }
     }
 
