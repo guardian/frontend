@@ -28,19 +28,21 @@
                             <span class="today__year">@Format(DateTime.now(), "yyyy")</span>
                         </span>
                     </span>
-                    @items.map(_.webPublicationDate).sortBy(-_.getMillis).headOption.map { latestDateTime =>
-                        <span class="container__updated">
-                            <span class="i--circle i--clock">
-                                <span class="i i-clock-hands-white"></span>
+                    @defining((items.map(_.webPublicationDate) :+ collection.lastUpdated.map(DateTime.parse(_)).getOrElse(new DateTime(0))).sortBy(-_.getMillis)) { updates =>
+                        @updates.headOption.map { latestUpdate =>
+                            <span class="container__updated">
+                                <span class="i--circle i--clock">
+                                    <span class="i i-clock-hands-white"></span>
+                                </span>
+                                Last updated:
+                                <time
+                                    class="js-timestamp"
+                                    itemprop="datePublished"
+                                    datetime="@latestUpdate.toString("yyyy-MM-dd'T'HH:mm:ssZ")"
+                                    data-relativeformat="long"
+                                    data-timestamp="@latestUpdate.getMillis"><span class="timestamp__text">@Format(latestUpdate, "E, h:ma")</span></time>
                             </span>
-                            Last updated:
-                            <time
-                                class="js-timestamp"
-                                itemprop="datePublished"
-                                datetime="@latestDateTime.toString("yyyy-MM-dd'T'HH:mm:ssZ")"
-                                data-relativeformat="long"
-                                data-timestamp="@latestDateTime.getMillis"><span class="timestamp__text">@Format(latestDateTime, "E, h:ma")</span></time>
-                        </span>
+                        }
                     }
                 </h2>
                 <div class="container__body">
