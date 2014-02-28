@@ -1,6 +1,6 @@
 {
   "name": "guss-layout",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "main": [
     "_row.scss",
     "_columns.scss"

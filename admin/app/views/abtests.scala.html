@@ -13,14 +13,19 @@
 
     <h1>A/B Tests</h1>
 
+    <div class="abtests-audience"></div>
+
     <div class="abtests-active"></div>
 
     <h2 class="abtests-expired-title">Expired <a href="#">show</a></h2>
+
     <div class="abtests-expired"></div>
 
     <script type="text/template" id="tmpl-abtest-item-template">@fragments.abtestItem()</script>
     <script type="text/template" id="tmpl-participation-template">@fragments.participation()</script>
     <script type="text/template" id="tmpl-participation-item-template">@fragments.participationItem()</script>
+    <script type="text/template" id="tmpl-audience-template">@fragments.audience()</script>
+    <script type="text/template" id="tmpl-audience-item-template">@fragments.audienceItem()</script>
 
     <script type="text/javascript">
         window.abCharts = {

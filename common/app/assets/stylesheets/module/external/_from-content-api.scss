@@ -15,7 +15,7 @@
 .from-content-api .block-elements {
 
     @include fs-bodyCopy(3);
-    color: #333333;
+    color: $c-neutral1;
 
     @include mq(tablet) {
         @include fs-bodyCopy(4, true);
@@ -25,11 +25,15 @@
     ul,
     ol,
     address {
-        margin: 0 0 $baseline*3 0;
+        @include rem((
+            margin: 0 0 $gs-baseline 0
+        ));
         padding: 0;
 
         @include mq(tablet) {
-            margin-bottom: $baseline*4;
+            @include rem((
+                margin-bottom: ($gs-baseline/3)*4
+            ));
         }
     }
     > ol,
@@ -79,14 +83,20 @@
     > figure,
     > video {
         + h2 {
-            margin-top: 24px;
+            @include rem((
+                margin-top: 24px
+            ));
 
             @include mq(tablet) {
-                margin-top: 27px;
+                @include rem((
+                    margin-top: 27px
+                ));
             }
         }
         + h3 {
-            margin-top: $baseline*3;
+            @include rem((
+                margin-top: $gs-baseline
+            ));
         }
     }
 }
@@ -108,10 +118,14 @@
 
 .from-content-api blockquote {
     font-style: italic;
-    margin: 28px 0 28px 24px;
+    @include rem((
+        margin: 28px 0 28px 24px
+    ));
 
     @include mq(tablet) {
-        margin-left: 28px;
+        @include rem((
+            margin-left: 28px
+        ));
     }
 
     &.quoted {
@@ -180,16 +194,20 @@ figcaption,
     color: $c-neutral2;
 
     @include mq(tablet) {
-        @include fs-data(2, true);
+        @include fs-data(3, true);
     }
 }
 
 .main-caption {
-    padding: $baseline*2 $gs-gutter/2 $gs-row-height;
+    @include rem((
+        padding: ($gs-baseline/3)*2 $gs-gutter/2 $gs-row-height
+    ));
 
     @include mq(mobileLandscape) {
-        padding-left: $gs-gutter;
-        padding-right: $gs-gutter;
+        @include rem((
+            padding-left: $gs-gutter,
+            padding-right: $gs-gutter
+        ));
     }
 }
 
@@ -203,38 +221,49 @@ figure {
     img {
         display: block;
     }
-
     &.img {
-        margin-top: $baseline*4;
-        margin-bottom: $baseline*5;
+        @include rem((
+            margin-top: ($gs-baseline/3)*4,
+            margin-bottom: ($gs-baseline/3)*5
+        ));
 
         @include mq(leftCol) {
-            margin-top: $baseline*5;
-            margin-bottom: $baseline*6;
+            @include rem((
+                margin-top: ($gs-baseline/3)*5,
+                margin-bottom: $gs-baseline*2
+            ));
         }
     }
-
-    &.img--extended {
-        margin-top: $baseline*4;
-        margin-bottom: $baseline*4;
-    }
-
     &.img--landscape,
     &.img--portrait {
         figcaption {
             background-color: $c-neutral7;
-            padding: $baseline 6px $baseline*6 6px;
+            @include rem((
+                padding: $gs-baseline/3 6px $gs-baseline*2 6px
+            ));
 
             @include mq(wide) {
-                padding: $baseline*1.5 8px $gs-row-height 8px;
+                @include rem((
+                    padding: $gs-baseline/2 8px $gs-row-height 8px
+                ));
             }
         }
     }
 }
 
+.figure.img--extended,
+.element-video {
+    @include rem((
+        margin-top: ($gs-baseline/3)*4,
+        margin-bottom: ($gs-baseline/3)*4
+    ));
+}
+
 p + figure,
 p + video {
-    margin-top: $baseline;
+    @include rem((
+        margin-top: $gs-baseline/3
+    ));
 }
 
 
@@ -246,8 +275,10 @@ p + video {
     padding-bottom: 56.25%; /* 16:9 */
     padding-top: 25px;
     height: 0;
-    margin-bottom: $baseline*2;
-    background-color: #000;
+    @include rem((
+        margin-bottom: ($gs-baseline/3)*2
+    ));
+    background-color: #000000;
 
     iframe,
     object,
@@ -260,6 +291,7 @@ p + video {
         height: 100%;
     }
 }
+
 
 /* Citations
    ========================================================================== */
@@ -292,85 +324,39 @@ p + video {
 
 .from-content-api {
     table {
-        margin-bottom: $baseline*4;
+        margin-bottom: ($gs-baseline/3)*4;
     }
 
     // This is a weird xml output from the api
     table caption {
         @include fs-headline(2);
-        padding: $baseline*2 0;
+        padding: ($gs-baseline/3)*2 0;
         text-align: left;
         border-top: 1px solid #B3B3B4;
     }
-
     th,
     td {
         @include fs-data(3);
-        padding: $baseline*2;
+        padding: ($gs-baseline/3)*2;
     }
-
     th {
         font-weight: 600;
         color: #333333;
     }
-
     tbody tr:nth-child(odd) td {
         background-color: darken($c-neutral8, 4%);
     }
 }
 
+
 /* Embeds
    ========================================================================== */
+
 .from-content-api {
     .element {
         iframe {
             width: 100%;
             border: none;
-        }
-    }
-}
-
-/* Paragraph spacing
-   ========================================================================== */
-
-.paragraph-spacing--indents {
-    .from-content-api,
-    .from-content-api .block-elements {
-        > p {
-            margin-bottom: 0;
-
-            + .card-wrapper + p, // Inline link cards are inserted between paragraphs
-            + .inline-image + p,
-            + p {
-                // Indent consecutive paragraphs
-                // by the value of the line-height
-                text-indent: 24px;
-                text-indent: 2.4rem;
-
-                @include mq(tablet) {
-                    text-indent: 28px;
-                    text-indent: 2.8rem;
-                }
-            }
-        }
-        > p.bullet-container + p {
-            text-indent: 0;
-        }
-    }
-    .from-content-api blockquote.quoted {
-        text-indent: 0;
-
-        @include mq(tablet) {
-            text-indent: 0;
-        }
-
-        p {
-            margin-bottom: 0;
-            text-indent: 40px;
-
-            @include mq(tablet) {
-                text-indent: 42px;
-            }
         }
     }
 }

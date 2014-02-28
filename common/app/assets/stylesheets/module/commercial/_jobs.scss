@@ -4,7 +4,7 @@
 
 .jobs-component {
     .lineitem__image-logo {
-        margin-left: $baseline;
+        margin-left: $gs-gutter/5;
         @include rem((
             width: 100px,
             height: 40px
@@ -16,7 +16,7 @@
     }
     .lineitem__list {
         @include font-size(14, 16);
-        margin: $baseline*4 0;
+        margin: ($gs-baseline/3)*4 0;
     }
     @include mq($to: tablet) {
         .commercial__head {

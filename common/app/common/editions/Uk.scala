@@ -9,7 +9,7 @@ object Uk extends Edition(
   id = "UK",
   displayName = "UK edition",
   timezone = DateTimeZone.forID("Europe/London")
-  ) with Sections with Zones {
+  ) with Zones {
 
   implicit val UK = Uk
   val zones = Seq(
@@ -24,18 +24,18 @@ object Uk extends Edition(
     travelZone
   )
 
-  def navigation(metadata: MetaData) = Seq(
+  def navigation(metadata: MetaData): Seq[NavItem] = Seq(
     NavItem(home),
-    NavItem(uk, Seq(politics, media, science, society, health, education)),
-    NavItem(world, Seq(us, europe, middleeast, asiapacific, africa, americas)),
-    NavItem(cif, Seq(cifbelief, cifgreen)),
-    NavItem(sport, Seq(football, cricket, tennis, rugbyunion, cycling)),
+    NavItem(uk),
+    NavItem(world),
+    NavItem(cif),
+    NavItem(sport, Seq(football, cricket, tennis, rugbyunion, cycling, usSport)),
     footballNav(metadata),
-    NavItem(lifeandstyle, Seq(foodanddrink, fashion, relationships, healthandwellbeing, women)),
+    NavItem(lifeandstyle),
     NavItem(culture, Seq(film, music, books, televisionandradio, artanddesign, stage)),
-    NavItem(business, Seq(economics, banking, property, workandcareers, savings)),
-    NavItem(travel, Seq(shortbreaks, uktravel, europetravel, hotels, resturants)),
-    NavItem(technology, Seq(internet, games, mobilephones, appsblog)),
-    NavItem(environment, Seq(climatechange, wildlife, energy, conservation, food))
+    NavItem(business),
+    NavItem(travel),
+    NavItem(technology),
+    NavItem(environment)
   )
 }

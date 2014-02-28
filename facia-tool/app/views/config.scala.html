@@ -39,6 +39,8 @@
                 underDrag: state.underDrag,
                 open: state.open}">
 
+            <span class="cnf-collection__index" data-bind="text: $index() + 1"></span>
+
             <a class="cnf-collection__name" data-bind="
                 click: toggleOpen,
                 attr: {href: id},
@@ -52,9 +54,9 @@
                 <span class="also">also</span> on
                 <span data-bind="foreach: parents">
                     <!-- ko if: $parents[2] ? id !== $parents[2].id : true -->
-                        <a target="edit-collections" data-bind="
-                            attr: {href: '/?front=' + id},
-                            text: id "></a>
+                        <a class="cnf-collection__also-on" data-bind="
+                            click: $root.openFront,
+                            text: id"></a>
                     <!-- /ko -->
                 </span>
             </span>

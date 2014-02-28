@@ -1,8 +1,8 @@
 .football-filters {
-    margin-bottom: $baseline*4;
+    margin-bottom: ($gs-baseline/3)*4;
 
     .football-filter + & {
-        margin-top: $baseline*-4;
+        margin-top: ($gs-baseline/3)*-4;
     }
 
     > li {
@@ -15,7 +15,7 @@
         font-size: 14px;
         font-size: 1.4rem;
         color: #ffffff;
-        padding-bottom: $baseline;
+        padding-bottom: $gs-baseline/3;
         margin-top: 10px;
     }
     li:first-child h2 {
@@ -31,8 +31,8 @@
     }
     .cta {
         background: $c-sportDark;
-        margin-bottom: $baseline*2;
-        margin-top: $baseline*4;
+        margin-bottom: ($gs-baseline/3)*2;
+        margin-top: ($gs-baseline/3)*4;
         padding: 15px 0;
     }
 }
@@ -45,8 +45,8 @@
     background: #ffffff;
     border: 1px solid $c-neutral5;
     display: block;
-    margin-bottom: $baseline*4;
-    padding: $baseline*3 48px 10px 8px;
+    margin-bottom: ($gs-baseline/3)*4;
+    padding: $gs-baseline 48px 10px 8px;
     position: relative;
 
     &,
