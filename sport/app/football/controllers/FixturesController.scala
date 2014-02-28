@@ -28,7 +28,7 @@ trait FixtureRenderer extends Controller with CompetitionFixtureFilters {
     val fixtures = dates.map { day => MatchesOnDate(day, competitions.withMatchesOn(day).competitions) }
 
     val nextPage = dates.lastOption.flatMap { date =>
-      competitions.nextMatchDates(date.plusDays(1), daysToDisplay).headOptionMatchesPage
+      competitions.nextMatchDates(date.plusDays(1), daysToDisplay).headOption
     }.map(date => toNextPreviousUrl(date, competitionFilter))
 
     val previousPage = competitions.previousMatchDates(startDate.minusDays(1), daysToDisplay)
