@@ -30,7 +30,7 @@ trait Navigation  {
   val environment = SectionLink("environment", "Environment", "/environment")
   val media = SectionLink("media", "Media", "/media")
   val education = SectionLink("education", "Education", "/education")
-  val students = SectionLink("education", "Students", "/education")
+  val students = SectionLink("education", "Students", "/education/students")
   val society = SectionLink("society", "Society", "/society")
   val development = SectionLink("globaldevelopment", "Global development", "/global-development")
   val science = SectionLink("science", "Science", "/science")
