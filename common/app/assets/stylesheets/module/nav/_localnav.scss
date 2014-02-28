@@ -31,12 +31,8 @@
    ========================================================================== */
 
 .nav-popup-localnav {
-    top: 168px;
+    top: auto;
     border-color: $c-neutral5;
-
-    .ab__ad-labels & {
-        top: 188px;
-    }
 
     .is-active .nav__link {
         font-family: $serifheadline;
