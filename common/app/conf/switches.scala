@@ -335,7 +335,7 @@ object Switches extends Collections {
 
   val ABRightHandRecommendations = Switch("A/B Tests", "ab-right-hand-recommendations",
     "Sets different recommendation providers against each other for the right hand component",
-    safeState = Off, sellByDate = new DateMidnight(2014, 2, 28)
+    safeState = Off, sellByDate = new DateMidnight(2014, 3, 7)
   )
 
   val ABInlineElements = Switch("A/B Tests", "ab-onward-inline-elements",
