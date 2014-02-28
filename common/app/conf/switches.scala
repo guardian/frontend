@@ -123,7 +123,7 @@ object Switches extends Collections {
   
   val ForeseeSwitch = Switch("Commercial Tags", "Foresee",
     "Enable Forsee surveys for a sample of our audience",
-    safeState = Off, sellByDate = endOfQ4)
+    safeState = Off, sellByDate = new DateMidnight(2014,5,1)) // 3 month trial
 
   // Commercial Feeds
 
