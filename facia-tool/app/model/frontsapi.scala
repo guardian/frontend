@@ -97,8 +97,8 @@ trait UpdateActions extends Logging {
   def putBlock(id: String, block: Block, identity: Identity, updateJson: JsValue): Block =
     FaciaApi.putBlock(id, block, identity)
 
-  def archiveBlock(id: String, block: Block, update: JsValue): Block =
-    Try(FaciaApi.archive(id, block, update)) match {
+  def archiveBlock(id: String, block: Block, update: JsValue, identity: Identity): Block =
+    Try(FaciaApi.archive(id, block, update, identity)) match {
       case Failure(t: Throwable) => {
         log.warn(t.toString)
         block
@@ -118,7 +118,7 @@ trait UpdateActions extends Logging {
     .map(insertIntoDraft(update, _))
     .map(capCollection)
     .map(putBlock(id, _, identity, updateJson))
-    .map(archiveBlock(id, _, updateJson))
+    .map(archiveBlock(id, _, updateJson, identity))
     .orElse(createBlock(id, identity, update))
   }
 
@@ -128,7 +128,7 @@ trait UpdateActions extends Logging {
       .map(deleteFromLive(update, _))
       .map(deleteFromDraft(update, _))
       .map(putBlock(id, _, identity, updateJson))
-      .map(archiveBlock(id, _, updateJson))
+      .map(archiveBlock(id, _, updateJson, identity))
   }
 
   def updateCollectionMeta(id: String, update: CollectionMetaUpdate, identity: Identity): Option[Block] =

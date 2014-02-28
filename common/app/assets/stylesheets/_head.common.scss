@@ -36,11 +36,10 @@
 @import "layout/_grid-system";
     @include grid-system;
 @import "layout/_layout";
-
 @import "components/guss-layout/_row";
 @include guss-row-utility;
-@import "module/facia/_row-pattern";
-
+@import "components/guss-layout/_columns";
+@include guss-columns-utility;
 
 /* ==========================================================================
    Global modules
@@ -51,6 +50,16 @@
 @import "module/_adslot";
 @import "module/_media";
 @import "module/_headers";
+
+/* ==========================================================================
+   Facia
+   ========================================================================== */
+
+@import "module/facia/_extends";
+@import "module/facia/_items";
+@import "module/facia/_row-pattern";
+@import "module/facia/_facia-container";
+@import "module/facia/_linkslist";
 
 
 /* ==========================================================================

@@ -81,14 +81,9 @@ object Switches extends Collections {
     safeState = Off, sellByDate = endOfQ4
   )
 
-  val SpdyAjaxServicesSwitch = Switch("Performance Switches", "spdy-ajax-services",
-    "If this switch is on, all ajax api endpoints will route through Akamai's SPDY service.",
-    safeState = Off, sellByDate = new DateMidnight(2014,2,28)
-  )
-
-  val SpdyImageServicesSwitch = Switch("Performance Switches", "spdy-image-services",
-    "If this switch is on, all image endpoints will route through Akamai's SPDY service.",
-    safeState = Off, sellByDate = new DateMidnight(2014,2,28)
+  val ShowAllArticleEmbedsSwitch = Switch("Performance Switches", "show-all-embeds",
+    "If switched on then all embeds will be shown inside article bodies",
+    safeState = On, sellByDate = never
   )
 
   // Advertising Switches
@@ -215,12 +210,6 @@ object Switches extends Collections {
   )
 
   // Feature Switches
-
-  val ShowAllArticleEmbedsSwitch = Switch("Feature Switches", "show-all-embeds",
-    "If switched on then all embeds will be shown inside article bodies",
-    safeState = Off, sellByDate = new DateMidnight(2014, 2, 28)
-  )
-
   val ReleaseMessageSwitch = Switch("Feature Switches", "release-message",
     "If this is switched on users will be messaged that they are inside the alpha/beta/whatever release",
     safeState = Off, sellByDate = endOfQ4
@@ -246,13 +235,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = endOfQ4
   )
 
-  val LocalNavSwitch = Switch("Feature Switches", "local-nav",
-    "If this switch is on, a secondary local nav is shown.",
-    safeState = Off,
-    // extend by a week, GK is working on the replacement
-    sellByDate = new DateMidnight(2014, 3, 7)
-  )
-
   val LightboxGalleriesSwitch = Switch("Feature Switches", "lightbox-galleries",
     "If this switch is on, galleries open in a lightbox.",
     safeState = On, sellByDate = endOfQ4
@@ -267,14 +249,7 @@ object Switches extends Collections {
     "If this switch is on, external links are turned into cards in body content on wide viewports.",
     safeState = Off,
 
-    // WARNING - this has had one extension, no more.
-    // if we cannot make a decision next time it goes
-    sellByDate = new DateMidnight(2014, 2, 28)
-  )
-
-  val LiveSummarySwitch = Switch("Feature Switches", "live-summary",
-    "If this is switched on the live events will show a summary at the beginning of the page on mobile next to the article on wider devices.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 2, 28)
+    sellByDate = new DateMidnight(2014, 3, 7)
   )
 
   val ArticleKeywordsSwitch = Switch("Feature Switches", "article-keywords",
@@ -322,7 +297,7 @@ object Switches extends Collections {
 
   val DogeSwitch = Switch("Feature Switches", "doge",
     "Makes article headline Doge style",
-    safeState = Off, sellByDate = new DateMidnight(2014, 2, 28)
+    safeState = Off, sellByDate = new DateMidnight(2014, 3, 3)
   )
 
   val LayoutHintsSwitch = Switch("Feature Switches", "layout-hints",
@@ -339,13 +314,9 @@ object Switches extends Collections {
 
   val ABRightHandRecommendations = Switch("A/B Tests", "ab-right-hand-recommendations",
     "Sets different recommendation providers against each other for the right hand component",
-    safeState = Off, sellByDate = new DateMidnight(2014, 2, 28)
+    safeState = Off, sellByDate = new DateMidnight(2014, 3, 7)
   )
 
-  val ABInlineElements = Switch("A/B Tests", "ab-onward-inline-elements",
-    "If this switch is on the ab inline elements test is run",
-    safeState = Off, sellByDate = new DateMidnight(2014, 2, 28)
-  )
 
   val ABRelatedContent = Switch("A/B Tests", "ab-onward-related",
     "If this switch is on the related content popular-in-tag override A/B test is run",
@@ -378,8 +349,13 @@ object Switches extends Collections {
   )
 
   val FootballTablePosition = Switch("A/B Tests", "ab-football-table-position",
-    "If this swith is on, the football table will vary in position throughout the football tagged pages.",
+    "If this switch is on, the football table will vary in position throughout the football tagged pages.",
     safeState = Off, sellByDate = new DateMidnight(2014, 3, 7)
+  )
+
+  val ABFrontsLatestReviewsCard = Switch("A/B Tests", "ab-fronts-latest-reviews-card",
+    "If this switch is on, AB test adding a 'Latest Reviews' card to the Features container on the front.",
+    safeState = Off, sellByDate = new DateMidnight(2014, 3, 8)
   )
 
   // Sport Switch
@@ -450,8 +426,6 @@ object Switches extends Collections {
     AutoRefreshSwitch,
     DoubleCacheTimesSwitch,
     RelatedContentSwitch,
-    SpdyAjaxServicesSwitch,
-    SpdyImageServicesSwitch,
     AdvertSwitch,
     VideoAdvertSwitch,
     AudienceScienceSwitch,
@@ -465,11 +439,9 @@ object Switches extends Collections {
     ReleaseMessageSwitch,
     IntegrationTestSwitch,
     ClientSideErrorSwitch,
-    LocalNavSwitch,
     LightboxGalleriesSwitch,
     IdentityProfileNavigationSwitch,
     ExternalLinksCardsSwitch,
-    LiveSummarySwitch,
     LiveCricketSwitch,
     LiveStatsSwitch,
     LiveAbTestStatsSwitch,
@@ -486,7 +458,6 @@ object Switches extends Collections {
     ABRightHandRecommendations,
     GeoMostPopular,
     FootballTablePosition,
-    ABInlineElements,
     ABRelatedContent,
     ToolDisable,
     ToolConfigurationDisable,
@@ -519,7 +490,9 @@ object Switches extends Collections {
     DogeSwitch,
     ABUkContainers,
     ABUsContainers,
-    LayoutHintsSwitch
+    LayoutHintsSwitch,
+    ABAuContainers,
+    ABFrontsLatestReviewsCard
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }

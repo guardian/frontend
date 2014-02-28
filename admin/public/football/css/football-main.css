@@ -1,17 +1,10 @@
 body {
   font-family: Ubuntu, "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Calibri;
 }
-input[type=text],
-input[type=submit] {
-  padding: 10px;
-  border: solid 1px #999;
+.pa-search {
   font-size: 1em;
-}
-input[type=submit] {
-  background-color: #f7f7f7;
-}
-.browser-form .query {
-  width: 700px;
+  margin-bottom: 20px;
+  width: 100%;
 }
 .hint {
   text-decoration: none;
@@ -66,4 +59,7 @@ label[for] {
 }
 .table tbody .table-row--break td {
   border-top: 1px solid #666;
+}
+.form-control--team {
+    display: none;
 }

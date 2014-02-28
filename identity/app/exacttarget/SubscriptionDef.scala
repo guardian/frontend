@@ -9,7 +9,7 @@ object SubscriptionDef {
   val liveBetter= DataExtId(businessUnitId="1058977", customerKey="1806")
 
   val liveBetterSubDefs =
-    (1 to 6).map(n => s"lb$n" -> SubscriptionDef(liveBetter, Map(s"LB_Chal_$n" -> "true"))).toMap
+    (1 to 7).map(n => s"lb$n" -> SubscriptionDef(liveBetter, Map(s"LB_Chal_$n" -> "true"))).toMap
   
   val All: Map[String, SubscriptionDef] = liveBetterSubDefs
 }

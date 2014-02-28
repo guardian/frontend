@@ -126,7 +126,6 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
       else configuration.getStringProperty("ajax.url").getOrElse("")
     lazy val corsOrigins: Seq[String] = configuration.getStringProperty("ajax.cors.origin").map(_.split(",")
       .map(_.trim).toSeq).getOrElse(Nil)
-    lazy val spdyUrl: String = configuration.getStringProperty("ajax.spdyUrl").getOrElse("")
   }
 
   object id {
@@ -145,7 +144,6 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
   object images {
     lazy val path = configuration.getMandatoryStringProperty("images.path")
-    lazy val spdyPath = configuration.getStringProperty("images.spdyPath").getOrElse("https://services.guardianapps.co.uk/static")
   }
 
   object assets {

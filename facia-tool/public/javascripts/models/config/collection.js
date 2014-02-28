@@ -59,13 +59,13 @@ define([
         }
         this.state.open(false);
         this.state.openAdvanced(false);
-        vars.model.save();
+        vars.model.save(this);
     };
 
     Collection.prototype.discard = function() {
         if (this.state.enableDiscard()) {
             vars.model.collections.remove(this);
-            vars.model.save();
+            vars.model.save(this);
         }
     };
 
