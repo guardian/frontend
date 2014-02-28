@@ -28,19 +28,18 @@ object Uk extends Edition(
     NavItem(home),
     NavItem(uk),
     NavItem(world, Seq(europeNews, us, asia, australia, africa, middleEast)),
-    NavItem(cif),
     NavItem(sport, Seq(football, rugbyunion, rugbyLeague,cricket, tennis, cycling, boxing, usSport, formulaOne)),
     footballNav(metadata),
-    NavItem(technology, Seq(games)),
+    NavItem(cif),
     NavItem(culture, Seq(film, televisionAndRadio, music, books, artanddesign, stage)),
-    NavItem(lifeandstyle, Seq(food, health, loveAndSex, family, women, homeAndGarden)),
-    NavItem(fashion),
     NavItem(economy, Seq(markets, companies, media)),
+    NavItem(lifeandstyle, Seq(food, health, loveAndSex, family, women, homeAndGarden)),
+    NavItem(environment, Seq(cities, globalDevelopment)),
+    NavItem(technology, Seq(games)),
     NavItem(money, Seq(property, savings, borrowing, careers)),
     NavItem(travel, Seq(uktravel, europetravel, usTravel)),
-    NavItem(environment, Seq(cities, globalDevelopment)),
+    NavItem(fashion),
     NavItem(science),
     NavItem(education, Seq(students))
-
   )
 }
