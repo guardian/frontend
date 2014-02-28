@@ -81,6 +81,11 @@ object Switches extends Collections {
     safeState = Off, sellByDate = endOfQ4
   )
 
+  val ShowAllArticleEmbedsSwitch = Switch("Performance Switches", "show-all-embeds",
+    "If switched on then all embeds will be shown inside article bodies",
+    safeState = On, sellByDate = never
+  )
+
   // Advertising Switches
 
   val AdvertSwitch = Switch("Advertising", "adverts",
@@ -201,12 +206,6 @@ object Switches extends Collections {
   )
 
   // Feature Switches
-
-  val ShowAllArticleEmbedsSwitch = Switch("Feature Switches", "show-all-embeds",
-    "If switched on then all embeds will be shown inside article bodies",
-    safeState = Off, sellByDate = new DateMidnight(2014, 2, 28)
-  )
-
   val ReleaseMessageSwitch = Switch("Feature Switches", "release-message",
     "If this is switched on users will be messaged that they are inside the alpha/beta/whatever release",
     safeState = Off, sellByDate = endOfQ4
@@ -246,9 +245,7 @@ object Switches extends Collections {
     "If this switch is on, external links are turned into cards in body content on wide viewports.",
     safeState = Off,
 
-    // WARNING - this has had one extension, no more.
-    // if we cannot make a decision next time it goes
-    sellByDate = new DateMidnight(2014, 2, 28)
+    sellByDate = new DateMidnight(2014, 3, 7)
   )
 
   val ArticleKeywordsSwitch = Switch("Feature Switches", "article-keywords",
@@ -313,7 +310,7 @@ object Switches extends Collections {
 
   val ABRightHandRecommendations = Switch("A/B Tests", "ab-right-hand-recommendations",
     "Sets different recommendation providers against each other for the right hand component",
-    safeState = Off, sellByDate = new DateMidnight(2014, 2, 28)
+    safeState = Off, sellByDate = new DateMidnight(2014, 3, 7)
   )
 
   val ABInlineElements = Switch("A/B Tests", "ab-onward-inline-elements",
