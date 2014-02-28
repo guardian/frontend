@@ -157,12 +157,6 @@
 .supporting__action:visited {
     color: $c-neutral2;
 }
-.fromage__media-wrapper,
-.fromage__image-container {
-    .js-off & {
-        display: none !important;
-    }
-}
 .fromage__media-wrapper {
     @include mq(tablet) {
         float: left;
