@@ -4,9 +4,8 @@ import org.scalatest.{ FeatureSpec, GivenWhenThen }
 import org.scalatest.Matchers
 import collection.JavaConversions._
 import conf.{Switches, Configuration}
-import common.UsesElasticSearch
 
-class TagFeatureTest extends FeatureSpec with GivenWhenThen with Matchers with UsesElasticSearch {
+class TagFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
   feature("Tag Pages trail size") {
 
@@ -16,7 +15,7 @@ class TagFeatureTest extends FeatureSpec with GivenWhenThen with Matchers with U
 
       HtmlUnit("/technology/askjack") { browser =>
         import browser._
-        val trails = $(".collection > li")
+        val trails = $(".fromage, .collection__item, .linkslist__item")
         trails.length should be(20)
       }
 

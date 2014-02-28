@@ -1,6 +1,6 @@
 @(trail: Gallery, index: Int, containerIndex: Int, element: String = "li")(implicit request: RequestHeader)
 
-@defining((VisualTone(trail), containerIndex == 0, containerIndex == 0 && index < 3)) { case (tone, isFirstContainer, inlineImages) =>
+@defining((VisualTone(trail), containerIndex == 0, containerIndex == 0 && index < 4)) { case (tone, isFirstContainer, inlineImages) =>
     <@element
         class="@GetClasses.forItem(trail, isFirstContainer) item--thumbnail"
         data-link-name="trail | @{index + 1}">
@@ -8,16 +8,8 @@
         <div class="item__container">
 
             <a href="@LinkTo{@trail.url}" class="item__link tone-accent-border" data-link-name="article">
-                <h@if(isFirstContainer && index == 0){1}else{2} class="item__title">
-                    @if(trail.isBreaking){
-                        <span class="item__live-indicator">Breaking News</span>
-                    }
-                    @if(trail.isLive && !trail.isBreaking){
-                        <span class="item__live-indicator">Live</span>
-                    }
-                    @RemoveOuterParaHtml(trail.headline)
-                </h@if(isFirstContainer && index == 0){1}else{2}>
-                <div class="item__media-wrapper item__media-wrapper--has-icon gallerythumbs" data-gallery-url="@LinkTo{@trail.url}">
+                @fragments.items.elements.title(trail, index, containerIndex)
+                <div class="item__media-wrapper item__media-wrapper--has-icon js-gallerythumbs" data-gallery-url="@LinkTo{@trail.url}">
                     <div class="item__cta item__cta--gallery">
                         <p>Expand</p>
                         <span class="item__cta__icon">
@@ -27,7 +19,7 @@
                     </div>
                     @trail.trailPicture(5,3).map{ imageContainer =>
                         @ImgSrc.imager(imageContainer, Item620).map { imgSrc =>
-                            <div class="item__image-container js-image-upgrade @if(inlineImages){ inlined-image}" data-src="@imgSrc" @if(isFirstContainer){ data-force-upgrade="desktop wide"}>
+                            <div class="item__image-container js-image-upgrade @if(inlineImages){ inlined-image}" data-src="@imgSrc">
                                 @if(inlineImages){
                                     @Item300.bestFor(imageContainer).map{ url => <img src="@url" class="responsive-img" alt="" /> }
                                 }

@@ -1,0 +1,194 @@
+.collection-wrapper {
+    @include rem((
+        margin-left: $gs-gutter/2 * -1,
+        margin-right: $gs-gutter/2 * -1
+    ));
+
+    + .collection-wrapper {
+        @include rem((
+            margin-top: ($gs-baseline/3)*2
+        ));
+    }
+}
+.collection-wrapper--no-outer-margins {
+    margin-left: 0;
+    margin-right: 0;
+}
+.collection__item {
+    position: relative; // Replace .item as a relative context
+
+    @include rem((
+        padding-bottom: 20px,
+        margin-bottom: $gs-baseline
+    ));
+
+    &.collection__item--content-type-gallery,
+    &.collection__item--content-type-video {
+        padding-bottom: 0;
+    }
+    & + .collection__item {
+        @include vertical-item-separator; // Restore inter-item separator
+    }
+
+    .l-row--layout-m & {
+        @include mq($to: tablet) {
+            @include rem((
+                margin-bottom: get-line-height($fs-headlines, 1)
+            ));
+        }
+    }
+}
+
+.container--row-pattern {
+    .item {
+        display: block;
+        margin-top: 0;
+        position: static; // Children should be relative to the row__item
+        padding-bottom: 0;
+        @include clearfix;
+
+        @include rem((
+            margin-bottom: $gs-baseline/2
+        ));
+
+        &:before {
+            // Remove inter-item separator
+            // (restored on collection__item)
+            display: none;
+        }
+        // Restore top tone border on first item of each row
+        &:first-child .item__link {
+            border-top-style: solid;
+        }
+    }
+    .collection {
+        margin-left: auto;
+        margin-right: auto;
+
+        @include mq(tablet) {
+            overflow: visible; // Prevents height issue in Firefox < 22
+        }
+    }
+    .item__title {
+        @include fs-headline(1, true);
+    }
+    .item__media-wrapper,
+    .item__image-container {
+        display: none;
+    }
+    .item__media-wrapper {
+        position: relative;
+    }
+    .item--has-image {
+        .item__media-wrapper,
+        .item__image-container {
+            display: block;
+
+            .js-off & {
+                display: none !important;
+            }
+        }
+    }
+}
+
+.container .l-row--items-2 {
+    .item--thumbnail {
+        .item__standfirst {
+            display: none;
+
+            @include mq(tablet) {
+                display: block;
+            }
+        }
+        @include mq(mobile, tablet) {
+            .item__link {
+                display: -webkit-flex;
+                display: flex;
+                -webkit-flex-direction: column;
+                flex-direction: column;
+            }
+            .item__media-wrapper {
+                -webkit-order: -1;
+                order: -1;
+                margin-right: 0;
+            }
+        }
+        .item__media-wrapper {
+            @include mq(tablet) {
+                @include rem((
+                    width: 122px,
+                    margin-right: $gs-gutter/2
+                ));
+            }
+            @include mq(desktop) {
+                @include rem((
+                    width: gs-span(3),
+                    margin-right: $gs-gutter
+                ));
+            }
+        }
+        @include mq(desktop) {
+            padding-bottom: 0;
+
+            .item__meta {
+                position: static;
+                @include rem((
+                    margin-top: $gs-baseline,
+                    margin-bottom: $gs-baseline
+                ));
+            }
+        }
+    }
+}
+.container .l-row--items-4 {
+    .item__byline {
+        @include fs-headline(1, true);
+    }
+    .item__standfirst,
+    .item__media-wrapper,
+    .item__image-container {
+        display: none;
+    }
+    .item--imageadjust-highlight {
+        .item__media-wrapper,
+        .item__image-container {
+            display: block;
+        }
+    }
+
+    @include mq(tablet) {
+        .item__media-wrapper,
+        .item__image-container,
+        .item--has-no-image .item__standfirst {
+            display: block;
+        }
+        .item--imageadjust-highlight,
+        .item--imageadjust-default .item__title {
+            @include rem((
+                min-height: get-line-height($fs-headlines, 1) * 3
+            ));
+        }
+    }
+    @include mq(desktop) {
+        .item--has-no-image .item__title {
+            @include fs-headline(2, true);
+        }
+    }
+}
+
+@include mq($to: tablet) {
+    .l-row--layout-m {
+        .item--imageadjust-default .item__title {
+            @include rem((
+                min-height: get-line-height($fs-headlines, 1) * 4
+            ));
+        }
+        .l-row__item--break-m {
+            .item--imageadjust-default .item__title {
+                @include rem((
+                    min-height: get-line-height($fs-headlines, 2) * 3
+                ));
+            }
+        }
+    }
+}

@@ -11,8 +11,8 @@
             background-color: #ffffff;
         }
     }
-    h2.article-zone:only-child,
-    .parts__body > .article-zone,
+    h2.article__zone:only-child,
+    .parts__body > .article__zone,
     .hide-on-mobile-if-localnav,
     .section-head {
         display: none;
@@ -31,7 +31,7 @@
    ========================================================================== */
 
 .nav-popup--localnav {
-    top: 156px;
+    top: auto;
     border-color: $c-neutral4;
     @include rem((
         padding-bottom: $gs-baseline

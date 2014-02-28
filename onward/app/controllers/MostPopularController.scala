@@ -2,12 +2,10 @@ package controllers
 
 import common._
 import conf._
-import feed.MostPopularAgent
+import feed.{MostPopularAgent, GeoMostPopularAgent}
 import model._
 import play.api.mvc.{ RequestHeader, Controller, Action }
-import play.api.libs.json._
 import scala.concurrent.Future
-import scala.util.Random
 import views.support.PopularContainer
 
 
@@ -41,20 +39,30 @@ object MostPopularController extends Controller with Logging with ExecutionConte
     }
   }
 
-  def renderCard() = Action { implicit request =>
-    val edition = Edition(request)
-    val trails = Random.shuffle(MostPopularAgent.mostPopular(edition))
-    if(trails.nonEmpty) {
-      val jsonResponse = () => views.html.fragments.cards.card(trails.head, "right", "Most read", "Story pack card | most read")
-      renderFormat(jsonResponse, 60)
-    } else {
-      NotFound
+  private val countryNames = Map(
+    "AU" -> "Australia",
+    "US" -> "US",
+    "IN" -> "India")
+
+  def renderPopularGeoJson() = Action { implicit request =>
+
+    val headers = request.headers.toSimpleMap
+    val countryCode = headers.getOrElse("X-GU-GeoLocation","country:ROW").replace("country:","")
+
+    val countryPopular = MostPopular("The Guardian", "", GeoMostPopularAgent.mostPopular(countryCode))
+
+    Cached(900) {
+      JsonComponent(
+        "html" -> views.html.fragments.collections.popular(Seq(countryPopular)),
+        "rightHtml" -> views.html.fragments.rightMostPopularGeo(countryPopular, countryNames.get(countryCode), countryCode),
+        "country" -> countryCode
+      )
     }
   }
 
   private def lookup(edition: Edition, path: String)(implicit request: RequestHeader) = {
     log.info(s"Fetching most popular: $path for edition $edition")
-    ContentApi.item(path, edition)
+    SwitchingContentApi().item(path, edition)
       .tag(None)
       .showMostViewed(true)
       .response.map{response =>

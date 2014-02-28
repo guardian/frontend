@@ -64,7 +64,7 @@ object TroubleshooterController extends Controller with Logging with AuthLogging
 
   private def testOnContentApi(testPath: String, id: String): Future[EndpointStatus] = {
     val testName = "Can fetch directly from Content API"
-    val request = SwitchingContentApi().item(testPath, "UK").showFields("all")
+    val request = SwitchingContentApi().item(testPath, "UK", None).showFields("all")
     request.response.map {
       response =>
         if (response.status == "ok") {

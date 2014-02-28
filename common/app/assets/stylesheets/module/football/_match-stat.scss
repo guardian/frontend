@@ -1,5 +1,5 @@
 .match-stat {
-    padding-bottom: $baseline*2;
+    padding-bottom: ($gs-baseline/3)*2;
     margin-bottom: 0;
 
     span {
@@ -15,4 +15,45 @@
         float: right;
         text-align: right;
     }
+}
+
+@mixin match-result--small {
+    border-radius: 0;
+    display: inline-block;
+    height: 14px;
+    margin-left: 1px;
+    position: relative;
+    top: 2px;
+    width: 2px;
+}
+
+.match-result {
+    border-radius: 4px;
+    display: inline-block;
+    height: 8px;
+    margin-left: $gs-gutter/4;
+    top: 0;
+    width: 8px;
+
+    &:first-child {
+        margin-left: 0;
+    }
+
+    @include mq($to: tablet) { @include match-result--small; }
+}
+
+.table--small {
+    .match-result { @include match-result--small; }
+}
+
+.match-result--won {
+    background-color: $c-statusPositive;
+}
+
+.match-result--drew {
+    background-color: $c-statusNeutral;
+}
+
+.match-result--lost {
+    background-color: $c-statusNegative;
 }

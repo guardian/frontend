@@ -1,10 +1,10 @@
-@(page: Page)(implicit request: RequestHeader)
+@(page: model.Page)(implicit request: RequestHeader)
 
 <main itemprop="mainContentOfPage" role="main">
     @Edition(request).zones.map{ zone =>
         <div class="monocolumn-wrapper">
             @if(zone.name.title == "News") {
-                <h1 class="article-zone article-zone--bleed-out tone-news tone-border">All sections</h1>
+                <h1 class="article__zone article__zone--bleed-out tone-news tone-border">All sections</h1>
             }
             @if(zone.name.title != "News") {
                 <h2 class="page-sub-header">

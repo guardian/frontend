@@ -5,9 +5,10 @@
     text-align: center;
     min-height: 56px;
 
-    //For expandables
+    // For expandables
     position: relative;
     z-index: 1000;
+
     @include mq(desktopAd) {
         min-height: 96px;
     }
@@ -21,9 +22,8 @@
         @include box-sizing(border-box);
         height: 34px;
         background-color: $c-neutral8;
-        padding: 0 $baseline*2;
+        padding: 0 ($gs-baseline/3)*2;
         border-top: 1px solid $c-neutral5;
-
         color: $c-neutral2;
         font-family: $sans-serif;
         @include font-size(12, 20);
@@ -31,64 +31,65 @@
         -webkit-font-smoothing: antialiased;
     }
 
-    &.ad-slot__show-label {
-
-        .ad-slot__label {
-            display: block;
-        }
+    .no-js & {
+        display: none;
     }
 }
-
-.ad-slot__wrapper {
+.ad-slot__inner {
     max-width: 100%;
     display: inline-block;
 }
-
 .ad-container {
     display: inline-block;
     width: auto;
     margin: 0 auto !important;
 }
-
-[data-link-name*="bottom-banner-ad"] {
-    padding: $baseline*2 0;
-    background-color: #ffffff;
-}
-
 .top-banner-ad-container {
     min-height: 70px;
-}
 
+    @include mq(faciaLeftCol) {
+        @include rem((
+            width: gs-span(14)
+        ));
+        margin: 0 auto;
+    }
+}
 .ad-slot--top-banner-ad {
     background-color: #f0f0f0;
+
+    @include mq($to: tablet) {
+        .ad-slot__label {
+            background-color: #f0f0f0;
+            height: auto;
+            border: none;
+        }
+    }
 
     @include mq(tablet) {
         background-color: #ffffff;
     }
 
-    @include mq($to: tablet) {
-        .ad-slot__label {
-            height: auto;
-            border: none;
-        }
+    @include mq(faciaLeftCol) {
+        width: auto;
+        margin-left: gs-span(2) + $gs-gutter;
+        text-align: left;
     }
 }
-
 .parts__head {
     z-index: 1002;
-    &.is-sticky {
-        top: 0;
-        @include sticky;
-    }
 }
-
+.mpu-context {
+    // Provides context to sticky positioned blocks
+    height: 100%;
+}
 .ad-slot--inline {
+    min-width: 300px;
+    max-width: 100%;
     padding: 0;
 
     .ad-container {
         line-height: 0;
     }
-
     .ad-slot__label {
         max-width: 300px;
         margin: 0 auto;
@@ -102,31 +103,23 @@
         }
     }
 
-    &.ad-slot__show-label {
-
-        @include mq(mobileLandscape, tablet) {
-            text-align: right;
-        }
-    }
-
     @include mq(tablet) {
         width: auto;
         height: auto;
-        padding-top: $baseline;
+        padding-top: $gs-baseline/3;
         padding-left: $gs-gutter;
         float: right;
     }
 }
-
-.mpu-context {
-    // Provides context to sticky positioned blocks
-    height: 100%;
-}
-
 .ad-slot--mpu-banner-ad {
-    padding-top: 25px;
+    padding-top: 29px; // Align with bottom of image
     padding-bottom: 37px;
     width: 300px;
     height: 250px;
     overflow: hidden;
+}
+.ad-slot--commercial-component {
+    width: 100%;
+    min-height: initial;
+    padding: 0 0 $gs-baseline 0;
 }

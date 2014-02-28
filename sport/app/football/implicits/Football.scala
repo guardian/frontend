@@ -105,6 +105,10 @@ trait Football extends Collections {
   implicit class TeamHasScored(t: MatchDayTeam) {
     lazy val hasScored = t.score.exists(_ != 0)
   }
+
+  implicit class LeagueTableEntryWithPrevResults2LeagueTableEntry(ltewpr: LeagueTableEntryWithForm) {
+    lazy val leagueTableEntry = LeagueTableEntry(ltewpr.stageNumber, ltewpr.round, ltewpr.team)
+  }
 }
 
 object Football extends Football

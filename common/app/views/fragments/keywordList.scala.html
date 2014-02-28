@@ -5,7 +5,11 @@
         <ul class="inline-list" itemprop="keywords">
             <li class="inline-list__item">Tags:</li>
             @keywordsList.zipWithRowInfo.map{ case(keyword, row) =>
-                <li class="inline-list__item"><a href="@LinkTo(keyword.url)" data-link-name="keyword: @keyword.id">@keyword.name</a>@if(!row.isLast){, }</li>
+                <li class="inline-list__item">
+                    <a class="@if(keyword.isFootballTeam){js-football-team}
+                              @if(keyword.isFootballCompetition){ js-football-competition}"
+                        href="@LinkTo(keyword.url)"
+                        data-link-name="keyword: @keyword.id">@keyword.name</a>@if(!row.isLast){, }</li>
             }
         </ul>
     }

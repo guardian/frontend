@@ -5,12 +5,13 @@ import model.{ Trail, Cached, Content }
 import play.api.mvc.{ SimpleResult, RequestHeader, Action, Controller }
 import common._
 import org.joda.time.format.DateTimeFormat
-import conf.ContentApi
+
 import org.scala_tools.time.Imports._
 import pa.FootballMatch
 import implicits.{ Requests, Football }
 
 import concurrent.Future
+import conf.ContentApiDoNotUseForNewQueries
 
 case class Report(trail: Trail, name: String)
 
@@ -56,8 +57,10 @@ object MoreOnMatchController extends Controller with Football with Requests with
       loadMoreOn(request, theMatch) map {
         case Nil => JsonNotFound()
         case related => JsonComponent(
-          ("nav" -> football.views.html.fragments.matchNav(populateNavModel(theMatch, related filter { hasExactlyTwoTeams }))),
-          ("related" -> views.html.fragments.relatedTrails(related, "More on this match", 5))
+          "nav" -> football.views.html.fragments.matchNav(populateNavModel(theMatch, related filter {
+            hasExactlyTwoTeams
+          })),
+          "related" -> views.html.fragments.relatedTrails(related, "More on this match", 5)
         )
       }
     }
@@ -69,8 +72,8 @@ object MoreOnMatchController extends Controller with Football with Requests with
   def loadMoreOn(request: RequestHeader, theMatch: FootballMatch): Future[Seq[Content]] = {
     val matchDate = theMatch.date.toDateMidnight
 
-    // TODO search by reference does not (currently) work in new content api
-    ContentApi.search(Edition(request))
+    // TODO search by reference does not work in new content api
+    ContentApiDoNotUseForNewQueries.search(Edition(request))
       .section("football")
       .tag("tone/matchreports|football/series/squad-sheets|football/series/saturday-clockwatch")
       .fromDate(matchDate.minusDays(2))
@@ -82,7 +85,7 @@ object MoreOnMatchController extends Controller with Football with Requests with
   }
 
   //for our purposes we expect exactly 2 football teams
-  private def hasExactlyTwoTeams(content: Content) = content.tags.filter(_.isFootballTeam).size == 2
+  private def hasExactlyTwoTeams(content: Content) = content.tags.count(_.isFootballTeam) == 2
 
   private def populateNavModel(theMatch: FootballMatch, related: Seq[Content])(implicit request: RequestHeader) = {
     val matchDate = theMatch.date.toDateMidnight

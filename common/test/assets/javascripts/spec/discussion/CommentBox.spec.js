@@ -94,7 +94,7 @@ define([
             spyOn(commentBox, 'getUserData').andReturn({
                 displayName: "testy",
                 id: 1,
-                accountCreatedDate: new Date(1391904001338)
+                accountCreatedDate: new Date(1392719401338)
             });
 
             commentBox.attachTo(document.querySelector('.d-comment-box'));

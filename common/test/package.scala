@@ -1,6 +1,6 @@
 package test
 
-import conf.{ElasticSearchContentApi, Configuration, ContentApi}
+import conf.{ContentApiDoNotUseForNewQueries, ElasticSearchContentApi, Configuration}
 import java.net.URLEncoder
 import play.api.test._
 import play.api.test.Helpers._
@@ -68,7 +68,7 @@ trait TestSettings {
     }
   }
 
-  ContentApi.http = toRecorderHttp(ContentApi.http)
+  ContentApiDoNotUseForNewQueries.http = toRecorderHttp(ContentApiDoNotUseForNewQueries.http)
   ElasticSearchContentApi.http = toRecorderHttp(ElasticSearchContentApi.http)
 }
 

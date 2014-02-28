@@ -4,9 +4,8 @@ import play.api.test._
 import play.api.test.Helpers._
 import org.scalatest.Matchers
 import org.scalatest.FlatSpec
-import common.UsesElasticSearch
 
-class LeagueTableControllerTest extends FlatSpec with Matchers with UsesElasticSearch {
+class LeagueTableControllerTest extends FlatSpec with Matchers {
   
   "League Table Controller" should "200 when content type is table" in Fake {
     val result = football.controllers.LeagueTableController.renderLeagueTable()(TestRequest())
@@ -82,7 +81,7 @@ class LeagueTableControllerTest extends FlatSpec with Matchers with UsesElasticS
     val result = football.controllers.LeagueTableController.renderCompetition(competitionId)(fakeRequest)
     status(result) should be(200)
     header("Content-Type", result).get should be("application/json; charset=utf-8")
-    contentAsString(result) should startWith("{\"config\"")
+    contentAsString(result) should startWith("{\"html\"")
   }
   
 }

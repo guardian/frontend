@@ -1,5 +1,6 @@
-@(page: MetaData)(implicit request: RequestHeader)
+@(page: model.MetaData)(implicit request: RequestHeader)
 @import conf.Switches.{SearchSwitch, ReleaseMessageSwitch, IdentityProfileNavigationSwitch}
+@import common.{LinkTo, Navigation, Edition}
 
 @*<!--
 Identity pages use identityHeader.scala.html, be sure
@@ -80,16 +81,50 @@ to apply any necessary changes to non-shared code there too.
                 <i class="i i-guardian-logo-big hide-on-mobile"></i>
             </a>
 
-            <div class="nav-container u-cf">
-                <ul class="nav nav--global" data-link-name="Sections">
-                @Edition(request).navigation(page).map{ nav =>
-                    <li class="nav__item @if(nav.currentFor(page)){is-active}">
-                        <a href="@LinkTo{@nav.name.href}" data-link-name="@nav.name.linkName"
-                           class="nav__link">@nav.name.title</a>
-                    </li>
-                }
-                </ul>
-            </div>
+        @defining(Edition(request).navigation(page)) { navigation =>
+            @defining(Navigation.topLevelItem(navigation, page)) { topLevelSelected =>
+                @*
+                * See here for more info on Breadcrumbs
+                * https://support.google.com/webmasters/answer/185417?hl=en
+                *@
+                <div itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+                    @* Top level nav *@
+                    <div class="nav-container gs-container u-cf">
+                        <ul class="nav nav--global" data-link-name="Sections">
+                            @navigation.map { nav =>
+                                <li class="nav__item @if(topLevelSelected.exists(_ == nav)) {is-active}">
+                                    <a href="@LinkTo {@nav.name.href}" @if(topLevelSelected.exists(_ == nav)) { itemprop="url" } data-link-name="@nav.name.href" class="nav__link">
+                                        <span @if(topLevelSelected.exists(_ == nav)){ itemprop="title" }>
+                                            @Html(nav.name.title)
+                                        </span>
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                    @* Secondary nav *@
+                    @Navigation.localNav(navigation, page).map { localNav =>
+                        @defining(localNav.find(_.currentFor(page))){ currentSublink =>
+                            <div class="localnav-container gs-container u-cf">
+                                <ul class="nav nav--local" data-link-name="Local Navigation">
+                                    @localNav.map { nav =>
+                                        <li class="nav__item @currentSublink.filter(_.href == nav.href).map{ current => is-active }">
+                                            <a href="@LinkTo{@nav.href}" class="nav__link"
+                                                data-link-name="@nav.href"
+                                                @if(currentSublink.exists(_ == nav)) { itemprop="url" }>
+                                                <span @if(currentSublink.exists(_ == nav)) { itemprop="title" }>
+                                                    @Html(nav.title)
+                                                </span>
+                                            </a>
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                        }
+                    }
+                </div>
+            }
+        }
 
             @if(IdentityProfileNavigationSwitch.isSwitchedOn) {
                 <div class="nav-popup--profile nav-popup--small js-profile-nav-popup nav-popup is-off"></div>
@@ -103,7 +138,5 @@ to apply any necessary changes to non-shared code there too.
             </div>
         </div>
     </div>
-
-    <div class="js-localnav-placeholder"></div>
 
 </header>

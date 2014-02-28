@@ -6,6 +6,7 @@ import org.scala_tools.time.Imports._
 import common.{Sponsor, Sponsors}
 import common.{LinkCounts, LinkTo, Reference}
 import org.jsoup.Jsoup
+import org.jsoup.safety.Whitelist
 import collection.JavaConversions._
 import views.support.{Naked, ImgSrc}
 import views.support.StripHtmlTagsAndUnescapeEntities
@@ -21,7 +22,6 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   lazy val shortUrl: String = delegate.safeFields("shortUrl")
   lazy val shortUrlId: String = delegate.safeFields("shortUrl").replace("http://gu.com", "")
   lazy val webUrl: String = delegate.webUrl
-  lazy val wordCount: String = fields.get("wordcount").getOrElse("")
   lazy val standfirst: Option[String] = fields.get("standfirst")
   lazy val starRating: Option[String] = fields.get("starRating")
   lazy val shortUrlPath: String = shortUrl.replace("http://gu.com", "")
@@ -79,6 +79,10 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
     }
 
     souped getOrElse Nil
+  }
+
+  lazy val wordCount: Int = {
+    Jsoup.clean(delegate.safeFields.getOrElse("body",""), Whitelist.none()).split("\\s+").size
   }
 
   override lazy val byline: Option[String] = fields.get("byline")
@@ -142,7 +146,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   override lazy val headline: String = apiContent.metaData.get("headline").flatMap(_.asOpt[String]).getOrElse(fields("headline"))
   override lazy val trailText: Option[String] = apiContent.metaData.get("trailText").flatMap(_.asOpt[String]).orElse(fields.get("trailText"))
   override lazy val group: Option[String] = apiContent.metaData.get("group").flatMap(_.asOpt[String])
-  override lazy val imageAdjust: Option[String] = apiContent.metaData.get("imageAdjust").flatMap(_.asOpt[String])
+  override lazy val imageAdjust: String = apiContent.metaData.get("imageAdjust").flatMap(_.asOpt[String]).getOrElse("default")
   override lazy val isBreaking: Boolean = apiContent.metaData.get("isBreaking").flatMap(_.asOpt[Boolean]).getOrElse(false)
   override lazy val supporting: List[Content] = apiContent.supporting
 }
@@ -264,6 +268,7 @@ class Article(content: ApiContentWithMeta) extends Content(content) {
     "article:published_time" -> webPublicationDate,
     "article:modified_time" -> lastModified,
     "article:section" -> sectionName,
+    "article:publisher" -> "https://www.facebook.com/theguardian",
     "og:image" -> openGraphImage
   ) ++ tags.map("article:tag" -> _.name) ++
     tags.filter(_.isContributor).map("article:author" -> _.webUrl)

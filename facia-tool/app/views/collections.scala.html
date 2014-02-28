@@ -4,8 +4,11 @@
 
 <div style="display: none;" data-bind="visible: true">
     <div class="toolbar" data-bind="visible: true" style="display: none">
-        <span class="tool-label">Front</span>
-        <select class="tool-select" data-bind="options: fronts, value: front, optionsCaption: 'choose...'"></select>
+
+        <span data-bind="if: fronts().length > 1">
+            <span class="tool-label">Front</span>
+            <select class="tool-select" data-bind="options: fronts, value: front, optionsCaption: 'choose...'"></select>
+        </span>
 
         <a class="spark" target="ophan" title="Dark blue: Guardian. Green: Google. Light blue: Other." data-bind="
             visible: frontSparkUrl,
@@ -25,7 +28,7 @@
             visible: front">View Live</a>
     </div>
 
-    <div class="finder">
+    <div class="left-col">
         <div class="title">Clipboard</div>
         <div class="clipboard__wrapper" data-bind="with: clipboard">
             <div class="clipboard droppable" data-bind="
@@ -77,7 +80,7 @@
         </div>
     </div>
 
-    <div class="collections" data-bind="css: {'live-mode': $root.liveMode}">
+    <div class="right-col" data-bind="css: {'live-mode': $root.liveMode}">
         <div class="collections__inner scrollable" data-bind="template: {name: 'template_collection', foreach: collections}"></div>
     </div>
 
@@ -106,7 +109,7 @@
                     </span>
 
                     <span class="title" data-bind="
-                        text: configMeta.displayName() || collectionMeta.displayName() || configMeta.roleName() || id"></span>
+                        text: configMeta.displayName() || collectionMeta.displayName() || 'Special'"></span>
 
                     <a class="list-header__edit" data-bind="
                         click: toggleEditingConfig,
@@ -120,6 +123,16 @@
 
                     <span class="count" data-bind="if: isPending() && !configMeta.uneditable()">
                         (<span class="non-zero">updating...</span>)
+                    </span>
+
+                    <span data-bind="if: alsoOn.length">
+                        also on
+                        <span data-bind="foreach: alsoOn"
+                        ><span data-bind="if: $index">, </span
+                        ><a class="list-header__also-on" data-bind="
+                                click: $root.setFront,
+                                text: $data"></a
+                        ></span>
                     </span>
 
                     <i class="list-header__collapser" data-bind="
@@ -146,7 +159,12 @@
                     <input type="text" data-bind="
                         value: collectionMeta.displayName,
                         hasFocus: true" placeholder="Title"/>
-                    <span>
+
+                    <input type="text" data-bind="
+                        value: collectionMeta.href,
+                        hasFocus: true" placeholder="Link, e.g. sport/cricket"/>
+
+                    <span class="tools">
                         <a class="tool" data-bind="click: saveMeta">Save</a>
                         <a class="tool" data-bind="click: reset">Cancel</a>
                     </span>
@@ -189,10 +207,10 @@
             }">
 
             <a target="article" data-bind="
-                attr: {href: 'http://www.theguardian.com/' + props.id()},
+                attr: {href: 'http://www.theguardian.com/' + id},
                 click: open">
                 <img class="thumb" draggable="false" data-bind="
-                    attr: {src: fields.thumbnail, title: props.id}"/>
+                    attr: {src: fields.thumbnail, title: id}"/>
             </a>
 
             <div class="article__date" data-bind="text: humanDate"></div>
@@ -232,7 +250,7 @@
 
                     <div class="tools">
                         <a class="tool tool--done" data-bind="click: close">Done</a
-                       ><a class="tool tool--remove" data-bind="click: $parent.omitItem">
+                       ><a class="tool tool--small tool--small--remove" data-bind="click: $parent.omitItem">
                             <i class="icon-trash"></i>
                         </a>
                     </div>
@@ -260,7 +278,7 @@
             <div class="closed" data-bind="if: !state.open()">
                 <a class="spark" target="ophan" title="Dark blue: Guardian. Green: Google. Light blue: Other." data-bind="
                     visible: state.sparkUrl,
-                    attr: {href: 'http://dashboard.ophan.co.uk/graph/breakdown?path=/' + props.id()}">
+                    attr: {href: 'http://dashboard.ophan.co.uk/graph/breakdown?path=/' + id}">
                     <img data-bind="attr: {src: state.sparkUrl}" />
                 </a>
 
@@ -273,21 +291,31 @@
                         visible: meta.imageAdjust() === 'hide'">Hidden</span>
                 </div>
 
-                <a class="tool tool--remove" data-bind="click: $parent.omitItem">
+                <a class="tool tool--small tool--small--remove" data-bind="click: $parent.omitItem">
                     <i class="icon-trash"></i>
+                </a>
+
+                <a class="tool tool--small tool--small--href" target="_blank" data-bind="
+                    attr: {href: 'http://www.theguardian.com/' + id}">
+                    <i class="icon-share-alt"></i>
                 </a>
 
                 <div class="article_content is-empty" data-bind="if: state.isEmpty">
                     This content is unavailable, deleted, or has a new URL
                     <a target="article" class="is-empty__url" data-bind="
-                        attr: {href: props.id},
-                        text: props.id"></a>
+                        attr: {href: id},
+                        text: id"></a>
                 </div>
 
                 <div class="article_content" data-bind="if: !state.isEmpty()">
+
+                    <span class="is-breaking" data-bind="
+                        visible: meta.isBreaking,
+                        click: open">Breaking News</span>
+
                     <a class="headline" target="article" data-bind="
                         text: meta.headline() || fields.headline(),
-                        attr: {href: props.id()},
+                        attr: {href: id},
                         click: open"></a>
 
                     <!-- ko if: meta.supporting && meta.supporting.items().length -->
@@ -299,7 +327,7 @@
                     <!-- /ko -->
 
                     <div class="trailtext" data-bind="
-                        attr: {href: props.id()},
+                        attr: {href: id},
                         html: meta.trailText() || fields.trailText()"></div>
 
                 </div>

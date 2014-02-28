@@ -13,7 +13,9 @@
 .nav {
     list-style: none;
     margin: 0;
-    @include rem((padding: $baseline*2 0 $baseline));
+    @include rem((
+        padding: ($gs-baseline/3)*2 0 $gs-baseline/3
+    ));
 
     .nav__item--full {
         width: 100%;
@@ -39,7 +41,9 @@
    ========================================================================== */
 
 .nav--columns {
-    @include rem((padding: 0 $gs-gutter/2));
+    @include rem((
+        padding: 0 $gs-gutter/2
+    ));
     @include mq(mobileLandscape) {
         @include rem((
             padding-left: $gs-gutter,
@@ -50,20 +54,26 @@
         float: left;
         width: 50%;
         @include box-sizing(border-box);
-        @include rem((padding-right: $gs-gutter/2));
+        @include rem((
+            padding-right: $gs-gutter/2
+        ));
 
         &:nth-child(odd) {
             clear: left;
         }
         &:nth-child(even) {
             padding-right: 0;
-            @include rem((padding-left: $gs-gutter/2));
+            @include rem((
+                padding-left: $gs-gutter/2
+            ));
         }
     }
 
     .nav__link {
         display: block;
-        @include rem((padding: 3px 0 $baseline*4));
+        @include rem((
+            padding: 3px 0 ($gs-baseline/3)*4
+        ));
         border-top: 1px solid $c-neutral7;
         height: auto;
         background-color: transparent;
@@ -85,8 +95,8 @@
 .nav--columns-football {
     @extend .nav--no-horizontal-spacing;
     @include rem((
-        padding-top: $baseline*2,
-        padding-bottom: $baseline
+        padding-top: ($gs-baseline/3)*2,
+        padding-bottom: $gs-baseline/3
     ));
 }
 
@@ -204,7 +214,7 @@
 .localnav--small {
     background-color: #ffffff;
     display: block;
-    border-top: $baseline/2 solid $c-newsAccent;
+    border-top: $gs-baseline/6 solid $c-newsAccent;
 
     @include mq(tablet) { display: none; }
 
@@ -230,7 +240,9 @@
 
 .localnav__inner {
     position: relative;
-    @include rem((margin: 0 $gs-gutter/2));
+    @include rem((
+        margin: 0 $gs-gutter/2
+    ));
     border-bottom: 1px solid $c-neutral6;
     border-bottom-color: $c-neutral6 !important;
 
@@ -266,8 +278,8 @@
 
     .nav__item {
         @include rem((
-            margin: $baseline 0 0,
-            padding: $baseline $gs-gutter/2
+            margin: $gs-baseline/3 0 0,
+            padding: $gs-baseline/3 $gs-gutter/2
         ));
         color: #ffffff;
         border-right: 1px solid $c-brandLightBlue;
@@ -342,7 +354,9 @@
 
 .top-nav,
 .top-nav__item {
-    @include rem((height: 44px));
+    @include rem((
+        height: 44px
+    ));
 }
 .top-nav__item {
     @include box-sizing(border-box);

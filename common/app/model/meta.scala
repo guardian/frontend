@@ -34,7 +34,7 @@ trait MetaData extends Tags {
     "og:site_name" -> "the Guardian",
     "fb:app_id"    -> Configuration.facebook.appId
   )
-  
+
   def cards: List[(String, Any)] = List(
     "twitter:site" -> "@guardian",
     "twitter:app:name:iphone" -> "The Guardian",

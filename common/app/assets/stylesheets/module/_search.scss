@@ -80,7 +80,7 @@ input.gsc-search-button-v2 {
 }
 
 .gsc-results .gsc-cursor-box {
-    margin: 0 0 $baseline*4 0 !important;
+    margin: 0 0 ($gs-baseline/3)*4 0 !important;
 }
 
 .gsc-results .gsc-cursor-box .gsc-cursor-page {

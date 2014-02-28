@@ -13,6 +13,7 @@ import play.api.mvc.SimpleResult
 import scala.concurrent.Future
 import services._
 import utils.SafeLogging
+import form.Mappings.{idEmail, idPassword}
 
 @Singleton
 class RegistrationController @Inject()( returnUrlVerifier : ReturnUrlVerifier,
@@ -27,9 +28,9 @@ class RegistrationController @Inject()( returnUrlVerifier : ReturnUrlVerifier,
 
   val registrationForm = Form(
     Forms.tuple(
-      "user.primaryEmailAddress" -> Forms.text,
+      "user.primaryEmailAddress" -> idEmail,
       "user.publicFields.username" -> Forms.text,
-      "user.password" -> Forms.text,
+      "user.password" -> idPassword,
       "receive_gnm_marketing" -> Forms.boolean,
       "receive_third_party_marketing" -> Forms.boolean
     )

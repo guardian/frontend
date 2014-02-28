@@ -5,12 +5,11 @@ import conf.Switches._
 import org.scalatest.Matchers
 import org.scalatest.{ GivenWhenThen, FeatureSpec }
 import collection.JavaConversions._
-import common.UsesElasticSearch
 import play.api.libs.ws.WS
 import scala.concurrent.duration._
 import scala.concurrent.Await
 
-class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers  with UsesElasticSearch {
+class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
   implicit val config = Configuration
 
@@ -202,7 +201,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers  w
         ImageServerSwitch.switchOn()
         inBodyImage.getAttribute("class") should include("img--extended")
         inBodyImage.findFirst("[itemprop=contentURL]").getAttribute("src") should
-          endWith("sys-images/Travel/Late_offers/pictures/2012/10/11/1349951383662/Shops-in-Rainbow-Row-Char-001.jpg?width=-&height=-&quality=95")
+          endWith("sys-images/Travel/Late_offers/pictures/2012/10/11/1349951383662/Shops-in-Rainbow-Row-Char-001.jpg?width=620&height=-&quality=95")
 
         And("I should see the image caption")
         inBodyImage.findFirst("[itemprop=description]").getText should
@@ -358,17 +357,6 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers  w
 
         Then("I should see paragraph 16")
         findFirst("#block-16").getText should startWith("11.31am: Vince Cable, the business secretary")
-      }
-    }
-
-    scenario("Primary image upgrades to high resolution") {
-
-      Given("I am on an article")
-      HtmlUnit("/film/2012/nov/11/margin-call-cosmopolis-friends-with-kids-dvd-review") { browser =>
-        import browser._
-
-        Then("the primary image's 'data-force-upgrade' attribute should be 'true'")
-        findFirst("#article figure .js-image-upgrade").getAttribute("data-force-upgrade") should be("")
       }
     }
 
@@ -581,5 +569,17 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers  w
       }
     }
 
+
+    scenario("Section navigation") {
+      Given("I am on an article")
+      HtmlUnit("/football/2013/oct/29/arsene-wenger-arsenal-chelsea-capital-one-cup") { browser =>
+        import browser._
+
+        Then("I should see the section and local nav")
+        val navigation = findFirst("[itemtype='http://data-vocabulary.org/Breadcrumb']")
+        navigation.findFirst("[itemprop='url']").getAttribute("href") should endWith ("/football")
+        navigation.find(".nav--local").find(".nav__item").size should be (6)
+      }
+    }
   }
 }

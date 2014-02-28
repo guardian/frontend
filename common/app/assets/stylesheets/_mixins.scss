@@ -49,6 +49,15 @@
     @include font-size($size, $line-height);
 }
 
+// Usage: font-size: get-line-height($fs-header, 3);
+@function get-font-size($font-scale, $level) {
+    @return nth(nth($font-scale, $level), 1);
+}
+
+@function get-line-height($font-scale, $level) {
+    @return nth(nth($font-scale, $level), 2);
+}
+
 
 // Font Scale
 // =============================================================================
@@ -244,6 +253,14 @@
     user-select: none;
 }
 
+// Set the properties of placeholder text
+@mixin placeholder {
+    ::-webkit-input-placeholder {@content}
+    :-moz-placeholder           {@content}
+    ::-moz-placeholder          {@content}
+    :-ms-input-placeholder      {@content}
+}
+
 // Vertical linear gradient with a plain fallback for older browsers
 @mixin simple-gradient($from, $to) {
     // Fix for browsers not understanding transparent
@@ -280,9 +297,11 @@
     }
 }
 
-@mixin faux-bullet-point {
+@mixin faux-bullet-point($color: $c-neutral3) {
     position: relative;
-    @include rem((text-indent: 20px));
+    @include rem((
+        text-indent: 20px
+    ));
 
     &:before {
         position: absolute;
@@ -292,7 +311,7 @@
             top: 2px,
             font-size: 48px
         ));
-        color: $c-neutral3;
+        color: $color;
     }
 }
 
@@ -320,7 +339,9 @@
     // Fallback for non-Webkit browsers
     // (won't show `…` at the end of the block)
     @if $line-height {
-        @include rem((max-height: $line-height * $lines));
+        @include rem((
+            max-height: $line-height * $lines
+        ));
     }
 }
 
@@ -337,10 +358,10 @@
         top: 50%;
         left: 50%;
         margin-top: $iconOffsetX;
-        @if $iconOffsetY == "" { 
-            margin-left: $iconOffsetX; 
-        } @else { 
-            margin-left: $iconOffsetY; 
+        @if $iconOffsetY == "" {
+            margin-left: $iconOffsetX;
+        } @else {
+            margin-left: $iconOffsetY;
         }
     }
 }

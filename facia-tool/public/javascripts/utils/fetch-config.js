@@ -8,26 +8,28 @@ define([
     authedAjax,
     terminate
 ) {
-    return function (model, terminateOnFail) {
-        return authedAjax.request({
+    return function (terminateOnFail) {
+        var deferred = $.Deferred();
+
+        authedAjax.request({
             url: vars.CONST.apiBase + '/config'
         })
         .fail(function () {
             if(terminateOnFail) {
-                terminate("the config was not available");
+                terminate("the config is invalid or unvailable");
             }
+            deferred.reject();
         })
         .done(function(config) {
             if (_.isObject(config.fronts) && _.isObject(config.collections)) {
-                if (model.config) {
-                    model.config(config);
-                }
-                if (model.fronts) {
-                    model.fronts(_.keys(config.fronts));
-                }
+                deferred.resolve(config);
             } else if (terminateOnFail ) {
                 terminate("the config is invalid.");
+            } else {
+                deferred.reject();
             }
         });
+
+        return deferred.promise();
     };
 });

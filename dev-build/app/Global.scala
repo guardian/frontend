@@ -3,8 +3,8 @@ import conf.RequestMeasurementMetrics
 import controllers.front.FrontLifecycle
 import dev.DevParametersLifecycle
 import implicits.Requests
-import model.{MostPopularLifecycle, AdminLifecycle}
-import feed.OnwardJourneyLifecycle
+import model.AdminLifecycle
+import feed.{OnwardJourneyLifecycle, MostReadLifecycle}
 
 import play.api.mvc.{RequestHeader, EssentialAction, EssentialFilter, WithFilters}
 
@@ -52,5 +52,5 @@ object DevJsonExtensionFilter extends EssentialFilter with ExecutionContexts wit
 
 object Global extends WithFilters(
   DevJsonExtensionFilter :: DevCacheWarningFilter :: RequestMeasurementMetrics.asFilters: _*
-) with MostPopularLifecycle with CommercialLifecycle with FrontLifecycle
-  with DevParametersLifecycle with AdminLifecycle with DiagnosticsLifecycle with OnwardJourneyLifecycle
+) with CommercialLifecycle with FrontLifecycle
+  with DevParametersLifecycle with AdminLifecycle with DiagnosticsLifecycle with OnwardJourneyLifecycle with MostReadLifecycle

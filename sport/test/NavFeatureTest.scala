@@ -2,9 +2,8 @@ package test
 
 import org.scalatest.{ FeatureSpec, GivenWhenThen }
 import org.scalatest.Matchers
-import common.UsesElasticSearch
 
-class NavFeatureTest extends FeatureSpec with GivenWhenThen with Matchers with UsesElasticSearch {
+class NavFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
   feature("Football Nav") {
 

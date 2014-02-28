@@ -1,0 +1,13 @@
+@(teamResults: List[_root_.football.model.PrevResult])
+
+@teamResults.filter(_.hasResult).take(5).map { result =>
+  @if(result.won) {
+      <span class="result won" data-foe="@result.foe.name" data-score="@result.self.score.get" data-score-foe="@result.foe.score.get">&#10004;</span>
+  }
+  @if(result.drew) {
+      <span class="result drew" data-foe="@result.foe.name" data-score="@result.self.score.get" data-score-foe="@result.foe.score.get">-</span>
+  }
+  @if(result.lost) {
+      <span class="result lost" data-foe="@result.foe.name" data-score="@result.self.score.get" data-score-foe="@result.foe.score.get">&#x2718;</span>
+  }
+}

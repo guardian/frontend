@@ -6,14 +6,14 @@ define([
     "fence",
     "common/modules/ui/autoupdate",
     "common/modules/live/filter",
-    "common/modules/live/summary",
     "common/modules/sport/football/matchnav",
     "common/modules/discussion/loader",
     "common/modules/sport/cricket",
     "common/modules/ui/notification-counter",
     "common/modules/experiments/left-hand-card",
     "common/modules/open/cta",
-    "common/modules/commercial/loader"
+    "common/modules/commercial/loader",
+    "common/modules/experiments/layoutHints"
 ], function (
     common,
     mediator,
@@ -22,14 +22,14 @@ define([
     fence,
     AutoUpdate,
     LiveFilter,
-    LiveSummary,
     MatchNav,
     DiscussionLoader,
     Cricket,
     NotificationCounter,
     LeftHandCard,
     OpenCta,
-    CommercialLoader
+    CommercialLoader,
+    Layout
 ) {
 
     var modules = {
@@ -77,11 +77,6 @@ define([
                 if (config.page.isLiveBlog) {
                     var lf = new LiveFilter(context).init(),
                         nc = new NotificationCounter().init();
-
-
-                    if (config.switches.liveSummary) {
-                        var ls = new LiveSummary(context).init();
-                    }
                 }
             });
         },
@@ -92,6 +87,14 @@ define([
                 if (config.page.commentable && config.switches.discussion) {
                     var discussionLoader = new DiscussionLoader(context, common.mediator, { 'switches': config.switches });
                     discussionLoader.attachTo($('.discussion')[0]);
+                }
+            });
+        },
+
+        initDoge: function() {
+            common.mediator.on('page:article:ready', function(config, context) {
+                if (config.switches.doge) {
+                    $('.article__headline').css({fontFamily:'"Comic Sans MS", cursive', color:'pink'});
                 }
             });
         },
@@ -146,6 +149,12 @@ define([
                     fence.render(el);
                 });
             });
+        },
+
+        initLayoutHints: function(config) {
+            if(config.switches.layoutHints && /\/-sp-/g.test(config.page.pageId)) {
+                var l = new Layout(config);
+            }
         }
     };
 
@@ -155,10 +164,12 @@ define([
             modules.matchNav();
             modules.initLiveBlogging();
             modules.initDiscussion();
+            modules.initDoge();
             modules.initCricket();
             modules.externalLinksCards();
             modules.initOpen(config);
             modules.initFence();
+            modules.initLayoutHints(config);
         }
         common.mediator.emit("page:article:ready", config, context);
     };

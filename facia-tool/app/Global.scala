@@ -18,10 +18,15 @@ object Global extends FaciaToolLifecycle with GlobalSettings {
     Jobs.schedule("ConfigAgentJob", "0 * * * * ?") {
       FaciaToolConfigAgent.refresh()
     }
+
+    Jobs.schedule("FaciaToolPressJob", "0/10 * * * * ?") {
+      FrontPressJob.run()
+    }
   }
 
   def descheduleJobs() {
     Jobs.deschedule("ConfigAgentJob")
+    Jobs.deschedule("FaciaToolPressJob")
   }
 
   override def onStart(app: play.api.Application) {

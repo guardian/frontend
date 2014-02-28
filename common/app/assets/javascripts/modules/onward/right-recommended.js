@@ -8,6 +8,7 @@ define([
     'common/utils/cookies',
     'lodash/objects/assign',
     'common/modules/component',
+    'bean',
 
     'common/modules/onward/right-recommended-item',
     'common/modules/ui/images'
@@ -18,6 +19,7 @@ define([
     cookies,
     extend,
     Component,
+    bean,
 
     RecommendedItem,
     images
@@ -91,6 +93,16 @@ define([
             new RecommendedItem(item, index).render(container);
         });
         images.upgrade(container);
+        bean.on(document.body, 'click', '.right-recommended-item__url', function() {
+            s.events="event37";
+            s.eVar7 = s.pageName;
+
+            s.eVar37 = "right-popular-contentrec";
+
+            s.linkTrackVars="events,eVar37,eVar37";
+            s.linkTrackEvents="event37";
+            s.tl(true,"e","right-popular-contentrec");
+        });
     };
 
     return RightRecommendedForYou;

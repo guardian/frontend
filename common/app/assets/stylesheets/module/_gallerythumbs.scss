@@ -1,5 +1,5 @@
 .gallerythumbs {
-    margin: $baseline 0;
+    margin: $gs-baseline/3 0;
     list-style: none;
     position: relative;
 }
@@ -23,9 +23,11 @@
     width: 100%;
 }
 
+
 /* ==========================================================================
    Landscape layout
    ========================================================================== */
+
 .gallerythumbs--landscapes {
     .gallerythumbs__item {
         @include fix-aspect-ratio(5, 3, 50%); // 5:3 aspect - works around thumbs being slightly different in size
@@ -59,9 +61,11 @@
     }
 }
 
+
 /* ==========================================================================
    Portrait layout
    ========================================================================== */
+
 .gallerythumbs--portraits {
     .gallerythumbs__item {
         @include fix-aspect-ratio(3, 4, 33%);
@@ -70,11 +74,10 @@
 }
 
 
-
-
 /* ==========================================================================
    Launch CTA
    ========================================================================== */
+
 .gallery-launch-cta {
     @extend %type-7;
     line-height: 16px;
@@ -85,7 +88,7 @@
     left: 0;
     border: 0;
     text-align: left;
-    padding: $baseline*3 0;
+    padding: $gs-baseline 0;
     width: 220px;
     z-index: 10;
 

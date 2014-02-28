@@ -1,7 +1,7 @@
 @(interactive: Interactive, storyPackage: List[Trail], index: Int, trail: Boolean)(implicit request: RequestHeader)
 @import conf.Switches.DiscussionSwitch
 
-<h2 class="article-zone tone-@VisualTone(interactive) tone-accent-border">
+<h2 class="article__zone tone-@VisualTone(interactive) tone-accent-border">
     <a class="tone-colour" data-link-name="article section" href="@LinkTo{/@interactive.section}">@Html(interactive.sectionName.toLowerCase)</a>
 </h2>
 

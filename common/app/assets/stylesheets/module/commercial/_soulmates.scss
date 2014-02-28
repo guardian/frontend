@@ -3,51 +3,49 @@
    ========================================================================== */
 
 .soulmates-component {
-    background-color: #F4F8FD;
+    background-color: #f4f8fd;
 
     .commercial__head {
-        background-color: #DEEBF9;
-		position: relative;
+        background-color: #deebf9;
+        position: relative;
         overflow: hidden;
         clear: both;
     }
-
     .commercial__subtitle {
         color: $c-neutral2;
     }
-
     .commercial__body {
-        padding: $baseline*2;
+        padding: ($gs-baseline/3)*2 ($gs-gutter/5)*2;
     }
 
     /* Entries */
     .lineitem {
-		text-align: center;
+        text-align: center;
         width: 50%;
         float: left;
     }
-
     .lineitem__title {
-        color: #1A1570;
-        font-size: rem(13px);
+        color: #1a1570;
+        @include rem((
+            font-size: 13px
+        ));
         line-height: 1.5385;
         font-weight: bold;
-        margin-top: $baseline;
+        margin-top: $gs-baseline/3;
+
         &:hover {
             text-decoration: underline;
         }
     }
-	
-	.lineitem__meta strong {
-		color: $c-neutral1;
-		font-weight: normal;
-	}
-
+    .lineitem__meta strong {
+        color: $c-neutral1;
+        font-weight: normal;
+    }
     .lineitem__image {
-        padding: $baseline;
-        background-color: #fff;
-		outline: 0 none;
-        box-shadow: 2px 2px 0 0 rgba(0,0,0,0.15);
+        padding: $gs-baseline/3 $gs-gutter/5;
+        background-color: #ffffff;
+        outline: 0 none;
+        box-shadow: 2px 2px 0 0 rgba(#000000, .15);
         position: relative;
         z-index: 2;
     }
@@ -56,16 +54,17 @@
         margin: 0 auto;
         display: block;
         position: relative;
-        &::before {
+
+        &:before {
             content: " ";
-            background-color: #D80457;
-			margin-left: -44px;
+            background-color: #d80457;
+            margin-left: -44px;
             padding: 1px;
             width: 88px;
             height: 108px;
             display: block;
             position: absolute;
-			left: 50%;
+            left: 50%;
             z-index: 1;
             -webkit-transform:rotate(-4deg);
             -moz-transform:rotate(-4deg);
@@ -76,8 +75,8 @@
     .lineitem {
         &:nth-child(2n) {
             .lineitem__blocklink {
-                &::before {
-                    background-color: #5994DD;
+                &:before {
+                    background-color: #5994dd;
                 }
             }
         }
@@ -90,20 +89,20 @@
         }
     }
 
-	@include mq($to: tablet) {
-		.commercial__head {
-			background-color: #fff;
-		}
-	}
-	@include mq($from: tablet) {
-		.commercial__title {
-			padding-top: $baseline;
-		}
-		.commercial__subtitle {
-			display: block; // this is not a very good idea
-			bottom: 0;
-		}
-	}
+    @include mq($to: tablet) {
+        .commercial__head {
+            background-color: #ffffff;
+        }
+    }
+    @include mq($from: tablet) {
+        .commercial__title {
+            padding-top: $gs-baseline/3;
+        }
+        .commercial__subtitle {
+            display: block; // this is not a very good idea
+            bottom: 0;
+        }
+    }
 
 //    &.commercial--w600 {
 //        .commercial__item {

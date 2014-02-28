@@ -25,33 +25,33 @@ class BestsellersApiTest extends FlatSpec with Matchers {
 
     books should be(Seq(
 
-      Book("Guardian Quick Crosswords 5 & 6", None, "5038495113238", 13.98, Some(8.0), None,
+      Book("Guardian Quick Crosswords 5 & 6", None, "5038495113238", Some(13.98), Some(8.0), None,
         Some("http://images.bertrams.com/ProductImages/services/GetImage?Source=BERT&Quality=WEB&Component=FRONTCOVER&EAN13=5038495113238"),
-        "http://www.guardianbookshop.co.uk/BerteShopWeb/viewProduct.do?ISBN=5038495113238", 1,
-        "General Bestsellers", Seq("testkeyword1", "testkeyword2")),
+        Some("http://www.guardianbookshop.co.uk/BerteShopWeb/viewProduct.do?ISBN=5038495113238"), Some(1),
+        Some("General Bestsellers"), Seq("testkeyword1", "testkeyword2")),
 
-      Book("Twelve Years a Slave", Some("Solomon Northup"), "9780141393827", 7.99, Some(6.39),
+      Book("Twelve Years a Slave", Some("Solomon Northup"), "9780141393827", Some(7.99), Some(6.39),
         Some("Solomon Northup is a free man, living in New York. Then he is kidnapped and sold into slavery. Drugged, beaten, given a new name and transported away from his wife and children to a Louisiana cotton plantation, Solomon will die if he reveals his true identity."),
         Some("http://images.bertrams.com/ProductImages/services/GetImage?Source=BERT&Quality=WEB&Component=FRONTCOVER&EAN13=9780141393827"),
-        "http://www.guardianbookshop.co.uk/BerteShopWeb/viewProduct.do?ISBN=9780141393827", 2,
-        "General Bestsellers", Seq("testkeyword1", "testkeyword2")),
+        Some("http://www.guardianbookshop.co.uk/BerteShopWeb/viewProduct.do?ISBN=9780141393827"), Some(2),
+        Some("General Bestsellers"), Seq("testkeyword1", "testkeyword2")),
 
-      Book("How to Be Alone", Some("Sara Maitland"), "9780230768086", 7.99, Some(6.39),
+      Book("How to Be Alone", Some("Sara Maitland"), "9780230768086", Some(7.99), Some(6.39),
         Some("Learn how to enjoy solitude and find happiness without others"),
         Some("http://images.bertrams.com/ProductImages/services/GetImage?Source=BERT&Quality=WEB&Component=FRONTCOVER&EAN13=9780230768086"),
-        "http://www.guardianbookshop.co.uk/BerteShopWeb/viewProduct.do?ISBN=9780230768086", 3,
-        "General Bestsellers", Seq("testkeyword1", "testkeyword2")),
+        Some("http://www.guardianbookshop.co.uk/BerteShopWeb/viewProduct.do?ISBN=9780230768086"), Some(3),
+        Some("General Bestsellers"), Seq("testkeyword1", "testkeyword2")),
 
-      Book("1941: The Year That Keeps Returning", Some("Slavko Goldstein"), "9781590176733", 19.99, Some(15.49), None,
+      Book("1941: The Year That Keeps Returning", Some("Slavko Goldstein"), "9781590176733", Some(19.99), Some(15.49), None,
         Some("http://images.bertrams.com/ProductImages/services/GetImage?Source=BERT&Quality=WEB&Component=FRONTCOVER&EAN13=9781590176733"),
-        "http://www.guardianbookshop.co.uk/BerteShopWeb/viewProduct.do?ISBN=9781590176733", 4,
-        "General Bestsellers", Seq("testkeyword1", "testkeyword2")),
+        Some("http://www.guardianbookshop.co.uk/BerteShopWeb/viewProduct.do?ISBN=9781590176733"), Some(4),
+        Some("General Bestsellers"), Seq("testkeyword1", "testkeyword2")),
 
-      Book("Examined Life", Some("Stephen Grosz"), "9780099549031", 8.99, Some(6.99),
+      Book("Examined Life", Some("Stephen Grosz"), "9780099549031", Some(8.99), Some(6.99),
         Some("Reveals how the art of insight can illuminate the most complicated, confounding and human of experiences. This title includes stories about our everyday lives: they are about the people we love and the lies that we tell; the changes we bear, and the grief."),
         Some("http://images.bertrams.com/ProductImages/services/GetImage?Source=BERT&Quality=WEB&Component=FRONTCOVER&EAN13=9780099549031"),
-        "http://www.guardianbookshop.co.uk/BerteShopWeb/viewProduct.do?ISBN=9780099549031", 5,
-        "General Bestsellers", Seq("testkeyword1", "testkeyword2"))
+        Some("http://www.guardianbookshop.co.uk/BerteShopWeb/viewProduct.do?ISBN=9780099549031"), Some(5),
+        Some("General Bestsellers"), Seq("testkeyword1", "testkeyword2"))
 
     ))
   }

@@ -20,7 +20,9 @@
             a {
                 padding: 0;
                 color: $c-neutral1;
-                @include fs-header(2);
+                @include fs-header(3);
+                line-height: 1;
+                cursor: text;
             }
 
             span {
@@ -36,7 +38,7 @@
         }
 
         .tabs__content {
-            padding-top: 2px;
+            padding-top: 0;
             border-top: none;
         }
 
@@ -60,7 +62,9 @@
 
                     .headline-list__count {
                         top: 10px;
-                        @include rem((font-size: 54px));
+                        @include rem((
+                            font-size: 54px
+                        ));
                     }
 
                     .headline-list__body {
@@ -86,7 +90,9 @@
             .headline-list__count {
                 left: 0;
                 top: $gs-baseline/2;
-                @include rem((font-size: 45px));
+                @include rem((
+                    font-size: 45px
+                ));
             }
 
             .headline-list__body {

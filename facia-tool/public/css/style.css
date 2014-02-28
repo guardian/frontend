@@ -1,5 +1,4 @@
 body {
-    overflow-y: hidden;
     margin: 0;
     padding: 0;
     min-width: 320px;
@@ -70,14 +69,13 @@ a, a:hover {
     margin: 13px 10px 0 0;
 }
 
-.finder {
+.left-col {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     position: absolute;
     top: 49px;
     width: 50%;
     padding: 10px 15px 0 12px;
-    color: #666666;
     border-right: 1px solid #cccccc;
     border-top: 1px solid #cccccc;
 }
@@ -135,6 +133,20 @@ a, a:hover {
     pointer-events: none;
 }
 
+.updating {
+    display: none;
+    color: #009900;
+    position: absolute;
+    top: 13px;
+    right: 15px;
+    z-index: 1;
+    font-weight: bold;
+}
+
+.pending .updating {
+    display: block;
+}
+
 .list-header {
     color: #999999;
     overflow: hidden;
@@ -163,7 +175,7 @@ a, a:hover {
     color: #d61d00;
 }
 
-.collections {
+.right-col {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     position: absolute;
@@ -173,7 +185,7 @@ a, a:hover {
     padding: 10px 15px 0 15px;
 }
 
-.collections.live-mode {
+.right-col.live-mode {
     background: #EEFFEE;
 }
 
@@ -191,6 +203,7 @@ a, a:hover {
 .article {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
+    min-height: 56px;
     overflow: hidden;
     padding: 0 2px 3px 4px;
     position: relative;
@@ -217,7 +230,7 @@ a, a:hover {
 }
 
 .article.open {
-    background: #CCCCCC;
+    background: #CCCCCC !important;
 }
 
 .article.underDrag {
@@ -262,6 +275,15 @@ a, a:hover {
 
 .headline:hover {
     color: #000000;
+}
+
+.is-breaking {
+    background: #d61d00;
+    color: #ffffff;
+    font-size: 11px;
+    line-height: 11px;
+    padding: 0 2px;
+    border-radius: 2px;
 }
 
 .is-empty {
@@ -434,7 +456,6 @@ textarea.trailtext {
 }
 
 button {
-    height: 30px;
     padding: 0 10px;
 }
 
@@ -632,36 +653,43 @@ button {
     float: left;
 }
 
-.tool--remove {
-    background: #FFFFFF;
+.tool--small {
+    background: inherit;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     padding: 0 4px;
     margin: 0 1px 0 3px;
 }
 
-.tool--remove i {
+.tool--small i {
     margin: 0;
 }
 
-.latest-articles .tool--remove {
+.article > .closed .tool--small {
     display: none;
-}
-
-.article .closed .tool--remove {
-    opacity: 0.2;
     position: absolute;
     right: 2px;
+}
+
+.article > .closed .tool--small--href {
+    top: 3px;
+}
+
+.article > .closed .tool--small--remove {
     top: 28px;
 }
 
-.article:hover .closed .tool--remove {
-    opacity: 0.6;
+.article:hover > .closed .tool--small {
+    display: block;
+    opacity: 0.8;
 }
 
-.article .closed .tool--remove:hover {
-    background: #CCCCCC;
+.article > .closed .tool--small:hover {
     opacity: 1;
+}
+
+.latest-articles .tool--small--remove {
+    display: none !important;
 }
 
 .preview {
@@ -695,26 +723,174 @@ button {
     margin: 0 -2px -4px -4px;
 }
 
+.instructions {
+    font-size: 12px;
+    color: #999999;
+    padding: 0 0 10px 4px;
+}
+
+/*****************************************/
+/* CONFIG EDITOR */
+/*****************************************/
+
+.cnf-fronts {
+    border-top: 1px solid #CCCCCC;
+}
+
+.cnf-front {
+    padding: 4px 0 4px 4px;
+    border-bottom: 1px solid #CCCCCC;
+}
+
+.cnf-front .title {
+    cursor: pointer;
+}
+
+.cnf-front.isProvisional {
+    background: #CCCCCC;
+}
+
+.cnf-front__inner {
+    padding: 0 10px 0 10px;
+}
+
+.cnf-collections {
+    margin: 10px 0 0 0;
+}
+
+.cnf-collection {
+    position: relative;
+    background: #ffffff;
+    padding: 4px 0 4px 5px;
+    border-top: 3px solid #ffffff;
+}
+
+.cnf-collection:nth-child(odd) {
+    background: #EEEEEE;
+}
+
+.cnf-collection.open {
+    background: #EEEEEE;
+    padding-bottom: 5px;
+}
+
+.cnf-collection.underDrag {
+    border-top-color: #f89406;
+}
+
+.cnf-collection__index {
+    color: #CCCCCC;
+    display: inline-block;
+    width: 15px;
+}
+
+.cnf-collection__name {
+    color: #000000;
+}
+
+.cnf-collection__id {
+    display: none;
+    color: #999999;
+    font-size: 10px;
+    float: right;
+    margin: 0 5px 0 0;
+}
+
+.cnf-collection.open .cnf-collection__id,
+.cnf-collection:hover .cnf-collection__id {
+    display: block;
+}
+
+.cnf-collection__also-on {
+    font-weight: bold;
+}
+
+.cnf-collection .placements {
+    color: #999999;
+}
+
+.is-parent {
+    display: none;
+}
+
+.cnf-front .cnf-collection .placements.is-single {
+    display: none;
+}
+
+.cnf-collection .placements a {
+    color: #333333;
+    border-left: 1px solid #CCCCCC;
+    padding-left: 5px;
+}
+
+.cnf-collection .placements a:first-child {
+    border-left: inherit;
+    padding-left: inherit;
+}
+
+.left-col .also {
+    display: none;
+}
+
+.cnf-form {
+    overflow: auto;
+}
+
+.cnf-form label {
+    color: #999999;
+    width: 80px;
+    float: left;
+    clear: left;
+}
+
+.cnf-form input,
+.cnf-form select{
+    float: left;
+    clear: right;
+}
+
+.cnf-form .advanced-options {
+    clear: both;
+    font-size: 10px;
+}
+
+.cnf-form .tools {
+    clear: left;
+}
+
+.cnf-form .tools-advanced {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    font-size: 12px;
+    color: #CCCCCC;
+}
+
+/*****************************************/
+/* MEDIA QUERIES */
+/*****************************************/
+
+
 @media (max-width: 1100px) {
     .toolbar,
-    .collections {
+    .right-col {
         left: 40%;
         width: 60%;
     }
-    .finder {
+    .left-col {
         width: 40%;
     }
-    .finder .article .article_content {
+    .left-col .article .article_content {
         margin-right: 0;
     }
-    .finder .article .spark {
+    .left-col .article .spark {
         display: none;
     }
 }
 
 @media (max-width: 875px) {
     .is-authed .tool-title,
-    .finder {
+    .left-col {
         display: none;
     }
     .toolbar {
@@ -724,7 +900,7 @@ button {
         height: 50px;
         padding: 10px 15px 10px 45px;
     }
-    .collections {
+    .right-col {
         left: 0;
         width: 100%;
         padding: 10px 0 0 10px;
@@ -744,7 +920,7 @@ button {
     .article .article_content {
         margin-right: 25px;
     }
-    .article .closed .tool--remove {
+    .article > .closed .tool--remove {
         top: 0;
     }
     .toolbar .spark,

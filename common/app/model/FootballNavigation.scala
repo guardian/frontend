@@ -7,7 +7,7 @@ object FootballNavigation {
     "/football/championship",
     "/football/leagueonefootball",
     "/football/leaguetwofootball",
-    "/football/scottishpremierleague",
+    "/football/scottish-premiership",
     "/football/scottish-division-one",
     "/football/scottish-division-two",
     "/football/scottish-division-three",

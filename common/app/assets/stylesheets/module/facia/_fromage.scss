@@ -7,12 +7,9 @@
  * - supporting links
  */
 
-// Enhance contrast of grey text on light grey background
-$c-neutral2-contrasted: darken($c-neutral2, 3%);
-
 
 /* Wrapper
-   ===========================================================================*/
+   ========================================================================== */
 
 .fromage {
     @include rem((
@@ -25,6 +22,89 @@ $c-neutral2-contrasted: darken($c-neutral2, 3%);
         @include rem((
             margin-bottom: $gs-baseline*2
         ));
+    }
+    .item__title {
+        @include fs-headline(2, $size-only: true);
+        padding-top: 0;
+
+        @include rem((
+            margin-bottom: $gs-baseline + 2px
+        ));
+        @include mq(tablet) {
+            display: table-cell;
+            vertical-align: top;
+            width: 100000px;
+            max-width: 100%;
+            margin-bottom: 0;
+            @include fs-headline(4, true);
+        }
+        @include mq(desktop) {
+            @include fs-headline(5, true);
+        }
+    }
+
+
+    /* Meta
+       ====================================================================== */
+
+    .item__meta {
+        position: absolute;
+        bottom: -1px;
+        overflow: hidden;
+        @include fs-data(1);
+        color: $c-neutral2;
+        @include rem((
+            margin-bottom: $gs-baseline/2
+        ));
+
+        @include mq(tablet) {
+            position: static;
+            @include fs-data(3, true);
+        }
+    }
+
+    .item__timestamp,
+    .trail__count {
+        position: relative;
+        float: left;
+
+        i {
+            position: absolute;
+            left: 0;
+            top: 2px;
+            margin: 0;
+        }
+    }
+    .item__timestamp {
+        position: relative;
+        float: left;
+
+        @include rem((
+        min-width: 50px - $gs-gutter/2 - 14px,
+        padding-right: $gs-gutter/2,
+        padding-left: 14px
+        ));
+
+        i {
+            left: 0;
+            @include mq(tablet) {
+                top: 2px;
+            }
+        }
+    }
+    .trail__count {
+        @include rem((
+        padding-left: 18px
+        ));
+        top: 0;
+
+        a {
+            line-height: inherit;
+            color: inherit;
+        }
+        i {
+            left: 0;
+        }
     }
 }
 .fromage,
@@ -49,30 +129,33 @@ $c-neutral2-contrasted: darken($c-neutral2, 3%);
 
 
 /* Main elements
-   ===========================================================================*/
+   ========================================================================== */
 
 .fromage__link,
-.fromage__support__action {
+.supporting__action {
     color: $c-neutral1;
 }
 .fromage__link {
+    display: block;
+
     &:hover,
     &:focus {
-        .fromage__title {
+       text-decoration: none;
+
+        .item__title {
             text-decoration: underline;
+        }
+    }
+    &:active {
+        .item__title {
+            text-decoration: none;
         }
     }
 }
 .fromage__link:visited,
-.fromage__link:visited .fromage__title,
-.fromage__support__action:visited {
+.fromage__link:visited .item__title,
+.supporting__action:visited {
     color: $c-neutral2;
-}
-.fromage__media-wrapper,
-.fromage__image-container {
-    .js-off & {
-        display: none !important;
-    }
 }
 .fromage__media-wrapper {
     @include mq(tablet) {
@@ -97,23 +180,6 @@ $c-neutral2-contrasted: darken($c-neutral2, 3%);
         left: 0;
     }
 }
-.fromage__title {
-    @include fs-headline(2);
-    @include rem((
-        margin-bottom: $gs-baseline + 2px
-    ));
-    @include mq(tablet) {
-        display: table-cell;
-        vertical-align: top;
-        width: 100000px;
-        max-width: 100%;
-        margin-bottom: 0;
-        @include fs-headline(4, true);
-    }
-    @include mq(desktop) {
-        @include fs-headline(5, true);
-    }
-}
 .fromage__standfirst {
     @include fs-headline(1);
     color: $c-neutral2;
@@ -132,122 +198,8 @@ $c-neutral2-contrasted: darken($c-neutral2, 3%);
 }
 
 
-/* Meta
-   ===========================================================================*/
-
-.fromage__meta {
-    position: absolute;
-    bottom: -1px;
-    overflow: hidden;
-    @include fs-data(1);
-    color: $c-neutral2;
-    @include rem((
-        margin-bottom: $gs-baseline/2
-    ));
-
-    @include mq(tablet) {
-        position: static;
-        @include fs-data(3, true);
-    }
-}
-
-.fromage__timestamp,
-.trail__count {
-    position: relative;
-    float: left;
-
-    i {
-        position: absolute;
-        left: 0;
-        top: 2px;
-        margin: 0;
-    }
-}
-.fromage__timestamp {
-    position: relative;
-    float: left;
-
-    @include rem((
-        min-width: 50px - $gs-gutter/2 - 14px,
-        padding-right: $gs-gutter/2,
-        padding-left: 14px
-    ));
-
-    i {
-        left: 0;
-        @include mq(tablet) {
-            top: 2px;
-        }
-    }
-}
-.trail__count {
-    @include rem((
-        padding-left: 18px
-    ));
-    top: 0;
-
-    a {
-        line-height: inherit;
-        color: inherit;
-    }
-    i {
-        left: 0;
-    }
-}
-
-
-/* Support
-   ===========================================================================*/
-
-.fromage__support {
-    clear: both;
-}
-.fromage__support-list {
-    margin: 0;
-    list-style-type: none;
-    display: table;
-    width: 100%;
-    table-layout: fixed;
-    border-collapse: collapse;
-}
-.fromage__support__item {
-    border-top: 1px solid $c-neutral5;
-
-    @include mq(tablet) {
-        display: table-cell;
-
-        & + & {
-            border-left: 1px solid $c-neutral5;
-
-            .svg & {
-                .fromage__support__action {
-                    @include rem((
-                        padding-left: $gs-gutter/4
-                    ));
-                }
-                .action--has-icon {
-                    @include rem((
-                        padding-left: $action-icon-width + ($action-icon-rightspace * 2)
-                    ));
-                }
-            }
-        }
-    }
-}
-.fromage__support__action {
-    display: block;
-    margin: 0;
-    @include fs-headline(1);
-    @include rem((
-        padding-top: $gs-baseline/3,
-        padding-bottom: nth(nth($fs-headlines, 1), 2),
-        padding-right: $gs-gutter/4
-    ));
-}
-
-
 /* Modifier: image hide/default/highlight
-   ===========================================================================*/
+   ========================================================================== */
 
 .fromage__media-wrapper--first {
     &,
@@ -311,7 +263,7 @@ $c-neutral2-contrasted: darken($c-neutral2, 3%);
             ));
         }
     }
-    .fromage__title {
+    .item__title {
         @include fs-headline(3, true);
 
         @include mq(tablet) {
@@ -331,7 +283,7 @@ $c-neutral2-contrasted: darken($c-neutral2, 3%);
     }
 }
 .fromage--has-image {
-    .fromage__title,
+    .item__title,
     .fromage__standfirst {
         @include mq(desktop) {
             @include rem((
@@ -367,12 +319,13 @@ $c-neutral2-contrasted: darken($c-neutral2, 3%);
     }
 }
 .fromage--imageadjust-highlight {
-    .fromage__title {
+    .item__title {
         @include rem((
-            margin-top: $gs-baseline/3
+            padding-top: $gs-baseline/3
         ));
         @include mq(tablet) {
             @include fs-headline(5, true);
+            padding-top: 0;
         }
         @include mq(desktop) {
             @include fs-headline(6, true);
@@ -436,21 +389,24 @@ $c-neutral2-contrasted: darken($c-neutral2, 3%);
 
 
 /* Modifier: Volume 0, 1, 2
-   ===========================================================================*/
+   ========================================================================== */
 
 .fromage--volume-1,
 .fromage--volume-2 {
-    .fromage__support__item {
+    .supporting__item {
         border-top-color: #ffffff;
 
+        @include rem((
+            padding-left: $gs-gutter/4
+        ));
         @include mq(tablet) {
-            + .fromage__support__item {
+            + .supporting__item {
                 border-left-color: #ffffff;
             }
         }
     }
-    .fromage__title,
-    .fromage__meta,
+    .item__title,
+    .item__meta,
     .fromage__standfirst,
     .fromage__byline {
         // Add some breathing space to children since they're in a box
@@ -461,7 +417,7 @@ $c-neutral2-contrasted: darken($c-neutral2, 3%);
         ));
     }
     .fromage__standfirst,
-    .fromage__meta,
+    .item__meta,
     .fromage__byline {
         @include mq(tablet) {
             @include rem((
@@ -470,7 +426,7 @@ $c-neutral2-contrasted: darken($c-neutral2, 3%);
         }
     }
     &.fromage--has-image {
-        .fromage__title {
+        .item__title {
             @include mq(tablet) {
                 @include rem((
                     padding-left: 0
@@ -494,17 +450,11 @@ $c-neutral2-contrasted: darken($c-neutral2, 3%);
             }
         }
     }
-    .fromage__support__action {
-        @include rem((
-            padding-left: $gs-gutter/4,
-            padding-right: $gs-gutter/4
-        ));
-    }
 }
 .fromage--volume-1 {
     &,
     .fromage__container,
-    .fromage__support {
+    .supporting {
         background: $c-neutral7;
     }
     .fromage__standfirst {
@@ -520,19 +470,21 @@ $c-neutral2-contrasted: darken($c-neutral2, 3%);
     }
     &,
     .fromage__container,
-    .fromage__title,
+    .item__title,
     .fromage__standfirst,
-    .fromage__meta,
-    .fromage__support__action,
+    .item__meta,
+    .supporting__action,
     .fromage__link {
         color: #ffffff;
     }
     .fromage__link:visited,
-    .fromage__link:visited .fromage__title,
-    .fromage__support__action:visited {
-        color: rgba(#ffffff, .9);
+    .fromage__link:visited .item__title {
+        color: mix(#ffffff, $c-brandBlue, 80%);
     }
-    .fromage__support {
+    .supporting {
         background-color: lighten($c-brandBlue, 7%);
+    }
+    .supporting__action:visited {
+        color: mix(#ffffff, lighten($c-brandBlue, 7%), 80%);
     }
 }

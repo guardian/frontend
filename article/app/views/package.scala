@@ -1,12 +1,9 @@
 package views
 
+import common.Edition
 import model.Article
 import play.api.mvc.RequestHeader
-import views.support._
-import common.Edition
-import views.support.PictureCleaner
-import views.support.InBodyLinkCleaner
-
+import support._
 
 object BodyCleaner {
   def apply(article: Article, html: String)(implicit request: RequestHeader) = withJsoup(BulletCleaner(html))(
@@ -18,6 +15,7 @@ object BodyCleaner {
     TweetCleaner,
     WitnessCleaner,
     VideoEmbedCleaner(article.bodyVideos),
-    new TagLinker(article)
+    new TagLinker(article),
+    InlineSlotGenerator(article.wordCount)
   )
 }

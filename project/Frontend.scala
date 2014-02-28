@@ -38,8 +38,9 @@ object Frontend extends Build with Prototypes {
   val facia = application("facia").dependsOn(commonWithTests).aggregate(common)
   val article = application("article").dependsOn(commonWithTests).aggregate(common)
   val applications = application("applications").dependsOn(commonWithTests).aggregate(common)
+  val archive = application("archive").dependsOn(commonWithTests).aggregate(common)
   val sport = application("sport").dependsOn(commonWithTests).aggregate(common).settings(
-    libraryDependencies += "com.gu" %% "pa-client" % "4.0",
+    libraryDependencies += "com.gu" %% "pa-client" % "4.1",
     templatesImport ++= Seq(
       "pa._",
       "feed._",
@@ -65,7 +66,8 @@ object Frontend extends Build with Prototypes {
   val admin = application("admin").dependsOn(commonWithTests).aggregate(common).settings(
     libraryDependencies ++= Seq(
       "com.typesafe.slick" %% "slick" % "1.0.0",
-      "postgresql" % "postgresql" % "8.4-703.jdbc4" from "http://jdbc.postgresql.org/download/postgresql-8.4-703.jdbc4.jar"
+      "postgresql" % "postgresql" % "8.4-703.jdbc4" from "http://jdbc.postgresql.org/download/postgresql-8.4-703.jdbc4.jar",
+      "com.gu" %% "pa-client" % "4.1"
     )
   )
   val faciaTool = application("facia-tool").dependsOn(commonWithTests)
@@ -83,7 +85,8 @@ object Frontend extends Build with Prototypes {
       "net.liftweb" %% "lift-json" % "2.5",
       "commons-httpclient" % "commons-httpclient" % "3.1",
       "net.databinder.dispatch" %% "dispatch-core" % "0.11.0",
-      "org.slf4j" % "slf4j-ext" % "1.7.5"
+      "org.slf4j" % "slf4j-ext" % "1.7.5",
+      "com.gu" %% "exact-target-client" % "2.23"
     )
   )
 
@@ -125,6 +128,7 @@ object Frontend extends Build with Prototypes {
     ).dependsOn(
       facia,
       applications,
+      archive,
       sport,
       discussion,
       router,
@@ -148,6 +152,7 @@ object Frontend extends Build with Prototypes {
     admin,
     identity,
     commercial,
-    onward
+    onward,
+    archive
   )
 }

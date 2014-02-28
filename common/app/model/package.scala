@@ -1,12 +1,8 @@
 package model
 
 import com.gu.openplatform.contentapi.model.{ Content => ApiContent, MediaAsset }
-import org.joda.time.DateTime
-import org.joda.time.format.{DateTimeFormat, ISODateTimeFormat}
+import org.joda.time.format.ISODateTimeFormat
 import scala.math.abs
-import org.scala_tools.time.Imports._
-import org.scala_tools.time.TypeImports.DateTimeFormat
-import org.scala_tools.time.StaticForwarderImports.DateTimeFormat
 
 object `package` {
 

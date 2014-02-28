@@ -1,75 +1,43 @@
-@(trail: model.Trail,
-  index: Int,
-  volumeOverride: Int = 0,
-  imageAdjustOverride: String = "none"
-)(implicit request: RequestHeader)
+@(trail: Trail, index: Int, imageAdjustOverride: Option[String] = None)(implicit request: RequestHeader)
 
-@defining((VisualTone(trail))) { case (tone) =>
+@defining((VisualTone(trail), imageAdjustOverride.getOrElse(trail.imageAdjust))) { case (tone, imageAdjust) =>
     <div
-        class="fromage
-               @if(volumeOverride != 0) {
-                   fromage--volume-@volumeOverride
-               }else{
-                   fromage--volume-@trail.group.getOrElse("0")
-               }
-               @if(trail.trailPicture(5,3).isEmpty || trail.imageAdjust == Some("hide") || imageAdjustOverride == "hide"){
-                   fromage--has-no-image
-               }else{
-                   fromage--has-image
-                   @if(imageAdjustOverride != "none"){
-                       fromage--imageadjust-@imageAdjustOverride
-                   }else{
-                       @trail.imageAdjust.map{adjustValue =>
-                           fromage--imageadjust-@adjustValue
-                       }
-                   }
-               }
-               @if(trail.isLive){fromage--live}
-               tone-@tone
-               tone-accent-border"
+        class="@GetClasses.forFromage(trail, imageAdjust)"
         @trail.discussionId.map{ id => data-discussion-id="@id" }
         data-discussion-closed="@trail.isClosedForComments"
         data-link-name="trail | @{index + 1}">
 
         <div class="fromage__container">
             <a href="@LinkTo{@trail.url}" class="fromage__link" data-link-name="article">
-                @if(trail.imageAdjust != Some("hide") && imageAdjustOverride != "hide") {
+                @if(imageAdjust != Some("hide")) {
                     @trail.trailPicture(5,3).map{ imageContainer =>
                         @ImgSrc.imager(imageContainer, Item620).map { imgSrc =>
                             <div class="fromage__media-wrapper fromage__media-wrapper--first">
-                                <div class="fromage__image-container js-image-upgrade inlined-image" data-src="@imgSrc" data-force-upgrade="desktop wide">
-                                    @if(trail.imageAdjust == Some("highlight") || imageAdjustOverride == "highlight") {
+                                <div class="fromage__image-container js-image-upgrade inlined-image" data-src="@imgSrc">
+                                    @if(imageAdjust == "highlight") {
                                         @Item300.bestFor(imageContainer).map{ url => <img src="@url" class="responsive-img" alt="" /> }
+                                    } else {
+                                        @Item220.bestFor(imageContainer).map{ url => <img src="@url" class="responsive-img" alt="" /> }
                                     }
                                 </div>
                             </div>
                         }
                     }
                 }
-                <h1 class="fromage__title">
-                    @if(trail.isBreaking){
-                        <span class="item__live-indicator">Breaking News</span>
-                    }
-                    @if(trail.isLive && !trail.isBreaking){
-                        <span class="item__live-indicator">Live</span>
-                    }
-                    @if(tone == "comment") {
-                        <span class="i i-quote-orange"></span>
-                    }
-                    @RemoveOuterParaHtml(trail.headline)
-                </h1>
+                @fragments.items.elements.title(trail, index, 0)
             </a>
             @if(tone == "comment") {
                 @trail.byline.map { byLine =>
                     <p class="fromage__byline tone-colour">@Html(byLine)</p>
                 }
             }
-            @if(trail.imageAdjust != Some("hide") && trail.imageAdjust != Some("highlight") && imageAdjustOverride != "hide") {
+            @if(imageAdjust == "default") {
                 @trail.trailPicture(5,3).map{ imageContainer =>
                     @ImgSrc.imager(imageContainer, Item620).map { imgSrc =>
                         <a href="@LinkTo{@trail.url}" data-link-name="article">
                             <div class="fromage__media-wrapper fromage__media-wrapper--second">
                                 <div class="fromage__image-container js-image-upgrade inlined-image" data-src="@imgSrc">
+                                    @Item220.bestFor(imageContainer).map{ url => <img src="@url" class="responsive-img" alt="" /> }
                                 </div>
                             </div>
                         </a>
@@ -79,33 +47,11 @@
             @trail.trailText.map { text =>
                 <div class="fromage__standfirst">@Html(text)</div>
             }
-            <div class="fromage__meta js-append-commentcount">
-                <time class="fromage__timestamp js-item__timestamp"
-                      itemprop="datePublished"
-                      datetime="@trail.webPublicationDate.toString("yyyy-MM-dd'T'HH:mm:ssZ")"
-                      data-timestamp="@trail.webPublicationDate.getMillis"
-                      data-relativeformat="short">
-                    <i class="i i-clock-light-grey"></i>
-                    <span class="timestamp__text"><span class="u-h">Published: </span>@Format(trail.webPublicationDate, "d MMM y")</span>
-                </time>
-            </div>
-        </div>
-        @if(trail.supporting.nonEmpty){
-            <div class="fromage__support">
-                <h2 class="fromage__support__title u-h">More on this story:</h2>
 
-                <ul class="fromage__support-list">
-                    @trail.supporting.zipWithIndex.map{ case (supporting, index) =>
-                        @supporting match {
-                            case l: LiveBlog if l.isLive         => { @fragments.items.supporting.live(l, index) }
-                            case g: Gallery                      => { @fragments.items.supporting.gallery(g, index) }
-                            case v: Video                        => { @fragments.items.supporting.video(v, index) }
-                            case c if VisualTone(c) == "comment" => { @fragments.items.supporting.comment(c, index) }
-                            case s                               => { @fragments.items.supporting.standard(s, index) }
-                        }
-                    }
-                </ul>
-            </div>
-        }
+            @fragments.items.elements.meta(trail)
+        </div>
+
+        @fragments.items.elements.supporting(trail.supporting)
+
     </div>
 }

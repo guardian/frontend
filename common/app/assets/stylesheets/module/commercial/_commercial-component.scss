@@ -6,52 +6,48 @@
     width: 100%;
     position: relative;
 }
-
 .commercial__head {
     background-color: $c-neutral6;
     overflow: hidden;
     @include rem((
         height: 40px
-    ))
+    ));
 }
-
 .commercial__title {
+    padding: ($gs-baseline/3)*2;
+    margin: 0;
+    float: left;
     color: $c-brandBlue;
     text-transform: lowercase;
     word-spacing: -0.25em;
     @include fs-headline(2);
-    margin: 0;
-    padding: $baseline*2;
-    float: left;
+
     .em {
         font-style: italic;
     }
 }
-
 .commercial__subtitle {
-	color: #fff;
+    color: #ffffff;
     @include f-headline;
-    @include font-size(12,12);
-	margin: 0;
+    @include font-size(12, 12);
+    margin: 0;
     position: absolute;
-	bottom: $baseline;
-	padding: $baseline $baseline*2;
+    bottom: $gs-baseline/3;
+    padding: $gs-baseline/3 ($gs-gutter/5)*2;
 }
-
 .commercial__body {
-    padding: $baseline*2;
+    padding: ($gs-baseline/3)*2;
     overflow: hidden;
 }
-
 .commercial__foot {
     border-top: 1px dotted $c-neutral5;
-    padding: $baseline;
-    margin: 0 $baseline;
+    padding: $gs-baseline/3 $gs-gutter/5;
+    margin: 0 $gs-gutter/5;
     clear: both;
 }
-
 .commercial__link {
     @include fs-data(4);
+
     .i {
         position: relative;
         top: 2px;
@@ -61,24 +57,22 @@
         @include rem((
             line-height: 32px
         ));
-        padding: $baseline;
+        padding: $gs-baseline/3 $gs-gutter/5;
         display: block;
         float: right;
+
         .i {
             background-color: $c-newsDefault;
             background-position: 9px 9px;
             border-radius: 100%;
-            margin-left: $baseline;
+            margin-left: $gs-gutter/5;
             top: 0;
-            @include rem((
-                width: 32px,
-                height: 32px
-            ));
+            width: 32px;
+            height: 32px;
             float: right;
         }
     }
 }
-
 .commercial__label {
     display: block;
 }
@@ -87,59 +81,54 @@
 /* ==========================================================================
    Entries
    ========================================================================== */
+
 .lineitems {
     list-style-type: none;
     margin: 0;
 }
-
 .lineitem__title {
     @include f-headline;
-    @include font-size(18,20);
+    @include font-size(18, 20);
+
     a {
         color: $c-neutral1;
     }
 }
-
 .lineitem__description,
 .lineitem__link {
     @include fs-data(4);
+
     strong {
-        color: #000;
+        color: #000000;
         font-weight: normal;
     }
 }
-
 .lineitem__link {
-    margin-top: $baseline;
+    margin-top: $gs-baseline/3;
+
     .i.i-single-arrow-right-blue {
         background-position: 6px 4px;
         border: 1px solid $c-newsDefault;
         border-radius: 100%;
-        margin-right: $baseline;
-        padding: $baseline;
-        @include rem((
-            width: 8px,
-            height: 8px
-        ));
+        margin-right: $gs-gutter/5;
+        padding: $gs-baseline/3 $gs-gutter/5;
+        width: 8px;
+        height: 8px;
         float: left;
     }
 }
+.lineitem__blocklink:hover {
+    text-decoration: none;
 
-.lineitem__blocklink {
-    &:hover {
-        text-decoration: none;
-        .lineitem__title {
-            text-decoration: underline;
-        }
+    .lineitem__title {
+        text-decoration: underline;
     }
 }
-
 .lineitem__meta {
     color: $c-neutral2;
     @include fs-data(2);
     margin: 0;
 }
-
 .lineitem__image {
     max-width: 100%;
     outline: 1px solid $c-neutral7;
@@ -149,33 +138,35 @@
 /* ==========================================================================
    300x50 varient
    ========================================================================== */
+
 @include mq($to: tablet) {
-	.commercial__head {
-		padding-left: $baseline*1.5;
-		padding-right: $baseline*1.5;
-		height: rem(50px);
-		overflow: hidden;
-	}
-	.commercial__title {
-		padding: $baseline;
-		.i {
-			margin-top: $baseline;
-		}
-	}
-	.commercial__subtitle {
-		padding: $baseline;
-	}
-	.commercial__title a {
-		color: #fff;
-	}
-	.commercial__body,
-	.commercial__foot {
-		display: none; // this is not a very good idea
-	}
+    .commercial__head {
+        padding-left: $gs-baseline/2;
+        padding-right: $gs-baseline/2;
+        height: rem(50px);
+        overflow: hidden;
+    }
+    .commercial__title {
+        padding: $gs-baseline/3 $gs-gutter/5;
+
+        .i {
+            margin-top: $gs-baseline/3;
+        }
+    }
+    .commercial__subtitle {
+        padding: $gs-baseline/3 $gs-gutter/5;
+    }
+    .commercial__title a {
+        color: #ffffff;
+    }
+    .commercial__body,
+    .commercial__foot {
+        display: none; // this is not a very good idea
+    }
 }
 
 @include mq($from: tablet) {
-	.commercial__subtitle {
-		display: none; // this is not a very good idea
-	}
+    .commercial__subtitle {
+        display: none; // this is not a very good idea
+    }
 }

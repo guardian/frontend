@@ -3,13 +3,17 @@ $c-live: #e81818;
 .container {
     position: relative;
     overflow: hidden;
-    @include rem((margin-top: $gs-baseline));
+    @include rem((
+        margin-top: $gs-baseline
+    ));
 
     @include mq(tablet) {
-        @include rem((margin-top: $gs-baseline*2));
+        @include rem((
+            margin-top: $gs-baseline*2
+        ));
     }
 }
-.container:first-child {
+.container--first {
     margin-top: 0;
 }
 .container__border {
@@ -64,7 +68,7 @@ $c-live: #e81818;
     color: inherit;
 }
 @include mq($to: tablet) {
-    .has-localnav .container:first-child {
+    .has-localnav .container--first {
         .container__title,
         .container__border {
             display: none;
@@ -118,7 +122,9 @@ $c-live: #e81818;
 
     .container__toggle__text {
         position: relative;
-        @include rem((top: -6px));
+        @include rem((
+            top: -6px
+        ));
     }
     @include mq($to: tablet) {
         border-left: 1px solid #ffffff;
@@ -146,6 +152,33 @@ $c-live: #e81818;
         &:focus {
             color: $c-neutral1;
         }
+    }
+}
+
+.container__card {
+    position: absolute;
+    bottom: 0;
+    border-top: 1px solid $c-featureAccent;
+    display: none;
+    @include rem((
+        width: gs-span(2)
+    ));
+    @include mq(faciaLeftCol) {
+        display: block;
+    }
+}
+.container__card__title {
+    margin-bottom: 0;
+    color: $c-featureDefault;
+    @include fs-header(1);
+}
+.container__card__item {
+    margin-top: $gs-baseline;
+    @include f-headline;
+    @include font-size(14px, 18px);
+
+    a {
+        color: $c-neutral1;
     }
 }
 
@@ -205,14 +238,14 @@ $c-live: #e81818;
     }
 }
 .item__image-container {
-    display: none;
     position: relative;
     margin-top: 4px;
     padding-bottom: 60%;
 
-    &.inlined-image {
-        display: block;
+    .js-off & {
+        display: none;
     }
+
     .responsive-img {
         width: 100%;
         height: 100%;
@@ -239,7 +272,10 @@ $c-live: #e81818;
     @include f-headline;
 }
 .item__title {
-    margin-top: 2px;
+    position: relative;
+    @include rem((
+        padding-top: $gs-baseline/6
+    ));
     @include fs-headline(2, $size-only: true);
     word-wrap: break-word;
 
@@ -255,6 +291,35 @@ $c-live: #e81818;
         // This is a scalable icon,
         // it will only work if SVG is active
         @include show-only-if-svg-is-supported;
+    }
+}
+.item--video,
+.item--gallery {
+    .item__title .i {
+        display: none;
+    }
+}
+.l-row--items-4 {
+    @include mq($to: tablet) {
+         .item__title--has-icon-mobile {
+            @include rem((
+                padding-left: 30px
+            ));
+        }
+    }
+    .item--video,
+    .item--gallery {
+        .item__title .i {
+            display: block;
+            position: absolute;
+            top: 4px;
+            left: 0;
+        }
+        @include mq(tablet) {
+            .item__title .i {
+                display: none;
+            }
+        }
     }
 }
 .item__byline {
@@ -354,10 +419,10 @@ $c-live: #e81818;
 
 .item__cta {
     position: absolute;
-    width: $baseline*11;  //44px
-    height: $baseline*11;
+    width: ($gs-baseline/3)*11;  //44px
+    height: ($gs-baseline/3)*11;
     @include rem((
-        top: $baseline*2,
+        top: ($gs-baseline/3)*2,
         left: $gs-gutter/2.5
     ));
     background-color: rgba($c-neutral2, 0.7);
@@ -388,8 +453,8 @@ $cta-icon-gap: 2px;
 .item__media-wrapper--has-icon {
     .item__cta {
         position: absolute;
-        top: 8px;
-        left: 8px;
+        top: $gs-baseline/3;
+        left: $gs-baseline/3;
     }
     .i {
         margin-bottom: $cta-icon-gap;
@@ -422,12 +487,13 @@ $cta-icon-gap: 2px;
         width: map-get($gallery-cta-icon, width);
         height: map-get($gallery-cta-icon, height);
         margin-left: -1 * (map-get($gallery-cta-icon, width) / 2);
-        margin-top: -1 * (map-get($gallery-cta-icon, height) / 2);
+        margin-top: -1 * ceil(map-get($gallery-cta-icon, height) / 2);
     }
     .item__cta--video & {
         width: map-get($video-cta-icon, width);
         height: map-get($video-cta-icon, height);
-        margin-left: -1 * (map-get($video-cta-icon, width) / 2);
+        // don't want icon to be exactly in the middle
+        margin-left: -1 * (map-get($video-cta-icon, width) / 3);
         margin-top: -1 * (map-get($video-cta-icon, height) / 2);
     }
 }
@@ -485,7 +551,8 @@ $show-more-icon: (
     overflow: hidden;
 
     &:hover,
-    &:focus {
+    &:focus,
+    &[disabled] {
         .collection__show-more__icon {
             margin-top: -1 * (map-get($show-more-icon, height) + map-get($show-more-icon, space-between));
         }
@@ -500,6 +567,9 @@ $show-more-icon: (
     height: (map-get($show-more-icon, height) + map-get($show-more-icon, space-between)) * 2;
     width: map-get($show-more-icon, width);
 }
+.container--rolled-up .container--rolled-up-hide {
+    display: none;
+}
 
 
 // Thumbnail element order:
@@ -509,65 +579,41 @@ $show-more-icon: (
 
 .item--thumbnail {
     .item__standfirst {
+        display: block;
         @include rem((
-            margin-top: $gs-baseline
+            margin-top: 2px
+        ));
+    }
+    .item__media-wrapper {
+        float: left;
+        clear: both;
+
+        @include rem((
+            margin-right: $gs-gutter/2
         ));
     }
 }
 
-.action--has-icon {
-    .i {
-        // This is a scalable icon,
-        // it will only work if SVG is active
-        @include show-only-if-svg-is-supported;
-    }
-    .svg & {
-        @include rem((
-            padding-left: $action-icon-width + $action-icon-rightspace
-        ));
 
-        .i {
-            float: left;
-            @include rem((
-                margin-left: ($action-icon-width + $action-icon-rightspace) * -1
-            ));
+/**
+ * Ads in containers / row patterns
+ */
+
+.container {
+    .ad-slot {
+        padding: 0;
+        margin: 0 auto;
+    }
+}
+.l-row__item--mpu-300 {
+    @if $browser-supports-flexbox {
+        @include mq(tablet) {
+            min-width: gs-span(4) + $gs-gutter;
+            max-width: gs-span(4) + $gs-gutter;
         }
-    }
-}
-.action--tone-comment .i.i-quote-orange { // Chained selector to overrule icon code from global.css
-    margin-top: 3px; // Align icon with text
-    width: 1.45em;
-    background-size: contain;
-}
-
-.item--video,
-.item--gallery {
-    .item__title .i {
-        position: relative;
-        top: 4px;
-    }
-    @include mq(tablet) {
-        .item__title .i {
-            display: none;
+    } @else {
+        @include mq(desktop) {
+            width: gs-span(4);
         }
-    }
-}
-
-.i--circle {
-    @include rounded-corners(50%);
-    display: block;
-    position: relative;
-}
-.i--clock {
-    width: 31px;
-    height: 31px;
-    background-color: $c-newsDefault;
-    position: absolute;
-    left: 0;
-
-    .i {
-        position: absolute;
-        left: 14px;
-        top: 6px;
     }
 }

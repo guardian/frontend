@@ -1,157 +1,136 @@
 .container--features {
-    .collection-wrapper {
-        @include rem((margin-top: $gs-baseline/4));
-        + .collection-wrapper {
-            margin-top: 0;
-        }
-    }
-    .item__meta {
-        display: none;
-    }
-    .collection__item {
-        padding-bottom: 0;
-    }
-    .l-row--items-2 {
-        .collection__item {
-            background-color: $c-features-primary;
-
-            &:nth-child(2n) {
-                background-color: $c-features-secondary;
-            }
-            &:nth-child(3n) {
-                background-color: $c-features-tertiary;
-            }
-            @include hide-background-on-item-sides($separator: false);
-            + .collection__item {
-                &:before {
-                    border-left-width: 0;
-                }
-            }
-        }
-        .item {
-            margin-bottom: 0;
-        }
-        .item__title,
-        .item__standfirst {
-            @include rem((
-                padding-left: 7px,
-                padding-right: 7px
-            ));
-        }
-        .item--has-no-image {
-            .item__title {
-                @include rem((padding-top: 1px));
-            }
-        }
-        .item__byline {
-            display: none;
-        }
-        .item__link,
-        .item__title,
-        .item__standfirst {
-            color: #ffffff;
-        }
-        .item__standfirst {
-            color: rgba(#ffffff, .8);
-        }
-        .item__link {
-            border-top: 0;
-        }
-        .item__image-container {
-            margin-top: 0;
-        }
-        .item__title {
-            @include fs-headline(2, true);
-            @include rem((
-                padding-bottom: $gs-baseline,
-                min-height: nth(nth($fs-headlines, 2), 2)*2
-            ));
-            @include mq(desktop) {
-                @include fs-headline(3, true);
-                @include rem((
-                    min-height: nth(nth($fs-headlines, 3), 2)*2 + $gs-baseline/3
-                ));
-            }
-            background-color: $c-features-primary;
-            @include mq(tablet) { background-color: rgba($c-features-primary, .8); }
-        }
-        .collection__item:nth-child(2n) .item__title {
-            background-color: $c-features-secondary;
-            @include mq(tablet) { background-color: rgba($c-features-secondary, .8); }
-        }
-        .collection__item:nth-child(3n) .item__title {
-            background-color: $c-features-tertiary;
-            @include mq(tablet) { background-color: rgba($c-features-tertiary, .8); }
-        }
-        .item__link:hover,
-        .item__link:focus {
-            .item__title {
-                // Restore lost underline because of the absolute positioning
-                text-decoration: underline;
-            }
-        }
-        .item--has-image {
-            @include mq(tablet) {
-                .item__title {
-                    position: absolute;
-                    bottom: 0;
-                    @include rem((
-                        left: $gs-gutter/2,
-                        right: $gs-gutter/2,
-                        padding-top: $gs-baseline/3
-                    ));
-                }
-            }
-        }
-    }
-    .l-row--items-3 {
-        .collection__item,
-        .item {
-            margin-bottom: 0;
-        }
-        @include mq($to: tablet) {
-            .item__title {
-                @include rem((
-                    min-height: nth(nth($fs-headlines, 1), 2) + 1,
-                    padding-bottom: ($gs-baseline*5)/3
-                ));
-                @include mq(tablet) {
-                    @include rem((
-                        // Twice the line height of the action
-                        min-height: nth(nth($fs-headlines, 1), 2) * 2 + 1,
-                        padding-bottom: $gs-baseline + $gs-baseline / 6
-                    ));
-                }
-            }
-        }
-        .item__media-wrapper,
-        .item__image-container {
-            display: none;
-        }
-        .item--imageadjust-highlight {
-            .item__media-wrapper,
-            .item__image-container {
-                display: block;
-            }
-        }
-        @include mq(tablet) {
-            .item--has-image .item__media-wrapper,
-            .item--has-image .item__image-container,
-            .item--has-no-image .item__standfirst {
-                display: block;
-            }
-        }
-        @include mq(desktop) {
-            .item__title {
-                @include fs-headline(2, true);
-            }
+    .container__body {
+        @include rem((
+            padding-top: $gs-baseline/3
+        ));
+        @include mq(tablet, desktop) {
+            padding-top: 0;
         }
     }
     .linkslist-container {
-        @include rem((margin-top: $gs-baseline));
-
-        @include mq(tablet) {
-            @include rem((margin-top: $gs-baseline*2));
+        @include mq($to: desktop) {
+            margin-top: 0;
         }
+    }
+    .ad-slot--inline {
+        margin-top: $gs-baseline/2;
+        margin-bottom: $gs-baseline/2;
+    }
+    .collection-wrapper--position-1 {
+        .item__title {
+            @include fs-headline(2, true);
+            @include box-sizing(border-box);
+            @include rem((
+                padding-bottom: $gs-baseline,
+                min-height: 82px
+            ));
+        }
+        @include mq($to: tablet) {
+            .collection__item {
+                border-bottom: 1px solid #ffffff;
+            }
+
+            .collection__item + .collection__item {
+                border-bottom: 0;
+
+                .item__title {
+                    @include fs-headline(1, true);
+                }
+            }
+            .item--has-image .item__media-wrapper,
+            .item--has-image .item__image-container {
+                display: block;
+            }
+        }
+    }
+}
+
+
+/* Remove spacing between items */
+.collection-wrapper--spacing-thin {
+    margin-left: 0;
+    margin-right: 0;
+
+    .item {
+        padding-left: 0;
+        padding-right: 0;
+        margin-bottom: 1px;
+    }
+    .collection__item {
+        margin-bottom: 0;
+        padding-bottom: 0;
+
+        &:after {
+            content: '';
+            position: absolute;
+            right: 100%;
+            top: 0;
+            height: 100%;
+            width: 1px;
+            background: #ffffff;
+            z-index: 1;
+        }
+    }
+}
+
+/* Items in this row have a background */
+.l-row--background-features {
+    .item {
+        @include rem((
+            padding-left: 7px,
+            padding-right: 7px
+        ));
+    }
+    .item__media-wrapper {
+        @include rem((
+            margin-left: -7px,
+            margin-right: -7px
+        ));
+    }
+    .item__byline,
+    .item__meta {
+        display: none;
+    }
+    .item--has-no-image {
+        .item__title {
+            @include rem((
+                padding-top: 3px
+            ));
+        }
+    }
+    .collection__item {
+        background-color: $c-features-secondary;
+
+        + .collection__item {
+            &:before {
+                border-left-width: 0;
+            }
+        }
+    }
+    .item__link,
+    .item__title,
+    .item__standfirst {
+        color: #ffffff;
+    }
+    .item__standfirst {
+        color: rgba(#ffffff, .8);
+    }
+    .item__link:visited,
+    .item__link:visited .item__title {
+        color: mix(#ffffff, $c-features-secondary, 80%);
+    }
+    @include item--hide-tone-border;
+    .item__title {
+        background-color: $c-features-secondary;
+    }
+    .item__link:hover,
+    .item__link:focus {
+        .item__title {
+            // Restore lost underline because of the absolute positioning
+            text-decoration: underline;
+        }
+    }
+    .item__link:active .item__title {
+        text-decoration: none;
     }
 }

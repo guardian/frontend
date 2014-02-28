@@ -9,19 +9,21 @@ define([
     terminate
 ) {
     return function (terminateOnFail) {
-        return authedAjax.request({
+        var deferred = $.Deferred();
+
+        authedAjax.request({
             url: vars.CONST.apiBase + '/switches'
         })
         .fail(function () {
             if(terminateOnFail) {
-                terminate("the switches are unavailable");
+                terminate("the switches are invalid or unvailable");
             }
+            deferred.reject();
         })
         .done(function(switches) {
-            if (switches['facia-tool-disable']) {
-                terminate();
-            }
-            vars.state.switches = switches || {};
+            deferred.resolve(switches || {});
         });
+
+        return deferred.promise();
     };
 });

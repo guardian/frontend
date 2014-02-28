@@ -5,7 +5,7 @@ import org.scalatest.Matchers
 import test.HtmlUnit
 import collection.JavaConversions._
 
-class CombinerFeatureTest extends FeatureSpec with GivenWhenThen with Matchers with UsesElasticSearch {
+class CombinerFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
   feature("Combiner pages") {
 
@@ -15,7 +15,7 @@ class CombinerFeatureTest extends FeatureSpec with GivenWhenThen with Matchers w
 
       HtmlUnit("/world/iraq+tone/comment") { browser =>
         import browser._
-        val trails = $(".collection > li")
+        val trails = $(".fromage, .collection__item, .linkslist__item")
         Then("I should see content tagged with both tags")
         trails.length should be(20)
       }
@@ -27,7 +27,7 @@ class CombinerFeatureTest extends FeatureSpec with GivenWhenThen with Matchers w
 
       HtmlUnit("/science+technology/apple") { browser =>
         import browser._
-        val trails = $(".collection > li")
+        val trails = $(".fromage, .collection__item, .linkslist__item")
         Then("I should see content tagged with both the section and the tag")
         findFirst(".container__title").getText.toLowerCase should be ("science + apple")
         trails.length should be > 10
@@ -40,7 +40,7 @@ class CombinerFeatureTest extends FeatureSpec with GivenWhenThen with Matchers w
 
       HtmlUnit("/books/jkrowling+harrypotter") { browser =>
         import browser._
-        val trails = $(".collection > li")
+        val trails = $(".fromage, .collection__item, .linkslist__item")
         Then("I should see content tagged with both tags")
         trails.length should be > 10
       }
@@ -52,7 +52,7 @@ class CombinerFeatureTest extends FeatureSpec with GivenWhenThen with Matchers w
 
       HtmlUnit("/lifeandstyle/series/quick-and-healthy-recipes+series/hugh-fearnley-whittingstall-quick-and-healthy-lunches") { browser =>
         import browser._
-        val trails = $(".collection > li")
+        val trails = $(".fromage, .collection__item, .linkslist__item")
         Then("I should see content tagged with both tags")
         trails.length should be > 5
       }

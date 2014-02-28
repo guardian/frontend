@@ -6,17 +6,13 @@ define(['common/$', 'common/utils/to-array', 'bonzo', 'common/utils/mediator', '
             context = context || document;
             var breakpoint = detect.getBreakpoint(),
                 options = {
-                    availableWidths: [ 140, 220, 300, 460, 620, 700 ],
+                    availableWidths: [ 140, 220, 300, 460, 620, 700, 940 ],
                     strategy: 'container',
                     replacementDelay: 0
                 };
 
             toArray(context.getElementsByClassName('js-image-upgrade')).forEach(function(container) {
-                var $container = bonzo(container),
-                    forceUpgradeAttr = $container.attr('data-force-upgrade'),
-                    forceUpdgradeBreakpoints = forceUpgradeAttr !== null ? forceUpgradeAttr.split(' ') : [],
-                    isForceUpgrade = forceUpdgradeBreakpoints.indexOf(breakpoint) !== -1 || forceUpgradeAttr === '';
-                if (($('html').hasClass('connection--low') && !isForceUpgrade) || $container.css('display') === 'none') {
+                if (bonzo(container).css('display') === 'none') {
                     return;
                 }
                 imager.init([container], options);
@@ -29,6 +25,9 @@ define(['common/$', 'common/utils/to-array', 'bonzo', 'common/utils/mediator', '
                     images.upgrade();
                 },
                 'window:orientationchange': function(e) {
+                    images.upgrade();
+                },
+                'ui:images:upgrade': function(e) {
                     images.upgrade();
                 }
             });

@@ -33,9 +33,9 @@ GET         /open/cta/article/*discussionKey.json                               
 # Core Navigation
 GET         /most-read                                                                                               controllers.MostPopularController.render(path = "")
 GET         /most-read.json                                                                                          controllers.MostPopularController.render(path = "")
-GET         /most-read/card.json                                                                                     controllers.MostPopularController.renderCard()
 GET         /most-read/*path.json                                                                                    controllers.MostPopularController.renderJson(path)
 GET         /most-read/*path                                                                                         controllers.MostPopularController.render(path)
+GET         /most-read-geo.json                                                                                      controllers.MostPopularController.renderPopularGeoJson()
 
 GET         /top-stories                                                                                             controllers.TopStoriesController.renderTopStories()
 GET         /top-stories.json                                                                                        controllers.TopStoriesController.renderTopStoriesJson()
@@ -43,7 +43,7 @@ GET         /top-stories/trails                                                 
 GET         /top-stories/trails.json                                                                                 controllers.TopStoriesController.renderJsonTrails()
 GET         /related/*path.json                                                                                      controllers.RelatedController.renderJson(path)
 GET         /related/*path                                                                                           controllers.RelatedController.render(path)
-GET         /recent/card.json                                                                                        controllers.RecentController.renderRecent()
+GET         /popular-in-tag/*tag.json                                                                                controllers.PopularInTag.renderJson(tag)
 
 GET         /preference/platform/:platform                                                                           controllers.ChangeViewController.render(platform, page)
 GET         /preference/edition/:edition                                                                             controllers.ChangeEditionController.render(edition)
@@ -141,6 +141,28 @@ GET         /troubleshoot/football                                              
 GET         /troubleshoot/pages                                                                                      controllers.admin.TroubleshooterController.index()
 GET         /troubleshoot/test                                                                                       controllers.admin.TroubleshooterController.test(id, testPath)
 
+# Football admin
+
+GET         /admin/football                                                                                          controllers.admin.SiteController.index
+GET         /admin/football/browse                                                                                   controllers.admin.PaBrowserController.browse
+POST        /admin/football/browserRedirect                                                                          controllers.admin.PaBrowserController.browserSubstitution
+GET         /admin/football/browser/*query                                                                           controllers.admin.PaBrowserController.browser(query)
+GET         /admin/football/team                                                                                     controllers.admin.TeamController.teamIndex
+POST        /admin/football/team/head2head                                                                           controllers.admin.TeamController.redirectToTeamHead2Head
+GET         /admin/football/team/head2head/:team1Id/:team2Id                                                         controllers.admin.TeamController.teamHead2Head(team1Id: String, team2Id: String)
+POST        /admin/football/team/images                                                                              controllers.admin.TeamController.redirectToSquadPictures
+GET         /admin/football/team/images/:teamId                                                                      controllers.admin.TeamController.squadPictures(teamId: String)
+GET         /admin/football/player                                                                                   controllers.admin.PlayerController.playerIndex
+POST        /admin/football/player/head2head                                                                         controllers.admin.PlayerController.redirectToHead2Head
+GET         /admin/football/player/head2head/:player1Id/:player2Id                                                   controllers.admin.PlayerController.head2Head(player1Id: String, player2Id: String)
+POST        /admin/football/player/card                                                                              controllers.admin.PlayerController.redirectToCard
+GET         /admin/football/player/card/:playerId                                                                    controllers.admin.PlayerController.playerCard(playerId: String)
+GET         /admin/football/tables                                                                                   controllers.admin.TablesController.tablesIndex
+POST        /admin/football/tables/league                                                                            controllers.admin.TablesController.redirectToTable
+GET         /admin/football/tables/league/:competitionId                                                             controllers.admin.TablesController.leagueTable(competitionId: String)
+GET         /admin/football/tables/league/:competitionId/:focus                                                      controllers.admin.TablesController.leagueTableFragment(competitionId: String, focus: String)
+GET         /admin/football/tables/league/:competitionId/:team1Id/:team2Id                                           controllers.admin.TablesController.leagueTable2Teams(competitionId: String, team1Id: String, team2Id: String)
+
 # Commercial
 GET         /commercial/travel/offers.json                                                                           controllers.commercial.TravelOffers.listOffers
 GET         /commercial/jobs.json                                                                                    controllers.commercial.JobAds.jobs
@@ -148,14 +170,11 @@ GET         /commercial/masterclasses.json                                      
 GET         /commercial/soulmates/mixed.json                                                                         controllers.commercial.SoulmateAds.mixed
 GET         /commercial/money/bestbuys.json                                                                          controllers.commercial.MoneyOffers.bestBuys(format="json")
 GET         /commercial/books/bestsellers.json                                                                       controllers.commercial.BookOffers.bestsellers(format="json")
+GET         /commercial/books/book/*pageId.json                                                                      controllers.commercial.BookOffers.singleBook(pageId, format="json")
+GET         /commercial/books/book/*pageId                                                                           controllers.commercial.BookOffers.singleBook(pageId, format="html")
 
 # Onward journeys
-GET         /onward/card/*path.json                                                                                  controllers.OnwardCardController.renderCard(path)
-GET         /onward/trail/*path.json                                                                                 controllers.OnwardCardController.renderTrail(path)
-GET         /onward/most-read.json                                                                                   controllers.MostPopularOnwardController.mostRead()
-GET         /onward/latest.json                                                                                      controllers.LatestContentController.renderLatest()
 GET         /onward/recently-published                                                                               controllers.LatestContentController.recentlyPublished()
-
 
 # Facia
 GET         /                                                                                                        controllers.FaciaController.editionRedirect(path = "")
@@ -164,6 +183,9 @@ GET         /$path<(us|uk|au|us-alpha|uk-alpha|au-alpha)?>                      
 GET         /$path<(us|uk|au|us-alpha|uk-alpha|au-alpha)?>.json                                                      controllers.FaciaController.renderEditionFrontJson(path)
 GET         /$path<((uk|us|au)/)?(culture|sport|australia|commentisfree|business|money)>                             controllers.FaciaController.renderEditionSectionFront(path)
 GET         /$path<((uk|us|au)/)?(culture|sport|australia|commentisfree|business|money)>.json                        controllers.FaciaController.renderEditionSectionFrontJson(path)
+
+#Facia Press
+GET         /pressed/*path                                                                                           controllers.FaciaController.renderFaciaPress(path)
 
 GET         /collection/$id<[\w\d-/]*>/rss                                                                           controllers.FaciaController.renderCollectionRss(id)
 GET         /collection/$id<[\w\d-/]*>                                                                               controllers.FaciaController.renderEditionCollection(id)

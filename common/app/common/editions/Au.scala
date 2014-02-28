@@ -14,7 +14,7 @@ object Au extends Edition(
   id = "AU",
   displayName = "Australia edition",
   DateTimeZone.forID("Australia/Sydney")
-  ) with Sections with Zones with QueryDefaults {
+  ) with Zones with QueryDefaults {
 
   implicit val AU = Au
 
@@ -32,16 +32,16 @@ object Au extends Edition(
 
   def navigation(metadata: MetaData) = Seq(
     NavItem(home),
-    NavItem(uk, Seq(politics, media, science, society, health, education)),
-    NavItem(world, Seq(us, europe, middleeast, asiapacific, africa, americas)),
-    NavItem(cif, Seq(cifbelief, cifgreen)),
-    NavItem(sport, Seq(football, cricket, tennis, rugbyunion, cycling)),
+    NavItem(uk),
+    NavItem(world),
+    NavItem(cif),
+    NavItem(sport, Seq(football, cricket, tennis, rugbyunion, cycling, usSport)),
     footballNav(metadata),
-    NavItem(lifeandstyle, Seq(foodanddrink, fashion, relationships, healthandwellbeing, women)),
-    NavItem(culture, Seq(film, music, books, televisionandradio, artanddesign, stage)),
-    NavItem(business, Seq(economics, banking, property, workandcareers, savings)),
-    NavItem(travel, Seq(shortbreaks, uktravel, europetravel, hotels, resturants)),
-    NavItem(technology, Seq(internet, games, mobilephones, appsblog)),
-    NavItem(environment, Seq(climatechange, wildlife, energy, conservation, food))
+    NavItem(lifeandstyle),
+    NavItem(culture),
+    NavItem(business),
+    NavItem(travel),
+    NavItem(technology),
+    NavItem(environment)
   )
 }

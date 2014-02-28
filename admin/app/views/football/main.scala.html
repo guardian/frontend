@@ -1,0 +1,45 @@
+@(title: String)(content: Html)
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>@title</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="shortcut icon" type="image/x-icon" href='@routes.Assets.at("football/images/favicon.ico")' />
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" />
+        <link rel="stylesheet" media="screen" href='@routes.Assets.at("football/css/football-main.css")' />
+        <link rel="stylesheet" href='@routes.Assets.at("football/css/jquery-ui.min.css")' />
+        <script src='@routes.Assets.at("football/javascripts/jquery-1.10.2.js")'></script>
+        <script src='@routes.Assets.at("football/javascripts/jquery-ui-1.10.4.custom.min.js")'></script>
+        <script src='@routes.Assets.at("football/javascripts/bootstrap/bootstrap.min.js")'></script>
+        <script src='@routes.Assets.at("football/javascripts/browser.js")'></script>
+    </head>
+    <body>
+        <nav class="navbar navbar-default navbar-static-top" role="navigation">
+          <div class="container-fluid">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-8">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="/admin/football">PA Browser <sup>ɐʇǝq</sup></a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-8">
+              <ul class="nav navbar-nav">
+                  <li><a href="/admin/football/player">Players</a></li>
+                  <li><a href="/admin/football/team">Teams</a></li>
+                  <li><a href="/admin/football/tables">Tables</a></li>
+                  <li><a href="/admin/football/browse">API browser</a></li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+        <div class="container-fluid">
+            @content
+        </div>
+    </body>
+</html>

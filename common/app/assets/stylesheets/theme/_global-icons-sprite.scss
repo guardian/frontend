@@ -1,195 +1,195 @@
-.i { background-repeat: no-repeat; display: inline-block; }
+%i, .i { background-repeat: no-repeat; display: inline-block; }
 
-.i-alert { background-position: -8px -9px; width: 20px; height: 20px; }
+%i-alert, .i-alert { background-position: -8px -9px; width: 20px; height: 20px; }
 
-.i-arrow-blue-down { background-position: -29px -9px; width: 15px; height: 7px; }
+%i-arrow-blue-down, .i-arrow-blue-down { background-position: -29px -9px; width: 15px; height: 7px; }
 
-.i-arrow-grey-down { background-position: -45px -9px; width: 15px; height: 7px; }
+%i-arrow-down-double-blue, .i-arrow-down-double-blue { background-position: -45px -9px; width: 16px; height: 16px; }
 
-.i-arrow-small-up { background-position: -61px -9px; width: 13px; height: 7px; }
+%i-arrow-grey-down, .i-arrow-grey-down { background-position: -62px -9px; width: 15px; height: 7px; }
 
-.i-arrow-white-circle { background-position: -74px -9px; width: 20px; height: 20px; }
+%i-arrow-small-up, .i-arrow-small-up { background-position: -78px -9px; width: 13px; height: 7px; }
 
-.i-arrow-white-down { background-position: -95px -9px; width: 15px; height: 7px; }
+%i-arrow-white-circle, .i-arrow-white-circle { background-position: -91px -9px; width: 20px; height: 20px; }
 
-.i-arrow-white-large { background-position: -111px -9px; width: 24px; height: 10px; }
+%i-arrow-white-down, .i-arrow-white-down { background-position: -112px -9px; width: 15px; height: 7px; }
 
-.i-arrow-white-right { background-position: -136px -9px; width: 24px; height: 25px; }
+%i-arrow-white-large, .i-arrow-white-large { background-position: -128px -9px; width: 24px; height: 10px; }
 
-.i-back-white { background-position: -161px -9px; width: 12px; height: 12px; }
+%i-arrow-white-right, .i-arrow-white-right { background-position: -153px -9px; width: 24px; height: 25px; }
 
-.i-back { background-position: -174px -9px; width: 12px; height: 12px; }
+%i-back-white, .i-back-white { background-position: -178px -9px; width: 12px; height: 12px; }
 
-.i-camera-black-large { background-position: -187px -9px; width: 18px; height: 13px; }
+%i-back, .i-back { background-position: -191px -9px; width: 12px; height: 12px; }
 
-.i-camera-yellow-large { background-position: -206px -9px; width: 18px; height: 13px; }
+%i-camera-black-large, .i-camera-black-large { background-position: -204px -9px; width: 18px; height: 13px; }
 
-.i-clock-grey { background-position: -225px -9px; width: 11px; height: 11px; }
+%i-camera-yellow-large, .i-camera-yellow-large { background-position: -223px -9px; width: 18px; height: 13px; }
 
-.i-clock-hands-white { background-position: -237px -9px; width: 10px; height: 13px; }
+%i-clock-grey, .i-clock-grey { background-position: -242px -9px; width: 11px; height: 11px; }
 
-.i-clock-light-grey { background-position: -247px -9px; width: 11px; height: 11px; }
+%i-clock-hands-white, .i-clock-hands-white { background-position: -254px -9px; width: 10px; height: 13px; }
 
-.i-clock-yellow { background-position: -259px -9px; width: 11px; height: 11px; }
+%i-clock-light-grey, .i-clock-light-grey { background-position: -264px -9px; width: 11px; height: 11px; }
 
-.i-close-icon { background-position: -271px -9px; width: 18px; height: 18px; }
+%i-clock-yellow, .i-clock-yellow { background-position: -276px -9px; width: 11px; height: 11px; }
 
-.i-comment-comment { background-position: -290px -9px; width: 16px; height: 16px; }
+%i-close-icon, .i-close-icon { background-position: -288px -9px; width: 18px; height: 18px; }
 
-.i-comment-feature { background-position: -307px -9px; width: 16px; height: 16px; }
+%i-comment-comment, .i-comment-comment { background-position: -307px -9px; width: 16px; height: 16px; }
 
-.i-comment-grey { background-position: -324px -9px; width: 16px; height: 16px; }
+%i-comment-feature, .i-comment-feature { background-position: -324px -9px; width: 16px; height: 16px; }
 
-.i-comment-light-grey { background-position: -341px -9px; width: 14px; height: 12px; }
+%i-comment-grey, .i-comment-grey { background-position: -341px -9px; width: 16px; height: 16px; }
 
-.i-comment-news { background-position: -356px -9px; width: 16px; height: 16px; }
+%i-comment-light-grey, .i-comment-light-grey { background-position: -358px -9px; width: 14px; height: 12px; }
 
-.i-date { background-position: -373px -9px; width: 10px; height: 10px; }
+%i-comment-news, .i-comment-news { background-position: -373px -9px; width: 16px; height: 16px; }
 
-.i-double-arrow-right-blue { background-position: -384px -9px; width: 15px; height: 14px; }
+%i-date, .i-date { background-position: -390px -9px; width: 10px; height: 10px; }
 
-.i-double-arrow-right-white { background-position: -399px -9px; width: 15px; height: 14px; }
+%i-double-arrow-right-blue, .i-double-arrow-right-blue { background-position: -401px -9px; width: 15px; height: 14px; }
 
-.i-ee-add-button { background-position: -414px -9px; width: 54px; height: 47px; }
+%i-double-arrow-right-white, .i-double-arrow-right-white { background-position: -416px -9px; width: 15px; height: 14px; }
 
-.i-expand-white { background-position: -469px -9px; width: 18px; height: 18px; }
+%i-ee-add-button, .i-ee-add-button { background-position: -431px -9px; width: 54px; height: 47px; }
 
-.i-fb { background-position: -488px -9px; width: 11px; height: 22px; }
+%i-expand-white, .i-expand-white { background-position: -486px -9px; width: 18px; height: 18px; }
 
-.i-filter-arrow-down { background-position: -499px -9px; width: 20px; height: 11px; }
+%i-fb, .i-fb { background-position: -505px -9px; width: 11px; height: 22px; }
 
-.i-filter-arrow-left { background-position: -520px -9px; width: 9px; height: 15px; }
+%i-filter-arrow-down, .i-filter-arrow-down { background-position: -516px -9px; width: 20px; height: 11px; }
 
-.i-filter-arrow-right { background-position: -529px -9px; width: 9px; height: 15px; }
+%i-filter-arrow-left, .i-filter-arrow-left { background-position: -537px -9px; width: 9px; height: 15px; }
 
-.i-filter-arrow-up { background-position: -538px -9px; width: 20px; height: 11px; }
+%i-filter-arrow-right, .i-filter-arrow-right { background-position: -546px -9px; width: 9px; height: 15px; }
 
-.i-fullscreen-toggle { background-position: -559px -9px; width: 12px; height: 12px; }
+%i-filter-arrow-up, .i-filter-arrow-up { background-position: -555px -9px; width: 20px; height: 11px; }
 
-.i-gallery-arrow { background-position: -538px -22px; width: 32px; height: 32px; }
+%i-fullscreen-toggle, .i-fullscreen-toggle { background-position: -576px -9px; width: 12px; height: 12px; }
 
-.i-gallery-fullimage-icon { background-position: -571px -22px; width: 18px; height: 18px; }
+%i-gallery-arrow, .i-gallery-arrow { background-position: -555px -22px; width: 32px; height: 32px; }
 
-.i-gallery-pause-slideshow { background-position: -571px -41px; width: 18px; height: 18px; }
+%i-gallery-fullimage-icon, .i-gallery-fullimage-icon { background-position: -486px -55px; width: 18px; height: 18px; }
 
-.i-gallery-play-slideshow { background-position: -8px -60px; width: 18px; height: 18px; }
+%i-gallery-pause-slideshow, .i-gallery-pause-slideshow { background-position: -505px -55px; width: 18px; height: 18px; }
 
-.i-gallery-thumb-icon { background-position: -27px -60px; width: 18px; height: 18px; }
+%i-gallery-play-slideshow, .i-gallery-play-slideshow { background-position: -524px -55px; width: 18px; height: 18px; }
 
-.i-gallery-yellow-small { background-position: -46px -60px; width: 20px; height: 20px; }
+%i-gallery-thumb-icon, .i-gallery-thumb-icon { background-position: -543px -55px; width: 18px; height: 18px; }
 
-.i-gallery { background-position: -67px -60px; width: 16px; height: 14px; }
+%i-gallery-yellow-small, .i-gallery-yellow-small { background-position: -562px -55px; width: 20px; height: 20px; }
 
-.i-gplus { background-position: -84px -60px; width: 24px; height: 21px; }
+%i-gallery, .i-gallery { background-position: -8px -76px; width: 16px; height: 14px; }
 
-.i-guardian-holidayoffers-logo { background-position: -109px -60px; width: 199px; height: 20px; }
+%i-gplus, .i-gplus { background-position: -25px -76px; width: 24px; height: 21px; }
 
-.i-guardian-logo-160 { background-position: -309px -60px; width: 160px; height: 30px; }
+.i-guardian-logo-rainbow { background-position: -309px -60px; width: 108px; height: 20px; }
 
-.i-guardian-logo-big { background-position: -8px -91px; width: 340px; height: 61px; }
+.i-guardian-logo { background-position: -417px -60px; width: 108px; height: 20px; }
 
-.i-guardian-logo-rainbow { background-position: -349px -91px; width: 108px; height: 20px; }
+.i-guardian-picks { background-position: -525px -60px; width: 15px; height: 47px; }
 
-.i-guardian-logo { background-position: -457px -91px; width: 108px; height: 20px; }
+.i-guardian-soulmates-logo { background-position: -8px -107px; width: 90px; height: 20px; }
 
-.i-guardian-picks { background-position: -565px -91px; width: 15px; height: 47px; }
+.i-gupickasterisk { background-position: -99px -107px; width: 18px; height: 17px; }
 
-.i-guardian-soulmates-logo { background-position: -349px -138px; width: 90px; height: 20px; }
+.i-id-alert { background-position: -118px -107px; width: 18px; height: 18px; }
 
-.i-gupickasterisk { background-position: -440px -138px; width: 18px; height: 17px; }
+.i-id-ok { background-position: -137px -107px; width: 18px; height: 18px; }
 
-.i-id-alert { background-position: -459px -138px; width: 18px; height: 18px; }
+.i-image { background-position: -156px -107px; width: 17px; height: 12px; }
 
-.i-id-ok { background-position: -478px -138px; width: 18px; height: 18px; }
+.i-in-reply-arrow { background-position: -174px -107px; width: 15px; height: 9px; }
 
-.i-image { background-position: -497px -138px; width: 17px; height: 12px; }
+.i-liveblog-pause { background-position: -190px -107px; width: 30px; height: 30px; }
 
-.i-in-reply-arrow { background-position: -515px -138px; width: 15px; height: 9px; }
+.i-liveblog-play { background-position: -221px -107px; width: 30px; height: 30px; }
 
-.i-liveblog-pause { background-position: -531px -138px; width: 30px; height: 30px; }
+.i-livequote-after { background-position: -252px -107px; width: 37px; height: 20px; }
 
-.i-liveblog-play { background-position: -8px -169px; width: 30px; height: 30px; }
+.i-livequote-before { background-position: -290px -107px; width: 37px; height: 20px; }
 
-.i-livequote-after { background-position: -39px -169px; width: 37px; height: 20px; }
+.i-local-nav-arrow { background-position: -328px -107px; width: 50px; height: 37px; }
 
-.i-livequote-before { background-position: -77px -169px; width: 37px; height: 20px; }
+.i-menu-active { background-position: -379px -107px; width: 18px; height: 12px; }
 
-.i-local-nav-arrow { background-position: -115px -169px; width: 32px; height: 32px; }
+.i-menu { background-position: -398px -107px; width: 18px; height: 12px; }
 
-.i-menu-active { background-position: -148px -169px; width: 18px; height: 18px; }
+.i-message-close { background-position: -417px -107px; width: 22px; height: 22px; }
 
-.i-menu { background-position: -167px -169px; width: 18px; height: 18px; }
+.i-play-black { background-position: -440px -107px; width: 12px; height: 16px; }
 
-.i-message-close { background-position: -186px -169px; width: 22px; height: 22px; }
+.i-play { background-position: -453px -107px; width: 18px; height: 18px; }
 
-.i-play-black { background-position: -209px -169px; width: 12px; height: 16px; }
+.i-plus-white-large { background-position: -472px -107px; width: 30px; height: 30px; }
 
-.i-play { background-position: -222px -169px; width: 18px; height: 18px; }
+.i-plus-white-mask { background-position: -503px -107px; width: 32px; height: 32px; }
 
-.i-plus-white-large { background-position: -241px -169px; width: 30px; height: 30px; }
+.i-plus-white-small { background-position: -536px -107px; width: 18px; height: 18px; }
 
-.i-plus-white-mask { background-position: -272px -169px; width: 32px; height: 32px; }
+.i-plus-white { background-position: -555px -107px; width: 32px; height: 32px; }
 
-.i-plus-white-small { background-position: -305px -169px; width: 18px; height: 18px; }
+.i-powered-by-ee { background-position: -379px -140px; width: 68px; height: 31px; }
 
-.i-plus-white { background-position: -324px -169px; width: 32px; height: 32px; }
+.i-profile-active { background-position: -448px -140px; width: 18px; height: 18px; }
 
-.i-powered-by-ee { background-position: -357px -169px; width: 68px; height: 31px; }
+.i-profile-signed-in { background-position: -467px -140px; width: 18px; height: 18px; }
 
-.i-profile-active { background-position: -426px -169px; width: 18px; height: 18px; }
+.i-profile { background-position: -486px -140px; width: 18px; height: 18px; }
 
-.i-profile-signed-in { background-position: -445px -169px; width: 18px; height: 18px; }
+.i-quote-marks { background-position: -505px -140px; width: 39px; height: 24px; }
 
-.i-profile { background-position: -464px -169px; width: 18px; height: 18px; }
+.i-quote-orange { background-position: -544px -140px; width: 34px; height: 20px; }
 
-.i-quote-marks { background-position: -483px -169px; width: 39px; height: 24px; }
+.i-recommend-inactive { background-position: -579px -140px; width: 12px; height: 12px; }
 
-.i-quote-orange { background-position: -522px -169px; width: 34px; height: 20px; }
+.i-recommend { background-position: -579px -153px; width: 12px; height: 12px; }
 
-.i-recommend-inactive { background-position: -557px -169px; width: 12px; height: 12px; }
+.i-red-card { background-position: -448px -166px; width: 9px; height: 12px; }
 
-.i-recommend { background-position: -570px -169px; width: 12px; height: 12px; }
+.i-reply-arrow-white { background-position: -458px -166px; width: 9px; height: 10px; }
 
-.i-red-card { background-position: -557px -182px; width: 9px; height: 12px; }
+.i-reply-button { background-position: -468px -166px; width: 19px; height: 19px; }
 
-.i-reply-arrow-white { background-position: -567px -182px; width: 9px; height: 10px; }
+.i-search-blue { background-position: -488px -166px; width: 18px; height: 18px; }
 
-.i-reply-button { background-position: -567px -193px; width: 19px; height: 19px; }
+.i-search-grey { background-position: -507px -166px; width: 18px; height: 18px; }
 
-.i-search-active { background-position: -8px -213px; width: 18px; height: 18px; }
+.i-search { background-position: -526px -166px; width: 18px; height: 18px; }
 
-.i-search-grey { background-position: -27px -213px; width: 18px; height: 18px; }
+.i-share-email-hover { background-position: -545px -166px; width: 32px; height: 32px; }
 
-.i-search { background-position: -46px -213px; width: 18px; height: 18px; }
+.i-share-email { background-position: -8px -199px; width: 32px; height: 32px; }
 
-.i-share-email-hover { background-position: -65px -213px; width: 32px; height: 32px; }
+.i-share-facebook-hover { background-position: -41px -199px; width: 32px; height: 32px; }
 
-.i-share-email { background-position: -98px -213px; width: 32px; height: 32px; }
+.i-share-facebook { background-position: -74px -199px; width: 32px; height: 32px; }
 
-.i-share-facebook-hover { background-position: -131px -213px; width: 32px; height: 32px; }
+.i-share-gplus-hover { background-position: -107px -199px; width: 32px; height: 32px; }
 
-.i-share-facebook { background-position: -164px -213px; width: 32px; height: 32px; }
+.i-share-gplus { background-position: -140px -199px; width: 32px; height: 32px; }
 
-.i-share-gplus-hover { background-position: -197px -213px; width: 32px; height: 32px; }
+.i-share-twitter-hover { background-position: -173px -199px; width: 32px; height: 32px; }
 
-.i-share-gplus { background-position: -230px -213px; width: 32px; height: 32px; }
+.i-share-twitter { background-position: -206px -199px; width: 32px; height: 32px; }
 
-.i-share-twitter-hover { background-position: -263px -213px; width: 32px; height: 32px; }
+.i-show-all-comments { background-position: -239px -199px; width: 44px; height: 44px; }
 
-.i-share-twitter { background-position: -296px -213px; width: 32px; height: 32px; }
+.i-single-arrow-right-blue { background-position: -284px -199px; width: 4px; height: 8px; }
 
-.i-show-all-comments { background-position: -329px -213px; width: 44px; height: 44px; }
+.i-sport-arrow { background-position: -289px -199px; width: 8px; height: 15px; }
 
-.i-single-arrow-right-blue { background-position: -374px -213px; width: 4px; height: 8px; }
+.i-story-quote { background-position: -298px -199px; width: 49px; height: 25px; }
 
-.i-sport-arrow { background-position: -379px -213px; width: 8px; height: 15px; }
+.i-swipe-arrow-small { background-position: -348px -199px; width: 5px; height: 10px; }
 
-.i-story-quote { background-position: -388px -213px; width: 49px; height: 25px; }
+.i-swipe-arrow { background-position: -354px -199px; width: 7px; height: 16px; }
 
-.i-swipe-arrow-small { background-position: -438px -213px; width: 5px; height: 10px; }
+.i-top-stories-active { background-position: -362px -199px; width: 18px; height: 18px; }
 
-.i-swipe-arrow { background-position: -444px -213px; width: 7px; height: 16px; }
+.i-top-stories { background-position: -381px -199px; width: 18px; height: 18px; }
 
-.i-video-yellow-small { background-position: -452px -213px; width: 20px; height: 20px; }
+.i-video-yellow-small { background-position: -400px -199px; width: 20px; height: 20px; }
 
-.i-yellow-card { background-position: -473px -213px; width: 9px; height: 12px; }
+.i-yellow-card { background-position: -421px -199px; width: 9px; height: 12px; }

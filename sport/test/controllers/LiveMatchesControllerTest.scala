@@ -4,9 +4,8 @@ import play.api.test._
 import play.api.test.Helpers._
 import org.scalatest.Matchers
 import org.scalatest.FlatSpec
-import common.UsesElasticSearch
 
-class LiveMatchesControllerTest extends FlatSpec with Matchers with UsesElasticSearch {
+class LiveMatchesControllerTest extends FlatSpec with Matchers {
   
   "Live Matches Controller" should "200 when content type is live match" in Fake {
     val result = football.controllers.LiveMatchesController.renderLiveMatches()(TestRequest())

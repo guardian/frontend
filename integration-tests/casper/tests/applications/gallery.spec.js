@@ -13,8 +13,8 @@ casper.test.setUp(function() {
 
 casper.test.begin("Display gallery contact sheet", function(test) {
     casper.then(function testGalleryThumbs() {
-        casper.waitForSelector('.gallery-page .gallerythumbs', function() {
-            test.assertVisible('.gallery-page .gallerythumbs', 'Thumbnails are visible');
+        casper.waitForSelector('.gallery-page .js-gallerythumbs', function() {
+            test.assertVisible('.gallery-page .js-gallerythumbs', 'Thumbnails are visible');
             test.assertEvalEquals(function() {
                 return document.querySelectorAll('.gallery-page .gallerythumbs__item').length;
             }, 3, '3 items should be available');

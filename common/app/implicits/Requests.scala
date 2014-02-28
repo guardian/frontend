@@ -26,9 +26,5 @@ trait Requests {
     }
 
     lazy val hasParameters = !r.queryString.isEmpty
-
-    lazy val accessControlAllowOrigin = r.headers.get("Origin").map{ requestOrigin =>
-      "Access-Control-Allow-Origin" -> corsOrigins.find(_ == requestOrigin).getOrElse("*")
-    }
   }
 }

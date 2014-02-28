@@ -29,13 +29,13 @@ trait BestsellersApi extends XmlAdsApi[Book] {
           title = (book \ "title").text,
           author = OptString((book \ "author").text),
           isbn = (book \ "isbn").text,
-          price = (book \ "price").text.toDouble,
+          price = Some((book \ "price").text).map(_.toDouble),
           offerPrice = (book \ "offerprice").headOption.map(_.text).map(_.toDouble),
           description = OptString((book \ "description").text),
           jacketUrl = (book \ "jacketurl").headOption.map(node => s"http:${node.text}"),
-          buyUrl = (book \ "bookurl").text,
-          position = (entry \ "Position").text.toInt,
-          category,
+          buyUrl = Some((book \ "bookurl").text),
+          position = Some((entry \ "Position").text).map(_.toInt),
+          Some(category),
           keywords
         )
     }

@@ -12,12 +12,13 @@
 
 $old-ie:      false !default;
 $svg-support: true !default;
+$browser-supports-columns: true !default;
+$browser-supports-flexbox: true !default;
 
 
 // Layout dimensions
 // =============================================================================
 
-$baseline: 4px;
 $gutter: 16px;
 $unitHeight: 36px;
 $inArticleInlineImgWidth: 114px;
@@ -134,6 +135,8 @@ $c-error: #d61d00;
 
 $c-neutral1: #333333;
 $c-neutral2: #767676;
+// Enhance contrast of grey text on light grey background
+$c-neutral2-contrasted: darken($c-neutral2, 3%);
 $c-neutral3: #bdbdbd;
 $c-neutral4: #dcdcdc;
 $c-neutral5: #e3e3db;
@@ -188,6 +191,14 @@ $c-sportDark: #003f64;
 
 $c-sportHome: $c-sportBright;
 $c-sportAway: $c-sportDark;
+
+
+// Stati
+// =============================================================================
+$c-statusPositive: #6ca843;
+$c-statusNeutral: #999999;
+$c-statusNegative: #da1d1d;
+
 
 // Dimensions
 // =============================================================================

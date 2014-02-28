@@ -6,7 +6,9 @@
 }
 
 .profile__img {
-    @include rem((margin: 0 $gs-gutter 0 0));
+    @include rem((
+        margin: 0 $gs-gutter 0 0
+    ));
     @include rounded-corners(50%);
     overflow: hidden;
 

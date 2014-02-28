@@ -142,7 +142,9 @@ a.edition {
 
 @include mq(tablet) {
     .monocolumn-wrapper {
-        @include rem((max-width: gs-span(8)));
+        @include rem((
+            max-width: gs-span(8)
+        ));
         margin-left: auto;
         margin-right: auto;
     }
@@ -160,11 +162,15 @@ a.edition {
  */
 
 .component {
-    @include rem((margin-bottom: 20px));
+    @include rem((
+        margin-bottom: 20px
+    ));
 }
 
 .box-indent {
-    @include rem((padding: 0 $gs-gutter/2 $baseline));
+    @include rem((
+        padding: 0 $gs-gutter/2 ($gs-baseline/3)
+    ));
 
     @include mq(mobileLandscape) {
         @include rem((
@@ -187,18 +193,24 @@ a.edition {
     ));
 
     @include mq(mobileLandscape) {
-        @include rem((width: gs-span(2)));
+        @include rem((
+            width: gs-span(2)
+        ));
     }
 
     figcaption {
-        @include rem((padding-top: $baseline));
+        @include rem((
+            padding-top: $gs-baseline/3
+        ));
         word-wrap: break-word;
     }
 }
 
 .img-tiny.img--inline {
     width: auto;
-    @include rem((max-width: $inArticleInlineImgWidth));
+    @include rem((
+        max-width: $inArticleInlineImgWidth
+    ));
 }
 
 
@@ -206,11 +218,20 @@ a.edition {
    ========================================================================== */
 
 .preload-msg {
-    @include rem((padding: 50px 50px 250px 50px));
+    @include rem((
+        padding: 50px 50px 250px 50px
+    ));
     text-align: center;
+
+    .accessible-link {
+        display: block;
+        @include fs-data(2);
+    }
 }
 
 .preload-msg .is-updating {
     display: block;
-    @include rem((margin: 10px auto));
+    @include rem((
+        margin: 10px auto
+    ));
 }

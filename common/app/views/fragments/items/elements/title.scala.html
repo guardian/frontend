@@ -1,0 +1,16 @@
+@(trail: Trail, itemIndex: Int, containerIndex: Int)(implicit request: RequestHeader)
+
+@defining((VisualTone(trail), if (containerIndex == 0 && itemIndex == 0) { "1" } else { "2" })) { case (tone, headerLevel) =>
+    <h@headerLevel class="item__title">
+        @if(trail.isBreaking){
+            <span class="item__live-indicator">Breaking News</span>
+        }
+        @if(trail.isLive && !trail.isBreaking){
+            <span class="item__live-indicator">Live</span>
+        }
+        @if(tone == "comment") {
+            <span class="i i-quote-orange"></span>
+        }
+        @RemoveOuterParaHtml(trail.headline)
+    </h@headerLevel>
+}

@@ -2,7 +2,9 @@
    ========================================================================== */
 
 .guardian-logo-footer {
-    @include rem((margin-left: $gs-gutter));
+    @include rem((
+        margin-left: $gs-gutter
+    ));
     float: left;
 }
 .top--footer {
@@ -14,7 +16,7 @@
         float: right;
         @include rem((
             width: gs-span(2),
-            padding-top: $baseline*2,
+            padding-top: ($gs-baseline/3)*2,
             margin-right: $gs-gutter,
             padding-bottom: $gs-baseline*3
         ));
@@ -51,11 +53,15 @@
 }
 .footer__secondary {
     @include font($sans-serif, normal, 13, 19);
-    @include rem((padding-top: $baseline*5));
+    @include rem((
+        padding-top: ($gs-baseline/3)*5
+    ));
     color: lighten($c-neutral2, 15%);
 
     @include mq(tablet) {
-        @include rem((padding-top: $baseline*2));
+        @include rem((
+            padding-top: ($gs-baseline/3)*2
+        ));
     }
     a {
         color: darken($c-neutral2, 3%); // Enhance contrast on non-white background
@@ -63,7 +69,9 @@
 }
 .colophon {
     list-style: none;
-    @include rem((margin: 0 0 $baseline*3));
+    @include rem((
+        margin: 0 0 $gs-baseline
+    ));
 
     @include mq(tablet) {
         float: right;
@@ -73,10 +81,14 @@
         ));
     }
     @include mq(desktop) {
-        @include rem((width: gs-span(6)));
+        @include rem((
+            width: gs-span(6)
+        ));
     }
     @include mq(wide) {
-        @include rem((width: gs-span(8)));
+        @include rem((
+            width: gs-span(8)
+        ));
     }
 
     a {
@@ -88,19 +100,25 @@
     float: left;
     width: 50%;
     @include box-sizing(border-box);
-    @include rem((padding-right: $gs-gutter/2));
+    @include rem((
+        padding-right: $gs-gutter/2
+    ));
 
     @include mq($to: desktop) {
         &:nth-child(even) {
             padding-right: 0;
-            @include rem((padding-left: $gs-gutter/2));
+            @include rem((
+                padding-left: $gs-gutter/2
+            ));
         }
     }
 
     @include mq(desktop) {
         width: gs-span(2);
         padding-left: 0;
-        @include rem((margin-right: $gs-gutter));
+        @include rem((
+            margin-right: $gs-gutter
+        ));
     }
     @include mq(desktop, wide) {
         &:nth-child(3n) {
@@ -116,7 +134,9 @@
 
 .footer__misc {
     border-top: 1px solid lighten($c-neutral2, 40%);
-    @include rem((padding-top: $baseline - 1));
+    @include rem((
+        padding-top: $gs-baseline/3 - 1
+    ));
 
     @include mq(tablet) {
         padding-top: 0;
@@ -124,5 +144,7 @@
     }
 }
 .really-serious-copyright {
-    @include rem((margin-bottom: $baseline));
+    @include rem((
+        margin-bottom: $gs-baseline/3
+    ));
 }

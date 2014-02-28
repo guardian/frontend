@@ -13,6 +13,8 @@ import play.api.libs.ws.WS
 import javax.crypto.Mac
 import javax.crypto.spec.SecretKeySpec
 import sun.misc.BASE64Encoder
+import com.amazonaws.auth.AWSSessionCredentials
+import controllers.Identity
 
 trait S3 extends Logging {
 
@@ -67,6 +69,7 @@ trait S3 extends Logging {
     val metadata = new ObjectMetadata()
     metadata.setCacheControl("no-cache,no-store")
     metadata.setContentType(contentType)
+    metadata.setContentLength(value.getBytes.length)
 
     val request = new PutObjectRequest(bucket, key, new StringInputStream(value), metadata).withCannedAcl(accessControlList)
 
@@ -81,20 +84,28 @@ object S3FrontsApi extends S3 {
   override lazy val bucket = Configuration.aws.bucket
   lazy val stage = if (Play.isTest) "TEST" else Configuration.facia.stage.toUpperCase
   val namespace = "frontsapi"
-  lazy val location = s"${stage}/${namespace}"
+  lazy val location = s"$stage/$namespace"
 
-  def getSchema = get(s"${location}/schema.json")
-  def getConfig(id: String) = get(s"${location}/config/${id}/config.json")
+  def getSchema = get(s"$location/schema.json")
+  def getConfig(id: String) = get(s"$location/config/$id/config.json")
   def getMasterConfig: Option[String] = get(s"$location/config/config.json")
-  def getBlock(id: String) = get(s"${location}/collection/${id}/collection.json")
+  def getBlock(id: String) = get(s"$location/collection/$id/collection.json")
   def listConfigsIds: List[String] = getConfigIds(s"$location/config/")
   def listCollectionIds: List[String] = getCollectionIds(s"$location/collection/")
   def putBlock(id: String, json: String) =
-    putPublic(s"${location}/collection/${id}/collection.json", json, "application/json")
+    putPublic(s"$location/collection/$id/collection.json", json, "application/json")
 
-  def archive(id: String, json: String) = {
+  def archive(id: String, json: String, identity: Identity) = {
     val now = DateTime.now
-    putPrivate(s"${location}/history/collection/${id}/${now.year.get}/${"%02d".format(now.monthOfYear.get)}/${"%02d".format(now.dayOfMonth.get)}/${now}.json", json, "application/json")
+    putPrivate(s"$location/history/collection/$id/${now.year.get}/${"%02d".format(now.monthOfYear.get)}/${"%02d".format(now.dayOfMonth.get)}/${now}.${identity.email}.json", json, "application/json")
+  }
+
+  def putMasterConfig(json: String) =
+    putPublic(s"$location/config/config.json", json, "application/json")
+
+  def archiveMasterConfig(json: String, identity: Identity) = {
+    val now = DateTime.now
+    putPublic(s"${location}/history/config/${now.year.get}/${"%02d".format(now.monthOfYear.get)}/${"%02d".format(now.dayOfMonth.get)}/${now}.${identity.email}.json", json, "application/json")
   }
 
   private def getListing(prefix: String, dropText: String): List[String] = {
@@ -120,27 +131,41 @@ trait SecureS3Request extends implicits.Dates with Logging {
   val frontendBucket: String = Configuration.aws.bucket
   val frontendStore: String = Configuration.frontend.store
 
-  //Defs because credentials expire
-  def accessKey: String = Configuration.aws.credentials.getCredentials.getAWSAccessKeyId
-  def secretKey: String = Configuration.aws.credentials.getCredentials.getAWSSecretKey
-
   def urlGet(id: String): WS.WSRequestHolder = url("GET", id)
 
   private def url(httpVerb: String, id: String): WS.WSRequestHolder = {
-    val date: String = DateTime.now.toHttpDateTimeString
-    val signedString: String = signAndBase64Encode(generateStringToSign(httpVerb, id, date))
-    WS.url(s"$frontendStore/$id")
-      .withHeaders("Date" -> date)
-      .withHeaders("Authorization" -> s"AWS $accessKey:$signedString")
+
+    // we are working with a credentials provider here - this needs to be scoped inside the function
+    // i.e. we need a new one each request
+    val credentials = Configuration.aws.credentials.getCredentials
+
+    val sessionTokenHeaders: Seq[(String, String)] = credentials match {
+      case sessionCredentials: AWSSessionCredentials => Seq("x-amz-security-token" -> sessionCredentials.getSessionToken)
+      case _ => Nil
+    }
+
+    val date = DateTime.now.toHttpDateTimeString
+    val signedString = signAndBase64Encode(generateStringToSign(httpVerb, id, date, sessionTokenHeaders), credentials.getAWSSecretKey)
+
+    val headers = Seq(
+      "Date" -> date,
+      "Authorization" -> s"AWS ${credentials.getAWSAccessKeyId}:$signedString"
+    ) ++ sessionTokenHeaders
+
+    WS.url(s"$frontendStore/$id").withHeaders(headers:_*)
   }
 
   //Other HTTP verbs may need other information such as Content-MD5 and Content-Type
   //If we move to AWS Security Token Service, we will need x-amz-security-token
-  private def generateStringToSign(httpVerb: String, id: String, date: String): String =
-  //http://docs.aws.amazon.com/AmazonS3/latest/dev/RESTAuthentication.html
-    s"$httpVerb\n\n\n$date\n/$frontendBucket/$id"
+  private def generateStringToSign(httpVerb: String, id: String, date: String, headers: Seq[(String, String)]): String = {
+    //http://docs.aws.amazon.com/AmazonS3/latest/dev/RESTAuthentication.html#RESTAuthenticationConstructingCanonicalizedAmzHeaders
+    val headerString = headers.map{ case (name, value) => s"${name.trim.toLowerCase}:${value.trim}\n" }.mkString
+    //http://docs.aws.amazon.com/AmazonS3/latest/dev/RESTAuthentication.html
+    s"$httpVerb\n\n\n$date\n$headerString/$frontendBucket/$id"
+  }
 
-  private def signAndBase64Encode(stringToSign: String): String = {
+
+  private def signAndBase64Encode(stringToSign: String, secretKey: String): String = {
     try {
       val mac: Mac = Mac.getInstance(algorithm)
       mac.init(new SecretKeySpec(secretKey.getBytes("UTF-8"), algorithm))
@@ -155,3 +180,8 @@ trait SecureS3Request extends implicits.Dates with Logging {
 }
 
 object SecureS3Request extends SecureS3Request
+
+object S3Archive extends S3 {
+ override lazy val bucket = "aws-frontend-archive"
+ def getHtml(path: String) = get(path) 
+}

@@ -38,17 +38,17 @@
 .table-football td {
     border-right: none;
     text-align: right;
-    padding: $baseline*2 3% $baseline*2 3%;
+    padding: ($gs-baseline/3)*2 3% ($gs-baseline/3)*2 3%;
 }
 
 .table-football-header th:first-child,
 .table-football td:first-child {
-    padding: $baseline*2 3% $baseline*2 $gutter/2;
+    padding: ($gs-baseline/3)*2 3% ($gs-baseline/3)*2 $gutter/2;
 }
 
 .table-football-header th:last-child,
 .table-football td:last-child {
-    padding: $baseline*2 $gutter/2 $baseline*2 3%;
+    padding: ($gs-baseline/3)*2 $gutter/2 ($gs-baseline/3)*2 3%;
 }
 
 .table-football td:last-child {
@@ -56,7 +56,6 @@
 }
 
 .table-football-body tr {
-    border-bottom: 1px solid #DEDEDD;
     background-color: transparent;
 
     &:last-child {
@@ -64,16 +63,11 @@
     }
 }
 
-.table-football-body a {
-    color: #000;
-    font-weight: bold;
-}
-
 @include mq(641px) {
 
     .table-football th,
     .table-football td {
-        padding: $baseline*2 3px;
+        padding: ($gs-baseline/3)*2 3px;
     }
 
     .table-football-header th:first-child,
@@ -135,5 +129,67 @@
 @include mq(850px) {
     .stats-3 {
         display: table-cell;
+    }
+}
+
+@mixin table-football--small() {
+    .table-column--priority { display: table-cell; }
+
+    th,
+    td {
+        display: none;
+        min-width: 0;
+    }
+
+    .football-stat--form {
+        min-width: 0;
+    }
+}
+
+.table--football {
+    .table-column--main {
+        a {
+            display: block;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            width: 100%;
+        }
+    }
+
+    .football-stat--points {
+        font-weight: bold;
+    }
+
+    .football-stat--team a {
+        color: inherit;
+    }
+
+    .table-column--main {
+        max-width: 90px;
+    }
+
+    // This makes sure that all table columns are equally spaced
+    td {
+        min-width: 12px;
+    }
+
+    .football-stat--form {
+        min-width: 75px; // 15(width of status)*5
+    }
+
+    // This is as we don't have element media queries (no-one does)
+    @include mq($to: tablet) { @include table-football--small; }
+    &.table--small { @include table-football--small; }
+}
+
+.football__group {
+    margin-top: $gs-baseline;
+    &:first-child { margin-top: 0; }
+}
+
+.article__secondary-column {
+    .table__container {
+        @include rem((margin-bottom: $gs-baseline));
     }
 }

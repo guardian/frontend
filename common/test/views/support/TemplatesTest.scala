@@ -1,12 +1,14 @@
 package views.support
 
+import conf.Switches.ArticleSlotsSwitch
+
 import com.gu.openplatform.contentapi.model.{Tag => ApiTag, Element => ApiElement, Asset => ApiAsset}
 import model._
-import org.scalatest.Matchers
-import org.scalatest.FlatSpec
+import org.scalatest.{ Matchers, FlatSpec }
 import xml.XML
 import common.editions.Uk
-import com.gu.openplatform.contentapi.model.Asset
+import conf.Configuration
+import org.jsoup.Jsoup
 
 class TemplatesTest extends FlatSpec with Matchers {
 
@@ -83,7 +85,7 @@ class TemplatesTest extends FlatSpec with Matchers {
     val portaitImg = figures(4)
     (portaitImg \ "@class").text should include("img--portrait")
     (portaitImg \ "img" \ "@class").text should be("gu-image")
-    (portaitImg \ "img" \ "@height").text should be("700")
+    (portaitImg \ "img" \ "@height").length should be (0) // we remove the height attribute
 
     (body \\ "figure").foreach { fig =>
       (fig \ "@itemprop").text should be("associatedMedia")
@@ -102,13 +104,43 @@ class TemplatesTest extends FlatSpec with Matchers {
 
     val link = (body \\ "a").head
 
-    (link \ "@href").text should be("/section/2011/jan/01/words-for-url")
+    (link \ "@href").text should be (s"${Configuration.site.host}/section/2011/jan/01/words-for-url")
+
+  }
+  
+  "InBodyLinkCleanerForR1" should "clean links" in {
+
+    // i. www
+    val r1BodyText = """
+      <p> foo <a href="/Guardian/path/to/article">foo</a> foo</p>
+    """
+    val body = XML.loadString(withJsoup(r1BodyText)(InBodyLinkCleanerForR1("")).body.trim)
+    val link = (body \\ "a").head
+    (link \ "@href").text should be (s"/path/to/article")
+
+    // ii. old subdomains
+    val absoluteUrls = Map(
+        "/Arts/path/to/something" -> "/arts/path/to/something",
+        "/Education/path/to/something" -> "/education/path/to/something",
+        "/Guardian/path/to/something" -> "/path/to/something",
+        "/Club/path/to/something" -> "/Club/path/to/something" // unchanged
+    )
+
+    for ((key, value) <- absoluteUrls) {
+        val bodyAbsolute = XML.loadString(withJsoup(s"""<a href="${key}">foo</a>""")(InBodyLinkCleanerForR1("")).body.trim)
+        (bodyAbsolute \ "@href").text should be (value)
+    }
+    
+    // iii. relative to the old subdomain 
+    val bodyAbsolute = XML.loadString(withJsoup(s"""<a href="/path/to/foo">foo</a>""")(InBodyLinkCleanerForR1("/arts")).body.trim)
+    (bodyAbsolute \ "@href").text should be ("/arts/path/to/foo")
 
   }
 
+
   "BlockCleaner" should "insert block ids in minute by minute content" in {
 
-    val body = withJsoup(bodyWithBLocks)(BlockNumberCleaner).body.trim
+    val body = withJsoup(bodyWithBlocks)(BlockNumberCleaner).body.trim
 
     body should include("""<span id="block-14">some heading</span>""")
     body should include("""<p id="block-1">some more text</p>""")
@@ -116,6 +148,13 @@ class TemplatesTest extends FlatSpec with Matchers {
 
   "BulletCleaner" should "format all bullets by wrapping in a span" in {
     BulletCleaner("<p>Foo bar • foo</p>") should be("<p>Foo bar <span class=\"bullet\">•</span> foo</p>")
+  }
+
+  "InlineSlotGenerator" should "insert slots" in {
+    ArticleSlotsSwitch.switchOn()
+    val body = Jsoup.parseBodyFragment(withJsoup(bodyWithoutInlines)(InlineSlotGenerator(351)).body)
+    body.select(".slot").size should be > 0
+    ArticleSlotsSwitch.switchOff()
   }
 
   "RowInfo" should "add row info to a sequence" in {
@@ -155,7 +194,7 @@ class TemplatesTest extends FlatSpec with Matchers {
     StripHtmlTags("<a href=\"www.guardian.co.uk\">Foo <b>Bar</b></a>") should be("Foo Bar")
   }
 
-  it should "convert to html entites" in {
+  it should "convert to html entities" in {
     StripHtmlTags("This is \"sarcasm\" & so is \"this\"") should be("This is &quot;sarcasm&quot; &amp; so is &quot;this&quot;")
   }
 
@@ -215,9 +254,17 @@ class TemplatesTest extends FlatSpec with Matchers {
     <p>bar <a href="http://www.theguardian.com/section/2011/jan/01/words-for-url">the link</a></p>
                           """
 
-  val bodyWithBLocks = """<body>
+  val bodyWithBlocks = """<body>
       <!-- Block 14 --><span>some heading</span><p>some text</p>
       <!-- Block 1 --><p>some more text</p>
     </body>"""
+
+  val bodyWithoutInlines =
+    """
+      <body>
+        <p>Before Twitter, Whisper and Snapchat there was the Blog – the platform that made it possible for non-techies to publish on the internet. And if you grew up in the 90s, chances are you probably had one at some point – a Livejournal, a Blogger, a Wordpress or Diaryland. </p> <p>This year, the Blog turns 20. To mark the anniversary of the medium, we asked three blogging pioneers to look back on the transformation of the medium over the past two decades, and share their thoughts on new platforms like Snapchat and Twitter.</p> <p><strong>Dave Winer</strong> is an American <a href=\"http://en.wikipedia.org/wiki/Dave_Winer\">software developer</a>, entrepreneur and writer in New York City. He is noted for his contributions to outliners, scripting, content management and web services, as well as blogging and podcasting. He writes regularly at <a href=\"scripting.com\">Scripting News</a>, which he started in 1997.</p> <p><strong>Meg Hourihan</strong> has lived and worked on the web for nearly twenty years. As the co-founder of <a href=\"http://blogger.com/\">Blogger.com</a>, she lead the development of the seminal blogging tool acquired by Google in 2004. As the New York City-based mother of two young children, she regrets that she doesn't update <a href=\"http://www.megnut.com/\">www.megnut.com</a> nearly as much as she used to.</p> <p><strong>Justin Hall</strong> is a writer and entrepreneur. In 1994, Hall began publishing Justin's Links from the Underground, an early personal web site. In 2007 Hall lead a team making PMOG – a massively multiplayer online game layered on top of web surfing. Today Justin lives in San Francisco and publishes personal videos at <a href=\"http://links.net/\">http://links.net/</a>.</p>
+        <h2><strong>Who were you when you first started blogging? What was going on in your life?</strong></h2> <p><strong>DW:</strong> I was 39 when I started blogging. My life was more or less empty – I had sold my company, was well-off financially, and had just broken up in a long-term relationship. I was looking for something to do, and a friend, Sally Atkins, urged me to learn about the web. It was everything I had been looking for.<strong> If my life hadn't been empty I never would have spotted it so early.</strong></p> <p><strong>MH:</strong> I was 27. I’d started <a href=\"http://en.wikipedia.org/wiki/Pyra_Labs\">Pyra</a> (out of which came Blogger) six months earlier and I was in love with everything about the web and programming. My friends were too. The web was an open place where we shared everything. <strong>The web is no longer the small village where I grew up; it’s a megalopolis.</strong> I have two kids now, and though I feel the urge to share and write, I don’t make the time. The web is a part of me and who I am, but I don’t need to be online anymore. Actually it dawns on me that like Dave, I was lonely, and it helped me connect with people who liked the web and writing and computers. Now I like being offline for a week in the woods, alone!</p> <p><strong>JH:</strong> I started writing on the web in 1994 when I was 19 years old. I was fascinated by sex, psychedelic drugs and uptempo music with anarchic lyrics. I was attending Swarthmore College near Philadelphia, and I spent my summers in San Francisco getting closer to the heart of the web content machine. My headlong enthusiasm for the internet in those early days lead me to a number of similar folks who ended up inexorably altering my life. I grew through their friendship and mentoring, I studied their community-building ethic, and I flourished amidst their encouragement of eccentricity. </p>
+      </body>
+    """
 
 }

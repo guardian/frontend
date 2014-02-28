@@ -3,9 +3,8 @@ package test
 import org.scalatest.Matchers
 import org.scalatest.FlatSpec
 import scala.collection.JavaConversions._
-import common.UsesElasticSearch
 
-class GalleryTemplateTest extends FlatSpec with Matchers with UsesElasticSearch {
+class GalleryTemplateTest extends FlatSpec with Matchers {
 
   it should "render gallery headline" in HtmlUnit("/news/gallery/2012/may/02/picture-desk-live-kabul-burma") {
     browser =>

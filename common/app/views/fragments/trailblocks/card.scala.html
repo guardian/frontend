@@ -1,12 +1,13 @@
 @(trails: Seq[Trail], numItemsVisible: Int = 4, related: Boolean = false, numThumbnails: Int = 4, headingLevel: Int = 2)(implicit request: RequestHeader)
 
-<ul class="unstyled u-cf">
+<ul class="unstyled collection l-row l-row--items-4 l-row--layout-m">
     @trails.take(numItemsVisible).zipWithRowInfo.map{ case (trail, info) =>
-
-        @trail match {
-            case g: Gallery => { @fragments.items.gallery(trail, info.rowNum, 0) }
-            case v: Video => { @fragments.items.video(trail, info.rowNum, 0) }
-            case other => { @fragments.items.standard(trail, info.rowNum, 0) }
-        }
+         <li class="@GetClasses.forCollectionItem(trail, (if (info.rowNum == 1) "l-row__item--break-m" else ""))" data-link-name="trail | @info.rowNum">
+             @trail match {
+                 case g: Gallery => { @fragments.items.standardGallery(g, 0, 1, "div") }
+                 case v: Video   => { @fragments.items.standardVideo(v, 0, 1, "div") }
+                 case t          => { @fragments.items.standard(t, 0, 1, "div") }
+             }
+         </li>
     }
 </ul>

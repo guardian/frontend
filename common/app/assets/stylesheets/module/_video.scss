@@ -18,11 +18,11 @@ object {
 }
 
 .video-standfirst {
-    margin-bottom: $baseline*4;
+    margin-bottom: ($gs-baseline/3)*4;
 }
 
 .gallery-byline {
-    margin-top: $baseline*4;
+    margin-top: ($gs-baseline/3)*4;
 }
 
 .media-proportional-container {

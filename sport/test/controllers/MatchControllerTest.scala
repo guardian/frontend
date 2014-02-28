@@ -4,9 +4,8 @@ import play.api.test.Helpers._
 import org.scalatest.Matchers
 import org.scalatest.FlatSpec
 import test.{TestRequest, Fake}
-import common.UsesElasticSearch
 
-class MatchControllerTest extends FlatSpec with Matchers  with UsesElasticSearch {
+class MatchControllerTest extends FlatSpec with Matchers {
   
   "MatchController" should "redirect to results when match is not found" in Fake {
     val result = football.controllers.MatchController.renderMatchId("12345")(TestRequest())

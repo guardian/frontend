@@ -3,11 +3,22 @@ package services
 import common.{AkkaAgent, ExecutionContexts}
 import play.api.libs.json.{JsNull, Json, JsValue}
 import model.Config
+import scala.concurrent.Future
+import scala.concurrent.duration._
+import akka.util.Timeout
+import conf.Configuration
 
 trait ConfigAgentTrait extends ExecutionContexts {
+  implicit val alterTimeout: Timeout = Configuration.faciatool.configBeforePressTimeout.millis
   private val configAgent = AkkaAgent[JsValue](JsNull)
 
   def refresh() = S3FrontsApi.getMasterConfig map {s => configAgent.send(Json.parse(s))}
+
+  def refreshAndReturn(): Future[JsValue] =
+    S3FrontsApi.getMasterConfig
+      .map(Json.parse)
+      .map(json => configAgent.alter{_ => json})
+      .getOrElse(Future.successful(configAgent.get()))
 
   def getPathIds: List[String] = {
     val json = configAgent.get()
@@ -41,10 +52,9 @@ trait ConfigAgentTrait extends ExecutionContexts {
         id,
         (collectionJson \ "apiQuery").asOpt[String],
         (collectionJson \ "displayName").asOpt[String].filter(_.nonEmpty),
-        (collectionJson \ "tone").asOpt[String],
         (collectionJson \ "href").asOpt[String],
         (collectionJson \ "groups").asOpt[Seq[String]] getOrElse Nil,
-        (collectionJson \ "roleName").asOpt[String]
+        (collectionJson \ "type").asOpt[String]
       )
     }
   }

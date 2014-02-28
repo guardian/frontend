@@ -1,6 +1,6 @@
 /* global curl: true */
 curl([
-    'models/main-config'
+    'models/config/main'
 ]).then(function(
     ConfigEditor
 ){

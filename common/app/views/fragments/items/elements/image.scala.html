@@ -1,0 +1,19 @@
+@(trail: Trail, inlineImage: Boolean = false, maxWidth: Int = 620)(implicit request: RequestHeader)
+
+@if(trail.imageAdjust != "hide") {
+    @trail.trailPicture(5,3).map{ imageContainer =>
+        @ImgSrc.imager(imageContainer, maxWidth).map { imgSrc =>
+            <div class="item__media-wrapper">
+                <div
+                    class="item__image-container js-image-upgrade @if(inlineImage){inlined-image}"
+                    data-src="@imgSrc">
+                    @if(inlineImage){
+                        @Item300.bestFor(imageContainer).map{ url =>
+                            <img src="@url" class="responsive-img" alt="" />
+                        }
+                    }
+                </div>
+            </div>
+        }
+    }
+}

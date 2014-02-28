@@ -38,7 +38,8 @@
             swipe: '@Static("javascripts/components/swipe/swipe.js")',
             zxcvbn: '@Static("javascripts/components/zxcvbn/index.js")',
             gravity: '@Static("javascripts/vendor/gravity.js")',
-            'ophan/ng': '@{Configuration.javascript.config("ophanJsUrl")}'
+            'ophan/ng': '@{Configuration.javascript.config("ophanJsUrl")}',
+            outbrain: '@Static("javascripts/vendor/outbrain.js")'
         }
     };
 
@@ -101,33 +102,41 @@
                     if (cachedCss) {
                         style.innerHTML = cachedCss;
                         style.setAttribute('data-cache-full', 'true');
-                        document.querySelector('html').className += ' font-' + nameAndCacheKey[1] + '-loaded';
                     }
                 }
             }
         }
-        function isConnectionLow() {
-            var connection = connection || navigator.connection || navigator.mozConnection || navigator.webkitConnection || {type: 'unknown'};
-            if (connection.type === 3
-                || connection.type === 4
-                || /^[23]g$/.test(connection.type)
-            ) {
-                return true;
-            }
-            var perf = window.performance || window.msPerformance || window.webkitPerformance || window.mozPerformance;
-            if (perf && perf.timing) {
-                var start_time =  perf.timing.requestStart || perf.timing.fetchStart || perf.timing.navigationStart,
-                    end_time = perf.timing.responseEnd;
-                if (start_time && end_time) {
-                    return (end_time - start_time) > 3000;
+        function containersAb(switches) {
+            // are we on a front
+            var isFront = /^\/(pressed\/)?(uk|us|au)$/.exec(window.location.pathname);
+            if (isFront) {
+                var front = isFront[2],
+                    participations = JSON.parse(localStorage.getItem('gu.ab.participations')),
+                    capitalisedFront = front.slice(0, 1).toUpperCase() + front.slice(1),
+                    notInAlphaVariant =
+                        participations &&
+                        participations.value &&
+                        participations.value[capitalisedFront + 'Containers'] &&
+                        ['notintest', 'control'].indexOf(participations.value[capitalisedFront + 'Containers'].variant) > -1;
+                // only run if we're in the alpha variant, and switch is on
+                if (!notInAlphaVariant && switches['ab' + capitalisedFront + 'Containers']) {
+                    // make sure we can access local storage
+                    try {
+                        localStorage.setItem('test', 'test');
+                        localStorage.removeItem('test');
+                        document.documentElement.className += (' ab-' + front + '-containers');
+                        // set timeout to remove class to be safe
+                        setTimeout(function() {
+                            document.documentElement.className = document.documentElement.className.replace(/\bab-\w+-containers\b/g, ' ');
+                        }, 2000);
+                    }
+                    catch(e) { }
                 }
             }
-            return false;
         }
 
-        @* we want this to happen ASAP to avoid FOUC *@
-        var connectionClass = 'connection--' + (isConnectionLow() ? '' : 'not-') + 'low';
-        var htmlClassNames = connectionClass;
+        @* we want to add/remove classes to HTML ASAP to avoid FOUC *@
+        var htmlClassNames = "";
 
         @* http://modernizr.com/download/#-svg *@
         function hasSvgSupport() {
@@ -158,6 +167,8 @@
         }
 
         guardian.config = @fragments.javaScriptConfig(item);
+
+        containersAb(guardian.config.switches);
 
         // must be set before the Omniture file is parsed
         window.s_account = guardian.config.page.omnitureAccount;

@@ -4,7 +4,7 @@ import frontsapi.model.Trail
 import model.Config
 import scala.concurrent.Future
 import tools.FaciaApi
-import play.api.libs.json.{JsNumber, JsValue, Json}
+import play.api.libs.json.{JsNull, JsNumber, JsValue, Json}
 import play.api.libs.ws.{Response, WS}
 import common.{Logging, ExecutionContexts}
 import com.ning.http.client.Realm
@@ -16,14 +16,14 @@ trait ContentApiWrite extends ExecutionContexts with Logging {
 
   case class Item(
                    id: String,
-                   meta: Option[Map[String, JsValue]]
+                   metadata: Option[Map[String, JsValue]]
                    )
 
   case class ContentApiPut(
                             `type`: String,
                             displayName: Option[String],
                             groups: Seq[String],
-                            curated: Seq[Item],
+                            curatedContent: Seq[Item],
                             backfill: Option[String],
                             lastModified: String,
                             modifiedBy: String
@@ -36,7 +36,7 @@ trait ContentApiWrite extends ExecutionContexts with Logging {
 
   def getCollectionUrlForWrite(id: String): Option[String] = endpoint
     .filter(_.startsWith("https://") || Play.isDev)
-    .map(_ + s"/collections/${id.replace('/', '-')}")
+    .map(_ + s"/collections/$id")
 
   def writeToContentapi(config: Config): Future[Response] = {
     (for {
@@ -69,7 +69,7 @@ trait ContentApiWrite extends ExecutionContexts with Logging {
     FaciaApi.getBlock(config.id) map { block =>
 
       ContentApiPut(
-        config.roleName.getOrElse("Default"),
+        config.collectionType.getOrElse("news"),
         config.displayName,
         config.groups,
         generateItems(block.live),
@@ -82,13 +82,24 @@ trait ContentApiWrite extends ExecutionContexts with Logging {
 
   private def generateItems(items: List[Trail]): List[Item] =
     items.map { trail =>
-      Item(trail.id, trail.meta.map(_.map {
-            case (id, jsValue) if id == "group" => (id, jsValue.asOpt[BigDecimal].map(JsNumber.apply).getOrElse(jsValue))
-            case j  => j
-          }
-        )
-      )
+    Item(trail.id, trail.meta.map(_.map(convertFields))
+    )
     }
+
+  //TODO: These are in transition and will be removed
+  def convertFields: PartialFunction[(String, JsValue), (String, JsValue)] = {
+    case ("group", jsValue) => ("group", jsValue.asOpt[BigDecimal].map(JsNumber.apply).getOrElse(jsValue))
+    case ("imageAdjust", jsValue) => ("imageAdjustment", jsValue)
+    case ("meta", jsValue)        => ("metadata", convertMeta(jsValue))
+    case ("supporting", jsValue)  => ("supportingContent", convertSupporting(jsValue))
+    case j  => j
+  }
+
+  def convertSupporting(meta: JsValue): JsValue =
+    meta.asOpt[List[JsValue]].map(_.map(convertMeta)).map(Json.toJson(_)).getOrElse(JsNull)
+
+  def convertMeta(meta: JsValue): JsValue =
+    meta.asOpt[Map[String, JsValue]].map(_.map(convertFields)).map(Json.toJson(_)).getOrElse(JsNull)
 
 }
 

@@ -7,80 +7,9 @@
    Facia
    ========================================================================== */
 
-@import "components/guss-layout/_columns";
-@import "components/guss-layout/_row";
-@include guss-columns-utility;
-@include guss-row-utility;
-
-.facia-container {
-    @include mq(gs-span(7) + $gs-gutter*3, tablet) {
-        @include rem((width: gs-span(7)));
-        margin: 0 auto;
-    }
-    @include mq(tablet) {
-        @include rem((width: gs-span(9)));
-        padding-left: 0;
-        padding-right: 0;
-    }
-    @include mq(desktop) {
-        @include rem((width: gs-span(12)));
-    }
-    @include mq(faciaLeftCol) {
-        @include rem((width: gs-span(14)));
-
-        .container__title {
-            margin-bottom: 0;
-        }
-        .container__body {
-            overflow: hidden;
-            @include rem((
-                margin-left: gs-span(2) + $gs-gutter
-            ));
-        }
-        .container--news {
-            .container__title {
-                display: block;
-                float: left;
-                @include rem((
-                    width: gs-span(2),
-                    margin-right: $gs-gutter
-                ));
-            }
-            .container__body {
-                margin-left: 0;
-                @include rem((width: gs-span(12)));
-            }
-        }
-    }
-    @include mq(wide) {
-        @include rem((width: gs-span(16)));
-
-        .container__title {
-            float: left;
-            @include rem((
-                width: gs-span(3) !important,
-                margin-right: $gs-gutter
-            ));
-        }
-        .container__body {
-            margin-left: 0;
-            @include rem((width: gs-span(12)));
-        }
-    }
-}
-
-@import "module/facia/_extends";
-@import "module/facia/_mixins";
-@import "module/facia/_items";
+@import "module/facia/_supporting";
 @import "module/facia/_fromage";
-@import "module/facia/_linkslist";
+@import "module/facia/_baguette";
 
 @import "module/containers/_news";
-@import "module/containers/_sport";
-@import "module/containers/_features";
-@import "module/containers/_comment";
-@import "module/containers/_special";
-@import "module/containers/_section";
-@import "module/containers/_commentanddebate";
-@import "module/containers/_people";
-
+@import "module/containers/_tag";

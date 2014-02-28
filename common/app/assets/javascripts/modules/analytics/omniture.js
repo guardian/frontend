@@ -136,36 +136,29 @@ define([
             s.prop47    = config.page.edition || '';
 
             var mvt = ab.makeOmnitureTag(config, document);
-            if (mvt.length > 0) {
 
-                s.prop51  = mvt;
-                s.eVar51  = mvt;
+            s.prop51  = mvt;
+            s.eVar51  = mvt;
 
-                var alphaTag = 'notAlpha,';
+            var alphaTag = 'notAlpha,';
 
-                // prefix all the MVT tests with the alpha user tag if present
-                if (Cookies.get('GU_ALPHA') === "2") {
-                    // This tag allows us to easily segment phase one, phase two, or phase one and two.
-                    alphaTag = 'r2alph2,';
+            // prefix all the MVT tests with the alpha user tag if present
+            if (Cookies.get('GU_ALPHA') === "2") {
+                // This tag allows us to easily segment phase one, phase two, or phase one and two.
+                alphaTag = 'r2alph2,';
 
-                    s.prop51  = alphaTag + s.prop51;
-                    s.eVar51  = alphaTag + s.eVar51;
+                s.prop51  = alphaTag + s.prop51;
+                s.eVar51  = alphaTag + s.eVar51;
 
-                } else if (Cookies.get('GU_ALPHA') === "true") {
-                    // A value of true means phase one.
-                    alphaTag = 'r2alpha,';
+            } else if (Cookies.get('GU_ALPHA') === "true") {
+                // A value of true means phase one.
+                alphaTag = 'r2alpha,';
 
-                    s.prop51  = alphaTag + s.prop51;
-                    s.eVar51  = alphaTag + s.eVar51;
-                }
+                s.prop51  = alphaTag + s.prop51;
+                s.eVar51  = alphaTag + s.eVar51;
+            }
 
-                // is user is viewing an alpha front
-                if (/^.+-alpha$/.test(config.page.pageId)) {
-                    var frontAlphaTag = config.page.pageId + ',';
-                    s.prop51  = frontAlphaTag + s.prop51;
-                    s.eVar51  = frontAlphaTag + s.eVar51;
-                }
-
+            if (s.prop51) {
                 s.events = s.apl(s.events,'event58',',');
             }
 
@@ -230,6 +223,9 @@ define([
                 }
                 storage.session.remove('gu.analytics.referrerVars');
             }
+
+            s.prop75 = config.page.wordCount || 0;
+            s.eVar75 = config.page.wordCount || 0;
         };
 
         this.loaded = function(callback) {
