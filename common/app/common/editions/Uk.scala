@@ -35,7 +35,7 @@ object Uk extends Edition(
     NavItem(culture, Seq(film, televisionAndRadio, music, books, artanddesign, stage)),
     NavItem(lifeandstyle, Seq(food, health, loveAndSex, family, women, homeAndGarden)),
     NavItem(fashion),
-    NavItem(economy, Seq(markets, media)),
+    NavItem(economy, Seq(markets, companies, media)),
     NavItem(money, Seq(property, savings, borrowing, careers)),
     NavItem(travel, Seq(uktravel, europetravel, usTravel)),
     NavItem(environment, Seq(cities, globalDevelopment)),

@@ -96,6 +96,7 @@ trait Navigation  {
 
   //Business
   val economy =  SectionLink("business", "Economy", "/business")
+  val companies =  SectionLink("business", "Companies", "/business/companies")
   val economics = SectionLink("business", "Economics", "/business/economics")
   val markets = SectionLink("business", "Markets", "/business/stock-markets")
   val useconomy = SectionLink("business", "US economy", "/business/useconomy")
