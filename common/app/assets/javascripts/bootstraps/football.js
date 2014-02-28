@@ -149,8 +149,7 @@ define([
         lazyLoadCss('football', config);
 
         // not worth over complicating for the time being
-        var trs = $('.table tr[data-link-to]').css({ 'cursor': 'pointer' }).map(function(elem) { return elem; });
-        bean.on(context, 'click', trs, function(e) {
+        bean.on(context, 'click', qwery('.table tr[data-link-to]'), function(e) {
             window.location = this.getAttribute('data-link-to');
         });
 
