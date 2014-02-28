@@ -2,14 +2,14 @@ define([
     'common/modules/experiments/ab',
     'qwery',
     'bean',
-    'modules/abtests/participation',
-    'modules/abtests/abtest-item'
+    'modules/abtests/abtest-item',
+    'modules/abtests/audience'
 ], function(
     abTests,
     qwery,
     bean,
-    Participation,
-    Item
+    Item,
+    Audience
 ) {
     function renderTests(tests, active, elem){
         var items = tests.map(function(test){ return new Item({test: test, active: active}); });
@@ -21,6 +21,10 @@ define([
 
         renderTests(abTests.getActiveTests(), true, qwery('.abtests-active'));
         var expiredTests = renderTests(abTests.getExpiredTests(), false, qwery('.abtests-expired'));
+
+        // Display audience breakdown.
+        var audience = new Audience({tests: abTests.getActiveTests()});
+        audience.render(qwery('.abtests-audience'));
 
         var $expired = qwery('.abtests-expired')[0];
 
