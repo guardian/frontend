@@ -360,17 +360,6 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
       }
     }
 
-    scenario("Primary image upgrades to high resolution") {
-
-      Given("I am on an article")
-      HtmlUnit("/film/2012/nov/11/margin-call-cosmopolis-friends-with-kids-dvd-review") { browser =>
-        import browser._
-
-        Then("the primary image's 'data-force-upgrade' attribute should be 'true'")
-        findFirst("#article figure .js-image-upgrade").getAttribute("data-force-upgrade") should be("")
-      }
-    }
-
     scenario("Hide main picture if video is at start of article") {
       Given("I am on an article with a video at the start of the body")
       HtmlUnit("/society/2013/mar/26/failing-hospitals-nhs-jeremy-hunt") { browser =>

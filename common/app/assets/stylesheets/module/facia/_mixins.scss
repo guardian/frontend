@@ -1,10 +1,6 @@
 $item-top-border-height: 2px;
 
 @mixin image-meta {
-    .connection--not-low & .item__image-container,
-    .connection--low & .item__standfirst {
-        display: block;
-    }
     @include mq(desktop) {
         &.item--force-image-upgrade .item__standfirst {
             display: none
@@ -50,7 +46,7 @@ $item-top-border-height: 2px;
 }
 @mixin card-mobile-image {
     @include image-meta;
-    .connection--not-low & .item__title {
+    .item__title {
         @include rem((
             padding-top: $gs-baseline/3,
             margin-bottom: $gs-baseline/3
@@ -87,14 +83,9 @@ $item-top-border-height: 2px;
     }
 }
 @mixin card-half-width-image {
-    .connection--not-low & {
-        @include rem((
-            min-height: gs-height(5)
-        ));
-        .item__image-container {
-            display: block;
-        }
-    }
+    @include rem((
+        min-height: gs-height(5)
+    ));
 }
 @mixin card($with-image: false) {
     @include rem((
@@ -122,7 +113,7 @@ $item-top-border-height: 2px;
     .item__title {
         @include fs-headline(5, $size-only: true);
     }
-    .connection--not-low &.item--has-image .item__title {
+    &.item--has-image .item__title {
         @include rem((
             margin-top: $gs-baseline
         ));
@@ -145,15 +136,13 @@ $item-top-border-height: 2px;
     @include image-meta;
     .item__title {
         @include fs-headline(5, $size-only: true);
-    }
-    .connection--not-low & .item__title {
         @include rem((
             margin-top: $gs-baseline*(2/3)
         ));
     }
 }
 @mixin card-full-width {
-    .connection--not-low &.item--has-image {
+    &.item--has-image {
         @include rem((
             min-height: gs-height(6),
             padding-left: gs-span(6) + $gs-gutter*1.5
@@ -166,7 +155,7 @@ $item-top-border-height: 2px;
         @include fs-header(5, $size-only: true);
     }
     @include image-meta;
-    .connection--not-low & .item__image-container {
+    .item__image-container {
         margin-top: 0;
         @include rem((
             width: gs-span(6),
@@ -187,12 +176,12 @@ $item-top-border-height: 2px;
     .item__title {
         @include fs-headline(4, $size-only: true);
     }
-    .connection--not-low & .item__title {
+    .item__title {
         @include rem((
             margin-top: $gs-baseline*(2/3)
         ));
     }
-    .connection--not-low & .item__image-container {
+    .item__image-container {
         margin-top: 0;
     }
 }

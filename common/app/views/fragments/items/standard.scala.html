@@ -10,7 +10,7 @@
         <div class="item__container">
 
             <a href="@LinkTo{@trail.url}" class="item__link tone-accent-border" data-link-name="article">
-                @fragments.items.elements.image(trail, forceUpgrade = isFirstContainer, inlineImage = containerIndex == 0 && index < 4)
+                @fragments.items.elements.image(trail, inlineImage = containerIndex == 0 && index < 4)
                 @fragments.items.elements.title(trail, index, containerIndex)
             </a>
 
