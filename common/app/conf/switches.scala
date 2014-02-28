@@ -81,16 +81,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = endOfQ4
   )
 
-  val SpdyAjaxServicesSwitch = Switch("Performance Switches", "spdy-ajax-services",
-    "If this switch is on, all ajax api endpoints will route through Akamai's SPDY service.",
-    safeState = Off, sellByDate = new DateMidnight(2014,2,28)
-  )
-
-  val SpdyImageServicesSwitch = Switch("Performance Switches", "spdy-image-services",
-    "If this switch is on, all image endpoints will route through Akamai's SPDY service.",
-    safeState = Off, sellByDate = new DateMidnight(2014,2,28)
-  )
-
   val ShowAllArticleEmbedsSwitch = Switch("Performance Switches", "show-all-embeds",
     "If switched on then all embeds will be shown inside article bodies",
     safeState = On, sellByDate = never
@@ -239,13 +229,6 @@ object Switches extends Collections {
   val SearchSwitch = Switch("Feature Switches", "google-search",
     "If this switch is turned on then Google search is added to the sections nav.",
     safeState = Off, sellByDate = endOfQ4
-  )
-
-  val LocalNavSwitch = Switch("Feature Switches", "local-nav",
-    "If this switch is on, a secondary local nav is shown.",
-    safeState = Off,
-    // extend by a week, GK is working on the replacement
-    sellByDate = new DateMidnight(2014, 3, 7)
   )
 
   val LightboxGalleriesSwitch = Switch("Feature Switches", "lightbox-galleries",
@@ -443,8 +426,6 @@ object Switches extends Collections {
     AutoRefreshSwitch,
     DoubleCacheTimesSwitch,
     RelatedContentSwitch,
-    SpdyAjaxServicesSwitch,
-    SpdyImageServicesSwitch,
     AdvertSwitch,
     VideoAdvertSwitch,
     AudienceScienceSwitch,
@@ -458,7 +439,6 @@ object Switches extends Collections {
     ReleaseMessageSwitch,
     IntegrationTestSwitch,
     ClientSideErrorSwitch,
-    LocalNavSwitch,
     LightboxGalleriesSwitch,
     IdentityProfileNavigationSwitch,
     ExternalLinksCardsSwitch,
