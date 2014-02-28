@@ -1,0 +1,11 @@
+div.fsradmin{font-family:Verdana,Geneva,Arial,Helvetica,sans-serif;color:#666;background-color:#fff;font-size:12pt}
+#fslogo{height:64px;float:left}
+div.fsradmin div.header{text-align:center;font-size:14pt;height:81px;vertical-align:middle}
+div.fsradmin div.instructions{font-size:10pt}
+div.fsradmin div.override{font-size:10pt}
+div.fsradmin div.body{text-align:left}
+div.fsradmin table{text-align:center}
+div.fsradmin td{padding:3px}
+div.fsradmin td.names{text-align:right}
+div.fsradmin div.footer{text-align:center;font-size:8pt}
+div.fsradmin .clearfix:after{content:".";display:block;height:0;clear:both;visibility:hidden}

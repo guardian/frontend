@@ -1,0 +1,12 @@
+#fsrqualifier{font-family:Verdana,Geneva,Arial,Helvetica,sans-serif;color:#4d4d4d;background-color:#fff;font-size:10pt}
+#fsrqualifier div.fsrq_top_ul{float:left}
+#fsrqualifier div.fsrq_top_ur{position:relative;text-align:right}
+#fsrcontainer img.fsrLogo{height:64px}
+#fsrcontainer img.fsrTruste{border:0 none;cursor:pointer;height:30px}
+#fsrqualifier div.fsrq_body{padding-top:10px;text-align:left;clear:both}
+#fsrqualifier div.fsrq_footer{padding-top:10px;vertical-align:bottom;text-align:center;font-size:10px}
+#fsrcontainer:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+#fsrcontainer{display:inline-block}
+/*\*/* html #fsrcontainer{height:1%}
+#fsrcontainer{display:block}
+/**/

@@ -1,0 +1,15 @@
+#fsrtracker{font-family:Arial,Helvetica,Sans-Serif;color:#4d4d4d;background-color:#fff;font-size:10pt}
+#fsrtracker div.fsrt_top_ul{float:left}
+#fsrtracker div.fsrt_top_ur{position:relative;text-align:right}
+#fsrcontainer img.fsrLogo{height:64px}
+#fsrcontainer img.fsrTruste{border:0 none;cursor:pointer;height:30px}
+#fsrtracker div.fsrt_body{padding-top:10px;text-align:left;clear:both}
+#fsrtracker button{font-family:Arial,Helvetica,Sans-Serif;border:1px solid #999;cursor:pointer;font-size:12pt;margin:2px 8px;padding:2px 12px;text-decoration:none;text-transform:none;font-weight:normal;float:none;background-color:#eee;color:#000;font-weight:bold;width:180px}
+#fsrtracker button.a{background-color:#ee3224;color:#fff;font-weight:bold;width:180px}
+#fsrtracker div.fsrt_footer{padding-top:10px;vertical-align:bottom;text-align:center;font-size:10px}
+#fsrcontainer:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+#fsrcontainer{display:inline-block}
+* html #fsrcontainer{height:1%}
+#fsrcontainer{display:block}
+.fsrred{color:red}
+.fsrbold{font-weight:bold}
