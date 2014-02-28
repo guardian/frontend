@@ -1,12 +1,16 @@
 .football-table__heading {
-    @include rem((margin: $gs-baseline 0));
+    @include rem((
+        margin: $gs-baseline 0
+    ));
     border-top: 1px solid $c-neutral5;
     display: block;
 }
 
 .football-matches__day {
     .table--football-match {
-        @include rem((margin-bottom: $gs-baseline*2));
+        @include rem((
+            margin-bottom: $gs-baseline*2
+        ));
     }
 }
 
@@ -71,7 +75,9 @@
 
 .article__secondary-column {
     .table__container {
-        @include rem((margin-bottom: $gs-baseline));
+        @include rem((
+            margin-bottom: $gs-baseline
+        ));
     }
 }
 
@@ -105,7 +111,9 @@
 
 .details__meta {
     @include fs-data(2);
-    @include rem((margin-top: $gs-baseline/2));
+    @include rem((
+        margin-top: $gs-baseline/2
+    ));
 }
 
 .matches-nav {

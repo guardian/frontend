@@ -5,7 +5,9 @@
 
 .football-filters {
     @include mq($from: leftCol) {
-        @include rem((margin-top: -$gs-baseline*2));
+        @include rem((
+            margin-top: -$gs-baseline*2
+        ));
     }
 }
 
@@ -20,11 +22,15 @@
     font-weight: 900;
 
     @include mq(leftCol) {
-        @include rem((margin-left: -160px));
+        @include rem((
+            margin-left: -160px
+        ));
     }
 
     @include mq(wide) {
-        @include rem((margin-left: -240px));
+        @include rem((
+            margin-left: -240px
+        ));
     }
 }
 
