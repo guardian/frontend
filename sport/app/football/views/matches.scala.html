@@ -4,7 +4,7 @@
 }{
 <div class="article__zone left-col-deport tone-news tone-accent-border">
     <h2 class="page-heading--football left-col-deport__body">
-        matches
+        @model.pageType
     </h2>
 </div>
 <div class="article-wrapper monocolumn-wrapper tone-news">
@@ -13,7 +13,7 @@
             <div class="article__main-column">
                 <div class="football-filters">
                     @fragments.filterBar(model.page.webTitle)
-                    @fragments.filters(model.filters, model.page, "tables")
+                    @fragments.filters(model.filters, model.page, @model.pageType)
                 </div>
                 
                 @fragments.matchesBody(model)

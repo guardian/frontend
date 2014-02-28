@@ -19,6 +19,10 @@
 
     tr:hover {
         background-color: darken($c-neutral8, 4%);
+
+        a {
+            visibility: visible;
+        }
     }
 }
 
@@ -34,6 +38,14 @@
 
 .football-match__details {
     text-align: center;
+}
+
+.football-match__report {
+    white-space: nowrap;
+
+    a {
+        visibility: hidden;
+    }
 }
 
 .article__secondary-column {

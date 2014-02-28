@@ -4,9 +4,9 @@
 <table class="table table--football-match">
     <thead hidden>
         <tr>
-            <th>Match status / kick off time</th>
-            <th>Match details</th>
-            <th>Reports</th>
+            <th class="football-match__status table-column--sub">Match status / kick off time</th>
+            <th class="football-match__details">Match details</th>
+            <th class="football-match__report">Reports</th>
         </tr>
     </thead>
     <tbody>
@@ -17,7 +17,7 @@
                     "football-match--fixture" -> game.isFixture,
                     "football-match--result" -> game.isResult
                 ))">
-                <td class="football-match__status">
+                <td class="football-match__status table-column--sub">
                     @if(game.isFixture){
                         @game.date.toString("HH:mm")
                     }else{
@@ -44,7 +44,9 @@
                         </div>
                     </a>
                 </td>
-                <td></td>
+                <td class="football-match__report">
+                    <a href="@LinkTo{@MatchUrl(game)}" data-link-name="stats" data-match-id="@game.id">Match report</a>
+                </td>
             </tr>
         }
     </tbody>
