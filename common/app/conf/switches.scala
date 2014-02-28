@@ -251,11 +251,6 @@ object Switches extends Collections {
     sellByDate = new DateMidnight(2014, 2, 28)
   )
 
-  val LiveSummarySwitch = Switch("Feature Switches", "live-summary",
-    "If this is switched on the live events will show a summary at the beginning of the page on mobile next to the article on wider devices.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 2, 28)
-  )
-
   val ArticleKeywordsSwitch = Switch("Feature Switches", "article-keywords",
     "If this is switched on then keywords will be shown at the end of articles.",
     safeState = On, sellByDate = endOfQ4
@@ -445,7 +440,6 @@ object Switches extends Collections {
     LightboxGalleriesSwitch,
     IdentityProfileNavigationSwitch,
     ExternalLinksCardsSwitch,
-    LiveSummarySwitch,
     LiveCricketSwitch,
     LiveStatsSwitch,
     LiveAbTestStatsSwitch,
