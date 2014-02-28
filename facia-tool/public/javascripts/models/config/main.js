@@ -110,7 +110,7 @@ define([
         };
 
         function pressFront(front) {
-            authedAjax.request({
+            return authedAjax.request({
                 url: vars.CONST.apiBase + '/front/press/' + front.id(),
                 type: 'post'
             });
