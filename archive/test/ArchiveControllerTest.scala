@@ -81,4 +81,9 @@ class ArchiveControllerTest extends FlatSpec with Matchers {
     controllers.ArchiveController.isGallery("arts/gallery/0,") should be (Some("arts/pictures/0,"))
   }
 
+  if should
+  "http://www.theguardian.com/books/worldliteraturetour/page/0,,2021886,.html"
+  "http://books.theguardian.com/worldliteraturetour/page/0,,2021886,.html"
+
+
 }

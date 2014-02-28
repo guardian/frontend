@@ -14,7 +14,17 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
   def isRedirect(path: String): Option[String] = {
     val redirects = DynamoDB.destinationFor(path)
     log.info(s"Checking '${path}' is a redirect in DynamoDB: ${!redirects.isEmpty}")
-    redirects
+    redirects.map { url =>
+      linksToItself(path, url) match {
+        case true => {
+          log.info(s"The ${url} has a DynamoDB record that links to itself. You should delete it.")
+          None
+        }
+        case _ => Option(url) 
+      }
+    }.getOrElse(None) 
+   /*
+    }*/
   }
 
   def isArchived(path: String): Option[String] = {
@@ -52,6 +62,17 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
       case r1Url(section, path) => Option(s"/${section}")
       case _ => None
     } 
+  }
+
+  def linksToItself(path: String, destination: String): Boolean = {
+    val r1Url = s"""www.theguardian.com/([\\w\\d-]+)/(.*)""".r
+    path match {
+      case r1Url(section, r1path) => {
+        destination contains r1path
+      } 
+      case _ => false
+    } 
+     
   }
 
   def lookup(path: String) = Action { implicit request =>
