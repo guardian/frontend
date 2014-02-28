@@ -81,9 +81,10 @@ class ArchiveControllerTest extends FlatSpec with Matchers {
     controllers.ArchiveController.isGallery("arts/gallery/0,") should be (Some("arts/pictures/0,"))
   }
 
-  if should
-  "http://www.theguardian.com/books/worldliteraturetour/page/0,,2021886,.html"
-  "http://books.theguardian.com/worldliteraturetour/page/0,,2021886,.html"
-
+  it should "test a redirect doesn't not link to itself" in Fake {
+    val path = "www.theguardian.com/books/worldliteraturetour/page/0,,2021886,.html"
+    val dest = "http://books.theguardian.com/worldliteraturetour/page/0,,2021886,.html"
+    controllers.ArchiveController.linksToItself(path, dest) should be (true)
+  }
 
 }
