@@ -30,8 +30,8 @@
     &:before {
         display: block;
         content: ' ';
-        @extend .i;
-        @extend .i-quote-blue;
+        @extend %i;
+        @extend %i-quote-blue;
     }
 }
 
