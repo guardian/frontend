@@ -132,7 +132,7 @@ trait Navigation  {
   //Travel
   val travel = SectionLink("travel", "Travel", "/travel")
   val shortbreaks = SectionLink("travel", "Short breaks", "/travel/short-breaks")
-  val uktravel = SectionLink("travel", "Uk", "/travel/uk")
+  val uktravel = SectionLink("travel", "UK", "/travel/uk")
   val europetravel = SectionLink("travel", "Europe", "/travel/europe")
   val usTravel = SectionLink("travel", "US", "/travel/usa")
   val hotels = SectionLink("travel", "Hotels", "/travel/hotels")
