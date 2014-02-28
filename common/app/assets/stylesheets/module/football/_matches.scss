@@ -36,14 +36,22 @@
     }
 }
 
+.football-match__status {
+    width: 15%;
+}
+
 .football-match__details {
+    width: 70%;
     text-align: center;
 }
 
 .football-match__report {
+    text-align: right;
+    width: 15%;
     white-space: nowrap;
 
     a {
+        @include fs-data(2);
         visibility: hidden;
     }
 }
@@ -56,6 +64,9 @@
 
 .details__team {
     display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     width: 40%;
 }
 
