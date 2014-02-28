@@ -80,7 +80,7 @@ define([
             model.collections.unshift(collection);
         };
 
-        model.save = function() {
+        model.save = function(affectedFronts) {
             var serialized = serialize(model);
 
             if(!_.isEqual(serialized, vars.state.config)) {
@@ -100,10 +100,21 @@ define([
                     })
                     .done(function() {
                         model.pending(false);
+
+                        if (affectedFronts) {
+                            _.each([].concat(affectedFronts), pressFront);
+                        }
                     });
                 });
             }
         };
+
+        function pressFront(front) {
+            authedAjax.request({
+                url: vars.CONST.apiBase + '/front/press/' + front.id(),
+                type: 'post'
+            });
+        }
 
         function serialize(model) {
             return {

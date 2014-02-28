@@ -19,6 +19,8 @@ GET           /assets/*file              controllers.Assets.at(path="/public", f
 GET           /                          controllers.FaciaToolController.collectionsEditor()
 GET           /configuration             controllers.FaciaToolController.configEditor()
 
+POST          /front/press/*id           controllers.FaciaToolController.pressPathId(id)
+
 POST          /collection/publish/*id    controllers.FaciaToolController.publishCollection(id)
 POST          /collection/discard/*id    controllers.FaciaToolController.discardCollection(id)
 
