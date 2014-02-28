@@ -51,9 +51,20 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
   def sectionFromR1Path(path: String): Option[String] = {
     val r1Url = s"""www.theguardian.com/([\\w\\d-]+)/(.*)/[0|1]?,.*""".r
     path match {
-      case r1Url(section, path) => Option(s"/${section}")
+      case r1Url(s, path) => Option(s"/${s}")
       case _ => None
     } 
+  }
+
+  def linksToItself(path: String, destination: String): Boolean = {
+    val r1Url = s"""www.theguardian.com/([\\w\\d-]+)/(.*)""".r
+    path match {
+      case r1Url(s, r1path) => {
+        destination contains r1path
+      } 
+      case _ => false
+    } 
+     
   }
 
   def lookup(path: String) = Action { implicit request =>
