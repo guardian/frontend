@@ -9,7 +9,7 @@ abstract class Edition(
     val id: String,
     val displayName: String,
     val timezone: DateTimeZone
-  ) {
+  ) extends Navigation {
   def zones: Seq[Zone]
   def navigation(metadata: MetaData): Seq[NavItem]
 }
