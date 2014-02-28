@@ -43,21 +43,22 @@
 }
 
 .football-match__status {
-    width: 15%;
+    width: 18%;
 }
 
 .football-match__details {
-    width: 70%;
+    width: 74%;
     text-align: center;
 }
 
 .football-match__report {
     text-align: right;
-    width: 15%;
+    width: 18%;
     white-space: nowrap;
 
     a {
         @include fs-data(2);
+        text-decoration: underline;
         visibility: hidden;
     }
 }
@@ -82,6 +83,10 @@
 
 .details__team--away {
     text-align: left;
+}
+
+.details__versus {
+    color: $c-statusNeutral;
 }
 
 .details__versus,
