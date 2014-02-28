@@ -1,8 +1,8 @@
 {
   "name": "domready",
   "repo": "ded/domready",
-  "description": "bullet proof DOM ready method",
-  "version": "0.2.13",
+  "description": "modern domready",
+  "version": "1.0.3",
   "homepage": "https://github.com/ded/domready",
   "author": "Dustin Diaz <dustin@dustindiaz.com> (http://dustindiaz.com)",
   "keywords": [

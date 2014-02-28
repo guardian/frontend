@@ -10,7 +10,7 @@
     "async",
     "sync"
   ],
-  "version": "0.9.10",
+  "version": "1.1.0",
   "homepage": "https://github.com/ded/reqwest",
   "author": "Dustin Diaz <dustin@dustindiaz.com> (http://dustindiaz.com)",
   "repository": {
@@ -31,6 +31,6 @@
   },
   "scripts": {
     "boosh": "smoosh make ./build.json",
-    "test": "node make/tests.js"
+    "test": "node ./test.js"
   }
 }

@@ -68,8 +68,7 @@
       if (r._aborted) return error(r.request)
       if (r.request && r.request[readyState] == 4) {
         r.request.onreadystatechange = noop
-        if (twoHundo.test(r.request.status))
-          success(r.request)
+        if (twoHundo.test(r.request.status)) success(r.request)
         else
           error(r.request)
       }
@@ -109,7 +108,6 @@
     var reqId = uniqid++
       , cbkey = o['jsonpCallback'] || 'callback' // the 'callback' key
       , cbval = o['jsonpCallbackName'] || reqwest.getcallbackPrefix(reqId)
-      // , cbval = o['jsonpCallbackName'] || ('reqwest_' + reqId) // the 'callback' value
       , cbreg = new RegExp('((^|\\?|&)' + cbkey + ')=([^&]+)')
       , match = url.match(cbreg)
       , script = doc.createElement('script')
@@ -135,9 +133,6 @@
       // need this for IE due to out-of-order onreadystatechange(), binding script
       // execution to an event listener gives us control over when the script
       // is executed. See http://jaubourg.net/2010/07/loading-script-as-onclick-handler-of.html
-      //
-      // if this hack is used in IE10 jsonp callback are never called
-      script.event = 'onclick'
       script.htmlFor = script.id = '_reqwest_' + reqId
     }
 
@@ -224,9 +219,12 @@
     init.apply(this, arguments)
   }
 
-  function setType(url) {
-    var m = url.match(/\.(json|jsonp|html|xml)(\?|$)/)
-    return m ? m[1] : 'js'
+  function setType(header) {
+    // json, javascript, text/plain, text/html, xml
+    if (header.match('json')) return 'json'
+    if (header.match('javascript')) return 'js'
+    if (header.match('text')) return 'html'
+    if (header.match('xml')) return 'xml'
   }
 
   function init(o, fn) {
@@ -248,7 +246,6 @@
     this._responseArgs = {}
 
     var self = this
-      , type = o['type'] || setType(this.url)
 
     fn = fn || function () {}
 
@@ -285,6 +282,7 @@
     }
 
     function success (resp) {
+      var type = o['type'] || setType(resp.getResponseHeader('Content-Type'))
       resp = (type !== 'jsonp') ? self.request : resp
       // use global data filter on response text
       var filteredResponse = globalSetupOptions.dataFilter(resp.responseText, type)

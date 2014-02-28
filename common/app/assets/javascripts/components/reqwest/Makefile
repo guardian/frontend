@@ -8,5 +8,9 @@ test:
 	npm test
 
 bump: boosh
-	node node_modules/bump/bump.js
+	npm version patch
 	node make/bump
+
+publish:
+	npm publish
+	git push origin master --tags
