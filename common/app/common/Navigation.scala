@@ -20,7 +20,7 @@ case class NavItem(name: SectionLink, links: Seq[SectionLink] = Nil, current: Bo
 trait Navigation  {
 
   //News
-  val home = SectionLink("news", "News", "/")
+  val home = SectionLink("news", "Home", "/")
   val news  = SectionLink("news", "News", "/")
   val world = SectionLink("world", "World", "/world")
   val uk    = SectionLink("uk", "UK", "/uk-news")
