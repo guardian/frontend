@@ -8,6 +8,7 @@
         }
     </select>
     <script>
+        // TODO (jamesgorrie): Get rid of this. No scala code here
         $('#auto-@fieldName').fautocomplete({
             source: [@for(team <- teams) {
                 { id: '@team.id', value: '@team.name' },
