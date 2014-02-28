@@ -158,10 +158,12 @@ $c-live: #e81818;
 .container__card {
     position: absolute;
     bottom: 0;
-    width: gs-span(2);
     border-top: 1px solid $c-featureAccent;
     display: none;
-    @include mq(desktop) {
+    @include rem((
+        width: gs-span(2)
+    ));
+    @include mq(faciaLeftCol) {
         display: block;
     }
 }
