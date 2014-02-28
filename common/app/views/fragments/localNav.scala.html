@@ -19,7 +19,7 @@
                 @localNav.links.map{ link =>
                     <li class="nav__item @currentSublink.filter(_.href == link.href).map{ current => is-active }">
                         <a href="@LinkTo{@link.href}" class="nav__link" data-link-name="@link.href">
-                            @Html(link.linkName)
+                            @Html(link.title)
                         </a>
                     </li>
                 }
