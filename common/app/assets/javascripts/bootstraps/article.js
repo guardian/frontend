@@ -13,7 +13,8 @@ define([
     "common/modules/ui/notification-counter",
     "common/modules/experiments/left-hand-card",
     "common/modules/open/cta",
-    "common/modules/commercial/loader"
+    "common/modules/commercial/loader",
+    "common/modules/experiments/layoutHints"
 ], function (
     common,
     mediator,
@@ -29,7 +30,8 @@ define([
     NotificationCounter,
     LeftHandCard,
     OpenCta,
-    CommercialLoader
+    CommercialLoader,
+    Layout
 ) {
 
     var modules = {
@@ -154,6 +156,12 @@ define([
                     fence.render(el);
                 });
             });
+        },
+
+        initLayoutHints: function(config) {
+            if(config.switches.layoutHints && /\/-sp-/g.test(config.page.pageId)) {
+                var l = new Layout(config);
+            }
         }
     };
 
@@ -168,6 +176,7 @@ define([
             modules.externalLinksCards();
             modules.initOpen(config);
             modules.initFence();
+            modules.initLayoutHints(config);
         }
         common.mediator.emit("page:article:ready", config, context);
     };

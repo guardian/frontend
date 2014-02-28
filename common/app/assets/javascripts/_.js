@@ -2,9 +2,9 @@ define(['lodash/arrays/compact', 'lodash/arrays/flatten', 'lodash/arrays/zip', '
         'lodash/collections/forEach', 'lodash/collections/map', 'lodash/collections/pluck', 'lodash/collections/sortBy',
         'lodash/objects/mapValues', 'lodash/collections/max', 'lodash/objects/pairs', 'lodash/objects/values',
         'lodash/objects/forOwn', 'lodash/objects/isArray', 'lodash/utilities/mixin', 'lodash/internals/lodashWrapper',
-        'lodash/objects/functions'],
+        'lodash/objects/functions', 'lodash/collections/filter'],
 function(compact, flatten, zip, wrapperValueOf, forEach, map, pluck, sortBy, mapValues, max, pairs, values,
-         forOwn, isArray, mixin, LodashWrapper, functions) {
+         forOwn, isArray, mixin, LodashWrapper, functions, filter) {
 
     var arrayRef = [];
     var objectProto = Object.prototype;
@@ -12,33 +12,33 @@ function(compact, flatten, zip, wrapperValueOf, forEach, map, pluck, sortBy, map
 
 
     function Lodash(value) {
-    // don't wrap if already wrapped, even if wrapped by a different `lodash` constructor
-    return (value && typeof value === 'object' && !isArray(value) && hasOwnProperty.call(value, '__wrapped__'))
-     ? value
-     : new LodashWrapper(value);
+        // don't wrap if already wrapped, even if wrapped by a different `lodash` constructor
+        return (value && typeof value === 'object' && !isArray(value) && hasOwnProperty.call(value, '__wrapped__'))
+            ? value : new LodashWrapper(value);
     }
     // ensure `new lodashWrapper` is an instance of `lodash`
     LodashWrapper.prototype = Lodash.prototype;
 
     // wrap `_.mixin` so it works when provided only one argument
     mixin = (function(fn) {
-    var functions = functions;
-    return function(object, source, options) {
-      if (!source || (!options && !functions(source).length)) {
-        if (options === null) {
-          options = source;
-        }
-        source = object;
-        object = Lodash;
-      }
-      return fn(object, source, options);
-    };
+        var functions = functions;
+        return function(object, source, options) {
+          if (!source || (!options && !functions(source).length)) {
+            if (options === null) {
+              options = source;
+            }
+            source = object;
+            object = Lodash;
+          }
+          return fn(object, source, options);
+        };
     }(mixin));
 
     // add functions that return wrapped values when chaining
     Lodash.compact = compact;
     Lodash.flatten = flatten;
     Lodash.forEach = forEach;
+    Lodash.filter = filter;
     Lodash.map = map;
     Lodash.mapValues = mapValues;
     Lodash.max = max;
@@ -65,17 +65,17 @@ function(compact, flatten, zip, wrapperValueOf, forEach, map, pluck, sortBy, map
     })(), false);
 
     forOwn(Lodash, function(func, methodName) {
-    var callbackable = methodName !== 'sample';
-    if (!Lodash.prototype[methodName]) {
-      Lodash.prototype[methodName]= function(n, guard) {
-        var chainAll = this.__chain__,
-            result = func(this.__wrapped__, n, guard);
+        var callbackable = methodName !== 'sample';
+        if (!Lodash.prototype[methodName]) {
+          Lodash.prototype[methodName]= function(n, guard) {
+            var chainAll = this.__chain__,
+                result = func(this.__wrapped__, n, guard);
 
-        return !chainAll && (n === null || (guard && !(callbackable && typeof n === 'function')))
-          ? result
-          : new LodashWrapper(result, chainAll);
-      };
-    }
+            return !chainAll && (n === null || (guard && !(callbackable && typeof n === 'function')))
+              ? result
+              : new LodashWrapper(result, chainAll);
+          };
+        }
     });
 
     /**
@@ -92,32 +92,32 @@ function(compact, flatten, zip, wrapperValueOf, forEach, map, pluck, sortBy, map
 
     // add `Array` functions that return unwrapped values
     forEach(['join', 'pop', 'shift'], function(methodName) {
-    var func = arrayRef[methodName];
-    Lodash.prototype[methodName] = function() {
-      var chainAll = this.__chain__,
-          result = func.apply(this.__wrapped__, arguments);
+        var func = arrayRef[methodName];
+        Lodash.prototype[methodName] = function() {
+          var chainAll = this.__chain__,
+              result = func.apply(this.__wrapped__, arguments);
 
-      return chainAll
-        ? new LodashWrapper(result, chainAll)
-        : result;
-    };
+          return chainAll
+            ? new LodashWrapper(result, chainAll)
+            : result;
+        };
     });
 
     // add `Array` functions that return the existing wrapped value
     forEach(['push', 'reverse', 'sort', 'unshift'], function(methodName) {
-    var func = arrayRef[methodName];
-    Lodash.prototype[methodName] = function() {
-      func.apply(this.__wrapped__, arguments);
-      return this;
-    };
+        var func = arrayRef[methodName];
+        Lodash.prototype[methodName] = function() {
+          func.apply(this.__wrapped__, arguments);
+          return this;
+        };
     });
 
     // add `Array` functions that return new wrapped values
     forEach(['concat', 'slice', 'splice'], function(methodName) {
-    var func = arrayRef[methodName];
-    Lodash.prototype[methodName] = function() {
-      return new LodashWrapper(func.apply(this.__wrapped__, arguments), this.__chain__);
-    };
+        var func = arrayRef[methodName];
+        Lodash.prototype[methodName] = function() {
+          return new LodashWrapper(func.apply(this.__wrapped__, arguments), this.__chain__);
+        };
     });
 
     //(Lodash.templateSettings = utilities.templateSettings).imports._ = Lodash;

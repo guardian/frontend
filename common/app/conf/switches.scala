@@ -81,12 +81,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = endOfQ4
   )
 
-  // Front Press Switches
-  val FrontPressJobSwitch = Switch("Front Press Switches", "front-press-job-switch",
-    "If this switch is on then the jobs to push and pull from SQS will run",
-    safeState = Off, sellByDate = never
-  )
-
   val SpdyAjaxServicesSwitch = Switch("Performance Switches", "spdy-ajax-services",
     "If this switch is on, all ajax api endpoints will route through Akamai's SPDY service.",
     safeState = Off, sellByDate = new DateMidnight(2014,2,28)
@@ -320,6 +314,11 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 2, 28)
   )
 
+  val LayoutHintsSwitch = Switch("Feature Switches", "layout-hints",
+    "If this switch is on, javascript will enable the inline-hinting css experiments",
+    safeState = Off, sellByDate = new DateMidnight(2014, 4, 30)
+  )
+
   // A/B Test Switches
 
   val ABAa = Switch("A/B Tests", "ab-abcd",
@@ -335,6 +334,11 @@ object Switches extends Collections {
   val ABInlineElements = Switch("A/B Tests", "ab-onward-inline-elements",
     "If this switch is on the ab inline elements test is run",
     safeState = Off, sellByDate = new DateMidnight(2014, 2, 28)
+  )
+
+  val ABRelatedContent = Switch("A/B Tests", "ab-onward-related",
+    "If this switch is on the related content popular-in-tag override A/B test is run",
+    safeState = Off, sellByDate = new DateMidnight(2014, 3, 10)
   )
 
   val TagLinking = Switch("Feature Switches", "tag-linking",
@@ -413,8 +417,14 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
-  val FaciaToolPressSwitch = Switch("Facia Tool", "facia-tool-press-front",
+  val FaciaToolPressSwitch = Switch("Front Press Switches", "facia-tool-press-front",
     "If this switch is on facia tool will press fronts on each change",
+    safeState = Off, sellByDate = never
+  )
+
+  // Front Press Switches
+  val FrontPressJobSwitch = Switch("Front Press Switches", "front-press-job-switch",
+    "If this switch is on then the jobs to push and pull from SQS will run",
     safeState = Off, sellByDate = never
   )
 
@@ -465,6 +475,7 @@ object Switches extends Collections {
     GeoMostPopular,
     FootballTablePosition,
     ABInlineElements,
+    ABRelatedContent,
     ToolDisable,
     ToolConfigurationDisable,
     ToolSparklines,
@@ -491,13 +502,11 @@ object Switches extends Collections {
     FaciaToolPressSwitch,
     DogpileSwitch,
     ShowAllArticleEmbedsSwitch,
-    ImageServerSwitch,
     FrontPressJobSwitch,
     DogeSwitch,
-    FrontPressJobSwitch,
     ABUkContainers,
     ABUsContainers,
-    ABAuContainers
+    LayoutHintsSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }

@@ -84,6 +84,7 @@ trait Prototypes {
     mergeStrategy in assembly <<= (mergeStrategy in assembly) { current =>
       {
         case s: String if s.startsWith("org/mozilla/javascript/") => MergeStrategy.first
+        case s: String if s.startsWith("org/jdom/") || s.startsWith("JDOM") => MergeStrategy.last
         case s: String if s.startsWith("jargs/gnu/") => MergeStrategy.first
         case s: String if s.startsWith("scala/concurrent/stm") => MergeStrategy.first
         case s: String if s.endsWith("ServerWithStop.class") => MergeStrategy.first  // There is a scala trait and a Java interface
