@@ -1,11 +1,13 @@
 define([
     'reqwest',
     'bonzo',
-    'qwery'
+    'qwery',
+    'common/utils/detect'
 ], function(
     reqwest,
     bonzo,
-    qwery
+    qwery,
+    detect
 ) {
 
     function fillTemplate(template, params) {
@@ -17,12 +19,18 @@ define([
     return function() {
 
         this.id = 'FrontsLatestReviewsCard';
+        this.start = '2014-02-28';
         this.expiry = '2014-03-08';
+        this.author = 'Darren Hurley';
+        this.description = 'Add a latest reviews card to the features container';
         this.audience = 0.1;
         this.audienceOffset = 0.0;
-        this.description = 'Add a latest reviews card to the features container';
+        this.successMeasure = 'Click-through for the page as a whole.';
+        this.audienceCriteria = 'Users who are not on desktop or bigger, on the network front.';
+        this.dataLinkNames = 'card | latest reviews | trail | {{index}}';
+        this.idealOutcome = 'Click-through for the front increases, i.e. the card does not detract from the page\'s CTR.';
         this.canRun = function(config) {
-            return config.page.isFront && config.page.pageId === '';
+            return ['desktop', 'wide'].indexOf(detect.getBreakpoint()) > -1 && config.page.isFront && config.page.pageId === '';
         };
         this.variants = [
             {
@@ -38,11 +46,11 @@ define([
                     })
                         .then(function(resp) {
                             var reviews = [];
-                            resp.response.results.forEach(function(result) {
+                            resp.response.results.forEach(function(result, index) {
                                 var starRating = result.fields.starRating;
                                 reviews.push(
                                     fillTemplate(
-                                        '<li class="container__card__item"><a href="{{url}}">{{section}}: {{title}}</a>' +
+                                        '<li class="container__card__item" data-link-name="trail | {{index}}"><a href="{{url}}" data-link-name="article">{{section}}: {{title}}</a>' +
                                             ((starRating !== undefined) ?
                                                 '<span class="stars s-{{rating}}" itemprop="reviewRating" itemscope itemtype="http://schema.org/Rating">' +
                                                     '<meta itemprop="worstRating" content="1" />' +
@@ -50,14 +58,14 @@ define([
                                                     '<span itemprop="bestRating">5</span> stars' +
                                                 '</span>' : '') +
                                         '</li>',
-                                        {url: result.webUrl.replace(/http:\/\/[^/]*/, ''), title: result.webTitle, section: result.sectionName, rating: result.fields.starRating}
+                                        {url: result.webUrl.replace(/https?:\/\/[^/]*/, ''), title: result.webTitle, section: result.sectionName, rating: result.fields.starRating, index: index + 1}
                                     )
                                 );
                             });
                             var $card = bonzo(
                                     bonzo.create(
                                         fillTemplate(
-                                            '<div class="container__card"><h3 class="container__card__title">Latest reviews</h3><ul class="unstyled">{{reviews}}</ul></div>',
+                                            '<div class="container__card" data-link-name="card | latest reviews"><h3 class="container__card__title">Latest reviews</h3><ul class="unstyled">{{reviews}}</ul></div>',
                                             {reviews:  reviews.join('')}
                                         )
                                     )
