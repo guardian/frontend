@@ -258,7 +258,7 @@
     @extend .section-head;
     border: 0 !important;
     @include rem((
-        height: $gs-row-height + $baseline - 3 !important
+        height: $gs-row-height + ($gs-baseline/3) - 3 !important
     ));
     padding-left: 0 !important;
 }

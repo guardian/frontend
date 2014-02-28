@@ -70,7 +70,9 @@
         overflow: hidden;
         top: 1px;
         left: 42px;
-        @include rem((max-width: 200px));
+        @include rem((
+            max-width: 200px
+        ));
         text-overflow: ellipsis;
         text-align: left;
     }

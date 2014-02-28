@@ -30,7 +30,9 @@
     }
 
     @include mq(mobileLandscape) {
-        @include rem((margin-right: $gs-gutter));
+        @include rem((
+            margin-right: $gs-gutter
+        ));
     }
     @include mq(tablet) {
         @include rem((
