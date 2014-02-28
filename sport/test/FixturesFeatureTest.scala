@@ -14,7 +14,7 @@ class FixturesFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
       HtmlUnit("/football/fixtures") { browser =>
         import browser._
-        findFirst("h1").getText should be("All fixtures")
+        findFirst(".football-filter__label").getText should be("All fixtures")
 
         Then("I should see todays live matches")
         val matches = $(".match-desc").getTexts
@@ -74,6 +74,5 @@ class FixturesFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
       }
 
     }
-
   }
 }

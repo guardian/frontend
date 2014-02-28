@@ -2,19 +2,22 @@ package common
 
 import model.{Tag, MetaData}
 
-case class SectionLink(zone: String, linkName: String, href: String, title: String, newWindow: Boolean = false)
+case class SectionLink(zone: String, linkName: String, href: String, title: String, newWindow: Boolean = false) {
+  def currentFor(page: MetaData): Boolean = page.url == href ||
+    s"/${page.section}" == href ||
+    page.tags.exists(t => s"/${t.id}" == href)
+}
 
 case class Zone(name: SectionLink, sections: Seq[SectionLink])
 
 case class NavItem(name: SectionLink, links: Seq[SectionLink] = Nil, current: Boolean = false) {
-  def currentFor(metadata: MetaData) = {
-    val sectionId = s"/${metadata.section}"
-    sectionId == name.href || name.href == s"/${metadata.id}" || links.exists(_.href == sectionId)
-  }
+  def currentFor(page: MetaData): Boolean = name.currentFor(page) ||
+    links.exists(_.currentFor(page)) || exactFor(page)
+
+  def exactFor(page: MetaData): Boolean = page.section == name.href.dropWhile(_ == '/')
 }
 
-
-trait Sections  {
+trait Navigation  {
 
   //News
   val home = SectionLink("news", "News", "/", "Home")
@@ -36,17 +39,10 @@ trait Sections  {
 
   val health = SectionLink("society", "Health", "/society/health", "Health")
 
-
-  //World
-  val europe = SectionLink("world", "Europe", "/world/europe/roundup", "Europe")
-  val middleeast = SectionLink("world", "Middle East", "/world/middleeast/roundup", "Middle east")
-  val asiapacific = SectionLink("world", "Asia Pacific", "/world/asiapacific/roundup", "Asia Pacific")
-  val africa = SectionLink("world", "Africa", "/world/africa/roundup", "Africa")
-  val americas = SectionLink("world", "Americas", "/world/americas/roundup", "Americas")
-
   //Sport
   val sport = SectionLink("sport", "Sport", "/sport", "Sport")
   val sports = sport.copy(title = "Sports")
+  val usSport = SectionLink("sport", "US sports", "/sport/us-sport", "US sports")
 
   val football = SectionLink("football", "Football", "/football", "Football")
   val cricket = SectionLink("sport", "Cricket", "/sport/cricket", "Cricket")
@@ -130,8 +126,8 @@ trait Sections  {
   val budget = SectionLink("travel", "Budget travel", "/travel/budget", "Budget travel")
 
   //Environment
-  val climatechange = SectionLink("environment", "Climate change", "/environment/climate-change", "environment")
-  val wildlife = SectionLink("environment", "Wildlife", "/environment/wildlife", "wildlife")
+  val climatechange = SectionLink("environment", "Climate change", "/environment/climate-change", "Climate change"  )
+  val wildlife = SectionLink("environment", "Wildlife", "/environment/wildlife", "Wildlife")
   val energy = SectionLink("environment", "Energy", "/environment/energy", "Energy")
   val conservation = SectionLink("environment", "Conservation", "/environment/conservation", "Conservation")
   val food = SectionLink("environment", "Food", "/environment/food", "Food")
@@ -140,16 +136,16 @@ trait Sections  {
     case tag: Tag if tag.isFootballTeam => NavItem(football, Seq(
       SectionLink("football", "Tables", "/football/tables", "Tables"),
       SectionLink("football", "Live scores", "/football/live", "Live scores"),
-      SectionLink("football", "Fixtures", s"/football/${tag.url}/fixtures", "Fixtures"),
-      SectionLink("football", "Results", s"/football/${tag.url}/results", "Results"),
+      SectionLink("football", "Fixtures", s"${tag.url}/fixtures", "Fixtures"),
+      SectionLink("football", "Results", s"${tag.url}/results", "Results"),
       SectionLink("football", "Teams", "/football/teams", "Teams"),
       SectionLink("football", "Leagues & competitions", "/football/competitions", "Leagues & competitions")
     ))
     case tag: Tag if tag.isFootballCompetition => NavItem(football, Seq(
-      SectionLink("football", "Tables", s"/football/${tag.url}/tables", "Tables"),
-      SectionLink("football", "Live scores", s"/football/${tag.url}/live", "Live scores"),
-      SectionLink("football", "Fixtures", s"/football/${tag.url}/fixtures", "Fixtures"),
-      SectionLink("football", "Results", s"/football/${tag.url}/results", "Results"),
+      SectionLink("football", "Tables", s"${tag.url}/tables", "Tables"),
+      SectionLink("football", "Live scores", s"${tag.url}/live", "Live scores"),
+      SectionLink("football", "Fixtures", s"${tag.url}/fixtures", "Fixtures"),
+      SectionLink("football", "Results", s"${tag.url}/results", "Results"),
       SectionLink("football", "Teams", "/football/teams", "Teams"),
       SectionLink("football", "Leagues & competitions", "/football/competitions", "Leagues & competitions")
     ))
@@ -164,7 +160,18 @@ trait Sections  {
   }
 }
 
-trait Zones extends Sections {
+// helper for the views
+object Navigation {
+  
+  def topLevelItem(navigation: Seq[NavItem], page: MetaData): Option[NavItem] = navigation.find(_.exactFor(page))
+    .orElse(navigation.find(_.currentFor(page)))
+
+
+  def localNav(navigation: Seq[NavItem], page: MetaData): Option[Seq[SectionLink]] = topLevelItem(navigation, page)
+    .map(_.links).filter(_.nonEmpty)
+}
+
+trait Zones extends Navigation {
 
 
   val newsZone = Zone(news,

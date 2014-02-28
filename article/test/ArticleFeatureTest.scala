@@ -580,5 +580,17 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
       }
     }
 
+
+    scenario("Section navigation") {
+      Given("I am on an article")
+      HtmlUnit("/football/2013/oct/29/arsene-wenger-arsenal-chelsea-capital-one-cup") { browser =>
+        import browser._
+
+        Then("I should see the section and local nav")
+        val navigation = findFirst("[itemtype='http://data-vocabulary.org/Breadcrumb']")
+        navigation.findFirst("[itemprop='url']").getAttribute("href") should endWith ("/football")
+        navigation.find(".nav--local").find(".nav__item").size should be (6)
+      }
+    }
   }
 }
