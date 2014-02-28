@@ -18,7 +18,7 @@ class FixturesFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
         Then("I should see todays live matches")
         val matches = $(".details__match-teams").getTexts
-        matches should contain ("Arsenal 1-0 Spurs")
+        matches should contain ("Arsenal 1 - 0 Spurs")
 
         And("The next 3 days fixtures")
         matches should contain("Liverpool v Man C")
