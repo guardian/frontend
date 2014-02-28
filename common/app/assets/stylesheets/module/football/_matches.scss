@@ -16,12 +16,15 @@
 
 .table--football-match {
     a,
-    a:hover{
+    a:hover,
+    a:active {
         color: $c-neutral1;
         text-decoration: none;
     }
 
-    tr:hover {
+    tr:hover,
+    tr:active
+    {
         background-color: darken($c-neutral8, 4%);
 
         a {
