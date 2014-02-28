@@ -81,16 +81,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = endOfQ4
   )
 
-  val SpdyAjaxServicesSwitch = Switch("Performance Switches", "spdy-ajax-services",
-    "If this switch is on, all ajax api endpoints will route through Akamai's SPDY service.",
-    safeState = Off, sellByDate = new DateMidnight(2014,2,28)
-  )
-
-  val SpdyImageServicesSwitch = Switch("Performance Switches", "spdy-image-services",
-    "If this switch is on, all image endpoints will route through Akamai's SPDY service.",
-    safeState = Off, sellByDate = new DateMidnight(2014,2,28)
-  )
-
   // Advertising Switches
 
   val AdvertSwitch = Switch("Advertising", "adverts",
@@ -439,8 +429,6 @@ object Switches extends Collections {
     AutoRefreshSwitch,
     DoubleCacheTimesSwitch,
     RelatedContentSwitch,
-    SpdyAjaxServicesSwitch,
-    SpdyImageServicesSwitch,
     AdvertSwitch,
     VideoAdvertSwitch,
     AudienceScienceSwitch,
