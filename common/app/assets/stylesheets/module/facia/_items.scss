@@ -238,14 +238,14 @@ $c-live: #e81818;
     }
 }
 .item__image-container {
-    display: none;
     position: relative;
     margin-top: 4px;
     padding-bottom: 60%;
 
-    &.inlined-image {
-        display: block;
+    .js-off & {
+        display: none;
     }
+
     .responsive-img {
         width: 100%;
         height: 100%;
