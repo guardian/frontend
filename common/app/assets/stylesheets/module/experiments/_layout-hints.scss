@@ -25,7 +25,7 @@
     @include fs-headline(3);
     font-weight: 200;
     font-style: normal;
-    color: $c-neutral3;
+    color: $c-neutral2;
 
     &:before {
         display: block;
@@ -40,7 +40,7 @@ figure {
         @include mq(leftCol) {
             float:left;
             width: gs-span(5);
-            margin-top: 0;
+            margin-top: $gs-baseline/2;
             margin-right: $gs-gutter;
         }
 
