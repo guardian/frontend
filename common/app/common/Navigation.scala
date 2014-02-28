@@ -146,7 +146,7 @@ trait Navigation  {
   val conservation = SectionLink("environment", "Conservation", "/environment/conservation")
   val food = SectionLink("environment", "Food", "/environment/food")
   val cities = SectionLink("environment", "Cities", "/cities")
-  val globalDevelopment = SectionLink("environment", "Development", "/cities")
+  val globalDevelopment = SectionLink("environment", "Development", "/global-development")
 
   def footballNav(metaData: MetaData) = NavItem(football, Seq(
     SectionLink("football", "Live scores", "/football/live"),
