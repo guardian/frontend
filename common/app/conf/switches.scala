@@ -293,7 +293,7 @@ object Switches extends Collections {
 
   val DogeSwitch = Switch("Feature Switches", "doge",
     "Makes article headline Doge style",
-    safeState = Off, sellByDate = new DateMidnight(2014, 2, 28)
+    safeState = Off, sellByDate = new DateMidnight(2014, 3, 3)
   )
 
   val LayoutHintsSwitch = Switch("Feature Switches", "layout-hints",
