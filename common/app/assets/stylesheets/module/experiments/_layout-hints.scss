@@ -70,7 +70,10 @@ figure {
             position: relative;
             @include deport-left;
             @include fs-data(3, true);
-            figcaption { background: #ffffff; }
+            figcaption {
+                padding-left: 0;
+                background: #ffffff;
+            }
         }
 
         figcaption {
