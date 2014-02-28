@@ -27,15 +27,20 @@ object Uk extends Edition(
   def navigation(metadata: MetaData): Seq[NavItem] = Seq(
     NavItem(home),
     NavItem(uk),
-    NavItem(world),
+    NavItem(world, Seq(europeNews, us, asia, australia)),
     NavItem(cif),
-    NavItem(sport, Seq(football, cricket, tennis, rugbyunion, cycling, usSport)),
+    NavItem(sport, Seq(football, rugbyunion, rugbyLeague,cricket, tennis, cycling, boxing, usSport, formulaOne)),
     footballNav(metadata),
-    NavItem(lifeandstyle),
-    NavItem(culture, Seq(film, music, books, televisionandradio, artanddesign, stage)),
-    NavItem(business),
-    NavItem(travel),
-    NavItem(technology),
-    NavItem(environment)
+    NavItem(technology, Seq(games)),
+    NavItem(culture, Seq(film, televisionAndRadio, music, books, artanddesign, stage)),
+    NavItem(lifeandstyle, Seq(food, health, loveAndSex, family, women, homeAndGarden)),
+    NavItem(fashion),
+    NavItem(economy, Seq(markets, companies, media)),
+    NavItem(money, Seq(property, savings, borrowing, careers)),
+    NavItem(travel, Seq(uktravel, europetravel, usTravel)),
+    NavItem(environment, Seq(cities, globalDevelopment)),
+    NavItem(science),
+    NavItem(education, Seq(students))
+
   )
 }
