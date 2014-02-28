@@ -12,7 +12,8 @@ define([
     'common/modules/experiments/tests/uk-containers',
     'common/modules/experiments/tests/us-containers',
     'common/modules/experiments/tests/au-containers',
-    'common/modules/experiments/tests/onward-related'
+    'common/modules/experiments/tests/onward-related',
+    'common/modules/experiments/tests/fronts-latest-reviews-card'
 ], function (
     common,
     store,
@@ -25,8 +26,9 @@ define([
     UkContainers,
     UsContainers,
     AuContainers,
-    OnwardRelated
-    ) {
+    OnwardRelated,
+    FrontsLatestReviewsCard
+) {
 
     var TESTS = [
             new Aa(),
@@ -36,7 +38,8 @@ define([
             new UkContainers(),
             new UsContainers(),
             new AuContainers(),
-            new OnwardRelated()
+            new OnwardRelated(),
+            new FrontsLatestReviewsCard()
        ],
        participationsKey = 'gu.ab.participations';
 
