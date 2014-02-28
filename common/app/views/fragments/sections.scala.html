@@ -11,7 +11,7 @@
             @Edition(request).navigation(page).map{ section =>
                 <li class="nav__item@if(section.name.newWindow && !isFooter){ mobile-only}">
                     <a href="@LinkTo{@section.name.href}"
-                        data-link-name="@section.name.linkName"
+                        data-link-name="@section.name.title"
                         class="nav__link@if("/" + page.id == section.name.href) { is-active}"
                         @if(section.name.newWindow){ target="_blank" }>
                             @HtmlFormat.raw(section.name.title)

@@ -33,8 +33,8 @@ object Us extends Edition(
     footballNav(metadata),
     NavItem(cif),
     NavItem(lifeandstyle),
-    NavItem(culture, Seq(film, music, books, televisionandradio, artanddesign, stage)),
-    NavItem(business),
+    NavItem(culture, Seq(film, music, books, televisionAndRadio, artanddesign, stage)),
+    NavItem(economy),
     NavItem(technology),
     NavItem(environment),
     NavItem(media)

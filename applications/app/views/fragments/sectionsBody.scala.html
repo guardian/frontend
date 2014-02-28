@@ -14,11 +14,11 @@
                 </h2>
             }
 
-            <section class="component" data-link-name="@zone.name.linkName">
+            <section class="component" data-link-name="@zone.name.title">
                 <ul class="nav nav--columns nav--no-horizontal-spacing u-cf">
                     @zone.sections.map{ section =>
                         <li class="nav__item">
-                            <a class="nav__link c-neutral1" href="@LinkTo(section.href)" data-link-name="@section.linkName:text">
+                            <a class="nav__link c-neutral1" href="@LinkTo(section.href)" data-link-name="@section.title:text">
                                 @HtmlFormat.raw(section.title)
                             </a>
                         </li>
