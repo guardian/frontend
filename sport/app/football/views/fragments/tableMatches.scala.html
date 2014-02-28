@@ -45,7 +45,7 @@
                     </a>
                 </td>
                 <td class="football-match__report">
-                    <a href="@LinkTo{@MatchUrl(game)}" data-link-name="stats" data-match-id="@game.id">Match report</a>
+                    <a href="@LinkTo{@MatchUrl(game)}" data-link-name="stats" data-match-id="@game.id">@if(game.isLive){Live Match}else{Match report}</a>
                 </td>
             </tr>
         }
