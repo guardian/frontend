@@ -1,4 +1,3 @@
-
 /* Elements modifiers specific to the footer
    ========================================================================== */
 
@@ -160,6 +159,7 @@
         border-top: 0;
     }
 }
+
 .really-serious-copyright {
     @include rem((
         margin-bottom: $gs-baseline/3
