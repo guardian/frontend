@@ -5,36 +5,41 @@
         margin-top: ($gs-baseline/3)*-4;
     }
 
-    > li {
-        background: $c-sportMid;
-        padding: 0 12px;
-    }
-    h2 {
-        font-weight: bold;
-        font-family: $sans-serif;
-        font-size: 14px;
-        font-size: 1.4rem;
-        color: #ffffff;
-        padding-bottom: $gs-baseline/3;
-        margin-top: 10px;
-    }
-    li:first-child h2 {
-        margin-top: 30px;
-    }
     a {
         color: #ffffff;
     }
+
     .nav__link {
         border-top-color: $c-sportBright;
         line-height: 21px;
         line-height: 2.1rem;
     }
+
     .cta {
         background: $c-sportDark;
         margin-bottom: ($gs-baseline/3)*2;
         margin-top: ($gs-baseline/3)*4;
         padding: 15px 0;
     }
+}
+
+.football-filters__item {
+    background: $c-sportMid;
+    padding: 0 12px;
+
+    &:first-child .football-filters__heading {
+        margin-top: 30px;
+    }
+}
+
+.football-filters__heading {
+    font-weight: bold;
+    font-family: $sans-serif;
+    font-size: 14px;
+    font-size: 1.4rem;
+    color: #ffffff;
+    padding-bottom: $gs-baseline/3;
+    margin-top: 10px;
 }
 
 // football-filter is the dropdown link item

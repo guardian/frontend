@@ -1,5 +1,5 @@
 .football-table__heading {
-    @include rem((margin: $gs-baseline 0 $gs-baseline));
+    @include rem((margin: $gs-baseline 0));
     border-top: 1px solid $c-neutral5;
     display: block;
 }
