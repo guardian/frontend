@@ -66,13 +66,6 @@ figure {
             figcaption { background: #ffffff; }
         }
 
-        .element-video__wrap video {
-            top: -1px;
-            left: -1px;
-            width: 104%;
-            height: 104%;
-        }
-
         .element-image {
             position: relative;
             @include deport-left;
