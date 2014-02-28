@@ -40,6 +40,7 @@ define([
     "common/modules/identity/autosignin",
     'common/modules/adverts/article-body-adverts',
     "common/modules/analytics/commercial/tags/container",
+    "common/modules/analytics/foresee-survey",
     "common/modules/interactive/loader",
     "common/modules/onward/right-hand-component-factory"
 ], function (
@@ -84,6 +85,7 @@ define([
     AutoSignin,
     ArticleBodyAdverts,
     TagContainer,
+    Foresee,
     Interactive,
     RightHandComponentFactory
 ) {
@@ -415,6 +417,12 @@ define([
                 $('html').addClass('iframed');
             }
         },
+        
+        runForseeSurvey: function(config) {
+            if(config.switches.foreseeSurvey) {
+                Foresee.load();
+            }
+        },
 
         augmentInteractive: function () {
             mediator.on('page:common:ready', function(config, context) {
@@ -469,6 +477,7 @@ define([
             modules.initAutoSignin(config);
             modules.loadTags(config);
             modules.augmentInteractive();
+            modules.runForseeSurvey(config);
         }
         mediator.emit("page:common:ready", config, context);
     };
