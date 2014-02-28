@@ -74,6 +74,7 @@ define([
     function loadSequence(context) {
         ajax({
             url: '/' + context.path + '.json',
+            type: 'json',
             crossOrigin: true
         }).then(function (json) {
             if(json && 'trails' in json) {
