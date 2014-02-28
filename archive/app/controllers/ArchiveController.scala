@@ -14,7 +14,9 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
   def isRedirect(path: String): Option[String] = {
     val redirects = DynamoDB.destinationFor(path)
     log.info(s"Checking '${path}' is a redirect in DynamoDB: ${!redirects.isEmpty}")
-    redirects
+    redirects.filterNot { url => 
+      linksToItself(path, url) 
+    }
   }
 
   def isArchived(path: String): Option[String] = {
