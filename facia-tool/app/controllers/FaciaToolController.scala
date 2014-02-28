@@ -137,10 +137,8 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
     }
   }
 
-  def pressPathId(id: String) = AjaxExpiringAuthentication { request =>
-    if (Switches.FaciaToolPressSwitch.isSwitchedOn) {
-      FrontPressJob.pressByPathId(id)
-    }
+  def pressCollection(id: String) = AjaxExpiringAuthentication { request =>
+    pressCollectionId(id)
     NoCache(Ok)
   }
 

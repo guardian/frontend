@@ -80,7 +80,7 @@ define([
             model.collections.unshift(collection);
         };
 
-        model.save = function(affectedFronts) {
+        model.save = function(affectedCollection) {
             var serialized = serialize(model);
 
             if(!_.isEqual(serialized, vars.state.config)) {
@@ -101,17 +101,17 @@ define([
                     .done(function() {
                         model.pending(false);
 
-                        if (affectedFronts) {
-                            _.each([].concat(affectedFronts), pressFront);
+                        if (affectedCollection) {
+                            _.each([].concat(affectedCollection), pressCollection);
                         }
                     });
                 });
             }
         };
 
-        function pressFront(front) {
+        function pressCollection(collection) {
             return authedAjax.request({
-                url: vars.CONST.apiBase + '/front/press/' + front.id(),
+                url: vars.CONST.apiBase + '/collection/press/' + collection.id,
                 type: 'post'
             });
         }
