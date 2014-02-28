@@ -23,8 +23,7 @@
     }
 
     tr:hover,
-    tr:active
-    {
+    tr:active {
         background-color: darken($c-neutral8, 4%);
 
         a {
