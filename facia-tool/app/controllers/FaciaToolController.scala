@@ -137,6 +137,11 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
     }
   }
 
+  def pressCollection(id: String) = AjaxExpiringAuthentication { request =>
+    pressCollectionId(id)
+    NoCache(Ok)
+  }
+
   def notifyContentApi(id: String): Option[Future[Response]] =
     if (ContentApiPutSwitch.isSwitchedOn)
       ConfigAgent.getConfig(id)
@@ -148,5 +153,4 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
     if (Switches.FaciaToolPressSwitch.isSwitchedOn) {
       FrontPressJob.pressByCollectionIds(ids)
     }
-
 }
