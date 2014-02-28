@@ -30,7 +30,7 @@ trait Navigation  {
   val environment = SectionLink("environment", "Environment", "/environment")
   val media = SectionLink("media", "Media", "/media")
   val education = SectionLink("education", "Education", "/education")
-  val students = SectionLink("education", "Students", "/education")
+  val students = SectionLink("education", "Students", "/education/students")
   val society = SectionLink("society", "Society", "/society")
   val development = SectionLink("globaldevelopment", "Global development", "/global-development")
   val science = SectionLink("science", "Science", "/science")
@@ -146,7 +146,7 @@ trait Navigation  {
   val conservation = SectionLink("environment", "Conservation", "/environment/conservation")
   val food = SectionLink("environment", "Food", "/environment/food")
   val cities = SectionLink("environment", "Cities", "/cities")
-  val globalDevelopment = SectionLink("environment", "Development", "/cities")
+  val globalDevelopment = SectionLink("environment", "Development", "/global-development")
 
   def footballNav(metaData: MetaData) = NavItem(football, Seq(
     SectionLink("football", "Live scores", "/football/live"),
