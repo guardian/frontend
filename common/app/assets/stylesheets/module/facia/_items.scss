@@ -161,7 +161,6 @@ $c-live: #e81818;
     width: gs-span(2);
     border-top: 1px solid $c-featureAccent;
     display: none;
-
     @include mq(desktop) {
         display: block;
     }
