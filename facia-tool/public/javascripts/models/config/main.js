@@ -80,7 +80,7 @@ define([
             model.collections.unshift(collection);
         };
 
-        model.save = function(affectedCollection) {
+        model.save = function(affectedCollections) {
             var serialized = serialize(model);
 
             if(!_.isEqual(serialized, vars.state.config)) {
@@ -100,9 +100,8 @@ define([
                     })
                     .done(function() {
                         model.pending(false);
-
-                        if (affectedCollection) {
-                            _.each([].concat(affectedCollection), pressCollection);
+                        if (affectedCollections) {
+                            _.each([].concat(affectedCollections), pressCollection);
                         }
                     });
                 });
