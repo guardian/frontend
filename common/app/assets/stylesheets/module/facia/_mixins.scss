@@ -233,3 +233,12 @@ $item-top-border-height: 2px;
     display: none;
     .svg & { display: block; }
 }
+
+@mixin hide-icon-in-title {
+    .item--video .item__title--has-icon-mobile,
+    .item--gallery .item__title--has-icon-mobile {
+        padding-left: 0;
+
+        .i { display: none; }
+    }
+}
