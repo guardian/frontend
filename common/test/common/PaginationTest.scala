@@ -15,6 +15,9 @@ class PaginationTest extends FlatSpec with Matchers {
     Pagination(8, 10).pages should be (List(6,7,8,9,10))
     Pagination(9, 10).pages should be (List(6,7,8,9,10))
     Pagination(10, 10).pages should be (List(6,7,8,9,10))
+
+    Pagination(100, 1000).pages should be (List(98,99,100,101,102))
+    Pagination(101, 1000).pages should be (List(99,100,101,102,103))
   }
 
   it should "handle short runs" in {
