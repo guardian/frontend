@@ -20,7 +20,7 @@ case class NavItem(name: SectionLink, links: Seq[SectionLink] = Nil, current: Bo
 trait Navigation  {
 
   //News
-  val home = SectionLink("news", "News", "/")
+  val home = SectionLink("news", "Home", "/")
   val news  = SectionLink("news", "News", "/")
   val world = SectionLink("world", "World", "/world")
   val uk    = SectionLink("uk", "UK", "/uk-news")
@@ -30,7 +30,7 @@ trait Navigation  {
   val environment = SectionLink("environment", "Environment", "/environment")
   val media = SectionLink("media", "Media", "/media")
   val education = SectionLink("education", "Education", "/education")
-  val students = SectionLink("education", "Students", "/education")
+  val students = SectionLink("education", "Students", "/education/students")
   val society = SectionLink("society", "Society", "/society")
   val development = SectionLink("globaldevelopment", "Global development", "/global-development")
   val science = SectionLink("science", "Science", "/science")
@@ -132,7 +132,7 @@ trait Navigation  {
   //Travel
   val travel = SectionLink("travel", "Travel", "/travel")
   val shortbreaks = SectionLink("travel", "Short breaks", "/travel/short-breaks")
-  val uktravel = SectionLink("travel", "Uk", "/travel/uk")
+  val uktravel = SectionLink("travel", "UK", "/travel/uk")
   val europetravel = SectionLink("travel", "Europe", "/travel/europe")
   val usTravel = SectionLink("travel", "US", "/travel/usa")
   val hotels = SectionLink("travel", "Hotels", "/travel/hotels")
@@ -146,7 +146,7 @@ trait Navigation  {
   val conservation = SectionLink("environment", "Conservation", "/environment/conservation")
   val food = SectionLink("environment", "Food", "/environment/food")
   val cities = SectionLink("environment", "Cities", "/cities")
-  val globalDevelopment = SectionLink("environment", "Development", "/cities")
+  val globalDevelopment = SectionLink("environment", "Development", "/global-development")
 
   def footballNav(metaData: MetaData) = NavItem(football, Seq(
     SectionLink("football", "Live scores", "/football/live"),
