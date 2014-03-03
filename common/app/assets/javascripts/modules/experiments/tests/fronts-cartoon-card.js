@@ -2,12 +2,14 @@ define([
     'reqwest',
     'bonzo',
     'qwery',
-    'common/utils/detect'
+    'common/utils/detect',
+    'common/utils/get-property'
 ], function(
     reqwest,
     bonzo,
     qwery,
-    detect
+    detect,
+    getProperty
 ) {
 
     function fillTemplate(template, params) {
@@ -45,7 +47,7 @@ define([
                         type: 'jsonp'
                     })
                         .then(function(resp) {
-                            var $card = resp.response.results
+                            var $card = getProperty(resp, 'response.results', [])
                                     .map(function(result) {
                                         return bonzo(bonzo.create(
                                             fillTemplate(

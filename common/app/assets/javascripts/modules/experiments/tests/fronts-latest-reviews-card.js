@@ -2,12 +2,14 @@ define([
     'reqwest',
     'bonzo',
     'qwery',
-    'common/utils/detect'
+    'common/utils/detect',
+    'common/utils/get-property'
 ], function(
     reqwest,
     bonzo,
     qwery,
-    detect
+    detect,
+    getProperty
 ) {
 
     function fillTemplate(template, params) {
@@ -46,7 +48,7 @@ define([
                     })
                         .then(function(resp) {
                             var reviews = [];
-                            resp.response.results.forEach(function(result, index) {
+                            getProperty(resp, 'response.results', []).forEach(function(result, index) {
                                 var starRating = result.fields.starRating;
                                 reviews.push(
                                     fillTemplate(
