@@ -109,9 +109,9 @@
 
 
 @include keyframes(new-block-animation) {
-    0%   { opacity: 0; background: #f4f4ee; }
+    0%   { opacity: 0; background: $c-neutral7; }
     20%  { opacity: 1; }
-    70%  { background: #f4f4ee; }
+    70%  { background: $c-neutral7; }
     100% { background: transparent; }
 }
 
