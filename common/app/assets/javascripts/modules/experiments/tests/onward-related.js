@@ -8,7 +8,7 @@ define([
 
     return function() {
 
-        this.id = 'OnwardRelated';
+        this.id = 'OnwardRelatedSports';
         this.start = '2014-03-03';
         this.expiry = '2014-3-10';
         this.author = "Matt Osborn";
