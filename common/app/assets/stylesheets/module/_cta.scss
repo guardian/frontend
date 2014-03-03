@@ -1,5 +1,6 @@
 .cta {
-    @extend %type-10;
+    @include fs-data(3);
+    -webkit-font-smoothing: subpixel-antialiased; // Text look fatter, better for a CTA
     line-height: 1;
     color: #545454;
     text-align: center;
@@ -41,7 +42,7 @@ button.cta {
 }
 
 .top {
-    @extend %type-8;
+    @include fs-data(3);
     display: block;
     width: 100%;
     @include box-sizing(border-box);
@@ -53,7 +54,7 @@ button.cta {
         color: #ffffff;
     }
 
-    padding: 10px $gs-gutter/2;
+    padding: 11px $gs-gutter/2;
 
     @include mq(mobileLandscape) {
         padding-left: $gs-gutter;
@@ -62,9 +63,9 @@ button.cta {
 }
 
 .cta-small {
-    @extend %type-8;
+    @include fs-data(4);
     display: block;
-    padding: ($gs-baseline/3)*2 0 $gs-baseline 0;
+    padding: ($gs-baseline - 3) 0 $gs-baseline 0;
 }
 .cta-small--border {
     border-bottom: 1px solid $c-neutral6;

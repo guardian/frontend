@@ -260,8 +260,7 @@ i.gallery__watermark {
 }
 
 .gallerycaption__text {
-    @extend %type-10;
-    line-height: 16px;
+    @include fs-data(3);
     padding-bottom: ($gs-baseline/3)*4;
     border-bottom: 1px solid $c-neutral2;
     max-width: 620px;
@@ -313,7 +312,7 @@ i.gallery__watermark {
    ========================================================================== */
 
 .gallery__counter {
-    @extend %type-10;
+    @include fs-data(3);
     margin-left: 0;
     letter-spacing: -1px;
     line-height: 44px;
