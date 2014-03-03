@@ -39,6 +39,7 @@ define([
     "common/modules/ui/message",
     "common/modules/identity/autosignin",
     'common/modules/adverts/article-body-adverts',
+    'common/modules/adverts/dfp',
     "common/modules/analytics/commercial/tags/container",
     "common/modules/interactive/loader",
     "common/modules/onward/right-hand-component-factory"
@@ -83,6 +84,7 @@ define([
     Message,
     AutoSignin,
     ArticleBodyAdverts,
+    DFP,
     TagContainer,
     Interactive,
     RightHandComponentFactory
@@ -243,6 +245,8 @@ define([
                     });
                 };
 
+                var dfpAds = new DFP(config);
+
                 if(config.page.contentType === 'Article' && !config.page.isLiveBlog) {
                     var articleBodyAdverts = new ArticleBodyAdverts();
 
@@ -260,7 +264,10 @@ define([
                 mediator.on('page:common:deferred:loaded', function(config, context) {
                     Adverts.init(config, context);
                 });
-                mediator.on('modules:adverts:docwrite:loaded', Adverts.load);
+                mediator.on('modules:adverts:docwrite:loaded', function() {
+                    dfpAds.load();
+                    Adverts.load();
+                });
 
                 mediator.on('window:resize', debounce(resizeCallback, 2000));
             }
