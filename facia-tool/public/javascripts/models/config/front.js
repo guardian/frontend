@@ -75,7 +75,7 @@ define([
         collection.state.open(false);
         collection.parents.remove(this);
         this.collections.items.remove(collection);
-        vars.model.save();
+        vars.model.save(collection);
     };
 
     return Front;

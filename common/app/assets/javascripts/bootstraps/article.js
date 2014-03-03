@@ -6,7 +6,6 @@ define([
     "fence",
     "common/modules/ui/autoupdate",
     "common/modules/live/filter",
-    "common/modules/live/summary",
     "common/modules/sport/football/matchnav",
     "common/modules/discussion/loader",
     "common/modules/sport/cricket",
@@ -23,7 +22,6 @@ define([
     fence,
     AutoUpdate,
     LiveFilter,
-    LiveSummary,
     MatchNav,
     DiscussionLoader,
     Cricket,
@@ -79,11 +77,6 @@ define([
                 if (config.page.isLiveBlog) {
                     var lf = new LiveFilter(context).init(),
                         nc = new NotificationCounter().init();
-
-
-                    if (config.switches.liveSummary) {
-                        var ls = new LiveSummary(context).init();
-                    }
                 }
             });
         },

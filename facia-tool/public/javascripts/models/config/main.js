@@ -80,7 +80,7 @@ define([
             model.collections.unshift(collection);
         };
 
-        model.save = function() {
+        model.save = function(affectedCollections) {
             var serialized = serialize(model);
 
             if(!_.isEqual(serialized, vars.state.config)) {
@@ -100,10 +100,20 @@ define([
                     })
                     .done(function() {
                         model.pending(false);
+                        if (affectedCollections) {
+                            _.each([].concat(affectedCollections), pressCollection);
+                        }
                     });
                 });
             }
         };
+
+        function pressCollection(collection) {
+            return authedAjax.request({
+                url: vars.CONST.apiBase + '/collection/press/' + collection.id,
+                type: 'post'
+            });
+        }
 
         function serialize(model) {
             return {

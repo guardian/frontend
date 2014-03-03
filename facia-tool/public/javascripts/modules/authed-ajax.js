@@ -8,7 +8,7 @@ define(['modules/vars'], function(vars) {
             }, opts)
         ).fail(function(xhr) {
             if (xhr.status === 403) {
-                window.location.href = window.location.href;
+                window.location.reload(true);
             }
         });
     }

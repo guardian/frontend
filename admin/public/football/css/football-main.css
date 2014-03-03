@@ -1,0 +1,65 @@
+body {
+  font-family: Ubuntu, "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Calibri;
+}
+.pa-search {
+  font-size: 1em;
+  margin-bottom: 20px;
+  width: 100%;
+}
+.hint {
+  text-decoration: none;
+  padding: 5px;
+  background-color: #f7f7f7;
+  border: solid #ccc 1px;
+  margin-left: 10px;
+  color: #333;
+}
+.hint:hover {
+  background-color: #eee;
+  border: solid #999 1px;
+}
+label[for] {
+  cursor: pointer;
+  margin-left: 5px;
+}
+/* head to head */
+.head-to-head {
+  width: 40%;
+  float: left;
+}
+/* player images */
+.player-image {
+  float: left;
+  margin: 10px;
+  border: solid 1px #ccc;
+  padding: 10px;
+  text-align: center;
+}
+.controls {
+  margin-bottom: 20px;
+}
+/** Tables **/
+.table {
+  background: #f6f6f6;
+  border-top: 2px solid #4bc6df;
+  width: 100%;
+}
+.table th {
+  font-weight: bold;
+  padding: 8px;
+  text-align: left;
+  vertical-align: top;
+}
+.table tbody td {
+  border-top: 1px solid #ececec;
+  padding: 16px;
+}
+.table-row--highlight td {
+    font-weight: bold;
+}
+.table tbody .table-row--break td {
+  border-top: 1px solid #666;
+}
+.form-control--team {
+    display: none;
+}

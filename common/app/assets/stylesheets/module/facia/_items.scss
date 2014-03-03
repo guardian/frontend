@@ -155,6 +155,33 @@ $c-live: #e81818;
     }
 }
 
+.container__card {
+    position: absolute;
+    bottom: 0;
+    border-top: 1px solid $c-featureAccent;
+    display: none;
+    @include rem((
+        width: gs-span(2)
+    ));
+    @include mq(faciaLeftCol) {
+        display: block;
+    }
+}
+.container__card__title {
+    margin-bottom: 0;
+    color: $c-featureDefault;
+    @include fs-header(1);
+}
+.container__card__item {
+    margin-top: $gs-baseline;
+    @include f-headline;
+    @include font-size(14px, 18px);
+
+    a {
+        color: $c-neutral1;
+    }
+}
+
 .collection {
     font-size: 0;
     overflow: hidden;
@@ -211,14 +238,14 @@ $c-live: #e81818;
     }
 }
 .item__image-container {
-    display: none;
     position: relative;
     margin-top: 4px;
     padding-bottom: 60%;
 
-    &.inlined-image {
-        display: block;
+    .js-off & {
+        display: none;
     }
+
     .responsive-img {
         width: 100%;
         height: 100%;

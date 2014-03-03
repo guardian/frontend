@@ -68,7 +68,7 @@
     "worker": true,
     "wsh": false,
     "nomen": false,
-    "onevar": true,
+    "onevar": false,
     "passfail": false
   }
 }

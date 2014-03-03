@@ -7,6 +7,8 @@ define([
     'common/utils/mediator',
     'common/utils/lazy-load-css',
     'bonzo',
+    'qwery',
+    'bean',
 
     //Modules
     'common/modules/ui/togglepanel',
@@ -24,6 +26,8 @@ define([
     mediator,
     lazyLoadCss,
     bonzo,
+    qwery,
+    bean,
     TogglePanel,
     Expandable,
     FootballFixtures,
@@ -143,6 +147,11 @@ define([
         var bits = window.location.pathname.split('/'),
             action = config.page.contentType === 'Article' ? 'article' : (bits.length === 3 ? bits[2] : bits[3]); // removing router for now
         lazyLoadCss('football', config);
+
+        // not worth over complicating for the time being
+        bean.on(context, 'click', qwery('.table tr[data-link-to]'), function(e) {
+            window.location = this.getAttribute('data-link-to');
+        });
 
         switch(action) {
             case 'fixtures':

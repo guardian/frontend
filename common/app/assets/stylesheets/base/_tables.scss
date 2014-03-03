@@ -48,7 +48,8 @@ td {
     th,
     td {
         @include fs-data(5);
-        padding: $gs-baseline ($gs-gutter+4)/2;
+        @include rem((padding: $gs-baseline ($gs-gutter+4)/2));
+        vertical-align: top;
     }
 
     th,
