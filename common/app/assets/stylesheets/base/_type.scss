@@ -45,7 +45,6 @@ h1, h2, h3, h4, h5, h6 {
 
 // SerifText
 .type-5 { @extend %type-5; }
-.type-6 { @extend %type-6; }
 .type-7 { @extend %type-7; }
 
 // Sans-serif
@@ -69,8 +68,9 @@ h1 {
     @extend %type-1;
 }
 h3 {
+    font-weight: normal;
     margin-bottom: 7px;
-    @extend %type-6;
+    @include fs-bodyCopy(3);
 }
 th,
 td {
