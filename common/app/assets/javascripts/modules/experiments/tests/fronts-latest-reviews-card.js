@@ -52,7 +52,7 @@ define([
                                 var starRating = result.fields.starRating;
                                 reviews.push(
                                     fillTemplate(
-                                        '<li data-link-name="trail | {{index}}">' +
+                                        '<li data-link-name="trail | {{index}}" class="card__item">' +
                                             '<a href="{{url}}" class="card__item__link" data-link-name="article">' +
                                                 '<h4 class="card__item__title">{{section}}: {{title}}</h4>' +
                                                 ((starRating !== undefined) ?
@@ -76,7 +76,7 @@ define([
                             var $card = bonzo(
                                     bonzo.create(
                                         fillTemplate(
-                                            '<div class="container__card tone-feature tone-border" data-link-name="card | latest reviews">' +
+                                            '<div class="container__card tone-feature tone-accent-border" data-link-name="card | latest reviews">' +
                                                 '<h3 class="container__card__title tone-colour">Latest reviews</h3>' +
                                                 '<ul class="unstyled">{{reviews}}</ul>' +
                                             '</div>',

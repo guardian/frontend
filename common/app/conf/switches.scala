@@ -358,7 +358,7 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 3, 8)
   )
 
-  val ABMissedCartoonCard = Switch("A/B Tests", "ab-fronts-missed-card",
+  val ABFrontsMissedCard = Switch("A/B Tests", "ab-fronts-missed-card",
     "If this swith is on, run an ab test to add a `You might have missed` card to the News container.",
     safeState = Off, sellByDate = new DateMidnight(2014, 3, 8)
   )

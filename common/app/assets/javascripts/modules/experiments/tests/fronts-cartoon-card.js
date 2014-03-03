@@ -51,9 +51,9 @@ define([
                                     .map(function(result) {
                                         return bonzo(bonzo.create(
                                             fillTemplate(
-                                                '<div class="container__card tone-comment tone-border" data-link-name="card | cartoon">' +
+                                                '<div class="container__card tone-comment tone-accent-border" data-link-name="card | cartoon">' +
                                                     '<h3 class="container__card__title tone-colour">Cartoon</h3>' +
-                                                    '<a href="{{url}}" data-link-name="article" class="card__item__link">' +
+                                                    '<a href="{{url}}" data-link-name="article" class="card__item card__item__link">' +
                                                         '<h4 class="card__item__title">{{headline}}</h4>' +
                                                         '<img src="{{thumbnail}}" alt="" width="140" height="84" class="card__item__image" />' +
                                                     '</a>' +
