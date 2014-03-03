@@ -1,4 +1,7 @@
 define(['bonzo'], function (bonzo) {
+    var openInBodyLinksInSameWindow = function (context) {
+        bonzo(context.querySelectorAll('[data-link-name="in body link"]')).attr('target', '_self');
+    };
 
     var ExternalLinksNewWindow = function () {
 
@@ -22,7 +25,7 @@ define(['bonzo'], function (bonzo) {
             {
                 id: 'control',
                 test: function (context, config) {
-                    bonzo(context.querySelectorAll('[data-link-name="in body link"]')).attr('target', '_self');
+                    openInBodyLinksInSameWindow(context);
                 }
             },
             {
@@ -30,6 +33,10 @@ define(['bonzo'], function (bonzo) {
                 test: function (context, config) {}
             }
         ];
+
+        this.notInTest = function(context) {
+            openInBodyLinksInSameWindow(context);
+        };
     };
 
     return ExternalLinksNewWindow;
