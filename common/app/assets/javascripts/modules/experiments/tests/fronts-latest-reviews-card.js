@@ -63,7 +63,13 @@ define([
                                                     '</span>' : '') +
                                             '</a>' +
                                         '</li>',
-                                        {url: result.webUrl.replace(/https?:\/\/[^/]*/, ''), title: result.webTitle, section: result.sectionName, rating: result.fields.starRating, index: index + 1}
+                                        {
+                                            url: result.webUrl.replace(/https?:\/\/[^/]*/, ''),
+                                            title: result.webTitle,
+                                            section: result.sectionName,
+                                            rating: result.fields.starRating,
+                                            index: index + 1
+                                        }
                                     )
                                 );
                             });

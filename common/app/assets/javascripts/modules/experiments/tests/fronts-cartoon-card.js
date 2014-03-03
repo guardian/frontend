@@ -60,7 +60,7 @@ define([
                                                 '</div>',
                                                 {
                                                     headline: result.webTitle,
-                                                    url: result.webUrl,
+                                                    url: result.webUrl.replace(/https?:\/\/[^/]*/, ''),
                                                     thumbnail: result.fields.thumbnail
                                                 }
                                             )
