@@ -9,9 +9,9 @@ For other environments, specifying settings through system properties, also work
 In your frontend.properties or developer.properties, add the following configuration:
 
 ```
-username=
-password=
-GASecret=
+test.username=
+test.password=
+test.GASecret=
 ```
 
 To acquire your google account secret for 2 step authentication, follow the steps [described in this blog post](http://www.meza.hu/2014/02/havig-difficulties-testing-sites-with-2.html)
