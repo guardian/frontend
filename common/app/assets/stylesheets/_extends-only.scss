@@ -7,9 +7,6 @@
 // DEPRECATED:
 // Use font-scale mixins instead
 
-// Serif Headline
-%type-2 { @include font($serifheadline, normal, 18, 28); }
-
 // Serif Text
 %type-5 { @include font($serifheadline, normal, 18, 24); }
 %type-7 { @include font($serif, normal, 14, 20); }
