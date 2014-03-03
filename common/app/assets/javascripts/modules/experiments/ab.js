@@ -7,10 +7,13 @@ define([
     //Current tests
     'common/modules/experiments/tests/aa',
     'common/modules/experiments/tests/right-hand-recommendations',
-    'common/modules/experiments/tests/ad-labels',
-    'common/modules/experiments/tests/onward-inline-elements',
     'common/modules/experiments/tests/geo-most-popular',
-    'common/modules/experiments/tests/uk-containers'
+    'common/modules/experiments/tests/football-table-position',
+    'common/modules/experiments/tests/uk-containers',
+    'common/modules/experiments/tests/us-containers',
+    'common/modules/experiments/tests/au-containers',
+    'common/modules/experiments/tests/onward-related',
+    'common/modules/experiments/tests/fronts-latest-reviews-card'
 ], function (
     common,
     store,
@@ -18,19 +21,25 @@ define([
     mvtCookie,
     Aa,
     RightHandRecommendations,
-    AdLabels,
-    InlineElements,
     GeoMostPopular,
-    UkContainers
+    FootballTablePosition,
+    UkContainers,
+    UsContainers,
+    AuContainers,
+    OnwardRelated,
+    FrontsLatestReviewsCard
 ) {
 
     var TESTS = [
             new Aa(),
             new RightHandRecommendations(),
-            new AdLabels(),
-            new InlineElements(),
             new GeoMostPopular(),
-            new UkContainers()
+            new FootballTablePosition(),
+            new UkContainers(),
+            new UsContainers(),
+            new AuContainers(),
+            new OnwardRelated(),
+            new FrontsLatestReviewsCard()
        ],
        participationsKey = 'gu.ab.participations';
 
@@ -124,7 +133,6 @@ define([
 
     // Finds variant in specific tests and runs it
     function run(test, config, context) {
-
         if (isParticipating(test) && testCanBeRun(test, config)) {
             var participations = getParticipations(),
                 variantId = participations[test.id].variant;
@@ -143,7 +151,7 @@ define([
     function allocateUserToTest(test, config) {
 
         // Skip allocation if the user is already participating, or the test is invalid.
-        if (isParticipating(test) || !testCanBeRun(test, config)) {
+        if (!testCanBeRun(test, config) || isParticipating(test)) {
             return;
         }
 

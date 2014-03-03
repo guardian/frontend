@@ -1,7 +1,7 @@
 /* global _: true */
 define([], function() {
-    return function (msg) {
-        if (msg) { window.alert("Please contact support. Error: " + msg); }
-        window.location.href = '/logout';
+    return function (msg, redirectTo) {
+        if (msg) { window.alert(msg); }
+        window.location.href = redirectTo ? redirectTo : '/logout';
     };
 });

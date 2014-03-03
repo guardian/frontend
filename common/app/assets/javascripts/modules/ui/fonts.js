@@ -18,10 +18,6 @@ define([
         this.view = {
             showFont: function(style, json) {
                 style.innerHTML = json.css;
-                var html = document.querySelector('html');
-                if (html.className.indexOf('font-' + json.name + '-loaded') < 0) {
-                    html.className += ' font-' + json.name + '-loaded';
-                }
             }
         };
 

@@ -14,10 +14,10 @@ class LiveMatchesFeatureTest extends FeatureSpec with GivenWhenThen with Matcher
       HtmlUnit("/football/live") { browser =>
         import browser._
         Then("I should see todays live matches")
-        val matches = $(".match-desc").getTexts
-        matches should contain ("Arsenal 1-0 Spurs")
-        matches should contain ("Chelsea 0-0 Man U")
-        matches should contain ("Sunderland 1-1 West Ham")
+        val matches = $(".details__match-teams").getTexts
+        matches should contain ("Arsenal 1 - 0 Spurs")
+        matches should contain ("Chelsea 0 - 0 Man U")
+        matches should contain ("Sunderland 1 - 1 West Ham")
       }
     }
 
@@ -27,10 +27,10 @@ class LiveMatchesFeatureTest extends FeatureSpec with GivenWhenThen with Matcher
       HtmlUnit("/football/premierleague/live") { browser =>
         import browser._
         Then("I should see premier league live games")
-        $(".match-desc").getTexts should contain ("Arsenal 1-0 Spurs")
+        $(".details__match-teams").getTexts should contain ("Arsenal 1 - 0 Spurs")
 
         And("I should not see other leagues games")
-        $(".match-desc").getTexts should not contain ("Cardiff 2-0 Brighton")
+        $(".details__match-teams").getTexts should not contain ("Cardiff 2 - 0 Brighton")
       }
     }
 

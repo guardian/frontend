@@ -6,13 +6,14 @@ Most tests can be written in JavaScript, although we can serve variants via Varn
 
 # Guide
 
-There is five simple steps to releasing a test :-
+There are six steps in the test lifecycle:-
 
  - Adding a switch to turn the test on & off
  - Writing a test, which is typically a simple AMD module
  - Running the test
  - Analysis of the test data
  - Share your findings
+ - Delete the test
 
 ## Adding a switch
 
@@ -39,8 +40,7 @@ val all: List[Switch] = List(
     )
 ```
 
-You will notice here that the switches we use to run our AB testing are
-the same switches we use to toggle features. 
+You will notice here that the switches we use to run our AB testing are the same switches we use to toggle features.
 
 ## Writing a test
 
@@ -51,48 +51,62 @@ Tests live in `./common/app/assets/javascripts/modules/experiments/tests/`, so c
 ``` 
 define(['bonzo'], function (bonzo) {
 
-    var ExperimentRelatedContent = function () {
+    var GeoMostPopular = function () {
 
-        this.id = 'RelatedContentV2';
-        this.expiry = "2013-01-01";
-        this.audience = 0.2;
-        this.audienceOffset = 0.6;
-        this.description = 'Hides related content block on article to see if increases click through on most popular';
+        this.id = 'GeoMostPopular';
+        this.start = '2014-02-26';
+        this.expiry = '2014-03-14';
+        this.author = 'Richard Nguyen';
+        this.description = 'Choose popular trails based on request location.';
+        this.audience = 0.1;
+        this.audienceOffset = 0.4;
+        this.successMeasure = 'Click-through for the right most popular, and page views per visit.';
+        this.audienceCriteria = 'Users who are not on mobile, viewing an article.';
+        this.dataLinkNames = 'right hand most popular geo. Specific countries appear as: right hand most popular geo GB';
+        this.idealOutcome = 'Click-through is increased on articles, mostly in US, Australia and India regions.';
+
         this.canRun = function(config) {
-          return (config.page && config.page.contentType === "Article") ? true : false;
+            return config.page.contentType === 'Article' && detect.getBreakpoint() !== 'mobile';
         };
+
         this.variants = [
             {
                 id: 'control',
-                test: function (context) { 
-                   return true;
+                test: function (context, config) {
                 }
             },
             {
                 id: 'hide',
-                test: function (context) {
+                test: function (context, config) {
                     bonzo(context.querySelector('.js-related')).hide();
                 }
             }
         ];
     };
 
-    return ExperimentRelatedContent;
+    return GeoMostPopular;
 
 });
 ```
 
 The AMD module must return an object with the following properties,
 
-- id: The unique name of the test.
-- expiry: The date on which this test is due to stop running. Expressed as a string parsable by the JavaScript Date object.
-- audience: The ratio of people who you want in the test (Eg, 0.2 = 20%), who will then be split 50/50 between the control and variant.
-- audienceOffset: All users are given a permanent, unique hash that is a number between 0 and 1. `audienceOffset` allows you to specify the range of
+- `id`: The unique name of the test.
+- `start`: The planned start date of the test, the day when the test will be turned on.
+- `expiry`: The date on which this test is due to stop running.
+- `author`: The author of the test. They have responsibility for fixing and removing the test.
+- `description`: A plain English summary of the test.
+- `audience`: The ratio of people who you want in the test (Eg, 0.2 = 20%), who will then be split 50/50 between the control and variant.
+- `audienceOffset`: All users are given a permanent, unique hash that is a number between 0 and 1. `audienceOffset` allows you to specify the range of
   users you want to test. For example, an `audienceOffset` value of `0.5` and an `audience` of `0.1` means user with a hash between 0.5 and 0.6 will
   be opted in to the test. This helps to avoid overlapping tests. 
-- description: A plain English summary of the test.
-- canRun: A function to determine if the test is allowed to run (Eg, so you can target individual pages, segments etc.)
-- variants: An array of two functions - the first representing the _control_ group, the second the variant.
+- `successMeasure`: Measurable traits that can be directed related to the hypothesis and objective (eg. CTR, Page Views per Visitor).
+- `audienceCriteria`: Additional criteria on audience (eg. Desktop users only, Network Front entry users only).
+- `dataLinkNames`: Link names or custom link names used for test.
+- `idealOutcome`: What is the outcome that you want to see from the new variant (We want to see Y when we do X)?
+- `canRun`: A function to determine if the test is allowed to run (Eg, so you can target individual pages, segments etc.).
+- `variants`: An array of two functions - the first representing the _control_ group, the second the variant.
+
 
 You will also need to mark the module as a dependency of the AB testing module.
 
@@ -100,18 +114,15 @@ Do that here, `./common/app/assets/javascripts/modules/experiments/ab.js`
 
 ```
 define([
-    'common',
-    'modules/storage',
 
-    //Current tests
-    'modules/experiments/tests/story-article-swap'  //  add your module here.
+    // Current tests
+    'modules/experiments/tests/geo-most-popular'  //  add your module here.
 ], function (
-    common,
-    store,
-    StoryArticleSwap) {
+
+    GeoMostPopular) {
     
     var TESTS = {
-            Related: new ExperimentRelatedContent()    //  and here. 
+            Related: new GeoMostPopular()    //  and here.
         };
     
     ...

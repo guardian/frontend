@@ -15,7 +15,7 @@
         color: $c-neutral2;
     }
     .commercial__body {
-        padding: $baseline*2 ($gs-gutter/5)*2;
+        padding: ($gs-baseline/3)*2 ($gs-gutter/5)*2;
     }
 
     /* Entries */
@@ -31,7 +31,7 @@
         ));
         line-height: 1.5385;
         font-weight: bold;
-        margin-top: $baseline;
+        margin-top: $gs-baseline/3;
 
         &:hover {
             text-decoration: underline;
@@ -42,7 +42,7 @@
         font-weight: normal;
     }
     .lineitem__image {
-        padding: $baseline;
+        padding: $gs-baseline/3 $gs-gutter/5;
         background-color: #ffffff;
         outline: 0 none;
         box-shadow: 2px 2px 0 0 rgba(#000000, .15);
@@ -96,7 +96,7 @@
     }
     @include mq($from: tablet) {
         .commercial__title {
-            padding-top: $baseline;
+            padding-top: $gs-baseline/3;
         }
         .commercial__subtitle {
             display: block; // this is not a very good idea

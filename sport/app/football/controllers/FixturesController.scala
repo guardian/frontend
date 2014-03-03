@@ -108,7 +108,7 @@ object CompetitionFixturesController extends FixtureRenderer with Logging {
   )
 
   def render(competitionName: String, competition: Competition, date: Option[DateMidnight] = None) = Action { implicit request =>
-
+    print (competitionName)
     val page = new Page(
       "football/fixtures",
       "football",

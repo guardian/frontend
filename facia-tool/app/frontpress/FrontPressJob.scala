@@ -1,6 +1,6 @@
 package jobs
 
-import common.{ExecutionContexts, Logging}
+import common.Logging
 import com.amazonaws.services.sqs.AmazonSQSAsyncClient
 import conf.Configuration
 import com.amazonaws.services.sqs.model._
@@ -14,7 +14,7 @@ import frontpress.{FaciaToolConfigAgent, FrontPress}
 import common.FaciaToolMetrics.{FrontPressCronFailure, FrontPressCronSuccess}
 import play.api.libs.concurrent.Akka
 import scala.util.{Failure, Success}
-import conf.Switches.{FrontPressJobSwitch}
+import conf.Switches.FrontPressJobSwitch
 
 object FrontPressJob extends Logging with implicits.Collections {
 
@@ -72,6 +72,8 @@ object FrontPressJob extends Logging with implicits.Collections {
   }
 
   def pressByCollectionIds(ids: Set[String]): Future[Set[JsObject]] = {
+    //Give it one second to update
+    Await.ready(FaciaToolConfigAgent.refreshAndReturn(), Configuration.faciatool.configBeforePressTimeout.millis)
     val paths: Set[String] = for {
       id <- ids
       path <- FaciaToolConfigAgent.getConfigsUsingCollectionId(id)

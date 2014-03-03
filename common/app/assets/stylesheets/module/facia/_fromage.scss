@@ -140,8 +140,15 @@
 
     &:hover,
     &:focus {
+       text-decoration: none;
+
         .item__title {
             text-decoration: underline;
+        }
+    }
+    &:active {
+        .item__title {
+            text-decoration: none;
         }
     }
 }
@@ -149,12 +156,6 @@
 .fromage__link:visited .item__title,
 .supporting__action:visited {
     color: $c-neutral2;
-}
-.fromage__media-wrapper,
-.fromage__image-container {
-    .js-off & {
-        display: none !important;
-    }
 }
 .fromage__media-wrapper {
     @include mq(tablet) {
