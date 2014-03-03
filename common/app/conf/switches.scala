@@ -291,11 +291,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 4, 30)
   )
 
-  val DogeSwitch = Switch("Feature Switches", "doge",
-    "Makes article headline Doge style",
-    safeState = Off, sellByDate = new DateMidnight(2014, 3, 3)
-  )
-
   val LayoutHintsSwitch = Switch("Feature Switches", "layout-hints",
     "If this switch is on, javascript will enable the inline-hinting css experiments",
     safeState = Off, sellByDate = new DateMidnight(2014, 4, 30)
@@ -482,7 +477,6 @@ object Switches extends Collections {
     DogpileSwitch,
     ShowAllArticleEmbedsSwitch,
     FrontPressJobSwitch,
-    DogeSwitch,
     ABUkContainers,
     ABUsContainers,
     LayoutHintsSwitch,
