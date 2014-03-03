@@ -64,9 +64,6 @@ p {
     margin-top: 0;
     margin-bottom: ($gs-baseline/3)*2;
 }
-h1 {
-    @extend %type-1;
-}
 h3 {
     font-weight: normal;
     margin-bottom: 7px;
