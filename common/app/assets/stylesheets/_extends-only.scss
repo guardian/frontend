@@ -11,7 +11,6 @@
 %type-2 { @include font($serifheadline, normal, 18, 28); }
 
 // Serif Text
-%type-4 { @include font($serif, 700, 18, 24); }
 %type-5 { @include font($serifheadline, normal, 18, 24); }
 %type-7 { @include font($serif, normal, 14, 20); }
 
