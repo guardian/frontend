@@ -1,5 +1,5 @@
-domReady
---------
+## domReady
+
 It's easy. Works like this:
 
 ``` js
@@ -8,36 +8,40 @@ domready(function () {
 })
 ```
 
-Browser support
----------------
+### Browser support
 
-  * IE6+
-  * Firefox 2+
+  * IE9+
+  * Firefox 4+
   * Safari 3+
   * Chrome *
   * Opera *
 
-Building
---------
+### Building
 
-    $ npm install -dev
-    $ make
-    $ open tests/test.html
+``` sh
+npm install
+make
+open tests/test.html
+```
 
-Including with Ender
---------------------
-Don't already have [Ender](http://ender.no.de)? Ender relies on [Node](http://nodejs.org), and [NPM](http://npmjs.org). Install it like this:
+### Including with Ender
 
-    npm install ender -g
+Don't already have [Ender](http://enderjs.com)? Install it like this:
 
-Once you're good with that. Include domready in your package:
+``` sh
+npm install ender -g
+```
 
-    ender add domready
+Include domready in your package:
 
-Then use it like this:
+``` sh
+ender add domready
+```
+
+Then use it like this
 
 ``` js
-$.domReady(function () {
+require('domready')(function () {
   $('body').html('<p>boosh</p>')
 })
 

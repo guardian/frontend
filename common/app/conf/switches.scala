@@ -291,11 +291,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 4, 30)
   )
 
-  val DogeSwitch = Switch("Feature Switches", "doge",
-    "Makes article headline Doge style",
-    safeState = Off, sellByDate = new DateMidnight(2014, 3, 3)
-  )
-
   val LayoutHintsSwitch = Switch("Feature Switches", "layout-hints",
     "If this switch is on, javascript will enable the inline-hinting css experiments",
     safeState = Off, sellByDate = new DateMidnight(2014, 4, 30)
@@ -351,6 +346,11 @@ object Switches extends Collections {
 
   val ABFrontsLatestReviewsCard = Switch("A/B Tests", "ab-fronts-latest-reviews-card",
     "If this switch is on, AB test adding a 'Latest Reviews' card to the Features container on the front.",
+    safeState = Off, sellByDate = new DateMidnight(2014, 3, 8)
+  )
+
+  val ABFrontsCartoonCard = Switch("A/B Tests", "ab-fronts-cartoon-card",
+    "If this swith is on, run an ab test to add a Cartoon card to the C&D container.",
     safeState = Off, sellByDate = new DateMidnight(2014, 3, 8)
   )
 
@@ -482,12 +482,12 @@ object Switches extends Collections {
     DogpileSwitch,
     ShowAllArticleEmbedsSwitch,
     FrontPressJobSwitch,
-    DogeSwitch,
     ABUkContainers,
     ABUsContainers,
     LayoutHintsSwitch,
     ABAuContainers,
-    ABFrontsLatestReviewsCard
+    ABFrontsLatestReviewsCard,
+    ABFrontsCartoonCard
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
