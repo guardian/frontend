@@ -122,6 +122,58 @@ object FrontPage {
       )
     },
 
+    new FrontPage(isNetworkFront = false) {
+      override val id = "business/companies"
+      override val section = "business"
+      override val webTitle = "The Guardian"
+      override lazy val analyticsName = "GFE:Business"
+
+      override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
+        "keywords" -> "Business",
+        "content-type" -> "Section",
+        "is-front" -> true
+      )
+    },
+
+    new FrontPage(isNetworkFront = false) {
+      override val id = "world/asia"
+      override val section = "world"
+      override val webTitle = "The Guardian"
+      override lazy val analyticsName = "GFE:World"
+
+      override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
+        "keywords" -> "World",
+        "content-type" -> "Section",
+        "is-front" -> true
+      )
+    },
+
+    new FrontPage(isNetworkFront = false) {
+      override val id = "lifeandstyle/love-and-sex"
+      override val section = "lifeandstyle"
+      override val webTitle = "The Guardian"
+      override lazy val analyticsName = "GFE:Life and style"
+
+      override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
+        "keywords" -> "Life and style",
+        "content-type" -> "Section",
+        "is-front" -> true
+      )
+    },
+
+    new FrontPage(isNetworkFront = false) {
+      override val id = "lifeandstyle/home-and-garden"
+      override val section = "lifeandstyle"
+      override val webTitle = "The Guardian"
+      override lazy val analyticsName = "GFE:Life and style"
+
+      override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
+        "keywords" -> "Life and style",
+        "content-type" -> "Section",
+        "is-front" -> true
+      )
+    },
+
     //TODO important this one is last for matching purposes
     new FrontPage(isNetworkFront = true) {
       override val id = ""

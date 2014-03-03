@@ -8,12 +8,12 @@ define([
         RightHandComponentFactory
    ) {
 
-   var RighHandRecommendations = function() {
+   var RecommendedRighHand = function() {
 
        var self = this;
 
-       this.id = 'RightHandRecommendations';
-       this.expiry = '2014-02-28';
+       this.id = 'RecommendedRightHand';
+       this.expiry = '2014-03-17';
        this.audience = 0.3;
        this.audienceOffset = 0.7;
        this.description = 'Embeds the outbrain library on the page and for the tests uses their api to populate the right-hand menu';
@@ -44,6 +44,6 @@ define([
        ];
    };
 
-   return RighHandRecommendations;
+   return RecommendedRighHand;
 
 });

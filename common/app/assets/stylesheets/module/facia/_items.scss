@@ -158,7 +158,8 @@ $c-live: #e81818;
 .container__card {
     position: absolute;
     bottom: 0;
-    border-top: 1px solid $c-featureAccent;
+    border-top-width: 1px;
+    border-top-style: solid;
     display: none;
     @include rem((
         width: gs-span(2)
@@ -169,17 +170,20 @@ $c-live: #e81818;
 }
 .container__card__title {
     margin-bottom: 0;
-    color: $c-featureDefault;
     @include fs-header(1);
 }
-.container__card__item {
+.card__item__title,
+.card__item__image {
     margin-top: $gs-baseline;
+}
+.card__item__title {
     @include f-headline;
     @include font-size(14px, 18px);
-
-    a {
-        color: $c-neutral1;
-    }
+    color: $c-neutral1;
+}
+.card__item__image,
+.card__item__link {
+    display: block;
 }
 
 .collection {
