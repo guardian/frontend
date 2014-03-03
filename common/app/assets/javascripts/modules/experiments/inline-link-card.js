@@ -65,7 +65,7 @@ define([
             publishedFragment = '<div class="dateline"><i class="i i-clock-light-grey relative-timestamp__icon"></i><time datetime="' + datePublished + '" class="js-timestamp"></time></div>';
         }
         if (title === 'Wikipedia') {
-            contentFragment = '<div class="card__description type-11">' + description + '</div>';
+            contentFragment = '<div class="card__description">' + description + '</div>';
         } else {
             contentFragment = '<h3 class="card__headline">' + headline + '</h3>';
         }

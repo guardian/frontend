@@ -143,6 +143,7 @@
 }
 .card__description {
     color: $c-neutral1;
+    @include fs-data(3);
 }
 .card__appendix {
     color: #8c8c8c;

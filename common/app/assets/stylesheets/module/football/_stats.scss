@@ -51,6 +51,9 @@
         float: right;
     }
 }
+.team-list__item {
+    @include fs-data(3);
+}
 
 .m-status {
     padding: 0 5px;
