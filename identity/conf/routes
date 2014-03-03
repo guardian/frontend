@@ -15,6 +15,7 @@ GET     /email-prefs                                    @controllers.EmailContro
 POST    /email-prefs                                    @controllers.EmailController.savePreferences
 GET     /profile/public                                 @controllers.PublicProfileController.displayForm
 POST    /profile/public                                 @controllers.PublicProfileController.submitForm
+GET     /profile/public/:displayName                    @controllers.PublicProfileController.publicProfilePage(displayName: String)
 GET     /verify-email/:token                            @controllers.EmailVerificationController.verify(token: String)
 
 GET     /ethical-awards/complete                        @controllers.EthicalAwardsController.complete

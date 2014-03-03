@@ -1,0 +1,17 @@
+@(page: MetaData, idRequest: services.IdentityRequest, idUrlBuilder: services.IdentityUrlBuilder, user: com.gu.identity.model.User)(implicit request: RequestHeader)
+
+@import views.html.fragments.registrationFooter
+
+@identityMain(page, Switches.all){
+}{
+<div class="identity-wrapper monocolumn-wrapper">
+    <h1 class="identity-title">@user.publicFields.displayName (@user.publicFields.username)</h1>
+    <p>Location: @user.publicFields.location</p>
+    <p>About Me: @user.publicFields.aboutMe</p>
+    <p>Interests: @user.publicFields.interests</p>
+    <p>Web page: @user.publicFields.webPage</p>
+
+
+    @registrationFooter(page, idRequest, idUrlBuilder)
+</div>
+}

@@ -83,4 +83,17 @@ class PublicProfileController @Inject()(idUrlBuilder: IdentityUrlBuilder,
       }
     }
   }
+
+  def publicProfilePage(displayName: String) = Action.async { implicit request =>
+    val idRequest = idRequestParser(request)
+    identityApiClient.userFromUsername(userName = displayName).map {
+      case Left(errors) => {
+        Ok("errors: " + errors)
+      }
+      case Right(user) => {
+        Ok(views.html.public_profile_page(page, idRequest, idUrlBuilder, user))
+      }
+    }
+  }
+
 }

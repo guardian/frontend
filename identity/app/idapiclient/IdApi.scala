@@ -54,6 +54,14 @@ abstract class IdApi(val apiRootUrl: String, http: Http, jsonBodyParser: JsonBod
     response map jsonBodyParser.extract(jsonField("user"))
   }
 
+  def userFromUsername(userName: String, auth: Auth = Anonymous): Future[Response[User]] = {
+    val apiPath = "user"
+    val params = buildParams(auth = Some(auth), extra = Iterable("username" -> userName))
+    val headers = buildHeaders(Some(auth))
+    val response = http.GET(apiUrl(apiPath), params, headers)
+    response map jsonBodyParser.extract(jsonField("user"))
+  }
+
   def saveUser(userId: String, user: UserUpdate, auth: Auth): Future[Response[User]] = {
     val apiPath = urlJoin("user", userId)
     val params = buildParams(Some(auth))
@@ -148,7 +156,7 @@ abstract class IdApi(val apiRootUrl: String, http: Http, jsonBodyParser: JsonBod
     val params = buildParams(tracking = Some(trackingParameters), auth = Some(auth))
     val response = http.GET(apiUrl(apiPath), params)
     response map jsonBodyParser.extractUnit
-  }  
+  }
 }
 
 class SynchronousIdApi(apiRootUrl: String, http: Http, jsonBodyParser: JsonBodyParser, clientAuth: Auth)
