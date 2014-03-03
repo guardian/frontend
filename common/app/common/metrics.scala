@@ -395,9 +395,9 @@ object PerformanceMetrics {
 }
 
 trait CloudWatchApplicationMetrics extends GlobalSettings {
-
+  val applicationMetricsNamespace: String = "Application"
+  val applicationDimension: Dimension = new Dimension().withName("ApplicationName").withValue(applicationName)
   def applicationName: String
-
   def applicationMetrics: Map[String, Double] = Map.empty
 
   def systemMetrics: Map[String, Double] = Map(
@@ -425,8 +425,7 @@ trait CloudWatchApplicationMetrics extends GlobalSettings {
     val applicationMetrics: Map[String, Double] = this.applicationMetrics
     CloudWatch.put("ApplicationSystemMetrics", systemMetrics)
     if (applicationMetrics.nonEmpty) {
-      val applicationDimension: Dimension = new Dimension().withName("ApplicationName").withValue(applicationName)
-      CloudWatch.putWithDimensions("Application", applicationMetrics, Seq(applicationDimension))
+      CloudWatch.putWithDimensions(applicationMetricsNamespace, applicationMetrics, Seq(applicationDimension))
     }
   }
 
