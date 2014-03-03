@@ -1,4 +1,5 @@
 $table-baseline: 4px;
+$table-gutter: 4px;
 
 table {
     width: 100%;
@@ -60,14 +61,14 @@ td {
         color: $c-neutral1;
         font-weight: 800;
         @include rem((
-            padding: $table-baseline*2 $table-baseline*3
+            padding: $table-baseline*2 $table-gutter*3
         ));
     }
 
     td {
         border-top: 1px solid darken($c-neutral8, 4%);
         @include rem((
-            padding: $gs-baseline $table-baseline*3
+            padding: $gs-baseline $table-gutter*3
         ));
     }
 
