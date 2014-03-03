@@ -349,6 +349,11 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 3, 8)
   )
 
+  val ABExternalLinksNewWindow = Switch("A/B Tests", "ab-external-links-new-window",
+    "If this switch is on, AB test opening external links in a new tab/window.",
+    safeState = Off, sellByDate = new DateMidnight(2014, 4, 3)
+  )
+
   // Sport Switch
 
   val LiveCricketSwitch = Switch("Live Cricket", "live-cricket",
@@ -481,7 +486,8 @@ object Switches extends Collections {
     ABUsContainers,
     LayoutHintsSwitch,
     ABAuContainers,
-    ABFrontsLatestReviewsCard
+    ABFrontsLatestReviewsCard,
+    ABExternalLinksNewWindow
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
