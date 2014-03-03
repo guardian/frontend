@@ -40,9 +40,6 @@
         </div>
     }
 }
-@style.adSlot.map { adSlot =>
-    <div class="ad-slot ad-slot--inline mobile-only" data-base="@adSlot.baseName"><div class="ad-container"></div></div>
-}
 @defining(items.slice(9, 29)) { items =>
     @if(items.nonEmpty) {
         <div class="linkslist-container js-container--show-more tone-@{style.tone}" data-tone="@style.tone">
@@ -59,4 +56,7 @@
             </ul>
         </div>
     }
+}
+@style.adSlot.map { adSlot =>
+    <div class="ad-slot ad-slot--inline mobile-only" data-base="@adSlot.baseName"><div class="ad-container"></div></div>
 }
