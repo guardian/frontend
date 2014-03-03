@@ -2,14 +2,14 @@ define([
     'common/modules/onward/related',
     'lodash/arrays/intersection'
 ], function(
-    related,
+    Related,
     _intersection
     ) {
 
     return function() {
 
         this.id = 'OnwardRelated';
-        this.start = '2014-02-27';
+        this.start = '2014-03-03';
         this.expiry = '2014-3-10';
         this.author = "Matt Osborn";
         this.audience = 0.2;
@@ -40,16 +40,13 @@ define([
                     var match = _intersection(allWhitelistedTags, tags);
                     if (match.length > 0) {
                         var url = '/popular-in-tag/' + match[0] + '.json';
-                        related(config, context, url, true);
-                    } else {
-                        related(config, context);
+                        Related.setOverrideUrl(url);
                     }
                 }
             },
             {
                 id: 'control',
                 test: function (context, config) {
-                    related(context, config);
                 }
             }
         ];
