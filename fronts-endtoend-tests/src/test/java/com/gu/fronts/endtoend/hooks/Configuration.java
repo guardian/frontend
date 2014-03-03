@@ -39,14 +39,14 @@ public class Configuration {
     }
 
     public String getUsename() {
-        return config.get("username");
+        return config.get("test.username");
     }
 
     public String getPassword() {
-        return config.get("password");
+        return config.get("test.password");
     }
 
     public String getGASecret() {
-        return config.get("GASecret");
+        return config.get("test.GASecret");
     }
 }
