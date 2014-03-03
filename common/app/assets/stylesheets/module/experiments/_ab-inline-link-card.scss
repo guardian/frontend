@@ -146,6 +146,7 @@
     @include fs-data(3);
 }
 .card__appendix {
+    @include fs-data(1);
     color: #8c8c8c;
     @include rem((
         padding-top: $gs-baseline/3
