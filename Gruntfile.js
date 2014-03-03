@@ -33,9 +33,9 @@ module.exports = function (grunt) {
                     }
                 }],
                 options: {
-                    style: (isDev) ? 'expanded' : 'compressed',
-                    sourcemap: false,
-                    noCache: (isDev) ? false : true,
+                    style: 'compressed',
+                    sourcemap: true,
+                    noCache: true,
                     quiet: (isDev) ? false : true,
                     loadPath: [
                         'common/app/assets/stylesheets/components/sass-mq',
@@ -63,8 +63,8 @@ module.exports = function (grunt) {
                     fence:        'common/components/fence/fence',
                     'ophan/ng':   'empty:'
                 },
-                optimize: (isDev) ? 'none' : 'uglify2',
-                useSourceUrl: (isDev) ? true : false,
+                optimize: 'uglify2',
+                generateSourceMaps: true,
                 preserveLicenseComments: false
             },
             common: {
@@ -301,14 +301,6 @@ module.exports = function (grunt) {
                     dest: staticRequireDir + 'javascripts/common'
                 }]
             },
-            'javascript-common-tests': {
-                files: [{
-                    expand: true,
-                    cwd: 'common/test/assets/javascripts/spec',
-                    src: ['**/*.js'],
-                    dest: staticRequireDir + 'tests/specs'
-                }]
-            },
             'javascript-admin': {
                 files: [{
                     expand: true,
@@ -331,28 +323,20 @@ module.exports = function (grunt) {
                     dest: staticRequireDir + 'javascripts'
                 }]
             },
-            'javascript-facia-tests': {
-                files: [{
-                    expand: true,
-                    cwd: 'facia/test/assets/javascripts/spec',
-                    src: ['**/*.js'],
-                    dest: staticRequireDir + 'tests/specs'
-                }]
-            },
-            testUtils: {
-                files: [{
-                    expand: true,
-                    cwd: 'common/test/assets/javascripts',
-                    src: ['**/*', '!spec/**'],
-                    dest: staticRequireDir + 'tests'
-                }]
-            },
             commonModules: {
                 files: [{
                     expand: true,
                     cwd: 'common/app/assets/javascripts',
                     src: ['**/*.js'],
                     dest: staticRequireDir + 'javascripts/common'
+                }]
+            },
+            css: {
+                files: [{
+                    expand: true,
+                    cwd: 'common/app/assets/stylesheets',
+                    src: ['**/*.scss'],
+                    dest: staticTargetDir + 'stylesheets'
                 }]
             },
             images: {
@@ -434,7 +418,6 @@ module.exports = function (grunt) {
 
         karma: {
             options: {
-                configFile: testConfDir + 'common.js',
                 reporters: isDev ? ['dots'] : ['progress'],
                 singleRun: singleRun
             },
@@ -598,10 +581,7 @@ module.exports = function (grunt) {
             'static': [staticDir],
             staticTarget: [staticTargetDir],
             js: [staticTargetDir + 'javascripts', staticRequireDir],
-            css: [
-                staticTargetDir + 'stylesheets',
-                '.sass-cache'
-            ],
+            css: [staticTargetDir + 'stylesheets'],
             images: [staticTargetDir + 'images'],
             flash: [staticTargetDir + 'flash'],
             fonts: [staticTargetDir + 'fonts'],
@@ -639,6 +619,17 @@ module.exports = function (grunt) {
                 files: ['resources/fonts/**/*'],
                 tasks: ['compile:fonts']
             }
+        },
+
+        replace: {
+            cssSourceMaps: {
+                src: [staticTargetDir + 'stylesheets/*.css.map'],
+                overwrite: true,
+                replacements: [{
+                    from: '../../../common/app/assets/stylesheets/',
+                    to: ''
+                }]
+            }
         }
     });
 
@@ -661,6 +652,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-asset-monitor');
+    grunt.loadNpmTasks('grunt-text-replace');
 
     grunt.registerTask('default', ['compile', 'test', 'analyse']);
 
@@ -677,7 +669,7 @@ module.exports = function (grunt) {
 
     // Compile tasks
     grunt.registerTask('compile:images', ['clean:images', 'copy:images', 'shell:spriteGeneration', 'imagemin']);
-    grunt.registerTask('compile:css', ['clean:css', 'sass:compile']);
+    grunt.registerTask('compile:css', ['clean:css', 'sass:compile', 'replace:cssSourceMaps', 'copy:css']);
     grunt.registerTask('compile:js', function(app) {
         grunt.task.run(['clean:js']);
         var apps = ['common'];
@@ -737,7 +729,7 @@ module.exports = function (grunt) {
         }
         grunt.config.set('karma.options.singleRun', (singleRun === false) ? false : true);
         apps.forEach(function(app) {
-            grunt.task.run(['clean:static', 'copy:testUtils', 'copy:commonModules', 'copy:javascript-' + app, 'copy:javascript-' + app + '-tests', 'karma:' + app]);
+            grunt.task.run(['karma:' + app]);
         });
     });
     // TODO - don't have common as default?

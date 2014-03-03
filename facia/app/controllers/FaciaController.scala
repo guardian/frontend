@@ -44,15 +44,6 @@ class FaciaController extends Controller with Logging with ExecutionContexts {
     Cached(60)(Redirect(redirectPath))
   }
 
-  private def getPathForUkAlpha(path: String, request: RequestHeader): String =
-    Seq("uk", "us", "au").find { page =>
-      path == page &&
-        Switches.byName(s"network-front-${page}-alpha").exists(_.isSwitchedOn) &&
-        request.headers.get(s"X-Gu-Front-Alphas").exists(_.toLowerCase == "true")
-    }.map{ page =>
-      s"$page-alpha"
-    }.getOrElse(path)
-
   // Needed as aliases for reverse routing
   def renderEditionFrontJson(path: String) = renderFront(path)
   def renderEditionFront(path: String) = renderFront(path)
@@ -69,26 +60,25 @@ class FaciaController extends Controller with Logging with ExecutionContexts {
       renderFaciaPress(path)
     else
       DogpileAction { implicit request =>
-        Future{
-          //For UK alpha only
-          val newPath = getPathForUkAlpha(path, request)
+          Future {
+            val editionalisedPath = editionPath(path, Edition(request))
 
-          val editionalisedPath = editionPath(newPath, Edition(request))
+            FrontPage(editionalisedPath).flatMap {
+              frontPage =>
 
-          FrontPage(editionalisedPath).flatMap { frontPage =>
-
-          // get the trailblocks
-            val faciaPageOption: Option[FaciaPage] = front(editionalisedPath)
-            faciaPageOption map { faciaPage =>
-              Cached(frontPage) {
-                if (request.isJson)
-                  JsonFront(frontPage, faciaPage)
-                else
-                  Ok(views.html.front(frontPage, faciaPage))
-              }
-            }
-          }.getOrElse(Cached(60)(NotFound))
-        }
+              // get the trailblocks
+                val faciaPageOption: Option[FaciaPage] = front(editionalisedPath)
+                faciaPageOption map {
+                  faciaPage =>
+                    Cached(frontPage) {
+                      if (request.isJson)
+                        JsonFront(frontPage, faciaPage)
+                      else
+                        Ok(views.html.front(frontPage, faciaPage))
+                    }
+                }
+            }.getOrElse(Cached(60)(NotFound))
+          }
       }
 
   def renderFaciaPress(path: String) = DogpileAction { implicit request =>

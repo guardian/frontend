@@ -1,9 +1,12 @@
+$table-baseline: 4px;
+$table-gutter: 4px;
+
 table {
     width: 100%;
 }
 th,
 td {
-    padding: $baseline;
+    padding: $gs-baseline/3 $gs-gutter/5;
     text-align: left;
 }
 
@@ -22,16 +25,19 @@ td {
 
 @mixin table--small {
     th,
-    td {
+    td,
+    thead td {
         @include fs-data(4);
-        padding-left: 8px;
-        padding-right: 8px;
+        @include rem((
+            padding: $table-baseline*2
+        ));
     }
 }
 
 .table {
     background: $c-neutral8;
     border-top: 2px solid $c-newsAccent;
+    color: $c-neutral1;
 
     caption {
         @include fs-header(2);
@@ -47,18 +53,29 @@ td {
     th,
     td {
         @include fs-data(5);
-        padding: $gs-baseline ($gs-gutter+4)/2;
+        vertical-align: top;
     }
 
     th,
     thead td {
         color: $c-neutral1;
         font-weight: 800;
+        @include rem((
+            padding: $table-baseline*2 $table-gutter*3
+        ));
+    }
+
+    td {
+        border-top: 1px solid darken($c-neutral8, 4%);
+        @include rem((
+            padding: $gs-baseline $table-gutter*3
+        ));
     }
 
     abbr {
         border-bottom: 1px dotted $c-neutral8;
     }
+
 
     @include mq($to: tablet) { @include table--small; }
 }
@@ -68,6 +85,10 @@ td {
 }
 
 .table--striped {
+    td {
+        border-top: none;
+    }
+
     tr:nth-child(odd) > td {
         background-color: darken($c-neutral8, 4%);
     }

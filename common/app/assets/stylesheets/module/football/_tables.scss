@@ -1,137 +1,3 @@
-.football-table-container a.cta {
-    background-color: #f4f4ee;
-    color: #064951;
-}
-
-.table-football {
-    background-color: #f4f4ee;
-}
-
-.table-football-header {
-    border-bottom: 1px solid #DEDEDD;
-}
-
-.table-football-header th,
-.table-football-body .table-football-legend th { // can't get this less specific, sorry (MA)
-    background-color: #f4f4ee;
-    color: #777;
-    font-weight: normal;
-}
-
-.table-football th {
-    border-bottom: none;
-}
-
-.table-football-body th {
-    background: #f4f4ee;
-    font-weight: bold;
-    color: $c-sportMid;
-    border-top: 1px solid #DEDEDD;
-
-    &:first-child {
-        border-top: none;
-        padding-left: $gutter/2;
-    }
-}
-
-.table-football th,
-.table-football td {
-    border-right: none;
-    text-align: right;
-    padding: $baseline*2 3% $baseline*2 3%;
-}
-
-.table-football-header th:first-child,
-.table-football td:first-child {
-    padding: $baseline*2 3% $baseline*2 $gutter/2;
-}
-
-.table-football-header th:last-child,
-.table-football td:last-child {
-    padding: $baseline*2 $gutter/2 $baseline*2 3%;
-}
-
-.table-football td:last-child {
-    font-weight: bold;
-}
-
-.table-football-body tr {
-    background-color: transparent;
-
-    &:last-child {
-        border-bottom: none;
-    }
-}
-
-@include mq(641px) {
-
-    .table-football th,
-    .table-football td {
-        padding: $baseline*2 3px;
-    }
-
-    .table-football-header th:first-child,
-    .table-football-body th:first-child,
-    .table-football td:first-child {
-        padding-left: 12px;
-    }
-
-    .table-football-header th:last-child,
-    .table-football td:last-child {
-        padding-right: 12px;
-    }
-}
-
-.table-football-leftaligned {
-    text-align: left !important;
-}
-
-.table-football-body {
-    border-bottom: 3px solid #fff; // this is a border because margins don't appear
-}
-
-// overriding pasteup :(
-.table-football-body:hover tr,
-.table-football-body:hover tr:nth-child(even),
-.table-football-body tr:nth-child(even),
-.table-football-body:hover tr:hover,
-.table-football-body tr:last-child {
-    background-color: transparent !important;
-}
-
-.table-football-body tr.highlight,
-.table-football-body:hover tr.highlight,
-.table-football-body tr.highlight:nth-child(even),
-.table-football-body:hover tr.highlight:nth-child(even) {
-    background-color: #f9c83f !important;
-    border-bottom: none;
-    margin-top: -1px;
-}
-
-
-/* These are used to hide columns that we don't display on smaller screens. */
-
-.stats-1,
-.stats-2,
-.stats-3 {
-    display: none;
-}
-@include mq(400px) {
-    .stats-1 {
-        display: table-cell;
-    }
-}
-@include mq(641px) {
-    .stats-2 {
-        display: table-cell;
-    }
-}
-@include mq(850px) {
-    .stats-3 {
-        display: table-cell;
-    }
-}
-
 @mixin table-football--small() {
     .table-column--priority { display: table-cell; }
 
@@ -146,9 +12,11 @@
     }
 }
 
+/** League table **/
 .table--football {
     .table-column--main {
-        a {
+        a,
+        span {
             display: block;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -174,6 +42,12 @@
         min-width: 12px;
     }
 
+    // remove battle line from last row
+    // (only happens in truncated tables)
+    tr:last-child td {
+        border-bottom: none;
+    }
+
     .football-stat--form {
         min-width: 75px; // 15(width of status)*5
     }
@@ -183,13 +57,7 @@
     &.table--small { @include table-football--small; }
 }
 
-.football__group {
-    margin-top: $gs-baseline;
-    &:first-child { margin-top: 0; }
-}
-
-.article__secondary-column {
-    .table__container {
-        @include rem((margin-bottom: $gs-baseline));
-    }
+// Hack for fronts until we tidy them up properly
+.fromage .table {
+    border-top-color: $c-neutral3;
 }

@@ -5,7 +5,7 @@
 
     .element-witness {
         border: 1px solid $c-neutral5;
-        margin-bottom: $baseline*5;
+        margin-bottom: ($gs-baseline/3)*5;
     }
 
     .element-witness {
@@ -26,11 +26,11 @@
 
     .element-witness--title {
         @extend %type-3;
-        margin-bottom: $baseline*2;
+        margin-bottom: ($gs-baseline/3)*2;
     }
 
     .element-witness--main {
-        padding: $baseline*3 $gutter/2 $baseline*4;
+        padding: $gs-baseline $gutter/2 ($gs-baseline/3)*4;
     }
 
     .element-witness--brand {
@@ -43,7 +43,7 @@
     }
 
     .element-witness figcaption {
-        margin: $baseline*4 0 0 0;
+        margin: ($gs-baseline/3)*4 0 0 0;
     }
 
     .element-witness-video iframe {
@@ -62,7 +62,7 @@
         }
         border-top: 1px solid $c-neutral5;
         background: $c-neutral7;
-        padding: $baseline*3 $gutter/2;
+        padding: $gs-baseline $gutter/2;
         line-height: 1;
         color: #666 !important;
     }
@@ -110,15 +110,15 @@
 }
 
 .element-witness-text .element-witness--main {
-    @extend .svg-i-quote-marks !optional;
-    background-position: $baseline*2 0 !important;
+    @extend %svg-i-quote-marks !optional;
+    background-position: ($gs-baseline/3)*2 0 !important;
 }
 
 .witness-cta-wrapper {
     position: relative;
     overflow: hidden;
     height: 47px;
-    margin-bottom: $baseline*4;
+    margin-bottom: ($gs-baseline/3)*4;
 }
 .witness-cta__body {
     @extend %type-10;

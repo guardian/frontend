@@ -81,8 +81,8 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
     FaciaToolMetrics.DraftPublishCount.increment()
     val block = FaciaApi.publishBlock(id, identity)
     block.foreach{ b =>
-      FaciaApi.archive(id, b, JsString("publish"))
-      pressCollectionId(b.id)
+      FaciaApi.archive(id, b, JsString("publish"), identity)
+      pressCollectionId(id)
     }
     notifyContentApi(id)
     NoCache(Ok)
@@ -92,7 +92,7 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
     val identity = Identity(request).get
     val block = FaciaApi.discardBlock(id, identity)
     block.foreach { b =>
-      FaciaApi.archive(id, b, JsString("discard"))
+      FaciaApi.archive(id, b, JsString("discard"), identity)
     }
     NoCache(Ok)
   }
@@ -119,9 +119,11 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
         case update: Map[String, UpdateList] => {
           val identity: Identity = Identity(request).get
           val updatedCollections: Map[String, Block] = update.collect {
-            case ("update", updateList) => UpdateActions.updateCollectionList(updateList.id, updateList, identity)
-            case ("remove", updateList) => UpdateActions.updateCollectionFilter(updateList.id, updateList, identity)
-          }.flatten.map(b => (b.id, b)).toMap
+            case ("update", updateList) =>
+              UpdateActions.updateCollectionList(updateList.id, updateList, identity).map(updateList.id -> _)
+            case ("remove", updateList) =>
+              UpdateActions.updateCollectionFilter(updateList.id, updateList, identity).map(updateList.id -> _)
+          }.flatten.toMap
 
           pressCollectionIds(updatedCollections.keySet)
 
@@ -135,6 +137,11 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
     }
   }
 
+  def pressCollection(id: String) = AjaxExpiringAuthentication { request =>
+    pressCollectionId(id)
+    NoCache(Ok)
+  }
+
   def notifyContentApi(id: String): Option[Future[Response]] =
     if (ContentApiPutSwitch.isSwitchedOn)
       ConfigAgent.getConfig(id)
@@ -146,5 +153,4 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
     if (Switches.FaciaToolPressSwitch.isSwitchedOn) {
       FrontPressJob.pressByCollectionIds(ids)
     }
-
 }

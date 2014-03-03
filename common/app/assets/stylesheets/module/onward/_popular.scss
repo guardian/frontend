@@ -20,7 +20,9 @@
             a {
                 padding: 0;
                 color: $c-neutral1;
-                @include fs-header(2);
+                @include fs-header(3);
+                line-height: 1;
+                cursor: text;
             }
 
             span {
@@ -36,7 +38,7 @@
         }
 
         .tabs__content {
-            padding-top: 2px;
+            padding-top: 0;
             border-top: none;
         }
 

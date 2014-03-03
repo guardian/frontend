@@ -118,7 +118,9 @@ define([
         },
 
         transcludeRelated: function (config, context) {
-            related(config, context);
+            if (!config.switches.abOnwardRelated) {
+                related(config, context);
+            }
         },
 
         transcludePopular: function () {

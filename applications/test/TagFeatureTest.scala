@@ -4,6 +4,7 @@ import org.scalatest.{ FeatureSpec, GivenWhenThen }
 import org.scalatest.Matchers
 import collection.JavaConversions._
 import conf.{Switches, Configuration}
+import play.api.test.TestBrowser
 
 class TagFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
@@ -84,6 +85,28 @@ class TagFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
     }
 
-  }
+    scenario("Pagination") {
 
+      Given("I visit the 'Cycling' tag page")
+
+      HtmlUnit("/sport/cycling") { browser =>
+        import browser._
+
+        val linksOnFirstPage = findFirst(".container__body").find("a").map(_.getAttribute("href"))
+        linksOnFirstPage.size should be > 10
+
+        Then("I should be able to navigate to the 'next' page")
+        findFirst(".pagination").findFirst("[rel=next]").click()
+        val linksOnNextPage = findFirst(".container__body").find("a").map(_.getAttribute("href"))
+        linksOnNextPage.size should be > 10
+
+        linksOnNextPage.foreach( linksOnFirstPage should not contain _ )
+
+        And("I should be able to navigate to the 'previous' page")
+        findFirst(".pagination").findFirst("[rel=prev]").click()
+        val linksOnPreviousPage = findFirst(".container__body").find("a").map(_.getAttribute("href"))
+        linksOnPreviousPage should equal (linksOnFirstPage)
+      }
+    }
+  }
 }

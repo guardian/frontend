@@ -31,11 +31,11 @@
     .tone-#{$tone} {
         .commentcount {
             i {
-                @extend .i-comment-#{$tone};
+                @extend %i-comment-#{$tone};
 
                 @if $svg-support {
                     .svg & {
-                        @extend .svg-i-comment-#{$tone};
+                        @extend %svg-i-comment-#{$tone};
                     }
                 }
             }

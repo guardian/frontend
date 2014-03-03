@@ -13,7 +13,7 @@
         }
     }
     .ad-slot--inline {
-        margin-top: $gs-baseline/2;
+        margin-top: $gs-baseline;
         margin-bottom: $gs-baseline/2;
     }
     .collection-wrapper--position-1 {
@@ -26,27 +26,15 @@
             ));
         }
         @include mq($to: tablet) {
-            background-color: $c-features-secondary;
-
             .collection__item {
                 border-bottom: 1px solid #ffffff;
             }
 
             .collection__item + .collection__item {
-                float: left;
-                width: 50%;
                 border-bottom: 0;
 
                 .item__title {
                     @include fs-headline(1, true);
-                }
-            }
-            .collection__item:nth-child(2) {
-                // Hairline takes the full height of the 2nd row
-                &:after {
-                    left: auto;
-                    right: 0;
-                    background: #ffffff;
                 }
             }
             .item--has-image .item__media-wrapper,
@@ -141,5 +129,8 @@
             // Restore lost underline because of the absolute positioning
             text-decoration: underline;
         }
+    }
+    .item__link:active .item__title {
+        text-decoration: none;
     }
 }

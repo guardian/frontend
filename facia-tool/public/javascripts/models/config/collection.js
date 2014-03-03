@@ -4,18 +4,18 @@ define([
     'modules/vars',
     'utils/as-observable-props',
     'utils/populate-observables',
-    'utils/guid'
+    'utils/collection-guid'
 ], function(
     ko,
     vars,
     asObservableProps,
     populateObservables,
-    guid
+    collectionGuid
 ) {
     function Collection(opts) {
         opts = opts || {};
 
-        this.id = opts.id || (opts.idPrefix ? opts.idPrefix + '_' : '') + guid();
+        this.id = opts.id || collectionGuid();
 
         this.parents = ko.observableArray();
 
@@ -59,13 +59,13 @@ define([
         }
         this.state.open(false);
         this.state.openAdvanced(false);
-        vars.model.save();
+        vars.model.save(this);
     };
 
     Collection.prototype.discard = function() {
         if (this.state.enableDiscard()) {
             vars.model.collections.remove(this);
-            vars.model.save();
+            vars.model.save(this);
         }
     };
 

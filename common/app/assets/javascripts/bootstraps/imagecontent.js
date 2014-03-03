@@ -1,9 +1,11 @@
 define([
     "common/utils/mediator",
-    "common/modules/discussion/loader"
+    "common/modules/discussion/loader",
+    "common/$"
 ], function(
     mediator,
-    DiscussionLoader
+    DiscussionLoader,
+    $
 ) {
     var modules = {
 

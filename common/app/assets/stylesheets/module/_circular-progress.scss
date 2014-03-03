@@ -2,7 +2,7 @@
     position: relative;
 
     &.circular-progress--is-off .circular-progress__cta {
-        @extend .i-liveblog-play;
+        @extend %i-liveblog-play;
     }
 }
 
@@ -31,6 +31,6 @@
     }
 
     &:hover .circular-progress__cta {
-        @extend .i-liveblog-pause;
+        @extend %i-liveblog-pause;
     }
 }

@@ -16,8 +16,10 @@
                 };
         </script>
         <style>
+            body {
+                background: #CCCCCC;
+            }
             iframe {
-                border: 1px solid #999999;
                 border-radius: 4px;
             }
             h2 {
@@ -40,6 +42,14 @@
                 return obj;
             }
 
+            function updateScrollables() {
+                var height = window.innerHeight;
+
+                Array.prototype.forEach.call(document.querySelectorAll('iframe'), function(el) {
+                    el.style.height = Math.max(100, height - el.getBoundingClientRect().top) - 25 + "px";
+                });
+            }
+
             function init() {
                 var sbWidth = 15, // scrollbar width
                     html = '',
@@ -49,10 +59,9 @@
                     html +=
                         '<div style="left:' + leftAcc + 'px">' +
                             '<h2>' + bp.name + '</h2>' +
-                            '<iframe sandbox="allow-same-origin allow-forms allow-scripts" seamless ' +
+                            '<iframe frameBorder="0" sandbox="allow-same-origin allow-forms allow-scripts" seamless ' +
                                 'src="' + (base[hashArgs().env] || base['prod']) + '/' + (hashArgs().url || '').replace(/^(\/|https?:\/\/)/, '') + '" ' +
-                                'width="' + (bp.width + sbWidth) + '" ' +
-                                'height="' + bp.height + '"></iframe>' +
+                                'width="' + (bp.width + sbWidth) + '"></iframe>' +
                         '</div>';
                     leftAcc += bp.width + sbWidth + 15;
                 })
@@ -61,7 +70,10 @@
             }
 
             init();
+            updateScrollables();
+
             window.onhashchange = init;
+            window.onresize = updateScrollables;
         </script>
     </body>
 </html>
