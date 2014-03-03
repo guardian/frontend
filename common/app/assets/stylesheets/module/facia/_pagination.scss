@@ -1,6 +1,8 @@
 .pagination {
-    margin: $gs-baseline 0;
-    padding-top: $gs-baseline / 2;
+    @include rem((
+        padding-top: $gs-baseline / 2,
+        margin: $gs-baseline 0
+    ));
     text-align: center;
     @include fs-data(4);
     border-top: 1px solid $c-neutral5;
@@ -8,9 +10,11 @@
 
 .pagination__links {
     width: 100%;
-    float: right;
-    @include mq(tablet){
-        width: gs-span(4);
+    @include mq(tablet) {
+        float: right;
+        @include rem((
+            width: gs-span(4)
+        ))
     }
 }
 
@@ -36,14 +40,14 @@
 
 .pagination__action {
     @include rem((
-        padding: 0 $gs-gutter/5
+        padding: 0 $gs-gutter / 5
     ));
 }
 
 .pagination_legend {
     float: left;
     @include rem((
-    padding: 0 $gs-gutter 0 0
+        padding-left: $gs-gutter
     ));
 }
 
