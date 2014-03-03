@@ -131,7 +131,7 @@ object FrontPage {
       override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
         "keywords" -> "Business",
         "content-type" -> "Section",
-        "is-front" -> isNetworkFront
+        "is-front" -> true
       )
     },
 
@@ -144,7 +144,7 @@ object FrontPage {
       override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
         "keywords" -> "World",
         "content-type" -> "Section",
-        "is-front" -> isNetworkFront
+        "is-front" -> true
       )
     },
 
@@ -157,7 +157,7 @@ object FrontPage {
       override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
         "keywords" -> "Life and style",
         "content-type" -> "Section",
-        "is-front" -> isNetworkFront
+        "is-front" -> true
       )
     },
 
@@ -170,7 +170,7 @@ object FrontPage {
       override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
         "keywords" -> "Life and style",
         "content-type" -> "Section",
-        "is-front" -> isNetworkFront
+        "is-front" -> true
       )
     },
 
