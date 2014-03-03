@@ -11,10 +11,7 @@
 @import views.html.fragments.form.{inputField, textareaField}
 @import views.html.fragments.registrationFooter
 @import views.html.fragments.socialSignin
-@import form.IdFormHelpers._
-@import form.Input
-@import conf.Switches.IdentityEmailVerificationSwitch
-@import helper._
+@import views.html.fragments.profile.{public_profile_form, account_details_form}
 
 @identityMain(page, conf.Switches.all){
 }{
@@ -35,101 +32,13 @@
         <div class="tabs__content">
             <div id="tabs-popular-1" class="tabs__pane u-cf" role="tabpanel" aria-labelledby="tabs-popular-1-tab" data-link-name="Public Profile" data-link-context="Identity/profile" style="">
 
-                <form class="form" novalidate action="@idUrlBuilder.buildUrl("/profile/public", idRequest)" role="main" method="post">
-                    @views.html.helper.CSRF.formField
-
-                    <fieldset class="fieldset">
-                        <div class="fieldset__heading">
-                            <div class="user-avatar" data-userid="@user.id"></div>
-                            <h2 class="form__heading">
-                                @user.publicFields.displayName
-                            </h2>
-                            @user.dates.accountCreatedDate.map { joinDate =>
-                                <p class="form-field__note">Joined: @joinDate.toString("d MMM yyyy")</p>
-                            }
-                        </div>
-                    </fieldset>
-
-                    @if(publicProfileForm.globalError.isDefined) {
-                        <div class="form__error">@publicProfileForm.globalErrors.map(_.message).mkString(", ")</div>
-                    }
-
-                    <fieldset class="fieldset">
-
-                        <div class="fieldset__heading">
-                            <h2 class="form__heading">Public profile.</h2>
-                            <div class="form__note">These details will be visible to everyone who sees your profile.</div>
-                        </div>
-
-                        <div class="fieldset__fields">
-                            <ul class="unstyled">
-
-                                @if(IdentityEmailVerificationSwitch.isSwitchedOn){
-                                    <li class="form-field form-field--email-validation">
-                                        @if(user.statusFields.userEmailValidated.getOrElse(false)){
-                                            <i class="i i-id-ok"></i>
-                                            <p class="form__note">Your email address has been validated.</p>
-                                        }else{
-                                            <i class="i i-id-alert"></i>
-                                            <p class="form__note">
-                                                Please confirm your email address to post comments.<br />
-                                                <a class="js-id-send-validation-email" data-link-name="Resend verification email">Send validation email</a>
-                                            </p>
-                                        }
-                                    </li>
-                                }
-
-                                @inputField(Input(publicProfileForm("location"), ('_label, "Location")))
-                                @select(
-                                    publicProfileForm("gender"),
-                                    List(("Male", "Male"), ("Female", "Female"), ("unknown", "Prefer not to say")),
-                                    ('_label, "Gender"),
-                                    ('_default, "")
-                                )
-
-                                @textareaField(Input(publicProfileForm("aboutMe"), ('_label, "About me"), ('class, "textarea--long")))
-                                @textareaField(Input(publicProfileForm("interests"), ('_label, "Interests")))
-                                @inputField(Input(publicProfileForm("webPage"), ('_label, "Website (enter full address)")))
-
-                                <li>
-                                    <button type="submit" class="submit-input" data-link-name="Create account">Save changes</button>
-                                </li>
-                            </ul>
-                        </div>
-
-                    </fieldset>
-                </form>
+                @public_profile_form(idUrlBuilder, idRequest, user, publicProfileForm)
 
             </div>
 
             <div id="tabs-popular-2" class="tabs__pane u-cf" role="tabpanel" aria-labelledby="tabs-popular-2-tab" data-link-name="Account" data-link-context="Identity/profile" style="display: none;">
 
-                <form class="form" novalidate action="@idUrlBuilder.buildUrl("/profile/account-details", idRequest)" role="main" method="post">
-                    @views.html.helper.CSRF.formField
-
-                    @if(accountDetailsForm.globalError.isDefined) {
-                        <div class="form__error">@accountDetailsForm.globalErrors.map(_.message).mkString(", ")</div>
-                    }
-
-                    <fieldset class="fieldset">
-
-                        <div class="fieldset__heading">
-                            <h2 class="form__heading">Contact information.</h2>
-                            <div class="form__note">These details will only be visible to yourself and the Guardian.</div>
-                        </div>
-
-                        <div class="fieldset__fields">
-                            <ul class="unstyled">
-                                @inputField(Input(accountDetailsForm("primaryEmailAddress"), ('_label, "Email address")))
-
-                                <li>
-                                    <button type="submit" class="submit-input" data-link-name="Create account">Save changes</button>
-                                </li>
-                            </ul>
-                        </div>
-
-                    </fieldset>
-                </form>
+                @account_details_form(idUrlBuilder, idRequest, user, accountDetailsForm)
 
             </div>
         </div>

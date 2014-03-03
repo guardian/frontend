@@ -6,14 +6,11 @@ import idapiclient.UserUpdate
 
 object ProfileMapping extends UserFormMapping[ProfileFormData] {
 
-  private val genders = List("Male", "Female", "unknown", "")
-
   protected lazy val formMapping = mapping(
     "location" -> textField,
     "aboutMe" -> textArea,
     "interests" -> textField,
-    "webPage" -> idUrl,
-    "gender" -> comboList(genders)
+    "webPage" -> idUrl
   )(ProfileFormData.apply)(ProfileFormData.unapply)
 
   protected def fromUser(user: User) = ProfileFormData(user)
@@ -22,8 +19,7 @@ object ProfileMapping extends UserFormMapping[ProfileFormData] {
     "publicFields.location" -> "location",
     "publicFields.aboutMe" -> "aboutMe",
     "publicFields.interests" -> "interests",
-    "publicFields.webPage" -> "webPage",
-    "privateFields.gender" -> "gender"
+    "publicFields.webPage" -> "webPage"
   )
 }
 
@@ -35,8 +31,7 @@ case class ProfileFormData(
   location: String,
   aboutMe: String,
   interests: String,
-  webPage: String,
-  gender: String
+  webPage: String
 ) extends UserFormData{
 
   lazy val toUserUpdate: UserUpdate = UserUpdate(
@@ -45,8 +40,7 @@ case class ProfileFormData(
       aboutMe = Some(aboutMe),
       webPage = Some(webPage),
       interests = Some(interests)
-    )),
-    privateFields = Some(PrivateFields(gender = Some(gender)))
+    ))
   )
 
 }
@@ -56,7 +50,6 @@ object ProfileFormData {
     location = user.publicFields.location getOrElse "",
     aboutMe = user.publicFields.aboutMe getOrElse "",
     interests = user.publicFields.interests getOrElse "",
-    webPage = user.publicFields.webPage getOrElse "",
-    gender = user.privateFields.gender getOrElse "unknown"
+    webPage = user.publicFields.webPage getOrElse ""
   )
 }
