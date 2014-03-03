@@ -174,6 +174,19 @@ object FrontPage {
       )
     },
 
+    new FrontPage(isNetworkFront = false) {
+      override val id = "football"
+      override val section = "football"
+      override val webTitle = "The Guardian"
+      override lazy val analyticsName = "GFE:Football"
+
+      override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
+        "keywords" -> "Football",
+        "content-type" -> "Section",
+        "is-front" -> true
+      )
+    },
+
     //TODO important this one is last for matching purposes
     new FrontPage(isNetworkFront = true) {
       override val id = ""
