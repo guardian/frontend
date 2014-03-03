@@ -69,17 +69,14 @@ define([
         },
 
         showCompetitionData: function(competition) {
-            // wrap the return sports stats component in an 'item'
-            var fixtures = bonzo.create('<li class="item item--sport-stats item--sport-stats-tall"></li>'),
-                table = bonzo.create('<li class="item item--sport-stats item--sport-table"></li>');
+            var fixtures = bonzo.create('<div class="fromage tone-accent-border tone-news unstyled item--sport-stats"></div>'),
+                table = bonzo.create('<div class="fromage tone-accent-border tone-news unstyled item--sport-stats"></div>');
             mediator.on('modules:footballfixtures:render', function() {
-                var $collection = $('.container--sport .collection', context);
-                $('.item:first-child', $collection[0])
-                    .after(fixtures);
-                $collection.removeClass('collection--without-sport-stats')
-                    .addClass('collection--with-sport-stats')
+                bonzo($('.collection-wrapper', context).get(1))
+                    .append(fixtures)
                     .append(table);
             });
+
             new FootballFixtures({
                 prependTo: fixtures,
                 attachMethod: 'append',
@@ -149,7 +146,8 @@ define([
         lazyLoadCss('football', config);
 
         // not worth over complicating for the time being
-        bean.on(context, 'click', qwery('.table tr[data-link-to]'), function(e) {
+        var trs = $('.table tr[data-link-to]').css({ 'cursor': 'pointer' }).map(function(elem) { return elem; });
+        bean.on(context, 'click', trs, function(e) {
             window.location = this.getAttribute('data-link-to');
         });
 
