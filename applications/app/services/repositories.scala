@@ -82,7 +82,7 @@ trait Index extends ConciergeRepository with QueryDefaults {
         ModelOrResult(page, response)
     }
     promiseOfResponse.recover(convertApiExceptions)
-      .recover{ case ApiError(400, _) => Right(Found(path)) } //this is the best handle we have on a wrong 'page' number
+      .recover{ case ApiError(400, _) => Right(Found(s"/$path")) } //this is the best handle we have on a wrong 'page' number
   }
 
 
