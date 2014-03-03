@@ -25,7 +25,6 @@
     }
 
     .element-witness--title {
-        @extend %type-3;
         margin-bottom: ($gs-baseline/3)*2;
     }
 
@@ -34,7 +33,6 @@
     }
 
     .element-witness--brand {
-        padding: 0 $gutter/2 0 0;
         line-height: 14px;
     }
 
