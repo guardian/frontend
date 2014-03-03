@@ -18,6 +18,7 @@ import play.api.mvc.RequestHeader
 import play.api.mvc.SimpleResult
 import play.api.templates.Html
 import scala.collection.JavaConversions._
+import java.text.DecimalFormat
 
 sealed trait Style {
   val className: String
@@ -631,6 +632,8 @@ object Format {
     val timezone = Edition(request).timezone
     date.toString(DateTimeFormat.forPattern(pattern).withZone(timezone))
   }
+
+  def apply(a: Int): String = new DecimalFormat("#,###").format(a)
 }
 
 object cleanTrailText {

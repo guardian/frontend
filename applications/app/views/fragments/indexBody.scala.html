@@ -2,7 +2,7 @@
 
 <div class="facia-container facia-container--layout-front monocolumn-wrapper monocolumn-wrapper--no-limit" data-link-name="Front" role="main">
 
-    @fragments.containers.tag(index.page, Config(s"${index.page.id}/news/regular-stories", displayName = Some(index.page.webTitle)), Collection(index.trails), NewsContainer(showMore = false), containerIndex = 0)
+    @fragments.containers.tag(index.page, Config(s"${index.page.id}/news/regular-stories", displayName = Some(index.page.webTitle)), Collection(index.trails), NewsContainer(showMore = false), containerIndex = 0, pagination = Some(index.pagination))
 
     <section class="no-indent-article__zone">
         @fragments.footballNav(index.page)
