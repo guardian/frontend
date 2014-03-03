@@ -5,10 +5,8 @@ module.exports = function (grunt) {
         singleRun = grunt.option('single-run') !== false,
         env = grunt.option('env') || 'code',
         screenshotsDir = './screenshots',
-        staticDir = 'static/',
-        staticTargetDir = staticDir + 'target/',
-        staticRequireDir = staticDir + 'requirejs/',
-        testConfDir = 'common/test/assets/javascripts/conf/',
+        staticTargetDir = './static/target/',
+        testConfDir = './common/test/assets/javascripts/conf/',
         propertiesFile = (isDev) ? process.env.HOME + '/.gu/frontend.properties' : '/etc/gu/frontend.properties';
 
     if (isDev) {
