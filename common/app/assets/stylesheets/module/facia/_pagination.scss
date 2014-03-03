@@ -1,0 +1,37 @@
+.pagination {
+    margin: $gs-baseline 0;
+    padding-top: $gs-baseline / 2;
+    text-align: center;
+    @include fs-data(4);
+    border-top: 1px solid $c-neutral5;
+}
+
+.pagination__links {
+    width: 100%;
+    float: right;
+    @include mq(tablet){
+        width: gs-span(4);;
+    };
+}
+
+.pagination__item {
+    display: inline-block;
+}
+
+.pagination__item--next {
+    float: right;
+}
+
+.pagination__item--prev {
+    float: left;
+}
+
+.pagination__action {
+    padding: 0 4px 0 4px;
+}
+
+.pagination_legend {
+    float: left;
+    padding-right: $gs-gutter;
+}
+
