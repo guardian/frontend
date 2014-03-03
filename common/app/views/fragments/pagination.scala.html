@@ -11,15 +11,15 @@
 
     <ol class="unstyled pagination__links">
         <li class="pagination__item pagination__item--next">
-        @pagination.next.map { next =>
-        <a rel="next" href="@paginated(page.url, next)">Next</a>
-        }.getOrElse{ <span>Next</span> }
+            @pagination.next.map { next =>
+                <a rel="next" href="@paginated(page.url, next)">Next</a>
+            }.getOrElse{ Next }
         </li>
 
         <li class="pagination__item pagination__item--prev">
-        @pagination.previous.map{ prev =>
-        <a rel="prev" href="@paginated(page.url, prev)">Previous</a>
-        }.getOrElse{ <span>Previous</span> }
+            @pagination.previous.map{ prev =>
+                <a rel="prev" href="@paginated(page.url, prev)">Previous</a>
+            }.getOrElse{ Previous }
         </li>
 
         @pagination.pages.map{ pageNum =>
