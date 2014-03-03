@@ -80,11 +80,12 @@ Here are the browsers and devices we currently regularly test on:-
 
 ### Mobile / Tablet
 
--  Safari iOS 4.3+
+-  Safari iOS 5+
 -  Android 4.0+
 -  Chrome Android
 -  Blackberry 7+
 -  Windows IE 9+
+-  Firefox 28+
 
 ## Internet Explorer 8
 
