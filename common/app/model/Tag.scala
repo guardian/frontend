@@ -2,7 +2,7 @@ package model
 
 import com.gu.openplatform.contentapi.model.{ Tag => ApiTag }
 import common.Reference
-import views.support.{Contributor, ImgSrc}
+import views.support.{Contributor, ImgSrc, Item140}
 import play.api.templates.Html
 import java.net.URI
 
@@ -22,7 +22,7 @@ case class Tag(private val delegate: ApiTag) extends MetaData {
 
   lazy val contributorImagePath: Option[String] = delegate.bylineImageUrl.map(ImgSrc(_, Contributor))
 
-  lazy val contributorLargeImagePath: Option[String] = delegate.bylineLargeImageUrl.map(ImgSrc(_, Contributor))
+  lazy val contributorLargeImagePath: Option[String] = delegate.bylineLargeImageUrl.map(ImgSrc(_, Item140))
   lazy val hasLargeContributorImage: Boolean = contributorLargeImagePath.nonEmpty
 
   lazy val isContributor: Boolean = id.startsWith("profile/")
