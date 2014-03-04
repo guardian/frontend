@@ -9,6 +9,7 @@ trait OnwardJourneyLifecycle extends GlobalSettings {
     super.onStart(app)
 
     Jobs.deschedule("OnwardJourneyAgentsRefreshJob")
+    Jobs.deschedule("OnwardJourneyAgentsRefresh5MinsJob")
 
     // fire every min
     Jobs.schedule("OnwardJourneyAgentsRefreshJob",  "0 * * * * ?") {
@@ -16,6 +17,10 @@ trait OnwardJourneyLifecycle extends GlobalSettings {
       MostPopularAgent.refresh()
       MostPopularExpandableAgent.refresh()
       GeoMostPopularAgent.refresh()
+    }
+
+    // fire every 5 mins
+    Jobs.schedule("OnwardJourneyAgentsRefresh5MinsJob",  "0 */5 * * * ?") {
       DayMostPopularAgent.refresh()
     }
 

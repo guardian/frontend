@@ -107,7 +107,7 @@ object DayMostPopularAgent extends Logging with ExecutionContexts {
   }
 
   def update(countryCode: String) {
-    val ophanQuery = OphanApi.getMostRead(hours = 24, count = 30, country = countryCode)
+    val ophanQuery = OphanApi.getMostRead(hours = 24, count = 10, country = countryCode)
 
     ophanQuery.map { ophanResults =>
 
