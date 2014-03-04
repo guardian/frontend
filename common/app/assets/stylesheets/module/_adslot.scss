@@ -153,21 +153,29 @@
 
 .ad-slot__paid-for-content {
     width: 100%;
-    height: 80px;
+    padding: ($gs-baseline / 2) 0;
     margin: $gs-baseline 0;
     border-top: 1px dotted $c-neutral5;
     z-index: 1;
     text-align: left;
     @include fs-data(3);
 
+    img {
+        padding-bottom: ($gs-baseline / 2) 0;
+    }
+
     a {
         display: block;
         float: left;
     }
 
+    @include mq($from: tablet) {
+        border: none;
+    }
+
     @include mq($from: rightCol) {
         position: absolute;
-        top: $gs-baseline*2;
+        top: $gs-baseline / 2;
         right: 0;
         width: 140px;
         height: 100px;
