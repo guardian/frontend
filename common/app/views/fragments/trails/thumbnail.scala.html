@@ -16,7 +16,7 @@
     @trail.trailPicture.map { imageContainer =>
         @ImgSrc.imager(imageContainer, Item620).map{ imgSrc =>
             <a href="@LinkTo{@trail.url}"
-               class="trail__img item__image-container"
+               class="trail__img item__image-container u-responsive-ratio"
                data-link-name="@rowNum | image"
                aria-hidden="true"
                data-src="@Html(imgSrc)"
