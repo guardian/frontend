@@ -48,8 +48,8 @@ define([
             large = this.config.breakpoints[this.config.page.contentType].large;
 
         return googletag.sizeMapping().
-            addSize(small, [300, 80]).
-            addSize(large, [900, 250]).
+            addSize(small, [[900, 250], [300, 80]]).
+            addSize(large, [[900, 250], [300, 80]]).
             build();
     };
 
@@ -61,11 +61,11 @@ define([
             userSegments     = userAdTargeting.getUserSegments() || [];
 
         googletag.pubads().setTargeting('k', ['test18', 'speedo_sponser_test', 'eon_sponser_test'].concat(keywords));
-        // googletag.pubads().setTargeting('pt', contentType);
-        // googletag.pubads().setTargeting('ct', contentType);
-        // googletag.pubads().setTargeting('cat', section);
-        // googletag.pubads().setTargeting('a', audienceSegments);
-        // googletag.pubads().setTargeting('gdncrm', userSegments);
+        googletag.pubads().setTargeting('pt', contentType);
+        googletag.pubads().setTargeting('ct', contentType);
+        googletag.pubads().setTargeting('cat', section);
+        googletag.pubads().setTargeting('a', audienceSegments);
+        googletag.pubads().setTargeting('gdncrm', userSegments);
     };
 
     DFP.prototype.downloadGoogleLibrary = function(cb) {
@@ -78,7 +78,8 @@ define([
 
         var mapping = this.createSizeMapping();
 
-        googletag.defineSlot('/'+ conf.accountId +'/'+ conf.server, conf.sizes, conf.adSlotId).defineSizeMapping(mapping).addService(googletag.pubads());
+        googletag.defineSlot('/'+ conf.accountId +'/'+ conf.server, [900, 250], conf.adSlotId).addService(googletag.pubads());
+        googletag.defineSlot('/'+ conf.accountId +'/'+ conf.server, [300, 80], 'dfp_paidforlogo').addService(googletag.pubads());
 
         this.setTargetting(conf.page);
 
@@ -105,9 +106,12 @@ define([
                     var $slot         = $('#'+ slot.getSlotId().getDomId()),
                         frameContents = $slot[0].querySelector('iframe').contentDocument.body;
 
-                    if(frameContents.querySelector('.breakout') !== null) {
+                    if(frameContents.querySelector('.breakout__html') !== null) {
                         $slot[0].innerHTML = '';
-                        postscribe($slot[0], '<script>'+ frameContents.querySelector('.breakout').innerHTML +'</script>');
+                        postscribe($slot[0], frameContents.querySelector('.breakout__html').innerHTML);
+                    } else if(frameContents.querySelector('.breakout__script') !== null) {
+                        $slot[0].innerHTML = '';
+                        postscribe($slot[0], '<script>'+ frameContents.querySelector('.breakout__script').innerHTML +'</script>');
                     }
                 });
             });

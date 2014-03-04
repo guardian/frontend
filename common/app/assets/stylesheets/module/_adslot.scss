@@ -148,3 +148,53 @@
     min-height: initial;
     padding: 0 0 $gs-baseline 0;
 }
+
+
+
+.ad-slot__paid-for-content {
+    width: 100%;
+    height: 80px;
+    margin: $gs-baseline 0;
+    border-top: 1px dotted $c-neutral5;
+    z-index: 1;
+    text-align: left;
+    @include fs-data(3);
+
+    a {
+        display: block;
+        float: left;
+    }
+
+    @include mq($from: rightCol) {
+        position: absolute;
+        top: $gs-baseline*2;
+        right: 0;
+        width: 140px;
+        height: 100px;
+        margin: 0;
+    }
+}
+
+.ad-slot__paid-for-content--fronts {
+    @include clearfix;
+
+    @include mq($from: tablet, $to: faciaLeftCol) {
+        margin-top: -36px;
+        text-align: right;
+        float: none;
+    }
+
+    @include mq($from: rightCol) {
+        position: relative;
+        top: 0;
+    }
+
+    @include mq($from: faciaLeftCol) {
+        float: left;
+        clear: left;
+    }
+
+    @include mq(faciaLeftCol, wide) {
+        @include rem((margin-top: 12px));
+    }
+}
