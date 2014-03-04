@@ -1,7 +1,7 @@
 @(content: model.Content)(implicit request: RequestHeader)
 
 @if(content.hasLargeContributorImage) {
-    <div class="media article__meta-container article__meta-container--has-image">
+    <div class="media article__meta-container u-cf">
          <div class="media__img meta__image">
             @fragments.meta.bylineImage(content)
          </div>
@@ -12,7 +12,7 @@
         </div>
     </div>
 } else {
-    <div class="article__meta-container">
+    <div class="article__meta-container u-cf">
         @fragments.meta.byline(content.byline, content)
         @fragments.meta.dateline(content.webPublicationDate, secondary=true)
         <div class="js-comment-count"></div>
