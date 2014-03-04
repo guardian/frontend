@@ -6,7 +6,7 @@ define([
 
     //Current tests
     'common/modules/experiments/tests/aa',
-    'common/modules/experiments/tests/right-hand-recommendations',
+    'common/modules/experiments/tests/recommended-right-hand',
     'common/modules/experiments/tests/geo-most-popular',
     'common/modules/experiments/tests/football-table-position',
     'common/modules/experiments/tests/uk-containers',

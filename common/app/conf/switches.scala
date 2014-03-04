@@ -303,13 +303,12 @@ object Switches extends Collections {
     safeState = Off, sellByDate = endOfQ4
   )
 
-  val ABRightHandRecommendations = Switch("A/B Tests", "ab-right-hand-recommendations",
+  val ABRecommendedRightHand = Switch("A/B Tests", "ab-recommended-right-hand",
     "Sets different recommendation providers against each other for the right hand component",
-    safeState = Off, sellByDate = new DateMidnight(2014, 3, 7)
+    safeState = Off, sellByDate = new DateMidnight(2014, 3, 17)
   )
 
-
-  val ABRelatedContent = Switch("A/B Tests", "ab-onward-related",
+  val ABRelatedContent = Switch("A/B Tests", "ab-onward-related-sports",
     "If this switch is on the related content popular-in-tag override A/B test is run",
     safeState = Off, sellByDate = new DateMidnight(2014, 3, 10)
   )
@@ -451,7 +450,7 @@ object Switches extends Collections {
     IdentityEthicalAwardsSwitch,
     IdentityFilmAwardsSwitch,
     ABAa,
-    ABRightHandRecommendations,
+    ABRecommendedRightHand,
     GeoMostPopular,
     FootballTablePosition,
     ABRelatedContent,

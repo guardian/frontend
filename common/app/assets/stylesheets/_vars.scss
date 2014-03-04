@@ -3,7 +3,7 @@
 // =============================================================================
 
 // Be careful of Sass variable scope
-// Note: Sass 3.3.0 adds Local and local varsVisit the fixtures page
+// Note: Sass 3.3.0 adds Local and local vars
 // http://sass-lang.com/docs/yardoc/file.SASS_REFERENCE.html#variables
 
 
@@ -144,7 +144,7 @@ $c-neutral6: #edede7;
 $c-neutral7: #f4f4ee;
 $c-neutral8: #f6f6f6;
 
-$c-live: #F23B54;
+$c-live: #e81818;
 $c-media-icon: #FBBA0F;
 
 
@@ -156,13 +156,10 @@ $c-newsAccent: #4BC6DF;
 
 $c-featureDefault: #951C55;
 $c-featureAccent: #F66980;
+$c-featuresVariant: #7d0068;
 
 $c-commentDefault: #E6711B;
 $c-commentAccent: #FFBB00;
-
-$c-features-primary: #4e0375;
-$c-features-secondary: #7d0068;
-$c-features-tertiary: #951c55;
 
 
 // Zones
@@ -178,7 +175,6 @@ $environmentGreen: #4A7801;
 $lifeandstyleOrange: #EA721E;
 $moneyPurple: #7D0068;
 $newsRed: #D61D00;
-
 $travelBlue: #066EC9;
 
 
@@ -195,6 +191,7 @@ $c-sportAway: $c-sportDark;
 
 // Stati
 // =============================================================================
+
 $c-statusPositive: #6ca843;
 $c-statusNeutral: #999999;
 $c-statusNegative: #da1d1d;

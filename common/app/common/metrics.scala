@@ -7,6 +7,7 @@ import java.lang.management.ManagementFactory
 import model.diagnostics.CloudWatch
 import java.io.File
 import java.util.concurrent.atomic.AtomicLong
+import com.amazonaws.services.cloudwatch.model.Dimension
 
 trait TimingMetricLogging extends Logging { self: TimingMetric =>
   override def measure[T](block: => T): T = {
@@ -101,35 +102,35 @@ object SystemMetrics extends implicits.Numbers {
 }
 
 object ContentApiMetrics {
-  object HttpTimingMetric extends TimingMetric(
+  object HttpTimingMetric extends FrontendTimingMetric(
     "performance",
     "content-api-calls",
     "Content API calls",
     "outgoing requests to content api"
   ) with TimingMetricLogging
 
-  object HttpTimeoutCountMetric extends CountMetric(
+  object HttpTimeoutCountMetric extends SimpleCountMetric(
     "timeout",
     "content-api-timeouts",
     "Content API timeouts",
     "Content api calls that timeout"
   )
 
-  object ElasticHttpTimingMetric extends TimingMetric(
+  object ElasticHttpTimingMetric extends FrontendTimingMetric(
     "performance",
     "elastic-content-api-calls",
     "Elastic Content API calls",
     "Elastic outgoing requests to content api"
   ) with TimingMetricLogging
 
-  object ElasticHttpTimeoutCountMetric extends CountMetric(
+  object ElasticHttpTimeoutCountMetric extends SimpleCountMetric(
     "timeout",
     "elastic-content-api-timeouts",
     "Elastic Content API timeouts",
     "Elastic Content api calls that timeout"
   )
 
-  object ContentApi404Metric extends CountMetric(
+  object ContentApi404Metric extends SimpleCountMetric(
     "404",
     "content-api-404-responses",
     "Content API 404 responses",
@@ -194,14 +195,14 @@ object AdminMetrics {
 
 object FaciaMetrics {
 
-  object JsonParsingErrorCount extends CountMetric(
+  object JsonParsingErrorCount extends SimpleCountMetric(
     "facia-front",
     "facia-json-error",
     "Facia JSON parsing errors",
     "Number of errors whilst parsing JSON out of S3"
   )
 
-  object S3AuthorizationError extends CountMetric(
+  object S3AuthorizationError extends SimpleCountMetric(
     "facia-front",
     "facia-s3-authorization-403",
     "Facia S3 403 (Unauthorized) error count",
@@ -216,70 +217,70 @@ object FaciaMetrics {
 
 object FaciaToolMetrics {
 
-  object ApiUsageCount extends CountMetric(
+  object ApiUsageCount extends SimpleCountMetric(
     "facia-api",
     "facia-api-usage",
     "Facia API usage count",
     "Number of requests to the Facia API from clients (The tool)"
   )
 
-  object ProxyCount extends CountMetric(
+  object ProxyCount extends SimpleCountMetric(
     "facia-api",
     "facia-proxy-usage",
     "Facia proxy usage count",
     "Number of requests to the Facia proxy endpoints (Ophan and Content API) from clients"
   )
 
-  object ExpiredRequestCount extends CountMetric(
+  object ExpiredRequestCount extends SimpleCountMetric(
     "facia-api",
     "facia-auth-expired",
     "Facia auth endpoints expired requests",
     "Number of expired requests coming into an endpoint using ExpiringAuthAction"
   )
 
-  object DraftPublishCount extends CountMetric(
+  object DraftPublishCount extends SimpleCountMetric(
     "facia-api",
     "facia-draft-publish",
     "Facia draft publish count",
     "Number of drafts that have been published"
   )
 
-  object ContentApiPutSuccess extends CountMetric(
+  object ContentApiPutSuccess extends SimpleCountMetric(
     "facia-api",
     "faciatool-contentapi-put-success",
     "Facia tool contentapi put success count",
     "Number of PUT requests that have been successful to the content api"
   )
 
-  object ContentApiPutFailure extends CountMetric(
+  object ContentApiPutFailure extends SimpleCountMetric(
     "facia-api",
     "faciatool-contentapi-put-failure",
     "Facia tool contentapi put failure count",
     "Number of PUT requests that have failed to the content api"
   )
 
-  object FrontPressSuccess extends CountMetric(
+  object FrontPressSuccess extends SimpleCountMetric(
     "facia-front-press",
     "facia-front-press-success",
     "Facia front press success count",
     "Number of times facia-tool has successfully pressed"
   )
 
-  object FrontPressFailure extends CountMetric(
+  object FrontPressFailure extends SimpleCountMetric(
     "facia-front-press",
     "facia-front-press-failure",
     "Facia front press failue count",
     "Number of times facia-tool has has a failure in pressing"
   )
 
-  object FrontPressCronSuccess extends CountMetric(
+  object FrontPressCronSuccess extends SimpleCountMetric(
     "facia-front-press",
     "facia-front-press-cron-success",
     "Facia front press cron success count",
     "Number of times facia-tool has successfully pressed"
   )
 
-  object FrontPressCronFailure extends CountMetric(
+  object FrontPressCronFailure extends SimpleCountMetric(
     "facia-front-press",
     "facia-front-press-cron-failure",
     "Facia front press cron failue count",
@@ -356,50 +357,98 @@ object Metrics {
   lazy val faciaTool = FaciaToolMetrics.all
 }
 
-case class SimpleCountMetric(namespace: String, name: String) {
+case class SimpleCountMetric(
+                              group: String,
+                              name: String,
+                              title: String,
+                              description: String
+                              ) extends AbstractMetric[Long] {
   val count = new AtomicLong(0)
-  def increment() { count.incrementAndGet() }
+  val currentCount = new AtomicLong(0)
+  val `type` = "counter"
+
+  def increment() {
+    count.incrementAndGet()
+    currentCount.incrementAndGet()
+  }
+
+  def getAndReset = currentCount.getAndSet(0)
+  val getValue: () => Long = count.get
+
+  override def asJson: StatusMetric = super.asJson.copy(count = Some(getValue().toString))
+}
+
+class FrontendTimingMetric(
+                            group: String,
+                            name: String,
+                            title: String,
+                            description: String,
+                            master: Option[Metric] = None)
+  extends TimingMetric(group, name, title, description, master) {
+
+  private val timeInMillis = new AtomicLong()
+  private val currentCount = new AtomicLong()
+
+  override def recordTimeSpent(durationInMillis: Long) {
+    timeInMillis.addAndGet(durationInMillis)
+    currentCount.incrementAndGet
+  }
+  override def totalTimeInMillis = timeInMillis.get
+  override def count = currentCount.get
+  override val getValue = () => totalTimeInMillis
+
+  def getAndReset: Long = currentCount.getAndSet(0)
 }
 
 object PerformanceMetrics {
   val dogPileHitMetric = SimpleCountMetric(
     "performance",
-    "dogpile-hits"
+    "dogpile-hits",
+    "Dogpile Hits",
+    "Count of hits through use of DogPile action"
   )
 
   val dogPileMissMetric = SimpleCountMetric(
     "performance",
-    "dogpile-miss"
+    "dogpile-miss",
+    "Dogpile Misses",
+    "Count of misses through use of DogPile action"
   )
 }
 
 trait CloudWatchApplicationMetrics extends GlobalSettings {
-
+  val applicationMetricsNamespace: String = "Application"
+  val applicationDimension: Dimension = new Dimension().withName("ApplicationName").withValue(applicationName)
   def applicationName: String
+  def applicationMetrics: Map[String, Double] = Map.empty
+
+  def systemMetrics: Map[String, Double] = Map(
+    (s"$applicationName-max-heap-memory", SystemMetrics.MaxHeapMemoryMetric.getValue().toDouble),
+    (s"$applicationName-used-heap-memory", SystemMetrics.UsedHeapMemoryMetric.getValue().toDouble),
+
+    (s"$applicationName-total-physical-memory", SystemMetrics.TotalPhysicalMemoryMetric.getValue().toDouble),
+    (s"$applicationName-free-physical-memory", SystemMetrics.FreePhysicalMemoryMetric.getValue().toDouble),
+
+    (s"$applicationName-available-processors", SystemMetrics.AvailableProcessorsMetric.getValue().toDouble),
+
+    (s"$applicationName-load-average", SystemMetrics.LoadAverageMetric.getValue()),
+
+    (s"$applicationName-build-number", SystemMetrics.BuildNumberMetric.getValue().toDouble),
+
+    (s"$applicationName-free-disk-space", SystemMetrics.FreeDiskSpaceMetric.getValue()),
+    (s"$applicationName-total-disk-space", SystemMetrics.TotalDiskSpaceMetric.getValue()),
+
+    (s"$applicationName-dogpile-hits", PerformanceMetrics.dogPileHitMetric.count.getAndSet(0).toDouble),
+    (s"$applicationName-dogpile-miss", PerformanceMetrics.dogPileMissMetric.count.getAndSet(0).toDouble)
+  )
 
   def report() {
-
-    val metrics = Map(
-      (s"$applicationName-max-heap-memory", SystemMetrics.MaxHeapMemoryMetric.getValue().toDouble),
-      (s"$applicationName-used-heap-memory", SystemMetrics.UsedHeapMemoryMetric.getValue().toDouble),
-
-      (s"$applicationName-total-physical-memory", SystemMetrics.TotalPhysicalMemoryMetric.getValue().toDouble),
-      (s"$applicationName-free-physical-memory", SystemMetrics.FreePhysicalMemoryMetric.getValue().toDouble),
-
-      (s"$applicationName-available-processors", SystemMetrics.AvailableProcessorsMetric.getValue().toDouble),
-
-      (s"$applicationName-load-average", SystemMetrics.LoadAverageMetric.getValue()),
-
-      (s"$applicationName-build-number", SystemMetrics.BuildNumberMetric.getValue().toDouble),
-
-      (s"$applicationName-free-disk-space", SystemMetrics.FreeDiskSpaceMetric.getValue()),
-      (s"$applicationName-total-disk-space", SystemMetrics.TotalDiskSpaceMetric.getValue()),
-
-      (s"$applicationName-dogpile-hits", PerformanceMetrics.dogPileHitMetric.count.getAndSet(0).toDouble),
-      (s"$applicationName-dogpile-miss", PerformanceMetrics.dogPileMissMetric.count.getAndSet(0).toDouble)
-    )
-
-    CloudWatch.put("ApplicationSystemMetrics", metrics)
+    val systemMetrics: Map[String, Double] = this.systemMetrics
+    val applicationMetrics: Map[String, Double] = this.applicationMetrics
+    CloudWatch.put("ApplicationSystemMetrics", systemMetrics)
+    if (applicationMetrics.nonEmpty) {
+      CloudWatch.putWithDimensions(applicationMetricsNamespace, applicationMetrics, Seq(applicationDimension))
+    }
   }
 
   override def onStart(app: PlayApp) {

@@ -341,7 +341,7 @@ p + video {
     }
     th {
         font-weight: 600;
-        color: #333333;
+        color: $c-neutral1;
     }
     tbody tr:nth-child(odd) td {
         background-color: darken($c-neutral8, 4%);

@@ -56,7 +56,7 @@ define([
     storage,
     detect,
     popular,
-    related,
+    Related,
     images,
     Profile,
     Sections,
@@ -114,9 +114,8 @@ define([
         },
 
         transcludeRelated: function (config, context) {
-            if (!config.switches.abOnwardRelated) {
-                related(config, context);
-            }
+            var r = new Related();
+            r.renderRelatedComponent(config, context);
         },
 
         transcludePopular: function () {

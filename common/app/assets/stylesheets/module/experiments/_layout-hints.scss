@@ -27,11 +27,13 @@
     font-style: normal;
     color: $c-neutral2;
 
-    &:before {
-        display: block;
-        content: ' ';
-        @extend %i;
-        @extend %i-quote-blue;
+    @if ($svg-support) {
+        &:before {
+            content: '';
+            display: block;
+            @extend %i-quote-blue;
+            @extend %svg-i-quote-blue;
+        }
     }
 }
 

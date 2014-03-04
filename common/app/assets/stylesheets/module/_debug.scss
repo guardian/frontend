@@ -1,9 +1,9 @@
 #dev-debug {
     display: none;
+    @include fs-data(3);
+    margin-top: ($gs-baseline/3)*2;
 }
 
 #dev-debug.active {
-    @extend %type-10;
-    margin-top: ($gs-baseline/3)*2;
     display: block;
 }

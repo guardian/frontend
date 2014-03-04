@@ -129,7 +129,12 @@
     ));
     text-transform: lowercase;
 
-    @include mq(tablet) { display: block; }
+    @include mq(tablet) {
+        display: block;
+        @include rem((
+            padding-right: gs-span(1)
+        ));
+    }
 
     .nav__item {
         float: left;
@@ -291,7 +296,7 @@
     .nav__link:active,
     .nav__link:focus,
     .nav__link:hover {
-        color: #fff;
+        color: #ffffff;
         text-decoration: none;
     }
 }

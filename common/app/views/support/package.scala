@@ -18,6 +18,7 @@ import play.api.mvc.RequestHeader
 import play.api.mvc.SimpleResult
 import play.api.templates.Html
 import scala.collection.JavaConversions._
+import java.text.DecimalFormat
 
 sealed trait Style {
   val className: String
@@ -343,11 +344,11 @@ case class InBodyLinkCleaner(dataLinkName: String)(implicit val edition: Edition
 case class InBodyLinkCleanerForR1(section: String) extends HtmlCleaner {
 
   def FixR1Link(href: String, section: String = "") = {
-  
+
    /**
     * We moved some R1 HTML files from subdomains to www.theguardian.com.
     * This means we broke some of the <a href="...">'s in the HTML.
-    * 
+    *
     * Here's how this works :-
     *
     * 1. /Books/reviews/travel/0,,343395,.html -> /books/reviews/travel/0,,343395,.html
@@ -357,7 +358,7 @@ case class InBodyLinkCleanerForR1(section: String) extends HtmlCleaner {
     *       - Prefix the current section to any links without a path in them.
     *
     * 3. /Guardian/film/2002/jan/12/awardsandprizes.books -> /film/2002/jan/12/awardsandprizes.books
-    *       - The /Guardian path is an alias for the root (www), so we just remove it. 
+    *       - The /Guardian path is an alias for the root (www), so we just remove it.
     *
     * 4. http://...
     *       - Ignore any links that contain a full URL.
@@ -366,13 +367,13 @@ case class InBodyLinkCleanerForR1(section: String) extends HtmlCleaner {
     // #1
     val subdomains = "^/(Business|Music|Lifeandhealth|Users|Sport|Books|Media|Society|Travel|Money|Education|Arts|Politics|Observer|Football|Film|Technology|Environment|Shopping|Century)/(.*)".r
     href match {
-        case subdomains(section, path) => { 
+        case subdomains(section, path) => {
           s"/${section.toLowerCase}/${path}"
         }
         case _ => {
           (href contains "/Guardian") match {
-            case true => href.replace("/Guardian", "") // #2  
-            case _ => s"${section}${href}" // #3 
+            case true => href.replace("/Guardian", "") // #2
+            case _ => s"${section}${href}" // #3
           }
         }
     }
@@ -631,6 +632,8 @@ object Format {
     val timezone = Edition(request).timezone
     date.toString(DateTimeFormat.forPattern(pattern).withZone(timezone))
   }
+
+  def apply(a: Int): String = new DecimalFormat("#,###").format(a)
 }
 
 object cleanTrailText {
@@ -785,5 +788,12 @@ object GetClasses {
     val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail, imageAdjust)}
     RenderClasses(classes:_*)
   }
+
+}
+
+object LatestUpdate {
+
+  def apply(collection: Collection, trails: Seq[Trail]): Option[DateTime] =
+    (trails.map(_.webPublicationDate) ++ collection.lastUpdated.map(DateTime.parse(_))).sortBy(-_.getMillis).headOption
 
 }
