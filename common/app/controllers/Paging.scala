@@ -2,7 +2,7 @@ package controllers
 
 import play.api.mvc.RequestHeader
 
-trait Paging {
+trait Paging extends implicits.Numbers {
 
   /*
    * Key/value of paging param name to default value
@@ -29,5 +29,8 @@ trait Paging {
     val actualOffset = paging("offset") + (paging("page-size") * (paging("page") - 1))
     paging + ("actual-offset" -> actualOffset)
   }
+
+  protected def extractPage(request: RequestHeader): Int = request.getQueryString("page")
+    .filter(_.isInt).map(_.toInt).getOrElse(1)
 
 }

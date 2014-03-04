@@ -2,11 +2,12 @@ package controllers
 
 import common._
 import conf._
-import feed.{MostPopularAgent, GeoMostPopularAgent}
+import feed.{MostPopularAgent, GeoMostPopularAgent, DayMostPopularAgent}
 import model._
 import play.api.mvc.{ RequestHeader, Controller, Action }
 import scala.concurrent.Future
 import views.support.PopularContainer
+import play.api.libs.json.{Json, JsArray}
 
 
 object MostPopularController extends Controller with Logging with ExecutionContexts {
@@ -39,6 +40,11 @@ object MostPopularController extends Controller with Logging with ExecutionConte
     }
   }
 
+  private val countryNames = Map(
+    "AU" -> "Australia",
+    "US" -> "US",
+    "IN" -> "India")
+
   def renderPopularGeoJson() = Action { implicit request =>
 
     val headers = request.headers.toSimpleMap
@@ -49,7 +55,21 @@ object MostPopularController extends Controller with Logging with ExecutionConte
     Cached(900) {
       JsonComponent(
         "html" -> views.html.fragments.collections.popular(Seq(countryPopular)),
-        "rightHtml" -> views.html.fragments.rightMostPopular(countryPopular)
+        "rightHtml" -> views.html.fragments.rightMostPopularGeo(countryPopular, countryNames.get(countryCode), countryCode),
+        "country" -> countryCode
+      )
+    }
+  }
+
+  def renderPopularDayJson(countryCode: String) = Action { implicit request =>
+    Cached(900) {
+      JsonComponent(
+        "trails" -> JsArray(DayMostPopularAgent.mostPopular(countryCode).map{ trail =>
+          Json.obj(
+            ("url", trail.url),
+            ("headline", trail.headline)
+          )
+        })
       )
     }
   }

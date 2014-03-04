@@ -151,3 +151,13 @@ jQuery(function($){
         window.location = '/team/images/'+ select.options[select.selectedIndex].value;
     });
 });
+
+// autocomplete
+$.widget('custom.fautocomplete', $.ui.autocomplete, {
+    _renderItem: function(ul, item) {
+        return $('<li>')
+            .attr('data-id', item.id)
+            .append($('<a>').text( item.value ))
+            .appendTo(ul);
+    }
+});

@@ -109,3 +109,67 @@
 .participation__opt-out:hover {
     color: #a55;
 }
+
+.audience-breakdown__ruler-division {
+    width: 25%;
+}
+
+.audience-breakdown__tests {
+    margin-bottom: 32px;
+}
+
+.audience-item__container {
+    position: relative;
+}
+
+.audience-item__test {
+    position: absolute;
+    top: 3px;
+}
+
+.audience-item__test-label {
+    text-align: center;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    padding: 8px 3px;
+}
+
+.audience-item__caption {
+    background: #F8F8F8;
+    border: 2px solid #DFDFDF;
+    color: #717171;
+    font-size: 13px;
+    position: relative;
+    text-align: center;
+    top: -98px;
+    left:-100px;
+    display: none;
+    padding: 6px 6px 0;
+    width: 200px;
+    height: 50px;
+}
+
+.audience-item__caption:after {
+    content:'';
+    position: absolute;
+    bottom: -7px;
+    width: 10px;
+    height:10px;
+    border-bottom: 2px solid #dfdfdf;
+    border-right: 2px solid #dfdfdf;
+    background: #f8f8f8;
+    left: 50%;
+    margin-left: -10px;
+    -moz-transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+.audience-item__test:hover .audience-item__caption {
+    display: block;
+}
+
+.audience-item__caption-test,
+.audience-item__caption-range {
+    text-align: center;
+}

@@ -129,11 +129,21 @@
 
 
 /**
- * underlines text
+ * Fakes text underline with a border
  */
 
 .u-underline {
-    text-decoration: underline;
+    text-decoration: none !important;
+    border-bottom: 1px solid $c-neutral4;
+    @include transition(border-color .15s ease-out);
+
+    &:hover,
+    &:focus {
+        border-color: mix($c-newsDefault, $c-neutral4, 50%);
+    }
+    &:active {
+        border-color: $c-newsAccent;
+    }
 }
 
 

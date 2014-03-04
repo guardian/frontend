@@ -1,0 +1,53 @@
+.toggler {
+    @include rem((margin-bottom: $gs-gutter));
+    border-bottom: 1px solid $c-neutral5;
+    border-top: 1px solid $c-neutral5;
+    cursor: pointer;
+    position: relative;
+
+    .i-expander {
+        @extend %i-toggle-expand-neutral;
+        position: absolute;
+        right: $gs-gutter/2;
+        top: 4px;
+    }
+}
+
+// sorry, forcing it for now
+.toggler.toggler--active {
+    .toggler__text {
+        font-weight: 900;
+    }
+
+    .i-expander {
+        @extend %i-toggle-collapse-neutral;
+    }
+}
+
+.toggler--dark {
+    .toggler__text {
+        background: $c-neutral2;
+        color: #ffffff;
+        @include rem((padding-left: $gs-gutter/2));
+    }
+
+    .i-expander {
+        @extend %i-toggle-expand-white;
+    }
+}
+
+.toggler.toggler--dark.toggler--active {
+    .i-expander { // sorry, forcing it for now
+        @extend %i-toggle-collapse-white;
+    }
+}
+
+.toggler__text {
+    @include fs-bodyHeading(3);
+    @include rem((
+        line-height: $gs-baseline*3,
+        padding-bottom: $gs-baseline/2
+    ));
+    display: block;
+    font-weight: 400;
+}

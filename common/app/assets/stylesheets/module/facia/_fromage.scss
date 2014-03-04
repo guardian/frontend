@@ -48,62 +48,14 @@
        ====================================================================== */
 
     .item__meta {
-        position: absolute;
         bottom: -1px;
         overflow: hidden;
-        @include fs-data(1);
-        color: $c-neutral2;
         @include rem((
             margin-bottom: $gs-baseline/2
         ));
 
         @include mq(tablet) {
             position: static;
-            @include fs-data(3, true);
-        }
-    }
-
-    .item__timestamp,
-    .trail__count {
-        position: relative;
-        float: left;
-
-        i {
-            position: absolute;
-            left: 0;
-            top: 2px;
-            margin: 0;
-        }
-    }
-    .item__timestamp {
-        position: relative;
-        float: left;
-
-        @include rem((
-        min-width: 50px - $gs-gutter/2 - 14px,
-        padding-right: $gs-gutter/2,
-        padding-left: 14px
-        ));
-
-        i {
-            left: 0;
-            @include mq(tablet) {
-                top: 2px;
-            }
-        }
-    }
-    .trail__count {
-        @include rem((
-        padding-left: 18px
-        ));
-        top: 0;
-
-        a {
-            line-height: inherit;
-            color: inherit;
-        }
-        i {
-            left: 0;
         }
     }
 }
@@ -140,8 +92,15 @@
 
     &:hover,
     &:focus {
+       text-decoration: none;
+
         .item__title {
             text-decoration: underline;
+        }
+    }
+    &:active {
+        .item__title {
+            text-decoration: none;
         }
     }
 }
@@ -149,12 +108,6 @@
 .fromage__link:visited .item__title,
 .supporting__action:visited {
     color: $c-neutral2;
-}
-.fromage__media-wrapper,
-.fromage__image-container {
-    .js-off & {
-        display: none !important;
-    }
 }
 .fromage__media-wrapper {
     @include mq(tablet) {

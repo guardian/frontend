@@ -2,8 +2,8 @@
 
 @renderFilter(name: String) = {
     @filterMap.get(name).map{ filters =>
-        <li class="u-cf">
-            <h2>@name</h2>
+        <li class="football-filters__item u-cf">
+            <h2 class="football-filters__heading">@name</h2>
             <ul class="nav nav--columns nav--columns-football sections">
                 @filters.map{ filter => <li class="nav__item"><a class="nav__link" href="@LinkTo{@filter.url}" data-link-name="@filter.name">@filter.name</a></li> }
             </ul>
@@ -20,8 +20,8 @@
         @renderFilter("Internationals")
         @renderFilter("Rest of world")
 
-        <li class="u-cf">
-            <a href="@LinkTo{/@page.id}" class="cta type-8" data-link-name="@page.webTitle.toLowerCase">View all @pageTitle</a>
+        <li class="football-filters__item u-cf">
+            <a href="@LinkTo{/@page.id}" class="cta" data-link-name="@page.webTitle.toLowerCase">View all @pageTitle</a>
         </li>
     </ol>
 }

@@ -24,3 +24,4 @@ GET     /film-awards/:formReference                     @controllers.FilmAwardsC
 GET     /form/complete                                  @controllers.FormstackController.complete
 GET     /form/:formReference                            @controllers.FormstackController.formstackForm(formReference: String)
 
+GET     /et/subscribe/:subDefId                         @controllers.ExactTargetController.subscribe(subDefId: String, returnUrl: String)

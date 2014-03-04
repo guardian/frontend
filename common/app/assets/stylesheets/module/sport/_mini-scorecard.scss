@@ -3,7 +3,7 @@
    ========================================================================== */
 
 .sport-miniscorecard {
-    margin-bottom: $baseline*4;
+    margin-bottom: ($gs-baseline/3)*4;
     width: 100%;
 }
 
@@ -14,9 +14,9 @@
     color: $c-sportBright;
     display: block;
     font-weight: bold;
-    margin-top: $baseline*2;
+    margin-top: ($gs-baseline/3)*2;
     margin-bottom: 0;
-    padding: 10px $gutter/2 $baseline*2;
+    padding: 10px $gutter/2 ($gs-baseline/3)*2;
 }
 
 .sport-miniscorecard__body {
@@ -25,7 +25,7 @@
     td {
         @extend %type-10;
         display: table-cell;
-        padding: $baseline*2 $gutter/4*3;
+        padding: ($gs-baseline/3)*2 $gutter/4*3;
     }
 }
 
@@ -49,7 +49,7 @@
     td {
         @extend %type-10;
         display: table-cell;
-        padding: $baseline*2 $gutter/4*3;
+        padding: ($gs-baseline/3)*2 $gutter/4*3;
     }
 
     td:first-child {

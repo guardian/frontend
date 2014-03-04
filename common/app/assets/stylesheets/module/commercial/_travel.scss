@@ -14,7 +14,7 @@
         background: -webkit-linear-gradient(top, fade-out($c-neutral1, 1) 0%, $c-neutral1 66%);
         background: -ms-linear-gradient(top, fade-out($c-neutral1, 1) 0%, $c-neutral1 66%);
         background: linear-gradient(to bottom, fade-out($c-neutral1, 1) 0%, $c-neutral1 66%);
-        padding: $baseline*2;
+        padding: ($gs-baseline/3)*2;
         position: absolute;
         right: 0;
         bottom: 0;
@@ -43,7 +43,7 @@
         color: #ffffff;
     }
     .commercial__search {
-        margin-bottom: $baseline;
+        margin-bottom: $gs-baseline/3;
         overflow: hidden;
         position: relative;
 
@@ -55,7 +55,7 @@
             padding: 8px;
         }
         .text-input {
-            padding: $baseline $gs-gutter/5;
+            padding: $gs-baseline/3 $gs-gutter/5;
             padding-left: 2em;
             width: 70%;
             height: 32px;
@@ -100,13 +100,13 @@
 //            width: 25%;
 //            
 //            .lineitem__title {
-//                color: #fff;
+//                color: #ffffff;
 //                @include fs-data(2);
 //                font-weight: normal;
 //                margin: 0;
 //            }
 //            .lineitem__offer {
-//                padding: $baseline;
+//                padding: $gs-baseline/3;
 //            }
 //        }
 //    }

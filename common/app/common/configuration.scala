@@ -126,7 +126,6 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
       else configuration.getStringProperty("ajax.url").getOrElse("")
     lazy val corsOrigins: Seq[String] = configuration.getStringProperty("ajax.cors.origin").map(_.split(",")
       .map(_.trim).toSeq).getOrElse(Nil)
-    lazy val spdyUrl: String = configuration.getStringProperty("ajax.spdyUrl").getOrElse("")
   }
 
   object id {
@@ -145,7 +144,6 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
   object images {
     lazy val path = configuration.getMandatoryStringProperty("images.path")
-    lazy val spdyPath = configuration.getStringProperty("images.spdyPath").getOrElse("https://services.guardianapps.co.uk/static")
   }
 
   object assets {
@@ -213,11 +211,13 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
   object facia {
     lazy val stage = configuration.getStringProperty("facia.stage").getOrElse(Configuration.environment.stage)
+    lazy val collectionCap: Int = configuration.getIntegerProperty("facia.collection.cap").getOrElse(25)
   }
 
   object faciatool {
     lazy val contentApiPostEndpoint: Option[String] = configuration.getStringProperty("contentapi.post.endpoint")
     lazy val frontPressQueueUrl: Option[String] = configuration.getStringProperty("frontpress.sqs.queue")
+    lazy val configBeforePressTimeout: Int = 1000
   }
 
   object pa {

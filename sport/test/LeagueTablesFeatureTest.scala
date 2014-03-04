@@ -34,7 +34,7 @@ class LeagueTablesFeatureTest extends FeatureSpec with GivenWhenThen with Matche
         import browser._
 
         $("h1").getTexts should contain("Premier League table")
-        val teams = $(".table-football-body td").getTexts
+        val teams = $(".table--football td").getTexts
         teams should contain("Arsenal")
 
         teams should contain ("Wigan") // I can now see all items

@@ -9,7 +9,7 @@ define([
     'utils/clean-clone',
     'utils/clone-with-key',
     'utils/find-first-by-id',
-    'utils/guid',
+    'utils/terminate',
     'models/group',
     'models/config/droppable',
     'models/config/front',
@@ -24,7 +24,7 @@ define([
     cleanClone,
     cloneWithKey,
     findFirstById,
-    guid,
+    terminate,
     Group,
     droppable,
     Front,
@@ -36,7 +36,7 @@ define([
 
         model.collections = ko.observableArray();
         model.fronts = ko.observableArray();
-        model.newFront = ko.observable();
+        model.pinnedFront = ko.observable();
         model.pending = ko.observable();
 
         model.types =  [''].concat(vars.CONST.types);
@@ -55,22 +55,32 @@ define([
         }, this);
 
         model.createFront = function() {
-            var front =  new Front();
+            var front;
 
-            model.newFront(front);
-            model.fronts.unshift(front);
-            front.toggleOpen();
+            if (vars.model.fronts().length <= vars.CONST.maxFronts) {
+                front =  new Front();
+                model.pinnedFront(front);
+                model.fronts.unshift(front);
+                model.openFront(front);
+            } else {
+                window.alert('The maximum number of fronts (' + vars.CONST.maxFronts + ') has been exceeded. Please delete one first, by removing all its collections.');
+            }
+        };
+
+        model.openFront = function(front) {
+            _.each(model.fronts(), function(f){
+                f.setOpen(f === front);
+            });
         };
 
         model.createCollection = function() {
-            var collection = new Collection({
-                id: guid()
-            });
+            var collection = new Collection();
+
             collection.toggleOpen();
             model.collections.unshift(collection);
         };
 
-        model.save = function() {
+        model.save = function(affectedCollections) {
             var serialized = serialize(model);
 
             if(!_.isEqual(serialized, vars.state.config)) {
@@ -90,10 +100,20 @@ define([
                     })
                     .done(function() {
                         model.pending(false);
+                        if (affectedCollections) {
+                            _.each([].concat(affectedCollections), pressCollection);
+                        }
                     });
                 });
             }
         };
+
+        function pressCollection(collection) {
+            return authedAjax.request({
+                url: vars.CONST.apiBase + '/collection/press/' + collection.id,
+                type: 'post'
+            });
+        }
 
         function serialize(model) {
             return {
@@ -139,7 +159,11 @@ define([
             opts.openFronts = opts.openFronts|| {};
 
             return fetchSettings(function (config, switches) {
-                vars.state.switches = switches || {};
+                if (switches['facia-tool-configuration-disable']) {
+                    terminate('The configuration tool has been switched off.', '/');
+                    return;
+                }
+                vars.state.switches = switches;
 
                 if (opts.force || !_.isEqual(config, vars.state.config)) {
                     vars.state.config = config;
@@ -153,8 +177,8 @@ define([
                     model.fronts(
                        _.chain(_.keys(config.fronts))
                         .sortBy(function(id) { return id; })
-                        .without(model.newFront() ? model.newFront().id() : undefined)
-                        .unshift(model.newFront() ? model.newFront().id() : undefined)
+                        .without(model.pinnedFront() ? model.pinnedFront().id() : undefined)
+                        .unshift(model.pinnedFront() ? model.pinnedFront().id() : undefined)
                         .filter(function(id) { return id; })
                         .map(function(id) {
                             var front = new Front(cloneWithKey(config.fronts[id], id));

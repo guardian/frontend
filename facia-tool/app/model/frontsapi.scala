@@ -6,6 +6,7 @@ import controllers.Identity
 import org.joda.time.DateTime
 import scala.util.{Success, Failure, Try}
 import common.Logging
+import conf.Configuration
 
 case class Config(
   fronts: Map[String, Front],
@@ -26,7 +27,6 @@ case class Collection(
                   )
 
 case class Block(
-                  id: String,
                   name: Option[String],
                   live: List[Trail],
                   draft: Option[List[Trail]],
@@ -52,8 +52,7 @@ case class CollectionMetaUpdate(
 
 trait UpdateActions extends Logging {
 
-  lazy val defaultMinimumTrailblocks = 0
-  lazy val defaultMaximumTrailblocks = 20
+  val collectionCap: Int = Configuration.facia.collectionCap
   val itemMetaWhitelistFields: Seq[String] = Seq("headline", "trailText", "group", "supporting", "imageAdjust", "isBreaking", "updatedAt")
   
   implicit val collectionMetaWrites = Json.writes[CollectionMetaUpdate]
@@ -98,8 +97,8 @@ trait UpdateActions extends Logging {
   def putBlock(id: String, block: Block, identity: Identity, updateJson: JsValue): Block =
     FaciaApi.putBlock(id, block, identity)
 
-  def archiveBlock(id: String, block: Block, update: JsValue): Block =
-    Try(FaciaApi.archive(id, block, update)) match {
+  def archiveBlock(id: String, block: Block, update: JsValue, identity: Identity): Block =
+    Try(FaciaApi.archive(id, block, update, identity)) match {
       case Failure(t: Throwable) => {
         log.warn(t.toString)
         block
@@ -108,7 +107,7 @@ trait UpdateActions extends Logging {
     }
 
   def putMasterConfig(config: Config, identity: Identity): Option[Config] = {
-    FaciaApi.archiveMasterConfig(config)
+    FaciaApi.archiveMasterConfig(config, identity)
     FaciaApi.putMasterConfig(config, identity)
   }
 
@@ -117,8 +116,9 @@ trait UpdateActions extends Logging {
     getBlock(id)
     .map(insertIntoLive(update, _))
     .map(insertIntoDraft(update, _))
+    .map(capCollection)
     .map(putBlock(id, _, identity, updateJson))
-    .map(archiveBlock(id, _, updateJson))
+    .map(archiveBlock(id, _, updateJson, identity))
     .orElse(createBlock(id, identity, update))
   }
 
@@ -128,7 +128,7 @@ trait UpdateActions extends Logging {
       .map(deleteFromLive(update, _))
       .map(deleteFromDraft(update, _))
       .map(putBlock(id, _, identity, updateJson))
-      .map(archiveBlock(id, _, updateJson))
+      .map(archiveBlock(id, _, updateJson, identity))
   }
 
   def updateCollectionMeta(id: String, update: CollectionMetaUpdate, identity: Identity): Option[Block] =
@@ -161,10 +161,13 @@ trait UpdateActions extends Logging {
 
   def createBlock(id: String, identity: Identity, update: UpdateList): Option[Block] = {
     if (update.live)
-      Option(FaciaApi.putBlock(id, Block(id, None, List(Trail(update.item, update.itemMeta)), None, DateTime.now.toString, identity.fullName, identity.email, None, None, None), identity))
+      Option(FaciaApi.putBlock(id, Block(None, List(Trail(update.item, update.itemMeta)), None, DateTime.now.toString, identity.fullName, identity.email, None, None, None), identity))
     else
-      Option(FaciaApi.putBlock(id, Block(id, None, Nil, Some(List(Trail(update.item, update.itemMeta))), DateTime.now.toString, identity.fullName, identity.email, None, None, None), identity))
+      Option(FaciaApi.putBlock(id, Block(None, Nil, Some(List(Trail(update.item, update.itemMeta))), DateTime.now.toString, identity.fullName, identity.email, None, None, None), identity))
   }
+
+  def capCollection(block: Block): Block =
+    block.copy(live = block.live.take(collectionCap), draft = block.draft.map(_.take(collectionCap)))
 
 }
 

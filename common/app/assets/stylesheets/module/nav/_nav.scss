@@ -14,7 +14,7 @@
     list-style: none;
     margin: 0;
     @include rem((
-        padding: $baseline*2 0 $baseline
+        padding: ($gs-baseline/3)*2 0 $gs-baseline/3
     ));
 
     .nav__item--full {
@@ -72,7 +72,7 @@
     .nav__link {
         display: block;
         @include rem((
-            padding: 3px 0 $baseline*4
+            padding: 3px 0 ($gs-baseline/3)*4
         ));
         border-top: 1px solid $c-neutral7;
         height: auto;
@@ -85,8 +85,8 @@
 .nav--columns-football {
     @extend .nav--no-horizontal-spacing;
     @include rem((
-        padding-top: $baseline*2,
-        padding-bottom: $baseline
+        padding-top: ($gs-baseline/3)*2,
+        padding-bottom: $gs-baseline/3
     ));
 }
 
@@ -118,7 +118,12 @@
         padding: 0 $gs-gutter
     ));
 
-    @include mq(tablet) { display: block; }
+    @include mq(tablet) {
+        display: block;
+        @include rem((
+            padding-right: gs-span(1)
+        ));
+    }
 
     .nav__item {
         position: relative;
@@ -141,7 +146,7 @@
         color: $c-neutral1;
         display: block;
         @include rem((
-            margin: 10px 0 $baseline*3,
+            margin: 10px 0 $gs-baseline,
             padding: 2px 9px 0 9px
         ));
         @include font-size(14, 19);
@@ -198,7 +203,7 @@
         color: $c-neutral2;
         display: block;
         @include rem((
-            margin: $baseline*4 0 $baseline*3 0,
+            margin: ($gs-baseline/3)*4 0 $gs-baseline 0,
             padding: 2px 9px 0,
             font-size: 14px
         ));
@@ -223,9 +228,9 @@
 }
 
 .localnav--small {
-    background-color: #fff;
+    background-color: #ffffff;
     display: block;
-    border-top: $baseline/2 solid $c-newsAccent;
+    border-top: $gs-baseline/6 solid $c-newsAccent;
 
     @include mq(tablet) { display: none; }
 
@@ -234,7 +239,7 @@
         width: $gs-column-width;
         height: 25px;
         padding: 0;
-        margin: $baseline*1.5 0;
+        margin: $gs-baseline/2 0;
         position: absolute;
         right: 0;
         top: 0;
@@ -278,8 +283,8 @@
     width: 100%;
     float: left;
     border: 0 !important;
-    height: $gs-row-height + $baseline - 3 !important;
-    height: rem($gs-row-height + $baseline - 3) !important;
+    height: $gs-row-height + $gs-baseline/3 - 3 !important;
+    height: rem($gs-row-height + $gs-baseline/3 - 3) !important;
     padding-left: 0 !important;
 }
 
@@ -298,8 +303,8 @@
 
     .nav__item {
         @include rem((
-            margin: $baseline 0 0,
-            padding: $baseline $gs-gutter/2
+            margin: $gs-baseline/3 0 0,
+            padding: $gs-baseline/3 $gs-gutter/2
         ));
         color: #ffffff;
         border-right: 1px solid #94B1CA;
@@ -311,7 +316,7 @@
     .nav__link:active,
     .nav__link:focus,
     .nav__link:hover {
-        color: #fff;
+        color: #ffffff;
         text-decoration: none;
     }
 }

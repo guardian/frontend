@@ -29,6 +29,7 @@ define([
         this.id = opts.id;
         this.raw = undefined;
         this.groups = this.createGroups(opts.groups);
+        this.alsoOn = opts.alsoOn || [];
 
         // properties from the config, about this collection
         this.configMeta   = asObservableProps([

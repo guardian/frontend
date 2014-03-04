@@ -1,13 +1,21 @@
 @(trails: Seq[Trail], heading: String, visibleTrails: Int = 5)(implicit request: RequestHeader)
 
 @defining(trails.length){ numTrails =>
-    <h2 id="related-content-head" class="related__header page-sub-header">@Html(heading)</h2>
-    <div class="related__container"
-        data-count="@{trails.length - visibleTrails -1}"
-        data-link-name="Related @heading"
-        role="complementary"
-        aria-labelledby="related-content-head">
-        @* order the related trails by date *@
-        @fragments.trailblocks.card(trails, numItemsVisible = visibleTrails, related = true, headingLevel = 3)
+    <div class="facia-container facia-container--layout-article monocolumn-wrapper monocolumn-wrapper--no-limit">
+        <div class="container container--row-pattern">
+            <div class="container__border hide-on-mobile"></div>
+            <h2 id="related-content-head" class="container__title">
+                <span class="container__title__label u-text-hyphenate">@Html(heading)</span>
+            </h2>
+            <div class="container__body">
+                <div class="related__container collection-wrapper"
+                    data-count="@{trails.length - visibleTrails -1}"
+                    data-link-name="Related @heading"
+                    role="complementary"
+                    aria-labelledby="related-content-head">
+                    @fragments.trailblocks.card(trails, numItemsVisible = visibleTrails, related = true, headingLevel = 3)
+                </div>
+            </div>
+        </div>
     </div>
 }
