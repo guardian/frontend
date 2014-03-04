@@ -166,7 +166,7 @@
         @include rem((
             top: $gs-baseline
         ));
-        
+
         &:after {
             content: 'v';
         }
