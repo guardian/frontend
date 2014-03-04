@@ -1,20 +1,20 @@
 @(content: model.Content)(implicit request: RequestHeader)
 
 @if(content.hasLargeContributorImage) {
-    <div class="media article__meta-container article__meta-containe--has-image">
-         <div class="media__img">
+    <div class="media article__meta-container article__meta-container--has-image">
+         <div class="media__img meta__image">
             @fragments.meta.bylineImage(content)
          </div>
-        <div class="media__body">
-            @fragments.byline(content.byline, content)
-            @fragments.article.dateline(content.webPublicationDate, secondary=true)
+        <div class="media__body meta__body">
+            @fragments.meta.byline(content.byline, content)
+            @fragments.meta.dateline(content.webPublicationDate, secondary=true)
             <div class="js-comment-count"></div>
         </div>
     </div>
 } else {
-    <div class="article__meta-containe">
-        @fragments.byline(content.byline, content)
-        @fragments.article.dateline(content.webPublicationDate, secondary=true)
+    <div class="article__meta-container">
+        @fragments.meta.byline(content.byline, content)
+        @fragments.meta.dateline(content.webPublicationDate, secondary=true)
         <div class="js-comment-count"></div>
     </div>
 }
