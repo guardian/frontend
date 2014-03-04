@@ -19,7 +19,9 @@ object Global extends FaciaToolLifecycle with GlobalSettings with CloudWatchAppl
     ("draft-publish", FaciaToolMetrics.DraftPublishCount.getAndReset.toDouble),
     ("auth-expired", FaciaToolMetrics.ExpiredRequestCount.getAndReset.toDouble),
     ("front-press-failure", FaciaToolMetrics.FrontPressFailure.getAndReset.toDouble),
-    ("front-press-success", FaciaToolMetrics.FrontPressSuccess.getAndReset.toDouble)
+    ("front-press-success", FaciaToolMetrics.FrontPressSuccess.getAndReset.toDouble),
+    ("front-press-cron-success", FaciaToolMetrics.FrontPressCronSuccess.getAndReset.toDouble),
+    ("front-press-cron-failure", FaciaToolMetrics.FrontPressCronFailure.getAndReset.toDouble)
   )
 
   override def onLoadConfig(config: Configuration, path: File, classloader: ClassLoader, mode: Mode.Mode): Configuration = {
