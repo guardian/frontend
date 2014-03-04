@@ -1,8 +1,7 @@
 @(
         page: model.MetaData with tracking.TrackingParams,
         user: com.gu.identity.model.User,
-        publicProfileForm: Form[form.ProfileFormData],
-        accountDetailsForm: Form[form.AccountFormData],
+        forms: controllers.ProfileForms,
         idRequest: services.IdentityRequest,
         idUrlBuilder: services.IdentityUrlBuilder
 )(implicit request: RequestHeader)
@@ -32,13 +31,13 @@
         <div class="tabs__content">
             <div id="tabs-popular-1" class="tabs__pane u-cf" role="tabpanel" aria-labelledby="tabs-popular-1-tab" data-link-name="Public Profile" data-link-context="Identity/profile" style="">
 
-                @public_profile_form(idUrlBuilder, idRequest, user, publicProfileForm)
+                @public_profile_form(idUrlBuilder, idRequest, user, forms.publicForm)
 
             </div>
 
             <div id="tabs-popular-2" class="tabs__pane u-cf" role="tabpanel" aria-labelledby="tabs-popular-2-tab" data-link-name="Account" data-link-context="Identity/profile" style="display: none;">
 
-                @account_details_form(idUrlBuilder, idRequest, user, accountDetailsForm)
+                @account_details_form(idUrlBuilder, idRequest, user, forms.accountForm)
 
             </div>
         </div>

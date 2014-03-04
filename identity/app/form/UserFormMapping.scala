@@ -6,7 +6,7 @@ import idapiclient.UserUpdate
 
 trait UserFormMapping[T <: UserFormData] extends Mappings{
 
-  lazy val form = Form(formMapping)
+  lazy val form: Form[T] = Form(formMapping)
 
   def bindFromRequest()(implicit request: play.api.mvc.Request[_]): Form[T] = form.bindFromRequest()
 

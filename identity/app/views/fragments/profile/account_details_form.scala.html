@@ -6,7 +6,7 @@
 @import conf.Switches.IdentityEmailVerificationSwitch
 @import helper._
 
-<form class="form js-account-details-form" novalidate action="@idUrlBuilder.buildUrl("/profile/account-details", idRequest)" role="main" method="post">
+<form class="form js-account-details-form" novalidate action="@idUrlBuilder.buildUrl("/account/edit", idRequest)" role="main" method="post">
     @views.html.helper.CSRF.formField
 
     @if(accountDetailsForm.globalError.isDefined) {
@@ -47,23 +47,23 @@
 
     </fieldset>
 
-    <fieldset class="fieldset">    
+    @*<fieldset class="fieldset">    *@
 
-        <div class="fieldset__heading">
-            <h2 class="form__heading">Change password</h2>
-        </div>
+        @*<div class="fieldset__heading">*@
+            @*<h2 class="form__heading">Change password</h2>*@
+        @*</div>*@
 
-        <div class="fieldset__fields">
-            <ul class="unstyled">
-            
-            	@inputField(Password(accountDetailsForm("password"), ('_label, "New password")))
+        @*<div class="fieldset__fields">*@
+            @*<ul class="unstyled">*@
+            @**@
+            	@*@inputField(Password(accountDetailsForm("password"), ('_label, "New password")))*@
 
-            	@inputField(Password(accountDetailsForm("confirmPassword"), ('_label, "Repeat password")))            	
+            	@*@inputField(Password(accountDetailsForm("confirmPassword"), ('_label, "Repeat password")))            	*@
 
-            </ul>
-        </div>
+            @*</ul>*@
+        @*</div>*@
 
-    </fieldset>
+    @*</fieldset>*@
 
     <fieldset class="fieldset">    
 

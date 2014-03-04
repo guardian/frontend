@@ -21,61 +21,45 @@ class PublicProfileController @Inject()(idUrlBuilder: IdentityUrlBuilder,
                                         idRequestParser: IdRequestParser)
   extends Controller
   with ExecutionContexts
-  with SafeLogging
-  with ProfileMapping
-  with AccountDetailsMapping {
+  with SafeLogging{
 
   val page = IdentityPage("/profile/public", "Public profile", "public profile")
 
-  def displayForm = CSRFAddToken {
+  def displayPublicProfileForm = displayForm(isPublicFormActive = true)
+  def displayAccountForm = displayForm(isPublicFormActive = false)
+
+  protected def displayForm(isPublicFormActive: Boolean) = CSRFAddToken {
     authActionWithUser.apply { implicit request =>
       val idRequest = idRequestParser(request)
-      val (boundProfileForm, boundAccountDetailsForm) = bindForms(request.user)
-      Ok(views.html.public_profile(page.tracking(idRequest), request.user, boundProfileForm, boundAccountDetailsForm, idRequest, idUrlBuilder))
+      val forms = ProfileForms(request.user, isPublicFormActive)
+      Ok(views.html.public_profile(page.tracking(idRequest), request.user, forms, idRequest, idUrlBuilder))
     }
   }
 
-  def submitProfileForm() = submitForm(isProfileForm = true)
+  def submitPublicProfileForm() = submitForm(isProfileForm = true)
   def submitAccountForm() = submitForm(isProfileForm = false)
 
   def submitForm(isProfileForm: Boolean) = CSRFCheck {
     authActionWithUser.async {
       implicit request =>
         val idRequest = idRequestParser(request)
-        val boundForms = bindFromRequest(isProfileForm)
-        val activeForm = if(isProfileForm) boundForms._1 else boundForms._2
-        val futureFormOpt = activeForm.value map {
+        val forms = ProfileForms(request.user, isProfileForm).bindFromRequest(request)
+        val futureFormOpt = forms.activeForm.value map {
           data: UserFormData =>
             identityApiClient.saveUser(request.user.id, data.toUserUpdate, request.auth) map {
               case Left(errors) =>
-                val errorForm = errors.foldLeft(activeForm) {
-                  (formWithErrors, error) =>
-                    formWithErrors.withError(profileMapping.mapContext(error.context getOrElse ""), error.description)
-                }
-                if(isProfileForm)
-                  (errorForm.asInstanceOf[Form[ProfileFormData]], boundForms._2)
-                else
-                  (boundForms._1, errorForm.asInstanceOf[Form[AccountFormData]])
+                forms.withErrors(errors)
 
-              case Right(user) => bindForms(user)
+              case Right(user) => forms.bindForms(user)
             }
         }
 
-        val futureForms = futureFormOpt getOrElse Future.successful(boundForms)
+        val futureForms = futureFormOpt getOrElse Future.successful(forms)
         futureForms map {
           forms =>
-            Ok(views.html.public_profile(page.accountEdited(idRequest), request.user, forms._1, forms._2, idRequest,idUrlBuilder))
+            Ok(views.html.public_profile(page.accountEdited(idRequest), request.user, forms, idRequest,idUrlBuilder))
         }
     }
-  }
-
-  protected def bindForms(user: User) = (profileMapping.bindForm(user), accountDetailsMapping.bindForm(user))
-
-  protected def bindFromRequest(isProfileForm: Boolean)(implicit request: Request[_]) = {
-    if(isProfileForm)
-      (profileMapping.bindFromRequest(), accountDetailsMapping.form)
-    else
-      (profileMapping.form, accountDetailsMapping.bindFromRequest())
   }
 
   protected def submitForm(profileFormData: Form[ProfileFormData], accountFormData: Form[AccountFormData], isAccountForm: Boolean) ={
@@ -83,4 +67,55 @@ class PublicProfileController @Inject()(idUrlBuilder: IdentityUrlBuilder,
       else profileFormData.value map {_.toUserUpdate}
     updateOpt
   }
+}
+
+case class ProfileForms(publicForm: Form[ProfileFormData], accountForm: Form[AccountFormData], isPublicFormActive: Boolean)
+  extends ProfileMapping
+  with AccountDetailsMapping {
+
+  lazy val activeForm = if(isPublicFormActive) publicForm else accountForm
+
+  def bindFromRequest(implicit request: Request[_]) = update {
+    form =>
+      form.bindFromRequest()
+  }
+
+  def bindForms(user: User): ProfileForms = {
+    copy(
+      publicForm = profileMapping.bindForm(user),
+      accountForm = accountDetailsMapping.bindForm(user)
+    )
+  }
+
+  def withErrors(errors: List[client.Error]): ProfileForms = {
+    update{
+      form =>
+        errors.foldLeft(form){
+          (formWithErrors, error) =>
+            val context = activeMapping.mapContext(error.context getOrElse "")
+            formWithErrors.withError(context, error.description)
+        }
+    }
+  }
+
+  private lazy val activeMapping = if(isPublicFormActive) profileMapping else accountDetailsMapping
+
+  private def update(change: (Form[_ <: UserFormData]) => Form[_ <: UserFormData]): ProfileForms = {
+    if(isPublicFormActive){
+      copy(publicForm = change(publicForm).asInstanceOf[Form[ProfileFormData]])
+    }
+    else
+      copy(accountForm = change(accountForm).asInstanceOf[Form[AccountFormData]])
+  }
+}
+
+object ProfileForms
+  extends ProfileMapping
+  with AccountDetailsMapping {
+
+    def apply(user: User, isPublicFormActive: Boolean): ProfileForms = ProfileForms(
+      publicForm = profileMapping.bindForm(user),
+      accountForm = accountDetailsMapping.bindForm(user),
+      isPublicFormActive = isPublicFormActive
+    )
 }
