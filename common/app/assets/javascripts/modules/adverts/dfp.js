@@ -5,6 +5,7 @@ define([
     'postscribe',
     'common/modules/component',
     'lodash/objects/assign',
+    'common/utils/cookies',
     'common/modules/adverts/userAdTargeting',
     'common/modules/analytics/commercial/tags/common/audience-science'
 ], function (
@@ -13,8 +14,9 @@ define([
     postscribe,
     Component,
     extend,
-    userAdTargeting,
-    audienceScience
+    Cookies,
+    UserAdTargeting,
+    AudienceScience
 ) {
 
     var dfpUrl = 'js!'+ (document.location.protocol === 'https:' ? 'https' : 'http') +'://www.googletagservices.com/tag/js/gpt.js';
@@ -57,8 +59,12 @@ define([
         var keywords         = conf.keywords    ? conf.keywords.split(',')       : '',
             section          = conf.section     ? conf.section.toLowerCase()     : '',
             contentType      = conf.contentType ? conf.contentType.toLowerCase() : '',
-            audienceSegments = audienceScience.getSegments()     || [],
-            userSegments     = userAdTargeting.getUserSegments() || [];
+            audienceSegments = AudienceScience.getSegments()     || [],
+            userSegments     = UserAdTargeting.getUserSegments() || [];
+
+        if(Cookies.get('adtest') === '18') {
+            keywords.push('test18');
+        }
 
         googletag.pubads().setTargeting('k', ['test18', 'speedo_sponser_test', 'eon_sponser_test'].concat(keywords));
         googletag.pubads().setTargeting('pt', contentType);
@@ -78,7 +84,10 @@ define([
 
         var mapping = this.createSizeMapping();
 
+        // Commercial component
         googletag.defineSlot('/'+ conf.accountId +'/'+ conf.server, [900, 250], conf.adSlotId).addService(googletag.pubads());
+
+        // Paid for logo
         googletag.defineSlot('/'+ conf.accountId +'/'+ conf.server, [300, 80], 'dfp_paidforlogo').addService(googletag.pubads());
 
         this.setTargetting(conf.page);
