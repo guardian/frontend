@@ -4,6 +4,7 @@ case class Pagination(currentPage: Int, lastPage: Int, totalContent: Int) {
 
   val next: Option[Int] = if (lastPage > currentPage) Some(currentPage + 1) else None
   val previous: Option[Int] = if (currentPage > 1) Some(currentPage -1) else None
+  val isFirstPage: Boolean = currentPage == 1
 
   /**
    * Returns the next/prev 5 navigation pages with the current page as close to the center as possible.

@@ -1,12 +1,10 @@
 package model
 
 import com.gu.openplatform.contentapi.model.{ Tag => ApiTag }
-import common.Reference
+import common.{Pagination, Reference}
 import views.support.{Contributor, ImgSrc}
-import play.api.templates.Html
-import java.net.URI
 
-case class Tag(private val delegate: ApiTag) extends MetaData {
+case class Tag(private val delegate: ApiTag, override val pagination: Option[Pagination] = None) extends MetaData {
   lazy val name: String = webTitle
   lazy val tagType: String = delegate.`type`
 
