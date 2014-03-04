@@ -32,7 +32,7 @@ class PublicProfileController @Inject()(idUrlBuilder: IdentityUrlBuilder,
     authActionWithUser.apply { implicit request =>
       val idRequest = idRequestParser(request)
       val forms = ProfileForms(request.user, isPublicFormActive)
-      Ok(views.html.public_profile(page.tracking(idRequest), request.user, forms, idRequest, idUrlBuilder))
+      Ok(views.html.profileForms(page.tracking(idRequest), request.user, forms, idRequest, idUrlBuilder))
     }
   }
 
@@ -58,7 +58,7 @@ class PublicProfileController @Inject()(idUrlBuilder: IdentityUrlBuilder,
         val futureForms = futureFormOpt getOrElse Future.successful(forms)
         futureForms map {
           forms =>
-            Ok(views.html.public_profile(page.accountEdited(idRequest), request.user, forms, idRequest,idUrlBuilder))
+            Ok(views.html.profileForms(page.accountEdited(idRequest), request.user, forms, idRequest,idUrlBuilder))
         }
     }
   }
