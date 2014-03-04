@@ -23,6 +23,7 @@ case class Tag(private val delegate: ApiTag) extends MetaData {
   lazy val contributorImagePath: Option[String] = delegate.bylineImageUrl.map(ImgSrc(_, Contributor))
 
   lazy val contributorLargeImagePath: Option[String] = delegate.bylineLargeImageUrl.map(ImgSrc(_, Contributor))
+  lazy val hasLargeContributorImage: Boolean = contributorLargeImagePath.nonEmpty
 
   lazy val isContributor: Boolean = id.startsWith("profile/")
   lazy val bio: String = delegate.bio.getOrElse("")
