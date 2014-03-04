@@ -99,7 +99,7 @@
         }
     }
     .collection__item {
-        background-color: $c-features-secondary;
+        background-color: $c-featuresVariant;
 
         + .collection__item {
             &:before {
@@ -117,11 +117,11 @@
     }
     .item__link:visited,
     .item__link:visited .item__title {
-        color: mix(#ffffff, $c-features-secondary, 80%);
+        color: mix(#ffffff, $c-featuresVariant, 80%);
     }
     @include item--hide-tone-border;
     .item__title {
-        background-color: $c-features-secondary;
+        background-color: $c-featuresVariant;
     }
     .item__link:hover,
     .item__link:focus {

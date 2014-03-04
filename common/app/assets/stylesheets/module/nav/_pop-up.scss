@@ -30,7 +30,7 @@
     padding-bottom: 0;
 
     .nav__link {
-        color: #333333;
+        color: $c-neutral1;
     }
 
     @include mq(tablet) {

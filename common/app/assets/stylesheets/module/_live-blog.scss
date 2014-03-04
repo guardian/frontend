@@ -3,7 +3,7 @@
 
 .timestamp,
 .published-time {
-    @extend %type-9;
+    @include font($sans-serif, bold, 13, 20);
     display: block;
     border-top: 1px dotted $c-neutral3;
     padding: $gs-baseline/3 0;
@@ -109,9 +109,9 @@
 
 
 @include keyframes(new-block-animation) {
-    0%   { opacity: 0; background: #f4f4ee; }
+    0%   { opacity: 0; background: $c-neutral7; }
     20%  { opacity: 1; }
-    70%  { background: #f4f4ee; }
+    70%  { background: $c-neutral7; }
     100% { background: transparent; }
 }
 
