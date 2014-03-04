@@ -8,10 +8,10 @@ $mq-responsive: true !default;
 // across team members. It will improve communication between
 // stakeholders, designers, developers, and testers.
 $mq-breakpoints: (
-    mobile:  300px,
-    tablet:  600px,
-    desktop: 900px,
-    wide:    1260px
+    mobile:  320px,
+    tablet:  740px,
+    desktop: 980px,
+    wide:    1300px
 ) !default;
 
 // Define the breakpoint from the $mq-breakpoints list that should
@@ -19,6 +19,10 @@ $mq-breakpoints: (
 // (i.e. when $mq-responsive is set to 'false').
 $mq-static-breakpoint: desktop !default;
 
+// If you want to display the currently active breakpoint in the top
+// right corner of your site during development, add the breakpoints
+// to this list, ordered by width, e.g. (mobile, tablet, desktop).
+$mq-show-breakpoints: () !default;
 
 @function mq-px2em($px, $base-font-size: 16px) {
     @if (unitless($px)) {
@@ -99,7 +103,7 @@ $mq-static-breakpoint: desktop !default;
         }
     }
 
-    // Responsive support is enabled, output rules inside @media queries
+        // Responsive support is enabled, output rules inside @media queries
     @else {
         @if $min-width != 0 { $mediaQuery: '#{$mediaQuery} and (min-width: #{$min-width})'; }
         @if $max-width != 0 { $mediaQuery: '#{$mediaQuery} and (max-width: #{$max-width})'; }
@@ -118,4 +122,28 @@ $mq-static-breakpoint: desktop !default;
 @function mq-add-breakpoint($name, $breakpoint) {
     $new-breakpoint: (#{$name}: $breakpoint);
     @return map-merge($mq-breakpoints, $new-breakpoint);
+}
+
+// Show the active breakpoint in the top right corner of the viewport
+@if (length($mq-show-breakpoints) > 0) {
+    body:before {
+        background-color: #FCF8E3;
+        border-bottom: 1px solid #FBEED5;
+        border-left: 1px solid #FBEED5;
+        color: #C09853;
+        font: small-caption;
+        padding: 3px 6px;
+        position: absolute;
+        right: 0;
+        top: 0;
+        z-index: 100;
+
+        // Loop through the breakpoints that should be shown
+        @each $show-breakpoint in $mq-show-breakpoints {
+            $width: mq-get-breakpoint-width($show-breakpoint);
+            @include mq($show-breakpoint) {
+                content: "#{$show-breakpoint} ≥ #{$width} (#{mq-px2em($width)})";
+            }
+        }
+    }
 }

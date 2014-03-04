@@ -143,7 +143,7 @@ define([
     var ready = function() {
         var bits = window.location.pathname.split('/'),
             action = config.page.contentType === 'Article' ? 'article' : (bits.length === 3 ? bits[2] : bits[3]); // removing router for now
-        lazyLoadCss('football', config);
+        // lazyLoadCss('football', config);
 
         // not worth over complicating for the time being
         var trs = $('.table tr[data-link-to]').css({ 'cursor': 'pointer' }).map(function(elem) { return elem; });
