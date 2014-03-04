@@ -92,9 +92,9 @@ define([
         },
 
         accountProfile: function () {
-            var tabs = new Tabs();
+            var accountProfile = new AccountProfile();
             mediator.on('page:identity:ready', function(config, context) {
-                AccountProfile.init(context);
+                accountProfile.init(context);
             });
         }
     };

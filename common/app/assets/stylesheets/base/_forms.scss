@@ -150,6 +150,10 @@
         border-color: $c-neutral2;
     }
 
+    &.form-field--unsaved {
+        border: 1px solid $c-brandBlue;
+    }
+
     @include mq(tablet) {
         font-size: 14px;
         font-size: 1.4rem;
