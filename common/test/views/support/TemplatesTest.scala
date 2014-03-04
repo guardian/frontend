@@ -107,6 +107,36 @@ class TemplatesTest extends FlatSpec with Matchers {
     (link \ "@href").text should be (s"${Configuration.site.host}/section/2011/jan/01/words-for-url")
 
   }
+  
+  "InBodyLinkCleanerForR1" should "clean links" in {
+
+    // i. www
+    val r1BodyText = """
+      <p> foo <a href="/Guardian/path/to/article">foo</a> foo</p>
+    """
+    val body = XML.loadString(withJsoup(r1BodyText)(InBodyLinkCleanerForR1("")).body.trim)
+    val link = (body \\ "a").head
+    (link \ "@href").text should be (s"/path/to/article")
+
+    // ii. old subdomains
+    val absoluteUrls = Map(
+        "/Arts/path/to/something" -> "/arts/path/to/something",
+        "/Education/path/to/something" -> "/education/path/to/something",
+        "/Guardian/path/to/something" -> "/path/to/something",
+        "/Club/path/to/something" -> "/Club/path/to/something" // unchanged
+    )
+
+    for ((key, value) <- absoluteUrls) {
+        val bodyAbsolute = XML.loadString(withJsoup(s"""<a href="${key}">foo</a>""")(InBodyLinkCleanerForR1("")).body.trim)
+        (bodyAbsolute \ "@href").text should be (value)
+    }
+    
+    // iii. relative to the old subdomain 
+    val bodyAbsolute = XML.loadString(withJsoup(s"""<a href="/path/to/foo">foo</a>""")(InBodyLinkCleanerForR1("/arts")).body.trim)
+    (bodyAbsolute \ "@href").text should be ("/arts/path/to/foo")
+
+  }
+
 
   "BlockCleaner" should "insert block ids in minute by minute content" in {
 

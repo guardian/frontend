@@ -39,6 +39,11 @@ object MostPopularController extends Controller with Logging with ExecutionConte
     }
   }
 
+  private val countryNames = Map(
+    "AU" -> "Australia",
+    "US" -> "US",
+    "IN" -> "India")
+
   def renderPopularGeoJson() = Action { implicit request =>
 
     val headers = request.headers.toSimpleMap
@@ -49,7 +54,8 @@ object MostPopularController extends Controller with Logging with ExecutionConte
     Cached(900) {
       JsonComponent(
         "html" -> views.html.fragments.collections.popular(Seq(countryPopular)),
-        "rightHtml" -> views.html.fragments.rightMostPopular(countryPopular)
+        "rightHtml" -> views.html.fragments.rightMostPopularGeo(countryPopular, countryNames.get(countryCode), countryCode),
+        "country" -> countryCode
       )
     }
   }

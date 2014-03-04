@@ -158,13 +158,6 @@ define([
                 s.eVar51  = alphaTag + s.eVar51;
             }
 
-            // is user is viewing an alpha front
-            if (/^.+-alpha$/.test(config.page.pageId)) {
-                var frontAlphaTag = config.page.pageId + ',';
-                s.prop51  = frontAlphaTag + s.prop51;
-                s.eVar51  = frontAlphaTag + s.eVar51;
-            }
-
             if (s.prop51) {
                 s.events = s.apl(s.events,'event58',',');
             }

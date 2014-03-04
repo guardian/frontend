@@ -5,11 +5,11 @@
 .masterclasses-component {
     .commercial__title {
         .em {
-            color: #951c55;
+            color: $c-featureDefault;
         }
     }
     .lineitem__image {
-        margin-right: $baseline;
+        margin-right: $gs-gutter/5;
         outline: 1px solid $c-neutral7;
         float: left;
     }
@@ -17,12 +17,12 @@
         display: block;
     }
     .lineitem__description {
-        margin-top: $baseline;
+        margin-top: $gs-baseline/3;
     }
 
     @include mq($to: tablet) {
         .commercial__head {
-            background-color: #951c55;
+            background-color: $c-featureDefault;
 
             .commercial__title {
                 .em {

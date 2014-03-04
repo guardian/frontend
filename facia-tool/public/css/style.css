@@ -154,11 +154,6 @@ a, a:hover {
     height: 23px;
 }
 
-.list-header__also-on {
-    color: #000000;
-    font-weight: bold;
-}
-
 .list-header.collapsed {
     opacity: 0.5;
 }
@@ -747,6 +742,10 @@ button {
     border-bottom: 1px solid #CCCCCC;
 }
 
+.cnf-front .title {
+    cursor: pointer;
+}
+
 .cnf-front.isProvisional {
     background: #CCCCCC;
 }
@@ -762,11 +761,11 @@ button {
 .cnf-collection {
     position: relative;
     background: #ffffff;
-    padding: 0 0 0 5px;
+    padding: 4px 0 4px 5px;
     border-top: 3px solid #ffffff;
 }
 
-.cnf-collection:hover {
+.cnf-collection:nth-child(odd) {
     background: #EEEEEE;
 }
 
@@ -777,6 +776,12 @@ button {
 
 .cnf-collection.underDrag {
     border-top-color: #f89406;
+}
+
+.cnf-collection__index {
+    color: #CCCCCC;
+    display: inline-block;
+    width: 15px;
 }
 
 .cnf-collection__name {
@@ -794,6 +799,10 @@ button {
 .cnf-collection.open .cnf-collection__id,
 .cnf-collection:hover .cnf-collection__id {
     display: block;
+}
+
+.cnf-collection__also-on {
+    font-weight: bold;
 }
 
 .cnf-collection .placements {

@@ -29,7 +29,7 @@ $replyIndent: 26px;
     color: $c-neutral2;
     border-top: 1px solid $c-neutral4;
     @include rem((
-        padding-bottom: $baseline*3
+        padding-bottom: $gs-baseline
     ));
 }
 .d-thread {
@@ -46,8 +46,8 @@ $replyIndent: 26px;
 }
 .show-more__container {
     @include rem((
-        margin-bottom: $baseline*2,
-        padding-top: $baseline*2
+        margin-bottom: ($gs-baseline/3)*2,
+        padding-top: ($gs-baseline/3)*2
     ));
     display: block;
     text-align: center;
@@ -60,7 +60,7 @@ $replyIndent: 26px;
     }
 }
 .d-discussion__show-more {
-    padding-top: $baseline*2;
+    padding-top: ($gs-baseline/3)*2;
     @include fs-data(5);
     position: relative;
     line-height: 30px;
@@ -74,7 +74,7 @@ $replyIndent: 26px;
     background-color: $c-newsDefault;
 }
 .d-discussion__show-more-text {
-    padding-left: 32px + $baseline;
+    padding-left: 32px + $gs-baseline/3;
     display: inline-block;
 }
 .d-discussion__show-all-comments {
@@ -90,7 +90,7 @@ $replyIndent: 26px;
         left: 0;
     }
     .i-arrow-blue-down {
-        margin-left: $baseline*2;
+        margin-left: ($gs-baseline/3)*2;
     }
 }
 .d-discussion--not-staff .d-staff-required {
@@ -128,8 +128,8 @@ $replyIndent: 26px;
 .d-comment__meta,
 .d-comment-box__meta {
     @include rem((
-        height: $avatarSize + $baseline,
-        margin-bottom: $baseline*2
+        height: $avatarSize + ($gs-baseline/3),
+        margin-bottom: ($gs-baseline/3)*2
     ));
     white-space: nowrap;
 
@@ -165,7 +165,7 @@ $replyIndent: 26px;
 .d-comment-box__avatar-wrapper {
     @include rem((
         margin-right: ($gs-gutter/5)*2,
-        margin-top: $baseline
+        margin-top: $gs-baseline/3
     ));
     float: left;
 
@@ -222,7 +222,7 @@ $replyIndent: 26px;
 
 .d-comment__timestamp {
     @include fs-data(2);
-    margin-bottom: $baseline;
+    margin-bottom: $gs-baseline/3;
     a { color: $c-neutral2; }
 }
 .d-comment__reply-to-author,
@@ -425,8 +425,8 @@ $replyIndent: 26px;
     @include fs-data(2);
     @include rem((
         height: 14px,
-        padding-top: $baseline*2,
-        padding-bottom: $baseline*5
+        padding-top: ($gs-baseline/3)*2,
+        padding-bottom: ($gs-baseline/3)*5
     ));
     width: 100%;
     position: absolute;
@@ -460,7 +460,7 @@ $replyIndent: 26px;
 .d-comment__action--report {
     font-weight: normal;
     position: absolute;
-    right: $baseline;
+    right: $gs-baseline/3;
 }
 .d-comment__action-separator {
     @include fs-data(1);
@@ -524,7 +524,7 @@ $replyIndent: 26px;
 
     .d-comment__main {
         @include rem((
-            margin-top: $baseline
+            margin-top: $gs-baseline/3
         ));
     }
     .d-comment__content {
@@ -538,11 +538,11 @@ $replyIndent: 26px;
     .d-comment__body {
         color: $c-replyText;
         @include rem((
-            margin-top: $baseline
+            margin-top: $gs-baseline/3
         ));
         @include mq(tablet) {
             @include rem((
-                margin-top: $baseline*2
+                margin-top: ($gs-baseline/3)*2
             ));
         }
     }
@@ -553,7 +553,7 @@ $replyIndent: 26px;
     }
     .d-comment__timestamp {
         @include rem((
-            margin-top: $baseline * -1
+            margin-top: $gs-baseline/3 * -1
         ));
     }
 }
@@ -607,7 +607,7 @@ $replyIndent: 26px;
     @include fs-data(4);
     color: $c-error;
     @include rem((
-        margin-top: $baseline*2
+        margin-top: ($gs-baseline/3)*2
     ));
 
     .d-discussion__error-text {
@@ -673,7 +673,7 @@ $replyIndent: 26px;
         @include icon-button(18px, -9px);
         background-color: $c-newsDefault;
         @include rem((
-            margin-bottom: $baseline * -1,
+            margin-bottom: $gs-baseline/3 * -1,
             margin-right: ($gs-gutter/5)*2
         ));
     }
@@ -717,14 +717,14 @@ $replyIndent: 26px;
     .d-comment__meta {
         position: absolute;
         @include rem((
-            bottom: $baseline*2
+            bottom: ($gs-baseline/3)*2
         ));
         width: 100%;
 
         @include mq($comment-meta-breakpoint) {
             position: static;
             @include rem((
-                margin-top: $baseline*4,
+                margin-top: ($gs-baseline/3)*4,
                 width: 160px
             ));
             top: 0;
@@ -733,12 +733,12 @@ $replyIndent: 26px;
     .d-comment__inner {
         min-height: 0;
         @include rem((
-            padding-bottom: $avatarSize + 20px + $baseline*4
+            padding-bottom: $avatarSize + 20px + ($gs-baseline/3)*4
         ));
 
         @include mq($comment-meta-breakpoint) {
             @include rem((
-                padding-bottom: $baseline*2
+                padding-bottom: ($gs-baseline/3)*2
             ));
         }
     }
@@ -750,8 +750,8 @@ $replyIndent: 26px;
     .d-comment__content {
         background-color: $c-neutral7;
         @include rem((
-            padding: $baseline*2 ($gs-gutter/5)*3,
-            margin-bottom: $baseline*3
+            padding: ($gs-baseline/3)*2 ($gs-gutter/5)*3,
+            margin-bottom: $gs-baseline
         ));
         position: relative;
 
@@ -782,12 +782,12 @@ $replyIndent: 26px;
     }
     .d-comment__recommend {
         @include rem((
-            top: $baseline*2,
-            right: $baseline*2
+            top: ($gs-baseline/3)*2,
+            right: ($gs-baseline/3)*2
         ));
         @include mq(tablet) {
             @include rem((
-                right: $baseline
+                right: $gs-gutter/5
             ));
         }
     }
@@ -823,7 +823,7 @@ $replyIndent: 26px;
 .comment--speechy {
     border: none;
     @include rem((
-        padding: 0 0 $baseline*10 0
+        padding: 0 0 ($gs-baseline/3)*10 0
     ));
 
     .comment__inner {
@@ -831,7 +831,7 @@ $replyIndent: 26px;
         background-color: $c-neutral7;
         display: inline-block;
         @include rem((
-            padding: $baseline*2 $gs-gutter/2 $baseline*3
+            padding: ($gs-baseline/3)*2 $gs-gutter/2 $gs-baseline
         ));
         position: relative;
         width: 100%;
@@ -875,7 +875,7 @@ $replyIndent: 26px;
     display: block;
     float: right;
     @include rem((
-        margin-top: -$baseline*4+2
+        margin-top: -($gs-baseline/3)*4+2
     ));
 
     .i {
@@ -976,7 +976,7 @@ $replyIndent: 26px;
     display: block;
     @include rem((
         padding-right: $gutter*2,
-        margin: $baseline*4 0
+        margin: ($gs-baseline/3)*4 0
     ));
     @include fs-data(3);
     color: #808080;
@@ -987,11 +987,11 @@ $replyIndent: 26px;
     ));
     content: ' ';
     display: inline-block;
-    @extend .i-filter-arrow-right;
+    @extend %i-filter-arrow-right;
 }
 .d-show-cta-wrapper {
     @include rem((
-        padding: $baseline*2 0 $baseline*4
+        padding: ($gs-baseline/3)*2 0 ($gs-baseline/3)*4
     ));
 }
 .d-show-cta,
@@ -1003,8 +1003,8 @@ $replyIndent: 26px;
     display: block;
     line-height: 1;
     @include rem((
-        margin-bottom: $baseline*6,
-        padding: $baseline*2 8px $baseline*6 6px
+        margin-bottom: $gs-baseline*2,
+        padding: ($gs-baseline/3)*2 8px $gs-baseline*2 6px
     ));
     overflow: auto;
     position: relative;
@@ -1037,7 +1037,7 @@ $replyIndent: 26px;
 .d-bar {
     color: $c-neutral1;
     @include rem((
-        margin-bottom: $baseline*4
+        margin-bottom: ($gs-baseline/3)*4
     ));
 }
 .d-comment-box__body {
@@ -1045,8 +1045,8 @@ $replyIndent: 26px;
     border: 1px solid $c-neutral3;
     @include rem((
         height: 50px,
-        margin: $baseline*2 0,
-        padding: $baseline*2 $gutter/2
+        margin: ($gs-baseline/3)*2 0,
+        padding: ($gs-baseline/3)*2 $gutter/2
     ));
     resize: vertical;
     width: 100%;
@@ -1142,7 +1142,7 @@ $replyIndent: 26px;
 }
 .open-cta {
     @include rem((
-        margin-top: $baseline*8
+        margin-top: ($gs-baseline/3)*8
     ));
 
     .clamp__fade {

@@ -27,7 +27,7 @@ define([
         edition = config.page.edition;
 
         makeAbsolute = function (url) {
-            return ('switches' in config && config.switches.spdyAjaxServices) ?  config.page.ajaxSpdyUrl + url : config.page.ajaxUrl + url;
+            return config.page.ajaxUrl + url;
         };
     };
 

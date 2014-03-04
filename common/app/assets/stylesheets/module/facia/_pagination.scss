@@ -1,0 +1,53 @@
+.pagination {
+    @include rem((
+        padding-top: $gs-baseline / 2,
+        margin: $gs-baseline 0
+    ));
+    text-align: center;
+    @include fs-data(4);
+    border-top: 1px solid $c-neutral5;
+}
+
+.pagination__links {
+    width: 100%;
+    @include mq(tablet) {
+        float: right;
+        @include rem((
+            width: gs-span(4)
+        ))
+    }
+}
+
+.pagination__item {
+    display: inline-block;
+}
+
+.pagination__item--next {
+    float: right;
+    text-align: right;
+    @include rem((
+        width: 100px
+    ));
+}
+
+.pagination__item--prev {
+    float: left;
+    text-align: left;
+    @include rem((
+        width: 100px
+    ));
+}
+
+.pagination__action {
+    @include rem((
+        padding: 0 $gs-gutter / 5
+    ));
+}
+
+.pagination_legend {
+    float: left;
+    @include rem((
+        padding-left: $gs-gutter
+    ));
+}
+

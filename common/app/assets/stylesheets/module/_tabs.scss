@@ -15,7 +15,7 @@
     border-bottom: none;
     list-style-type: none;
     overflow: hidden;
-    background: #fff;
+    background: #ffffff;
 
     @include mq(tablet) {
         margin-bottom: -1px;
@@ -39,14 +39,14 @@
         @include box-sizing(border-box);
         min-height: $gs-row-height;
         text-align: left;
-        padding: $baseline 8px 0;
+        padding: $gs-baseline/3 8px 0;
         display: block;
         text-decoration: none;
         background-color: $c-neutral6;
 
         &:active,
         &:focus {
-            background-color: #fff;
+            background-color: #ffffff;
             text-decoration: none;
         }
 
@@ -56,7 +56,7 @@
         }
 
         @include mq(tablet) {
-            padding: $baseline $gs-gutter/2 0;
+            padding: $gs-baseline/3 $gs-gutter/2 0;
         }
     }
 
@@ -88,7 +88,7 @@
 
 .tabs__content {
     clear: both;
-    padding-top: $baseline*2;
+    padding-top: ($gs-baseline/3)*2;
 
     @include mq(tablet) {
         border-top: 1px solid $c-neutral5;

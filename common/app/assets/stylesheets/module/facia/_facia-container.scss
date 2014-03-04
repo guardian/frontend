@@ -1,0 +1,132 @@
+.facia-container {
+
+}
+.facia-container--layout-front {
+    @include mq(gs-span(7) + $gs-gutter*3, tablet) {
+        @include rem((
+            width: gs-span(7)
+        ));
+        margin: 0 auto;
+    }
+    @include mq(tablet) {
+        @include rem((
+            width: gs-span(9)
+        ));
+        padding-left: 0;
+        padding-right: 0;
+    }
+    @include mq(desktop) {
+        @include rem((
+            width: gs-span(12)
+        ));
+    }
+    @include mq(faciaLeftCol) {
+        @include rem((
+            width: gs-span(14)
+        ));
+
+        .container__title {
+            margin-bottom: 0;
+        }
+        .container__body {
+            overflow: hidden;
+            @include rem((
+                margin-left: gs-span(2) + $gs-gutter
+            ));
+        }
+        .container--news {
+            .container__title {
+                display: block;
+                float: left;
+                @include rem((
+                    width: gs-span(2),
+                    margin-right: $gs-gutter
+                ));
+            }
+            .container__body {
+                margin-left: 0;
+                @include rem((
+                    width: gs-span(12)
+                ));
+            }
+        }
+    }
+    @include mq(wide) {
+        @include rem((
+            width: gs-span(16)
+        ));
+
+        .container__title {
+            float: left;
+            @include rem((
+                width: gs-span(3) !important,
+                margin-right: $gs-gutter
+            ));
+        }
+        .container__body {
+            margin-left: 0;
+            @include rem((
+                width: gs-span(12)
+            ));
+        }
+    }
+
+    .is-updating {
+        display: none;
+        margin: 100px auto 0;
+    }
+    .ab-uk-containers &,
+    .ab-us-containers &,
+    .ab-au-containers & {
+        > {
+            * {
+                visibility: hidden;
+            }
+            .is-updating {
+                display: block;
+                visibility: visible;
+            }
+        }
+    }
+}
+.facia-container--layout-article {
+    @include mq(tablet) {
+        @include rem((
+            max-width: gs-span(8)
+        ));
+    }
+    @include mq(rightCol) {
+        @include rem((
+            max-width: gs-span(14) + $gs-gutter*2
+        ));
+    }
+    @include mq(leftCol) {
+        .container__title {
+            margin-bottom: 0;
+            float: left;
+            @include rem((
+                width: $a-leftCol-width !important,
+                margin-right: $gs-gutter
+            ));
+        }
+        .container__body {
+            overflow: hidden;
+            @include rem((
+                margin-left: gs-span(2) + $gs-gutter
+            ));
+        }
+    }
+    @include mq(wide) {
+        @include rem((
+            max-width: gs-span(15),
+            padding-right: gs-span(1) + $gs-gutter*2
+        ));
+
+        .container__title {
+            @include rem((
+                width: $a-leftColWide-width !important
+            ));
+        }
+    }
+
+}

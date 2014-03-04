@@ -1,5 +1,5 @@
 .gallerythumbs {
-    margin: $baseline 0;
+    margin: $gs-baseline/3 0;
     list-style: none;
     position: relative;
 }
@@ -88,7 +88,7 @@
     left: 0;
     border: 0;
     text-align: left;
-    padding: $baseline*3 0;
+    padding: $gs-baseline 0;
     width: 220px;
     z-index: 10;
 

@@ -21,6 +21,7 @@ GET           /configuration             controllers.FaciaToolController.configE
 
 POST          /collection/publish/*id    controllers.FaciaToolController.publishCollection(id)
 POST          /collection/discard/*id    controllers.FaciaToolController.discardCollection(id)
+POST          /collection/press/*id      controllers.FaciaToolController.pressCollection(id)
 
 GET           /collection/*id            controllers.FaciaToolController.readBlock(id)
 POST          /edits                     controllers.FaciaToolController.collectionEdits

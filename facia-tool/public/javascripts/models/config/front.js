@@ -54,12 +54,17 @@ define([
         this.depopulateCollection = this._depopulateCollection.bind(this);
     }
 
+    Front.prototype.setOpen = function(isOpen) {
+        this.state.open(isOpen);
+    };
+
     Front.prototype.toggleOpen = function() {
         this.state.open(!this.state.open());
     };
 
     Front.prototype.createCollection = function() {
-        var collection = new Collection({idPrefix: this.id()});
+        var collection = new Collection();
+
         collection.toggleOpen();
         collection.parents.push(this);
         this.collections.items.push(collection);
@@ -70,7 +75,7 @@ define([
         collection.state.open(false);
         collection.parents.remove(this);
         this.collections.items.remove(collection);
-        vars.model.save();
+        vars.model.save(collection);
     };
 
     return Front;

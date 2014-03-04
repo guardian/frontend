@@ -1,0 +1,53 @@
+@(matches: List[FootballMatch])(implicit request: RequestHeader)
+@import implicits.Football._
+
+<table class="table table--football-match">
+    <thead hidden>
+        <tr>
+            <th class="football-match__status table-column--sub">Match status / kick off time</th>
+            <th class="football-match__details">Match details</th>
+            <th class="football-match__report">Reports</th>
+        </tr>
+    </thead>
+    <tbody>
+        @matches.map{ game =>
+            <tr data-link-to="@LinkTo{@MatchUrl(game)}"
+                class="@RenderClasses(Map(
+                    "football-match--live" -> game.isLive,
+                    "football-match--fixture" -> game.isFixture,
+                    "football-match--result" -> game.isResult
+                ))">
+                <td class="football-match__status table-column--sub">
+                    @if(game.isFixture){
+                        @game.date.toString("HH:mm")
+                    }else{
+                        @MatchStatus(game.matchStatus)
+                    }
+                </td>
+                <td class="football-match__details table-column--main">
+                    <a href="@LinkTo{@MatchUrl(game)}" data-link-name="stats" data-match-id="@game.id">
+                        <div class="details__match-teams">
+                            <span class="details__team details__team--home">@game.homeTeam.name</span>
+                            @if(game.isFixture){
+                                <abbr class="details__versus" title="versus">v</abbr>
+                            }else{
+                                <span class="details__score">@game.homeTeam.score - @game.awayTeam.score</span>
+                            }
+                            <span class="details__team details__team--away">@game.awayTeam.name</span>
+                        </div>
+
+                        <div class="details__meta">
+                            @if(game.homeTeam.aggregateScore){
+                                <div class="details__aggregate">(agg. @game.homeTeam.aggregateScore-@game.awayTeam.aggregateScore)</div>
+                            }
+                            @game.comments.map{ comment => <div class="details__comment">@comment</div>}
+                        </div>
+                    </a>
+                </td>
+                <td class="football-match__report">
+                    <a href="@LinkTo{@MatchUrl(game)}" data-link-name="stats" data-match-id="@game.id">@if(game.isLive){Live Match}else{Match report}</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

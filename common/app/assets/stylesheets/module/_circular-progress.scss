@@ -2,7 +2,7 @@
     position: relative;
 
     &.circular-progress--is-off .circular-progress__cta {
-        @extend .i-liveblog-play;
+        @extend %i-liveblog-play;
     }
 }
 
@@ -15,7 +15,7 @@
 }
 
 .circular-progress__counter {
-    @extend %type-12;
+    @include fs-data(1);
     font-weight: bold;
     color: $c-neutral2;
     line-height: 30px;
@@ -31,6 +31,6 @@
     }
 
     &:hover .circular-progress__cta {
-        @extend .i-liveblog-pause;
+        @extend %i-liveblog-pause;
     }
 }

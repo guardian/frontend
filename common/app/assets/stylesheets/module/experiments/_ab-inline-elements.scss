@@ -53,7 +53,7 @@ $c-darkText: #9c9c9c;
     }
 
     .inline-story__cta {
-        background-color: #fbba0f;
+        background-color: $c-media-icon;
         @include rounded-corners(50%);
         width: 36px;
         height: 36px;
@@ -105,7 +105,7 @@ $c-darkText: #9c9c9c;
 
     .inline-story__title {
         color: #ffffff;
-        min-height: $gs-row-height*3 + $baseline*2 - 10px;
+        min-height: $gs-row-height*3 + ($gs-baseline/3)*2 - 10px;
         margin: 0;
         padding: 5px $gs-baseline/2 5px $gs-baseline/2;
         font-weight: normal;

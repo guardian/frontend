@@ -44,15 +44,6 @@ class FaciaController extends Controller with Logging with ExecutionContexts {
     Cached(60)(Redirect(redirectPath))
   }
 
-  private def getPathForUkAlpha(path: String, request: RequestHeader): String =
-    Seq("uk", "us", "au").find { page =>
-      path == page &&
-        Switches.byName(s"network-front-${page}-alpha").exists(_.isSwitchedOn) &&
-        request.headers.get(s"X-Gu-Front-Alphas").exists(_.toLowerCase == "true")
-    }.map{ page =>
-      s"$page-alpha"
-    }.getOrElse(path)
-
   // Needed as aliases for reverse routing
   def renderEditionFrontJson(path: String) = renderFront(path)
   def renderEditionFront(path: String) = renderFront(path)
@@ -66,10 +57,7 @@ class FaciaController extends Controller with Logging with ExecutionContexts {
 
   def renderFront(path: String) = DogpileAction { implicit request =>
     Future{
-      //For UK alpha only
-      val newPath = getPathForUkAlpha(path, request)
-
-      val editionalisedPath = editionPath(newPath, Edition(request))
+      val editionalisedPath = editionPath(path, Edition(request))
 
       FrontPage(editionalisedPath).flatMap { frontPage =>
 

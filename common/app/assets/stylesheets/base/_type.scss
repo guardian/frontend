@@ -27,7 +27,7 @@ body {
    ========================================================================== */
 
 h1, h2, h3, h4, h5, h6 {
-    color: #333333;
+    color: $c-neutral1;
     font-family: $serif;
     margin: 0;
 }
@@ -41,18 +41,13 @@ h1, h2, h3, h4, h5, h6 {
  * Use font-scale mixins instead
  */
 
-.type-2 { @extend %type-2; }
 
 // SerifText
 .type-5 { @extend %type-5; }
-.type-6 { @extend %type-6; }
 .type-7 { @extend %type-7; }
 
 // Sans-serif
-.type-8  { @extend %type-8; }
 .type-10 { @extend %type-10; }
-.type-11 { @extend %type-11; }
-.type-12 { @extend %type-12; }
 
 
 /* Default type elements
@@ -63,14 +58,12 @@ blockquote {
 }
 p {
     margin-top: 0;
-    margin-bottom: $baseline*2;
-}
-h1 {
-    @extend %type-1;
+    margin-bottom: ($gs-baseline/3)*2;
 }
 h3 {
+    font-weight: normal;
     margin-bottom: 7px;
-    @extend %type-6;
+    @include fs-bodyCopy(3);
 }
 th,
 td {

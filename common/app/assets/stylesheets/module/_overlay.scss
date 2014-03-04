@@ -6,7 +6,7 @@
     height: 100%;
 
     .is-updating {
-        margin-top: $baseline * 20;
+        margin-top: ($gs-baseline/3)*20;
     }
 
     .preload-msg {
@@ -15,7 +15,7 @@
 }
 
 .overlay__header {
-    height: $baseline * 12;
+    height: $gs-baseline*4;
 }
 
 .overlay__toolbar {
@@ -42,7 +42,7 @@
    CTA styles
    ========================================================================== */
 .overlay__cta {
-    height: $baseline * 12;
+    height: $gs-baseline*4;
     padding: 0 $gutter / 2;
     color: #FFFFFF;
     float: left;

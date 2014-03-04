@@ -9,8 +9,8 @@
 }
 
 .form {
-    margin-top: $baseline*6;
-    margin-bottom: $baseline*6;
+    margin-top: $gs-baseline*2;
+    margin-bottom: $gs-baseline*2;
 }
 
 .form__heading {
@@ -34,7 +34,7 @@
         border-top: none;
     }
     display: table;
-    padding: ($baseline * 4 - 1) 0 ($baseline * 6);
+    padding: (($gs-baseline/3)*4 - 1) 0 ($gs-baseline*2);
     margin: 0;
 }
 
@@ -59,7 +59,7 @@
 
 .form-field {
     list-style: none;
-    margin: 0 0 $baseline*6 0;
+    margin: 0 0 $gs-baseline*2 0;
     padding: 0;
 }
 
@@ -97,7 +97,7 @@
     border-top: 1px solid lighten($newsRed, 35%);
     color: $newsRed;
     margin-top: 6px;
-    padding: 7px $baseline*2;
+    padding: 7px ($gs-baseline/3)*2;
 }
 
 .form-field__error {
@@ -120,7 +120,7 @@
 }
 
 .label {
-    color: #333;
+    color: $c-neutral1;
     cursor: pointer;
     display: block;
     font-size: 16px;
@@ -161,18 +161,18 @@
 }
 
 .textarea--no-resize {
-    min-height: $baseline*20;
+    min-height: ($gs-baseline/3)*20;
     resize: none;
 }
 
 .textarea--long {
-    min-height: $baseline*40;
+    min-height: ($gs-baseline/3)*40;
 }
 
 .submit-input {
     background: $c-newsDefault;
     border: 0 none;
-    color: #fff;
+    color: #ffffff;
     cursor: pointer;
     display: inline-block;
     font-size: 14px;
@@ -189,7 +189,7 @@
     }
 
     &:active {
-        background: #000;
+        background: #000000;
     }
 }
 
@@ -203,7 +203,7 @@
     font-family: $sans-serif;
     font-size: 13px;
     font-size: 1.3rem;
-    margin-bottom: $baseline;
+    margin-bottom: $gs-baseline/3;
     padding-left: $gs-gutter;
 }
 

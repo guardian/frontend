@@ -3,11 +3,11 @@
 
 .timestamp,
 .published-time {
-    @extend %type-9;
+    @include font($sans-serif, bold, 13, 20);
     display: block;
     border-top: 1px dotted $c-neutral3;
-    padding: $baseline 0 $baseline;
-    margin-top: $baseline*2;
+    padding: $gs-baseline/3 0;
+    margin-top: ($gs-baseline/3)*2;
 }
 
 
@@ -21,7 +21,7 @@
 }
 
 .updated-time {
-    margin: $baseline 0 $baseline*4;
+    margin: $gs-baseline/3 0 ($gs-baseline/3)*4;
     @include fs-data(1);
     color: $c-neutral2;
 }
@@ -38,7 +38,7 @@
 /* Blocks
    ========================================================================== */
 .block {
-    margin-bottom: $baseline*6;
+    margin-bottom: $gs-baseline*2;
 }
 
 
@@ -50,17 +50,17 @@
     width: 10000px;
     max-width: 100%;
     background-color: #f4f4f4;
-    background-position: $baseline*2 $gutter/2 !important;
+    background-position: ($gs-baseline/3)*2 $gutter/2 !important;
     background-repeat: no-repeat;
-    border-top: $baseline/2 solid #3299d0;
+    border-top: $gs-baseline/6 solid #3299d0;
 }
     .element-tweet {
-        margin: $baseline*3 0 $baseline*4;
+        margin: $gs-baseline 0 ($gs-baseline/3)*4;
     }
     .tweet,
     .from-content-api blockquote.tweet {
         border-left-width: 0;
-        padding: $baseline*1.5 $baseline*2;
+        padding: $gs-baseline/2 ($gs-baseline/3)*2;
         font-style: normal;
         @include fs-data(4);
 
@@ -93,7 +93,7 @@
         display: block;
         color: $c-neutral2;
         padding-left: 40px;
-        margin-bottom: $baseline*4;
+        margin-bottom: ($gs-baseline/3)*4;
     }
 
 
@@ -109,9 +109,9 @@
 
 
 @include keyframes(new-block-animation) {
-    0%   { opacity: 0; background: #f4f4ee; }
+    0%   { opacity: 0; background: $c-neutral7; }
     20%  { opacity: 1; }
-    70%  { background: #f4f4ee; }
+    70%  { background: $c-neutral7; }
     100% { background: transparent; }
 }
 

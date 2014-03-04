@@ -69,7 +69,7 @@ trait Elements {
   }
 
   // trail picture is used on index pages (i.e. Fronts and tag pages)
-  def trailPicture: Option[ImageContainer] = thumbnail.find(_.imageCrops.exists(_.width >= 940))
+  def trailPicture: Option[ImageContainer] = thumbnail.find(_.imageCrops.exists(_.width >= 620))
     .orElse(mainPicture)
     .orElse(thumbnail)
 

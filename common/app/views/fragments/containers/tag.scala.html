@@ -1,8 +1,13 @@
-@(page: MetaData, config: Config, collection: Collection, style: Container, containerIndex: Int)(implicit request: RequestHeader, templateDeduping: TemplateDeduping)
+@(page: MetaData, config: Config, collection: Collection, style: Container, containerIndex: Int, pagination: Option[Pagination] = None)(implicit request: RequestHeader, templateDeduping: TemplateDeduping)
 
 @if(collection.items.nonEmpty) {
     <section
-        class="@RenderClasses("container", "container--row-pattern", "container--news", "container--tag")"
+        class="@RenderClasses(Map(
+            "container" -> true,
+            "container--row-pattern" -> true,
+            "container--news" -> true,
+            "container--tag" -> true,
+            "container--first" -> (containerIndex == 0)))"
         data-link-name="block | @config.id"
         data-id="@config.id"
         data-type="@style.containerType">
@@ -22,5 +27,6 @@
             @fragments.contributor(page)
             @fragments.collections.news(collection.items, style, containerIndex)
         </div>
+        @pagination.map{ paginate => @fragments.pagination(page, paginate)}
     </section>
 }

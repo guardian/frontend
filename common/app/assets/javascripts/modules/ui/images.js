@@ -12,11 +12,7 @@ define(['common/$', 'common/utils/to-array', 'bonzo', 'common/utils/mediator', '
                 };
 
             toArray(context.getElementsByClassName('js-image-upgrade')).forEach(function(container) {
-                var $container = bonzo(container),
-                    forceUpgradeAttr = $container.attr('data-force-upgrade'),
-                    forceUpdgradeBreakpoints = forceUpgradeAttr !== null ? forceUpgradeAttr.split(' ') : [],
-                    isForceUpgrade = forceUpdgradeBreakpoints.indexOf(breakpoint) !== -1 || forceUpgradeAttr === '';
-                if (($('html').hasClass('connection--low') && !isForceUpgrade) || $container.css('display') === 'none') {
+                if (bonzo(container).css('display') === 'none') {
                     return;
                 }
                 imager.init([container], options);
