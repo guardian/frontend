@@ -22,5 +22,11 @@ trait UserFormMapping[T <: UserFormData] extends Mappings{
 }
 
 trait UserFormData {
-  def toUserUpdate: UserUpdate
+  def toUserUpdate(currentUser: User): UserUpdate
+
+  protected def toUpdate[T](newValue: T, current: Option[T]): Option[T] = (newValue, current) match {
+    case ("", None) => None
+    case (nv, Some(curr)) if(nv == curr) => None
+    case (nv, _) => Some(nv)
+  }
 }

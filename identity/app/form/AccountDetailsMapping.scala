@@ -38,9 +38,13 @@ case class AccountFormData(
   gender: String
 ) extends UserFormData{
 
-  lazy val toUserUpdate: UserUpdate = UserUpdate(
-    primaryEmailAddress = Some(primaryEmailAddress),
-    privateFields = Some(PrivateFields(firstName = Some(firstName), secondName = Some(secondName), gender = Some(gender)))
+  def toUserUpdate(currentUser: User): UserUpdate = UserUpdate(
+    primaryEmailAddress = toUpdate(primaryEmailAddress, Some(currentUser.primaryEmailAddress)),
+    privateFields = Some(PrivateFields(
+      firstName = toUpdate(firstName, currentUser.privateFields.firstName),
+      secondName = toUpdate(secondName, currentUser.privateFields.secondName),
+      gender = toUpdate(gender, currentUser.privateFields.gender)
+    ))
   )
 
 }

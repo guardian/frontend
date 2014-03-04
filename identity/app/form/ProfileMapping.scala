@@ -1,7 +1,7 @@
 package form
 
 import play.api.data.Forms._
-import com.gu.identity.model.{PrivateFields, PublicFields, User}
+import com.gu.identity.model.{PublicFields, User}
 import idapiclient.UserUpdate
 
 object ProfileMapping extends UserFormMapping[ProfileFormData] {
@@ -34,12 +34,12 @@ case class ProfileFormData(
   webPage: String
 ) extends UserFormData{
 
-  lazy val toUserUpdate: UserUpdate = UserUpdate(
+  def toUserUpdate(currentUser: User): UserUpdate = UserUpdate(
     publicFields = Some(PublicFields(
-      location = Some(location),
-      aboutMe = Some(aboutMe),
-      webPage = Some(webPage),
-      interests = Some(interests)
+      location = toUpdate(location, currentUser.publicFields.location),
+      aboutMe = toUpdate(aboutMe, currentUser.publicFields.aboutMe),
+      webPage = toUpdate(webPage, currentUser.publicFields.webPage),
+      interests = toUpdate(interests, currentUser.publicFields.interests)
     ))
   )
 

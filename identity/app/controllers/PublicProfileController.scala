@@ -46,8 +46,9 @@ class PublicProfileController @Inject()(idUrlBuilder: IdentityUrlBuilder,
         val forms = ProfileForms(request.user, isProfileForm).bindFromRequest(request)
         val futureFormOpt = forms.activeForm.value map {
           data: UserFormData =>
-            identityApiClient.saveUser(request.user.id, data.toUserUpdate, request.auth) map {
+            identityApiClient.saveUser(request.user.id, data.toUserUpdate(request.user), request.auth) map {
               case Left(errors) =>
+                println("Form Erros:" + errors)
                 forms.withErrors(errors)
 
               case Right(user) => forms.bindForms(user)
@@ -60,12 +61,6 @@ class PublicProfileController @Inject()(idUrlBuilder: IdentityUrlBuilder,
             Ok(views.html.public_profile(page.accountEdited(idRequest), request.user, forms, idRequest,idUrlBuilder))
         }
     }
-  }
-
-  protected def submitForm(profileFormData: Form[ProfileFormData], accountFormData: Form[AccountFormData], isAccountForm: Boolean) ={
-    val updateOpt = if(isAccountForm) accountFormData.value map {_.toUserUpdate}
-      else profileFormData.value map {_.toUserUpdate}
-    updateOpt
   }
 }
 
