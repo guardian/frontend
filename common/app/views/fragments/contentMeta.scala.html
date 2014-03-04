@@ -1,0 +1,27 @@
+@(content: model.Content)(implicit request: RequestHeader)
+
+@byline(content: model.Content) = {
+    @content match {
+        case v: Video   => { @fragments.meta.byline(v.bylineWithSource, v) }
+        case c          => { @fragments.meta.byline(c.byline, c) }
+    }
+}
+
+@if(content.hasLargeContributorImage) {
+    <div class="media article__meta-container u-cf">
+         <div class="media__img meta__image">
+            @fragments.meta.bylineImage(content)
+         </div>
+        <div class="media__body meta__body">
+            @byline(content)
+            @fragments.meta.dateline(content.webPublicationDate, secondary=true)
+            <div class="js-comment-count"></div>
+        </div>
+    </div>
+} else {
+    <div class="article__meta-container u-cf">
+        @byline(content)
+        @fragments.meta.dateline(content.webPublicationDate, secondary=true)
+        <div class="js-comment-count"></div>
+    </div>
+}
