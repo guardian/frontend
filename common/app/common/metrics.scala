@@ -386,18 +386,18 @@ class FrontendTimingMetric(
                             master: Option[Metric] = None)
   extends TimingMetric(group, name, title, description, master) {
 
-  private val _totalTimeInMillis = new AtomicLong()
-  private val _count = new AtomicLong()
+  private val timeInMillis = new AtomicLong()
+  private val currentCount = new AtomicLong()
 
   override def recordTimeSpent(durationInMillis: Long) {
-    _totalTimeInMillis.addAndGet(durationInMillis)
-    _count.incrementAndGet
+    timeInMillis.addAndGet(durationInMillis)
+    currentCount.incrementAndGet
   }
-  override def totalTimeInMillis = _totalTimeInMillis.get
-  override def count = _count.get
+  override def totalTimeInMillis = timeInMillis.get
+  override def count = currentCount.get
   override val getValue = () => totalTimeInMillis
 
-  def getAndReset: Long = _count.getAndSet(0)
+  def getAndReset: Long = currentCount.getAndSet(0)
 }
 
 object PerformanceMetrics {
