@@ -48,8 +48,8 @@ define([
             large = this.config.breakpoints[this.config.page.contentType].large;
 
         return googletag.sizeMapping().
-            addSize(small, [[900, 250], [300, 80]]).
-            addSize(large, [[900, 250], [300, 80]]).
+            addSize(small, [300, 80]).
+            addSize(large, [900, 250]).
             build();
     };
 
