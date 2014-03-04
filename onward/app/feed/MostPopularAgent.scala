@@ -93,6 +93,63 @@ object GeoMostPopularAgent extends Logging with ExecutionContexts {
   }
 }
 
+object DayMostPopularAgent extends Logging with ExecutionContexts {
+
+  private val ophanPopularAgent = AkkaAgent[Map[String, Seq[Content]]](Map.empty)
+
+  private val countries = Seq("GB", "US", "AU")
+
+  def mostPopular(country: String): Seq[Content] = ophanPopularAgent().get(country).getOrElse(Nil)
+
+  def refresh() {
+    log.info("Refreshing most popular for the day.")
+    countries foreach update
+  }
+
+  def update(countryCode: String) {
+    val ophanQuery = OphanApi.getMostRead(hours = 24, count = 30, country = countryCode)
+
+    ophanQuery.map { ophanResults =>
+
+    // Parse ophan results into a sequence of Content objects.
+      val mostRead: Seq[Future[Option[Content]]] = for {
+        item: JsValue <- ophanResults.asOpt[JsArray].map(_.value).getOrElse(Nil)
+        url <- (item \ "url").asOpt[String]
+      } yield {
+        SwitchingContentApi().item(UrlToContentPath(url), Edition.defaultEdition ).response.map( _.content.map( Content(_)))
+      }
+
+      Future.sequence(mostRead).map { contentSeq =>
+        val validContents = contentSeq.flatten
+        if (validContents.size > 0) {
+
+          // Add each country code to the map.
+          ophanPopularAgent send ( currentMap => {
+            currentMap + (countryCode -> contentSeq.flatten)
+          })
+
+        } else {
+
+          log.info(s"Day popular update for ${countryCode} found nothing.")
+        }
+      }
+    }
+  }
+
+  def stop() {
+    ophanPopularAgent.close()
+  }
+
+  private def UrlToContentPath(url: String): String = {
+    var contentId = new URL(url).getPath
+    if (contentId.startsWith("/")) {
+      contentId = contentId.substring(1)
+    }
+    contentId
+  }
+
+}
+
 object MostPopularExpandableAgent extends Logging with ExecutionContexts {
 
   private val agent = AkkaAgent[Map[String, Seq[Content]]](Map.empty)
