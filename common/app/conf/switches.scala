@@ -41,6 +41,9 @@ object Switches extends Collections {
   private lazy val never = new DateMidnight(2100, 1, 1)
   private lazy val endOfQ4 = new DateMidnight(2014, 4, 1)
 
+  private lazy val profilingEvalDeadline = new DateMidnight(2014, 6, 4)
+
+
   // Load Switches
 
   val AutoRefreshSwitch = Switch("Performance Switches", "auto-refresh",
@@ -106,14 +109,14 @@ object Switches extends Collections {
 
   val ImrWorldwideSwitch = Switch("Commercial Tags", "imr-worldwide",
     "Enable the IMR Worldwide audience segment tracking.",
-    safeState = Off, sellByDate = endOfQ4)
-
-  val AmaaSwitch = Switch("Commercial Tags", "amaa",
-    "Enable the AMAA audience segment tracking.",
-    safeState = Off, sellByDate = endOfQ4)
+    safeState = Off, sellByDate = profilingEvalDeadline)
 
   val EffectiveMeasureSwitch = Switch("Commercial Tags", "effective-measure",
     "Enable the Effective Measure audience segment tracking.",
+    safeState = Off, sellByDate = profilingEvalDeadline)
+
+  val AmaaSwitch = Switch("Commercial Tags", "amaa",
+    "Enable the AMAA audience segment tracking.",
     safeState = Off, sellByDate = endOfQ4)
 
   // Commercial Feeds
