@@ -34,7 +34,8 @@ trait MatchTestData {
     )
   }
   val matches2 = Seq(
-    Fixture("35", now.plusDays(10), stage, None, "1", newcastle, manu, None, None),
+    Fixture("36", now.plusDays(10), stage, None, "1", spurs, manu, None, None),
+    Fixture("35", now.plusDays(4), stage, None, "1", newcastle, manu, None, None),
     Fixture("34", now.plusDays(1), stage, None, "1", arsenal, newcastle, None, None),
     MatchDay("33", now.plusMinutes(120), None, None, "1", false, false, false, false, false, "-", None, newcastle, manu, None, None, None),
     MatchDay("32", now.plusMinutes(80), None, None, "1", false, false, false, false, false, "-", None, newcastle, manu, None, None, None),

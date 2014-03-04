@@ -17,16 +17,16 @@ trait MatchesList extends Football {
   def filterMatches(fMatch: FootballMatch, competition: Competition): Boolean
 
   // ordering for the displayed matches
-  def compare(x: FootballMatch, y: FootballMatch): Int
+  def compareMatches(x: FootballMatch, y: FootballMatch): Int
   implicit val ordering: Ordering[FootballMatch] = new Ordering[FootballMatch] {
-    override def compare(x: FootballMatch, y: FootballMatch): Int = compare(x, y)
+    override def compare(x: FootballMatch, y: FootballMatch): Int = compareMatches(x, y)
   }
 
   def previousPage: Option[String]
   def nextPage: Option[String]
 
   // the subset of football matches to display
-  val relevantMatches: List[(FootballMatch, Competition)] = {
+  lazy val relevantMatches: List[(FootballMatch, Competition)] = {
     val today = DateMidnight.now()
     for {
       competition <- competitions.competitions
@@ -43,24 +43,24 @@ trait MatchesList extends Football {
 }
 
 trait Fixtures extends MatchesList {
-  val daysToDisplay = 3
+  override val daysToDisplay = 3
   override def nextPage: Option[String] = Some("")
   override def previousPage: Option[String] = Some("")
-  override def compare(x: FootballMatch, y: FootballMatch): Int =
+  override def compareMatches(x: FootballMatch, y: FootballMatch): Int =
     Ordering[Long].compare(x.date.getMillis, y.date.getMillis)
 }
 trait Results extends MatchesList {
-  val daysToDisplay = 3
+  override val daysToDisplay = 3
   override def nextPage: Option[String] = Some("")
   override def previousPage: Option[String] = Some("")
-  override def compare(x: FootballMatch, y: FootballMatch): Int =
+  override def compareMatches(x: FootballMatch, y: FootballMatch): Int =
     Ordering[Long].compare(y.date.getMillis, x.date.getMillis) // reversed
 }
 trait LiveMatches extends MatchesList {
-  val daysToDisplay = 1
+  override val daysToDisplay = 1
   override def nextPage: Option[String] = None
   override def previousPage: Option[String] = None
-  override def compare(x: FootballMatch, y: FootballMatch): Int =
+  override def compareMatches(x: FootballMatch, y: FootballMatch): Int =
     Ordering[Long].compare(x.date.getMillis, y.date.getMillis)
 }
 
