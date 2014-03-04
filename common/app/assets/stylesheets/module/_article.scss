@@ -327,12 +327,8 @@
     color: $c-neutral2;
     @include fs-bodyHeading(1);
 
-    @include mq(tablet, leftCol) {
+    @include mq(tablet) {
         @include fs-bodyHeading(2, true);
-    }
-
-    @include mq(rightCol) {
-        display: block;
     }
 
     @include mq(leftCol) {
