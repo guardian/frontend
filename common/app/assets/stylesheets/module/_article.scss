@@ -186,7 +186,7 @@
     @include mq(leftCol) {
         @include rem((
             padding-top: 2px,
-            margin-bottom: $baseline*3
+            margin-bottom: $gs-baseline
         ));
         border-top: 1px dotted $c-neutral5;
     }
@@ -339,7 +339,7 @@
 
 .byline-img {
     width: gs-span(1);
-    height: 60px;
+    height: 60px; //Intentionally off grid
     @include rem((
         margin: $gs-baseline/2 0
     ));
@@ -363,7 +363,6 @@
 
 .article__meta-container {
     position: relative;
-    overflow: auto;
     @include rem((margin-bottom: $gs-baseline));
     border-top: 1px dotted $c-neutral5;
     border-bottom: 1px dotted $c-neutral5;
