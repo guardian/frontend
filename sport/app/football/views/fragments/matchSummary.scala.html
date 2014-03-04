@@ -1,38 +1,43 @@
 @(theMatch: FootballMatch)
 @import implicits.Football._
 
-@cleanScorers(teamScorers: Option[String]) = {
-    @teamScorers.map{ scorers => @scorers.replace("(", "").replace(")", "").replace(",", ", ") }.getOrElse(Html("&nbsp;"))
-}
-
 @defining((theMatch.homeTeam, theMatch.awayTeam)){ case (homeTeam, awayTeam) =>
-  @if(theMatch.isLive || theMatch.isResult){
-    <h1 class="u-h">
-        @homeTeam.name @homeTeam.score - @awayTeam.score @awayTeam.name
+<div class="match-summary" data-match-id="@theMatch.id">
+    @if(theMatch.isLive || theMatch.isResult){
+    <h1 class="match-summary__teams">
+        <div class="match-summary__team match-summary__team--home">
+            <span class="team__name">@homeTeam.name</span>
+            <span class="team__score">@homeTeam.score</span>
+        </div>
+        <div class="match-summary__team match-summary__team--away">
+            <span class="team__score">@awayTeam.score</span>
+            <span class="team__name">@awayTeam.name</span>
+        </div>
+        <div class="teams__divider"></div>
     </h1>
 
-    <h2 class="match-summary__team">
-        @homeTeam.name
-        <span class="match-summary__score">@homeTeam.score</span>
-    </h2>
-    @if(homeTeam.hasScored){
-        <p class="match-summary__scorers match-summary__scorers--home">@cleanScorers(homeTeam.scorers)</p>
-    }
-
-    <h2 class="match-summary__team match-summary__team--away">
-        @awayTeam.name
-        <span class="match-summary__score">@awayTeam.score</span>
-    </h2>
-    @if(awayTeam.hasScored){
-        <p class="match-summary__scorers match-summary__scorers--home">@cleanScorers(awayTeam.scorers)</p>
-    }
-  } else {
+    <dl class="match-summary__scorers">
+        @if(homeTeam.hasScored){
+        <dl class="team__scorers team__scorers--home unstyled">
+            <dt class="u-h">Home scorers</dt>
+            @homeTeam.scorers.map{scorers => @scorers.split(",").map{ scorer => <dd>@scorer.replace("(", "").replace(")", "′")</dd>}}
+        </dl>
+        }
+        @if(awayTeam.hasScored){
+        <dl class="team__scorers team__scorers--away unstyled">
+            <dt class="u-h">Away scorers</dt>
+            @awayTeam.scorers.map{scorers => @scorers.split(",").map{ scorer => <dd>@scorer.replace("(", "").replace(")", "′")</dd>}}
+        </dl>
+        }
+    </dl>
+    } else {
     <h1 class="match-summary__team">@homeTeam.name v @awayTeam.name</h1>
-  }
+    }
 
     @if(theMatch.homeTeam.aggregateScore){
-        <p class="match-summary__aggregate">(agg. <span>@theMatch.homeTeam.aggregateScore-@theMatch.awayTeam.aggregateScore</span>)</p>
+    <p class="match-summary__aggregate">(agg. <span>@theMatch.homeTeam.aggregateScore-@theMatch.awayTeam.aggregateScore</span>)</p>
     }
 
     @theMatch.comments.map{ comments => <h5 class="match-summary__comment">@comments.replace("(", "").replace(")", "")</h5>}
+</div>
 }
