@@ -102,7 +102,7 @@ object SystemMetrics extends implicits.Numbers {
 }
 
 object ContentApiMetrics {
-  object HttpTimingMetric extends TimingMetric(
+  object HttpTimingMetric extends FrontendTimingMetric(
     "performance",
     "content-api-calls",
     "Content API calls",
@@ -116,7 +116,7 @@ object ContentApiMetrics {
     "Content api calls that timeout"
   )
 
-  object ElasticHttpTimingMetric extends TimingMetric(
+  object ElasticHttpTimingMetric extends FrontendTimingMetric(
     "performance",
     "elastic-content-api-calls",
     "Elastic Content API calls",
@@ -376,6 +376,28 @@ case class SimpleCountMetric(
   val getValue: () => Long = count.get
 
   override def asJson: StatusMetric = super.asJson.copy(count = Some(getValue().toString))
+}
+
+class FrontendTimingMetric(
+                            group: String,
+                            name: String,
+                            title: String,
+                            description: String,
+                            master: Option[Metric] = None)
+  extends TimingMetric(group, name, title, description, master) {
+
+  private val _totalTimeInMillis = new AtomicLong()
+  private val _count = new AtomicLong()
+
+  override def recordTimeSpent(durationInMillis: Long) {
+    _totalTimeInMillis.addAndGet(durationInMillis)
+    _count.incrementAndGet
+  }
+  override def totalTimeInMillis = _totalTimeInMillis.get
+  override def count = _count.get
+  override val getValue = () => totalTimeInMillis
+
+  def getAndReset: Long = _count.getAndSet(0)
 }
 
 object PerformanceMetrics {
