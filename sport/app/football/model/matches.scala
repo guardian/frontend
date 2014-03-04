@@ -17,28 +17,27 @@ trait MatchesList extends Football {
   def filterMatches(fMatch: FootballMatch, competition: Competition): Boolean
 
   // ordering for the displayed matches
-  def compareMatches(x: FootballMatch, y: FootballMatch): Int
-  implicit val ordering: Ordering[FootballMatch] = new Ordering[FootballMatch] {
-    override def compare(x: FootballMatch, y: FootballMatch): Int = compareMatches(x, y)
-  }
+  def matchLessThan(x: FootballMatch, y: FootballMatch): Boolean
 
   def previousPage: Option[String]
   def nextPage: Option[String]
 
   // the subset of football matches to display
   lazy val relevantMatches: List[(FootballMatch, Competition)] = {
-    val today = DateMidnight.now()
-    for {
+    val startDate = date
+    val matchesWithCompetition = for {
       competition <- competitions.competitions
       matches = competition
         .matches
         .filter(fMatch => filterMatches(fMatch, competition))
-        .sorted
-      days = matches.map(_.date.toDateMidnight).distinct
-      dates = days.dropWhile(_ != today).take(daysToDisplay)
       fMatch <- matches
-      if dates.contains(fMatch.date.toDateMidnight)
     } yield (fMatch, competition)
+    val sortedMatches = matchesWithCompetition.sortWith { case ((fMatch1, _), (fMatch2, _)) => matchLessThan(fMatch1, fMatch2) }
+    val matchDates = sortedMatches.map { case (fMatch, _) => fMatch.date.toDateMidnight }.distinct
+    val eligibleDates = matchDates.dropWhile(_ != startDate).take(daysToDisplay)
+    sortedMatches.filter { case (fMatch, _) =>
+      eligibleDates.contains(fMatch.date.toDateMidnight)
+    }
   }
 }
 
@@ -46,22 +45,19 @@ trait Fixtures extends MatchesList {
   override val daysToDisplay = 3
   override def nextPage: Option[String] = Some("")
   override def previousPage: Option[String] = Some("")
-  override def compareMatches(x: FootballMatch, y: FootballMatch): Int =
-    Ordering[Long].compare(x.date.getMillis, y.date.getMillis)
+  override def matchLessThan(x: FootballMatch, y: FootballMatch): Boolean = x.date.isBefore(y.date)
 }
 trait Results extends MatchesList {
   override val daysToDisplay = 3
   override def nextPage: Option[String] = Some("")
   override def previousPage: Option[String] = Some("")
-  override def compareMatches(x: FootballMatch, y: FootballMatch): Int =
-    Ordering[Long].compare(y.date.getMillis, x.date.getMillis) // reversed
+  override def matchLessThan(x: FootballMatch, y: FootballMatch): Boolean = x.date.isAfter(y.date) // backwards
 }
 trait LiveMatches extends MatchesList {
   override val daysToDisplay = 1
   override def nextPage: Option[String] = None
   override def previousPage: Option[String] = None
-  override def compareMatches(x: FootballMatch, y: FootballMatch): Int =
-    Ordering[Long].compare(x.date.getMillis, y.date.getMillis)
+  override def matchLessThan(x: FootballMatch, y: FootballMatch): Boolean = x.date.isBefore(y.date)
 }
 
 class FixturesList(val date: DateMidnight, val competitions: CompetitionSupport) extends Fixtures {
