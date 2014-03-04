@@ -109,7 +109,7 @@ object ContentApiMetrics {
     "outgoing requests to content api"
   ) with TimingMetricLogging
 
-  object HttpTimeoutCountMetric extends CountMetric(
+  object HttpTimeoutCountMetric extends SimpleCountMetric(
     "timeout",
     "content-api-timeouts",
     "Content API timeouts",
@@ -123,14 +123,14 @@ object ContentApiMetrics {
     "Elastic outgoing requests to content api"
   ) with TimingMetricLogging
 
-  object ElasticHttpTimeoutCountMetric extends CountMetric(
+  object ElasticHttpTimeoutCountMetric extends SimpleCountMetric(
     "timeout",
     "elastic-content-api-timeouts",
     "Elastic Content API timeouts",
     "Elastic Content api calls that timeout"
   )
 
-  object ContentApi404Metric extends CountMetric(
+  object ContentApi404Metric extends SimpleCountMetric(
     "404",
     "content-api-404-responses",
     "Content API 404 responses",

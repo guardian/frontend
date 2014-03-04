@@ -1,4 +1,4 @@
-import common.{FaciaToolMetrics, CloudWatchApplicationMetrics, FaciaMetrics, Jobs}
+import common._
 import conf.Management
 import frontpress.FaciaToolConfigAgent
 import java.io.File
@@ -21,7 +21,12 @@ object Global extends FaciaToolLifecycle with GlobalSettings with CloudWatchAppl
     ("front-press-failure", FaciaToolMetrics.FrontPressFailure.getAndReset.toDouble),
     ("front-press-success", FaciaToolMetrics.FrontPressSuccess.getAndReset.toDouble),
     ("front-press-cron-success", FaciaToolMetrics.FrontPressCronSuccess.getAndReset.toDouble),
-    ("front-press-cron-failure", FaciaToolMetrics.FrontPressCronFailure.getAndReset.toDouble)
+    ("front-press-cron-failure", FaciaToolMetrics.FrontPressCronFailure.getAndReset.toDouble),
+    ("elastic-content-api-calls", ContentApiMetrics.ElasticHttpTimingMetric.count.toDouble),
+    ("solr-content-api-calls", ContentApiMetrics.HttpTimingMetric.count.toDouble),
+    ("elastic-content-api-timeouts", ContentApiMetrics.ElasticHttpTimeoutCountMetric.getAndReset.toDouble),
+    ("solr-content-api-timeouts", ContentApiMetrics.HttpTimeoutCountMetric.getAndReset.toDouble),
+    ("content-api-404", ContentApiMetrics.ContentApi404Metric.getAndReset.toLong)
   )
 
   override def onLoadConfig(config: Configuration, path: File, classloader: ClassLoader, mode: Mode.Mode): Configuration = {
