@@ -14,8 +14,7 @@
             <div class="article__inner article__inner--head">
                 <header class="article__head">
                     @fragments.headline(video.headline)
-
-                    @fragments.article.dateline(video.webPublicationDate, video.isLive)
+                    <div class="js-comment-count"></div>
                 </header>
             </div>
             <div class="article__columning-wrapper">
@@ -43,11 +42,8 @@
 
                     </div>
 
-                    <div class="article__meta-container">
-                        @fragments.byline(video.bylineWithSource, video)
-                        @fragments.article.dateline(video.webPublicationDate, secondary=true)
-                        <div class="js-comment-count"></div>
-                    </div>
+                    @fragments.contentMeta(video)
+
                     <div class="article__container">
                         <div class="video-standfirst">
                             @fragments.standfirst(video)
