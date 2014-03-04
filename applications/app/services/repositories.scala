@@ -63,12 +63,14 @@ trait Index extends ConciergeRepository with QueryDefaults {
 
   private def pagination(response: ItemResponse): Pagination = Pagination(
     response.currentPage.getOrElse(1),
-    response.pages.getOrElse(1)
+    response.pages.getOrElse(1),
+    response.total.getOrElse(0)
   )
 
   private def pagination(response: SearchResponse): Pagination = Pagination(
     response.currentPage,
-    response.pages
+    response.pages,
+    response.total
   )
 
   def index(edition: Edition, path: String, pageNum: Int)(implicit request: RequestHeader): Future[Either[IndexPage, SimpleResult]] = {
