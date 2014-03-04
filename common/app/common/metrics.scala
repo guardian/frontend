@@ -102,35 +102,35 @@ object SystemMetrics extends implicits.Numbers {
 }
 
 object ContentApiMetrics {
-  object HttpTimingMetric extends TimingMetric(
+  object HttpTimingMetric extends FrontendTimingMetric(
     "performance",
     "content-api-calls",
     "Content API calls",
     "outgoing requests to content api"
   ) with TimingMetricLogging
 
-  object HttpTimeoutCountMetric extends CountMetric(
+  object HttpTimeoutCountMetric extends SimpleCountMetric(
     "timeout",
     "content-api-timeouts",
     "Content API timeouts",
     "Content api calls that timeout"
   )
 
-  object ElasticHttpTimingMetric extends TimingMetric(
+  object ElasticHttpTimingMetric extends FrontendTimingMetric(
     "performance",
     "elastic-content-api-calls",
     "Elastic Content API calls",
     "Elastic outgoing requests to content api"
   ) with TimingMetricLogging
 
-  object ElasticHttpTimeoutCountMetric extends CountMetric(
+  object ElasticHttpTimeoutCountMetric extends SimpleCountMetric(
     "timeout",
     "elastic-content-api-timeouts",
     "Elastic Content API timeouts",
     "Elastic Content api calls that timeout"
   )
 
-  object ContentApi404Metric extends CountMetric(
+  object ContentApi404Metric extends SimpleCountMetric(
     "404",
     "content-api-404-responses",
     "Content API 404 responses",
@@ -376,6 +376,28 @@ case class SimpleCountMetric(
   val getValue: () => Long = count.get
 
   override def asJson: StatusMetric = super.asJson.copy(count = Some(getValue().toString))
+}
+
+class FrontendTimingMetric(
+                            group: String,
+                            name: String,
+                            title: String,
+                            description: String,
+                            master: Option[Metric] = None)
+  extends TimingMetric(group, name, title, description, master) {
+
+  private val timeInMillis = new AtomicLong()
+  private val currentCount = new AtomicLong()
+
+  override def recordTimeSpent(durationInMillis: Long) {
+    timeInMillis.addAndGet(durationInMillis)
+    currentCount.incrementAndGet
+  }
+  override def totalTimeInMillis = timeInMillis.get
+  override def count = currentCount.get
+  override val getValue = () => totalTimeInMillis
+
+  def getAndReset: Long = currentCount.getAndSet(0)
 }
 
 object PerformanceMetrics {

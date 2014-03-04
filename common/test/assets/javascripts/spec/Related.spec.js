@@ -37,7 +37,8 @@ define(['common/common', 'common/utils/ajax', 'common/modules/onward/related', '
             appendTo = document.querySelector('.js-related');
 
             runs(function() {
-                new Related(
+                var r = new Related();
+                r.renderRelatedComponent(
                     {page: {pageId: pageId}, switches: {relatedContent: true}},
                     document
                 );

@@ -21,7 +21,6 @@ case class IndexPage(page: MetaData, trails: Seq[Content], pagination: Paginatio
 
 trait Index extends ConciergeRepository with QueryDefaults {
 
-
   def index(edition: Edition, leftSide: String, rightSide: String, page: Int): Future[Either[IndexPage, SimpleResult]] = {
 
     val section = leftSide.split('/').head
@@ -58,50 +57,55 @@ trait Index extends ConciergeRepository with QueryDefaults {
     }
 
     promiseOfResponse.recover(convertApiExceptions)
-      .recover{ case ApiError(400, _) => Right(Found(s"/$leftSide+$rightSide")) } //this is the best handle we have on a wrong 'page' number
+      //this is the best handle we have on a wrong 'page' number
+      .recover{ case ApiError(400, _) => Right(Found(s"/$leftSide+$rightSide")) }
   }
 
   private def pagination(response: ItemResponse): Pagination = Pagination(
     response.currentPage.getOrElse(1),
-    response.pages.getOrElse(1)
+    response.pages.getOrElse(1),
+    response.total.getOrElse(0)
   )
 
   private def pagination(response: SearchResponse): Pagination = Pagination(
     response.currentPage,
-    response.pages
+    response.pages,
+    response.total
   )
 
-  def index(edition: Edition, path: String, page: Int)(implicit request: RequestHeader): Future[Either[IndexPage, SimpleResult]] = {
+  def index(edition: Edition, path: String, pageNum: Int)(implicit request: RequestHeader): Future[Either[IndexPage, SimpleResult]] = {
     val promiseOfResponse = SwitchingContentApi().item(path, edition)
-      .page(page)
+      .page(pageNum)
       .pageSize(IndexPagePagination.pageSize)
-      .showEditorsPicks(page == 1) //only show ed pics on first page
+      .showEditorsPicks(pageNum == 1) //only show ed pics on first page
       .response.map {
       response =>
-        val page = response.tag.flatMap(t => tag(response)).orElse(response.section.flatMap(t => section(response)))
+        val page = response.tag.flatMap(t => tag(response, pageNum))
+          .orElse(response.section.flatMap(t => section(response)))
         ModelOrResult(page, response)
     }
     promiseOfResponse.recover(convertApiExceptions)
-      .recover{ case ApiError(400, _) => Right(Found(s"/$path")) } //this is the best handle we have on a wrong 'page' number
+      //this is the best handle we have on a wrong 'page' number
+      .recover{ case ApiError(400, _) => Right(Found(s"/$path")) }
   }
 
 
 
   private def section(response: ItemResponse) = {
-      val section = response.section map { Section(_) }
-      val editorsPicks = response.editorsPicks map { Content(_) }
-      val editorsPicksIds = editorsPicks map { _.id }
-      val latestContent = response.results map { Content(_) } filterNot { c => editorsPicksIds contains c.id }
+      val section = response.section.map(Section)
+      val editorsPicks = response.editorsPicks.map(Content(_))
+      val editorsPicksIds = editorsPicks.map(_.id)
+      val latestContent = response.results.map(Content(_)).filterNot(c => editorsPicksIds contains c.id)
       val trails = editorsPicks ++ latestContent
-      section map { IndexPage(_, trails, pagination(response)) }
+      section.map(IndexPage(_, trails, pagination(response)))
   }
 
-  private def tag(response: ItemResponse) = {
+  private def tag(response: ItemResponse, page: Int) = {
     val tag = response.tag map { new Tag(_) }
     val leadContentCutOff = DateTime.now - leadContentMaxAge
-    val editorsPicks: Seq[Content] = response.editorsPicks.map(Content(_))
-    val leadContent: Seq[Content] = if (editorsPicks.isEmpty)
-      response.leadContent.take(1).map {Content(_) }.filter(_.webPublicationDate > leadContentCutOff)
+    val editorsPicks = response.editorsPicks.map(Content(_))
+    val leadContent = if (editorsPicks.isEmpty && page == 1) //only promote lead content on first page
+      response.leadContent.take(1).map(Content(_)).filter(_.webPublicationDate > leadContentCutOff)
     else
       Nil
 
