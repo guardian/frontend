@@ -53,7 +53,7 @@ $c-darkText: #9c9c9c;
     }
 
     .inline-story__cta {
-        background-color: #fbba0f;
+        background-color: $c-media-icon;
         @include rounded-corners(50%);
         width: 36px;
         height: 36px;

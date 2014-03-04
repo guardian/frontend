@@ -51,6 +51,9 @@
         float: right;
     }
 }
+.team-list__item {
+    @include fs-data(3);
+}
 
 .m-status {
     padding: 0 5px;
@@ -90,7 +93,7 @@
     font-size: 10px;
     font-style: normal;
     line-height: 1;
-    color: #fff;
+    color: #ffffff;
     background-color: $c-sportBright;
 
     abbr {

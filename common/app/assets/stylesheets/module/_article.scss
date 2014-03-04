@@ -419,7 +419,7 @@ video {
 }
 
 .commentcount {
-    @extend %type-11;
+    @include fs-data(3);
     display: none;
 
     i {

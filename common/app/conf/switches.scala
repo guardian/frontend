@@ -308,7 +308,7 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 3, 17)
   )
 
-  val ABRelatedContent = Switch("A/B Tests", "ab-onward-related",
+  val ABRelatedContent = Switch("A/B Tests", "ab-onward-related-sports",
     "If this switch is on the related content popular-in-tag override A/B test is run",
     safeState = Off, sellByDate = new DateMidnight(2014, 3, 10)
   )

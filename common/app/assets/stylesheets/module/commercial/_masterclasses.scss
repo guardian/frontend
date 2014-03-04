@@ -5,7 +5,7 @@
 .masterclasses-component {
     .commercial__title {
         .em {
-            color: #951c55;
+            color: $c-featureDefault;
         }
     }
     .lineitem__image {
@@ -22,7 +22,7 @@
 
     @include mq($to: tablet) {
         .commercial__head {
-            background-color: #951c55;
+            background-color: $c-featureDefault;
 
             .commercial__title {
                 .em {
