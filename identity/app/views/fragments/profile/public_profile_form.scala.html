@@ -5,7 +5,7 @@
 @import form.Input
 @import helper._
 
-<form class="form" novalidate action="@idUrlBuilder.buildUrl("/profile/public", idRequest)" role="main" method="post">
+<form class="form js-public-profile-form" novalidate action="@idUrlBuilder.buildUrl("/profile/public", idRequest)" role="main" method="post">
     @views.html.helper.CSRF.formField
 
     <fieldset class="fieldset">

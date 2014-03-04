@@ -6,6 +6,7 @@ define([
     'common/modules/identity/password-strength',
     'common/modules/identity/validation-email',
     'common/modules/identity/api',
+    'common/modules/identity/account-profile',
     'common/modules/adverts/userAdTargeting',
     'common/modules/discussion/user-avatars',
     'common/utils/mediator',
@@ -18,6 +19,7 @@ define([
     PasswordStrength,
     ValidationEmail,
     Id,
+    AccountProfile,
     UserAdTargeting,
     UserAvatars,
     mediator,
@@ -89,6 +91,13 @@ define([
             mediator.on('page:identity:ready', function(config, context) {
                 tabs.init(context);
             });
+        },
+
+        accountProfile: function () {
+            var tabs = new Tabs();
+            mediator.on('page:identity:ready', function(config, context) {
+                AccountProfile.init(context);
+            });
         }
     };
 
@@ -105,6 +114,7 @@ define([
             modules.userAvatars();
             modules.validationEmail();
             modules.tabs();
+            modules.accountProfile();
         }
         mediator.emit('page:identity:ready', config, context);
     };

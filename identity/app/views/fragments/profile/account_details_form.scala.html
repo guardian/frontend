@@ -6,7 +6,7 @@
 @import conf.Switches.IdentityEmailVerificationSwitch
 @import helper._
 
-<form class="form" novalidate action="@idUrlBuilder.buildUrl("/profile/account-details", idRequest)" role="main" method="post">
+<form class="form js-account-details-form" novalidate action="@idUrlBuilder.buildUrl("/profile/account-details", idRequest)" role="main" method="post">
     @views.html.helper.CSRF.formField
 
     @if(accountDetailsForm.globalError.isDefined) {
