@@ -162,8 +162,6 @@
 }
 
 .article__dateline {
-    float: left;
-    clear:left;
     position: relative;
     color: $c-neutral2;
     @include box-sizing(border-box);
@@ -186,18 +184,11 @@
     }
 
     @include mq(leftCol) {
-        float: none;
-        display: block;
         @include rem((
             padding-top: 2px,
             margin-bottom: $baseline*3
         ));
         border-top: 1px dotted $c-neutral5;
-
-        time {
-            display: inline-block;
-            width: 85%;
-        }
     }
 
     @include mq(wide) {
@@ -326,6 +317,7 @@
     ));
     color: $c-neutral2;
     @include fs-bodyHeading(1);
+    line-height: 2rem;
 
     @include mq(tablet) {
         @include fs-bodyHeading(2, true);
@@ -333,12 +325,13 @@
 
     @include mq(leftCol) {
         min-height: gs-height(1);
-        padding-top: 2px;
         @include rem((
+            padding-top: $gs-baseline/6,
             padding-bottom: $gs-baseline,
             margin-bottom: 0
         ));
         border-bottom: none;
+        line-height: 2.2rem;
     }
 }
 
