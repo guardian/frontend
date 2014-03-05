@@ -86,7 +86,7 @@ define([
                                             )
                                         )
                                     ).appendTo(qwery('.container--news').shift()),
-                                yPosition = 955 - $card.dim().height;
+                                yPosition = 944 - $card.dim().height;
                             $card.css('top', yPosition + 'px');
                         });
 
