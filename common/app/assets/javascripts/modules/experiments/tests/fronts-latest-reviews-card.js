@@ -3,20 +3,16 @@ define([
     'bonzo',
     'qwery',
     'common/utils/detect',
-    'common/utils/get-property'
+    'common/utils/get-property',
+    'common/utils/template'
 ], function(
     reqwest,
     bonzo,
     qwery,
     detect,
-    getProperty
+    getProperty,
+    template
 ) {
-
-    function fillTemplate(template, params) {
-        return Object.keys(params).reduce(function(template, token) {
-            return template.replace('{{' + token + '}}', params[token]);
-        }, template);
-    }
 
     return function() {
 
@@ -51,7 +47,7 @@ define([
                             getProperty(resp, 'response.results', []).forEach(function(result, index) {
                                 var starRating = result.fields.starRating;
                                 reviews.push(
-                                    fillTemplate(
+                                    template(
                                         '<li data-link-name="trail | {{index}}" class="card__item">' +
                                             '<a href="{{url}}" class="card__item__link" data-link-name="article">' +
                                                 '<h4 class="card__item__title">{{section}}: {{title}}</h4>' +
@@ -75,7 +71,7 @@ define([
                             });
                             var $card = bonzo(
                                     bonzo.create(
-                                        fillTemplate(
+                                        template(
                                             '<div class="container__card tone-feature tone-accent-border" data-link-name="card | latest reviews">' +
                                                 '<h3 class="container__card__title tone-colour">Latest reviews</h3>' +
                                                 '<ul class="unstyled">{{reviews}}</ul>' +

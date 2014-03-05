@@ -3,20 +3,16 @@ define([
     'bonzo',
     'qwery',
     'common/utils/detect',
-    'common/utils/get-property'
+    'common/utils/get-property',
+    'common/utils/template'
 ], function(
     reqwest,
     bonzo,
     qwery,
     detect,
-    getProperty
+    getProperty,
+    template
 ) {
-
-    function fillTemplate(template, params) {
-        return Object.keys(params).reduce(function(template, token) {
-            return template.replace('{{' + token + '}}', params[token]);
-        }, template);
-    }
 
     return function() {
 
@@ -50,7 +46,7 @@ define([
                             var $card = getProperty(resp, 'response.results', [])
                                     .map(function(result) {
                                         return bonzo(bonzo.create(
-                                            fillTemplate(
+                                            template(
                                                 '<div class="container__card tone-comment tone-accent-border" data-link-name="card | cartoon">' +
                                                     '<h3 class="container__card__title tone-colour">Cartoon</h3>' +
                                                     '<a href="{{url}}" data-link-name="article" class="card__item card__item__link">' +
