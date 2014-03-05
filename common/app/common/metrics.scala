@@ -309,7 +309,7 @@ object FaciaToolMetrics {
     DraftPublishCount, ContentApiPutSuccess, ContentApiPutFailure,
     FrontPressSuccess, FrontPressFailure, FrontPressCronSuccess,
     FrontPressCronFailure
-  )
+  ) ++ ContentApiMetrics.all
 }
 
 object CommercialMetrics {
