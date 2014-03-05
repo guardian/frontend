@@ -1,8 +1,8 @@
 define([
-    'common/common',
+    'common/utils/mediator',
     'common/utils/ajax'
 ], function (
-    common,
+    mediator,
     ajax
 ) {
 
@@ -17,7 +17,7 @@ define([
                     context.querySelector(".js-related").innerHTML = json.related;
                 }
 
-                common.mediator.emit('modules:matchnav:render');
+                mediator.emit('modules:matchnav:render');
             }
         };
         
@@ -33,10 +33,10 @@ define([
                         return;
                     }
                     that.view.render(json, context);
-                    common.mediator.emit('modules:matchnav:loaded', json);
+                    mediator.emit('modules:matchnav:loaded', json);
                 },
                 function(req) {
-                    common.mediator.emit('modules:error', 'Failed to load match nav: ' + req.statusText, 'common/modules/matchnav.js');
+                    mediator.emit('modules:error', 'Failed to load match nav: ' + req.statusText, 'common/modules/matchnav.js');
                 }
             );
         };

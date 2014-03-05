@@ -39,11 +39,40 @@ define([
 ) {
     context = context();
     var modules = {
-        matchNav: function(){
-            if (config.page.footballMatch) {
-                var url =  "/football/api/match-nav/" + config.page.footballMatch.id;
-                    url += ".json?page=" + encodeURIComponent(config.page.pageId);
+        matchNav: function() {
+            var teamIds = config.referencesOfType('paFootballTeam');
+
+            if (config.page.footballMatch ||
+                ((config.hasTone("Match reports") || config.page.isLiveBlog) && teamIds.length === 2)) {
+                var url =  '/football/api/match-nav/'+
+                           (config.page.footballMatch ? config.page.footballMatch.id :
+                               [config.webPublicationDateAsUrlPart()].concat(teamIds).join('/')) +
+                           '.json?page=' + encodeURIComponent(config.page.pageId);
+
                 new MatchNav().load(url, context);
+            }
+        },
+
+        matchScores: function() {
+            // For debugging
+            var force = window.location.hash === '#force-football-liveblog';
+
+            // we only want this on minute-by-minute of a match
+            if ((config.page.isLiveBlog && config.page.isLive) || force) {
+                // replace the headline with loader (mainly for mobile)
+                var $h = $('.article__headline', context),
+                    $scores = bonzo(bonzo.create(
+                            '<div class="live-summary live-summary--loading">'+
+                                '<div class="loading__text">Fetching the scores…</div>'+
+                                '<div class="is-updating"></div>'+
+                            '</div>'
+                        )).css({ height: $h.get(0).scrollHeight });
+
+                $h.empty().replaceWith($scores);
+                mediator.on('modules:matchnav:loaded', function(resp) {
+                    $scores.removeClass('live-summary--loading').empty().css({ height: 'auto' });
+                    $scores.empty().append(bonzo.create(resp.summary));
+                });
             }
         },
 
@@ -151,6 +180,8 @@ define([
             window.location = this.getAttribute('data-link-to');
         });
 
+        modules.matchScores();
+
         switch(action) {
             case 'fixtures':
             case 'results':
@@ -183,6 +214,8 @@ define([
                     });
                 }
 
+                modules.matchNav();
+
                 break;
 
             default:
@@ -195,12 +228,10 @@ define([
                 if(team) {
                     modules.showTeamData(team);
                 }
-                if(config.page.footballMatch){
-                    var match = config.page.footballMatch;
+                if(config.page.footballMatch) {
+                    modules.matchNav();
 
-                    modules.matchNav(config);
-
-                    if(match.isLive) {
+                    if(config.page.footballMatch.isLive) {
                         modules.initAutoUpdate(
                             {
                                 "summary"   : context.querySelector('.match-summary'),
