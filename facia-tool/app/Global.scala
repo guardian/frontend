@@ -26,7 +26,9 @@ object Global extends FaciaToolLifecycle with GlobalSettings with CloudWatchAppl
     ("solr-content-api-calls", ContentApiMetrics.HttpTimingMetric.getAndReset.toDouble),
     ("elastic-content-api-timeouts", ContentApiMetrics.ElasticHttpTimeoutCountMetric.getAndReset.toDouble),
     ("solr-content-api-timeouts", ContentApiMetrics.HttpTimeoutCountMetric.getAndReset.toDouble),
-    ("content-api-404", ContentApiMetrics.ContentApi404Metric.getAndReset.toDouble)
+    ("content-api-404", ContentApiMetrics.ContentApi404Metric.getAndReset.toDouble),
+    ("content-api-client-parse-exceptions", ContentApiMetrics.ContentApiJsonParseException.getAndReset.toDouble),
+    ("content-api-client-mapping-exceptions", ContentApiMetrics.ContentApiJsonMappingException.getAndReset.toDouble)
   )
 
   override def onLoadConfig(config: Configuration, path: File, classloader: ClassLoader, mode: Mode.Mode): Configuration = {
