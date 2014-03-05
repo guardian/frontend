@@ -37,6 +37,7 @@ define([
                 },
                 function(req) {
                     mediator.emit('modules:error', 'Failed to load match nav: ' + req.statusText, 'common/modules/matchnav.js');
+                    mediator.emit('modules:matchnav:error');
                 }
             );
         };
