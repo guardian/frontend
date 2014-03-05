@@ -225,4 +225,17 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
     newSearch
   } getOrElse Future(Result(Nil, Nil, Nil, Nil))
 
+  def validateContent(content: Content): Content = {
+    Try {
+      //These will throw because if they don't exist because of unsafe Map.apply
+      content.headline.isEmpty &&
+        content.shortUrl.isEmpty
+    } match {
+      case Success(_) => content
+      case Failure(_) => {
+        throw new InvalidContent(content.id)
+      }
+    }
+  }
+
 }
