@@ -1,14 +1,14 @@
 define([
-    'reqwest',
     'bonzo',
     'qwery',
+    'common/utils/ajax',
     'common/utils/detect',
     'common/utils/get-property',
     'common/utils/template'
 ], function(
-    reqwest,
     bonzo,
     qwery,
+    ajax,
     detect,
     getProperty,
     template
@@ -38,7 +38,7 @@ define([
             {
                 id: 'live',
                 test: function (context, config) {
-                    reqwest({
+                    ajax({
                         url: 'http://content.guardianapis.com/search?tag=tone%2Fminutebyminute&page-size=3&show-fields=liveBloggingNow',
                         type: 'jsonp'
                     })
