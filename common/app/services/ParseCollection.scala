@@ -208,7 +208,12 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
           case (query, (key, value)) => query.stringParam(key, value)
         }.showFields(showFieldsQuery)
         newSearch.response map { r =>
-          Result(Nil, Nil, Nil, r.results.map(Content(_)))
+          Result(
+            curated           = Nil,
+            editorsPicks      = Nil,
+            mostViewed        = Nil,
+            contentApiResults = r.results.map(Content(_)).map(validateContent)
+          )
         }
       }
       case Path(id)  => {
@@ -220,7 +225,12 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
           case (query, (key, value)) => query.stringParam(key, value)
         }.showFields(showFieldsQuery)
         newSearch.response map { r =>
-          Result(Nil, r.editorsPicks.map(Content(_)), r.mostViewed.map(Content(_)), r.results.map(Content(_)))
+          Result(
+            curated           = Nil,
+            editorsPicks      = r.editorsPicks.map(Content(_)).map(validateContent),
+            mostViewed        = r.mostViewed.map(Content(_)).map(validateContent),
+            contentApiResults = r.results.map(Content(_)).map(validateContent)
+          )
         }
       }
     }
