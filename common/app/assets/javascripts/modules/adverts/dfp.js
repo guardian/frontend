@@ -65,12 +65,8 @@ define([
             audienceSegments = AudienceScience.getSegments()     || [],
             userSegments     = UserAdTargeting.getUserSegments() || [];
 
-        // Add the adtest cookie to the keywords
-        if(Cookies.get('adtest') === '18') {
-            keywords.push('test18');
-        }
-
-        googletag.pubads().setTargeting('k', ['test18', 'speedo_sponser_test', 'eon_sponser_test'].concat(keywords));
+        googletag.pubads().setTargeting('k', keywords);
+        googletag.pubads().setTargeting('at', Cookies.get('adtest'));
         googletag.pubads().setTargeting('pt', contentType);
         googletag.pubads().setTargeting('ct', contentType);
         googletag.pubads().setTargeting('cat', section);

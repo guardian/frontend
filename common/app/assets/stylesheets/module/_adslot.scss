@@ -178,7 +178,8 @@
         position: absolute;
         top: $gs-baseline / 2;
         right: 0;
-        width: 140px;
+        width: auto;
+        max-width: 200px;
         height: 100px;
         margin: 0;
     }
