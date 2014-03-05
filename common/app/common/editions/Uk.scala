@@ -33,7 +33,7 @@ object Uk extends Edition(
     NavItem(cif),
     NavItem(culture, Seq(film, televisionAndRadio, music, books, artanddesign, stage)),
     NavItem(economy, Seq(markets, companies, media)),
-    NavItem(lifeandstyle, Seq(food, health, loveAndSex, family, women, homeAndGarden)),
+    NavItem(lifeandstyle, Seq(foodanddrink, health, loveAndSex, family, women, homeAndGarden)),
     NavItem(environment, Seq(cities, globalDevelopment)),
     NavItem(technology, Seq(games)),
     NavItem(money, Seq(property, savings, borrowing, careers)),

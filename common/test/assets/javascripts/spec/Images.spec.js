@@ -39,6 +39,17 @@ define(['common/modules/ui/images', 'helpers/fixtures', 'common/$', 'bonzo', 'co
 
         });
 
+        it('should add an empty alt attribute if one doesn\'t exist', function() {
+            $('.' + imgClass)
+                .first()
+                .append('<img alt="foo" />');
+            images.upgrade();
+            expect($('.img-0 img').attr('alt')).toEqual('foo');
+            expect($('.img-1 img').attr('alt')).toEqual('');
+            expect($('.img-2 img').attr('alt')).toEqual('');
+
+        });
+
         describe('window events', function() {
 
             ['resize', 'orientationchange'].forEach(function(event) {

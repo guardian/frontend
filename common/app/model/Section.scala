@@ -1,8 +1,9 @@
 package model
 
 import com.gu.openplatform.contentapi.model.{ Section => ApiSection }
+import common.Pagination
 
-case class Section(private val delegate: ApiSection) extends MetaData {
+case class Section(private val delegate: ApiSection, override val pagination: Option[Pagination] = None) extends MetaData {
 
   lazy val section: String = id
 
