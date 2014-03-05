@@ -3,6 +3,6 @@
     "version": "0.2.0 ",
     "dependencies": {
         "normalize-scss": "2.1.0",
-        "sass-mq": "2.0.0-rc.1"
+        "sass-mq": "2.0.0-rc.3"
     }
 }
