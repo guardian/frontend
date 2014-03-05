@@ -239,7 +239,7 @@ case class VideoEmbedCleaner(contentVideos: Seq[VideoElement]) extends HtmlClean
                 Sorry, your browser is unable to play this video.
               </object>""")
 
-        element.wrap("<div class=\"media-proportional-container\"></div>")
+        element.wrap("<div class=\"u-responsive-ratio\"></div>")
       })
     }
     document
@@ -413,7 +413,7 @@ case class InlineSlotGenerator(articleWordCount: Int) extends HtmlCleaner {
 
   private def isBlock(element: Element): Boolean = {
       (element.hasClass("img") && !element.hasClass("img--inline")) ||
-      element.hasClass("media-proportional-container") ||
+      element.hasClass("u-responsive-ratio") || // @Todo: be more specific - was "media-proportional-container"
       element.tagName == "video"
   }
 

@@ -4,7 +4,7 @@ import org.scalatest.{ FeatureSpec, GivenWhenThen }
 import org.scalatest.Matchers
 import collection.JavaConversions._
 import conf.{Switches, Configuration}
-import play.api.test.TestBrowser
+import org.fluentlenium.core.domain.{FluentWebElement, FluentList}
 
 class TagFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
@@ -94,13 +94,21 @@ class TagFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
         val linksOnFirstPage = findFirst(".container__body").find("a").map(_.getAttribute("href"))
         linksOnFirstPage.size should be > 10
+        findByRel($("link"), "next").head.getAttribute("href") should endWith ("/sport/cycling?page=2")
+        findByRel($("link"), "prev") should be (None)
 
         Then("I should be able to navigate to the 'next' page")
         findFirst(".pagination").findFirst("[rel=next]").click()
         val linksOnNextPage = findFirst(".container__body").find("a").map(_.getAttribute("href"))
         linksOnNextPage.size should be > 10
 
+        findByRel($("link"), "next").head.getAttribute("href") should endWith ("/sport/cycling?page=3")
+        findByRel($("link"), "prev").head.getAttribute("href") should endWith ("/sport/cycling")
+
         linksOnNextPage.foreach( linksOnFirstPage should not contain _ )
+
+        And("The title should reflect the page number")
+        findFirst("title").getText should include ("| Page 2 of")
 
         And("I should be able to navigate to the 'previous' page")
         findFirst(".pagination").findFirst("[rel=prev]").click()
@@ -109,4 +117,7 @@ class TagFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
       }
     }
   }
+
+  //I'm not having a happy time with the selectors on links...
+  private def findByRel(elements: FluentList[FluentWebElement], rel: String) = elements.toSeq.find(_.getAttribute("rel") == rel)
 }

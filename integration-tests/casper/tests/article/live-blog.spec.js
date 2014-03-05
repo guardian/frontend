@@ -54,42 +54,6 @@ casper.test.begin("Display embedded tweet", function(test) {
     test.done();
 });
 
-casper.test.begin("Display latest summary before events on small viewports", function(test) {
-    if (casper.exists('.js-article__summary')) {
-        casper.viewport(viewports.mobile.width, viewports.mobile.height);
-        // test.assertNotVisible(
-        //     '[data-link-name="summary after content"]',
-        //     "RHS summary block not visible on small viewports"
-        // );
-        test.assertVisible(
-            '[data-link-name="summary before content"]',
-            "Inline summary block visible on small viewports"
-        );
-        test.done();
-    } else {
-        casper.capture(screens + 'live-blog-summary-1-fail.png');
-        test.fail("Summary block not present");
-    }
-});
-
-casper.test.begin("Display latest summary on the right side of article on wide viewports", function(test) {
-    if (casper.exists('.js-article__summary')) {
-        casper.viewport(viewports.desktop.width, viewports.desktop.height);
-        test.assertVisible(
-            '[data-link-name="summary after content"]',
-            "RHS summary block visible on wide viewports"
-        );
-        test.assertNotVisible(
-            '[data-link-name="summary before content"]',
-            "Inline summary block not visible on wide viewports"
-        );
-        test.done();
-    } else {
-        casper.capture(screens + 'live-blog-summary-2-fail.png');
-        test.fail("Summary block not present");
-    }
-});
-
 casper.run(function() {
     this.test.renderResults(true, 0, this.cli.get("xunit") + "live-blog.xml");
 });

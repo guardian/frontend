@@ -67,6 +67,35 @@
 
 
 /**
+ * Responsive media (images, videos…)
+ *
+ * 1. Give the block an initial ratio of 5/3 to avoid FOUC
+ * 2. Stretch the contained media to the dimensions of its container
+ */
+
+.u-responsive-ratio {
+    @include fix-aspect-ratio(5, 3); // [1]
+
+    img,
+    object,
+    iframe,
+    video { // [2]
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+}
+
+// If you were to create a helper for a 16/9 responsive image format,
+// here is how you'd do it:
+// .u-responsive-ratio--hd {
+//     padding-bottom: aspect-ratio-height(16, 9);
+// }
+
+
+/**
  * Text hyphenation
  *
  * Break strings when their length exceeds the width of their container
