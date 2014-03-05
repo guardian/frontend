@@ -125,6 +125,15 @@ define([
             if(config.switches.layoutHints && /\/-sp-/g.test(config.page.pageId)) {
                 var l = new Layout(config);
             }
+        },
+
+        initHelvetica: function(config) {
+            if(config.switches.helvetica && /\/helvetica-one-font-to-rule-them-all/g.test(config.page.pageId)) {
+                var articleHeadline = document.querySelector('.article__headline');
+                articleHeadline.style.fontFamily = 'Helvetica, "EgyptianHeadline", georgia, serif';
+                articleHeadline.style.fontWeight = 'bold';
+                articleHeadline.style.letterSpacing = '-1px';
+            }
         }
     };
 
@@ -138,6 +147,7 @@ define([
             modules.initOpen(config);
             modules.initFence();
             modules.initLayoutHints(config);
+            modules.initHelvetica(config);
         }
         common.mediator.emit("page:article:ready", config, context);
     };

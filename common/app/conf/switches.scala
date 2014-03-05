@@ -297,7 +297,12 @@ object Switches extends Collections {
   )
 
   val LayoutHintsSwitch = Switch("Feature Switches", "layout-hints",
-    "If this switch is on, javascript will enable the inline-hinting css experiments",
+    "If this switch is on, JavaScript will enable the inline-hinting css experiments",
+    safeState = Off, sellByDate = new DateMidnight(2014, 4, 30)
+  )
+
+  val HelveticaEasterEggSwitch = Switch("Feature Switches", "helvetica",
+    "If this switch is on, the article about Helvetica will have its title Helvetica'd",
     safeState = Off, sellByDate = new DateMidnight(2014, 4, 30)
   )
 
@@ -503,7 +508,8 @@ object Switches extends Collections {
     ABAuContainers,
     ABFrontsLatestReviewsCard,
     ABFrontsCartoonCard,
-    ABFrontsMissedCard
+    ABFrontsMissedCard,
+    HelveticaEasterEggSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
