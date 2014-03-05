@@ -39,11 +39,24 @@ define([
 ) {
     context = context();
     var modules = {
-        matchNav: function(){
+        matchNav: function() {
             if (config.page.footballMatch) {
                 var url =  "/football/api/match-nav/" + config.page.footballMatch.id;
                     url += ".json?page=" + encodeURIComponent(config.page.pageId);
                 new MatchNav().load(url, context);
+            }
+        },
+
+        matchScores: function() {
+            // we only want this on minute-by-minute
+            var m = config.footballMatch;
+            if (m && m.isLive && config.hasTone('Minute by minutes') || true) {
+                // set loading
+                //...
+
+                mediator.on('modules:matchnav:loaded', function() {
+                    // ...
+                });
             }
         },
 
@@ -151,6 +164,8 @@ define([
             window.location = this.getAttribute('data-link-to');
         });
 
+        modules.matchScores();
+
         switch(action) {
             case 'fixtures':
             case 'results':
@@ -195,12 +210,10 @@ define([
                 if(team) {
                     modules.showTeamData(team);
                 }
-                if(config.page.footballMatch){
-                    var match = config.page.footballMatch;
+                if(config.page.footballMatch) {
+                    modules.matchNav();
 
-                    modules.matchNav(config);
-
-                    if(match.isLive) {
+                    if(config.page.footballMatch.isLive) {
                         modules.initAutoUpdate(
                             {
                                 "summary"   : context.querySelector('.match-summary'),
