@@ -1,4 +1,4 @@
-@(item: MetaData)(implicit request: RequestHeader)
+@(item: model.MetaData)(implicit request: RequestHeader)
 @import common._
 @import model._
 @import conf._
@@ -29,6 +29,11 @@
 
     @* http://www.chromium.org/spdy/link-headers-and-server-hint/link-rel-subresource *@
     <link rel="subresource" href="@Static("javascripts/bootstraps/app.js")" />
+
+    @item.pagination.map{ pagination =>
+        @pagination.next.map{ next => <link rel="next" href="@LinkTo(item.url)?page=@next" /> }
+        @pagination.previous.map{ prev => <link rel="prev" href="@LinkTo(item.url)@if(prev != 1){?page=@prev}" /> }
+    }
 
     <meta name="application-name" content="The Guardian" />
     <meta name="msapplication-TileColor" content="#004983" />

@@ -1,4 +1,4 @@
-Copyright 2013 Guardian Media Group 
+Copyright 2013-2014 Guardian Media Group 
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

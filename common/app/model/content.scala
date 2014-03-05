@@ -30,6 +30,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   lazy val isExpired = delegate.isExpired.getOrElse(false)
   lazy val blockVideoAds: Boolean = videoAssets.exists(_.blockVideoAds)
   lazy val isLiveBlog: Boolean = delegate.isLiveBlog
+  lazy val hasLargeContributorImage: Boolean = tags.filter(_.hasLargeContributorImage).nonEmpty
 
   // read this before modifying
   // https://developers.facebook.com/docs/opengraph/howtos/maximizing-distribution-media-content#images
@@ -97,7 +98,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   }
 
   // Inherited from Tags
-  override lazy val tags: Seq[Tag] = delegate.tags map { Tag }
+  override lazy val tags: Seq[Tag] = delegate.tags map { Tag(_) }
 
   // Inherited from MetaData
   override lazy val id: String = delegate.id

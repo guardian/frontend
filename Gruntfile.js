@@ -37,7 +37,6 @@ module.exports = function (grunt) {
                     quiet: (isDev) ? false : true,
                     loadPath: [
                         'common/app/assets/stylesheets/components/sass-mq',
-                        'common/app/assets/stylesheets/components/pasteup/sass/layout',
                         'common/app/assets/stylesheets/components/normalize-scss'
                     ]
                 }

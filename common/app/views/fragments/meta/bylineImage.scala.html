@@ -1,0 +1,9 @@
+@(tags: Tags)
+
+@tags.contributors.headOption.map { profile =>
+    @profile.contributorLargeImagePath.map{ image =>
+        <div class="byline-img">
+            <img src="@image" alt="@profile.name" />
+        </div>
+    }
+}

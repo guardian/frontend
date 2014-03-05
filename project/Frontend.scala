@@ -9,7 +9,7 @@ object Frontend extends Build with Prototypes {
   val common = application("common").settings(
     libraryDependencies ++= Seq(
       "com.gu" %% "configuration" % "3.9",
-      "com.gu.openplatform" %% "content-api-client" % "2.7",
+      "com.gu.openplatform" %% "content-api-client" % "2.9",
 
       "com.typesafe.akka" %% "akka-agent" % "2.1.0",
 

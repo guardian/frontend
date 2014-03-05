@@ -1,9 +1,7 @@
 package model
 
-import common.ManifestData
+import common.{Pagination, ManifestData}
 import conf.Configuration
-import play.api.templates.Html
-import java.net.URI
 
 trait MetaData extends Tags {
   def id: String
@@ -12,6 +10,7 @@ trait MetaData extends Tags {
   def analyticsName: String
   def url: String  = s"/$id"
   def linkText: String = webTitle
+  def pagination: Option[Pagination] = None
 
   // this is here so it can be included in analytics.
   // Basically it helps us understand the impact of changes and needs
@@ -50,14 +49,16 @@ class Page(
   val id: String,
   val section: String,
   val webTitle: String,
-  val analyticsName: String) extends MetaData
+  val analyticsName: String,
+  pagination: Option[Pagination] = None) extends MetaData
 
 object Page {
   def apply(
     id: String,
     section: String,
     webTitle: String,
-    analyticsName: String) = new Page(id, section, webTitle, analyticsName)
+    analyticsName: String,
+    pagination: Option[Pagination] = None) = new Page(id, section, webTitle, analyticsName, pagination)
 }
 
 trait Elements {
@@ -65,10 +66,14 @@ trait Elements {
   // Find a main picture crop which matches this aspect ratio.
   def trailPicture(aspectWidth: Int, aspectHeight: Int): Option[ImageContainer] =
     (thumbnail.find(_.imageCrops.exists(_.width >= 620)) ++ mainPicture ++ thumbnail)
-      .find(_.imageCrops.exists{ crop => crop.aspectRatioWidth == aspectWidth && crop.aspectRatioHeight == aspectHeight })
-      .map { image =>
-        ImageContainer(image.imageCrops, image.delegate, image.index)
+      .map{ image =>
+        image.imageCrops.filter{ crop => crop.aspectRatioWidth == aspectWidth && crop.aspectRatioHeight == aspectHeight } match {
+          case Nil   => None
+          case crops => Option(ImageContainer(crops, image.delegate, image.index))
+        }
       }
+      .flatten
+      .headOption
 
   // trail picture is used on index pages (i.e. Fronts and tag pages)
   def trailPicture: Option[ImageContainer] = thumbnail.find(_.imageCrops.exists(_.width >= 620))

@@ -29,8 +29,9 @@ trait OnwardJourneyLifecycle extends GlobalSettings {
       MostPopularAgent.refresh()
       MostPopularExpandableAgent.refresh()
       GeoMostPopularAgent.refresh()
-      DayMostPopularAgent.refresh()
     }
+    // kick off refresh now, as this happens hourly
+    DayMostPopularAgent.refresh()
   }
 
   override def onStop(app: PlayApp) {
