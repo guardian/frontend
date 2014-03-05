@@ -43,15 +43,13 @@ define([
                         type: 'jsonp'
                     })
                         .then(function(resp) {
-                            var reviews = [];
-                            getProperty(resp, 'response.results', []).forEach(function(result, index) {
-                                var starRating = result.fields.starRating;
-                                reviews.push(
-                                    template(
+                            var reviews = getProperty(resp, 'response.results', [])
+                                .map(function(result, index) {
+                                    return template(
                                         '<li data-link-name="trail | {{index}}" class="card__item">' +
                                             '<a href="{{url}}" class="card__item__link" data-link-name="article">' +
-                                                '<h4 class="card__item__title">{{section}}: {{title}}</h4>' +
-                                                ((starRating !== undefined) ?
+                                                '<h4 class="card__item__title">{{section}}: {{headline}}</h4>' +
+                                                ((result.fields.starRating !== undefined) ?
                                                     '<span class="stars s-{{rating}}" itemprop="reviewRating" itemscope itemtype="http://schema.org/Rating">' +
                                                         '<meta itemprop="worstRating" content="1" />' +
                                                         '<span itemprop="ratingValue">{{rating}}</span> /' +
@@ -60,16 +58,15 @@ define([
                                             '</a>' +
                                         '</li>',
                                         {
-                                            url: result.webUrl.replace(/https?:\/\/[^/]*/, ''),
-                                            title: result.webTitle,
-                                            section: result.sectionName,
-                                            rating: result.fields.starRating,
-                                            index: index + 1
+                                            headline: result.webTitle,
+                                            url     : result.webUrl.replace(/https?:\/\/[^/]*/, ''),
+                                            section : result.sectionName,
+                                            rating  : result.fields.starRating,
+                                            index   : index + 1
                                         }
-                                    )
-                                );
-                            });
-                            var $card = bonzo(
+                                    );
+                                }),
+                                $card = bonzo(
                                     bonzo.create(
                                         template(
                                             '<div class="container__card tone-feature tone-accent-border" data-link-name="card | latest reviews">' +
@@ -80,7 +77,7 @@ define([
                                         )
                                     )
                                 ).appendTo(qwery('.container--features').shift()),
-                                yPosition = 513 - $card.dim().height;
+                                yPosition = 518 - $card.dim().height;
                             $card.css('top', yPosition + 'px');
                         });
                 }

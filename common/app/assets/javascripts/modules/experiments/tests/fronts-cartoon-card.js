@@ -39,7 +39,7 @@ define([
                 id: 'cartoon',
                 test: function (context, config) {
                     reqwest({
-                        url: 'http://content.guardianapis.com/search?tag=theguardian%2Fseries%2Fguardiancommentcartoon&page-size=1&show-fields=all',
+                        url: 'http://content.guardianapis.com/search?tag=theguardian%2Fseries%2Fguardiancommentcartoon&page-size=1&show-fields=thumbnail',
                         type: 'jsonp'
                     })
                         .then(function(resp) {
@@ -55,8 +55,8 @@ define([
                                                     '</a>' +
                                                 '</div>',
                                                 {
-                                                    headline: result.webTitle,
-                                                    url: result.webUrl.replace(/https?:\/\/[^/]*/, ''),
+                                                    headline : result.webTitle,
+                                                    url      : result.webUrl.replace(/https?:\/\/[^/]*/, ''),
                                                     thumbnail: result.fields.thumbnail
                                                 }
                                             )
@@ -64,7 +64,7 @@ define([
                                     })
                                     .shift()
                                     .appendTo(qwery('.container--commentanddebate').shift()),
-                                yPosition = 379 - $card.dim().height;
+                                yPosition = 383 - $card.dim().height;
                             $card.css('top', yPosition + 'px');
                         });
                 }

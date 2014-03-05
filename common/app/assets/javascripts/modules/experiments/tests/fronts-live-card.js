@@ -1,10 +1,16 @@
 define([
     'reqwest',
+    'bonzo',
+    'qwery',
     'common/utils/detect',
+    'common/utils/get-property',
     'common/utils/template'
 ], function(
     reqwest,
+    bonzo,
+    qwery,
     detect,
+    getProperty,
     template
 ) {
 
@@ -30,13 +36,46 @@ define([
                 test: function(context, config) { }
             },
             {
-                id: 'latest-reviews',
+                id: 'live',
                 test: function (context, config) {
                     reqwest({
-                        url: 'http://content.guardianapis.com/search?tag=tone%2Freviews%2Cculture%2Fculture&page-size=3&show-fields=starRating',
+                        url: 'http://content.guardianapis.com/search?tag=tone%2Fminutebyminute&page-size=3&show-fields=liveBloggingNow',
                         type: 'jsonp'
                     })
                         .then(function(resp) {
+                            var items = getProperty(resp, 'response.results', []).map(function(result, index) {
+                                    return template(
+                                        '<li data-link-name="trail | {{index}}" class="card__item">' +
+                                            '<a href="{{url}}" class="card__item__link" data-link-name="article">' +
+                                                '<h4 class="card__item__title">' +
+                                                    ((result.fields.liveBloggingNow === 'true') ?
+                                                        '<span class="item__live-indicator">Live</span> ' : '') +
+                                                    '{{headline}}' +
+                                            '   </h4>' +
+                                            '</a>' +
+                                        '</li>',
+                                        {
+                                            headline: result.webTitle,
+                                            url:      result.webUrl.replace(/https?:\/\/[^/]*/, ''),
+                                            index:    index + 1
+                                        }
+                                    );
+                                }),
+                                $card = bonzo(
+                                    bonzo.create(
+                                        template(
+                                            '<div class="container__card container__card--live tone-news tone-accent-border" data-link-name="card | live">' +
+                                                '<h3 class="container__card__title tone-colour">What\'s happening now</h3>' +
+                                                '<ul class="unstyled">{{items}}</ul>' +
+                                            '</div>',
+                                            {
+                                                items:  items.join('')
+                                            }
+                                        )
+                                    )
+                                ).appendTo(qwery('.container--news').shift()),
+                                yPosition = 944 - $card.dim().height;
+                            $card.css('top', yPosition + 'px');
                         });
                 }
             }
