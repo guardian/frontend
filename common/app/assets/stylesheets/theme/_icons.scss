@@ -107,8 +107,7 @@ figcaption:before {
 
 
 
-.item--dark .i-comment-light-grey,
-.inline-story .i-comment-light-grey {
+.item--dark .i-comment-light-grey {
     @extend %i-comment-grey;
 
     @if ($svg-support) {
