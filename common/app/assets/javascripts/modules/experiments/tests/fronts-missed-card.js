@@ -80,7 +80,7 @@ define([
                                     bonzo.create(
                                         fillTemplate(
                                             '<div class="container__card container__card--missed tone-news tone-accent-border" data-link-name="card | missed">' +
-                                                '<h3 class="container__card__title tone-colour">You may have missed...</h3>' +
+                                                '<h3 class="container__card__title tone-colour">You may have missed…</h3>' +
                                                 '<ul class="unstyled">{{articles}}</ul>' +
                                             '</div>',
                                             {
@@ -92,7 +92,6 @@ define([
                                 yPosition = 944 - $card.dim().height;
                             $card.css('top', yPosition + 'px');
                         });
-
                 }
             }
         ];
