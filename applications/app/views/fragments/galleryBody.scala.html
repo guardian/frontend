@@ -12,18 +12,14 @@
         <div class="article__inner article__inner--head">
             <header class="article__head">
                 @fragments.headline(gallery.headline)
-                @fragments.article.dateline(gallery.webPublicationDate, gallery.isLive)
+
+                <div class="js-comment-count"></div>
             </header>
         </div>
         <div class="article__columning-wrapper">
             <div class="article__main-column">
 
-                <div class="article__meta-container">
-                    @fragments.byline(gallery.byline, gallery)
-                    @fragments.article.dateline(gallery.webPublicationDate, secondary=true)
-                    <div class="js-comment-count"></div>
-                </div>
-
+                @fragments.contentMeta(gallery)
 
                 <!-- Lightbox JS Gallery -->
                 @if(LightboxGalleriesSwitch.isSwitchedOn) {

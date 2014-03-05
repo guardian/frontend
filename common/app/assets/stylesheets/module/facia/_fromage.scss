@@ -120,18 +120,8 @@
         ));
     }
 }
-.fromage__image-container {
-    position: relative;
-    padding-bottom: 60%;
+.fromage__image-container {}
 
-    .responsive-img {
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        top: 0;
-        left: 0;
-    }
-}
 .fromage__standfirst {
     @include fs-headline(1);
     color: $c-neutral2;

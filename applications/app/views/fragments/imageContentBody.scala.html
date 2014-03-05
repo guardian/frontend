@@ -16,8 +16,7 @@
 
                     @fragments.standfirst(image)
 
-                    @fragments.article.dateline(image.webPublicationDate, image.isLive)
-
+                    <div class="js-comment-count"></div>
                 </header>
 
                 <div class="after-header"></div>
@@ -27,12 +26,7 @@
 
                     @fragments.img(image.mainPicture)
 
-                    <div class="article__meta-container">
-                        @fragments.byline(image.byline, image)
-
-                        @fragments.article.dateline(image.webPublicationDate, secondary=true)
-                        <div class="js-comment-count"></div>
-                    </div>
+                    @fragments.contentMeta(image)
 
                     <div class="social-wrapper">
                         @fragments.social(image)

@@ -22,7 +22,7 @@
 
                     @fragments.standfirst(article)
 
-                    @fragments.article.dateline(article.webPublicationDate)
+                    <div class="js-comment-count"></div>
 
                 </header>
 
@@ -36,7 +36,7 @@
                     @if(!article.hasVideoAtTop) {
                         @if(article.hasMainVideo) {
                             @article.mainVideo.map{ mainVideo =>
-                                <div class="media-proportional-container">
+                                <div class="u-responsive-ratio">
                                     <video data-media-id="@mainVideo.id" class="gu-video" controls="controls">
                                         @for(url <- mainVideo.videoAssets.flatMap(_.url)) {
                                             <source src="@url"></source>
@@ -57,12 +57,7 @@
                         }
                     }
 
-                    <div class="article__meta-container">
-                        @fragments.byline(article.byline, article)
-
-                        @fragments.article.dateline(article.webPublicationDate, secondary=true)
-                        <div class="js-comment-count"></div>
-                    </div>
+                    @fragments.contentMeta(article)
 
                     <div class="js-article__container article__container u-cf">
                         <div class="article-body u-cf from-content-api js-article__body"

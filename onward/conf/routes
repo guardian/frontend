@@ -13,6 +13,7 @@ GET        /most-read.json                          controllers.MostPopularContr
 GET        /most-read/*path.json                    controllers.MostPopularController.renderJson(path)
 GET        /most-read/*path                         controllers.MostPopularController.render(path)
 GET        /most-read-geo.json                      controllers.MostPopularController.renderPopularGeoJson()
+GET        /most-read-day.json                      controllers.MostPopularController.renderPopularDayJson(countryCode)
 
 GET        /top-stories                             controllers.TopStoriesController.renderTopStories()
 GET        /top-stories.json                        controllers.TopStoriesController.renderTopStoriesJson()

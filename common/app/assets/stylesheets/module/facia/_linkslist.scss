@@ -156,18 +156,7 @@
             width: $action-image-width
         ));
     }
-    .linkslist__image-container {
-        position: relative;
-        padding-bottom: 60%;
-
-        .responsive-img {
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            top: 0;
-            left: 0;
-        }
-    }
+    .linkslist__image-container {}
     .action--has-image.action--has-icon {
         .i {
             position: absolute;
