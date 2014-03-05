@@ -14,15 +14,18 @@
     }
 
     <fieldset class="fieldset">
+        <div class="form__note">These details will only be visible to yourself and the Guardian.</div>
+    </fieldset>
+
+    <fieldset class="fieldset">
 
         <div class="fieldset__heading">
             <h2 class="form__heading">Contact information</h2>
-            <div class="form__note">These details will only be visible to yourself and the Guardian.</div>
         </div>
 
         <div class="fieldset__fields">
             <ul class="unstyled">
-                
+
                 @inputField(Input(accountDetailsForm("primaryEmailAddress"), ('_label, "Email address")))
 
                 @if(IdentityEmailVerificationSwitch.isSwitchedOn){
@@ -65,7 +68,7 @@
 
     @*</fieldset>*@
 
-    <fieldset class="fieldset">    
+    <fieldset class="fieldset">
 
         <div class="fieldset__heading">
             <h2 class="form__heading">Personal information</h2>
@@ -73,7 +76,7 @@
 
         <div class="fieldset__fields">
             <ul class="unstyled">
-            
+
             	@inputField(Input(accountDetailsForm("firstName"), ('_label, "First name")))
 
             	@inputField(Input(accountDetailsForm("secondName"), ('_label, "Last name")))

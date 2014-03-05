@@ -12,17 +12,12 @@ define([
 
         var self = this;
 
-        self.config = {
-            errorHtml: "<div class='form__error'>Your form has unsaved changes.</div>"
-        };
-
         self.classes = {
             forms: '.js-account-profile-forms',
             accountForm: '.js-account-details-form',
             publicForm: '.js-public-profile-form',
             tabs: '.js-tabs',
             formError: '.form__error',
-            unsaved: 'form-field--unsaved',
             changed: 'js-form-changed',
             textInput: '.text-input'
         };
@@ -42,23 +37,43 @@ define([
 
                     bean.on(tabs, 'click', function (event) {
                         if (event.target.nodeName.toLowerCase() === "a") {
-
-                            url.pushUrl({}, event.target.innerHTML, event.target.getAttribute("data-pushstate-url"));
-
                             if (self.unsavedChangesForm) {
                                 event.preventDefault();
                                 event.stopImmediatePropagation();
                                 if (!self.unsavedChangesForm.querySelector(self.classes.formError)) {
-                                    bonzo(self.unsavedChangesForm).prepend(self.config.errorHtml);
+                                    bonzo(self.unsavedChangesForm).prepend(self.genUnsavedError());
+                                    bean.on(self.unsavedChangesForm.querySelector('.js-save-unsaved'), 'click', function () {
+                                        self.unsavedChangesForm.submit();
+                                    });
                                 }
-                                bonzo(self.unsavedFields).addClass(self.classes.unsaved);
+                            } else {
+                                url.pushUrl({}, event.target.innerHTML, event.target.getAttribute("data-pushstate-url"));
                             }
                         }
-                        
                     });
                 }
             }
         };
+    };
+
+    accountProfile.prototype.genUnsavedError = function () {
+        var errorDivStart = "<div class='form__error'>",
+            errorDivEnd = "</div>",
+            errorSaveLink = "<a href='#' class='js-save-unsaved'>Save changes</a>.",
+            errorMessageStart = "Your form has unsaved changes in ";
+
+        for (var i = 0; i < this.unsavedFields.length; i++) {
+            errorMessageStart += "'" + this.unsavedFields[i].labels[0].innerHTML + "'";
+            if (i === this.unsavedFields.length-1) {
+                errorMessageStart += ". ";
+            } else if (i === this.unsavedFields.length-2) {
+                errorMessageStart += " and ";
+            } else {
+                errorMessageStart += ", ";
+            }
+        }
+
+        return errorDivStart + errorMessageStart + errorSaveLink + errorDivEnd;
     };
 
     accountProfile.prototype.onInputChange = function (event) {

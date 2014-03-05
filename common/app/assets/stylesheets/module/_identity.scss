@@ -232,3 +232,16 @@
         left: 0;
     }
 }
+
+/* Account Edit page
+   ========================================================================== */
+
+.identity-wrapper .tabs {
+    .tone-colour {
+        color: $c-brandBlue;
+    }
+
+    .tone-accent-border {
+        border-color: $c-brandBlue;
+    }
+}
