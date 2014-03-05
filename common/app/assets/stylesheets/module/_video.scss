@@ -1,26 +1,28 @@
-video,
-object {
-    max-width: 100%;
-    height: auto;
-    @include user-select;
-}
-
 .player {
-    margin-left: $gs-gutter/2 * -1;
-    margin-right: $gs-gutter/2 * -1;
-    @include mq(mobileLandscape) {
-        margin-left: $gs-gutter * -1;
-        margin-right: $gs-gutter * -1;
-    }
-    margin-bottom: $gs-row-height;
+    @include rem((
+        margin-bottom: $gs-row-height
+    ));
     background: #000000;
     text-align: center; // prevents poster from loading to left then centering
-}
 
+    @include mq(leftCol) {
+        + .article__meta-container {
+            margin-left: 0;
+            margin-bottom: 0;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+    }
+}
+.gu-video-wrapper {
+    background: #000000;
+    @include rem((
+        margin-bottom: $gs-baseline * 1.5
+    ));
+}
 .video-standfirst {
-    margin-bottom: ($gs-baseline/3)*4;
-}
-
-.gallery-byline {
-    margin-top: ($gs-baseline/3)*4;
+    @include rem((
+        margin-bottom: ($gs-baseline/3)*4
+    ));
 }
