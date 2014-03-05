@@ -33,9 +33,10 @@ function (
             // add empty alts if none exist
             containers.forEach(function(container) {
                 $('img', container).each(function(img) {
-                    var $img = bonzo(img),
-                        alt = $img.attr('alt') || '';
-                    $img.attr('alt', alt);
+                    var $img = bonzo(img);
+                    if ($img.attr('alt') === null) {
+                        $img.attr('alt', '');
+                    }
                 });
             });
         },
