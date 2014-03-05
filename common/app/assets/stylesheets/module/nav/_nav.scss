@@ -112,6 +112,7 @@
 .nav-container {
     display: none;
     clear: both;
+    border-bottom: 2px solid $c-brandBlue;
 
     @include mq(tablet) {
         display: block;
@@ -128,6 +129,7 @@
         height: 45px
     ));
     text-transform: lowercase;
+    @include fs-header(3);
 
     @include mq(tablet) {
         display: block;
@@ -159,10 +161,8 @@
         display: block;
         @include rem((
             margin: 0 $gs-gutter 0 0,
-            padding: 5px 0 4px
+            padding: 3px 0 2px
         ));
-        @include fs-header(2);
-        -webkit-font-smoothing: subpixel-antialiased; // Make links look fatter
     }
     .is-active .nav__link {
         color: $c-brandLightBlue;
@@ -186,6 +186,7 @@
 .localnav-container {
     display: none;
     background-color: $c-brandBlue;
+    margin-top: -2px;
 
     @include mq(tablet) {
         display: block;
