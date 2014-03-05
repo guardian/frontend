@@ -99,7 +99,7 @@ $mq-static-breakpoint: desktop !default;
         }
     }
 
-        // Responsive support is enabled, output rules inside @media queries
+    // Responsive support is enabled, output rules inside @media queries
     @else {
         @if $min-width != 0 { $mediaQuery: '#{$mediaQuery} and (min-width: #{$min-width})'; }
         @if $max-width != 0 { $mediaQuery: '#{$mediaQuery} and (max-width: #{$max-width})'; }
