@@ -19,30 +19,29 @@
     <h1 class="identity-title">Edit your profile</h1>
 
     <div class="tabs u-cf identity-section">
-        <ol class="tabs__container js-tabs" id="js-popular-tabs" role="tablist" data-is-bound="true">
-            <li class="tabs__tab@if(forms.isPublicFormActive){ tabs__tab--selected tone-colour tone-accent-border}" role="tab" id="tabs-popular-1-tab" aria-selected="true" aria-controls="tabs-popular-1">
-                <a href="#tabs-popular-1" data-link-name="tab 1 World news" data-pushstate-url="/public/edit">Public</a>
+        <ol class="tabs__container js-tabs" id="js-account-profile-tabs" role="tablist" data-is-bound="true">
+            <li class="tabs__tab@if(forms.isPublicFormActive){ tabs__tab--selected tone-colour tone-accent-border}" role="tab" id="tabs-account-profile-1-tab" aria-selected="true" aria-controls="tabs-account-profile-1">
+                <a href="#tabs-account-profile-1" data-link-name="tab 1 World news" data-pushstate-url="/public/edit">Public</a>
             </li>
-            <li class="tabs__tab@if(!forms.isPublicFormActive){ tabs__tab--selected tone-colour tone-accent-border}" role="tab" id="tabs-popular-2-tab" aria-controls="tabs-popular-2" aria-selected="false">
-                <a href="#tabs-popular-2" data-link-name="tab 2 The Guardian" data-pushstate-url="/account/edit">Account details</a>
+            <li class="tabs__tab@if(!forms.isPublicFormActive){ tabs__tab--selected tone-colour tone-accent-border}" role="tab" id="tabs-account-profile-2-tab" aria-controls="tabs-account-profile-2" aria-selected="false">
+                <a href="#tabs-account-profile-2" data-link-name="tab 2 The Guardian" data-pushstate-url="/account/edit">Account details</a>
             </li>
         </ol>
 
         <div class="tabs__content">
-            <div id="tabs-popular-1" class="tabs__pane u-cf" role="tabpanel" aria-labelledby="tabs-popular-1-tab" data-link-name="Public Profile" data-link-context="Identity/profile"@if(!forms.isPublicFormActive){ style="display: none;"}>
+            <div id="tabs-account-profile-1" class="tabs__pane u-cf" role="tabpanel" aria-labelledby="tabs-account-profile-1-tab" data-link-name="Public Profile" data-link-context="Identity/profile"@if(!forms.isPublicFormActive){ style="display: none;"}>
 
                 @public_profile_form(idUrlBuilder, idRequest, user, forms.publicForm)
 
             </div>
 
-            <div id="tabs-popular-2" class="tabs__pane u-cf" role="tabpanel" aria-labelledby="tabs-popular-2-tab" data-link-name="Account" data-link-context="Identity/profile"@if(forms.isPublicFormActive){ style="display: none;"}>
+            <div id="tabs-account-profile-2" class="tabs__pane u-cf" role="tabpanel" aria-labelledby="tabs-account-profile-2-tab" data-link-name="Account" data-link-context="Identity/profile"@if(forms.isPublicFormActive){ style="display: none;"}>
 
                 @account_details_form(idUrlBuilder, idRequest, user, forms.accountForm)
 
             </div>
         </div>
     </div>
-
 
     @registrationFooter(page, idRequest, idUrlBuilder)
 </div>
