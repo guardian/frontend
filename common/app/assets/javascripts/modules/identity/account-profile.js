@@ -1,9 +1,11 @@
 define([
     'bean',
-    'bonzo'
+    'bonzo',
+    'common/utils/url'
 ], function(
     bean,
-    bonzo
+    bonzo,
+    url
 ) {
     
     var accountProfile = function () {
@@ -40,6 +42,9 @@ define([
 
                     bean.on(tabs, 'click', function (event) {
                         if (event.target.nodeName.toLowerCase() === "a") {
+
+                            url.pushUrl({}, event.target.innerHTML, event.target.getAttribute("data-pushstate-url"));
+
                             if (self.unsavedChangesForm) {
                                 event.preventDefault();
                                 event.stopImmediatePropagation();
