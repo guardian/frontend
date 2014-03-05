@@ -15,7 +15,9 @@ object Global extends WithFilters(RequestMeasurementMetrics.asFilters: _*) with 
     ("elastic-content-api-calls", ContentApiMetrics.ElasticHttpTimingMetric.getAndReset.toDouble),
     ("solr-content-api-calls", ContentApiMetrics.HttpTimingMetric.getAndReset.toDouble),
     ("elastic-content-api-timeouts", ContentApiMetrics.ElasticHttpTimeoutCountMetric.getAndReset.toDouble),
-    ("solr-content-api-timeouts", ContentApiMetrics.HttpTimeoutCountMetric.getAndReset.toDouble)
+    ("solr-content-api-timeouts", ContentApiMetrics.HttpTimeoutCountMetric.getAndReset.toDouble),
+    ("content-api-client-parse-exceptions", ContentApiMetrics.ContentApiJsonParseException.getAndReset.toDouble),
+    ("content-api-client-mapping-exceptions", ContentApiMetrics.ContentApiJsonMappingException.getAndReset.toDouble)
   )
 
 }
