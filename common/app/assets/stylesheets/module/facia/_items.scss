@@ -191,7 +191,8 @@
 .card__item__link {
     display: block;
 }
-.container__card--missed {
+.container__card--missed,
+.container__card--live {
     .card__item {
         &:after {
             content: "";
