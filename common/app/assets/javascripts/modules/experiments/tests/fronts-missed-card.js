@@ -16,12 +16,6 @@ define([
     template
 ) {
 
-    function fillTemplate(template, params) {
-        return Object.keys(params).reduce(function(template, token) {
-            return template.replace('{{' + token + '}}', params[token]);
-        }, template);
-    }
-
     var editionMappings = {
         'UK': 'GB',
         'US': 'US',
@@ -82,7 +76,7 @@ define([
                                     bonzo.create(
                                         template(
                                             '<div class="container__card container__card--missed tone-news tone-accent-border" data-link-name="card | missed">' +
-                                                '<h3 class="container__card__title tone-colour">You may have missed…</h3>' +
+                                                '<h3 class="container__card__title tone-colour">You may have missed</h3>' +
                                                 '<ul class="unstyled">{{articles}}</ul>' +
                                             '</div>',
                                             {
