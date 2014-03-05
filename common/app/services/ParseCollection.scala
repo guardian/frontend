@@ -10,6 +10,7 @@ import play.api.libs.ws.Response
 import scala.concurrent.Future
 import scala.Some
 import contentapi.QueryDefaults
+import scala.util.{Success, Failure, Try}
 
 object Path {
   def unapply[T](uri: String) = Some(uri.split('?')(0))
@@ -25,6 +26,7 @@ object Seg {
 
 trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging {
 
+  case class InvalidContent(id: String) extends Throwable(s"Invalid Content: $id")
   val showFieldsQuery: String = FaciaDefaults.showFields
   val queryMessage: Option[String] = Option("facia")
 
@@ -155,6 +157,14 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
           case apiError: com.gu.openplatform.contentapi.ApiError if apiError.httpStatus == 410 => {
             log.warn(s"Content API Error: 410 for ${collectionItem.id}")
             None
+          }
+          case jsonParseError: net.liftweb.json.JsonParser.ParseException => {
+            ContentApiMetrics.ContentApiJsonParseException.increment()
+            throw jsonParseError
+          }
+          case mappingException: net.liftweb.json.MappingException => {
+            ContentApiMetrics.ContentApiJsonMappingException.increment()
+            throw mappingException
           }
           case t: Throwable => {
             log.warn("%s: %s".format(collectionItem.id, t.toString))
