@@ -58,7 +58,7 @@ define([
             var force = window.location.hash === '#force-football-liveblog';
 
             // we only want this on minute-by-minute of a match
-            if ((config.page.isLiveBlog && config.page.isLive) || force) {
+            if (config.page.isLiveBlog || force) {
                 // replace the headline with loader (mainly for mobile)
                 var $h = $('.article__headline', context),
                     $scores = bonzo(bonzo.create(
@@ -68,7 +68,7 @@ define([
                             '</div>'
                         )).css({ height: $h.get(0).scrollHeight });
 
-                $h.empty().replaceWith($scores);
+                $h.replaceWith($scores);
                 mediator.on('modules:matchnav:loaded', function(resp) {
                     $scores.removeClass('live-summary--loading').empty().css({ height: 'auto' });
                     $scores.empty().append(bonzo.create(resp.summary));
