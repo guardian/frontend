@@ -379,16 +379,6 @@
     }
 }
 
-@include mq(leftCol) {
-    .media-content + .article__meta-container {
-        margin-left: 0;
-        margin-bottom: 0;
-        position: absolute;
-        top: 0;
-        left: 0;
-    }
-}
-
 .media-primary {
     @include rem((
         margin-left: $gs-gutter / -2,
@@ -401,23 +391,6 @@
         ));
     }
 }
-.main-image {
-    margin-bottom: 0;
-}
-
-.gu-video {
-    width: 100%;
-    @include rem((
-        margin-bottom: ($gs-baseline/3)*2
-    ));
-}
-
-video {
-    max-width: 100%;
-    height: auto;
-    @include user-select;
-}
-
 .commentcount {
     @include fs-data(3);
     display: none;
@@ -512,7 +485,6 @@ video {
         padding-left: 0 !important;
         padding-right: 0 !important;
     }
-    .player,
     .media-primary {
         margin-left: 0 !important;
         margin-right: 0 !important;
@@ -527,7 +499,6 @@ video {
         margin-right: (gs-span(1) + $gs-gutter) * -1 !important;
         margin-right: rem((gs-span(1) + $gs-gutter) * -1) !important;
     }
-
     .article__head .commentcount {
         display: block;
     }
