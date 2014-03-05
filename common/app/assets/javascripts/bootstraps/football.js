@@ -40,22 +40,24 @@ define([
     context = context();
     var modules = {
         matchNav: function() {
-            if (config.page.footballMatch) {
-                var url =  "/football/api/match-nav/" + config.page.footballMatch.id;
-                    url += ".json?page=" + encodeURIComponent(config.page.pageId);
+            var teamIds = config.referencesOfType('paFootballTeam');
+
+            if (config.page.footballMatch ||
+                ((config.hasTone("Match reports") || config.page.isLiveBlog) && teamIds.length === 2)) {
+                var url =  '/football/api/match-nav/'+
+                           (config.page.footballMatch ? config.page.footballMatch.id :
+                               [config.webPublicationDateAsUrlPart()].concat(teamIds).join('/')) +
+                           '.json?page=' + encodeURIComponent(config.page.pageId);
+
                 new MatchNav().load(url, context);
             }
         },
 
         matchScores: function() {
-            // we only want this on minute-by-minute
-            var m = config.footballMatch;
-            if (m && m.isLive && config.hasTone('Minute by minutes') || true) {
-                // set loading
-                //...
-
-                mediator.on('modules:matchnav:loaded', function() {
-                    // ...
+            // we only want this on minute-by-minute of a match
+            if (config.page.isLiveBlog) {
+                mediator.on('modules:matchnav:loaded', function(resp) {
+//                    console.log(resp)
                 });
             }
         },
@@ -197,6 +199,8 @@ define([
                         mediator.emit('bootstrap:football:rhs:table:ready');
                     });
                 }
+
+                modules.matchNav();
 
                 break;
 
