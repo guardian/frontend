@@ -1,7 +1,7 @@
 /*global guardian, googletag */
 define([
     'common/$',
-    'qwery',
+    'bonzo',
     'postscribe',
     'common/modules/component',
     'lodash/objects/assign',
@@ -11,7 +11,7 @@ define([
     'common/modules/adverts/dfp-events'
 ], function (
     $,
-    qwery,
+    bonzo,
     postscribe,
     Component,
     extend,
@@ -96,7 +96,7 @@ define([
         googletag.pubads().enableAsyncRendering();
         googletag.pubads().collapseEmptyDivs();
         googletag.enableServices();
-        googletag.display();
+        googletag.display('dfp_commercial_component');
     };
 
     DFP.prototype.setListeners = function() {
@@ -104,13 +104,15 @@ define([
     };
 
     DFP.prototype.checkForBreakout = function(e, level, message, service, slot, reference) {
-        var $slot         = $('#'+ slot.getSlotId().getDomId()),
-            frameContents = $slot[0].querySelector('iframe').contentDocument.body;
+        var $slot          = $('#'+ slot.getSlotId().getDomId()),
+            $frameContents = $slot[0].querySelector('iframe').contentDocument.body;
 
         for(var cls in breakoutHash) {
-            if(frameContents.querySelector('.'+ breakoutHash[cls]) !== null) {
-                $slot[0].innerHTML = '';
-                postscribe($slot[0], breakoutHash[cls].replace(/%content%/g, frameContents.querySelector('.breakout__html').innerHTML));
+            var $el = bonzo($frameContents.querySelector('.'+ cls));
+
+            if($el.length > 0) {
+                $slot.html('');
+                postscribe($slot[0], breakoutHash[cls].replace(/%content%/g, $el.html()));
             }
         }
     };
