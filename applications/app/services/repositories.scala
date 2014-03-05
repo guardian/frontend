@@ -17,7 +17,7 @@ object IndexPagePagination {
   def pageSize: Int = 20 //have a good think before changing this
 }
 
-case class IndexPage(page: MetaData, trails: Seq[Content], pagination: Pagination)
+case class IndexPage(page: MetaData, trails: Seq[Content])
 
 trait Index extends ConciergeRepository with QueryDefaults {
 
@@ -51,8 +51,10 @@ trait Index extends ConciergeRepository with QueryDefaults {
             val tag1 = head.tags.find(_.id == firstTag).head
             val tag2 = head.tags.find(_.id == secondTag).head
             val pageName = s"${tag1.name} + ${tag2.name}"
-            val page = Page(s"$leftSide+$rightSide", tag1.section, pageName, s"GFE:${tag1.section}:$pageName")
-            Left(IndexPage(page, trails, pagination(response)))
+            val page = Page(s"$leftSide+$rightSide", tag1.section, pageName,
+              s"GFE:${tag1.section}:$pageName", pagination = pagination(response))
+
+            Left(IndexPage(page, trails))
         }
     }
 
@@ -61,17 +63,17 @@ trait Index extends ConciergeRepository with QueryDefaults {
       .recover{ case ApiError(400, _) => Right(Found(s"/$leftSide+$rightSide")) }
   }
 
-  private def pagination(response: ItemResponse): Pagination = Pagination(
+  private def pagination(response: ItemResponse) = Some(Pagination(
     response.currentPage.getOrElse(1),
     response.pages.getOrElse(1),
     response.total.getOrElse(0)
-  )
+  ))
 
-  private def pagination(response: SearchResponse): Pagination = Pagination(
+  private def pagination(response: SearchResponse) = Some(Pagination(
     response.currentPage,
     response.pages,
     response.total
-  )
+  ))
 
   def index(edition: Edition, path: String, pageNum: Int)(implicit request: RequestHeader): Future[Either[IndexPage, SimpleResult]] = {
     val promiseOfResponse = SwitchingContentApi().item(path, edition)
@@ -92,16 +94,16 @@ trait Index extends ConciergeRepository with QueryDefaults {
 
 
   private def section(response: ItemResponse) = {
-      val section = response.section.map(Section)
+      val section = response.section.map{Section(_, pagination(response))}
       val editorsPicks = response.editorsPicks.map(Content(_))
       val editorsPicksIds = editorsPicks.map(_.id)
       val latestContent = response.results.map(Content(_)).filterNot(c => editorsPicksIds contains c.id)
       val trails = editorsPicks ++ latestContent
-      section.map(IndexPage(_, trails, pagination(response)))
+      section.map(IndexPage(_, trails))
   }
 
   private def tag(response: ItemResponse, page: Int) = {
-    val tag = response.tag map { new Tag(_) }
+    val tag = response.tag map { new Tag(_, pagination(response)) }
     val leadContentCutOff = DateTime.now - leadContentMaxAge
     val editorsPicks = response.editorsPicks.map(Content(_))
     val leadContent = if (editorsPicks.isEmpty && page == 1) //only promote lead content on first page
@@ -111,7 +113,7 @@ trait Index extends ConciergeRepository with QueryDefaults {
 
     val latest: Seq[Content] = response.results.map(Content(_)).filterNot(c => leadContent.map(_.id).exists(_ == c.id))
     val allTrails = (leadContent ++ editorsPicks ++ latest).distinctBy(_.id)
-    tag map { IndexPage(_, allTrails, pagination(response)) }
+    tag map { IndexPage(_, allTrails) }
   }
 
   // for some reason and for the life of me I cannot figure it out, this does not compile if these
