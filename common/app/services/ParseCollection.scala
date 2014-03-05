@@ -178,7 +178,11 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
           itemResponse <- content
           supporting <- supportingAsContent
         } yield {
-          itemResponse.map(Content(_, supporting, collectionItem.metaData)).map(_ +: contentList).getOrElse(contentList)
+          itemResponse
+            .map(Content(_, supporting, collectionItem.metaData))
+            .map(validateContent)
+            .map(_ +: contentList)
+            .getOrElse(contentList)
         }
       }
       val sorted = results map { _.sortBy(t => collectionItems.indexWhere(_.id == t.id))}
