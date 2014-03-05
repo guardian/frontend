@@ -178,6 +178,12 @@
         ));
     }
 
+    .article__meta-container--no-byline & {
+        @include rem((
+            padding-top: $gs-baseline/3
+        ));
+    }
+
     @include mq(tablet) {
         padding-right: 0;
         @include fs-data(3, true);
@@ -189,6 +195,10 @@
             margin-bottom: $gs-baseline
         ));
         border-top: 1px dotted $c-neutral5;
+
+        .article__meta-container--no-byline & {
+            border-top: none;
+        }
     }
 
     @include mq(wide) {
@@ -364,6 +374,7 @@
 }
 
 .article__meta-container {
+    min-height: gs-height(1);
     position: relative;
     @include rem((
         margin-bottom: $gs-baseline
