@@ -19,6 +19,7 @@ frontend-applications.properties
 
 .*
 !.editorconfig
+!.bowerrc
 
 log
 logs
