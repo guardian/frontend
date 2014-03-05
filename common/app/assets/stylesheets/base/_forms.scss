@@ -30,9 +30,6 @@
 .fieldset {
     border: none;
     border-top: 1px solid $c-neutral7;
-    &:first-of-type {
-        border-top: none;
-    }
     display: table;
     padding: (($gs-baseline/3)*4 - 1) 0 ($gs-baseline*2);
     margin: 0;
@@ -148,10 +145,6 @@
 
     &:focus {
         border-color: $c-neutral2;
-    }
-
-    &.form-field--unsaved {
-        border: 1px solid $c-brandBlue;
     }
 
     @include mq(tablet) {
