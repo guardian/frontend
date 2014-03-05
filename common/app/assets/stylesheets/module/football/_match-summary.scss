@@ -78,7 +78,7 @@
     position: relative;
 
     @include mq($from: tablet) {
-        @include fs-headline(7);
+        @include fs-headline(7, true);
     }
 }
 
