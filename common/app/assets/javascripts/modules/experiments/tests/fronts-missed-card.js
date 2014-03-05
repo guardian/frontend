@@ -1,14 +1,14 @@
 define([
-    'reqwest',
     'bonzo',
     'qwery',
+    'common/utils/ajax',
     'common/utils/detect',
     'common/modules/onward/history',
     'common/utils/get-property'
 ], function(
-    reqwest,
     bonzo,
     qwery,
+    ajax,
     detect,
     History,
     getProperty
@@ -19,6 +19,12 @@ define([
             return template.replace('{{' + token + '}}', params[token]);
         }, template);
     }
+
+    var editionMappings = {
+        'UK': 'GB',
+        'US': 'US',
+        'AU': 'AU'
+    };
 
     return function() {
 
@@ -44,17 +50,14 @@ define([
             {
                 id: 'missed',
                 test: function (context, config) {
-                    reqwest({
-                        url: 'http://dashboard.ophan.co.uk/last24hours/data',
-                        type: 'jsonp'
+                    ajax({
+                        url        : '/most-read-day.json?countryCode=' + editionMappings[config.page.edition],
+                        type       : 'json',
+                        crossOrigin: true
                     })
                         .then(function(resp) {
                             var history = new History(),
-                                articles = getProperty(resp, 'content', [])
-                                    .sort(function(a, b) {
-                                        return b.hits - a.hits;
-                                    })
-                                    .slice(0, 30)
+                                articles = getProperty(resp, 'trails', [])
                                     .filter(function(article) {
                                         return !history.contains('/' + article.id);
                                     })
@@ -63,29 +66,29 @@ define([
                                         return fillTemplate(
                                             '<li data-link-name="trail | {{index}}" class="card__item">' +
                                                 '<a href="{{url}}" class="card__item__link" data-link-name="article">' +
-                                                    '<h4 class="card__item__title">{{title}}</h4>' +
+                                                    '<h4 class="card__item__title">{{headline}}</h4>' +
                                                 '</a>' +
                                             '</li>',
                                             {
-                                                url: article.path,
-                                                title: article.webTitle,
-                                                index: index + 1
+                                                headline: article.headline,
+                                                url     : article.url,
+                                                index   : index + 1
                                             }
                                         );
                                     }),
                                 $card = bonzo(
-                                        bonzo.create(
-                                            fillTemplate(
-                                                '<div class="container__card container__card--missed tone-news tone-accent-border" data-link-name="card | missed">' +
-                                                    '<h3 class="container__card__title tone-colour">You might have missed...</h3>' +
-                                                    '<ul class="unstyled">{{articles}}</ul>' +
-                                                '</div>',
-                                                {
-                                                    articles:  articles.join('')
-                                                }
-                                            )
+                                    bonzo.create(
+                                        fillTemplate(
+                                            '<div class="container__card container__card--missed tone-news tone-accent-border" data-link-name="card | missed">' +
+                                                '<h3 class="container__card__title tone-colour">You may have missed...</h3>' +
+                                                '<ul class="unstyled">{{articles}}</ul>' +
+                                            '</div>',
+                                            {
+                                                articles:  articles.join('')
+                                            }
                                         )
-                                    ).appendTo(qwery('.container--news').shift()),
+                                    )
+                                ).appendTo(qwery('.container--news').shift()),
                                 yPosition = 944 - $card.dim().height;
                             $card.css('top', yPosition + 'px');
                         });
