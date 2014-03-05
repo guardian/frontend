@@ -63,10 +63,16 @@ object Page {
 trait Elements {
 
   // Find a main picture crop which matches this aspect ratio.
-  def trailPicture(aspectWidth: Int, aspectHeight: Int): Option[ImageContainer] = trailPicture.flatMap{ main =>
-    val correctCrops = main.imageCrops.filter(image => image.aspectRatioWidth == aspectWidth && image.aspectRatioHeight == aspectHeight)
-    correctCrops.headOption.map{ head => ImageContainer(correctCrops, main.delegate, head.index) }
-  }
+  def trailPicture(aspectWidth: Int, aspectHeight: Int): Option[ImageContainer] =
+    (thumbnail.find(_.imageCrops.exists(_.width >= 620)) ++ mainPicture ++ thumbnail)
+      .map{ image =>
+        image.imageCrops.filter{ crop => crop.aspectRatioWidth == aspectWidth && crop.aspectRatioHeight == aspectHeight } match {
+          case Nil   => None
+          case crops => Option(ImageContainer(crops, image.delegate, image.index))
+        }
+      }
+      .flatten
+      .headOption
 
   // trail picture is used on index pages (i.e. Fronts and tag pages)
   def trailPicture: Option[ImageContainer] = thumbnail.find(_.imageCrops.exists(_.width >= 620))

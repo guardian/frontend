@@ -123,7 +123,7 @@
     }
 }
 .card__zone {
-    @extend %type-2;
+    @include fs-headline(10);
     margin-bottom: 0;
 }
 .card__headline {
@@ -143,8 +143,10 @@
 }
 .card__description {
     color: $c-neutral1;
+    @include fs-data(3);
 }
 .card__appendix {
+    @include fs-data(1);
     color: #8c8c8c;
     @include rem((
         padding-top: $gs-baseline/3

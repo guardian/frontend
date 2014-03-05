@@ -22,7 +22,7 @@
 
                     @fragments.standfirst(article)
 
-                    @fragments.article.dateline(article.webPublicationDate)
+                    <div class="js-comment-count"></div>
 
                 </header>
 
@@ -57,12 +57,7 @@
                         }
                     }
 
-                    <div class="article__meta-container">
-                        @fragments.byline(article.byline, article)
-
-                        @fragments.article.dateline(article.webPublicationDate, secondary=true)
-                        <div class="js-comment-count"></div>
-                    </div>
+                    @fragments.contentMeta(article)
 
                     <div class="js-article__container article__container u-cf">
                         <div class="article-body u-cf from-content-api js-article__body"

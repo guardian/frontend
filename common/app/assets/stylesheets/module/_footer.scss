@@ -17,7 +17,7 @@
         float: right;
         @include rem((
             width: gs-span(2),
-            padding-top: ($gs-baseline/3)*4.5,
+            padding-top: ($gs-baseline/3)*5,
             margin-right: $gs-gutter
         ));
         padding-left: 0;
