@@ -137,12 +137,29 @@ object ContentApiMetrics {
     "Number of times the Content API has responded with a 404"
   )
 
+  object ContentApiJsonParseException extends SimpleCountMetric(
+    "exception",
+    "content-api-parse-exception",
+    "Content API Parse Exceptions",
+    "Number of times the Content API client has thrown a ParseException"
+  )
+
+  object ContentApiJsonMappingException extends SimpleCountMetric(
+    "exception",
+    "content-api-mapping-exception",
+    "Content API Mapping Exceptions",
+    "Number of times the Content API client has thrown a MappingException"
+  )
+
+
   val all: Seq[Metric] = Seq(
     HttpTimingMetric,
     HttpTimeoutCountMetric,
     ElasticHttpTimeoutCountMetric,
     ElasticHttpTimingMetric,
-    ContentApi404Metric
+    ContentApi404Metric,
+    ContentApiJsonParseException,
+    ContentApiJsonMappingException
   )
 }
 
