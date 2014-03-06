@@ -6,6 +6,15 @@
     text-align: center;
     @include fs-data(4);
     border-top: 1px solid $c-neutral5;
+
+    @include mq(leftCol) {
+        float: right;
+        width: gs-span(12);
+    }
+
+    @include mq(wide) {
+        width: gs-span(13);
+    }
 }
 
 .pagination__links {
@@ -46,8 +55,5 @@
 
 .pagination_legend {
     float: left;
-    @include rem((
-        padding-left: $gs-gutter
-    ));
 }
 
