@@ -1,5 +1,5 @@
 /* Local navigation - Global container overrides
-========================================================================== */
+   ========================================================================== */
 
 #preloads.has-localnav {
     .ad-slot-top-banner-ad {
@@ -38,6 +38,6 @@
     ));
 
     .is-active .nav__link {
-        font-family: $serifheadline;
+        color: $c-brandLightBlue;
     }
 }
