@@ -74,7 +74,7 @@ define([
         googletag.pubads().enableAsyncRendering();
         googletag.pubads().collapseEmptyDivs();
         googletag.enableServices();
-        googletag.display('dfp_commercial_component');
+        googletag.display(this.dfpAdSlots[0].id);
     };
 
     DFP.prototype.checkForBreakout = function(e, level, message, service, slot, reference) {

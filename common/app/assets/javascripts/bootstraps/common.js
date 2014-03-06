@@ -265,7 +265,11 @@ define([
                     Adverts.init(config, context);
                 });
                 mediator.on('modules:adverts:docwrite:loaded', function() {
-                    dfpAds.load();
+
+                    if(config.switches.dfpAdverts) {
+                        dfpAds.load();
+                    }
+
                     Adverts.load();
                 });
 
