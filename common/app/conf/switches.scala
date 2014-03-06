@@ -350,7 +350,7 @@ object Switches extends Collections {
 
   val FootballTablePosition = Switch("A/B Tests", "ab-football-table-position",
     "If this switch is on, the football table will vary in position throughout the football tagged pages.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 3, 7)
+    safeState = Off, sellByDate = new DateMidnight(2014, 3, 12)
   )
 
   val ABFrontsLatestReviewsCard = Switch("A/B Tests", "ab-fronts-latest-reviews-card",
