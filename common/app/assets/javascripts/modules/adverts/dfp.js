@@ -6,6 +6,7 @@ define([
     'common/modules/component',
     'lodash/objects/assign',
     'common/utils/cookies',
+    'common/utils/mediator',
     'common/modules/analytics/commercial/tags/common/audience-science',
     'common/modules/adverts/userAdTargeting',
     'common/modules/adverts/dfp-events'
@@ -16,6 +17,7 @@ define([
     Component,
     extend,
     Cookies,
+    mediator,
     AudienceScience,
     UserAdTargeting,
     DFPEvents
@@ -78,15 +80,15 @@ define([
     };
 
     DFP.prototype.checkForBreakout = function(e, level, message, service, slot, reference) {
-        var $slot          = $('#'+ slot.getSlotId().getDomId()),
-            $frameContents = $slot[0].querySelector('iframe').contentDocument.body;
+        var slotEl        = $('#'+ slot.getSlotId().getDomId()),
+            frameContents = slotEl[0].querySelector('iframe').contentDocument.body;
 
         for(var cls in breakoutHash) {
-            var $el = bonzo($frameContents.querySelector('.'+ cls));
+            var $el = bonzo(frameContents.querySelector('.'+ cls));
 
             if($el.length > 0) {
-                $slot.html('');
-                postscribe($slot[0], breakoutHash[cls].replace(/%content%/g, $el.html()));
+                slotEl.html('');
+                postscribe(slotEl[0], breakoutHash[cls].replace(/%content%/g, $el.html()));
             }
         }
     };
@@ -100,10 +102,14 @@ define([
 
         window.googletag = window.googletag || { cmd: [] };
 
-        googletag.cmd.push(this.setListeners.bind(this));
-        googletag.cmd.push(this.setTargetting.bind(this));
-        googletag.cmd.push(this.defineSlots.bind(this));
-        googletag.cmd.push(this.fireAdRequest.bind(this));
+        try {
+            googletag.cmd.push(this.setListeners.bind(this));
+            googletag.cmd.push(this.setTargetting.bind(this));
+            googletag.cmd.push(this.defineSlots.bind(this));
+            googletag.cmd.push(this.fireAdRequest.bind(this));
+        } catch(e) {
+            mediator.emit('module:error', 'DFP ad loading error: ' + e, 'common/modules/adverts/dfp.js');
+        }
     };
 
     return DFP;
