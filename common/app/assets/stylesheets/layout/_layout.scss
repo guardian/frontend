@@ -17,6 +17,7 @@
 }
 
 .guardian-logo-wrapper {
+    position: relative;
     float: right;
     @include rem((
         margin: $gs-baseline/4 $gs-gutter/2 $gs-baseline 0
@@ -35,6 +36,14 @@
         @include rem((
             margin-top: 7px
         ));
+
+        &:after {
+            content: "beta";
+            position: absolute;
+            top: 48px;
+            left: 128px;
+            font-size: 13px;
+        }
     }
     @include mq(desktop) {
         @include rem((
