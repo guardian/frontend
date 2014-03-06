@@ -8,6 +8,7 @@ import model.diagnostics.CloudWatch
 import java.io.File
 import java.util.concurrent.atomic.AtomicLong
 import com.amazonaws.services.cloudwatch.model.Dimension
+import common.FaciaToolMetrics.InvalidContentExceptionMetric
 
 trait TimingMetricLogging extends Logging { self: TimingMetric =>
   override def measure[T](block: => T): T = {
@@ -137,12 +138,29 @@ object ContentApiMetrics {
     "Number of times the Content API has responded with a 404"
   )
 
+  object ContentApiJsonParseExceptionMetric extends SimpleCountMetric(
+    "exception",
+    "content-api-parse-exception",
+    "Content API Parse Exceptions",
+    "Number of times the Content API client has thrown a ParseException"
+  )
+
+  object ContentApiJsonMappingExceptionMetric extends SimpleCountMetric(
+    "exception",
+    "content-api-mapping-exception",
+    "Content API Mapping Exceptions",
+    "Number of times the Content API client has thrown a MappingException"
+  )
+
+
   val all: Seq[Metric] = Seq(
     HttpTimingMetric,
     HttpTimeoutCountMetric,
     ElasticHttpTimeoutCountMetric,
     ElasticHttpTimingMetric,
-    ContentApi404Metric
+    ContentApi404Metric,
+    ContentApiJsonParseExceptionMetric,
+    ContentApiJsonMappingExceptionMetric
   )
 }
 
@@ -211,7 +229,8 @@ object FaciaMetrics {
 
   val all: Seq[Metric] = Seq(
     JsonParsingErrorCount,
-    S3AuthorizationError
+    S3AuthorizationError,
+    InvalidContentExceptionMetric
   )
 }
 
@@ -287,12 +306,19 @@ object FaciaToolMetrics {
     "Number of times facia-tool has has a failure in pressing"
   )
 
+  object InvalidContentExceptionMetric extends SimpleCountMetric(
+    "facia",
+    "facia-invalid-content",
+    "Facia InvalidContent count",
+    "Number of times facia/facia-tool has thrown InvalidContent exceptions"
+  )
+
   val all: Seq[Metric] = Seq(
     ApiUsageCount, ProxyCount, ExpiredRequestCount,
     DraftPublishCount, ContentApiPutSuccess, ContentApiPutFailure,
     FrontPressSuccess, FrontPressFailure, FrontPressCronSuccess,
-    FrontPressCronFailure
-  )
+    FrontPressCronFailure, InvalidContentExceptionMetric
+  ) ++ ContentApiMetrics.all
 }
 
 object CommercialMetrics {
