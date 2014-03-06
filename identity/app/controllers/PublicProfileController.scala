@@ -5,7 +5,7 @@ import common.ExecutionContexts
 import services.{IdRequestParser, IdentityUrlBuilder}
 import com.google.inject.{Inject, Singleton}
 import utils.SafeLogging
-import model.{NoCache, IdentityPage}
+import model.{Cached, IdentityPage}
 import play.api.data.{Forms, Form}
 import idapiclient.{IdApiClient, UserUpdate}
 import com.gu.identity.model.{PrivateFields, PublicFields, User}
@@ -88,10 +88,10 @@ class PublicProfileController @Inject()(idUrlBuilder: IdentityUrlBuilder,
     val idRequest = idRequestParser(request)
     identityApiClient.userFromUsername(userName = displayName).map {
       case Left(errors) => {
-        Ok("errors: " + errors)
+        NotFound(views.html.errors._404())
       }
       case Right(user) => {
-        NoCache(Ok(views.html.public_profile_page(page, idRequest, idUrlBuilder, user)))
+        Cached(60)(Ok(views.html.public_profile_page(page, idRequest, idUrlBuilder, user)))
       }
     }
   }
