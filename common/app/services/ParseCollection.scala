@@ -10,7 +10,7 @@ import play.api.libs.ws.Response
 import scala.concurrent.Future
 import scala.Some
 import contentapi.QueryDefaults
-import scala.util.{Success, Failure, Try}
+import scala.util.Try
 
 object Path {
   def unapply[T](uri: String) = Some(uri.split('?')(0))
