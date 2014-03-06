@@ -9,7 +9,7 @@
         @if(state.isValidated){
             <h1 class="identity-title">Thank you! Your email address has been validated.</h1>
             <p>You will now be able to comment.</p>
-            <p><a href="@LinkTo{/}" data-link-name="Home">Return to the homepage</a> or <a href="@idUrlBuilder.buildUrl("/profile/public", idRequest)" data-link-name="Edit profile">edit your profile</a>.</p>
+            <p><a href="@LinkTo{/}" data-link-name="Home">Return to the homepage</a> or <a href="@idUrlBuilder.buildUrl("/public/edit", idRequest)" data-link-name="Edit profile">edit your profile</a>.</p>
         }else {
             @if(state.isExpired){
                 <h1 class="identity-title">Your email confirmation link has expired.</h1>

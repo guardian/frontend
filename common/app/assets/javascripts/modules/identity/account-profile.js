@@ -110,9 +110,15 @@ define([
      */
     accountProfile.prototype.bindInputs = function (form) {
         var inputs = Array.prototype.slice.call(form.querySelectorAll(this.classes.textInput));
+        inputs = inputs.concat(Array.prototype.slice.call(form.querySelectorAll('select')));
         for (var i = inputs.length - 1; i >= 0; i--) {
-            inputs[i].form = form;
-            inputs[i].addEventListener("input", this.onInputChange.bind(this));
+            var input = inputs[i];
+            input.form = form;
+            if (input.type === "select-one") {
+                input.addEventListener("change", this.onInputChange.bind(this));
+            } else {
+                input.addEventListener("input", this.onInputChange.bind(this));
+            }
         }
     };
 
