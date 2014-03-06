@@ -137,14 +137,14 @@ object ContentApiMetrics {
     "Number of times the Content API has responded with a 404"
   )
 
-  object ContentApiJsonParseException extends SimpleCountMetric(
+  object ContentApiJsonParseExceptionMetric extends SimpleCountMetric(
     "exception",
     "content-api-parse-exception",
     "Content API Parse Exceptions",
     "Number of times the Content API client has thrown a ParseException"
   )
 
-  object ContentApiJsonMappingException extends SimpleCountMetric(
+  object ContentApiJsonMappingExceptionMetric extends SimpleCountMetric(
     "exception",
     "content-api-mapping-exception",
     "Content API Mapping Exceptions",
@@ -158,8 +158,8 @@ object ContentApiMetrics {
     ElasticHttpTimeoutCountMetric,
     ElasticHttpTimingMetric,
     ContentApi404Metric,
-    ContentApiJsonParseException,
-    ContentApiJsonMappingException
+    ContentApiJsonParseExceptionMetric,
+    ContentApiJsonMappingExceptionMetric
   )
 }
 

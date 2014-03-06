@@ -159,11 +159,11 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
             None
           }
           case jsonParseError: net.liftweb.json.JsonParser.ParseException => {
-            ContentApiMetrics.ContentApiJsonParseException.increment()
+            ContentApiMetrics.ContentApiJsonParseExceptionMetric.increment()
             throw jsonParseError
           }
           case mappingException: net.liftweb.json.MappingException => {
-            ContentApiMetrics.ContentApiJsonMappingException.increment()
+            ContentApiMetrics.ContentApiJsonMappingExceptionMetric.increment()
             throw mappingException
           }
           case t: Throwable => {
