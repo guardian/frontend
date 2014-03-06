@@ -151,7 +151,7 @@
 
 
 
-.ad-slot__paid-for-content {
+.ad-slot__paid-for-badge {
     width: 100%;
     padding: ($gs-baseline / 2) 0;
     margin: $gs-baseline 0;
@@ -185,7 +185,7 @@
     }
 }
 
-.ad-slot__paid-for-content--fronts {
+.ad-slot__paid-for-badge--fronts {
     @include clearfix;
 
     @include mq($from: tablet, $to: faciaLeftCol) {
