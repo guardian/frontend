@@ -242,14 +242,10 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
   def validateContent(content: Content): Content = {
     Try {
       //These will throw if they don't exist because of unsafe Map.apply
-      content.headline.isEmpty &&
-        content.shortUrl.isEmpty
-    } match {
-      case Success(_) => content
-      case Failure(_) => {
-        throw new InvalidContent(content.id)
-      }
-    }
+      content.headline.isEmpty
+      content.shortUrl.isEmpty
+      content
+    }.getOrElse(throw new InvalidContent(content.id))
   }
 
 }
