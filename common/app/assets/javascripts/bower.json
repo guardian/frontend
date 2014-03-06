@@ -12,9 +12,7 @@
     "curl": "~0.8.9",
     "qwery": "~4.0.0",
     "reqwest": "~1.1.0",
-    "domready": "~1.0.4"
-  },
-  "devDependencies": {
+    "domready": "~1.0.4",
     "postscribe": "~1.2.0"
   }
 }
