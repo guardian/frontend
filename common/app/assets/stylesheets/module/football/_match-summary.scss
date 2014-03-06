@@ -6,7 +6,7 @@
 
 .match-summary__teams {
     @include rem((
-        padding: $gs-baseline/2 0 $gs-baseline
+        padding: $gs-baseline/2 0 0
     ));
     border-bottom: 1px dotted $c-neutral2;
     border-top: 1px dotted $c-neutral2;

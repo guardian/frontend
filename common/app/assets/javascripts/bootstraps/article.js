@@ -6,7 +6,6 @@ define([
     "fence",
     "common/modules/ui/autoupdate",
     "common/modules/live/filter",
-    "common/modules/sport/football/matchnav",
     "common/modules/discussion/loader",
     "common/modules/sport/cricket",
     "common/modules/ui/notification-counter",
@@ -22,7 +21,6 @@ define([
     fence,
     AutoUpdate,
     LiveFilter,
-    MatchNav,
     DiscussionLoader,
     Cricket,
     NotificationCounter,
@@ -33,26 +31,6 @@ define([
 ) {
 
     var modules = {
-
-        matchNav: function(){
-            var matchNav = new MatchNav();
-            common.mediator.on('page:article:ready', function(config, context) {
-                if(config.page.section === "football") {
-                    var teamIds = config.referencesOfType('paFootballTeam'),
-                        isRightTypeOfContent = config.hasTone("Match reports") || config.page.isLiveBlog;
-
-                    if(teamIds.length === 2 && isRightTypeOfContent){
-                        var url = "/football/api/match-nav/" +
-                                  config.webPublicationDateAsUrlPart() + "/" +
-                                  teamIds[0] + "/" + teamIds[1] +
-                                  ".json?page=" + encodeURIComponent(config.page.pageId);
-
-                        matchNav.load(url, context);
-                    }
-                }
-            });
-        },
-
         initLiveBlogging: function() {
             common.mediator.on('page:article:ready', function(config, context) {
                 if (config.page.isLive) {
@@ -147,13 +125,21 @@ define([
             if(config.switches.layoutHints && /\/-sp-/g.test(config.page.pageId)) {
                 var l = new Layout(config);
             }
+        },
+
+        initHelvetica: function(config) {
+            if(config.switches.helvetica && /\/helvetica-one-font-to-rule-them-all/g.test(config.page.pageId)) {
+                var articleHeadline = document.querySelector('.article__headline');
+                articleHeadline.style.fontFamily = 'Helvetica, "EgyptianHeadline", georgia, serif';
+                articleHeadline.style.fontWeight = 'bold';
+                articleHeadline.style.letterSpacing = '-1px';
+            }
         }
     };
 
     var ready = function (config, context) {
         if (!this.initialised) {
             this.initialised = true;
-            modules.matchNav();
             modules.initLiveBlogging();
             modules.initDiscussion();
             modules.initCricket();
@@ -161,6 +147,7 @@ define([
             modules.initOpen(config);
             modules.initFence();
             modules.initLayoutHints(config);
+            modules.initHelvetica(config);
         }
         common.mediator.emit("page:article:ready", config, context);
     };
