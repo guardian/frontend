@@ -238,14 +238,14 @@ define([
 
         loadAdverts: function (config) {
             if(!userPrefs.isOff('adverts') && config.switches.adverts && !config.page.blockVideoAds && !config.page.shouldHideAdverts) {
+                var dfpAds = new DFP(config);
+
                 var resizeCallback = function() {
                     hasBreakpointChanged(function() {
                         Adverts.reload();
                         mediator.emit('modules:adverts:reloaded');
                     });
                 };
-
-                var dfpAds = new DFP(config);
 
                 if(config.page.contentType === 'Article' && !config.page.isLiveBlog) {
                     var articleBodyAdverts = new ArticleBodyAdverts();

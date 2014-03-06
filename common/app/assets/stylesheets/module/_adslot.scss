@@ -159,7 +159,7 @@
     z-index: 1;
     color: $c-neutral2;
     text-align: left;
-    @include fs-data(3);
+    @include fs-data(2);
 
     img {
         padding-bottom: ($gs-baseline / 2);

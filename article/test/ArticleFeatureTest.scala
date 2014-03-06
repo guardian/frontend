@@ -555,7 +555,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
       HtmlUnit("/carphone-warehouse-mobile-living/melody-makers") { browser =>
         import browser._
         Then("I should see a message")
-        $(".article__sponsor").getText should be ("Advertisement feature")
+        $(".ad-slot__paid-for-content").getAttribute("data-name") should be ("badge")
       }
     }
 

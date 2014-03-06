@@ -16,8 +16,6 @@
         <article id="article" class="article @if(article.isLive){is-live}"
                  itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType" role="main">
 
-            <div id="dfp_paidforlogo" class="ad-slot__dfp ad-slot__paid-for-content"></div>
-
             <div class="article__inner article__inner--head">
                 <header class="article__head">
 
@@ -119,7 +117,7 @@
 
     @fragments.mostPopularPlaceholder(article.section)
 
-    <div id="dfp_commercial_component" class="ad-slot__dfp ad-slot__commercial-component" data-base="Bottom3" data-median="Bottom3"></div>
+    <div id="dfp_commercial_component" class="ad-slot__dfp ad-slot__commercial-component" data-name="Bottom3" data-size="900,250"></div>
 
     <script type="text/template" id="tmpl-right-ear">@fragments.onwardRightEar()</script>
 }

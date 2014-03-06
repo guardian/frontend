@@ -35,68 +35,46 @@ define([
 
     DFP.prototype.config = {
         accountId: '158186692',
-        server: 'test-theguardian.com',
-        breakpoints: {
-            Article: {
-                small: [200, 200],
-                large: [900, 200]
-            },
-            Section: {
-                small: [200, 200],
-                large: [740, 200]
-            }
-        }
+        server: 'test-theguardian.com'
     };
 
-    DFP.prototype.createSizeMapping = function() {
-        var small = this.config.breakpoints[this.config.page.contentType].small,
-            large = this.config.breakpoints[this.config.page.contentType].large;
-
-        return googletag.sizeMapping().
-            addSize(small, [300, 80]).
-            addSize(large, [900, 250]).
-            build();
+    DFP.prototype.setListeners = function() {
+        googletag.on('gpt-slot_rendered', this.checkForBreakout);
     };
 
-    DFP.prototype.setTargetting = function(conf) {
-        var keywords         = conf.keywords    ? conf.keywords.split(',')       : '',
+    DFP.prototype.setTargetting = function() {
+        var conf             = this.config.page,
+            keywords         = conf.keywords    ? conf.keywords.split(',')       : '',
             section          = conf.section     ? conf.section.toLowerCase()     : '',
-            contentType      = conf.contentType ? conf.contentType.toLowerCase() : '',
-            audienceSegments = AudienceScience.getSegments()     || [],
-            userSegments     = UserAdTargeting.getUserSegments() || [];
+            contentType      = conf.contentType ? conf.contentType.toLowerCase() : '';
 
         googletag.pubads().setTargeting('k', keywords);
-        googletag.pubads().setTargeting('at', Cookies.get('adtest'));
+        googletag.pubads().setTargeting('at', Cookies.get('adtest') || '');
         googletag.pubads().setTargeting('pt', contentType);
         googletag.pubads().setTargeting('ct', contentType);
         googletag.pubads().setTargeting('cat', section);
-        googletag.pubads().setTargeting('a', audienceSegments);
-        googletag.pubads().setTargeting('gdncrm', userSegments);
+        googletag.pubads().setTargeting('a', AudienceScience.getSegments() || []);
+        googletag.pubads().setTargeting('gdncrm', UserAdTargeting.getUserSegments() || []);
     };
 
-    DFP.prototype.loadCommercialComponents = function() {
-        var self = this,
-            conf = this.config;
+    DFP.prototype.defineSlots = function() {
+        var account = '/'+ this.config.accountId +'/'+ this.config.server;
 
-        var mapping = this.createSizeMapping();
+        this.dfpAdSlots.each(function(adSlot) {
+            var id    = adSlot.id,
+                name  = adSlot.getAttribute('data-name'),
+                sizes = adSlot.getAttribute('data-size').split(',').map(Number);
 
-        // Commercial component
-        googletag.defineSlot('/'+ conf.accountId +'/'+ conf.server, [900, 250], 'dfp_commercial_component').addService(googletag.pubads());
+            googletag.defineSlot(account, sizes, id).addService(googletag.pubads()).setTargeting('slot', name);
+        });
+    };
 
-        // Paid for logo
-        googletag.defineSlot('/'+ conf.accountId +'/'+ conf.server, [300, 80], 'dfp_paidforlogo').addService(googletag.pubads());
-
-        this.setTargetting(conf.page);
-
+    DFP.prototype.fireAdRequest = function() {
         googletag.pubads().enableSingleRequest();
         googletag.pubads().enableAsyncRendering();
         googletag.pubads().collapseEmptyDivs();
         googletag.enableServices();
         googletag.display('dfp_commercial_component');
-    };
-
-    DFP.prototype.setListeners = function() {
-        googletag.on('gpt-slot_rendered', this.checkForBreakout);
     };
 
     DFP.prototype.checkForBreakout = function(e, level, message, service, slot, reference) {
@@ -114,14 +92,18 @@ define([
     };
 
     DFP.prototype.load = function() {
-        if($('.ad-slot__dfp').length === 0) {
+        this.dfpAdSlots = $('.ad-slot__dfp');
+
+        if(this.dfpAdSlots.length === 0) {
             return false;
         }
 
         window.googletag = window.googletag || { cmd: [] };
 
         googletag.cmd.push(this.setListeners.bind(this));
-        googletag.cmd.push(this.loadCommercialComponents.bind(this));
+        googletag.cmd.push(this.setTargetting.bind(this));
+        googletag.cmd.push(this.defineSlots.bind(this));
+        googletag.cmd.push(this.fireAdRequest.bind(this));
     };
 
     return DFP;
