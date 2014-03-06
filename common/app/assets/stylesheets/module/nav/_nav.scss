@@ -229,20 +229,16 @@
     margin-top: 3px;
     width: auto;
 
-    .control {
-        overflow: hidden;
-        -webkit-transform: translateZ(0);
-        transform: translateZ(0);
-    }
-
-    i {
-        margin-top: -1px;
-        margin-left: -1px;
+    .i {
         -webkit-transition: -webkit-transform .18s ease-out;
         transition: transform .18s ease-out;
+        clip: rect(12px, 28px, 23px, 4px);
+        position: absolute;
+        left: -1px;
+        top: -1px;
     }
 
-    &.is-active i {
+    &.is-active .i {
         @include rotate(180deg);
     }
 }
