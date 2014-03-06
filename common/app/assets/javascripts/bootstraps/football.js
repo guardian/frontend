@@ -87,7 +87,7 @@ define([
                             .attr('role', 'link');
 
                     bean.on($scores.get(0), 'click', function() {
-                        $('.tab--min-by-min a', context).click();
+                        bean.fire($('.tab--min-by-min a', context).get(0), 'click');
                     });
                     $h.before($scores);
                 });

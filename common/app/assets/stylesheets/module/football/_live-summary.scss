@@ -21,6 +21,8 @@
 
     @include mq($from: tablet) {
         @include fs-headline(4, true);
-        margin-bottom: 0;
+        @include rem((
+            margin: $gs-baseline/2 0 0
+        ));
     }
 }
