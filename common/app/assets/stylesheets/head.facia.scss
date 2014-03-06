@@ -7,15 +7,7 @@
    Facia
    ========================================================================== */
 
-@import "components/guss-layout/_columns";
-@include guss-columns-utility;
-
-@import "module/facia/_extends";
-
-@import "module/facia/_facia-container";
-@import "module/facia/_items";
 @import "module/facia/_supporting";
-@import "module/facia/_linkslist";
 @import "module/facia/_fromage";
 @import "module/facia/_baguette";
 

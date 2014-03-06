@@ -44,7 +44,7 @@
 @team(players: Seq[LineUpPlayer]) = {
     <ul class="team-list unstyled">
         @players.map{ player =>
-        <li class="type-11">
+        <li class="team-list__item">
             @player.name
             @events(player)
         </li>

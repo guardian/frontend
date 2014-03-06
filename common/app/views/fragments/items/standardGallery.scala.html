@@ -18,14 +18,14 @@
                     </div>
                     @trail.trailPicture(5,3).map{ imageContainer =>
                         @ImgSrc.imager(imageContainer, Item620).map { imgSrc =>
-                            <div class="item__image-container js-image-upgrade @if(inlineImages){ inlined-image}" data-src="@imgSrc" @if(isFirstContainer){ data-force-upgrade="desktop wide"}>
+                            <div class="item__image-container u-responsive-ratio js-image-upgrade @if(inlineImages){ inlined-image}" data-src="@imgSrc">
                                 @if(inlineImages){
                                     @Item300.bestFor(imageContainer).map{ url => <img src="@url" class="responsive-img" alt="" /> }
                                 }
                             </div>
                         }
                     }.getOrElse{
-                        <div class="item__image-container">
+                        <div class="item__image-container u-responsive-ratio">
                             <img src="@Static("images/no-image.png")" class="responsive-img" alt="" />
                         </div>
                     }

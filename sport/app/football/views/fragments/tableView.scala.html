@@ -20,7 +20,7 @@
             </tr>
         </thead>
 
-        <tbody class="table-football-body">
+        <tbody>
             @group.entries.zipWithRowInfo.map{ case (entry, row) =>
                 <tr class="@RenderClasses(Map(
                         "table-row--highlight" -> highlightTeamId.map(_ == entry.team.id).getOrElse(false),
@@ -31,7 +31,9 @@
                             <a href="@TeamUrl(entry.team)" data-link-name="View team">
                                 @entry.team.name
                             </a>
-                        }.getOrElse(entry.team.name)
+                        }.getOrElse{
+                            <span>@entry.team.name</span>
+                        }
                     </td>
                     <td class="football-stat--played table-column--priority">@entry.team.total.played</td>
                     <td class="football-stat--won">@entry.team.total.won</td>
@@ -64,7 +66,7 @@
             }
         </tbody>
     </table>
-    @if(showMeta){<a href='@{competition.url + "/table"}' data-link-name="full table" class="cta-small type-8">View full @competition.fullName table<i class="i i-sport-arrow i-sport-arrow--small"></i></a>}
+    @if(showMeta){<a href='@{competition.url + "/table"}' data-link-name="full table" class="cta-small">View full @competition.fullName table<i class="i i-sport-arrow i-sport-arrow--small"></i></a>}
 </div>
 }else{
 <div></div>

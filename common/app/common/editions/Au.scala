@@ -39,7 +39,7 @@ object Au extends Edition(
     footballNav(metadata),
     NavItem(lifeandstyle),
     NavItem(culture),
-    NavItem(business),
+    NavItem(economy),
     NavItem(travel),
     NavItem(technology),
     NavItem(environment)

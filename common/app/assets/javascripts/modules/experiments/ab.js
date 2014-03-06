@@ -6,14 +6,16 @@ define([
 
     //Current tests
     'common/modules/experiments/tests/aa',
-    'common/modules/experiments/tests/right-hand-recommendations',
+    'common/modules/experiments/tests/recommended-right-hand',
     'common/modules/experiments/tests/geo-most-popular',
     'common/modules/experiments/tests/football-table-position',
     'common/modules/experiments/tests/uk-containers',
     'common/modules/experiments/tests/us-containers',
     'common/modules/experiments/tests/au-containers',
     'common/modules/experiments/tests/onward-related',
-    'common/modules/experiments/tests/fronts-latest-reviews-card'
+    'common/modules/experiments/tests/fronts-latest-reviews-card',
+    'common/modules/experiments/tests/fronts-cartoon-card',
+    'common/modules/experiments/tests/fronts-missed-card'
 ], function (
     common,
     store,
@@ -27,7 +29,9 @@ define([
     UsContainers,
     AuContainers,
     OnwardRelated,
-    FrontsLatestReviewsCard
+    FrontsLatestReviewsCard,
+    FrontsCartoonCard,
+    FrontsMissedCard
 ) {
 
     var TESTS = [
@@ -39,7 +43,9 @@ define([
             new UsContainers(),
             new AuContainers(),
             new OnwardRelated(),
-            new FrontsLatestReviewsCard()
+            new FrontsLatestReviewsCard(),
+            new FrontsCartoonCard(),
+            new FrontsMissedCard()
        ],
        participationsKey = 'gu.ab.participations';
 

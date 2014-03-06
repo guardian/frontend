@@ -2,12 +2,14 @@ define([
     'reqwest',
     'bonzo',
     'qwery',
-    'common/utils/detect'
+    'common/utils/detect',
+    'common/utils/get-property'
 ], function(
     reqwest,
     bonzo,
     qwery,
-    detect
+    detect,
+    getProperty
 ) {
 
     function fillTemplate(template, params) {
@@ -46,30 +48,42 @@ define([
                     })
                         .then(function(resp) {
                             var reviews = [];
-                            resp.response.results.forEach(function(result, index) {
+                            getProperty(resp, 'response.results', []).forEach(function(result, index) {
                                 var starRating = result.fields.starRating;
                                 reviews.push(
                                     fillTemplate(
-                                        '<li class="container__card__item" data-link-name="trail | {{index}}"><a href="{{url}}" data-link-name="article">{{section}}: {{title}}</a>' +
-                                            ((starRating !== undefined) ?
-                                                '<span class="stars s-{{rating}}" itemprop="reviewRating" itemscope itemtype="http://schema.org/Rating">' +
-                                                    '<meta itemprop="worstRating" content="1" />' +
-                                                    '<span itemprop="ratingValue">{{rating}}</span> /' +
-                                                    '<span itemprop="bestRating">5</span> stars' +
-                                                '</span>' : '') +
+                                        '<li data-link-name="trail | {{index}}" class="card__item">' +
+                                            '<a href="{{url}}" class="card__item__link" data-link-name="article">' +
+                                                '<h4 class="card__item__title">{{section}}: {{title}}</h4>' +
+                                                ((starRating !== undefined) ?
+                                                    '<span class="stars s-{{rating}}" itemprop="reviewRating" itemscope itemtype="http://schema.org/Rating">' +
+                                                        '<meta itemprop="worstRating" content="1" />' +
+                                                        '<span itemprop="ratingValue">{{rating}}</span> /' +
+                                                        '<span itemprop="bestRating">5</span> stars' +
+                                                    '</span>' : '') +
+                                            '</a>' +
                                         '</li>',
-                                        {url: result.webUrl.replace(/https?:\/\/[^/]*/, ''), title: result.webTitle, section: result.sectionName, rating: result.fields.starRating, index: index + 1}
+                                        {
+                                            url: result.webUrl.replace(/https?:\/\/[^/]*/, ''),
+                                            title: result.webTitle,
+                                            section: result.sectionName,
+                                            rating: result.fields.starRating,
+                                            index: index + 1
+                                        }
                                     )
                                 );
                             });
                             var $card = bonzo(
                                     bonzo.create(
                                         fillTemplate(
-                                            '<div class="container__card" data-link-name="card | latest reviews"><h3 class="container__card__title">Latest reviews</h3><ul class="unstyled">{{reviews}}</ul></div>',
+                                            '<div class="container__card tone-feature tone-accent-border" data-link-name="card | latest reviews">' +
+                                                '<h3 class="container__card__title tone-colour">Latest reviews</h3>' +
+                                                '<ul class="unstyled">{{reviews}}</ul>' +
+                                            '</div>',
                                             {reviews:  reviews.join('')}
                                         )
                                     )
-                                ).appendTo(qwery('.container--features')[0]),
+                                ).appendTo(qwery('.container--features').shift()),
                                 yPosition = 513 - $card.dim().height;
                             $card.css('top', yPosition + 'px');
                         });

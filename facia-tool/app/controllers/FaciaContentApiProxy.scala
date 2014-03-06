@@ -6,6 +6,7 @@ import implicits.Strings
 import play.api.mvc._
 import play.api.libs.ws.WS
 import model.Cached
+import conf.Switches._
 
 object FaciaContentApiProxy extends Controller with Logging with AuthLogging with ExecutionContexts with Strings {
 
@@ -15,7 +16,12 @@ object FaciaContentApiProxy extends Controller with Logging with AuthLogging wit
        "%s=%s".format(p._1, p._2.head.urlEncoded)
     }.mkString("&")
 
-    val url = s"${Configuration.contentApi.host}/$path?$queryString&api-key=${Configuration.contentApi.key}"
+    val contentApiHost = if(ElasticSearchSwitch.isSwitchedOn) {
+      Configuration.contentApi.elasticSearchHost
+    } else {
+      Configuration.contentApi.host
+    }
+    val url = s"$contentApiHost/$path?$queryString&api-key=${Configuration.contentApi.key}"
 
     log("Proxying tag API query to: %s" format url, request)
 

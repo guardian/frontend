@@ -41,6 +41,11 @@ object Switches extends Collections {
   private lazy val never = new DateMidnight(2100, 1, 1)
   private lazy val endOfQ4 = new DateMidnight(2014, 4, 1)
 
+  // this is 3 months - at the end of this a decision is expected
+  // and one (or both) of the 2 needs to go.
+  private lazy val profilingEvalDeadline = new DateMidnight(2014, 6, 4)
+
+
   // Load Switches
 
   val AutoRefreshSwitch = Switch("Performance Switches", "auto-refresh",
@@ -111,14 +116,14 @@ object Switches extends Collections {
 
   val ImrWorldwideSwitch = Switch("Commercial Tags", "imr-worldwide",
     "Enable the IMR Worldwide audience segment tracking.",
-    safeState = Off, sellByDate = endOfQ4)
-
-  val AmaaSwitch = Switch("Commercial Tags", "amaa",
-    "Enable the AMAA audience segment tracking.",
-    safeState = Off, sellByDate = endOfQ4)
+    safeState = Off, sellByDate = profilingEvalDeadline)
 
   val EffectiveMeasureSwitch = Switch("Commercial Tags", "effective-measure",
     "Enable the Effective Measure audience segment tracking.",
+    safeState = Off, sellByDate = profilingEvalDeadline)
+
+  val AmaaSwitch = Switch("Commercial Tags", "amaa",
+    "Enable the AMAA audience segment tracking.",
     safeState = Off, sellByDate = endOfQ4)
 
   // Commercial Feeds
@@ -296,13 +301,13 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 4, 30)
   )
 
-  val DogeSwitch = Switch("Feature Switches", "doge",
-    "Makes article headline Doge style",
-    safeState = Off, sellByDate = new DateMidnight(2014, 3, 3)
+  val LayoutHintsSwitch = Switch("Feature Switches", "layout-hints",
+    "If this switch is on, JavaScript will enable the inline-hinting css experiments",
+    safeState = Off, sellByDate = new DateMidnight(2014, 4, 30)
   )
 
-  val LayoutHintsSwitch = Switch("Feature Switches", "layout-hints",
-    "If this switch is on, javascript will enable the inline-hinting css experiments",
+  val HelveticaEasterEggSwitch = Switch("Feature Switches", "helvetica",
+    "If this switch is on, the article about Helvetica will have its title Helvetica'd",
     safeState = Off, sellByDate = new DateMidnight(2014, 4, 30)
   )
 
@@ -313,13 +318,12 @@ object Switches extends Collections {
     safeState = Off, sellByDate = endOfQ4
   )
 
-  val ABRightHandRecommendations = Switch("A/B Tests", "ab-right-hand-recommendations",
+  val ABRecommendedRightHand = Switch("A/B Tests", "ab-recommended-right-hand",
     "Sets different recommendation providers against each other for the right hand component",
-    safeState = Off, sellByDate = new DateMidnight(2014, 3, 7)
+    safeState = Off, sellByDate = new DateMidnight(2014, 3, 17)
   )
 
-
-  val ABRelatedContent = Switch("A/B Tests", "ab-onward-related",
+  val ABRelatedContent = Switch("A/B Tests", "ab-onward-related-sports",
     "If this switch is on the related content popular-in-tag override A/B test is run",
     safeState = Off, sellByDate = new DateMidnight(2014, 3, 10)
   )
@@ -359,6 +363,16 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 3, 8)
   )
 
+  val ABFrontsCartoonCard = Switch("A/B Tests", "ab-fronts-cartoon-card",
+    "If this swith is on, run an ab test to add a Cartoon card to the C&D container.",
+    safeState = Off, sellByDate = new DateMidnight(2014, 3, 8)
+  )
+
+  val ABFrontsMissedCard = Switch("A/B Tests", "ab-fronts-missed-card",
+    "If this swith is on, run an ab test to add a `You might have missed` card to the News container.",
+    safeState = Off, sellByDate = new DateMidnight(2014, 3, 8)
+  )
+
   // Sport Switch
 
   val LiveCricketSwitch = Switch("Live Cricket", "live-cricket",
@@ -383,8 +397,13 @@ object Switches extends Collections {
     safeState = On, new DateMidnight().minusDays(1)
   )
 
-  // Facia Tool Switches
+  // Facia
+  val PressedFacia = Switch("Facia", "pressed-facia",
+    "If this switch is on then it will use pressed JSON for all requests",
+    safeState = Off, sellByDate = never
+  )
 
+  // Facia Tool Switches
   val ToolDisable = Switch("Facia Tool", "facia-tool-disable",
     "If this is switched on then the fronts tool is disabled",
     safeState = Off, sellByDate = never
@@ -457,7 +476,7 @@ object Switches extends Collections {
     IdentityEthicalAwardsSwitch,
     IdentityFilmAwardsSwitch,
     ABAa,
-    ABRightHandRecommendations,
+    ABRecommendedRightHand,
     GeoMostPopular,
     FootballTablePosition,
     ABRelatedContent,
@@ -487,13 +506,16 @@ object Switches extends Collections {
     FaciaToolPressSwitch,
     DogpileSwitch,
     ShowAllArticleEmbedsSwitch,
+    PressedFacia,
     FrontPressJobSwitch,
-    DogeSwitch,
     ABUkContainers,
     ABUsContainers,
     LayoutHintsSwitch,
     ABAuContainers,
-    ABFrontsLatestReviewsCard
+    ABFrontsLatestReviewsCard,
+    ABFrontsCartoonCard,
+    ABFrontsMissedCard,
+    HelveticaEasterEggSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }

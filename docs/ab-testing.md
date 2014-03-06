@@ -91,21 +91,21 @@ define(['bonzo'], function (bonzo) {
 
 The AMD module must return an object with the following properties,
 
-- id: The unique name of the test.
-- start: The planned start date of the test, the day when the test will be turned on.
-- expiry: The date on which this test is due to stop running.
-- author: The author of the test. They have responsibility for fixing and removing the test.
-- description: A plain English summary of the test.
-- audience: The ratio of people who you want in the test (Eg, 0.2 = 20%), who will then be split 50/50 between the control and variant.
-- audienceOffset: All users are given a permanent, unique hash that is a number between 0 and 1. `audienceOffset` allows you to specify the range of
+- `id`: The unique name of the test.
+- `start`: The planned start date of the test, the day when the test will be turned on.
+- `expiry`: The date on which this test is due to stop running.
+- `author`: The author of the test. They have responsibility for fixing and removing the test.
+- `description`: A plain English summary of the test.
+- `audience`: The ratio of people who you want in the test (Eg, 0.2 = 20%), who will then be split 50/50 between the control and variant.
+- `audienceOffset`: All users are given a permanent, unique hash that is a number between 0 and 1. `audienceOffset` allows you to specify the range of
   users you want to test. For example, an `audienceOffset` value of `0.5` and an `audience` of `0.1` means user with a hash between 0.5 and 0.6 will
   be opted in to the test. This helps to avoid overlapping tests. 
-- successMeasure: Measurable traits that can be directed related to the hypothesis and objective (eg. CTR, Page Views per Visitor).
-- audienceCriteria: Additional criteria on audience (eg. Desktop users only, Network Front entry users only).
-- dataLinkNames: Link names or custom link names used for test.
-- idealOutcome: What is the outcome that you want to see from the new variant (We want to see Y when we do X)?
-- canRun: A function to determine if the test is allowed to run (Eg, so you can target individual pages, segments etc.).
-- variants: An array of two functions - the first representing the _control_ group, the second the variant.
+- `successMeasure`: Measurable traits that can be directed related to the hypothesis and objective (eg. CTR, Page Views per Visitor).
+- `audienceCriteria`: Additional criteria on audience (eg. Desktop users only, Network Front entry users only).
+- `dataLinkNames`: Link names or custom link names used for test.
+- `idealOutcome`: What is the outcome that you want to see from the new variant (We want to see Y when we do X)?
+- `canRun`: A function to determine if the test is allowed to run (Eg, so you can target individual pages, segments etc.).
+- `variants`: An array of two functions - the first representing the _control_ group, the second the variant.
 
 
 You will also need to mark the module as a dependency of the AB testing module.
@@ -147,7 +147,7 @@ The data is logged under the Omniture property _p51_.
 
 ### Ophan
 
-We have an [AB test dashbord](https://frontend.gutools.co.uk/analytics/abtests) within the frontend tools project.
+We have an [AB test dashboard](https://frontend.gutools.co.uk/analytics/abtests) within the frontend tools project.
 
 For inspection of the raw test data you can query the RedShift instance created by the data team.
 

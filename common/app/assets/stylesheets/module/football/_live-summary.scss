@@ -1,0 +1,28 @@
+.live-summary--loading {
+    @include rem((
+        padding: $gs-baseline 0
+    ));
+    text-align: center;
+
+    .accessible-link {
+        @include fs-data(1);
+    }
+
+    .is-updating {
+        display: inline-block;
+    }
+}
+
+.score-summary {
+    @include fs-headline(2, true);
+    @include rem((
+        margin: $gs-baseline 0 (-$gs-baseline/2)
+    ));
+
+    @include mq($from: tablet) {
+        @include fs-headline(4, true);
+        @include rem((
+            margin: $gs-baseline/2 0 0
+        ));
+    }
+}

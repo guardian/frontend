@@ -2,7 +2,31 @@
 
 @main(model.page){
 }{
+<div class="article__zone left-col-deport tone-news tone-accent-border">
+    <h2 class="page-heading--football left-col-deport__body">
+        @model.pageType
+    </h2>
+</div>
+<div class="article-wrapper monocolumn-wrapper tone-news">
+    <article id="article" class="article" itemprop="mainContentOfPage" itemtype="http://schema.org/Article" role="main">
+        <div class="article__columning-wrapper">
+            <div class="article__main-column">
+                <div class="football-filters">
+                    @fragments.filterBar(model.page.webTitle)
+                    @fragments.filters(model.filters, model.page, model.pageType)
+                </div>
+                
+                @fragments.matchesBody(model)
+            </div>
 
-    @fragments.matchesBody(model)
-
+            <div class="article__secondary-column" aria-hidden="true">
+                <div class="article__secondary-column__inner article__secondary-column__inner--fill-vertically">
+                    @* TODO (jamesgorrie): add onwards journeys *@
+                </div>
+            </div>
+        </div>
+    </article>
+    @fragments.footballCompetitionNav(model.comp)
+    @views.html.fragments.mostPopularPlaceholder("sport")
+</div>
 }

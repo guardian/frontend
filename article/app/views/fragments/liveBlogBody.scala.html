@@ -24,7 +24,7 @@
                     }
 
                     @fragments.standfirst(article)
-                    @fragments.article.dateline(article.webPublicationDate, article.isLive)
+                    <div class="js-comment-count"></div>
                 </header>
 
                 @fragments.witnessCallToAction(article)
@@ -37,12 +37,8 @@
                     @if(!article.isLive && !article.hasVideoAtTop) {
                         @fragments.img(article.mainPicture)
                     }
-                    <div class="article__meta-container">
-                        @fragments.byline(article.byline, article)
 
-                        @fragments.article.dateline(article.webPublicationDate, secondary=true)
-                        <div class="js-comment-count"></div>
-                    </div>
+                    @fragments.contentMeta(article)
 
                     <div class="js-article__container article__container u-cf">
                         <div class="live-toolbar">
@@ -115,6 +111,4 @@
     @fragments.storyPackagePlaceholder(storyPackage)
 
     @fragments.mostPopularPlaceholder(article.section)
-
-    <script type="text/template" id="tmpl-right-ear">@fragments.onwardRightEar()</script>
 }

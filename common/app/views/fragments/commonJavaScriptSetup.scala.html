@@ -23,8 +23,7 @@
         css: {
             loaded: false,
             football: '@Static("stylesheets/football.css")',
-            gallery: '@Static("stylesheets/gallery.css")',
-            video: '@Static("stylesheets/video.css")'
+            gallery: '@Static("stylesheets/gallery.css")'
         }
     },
     curl = {
@@ -106,24 +105,6 @@
                 }
             }
         }
-        function isConnectionLow() {
-            var connection = connection || navigator.connection || navigator.mozConnection || navigator.webkitConnection || {type: 'unknown'};
-            if (connection.type === 3
-                || connection.type === 4
-                || /^[23]g$/.test(connection.type)
-            ) {
-                return true;
-            }
-            var perf = window.performance || window.msPerformance || window.webkitPerformance || window.mozPerformance;
-            if (perf && perf.timing) {
-                var start_time =  perf.timing.requestStart || perf.timing.fetchStart || perf.timing.navigationStart,
-                    end_time = perf.timing.responseEnd;
-                if (start_time && end_time) {
-                    return (end_time - start_time) > 3000;
-                }
-            }
-            return false;
-        }
         function containersAb(switches) {
             // are we on a front
             var isFront = /^\/(pressed\/)?(uk|us|au)$/.exec(window.location.pathname);
@@ -153,9 +134,8 @@
             }
         }
 
-        @* we want this to happen ASAP to avoid FOUC *@
-        var connectionClass = 'connection--' + (isConnectionLow() ? '' : 'not-') + 'low';
-        var htmlClassNames = connectionClass;
+        @* we want to add/remove classes to HTML ASAP to avoid FOUC *@
+        var htmlClassNames = "";
 
         @* http://modernizr.com/download/#-svg *@
         function hasSvgSupport() {

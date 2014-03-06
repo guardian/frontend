@@ -86,7 +86,8 @@ to apply any necessary changes to non-shared code there too.
                     @* Secondary nav *@
                     @Navigation.localNav(navigation, page).map { localNav =>
                         @defining(localNav.find(_.currentFor(page))){ currentSublink =>
-                            <div class="localnav-container gs-container u-cf">
+                            <div class="localnav-container gs-container u-cf"
+                                @currentSublink.map{ s => itemprop="child" itemscope itemtype="http://data-vocabulary.org/Breadcrumb" }>
                                 <ul class="nav nav--local" data-link-name="Local Navigation">
                                     @localNav.map { nav =>
                                         <li class="nav__item @currentSublink.filter(_.href == nav.href).map{ current => is-active }">

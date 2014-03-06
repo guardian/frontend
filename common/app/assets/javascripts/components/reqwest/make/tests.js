@@ -83,7 +83,3 @@ var otherOriginRoutes = {
 }
 
 Connect.createServer(Connect.query(), dispatch(otherOriginRoutes)).listen(5678)
-
-exec('open http://localhost:1234', function () {
-  console.log('opening tests at http://localhost:1234')
-})

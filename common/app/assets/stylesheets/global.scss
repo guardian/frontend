@@ -6,6 +6,7 @@
 
 @import "_vars";
 @import "_mixins";
+@import "module/facia/_mixins";
 @import "module/_discussion-mixins";
 @import "_extends-only";
 @import "components/guss-layout/_columns";
@@ -73,10 +74,6 @@
    ========================================================================== */
 
 @import "module/facia/_extends";
-@import "module/facia/_mixins";
-
-@import "module/facia/_facia-container";
-@import "module/facia/_items";
 @import "module/containers/_sport";
 @import "module/containers/_features";
 @import "module/containers/_comment";
@@ -87,6 +84,7 @@
 @import "module/containers/_misc";
 @import "module/containers/_popular";
 @import "module/containers/_related";
+@import "module/facia/_pagination";
 
 
 /* ==========================================================================
@@ -94,7 +92,6 @@
    ========================================================================== */
 
 @import "module/experiments/_ab-inline-link-card";
-@import "module/experiments/_ab-inline-elements";
 @import "module/experiments/_ab-football-table-position";
 @import "module/experiments/_layout-hints";
 

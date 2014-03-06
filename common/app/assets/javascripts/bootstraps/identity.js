@@ -27,9 +27,7 @@ define([
             Id.init(config);
             // Used to show elements that need signin. Use .sign-in-required
             if (Id.isUserLoggedIn()) {
-                $('html').addClass('id--signed-in');
-            } else {
-                $('html').addClass('id--signed-out');
+                document.documentElement.className = document.documentElement.className.replace(/\bid--signed-out\b/, 'id--signed-in');
             }
         },
         initFormstack: function () {

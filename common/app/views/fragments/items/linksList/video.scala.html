@@ -6,12 +6,14 @@
         @if(imageAdjust == "highlight") {
             @trail.trailPicture(5,3).map{ imageContainer =>
                 @ImgSrc.imager(imageContainer, Item120).map { imgSrc =>
-                    <div class="linkslist__media-wrapper"><div class="linkslist__image-container js-image-upgrade" data-src="@imgSrc"></div></div>
+                    <div class="linkslist__media-wrapper"><div class="linkslist__image-container u-responsive-ratio js-image-upgrade" data-src="@imgSrc"></div></div>
                 }
             }
         }
-        <span class="i i-video-yellow-small linkslist__icon"></span>
-        @RemoveOuterParaHtml(trail.headline)
+        <span class="linkslist__label">
+            <span class="i i-video-yellow-small linkslist__icon"></span>
+            @RemoveOuterParaHtml(trail.headline)
+        </span>
     </a>
 </li>
 }

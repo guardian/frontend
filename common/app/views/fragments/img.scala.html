@@ -3,9 +3,9 @@
 
 @image.map{ picture =>
     <figure itemprop="associatedMedia primaryImageOfPage" itemscope itemtype="http://schema.org/ImageObject" class="media-primary media-content">
-        <div class="js-image-upgrade" data-src="@ImgSrc.imager(picture, Item620).map(Html(_))" data-force-upgrade>
+        <div class="js-image-upgrade" data-src="@ImgSrc.imager(picture, Item620).map(Html(_))">
             <img src="@Item220.bestFor(picture).map(Html(_))"
-                 class="maxed main-image responsive-img"
+                 class="maxed responsive-img"
                  itemprop="contentURL"
                  title="@Item620.altTextFor(picture).getOrElse("")"
                  alt="@Item620.altTextFor(picture).getOrElse("")" />

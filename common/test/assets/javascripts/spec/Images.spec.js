@@ -3,13 +3,10 @@ define(['common/modules/ui/images', 'helpers/fixtures', 'common/$', 'bonzo', 'co
     describe('Images', function() {
 
         var fixturesId = 'images-fixtures',
-            lowClassName = 'connection--low',
-            notLowClassName = 'connection--not-low',
             dataSrc = '/item-{width}/cat.jpg',
             imgClass = 'js-image-upgrade';
 
         beforeEach(function() {
-            $('html').addClass(notLowClassName);
             fixtures.render({
                 id: fixturesId,
                 fixtures: [1, 2, 3].map(function(value, i) {
@@ -19,7 +16,6 @@ define(['common/modules/ui/images', 'helpers/fixtures', 'common/$', 'bonzo', 'co
         });
 
         afterEach(function() {
-            $('html').removeClass([lowClassName, notLowClassName].join(' '));
             mediator.removeAllListeners();
             fixtures.clean(fixturesId);
         });
@@ -34,14 +30,6 @@ define(['common/modules/ui/images', 'helpers/fixtures', 'common/$', 'bonzo', 'co
             })
         });
 
-        it('should not upgrade when connection is low', function() {
-            $('html')
-                .removeClass(notLowClassName)
-                .addClass(lowClassName);
-            images.upgrade();
-            expect($('.' + imgClass + ' img').length).toEqual(0);
-        });
-
         it('should not upgrade image with display "none"', function() {
             var hiddenImg = $('.' + imgClass + ':first-child')
                 .css('display', 'none');
@@ -51,40 +39,14 @@ define(['common/modules/ui/images', 'helpers/fixtures', 'common/$', 'bonzo', 'co
 
         });
 
-        describe('force upgrade', function() {
-
-            var forceUpgradeAttr = 'data-force-upgrade';
-            it('should force upgrade if "' + forceUpgradeAttr + '" attribute exists', function() {
-                $('html')
-                    .removeClass(notLowClassName)
-                    .addClass(lowClassName);
-                // add data-force-upgrade attrs
-                ['desktop wide', 'tablet desktop', 'mobile'].forEach(function(breakpoints, i) {
-                    $('.' + imgClass + ':nth-child(' + (i + 1) + ')').attr(forceUpgradeAttr, '');
-                });
-                images.upgrade();
-                expect($('.' + imgClass + ' img').length).toEqual(3);
-            });
-
-            it('should force upgrade at certain breakpoints if set in attribute', function() {
-                var $style = bonzo(bonzo.create('<style></style>'))
-                    .html('body:after { content: "desktop"; }')
-                    .appendTo('head');
-                $('html')
-                    .removeClass(notLowClassName)
-                    .addClass(lowClassName);
-                // add data-force-upgrade attrs
-                ['desktop wide', 'tablet desktop', 'mobile'].forEach(function(breakpoints, i) {
-                    $('.' + imgClass + ':nth-child(' + (i + 1) + ')').attr(forceUpgradeAttr, breakpoints);
-                });
-                images.upgrade();
-                // first two should be forced to upgrade
-                expect($('.' + imgClass + ':nth-child(1) img').length).toEqual(1);
-                expect($('.' + imgClass + ':nth-child(2) img').length).toEqual(1);
-                // but not the third
-                expect($('.' + imgClass + ':nth-child(3) img').length).toEqual(0);
-                $style.remove();
-            });
+        it('should add an empty alt attribute if one doesn\'t exist', function() {
+            $('.' + imgClass)
+                .first()
+                .append('<img alt="foo" />');
+            images.upgrade();
+            expect($('.img-0 img').attr('alt')).toEqual('foo');
+            expect($('.img-1 img').attr('alt')).toEqual('');
+            expect($('.img-2 img').attr('alt')).toEqual('');
 
         });
 

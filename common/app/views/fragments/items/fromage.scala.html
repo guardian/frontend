@@ -13,11 +13,11 @@
                     @trail.trailPicture(5,3).map{ imageContainer =>
                         @ImgSrc.imager(imageContainer, Item620).map { imgSrc =>
                             <div class="fromage__media-wrapper fromage__media-wrapper--first">
-                                <div class="fromage__image-container js-image-upgrade inlined-image" data-src="@imgSrc" data-force-upgrade="desktop wide">
+                                <div class="fromage__image-container u-responsive-ratio@if(imageAdjust == "highlight"){ js-image-upgrade inlined-image" data-src="@imgSrc}">
                                     @if(imageAdjust == "highlight") {
                                         @Item300.bestFor(imageContainer).map{ url => <img src="@url" class="responsive-img" alt="" /> }
                                     } else {
-                                        @Item220.bestFor(imageContainer).map{ url => <img src="@url" class="responsive-img" alt="" /> }
+                                        @Item220.bestFor(imageContainer).map{ url => <img src="@url" alt="" /> }
                                     }
                                 </div>
                             </div>
@@ -36,8 +36,8 @@
                     @ImgSrc.imager(imageContainer, Item620).map { imgSrc =>
                         <a href="@LinkTo{@trail.url}" data-link-name="article">
                             <div class="fromage__media-wrapper fromage__media-wrapper--second">
-                                <div class="fromage__image-container js-image-upgrade inlined-image" data-src="@imgSrc" data-force-upgrade="desktop wide">
-                                    @Item220.bestFor(imageContainer).map{ url => <img src="@url" class="responsive-img" alt="" /> }
+                                <div class="fromage__image-container u-responsive-ratio">
+                                    @Item220.bestFor(imageContainer).map{ url => <img src="@url" alt="" /> }
                                 </div>
                             </div>
                         </a>
