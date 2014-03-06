@@ -9,16 +9,21 @@
 
     @include mq(leftCol) {
         float: right;
-        width: gs-span(12);
+        @include rem((
+            width: gs-span(12)
+        ))
     }
 
     @include mq(wide) {
-        width: gs-span(13);
+        @include rem((
+            width: gs-span(13)
+        ))
     }
 }
 
 .pagination__links {
     width: 100%;
+
     @include mq(tablet) {
         float: right;
         @include rem((
