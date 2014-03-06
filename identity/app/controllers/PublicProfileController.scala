@@ -5,7 +5,7 @@ import common.ExecutionContexts
 import services.{IdRequestParser, IdentityUrlBuilder}
 import com.google.inject.{Inject, Singleton}
 import utils.SafeLogging
-import model.IdentityPage
+import model.{NoCache, IdentityPage}
 import play.api.data.Form
 import idapiclient.IdApiClient
 import actions.AuthActionWithUser
@@ -32,7 +32,7 @@ class PublicProfileController @Inject()(idUrlBuilder: IdentityUrlBuilder,
     authActionWithUser.apply { implicit request =>
       val idRequest = idRequestParser(request)
       val forms = ProfileForms(request.user, isPublicFormActive)
-      Ok(views.html.profileForms(page.tracking(idRequest), request.user, forms, idRequest, idUrlBuilder))
+      NoCache(Ok(views.html.profileForms(page.tracking(idRequest), request.user, forms, idRequest, idUrlBuilder)))
     }
   }
 
@@ -48,7 +48,6 @@ class PublicProfileController @Inject()(idUrlBuilder: IdentityUrlBuilder,
           data: UserFormData =>
             identityApiClient.saveUser(request.user.id, data.toUserUpdate(request.user), request.auth) map {
               case Left(errors) =>
-                println("Form Erros:" + errors)
                 forms.withErrors(errors)
 
               case Right(user) => forms.bindForms(user)
@@ -58,7 +57,7 @@ class PublicProfileController @Inject()(idUrlBuilder: IdentityUrlBuilder,
         val futureForms = futureFormOpt getOrElse Future.successful(forms)
         futureForms map {
           forms =>
-            Ok(views.html.profileForms(page.accountEdited(idRequest), request.user, forms, idRequest,idUrlBuilder))
+            NoCache(Ok(views.html.profileForms(page.accountEdited(idRequest), request.user, forms, idRequest,idUrlBuilder)))
         }
     }
   }
