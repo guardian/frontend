@@ -18,6 +18,7 @@
     @include rem((
         margin: $gs-baseline 0 (-$gs-baseline/2)
     ));
+    color: $c-newsDefault;
 
     @include mq($from: tablet) {
         @include fs-headline(4, true);
