@@ -50,17 +50,18 @@ define([
      *  message if form contains unsaved changes.
      */
     accountProfile.prototype.handleTabsClick = function(event) {
+        var self = this;
         if (event.target.nodeName.toLowerCase() === "a") {
-            if (this.unsavedChangesForm) {
+            if (self.unsavedChangesForm) {
                 event.preventDefault();
                 event.stopImmediatePropagation();
                 // Prevent multiple errors from appearing
-                if (!this.unsavedChangesForm.querySelector(this.classes.formError)) {
+                if (!self.unsavedChangesForm.querySelector(self.classes.formError)) {
                     // Append error message
-                    bonzo(this.unsavedChangesForm).prepend(this.genUnsavedError());
+                    bonzo(self.unsavedChangesForm).prepend(self.genUnsavedError());
                     // Bind form submit to error message 'save' action
-                    bean.on(this.unsavedChangesForm.querySelector('.js-save-unsaved'), 'click', function () {
-                        this.unsavedChangesForm.submit();
+                    bean.on(self.unsavedChangesForm.querySelector('.js-save-unsaved'), 'click', function () {
+                        self.unsavedChangesForm.submit();
                     });
                 }
             } else {
@@ -111,7 +112,7 @@ define([
         var inputs = Array.prototype.slice.call(form.querySelectorAll(this.classes.textInput));
         for (var i = inputs.length - 1; i >= 0; i--) {
             inputs[i].form = form;
-            inputs[i].addEventListener("keyup", this.onInputChange.bind(this));
+            inputs[i].addEventListener("input", this.onInputChange.bind(this));
         }
     };
 
