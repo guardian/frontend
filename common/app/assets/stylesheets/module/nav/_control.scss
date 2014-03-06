@@ -48,7 +48,12 @@
         z-index: 1;
         @include rem((
             right: $gs-gutter,
-            top: 130px
+            top: 131px
+        ));
+    }
+    @include mq(desktop) {
+        @include rem((
+            top: 131px - $gs-row-height
         ));
     }
 }

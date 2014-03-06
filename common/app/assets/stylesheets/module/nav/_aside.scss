@@ -1,7 +1,6 @@
 .navigation-aside {
     clear: both;
-    background: $c-neutral8;
-    border-top: 1px solid $c-neutral5;
+    border-top: 1px solid lighten($c-neutral4, 5%);
     @include font-size(14, 20);
     @include rem((
         margin-top: ($gs-baseline/3)*2
@@ -29,21 +28,10 @@
             margin-right: $gs-gutter
         ));
     }
-
     & + & {
-        border-top: 1px solid $c-neutral5;
-
-        @include mq(tablet) {
-            border-top: 0;
-        }
-    }
-}
-.navigation-aside--footer {
-    border-top: 0;
-
-    .switcher {
-        border-top: 0;
-        border-bottom: 1px solid $c-neutral5;
+        @include rem((
+            padding-top: $gs-baseline / 2
+        ));
     }
 }
 .switcher__label,
@@ -92,7 +80,7 @@
         content: '';
         display: inline-block;
         @include rounded-corners(50%);
-        background: $c-neutral3;
+        background: $c-brandLightBlue;
         @include rem((
             margin-left: -15px,
             vertical-align: -1px,

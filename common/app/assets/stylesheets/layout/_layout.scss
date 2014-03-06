@@ -36,13 +36,18 @@
             margin-top: 7px
         ));
     }
+    @include mq(desktop) {
+        @include rem((
+            margin-top: -$gs-row-height,
+            margin-bottom: $gs-baseline * 1.5
+        ));
+    }
 }
-
 
 /* Pre-header
    ========================================================================== */
 
-.pre-header {
+.header-pre {
     float: left;
     min-width: gs-span(2);
     z-index: 1;
@@ -53,8 +58,11 @@
         background: $c-neutral8;
         border-bottom: 1px solid $c-neutral4;
     }
+    @include mq(desktop) {
+        border-bottom-color: $c-neutral8;
+    }
 }
-.pre-header__inner {
+.header-pre__inner {
     @include box-sizing(border-box);
     @include rem((
         padding-left: $gs-gutter/2,
@@ -113,6 +121,15 @@ a.edition {
         color: $c-brandLightBlue;
         text-decoration: none;
     }
+}
+
+
+/* Main header (logo, actions)
+   ========================================================================== */
+
+.header-main {
+    position: relative;
+    z-index: 2;
 }
 
 
