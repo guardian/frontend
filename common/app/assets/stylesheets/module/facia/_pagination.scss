@@ -6,10 +6,24 @@
     text-align: center;
     @include fs-data(4);
     border-top: 1px solid $c-neutral5;
+
+    @include mq(leftCol) {
+        float: right;
+        @include rem((
+            width: gs-span(12)
+        ))
+    }
+
+    @include mq(wide) {
+        @include rem((
+            width: gs-span(13)
+        ))
+    }
 }
 
 .pagination__links {
     width: 100%;
+
     @include mq(tablet) {
         float: right;
         @include rem((
@@ -46,8 +60,5 @@
 
 .pagination_legend {
     float: left;
-    @include rem((
-        padding-left: $gs-gutter
-    ));
 }
 
