@@ -76,7 +76,7 @@ define([
     accountProfile.prototype.genUnsavedError = function () {
         var errorDivStart = "<div class='form__error'>",
             errorDivEnd = "</div>",
-            errorSaveLink = "<a href='#' class='js-save-unsaved'>Save changes</a>.",
+            errorSaveLink = "<a href='#' class='js-save-unsaved'>Save changes</a>",
             errorMessageStart = "Your form has unsaved changes in ";
 
         for (var i = 0; i < this.unsavedFields.length; i++) {

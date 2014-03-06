@@ -237,11 +237,7 @@
    ========================================================================== */
 
 .identity-wrapper .tabs {
-    .tone-colour {
-        color: $c-brandBlue;
-    }
-
-    .tone-accent-border {
-        border-color: $c-brandBlue;
+    .fieldset:first-of-type {
+        border-top: none; // Included so as not to break tabs metaphor
     }
 }
