@@ -245,7 +245,10 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
       content.headline.isEmpty
       content.shortUrl.isEmpty
       content
-    }.getOrElse(throw new InvalidContent(content.id))
+    }.getOrElse {
+      FaciaToolMetrics.InvalidContentExceptionMetric.increment()
+      throw new InvalidContent(content.id)
+    }
   }
 
 }
