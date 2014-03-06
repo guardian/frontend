@@ -1,7 +1,6 @@
 .navigation-aside {
     clear: both;
-    background: $c-neutral7;
-    border-top: 1px solid $c-neutral5;
+    border-top: 1px solid lighten($c-neutral4, 5%);
     @include font-size(14, 20);
     @include rem((
         margin-top: ($gs-baseline/3)*2
@@ -15,6 +14,7 @@
     }
 }
 .switcher {
+    color: darken($c-neutral2, 3%); // Enhance contrast on non-white background
     clear: both;
     @include rem((
         padding-top: $gs-baseline,
@@ -28,17 +28,10 @@
             margin-right: $gs-gutter
         ));
     }
-
     & + & {
-        border-top: 1px solid $c-neutral5;
-    }
-}
-.navigation-aside--footer {
-    border-top: 0;
-
-    .switcher {
-        border-top: 0;
-        border-bottom: 1px solid $c-neutral5;
+        @include rem((
+            padding-top: $gs-baseline / 2
+        ));
     }
 }
 .switcher__label,
@@ -49,7 +42,6 @@
 .switcher__label {
     margin: 0;
     width: 25%;
-    color: darken($c-neutral2, 3%); // Enhance contrast on non-white background
     @include fs-data(4);
     font-weight: normal;
 }
@@ -58,6 +50,7 @@
     width: 75%;
 }
 .switcher__option {
+    @include fs-header(1);
     @include box-sizing(border-box);
     width: 33.333333333%; // of 75% = 25%
     @include rem((
@@ -67,7 +60,12 @@
 
     &,
     a {
-        color: $c-neutral1;
+        color: darken($c-neutral2, 3%); // Enhance contrast on non-white background
+    }
+    a:hover,
+    a:focus {
+        color: $c-brandLightBlue;
+        text-decoration: none;
     }
 
     &:last-child {
@@ -76,11 +74,13 @@
 }
 
 .switcher__option--active {
+    color: $c-brandLightBlue;
+
     &:before {
         content: '';
         display: inline-block;
         @include rounded-corners(50%);
-        background: $c-neutral3;
+        background: $c-brandLightBlue;
         @include rem((
             margin-left: -15px,
             vertical-align: -1px,

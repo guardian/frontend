@@ -13,10 +13,10 @@ casper.test.setUp(function() {
 
 casper.test.begin("Load search", function(test){
     casper.then(function testSearch() {
-        casper.waitUntilVisible('.control--search', function() {
-            casper.click(".control--search");
-            casper.waitUntilVisible('.nav-popup-search', function() {
-                test.assertVisible('.nav-popup-search','Then I see the search bar when I click on the search icon');
+        casper.waitUntilVisible('.js-search-toggle', function() {
+            casper.click(".js-search-toggle");
+            casper.waitUntilVisible('.nav-popup--search', function() {
+                test.assertVisible('.nav-popup--search','Then I see the search bar when I click on the search icon');
                 test.done();
             }, function timeout() {
                 casper.capture(screens + 'search-component-fail.png');
