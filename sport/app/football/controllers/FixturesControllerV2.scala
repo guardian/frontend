@@ -80,16 +80,16 @@ object FixturesControllerV2 extends Controller with CompetitionFixtureFilters wi
     renderMatchList(page, fixtures)
   }
 
-  protected def renderMatchList(page: Page, matchList: MatchesList)(implicit request: RequestHeader) = {
+  protected def renderMatchList(page: Page, matchesList: MatchesList)(implicit request: RequestHeader) = {
     Cached(page) {
       if (request.isJson)
         JsonComponent(
           page,
-          "html" -> football.views.html.matchList.matchesList(page, matchList),
-          "more" -> Html(matchList.nextPage.getOrElse(""))
+          "html" -> football.views.html.matchList.matchesList(matchesList),
+          "more" -> Html(matchesList.nextPage.getOrElse(""))
         )
       else
-        Ok(football.views.html.matchList.matchesPage(page, matchList))
+        Ok(football.views.html.matchList.matchesPage(page, matchesList))
     }
   }
 }

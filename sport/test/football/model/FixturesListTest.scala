@@ -17,6 +17,12 @@ class FixturesListTest extends FreeSpec with ShouldMatchers with MatchTestData w
         }.sortBy(_.toInt) should equal(List("7", "8", "9", "10", "32", "33", "34"))
       }
 
+      "should group matches correctly" in {
+        fixtures.matchesGroupedByDateAndCompetition.map(_._1) should equal(List(today, today.plusDays(1), today.plusDays(3)))
+        val (date1, competitionMatches1) = fixtures.matchesGroupedByDateAndCompetition(0)
+        competitionMatches1.map(_._1.id) should equal(List("1", "2"))
+      }
+
       "should only contain matches happening on one of next 3 days that have fixtures (includes today)" in {
         val allowedDates = List(today, today.plusDays(1), today.plusDays(3))  // look at the test data to see why
 
