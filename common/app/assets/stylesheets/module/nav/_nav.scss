@@ -128,7 +128,6 @@
         padding: $gs-baseline/2 $gs-gutter*3 $gs-baseline/2 $gs-gutter,
         height: 45px
     ));
-    text-transform: lowercase;
     @include fs-header(3);
 
     @include mq(tablet) {
@@ -332,7 +331,6 @@
 
 @include mq(tablet) {
     .nav--additional-sections {
-        text-transform: lowercase;
         @include rem((
             padding-left: $gs-gutter/2,
             padding-right: $gs-gutter/2
