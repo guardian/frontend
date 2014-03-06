@@ -1,4 +1,4 @@
-import common.{ContentApiMetrics, FaciaMetrics, CloudWatchApplicationMetrics}
+import common.{FaciaToolMetrics, ContentApiMetrics, FaciaMetrics, CloudWatchApplicationMetrics}
 import conf.{Management, RequestMeasurementMetrics}
 import controllers.front._
 import dev.DevParametersLifecycle
@@ -17,7 +17,8 @@ object Global extends WithFilters(RequestMeasurementMetrics.asFilters: _*) with 
     ("elastic-content-api-timeouts", ContentApiMetrics.ElasticHttpTimeoutCountMetric.getAndReset.toDouble),
     ("solr-content-api-timeouts", ContentApiMetrics.HttpTimeoutCountMetric.getAndReset.toDouble),
     ("content-api-client-parse-exceptions", ContentApiMetrics.ContentApiJsonParseExceptionMetric.getAndReset.toDouble),
-    ("content-api-client-mapping-exceptions", ContentApiMetrics.ContentApiJsonMappingExceptionMetric.getAndReset.toDouble)
+    ("content-api-client-mapping-exceptions", ContentApiMetrics.ContentApiJsonMappingExceptionMetric.getAndReset.toDouble),
+    ("content-api-invalid-content-exceptions", FaciaToolMetrics.InvalidContentExceptionMetric.getAndReset.toDouble)
   )
 
 }
