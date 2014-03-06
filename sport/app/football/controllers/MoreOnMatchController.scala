@@ -41,7 +41,8 @@ object MoreOnMatchController extends Controller with Football with Requests with
         case Nil => JsonNotFound()
         case filtered => JsonComponent(
           "nav" -> football.views.html.fragments.matchNav(populateNavModel(theMatch, filtered)),
-          "summary" -> football.views.html.fragments.matchSummary(theMatch)
+          "summary" -> football.views.html.fragments.matchSummary(theMatch),
+          "scoreSummary" -> football.views.html.fragments.scoreSummary(theMatch)
         )
       }
     }
