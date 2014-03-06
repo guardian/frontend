@@ -376,9 +376,9 @@ module.exports = function (grunt) {
             components: {
                 files: [{
                     expand: true,
-                    cwd: staticTargetDir + 'javascripts/components/',
-                    src: '**/*.js',
-                    dest: staticTargetDir + 'javascripts/components/'
+                    cwd: staticTargetDir + 'javascripts',
+                    src: ['**/*.js', '!bootstraps/**/*.js'],
+                    dest: staticTargetDir + 'javascripts'
                 }]
             }
         },
