@@ -222,26 +222,31 @@
     border-top: $gs-baseline/6 solid $c-newsAccent;
 
     @include mq(tablet) { display: none; }
+}
 
-    .localnav__cta {
-        float: right;
-        margin-top: 3px;
-        width: auto;
+.localnav__cta {
+    float: right;
+    margin-top: 3px;
+    width: auto;
 
-        .control {
-            overflow: hidden;
-        }
+    .control {
+        overflow: hidden;
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+    }
 
-        i {
-            margin-top: -1px;
-            margin-left: -1px;
-        }
+    i {
+        margin-top: -1px;
+        margin-left: -1px;
+        -webkit-transition: -webkit-transform .18s ease-out;
+        transition: transform .18s ease-out;
+    }
 
-        &.is-active i {
-            @include rotate(180deg);
-        }
+    &.is-active i {
+        @include rotate(180deg);
     }
 }
+
 
 .localnav__inner {
     position: relative;
