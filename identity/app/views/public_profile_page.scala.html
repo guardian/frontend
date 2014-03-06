@@ -5,12 +5,17 @@
 @identityMain(page, Switches.all){
 }{
 <div class="identity-wrapper monocolumn-wrapper identity-public-profile">
-    <div class="identity-section">
-        <div class="identity-section__head u-cf identity-public-profile__title">
+    <div class="identity-section form">
+        <div class="fieldset__heading">
             <div class="user-avatar" data-userid="@user.id"></div>
-            <h1 class="identity-title">@user.publicFields.displayName (@user.publicFields.username)</h1>
+            <h2 class="form__heading">
+                @user.publicFields.displayName
+            </h2>
+            @user.dates.accountCreatedDate.map { joinDate =>
+                <p class="form-field__note">Joined: @joinDate.toString("d MMM yyyy")</p>
+            }
         </div>
-        <div class="identity-public-profile__text">
+        <div class="fieldset__fields">
             <ul class="unstyled">
                 <li>
                     <strong class="">Location:</strong>

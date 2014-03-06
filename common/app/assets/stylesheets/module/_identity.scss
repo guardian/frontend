@@ -75,7 +75,7 @@
     }
 
     .social-signin__action {
-        color: #fff;
+        color: #ffffff;
         display: block;
         font-family: $sans-serif;
         font-size: 14px;
@@ -232,28 +232,3 @@
         left: 0;
     }
 }
-
-/* Public Profile Page
-   ========================================================================== */
-
-@include mq(desktop) {
-    .identity-public-profile__title {
-        display: table-cell;
-        padding-right: 100px;
-        vertical-align: top;
-        width: 220px;
-    }
-
-    .identity-public-profile__text {
-        display: table-cell;
-        vertical-align: top;
-        width: 460px;
-        .identity-section__text {
-            font-family: $sans-serif;
-            font-size: 13px;
-            font-size: 1.3rem;
-            margin-bottom: 8px;
-        }
-    }
-}
-

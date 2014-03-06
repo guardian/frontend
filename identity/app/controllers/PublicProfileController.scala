@@ -5,7 +5,7 @@ import common.ExecutionContexts
 import services.{IdRequestParser, IdentityUrlBuilder}
 import com.google.inject.{Inject, Singleton}
 import utils.SafeLogging
-import model.IdentityPage
+import model.{NoCache, IdentityPage}
 import play.api.data.{Forms, Form}
 import idapiclient.{IdApiClient, UserUpdate}
 import com.gu.identity.model.{PrivateFields, PublicFields, User}
@@ -91,7 +91,7 @@ class PublicProfileController @Inject()(idUrlBuilder: IdentityUrlBuilder,
         Ok("errors: " + errors)
       }
       case Right(user) => {
-        Ok(views.html.public_profile_page(page, idRequest, idUrlBuilder, user))
+        NoCache(Ok(views.html.public_profile_page(page, idRequest, idUrlBuilder, user)))
       }
     }
   }
