@@ -85,7 +85,7 @@ define([
                         $('.tab--min-by-min a', context).each(function(el, i) {
                             if (i === 0) {
                                 $scores.addClass('u-fauxlink');
-                                bean.on('click', $scores[0], function() {
+                                bean.on($scores[0], 'click', function() {
                                     window.location = el.getAttribute('href');
                                 });
                             }
