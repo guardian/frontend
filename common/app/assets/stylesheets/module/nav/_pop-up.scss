@@ -72,7 +72,7 @@
 }
 .nav-popup--search {
     @include rem((
-        padding-top: $gs-baseline
+        padding-top: 10px
     ));
 
     @include mq(tablet) {
