@@ -54,19 +54,19 @@ define([
         },
 
         matchScores: function() {
-            // For debugging
-            var force = window.location.hash === '#force-football-liveblog';
+            if (config.referencesOfType('paFootballTeam').length !== 2) {
+                return;
+            }
 
-            // we only want this on minute-by-minute of a match
-            if ((config.page.isLiveBlog && config.referencesOfType('paFootballTeam').length === 2) || force) {
+            var $h = $('.article__headline', context);
+            if (config.page.isLiveBlog) {
                 // replace the headline with loader (mainly for mobile)
-                var $h = $('.article__headline', context),
-                    $scores = bonzo(bonzo.create(
-                            '<div class="live-summary live-summary--loading">'+
-                                '<div class="loading__text">Fetching the scores…</div>'+
-                                '<div class="is-updating"></div>'+
-                            '</div>'
-                        )).css({ height: $h.get(0).scrollHeight });
+                var $scores = bonzo(bonzo.create(
+                    '<div class="live-summary live-summary--loading">'+
+                        '<div class="loading__text">Fetching the scores…</div>'+
+                        '<div class="is-updating"></div>'+
+                    '</div>'
+                )).css({ height: $h.get(0).scrollHeight });
 
                 $h.addClass('u-h');
                 $scores.insertAfter($h);
@@ -78,6 +78,18 @@ define([
                 mediator.on('modules:matchnav:error', function() {
                     $h.removeClass('u-h');
                     $scores.remove();
+                });
+
+            } else if (config.hasTone("Match reports")) {
+                mediator.on('modules:matchnav:loaded', function(resp) {
+                    var $scores = bonzo(bonzo.create(resp.scoreSummary))
+                            .addClass('u-fauxlink')
+                            .attr('role', 'link');
+
+                    bean.on($scores.get(0), 'click', function() {
+                        bean.fire($('.tab--min-by-min a', context).get(0), 'click');
+                    });
+                    $h.before($scores);
                 });
             }
         },

@@ -12,3 +12,17 @@
         display: inline-block;
     }
 }
+
+.score-summary {
+    @include fs-headline(2, true);
+    @include rem((
+        margin: $gs-baseline 0 (-$gs-baseline/2)
+    ));
+
+    @include mq($from: tablet) {
+        @include fs-headline(4, true);
+        @include rem((
+            margin: $gs-baseline/2 0 0
+        ));
+    }
+}

@@ -383,7 +383,8 @@
     border-bottom: 1px dotted $c-neutral5;
 
     @include mq(leftCol) {
-        float: left;
+        position: absolute;
+        top: 0;
         @include rem((
             margin-left: ($a-leftCol-width + $gs-gutter)*-1,
             margin-bottom: ($gs-baseline/3)*4,
