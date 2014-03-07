@@ -14,6 +14,12 @@
         @include rem((
             line-height: 21px
         ));
+        -webkit-font-smoothing: antialiased;
+
+        &:link,
+        &:visited {
+            color: #ffffff;
+        }
     }
 
     .cta {
