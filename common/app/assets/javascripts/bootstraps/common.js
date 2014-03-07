@@ -9,6 +9,7 @@ define([
     'domReady',
     'bonzo',
     'bean',
+    'enhancer',
     'lodash/functions/debounce',
     //Modules
     'common/utils/storage',
@@ -39,7 +40,6 @@ define([
     "common/modules/identity/autosignin",
     'common/modules/adverts/article-body-adverts',
     "common/modules/analytics/commercial/tags/container",
-    "common/modules/interactive/loader",
     "common/modules/onward/right-hand-component-factory"
 ], function (
     $,
@@ -51,6 +51,7 @@ define([
     domReady,
     bonzo,
     bean,
+    enhancer,
     debounce,
 
     storage,
@@ -82,7 +83,6 @@ define([
     AutoSignin,
     ArticleBodyAdverts,
     TagContainer,
-    Interactive,
     RightHandComponentFactory
 ) {
 
@@ -414,9 +414,9 @@ define([
         augmentInteractive: function () {
             mediator.on('page:common:ready', function(config, context) {
                 if (/Article|Interactive/.test(config.page.contentType)) {
-                    var interactives = context.querySelectorAll('figure.interactive');
-                    Array.prototype.forEach.call(interactives, function (i) {
-                        new Interactive(i, context, config).init();
+                    $('figure.interactive').each(function (el) {
+
+                        enhancer.render(el, context, config, mediator);
                     });
                 }
             });
