@@ -4,7 +4,7 @@
 
 .nav-popup {
     position: absolute;
-    top: $headerHeight;
+    top: 0;
     clear: both;
     z-index: 100;
     @include rem((
@@ -12,11 +12,9 @@
     ));
     list-style: none;
     margin-bottom: -4px;
-    border-bottom: $gs-baseline/3 solid $c-brandBlue;
+    border-bottom: 2px solid $c-brandBlue;
     background: #ffffff;
     width: 100%;
-    @include transform(translateZ(0)); // Hotfix to make popups stay on top
-                                       // of .preload elements in Chrome Android
 }
 
 
@@ -25,46 +23,140 @@
 
 .nav-popup--small {
     @include rem((
-        padding-top: $gs-baseline
+        padding-top: $gs-baseline/3,
+        padding-bottom: $gs-baseline,
+        top: $headerHeight,
+        min-height: 47px
     ));
-    padding-bottom: 0;
-
-    .nav__link {
-        color: $c-neutral1;
-    }
 
     @include mq(tablet) {
         position: absolute;
-        top: 99px;
-        right: 0;
-        width: auto;
-        padding-top: $gs-baseline/3;
+
         @include rem((
+            top: 40px,
+            right: $gs-gutter,
+            padding-top: $gs-baseline/3,
             width: gs-span(4) + $gs-gutter
         ));
         @include box-sizing(border-box);
         background-color: #ffffff;
-        border-bottom: 1px solid $c-neutral5;
-        border-left: 1px solid $c-neutral5;
+        border: 1px solid $c-neutral4;
 
         .nav--additional-sections > .nav__item {
             > .nav__link {
                 border-top: 0;
-                border-bottom: 1px solid $c-neutral7;
+                border-bottom: 1px solid lighten($c-neutral4, 8%);
             }
         }
 
         .nav__link {
-            @include font-size(14, 19);
-            padding: 10px 0;
+            @include rem((
+                padding: 10px 0
+            ));
         }
     }
+}
+.nav-popup--sections {
+    padding-bottom: 0;
 
-    // Popup is not sticking to the edge of screen
-    @include mq(1157px, 1299px) {
-        border-right: 1px solid $c-neutral5;
+    @include mq(tablet) {
+        @include rem((
+            top: 120px
+        ));
     }
-    @include mq(1316px) {
-        border-right: 1px solid $c-neutral5;
+    @include mq(desktop) {
+        @include rem((
+            top: 120px - $gs-row-height
+        ));
+    }
+}
+.nav-popup--search {
+    @include rem((
+        padding-top: 10px
+    ));
+
+    @include mq(tablet) {
+        right: auto;
+        top: -1px;
+        border: 1px solid $c-neutral4;
+
+        @include rem((
+            width: gs-span(8) + $gs-gutter,
+            min-height: 68px,
+            left: $gs-gutter/2,
+            padding-bottom: $gs-baseline/2
+        ));
+    }
+}
+
+
+/* Identity Menu
+   ========================================================================== */
+
+.nav-popup--profile {
+    @include mq(tablet) {
+        right: auto;
+        top: -1px;
+        @include rem((
+            left: 303px,
+            width: gs-span(3)
+        ));
+    }
+
+    .nav {
+        padding-left: 0;
+        padding-right: 0;
+
+        @include mq(tablet) {
+            @include rem((
+                padding-left: 2px,
+                padding-right: 2px
+            ));
+        }
+
+        > .nav__item {
+            float: none;
+            width: auto;
+            display: block;
+            @include rem((
+                padding-left: $gs-gutter/2,
+                padding-right: $gs-gutter/2
+            ));
+            @include mq(mobileLandscape) {
+                @include rem((
+                    padding-left: $gs-gutter,
+                    padding-right: $gs-gutter
+                ));
+            }
+
+            &:first-child .nav__link {
+                border-top: 0;
+                padding-top: 0;
+                @include mq(tablet) {
+                    @include rem((
+                        padding-top: 10px
+                    ));
+                }
+            }
+            &:last-child .nav__link {
+                border-bottom: 0;
+            }
+            .nav__link {
+                @include mq(tablet) {
+                    @include rem((
+                        padding: 10px 0
+                    ));
+                }
+            }
+        }
+    }
+}
+
+/* Force left positioning in identity header */
+.nav-popup--profile-docked-left {
+    @include mq(tablet) {
+        @include rem((
+            left: $gs-gutter/2
+        ));
     }
 }

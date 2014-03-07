@@ -11,34 +11,42 @@ import java.io.File;
 
 public class Configuration {
 
-	private final Config config;
+    private final Config config;
 
-	public Configuration(Config config) {
-		this.config = config;
+    public Configuration(Config config) {
+        this.config = config;
 
-		final SystemPropertiesConfiguration systemPropertiesConfiguration =
-			new SystemPropertiesConfiguration();
+        final SystemPropertiesConfiguration systemPropertiesConfiguration =
+                new SystemPropertiesConfiguration();
 
-		Config system = new Config();
-		system.add(systemPropertiesConfiguration);
+        Config system = new Config();
+        system.add(systemPropertiesConfiguration);
 
-		String userHome = system.get("user.home");
-		String path = String.format("%s%s.gu%sfrontend.properties", userHome, File.separator,
-									File.separator);
-		system = null;
+        String userHome = system.get("user.home");
+        String path = String.format("%s%s.gu%sfrontend.properties", userHome, File.separator,
+                File.separator);
+        system = null;
 
-		File frontendConfigFile = new File(path);
-		config.add(new Optional(new FileConfiguration(frontendConfigFile)));
-		config.addOverriding(new Required(new ResourceConfiguration("environment.properties")));
-		config.addOverriding(new Optional(new ResourceConfiguration("developer.properties")));
-		config.addHighOrder(systemPropertiesConfiguration);
-	}
+        File frontendConfigFile = new File(path);
+        config.add(new Optional(new FileConfiguration(frontendConfigFile)));
+        config.addOverriding(new Required(new ResourceConfiguration("environment.properties")));
+        config.addOverriding(new Optional(new ResourceConfiguration("developer.properties")));
+        config.addHighOrder(systemPropertiesConfiguration);
+    }
 
-	public String baseUrl() {
-		return config.get("baseUrl");
-	}
+    public String baseUrl() {
+        return config.get("baseUrl");
+    }
 
-	public String cookieString() {
-		return config.get("userCookie");
-	}
+    public String getUsename() {
+        return config.get("test.username");
+    }
+
+    public String getPassword() {
+        return config.get("test.password");
+    }
+
+    public String getGASecret() {
+        return config.get("test.GASecret");
+    }
 }

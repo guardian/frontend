@@ -246,13 +246,6 @@ object Switches extends Collections {
     safeState = On, sellByDate = endOfQ4
   )
 
-  val ExternalLinksCardsSwitch = Switch("Feature Switches", "external-links-cards",
-    "If this switch is on, external links are turned into cards in body content on wide viewports.",
-    safeState = Off,
-
-    sellByDate = new DateMidnight(2014, 3, 7)
-  )
-
   val ArticleKeywordsSwitch = Switch("Feature Switches", "article-keywords",
     "If this is switched on then keywords will be shown at the end of articles.",
     safeState = On, sellByDate = endOfQ4
@@ -350,7 +343,7 @@ object Switches extends Collections {
 
   val FootballTablePosition = Switch("A/B Tests", "ab-football-table-position",
     "If this switch is on, the football table will vary in position throughout the football tagged pages.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 3, 7)
+    safeState = Off, sellByDate = new DateMidnight(2014, 3, 12)
   )
 
   val ABFrontsLatestReviewsCard = Switch("A/B Tests", "ab-fronts-latest-reviews-card",
@@ -456,7 +449,6 @@ object Switches extends Collections {
     ClientSideErrorSwitch,
     LightboxGalleriesSwitch,
     IdentityProfileNavigationSwitch,
-    ExternalLinksCardsSwitch,
     LiveCricketSwitch,
     LiveStatsSwitch,
     LiveAbTestStatsSwitch,

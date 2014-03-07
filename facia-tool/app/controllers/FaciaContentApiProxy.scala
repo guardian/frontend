@@ -12,7 +12,7 @@ object FaciaContentApiProxy extends Controller with Logging with AuthLogging wit
 
   def proxy(path: String) = AjaxExpiringAuthentication.async { request =>
     FaciaToolMetrics.ProxyCount.increment()
-    val queryString = request.queryString.map { p =>
+    val queryString = request.queryString.filter(_._2.exists(_.nonEmpty)).map { p =>
        "%s=%s".format(p._1, p._2.head.urlEncoded)
     }.mkString("&")
 

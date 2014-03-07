@@ -13,6 +13,6 @@ public class TrailBlock implements Managable {
 	}
 
 	public String uri() {
-		return String.format("uk/news/%s", name);
+		return String.format("%s", name);
 	}
 }
