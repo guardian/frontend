@@ -81,7 +81,11 @@ trait LiveMatches extends MatchesList {
   override def timeComesFirstInList(d: DateTime, other: DateTime): Boolean = d.isBefore(other)
 }
 trait TeamList { val teamId: String }
-trait CompetitionList { val competitionId: String }
+trait CompetitionList {
+  val competitions: CompetitionSupport
+  val competitionId: String
+  lazy val competition = competitions.competitions.find(_.id == competitionId)
+}
 
 case class FixturesList(date: DateMidnight, competitions: CompetitionSupport) extends Fixtures {
   override val daysToDisplay = 3
@@ -119,4 +123,9 @@ case class LiveMatchesList(competitions: CompetitionSupport) extends LiveMatches
   override val date = DateMidnight.now
   override def filterMatches(fMatch: FootballMatch, competition: Competition): Boolean =
     fMatch.isLive
+}
+case class CompetitionLiveMatchesList(competitions: CompetitionSupport, competitionId: String) extends LiveMatches with CompetitionList {
+  override val date = DateMidnight.now
+  override def filterMatches(fMatch: FootballMatch, competition: Competition): Boolean =
+    competition.id == competitionId && fMatch.isLive
 }
