@@ -45,7 +45,6 @@ class PublicProfileControllerTest extends path.FreeSpec with ShouldMatchers with
 
   "the submit form method" - {
     val location = "Test location"
-    val gender = "Male"
     val aboutMe = "Interesting"
     val interests = "Other interesting things"
     val webPage = "http://example.com/test"
@@ -56,8 +55,7 @@ class PublicProfileControllerTest extends path.FreeSpec with ShouldMatchers with
         "location" -> location,
         "aboutMe" -> aboutMe,
         "interests" -> interests,
-        "webPage" -> webPage,
-        "gender" -> gender
+        "webPage" -> webPage
       )
       when(api.saveUser(Matchers.any[String], Matchers.any[UserUpdate], Matchers.any[Auth]))
         .thenReturn(Future.successful(Right(user)))
@@ -71,7 +69,6 @@ class PublicProfileControllerTest extends path.FreeSpec with ShouldMatchers with
       userUpdate.publicFields.value.aboutMe.value should equal(aboutMe)
       userUpdate.publicFields.value.interests.value should equal(interests)
       userUpdate.publicFields.value.webPage.value should equal(webPage)
-      userUpdate.privateFields.value.gender.value should equal(gender)
     }
 
     "when the form submission does not pass its CSRF check" - {
