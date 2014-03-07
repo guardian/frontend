@@ -2,9 +2,15 @@
 /* Identity and registration
    ========================================================================== */
 
-.identity-header {
-    height: 133px;
-    border-bottom: 2px solid #214583;
+#header.identity-header {
+    height: 44px;
+    background-color: #ffffff;
+
+    @include mq(tablet) {
+        height: 133px;
+        border-bottom: 2px solid #214583;
+        background: $c-neutral8;
+    }
 }
 
 .identity-wrapper {
