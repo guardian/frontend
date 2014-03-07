@@ -18,9 +18,11 @@ object FixturesControllerV2 extends Controller with CompetitionFixtureFilters wi
   private def createDate(year: String, month: String, day: String): DateMidnight =
     datePattern.parseDateTime(s"$year$month$day").toDateMidnight
 
-  def allFixtures(year: String, month: String, day: String): Action[AnyContent] =
+  def allFixturesForJson(year: String, month: String, day: String) = allFixturesFor(year, month, day)
+  def allFixturesFor(year: String, month: String, day: String): Action[AnyContent] =
     renderAllFixtures(createDate(year, month, day))
 
+  def allFixturesJson() = allFixtures()
   def allFixtures(): Action[AnyContent] =
     renderAllFixtures(DateMidnight.now)
 
@@ -35,11 +37,13 @@ object FixturesControllerV2 extends Controller with CompetitionFixtureFilters wi
     renderMatchList(page, fixtures)
   }
 
+  def tagFixturesJson(tag: String) = tagFixtures(tag)
   def tagFixtures(tag: String): Action[AnyContent] =
-    tagFixtures(DateMidnight.now, tag)
-  def tagFixtures(year: String, month: String, day: String, tag: String): Action[AnyContent] =
-    tagFixtures(createDate(year, month, day), tag)
-  private def tagFixtures(date: DateMidnight, tag: String): Action[AnyContent] = {
+    renderTagFixtures(DateMidnight.now, tag)
+  def tagFixturesForJson(year: String, month: String, day: String, tag: String) = tagFixturesFor(year, month, day, tag)
+  def tagFixturesFor(year: String, month: String, day: String, tag: String): Action[AnyContent] =
+    renderTagFixtures(createDate(year, month, day), tag)
+  private def renderTagFixtures(date: DateMidnight, tag: String): Action[AnyContent] = {
     lookupCompetition(tag).map { comp =>
       renderCompetitionFixtures(tag, comp, date)
     }.orElse {
@@ -80,6 +84,7 @@ object FixturesControllerV2 extends Controller with CompetitionFixtureFilters wi
     renderMatchList(page, fixtures)
   }
 
+  // to move to superclass and share with Results / Live Matches
   protected def renderMatchList(page: Page, matchesList: MatchesList)(implicit request: RequestHeader) = {
     Cached(page) {
       if (request.isJson)

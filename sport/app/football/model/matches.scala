@@ -44,13 +44,12 @@ trait MatchesList extends Football with RichList {
       eligibleDates.contains(fMatch.date.toDateMidnight)
     }
   }
-  lazy val matchesGroupedByDate =
-    relevantMatches.segmentBy((t: (FootballMatch, Competition)) => t._1.date.toDateMidnight)
-  lazy val matchesGroupedByDateAndCompetition =
-    matchesGroupedByDate.map { case (dateTime, matchesList) =>
-      (dateTime, matchesList.segmentByAndMap(key = (t: (FootballMatch, Competition)) => t._2, mapValue = matchAndComp => matchAndComp._1))
-    }
-
+  lazy val matchesGroupedByDate = relevantMatches.segmentBy(_._1.date.toDateMidnight)
+  lazy val matchesGroupedByDateAndCompetition = matchesGroupedByDate.map { case (d, ms) =>
+    (d, ms.groupBy(_._2).mapValues(_.map {
+      case (matches, _) => matches
+    }))
+  }
 
   lazy val nextPage: Option[String] = {
     val nextMatchDate = matchDates.dropWhile(dateComesFirstInList(_, date)).drop(daysToDisplay).headOption

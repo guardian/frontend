@@ -1,5 +1,24 @@
-@(matchesList: football.model.MatchesList)(implicit request: RequestHeader)
+@(matchesList: _root_.football.model.MatchesList)(implicit request: RequestHeader)
 
+@matchesList.matchesGroupedByDateAndCompetition.map { case (date, competitionMatches) =>
+    <div class="football-matches__day">
+        <div class="date-divider">@date.toString("EEEE d MMMM yyyy")</div>
 
+        @competitionMatches.map { case (competition, matches) =>
+            <div class="article__meta-container">
+                <h3 class="article__meta-heading"><a href="@LinkTo{@competition.url}" data-link-name="view competition">@competition.fullName</a></h3>
+            </div>
 
+            <div class="article__container u-cf">
+                @football.views.html.fragments.tableMatches(matches)
+            </div>
+        }
+    </div>
+}
 
+@if(matchesList.previousPage.isDefined || matchesList.nextPage.isDefined) {
+    <div class="js-matches-nav matches-nav u-cf js-not-ajax" data-link-name="@matchesList.pageType nav">
+        @matchesList.previousPage.map{url => <a href="@LinkTo{@url}" data-link-name="previous"><span class="i i-toggle-collapse-neutral" title="Previous day"></span></a>}
+        @matchesList.nextPage.map{url => <a href="@LinkTo{@url}" data-link-name="next"><span class="i i-toggle-expand-neutral" title="Next few days"></span></a>}
+    </div>
+}
