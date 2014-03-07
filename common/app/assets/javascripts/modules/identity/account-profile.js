@@ -31,13 +31,13 @@ define([
         return {
             init: function (context) {
 
-                var accountProfileForms = context.querySelector(self.classes.forms);
+                self.accountProfileForms = context.querySelector(self.classes.forms);
 
-                if (accountProfileForms) {
-                    self.bindInputs(accountProfileForms.querySelector(self.classes.accountForm));
-                    self.bindInputs(accountProfileForms.querySelector(self.classes.publicForm));
+                if (self.accountProfileForms) {
+                    self.bindInputs(self.accountProfileForms.querySelector(self.classes.accountForm));
+                    self.bindInputs(self.accountProfileForms.querySelector(self.classes.publicForm));
 
-                    var tabs = accountProfileForms.querySelector(self.classes.tabs);
+                    var tabs = self.accountProfileForms.querySelector(self.classes.tabs);
 
                     bean.on(tabs, 'click', self.handleTabsClick.bind(self));
                 }
@@ -81,7 +81,9 @@ define([
             errorMessageStart = "Your form has unsaved changes in ";
 
         for (var i = 0; i < this.unsavedFields.length; i++) {
-            errorMessageStart += "'" + this.unsavedFields[i].labels[0].innerHTML + "'";
+            var labelId = this.unsavedFields[i].id;
+            var text = this.accountProfileForms.querySelector("[for='"+labelId+"']").innerHTML;
+            errorMessageStart += "'" + text + "'";
             if (i === this.unsavedFields.length-1) {
                 errorMessageStart += ". ";
             } else if (i === this.unsavedFields.length-2) {
