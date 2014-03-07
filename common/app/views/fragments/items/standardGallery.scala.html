@@ -7,34 +7,38 @@
 
         <div class="item__container">
 
-            <a href="@LinkTo{@trail.url}" class="item__link tone-accent-border" data-link-name="article">
-                <div class="item__media-wrapper item__media-wrapper--has-icon js-gallerythumbs" data-gallery-url="@LinkTo{@trail.url}">
-                    <div class="item__cta item__cta--gallery">
-                        <p>Expand</p>
-                        <span class="item__cta__icon">
-                            <span class="i i-camera-black-large"></span>
-                            <span class="i i-camera-yellow-large"></span>
-                        </span>
-                    </div>
-                    @trail.trailPicture(5,3).map{ imageContainer =>
-                        @ImgSrc.imager(imageContainer, Item620).map { imgSrc =>
-                            <div class="item__image-container u-responsive-ratio js-image-upgrade @if(inlineImages){ inlined-image}" data-src="@imgSrc">
-                                @if(inlineImages){
-                                    @Item300.bestFor(imageContainer).map{ url => <img src="@url" class="responsive-img" alt="" /> }
-                                }
+            <div class="item__link tone-accent-border" data-is-ajax>
+                <a href="@LinkTo{@trail.url}" data-is-ajax>
+                    <div class="item__media-wrapper item__media-wrapper--has-icon js-gallerythumbs" data-gallery-url="@LinkTo{@trail.url}" data-link-name="gallery">
+                        <div class="item__cta item__cta--gallery">
+                            <p>Expand</p>
+                            <span class="item__cta__icon">
+                                <span class="i i-camera-black-large"></span>
+                                <span class="i i-camera-yellow-large"></span>
+                            </span>
+                        </div>
+                        @trail.trailPicture(5,3).map{ imageContainer =>
+                            @ImgSrc.imager(imageContainer, Item620).map { imgSrc =>
+                                <div class="item__image-container u-responsive-ratio js-image-upgrade @if(inlineImages){ inlined-image}" data-src="@imgSrc">
+                                    @if(inlineImages){
+                                        @Item300.bestFor(imageContainer).map{ url => <img src="@url" class="responsive-img" alt="" /> }
+                                    }
+                                </div>
+                            }
+                        }.getOrElse{
+                            <div class="item__image-container u-responsive-ratio">
+                                <img src="@Static("images/no-image.png")" class="responsive-img" alt="" />
                             </div>
                         }
-                    }.getOrElse{
-                        <div class="item__image-container u-responsive-ratio">
-                            <img src="@Static("images/no-image.png")" class="responsive-img" alt="" />
-                        </div>
-                    }
-                </div>
-                <h@if(isFirstContainer && index == 0){1}else{2} class="item__title item__title--has-icon-mobile">
-                    <span class="i i-gallery-yellow-small"></span>
-                    @RemoveOuterParaHtml(trail.headline)
-                </h@if(isFirstContainer && index == 0){1}else{2}>
-            </a>
+                    </div>
+                </a>
+                <a href="@LinkTo{@trail.url}">
+                    <h@if(isFirstContainer && index == 0){1}else{2} class="item__title item__title--has-icon-mobile" data-link-name="article">
+                        <span class="i i-gallery-yellow-small"></span>
+                        @RemoveOuterParaHtml(trail.headline)
+                    </h@if(isFirstContainer && index == 0){1}else{2}>
+                </a>
+            </div>
 
             @trail.trailText.map { text =>
                 <div class="item__standfirst">@Html(text)</div>
