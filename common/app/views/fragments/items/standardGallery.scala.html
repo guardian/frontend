@@ -7,8 +7,8 @@
 
         <div class="item__container">
 
-            <a href="@LinkTo{@trail.url}" class="item__link tone-accent-border"  data-is-ajax>
-                <div class="item__media-wrapper item__media-wrapper--has-icon js-gallerythumbs" data-gallery-url="@LinkTo{@trail.url}" data-link-name="gallery">
+            <a href="@LinkTo{@trail.url}" class="item__link tone-accent-border" data-link-name="gallery" data-is-ajax>
+                <div class="item__media-wrapper item__media-wrapper--has-icon js-gallerythumbs" data-gallery-url="@LinkTo{@trail.url}">
                     <div class="item__cta item__cta--gallery">
                         <p>Expand</p>
                         <span class="item__cta__icon">
@@ -31,8 +31,8 @@
                     }
                 </div>
             </a>
-            <a href="@LinkTo{@trail.url}" class="item__link item__link--no-border">
-                <h@if(isFirstContainer && index == 0){1}else{2} class="item__title item__title--has-icon-mobile" data-link-name="article">
+            <a href="@LinkTo{@trail.url}" class="item__link item__link--no-border" data-link-name="article">
+                <h@if(isFirstContainer && index == 0){1}else{2} class="item__title item__title--has-icon-mobile">
                     <span class="i i-gallery-yellow-small"></span>
                     @RemoveOuterParaHtml(trail.headline)
                 </h@if(isFirstContainer && index == 0){1}else{2}>
