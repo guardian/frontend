@@ -62,7 +62,7 @@ class PublicProfileControllerTest extends path.FreeSpec with ShouldMatchers with
       when(api.saveUser(Matchers.any[String], Matchers.any[UserUpdate], Matchers.any[Auth]))
         .thenReturn(Future.successful(Right(user)))
 
-      controller.submitProfileForm()(fakeRequest)
+      controller.submitForm(true)(fakeRequest)
 
       var userUpdateCapture = ArgumentCaptor.forClass(classOf[UserUpdate])
       verify(api).saveUser(Matchers.eq(userId), userUpdateCapture.capture(), Matchers.eq(testAuth))
@@ -80,7 +80,7 @@ class PublicProfileControllerTest extends path.FreeSpec with ShouldMatchers with
 
       "should throw a CSRF error" in {
         intercept[RuntimeException]{
-          controller.submitProfileForm()(authRequest)
+          controller.submitForm(true)(authRequest)
         }
       }
     }
