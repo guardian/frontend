@@ -9,7 +9,7 @@ object Frontend extends Build with Prototypes {
   val common = application("common").settings(
     libraryDependencies ++= Seq(
       "com.gu" %% "configuration" % "3.9",
-      "com.gu.openplatform" %% "content-api-client" % "2.7",
+      "com.gu.openplatform" %% "content-api-client" % "2.9",
 
       "com.typesafe.akka" %% "akka-agent" % "2.1.0",
 
@@ -85,7 +85,8 @@ object Frontend extends Build with Prototypes {
       "net.liftweb" %% "lift-json" % "2.5",
       "commons-httpclient" % "commons-httpclient" % "3.1",
       "net.databinder.dispatch" %% "dispatch-core" % "0.11.0",
-      "org.slf4j" % "slf4j-ext" % "1.7.5"
+      "org.slf4j" % "slf4j-ext" % "1.7.5",
+      "com.gu" %% "exact-target-client" % "2.23"
     )
   )
 

@@ -30,7 +30,7 @@ define([
                     newItem.parents.push(targetList.parent);
                 }
 
-                vars.model.save();
+                vars.model.save(newItem);
             }
         });
     }

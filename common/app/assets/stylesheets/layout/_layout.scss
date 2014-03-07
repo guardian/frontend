@@ -11,55 +11,134 @@
    ========================================================================== */
 
 #header {
-    min-height: $headerHeight;
     position: relative;
-    z-index: 1051; // On top of Google "Adchoices" label which has z-index: 1050…
-
-    /* These styles extend the top bars to the screen edges */
-    @include mq(tablet) {
-        &:before,
-        &:after {
-            content: "";
-            display: block;
-            position: absolute;
-            width: 100%;
-            z-index: -10;
-        }
-
-        &:before {
-            top: 0;
-            height: $headerHeight;
-            background-color: $c-brandBlue;
-        }
-
-        &.has-nav {
-            min-height: $headerHeight + 40px;
-            &:after {
-                top: $headerHeight;
-                height: 40px;
-                background-color: $c-neutral7;
-                border-bottom: 1px solid $c-neutral5;
-            }
-        }
-    }
+    z-index: 1051; // On top of Google "Adchoices" label which has z-index: 1050
+    background: $c-neutral8;
 }
-    .header__inner {
-        background-color: $c-brandBlue;
-        height: $headerHeight;
-    }
 
 .guardian-logo-wrapper {
-    float: left;
-    margin: 20px 0 18px $gs-gutter/2;
-    margin-left: rem($gs-gutter/2); // Only horizontal space is scalable
+    position: relative;
+    float: right;
+    @include rem((
+        margin: $gs-baseline/4 $gs-gutter/2 $gs-baseline 0
+    ));
 
     i {
         display: block;
     }
 
     @include mq(mobileLandscape) {
-        @include rem((margin-left: $gs-gutter));
+        @include rem((
+            margin-right: $gs-gutter
+        ));
     }
+    @include mq(tablet) {
+        @include rem((
+            margin-top: 7px
+        ));
+
+        &:after {
+            content: "beta";
+            position: absolute;
+            top: 48px;
+            left: 128px;
+            font-size: 13px;
+        }
+    }
+    @include mq(desktop) {
+        @include rem((
+            margin-top: -$gs-row-height,
+            margin-bottom: $gs-baseline * 1.5
+        ));
+    }
+}
+
+/* Pre-header
+   ========================================================================== */
+
+.header-pre {
+    float: left;
+    min-width: gs-span(2);
+    z-index: 1;
+    position: relative;
+
+    @include mq(tablet) {
+        float: none;
+        background: $c-neutral8;
+        border-bottom: 1px solid $c-neutral4;
+    }
+    @include mq(desktop) {
+        border-bottom-color: $c-neutral8;
+    }
+}
+.header-pre__inner {
+    @include box-sizing(border-box);
+    @include rem((
+        padding-left: $gs-gutter/2,
+        padding-right: $gs-gutter/2
+    ));
+
+    @include mq(mobileLandscape) {
+        @include rem((
+            padding-left: $gs-gutter,
+            padding-right: $gs-gutter
+        ));
+    }
+}
+.preheader__editions {
+    float: left;
+    @include rem((
+        width: gs-span(3)
+    ));
+}
+.editions {
+    @include fs-header(1);
+}
+.editions,
+.editions__title,
+.edition__item,
+.edition {
+    padding: 0;
+    margin: 0;
+    display: inline-block;
+}
+.editions__title {
+    font-weight: normal;
+}
+.editions__title,
+.edition {
+    @include rem((
+        padding: $gs-baseline/2 $gs-gutter/4
+    ));
+}
+.edition__item {
+    color: $c-brandLightBlue;
+
+    & + .edition__item {
+        @include rem((
+            margin-left: $gs-gutter/4
+        ));
+    }
+}
+.edition {
+    text-decoration: none;
+    margin: 0;
+}
+a.edition {
+    &:hover,
+    &:focus {
+        color: $c-brandLightBlue;
+        text-decoration: none;
+    }
+}
+
+
+/* Main header (logo, actions)
+   ========================================================================== */
+
+.header-main {
+    position: relative;
+    z-index: 2;
 }
 
 
@@ -88,7 +167,9 @@
 
 @include mq(tablet) {
     .monocolumn-wrapper {
-        @include rem((max-width: gs-span(8)));
+        @include rem((
+            max-width: gs-span(8)
+        ));
         margin-left: auto;
         margin-right: auto;
     }
@@ -106,11 +187,15 @@
  */
 
 .component {
-    @include rem((margin-bottom: 20px));
+    @include rem((
+        margin-bottom: 20px
+    ));
 }
 
 .box-indent {
-    @include rem((padding: 0 $gs-gutter/2 $baseline));
+    @include rem((
+        padding: 0 $gs-gutter/2 ($gs-baseline/3)
+    ));
 
     @include mq(mobileLandscape) {
         @include rem((
@@ -133,18 +218,24 @@
     ));
 
     @include mq(mobileLandscape) {
-        @include rem((width: gs-span(2)));
+        @include rem((
+            width: gs-span(2)
+        ));
     }
 
     figcaption {
-        @include rem((padding-top: $baseline));
+        @include rem((
+            padding-top: $gs-baseline/3
+        ));
         word-wrap: break-word;
     }
 }
 
 .img-tiny.img--inline {
     width: auto;
-    @include rem((max-width: $inArticleInlineImgWidth));
+    @include rem((
+        max-width: $inArticleInlineImgWidth
+    ));
 }
 
 
@@ -152,11 +243,20 @@
    ========================================================================== */
 
 .preload-msg {
-    @include rem((padding: 50px 50px 250px 50px));
+    @include rem((
+        padding: 50px 50px 250px 50px
+    ));
     text-align: center;
+
+    .accessible-link {
+        display: block;
+        @include fs-data(2);
+    }
 }
 
 .preload-msg .is-updating {
     display: block;
-    @include rem((margin: 10px auto));
+    @include rem((
+        margin: 10px auto
+    ));
 }

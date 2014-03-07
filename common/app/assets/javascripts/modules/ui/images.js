@@ -1,25 +1,43 @@
-define(['common/$', 'common/utils/to-array', 'bonzo', 'common/utils/mediator', 'imager', 'common/utils/detect'], function ($, toArray, bonzo, mediator, imager, detect) {
+define([
+    'common/$',
+    'bonzo',
+    'common/utils/mediator',
+    'imager'
+],
+function (
+    $,
+    bonzo,
+    mediator,
+    imager
+) {
 
     var images = {
 
         upgrade: function(context) {
             context = context || document;
-            var breakpoint = detect.getBreakpoint(),
-                options = {
+            var options = {
                     availableWidths: [ 140, 220, 300, 460, 620, 700, 940 ],
                     strategy: 'container',
                     replacementDelay: 0
-                };
-
-            toArray(context.getElementsByClassName('js-image-upgrade')).forEach(function(container) {
-                var $container = bonzo(container),
-                    forceUpgradeAttr = $container.attr('data-force-upgrade'),
-                    forceUpdgradeBreakpoints = forceUpgradeAttr !== null ? forceUpgradeAttr.split(' ') : [],
-                    isForceUpgrade = forceUpdgradeBreakpoints.indexOf(breakpoint) !== -1 || forceUpgradeAttr === '';
-                if (($('html').hasClass('connection--low') && !isForceUpgrade) || $container.css('display') === 'none') {
-                    return;
-                }
-                imager.init([container], options);
+                },
+                containers = $('.js-image-upgrade', context).map(
+                    function(container) {
+                        return container;
+                    },
+                    // this is an optional filter function
+                    function(container) {
+                        return bonzo(container).css('display') !== 'none';
+                    }
+                );
+            imager.init(containers, options);
+            // add empty alts if none exist
+            containers.forEach(function(container) {
+                $('img', container).each(function(img) {
+                    var $img = bonzo(img);
+                    if ($img.attr('alt') === null) {
+                        $img.attr('alt', '');
+                    }
+                });
             });
         },
 
@@ -29,6 +47,9 @@ define(['common/$', 'common/utils/to-array', 'bonzo', 'common/utils/mediator', '
                     images.upgrade();
                 },
                 'window:orientationchange': function(e) {
+                    images.upgrade();
+                },
+                'ui:images:upgrade': function(e) {
                     images.upgrade();
                 }
             });

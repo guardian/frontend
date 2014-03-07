@@ -170,7 +170,7 @@ define([
                     });
                 }
                 // remove class
-                this._$collection.removeClass('js-collection--show-more');
+                this._$collection.removeClass('js-collection--show-more collection--show-more');
             } else {
                 this._showItems();
             }

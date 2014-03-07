@@ -4,9 +4,8 @@ import play.api.test._
 import play.api.test.Helpers._
 import org.scalatest.Matchers
 import org.scalatest.FlatSpec
-import common.UsesElasticSearch
 
-class IndexControllerTest extends FlatSpec with Matchers with UsesElasticSearch {
+class IndexControllerTest extends FlatSpec with Matchers {
 
   val section = "books"
   val callbackName = "aFunction"
@@ -17,17 +16,17 @@ class IndexControllerTest extends FlatSpec with Matchers with UsesElasticSearch 
   }
 
   it should "return JSONP when callback is supplied to front" in Fake {
-    val fakeRequest = TestRequest(s"/${section}?callback=$callbackName")
+    val fakeRequest = TestRequest(s"/$section?callback=$callbackName")
       .withHeaders("host" -> "localhost:9000")
 
     val result = controllers.IndexController.render(section)(fakeRequest)
     status(result) should be(200)
     header("Content-Type", result).get should be("application/javascript; charset=utf-8")
-    contentAsString(result) should startWith(s"""${callbackName}({\"html\"""")
+    contentAsString(result) should startWith(s"""$callbackName({\"html\"""")
   }
 
   it should "return JSON when .json format is supplied to front" in Fake {
-    val fakeRequest = TestRequest(s"/${section}.json")
+    val fakeRequest = TestRequest(s"/$section.json")
       .withHeaders("host" -> "localhost:9000")
       .withHeaders("Origin" -> "http://www.theorigin.com")
 
@@ -66,17 +65,17 @@ class IndexControllerTest extends FlatSpec with Matchers with UsesElasticSearch 
   }
 
   it should "return JSONP when callback is supplied to front trails" in Fake {
-    val fakeRequest = FakeRequest(GET, s"${section}/trails?callback=$callbackName")
+    val fakeRequest = FakeRequest(GET, s"$section/trails?callback=$callbackName")
       .withHeaders("host" -> "localhost:9000")
 
     val result = controllers.IndexController.renderTrails(section)(fakeRequest)
     status(result) should be(200)
     header("Content-Type", result).get should be("application/javascript; charset=utf-8")
-    contentAsString(result) should startWith(s"""${callbackName}({\"html\"""")
+    contentAsString(result) should startWith(s"""$callbackName({\"html\"""")
   }
 
   it should "return JSON when .json format is supplied to front trails" in Fake {
-    val fakeRequest = FakeRequest(GET, s"${section}/trails.json")
+    val fakeRequest = FakeRequest(GET, s"$section/trails.json")
       .withHeaders("host" -> "localhost:9000")
       .withHeaders("Origin" -> "http://www.theorigin.com")
 
@@ -86,4 +85,24 @@ class IndexControllerTest extends FlatSpec with Matchers with UsesElasticSearch 
     contentAsString(result) should startWith("{\"html\"")
   }
 
+  it should "redirect tag to first page if pagination goes beyond last page" in {
+
+    val request = FakeRequest(GET, "/sport/cycling?page=10000")
+    val result = controllers.IndexController.render("/sport/cycling")(request)
+
+    // temporary as this page may well exist tomorrow
+    status(result) should be (302)
+    header("Location", result).get should endWith ("/sport/cycling")
+
+  }
+
+  it should "redirect tag combiner to first page if pagination goes beyond last page" in {
+
+    val request = FakeRequest(GET, "/books+tone/reviews?page=10000")
+    val result = controllers.IndexController.renderCombiner("books", "tone/reviews")(request)
+
+    // temporary as this page may well exist tomorrow
+    status(result) should be (302)
+    header("Location", result).get should endWith ("/books+tone/reviews")
+  }
 }

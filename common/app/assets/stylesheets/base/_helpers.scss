@@ -37,6 +37,14 @@
     }
 }
 
+.hide-on-mobile-inline {
+    display: none !important;
+
+    @include mq(tablet) {
+        display: inline !important;
+    }
+}
+
 .is-invisible {
     visibility: hidden;
 }
@@ -63,6 +71,34 @@
 
 .u-cf {
     @include clearfix;
+}
+
+
+/**
+ * Responsive media (images, videos…)
+ *
+ * 1. Give the block an initial ratio of 5/3 to avoid FOUC
+ * 2. Stretch the contained media to the dimensions of its container
+ */
+
+.u-responsive-ratio {
+    @include fix-aspect-ratio(5, 3); // 1
+
+    img,
+    object,
+    embed,
+    iframe,
+    video { // 2
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+}
+
+.u-responsive-ratio--hd {
+    padding-bottom: aspect-ratio-height(16, 9);
 }
 
 
@@ -129,11 +165,21 @@
 
 
 /**
- * underlines text
+ * Fakes text underline with a border
  */
 
 .u-underline {
-    text-decoration: underline;
+    text-decoration: none !important;
+    border-bottom: 1px solid $c-neutral4;
+    @include transition(border-color .15s ease-out);
+
+    &:hover,
+    &:focus {
+        border-color: mix($c-newsDefault, $c-neutral4, 50%);
+    }
+    &:active {
+        border-color: $c-newsAccent;
+    }
 }
 
 

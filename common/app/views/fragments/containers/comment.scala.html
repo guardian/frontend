@@ -1,6 +1,6 @@
 @(config: Config, collection: Collection, style: Container, containerIndex: Int)(implicit request: RequestHeader, templateDeduping: TemplateDeduping)
 
-@defining(config.displayName.orElse(collection.displayName)) { title =>
+@defining((config.displayName.orElse(collection.displayName), config.href.orElse(collection.href))) { case (title, href) =>
 
     @defining(templateDeduping(5, collection.items)) { items =>
         @if(items.nonEmpty) {
@@ -8,7 +8,8 @@
                 class="@RenderClasses(Map(
                     "container" -> true,
                     s"container--${style.containerType}" -> true,
-                    "js-container--toggle" -> (containerIndex > 0 && title.nonEmpty)))"
+                    "js-container--toggle" -> (containerIndex > 0 && title.nonEmpty),
+                    "container--first" -> (containerIndex == 0)))"
                 data-link-name="block | @config.id"
                 data-id="@config.id"
                 data-type="@style.containerType">
@@ -17,7 +18,7 @@
 
                 @title.map { title =>
                     <h2 class="container__title tone-@style.tone tone-background">
-                        @collection.href.map { href =>
+                        @href.map { href =>
                             <a class="container__title__label u-text-hyphenate" data-link-name="section heading" href="@LinkTo{/@href}">@Html(title)</a>
                         }.getOrElse{
                             <span class="container__title__label u-text-hyphenate">@Html(title)</span>

@@ -17,15 +17,17 @@ GET           /assets/*file              controllers.Assets.at(path="/public", f
 
 # Fronts
 GET           /                          controllers.FaciaToolController.collectionsEditor()
-GET           /edit-config               controllers.FaciaToolController.configEditor()
+GET           /configuration             controllers.FaciaToolController.configEditor()
 
 POST          /collection/publish/*id    controllers.FaciaToolController.publishCollection(id)
 POST          /collection/discard/*id    controllers.FaciaToolController.discardCollection(id)
+POST          /collection/press/*id      controllers.FaciaToolController.pressCollection(id)
 
 GET           /collection/*id            controllers.FaciaToolController.readBlock(id)
 POST          /edits                     controllers.FaciaToolController.collectionEdits
 GET           /collection                controllers.FaciaToolController.listCollections
 GET           /config                    controllers.FaciaToolController.getConfig
+POST          /config                    controllers.FaciaToolController.updateConfig
 
 POST          /collectionmeta/*id        controllers.FaciaToolController.updateCollectionMeta(id)
 

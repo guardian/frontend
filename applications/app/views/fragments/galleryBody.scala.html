@@ -1,7 +1,7 @@
 @(gallery: Gallery, storyPackage: List[Trail], index: Int, trail: Boolean)(implicit request: RequestHeader)
 @import conf.Switches._
 
-<h2 class="article-zone left-col-deport tone-@VisualTone(gallery) tone-accent-border">
+<h2 class="article__zone left-col-deport tone-@VisualTone(gallery) tone-accent-border">
     <span class="left-col-deport__body">
         <a class="tone-colour" data-link-name="article section" href="/@gallery.section">@Html(gallery.sectionName.toLowerCase)</a>
     </span>
@@ -12,18 +12,14 @@
         <div class="article__inner article__inner--head">
             <header class="article__head">
                 @fragments.headline(gallery.headline)
-                @fragments.article.dateline(gallery.webPublicationDate, gallery.isLive)
+
+                <div class="js-comment-count"></div>
             </header>
         </div>
         <div class="article__columning-wrapper">
             <div class="article__main-column">
 
-                <div class="article__meta-container">
-                    @fragments.byline(gallery.byline, gallery)
-                    @fragments.article.dateline(gallery.webPublicationDate, secondary=true)
-                    <div class="js-comment-count"></div>
-                </div>
-
+                @fragments.contentMeta(gallery)
 
                 <!-- Lightbox JS Gallery -->
                 @if(LightboxGalleriesSwitch.isSwitchedOn) {
@@ -83,11 +79,11 @@
             </div>
         </div>
     </article>
-
-    @fragments.storyPackagePlaceholder(storyPackage)
-
-    @fragments.mostPopularPlaceholder(gallery.section)
 </div>
+
+@fragments.storyPackagePlaceholder(storyPackage)
+
+@fragments.mostPopularPlaceholder(gallery.section)
 
 
 <div class="gallery-overlay-bg"></div>

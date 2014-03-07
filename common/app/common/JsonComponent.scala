@@ -65,8 +65,7 @@ object JsonComponent extends Results with implicits.Requests {
     .getOrElse(Ok(json).as(JSON)).withHeaders("Vary" -> "Accept, Origin")
 
   private def cors(request: RequestHeader, json: String) = request.headers.get("Origin").map { origin =>
-      val response = Ok(json).as(JSON).withHeaders("Access-Control-Allow-Headers" -> "GET,POST,X-Requested-With")
-      request.accessControlAllowOrigin.map(response.withHeaders(_)).getOrElse(response)
+      Cors(Ok(json).as(JSON).withHeaders("Access-Control-Allow-Headers" -> "GET,POST,X-Requested-With"))(request)
   }
 
   // TODO we probably want to kill off JsonP - I do not think we intend to use it again
@@ -85,8 +84,7 @@ object JsonNotFound {
   def apply()(implicit request: RequestHeader): SimpleResult = jsonp(request).orElse(cors(request)).getOrElse(NotFound)
 
   private def cors(request: RequestHeader) = request.headers.get("Origin").map { origin =>
-    val response = NotFound.as(JSON).withHeaders("Access-Control-Allow-Headers" -> "GET,POST,X-Requested-With")
-    request.accessControlAllowOrigin.map(response.withHeaders(_)).getOrElse(response)
+    Cors(NotFound.as(JSON).withHeaders("Access-Control-Allow-Headers" -> "GET,POST,X-Requested-With"))(request)
   }
 
   // TODO we probably want to kill off JsonP - I do not think we intend to use it again

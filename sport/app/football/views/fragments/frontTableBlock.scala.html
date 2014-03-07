@@ -10,16 +10,16 @@
                 @round.name.map { name =>
                     <div class="football__group">
                         <div class="table__headline">@name</div>
-                        @tableView(table, group, true, highlightTeamId)
+                        @tableView(table.competition, group, highlightTeamId)
                     </div>
                 }
             }
         }
     }else{
         @table.groups.map{ group =>
-            @tableView(table, group, true, highlightTeamId)
+            @tableView(table.competition, group, highlightTeamId)
         }
     }
 
-    <a href="@LinkTo{@{table.competition.url + "/table"}}" data-link-name="full table" class="cta-small cta-small-border type-8 front-competition-link">View full table<i class="i i-sport-arrow i-sport-arrow--small"></i></a>
+    <a href="@LinkTo{@{table.competition.url + "/table"}}" data-link-name="full table" class="cta-small cta-small-border front-competition-link">View full table<i class="i i-sport-arrow i-sport-arrow--small"></i></a>
 </li>

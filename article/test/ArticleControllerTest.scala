@@ -4,9 +4,8 @@ import play.api.test._
 import play.api.test.Helpers._
 import org.scalatest.Matchers
 import org.scalatest.FlatSpec
-import common.UsesElasticSearch
 
-class ArticleControllerTest extends FlatSpec with Matchers  with UsesElasticSearch {
+class ArticleControllerTest extends FlatSpec with Matchers {
   
   val articleUrl = "environment/2012/feb/22/capitalise-low-carbon-future"
   val liveBlogUrl = "global/middle-east-live/2013/sep/09/syria-crisis-russia-kerry-us-live"

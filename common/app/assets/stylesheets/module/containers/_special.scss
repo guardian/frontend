@@ -27,9 +27,13 @@
                 .item__image-container {
                     display: block;
                 }
-            }
-            .item--gallery,
-            .item--video {
+                .item__title--has-icon-mobile {
+                    padding-left: 0;
+
+                    .i {
+                        display: none;
+                    }
+                }
                 .item__media-wrapper {
                     width: 50%;
                     float: left;

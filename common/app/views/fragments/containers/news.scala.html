@@ -11,7 +11,8 @@
                     "container" -> true,
                     "container--row-pattern" -> true,
                     s"container--${style.containerType}" -> true,
-                    "js-container--toggle" -> (containerIndex > 0 && title.nonEmpty)))"
+                    "js-container--toggle" -> (containerIndex > 0 && title.nonEmpty),
+                    "container--first" -> (containerIndex == 0)))"
                 data-link-name="block | @config.id"
                 data-id="@config.id"
                 data-type="@style.containerType">
@@ -19,7 +20,7 @@
                 <div class="container__border tone-@style.tone tone-accent-border"></div>
 
                 <h2 class="container__title">
-                    <span class="container__title__label today u-text-hyphenate">
+                    <span class="container__title__label today">
                         <b class="today__dayofweek js-dayofweek">@Format(DateTime.now(), "EEEE")</b>
                         <span class="u-nobr today__sub">
                             <span class="today__dayofmonth js-dayofmonth">@Format(DateTime.now(), "d")</span>
@@ -27,7 +28,7 @@
                             <span class="today__year">@Format(DateTime.now(), "yyyy")</span>
                         </span>
                     </span>
-                    @items.map(_.webPublicationDate).sortBy(-_.getMillis).headOption.map { latestDateTime =>
+                    @LatestUpdate(collection, items).map { latestUpdate =>
                         <span class="container__updated">
                             <span class="i--circle i--clock">
                                 <span class="i i-clock-hands-white"></span>
@@ -36,13 +37,13 @@
                             <time
                                 class="js-timestamp"
                                 itemprop="datePublished"
-                                datetime="@latestDateTime.toString("yyyy-MM-dd'T'HH:mm:ssZ")"
+                                datetime="@latestUpdate.toString("yyyy-MM-dd'T'HH:mm:ssZ")"
                                 data-relativeformat="long"
-                                data-timestamp="@latestDateTime.getMillis"><span class="timestamp__text">@Format(latestDateTime, "E, h:ma")</span></time>
+                                data-timestamp="@latestUpdate.getMillis"><span class="timestamp__text">@Format(latestUpdate, "E, h:ma")</span></time>
                         </span>
                     }
                 </h2>
-                <div class="container__body container--rolled-up-hide js-container-append-button">
+                <div class="container__body">
                     @fragments.collections.news(items, style, containerIndex)
                 </div>
             </section>

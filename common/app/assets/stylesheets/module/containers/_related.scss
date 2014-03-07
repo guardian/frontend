@@ -1,304 +1,70 @@
 .related {
-    position: relative;
-    @include rem((margin-bottom: $gs-baseline*6));
+    @include rem((
+        margin-bottom: $gs-baseline*2
+    ));
 
-    @include mq(rightCol) {
+    .container__border {
+        border-top: 1px solid $c-neutral4;
+    }
+    .container__title {
+        color: $c-neutral1;
+        background: transparent;
 
-        .related__header {
-            border-top: 1px solid $c-neutral4;
-            @include rem((padding-top: $baseline/2));
-            padding-bottom: 0;
-            margin-bottom: 0;
+        @include mq($to: tablet) {
+            @include fs-header(3, true);
+            padding-left: 0;
         }
+    }
+    .container__body {
+        @include rem((
+            padding-top: $gs-baseline/3
+        ));
+        @include mq(tablet, desktop) {
+            padding-top: 0;
+        }
+    }
+    .item__link {
+        @include mq($to: tablet) {
+            border-top: 1px solid $c-neutral5 !important;
+            @include rem((
+                padding-top: 7px,
+                margin-top: -12px
+            ));
+        }
+    }
+    .collection__item:first-child {
+        @include item--hide-tone-border;
 
-        .item {
-            &:first-child {
-                &:before {
-                    border-left: none;
-                }
-            }
-
-            &:nth-child(n+5) {
-                display: none;
+        @include mq($to: tablet) {
+            .item__title {
+                @include fs-headline(2, true);
             }
         }
+    }
+    .collection__item:nth-child(n+6) {
+        display: none;
+    }
 
+    @include mq(tablet) {
+        @include item--hide-tone-border;
+
+        .collection__item:nth-child(n+5),
         &.more-on-this-story--one-item {
             display: none;
         }
     }
-}
-
-.related__header {
-    @include mq(leftCol) {
-        position: absolute;
-        top: 0;
-        left: 0;
-        @include rem((
-            width: $a-leftCol-width,
-            padding-right: $gs-gutter
-        ));
+    // Force showing the images
+    .item--has-image .item__image-container,
+    .item--has-image .item__media-wrapper {
+        display: block !important;
     }
+    // … and remove the icons that are supposed to be here
+    // when there are no images
+    @include hide-icon-in-title;
 
-    @include mq(wide) {
-        @include rem((width: $a-leftColWide-width));
-    }
-}
-
-.related__container {
-    @include rem((margin-bottom: $gs-baseline));
-
-    @include mq(rightCol) {
-        @include rem((margin-left: -1*($gs-gutter/2)));
-
-        > ul {
-            @include rem((margin-right: - $gs-gutter/2));
-        }
-    }
-
-    @include mq(leftCol) {
-        border-top: 1px solid $c-neutral4;
-        @include rem((
-            padding-top: $gs-baseline/1.5,
-            margin-left: $a-leftCol-width + $gs-gutter/2
-        ));
-    }
-
-    @include mq(wide) {
-        @include rem((
-            margin-left: $a-leftColWide-width + $gs-gutter/2,
-            width:  gs-span(12) + $gs-gutter*1
-        ));
-    }
-
-    .item__container {
-        position: relative;
-        @include rem((min-height: gs-height(5)));
-
-        @include mq(mobileLandscape) {
-            @include rem((min-height: gs-height(6)));
-        }
-
-        @include mq(tablet, rightCol) {
-            @include rem((min-height: gs-height(7) - $gs-baseline));
-        }
-
-        @include mq(rightCol) {
-            @include rem((min-height: gs-height(5) + $gs-baseline));
-        }
-    }
-
-    .item {
-        float: left;
-        position: relative;
-        width: 50%;
-        padding-bottom: 0;
-        @include rem((margin-top: $gs-baseline*2));
-
-        @include mq($to: rightCol) {
-
-            &:nth-child(odd) {
-                padding-right: 0;
-            }
-
-            &:first-child,
-            &:nth-child(even) {
-                clear: left;
-                padding-left: 0;
-
-                &:before {
-                    border-left: none;
-                }
-            }
-
-            &:first-child {
-                width: 100%;
-                margin-top: 0;
-                padding-right: 0;
-
-                .item__image-container { margin: 0; }
-
-                .item__title {
-                    min-height: 0;
-                    @include rem((
-                        padding-top: $gs-baseline/2,
-                        padding-bottom: $gs-baseline*3
-                    ));
-                    @include fs-headline(2, true);
-                }
-
-                .item__meta {
-                    padding-right: 0;
-                }
-            }
-        }
-
-        @include mq(tablet, rightCol) {
-            &:first-child {
-                @include rem((
-                    margin-bottom: 20px
-                ));
-
-                .item__title {
-                    @include fs-headline(3, true);
-                    min-height: 0;
-                    @include rem((padding-bottom: $gs-row-height));
-                }
-
-                .item__container {
-                    @include rem((min-height: gs-height(10) + $gs-baseline));
-                }
-            }
-        }
-
-        @include mq(rightCol) {
-            width: 25%;
-            clear: none;
-        }
-
-        @include mq(leftCol) {
-            margin-top: 0;
-        }
-
-    }
-
-    .item__title {
-        @include box-sizing(border-box);
-        margin-top: 0;
-        @include rem((
-            padding-top: 2px, // Same as other similar patterns
-            padding-bottom: $gs-baseline,
-            min-height: $gs-row-height*3 - $gs-baseline //96px
-        ));
-        @include fs-headline(1, true);
-
-        @include mq(tablet, rightCol) {
-            @include fs-headline(2, true);
-        }
-
-        @include mq(tablet) {
-            @include rem((min-height: $gs-row-height*4 - $baseline*2)); //136px
-        }
-
-        @include mq(rightCol) {
-            @include rem((min-height: $gs-row-height*3 - $gs-baseline)); //96px
-        }
-        .i {
+    @include mq(tablet, rightCol) {
+        .collection__item:nth-child(n+4) {
             display: none;
         }
     }
-
-    .item--has-no-image {
-
-        &:first-child {
-            @include mq($to: rightCol) {
-                .item__title {
-                    @include fs-headline(3, true);
-                }
-                .item__container {
-                    @include rem((min-height: gs-height(2)));
-                }
-            }
-        }
-
-        .item__title {
-            padding-top: 0;
-            @include fs-headline(2, true);
-
-            @include mq(tablet) {
-                @include fs-headline(3, true);
-            }
-        }
-
-        &.item--dark {
-            .item__link {
-                background-color: $c-neutral1;
-            }
-        }
-    }
-
-    .item--live {
-        .item__container,
-        .item__meta {
-            background-color: $c-neutral8;
-        }
-
-        .item__live-indicator,
-        .i-clock-light-grey,
-        .timestamp__text {
-            display: none;
-        }
-
-        .item__timestamp {
-            display: inline-block;
-            padding-left: 0;
-
-            &:after {
-                display: inline-block;
-                content: 'LIVE';
-                color: $c-live;
-                @include fs-data(1);
-                font-weight: bold;
-            }
-
-            &:before {
-                position: relative;
-                display: inline-block;
-                content: ' ';
-                @include rem((
-                    top: 1px,
-                    width: $gs-gutter/2,
-                    height: $gs-gutter/2
-                ));
-                background-color: $c-live;
-                @include rounded-corners(50%);
-            }
-        }
-
-        .item__title {
-            @include rem((
-                padding-left: 7px,
-                padding-right: 7px
-            ));
-        }
-
-        .item__meta {
-            @include rem((padding-left: 7px));
-        }
-    }
-
-    .item__meta {
-        @include box-sizing(border-box);
-        width: 100%;
-        @include rem((
-            padding-bottom: $gs-baseline,
-            margin-bottom: - $gs-baseline
-        ));
-        border-bottom: 1px solid $c-neutral5;
-
-        @include mq(rightCol) {
-            border-bottom: none;
-            @include rem((padding-right: $gs-gutter));
-        }
-    }
-
-    .item__media-wrapper {
-        position: relative;
-    }
-
-    .item__image-container {
-        margin-top: 0;
-        display: block;
-    }
-
-    .item__link {
-        border-top: none;
-    }
-
-    .i-quote-orange,
-    .item__byline {
-        display: none;
-    }
-
-    .gallerythumbs { margin: 0; }
 }

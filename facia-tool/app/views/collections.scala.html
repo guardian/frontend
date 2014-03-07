@@ -125,6 +125,16 @@
                         (<span class="non-zero">updating...</span>)
                     </span>
 
+                    <span data-bind="if: alsoOn.length">
+                        also on
+                        <span data-bind="foreach: alsoOn"
+                        ><span data-bind="if: $index">, </span
+                        ><a class="list-header__also-on" data-bind="
+                                click: $root.setFront,
+                                text: $data"></a
+                        ></span>
+                    </span>
+
                     <i class="list-header__collapser" data-bind="
                         click: toggleCollapsed,
                         visible: !configMeta.uneditable(),
@@ -240,7 +250,7 @@
 
                     <div class="tools">
                         <a class="tool tool--done" data-bind="click: close">Done</a
-                       ><a class="tool tool--remove" data-bind="click: $parent.omitItem">
+                       ><a class="tool tool--small tool--small--remove" data-bind="click: $parent.omitItem">
                             <i class="icon-trash"></i>
                         </a>
                     </div>
@@ -281,8 +291,13 @@
                         visible: meta.imageAdjust() === 'hide'">Hidden</span>
                 </div>
 
-                <a class="tool tool--remove" data-bind="click: $parent.omitItem">
+                <a class="tool tool--small tool--small--remove" data-bind="click: $parent.omitItem">
                     <i class="icon-trash"></i>
+                </a>
+
+                <a class="tool tool--small tool--small--href" target="_blank" data-bind="
+                    attr: {href: 'http://www.theguardian.com/' + id}">
+                    <i class="icon-share-alt"></i>
                 </a>
 
                 <div class="article_content is-empty" data-bind="if: state.isEmpty">
@@ -293,6 +308,11 @@
                 </div>
 
                 <div class="article_content" data-bind="if: !state.isEmpty()">
+
+                    <span class="is-breaking" data-bind="
+                        visible: meta.isBreaking,
+                        click: open">Breaking News</span>
+
                     <a class="headline" target="article" data-bind="
                         text: meta.headline() || fields.headline(),
                         attr: {href: id},

@@ -5,9 +5,8 @@ import org.scalatest.{ GivenWhenThen, FeatureSpec }
 import football.controllers.MoreOnMatchController
 import play.api.test.Helpers._
 import play.api.test.FakeRequest
-import common.UsesElasticSearch
 
-class MoreOnMatchFeatureTest extends FeatureSpec with GivenWhenThen with Matchers with UsesElasticSearch {
+class MoreOnMatchFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
   val theMatch =
 

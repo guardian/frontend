@@ -31,7 +31,6 @@
         , script: noscope, style: noscope, link: noscope, param: noscope, base: noscope
       }
     , stateAttributes = /^(checked|selected|disabled)$/
-    , ie = /msie/i.test(navigator.userAgent)
     , hasClass, addClass, removeClass
     , uidMap = {}
     , uuids = 0
@@ -40,73 +39,31 @@
     , px = 'px'
     , setAttribute = 'setAttribute'
     , getAttribute = 'getAttribute'
-    , byTag = 'getElementsByTagName'
     , features = function() {
         var e = doc.createElement('p')
-        e.innerHTML = '<a href="#x">x</a><table style="float:left;"></table>'
         return {
-          hrefExtended: e[byTag]('a')[0][getAttribute]('href') != '#x' // IE < 8
-        , autoTbody: e[byTag]('tbody').length !== 0 // IE < 8
-        , computedStyle: doc.defaultView && doc.defaultView.getComputedStyle
-        , cssFloat: e[byTag]('table')[0].style.styleFloat ? 'styleFloat' : 'cssFloat'
-        , transform: function () {
+          transform: function () {
             var props = ['transform', 'webkitTransform', 'MozTransform', 'OTransform', 'msTransform'], i
             for (i = 0; i < props.length; i++) {
               if (props[i] in e.style) return props[i]
             }
           }()
         , classList: 'classList' in e
-        , opasity: function () {
-            return typeof doc.createElement('a').style.opacity !== 'undefined'
-          }()
         }
       }()
-    , trimReplace = /(^\s*|\s*$)/g
     , whitespaceRegex = /\s+/
     , toString = String.prototype.toString
     , unitless = { lineHeight: 1, zoom: 1, zIndex: 1, opacity: 1, boxFlex: 1, WebkitBoxFlex: 1, MozBoxFlex: 1 }
     , query = doc.querySelectorAll && function (selector) { return doc.querySelectorAll(selector) }
-    , trim = String.prototype.trim ?
-        function (s) {
-          return s.trim()
-        } :
-        function (s) {
-          return s.replace(trimReplace, '')
-        }
 
-    , getStyle = features.computedStyle
-        ? function (el, property) {
-            var value = null
-              , computed = doc.defaultView.getComputedStyle(el, '')
-            computed && (value = computed[property])
-            return el.style[property] || value
-          }
-        : !(ie && html.currentStyle)
-          ? function (el, property) {
-              return el.style[property]
-            }
-          :
-          /**
-           * @param {Element} el
-           * @param {string} property
-           * @return {string|number}
-           */
-          function (el, property) {
-            var val, value
-            if (property == 'opacity' && !features.opasity) {
-              val = 100
-              try {
-                val = el['filters']['DXImageTransform.Microsoft.Alpha'].opacity
-              } catch (e1) {
-                try {
-                  val = el['filters']('alpha').opacity
-                } catch (e2) {}
-              }
-              return val / 100
-            }
-            value = el.currentStyle ? el.currentStyle[property] : null
-            return el.style[property] || value
-          }
+
+  function getStyle(el, property) {
+    var value = null
+      , computed = doc.defaultView.getComputedStyle(el, '')
+    computed && (value = computed[property])
+    return el.style[property] || value
+  }
+
 
   function isNode(node) {
     return node && node.nodeName && (node.nodeType == 1 || node.nodeType == 11)
@@ -244,8 +201,7 @@
    */
   function styleProperty(p) {
       (p == 'transform' && (p = features.transform)) ||
-        (/^transform-?[Oo]rigin$/.test(p) && (p = features.transform + 'Origin')) ||
-        (p == 'float' && (p = features.cssFloat))
+        (/^transform-?[Oo]rigin$/.test(p) && (p = features.transform + 'Origin'))
       return p ? camelize(p) : null
   }
 
@@ -314,10 +270,10 @@
       return classReg(c).test(el.className)
     }
     addClass = function (el, c) {
-      el.className = trim(el.className + ' ' + c)
+      el.className = (el.className + ' ' + c).trim()
     }
     removeClass = function (el, c) {
-      el.className = trim(el.className.replace(classReg(c), ' '))
+      el.className = (el.className.replace(classReg(c), ' ')).trim()
     }
   }
 
@@ -331,11 +287,11 @@
    * })
    *
    * @param {Element} el
-   * @param {function (Element)|string}
+   * @param {function (Element)|string} v
    * @return {string}
    */
   function setter(el, v) {
-    return typeof v == 'function' ? v(el) : v
+    return typeof v == 'function' ? v.call(el, el) : v
   }
 
   function scroll(x, y, type) {
@@ -423,7 +379,7 @@
      */
     , html: function (h, opt_text) {
         var method = opt_text
-              ? html.textContent === undefined ? 'innerText' : 'textContent'
+              ? 'textContent'
               : 'innerHTML'
           , that = this
           , append = function (el, i) {
@@ -567,8 +523,12 @@
        * @return {Bonzo}
        */
     , replaceWith: function (node) {
-        bonzo(normalize(node)).insertAfter(this)
-        return this.remove()
+        var that = this
+        return this.each(function (el, i) {
+          each(normalize(node, that, i), function (i) {
+            el[parentNode] && el[parentNode].replaceChild(i, el)
+          })
+        })
       }
 
       /**
@@ -792,16 +752,6 @@
           iter[o] = opt_v
         }
 
-        if (!features.opasity && 'opacity' in iter) {
-          // oh this 'ol gamut
-          iter.filter = iter.opacity != null && iter.opacity !== ''
-            ? 'alpha(opacity=' + (iter.opacity * 100) + ')'
-            : ''
-          // give it layout
-          iter.zoom = o.zoom || 1
-          ;delete iter.opacity
-        }
-
         function fn(el, p, v) {
           for (var k in iter) {
             if (iter.hasOwnProperty(k)) {
@@ -912,8 +862,7 @@
         return typeof opt_v == 'undefined' ?
           !el ? null : specialAttributes.test(k) ?
             stateAttributes.test(k) && typeof el[k] == 'string' ?
-              true : el[k] : (k == 'href' || k =='src') && features.hrefExtended ?
-                el[getAttribute](k, 2) : el[getAttribute](k) :
+              true : el[k] :  el[getAttribute](k) :
           this.each(function (el) {
             specialAttributes.test(k) ? (el[k] = setter(el, opt_v)) : el[setAttribute](k, setter(el, opt_v))
           })
@@ -1091,16 +1040,13 @@
           , dep = p ? p[2] + 1 : 1
           , ns = p && p[3]
           , pn = parentNode
-          , tb = features.autoTbody && p && p[0] == '<table>' && !(/<tbody/i).test(node)
 
         el.innerHTML = p ? (p[0] + node + p[1]) : node
         while (dep--) el = el.firstChild
         // for IE NoScope, we may insert cruft at the begining just to get it to work
         if (ns && el && el.nodeType !== 1) el = el.nextSibling
         do {
-          // tbody special case for IE<8, creates tbody on any empty table
-          // we don't want it if we're just after a <thead>, <caption>, etc.
-          if ((!tag || el.nodeType == 1) && (!tb || (el.tagName && el.tagName != 'TBODY'))) {
+          if (!tag || el.nodeType == 1) {
             els.push(el)
           }
         } while (el = el.nextSibling)
@@ -1128,25 +1074,17 @@
 
   bonzo.viewport = function () {
     return {
-        width: ie ? html.clientWidth : self.innerWidth
-      , height: ie ? html.clientHeight : self.innerHeight
+        width: win.innerWidth
+      , height: win.innerHeight
     }
   }
 
   bonzo.isAncestor = 'compareDocumentPosition' in html ?
     function (container, element) {
       return (container.compareDocumentPosition(element) & 16) == 16
-    } : 'contains' in html ?
-    function (container, element) {
-      return container !== element && container.contains(element);
     } :
     function (container, element) {
-      while (element = element[parentNode]) {
-        if (element === container) {
-          return true
-        }
-      }
-      return false
+      return container !== element && container.contains(element);
     }
 
   return bonzo

@@ -30,6 +30,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   lazy val isExpired = delegate.isExpired.getOrElse(false)
   lazy val blockVideoAds: Boolean = videoAssets.exists(_.blockVideoAds)
   lazy val isLiveBlog: Boolean = delegate.isLiveBlog
+  lazy val hasLargeContributorImage: Boolean = tags.filter(_.hasLargeContributorImage).nonEmpty
 
   // read this before modifying
   // https://developers.facebook.com/docs/opengraph/howtos/maximizing-distribution-media-content#images
@@ -97,7 +98,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   }
 
   // Inherited from Tags
-  override lazy val tags: Seq[Tag] = delegate.tags map { Tag }
+  override lazy val tags: Seq[Tag] = delegate.tags map { Tag(_) }
 
   // Inherited from MetaData
   override lazy val id: String = delegate.id
@@ -146,7 +147,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   override lazy val headline: String = apiContent.metaData.get("headline").flatMap(_.asOpt[String]).getOrElse(fields("headline"))
   override lazy val trailText: Option[String] = apiContent.metaData.get("trailText").flatMap(_.asOpt[String]).orElse(fields.get("trailText"))
   override lazy val group: Option[String] = apiContent.metaData.get("group").flatMap(_.asOpt[String])
-  override lazy val imageAdjust: Option[String] = apiContent.metaData.get("imageAdjust").flatMap(_.asOpt[String])
+  override lazy val imageAdjust: String = apiContent.metaData.get("imageAdjust").flatMap(_.asOpt[String]).getOrElse("default")
   override lazy val isBreaking: Boolean = apiContent.metaData.get("isBreaking").flatMap(_.asOpt[Boolean]).getOrElse(false)
   override lazy val supporting: List[Content] = apiContent.supporting
 }
@@ -250,7 +251,7 @@ class Article(content: ApiContentWithMeta) extends Content(content) {
   override def schemaType = if (isReview) Some("http://schema.org/Review") else Some("http://schema.org/Article")
 
   // if you change these rules make sure you update IMAGES.md (in this project)
-  override def trailPicture: Option[ImageContainer] = thumbnail.find(_.imageCrops.exists(_.width >= 940))
+  override def trailPicture: Option[ImageContainer] = thumbnail.find(_.imageCrops.exists(_.width >= 620))
       .orElse(mainPicture).orElse(videos.headOption)
 
 
@@ -268,6 +269,7 @@ class Article(content: ApiContentWithMeta) extends Content(content) {
     "article:published_time" -> webPublicationDate,
     "article:modified_time" -> lastModified,
     "article:section" -> sectionName,
+    "article:publisher" -> "https://www.facebook.com/theguardian",
     "og:image" -> openGraphImage
   ) ++ tags.map("article:tag" -> _.name) ++
     tags.filter(_.isContributor).map("article:author" -> _.webUrl)

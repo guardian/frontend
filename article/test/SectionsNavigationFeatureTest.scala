@@ -1,16 +1,13 @@
 package test
 
 import org.scalatest.Matchers
-import org.scalatest.{ Informer, GivenWhenThen, FeatureSpec }
+import org.scalatest.{ GivenWhenThen, FeatureSpec }
 import collection.JavaConversions._
-import collection.JavaConverters._
-import org.fluentlenium.core.domain.{ FluentWebElement, FluentList }
 import org.fluentlenium.core.filter.FilterConstructor._
 
 import conf.Configuration
-import common.UsesElasticSearch
 
-class SectionNavigationFeatureTest extends FeatureSpec with GivenWhenThen with Matchers  with UsesElasticSearch {
+class SectionNavigationFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
   implicit val config = Configuration
 
@@ -94,7 +91,5 @@ class SectionNavigationFeatureTest extends FeatureSpec with GivenWhenThen with M
 
       }
     }
-
   }
-
 }

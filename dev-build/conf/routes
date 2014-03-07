@@ -35,6 +35,8 @@ GET         /most-read                                                          
 GET         /most-read.json                                                                                          controllers.MostPopularController.render(path = "")
 GET         /most-read/*path.json                                                                                    controllers.MostPopularController.renderJson(path)
 GET         /most-read/*path                                                                                         controllers.MostPopularController.render(path)
+GET         /most-read-geo.json                                                                                      controllers.MostPopularController.renderPopularGeoJson()
+GET         /most-read-day.json                                                                                      controllers.MostPopularController.renderPopularDayJson(countryCode)
 
 GET         /top-stories                                                                                             controllers.TopStoriesController.renderTopStories()
 GET         /top-stories.json                                                                                        controllers.TopStoriesController.renderTopStoriesJson()
@@ -42,6 +44,7 @@ GET         /top-stories/trails                                                 
 GET         /top-stories/trails.json                                                                                 controllers.TopStoriesController.renderJsonTrails()
 GET         /related/*path.json                                                                                      controllers.RelatedController.renderJson(path)
 GET         /related/*path                                                                                           controllers.RelatedController.render(path)
+GET         /popular-in-tag/*tag.json                                                                                controllers.PopularInTag.renderJson(tag)
 
 GET         /preference/platform/:platform                                                                           controllers.ChangeViewController.render(platform, page)
 GET         /preference/edition/:edition                                                                             controllers.ChangeEditionController.render(edition)
@@ -172,8 +175,6 @@ GET         /commercial/books/book/*pageId.json                                 
 GET         /commercial/books/book/*pageId                                                                           controllers.commercial.BookOffers.singleBook(pageId, format="html")
 
 # Onward journeys
-GET         /onward/most-read.json                                                                                   controllers.MostPopularOnwardController.mostRead()
-GET         /onward/latest.json                                                                                      controllers.LatestContentController.renderLatest()
 GET         /onward/recently-published                                                                               controllers.LatestContentController.recentlyPublished()
 
 # Facia

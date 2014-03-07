@@ -12,18 +12,19 @@
 
 $old-ie:      false !default;
 $svg-support: true !default;
+$browser-supports-columns: true !default;
+$browser-supports-flexbox: true !default;
 
 
 // Layout dimensions
 // =============================================================================
 
-$baseline: 4px;
 $gutter: 16px;
 $unitHeight: 36px;
 $inArticleInlineImgWidth: 114px;
 $trailblockImgWidth: 100%;
 $trailblockImgWidthLarge: 140px;
-$headerHeight: 58px;
+$headerHeight: 46px;
 
 
 // Guss defaults
@@ -128,9 +129,8 @@ $fs-data: (
 // Colours
 // =============================================================================
 
-// @todo: Blues need comments to associate with brand/logo colours
-
 $c-brandBlue: #214583;
+$c-brandLightBlue: #94b1ca;
 $c-error: #d61d00;
 
 $c-neutral1: #333333;
@@ -144,25 +144,22 @@ $c-neutral6: #edede7;
 $c-neutral7: #f4f4ee;
 $c-neutral8: #f6f6f6;
 
-$c-live: #F23B54;
-$c-media-icon: #FBBA0F;
+$c-live: #e81818;
+$c-media-icon: #fbba0f;
 
 
 // Tones
 // =============================================================================
 
 $c-newsDefault: #005689;
-$c-newsAccent: #4BC6DF;
+$c-newsAccent: #4bc6df;
 
-$c-featureDefault: #951C55;
-$c-featureAccent: #F66980;
+$c-featureDefault: #951c55;
+$c-featureAccent: #f66980;
+$c-featuresVariant: #7d0068;
 
-$c-commentDefault: #E6711B;
-$c-commentAccent: #FFBB00;
-
-$c-features-primary: #4e0375;
-$c-features-secondary: #7d0068;
-$c-features-tertiary: #951c55;
+$c-commentDefault: #e6711b;
+$c-commentAccent: #ffbb00;
 
 
 // Zones
@@ -174,12 +171,11 @@ $articleOrange: #e47a39; //Used for live-blogging
 $businessBlue: #004179;
 $commentBlue: #004179;
 $culturePink: #D1008B;
-$environmentGreen: #4A7801;
-$lifeandstyleOrange: #EA721E;
-$moneyPurple: #7D0068;
-$newsRed: #D61D00;
-
-$travelBlue: #066EC9;
+$environmentGreen: #4a7801;
+$lifeandstyleOrange: #ea721e;
+$moneyPurple: #7d0068;
+$newsRed: #d61d00;
+$travelBlue: #066ec9;
 
 
 // Football
@@ -195,6 +191,7 @@ $c-sportAway: $c-sportDark;
 
 // Stati
 // =============================================================================
+
 $c-statusPositive: #6ca843;
 $c-statusNeutral: #999999;
 $c-statusNegative: #da1d1d;

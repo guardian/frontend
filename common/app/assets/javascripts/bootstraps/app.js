@@ -9,7 +9,6 @@ define([
 
     'common/modules/analytics/errors',
     'common/modules/ui/fonts',
-    'common/modules/router',
     'common/modules/adverts/userAdTargeting',
     'common/modules/discussion/api',
 
@@ -33,7 +32,6 @@ define([
 
     Errors,
     Fonts,
-    Router,
     UserAdTargeting,
     DiscussionApi,
 
@@ -103,10 +101,6 @@ define([
             modules.initUserAdTargeting();
 
             var pageRoute = function(config, context) {
-
-                // We should rip out this router:
-                var r = new Router();
-
                 bootstrapCommon.init(config, context);
 
                 // Front
@@ -115,13 +109,6 @@ define([
                         facia.init(config, context);
                     });
                 }
-
-                //Football
-                r.get('/football', function(req) {                                Football.init(req, config, context); });
-                r.get('/football/:action', function(req) {                        Football.init(req, config, context); });
-                r.get('/football/:action/:year/:month/:day', function(req) {      Football.init(req, config, context); });
-                r.get('/football/:tag/:action', function(req) {                   Football.init(req, config, context); });
-                r.get('/football/:tag/:action/:year/:month/:day', function(req) { Football.init(req, config, context); });
 
                 if(config.page.contentType === 'Article') {
                     Article.init(config, context);
@@ -147,8 +134,10 @@ define([
                     ImageContent.init(config, context);
                 }
 
-                //Kick it all off
-                r.init();
+                if (config.page.section === 'football') {
+                    // Kick it all off
+                    Football.init();
+                }
             };
 
             mediator.on('page:ready', pageRoute);

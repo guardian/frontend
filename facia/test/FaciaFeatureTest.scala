@@ -3,9 +3,8 @@ package test
 import org.scalatest.Matchers
 import org.scalatest.{ GivenWhenThen, FeatureSpec }
 import collection.JavaConversions._
-import common.UsesElasticSearch
 
-class FaciaFeatureTest extends FeatureSpec with GivenWhenThen with Matchers  with UsesElasticSearch {
+class FaciaFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
 
   feature("Facia") {

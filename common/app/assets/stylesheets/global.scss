@@ -6,6 +6,7 @@
 
 @import "_vars";
 @import "_mixins";
+@import "module/facia/_mixins";
 @import "module/_discussion-mixins";
 @import "_extends-only";
 @import "components/guss-layout/_columns";
@@ -31,25 +32,26 @@
 @import "module/_stars";
 @import "module/_debug";
 @import "module/_gallerythumbs";
+
 @import "module/nav/_pop-up";
 @import "module/nav/_localnav";
 @import "module/nav/_aside";
 @import "module/_search";
+
 @import "module/_live-blog";
 @import "module/_live-filter";
-@import "module/_live-summary";
 @import "module/_circular-progress";
+
 @import "module/football/_matches";
 @import "module/sport/_summary";
 @import "module/sport/_mini-scorecard";
 @import "module/sport/_full-scorecard";
+
 @import "module/_discussion";
 @import "module/_interactive";
 @import "module/_overlay";
 @import "module/_lightbox-gallery";
-@import "module/facia/_extends";
-@import "module/facia/_mixins";
-@import "module/containers/_popular";
+
 @import "module/onward/_right-hand-most-popular";
 @import "module/onward/_right-recommended";
 @import "module/onward/_popular";
@@ -68,12 +70,29 @@
 
 
 /* ==========================================================================
+   Facia
+   ========================================================================== */
+
+@import "module/facia/_extends";
+@import "module/containers/_sport";
+@import "module/containers/_features";
+@import "module/containers/_comment";
+@import "module/containers/_special";
+@import "module/containers/_section";
+@import "module/containers/_commentanddebate";
+@import "module/containers/_people";
+@import "module/containers/_misc";
+@import "module/containers/_popular";
+@import "module/containers/_related";
+@import "module/facia/_pagination";
+
+
+/* ==========================================================================
    Experiments
    ========================================================================== */
 
-@import "module/experiments/_ab-inline-link-card";
-@import "module/experiments/_ab-inline-elements";
-@import "module/experiments/_truncation";
+@import "module/experiments/_ab-football-table-position";
+@import "module/experiments/_layout-hints";
 
 /* ==========================================================================
    Icons

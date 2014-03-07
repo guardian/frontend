@@ -80,10 +80,12 @@ trait Prototypes {
     test in assembly := {},
     jarName in assembly <<= (name) map { "frontend-%s.jar" format _ },
     aggregate in assembly := false,
+    mainClass in assembly := Some("play.core.server.NettyServer"),
 
     mergeStrategy in assembly <<= (mergeStrategy in assembly) { current =>
       {
         case s: String if s.startsWith("org/mozilla/javascript/") => MergeStrategy.first
+        case s: String if s.startsWith("org/jdom/") || s.startsWith("JDOM") => MergeStrategy.last
         case s: String if s.startsWith("jargs/gnu/") => MergeStrategy.first
         case s: String if s.startsWith("scala/concurrent/stm") => MergeStrategy.first
         case s: String if s.endsWith("ServerWithStop.class") => MergeStrategy.first  // There is a scala trait and a Java interface
@@ -100,19 +102,9 @@ trait Prototypes {
         case "NOTICE" => MergeStrategy.discard
         case "README" => MergeStrategy.discard
         case "CHANGELOG" => MergeStrategy.discard
-        case meta if meta.startsWith("META-INF/") => MergeStrategy.first
+        case meta if meta.startsWith("META-INF/") => MergeStrategy.discard
 
         case other => current(other)
-      }
-    },
-
-    excludedFiles in assembly := { (bases: Seq[File]) =>
-      bases flatMap { base => (base / "META-INF" * "*").get } collect {
-        case f if f.getName.toUpperCase == "LICENSE" => f
-        case f if f.getName.toUpperCase == "MANIFEST.MF" => f
-        case f if f.getName.endsWith(".SF") => f
-        case f if f.getName.endsWith(".DSA") => f
-        case f if f.getName.endsWith(".RSA") => f
       }
     }
   )

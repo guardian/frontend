@@ -18,58 +18,60 @@
         color: $c-neutral1;
         margin-bottom: 0;
     }
-    .l-row--items-2 {
-        .item__title {
-            @include rem((
-                margin-bottom: 14px
-            ));
-            @include mq(tablet) {
-                @include fs-headline(3, true);
-            }
-        }
-        @include mq(mobile, tablet) {
-            display: -webkit-flex;
-            display: flex;
-
-            .collection__item {
-                flex-basis: 50%;
-                -webkit-flex-basis: 50%;
-            }
-        }
-        @include mq(tablet) {
-            .collection__item {
-                @include rem((
-                    margin-bottom: $gs-baseline*2
-                ));
-            }
-        }
-        @include mq(desktop) {
-            .collection__item {
-                padding-bottom: 0;
-            }
-            .item {
-                margin-bottom: 0;
-            }
-        }
-    }
-    .l-row--items-2 {
-        .item--imageadjust-highlight {
-            padding-bottom: 0;
-
-            .item__standfirst {
-                display: none;
-            }
-            .item__meta {
-                position: static;
-                @include rem((
-                    margin-top: $gs-baseline
-                ));
-            }
-        }
-    }
     @include mq(tablet) {
         .item--sport-stats {
             display: none;
         }
+    }
+    @include mq($to: tablet) {
+        .l-row--items-4 {
+            .collection__item:nth-child(-n+2) {
+                // Force the image to be displayed
+                .item--has-image .item__media-wrapper,
+                .item--has-image .item__image-container {
+                    display: block;
+                }
+                // And here we don't need two "gallery" or "video" icons
+                @include hide-icon-in-title;
+            }
+        }
+    }
+}
+
+
+/**
+ * Date
+ */
+
+.today {
+    color: $c-neutral1;
+    font-weight: normal;
+}
+.today__dayofweek {
+    color: $c-newsDefault;
+}
+@include mq(wide) {
+    .today__sub {
+        display: block;
+    }
+}
+
+.i--circle {
+    @include rounded-corners(50%);
+    display: block;
+    position: relative;
+}
+.i--clock {
+    width: 32px;
+    height: 32px;
+    background-color: $c-newsDefault;
+    position: absolute;
+    left: 0;
+    margin-top: 3px;
+
+    .i {
+        position: absolute;
+        left: 15px;
+        top: 5px;
     }
 }

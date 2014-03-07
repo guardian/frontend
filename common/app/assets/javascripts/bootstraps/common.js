@@ -15,9 +15,7 @@ define([
     'common/utils/detect',
     'common/modules/onward/popular',
     'common/modules/onward/related',
-    'common/modules/router',
     'common/modules/ui/images',
-    'common/modules/navigation/top-stories',
     'common/modules/navigation/profile',
     'common/modules/navigation/sections',
     'common/modules/navigation/search',
@@ -58,10 +56,8 @@ define([
     storage,
     detect,
     popular,
-    related,
-    Router,
+    Related,
     images,
-    TopStories,
     Profile,
     Sections,
     Search,
@@ -100,8 +96,7 @@ define([
         },
 
         initialiseNavigation: function (config) {
-             var topStories = new TopStories(),
-                sections = new Sections(config),
+            var sections = new Sections(config),
                 search = new Search(config),
                 header = document.getElementById('header');
 
@@ -112,7 +107,6 @@ define([
                     });
                     profile.init();
                 }
-                topStories.load(config, header);
             }
 
             sections.init(document);
@@ -120,7 +114,8 @@ define([
         },
 
         transcludeRelated: function (config, context) {
-            related(config, context);
+            var r = new Related();
+            r.renderRelatedComponent(config, context);
         },
 
         transcludePopular: function () {
@@ -193,7 +188,7 @@ define([
             if(config.switches.rightHandMostPopular && config.page.contentType === 'Article') {
               var r = new RightHandComponentFactory({
                   wordCount: config.page.wordCount,
-                  mediator: mediator
+                  pageId: config.page.pageId
               });
            }
         },
@@ -237,18 +232,15 @@ define([
         loadAdverts: function (config) {
             if(!userPrefs.isOff('adverts') && config.switches.adverts && !config.page.blockVideoAds && !config.page.shouldHideAdverts) {
                 var resizeCallback = function() {
-                    hasBreakpointChanged(Adverts.reload);
+                    hasBreakpointChanged(function() {
+                        Adverts.reload();
+                        mediator.emit('modules:adverts:reloaded');
+                    });
                 };
 
                 if(config.page.contentType === 'Article' && !config.page.isLiveBlog) {
-                    // Limiting inline ads to 1 until support for different inline
-                    // ads is enabled
-                    var articleBodyAdverts = new ArticleBodyAdverts({
-                        inlineAdLimit: 1,
-                        wordCount: config.page.wordCount
-                    });
+                    var articleBodyAdverts = new ArticleBodyAdverts();
 
-                    // Add the body adverts to the article page
                     articleBodyAdverts.init();
 
                     resizeCallback = function(e) {
@@ -307,7 +299,7 @@ define([
                 exitLink = '/preference/platform/classic?page=' + encodeURIComponent(path + '?view=classic'),
                 msg = '<p class="site-message__message" id="site-message__message">' +
                             'You’re viewing a beta release of the Guardian’s responsive website.' +
-                            ' We’d love to hear your <a href="https://s.userzoom.com/m/MSBDMTBTMTE5" data-link-name="feedback">feedback</a>' +
+                            ' We’d love to hear your <a href="https://www.surveymonkey.com/s/theguardian-beta-feedback" data-link-name="feedback">feedback</a>' +
                       '</p>' +
                       '<ul class="site-message__actions unstyled">' +
                            '<li class="site-message__actions__item">' +
@@ -328,7 +320,7 @@ define([
         },
 
         displayOnboardMessage: function (config) {
-            if(window.location.hash === '#opt-in-message' && config.switches.networkFrontOptIn) {
+            if(window.location.hash === '#opt-in-message' && config.switches.networkFrontOptIn && detect.getBreakpoint() !== 'mobile') {
                 bean.on(document, 'click', '.js-site-message-close', function() {
                     Cookies.add("GU_VIEW", "responsive", 365);
                     Cookies.add("GU_ALPHA", "2", 365);
@@ -342,10 +334,10 @@ define([
                     exitLink = '/preference/platform/classic?page=' + encodeURIComponent(path + '?view=classic'),
                     msg = '<h2 class="site-message__header">Thanks for joining us.</h2>' +
                     '<div class="site-message__message" id="site-message__message">' +
-                    '<p>You’re looking at a prototype of our new website. Opt-out any time by clicking "Current version" at the bottom of the page.</p>' +
+                    '<p>You’re looking at a prototype of our new website. Opt-out any time by clicking "Current version" at the bottom of the page. <a href="http://next.theguardian.com/">Find out more</a>.</p>' +
                     '<ul class="site-message__list">' +
-                    '<li class="site-message__list__item">Our new front pages and content pages are a work in progress.</li>' +
-                    '<li class="site-message__list__item">We\'ll be launching our product site and feedback form later this week.</li>' +
+                    '<li class="site-message__list__item">We love feedback - <a href="https://www.surveymonkey.com/s/theguardian-beta-feedback">let us know yours</a>.</li>' +
+                    '<li class="site-message__list__item">Stay up to date with new releases on <a href="http://next.theguardian.com/blog/">our blog</a>.</li>' +
                     '</ul>' +
                     '<ul class="site-message__actions unstyled">' +
                     '<li class="site-message__actions__item"><i class="i i-arrow-white-circle"></i>  '+

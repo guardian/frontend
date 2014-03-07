@@ -9,35 +9,45 @@ $replyIndent: 26px;
 
 .discussion {
     @include mq(leftCol) {
-        @include rem((margin-left: - ($a-leftCol-width + $gs-gutter)));
+        @include rem((
+            margin-left: - ($a-leftCol-width + $gs-gutter)
+        ));
     }
     @include mq(wide) {
-        @include rem((margin-left: - ($a-leftColWide-width + $gs-gutter)));
+        @include rem((
+            margin-left: - ($a-leftColWide-width + $gs-gutter)
+        ));
     }
 }
 .d-discussion {
-    @include rem((font-size: 14px));
+    @include rem((
+        font-size: 14px
+    ));
 }
 .d-discussion__comment-count {
     @include fs-data(4);
     color: $c-neutral2;
     border-top: 1px solid $c-neutral4;
-    @include rem((padding-bottom: $baseline*3));
+    @include rem((
+        padding-bottom: $gs-baseline
+    ));
 }
 .d-thread {
     list-style: none;
     margin: 0;
 }
 .discussion__comments__container {
-    @include rem((margin-bottom: $gs-baseline*3.5));
+    @include rem((
+        margin-bottom: $gs-baseline*3.5
+    ));
 }
 .discussion__comment-count {
     color: $c-neutral3;
 }
 .show-more__container {
     @include rem((
-        margin-bottom: $baseline*2,
-        padding-top: $baseline*2
+        margin-bottom: ($gs-baseline/3)*2,
+        padding-top: ($gs-baseline/3)*2
     ));
     display: block;
     text-align: center;
@@ -50,7 +60,7 @@ $replyIndent: 26px;
     }
 }
 .d-discussion__show-more {
-    padding-top: $baseline*2;
+    padding-top: ($gs-baseline/3)*2;
     @include fs-data(5);
     position: relative;
     line-height: 30px;
@@ -64,7 +74,7 @@ $replyIndent: 26px;
     background-color: $c-newsDefault;
 }
 .d-discussion__show-more-text {
-    padding-left: 32px + $baseline;
+    padding-left: 32px + $gs-baseline/3;
     display: inline-block;
 }
 .d-discussion__show-all-comments {
@@ -80,7 +90,7 @@ $replyIndent: 26px;
         left: 0;
     }
     .i-arrow-blue-down {
-        margin-left: $baseline*2;
+        margin-left: ($gs-baseline/3)*2;
     }
 }
 .d-discussion--not-staff .d-staff-required {
@@ -118,25 +128,33 @@ $replyIndent: 26px;
 .d-comment__meta,
 .d-comment-box__meta {
     @include rem((
-        height: $avatarSize + $baseline,
-        margin-bottom: $baseline*2
+        height: $avatarSize + ($gs-baseline/3),
+        margin-bottom: ($gs-baseline/3)*2
     ));
     white-space: nowrap;
 
     @include mq($comment-meta-breakpoint) {
-        @include rem((width: 160px));
+        @include rem((
+            width: 160px
+        ));
         float: left;
         height: auto;
     }
     @include mq(leftCol) {
-        @include rem((width: $a-leftCol-width + $gs-gutter));
+        @include rem((
+            width: $a-leftCol-width + $gs-gutter
+        ));
     }
     @include mq(wide) {
-        @include rem((width: $a-leftColWide-width + $gs-gutter));
+        @include rem((
+            width: $a-leftColWide-width + $gs-gutter
+        ));
     }
 }
 .d-comment-box__meta {
-    @include rem((margin-top: $gs-baseline/2));
+    @include rem((
+        margin-top: $gs-baseline/2
+    ));
     position: relative;
     display: none;
     @include mq($comment-meta-breakpoint) {
@@ -147,7 +165,7 @@ $replyIndent: 26px;
 .d-comment-box__avatar-wrapper {
     @include rem((
         margin-right: ($gs-gutter/5)*2,
-        margin-top: $baseline
+        margin-top: $gs-baseline/3
     ));
     float: left;
 
@@ -166,7 +184,9 @@ $replyIndent: 26px;
 }
 .d-comment__meta-text,
 .d-comment-box__meta-text {
-    @include rem((padding-right: 50px));
+    @include rem((
+        padding-right: 50px
+    ));
     @include box-sizing(border-box);
     @include mq(desktop) {
         padding-right: 0;
@@ -187,7 +207,9 @@ $replyIndent: 26px;
     display: block;
     overflow: hidden;
     text-overflow: ellipsis;
-    @include rem((padding-right: $gs-gutter / 2));
+    @include rem((
+        padding-right: $gs-gutter / 2
+    ));
 }
 .d-comment__author-label {
     @include fs-data(1);
@@ -200,7 +222,7 @@ $replyIndent: 26px;
 
 .d-comment__timestamp {
     @include fs-data(2);
-    margin-bottom: $baseline;
+    margin-bottom: $gs-baseline/3;
     a { color: $c-neutral2; }
 }
 .d-comment__reply-to-author,
@@ -224,13 +246,19 @@ $replyIndent: 26px;
 
 .d-comment__content {
     @include mq($comment-meta-breakpoint) {
-        @include rem((margin-left: 160px));
+        @include rem((
+            margin-left: 160px
+        ));
     }
     @include mq(leftCol) {
-        @include rem((margin-left: $a-leftCol-width + $gs-gutter));
+        @include rem((
+            margin-left: $a-leftCol-width + $gs-gutter
+        ));
     }
     @include mq(wide) {
-        @include rem((margin-left: $a-leftColWide-width + $gs-gutter));
+        @include rem((
+            margin-left: $a-leftColWide-width + $gs-gutter
+        ));
     }
 }
 .d-comment__pick {
@@ -247,16 +275,22 @@ $replyIndent: 26px;
 }
 
 .d-comment__main {
-    @include rem((padding-bottom: $gs-baseline*2));
+    @include rem((
+        padding-bottom: $gs-baseline*2
+    ));
     position: relative;
 
     @include mq(tablet) {
-        @include rem((padding-right: $gs-gutter*2));
+        @include rem((
+            padding-right: $gs-gutter*2
+        ));
     }
 }
 .d-comment__body {
     @include fs-data(5);
-    @include rem((line-height: 23px));
+    @include rem((
+        line-height: 23px
+    ));
 
     color: $c-neutral1;
     min-height: 2.5em;
@@ -317,7 +351,9 @@ $replyIndent: 26px;
 }
 .d-comment__recommend-count {
     @include fs-data(3);
-    @include rem((height: 16px));
+    @include rem((
+        height: 16px
+    ));
     overflow: hidden;
     color: $c-neutral2;
     font-weight: bold;
@@ -325,6 +361,7 @@ $replyIndent: 26px;
     min-width: 12px;
     display: inline-block;
     margin-bottom: -4px;
+
     @include mq(tablet) {
         margin-bottom: 0;
         min-width: 0;
@@ -388,8 +425,8 @@ $replyIndent: 26px;
     @include fs-data(2);
     @include rem((
         height: 14px,
-        padding-top: $baseline*2,
-        padding-bottom: $baseline*5
+        padding-top: ($gs-baseline/3)*2,
+        padding-bottom: ($gs-baseline/3)*5
     ));
     width: 100%;
     position: absolute;
@@ -399,7 +436,9 @@ $replyIndent: 26px;
     color: $c-newsDefault;
     font-weight: bold;
     display: inline-block;
-    @include rem((line-height: 20px));
+    @include rem((
+        line-height: 20px
+    ));
 }
 .d-comment__action--reply {
     cursor: pointer;
@@ -421,13 +460,15 @@ $replyIndent: 26px;
 .d-comment__action--report {
     font-weight: normal;
     position: absolute;
-    right: $baseline;
+    right: $gs-baseline/3;
 }
 .d-comment__action-separator {
     @include fs-data(1);
     color: $c-neutral2;
     display: inline-block;
-    @include rem((margin: 0 ($gs-gutter/5)*2));
+    @include rem((
+        margin: 0 ($gs-gutter/5)*2
+    ));
     position: relative;
     bottom: 1px;
 }
@@ -461,39 +502,59 @@ $replyIndent: 26px;
 .d-comment--response,
 .d-comment-box--response {
     border-top: 1px dotted $c-neutral3;
-    @include rem((margin-left: $replyIndent));
+    @include rem((
+        margin-left: $replyIndent
+    ));
 
     @include mq($comment-meta-breakpoint) {
-        @include rem((margin-left: 160px + $replyIndent));
+        @include rem((
+            margin-left: 160px + $replyIndent
+        ));
     }
     @include mq(leftCol) {
-        @include rem((margin-left: $a-leftCol-width + $gs-gutter + $replyIndent));
+        @include rem((
+            margin-left: $a-leftCol-width + $gs-gutter + $replyIndent
+        ));
     }
     @include mq(wide) {
-        @include rem((margin-left: $a-leftColWide-width + $gs-gutter + $replyIndent));
+        @include rem((
+            margin-left: $a-leftColWide-width + $gs-gutter + $replyIndent
+        ));
     }
 
     .d-comment__main {
-        @include rem((margin-top: $baseline));
+        @include rem((
+            margin-top: $gs-baseline/3
+        ));
     }
     .d-comment__content {
         margin-left: 0;
     }
     .d-comment__inner {
-        @include rem((padding-top: $gs-baseline/2));
+        @include rem((
+            padding-top: $gs-baseline/2
+        ));
     }
     .d-comment__body {
         color: $c-replyText;
-        @include rem((margin-top: $baseline));
+        @include rem((
+            margin-top: $gs-baseline/3
+        ));
         @include mq(tablet) {
-            @include rem((margin-top: $baseline*2));
+            @include rem((
+                margin-top: ($gs-baseline/3)*2
+            ));
         }
     }
     .d-comment__recommend {
-        @include rem((top: $gs-baseline/2));
+        @include rem((
+            top: $gs-baseline/2
+        ));
     }
     .d-comment__timestamp {
-        @include rem((margin-top: $baseline * -1));
+        @include rem((
+            margin-top: $gs-baseline/3 * -1
+        ));
     }
 }
 .d-comment-box--response {
@@ -545,7 +606,9 @@ $replyIndent: 26px;
 .d-discussion__error {
     @include fs-data(4);
     color: $c-error;
-    @include rem((margin-top: $baseline*2));
+    @include rem((
+        margin-top: ($gs-baseline/3)*2
+    ));
 
     .d-discussion__error-text {
         display: inline-block;
@@ -558,26 +621,40 @@ $replyIndent: 26px;
 }
 .d-thread--responses .d-discussion__error {
     @include mq($comment-meta-breakpoint) {
-        @include rem((margin-left: 160px + $replyIndent));
+        @include rem((
+            margin-left: 160px + $replyIndent
+        ));
     }
     @include mq(leftCol) {
-        @include rem((margin-left: $a-leftCol-width + $gs-gutter + $replyIndent));
+        @include rem((
+            margin-left: $a-leftCol-width + $gs-gutter + $replyIndent
+        ));
     }
     @include mq(wide) {
-        @include rem((margin-left: $a-leftColWide-width + $gs-gutter + $replyIndent));
+        @include rem((
+            margin-left: $a-leftColWide-width + $gs-gutter + $replyIndent
+        ));
     }
 }
-.js-show-more-replies {
-    @include rem((margin-left: $replyIndent));
+.d-show-more-replies {
+    @include rem((
+        margin-left: $replyIndent
+    ));
 
     @include mq($comment-meta-breakpoint) {
-        @include rem((margin-left: 160px + $replyIndent));
+        @include rem((
+            margin-left: 160px + $replyIndent
+        ));
     }
     @include mq(leftCol) {
-        @include rem((margin-left: $a-leftCol-width + $gs-gutter + $replyIndent));
+        @include rem((
+            margin-left: $a-leftCol-width + $gs-gutter + $replyIndent
+        ));
     }
     @include mq(wide) {
-        @include rem((margin-left: $a-leftColWide-width + $gs-gutter + $replyIndent));
+        @include rem((
+            margin-left: $a-leftColWide-width + $gs-gutter + $replyIndent
+        ));
     }
 
     color: $c-newsDefault;
@@ -596,7 +673,7 @@ $replyIndent: 26px;
         @include icon-button(18px, -9px);
         background-color: $c-newsDefault;
         @include rem((
-            margin-bottom: $baseline * -1,
+            margin-bottom: $gs-baseline/3 * -1,
             margin-right: ($gs-gutter/5)*2
         ));
     }
@@ -610,7 +687,9 @@ $replyIndent: 26px;
     color: $c-neutral1;
     border-top: 1px dotted $c-neutral3;
     margin-bottom: 0;
-    @include rem((padding-top: $gs-baseline/10));
+    @include rem((
+        padding-top: $gs-baseline/10
+    ));
 }
 .discussion__comments--top-comments {
     .d-thread { // for the max-height fade effect
@@ -618,11 +697,15 @@ $replyIndent: 26px;
         overflow: hidden;
     }
     .d-comment {
-        @include rem((margin-bottom: ($gs-baseline/5)*2));
+        @include rem((
+            margin-bottom: ($gs-baseline/5)*2
+        ));
         overflow: hidden;
     }
     .d-comment__main {
-        @include rem((padding-right: 40px));
+        @include rem((
+            padding-right: 40px
+        ));
         padding-bottom: 0;
     }
     .d-comment__body {
@@ -633,13 +716,15 @@ $replyIndent: 26px;
     }
     .d-comment__meta {
         position: absolute;
-        @include rem((bottom: $baseline*2));
+        @include rem((
+            bottom: ($gs-baseline/3)*2
+        ));
         width: 100%;
 
         @include mq($comment-meta-breakpoint) {
             position: static;
             @include rem((
-                margin-top: $baseline*4,
+                margin-top: ($gs-baseline/3)*4,
                 width: 160px
             ));
             top: 0;
@@ -647,10 +732,14 @@ $replyIndent: 26px;
     }
     .d-comment__inner {
         min-height: 0;
-        @include rem((padding-bottom: $avatarSize + 20px + $baseline*4));
+        @include rem((
+            padding-bottom: $avatarSize + 20px + ($gs-baseline/3)*4
+        ));
 
         @include mq($comment-meta-breakpoint) {
-            @include rem((padding-bottom: $baseline*2));
+            @include rem((
+                padding-bottom: ($gs-baseline/3)*2
+            ));
         }
     }
     .show-more__container--newer,
@@ -661,8 +750,8 @@ $replyIndent: 26px;
     .d-comment__content {
         background-color: $c-neutral7;
         @include rem((
-            padding: $baseline*2 ($gs-gutter/5)*3,
-            margin-bottom: $baseline*3
+            padding: ($gs-baseline/3)*2 ($gs-gutter/5)*3,
+            margin-bottom: $gs-baseline
         ));
         position: relative;
 
@@ -693,11 +782,13 @@ $replyIndent: 26px;
     }
     .d-comment__recommend {
         @include rem((
-            top: $baseline*2,
-            right: $baseline*2
+            top: ($gs-baseline/3)*2,
+            right: ($gs-baseline/3)*2
         ));
         @include mq(tablet) {
-            @include rem((right: $baseline));
+            @include rem((
+                right: $gs-gutter/5
+            ));
         }
     }
     .d-discussion__comment-count { display: none; }
@@ -731,13 +822,17 @@ $replyIndent: 26px;
 }
 .comment--speechy {
     border: none;
-    @include rem((padding: 0 0 $baseline*10 0));
+    @include rem((
+        padding: 0 0 ($gs-baseline/3)*10 0
+    ));
 
     .comment__inner {
         @include box-sizing(border-box);
         background-color: $c-neutral7;
         display: inline-block;
-        @include rem((padding: $baseline*2 $gs-gutter/2 $baseline*3));
+        @include rem((
+            padding: ($gs-baseline/3)*2 $gs-gutter/2 $gs-baseline
+        ));
         position: relative;
         width: 100%;
         max-width: $a-rightCol-width;
@@ -779,7 +874,9 @@ $replyIndent: 26px;
     @include fs-data(3);
     display: block;
     float: right;
-    @include rem((margin-top: -$baseline*4+2));
+    @include rem((
+        margin-top: -($gs-baseline/3)*4+2
+    ));
 
     .i {
         position: relative;
@@ -791,7 +888,9 @@ $replyIndent: 26px;
 }
 
 .comment__meta {
-    @include rem((margin-top: $gs-baseline));
+    @include rem((
+        margin-top: $gs-baseline
+    ));
 }
 
 
@@ -877,19 +976,23 @@ $replyIndent: 26px;
     display: block;
     @include rem((
         padding-right: $gutter*2,
-        margin: $baseline*4 0
+        margin: ($gs-baseline/3)*4 0
     ));
     @include fs-data(3);
     color: #808080;
 }
 .d-actions__link:after {
-    @include rem((margin: 0 0 -3px 20px));
+    @include rem((
+        margin: 0 0 -3px 20px
+    ));
     content: ' ';
     display: inline-block;
-    @extend .i-filter-arrow-right;
+    @extend %i-filter-arrow-right;
 }
 .d-show-cta-wrapper {
-    @include rem((padding: $baseline*2 0 $baseline*4));
+    @include rem((
+        padding: ($gs-baseline/3)*2 0 ($gs-baseline/3)*4
+    ));
 }
 .d-show-cta,
 .d-show-cta:hover,
@@ -900,8 +1003,8 @@ $replyIndent: 26px;
     display: block;
     line-height: 1;
     @include rem((
-        margin-bottom: $baseline*6,
-        padding: $baseline*2 8px $baseline*6 6px
+        margin-bottom: $gs-baseline*2,
+        padding: ($gs-baseline/3)*2 8px $gs-baseline*2 6px
     ));
     overflow: auto;
     position: relative;
@@ -933,15 +1036,17 @@ $replyIndent: 26px;
 
 .d-bar {
     color: $c-neutral1;
-    @include rem((margin-bottom: $baseline*4));
+    @include rem((
+        margin-bottom: ($gs-baseline/3)*4
+    ));
 }
 .d-comment-box__body {
     @include box-sizing(border-box);
     border: 1px solid $c-neutral3;
     @include rem((
         height: 50px,
-        margin: $baseline*2 0,
-        padding: $baseline*2 $gutter/2
+        margin: ($gs-baseline/3)*2 0,
+        padding: ($gs-baseline/3)*2 $gutter/2
     ));
     resize: vertical;
     width: 100%;
@@ -951,13 +1056,19 @@ $replyIndent: 26px;
     position: relative;
 
     @include mq($comment-meta-breakpoint) {
-        @include rem((margin-left: 160px));
+        @include rem((
+            margin-left: 160px
+        ));
     }
     @include mq(leftCol) {
-        @include rem((margin-left: $a-leftCol-width + $gs-gutter));
+        @include rem((
+            margin-left: $a-leftCol-width + $gs-gutter
+        ));
     }
     @include mq(wide) {
-        @include rem((margin-left: $a-leftColWide-width + $gs-gutter));
+        @include rem((
+            margin-left: $a-leftColWide-width + $gs-gutter
+        ));
     }
 }
 
@@ -967,14 +1078,18 @@ $replyIndent: 26px;
     }
 }
 .d-comment-box--expanded .d-comment-box__body {
-    @include rem((height: gs-height(3)));
+    @include rem((
+        height: gs-height(3)
+    ));
 }
 .d-comment-box__add-comment {
     display: none;
 }
 .d-comment-box__submit {
     display: inline-block;
-    @include rem((margin-right: $gutter));
+    @include rem((
+        margin-right: $gutter
+    ));
     @include fs-data(4);
     font-weight: bold;
 }
@@ -986,7 +1101,9 @@ $replyIndent: 26px;
 .d-comment-box__hide-parent,
 .d-comment-box__show-parent {
     @include fs-data(3);
-    @include rem((margin-left: $gs-gutter));
+    @include rem((
+        margin-left: $gs-gutter
+    ));
     display: none;
 }
 .d-comment-box--response {
@@ -1010,7 +1127,9 @@ $replyIndent: 26px;
     color: $c-neutral2;
     position: absolute;
     right: 0;
-    @include rem((bottom: $gs-baseline));
+    @include rem((
+        bottom: $gs-baseline
+    ));
     display: none;
 
     .d-comment-box--expanded &,
@@ -1022,7 +1141,9 @@ $replyIndent: 26px;
     display: none;
 }
 .open-cta {
-    @include rem((margin-top: $baseline*8));
+    @include rem((
+        margin-top: ($gs-baseline/3)*8
+    ));
 
     .clamp__fade {
         @include simple-gradient(transparent, $c-neutral7);
@@ -1040,7 +1161,9 @@ $replyIndent: 26px;
     border-right: 16px solid transparent;
     border-bottom: 16px solid $c-neutral7;
     border-right-style: inset;
-    @include rem((margin-left: $gs-gutter*2));
+    @include rem((
+        margin-left: $gs-gutter*2
+    ));
 }
 .d-comment-box__parent-comment {
     background-color: $c-neutral7;
@@ -1060,7 +1183,9 @@ $replyIndent: 26px;
 }
 .d-comment-box__parent-comment-author {
     font-weight: bold;
-    @include rem((margin-bottom: $gs-baseline/2));
+    @include rem((
+        margin-bottom: $gs-baseline/2
+    ));
     color: $c-neutral1;
     display: inline-block;
 }
@@ -1068,7 +1193,9 @@ $replyIndent: 26px;
     position: relative;
 }
 .d-comment-box__parent-comment-wrapper {
-    @include rem((margin-top: $gs-baseline/2));
+    @include rem((
+        margin-top: $gs-baseline/2
+    ));
     display: none;
 }
 .d-comment-box--parent-visible {

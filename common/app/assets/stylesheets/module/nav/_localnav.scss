@@ -1,5 +1,5 @@
 /* Local navigation - Global container overrides
-========================================================================== */
+   ========================================================================== */
 
 #preloads.has-localnav {
     .ad-slot-top-banner-ad {
@@ -11,8 +11,8 @@
             background-color: #ffffff;
         }
     }
-    h2.article-zone:only-child,
-    .parts__body > .article-zone,
+    h2.article__zone:only-child,
+    .parts__body > .article__zone,
     .hide-on-mobile-if-localnav,
     .section-head {
         display: none;
@@ -30,15 +30,14 @@
 /* Local navigation popup
    ========================================================================== */
 
-.nav-popup-localnav {
-    top: 168px;
-    border-color: $c-neutral5;
-
-    .ab__ad-labels & {
-        top: 188px;
-    }
+.nav-popup--localnav {
+    top: auto;
+    border-color: $c-neutral4;
+    @include rem((
+        padding-bottom: $gs-baseline
+    ));
 
     .is-active .nav__link {
-        font-family: $serifheadline;
+        color: $c-brandLightBlue;
     }
 }

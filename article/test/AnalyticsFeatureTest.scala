@@ -5,10 +5,8 @@ import org.scalatest.{ GivenWhenThen, FeatureSpec }
 import collection.JavaConversions._
 import org.fluentlenium.core.domain.FluentWebElement
 import conf.Configuration
-import common.UsesElasticSearch
 
-class AnalyticsFeatureTest extends FeatureSpec with GivenWhenThen with Matchers with UsesElasticSearch {
-
+class AnalyticsFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
   implicit val config = Configuration
 
   feature("Analytics") {

@@ -1,41 +1,26 @@
-.nav-popup-search {
-    min-height: 47px;
-    padding-top: 14px;
-    padding-bottom: 7px;
-
-    @include mq(tablet) {
-        right: 0;
-        max-width: 512px;
-
-        &:before,
-        &:after {
-            content: '';
-            display: block;
-            width: 1px;
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            background: $c-neutral5;
-        }
-    }
-    @include mq(1157px, 1299px) { // When the layout starts to be centered
-        right: -1px;
-        &:after { left: auto; right: 0; }
-    }
-    @include mq(1316px) { // When the layout starts to be centered
-        right: -1px;
-        &:after { left: auto; right: 0; }
-    }
-}
+/* ==========================================================================
+   Site wide search
+   ========================================================================== */
 
 .gsc-search-box {
     padding: 0;
     max-width: none;
 }
-
+.search-placeholder {
+    min-height: 50px;
+    padding-top: $gs-baseline/2;
+}
 .search-box {
-    margin: 0 $gs-gutter;
+    @include rem((
+        margin: 0 $gs-gutter/2
+    ));
+
+    @include mq(mobileLandscape) {
+        @include rem((
+            margin-left: $gs-gutter,
+            margin-right: $gs-gutter
+        ));
+    }
 }
 
 .gsc-search-box .gsib_a {
@@ -66,7 +51,7 @@ input.gsc-search-button-v2 {
 }
 
 .gs-result {
-    font-family: 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
+    font-family: $sans-serif;
 }
 
 .gsc-control-cse {
@@ -95,9 +80,10 @@ input.gsc-search-button-v2 {
 }
 
 .gsc-results .gsc-cursor-box {
-    margin: 0 0 $baseline*4 0 !important;
+    margin: 0 0 ($gs-baseline/3)*4 0 !important;
 }
 
 .gsc-results .gsc-cursor-box .gsc-cursor-page {
     margin-right: 22px !important;
 }
+

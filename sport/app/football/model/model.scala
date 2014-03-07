@@ -88,7 +88,7 @@ case class LeagueTableEntryWithForm(stageNumber: String, round: Option[Round], t
 object LeagueTableEntryWithForm {
   def apply(competition: Competition, leagueTableEntry: LeagueTableEntry): LeagueTableEntryWithForm = {
     val prevResults = competition.matches
-      .filter(fmatch => fmatch.homeTeam.id == leagueTableEntry.team.id || fmatch.homeTeam.id == leagueTableEntry.team.id)
+      .filter(fmatch => fmatch.homeTeam.id == leagueTableEntry.team.id || fmatch.awayTeam.id == leagueTableEntry.team.id)
       .map(fmatch => PrevResult(fmatch, leagueTableEntry.team.id))
       .filter(_.hasResult)
     LeagueTableEntryWithForm(leagueTableEntry.stageNumber, leagueTableEntry.round, leagueTableEntry.team, prevResults)

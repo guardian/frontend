@@ -18,6 +18,7 @@ import play.api.mvc.RequestHeader
 import play.api.mvc.SimpleResult
 import play.api.templates.Html
 import scala.collection.JavaConversions._
+import java.text.DecimalFormat
 
 sealed trait Style {
   val className: String
@@ -215,7 +216,7 @@ case class VideoEmbedCleaner(contentVideos: Seq[VideoElement]) extends HtmlClean
 
   override def clean(document: Document): Document = {
     document.getElementsByClass("element-video").foreach { element: Element =>
-      element.child(0).wrap("<div class=\"element-video__wrap\"></div>")
+      element.child(0).wrap("<div class=\"embed-video-wrapper\"></div>")
     }
 
     document.getElementsByClass("gu-video").foreach { element: Element =>
@@ -238,7 +239,7 @@ case class VideoEmbedCleaner(contentVideos: Seq[VideoElement]) extends HtmlClean
                 Sorry, your browser is unable to play this video.
               </object>""")
 
-        element.wrap("<div class=\"media-proportional-container\"></div>")
+        element.wrap("<div class=\"gu-video-wrapper\"><div class=\"u-responsive-ratio u-responsive-ratio--hd\"></div></div>")
       })
     }
     document
@@ -315,12 +316,75 @@ object UnindentBulletParents extends HtmlCleaner with implicits.JSoup {
 
 case class InBodyLinkCleaner(dataLinkName: String)(implicit val edition: Edition) extends HtmlCleaner {
   def clean(body: Document): Document = {
-    val links = body.getElementsByTag("a")
+    val links = body.getElementsByAttribute("href")
 
     links.foreach { link =>
-      link.attr("href", LinkTo(link.attr("href"), edition))
-      link.attr("data-link-name", dataLinkName)
-      link.addClass("u-underline")
+      if (link.tagName == "a") {
+        link.attr("href", LinkTo(link.attr("href"), edition))
+        link.attr("data-link-name", dataLinkName)
+        link.addClass("u-underline")
+      }
+    }
+
+    // Prevent text in non clickable anchors from looking like links
+    // <a name="foo">bar</a> -> <a name="foo"></a>bar
+    val anchors = body.getElementsByAttribute("name")
+
+    anchors.foreach { anchor =>
+      if (anchor.tagName == "a") {
+        val text = anchor.ownText()
+        anchor.empty().after(text)
+      }
+    }
+
+    body
+  }
+}
+
+case class InBodyLinkCleanerForR1(section: String) extends HtmlCleaner {
+
+  def FixR1Link(href: String, section: String = "") = {
+
+   /**
+    * We moved some R1 HTML files from subdomains to www.theguardian.com.
+    * This means we broke some of the <a href="...">'s in the HTML.
+    *
+    * Here's how this works :-
+    *
+    * 1. /Books/reviews/travel/0,,343395,.html -> /books/reviews/travel/0,,343395,.html
+    *       - Downcase the old subdomain paths.
+    *
+    * 2. /Film_Page/0,,594132,00.html -> /film/Film_Page/0,,594132,00.html
+    *       - Prefix the current section to any links without a path in them.
+    *
+    * 3. /Guardian/film/2002/jan/12/awardsandprizes.books -> /film/2002/jan/12/awardsandprizes.books
+    *       - The /Guardian path is an alias for the root (www), so we just remove it.
+    *
+    * 4. http://...
+    *       - Ignore any links that contain a full URL.
+    */
+
+    // #1
+    val subdomains = "^/(Business|Music|Lifeandhealth|Users|Sport|Books|Media|Society|Travel|Money|Education|Arts|Politics|Observer|Football|Film|Technology|Environment|Shopping|Century)/(.*)".r
+    href match {
+        case subdomains(section, path) => {
+          s"/${section.toLowerCase}/${path}"
+        }
+        case _ => {
+          (href contains "/Guardian") match {
+            case true => href.replace("/Guardian", "") // #2
+            case _ => s"${section}${href}" // #3
+          }
+        }
+    }
+  }
+
+  def clean(body: Document): Document = {
+    val links = body.getElementsByTag("a")
+    links.filter{
+      link => link.attr("href") startsWith "/" // #4
+    }.foreach { link =>
+      link.attr("href", FixR1Link(link.attr("href"), section))
     }
     body
   }
@@ -349,7 +413,7 @@ case class InlineSlotGenerator(articleWordCount: Int) extends HtmlCleaner {
 
   private def isBlock(element: Element): Boolean = {
       (element.hasClass("img") && !element.hasClass("img--inline")) ||
-      element.hasClass("media-proportional-container") ||
+      element.hasClass("embed-video-wrapper") ||
       element.tagName == "video"
   }
 
@@ -383,7 +447,7 @@ case class InlineSlotGenerator(articleWordCount: Int) extends HtmlCleaner {
 
       children.zipWithIndex.foreach { case (element, index) =>
 
-        if (element.hasClass("img--inline")) {
+        if (element.attr("class").split(" ").contains("img--inline")) {
           lastInline = offset
         }
         else if (element.tagName == "p" && lastInline + spacing < offset && !element.hasClass("img")) {
@@ -397,6 +461,10 @@ case class InlineSlotGenerator(articleWordCount: Int) extends HtmlCleaner {
         }
 
         if (element.tagName.in(Set("p","h2"))) offset += element.text.length
+      }
+
+      document.select("body .slot").zipWithIndex.foreach { case (slot, index) =>
+        slot.attr("data-link-name", s"inline slot | $index")
       }
     }
 
@@ -564,6 +632,8 @@ object Format {
     val timezone = Edition(request).timezone
     date.toString(DateTimeFormat.forPattern(pattern).withZone(timezone))
   }
+
+  def apply(a: Int): String = new DecimalFormat("#,###").format(a)
 }
 
 object cleanTrailText {
@@ -647,7 +717,8 @@ object RenderClasses {
 
 object GetClasses {
 
-  def forCollectionItem(trail: Trail): String = {
+  def forCollectionItem(trail: Trail,
+                        additionalClasses: String = ""): String = {
     val f: Seq[(Trail) => String] = Seq(
       (trail: Trail) => trail match {
         case _: Gallery => "collection__item--content-type-gallery"
@@ -656,6 +727,7 @@ object GetClasses {
       }
     )
     val baseClasses: Seq[String] = Seq(
+      additionalClasses,
       "l-row__item",
       "collection__item",
       s"collection__item--volume-${trail.group.getOrElse("0")}"
@@ -664,7 +736,9 @@ object GetClasses {
     RenderClasses(classes:_*)
   }
 
-  def forItem(trail: Trail, firstContainer: Boolean, forceHasImage: Boolean = false): String = {
+  def forItem(trail: Trail,
+              firstContainer: Boolean,
+              forceHasImage: Boolean = false): String = {
     val baseClasses: Seq[String] = Seq(
       "item",
       s"tone-${VisualTone(trail)}"
@@ -675,42 +749,51 @@ object GetClasses {
         case _: Video   => "item--video"
         case _          => ""
       },
-      (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean) => if (firstContainer) {"item--force-image-upgrade"} else {""},
-      (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean) => if (trail.isLive) {"item--live"} else {""},
-      (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean) => if (forceHasImage == false && (trail.trailPicture(5,3).isEmpty || trail.imageAdjust == Some("hide"))){
-        "item--has-no-image"
-      }else{
-        "item--has-image"
-      },
-      (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean) => trail.imageAdjust.map{ adjustValue =>
-        s"item--imageadjust-$adjustValue"
-      }.getOrElse("")
+      (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean) =>
+        if (firstContainer) "item--force-image-upgrade" else "",
+      (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean) =>
+        if (trail.isLive) "item--live" else "",
+      (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean) =>
+        if (forceHasImage == false && (trail.trailPicture(5,3).isEmpty || trail.imageAdjust == "hide")){
+          "item--has-no-image"
+        }else{
+          "item--has-image"
+        },
+      (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean) =>
+        if (forceHasImage || !trail.trailPicture(5,3).isEmpty) s"item--imageadjust-${trail.imageAdjust}" else ""
     )
     val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail, firstContainer, forceHasImage)}
     RenderClasses(classes:_*)
   }
 
-  def forFromage(trail: Trail, imageAdjust: Option[String]): String = {
+  def forFromage(trail: Trail, imageAdjust: String): String = {
     val baseClasses: Seq[String] = Seq(
       "fromage",
       s"fromage--volume-${trail.group.getOrElse("0")}",
       s"tone-${VisualTone(trail)}",
       "tone-accent-border"
     )
-    val f: Seq[(Trail, Option[String]) => String] = Seq(
-      (trail: Trail, imageAdjust: Option[String]) => if (trail.isLive) {"item--live"} else {""},
-      (trail: Trail, imageAdjust: Option[String]) =>
-        if (trail.trailPicture(5,3).isEmpty || imageAdjust == Some("hide")){
+    val f: Seq[(Trail, String) => String] = Seq(
+      (trail: Trail, imageAdjust: String) =>
+        if (trail.isLive) "item--live" else "",
+      (trail: Trail, imageAdjust: String) =>
+        if (trail.trailPicture(5,3).isEmpty || imageAdjust == "hide"){
           "fromage--has-no-image"
         }else{
           "fromage--has-image"
         },
-      (trail: Trail, imageAdjust: Option[String]) => imageAdjust.map{ adjustValue =>
-        s"fromage--imageadjust-$adjustValue"
-      }.getOrElse("")
+      (trail: Trail, imageAdjust: String) =>
+        if (!trail.trailPicture(5,3).isEmpty) s"fromage--imageadjust-$imageAdjust" else ""
     )
     val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail, imageAdjust)}
     RenderClasses(classes:_*)
   }
+
+}
+
+object LatestUpdate {
+
+  def apply(collection: Collection, trails: Seq[Trail]): Option[DateTime] =
+    (trails.map(_.webPublicationDate) ++ collection.lastUpdated.map(DateTime.parse(_))).sortBy(-_.getMillis).headOption
 
 }

@@ -1,5 +1,5 @@
 .top .i-arrow-small-up {
-    margin-left: $baseline*2;
+    margin-left: ($gs-baseline/3)*2;
     position: relative;
     top: -1px;
 }
@@ -10,52 +10,12 @@
     vertical-align: top;
 }
 
-.is-active .i-menu {
-    @extend .i-menu-active;
-
-    @if ($svg-support) {
-        .svg & {
-            @extend .svg-i-menu-active;
-        }
-    }
-}
-
-.is-active .i-search {
-    @extend .i-search-blue;
-
-    @if ($svg-support) {
-        .svg & {
-            @extend .svg-i-search-blue;
-        }
-    }
-}
-
-.is-active .i-top-stories {
-    @extend .i-top-stories-active;
-
-    @if ($svg-support) {
-        .svg & {
-            @extend .svg-i-top-stories-active;
-        }
-    }
-}
-
 .is-signed-in .i-profile {
-    @extend .i-profile-signed-in;
+    @extend %i-profile-signed-in;
 
     @if ($svg-support) {
         .svg & {
-            @extend .svg-i-profile-signed-in;
-        }
-    }
-}
-
-.is-active .i-profile {
-    @extend .i-profile-active;
-
-    @if ($svg-support) {
-        .svg & {
-            @extend .svg-i-profile-active;
+            @extend %svg-i-profile-signed-in;
         }
     }
 }
@@ -72,8 +32,8 @@
 
 .caption:before,
 figcaption:before {
-    @extend .i;
-    @extend .i-image;
+    @extend %i;
+    @extend %i-image;
     display: inline-block;
     content: '';
     vertical-align: top;
@@ -81,22 +41,22 @@ figcaption:before {
 
     @if ($svg-support) {
         .svg & {
-            @extend .svg-i-image;
+            @extend %svg-i-image;
         }
     }
 }
 
 //Quotes
 .from-content-api blockquote.quoted:before {
-    @extend .i;
-    @extend .i-quote-marks;
+    @extend %i;
+    @extend %i-quote-marks;
     content: '';
     position: absolute;
     margin-top: -3px;
 
     @if ($svg-support) {
         .svg & {
-            @extend .svg-i-quote-marks;
+            @extend %svg-i-quote-marks;
         }
     }
 
@@ -107,13 +67,12 @@ figcaption:before {
 
 
 
-.item--dark .i-comment-light-grey,
-.inline-story .i-comment-light-grey {
-    @extend .i-comment-grey;
+.item--dark .i-comment-light-grey {
+    @extend %i-comment-grey;
 
     @if ($svg-support) {
         .svg & {
-            @extend .svg-i-comment-grey;
+            @extend %svg-i-comment-grey;
         }
     }
 }

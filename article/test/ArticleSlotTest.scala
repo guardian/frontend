@@ -1,25 +1,22 @@
 package test.slotgeneration
 
-import common.UsesElasticSearch
 import org.jsoup.Jsoup
-import org.scalatest.{ Matchers, FlatSpec }
+import org.scalatest.{BeforeAndAfterEach, Matchers, FlatSpec}
 import play.api.test.Helpers._
 import scala.collection.JavaConverters._
 import test.{ Fake, TestRequest }
 import model.`package`._
 import conf.Switches.ArticleSlotsSwitch
 
-class ArticleSlotTest extends FlatSpec with Matchers  with UsesElasticSearch {
+class ArticleSlotTest extends FlatSpec with Matchers with BeforeAndAfterEach {
 
   // These tests check the InlineSlotGenerator behaviour. Placing them in article's
   // tests allows us to use the test http recorder rather than stub data.
   override def beforeEach() {
-    super.beforeEach()
     ArticleSlotsSwitch.switchOn()
   }
 
   override def afterEach(){
-    super.afterEach()
     ArticleSlotsSwitch.switchOff()
   }
 

@@ -1,0 +1,40 @@
+.page-heading--football {
+    @include fs-header(3);
+    font-weight: 900;
+}
+
+.football-filters {
+    @include mq($from: leftCol) {
+        @include rem((
+            margin-top: -$gs-baseline*2
+        ));
+    }
+}
+
+.date-divider {
+    @include fs-data(4);
+    @include rem((
+        margin-bottom: $gs-baseline*2,
+        padding-top: $gs-baseline/2
+    ));
+    border-top: 1px solid $c-neutral5;
+    color: $c-neutral1;
+    font-weight: 900;
+
+    @include mq(leftCol) {
+        @include rem((
+            margin-left: -160px
+        ));
+    }
+
+    @include mq(wide) {
+        @include rem((
+            margin-left: -240px
+        ));
+    }
+}
+
+.nav--football {
+    clear: left;
+    padding-bottom: $gs-baseline;
+}

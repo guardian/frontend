@@ -48,7 +48,7 @@ define([
 
                         var project = deploy.projectName;
                         var stage = deploy.stage;
-                        if (stage && !latestDeployments[stage].hasOwnProperty(project)) {
+                        if (stage && latestDeployments[stage] && !latestDeployments[stage].hasOwnProperty(project)) {
                             latestDeployments[stage][project] = deploy;
                         }
                     });

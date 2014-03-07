@@ -12,9 +12,7 @@ define([
     'modules/ui/container-show-more',
     'modules/ui/container-toggle',
     'common/modules/sport/football/fixtures',
-    'common/modules/sport/cricket',
-    'common/modules/ui/message',
-    'common/modules/analytics/mvt-cookie'
+    'common/modules/sport/cricket'
 ], function (
     $,
     mediator,
@@ -27,28 +25,41 @@ define([
     ContainerShowMore,
     ContainerToggle,
     FootballFixtures,
-    cricket,
-    Message,
-    mvtCookie
+    cricket
     ) {
 
     var modules = {
 
         showCollectionShowMore: function () {
-            mediator.on('page:front:ready', function(config, context) {
-                $('.container', context).each(function(container) {
+            var collectionShowMoreAdd = function(config, context) {
+                var c = context || document;
+                $('.container', c).each(function(container) {
                     $('.js-collection--show-more', container).each(function(collection) {
                         new CollectionShowMore(collection).addShowMore();
                     });
                 });
-                $('.js-container--show-more', context).each(function(container) {
+                $('.js-container--show-more', c).each(function(container) {
                     new ContainerShowMore(container).addShowMore();
                 });
+            };
+            mediator.addListeners({
+                'page:front:ready': collectionShowMoreAdd,
+                'ui:collection-show-more:add':  collectionShowMoreAdd
             });
         },
 
         showContainerToggle: function () {
-            mediator.on('page:front:ready', function(config, context) {
+            var containerToggleAdd = function(config, context) {
+                var c = context || document;
+                $('.js-container--toggle', c).each(function(container) {
+                    new ContainerToggle(container).addToggle();
+                });
+            };
+            mediator.addListeners({
+                'page:front:ready': containerToggleAdd,
+                'ui:container-toggle:add':  containerToggleAdd
+            });
+            mediator.on(/page:front:ready|ui:container-toggle:add/, function(config, context) {
                 $('.js-container--toggle', context).each(function(container) {
                     new ContainerToggle(container).addToggle();
                 });
@@ -58,20 +69,23 @@ define([
         showFootballFixtures: function(path) {
             mediator.on('page:front:ready', function(config, context) {
                 if (config.page.edition === 'UK' && (['', 'sport', 'uk-alpha'].indexOf(config.page.pageId) !== -1)) {
-                    // wrap the return sports stats component in an 'item'
-                    var prependTo = bonzo(bonzo.create('<li class="item item--sport-stats item--sport-stats-tall"></li>'));
+                    // wrap the return sports stats component in an appropriate element
+                    var isNewsContainer = ['uk-alpha', 'sport'].indexOf(config.page.pageId) !== -1,
+                        prependToHtml = isNewsContainer
+                            ? '<div class="fromage tone-accent-border tone-news unstyled item--sport-stats"></div>'
+                            : '<li class="item item--sport-stats item--sport-stats-tall"></li>',
+                        $prependTo = bonzo(bonzo.create(prependToHtml));
                     mediator.on('modules:footballfixtures:render', function() {
-                        var isUkAlpha = config.page.pageId === 'uk-alpha',
-                            $container = $(isUkAlpha ? '.container--news' : '.container--sport', context).first();
+                        var $container = $(isNewsContainer ? '.container--news' : '.container--sport', context).first();
                         if ($container[0]) {
-                            if (isUkAlpha) {
-                                var $collectionWrapper = $('.collection-wrapper', $container[0]).last();
-                                $('.collection', $collectionWrapper[0]).append(prependTo);
+                            if (isNewsContainer) {
+                                bonzo($('.collection-wrapper', $container[0]).get(1))
+                                    .append($prependTo);
                             } else {
                                 var $collection = $('.container--sport .collection', context).first();
                                 $('.item:first-child', $collection[0])
                                     // add empty item
-                                    .after(prependTo);
+                                    .after($prependTo);
                                 $collection
                                     .removeClass('collection--without-sport-stats')
                                     .addClass('collection--with-sport-stats');
@@ -79,7 +93,7 @@ define([
                         }
                     });
                     new FootballFixtures({
-                        prependTo: prependTo,
+                        prependTo: $prependTo,
                         attachMethod: 'append',
                         competitions: ['500', '510', '100', '400'],
                         contextual: false,

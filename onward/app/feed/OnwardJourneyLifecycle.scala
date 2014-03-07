@@ -8,25 +8,41 @@ trait OnwardJourneyLifecycle extends GlobalSettings {
   override def onStart(app: PlayApp) {
     super.onStart(app)
 
-    Jobs.deschedule("OnwardJourneyAgentRefreshJob")
+    Jobs.deschedule("OnwardJourneyAgentsRefreshJob")
+    Jobs.deschedule("OnwardJourneyAgentsRefreshHourlyJob")
 
     // fire every min
-    Jobs.schedule("OnwardJourneyAgentRefreshJob",  "0 * * * * ?") {
-      OnwardJourneyAgent.update()
+    Jobs.schedule("OnwardJourneyAgentsRefreshJob", "0 * * * * ?") {
       LatestContentAgent.update()
+      MostPopularAgent.refresh()
+      MostPopularExpandableAgent.refresh()
+      GeoMostPopularAgent.refresh()
+    }
+
+    // fire every hour
+    Jobs.schedule("OnwardJourneyAgentsRefreshHourlyJob", "0 0 * * * ?") {
+      DayMostPopularAgent.refresh()
     }
 
     if (Play.isDev) {
-      OnwardJourneyAgent.update()
       LatestContentAgent.update()
+      MostPopularAgent.refresh()
+      MostPopularExpandableAgent.refresh()
+      GeoMostPopularAgent.refresh()
     }
+    // kick off refresh now, as this happens hourly
+    DayMostPopularAgent.refresh()
   }
 
   override def onStop(app: PlayApp) {
-    Jobs.deschedule("OnwardJourneyAgentRefreshJob")
+    Jobs.deschedule("OnwardJourneyAgentsRefreshJob")
+    Jobs.deschedule("OnwardJourneyAgentsRefreshHourlyJob")
 
-    OnwardJourneyAgent.stop()
     LatestContentAgent.stop()
+    MostPopularAgent.stop()
+    MostPopularExpandableAgent.stop()
+    GeoMostPopularAgent.stop()
+    DayMostPopularAgent.stop()
 
     super.onStop(app)
   }

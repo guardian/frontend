@@ -5,25 +5,25 @@
         <h1>@league.name table</h1>
     </hgroup>
 
-    <table data-embed-type="table" class="table data data--embedded">
+    <table data-embed-type="table" class="table table--football table--striped">
         <thead>
             <tr>
-                <th>Position</th>
-                <th>Team name</th>
-                <th>Pld</th>
-                <th>GD</th>
-                <th>Pts</th>
+                <th class="football-stat--postition table-column--sub"><abbr title="Position">Pos</abbr></th>
+                <th class="football-stat--team table-column--main">Team</th>
+                <th class="football-stat--played"><abbr title="Played">P</abbr></th>
+                <th class="football-stat--difference"><abbr title="Goal difference">GD</abbr></th>
+                <th class="football-stat--points"><abbr title="Points">Pts</abbr></th>
             </tr>
         </thead>
         <tbody>
             @for((tableEntry, prevTableEntry) <- tableEntries.zip(None :: tableEntries.init.map(Option(_)))) {
-            <tr class='@if(selectedTeams.contains(tableEntry.team.id)){table-row--selected}
-            @prevTableEntry.map { prev => @if(prev.team.rank + 1 != tableEntry.team.rank) {table-row--break-before} else {}}.getOrElse("")'>
-                <td>@tableEntry.team.rank</td>
-                <td>@tableEntry.team.name</td>
-                <td>@tableEntry.team.total.played</td>
-                <td>@tableEntry.team.goalDifference</td>
-                <td>@tableEntry.team.points</td>
+            <tr class='@if(selectedTeams.contains(tableEntry.team.id)){table-row--highlight}
+            @prevTableEntry.map { prev => @if(prev.team.rank + 1 != tableEntry.team.rank) {table-row--break} else {}}.getOrElse("")'>
+                <td class="football-stat--postition table-column--sub">@tableEntry.team.rank</td>
+                <td class="football-stat--team table-column--main">@tableEntry.team.name</td>
+                <td class="football-stat--played">@tableEntry.team.total.played</td>
+                <td class="football-stat--difference">@tableEntry.team.goalDifference</td>
+                <td class="football-stat--points">@tableEntry.team.points</td>
             </tr>
             }
         </tbody>

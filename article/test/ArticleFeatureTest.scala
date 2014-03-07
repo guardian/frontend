@@ -5,12 +5,11 @@ import conf.Switches._
 import org.scalatest.Matchers
 import org.scalatest.{ GivenWhenThen, FeatureSpec }
 import collection.JavaConversions._
-import common.UsesElasticSearch
 import play.api.libs.ws.WS
 import scala.concurrent.duration._
 import scala.concurrent.Await
 
-class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers  with UsesElasticSearch {
+class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
   implicit val config = Configuration
 
@@ -70,6 +69,16 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers  w
         And("I should see a link to the author's page")
         $("[itemprop=author] a[itemprop='url name']")(0).getAttribute("href") should be(WithHost("/profile/ben-arnold"))
         $("[itemprop=author] a[itemprop='url name']").last.getAttribute("href") should be(WithHost("/profile/phelimoneill"))
+      }
+    }
+
+    scenario("Display the byline image of the article author", ArticleComponents) {
+      Given("I am on an article entitled 'This generational smugness about paedophilia is wrong'")
+      HtmlUnit("/commentisfree/2014/feb/28/paedophilia-generation-mail-nccl") { browser =>
+        import browser._
+
+        Then("I should see a large byline image")
+        $(".byline-img img").getAttribute("src") should endWith("Pix/pictures/2014/1/20/1390230835044/JonathanFreedland.png?width=140&height=-&quality=95")
       }
     }
 
@@ -361,17 +370,6 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers  w
       }
     }
 
-    scenario("Primary image upgrades to high resolution") {
-
-      Given("I am on an article")
-      HtmlUnit("/film/2012/nov/11/margin-call-cosmopolis-friends-with-kids-dvd-review") { browser =>
-        import browser._
-
-        Then("the primary image's 'data-force-upgrade' attribute should be 'true'")
-        findFirst("#article figure .js-image-upgrade").getAttribute("data-force-upgrade") should be("")
-      }
-    }
-
     scenario("Hide main picture if video is at start of article") {
       Given("I am on an article with a video at the start of the body")
       HtmlUnit("/society/2013/mar/26/failing-hospitals-nhs-jeremy-hunt") { browser =>
@@ -581,5 +579,17 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers  w
       }
     }
 
+
+    scenario("Section navigation") {
+      Given("I am on an article")
+      HtmlUnit("/football/2013/oct/29/arsene-wenger-arsenal-chelsea-capital-one-cup") { browser =>
+        import browser._
+
+        Then("I should see the section and local nav")
+        val navigation = findFirst("[itemtype='http://data-vocabulary.org/Breadcrumb']")
+        navigation.findFirst("[itemprop='url']").getAttribute("href") should endWith ("/football")
+        navigation.find(".nav--local").find(".nav__item").size should be (6)
+      }
+    }
   }
 }

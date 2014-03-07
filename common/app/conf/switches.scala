@@ -41,6 +41,11 @@ object Switches extends Collections {
   private lazy val never = new DateMidnight(2100, 1, 1)
   private lazy val endOfQ4 = new DateMidnight(2014, 4, 1)
 
+  // this is 3 months - at the end of this a decision is expected
+  // and one (or both) of the 2 needs to go.
+  private lazy val profilingEvalDeadline = new DateMidnight(2014, 6, 4)
+
+
   // Load Switches
 
   val AutoRefreshSwitch = Switch("Performance Switches", "auto-refresh",
@@ -50,7 +55,10 @@ object Switches extends Collections {
 
   val DogpileSwitch = Switch("Performance Switches", "dogpile",
     "If switched on this will enable the anti-dogpile cache, which will help absorb large spikes on single pieces of content e.g. live blogs",
-    safeState = Off, sellByDate = new DateMidnight(2014, 2, 28)
+    safeState = Off,
+
+    //extended to end of March 2014 we will reevaluate once we see how successful it is with the pressed fronts
+    sellByDate = new DateMidnight(2014, 3, 31)
   )
 
   val DoubleCacheTimesSwitch = Switch("Performance Switches", "double-cache-times",
@@ -78,6 +86,10 @@ object Switches extends Collections {
     safeState = Off, sellByDate = endOfQ4
   )
 
+  val ShowAllArticleEmbedsSwitch = Switch("Performance Switches", "show-all-embeds",
+    "If switched on then all embeds will be shown inside article bodies",
+    safeState = On, sellByDate = never
+  )
 
   // Advertising Switches
 
@@ -99,14 +111,14 @@ object Switches extends Collections {
 
   val ImrWorldwideSwitch = Switch("Commercial Tags", "imr-worldwide",
     "Enable the IMR Worldwide audience segment tracking.",
-    safeState = Off, sellByDate = endOfQ4)
-
-  val AmaaSwitch = Switch("Commercial Tags", "amaa",
-    "Enable the AMAA audience segment tracking.",
-    safeState = Off, sellByDate = endOfQ4)
+    safeState = Off, sellByDate = profilingEvalDeadline)
 
   val EffectiveMeasureSwitch = Switch("Commercial Tags", "effective-measure",
     "Enable the Effective Measure audience segment tracking.",
+    safeState = Off, sellByDate = profilingEvalDeadline)
+
+  val AmaaSwitch = Switch("Commercial Tags", "amaa",
+    "Enable the AMAA audience segment tracking.",
     safeState = Off, sellByDate = endOfQ4)
 
   // Commercial Feeds
@@ -157,11 +169,6 @@ object Switches extends Collections {
     safeState = On, never
   )
 
-  val OmnitureVerificationSwitch = Switch("Analytics", "omniture-verification",
-    "Enables the new Ophan tracking javascript which support multiple events per page",
-    safeState = Off, new DateMidnight(2014, 2, 28)
-  )
-
   val DiagnosticsRequestLogging = Switch("Diagnostics", "enable-diagnostics-request-logging",
     "If this switch is on, then requests to the Diagnostics servers will be logged.",
     safeState = Off, endOfQ4
@@ -204,19 +211,8 @@ object Switches extends Collections {
   )
 
   // Feature Switches
-
-  val ShowAllArticleEmbedsSwitch = Switch("Feature Switches", "show-all-embeds",
-    "If switched on then all embeds will be shown inside article bodies",
-    safeState = Off, sellByDate = new DateMidnight(2014, 2, 28)
-  )
-
   val ReleaseMessageSwitch = Switch("Feature Switches", "release-message",
     "If this is switched on users will be messaged that they are inside the alpha/beta/whatever release",
-    safeState = Off, sellByDate = endOfQ4
-  )
-
-  val RainbowLogo = Switch("Feature Switches", "rainbow-logo",
-    "If this is switched on the guardian logo will be replaced with a rainbow version",
     safeState = Off, sellByDate = endOfQ4
   )
 
@@ -240,11 +236,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = endOfQ4
   )
 
-  val LocalNavSwitch = Switch("Feature Switches", "local-nav",
-    "If this switch is on, a secondary local nav is shown.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 2, 28)
-  )
-
   val LightboxGalleriesSwitch = Switch("Feature Switches", "lightbox-galleries",
     "If this switch is on, galleries open in a lightbox.",
     safeState = On, sellByDate = endOfQ4
@@ -253,20 +244,6 @@ object Switches extends Collections {
   val IdentityProfileNavigationSwitch = Switch("Feature Switches", "id-profile-navigation",
     "If this switch is on you will see the link in the topbar taking you through to the users profile or sign in..",
     safeState = On, sellByDate = endOfQ4
-  )
-
-  val ExternalLinksCardsSwitch = Switch("Feature Switches", "external-links-cards",
-    "If this switch is on, external links are turned into cards in body content on wide viewports.",
-    safeState = Off,
-
-    // WARNING - this has had one extension, no more.
-    // if we cannot make a decision next time it goes
-    sellByDate = new DateMidnight(2014, 2, 28)
-  )
-
-  val LiveSummarySwitch = Switch("Feature Switches", "live-summary",
-    "If this is switched on the live events will show a summary at the beginning of the page on mobile next to the article on wider devices.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 2, 28)
   )
 
   val ArticleKeywordsSwitch = Switch("Feature Switches", "article-keywords",
@@ -312,6 +289,16 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 4, 30)
   )
 
+  val LayoutHintsSwitch = Switch("Feature Switches", "layout-hints",
+    "If this switch is on, JavaScript will enable the inline-hinting css experiments",
+    safeState = Off, sellByDate = new DateMidnight(2014, 4, 30)
+  )
+
+  val HelveticaEasterEggSwitch = Switch("Feature Switches", "helvetica",
+    "If this switch is on, the article about Helvetica will have its title Helvetica'd",
+    safeState = Off, sellByDate = new DateMidnight(2014, 4, 30)
+  )
+
   // A/B Test Switches
 
   val ABAa = Switch("A/B Tests", "ab-abcd",
@@ -319,19 +306,14 @@ object Switches extends Collections {
     safeState = Off, sellByDate = endOfQ4
   )
 
-  val ABGravityRecommendations = Switch("A/B Tests", "ab-gravity-recommendations",
-    "Enables gravity beacon code on the site",
-    safeState = Off, sellByDate = new DateMidnight(2014, 2, 24)
+  val ABRecommendedRightHand = Switch("A/B Tests", "ab-recommended-right-hand",
+    "Sets different recommendation providers against each other for the right hand component",
+    safeState = Off, sellByDate = new DateMidnight(2014, 3, 17)
   )
 
-  val ABAdLabels = Switch("A/B Tests", "ab-ad-labels",
-    "Testing if putting labels next to ads impacts the CTR",
-    safeState = Off, sellByDate = new DateMidnight(2014, 2, 27)
-  )
-
-  val ABInlineElements = Switch("A/B Tests", "ab-onward-inline-elements",
-    "If this switch is on the ab inline elements test is run",
-    safeState = Off, sellByDate = new DateMidnight(2014, 2, 28)
+  val ABRelatedContent = Switch("A/B Tests", "ab-onward-related-sports",
+    "If this switch is on the related content popular-in-tag override A/B test is run",
+    safeState = Off, sellByDate = new DateMidnight(2014, 3, 10)
   )
 
   val TagLinking = Switch("Feature Switches", "tag-linking",
@@ -339,9 +321,44 @@ object Switches extends Collections {
     safeState = Off, sellByDate = endOfQ4
   )
 
-  val ArticleTruncation = Switch("A/B Tests", "ab-article-truncation",
-    "If this is switched on an A/B test runs to prove the effectiveness of truncatiung articles.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 2, 28)
+  val GeoMostPopular = Switch("A/B Tests", "ab-geo-most-popular",
+    "If this is switched on an A/B test runs to test if locally popular articles yield better click-through.",
+    safeState = Off, sellByDate = new DateMidnight(2014, 3, 14)
+  )
+
+  val ABUkContainers = Switch("A/B Tests", "ab-uk-containers",
+    "If this is switched on an A/B test runs that tries a variation of the containers on the UK network front.",
+    safeState = Off, sellByDate = new DateMidnight(2014, 3, 8)
+  )
+
+  val ABUsContainers = Switch("A/B Tests", "ab-us-containers",
+    "If this is switched on an A/B test runs that tries a variation of the containers on the US network front.",
+    safeState = Off, sellByDate = new DateMidnight(2014, 3, 12)
+  )
+
+  val ABAuContainers = Switch("A/B Tests", "ab-au-containers",
+    "If this is switched on an A/B test runs that tries a variation of the containers on the AU network front.",
+    safeState = Off, sellByDate = new DateMidnight(2014, 3, 12)
+  )
+
+  val FootballTablePosition = Switch("A/B Tests", "ab-football-table-position",
+    "If this switch is on, the football table will vary in position throughout the football tagged pages.",
+    safeState = Off, sellByDate = new DateMidnight(2014, 3, 12)
+  )
+
+  val ABFrontsLatestReviewsCard = Switch("A/B Tests", "ab-fronts-latest-reviews-card",
+    "If this switch is on, AB test adding a 'Latest Reviews' card to the Features container on the front.",
+    safeState = Off, sellByDate = new DateMidnight(2014, 3, 8)
+  )
+
+  val ABFrontsCartoonCard = Switch("A/B Tests", "ab-fronts-cartoon-card",
+    "If this swith is on, run an ab test to add a Cartoon card to the C&D container.",
+    safeState = Off, sellByDate = new DateMidnight(2014, 3, 8)
+  )
+
+  val ABFrontsMissedCard = Switch("A/B Tests", "ab-fronts-missed-card",
+    "If this swith is on, run an ab test to add a `You might have missed` card to the News container.",
+    safeState = Off, sellByDate = new DateMidnight(2014, 3, 8)
   )
 
   // Sport Switch
@@ -369,26 +386,19 @@ object Switches extends Collections {
   )
 
   // Facia
-
-  val NetworkFrontUkAlpha = Switch("Facia", "network-front-uk-alpha",
-    "If this is switched on then the uk alpha network fronts will be served if a GU_UK_ALPHA cookie has been dropped",
-    safeState = Off, sellByDate = new DateMidnight(2014, 2, 22)
-  )
-
-  val NetworkFrontUsAlpha = Switch("Facia", "network-front-us-alpha",
-    "If this is switched on then the us alpha network fronts will be served if a GU_US_ALPHA cookie has been dropped",
-    safeState = Off, sellByDate = new DateMidnight(2014, 2, 22)
-  )
-
-  val NetworkFrontAuAlpha = Switch("Facia", "network-front-au-alpha",
-    "If this is switched on then the au alpha network fronts will be served if a GU_AU_ALPHA cookie has been dropped",
-    safeState = Off, sellByDate = new DateMidnight(2014, 2, 22)
+  val PressedFacia = Switch("Facia", "pressed-facia",
+    "If this switch is on then it will use pressed JSON for all requests",
+    safeState = Off, sellByDate = never
   )
 
   // Facia Tool Switches
-
   val ToolDisable = Switch("Facia Tool", "facia-tool-disable",
     "If this is switched on then the fronts tool is disabled",
+    safeState = Off, sellByDate = never
+  )
+
+  val ToolConfigurationDisable = Switch("Facia Tool", "facia-tool-configuration-disable",
+    "If this is switched on then the fronts configuration tool is disabled",
     safeState = Off, sellByDate = never
   )
 
@@ -402,8 +412,14 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
-  val FaciaToolPressSwitch = Switch("Facia Tool", "facia-tool-press-front",
+  val FaciaToolPressSwitch = Switch("Front Press Switches", "facia-tool-press-front",
     "If this switch is on facia tool will press fronts on each change",
+    safeState = Off, sellByDate = never
+  )
+
+  // Front Press Switches
+  val FrontPressJobSwitch = Switch("Front Press Switches", "front-press-job-switch",
+    "If this switch is on then the jobs to push and pull from SQS will run",
     safeState = Off, sellByDate = never
   )
 
@@ -431,11 +447,8 @@ object Switches extends Collections {
     ReleaseMessageSwitch,
     IntegrationTestSwitch,
     ClientSideErrorSwitch,
-    LocalNavSwitch,
     LightboxGalleriesSwitch,
     IdentityProfileNavigationSwitch,
-    ExternalLinksCardsSwitch,
-    LiveSummarySwitch,
     LiveCricketSwitch,
     LiveStatsSwitch,
     LiveAbTestStatsSwitch,
@@ -449,14 +462,12 @@ object Switches extends Collections {
     IdentityEthicalAwardsSwitch,
     IdentityFilmAwardsSwitch,
     ABAa,
-    ABGravityRecommendations,
-    ArticleTruncation,
-    ABAdLabels,
-    ABInlineElements,
-    NetworkFrontUkAlpha,
-    NetworkFrontUsAlpha,
-    NetworkFrontAuAlpha,
+    ABRecommendedRightHand,
+    GeoMostPopular,
+    FootballTablePosition,
+    ABRelatedContent,
     ToolDisable,
+    ToolConfigurationDisable,
     ToolSparklines,
     TagLinking,
     SponsoredContentSwitch,
@@ -468,7 +479,6 @@ object Switches extends Collections {
     ImrWorldwideSwitch,
     DiagnosticsRequestLogging,
     DiagnosticsJavascriptErrorLogging,
-    OmnitureVerificationSwitch,
     TravelOffersFeedSwitch,
     JobFeedSwitch,
     MasterclassFeedSwitch,
@@ -482,8 +492,16 @@ object Switches extends Collections {
     FaciaToolPressSwitch,
     DogpileSwitch,
     ShowAllArticleEmbedsSwitch,
-    ImageServerSwitch,
-    RainbowLogo
+    PressedFacia,
+    FrontPressJobSwitch,
+    ABUkContainers,
+    ABUsContainers,
+    LayoutHintsSwitch,
+    ABAuContainers,
+    ABFrontsLatestReviewsCard,
+    ABFrontsCartoonCard,
+    ABFrontsMissedCard,
+    HelveticaEasterEggSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }

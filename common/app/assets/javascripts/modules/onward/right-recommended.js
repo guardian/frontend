@@ -43,7 +43,7 @@ define([
         var guid = cookies.get('grvinsights');
 
         return "http://rma-api.gravity.com/v0/site/14b492cf6727dd1ab3a6efc7556b91bc/user/"
-            + guid + "/stories?limit=7&rec_type=personalized&c=thisthat";
+            + guid + "/stories?limit=5&rec_type=personalized&c=thisthat";
     };
 
     RightRecommendedForYou.prototype.templateName = 'right-recommended';
@@ -93,7 +93,7 @@ define([
             new RecommendedItem(item, index).render(container);
         });
         images.upgrade(container);
-        bean.on(document, 'click', '.right-recommended-item__url', function() {
+        bean.on(document.body, 'click', '.right-recommended-item__url', function() {
             s.events="event37";
             s.eVar7 = s.pageName;
 
@@ -101,7 +101,7 @@ define([
 
             s.linkTrackVars="events,eVar37,eVar37";
             s.linkTrackEvents="event37";
-            s.tl(this,"o","right-popular-contentrec");
+            s.tl(true,"e","right-popular-contentrec");
         });
     };
 

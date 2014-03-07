@@ -1,170 +1,181 @@
 package common
 
-import model.{Tag, MetaData}
+import model.{Section, Tag, MetaData}
 
-case class SectionLink(zone: String, linkName: String, href: String, title: String, newWindow: Boolean = false)
+case class SectionLink(zone: String, title: String, href: String,newWindow: Boolean = false) {
+  def currentFor(page: MetaData): Boolean = page.url == href ||
+    s"/${page.section}" == href ||
+    page.tags.exists(t => s"/${t.id}" == href)
+}
 
 case class Zone(name: SectionLink, sections: Seq[SectionLink])
 
 case class NavItem(name: SectionLink, links: Seq[SectionLink] = Nil, current: Boolean = false) {
-  def currentFor(metadata: MetaData) = {
-    val sectionId = s"/${metadata.section}"
-    sectionId == name.href || name.href == s"/${metadata.id}" || links.exists(_.href == sectionId)
-  }
+  def currentFor(page: MetaData): Boolean = name.currentFor(page) ||
+    links.exists(_.currentFor(page)) || exactFor(page)
+
+  def exactFor(page: MetaData): Boolean = page.section == name.href.dropWhile(_ == '/')
 }
 
-
-trait Sections  {
+trait Navigation  {
 
   //News
-  val home = SectionLink("news", "News", "/", "Home")
-  val news  = SectionLink("news", "News", "/", "News")
-  val world = SectionLink("world", "World", "/world", "World")
-  val uk    = SectionLink("uk", "UK", "/uk-news", "UK")
-  val us    = SectionLink("us", "US", "/world/usa", "US")
-  val politics = SectionLink("politics", "Politics", "/politics", "Politics")
-  val technology = SectionLink("technology", "Technology", "/technology", "Technology")
-  val environment = SectionLink("environment", "Environment", "/environment", "Environment")
-  val media = SectionLink("media", "Media", "/media", "Media")
-  val education = SectionLink("education", "Education", "/education", "Education")
-  val society = SectionLink("society", "Society", "/society", "Society")
-  val development = SectionLink("globaldevelopment", "Global development", "/global-development", "Global development")
-  val science = SectionLink("science", "Science", "/science", "Science")
-  val law = SectionLink("law", "Law", "/law", "Law")
-  val blogs = SectionLink("blogs", "Blogs", "/tone/blog", "Blogs")
-  val inpictures = SectionLink("inpictures", "Galleries", "/inpictures", "In pictures")
+  val home = SectionLink("news", "home", "/")
+  val news  = SectionLink("news", "news", "/")
+  val world = SectionLink("world", "world", "/world")
+  val uk    = SectionLink("uk", "UK", "/uk-news")
+  val us    = SectionLink("us", "US", "/world/usa")
+  val politics = SectionLink("politics", "politics", "/politics")
+  val technology = SectionLink("technology", "tech", "/technology")
+  val environment = SectionLink("environment", "environment", "/environment")
+  val media = SectionLink("media", "media", "/media")
+  val education = SectionLink("education", "education", "/education")
+  val students = SectionLink("education", "students", "/education/students")
+  val society = SectionLink("society", "society", "/society")
+  val development = SectionLink("globaldevelopment", "global development", "/global-development")
+  val science = SectionLink("science", "science", "/science")
+  val law = SectionLink("law", "law", "/law")
+  val blogs = SectionLink("blogs", "blogs", "/tone/blog")
+  val inpictures = SectionLink("inpictures", "galleries", "/inpictures")
+  val europeNews = SectionLink("world", "europe", "/world/europe-news")
+  val americas = SectionLink("world", "americas", "/world/americas")
+  val australia = SectionLink("world", "australia", "/world/australia")
+  val asia = SectionLink("world", "asia", "/world/asia")
+  val africa = SectionLink("world", "africa", "/world/africa")
+  val middleEast = SectionLink("world", "middle east", "/world/middleeast")
 
-  val health = SectionLink("society", "Health", "/society/health", "Health")
-
-
-  //World
-  val europe = SectionLink("world", "Europe", "/world/europe/roundup", "Europe")
-  val middleeast = SectionLink("world", "Middle East", "/world/middleeast/roundup", "Middle east")
-  val asiapacific = SectionLink("world", "Asia Pacific", "/world/asiapacific/roundup", "Asia Pacific")
-  val africa = SectionLink("world", "Africa", "/world/africa/roundup", "Africa")
-  val americas = SectionLink("world", "Americas", "/world/americas/roundup", "Americas")
+  val health = SectionLink("society", "health", "/society/health")
 
   //Sport
-  val sport = SectionLink("sport", "Sport", "/sport", "Sport")
-  val sports = sport.copy(title = "Sports")
+  val sport = SectionLink("sport", "sport", "/sport")
+  val sports = sport.copy(title = "sports")
+  val usSport = SectionLink("sport", "US sports", "/sport/us-sport")
 
-  val football = SectionLink("football", "Football", "/football", "Football")
-  val cricket = SectionLink("sport", "Cricket", "/sport/cricket", "Cricket")
-  val sportblog = SectionLink("sport", "Sport blog", "/sport/blog", "Sport blog")
-  val cycling = SectionLink("sport", "Cycling", "/sport/cycling", "Cycling")
-  val rugbyunion = SectionLink("sport", "Rugby union", "/sport/rugby-union", "Rugby union")
-  val motorsport = SectionLink("sport", "Motor sport", "/sport/motorsports", "Motor sport")
-  val tennis = SectionLink("sport", "Tennis", "/sport/tennis", "Tennis")
-  val golf = SectionLink("sport", "Golf", "/sport/golf", "Golf")
-  val rugbyleague = SectionLink("sport", "Rugby league", "/sport/rugbyleague", "Rugby league")
-  val horseracing = SectionLink("sport", "Horse racing", "/sport/horse-racing", "Horse racing")
+  val football = SectionLink("football", "football", "/football")
+  val cricket = SectionLink("sport", "cricket", "/sport/cricket")
+  val sportblog = SectionLink("sport", "sport blog", "/sport/blog")
+  val cycling = SectionLink("sport", "cycling", "/sport/cycling")
+  val rugbyunion = SectionLink("sport", "rugby union", "/sport/rugby-union")
+  val rugbyLeague = SectionLink("sport", "rugby league", "/sport/rugbyleague")
+  val motorsport = SectionLink("sport", "motor sport", "/sport/motorsports")
+  val tennis = SectionLink("sport", "tennis", "/sport/tennis")
+  val golf = SectionLink("sport", "golf", "/sport/golf")
+  val horseracing = SectionLink("sport", "horse racing", "/sport/horse-racing")
+  val boxing = SectionLink("sport", "boxing", "/sport/boxing")
+  val formulaOne = SectionLink("sport", "formula one", "/sport/formula-one-2014")
 
-  val nfl = SectionLink("sport", "NFL", "/sport/nfl", "NFL")
-  val mlb = SectionLink("sport", "MLB", "/sport/mlb", "MLB")
-  val nba = SectionLink("sport", "NBA", "/sport/nba", "NBA")
-  val mls = SectionLink("football", "MLS", "/football/mls", "MLS")
-  val nhl = SectionLink("sport", "NHL", "/sport/nhl", "NHL")
+  val nfl = SectionLink("sport", "NFL", "/sport/nfl")
+  val mlb = SectionLink("sport", "MLB", "/sport/mlb")
+  val nba = SectionLink("sport", "NBA", "/sport/nba")
+  val mls = SectionLink("football", "MLS", "/football/mls")
+  val nhl = SectionLink("sport", "NHL", "/sport/nhl")
 
   //Cif
-  val cif = SectionLink("commentisfree", "Comment", "/commentisfree", "Comment")
-  val cifbelief = SectionLink("commentisfree", "Cif belief", "/commentisfree/belief", "Cif belief")
-  val cifgreen = SectionLink("commentisfree", "Cif green", "/commentisfree/cif-green", "Cif green")
+  val cif = SectionLink("commentisfree", "comment", "/commentisfree")
+  val cifbelief = SectionLink("commentisfree", "cif belief", "/commentisfree/belief")
+  val cifgreen = SectionLink("commentisfree", "cif green", "/commentisfree/cif-green")
 
   //Culture
-  val culture = SectionLink("culture", "Culture", "/culture", "Culture")
-  val artanddesign = SectionLink("culture", "Art &amp; design", "/artanddesign", "Art & design")
-  val books = SectionLink("culture", "Books", "/books", "Books")
-  val film = SectionLink("culture", "Film", "/film", "Film")
-  val music = SectionLink("culture", "Music", "/music", "Music")
-  val stage = SectionLink("culture", "Stage", "/stage", "Stage")
-  val televisionandradio = SectionLink("culture", "Television &amp; radio", "/tv-and-radio", "Television &amp; radio")
+  val culture = SectionLink("culture", "culture", "/culture")
+  val artanddesign = SectionLink("culture", "art & design", "/artanddesign")
+  val books = SectionLink("culture", "books", "/books")
+  val film = SectionLink("culture", "film", "/film")
+  val music = SectionLink("culture", "music", "/music")
+  val stage = SectionLink("culture", "stage", "/stage")
+  val televisionAndRadio = SectionLink("culture", "tv & radio", "/tv-and-radio")
 
   //Technology
-  val technologyblog = SectionLink("technology", "Technology blog", "/technology/blog", "Technology blog")
-  val games = SectionLink("technology", "Games", "/technology/games", "Games")
-  val gamesblog = SectionLink("technology", "Games blog", "/technology/gamesblog", "Games blog")
-  val appsblog = SectionLink("technology", "Apps blog", "/technology/appsblog", "Apps blog")
-  val askjack = SectionLink("technology", "Ask Jack", "/technology/askjack", "Ask Jack")
-  val internet = SectionLink("technology", "Internet", "/technology/internet", "Internet")
-  val mobilephones = SectionLink("technology", "Mobile phones", "/technology/mobilephones", "Mobile phones")
-  val gadgets = SectionLink("technology", "Gadgets", "/technology/gadgets", "Gadgets")
+  val technologyblog = SectionLink("technology", "technology blog", "/technology/blog")
+  val games = SectionLink("technology", "games", "/technology/games")
+  val gamesblog = SectionLink("technology", "games blog", "/technology/gamesblog")
+  val appsblog = SectionLink("technology", "apps blog", "/technology/appsblog")
+  val askjack = SectionLink("technology", "ask jack", "/technology/askjack")
+  val internet = SectionLink("technology", "internet", "/technology/internet")
+  val mobilephones = SectionLink("technology", "mobile phones", "/technology/mobilephones")
+  val gadgets = SectionLink("technology", "gadgets", "/technology/gadgets")
 
   //Business
-  val business =  SectionLink("business", "Business", "/business", "Business")
-  val economics = SectionLink("business", "Economics", "/business/economics", "Economics")
-  val useconomy = SectionLink("business", "US economy", "/business/useconomy", "US economy")
-  val recession = SectionLink("business", "Recession", "/business/recession", "Recession")
-  val  investing = SectionLink("business", "Investing", "/business/investing", "Investing")
-  val banking = SectionLink("business", "Banking", "/business/banking", "Banking")
-  val marketforceslive = SectionLink("business", "Market forces live", "/business/marketforceslive", "Market forces live")
-  val businessblog = SectionLink("business", "Business blog", "/business/blog", "Business blog")
+  val economy =  SectionLink("business", "economy", "/business")
+  val companies =  SectionLink("business", "companies", "/business/companies")
+  val economics = SectionLink("business", "economics", "/business/economics")
+  val markets = SectionLink("business", "markets", "/business/stock-markets")
+  val useconomy = SectionLink("business", "US economy", "/business/useconomy")
+  val recession = SectionLink("business", "recession", "/business/recession")
+  val  investing = SectionLink("business", "investing", "/business/investing")
+  val banking = SectionLink("business", "banking", "/business/banking")
+  val marketforceslive = SectionLink("business", "market forces live", "/business/marketforceslive")
+  val businessblog = SectionLink("business", "business blog", "/business/blog")
 
   //Money
-  val money = SectionLink("money", "Money", "/money", "Money")
-  val property = SectionLink("money", "Property", "/money/property", "Property")
-  val houseprices = SectionLink("money", "House prices", "/money/houseprices", "House prices")
-  val pensions = SectionLink("money", "Pensions", "/money/pensions", "Pensions")
-  val savings = SectionLink("money", "Savings", "/money/savings", "Savings")
-  val debt = SectionLink("money", "Borrowing &amp; debt", "/money/debt", "Borrowing &amp; debt")
-  val insurance = SectionLink("money", "Insurance", "/money/insurance", "Insurance")
-  val workandcareers = SectionLink("money", "Work &amp; careers", "/money/work-and-careers", "Work &amp; careers")
-  val consumeraffairs = SectionLink("money", "Consumer affairs", "/money/consumer-affairs", "Consumer affairs")
+  val money = SectionLink("money", "money", "/money")
+  val property = SectionLink("money", "property", "/money/property")
+  val houseprices = SectionLink("money", "house prices", "/money/houseprices")
+  val pensions = SectionLink("money", "pensions", "/money/pensions")
+  val savings = SectionLink("money", "savings", "/money/savings")
+  val borrowing = SectionLink("money", "borrowing", "/money/debt")
+  val insurance = SectionLink("money", "insurance", "/money/insurance")
+  val careers = SectionLink("money", "careers", "/money/work-and-careers")
+  val consumeraffairs = SectionLink("money", "consumer affairs", "/money/consumer-affairs")
 
   //Life and style
-  val lifeandstyle = SectionLink("lifeandstyle", "Life & Style", "/lifeandstyle", "Life & style")
-  val fashion = SectionLink("lifeandstyle", "Fashion", "/fashion", "Fashion")
-  val foodanddrink = SectionLink("lifeandstyle", "Food &amp; drink", "/lifeandstyle/food-and-drink", "Food &amp; drink")
-  val family = SectionLink("lifeandstyle", "Family", "/lifeandstyle/family", "Family")
-  val lostinshowbiz = SectionLink("lifeandstyle", "Lost in Showbiz", "/lifeandstyle/lostinshowbiz", "Lost in Showbiz")
-  val women = SectionLink("lifeandstyle", "Women", "/lifeandstyle/women", "Women")
-  val relationships = SectionLink("lifeandstyle", "Relationships", "/lifeandstyle/relationships", "Relationships")
-  val healthandwellbeing = SectionLink("lifeandstyle", "Health and wellbeing", "/lifeandstyle/health-and-wellbeing", "Health and wellbeing")
+  val lifeandstyle = SectionLink("lifeandstyle", "life", "/lifeandstyle")
+  val fashion = SectionLink("lifeandstyle", "fashion", "/fashion")
+  val foodanddrink = SectionLink("lifeandstyle", "food", "/lifeandstyle/food-and-drink")
+  val family = SectionLink("lifeandstyle", "family", "/lifeandstyle/family")
+  val lostinshowbiz = SectionLink("lifeandstyle", "lost in showbiz", "/lifeandstyle/lostinshowbiz")
+  val women = SectionLink("lifeandstyle", "women", "/lifeandstyle/women")
+  val relationships = SectionLink("lifeandstyle", "relationships", "/lifeandstyle/relationships")
+  val healthandwellbeing = SectionLink("lifeandstyle", "health and wellbeing", "/lifeandstyle/health-and-wellbeing")
+  val loveAndSex = SectionLink("lifeandstyle", "love & sex", "/lifeandstyle/love-and-sex")
+  val homeAndGarden = SectionLink("lifeandstyle", "home & garden", "/lifeandstyle/home-and-garden")
 
   //Travel
-  val travel = SectionLink("travel", "Travel", "/travel", "Travel")
-  val shortbreaks = SectionLink("travel", "Short breaks", "/travel/short-breaks", "Short breaks")
-  val uktravel = SectionLink("travel", "Uk travel", "/travel/uk", "United Kingdom")
-  val europetravel = SectionLink("travel", "Europe travel", "/travel/europe", "Europe")
-  val hotels = SectionLink("travel", "Hotels", "/travel/hotels", "Hotels")
-  val resturants = SectionLink("travel", "Restaurants", "/travel/restaurants", "Restaurants")
-  val budget = SectionLink("travel", "Budget travel", "/travel/budget", "Budget travel")
+  val travel = SectionLink("travel", "travel", "/travel")
+  val shortbreaks = SectionLink("travel", "short breaks", "/travel/short-breaks")
+  val uktravel = SectionLink("travel", "UK", "/travel/uk")
+  val europetravel = SectionLink("travel", "europe", "/travel/europe")
+  val usTravel = SectionLink("travel", "US", "/travel/usa")
+  val hotels = SectionLink("travel", "hotels", "/travel/hotels")
+  val resturants = SectionLink("travel", "restaurants", "/travel/restaurants")
+  val budget = SectionLink("travel", "budget travel", "/travel/budget")
 
   //Environment
-  val climatechange = SectionLink("environment", "Climate change", "/environment/climate-change", "environment")
-  val wildlife = SectionLink("environment", "Wildlife", "/environment/wildlife", "wildlife")
-  val energy = SectionLink("environment", "Energy", "/environment/energy", "Energy")
-  val conservation = SectionLink("environment", "Conservation", "/environment/conservation", "Conservation")
-  val food = SectionLink("environment", "Food", "/environment/food", "Food")
+  val climatechange = SectionLink("environment", "climate change", "/environment/climate-change")
+  val wildlife = SectionLink("environment", "wildlife", "/environment/wildlife")
+  val energy = SectionLink("environment", "energy", "/environment/energy")
+  val conservation = SectionLink("environment", "conservation", "/environment/conservation")
+  val food = SectionLink("environment", "food", "/environment/food")
+  val cities = SectionLink("environment", "cities", "/cities")
+  val globalDevelopment = SectionLink("environment", "development", "/global-development")
 
-  def footballNav(metaData: MetaData) = metaData match {
-    case tag: Tag if tag.isFootballTeam => NavItem(football, Seq(
-      SectionLink("football", "Tables", "/football/tables", "Tables"),
-      SectionLink("football", "Live scores", "/football/live", "Live scores"),
-      SectionLink("football", "Fixtures", s"/football/${tag.url}/fixtures", "Fixtures"),
-      SectionLink("football", "Results", s"/football/${tag.url}/results", "Results"),
-      SectionLink("football", "Teams", "/football/teams", "Teams"),
-      SectionLink("football", "Leagues & competitions", "/football/competitions", "Leagues & competitions")
-    ))
-    case tag: Tag if tag.isFootballCompetition => NavItem(football, Seq(
-      SectionLink("football", "Tables", s"/football/${tag.url}/tables", "Tables"),
-      SectionLink("football", "Live scores", s"/football/${tag.url}/live", "Live scores"),
-      SectionLink("football", "Fixtures", s"/football/${tag.url}/fixtures", "Fixtures"),
-      SectionLink("football", "Results", s"/football/${tag.url}/results", "Results"),
-      SectionLink("football", "Teams", "/football/teams", "Teams"),
-      SectionLink("football", "Leagues & competitions", "/football/competitions", "Leagues & competitions")
-    ))
-    case _ => NavItem(football, Seq(
-      SectionLink("football", "Tables", "/football/tables", "Tables"),
-      SectionLink("football", "Live scores", "/football/live", "Live scores"),
-      SectionLink("football", "Fixtures", "/football/fixtures", "Fixtures"),
-      SectionLink("football", "Results", "/football/results", "Results"),
-      SectionLink("football", "Teams", "/football/teams", "Teams"),
-      SectionLink("football", "Leagues & competitions", "/football/competitions", "Leagues & competitions")
-    ))
+  def footballNav(metaData: MetaData) = NavItem(football, Seq(
+    SectionLink("football", "live scores", "/football/live"),
+    SectionLink("football", "tables", "/football/tables"),
+    SectionLink("football", "competitions", "/football/competitions"),
+    SectionLink("football", "results", "/football/results"),
+    SectionLink("football", "fixtures", "/football/fixtures"),
+    SectionLink("football", "clubs", "/football/teams")
+  ))
+}
+
+// helper for the views
+object Navigation {
+  
+  def topLevelItem(navigation: Seq[NavItem], page: MetaData): Option[NavItem] = navigation.find(_.exactFor(page))
+    .orElse(navigation.find(_.currentFor(page)))
+
+
+  def localNav(navigation: Seq[NavItem], page: MetaData): Option[Seq[SectionLink]] = topLevelItem(navigation, page)
+    .map(_.links).filter(_.nonEmpty)
+
+  def sectionOverride(page: MetaData, localNav: NavItem, currentSublink: Option[SectionLink]): String = page match {
+    case p: Tag => currentSublink.map(_.title).getOrElse(localNav.name.title)
+    case p: Section => currentSublink.map(_.title).getOrElse(localNav.name.title)
+    case _ => localNav.name.title
   }
 }
 
-trait Zones extends Sections {
+trait Zones extends Navigation {
 
 
   val newsZone = Zone(news,
@@ -173,11 +184,11 @@ trait Zones extends Sections {
   )
 
   val sportZone = Zone(sport,
-    Seq(football, cricket, sportblog, rugbyunion, motorsport, tennis, golf, rugbyleague, horseracing)
+    Seq(football, cricket, sportblog, rugbyunion, motorsport, tennis, golf, rugbyLeague, horseracing)
   )
 
   val sportsZone = Zone(sports,
-    Seq(football, cricket, sportblog, rugbyunion, motorsport, tennis, golf, rugbyleague, horseracing)
+    Seq(football, cricket, sportblog, rugbyunion, motorsport, tennis, golf, rugbyLeague, horseracing)
   )
 
   val cifZone = Zone(cif,
@@ -185,19 +196,19 @@ trait Zones extends Sections {
   )
 
   val cultureZone = Zone(culture,
-    Seq(artanddesign, books, film, music, stage, televisionandradio)
+    Seq(artanddesign, books, film, music, stage, televisionAndRadio)
   )
 
   val technologyZone = Zone(technology,
     Seq(technologyblog, games, gamesblog, appsblog, askjack, internet, mobilephones, gadgets )
   )
 
-  val businessZone = Zone(business,
+  val businessZone = Zone(economy,
     Seq(economics, useconomy, recession, investing, banking, marketforceslive, businessblog )
   )
 
   val moneyZone = Zone(money,
-    Seq(property, houseprices, pensions, savings, debt, insurance, workandcareers, consumeraffairs)
+    Seq(property, houseprices, pensions, savings, borrowing, insurance, careers, consumeraffairs)
   )
 
   val lifeandstyleZone = Zone(lifeandstyle,

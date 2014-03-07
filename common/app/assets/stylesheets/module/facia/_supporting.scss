@@ -14,7 +14,7 @@
 
     @include rem((
         padding-top: $gs-baseline/3,
-        padding-bottom: nth(nth($fs-headlines, 1), 2),
+        padding-bottom: get-line-height($fs-headlines, 1),
         padding-right: $gs-gutter/4
     ));
     @include mq(tablet) {
@@ -34,7 +34,11 @@
     margin: 0;
     @include fs-headline(1);
     color: $c-neutral1;
-}
-.supporting__action:visited {
-    color: $c-neutral2;
+
+    &:visited {
+        color: $c-neutral2;
+    }
+    &:active {
+        color: $c-neutral1;
+    }
 }

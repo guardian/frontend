@@ -1,154 +1,28 @@
-.football-table-container a.cta {
-    background-color: #f4f4ee;
-    color: #064951;
-}
+@mixin table-football--small() {
+    .table-column--priority { display: table-cell; }
 
-.table-football {
-    background-color: #f4f4ee;
-}
+    th,
+    td {
+        display: none;
+        min-width: 0;
+    }
 
-.table-football-header {
-    border-bottom: 1px solid #DEDEDD;
-}
-
-.table-football-header th,
-.table-football-body .table-football-legend th { // can't get this less specific, sorry (MA)
-    background-color: #f4f4ee;
-    color: #777;
-    font-weight: normal;
-}
-
-.table-football th {
-    border-bottom: none;
-}
-
-.table-football-body th {
-    background: #f4f4ee;
-    font-weight: bold;
-    color: $c-sportMid;
-    border-top: 1px solid #DEDEDD;
-
-    &:first-child {
-        border-top: none;
-        padding-left: $gutter/2;
+    .football-stat--form {
+        min-width: 0;
     }
 }
 
-.table-football th,
-.table-football td {
-    border-right: none;
-    text-align: right;
-    padding: $baseline*2 3% $baseline*2 3%;
-}
-
-.table-football-header th:first-child,
-.table-football td:first-child {
-    padding: $baseline*2 3% $baseline*2 $gutter/2;
-}
-
-.table-football-header th:last-child,
-.table-football td:last-child {
-    padding: $baseline*2 $gutter/2 $baseline*2 3%;
-}
-
-.table-football td:last-child {
-    font-weight: bold;
-}
-
-.table-football-body tr {
-    background-color: transparent;
-
-    &:last-child {
-        border-bottom: none;
-    }
-}
-
-@include mq(641px) {
-
-    .table-football th,
-    .table-football td {
-        padding: $baseline*2 3px;
-    }
-
-    .table-football-header th:first-child,
-    .table-football-body th:first-child,
-    .table-football td:first-child {
-        padding-left: 12px;
-    }
-
-    .table-football-header th:last-child,
-    .table-football td:last-child {
-        padding-right: 12px;
-    }
-}
-
-.table-football-leftaligned {
-    text-align: left !important;
-}
-
-.table-football-body {
-    border-bottom: 3px solid #fff; // this is a border because margins don't appear
-}
-
-// overriding pasteup :(
-.table-football-body:hover tr,
-.table-football-body:hover tr:nth-child(even),
-.table-football-body tr:nth-child(even),
-.table-football-body:hover tr:hover,
-.table-football-body tr:last-child {
-    background-color: transparent !important;
-}
-
-.table-football-body tr.highlight,
-.table-football-body:hover tr.highlight,
-.table-football-body tr.highlight:nth-child(even),
-.table-football-body:hover tr.highlight:nth-child(even) {
-    background-color: #f9c83f !important;
-    border-bottom: none;
-    margin-top: -1px;
-}
-
-
-/* These are used to hide columns that we don't display on smaller screens. */
-
-.stats-1,
-.stats-2,
-.stats-3 {
-    display: none;
-}
-@include mq(400px) {
-    .stats-1 {
-        display: table-cell;
-    }
-}
-@include mq(641px) {
-    .stats-2 {
-        display: table-cell;
-    }
-}
-@include mq(850px) {
-    .stats-3 {
-        display: table-cell;
-    }
-}
-
+/** League table **/
 .table--football {
-    abbr {
-        border-bottom: 1px dotted $c-neutral8;
-    }
-
     .table-column--main {
-        a {
+        a,
+        span {
             display: block;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
             width: 100%;
         }
-    }
-
-    .football-stat--previous {
-        display: none;
     }
 
     .football-stat--points {
@@ -159,43 +33,35 @@
         color: inherit;
     }
 
+    .table-column--main {
+        max-width: 90px;
+    }
+
     // This makes sure that all table columns are equally spaced
-    @include mq($from: desktop) {
-        td {
-            min-width: 12px;
-        }
-
-        .football-stat--previous {
-            display: table-cell;
-        }
-
-        .table-column--main {
-            max-width: 100px;
-        }
-
-        .table-column--status {
-            min-width: 75px; // 15(width of status)*5
-        }
+    td {
+        min-width: 12px;
     }
 
-    // Leave blank ones for easy modification
-    @include mq($to: tablet) {
-        th, td { display: none; }
-        .football-stat--postition { display: table-cell; }
-        .football-stat--team { display: table-cell; }
-        .football-stat--played { display: table-cell; }
-        .football-stat--won {}
-        .football-stat--drawn {}
-        .football-stat--lost {}
-        .football-stat--for {}
-        .football-stat--against {}
-        .football-stat--difference { display: table-cell; }
-        .football-stat--points { display: table-cell; }
-        .football-stat--previous {}
+    // remove battle line from last row
+    // (only happens in truncated tables)
+    tr:last-child td {
+        border-bottom: none;
     }
+
+    .football-stat--form {
+        min-width: 75px; // 15(width of status)*5
+    }
+
+    // This is as we don't have element media queries (no-one does)
+    @include mq($to: tablet) { @include table-football--small; }
+    &.table--small { @include table-football--small; }
 }
 
-.football__group {
-    margin-top: $gs-baseline;
-    &:first-child { margin-top: 0; }
+.football-table__container {
+    position: relative;
+}
+
+// Hack for fronts until we tidy them up properly
+.fromage .table {
+    border-top-color: $c-neutral3;
 }

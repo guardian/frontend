@@ -1,11 +1,11 @@
 @(metaData: MetaData, switches: Seq[com.gu.management.Switchable], projectName: Option[String] = Some(conf.Configuration.environment.projectName))(head: Html)(body: Html)(implicit request: RequestHeader)
 
 <!DOCTYPE html>
-<html class="js-off" lang="en-GB">
+<html class="js-off id--signed-out" lang="en-GB">
 <head>
     @fragments.head(metaData, projectName, head)
 </head>
-<body id="top" itemscope itemtype="http://schema.org/WebPage" itemref="schema-WebPage">
+<body id="top">
 
     @fragments.message(metaData)
     @fragments.identityHeader(metaData)

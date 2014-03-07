@@ -1,3 +1,13 @@
+/**
+ * List of links
+ *
+ * Usually found in combination with a l-columns pattern
+ *
+ * Image adjust on a story:
+ * - hide/default: hidden image
+ * - highlight: shows image at desktop breakpoint
+ */
+
 .linkslist-container {
     position: relative;
     padding-top: 1px;
@@ -39,29 +49,116 @@
 .linkslist__item {
     border-top: 1px solid $c-neutral5;
     @include rem((
-        min-height: nth(nth($fs-headlines, 1), 2) + 1,
-        padding-top: $gs-baseline/6,
-        padding-bottom: ($gs-baseline*5)/3 // Simulates margins and don't create
-                                           // extra space at the beginning of a
-                                           // new column break as margins do
+        padding-top: $gs-baseline/4
     ));
-    @include mq(tablet) {
-        @include rem((
-            // Twice the line height of the action
-            min-height: nth(nth($fs-headlines, 1), 2) * 2 + 1,
-            padding-bottom: $gs-baseline + $gs-baseline / 6
-        ));
-    }
+
     &.show-more--hidden {
         display: none;
     }
 }
 .linkslist__action {
+    position: relative;
     color: $c-neutral1;
     display: block;
     @include fs-headline(1);
+    @include rem((
+        margin-bottom: get-line-height($fs-headlines, 1)
+    ));
+    @include mq(tablet) {
+        @include rem((
+            min-height: get-line-height($fs-headlines, 1) * 2,
+            margin-bottom: get-font-size($fs-headlines, 1)
+        ));
+    }
+
 
     &:visited {
         color: $c-neutral2;
+    }
+    &:active {
+        color: $c-neutral1;
+    }
+}
+
+.linkslist--with-images {
+    @include mq(desktop) {
+        .linkslist__action {
+            @include rem((
+                // Force min height of 3 baselines on all items
+                min-height: get-line-height($fs-headlines, 1) * 3,
+            ));
+        }
+    }
+}
+
+
+/* Icon (20x20px)
+   ========================================================================== */
+
+.action--has-icon {
+    .i {
+        // This is a scalable icon,
+        // it will only work if SVG is active
+        @include show-only-if-svg-is-supported;
+    }
+    .svg & {
+        @include rem((
+            padding-left: $action-icon-width + $action-icon-rightspace
+        ));
+
+        .i {
+            float: left;
+            @include rem((
+                margin-left: ($action-icon-width + $action-icon-rightspace) * -1
+            ));
+        }
+    }
+}
+.svg .action--tone-comment .i { // Chained selector to overrule icon code from global.css
+    margin-top: 3px; // Align icon with text
+    width: 1.45em;
+    background-size: contain;
+}
+
+
+/* Thumbnail image
+   ========================================================================== */
+
+.linkslist__media-wrapper,
+.linkslist__image-container {
+    display: none;
+}
+@include mq(desktop) { // Display thumbnail only on desktop and up
+    .linkslist__media-wrapper,
+    .linkslist__image-container {
+        display: block;
+    }
+
+    $action-image-width: 88px;
+    .action--has-image {
+        @include rem((
+            // Min height of 3 baselines
+            min-height: get-line-height($fs-headlines, 1) * 3,
+            // Override .svg .action--has-icon
+            padding-left: $action-image-width + $gs-gutter/2 !important
+        ));
+    }
+    .linkslist__media-wrapper {
+        float: left;
+        margin-top: 3px;
+        @include rem((
+            margin-left: ($action-image-width + $gs-gutter/2) * -1,
+            width: $action-image-width
+        ));
+    }
+    .linkslist__image-container {}
+    .action--has-image.action--has-icon {
+        .i {
+            position: absolute;
+            top: 5px;
+            left: 2px;
+            z-index: 1;
+            margin-left: 0;
+        }
     }
 }

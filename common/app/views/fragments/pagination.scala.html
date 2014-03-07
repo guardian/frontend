@@ -1,0 +1,39 @@
+@(page: MetaData, pagination: Pagination)(implicit request: RequestHeader)
+@import model._
+@import common._
+
+@import views.support.Format
+
+@paginated(url: String, pageNum: Int) = {@common.LinkTo(url)@if(pageNum > 1){?page=@pageNum}}
+
+@* don't show pagination if this is the only page *@
+@if(pagination.lastPage > 1) {
+    <div class="pagination u-cf">
+        <div class="pagination_legend hide-on-mobile-inline">About @Format(pagination.totalContent) results for @Html(page.webTitle)</div>
+
+        <ol class="unstyled pagination__links">
+            <li class="pagination__item pagination__item--next">
+                @pagination.next.map { next =>
+                    <a rel="next" href="@paginated(page.url, next)">Next</a>
+                }.getOrElse{ Next }
+            </li>
+
+            <li class="pagination__item pagination__item--prev">
+                @pagination.previous.map{ prev =>
+                    <a rel="prev" href="@paginated(page.url, prev)">Previous</a>
+                }.getOrElse{ Previous }
+            </li>
+
+            @pagination.pages.map{ pageNum =>
+                <li class="pagination__item">
+                    @if(pageNum == pagination.currentPage) {
+                        <span class="pagination__action">@pageNum</span>
+                    } else {
+                        <a class="pagination__action" href="@paginated(page.url, pageNum)">@pageNum</a>
+                    }
+                </li>
+            }
+
+        </ol>
+    </div>
+}

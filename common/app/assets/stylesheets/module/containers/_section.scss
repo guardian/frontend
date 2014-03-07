@@ -6,8 +6,13 @@
         }
         .item:nth-child(n+3) {
             @extend %item-show-more;
+
+            .item__image-container,
+            .item__media-wrapper {
+                display: none;
+            }
         }
-        .js-collection--show-more {
+        .collection--show-more {
             .item:nth-child(n+3) {
                 display: none;
             }
@@ -23,7 +28,13 @@
         .item:nth-child(-n+3) {
             @include card-image;
         }
-        .js-collection--show-more {
+        .item:nth-child(n+4) {
+            .item__image-container,
+            .item__media-wrapper {
+                display: none;
+            }
+        }
+        .collection--show-more {
             .item:nth-child(n+4) {
                 display: none;
             }
@@ -34,9 +45,16 @@
         .item:nth-child(-n+4) {
             @include card-image;
         }
-        .js-collection--show-more {
+        .item:nth-child(n+5) {
+            .item__image-container,
+            .item__media-wrapper {
+                display: none;
+            }
+        }
+        .collection--show-more {
             .item:nth-child(n+5) {
                 display: none;
+
             }
         }
     }

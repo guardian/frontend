@@ -10,6 +10,10 @@
         ));
     }
 }
+.collection-wrapper--no-outer-margins {
+    margin-left: 0;
+    margin-right: 0;
+}
 .collection__item {
     position: relative; // Replace .item as a relative context
 
@@ -24,6 +28,14 @@
     }
     & + .collection__item {
         @include vertical-item-separator; // Restore inter-item separator
+    }
+
+    .l-row--layout-m & {
+        @include mq($to: tablet) {
+            @include rem((
+                margin-bottom: get-line-height($fs-headlines, 1)
+            ));
+        }
     }
 }
 
@@ -143,16 +155,40 @@
             display: block;
         }
     }
+
     @include mq(tablet) {
         .item__media-wrapper,
         .item__image-container,
         .item--has-no-image .item__standfirst {
             display: block;
         }
+        .item--imageadjust-highlight,
+        .item--imageadjust-default .item__title {
+            @include rem((
+                min-height: get-line-height($fs-headlines, 1) * 3
+            ));
+        }
     }
     @include mq(desktop) {
         .item--has-no-image .item__title {
             @include fs-headline(2, true);
+        }
+    }
+}
+
+@include mq($to: tablet) {
+    .l-row--layout-m {
+        .item--imageadjust-default .item__title {
+            @include rem((
+                min-height: get-line-height($fs-headlines, 1) * 4
+            ));
+        }
+        .l-row__item--break-m {
+            .item--imageadjust-default .item__title {
+                @include rem((
+                    min-height: get-line-height($fs-headlines, 2) * 3
+                ));
+            }
         }
     }
 }

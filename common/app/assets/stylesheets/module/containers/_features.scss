@@ -3,15 +3,17 @@
         @include rem((
             padding-top: $gs-baseline/3
         ));
-        @include mq(tablet, wide) {
+        @include mq(tablet, desktop) {
             padding-top: 0;
         }
     }
     .linkslist-container {
-        margin-top: 0;
+        @include mq($to: desktop) {
+            margin-top: 0;
+        }
     }
     .ad-slot--inline {
-        margin-top: $gs-baseline/2;
+        margin-top: $gs-baseline;
         margin-bottom: $gs-baseline/2;
     }
     .collection-wrapper--position-1 {
@@ -20,19 +22,15 @@
             @include box-sizing(border-box);
             @include rem((
                 padding-bottom: $gs-baseline,
-                min-height: 86px
+                min-height: 82px
             ));
         }
         @include mq($to: tablet) {
-            background-color: $c-features-secondary;
-
             .collection__item {
                 border-bottom: 1px solid #ffffff;
             }
 
             .collection__item + .collection__item {
-                float: left;
-                width: 50%;
                 border-bottom: 0;
 
                 .item__title {
@@ -45,15 +43,8 @@
             }
         }
     }
-    .collection-wrapper--position-2 {
-        @include rem((padding-top: $gs-baseline/3));
-
-        .collection__item {
-            padding-bottom: 0;
-            margin-bottom: 0;
-        }
-    }
 }
+
 
 /* Remove spacing between items */
 .collection-wrapper--spacing-thin {
@@ -102,11 +93,13 @@
     }
     .item--has-no-image {
         .item__title {
-            @include rem((padding-top: 3px));
+            @include rem((
+                padding-top: 3px
+            ));
         }
     }
     .collection__item {
-        background-color: $c-features-secondary;
+        background-color: $c-featuresVariant;
 
         + .collection__item {
             &:before {
@@ -122,14 +115,13 @@
     .item__standfirst {
         color: rgba(#ffffff, .8);
     }
-    .item__link {
-        border-top: 0;
+    .item__link:visited,
+    .item__link:visited .item__title {
+        color: mix(#ffffff, $c-featuresVariant, 80%);
     }
-    .item__image-container {
-        margin-top: 0;
-    }
+    @include item--hide-tone-border;
     .item__title {
-        background-color: $c-features-secondary;
+        background-color: $c-featuresVariant;
     }
     .item__link:hover,
     .item__link:focus {
@@ -138,19 +130,7 @@
             text-decoration: underline;
         }
     }
-}
-
-.container--features__linkslist {
-    @include rem((
-        margin-left: $gs-gutter/2,
-        margin-right: $gs-gutter/2
-    ));
-
-    @include mq(tablet, desktop) {
-        @include rem((
-            // Width of a column in l-columns on tablet
-            // in that particular context
-            max-width: gs-span(4) + $gs-gutter
-        ));
+    .item__link:active .item__title {
+        text-decoration: none;
     }
 }

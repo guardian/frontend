@@ -1,18 +1,38 @@
 @(front: FrontPage, faciaTrailblock: FaciaPage)(implicit request: RequestHeader, templateDeduping: TemplateDeduping)
-@import conf.Switches._
+
 @if(faciaTrailblock.collections.nonEmpty) {
-    <div class="facia-container monocolumn-wrapper monocolumn-wrapper--no-limit" data-link-name="Front" role="main">
-        @faciaTrailblock.collections.filter(_._2.items.nonEmpty).zipWithIndex.map{ case(block, index) =>
-            @GetContainer(faciaTrailblock.id, block._1) match {
-                case style: NewsContainer             => { @containers.news(block._1,  block._2, style, index) }
-                case style: SportContainer            => { @containers.sport(front, block._1, block._2, style, index) }
-                case style: CommentContainer          => { @containers.comment(block._1, block._2, style, index) }
-                case style: CommentAndDebateContainer => { @containers.commentanddebate(block._1, block._2, style, index) }
-                case style: FeaturesContainer         => { @containers.features(block._1, block._2, style, index) }
-                case style: PopularContainer          => { @containers.popular(block._1, block._2, style, index) }
-                case style: PeopleContainer           => { @containers.people(block._1, block._2, style, index) }
-                case style: SpecialContainer          => { @containers.special(block._1, block._2, style, index) }
-                case style                            => { @containers.section(block._1, block._2, style, index) }
+    <div class="facia-container facia-container--layout-front monocolumn-wrapper monocolumn-wrapper--no-limit" data-link-name="Front" role="main">
+        <span class="is-updating"></span>
+        @defining(faciaTrailblock.collections.filter(_._2.items.nonEmpty)) { collections =>
+            @defining(collections.filter(c => (c._1.collectionType == Some("features") || c._1.collectionType == Some("news/people")))) { adCollections =>
+                @collections.zipWithIndex.map{ case(block, index) =>
+                    @block._1.collectionType match {
+                        case Some("news")                       => { @containers.news(block._1,  block._2, NewsContainer(), index) }
+                        case _ if index == 0                    => { @collections.size match {
+                            case size if size < 3 => { @containers.tag(front, block._1,  block._2, NewsContainer(showMore = false), index) }
+                            case _                => { @containers.tag(front, block._1,  block._2, NewsContainer(), index) }
+                        }}
+                        case Some("news/sport")                 => { @containers.sport(front, block._1, block._2, SportContainer(), index) }
+                        case Some("comment")                    => { @containers.comment(block._1, block._2, CommentContainer(), index) }
+                        case Some("comment/comment-and-debate") => { @containers.commentanddebate(block._1, block._2, CommentAndDebateContainer(), index) }
+                        case Some("features")                   => { @adCollections.indexOf(block) match {
+                            case 0 => { @containers.features(block._1, block._2, FeaturesContainer(adSlot = Some(AdSlot.First)), index) }
+                            case 1 => { @containers.features(block._1, block._2, FeaturesContainer(adSlot = Some(AdSlot.Second)), index) }
+                            case _ => { @containers.features(block._1, block._2, FeaturesContainer(), index) }
+                        }}
+                        case Some("news/most-popular")          => { @containers.popular(block._1, block._2, PopularContainer(), index) }
+                        case Some("news/people")                => { @adCollections.indexOf(block) match {
+                            case 0 => { @containers.people(block._1, block._2, PeopleContainer(adSlot = Some(AdSlot.First)), index) }
+                            case 1 => { @containers.people(block._1, block._2, PeopleContainer(adSlot = Some(AdSlot.Second)), index) }
+                            case _ => { @containers.people(block._1, block._2, PeopleContainer(), index) }
+                        }}
+                        case Some("news/special")               => { @containers.special(block._1, block._2, SpecialContainer(), index) }
+                        case Some("news/section")               => { @containers.section(block._1, block._2, SectionContainer(), index) }
+                        case Some("features/section")           => { @containers.section(block._1, block._2, SectionContainer(tone = "feature"), index) }
+                        case Some("comment/section")            => { @containers.section(block._1, block._2, SectionContainer(tone = "comment"), index) }
+                        case _                                  => { @containers.section(block._1, block._2, SectionContainer(), index) }
+                    }
+                }
             }
         }
     </div>

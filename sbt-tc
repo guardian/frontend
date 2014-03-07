@@ -4,19 +4,9 @@ set -o xtrace
 set -o nounset
 set -o errexit
 
-
 if [ -f "~/.sbtconfig" ]; then
   . ~/.sbtconfig
 fi
-
-
-# SBT configuration
-export SBT_BOOT_DIR=${HOME}/.sbt/boot/
-
-if [ ! -d "${SBT_BOOT_DIR}" ]; then
-  mkdir -p ${SBT_BOOT_DIR}
-fi
-
 
 # Build configuration
 BUILD_PARAMS=""
@@ -26,7 +16,6 @@ fi
 if [ -n "$BUILD_VCS_NUMBER" ]; then
   BUILD_PARAMS="${BUILD_PARAMS} -Dbuild.vcs.number=\"$BUILD_VCS_NUMBER\""
 fi 
-
 
 # Ivy configuration
 echo "setting ivy cache dir"
@@ -51,7 +40,6 @@ fake_secret="myKV8HQkjcaxygbDuyneHBeyFgsyyM8yCFFOxyDoT0QGuyrY7IyammSyP1VivCxS"
 # a heap that holds objects such as classes and methods. Xmx is the heap size.
 cat /dev/null | /usr/lib/jvm/java-1.7.0/bin/java -Xmx4096M -XX:MaxPermSize=2048m \
   -XX:ReservedCodeCacheSize=128m \
-  -Dsbt.boot.directory=$SBT_BOOT_DIR \
   -Dsbt.log.noformat=true \
   -XX:+UseConcMarkSweepGC \
   -XX:+CMSIncrementalMode \

@@ -4,10 +4,29 @@ import play.api.libs.json.{Json, JsValue}
 import tools.FaciaApi
 import controllers.Identity
 import org.joda.time.DateTime
-import play.api.templates.HtmlFormat
+import scala.util.{Success, Failure, Try}
+import common.Logging
+import conf.Configuration
+
+case class Config(
+  fronts: Map[String, Front],
+  collections: Map[String, Collection]
+)
+
+case class Front(
+                  collections: List[String]
+                  )
+
+case class Collection(
+                  displayName: Option[String],
+                  apiQuery: Option[String],
+                 `type`: Option[String],
+                  href: Option[String],
+                  groups: Option[List[String]],
+                  uneditable: Option[Boolean]
+                  )
 
 case class Block(
-                  id: String,
                   name: Option[String],
                   live: List[Trail],
                   draft: Option[List[Trail]],
@@ -15,7 +34,8 @@ case class Block(
                   updatedBy: String,
                   updatedEmail: String,
                   displayName: Option[String],
-                  href: Option[String]
+                  href: Option[String],
+                  diff: Option[JsValue]
                   )
 
 case class Trail(
@@ -30,11 +50,13 @@ case class CollectionMetaUpdate(
   href: Option[String]
 )
 
-trait UpdateActions {
+trait UpdateActions extends Logging {
 
-  lazy val defaultMinimumTrailblocks = 0
-  lazy val defaultMaximumTrailblocks = 20
+  val collectionCap: Int = Configuration.facia.collectionCap
   val itemMetaWhitelistFields: Seq[String] = Seq("headline", "trailText", "group", "supporting", "imageAdjust", "isBreaking", "updatedAt")
+  
+  implicit val collectionMetaWrites = Json.writes[CollectionMetaUpdate]
+  implicit val updateListWrite = Json.writes[UpdateList]
 
   def getBlock(id: String): Option[Block] = FaciaApi.getBlock(id)
 
@@ -72,28 +94,47 @@ trait UpdateActions {
   def updateCollectionMeta(block: Block, update: CollectionMetaUpdate, identity: Identity): Block =
     block.copy(displayName=update.displayName, href=update.href)
 
-  def putBlock(id: String, block: Block, identity: Identity): Option[Block] = {
-    FaciaApi.archive(id, block)
+  def putBlock(id: String, block: Block, identity: Identity, updateJson: JsValue): Block =
     FaciaApi.putBlock(id, block, identity)
+
+  def archiveBlock(id: String, block: Block, update: JsValue, identity: Identity): Block =
+    Try(FaciaApi.archive(id, block, update, identity)) match {
+      case Failure(t: Throwable) => {
+        log.warn(t.toString)
+        block
+      }
+      case Success(_) => block
+    }
+
+  def putMasterConfig(config: Config, identity: Identity): Option[Config] = {
+    FaciaApi.archiveMasterConfig(config, identity)
+    FaciaApi.putMasterConfig(config, identity)
   }
 
-  def updateCollectionList(id: String, update: UpdateList, identity: Identity): Option[Block] =
+  def updateCollectionList(id: String, update: UpdateList, identity: Identity): Option[Block] = {
+    lazy val updateJson = Json.toJson(update)
     getBlock(id)
-      .map(insertIntoLive(update, _))
-      .map(insertIntoDraft(update, _))
-      .flatMap(putBlock(id, _, identity))
-      .orElse(createBlock(id, identity, update))
+    .map(insertIntoLive(update, _))
+    .map(insertIntoDraft(update, _))
+    .map(capCollection)
+    .map(putBlock(id, _, identity, updateJson))
+    .map(archiveBlock(id, _, updateJson, identity))
+    .orElse(createBlock(id, identity, update))
+  }
 
-  def updateCollectionFilter(id: String, update: UpdateList, identity: Identity): Option[Block] =
+  def updateCollectionFilter(id: String, update: UpdateList, identity: Identity): Option[Block] = {
+    lazy val updateJson = Json.toJson(update)
     getBlock(id)
       .map(deleteFromLive(update, _))
       .map(deleteFromDraft(update, _))
-      .flatMap(putBlock(id, _, identity))
+      .map(putBlock(id, _, identity, updateJson))
+      .map(archiveBlock(id, _, updateJson, identity))
+  }
 
   def updateCollectionMeta(id: String, update: CollectionMetaUpdate, identity: Identity): Option[Block] =
     getBlock(id)
       .map(updateCollectionMeta(_, update, identity))
-      .flatMap(putBlock(id, _, identity))
+      .map(putBlock(id, _, identity, Json.toJson(update)))
 
   private def updateList(update: UpdateList, blocks: List[Trail]): List[Trail] = {
     val listWithoutItem = blocks.filterNot(_.id == update.item)
@@ -120,10 +161,13 @@ trait UpdateActions {
 
   def createBlock(id: String, identity: Identity, update: UpdateList): Option[Block] = {
     if (update.live)
-      FaciaApi.putBlock(id, Block(id, None, List(Trail(update.item, update.itemMeta)), None, DateTime.now.toString, identity.fullName, identity.email, None, None), identity)
+      Option(FaciaApi.putBlock(id, Block(None, List(Trail(update.item, update.itemMeta)), None, DateTime.now.toString, identity.fullName, identity.email, None, None, None), identity))
     else
-      FaciaApi.putBlock(id, Block(id, None, Nil, Some(List(Trail(update.item, update.itemMeta))), DateTime.now.toString, identity.fullName, identity.email, None, None), identity)
+      Option(FaciaApi.putBlock(id, Block(None, Nil, Some(List(Trail(update.item, update.itemMeta))), DateTime.now.toString, identity.fullName, identity.email, None, None, None), identity))
   }
+
+  def capCollection(block: Block): Block =
+    block.copy(live = block.live.take(collectionCap), draft = block.draft.map(_.take(collectionCap)))
 
 }
 

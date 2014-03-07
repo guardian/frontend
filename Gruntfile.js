@@ -5,10 +5,8 @@ module.exports = function (grunt) {
         singleRun = grunt.option('single-run') !== false,
         env = grunt.option('env') || 'code',
         screenshotsDir = './screenshots',
-        staticDir = 'static/',
-        staticTargetDir = staticDir + 'target/',
-        staticRequireDir = staticDir + 'requirejs/',
-        testConfDir = 'common/test/assets/javascripts/conf/',
+        staticTargetDir = './static/target/',
+        testConfDir = './common/test/assets/javascripts/conf/',
         propertiesFile = (isDev) ? process.env.HOME + '/.gu/frontend.properties' : '/etc/gu/frontend.properties';
 
     if (isDev) {
@@ -33,13 +31,12 @@ module.exports = function (grunt) {
                     }
                 }],
                 options: {
-                    style: (isDev) ? 'expanded' : 'compressed',
-                    sourcemap: false,
-                    noCache: (isDev) ? false : true,
+                    style: 'compressed',
+                    sourcemap: true,
+                    noCache: true,
                     quiet: (isDev) ? false : true,
                     loadPath: [
                         'common/app/assets/stylesheets/components/sass-mq',
-                        'common/app/assets/stylesheets/components/pasteup/sass/layout',
                         'common/app/assets/stylesheets/components/normalize-scss'
                     ]
                 }
@@ -48,27 +45,28 @@ module.exports = function (grunt) {
 
         requirejs: {
             options: {
-                baseUrl: staticRequireDir + 'javascripts',
                 paths: {
-                    bean:         'common/components/bean/bean',
-                    bonzo:        'common/components/bonzo/src/bonzo',
-                    domReady:     'common/components/domready/ready',
-                    EventEmitter: 'common/components/eventEmitter/EventEmitter',
-                    qwery:        'common/components/qwery/mobile/qwery-mobile',
-                    reqwest:      'common/components/reqwest/src/reqwest',
-                    postscribe:   'common/components/postscribe/dist/postscribe',
-                    lodash:       'common/components/lodash-amd/modern',
-                    imager:       'common/components/imager.js/src/strategies/container',
-                    omniture:     'common/components/omniture/omniture',
-                    fence:        'common/components/fence/fence',
+                    common:       '../../../../common/app/assets/javascripts',
+                    bean:         '../../../../common/app/assets/javascripts/components/bean/bean',
+                    bonzo:        '../../../../common/app/assets/javascripts/components/bonzo/src/bonzo',
+                    domReady:     '../../../../common/app/assets/javascripts/components/domready/ready',
+                    EventEmitter: '../../../../common/app/assets/javascripts/components/eventEmitter/EventEmitter',
+                    qwery:        '../../../../common/app/assets/javascripts/components/qwery/mobile/qwery-mobile',
+                    reqwest:      '../../../../common/app/assets/javascripts/components/reqwest/src/reqwest',
+                    postscribe:   '../../../../common/app/assets/javascripts/components/postscribe/dist/postscribe',
+                    lodash:       '../../../../common/app/assets/javascripts/components/lodash-amd/modern',
+                    imager:       '../../../../common/app/assets/javascripts/components/imager.js/src/strategies/container',
+                    omniture:     '../../../../common/app/assets/javascripts/components/omniture/omniture',
+                    fence:        '../../../../common/app/assets/javascripts/components/fence/fence',
                     'ophan/ng':   'empty:'
                 },
-                optimize: (isDev) ? 'none' : 'uglify2',
-                useSourceUrl: (isDev) ? true : false,
+                optimize: 'uglify2',
+                generateSourceMaps: true,
                 preserveLicenseComments: false
             },
             common: {
                 options: {
+                    baseUrl: 'common/app/assets/javascripts',
                     name: 'common/bootstraps/app',
                     out: staticTargetDir + 'javascripts/bootstraps/app.js',
                     shim: {
@@ -76,7 +74,7 @@ module.exports = function (grunt) {
                             exports: 'postscribe'
                         },
                         imager: {
-                            deps: ['common/components/imager.js/src/imager'],
+                            deps: ['components/imager.js/src/imager'],
                             exports: 'Imager'
                         },
                         omniture: {
@@ -91,6 +89,7 @@ module.exports = function (grunt) {
             },
             admin: {
                 options: {
+                    baseUrl: 'admin/app/assets/javascripts',
                     name: 'bootstraps/admin',
                     out: staticTargetDir + 'javascripts/bootstraps/admin.js',
                     shim: {
@@ -112,9 +111,10 @@ module.exports = function (grunt) {
             },
             facia: {
                 options: {
+                    baseUrl: 'facia/app/assets/javascripts',
                     name: 'bootstraps/facia',
                     out: staticTargetDir + 'javascripts/bootstraps/facia.js',
-                    exclude: ['common/bootstraps/app'],
+                    exclude: ['../../../../common/app/assets/javascripts/bootstraps/app'],
                     keepBuildDir: true
                 }
             }
@@ -293,66 +293,22 @@ module.exports = function (grunt) {
                     cwd: 'common/app/public/javascripts',
                     src: ['**/*.js'],
                     dest: staticTargetDir + 'javascripts'
-                },
-                {
-                    expand: true,
-                    cwd: 'common/app/assets/javascripts',
-                    src: ['**/*.js'],
-                    dest: staticRequireDir + 'javascripts/common'
-                }]
-            },
-            'javascript-common-tests': {
-                files: [{
-                    expand: true,
-                    cwd: 'common/test/assets/javascripts/spec',
-                    src: ['**/*.js'],
-                    dest: staticRequireDir + 'tests/specs'
                 }]
             },
             'javascript-admin': {
                 files: [{
                     expand: true,
-                    cwd: 'admin/app/assets/javascripts',
-                    src: ['**/*.js'],
-                    dest: staticRequireDir + 'javascripts'
-                },
-                {
-                    expand: true,
                     cwd: 'admin/public/javascripts',
                     src: ['**/*.js'],
-                    dest: staticRequireDir + 'javascripts'
+                    dest: staticTargetDir + 'javascripts'
                 }]
             },
-            'javascript-facia': {
+            css: {
                 files: [{
                     expand: true,
-                    cwd: 'facia/app/assets/javascripts',
-                    src: ['**/*.js'],
-                    dest: staticRequireDir + 'javascripts'
-                }]
-            },
-            'javascript-facia-tests': {
-                files: [{
-                    expand: true,
-                    cwd: 'facia/test/assets/javascripts/spec',
-                    src: ['**/*.js'],
-                    dest: staticRequireDir + 'tests/specs'
-                }]
-            },
-            testUtils: {
-                files: [{
-                    expand: true,
-                    cwd: 'common/test/assets/javascripts',
-                    src: ['**/*', '!spec/**'],
-                    dest: staticRequireDir + 'tests'
-                }]
-            },
-            commonModules: {
-                files: [{
-                    expand: true,
-                    cwd: 'common/app/assets/javascripts',
-                    src: ['**/*.js'],
-                    dest: staticRequireDir + 'javascripts/common'
+                    cwd: 'common/app/assets/stylesheets',
+                    src: ['**/*.scss'],
+                    dest: staticTargetDir + 'stylesheets'
                 }]
             },
             images: {
@@ -420,9 +376,9 @@ module.exports = function (grunt) {
             components: {
                 files: [{
                     expand: true,
-                    cwd: staticTargetDir + 'javascripts/components/',
-                    src: '**/*.js',
-                    dest: staticTargetDir + 'javascripts/components/'
+                    cwd: staticTargetDir + 'javascripts',
+                    src: ['**/*.js', '!bootstraps/**/*.js'],
+                    dest: staticTargetDir + 'javascripts'
                 }]
             }
         },
@@ -434,7 +390,6 @@ module.exports = function (grunt) {
 
         karma: {
             options: {
-                configFile: testConfDir + 'common.js',
                 reporters: isDev ? ['dots'] : ['progress'],
                 singleRun: singleRun
             },
@@ -595,19 +550,14 @@ module.exports = function (grunt) {
 
         // Clean stuff up
         clean: {
-            'static': [staticDir],
-            staticTarget: [staticTargetDir],
-            js: [staticTargetDir + 'javascripts', staticRequireDir],
-            css: [
-                staticTargetDir + 'stylesheets',
-                '.sass-cache'
-            ],
-            images: [staticTargetDir + 'images'],
-            flash: [staticTargetDir + 'flash'],
-            fonts: [staticTargetDir + 'fonts'],
+            js         : [staticTargetDir + 'javascripts'],
+            css        : [staticTargetDir + 'stylesheets'],
+            images     : [staticTargetDir + 'images'],
+            flash      : [staticTargetDir + 'flash'],
+            fonts      : [staticTargetDir + 'fonts'],
             // Clean any pre-commit hooks in .git/hooks directory
-            hooks: ['.git/hooks/pre-commit'],
-            assets: ['common/conf/assets'],
+            hooks      : ['.git/hooks/pre-commit'],
+            assets     : ['common/conf/assets'],
             screenshots: [screenshotsDir]
         },
 
@@ -639,6 +589,17 @@ module.exports = function (grunt) {
                 files: ['resources/fonts/**/*'],
                 tasks: ['compile:fonts']
             }
+        },
+
+        replace: {
+            cssSourceMaps: {
+                src: [staticTargetDir + 'stylesheets/*.css.map'],
+                overwrite: true,
+                replacements: [{
+                    from: '../../../common/app/assets/stylesheets/',
+                    to: ''
+                }]
+            }
         }
     });
 
@@ -661,6 +622,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-asset-monitor');
+    grunt.loadNpmTasks('grunt-text-replace');
 
     grunt.registerTask('default', ['compile', 'test', 'analyse']);
 
@@ -677,21 +639,24 @@ module.exports = function (grunt) {
 
     // Compile tasks
     grunt.registerTask('compile:images', ['clean:images', 'copy:images', 'shell:spriteGeneration', 'imagemin']);
-    grunt.registerTask('compile:css', ['clean:css', 'sass:compile']);
+    grunt.registerTask('compile:css', ['clean:css', 'sass:compile', 'replace:cssSourceMaps', 'copy:css']);
     grunt.registerTask('compile:js', function(app) {
         grunt.task.run(['clean:js']);
         var apps = ['common'];
-        if (app) {
+        if (!app) { // if no app supplied, compile all apps
+            apps = apps.concat(Object.keys(grunt.config('requirejs')).filter(function(app) { return ['options', 'common'].indexOf(app) === -1; }));
+        } else if (app !== 'common') {
             if (grunt.config('requirejs')[app]) {
                 apps.push(app);
             } else {
                 grunt.log.warn('No compile target for app "' + app + '"');
             }
-        } else { // if no app supplied, compile all apps
-            apps = apps.concat(Object.keys(grunt.config('requirejs')).filter(function(app) { return ['options', 'common'].indexOf(app) === -1; }));
         }
         apps.forEach(function(app) {
-            grunt.task.run('copy:javascript-' + app, 'requirejs:' + app);
+            if (grunt.config('copy')['javascript-' + app]) {
+                grunt.task.run('copy:javascript-' + app);
+            }
+            grunt.task.run('requirejs:' + app);
         });
         if (!isDev) {
             grunt.task.run('uglify:components');
@@ -737,7 +702,7 @@ module.exports = function (grunt) {
         }
         grunt.config.set('karma.options.singleRun', (singleRun === false) ? false : true);
         apps.forEach(function(app) {
-            grunt.task.run(['clean:static', 'copy:testUtils', 'copy:commonModules', 'copy:javascript-' + app, 'copy:javascript-' + app + '-tests', 'karma:' + app]);
+            grunt.task.run(['karma:' + app]);
         });
     });
     // TODO - don't have common as default?

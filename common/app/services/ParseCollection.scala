@@ -10,6 +10,7 @@ import play.api.libs.ws.Response
 import scala.concurrent.Future
 import scala.Some
 import contentapi.QueryDefaults
+import scala.util.Try
 
 object Path {
   def unapply[T](uri: String) = Some(uri.split('?')(0))
@@ -25,7 +26,9 @@ object Seg {
 
 trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging {
 
+  case class InvalidContent(id: String) extends Throwable(s"Invalid Content: $id")
   val showFieldsQuery: String = FaciaDefaults.showFields
+  val queryMessage: Option[String] = Option("facia")
 
   case class CollectionMeta(lastUpdated: Option[String], updatedBy: Option[String], updatedEmail: Option[String])
   object CollectionMeta {
@@ -144,7 +147,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
           lazy val supportingLinks: List[CollectionItem] = retrieveSupportingLinks(collectionItem)
           if (!hasParent) getArticles(supportingLinks, edition, hasParent=true) else Future.successful(Nil)
         }
-        val response = ContentApi().item(collectionItem.id, edition).showFields(showFieldsQuery).response
+        val response = ContentApi().item(collectionItem.id, edition, queryMessage).showFields(showFieldsQuery).response
 
         val content = response.map(_.content).recover {
           case apiError: com.gu.openplatform.contentapi.ApiError if apiError.httpStatus == 404 => {
@@ -154,6 +157,14 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
           case apiError: com.gu.openplatform.contentapi.ApiError if apiError.httpStatus == 410 => {
             log.warn(s"Content API Error: 410 for ${collectionItem.id}")
             None
+          }
+          case jsonParseError: net.liftweb.json.JsonParser.ParseException => {
+            ContentApiMetrics.ContentApiJsonParseExceptionMetric.increment()
+            throw jsonParseError
+          }
+          case mappingException: net.liftweb.json.MappingException => {
+            ContentApiMetrics.ContentApiJsonMappingExceptionMetric.increment()
+            throw mappingException
           }
           case t: Throwable => {
             log.warn("%s: %s".format(collectionItem.id, t.toString))
@@ -167,7 +178,11 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
           itemResponse <- content
           supporting <- supportingAsContent
         } yield {
-          itemResponse.map(Content(_, supporting, collectionItem.metaData)).map(_ +: contentList).getOrElse(contentList)
+          itemResponse
+            .map(Content(_, supporting, collectionItem.metaData))
+            .map(validateContent)
+            .map(_ +: contentList)
+            .getOrElse(contentList)
         }
       }
       val sorted = results map { _.sortBy(t => collectionItems.indexWhere(_.id == t.id))}
@@ -186,18 +201,23 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
 
     val newSearch = queryString match {
       case Path(Seg("search" ::  Nil)) => {
-        val search = ContentApi().search(edition)
+        val search = ContentApi().search(edition, queryMessage)
           .showElements("all")
           .pageSize(20)
         val newSearch = queryParamsWithEdition.foldLeft(search){
           case (query, (key, value)) => query.stringParam(key, value)
         }.showFields(showFieldsQuery)
         newSearch.response map { r =>
-          Result(Nil, Nil, Nil, r.results.map(Content(_)))
+          Result(
+            curated           = Nil,
+            editorsPicks      = Nil,
+            mostViewed        = Nil,
+            contentApiResults = r.results.map(Content(_)).map(validateContent)
+          )
         }
       }
       case Path(id)  => {
-        val search = ContentApi().item(id, edition)
+        val search = ContentApi().item(id, edition, queryMessage)
           .showElements("all")
           .showEditorsPicks(true)
           .pageSize(20)
@@ -205,7 +225,12 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
           case (query, (key, value)) => query.stringParam(key, value)
         }.showFields(showFieldsQuery)
         newSearch.response map { r =>
-          Result(Nil, r.editorsPicks.map(Content(_)), r.mostViewed.map(Content(_)), r.results.map(Content(_)))
+          Result(
+            curated           = Nil,
+            editorsPicks      = r.editorsPicks.map(Content(_)).map(validateContent),
+            mostViewed        = r.mostViewed.map(Content(_)).map(validateContent),
+            contentApiResults = r.results.map(Content(_)).map(validateContent)
+          )
         }
       }
     }
@@ -213,5 +238,17 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
     newSearch onFailure {case t: Throwable => log.warn("Content API Query failed: %s: %s".format(queryString, t.toString))}
     newSearch
   } getOrElse Future(Result(Nil, Nil, Nil, Nil))
+
+  def validateContent(content: Content): Content = {
+    Try {
+      //These will throw if they don't exist because of unsafe Map.apply
+      content.headline.isEmpty
+      content.shortUrl.isEmpty
+      content
+    }.getOrElse {
+      FaciaToolMetrics.InvalidContentExceptionMetric.increment()
+      throw new InvalidContent(content.id)
+    }
+  }
 
 }

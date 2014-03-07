@@ -2,7 +2,7 @@
 @import conf.Switches._
 
 @defining((page.image, page.storyPackage)) { case (image, storyPackage) =>
-    <h2 class="article-zone left-col-deport tone-@VisualTone(image) tone-accent-border">
+    <h2 class="article__zone left-col-deport tone-@VisualTone(image) tone-accent-border">
         <span class="left-col-deport__body">
             <a class="tone-colour" data-link-name="article section" href="/@image.section">@Html(image.sectionName.toLowerCase)</a>
         </span>
@@ -16,8 +16,7 @@
 
                     @fragments.standfirst(image)
 
-                    @fragments.article.dateline(image.webPublicationDate, image.isLive)
-
+                    <div class="js-comment-count"></div>
                 </header>
 
                 <div class="after-header"></div>
@@ -27,12 +26,7 @@
 
                     @fragments.img(image.mainPicture)
 
-                    <div class="article__meta-container">
-                        @fragments.byline(image.byline, image)
-
-                        @fragments.article.dateline(image.webPublicationDate, secondary=true)
-                        <div class="js-comment-count"></div>
-                    </div>
+                    @fragments.contentMeta(image)
 
                     <div class="social-wrapper">
                         @fragments.social(image)
@@ -54,11 +48,13 @@
         </article>
 
         @if(DiscussionSwitch.isSwitchedOn && image.isCommentable) {
-            @fragments.discussion(image.isClosedForComments, image.shortUrlId)
+            <div class="article__inner js-comments">
+                @fragments.discussion(image.isClosedForComments, image.shortUrlId)
+            </div>
         }
-
-        @fragments.storyPackagePlaceholder(storyPackage)
-
-        @fragments.mostPopularPlaceholder(image.section)
     </div>
+
+    @fragments.storyPackagePlaceholder(storyPackage)
+
+    @fragments.mostPopularPlaceholder(image.section)
 }

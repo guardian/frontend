@@ -1,203 +1,201 @@
-.i { background-repeat: no-repeat; display: inline-block; }
+%i, .i { background-repeat: no-repeat; display: inline-block; }
 
-.i-alert { background-position: -8px -9px; width: 20px; height: 20px; }
+%i-alert, .i-alert { background-position: -8px -9px; width: 20px; height: 20px; }
 
-.i-arrow-blue-down { background-position: -29px -9px; width: 15px; height: 7px; }
+%i-arrow-blue-down, .i-arrow-blue-down { background-position: -29px -9px; width: 15px; height: 7px; }
 
-.i-arrow-down-double-blue { background-position: -45px -9px; width: 16px; height: 16px; }
+%i-arrow-down-double-blue, .i-arrow-down-double-blue { background-position: -45px -9px; width: 16px; height: 16px; }
 
-.i-arrow-grey-down { background-position: -62px -9px; width: 15px; height: 7px; }
+%i-arrow-grey-down, .i-arrow-grey-down { background-position: -62px -9px; width: 15px; height: 7px; }
 
-.i-arrow-small-up { background-position: -78px -9px; width: 13px; height: 7px; }
+%i-arrow-small-up, .i-arrow-small-up { background-position: -78px -9px; width: 13px; height: 7px; }
 
-.i-arrow-white-circle { background-position: -91px -9px; width: 20px; height: 20px; }
+%i-arrow-white-circle, .i-arrow-white-circle { background-position: -91px -9px; width: 20px; height: 20px; }
 
-.i-arrow-white-down { background-position: -112px -9px; width: 15px; height: 7px; }
+%i-arrow-white-down, .i-arrow-white-down { background-position: -112px -9px; width: 15px; height: 7px; }
 
-.i-arrow-white-large { background-position: -128px -9px; width: 24px; height: 10px; }
+%i-arrow-white-large, .i-arrow-white-large { background-position: -128px -9px; width: 24px; height: 10px; }
 
-.i-arrow-white-right { background-position: -153px -9px; width: 24px; height: 25px; }
+%i-arrow-white-right, .i-arrow-white-right { background-position: -153px -9px; width: 24px; height: 25px; }
 
-.i-back-white { background-position: -178px -9px; width: 12px; height: 12px; }
+%i-back-white, .i-back-white { background-position: -178px -9px; width: 12px; height: 12px; }
 
-.i-back { background-position: -191px -9px; width: 12px; height: 12px; }
+%i-back, .i-back { background-position: -191px -9px; width: 12px; height: 12px; }
 
-.i-camera-black-large { background-position: -204px -9px; width: 18px; height: 13px; }
+%i-camera-black-large, .i-camera-black-large { background-position: -204px -9px; width: 18px; height: 13px; }
 
-.i-camera-yellow-large { background-position: -223px -9px; width: 18px; height: 13px; }
+%i-camera-yellow-large, .i-camera-yellow-large { background-position: -223px -9px; width: 18px; height: 13px; }
 
-.i-clock-grey { background-position: -242px -9px; width: 11px; height: 11px; }
+%i-clock-grey, .i-clock-grey { background-position: -242px -9px; width: 11px; height: 11px; }
 
-.i-clock-hands-white { background-position: -254px -9px; width: 10px; height: 13px; }
+%i-clock-hands-white, .i-clock-hands-white { background-position: -254px -9px; width: 10px; height: 13px; }
 
-.i-clock-light-grey { background-position: -264px -9px; width: 11px; height: 11px; }
+%i-clock-light-grey, .i-clock-light-grey { background-position: -264px -9px; width: 11px; height: 11px; }
 
-.i-clock-yellow { background-position: -276px -9px; width: 11px; height: 11px; }
+%i-clock-yellow, .i-clock-yellow { background-position: -276px -9px; width: 11px; height: 11px; }
 
-.i-close-icon { background-position: -288px -9px; width: 18px; height: 18px; }
+%i-close-icon, .i-close-icon { background-position: -288px -9px; width: 18px; height: 18px; }
 
-.i-comment-comment { background-position: -307px -9px; width: 16px; height: 16px; }
+%i-comment-comment, .i-comment-comment { background-position: -307px -9px; width: 16px; height: 16px; }
 
-.i-comment-feature { background-position: -324px -9px; width: 16px; height: 16px; }
+%i-comment-feature, .i-comment-feature { background-position: -324px -9px; width: 16px; height: 16px; }
 
-.i-comment-grey { background-position: -341px -9px; width: 16px; height: 16px; }
+%i-comment-grey, .i-comment-grey { background-position: -341px -9px; width: 16px; height: 16px; }
 
-.i-comment-light-grey { background-position: -358px -9px; width: 14px; height: 12px; }
+%i-comment-light-grey, .i-comment-light-grey { background-position: -358px -9px; width: 14px; height: 12px; }
 
-.i-comment-news { background-position: -373px -9px; width: 16px; height: 16px; }
+%i-comment-news, .i-comment-news { background-position: -373px -9px; width: 16px; height: 16px; }
 
-.i-date { background-position: -390px -9px; width: 10px; height: 10px; }
+%i-date, .i-date { background-position: -390px -9px; width: 10px; height: 10px; }
 
-.i-double-arrow-right-blue { background-position: -401px -9px; width: 15px; height: 14px; }
+%i-double-arrow-right-blue, .i-double-arrow-right-blue { background-position: -401px -9px; width: 15px; height: 14px; }
 
-.i-double-arrow-right-white { background-position: -416px -9px; width: 15px; height: 14px; }
+%i-double-arrow-right-white, .i-double-arrow-right-white { background-position: -416px -9px; width: 15px; height: 14px; }
 
-.i-ee-add-button { background-position: -431px -9px; width: 54px; height: 47px; }
+%i-ee-add-button, .i-ee-add-button { background-position: -431px -9px; width: 54px; height: 47px; }
 
-.i-expand-white { background-position: -486px -9px; width: 18px; height: 18px; }
+%i-expand-white, .i-expand-white { background-position: -486px -9px; width: 18px; height: 18px; }
 
-.i-fb { background-position: -505px -9px; width: 11px; height: 22px; }
+%i-fb, .i-fb { background-position: -505px -9px; width: 11px; height: 22px; }
 
-.i-filter-arrow-down { background-position: -516px -9px; width: 20px; height: 11px; }
+%i-filter-arrow-down, .i-filter-arrow-down { background-position: -516px -9px; width: 20px; height: 11px; }
 
-.i-filter-arrow-left { background-position: -537px -9px; width: 9px; height: 15px; }
+%i-filter-arrow-left, .i-filter-arrow-left { background-position: -537px -9px; width: 9px; height: 15px; }
 
-.i-filter-arrow-right { background-position: -546px -9px; width: 9px; height: 15px; }
+%i-filter-arrow-right, .i-filter-arrow-right { background-position: -546px -9px; width: 9px; height: 15px; }
 
-.i-filter-arrow-up { background-position: -555px -9px; width: 20px; height: 11px; }
+%i-filter-arrow-up, .i-filter-arrow-up { background-position: -555px -9px; width: 20px; height: 11px; }
 
-.i-fullscreen-toggle { background-position: -576px -9px; width: 12px; height: 12px; }
+%i-fullscreen-toggle, .i-fullscreen-toggle { background-position: -576px -9px; width: 12px; height: 12px; }
 
-.i-gallery-arrow { background-position: -555px -22px; width: 32px; height: 32px; }
+%i-gallery-arrow, .i-gallery-arrow { background-position: -555px -22px; width: 32px; height: 32px; }
 
-.i-gallery-fullimage-icon { background-position: -486px -55px; width: 18px; height: 18px; }
+%i-gallery-fullimage-icon, .i-gallery-fullimage-icon { background-position: -486px -55px; width: 18px; height: 18px; }
 
-.i-gallery-pause-slideshow { background-position: -505px -55px; width: 18px; height: 18px; }
+%i-gallery-pause-slideshow, .i-gallery-pause-slideshow { background-position: -505px -55px; width: 18px; height: 18px; }
 
-.i-gallery-play-slideshow { background-position: -524px -55px; width: 18px; height: 18px; }
+%i-gallery-play-slideshow, .i-gallery-play-slideshow { background-position: -524px -55px; width: 18px; height: 18px; }
 
-.i-gallery-thumb-icon { background-position: -543px -55px; width: 18px; height: 18px; }
+%i-gallery-thumb-icon, .i-gallery-thumb-icon { background-position: -543px -55px; width: 18px; height: 18px; }
 
-.i-gallery-yellow-small { background-position: -562px -55px; width: 20px; height: 20px; }
+%i-gallery-yellow-small, .i-gallery-yellow-small { background-position: -562px -55px; width: 20px; height: 20px; }
 
-.i-gallery { background-position: -8px -76px; width: 16px; height: 14px; }
+%i-gallery, .i-gallery { background-position: -8px -76px; width: 16px; height: 14px; }
 
-.i-gplus { background-position: -25px -76px; width: 24px; height: 21px; }
+%i-gplus, .i-gplus { background-position: -25px -76px; width: 24px; height: 21px; }
 
-.i-guardian-holidayoffers-logo { background-position: -50px -76px; width: 199px; height: 20px; }
+%i-guardian-logo-160, .i-guardian-logo-160 { background-position: -50px -76px; width: 160px; height: 30px; }
 
-.i-guardian-logo-rainbow { background-position: -250px -76px; width: 108px; height: 20px; }
+%i-guardian-logo-big, .i-guardian-logo-big { background-position: -211px -76px; width: 340px; height: 61px; }
 
-.i-guardian-logo { background-position: -358px -76px; width: 108px; height: 20px; }
+%i-guardian-logo, .i-guardian-logo { background-position: -8px -138px; width: 108px; height: 20px; }
 
-.i-guardian-picks { background-position: -466px -76px; width: 15px; height: 47px; }
+%i-guardian-picks, .i-guardian-picks { background-position: -116px -138px; width: 15px; height: 47px; }
 
-.i-guardian-soulmates-logo { background-position: -482px -76px; width: 90px; height: 20px; }
+%i-gupickasterisk, .i-gupickasterisk { background-position: -132px -138px; width: 18px; height: 17px; }
 
-.i-gupickasterisk { background-position: -573px -76px; width: 18px; height: 17px; }
+%i-id-alert, .i-id-alert { background-position: -151px -138px; width: 18px; height: 18px; }
 
-.i-home-white-mask { background-position: -482px -97px; width: 32px; height: 32px; }
+%i-id-ok, .i-id-ok { background-position: -170px -138px; width: 18px; height: 18px; }
 
-.i-home-white { background-position: -515px -97px; width: 32px; height: 32px; }
+%i-image, .i-image { background-position: -189px -138px; width: 17px; height: 12px; }
 
-.i-id-alert { background-position: -548px -97px; width: 18px; height: 18px; }
+%i-in-reply-arrow, .i-in-reply-arrow { background-position: -207px -138px; width: 15px; height: 9px; }
 
-.i-id-ok { background-position: -567px -97px; width: 18px; height: 18px; }
+%i-liveblog-pause, .i-liveblog-pause { background-position: -223px -138px; width: 30px; height: 30px; }
 
-.i-image { background-position: -548px -116px; width: 17px; height: 12px; }
+%i-liveblog-play, .i-liveblog-play { background-position: -254px -138px; width: 30px; height: 30px; }
 
-.i-in-reply-arrow { background-position: -566px -116px; width: 15px; height: 9px; }
+%i-livequote-after, .i-livequote-after { background-position: -285px -138px; width: 37px; height: 20px; }
 
-.i-liveblog-pause { background-position: -548px -129px; width: 30px; height: 30px; }
+%i-livequote-before, .i-livequote-before { background-position: -323px -138px; width: 37px; height: 20px; }
 
-.i-liveblog-play { background-position: -8px -160px; width: 30px; height: 30px; }
+%i-local-nav-arrow, .i-local-nav-arrow { background-position: -361px -138px; width: 32px; height: 32px; }
 
-.i-livequote-after { background-position: -39px -160px; width: 37px; height: 20px; }
+%i-menu-active, .i-menu-active { background-position: -394px -138px; width: 18px; height: 18px; }
 
-.i-livequote-before { background-position: -77px -160px; width: 37px; height: 20px; }
+%i-menu, .i-menu { background-position: -413px -138px; width: 18px; height: 18px; }
 
-.i-local-nav-arrow { background-position: -115px -160px; width: 50px; height: 37px; }
+%i-message-close, .i-message-close { background-position: -432px -138px; width: 22px; height: 22px; }
 
-.i-menu-active { background-position: -166px -160px; width: 18px; height: 12px; }
+%i-play-black, .i-play-black { background-position: -455px -138px; width: 12px; height: 16px; }
 
-.i-menu { background-position: -185px -160px; width: 18px; height: 12px; }
+%i-play, .i-play { background-position: -468px -138px; width: 18px; height: 18px; }
 
-.i-message-close { background-position: -204px -160px; width: 22px; height: 22px; }
+%i-plus-white-large, .i-plus-white-large { background-position: -487px -138px; width: 30px; height: 30px; }
 
-.i-play-black { background-position: -227px -160px; width: 12px; height: 16px; }
+%i-plus-white-mask, .i-plus-white-mask { background-position: -518px -138px; width: 32px; height: 32px; }
 
-.i-play { background-position: -240px -160px; width: 18px; height: 18px; }
+%i-plus-white-small, .i-plus-white-small { background-position: -551px -138px; width: 18px; height: 18px; }
 
-.i-plus-white-large { background-position: -259px -160px; width: 30px; height: 30px; }
+%i-plus-white, .i-plus-white { background-position: -551px -157px; width: 32px; height: 32px; }
 
-.i-plus-white-mask { background-position: -290px -160px; width: 32px; height: 32px; }
+%i-powered-by-ee, .i-powered-by-ee { background-position: -8px -190px; width: 68px; height: 31px; }
 
-.i-plus-white-small { background-position: -323px -160px; width: 18px; height: 18px; }
+%i-profile-active, .i-profile-active { background-position: -77px -190px; width: 18px; height: 18px; }
 
-.i-plus-white { background-position: -342px -160px; width: 32px; height: 32px; }
+%i-profile-signed-in, .i-profile-signed-in { background-position: -96px -190px; width: 18px; height: 18px; }
 
-.i-powered-by-ee { background-position: -375px -160px; width: 68px; height: 31px; }
+%i-profile, .i-profile { background-position: -115px -190px; width: 18px; height: 18px; }
 
-.i-profile-active { background-position: -444px -160px; width: 18px; height: 18px; }
+%i-quote-blue, .i-quote-blue { background-position: -134px -190px; width: 34px; height: 20px; }
 
-.i-profile-signed-in { background-position: -463px -160px; width: 18px; height: 18px; }
+%i-quote-marks, .i-quote-marks { background-position: -169px -190px; width: 39px; height: 24px; }
 
-.i-profile { background-position: -482px -160px; width: 18px; height: 18px; }
+%i-quote-orange, .i-quote-orange { background-position: -208px -190px; width: 34px; height: 20px; }
 
-.i-quote-blue { background-position: -501px -160px; width: 34px; height: 20px; }
+%i-recommend-inactive, .i-recommend-inactive { background-position: -243px -190px; width: 12px; height: 12px; }
 
-.i-quote-marks { background-position: -536px -160px; width: 39px; height: 24px; }
+%i-recommend, .i-recommend { background-position: -256px -190px; width: 12px; height: 12px; }
 
-.i-quote-orange { background-position: -444px -185px; width: 34px; height: 20px; }
+%i-red-card, .i-red-card { background-position: -269px -190px; width: 9px; height: 12px; }
 
-.i-recommend-inactive { background-position: -479px -185px; width: 12px; height: 12px; }
+%i-reply-arrow-white, .i-reply-arrow-white { background-position: -279px -190px; width: 9px; height: 10px; }
 
-.i-recommend { background-position: -492px -185px; width: 12px; height: 12px; }
+%i-reply-button, .i-reply-button { background-position: -289px -190px; width: 19px; height: 19px; }
 
-.i-red-card { background-position: -505px -185px; width: 9px; height: 12px; }
+%i-search-active, .i-search-active { background-position: -309px -190px; width: 18px; height: 18px; }
 
-.i-reply-arrow-white { background-position: -515px -185px; width: 9px; height: 10px; }
+%i-search-grey, .i-search-grey { background-position: -328px -190px; width: 18px; height: 18px; }
 
-.i-reply-button { background-position: -525px -185px; width: 19px; height: 19px; }
+%i-search, .i-search { background-position: -347px -190px; width: 18px; height: 18px; }
 
-.i-search-blue { background-position: -545px -185px; width: 18px; height: 18px; }
+%i-share-email-hover, .i-share-email-hover { background-position: -366px -190px; width: 32px; height: 32px; }
 
-.i-search-grey { background-position: -564px -185px; width: 18px; height: 18px; }
+%i-share-email, .i-share-email { background-position: -399px -190px; width: 32px; height: 32px; }
 
-.i-search { background-position: -545px -204px; width: 18px; height: 18px; }
+%i-share-facebook-hover, .i-share-facebook-hover { background-position: -432px -190px; width: 32px; height: 32px; }
 
-.i-share-email-hover { background-position: -8px -223px; width: 32px; height: 32px; }
+%i-share-facebook, .i-share-facebook { background-position: -465px -190px; width: 32px; height: 32px; }
 
-.i-share-email { background-position: -41px -223px; width: 32px; height: 32px; }
+%i-share-gplus-hover, .i-share-gplus-hover { background-position: -498px -190px; width: 32px; height: 32px; }
 
-.i-share-facebook-hover { background-position: -74px -223px; width: 32px; height: 32px; }
+%i-share-gplus, .i-share-gplus { background-position: -531px -190px; width: 32px; height: 32px; }
 
-.i-share-facebook { background-position: -107px -223px; width: 32px; height: 32px; }
+%i-share-twitter-hover, .i-share-twitter-hover { background-position: -8px -223px; width: 32px; height: 32px; }
 
-.i-share-gplus-hover { background-position: -140px -223px; width: 32px; height: 32px; }
+%i-share-twitter, .i-share-twitter { background-position: -41px -223px; width: 32px; height: 32px; }
 
-.i-share-gplus { background-position: -173px -223px; width: 32px; height: 32px; }
+%i-show-all-comments, .i-show-all-comments { background-position: -74px -223px; width: 44px; height: 44px; }
 
-.i-share-twitter-hover { background-position: -206px -223px; width: 32px; height: 32px; }
+%i-single-arrow-right-blue, .i-single-arrow-right-blue { background-position: -119px -223px; width: 4px; height: 8px; }
 
-.i-share-twitter { background-position: -239px -223px; width: 32px; height: 32px; }
+%i-sport-arrow, .i-sport-arrow { background-position: -124px -223px; width: 8px; height: 15px; }
 
-.i-show-all-comments { background-position: -272px -223px; width: 44px; height: 44px; }
+%i-story-quote, .i-story-quote { background-position: -133px -223px; width: 49px; height: 25px; }
 
-.i-single-arrow-right-blue { background-position: -317px -223px; width: 4px; height: 8px; }
+%i-swipe-arrow-small, .i-swipe-arrow-small { background-position: -183px -223px; width: 5px; height: 10px; }
 
-.i-sport-arrow { background-position: -322px -223px; width: 8px; height: 15px; }
+%i-swipe-arrow, .i-swipe-arrow { background-position: -189px -223px; width: 7px; height: 16px; }
 
-.i-story-quote { background-position: -331px -223px; width: 49px; height: 25px; }
+%i-toggle-collapse-neutral, .i-toggle-collapse-neutral { background-position: -197px -223px; width: 32px; height: 32px; }
 
-.i-swipe-arrow-small { background-position: -381px -223px; width: 5px; height: 10px; }
+%i-toggle-collapse-white, .i-toggle-collapse-white { background-position: -230px -223px; width: 32px; height: 32px; }
 
-.i-swipe-arrow { background-position: -387px -223px; width: 7px; height: 16px; }
+%i-toggle-expand-neutral, .i-toggle-expand-neutral { background-position: -263px -223px; width: 32px; height: 32px; }
 
-.i-top-stories-active { background-position: -395px -223px; width: 18px; height: 18px; }
+%i-toggle-expand-white, .i-toggle-expand-white { background-position: -296px -223px; width: 32px; height: 32px; }
 
-.i-top-stories { background-position: -414px -223px; width: 18px; height: 18px; }
+%i-video-yellow-small, .i-video-yellow-small { background-position: -329px -223px; width: 20px; height: 20px; }
 
-.i-video-yellow-small { background-position: -433px -223px; width: 20px; height: 20px; }
-
-.i-yellow-card { background-position: -454px -223px; width: 9px; height: 12px; }
+%i-yellow-card, .i-yellow-card { background-position: -350px -223px; width: 9px; height: 12px; }

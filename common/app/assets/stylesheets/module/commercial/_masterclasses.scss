@@ -3,38 +3,35 @@
    ========================================================================== */
 
 .masterclasses-component {
-
-	.commercial__title {
-		.em {
-			color: #951C55;
-		}
-	}
-
+    .commercial__title {
+        .em {
+            color: $c-featureDefault;
+        }
+    }
     .lineitem__image {
-        margin-right: $baseline;
+        margin-right: $gs-gutter/5;
         outline: 1px solid $c-neutral7;
         float: left;
     }
-
     .lineitem__link {
         display: block;
     }
-	
-	.lineitem__description {
-		margin-top: $baseline;
-	}
+    .lineitem__description {
+        margin-top: $gs-baseline/3;
+    }
 
-	@include mq($to: tablet) {
-		.commercial__head {
-			background-color: #951C55;
-			.commercial__title {
-				.em {
-					color: #fff;
-					color: rgba(255,255,255,0.8);
-				}
-			}
-		}
-	}
+    @include mq($to: tablet) {
+        .commercial__head {
+            background-color: $c-featureDefault;
+
+            .commercial__title {
+                .em {
+                    color: #ffffff;
+                    color: rgba(#ffffff, .8);
+                }
+            }
+        }
+    }
 
 //    &.commercial--w600 {
 //        .lineitem {

@@ -37,10 +37,17 @@ function examineExpressions(node) {
             value = node.right.value;
 
         switch( property ) {
+            case 'id':
+            case 'start':
+            case 'expiry':
+            case 'author':
+            case 'description':
             case 'audience':
             case 'audienceOffset':
-            case 'expiry':
-            case 'id':
+            case 'successMeasure':
+            case 'audienceCriteria':
+            case 'dataLinkNames':
+            case 'idealOutcome':
                 abtest[property] = value;
                 break;
         }

@@ -25,6 +25,8 @@
     }
     .item__title {
         @include fs-headline(2, $size-only: true);
+        padding-top: 0;
+
         @include rem((
             margin-bottom: $gs-baseline + 2px
         ));
@@ -46,62 +48,14 @@
        ====================================================================== */
 
     .item__meta {
-        position: absolute;
         bottom: -1px;
         overflow: hidden;
-        @include fs-data(1);
-        color: $c-neutral2;
         @include rem((
             margin-bottom: $gs-baseline/2
         ));
 
         @include mq(tablet) {
             position: static;
-            @include fs-data(3, true);
-        }
-    }
-
-    .item__timestamp,
-    .trail__count {
-        position: relative;
-        float: left;
-
-        i {
-            position: absolute;
-            left: 0;
-            top: 2px;
-            margin: 0;
-        }
-    }
-    .item__timestamp {
-        position: relative;
-        float: left;
-
-        @include rem((
-        min-width: 50px - $gs-gutter/2 - 14px,
-        padding-right: $gs-gutter/2,
-        padding-left: 14px
-        ));
-
-        i {
-            left: 0;
-            @include mq(tablet) {
-                top: 2px;
-            }
-        }
-    }
-    .trail__count {
-        @include rem((
-        padding-left: 18px
-        ));
-        top: 0;
-
-        a {
-            line-height: inherit;
-            color: inherit;
-        }
-        i {
-            left: 0;
         }
     }
 }
@@ -130,27 +84,30 @@
    ========================================================================== */
 
 .fromage__link,
-.fromage__support__action {
+.supporting__action {
     color: $c-neutral1;
 }
 .fromage__link {
+    display: block;
+
     &:hover,
     &:focus {
+       text-decoration: none;
+
         .item__title {
             text-decoration: underline;
+        }
+    }
+    &:active {
+        .item__title {
+            text-decoration: none;
         }
     }
 }
 .fromage__link:visited,
 .fromage__link:visited .item__title,
-.fromage__support__action:visited {
+.supporting__action:visited {
     color: $c-neutral2;
-}
-.fromage__media-wrapper,
-.fromage__image-container {
-    .js-off & {
-        display: none !important;
-    }
 }
 .fromage__media-wrapper {
     @include mq(tablet) {
@@ -163,18 +120,8 @@
         ));
     }
 }
-.fromage__image-container {
-    position: relative;
-    padding-bottom: 60%;
+.fromage__image-container {}
 
-    .responsive-img {
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        top: 0;
-        left: 0;
-    }
-}
 .fromage__standfirst {
     @include fs-headline(1);
     color: $c-neutral2;
@@ -316,10 +263,11 @@
 .fromage--imageadjust-highlight {
     .item__title {
         @include rem((
-            margin-top: $gs-baseline/3
+            padding-top: $gs-baseline/3
         ));
         @include mq(tablet) {
             @include fs-headline(5, true);
+            padding-top: 0;
         }
         @include mq(desktop) {
             @include fs-headline(6, true);
@@ -472,11 +420,13 @@
         color: #ffffff;
     }
     .fromage__link:visited,
-    .fromage__link:visited .item__title,
-    .fromage__support__action:visited {
-        color: rgba(#ffffff, .9);
+    .fromage__link:visited .item__title {
+        color: mix(#ffffff, $c-brandBlue, 80%);
     }
     .supporting {
         background-color: lighten($c-brandBlue, 7%);
+    }
+    .supporting__action:visited {
+        color: mix(#ffffff, lighten($c-brandBlue, 7%), 80%);
     }
 }

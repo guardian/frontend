@@ -4,9 +4,8 @@ import play.api.test._
 import play.api.test.Helpers._
 import org.scalatest.Matchers
 import org.scalatest.FlatSpec
-import common.UsesElasticSearch
 
-class cricketMatchControllerTest extends FlatSpec with Matchers with UsesElasticSearch {
+class cricketMatchControllerTest extends FlatSpec with Matchers {
 
   val cricketUrl = "sport/cricket/match/34780"
   val matchId = "34780"
