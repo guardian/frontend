@@ -11,14 +11,14 @@ import play.api.i18n.Messages
 import play.api.data.validation._
 import play.api.data.Forms._
 import play.api.data.format.Formats._
-import form.Mappings.idPassword
+import form.Mappings
 import utils.SafeLogging
 import scala.concurrent.Future
 
 
 @Singleton
 class ResetPasswordController @Inject()( api : IdApiClient, idRequestParser: IdRequestParser, idUrlBuilder: IdentityUrlBuilder )
-  extends Controller with ExecutionContexts with SafeLogging {
+  extends Controller with ExecutionContexts with SafeLogging with Mappings{
 
   val page = IdentityPage("/reset-password", "Reset Password", "reset-password")
 
@@ -60,8 +60,7 @@ class ResetPasswordController @Inject()( api : IdApiClient, idRequestParser: IdR
       }
     }
 
-    def onSuccess(form: (String)): Future[SimpleResult] = form match {
-      case (email) =>
+    def onSuccess(email: (String)): Future[SimpleResult] = {
         api.sendPasswordResetEmail(email, idRequest.trackingData) map {
           case Left(errors) =>
             logger.info(s"Request new password returned errors ${errors.toString()}")

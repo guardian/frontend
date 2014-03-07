@@ -3,7 +3,6 @@
   "version": "0.1.0 ",
   "dependencies": {
     "bean": "~1.0.4",
-    "postscribe": "krux/postscribe",
     "eventEmitter": "~4.2.6",
     "imager.js": "oncletom/Imager.js#feature-separation",
     "lodash-amd": "~2.4.1",
@@ -14,6 +13,7 @@
     "qwery": "~4.0.0",
     "reqwest": "~1.1.0",
     "domready": "~1.0.4",
-    "enhancer": "0.1.1"
+    "enhancer": "0.1.1",
+    "postscribe": "~1.2.0"
   }
 }

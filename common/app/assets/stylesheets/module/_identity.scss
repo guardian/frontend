@@ -243,3 +243,12 @@
         left: 0;
     }
 }
+
+/* Account Edit page
+   ========================================================================== */
+
+.identity-wrapper .tabs {
+    .fieldset:first-of-type {
+        border-top: none; // Included so as not to break tabs metaphor
+    }
+}
