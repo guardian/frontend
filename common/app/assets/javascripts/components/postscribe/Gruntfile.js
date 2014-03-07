@@ -1,21 +1,23 @@
+/*globals module:false*/
 module.exports = function(grunt) {
+
+  var pkg = grunt.file.readJSON('package.json');
+
+  // Autoload grunt plugins.
+  var _ = require('lodash');
+  _.filter(_.keys(pkg.devDependencies), function (key) {
+    return (/^grunt-/).test(key) && key !== 'grunt-cli';
+  }).forEach(grunt.loadNpmTasks);
 
   // Project configuration.
   grunt.initConfig({
-    pkg: '<json:package.json>',
+    pkg: pkg,
     meta: {
       banner: '/* <%= pkg.description %>, v<%= pkg.version %> <%= pkg.homepage %>\n' +
         'Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>, MIT license ' +
         '<%= pkg.licenses[0].url %> */'
     },
 
-    // run jshint on the files, with the options described below. Different globals defined based on file type
-    // 'node' for files that are run by node.js (module, process, etc.)
-    // 'browser' for files that are run by a browser (window, document, etc.)
-    lint: {
-      node: ['grunt.js', 'test/generate_expected.phantom.js'],
-      browser: ['postscribe.js']
-    },
     jshint: {
       // Apply to all js files
       options: {
@@ -35,20 +37,23 @@ module.exports = function(grunt) {
         // Really. Leave it
         unused: true
       },
-      globals: {},
       // Just for the 'node' src files
       node: {
-        globals: {
-          console: true,
-          process: true,
-          module: true,
-          require: true,
-          __dirname: true,
-          exports: true
+        src: ['Gruntfile.js', 'test/generate_expected.phantom.js'],
+        options: {
+          globals: {
+            console: false,
+            process: false,
+            module: true,
+            require: false,
+            __dirname: false,
+            exports: true
+          }
         }
       },
       // Just for the 'browser' src files
       browser: {
+        src: ['postscribe.js'],
         // Let's be very strict here
         options: {
           loopfunc: true,
@@ -56,21 +61,27 @@ module.exports = function(grunt) {
           evil: true,
           // Reluctantly added
           eqnull: true
-        },
-        globals: {}
+        }
       }
     },
     concat: {
+      options: {
+        banner: '<%= meta.banner %>'
+      },
       dist: {
-        src: ['<banner:meta.banner>', 'htmlParser/htmlParser.js', 'postscribe.js'],
+        src: ['<%= meta.banner %>', 'htmlParser/htmlParser.js', 'postscribe.js'],
         dest: 'dist/postscribe.js'
       }
     },
     // Minify postscribe src to postscribe.min.js, prepending a banner
-    min: {
+    uglify: {
+      options: {
+        banner: '<%= meta.banner %>'
+      },
       dist: {
-        src: ['<banner:meta.banner>', 'dist/postscribe.js'],
-        dest: 'dist/postscribe.min.js'
+        files: {
+          'dist/postscribe.min.js': ['dist/postscribe.js']
+        }
       }
     },
 
@@ -80,25 +91,25 @@ module.exports = function(grunt) {
 
     watch: {
       files: ['postscribe.js', 'test/*'],
-      tasks: 'lint qunit'
+      tasks: 'jshint qunit'
     },
 
     generate_expected: {
-      index: "<config:qunit.files>",
-      dest: "test/expected.js",
-      phantom: "test/generate_expected.phantom.js"
+      dest: 'test/expected.js',
+      index: '<%= qunit.files %>',
+      phantom: 'test/generate_expected.phantom.js'
     }
 
   });
 
-  grunt.registerTask('generate_expected', "Generate Files", function() {
+  grunt.registerTask('generate_expected', 'Generate Files', function() {
     var done = this.async();
 
     var data = grunt.config('generate_expected');
     var args = [data.phantom, data.index, data.dest];
-    console.log(args);
-
-    grunt.utils.spawn({cmd: 'phantomjs', args: args}, function(error, result) {
+    console.info(args);
+    grunt.util.spawn({cmd: './node_modules/.bin/phantomjs', args: args}, function(error, result) {
+      console.info('Done.');
       if(error) {
         console.error(result.stderr);
       }
@@ -107,9 +118,9 @@ module.exports = function(grunt) {
   });
 
   // Alias test
-  grunt.registerTask('test', 'generate_expected qunit');
-
+  grunt.registerTask('test', ['generate_expected', 'qunit']);
+  grunt.registerTask('min', ['concat', 'uglify']);
   // This is what gets run when you don't specify an argument for grunt.
-  grunt.registerTask('default', 'lint test');
+  grunt.registerTask('default', ['jshint', 'test']);
 
 };
