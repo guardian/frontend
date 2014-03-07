@@ -52,6 +52,7 @@ class Assets(base: String, assetMap: String = "assets/assets.map") extends Loggi
       val suffix = project match {
         case "facia" => "facia.css"
         case "identity" => "identity.css"
+        case "football" => "football.css"
         case default => "default.css"
       }
       val url = Play.classloader(Play.current).getResource(s"assets/head.$suffix")
