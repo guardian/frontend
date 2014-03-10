@@ -90,6 +90,22 @@
 }
 
 
+/* Local navigation popup
+   ========================================================================== */
+
+.nav-popup--localnav {
+    top: auto;
+    border-color: $c-neutral4;
+    @include rem((
+        padding-bottom: $gs-baseline
+    ));
+
+    .is-active .nav__link {
+        color: map-get($c-brandLightBlueAccessible, c-neutral8);
+    }
+}
+
+
 /* Identity Menu
    ========================================================================== */
 

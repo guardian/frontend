@@ -53,6 +53,7 @@
     }
 }
 
+
 /* Pre-header
    ========================================================================== */
 
@@ -112,7 +113,7 @@
     ));
 }
 .edition__item {
-    color: $c-brandLightBlue;
+    color: map-get($c-brandLightBlueAccessible, c-neutral8);
 
     & + .edition__item {
         @include rem((
