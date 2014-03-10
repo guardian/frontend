@@ -9,7 +9,7 @@
 </div>
 @defining(items.slice(2, 5)) { items =>
     @if(items.nonEmpty) {
-        <div class="linkslist-container js-container--show-more tone-@{style.tone}" data-tone="@style.tone">
+        <div class="linkslist-container tone-@{style.tone}" data-tone="@style.tone">
             <ul class="l-columns linkslist">
                 @items.zipWithIndex.map{ case (trail, index) =>
                     @trail match {
