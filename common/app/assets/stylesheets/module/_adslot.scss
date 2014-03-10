@@ -123,3 +123,68 @@
     min-height: initial;
     padding: 0 0 $gs-baseline 0;
 }
+
+
+
+.ad-slot__paid-for-badge {
+    width: 100%;
+    @include rem((
+        padding: ($gs-baseline / 2) 0,
+        margin: $gs-baseline 0
+    ));
+    border-top: 1px dotted $c-neutral5;
+    z-index: 1;
+    color: $c-neutral2;
+    text-align: left;
+    @include fs-data(2);
+
+    @include mq(tablet) {
+        border: none;
+    }
+
+    @include mq(rightCol) {
+        position: absolute;
+        @include rem((
+            top: $gs-baseline / 2,
+            max-width: 200px
+        ));
+        right: 0;
+        width: auto;
+        height: 100px;
+        margin: 0;
+    }
+
+    img {
+        padding-bottom: ($gs-baseline / 2);
+    }
+    a {
+        display: block;
+        float: left;
+    }
+}
+
+.ad-slot__paid-for-badge--fronts {
+    @include clearfix;
+
+    @include mq($from: tablet, $to: faciaLeftCol) {
+        margin-top: -$gs-row-height;
+        text-align: right;
+        float: none;
+    }
+
+    @include mq(rightCol) {
+        position: relative;
+        top: 0;
+    }
+
+    @include mq(faciaLeftCol) {
+        float: left;
+        clear: left;
+    }
+
+    @include mq(faciaLeftCol, wide) {
+        @include rem((
+            margin-top: $gs-baseline
+        ));
+    }
+}

@@ -98,6 +98,11 @@ object Switches extends Collections {
     safeState = On, sellByDate = never
   )
 
+  val DFPAdvertSwitch = Switch("Advertising", "dfp-adverts",
+    "If this switch is on then DFP adverts will be loaded with JavaScript.",
+    safeState = Off, sellByDate = never
+  )
+
   val VideoAdvertSwitch = Switch("Advertising", "video-adverts",
     "If this switch is on then OAS video adverts will be loaded with JavaScript.",
     safeState = Off, sellByDate = endOfQ4
@@ -415,6 +420,7 @@ object Switches extends Collections {
     DoubleCacheTimesSwitch,
     RelatedContentSwitch,
     AdvertSwitch,
+    DFPAdvertSwitch,
     VideoAdvertSwitch,
     AudienceScienceSwitch,
     DiscussionSwitch,

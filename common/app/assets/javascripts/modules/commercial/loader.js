@@ -25,7 +25,7 @@ define([
      *
      * ```
      * require(['common/modules/commercial/loader'], function (CommercialComponent) {
-     *     var slot = document.querySelector('data-base="SLOT_NAME"');
+     *     var slot = document.querySelector('[data-base="SLOT_NAME"]');
      *     var c = new CommercialComponent({config: guardian, oastoken: '%%C%%?'}).init('COMPONENT_NAME', slot);
      * })
      * ```
