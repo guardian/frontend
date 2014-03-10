@@ -316,9 +316,9 @@ object Switches extends Collections {
     safeState = Off, sellByDate = endOfQ4
   )
 
-  val GeoMostPopular = Switch("A/B Tests", "ab-geo-most-popular",
+  val GeoMostPopular = Switch("A/B Tests", "ab-most-popular-in-country",
     "If this is switched on an A/B test runs to test if locally popular articles yield better click-through.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 3, 14)
+    safeState = Off, sellByDate = new DateMidnight(2014, 3, 17)
   )
 
   val ABUkContainers = Switch("A/B Tests", "ab-uk-containers",

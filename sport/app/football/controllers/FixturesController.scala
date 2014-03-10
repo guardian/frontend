@@ -1,173 +1,72 @@
 package football.controllers
 
-import common._
-import conf._
-import feed.{ CompetitionSupport, Competitions }
-import model._
+import feed.Competitions
+import play.api.mvc.{AnyContent, Action}
 import org.joda.time.DateMidnight
-import org.joda.time.format.DateTimeFormat
-import org.scala_tools.time.Imports._
-import play.api.templates.Html
-import play.api.mvc.{ RequestHeader, Action, Controller }
+import model._
+import football.model._
+import pa.FootballTeam
+import model.Competition
 
 
-trait FixtureRenderer extends Controller with CompetitionFixtureFilters {
+object FixturesController extends MatchListController {
 
-  val daysToDisplay = 3
-  val datePattern = DateTimeFormat.forPattern("yyyyMMMdd")
+  def allFixturesForJson(year: String, month: String, day: String) = allFixturesFor(year, month, day)
+  def allFixturesFor(year: String, month: String, day: String): Action[AnyContent] =
+    renderAllFixtures(createDate(year, month, day))
 
-  def renderFixtures(page: Page,
-    competitions: CompetitionSupport,
-    date: Option[DateMidnight] = None,
-    competitionFilter: Option[String],
-    comp: Option[Competition])(implicit request: RequestHeader) = {
-    val startDate = date.getOrElse(new DateMidnight)
+  def allFixturesJson() = allFixtures()
+  def allFixtures(): Action[AnyContent] =
+    renderAllFixtures(DateMidnight.now)
 
-    val dates = competitions.nextMatchDates(startDate, daysToDisplay)
+  private def renderAllFixtures(date: DateMidnight) = Action { implicit request =>
+    val fixtures = new FixturesList(date, Competitions())
+    val page = new Page("football/fixtures", "football", "All fixtures", "GFE:Football:automatic:fixtures")
+    renderMatchList(page, fixtures)
+  }
 
-    val fixtures = dates.map { day => MatchesOnDate(day, competitions.withMatchesOn(day).competitions) }
+  def tagFixturesJson(tag: String) = tagFixtures(tag)
+  def tagFixtures(tag: String): Action[AnyContent] =
+    renderTagFixtures(DateMidnight.now, tag)
 
-    val nextPage = dates.lastOption.flatMap { date =>
-      competitions.nextMatchDates(date.plusDays(1), daysToDisplay).headOption
-    }.map(date => toNextPreviousUrl(date, competitionFilter))
+  def tagFixturesForJson(year: String, month: String, day: String, tag: String) = tagFixturesFor(year, month, day, tag)
+  def tagFixturesFor(year: String, month: String, day: String, tag: String): Action[AnyContent] =
+    renderTagFixtures(createDate(year, month, day), tag)
 
-    val previousPage = competitions.previousMatchDates(startDate.minusDays(1), daysToDisplay)
-      .lastOption.map(date => toNextPreviousUrl(date, competitionFilter))
-
-    val fixturesPage = MatchesPage(
-      page = page,
-      blog = None,
-      days = fixtures.filter(_.competitions.nonEmpty),
-      nextPage = nextPage,
-      previousPage = previousPage,
-      pageType = "fixtures",
-      filters = filters,
-      comp = comp
-    )
-    
-    Cached(page) {
-      if (request.isJson)
-        JsonComponent(
-          fixturesPage.page, 
-          "html" -> football.views.html.fragments.matchesBody(fixturesPage),
-          "more" -> Html(nextPage.getOrElse(""))
-        )
-      else
-        Ok(football.views.html.matches(fixturesPage))
+  private def renderTagFixtures(date: DateMidnight, tag: String): Action[AnyContent] = {
+    lookupCompetition(tag).map { comp =>
+      renderCompetitionFixtures(tag, comp, date)
+    }.orElse {
+      lookupTeam(tag).map(renderTeamFixtures(tag, _, date))
+    }.getOrElse {
+      Action(NotFound)
     }
   }
 
-  def toNextPreviousUrl(date: DateMidnight, competitionFilter: Option[String]): String
-}
-
-object FixturesController extends FixtureRenderer with Logging with ExecutionContexts {
-
-  val page = new Page(
-    "football/fixtures",
-    "football",
-    "All fixtures",
-    "GFE:Football:automatic:fixtures"
-  )
-
-  def renderForJson(year: String, month: String, day: String) = renderFor(year, month, day)
-  def renderFor(year: String, month: String, day: String) = render(
-    Some(datePattern.parseDateTime(year + month + day).toDateMidnight)
-  )
-
-  def renderJson(date: Option[DateMidnight] = None) = render(date)
-  def render(date: Option[DateMidnight] = None) = Action { implicit request =>
-    renderFixtures(page, Competitions().withTodaysMatchesAndFutureFixtures, date, None, None)
+  private def renderCompetitionFixtures(competitionName: String, competition: Competition, date: DateMidnight) = Action { implicit request =>
+    val fixtures = new CompetitionFixturesList(date, Competitions(), competition.id)
+    val page = new Page(s"football/$competitionName/fixtures", "football", s"${competition.fullName} fixtures", "GFE:Football:automatic:competition fixtures")
+    renderMatchList(page, fixtures)
   }
 
-  def routeCompetition(tag: String) = {
-    Competitions().withTag(tag) map { CompetitionFixturesController.render(tag, _) }
+  private def renderTeamFixtures(teamName: String, team: FootballTeam, date: DateMidnight) = Action { implicit request =>
+    val fixtures = new TeamFixturesList(date, Competitions(), team.id)
+    val page = new Page(s"football/$teamName/fixtures", "football", s"${team.name} fixtures", "GFE:Football:automatic:team fixtures")
+    renderMatchList(page, fixtures)
   }
 
-  def routeTeam(tag: String) = {
-    TeamMap.findTeamIdByUrlName(tag) map { teamId => TeamFixturesController.render(tag, teamId) }
-  }
-
-  def renderTagJson(tag: String) = renderTag(tag)
-  def renderTag(tag: String) = routeCompetition(tag) orElse routeTeam(tag) getOrElse Action(NotFound)
-
-  override def toNextPreviousUrl(date: DateMidnight, competitionFilter: Option[String]) = date match {
-    case today if today == DateMidnight.now => "/football/fixtures"
-    case other => "/football/fixtures/%s" format (other.toString("yyyy/MMM/dd").toLowerCase)
-  }
-}
-
-object CompetitionFixturesController extends FixtureRenderer with Logging {
-
-  override val daysToDisplay = 20
-
-  def renderForJson(year: String, month: String, day: String, competitionName: String) = renderFor(year, month, day, competitionName)
-  def renderFor(year: String, month: String, day: String, competitionName: String) = render(
-    competitionName,
-    Competitions().withTag(competitionName).map { comp => comp }.get,
-    Some(datePattern.parseDateTime(year + month + day).toDateMidnight)
-  )
-
-  def render(competitionName: String, competition: Competition, date: Option[DateMidnight] = None) = Action { implicit request =>
-    print (competitionName)
-    val page = new Page(
-      "football/fixtures",
-      "football",
-      s"${competition.fullName} fixtures",
-      "GFE:Football:automatic:competition fixtures"
-    )
-
-    renderFixtures(
-      page,
-      Competitions().withTodaysMatchesAndFutureFixtures.withCompetitionFilter(competition.url),
-      date,
-      Some(competitionName),
-      Some(competition)
-    )
-  }
-
-  override def toNextPreviousUrl(date: DateMidnight, competition: Option[String]) = date match {
-    case today if today == DateMidnight.now => "/football/%s/fixtures" format (competition.getOrElse(""))
-    case other => "/football/%s/fixtures/%s" format (competition.getOrElse(""), other.toString("yyyy/MMM/dd").toLowerCase)
-  }
-}
-
-object TeamFixturesController extends Controller with Logging with CompetitionFixtureFilters {
-
-  def render(teamName: String, teamId: String) = Action { implicit request =>
-
+  def teamFixturesComponentJson(teamId: String) = teamFixturesComponent(teamId)
+  def teamFixturesComponent(teamId: String) = Action { implicit request =>
     Competitions().findTeam(teamId).map { team =>
-
-      val fixtures = Competitions().withTeamMatches(team.id).sortBy(_.fixture.date.getMillis)
-      val startDate = new DateMidnight
-      val upcomingFixtures = fixtures.filter(_.fixture.date >= startDate)
-
+      val date = DateMidnight.now
+      val fixtures = new TeamFixturesList(date, Competitions(), teamId, 2)
       val page = new Page(
-        s"football/$teamName/fixtures",
+        s"football/${team.id}/fixtures",
         "football",
         s"${team.name} fixtures",
         "GFE:Football:automatic:team fixtures"
       )
-
-      Cached(60) {
-        val html = football.views.html.teamFixtures(page, filters, upcomingFixtures)
-        Ok(html)
-      }
-    }.getOrElse(NotFound)
-  }
-
-  def renderComponentJson(teamId: String) = renderComponent(teamId)
-  def renderComponent(teamId: String) = Action { implicit request =>
-    Competitions().findTeam(teamId).map { team =>
-      val fixtures = Competitions().withTeamMatches(teamId).sortBy(_.fixture.date.getMillis)
-
-      val startDate = new DateMidnight
-
-      val previousResult = fixtures.filter(_.fixture.date <= startDate).takeRight(1)
-      val upcomingFixtures = fixtures.filter(_.fixture.date >= startDate).take(2)
-      
-    
-      val html = () => football.views.html.fragments.teamFixtures(team, previousResult, upcomingFixtures)
-      renderFormat(html, html, 60)
+      renderMatchList(page, fixtures)
     }.getOrElse(NotFound)
   }
 }

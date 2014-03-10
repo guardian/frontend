@@ -17,7 +17,8 @@ class LiveMatchesFeatureTest extends FeatureSpec with GivenWhenThen with Matcher
         val matches = $(".details__match-teams").getTexts
         matches should contain ("Arsenal 1 - 0 Spurs")
         matches should contain ("Chelsea 0 - 0 Man U")
-        matches should contain ("Sunderland 1 - 1 West Ham")
+        And("Should not show matches that have finished")
+        matches should not contain ("Sunderland 1 - 1 West Ham")
       }
     }
 
