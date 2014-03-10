@@ -27,13 +27,15 @@
                 <td class="football-match__details table-column--main">
                     <a href="@LinkTo{@MatchUrl(game)}" data-link-name="stats" data-match-id="@game.id">
                         <div class="details__match-teams">
-                            <span class="details__team details__team--home">@game.homeTeam.name</span>
-                            @if(game.isFixture){
-                                <abbr class="details__versus" title="versus">v</abbr>
-                            }else{
-                                <span class="details__score">@game.homeTeam.score - @game.awayTeam.score</span>
-                            }
-                            <span class="details__team details__team--away">@game.awayTeam.name</span>
+                            <span class="details__team details__team--home">
+                                <span class="team__name">@game.homeTeam.name</span>
+                                @if(!game.isFixture){<span class="team__score">@game.homeTeam.score</span>}
+                            </span>
+                            <span class="details__team details__team--away">
+                                <span class="team__name">@game.awayTeam.name</span>
+                                @if(!game.isFixture){<span class="team__score">@game.awayTeam.score</span>}
+                            </span>
+                            <span class="team__battle-line team__battle-line--small@if(game.isFixture){ team__battle-line--fixture}" title="versus"></span>
                         </div>
 
                         <div class="details__meta">

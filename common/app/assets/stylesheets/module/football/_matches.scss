@@ -93,20 +93,39 @@
     }
 }
 
+.details__match-teams {
+    position: relative;
+}
+
 .details__team {
     display: inline-block;
     overflow: hidden;
+    position: relative;
     text-overflow: ellipsis;
     white-space: nowrap;
-    width: 40%;
+    width: 49%;
 }
 
 .details__team--home {
     text-align: right;
+
+    .team__score {
+        right: ($gs-gutter/4)+3;
+    }
 }
 
 .details__team--away {
     text-align: left;
+
+    .team__score {
+        left: ($gs-gutter/4)+3;
+    }
+
+    .team__name {
+        @include rem((
+            padding: 0 0 0 $gs-gutter*2
+        ));
+    }
 }
 
 .details__versus {
@@ -130,4 +149,16 @@
 
 .matches-nav {
     text-align: center;
+}
+
+.team__battle-line--small {
+    @include fs-data(2);
+    display: block;
+    top: 2px;
+}
+
+.team__battle-line--fixture {
+    &:after {
+        content: 'v';
+    }
 }
