@@ -129,9 +129,7 @@
 .ad-slot__paid-for-badge {
     width: 100%;
     @include rem((
-        padding: ($gs-baseline / 2) 0
-    ));
-    @include rem((
+        padding: ($gs-baseline / 2) 0,
         margin: $gs-baseline 0
     ));
     border-top: 1px dotted $c-neutral5;
@@ -147,13 +145,11 @@
     @include mq(rightCol) {
         position: absolute;
         @include rem((
-            top: $gs-baseline / 2
+            top: $gs-baseline / 2,
+            max-width: 200px
         ));
         right: 0;
         width: auto;
-        @include rem((
-            max-width: 200px
-        ));
         height: 100px;
         margin: 0;
     }
