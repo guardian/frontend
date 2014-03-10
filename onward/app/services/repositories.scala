@@ -1,12 +1,9 @@
 package services
 
 import common.Edition
-import model.{Tag, Trail, Content}
+import model.{Trail, Content}
 import scala.concurrent.Future
-import conf.{ContentApiDoNotUseForNewQueries, SwitchingContentApi}
-import feed.MostReadAgent
-import org.joda.time.DateTime
-import scala.collection.mutable.ListBuffer
+import conf.ContentApiDoNotUseForNewQueries
 
 trait Related extends ConciergeRepository {
   def related(edition: Edition, path: String): Future[Seq[Trail]] = {
@@ -21,21 +18,6 @@ trait Related extends ConciergeRepository {
     }
 
     trails recoverApi404With Nil
-  }
-
-  def getPopularInTag(edition: Edition, tag: String): Future[Seq[Trail]] = {
-
-    val response = SwitchingContentApi().search(edition)
-      .tag(tag)
-      .pageSize(50)
-      .dateId("date/last7days")
-      .response
-
-    val trails: Future[Seq[Content]] = response.map { response =>
-      response.results.map(Content(_)).sortBy(content => - MostReadAgent.getViewCount(content.id).getOrElse(0)).take(10)
-    }
-
-    trails
   }
 
 }

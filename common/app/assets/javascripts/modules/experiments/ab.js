@@ -12,7 +12,6 @@ define([
     'common/modules/experiments/tests/uk-containers',
     'common/modules/experiments/tests/us-containers',
     'common/modules/experiments/tests/au-containers',
-    'common/modules/experiments/tests/onward-related',
     'common/modules/experiments/tests/fronts-latest-reviews-card',
     'common/modules/experiments/tests/fronts-cartoon-card',
     'common/modules/experiments/tests/fronts-missed-card'
@@ -28,7 +27,6 @@ define([
     UkContainers,
     UsContainers,
     AuContainers,
-    OnwardRelated,
     FrontsLatestReviewsCard,
     FrontsCartoonCard,
     FrontsMissedCard
@@ -42,7 +40,6 @@ define([
             new UkContainers(),
             new UsContainers(),
             new AuContainers(),
-            new OnwardRelated(),
             new FrontsLatestReviewsCard(),
             new FrontsCartoonCard(),
             new FrontsMissedCard()
