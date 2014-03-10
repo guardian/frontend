@@ -100,7 +100,7 @@ case class SectionContainer(showMore: Boolean = true, tone: String = "news") ext
 }
 case class MultimediaContainer(showMore: Boolean = true) extends Container {
   val containerType = "multimedia"
-  val tone = "feature"
+  val tone = "comment"
 }
 
 sealed trait AdSlot {
