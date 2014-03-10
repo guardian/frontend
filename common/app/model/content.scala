@@ -52,7 +52,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
     }
   }
 
-  lazy val isAdvertisementFeature: Boolean = tags.exists(_.id == "tone/advertisementfeatures")
+  lazy val isAdvertisementFeature: Boolean = tags.exists(_.id == "tone/advertisement-features")
 
   lazy val shouldHideAdverts: Boolean = fields.get("shouldHideAdverts").exists(_.toBoolean)
 
