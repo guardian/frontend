@@ -8,7 +8,7 @@
 
         <div class="matches unstyled">
             <a href="@LinkTo{@fixture.competition.url}" class="football-table__heading" data-link-name="view competition">@fixture.competition.fullName</a>
-            @tableMatches(List(fixture.fixture))
+            @football.views.html.matchList.matchesComponent(List(fixture.fixture))
         </div>
     }
 </li>
@@ -26,7 +26,7 @@
 
         <div class="matches unstyled">
             <a href="@LinkTo{@result.competition.url}" class="football-table__heading" data-link-name="view competition">@result.competition.fullName</a>
-            @tableMatches(List(result.fixture))
+            @football.views.html.matchList.matchesComponent(List(result.fixture))
         </div>
     }
 </li>

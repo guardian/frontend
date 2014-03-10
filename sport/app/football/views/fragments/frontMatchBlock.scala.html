@@ -6,12 +6,12 @@
 
     <div class="matches unstyled">
         <a href="@LinkTo{@competition.url}" class="football-table__heading" data-link-name="all todays matches">@competition.fullName</a>
-        @tableMatches(competition.matches.take(numVisible))
+        @football.views.html.matchList.matchesComponent(competition.matches.take(numVisible))
     </div>
 
     @if(competition.matches.length > numVisible) {
     <div class="matches unstyled panel">
-        @tableMatches(competition.matches.drop(numVisible))
+        @football.views.html.matchList.matchesComponent(competition.matches.drop(numVisible))
     </div>
     }
 

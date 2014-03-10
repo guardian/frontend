@@ -5,7 +5,7 @@
         <div class="date-divider">@fixture.fixture.date.toString("EEEE d MMMM yyyy")</div>
 
         <div class="article__container u-cf">
-            @tableMatches(List(fixture.fixture))
+            @football.views.html.matchList.matchesComponent(List(fixture.fixture))
         </div>
     </div>
 }
