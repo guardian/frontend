@@ -10,13 +10,13 @@ define([
 
         var self = this;
 
-        this.id = 'GeoMostPopular';
-        this.start = '2014-02-26';
-        this.expiry = '2014-03-14';
+        this.id = 'MostPopularInCountry';
+        this.start = '2014-03-10';
+        this.expiry = '2014-03-17';
         this.author = 'Richard Nguyen';
         this.description = 'Choose popular trails based on request location.';
-        this.audience = 0.1;
-        this.audienceOffset = 0.4;
+        this.audience = 0.5;
+        this.audienceOffset = 0.0;
         this.successMeasure = 'Click-through for the right most popular, and page views per visit.';
         this.audienceCriteria = 'Users who are not on mobile, viewing an article.';
         this.dataLinkNames = 'right hand most popular geo. Specific countries appear as: right hand most popular geo GB';
