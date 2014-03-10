@@ -25,7 +25,7 @@ define([
                 }
                 contexts[id] = true;
 
-                var sectionsHeader = context.querySelector('.nav-popup-sections'),
+                var sectionsHeader = context.querySelector('.nav-popup--sections'),
                     sectionsNav    = context.querySelector('.nav--global');
 
                 if (!sectionsHeader || !sectionsNav) {
@@ -41,7 +41,7 @@ define([
                             that.view.hideColumns(sectionsHeader, sectionsNav);
 
                             // Hide popup localnav if visible
-                            common.$g('.nav-popup-localnav').addClass('is-off');
+                            common.$g('.nav-popup--localnav').addClass('is-off');
                         } else {
                             that.view.showColumns(sectionsHeader, sectionsNav);
                         }

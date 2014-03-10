@@ -37,7 +37,8 @@ define([
 
     DFP.prototype.config = {
         accountId: '158186692',
-        server: 'test-theguardian.com'
+        server: 'test-theguardian.com',
+        dfpUrl: '//www.googletagservices.com/tag/js/gpt.js'
     };
 
     DFP.prototype.setListeners = function() {
@@ -80,17 +81,33 @@ define([
     };
 
     DFP.prototype.checkForBreakout = function(e, level, message, service, slot, reference) {
-        var slotEl        = $('#'+ slot.getSlotId().getDomId()),
-            frameContents = slotEl[0].querySelector('iframe').contentDocument.body;
+        var $slotEl       = $('#'+ slot.getSlotId().getDomId()),
+            frameContents = $slotEl[0].querySelector('iframe').contentDocument.body;
 
         for(var cls in breakoutHash) {
             var $el = bonzo(frameContents.querySelector('.'+ cls));
 
             if($el.length > 0) {
-                slotEl.html('');
-                postscribe(slotEl[0], breakoutHash[cls].replace(/%content%/g, $el.html()));
+                $slotEl.html('');
+                postscribe($slotEl[0], breakoutHash[cls].replace(/%content%/g, $el.html()));
             }
         }
+    };
+
+    DFP.prototype.loadLibrary = function() {
+        var gads   = document.createElement('script'),
+            node   = document.getElementsByTagName('script')[0],
+            useSSL = 'https:' === document.location.protocol;
+
+        gads.async = true;
+        gads.type  = 'text/javascript';
+        gads.src   = (useSSL ? 'https:' : 'http:') + this.config.dfpUrl;
+
+        node.parentNode.insertBefore(gads, node);
+    };
+
+    DFP.prototype.destroy = function() {
+        this.dfpAdSlots = [];
     };
 
     DFP.prototype.load = function() {
@@ -102,7 +119,10 @@ define([
 
         window.googletag = window.googletag || { cmd: [] };
 
+        this.loadLibrary();
+
         try {
+            googletag.cmd.push(DFPEvents.init);
             googletag.cmd.push(this.setListeners.bind(this));
             googletag.cmd.push(this.setTargetting.bind(this));
             googletag.cmd.push(this.defineSlots.bind(this));

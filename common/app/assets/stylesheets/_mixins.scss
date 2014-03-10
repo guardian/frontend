@@ -289,7 +289,7 @@
     // To get this working, position the child element
     // to 'absolute' in the top left corner
     width: $startingWidth;
-    padding-bottom: aspect-ratio-height($x, $y, $startingWidth: 100%);
+    padding-bottom: aspect-ratio-height($x, $y, $startingWidth);
     position: relative;
     overflow: hidden;
 }

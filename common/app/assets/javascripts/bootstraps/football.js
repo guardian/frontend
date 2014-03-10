@@ -5,7 +5,6 @@ define([
     'common/utils/config',
     'common/utils/context',
     'common/utils/mediator',
-    'common/utils/lazy-load-css',
     'bonzo',
     'qwery',
     'bean',
@@ -24,7 +23,6 @@ define([
     config,
     context,
     mediator,
-    lazyLoadCss,
     bonzo,
     qwery,
     bean,
@@ -54,43 +52,45 @@ define([
         },
 
         matchScores: function() {
-            if (config.referencesOfType('paFootballTeam').length !== 2) {
-                return;
-            }
+            if (config.referencesOfType('paFootballTeam').length === 2) {
+                var $h = $('.article__headline', context);
+                if (config.page.isLiveBlog) {
+                    // replace the headline with loader (mainly for mobile)
+                    var $scores = bonzo(bonzo.create(
+                        '<div class="live-summary live-summary--loading">'+
+                            '<div class="loading__text">Fetching the scores…</div>'+
+                            '<div class="is-updating"></div>'+
+                        '</div>'
+                    )).css({ height: $h.get(0).scrollHeight });
 
-            var $h = $('.article__headline', context);
-            if (config.page.isLiveBlog) {
-                // replace the headline with loader (mainly for mobile)
-                var $scores = bonzo(bonzo.create(
-                    '<div class="live-summary live-summary--loading">'+
-                        '<div class="loading__text">Fetching the scores…</div>'+
-                        '<div class="is-updating"></div>'+
-                    '</div>'
-                )).css({ height: $h.get(0).scrollHeight });
-
-                $h.addClass('u-h');
-                $scores.insertAfter($h);
-                mediator.on('modules:matchnav:loaded', function(resp) {
-                    $scores.removeClass('live-summary--loading').empty().css({ height: 'auto' });
-                    $scores.empty().append(bonzo.create(resp.summary));
-                });
-
-                mediator.on('modules:matchnav:error', function() {
-                    $h.removeClass('u-h');
-                    $scores.remove();
-                });
-
-            } else if (config.hasTone("Match reports")) {
-                mediator.on('modules:matchnav:loaded', function(resp) {
-                    var $scores = bonzo(bonzo.create(resp.scoreSummary))
-                            .addClass('u-fauxlink')
-                            .attr('role', 'link');
-
-                    bean.on($scores.get(0), 'click', function() {
-                        bean.fire($('.tab--min-by-min a', context).get(0), 'click');
+                    $h.addClass('u-h');
+                    $scores.insertAfter($h);
+                    mediator.on('modules:matchnav:loaded', function(resp) {
+                        $scores.removeClass('live-summary--loading').empty().css({ height: 'auto' });
+                        $scores.empty().append(bonzo.create(resp.summary));
                     });
-                    $h.before($scores);
-                });
+
+                    mediator.on('modules:matchnav:error', function() {
+                        $h.removeClass('u-h');
+                        $scores.remove();
+                    });
+
+                } else if (config.hasTone("Match reports")) {
+                    mediator.on('modules:matchnav:loaded', function(resp) {
+                        var $scores = bonzo(bonzo.create(resp.scoreSummary))
+                                .attr('role', 'link');
+
+                        $('.tab--min-by-min a', context).each(function(el, i) {
+                            if (i === 0) {
+                                $scores.addClass('u-fauxlink');
+                                bean.on($scores[0], 'click', function() {
+                                    window.location = el.getAttribute('href');
+                                });
+                            }
+                        });
+                        $h.before($scores);
+                    });
+                }
             }
         },
 
@@ -189,10 +189,8 @@ define([
 
     var ready = function() {
         var bits = window.location.pathname.split('/'),
-            action = config.page.contentType === 'Article' ? 'article' : (bits.length === 3 ? bits[2] : bits[3]); // removing router for now
-        lazyLoadCss('football', config);
+            action = config.page.contentType === 'Article' ? 'article' : (bits.length === 3 ? bits[2] : bits[3]);
 
-        // not worth over complicating for the time being
         var trs = $('.table tr[data-link-to]').css({ 'cursor': 'pointer' }).map(function(elem) { return elem; });
         bean.on(context, 'click', trs, function(e) {
             window.location = this.getAttribute('data-link-to');

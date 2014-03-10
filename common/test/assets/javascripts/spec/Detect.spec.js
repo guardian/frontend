@@ -114,7 +114,7 @@ define(['common/utils/detect', 'bonzo'], function(detect, bonzo) {
         var breakpointName = 'a-breakpoint',
             style;
 
-        beforeEach(function () {
+        beforeEach(function() {
             // add css to page
             style = bonzo(bonzo.create('<style type="text/css"></style>'))
                 .html('body:after{ content: "' + breakpointName + '"}')
@@ -128,6 +128,11 @@ define(['common/utils/detect', 'bonzo'], function(detect, bonzo) {
 
         it("should be able to get current breakpoint", function() {
             expect(detect.getBreakpoint()).toBe(breakpointName);
+        });
+
+        it('shoule return "mobile" if no css value', function() {
+            style.remove();
+            expect(detect.getBreakpoint()).toBe('mobile');
         });
 
     });

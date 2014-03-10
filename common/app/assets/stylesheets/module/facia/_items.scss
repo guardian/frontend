@@ -261,6 +261,9 @@
         }
     }
 }
+.item__link--no-border {
+    border-width: 0;
+}
 .item__image-container {
     margin-top: 4px;
 
@@ -551,6 +554,14 @@ $show-more-icon: (
     height: 32px,
     space-between: 2px // to avoid overlaps/bleeding on zoom
 );
+
+@-webkit-keyframes spin {
+    0%   { -webkit-transform: rotate(0deg); }
+    25%  { -webkit-transform: rotate(90deg); }
+    50%  { -webkit-transform: rotate(180deg); }
+    75%  { -webkit-transform: rotate(270deg); }
+    100% { -webkit-transform: rotate(360deg); }
+}
 .collection__show-more {
     display: block;
     border: none;
@@ -563,6 +574,7 @@ $show-more-icon: (
     margin-left: -1 * map-get($show-more-icon, width) / 2;
     padding: 0;
     overflow: hidden;
+    -webkit-transform: translateZ(0);
 
     &:hover,
     &:focus,
@@ -574,6 +586,9 @@ $show-more-icon: (
     .i {
         display: block;
         margin-bottom: map-get($show-more-icon, space-between); // a bit of space between icons to avoid
+    }
+    &[disabled] {
+        -webkit-animation: spin 3s cubic-bezier(0.680, -0.550, 0.265, 1.550) forwards infinite;
     }
 }
 .collection__show-more__icon {

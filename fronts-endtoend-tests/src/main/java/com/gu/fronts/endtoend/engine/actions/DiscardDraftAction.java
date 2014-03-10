@@ -33,11 +33,11 @@ public class DiscardDraftAction implements TrailBlockAction {
 
 	@Override
 	public void execute() {
-		String data = "{\"discard\":true}";
+        String data = "";
 
-		final String requestUrl = String.format("/fronts/api/%s", trailBlock.uri());
-		httpCall = client.postJsonTo(requestUrl, data);
-	}
+        final String requestUrl = String.format("/collection/discard/%s", trailBlock.uri());
+        httpCall = client.postTo(requestUrl, data);
+    }
 
 	@Override
 	public DiscardDraftAction copyOf() {

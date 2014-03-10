@@ -9,6 +9,7 @@ define([
     'domReady',
     'bonzo',
     'bean',
+    'enhancer',
     'lodash/functions/debounce',
     //Modules
     'common/utils/storage',
@@ -16,7 +17,6 @@ define([
     'common/modules/onward/popular',
     'common/modules/onward/related',
     'common/modules/ui/images',
-    'common/modules/navigation/top-stories',
     'common/modules/navigation/profile',
     'common/modules/navigation/sections',
     'common/modules/navigation/search',
@@ -41,7 +41,6 @@ define([
     'common/modules/adverts/article-body-adverts',
     'common/modules/adverts/dfp',
     "common/modules/analytics/commercial/tags/container",
-    "common/modules/interactive/loader",
     "common/modules/onward/right-hand-component-factory"
 ], function (
     $,
@@ -53,6 +52,7 @@ define([
     domReady,
     bonzo,
     bean,
+    enhancer,
     debounce,
 
     storage,
@@ -60,7 +60,6 @@ define([
     popular,
     Related,
     images,
-    TopStories,
     Profile,
     Sections,
     Search,
@@ -86,7 +85,6 @@ define([
     ArticleBodyAdverts,
     DFP,
     TagContainer,
-    Interactive,
     RightHandComponentFactory
 ) {
 
@@ -100,8 +98,7 @@ define([
         },
 
         initialiseNavigation: function (config) {
-             var topStories = new TopStories(),
-                sections = new Sections(config),
+            var sections = new Sections(config),
                 search = new Search(config),
                 header = document.getElementById('header');
 
@@ -112,7 +109,6 @@ define([
                     });
                     profile.init();
                 }
-                topStories.load(config, header);
             }
 
             sections.init(document);
@@ -429,9 +425,8 @@ define([
         augmentInteractive: function () {
             mediator.on('page:common:ready', function(config, context) {
                 if (/Article|Interactive/.test(config.page.contentType)) {
-                    var interactives = context.querySelectorAll('figure.interactive');
-                    Array.prototype.forEach.call(interactives, function (i) {
-                        new Interactive(i, context, config).init();
+                    $('figure.interactive').each(function (el) {
+                        enhancer.render(el, context, config, mediator);
                     });
                 }
             });
