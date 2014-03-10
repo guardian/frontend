@@ -22,7 +22,6 @@
         padding: 0;
         margin-top: ($gs-baseline/3);
         float: none;
-        color: #630D4C;
 
         span {
             width: 98px;
@@ -190,7 +189,7 @@
         }
         .list__img {
             height: 100px;
-            margin: 0 auto 10px auto;
+            margin: 0 auto $gs-baseline auto;
             display: block;
             float: none;
         }
