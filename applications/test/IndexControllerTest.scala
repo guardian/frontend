@@ -55,6 +55,14 @@ class IndexControllerTest extends FlatSpec with Matchers {
     header("Location", result).get should be ("/video")
   }
 
+  it should "include pagination in the redirect" in Fake {
+
+    val result = controllers.IndexController.render("type/video")(TestRequest("/type/video?page=3"))
+
+    status(result) should be (302)
+    header("Location", result).get should be ("/video?page=3")
+  }
+
   // ignore while content api fixes a field in elastic search...
   ignore should "correctly redirect short urls to other servers" in Fake {
 
