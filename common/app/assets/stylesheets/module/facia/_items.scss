@@ -622,27 +622,3 @@ $show-more-icon: (
         ));
     }
 }
-
-
-/**
- * Ads in containers / row patterns
- */
-
-.container {
-    .ad-slot {
-        padding: 0;
-        margin: 0 auto;
-    }
-}
-.l-row__item--mpu-300 {
-    @if $browser-supports-flexbox {
-        @include mq(tablet) {
-            min-width: gs-span(4) + $gs-gutter;
-            max-width: gs-span(4) + $gs-gutter;
-        }
-    } @else {
-        @include mq(desktop) {
-            width: gs-span(4);
-        }
-    }
-}
