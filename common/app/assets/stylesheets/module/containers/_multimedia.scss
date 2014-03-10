@@ -32,6 +32,9 @@
             @include fs-headline(2, $size-only: true);
         }
     }
+    .collection-wrapper--position-2 .item__media-wrapper {
+        display: none;
+    }
     @include mq(tablet) {
         .container__title {
             @include rem((
@@ -85,9 +88,6 @@
                     display: none;
                 }
             }
-        }
-        .collection-wrapper--position-2 .item__media-wrapper {
-            display: none;
         }
     }
 
