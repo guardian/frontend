@@ -1,50 +1,14 @@
-@(matches: List[FootballMatch])(implicit request: RequestHeader)
-@import implicits.Football._
+@(matchesList: football.model.MatchesList)(implicit request: RequestHeader)
 
-<table class="table football-matches">
-    <thead hidden>
-        <tr>
-            <th class="match__status">Match status / kick off time</th>
-            <th class="match__details">Match details</th>
-            <th class="match__report">Reports</th>
-        </tr>
-    </thead>
+@import football.model._
 
-    <tbody>
-        @matches.map{ theMatch =>
-            <tr data-link-to="@LinkTo{@theMatch.url}"
-                class="@RenderClasses(Map(
-                    "football-match" -> true,
-                    "football-match--live" -> theMatch.isLive,
-                    "football-match--fixture" -> theMatch.isFixture,
-                    "football-match--result" -> theMatch.isResult
-                ))">
-                <td class="football-match__status football-match__status--@MatchStatus(theMatch.matchStatus).toString.toLowerCase">
-                    @if(theMatch.isFixture){
-                        @theMatch.date.toString("HH:mm")
-                    }else{
-                        @MatchStatus(theMatch.matchStatus)
-                    }
-                </td>
-                <td class="football-match__teams table-column--main">
-                    <div class="football-teams u-cf">
-                        <div class="football-match__team football-match__team--home football-team">
-                            <div class="football-team__name">@theMatch.homeTeam.name</div>
-                            <div class="football-team__score">@theMatch.homeTeam.score</div>
-                        </div>
-
-                        <div class="football-match__team football-match__team--away football-team">
-                            <div class="football-team__name">@theMatch.awayTeam.name</div>
-                            <div class="football-team__score">@theMatch.awayTeam.score</div>
-                        </div>
-
-                        <div class="football-teams__battleline"></div>
-                    </div>
-                </td>
-                <td class="football-match__report">
-                    <a href="@LinkTo{@theMatch.url}" data-link-name="stats" data-match-id="@theMatch.id">Match report</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+<div class="c-football-matches">
+    @matchesList.matchesGroupedByDateAndCompetition.map { case (date, competitionMatches) =>
+        <div class="football-matches__day">
+            <div class="date-divider">@date.toString("EEEE d MMMM yyyy")</div>
+            @competitionMatches.map { case (competition, matches) =>
+                    @football.views.html.matchList.matchesList(matches, competition)
+            }
+        </div>
+    }
+</div>

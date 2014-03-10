@@ -90,6 +90,7 @@ define([
 
     /**
      * @param {Element} parent
+     * @param {string} key element to lookup from the response
      */
     Component.prototype.fetch = function(parent, key) {
         this.checkAttached();
@@ -108,7 +109,7 @@ define([
             crossOrigin: true
         }).then(
             function render(resp) {
-                self.elem = bonzo.create(resp[(key) ? key : 'html'])[0];
+                self.elem = bonzo.create(resp[key || 'html'])[0];
                 self._prerender();
 
                 if (!self.destroyed) {

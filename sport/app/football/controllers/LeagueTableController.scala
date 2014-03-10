@@ -38,8 +38,8 @@ object LeagueTableController extends Controller with Logging with CompetitionTab
       }
     }
     
-    val htmlResponse = () => football.views.html.tables(TablesPage(page, groups, "/football", filters, None))
-    val jsonResponse = () => football.views.html.fragments.tablesBody(TablesPage(page, groups, "/football", filters, None))
+    val htmlResponse = () => football.views.html.tablesList.tablesPage(TablesPage(page, groups, "/football", filters, None))
+    val jsonResponse = () => football.views.html.tablesList.tablesBody(TablesPage(page, groups, "/football", filters, None))
     renderFormat(htmlResponse, jsonResponse, page, Switches.all)
 
   }
@@ -78,8 +78,8 @@ object LeagueTableController extends Controller with Logging with CompetitionTab
       )
 
       val smallTableGroup = table.copy(groups = table.groups.map { group => group.copy(entries = group.entries.take(10)) }).groups(0)
-      val htmlResponse = () => football.views.html.tables(TablesPage(page, Seq(table), table.competition.url, filters, Some(table.competition)))
-      val jsonResponse = () => football.views.html.fragments.tableView(table.competition, smallTableGroup, showMeta = true, isSmall = true, multiGroup = table.multiGroup)
+      val htmlResponse = () => football.views.html.tablesList.tablesPage(TablesPage(page, Seq(table), table.competition.url, filters, Some(table.competition)))
+      val jsonResponse = () => football.views.html.tablesList.tableView(table.competition, smallTableGroup, showMeta = true, isSmall = true, multiGroup = table.multiGroup)
 
       renderFormat(htmlResponse, jsonResponse, page)
 
