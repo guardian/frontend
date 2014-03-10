@@ -5,7 +5,6 @@ define([
     'common/utils/config',
     'common/utils/context',
     'common/utils/mediator',
-    'common/utils/lazy-load-css',
     'bonzo',
     'qwery',
     'bean',
@@ -24,7 +23,6 @@ define([
     config,
     context,
     mediator,
-    lazyLoadCss,
     bonzo,
     qwery,
     bean,
@@ -191,10 +189,8 @@ define([
 
     var ready = function() {
         var bits = window.location.pathname.split('/'),
-            action = config.page.contentType === 'Article' ? 'article' : (bits.length === 3 ? bits[2] : bits[3]); // removing router for now
-        lazyLoadCss('football', config);
+            action = config.page.contentType === 'Article' ? 'article' : (bits.length === 3 ? bits[2] : bits[3]);
 
-        // not worth over complicating for the time being
         var trs = $('.table tr[data-link-to]').css({ 'cursor': 'pointer' }).map(function(elem) { return elem; });
         bean.on(context, 'click', trs, function(e) {
             window.location = this.getAttribute('data-link-to');

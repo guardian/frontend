@@ -311,54 +311,34 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 3, 17)
   )
 
-  val ABRelatedContent = Switch("A/B Tests", "ab-onward-related-sports",
-    "If this switch is on the related content popular-in-tag override A/B test is run",
-    safeState = Off, sellByDate = new DateMidnight(2014, 3, 10)
-  )
-
   val TagLinking = Switch("Feature Switches", "tag-linking",
     "If this is switched on articles that have no in body links will auto link to their tags where possible",
     safeState = Off, sellByDate = endOfQ4
   )
 
-  val GeoMostPopular = Switch("A/B Tests", "ab-geo-most-popular",
+  val GeoMostPopular = Switch("A/B Tests", "ab-most-popular-in-country",
     "If this is switched on an A/B test runs to test if locally popular articles yield better click-through.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 3, 14)
+    safeState = Off, sellByDate = new DateMidnight(2014, 3, 17)
   )
 
   val ABUkContainers = Switch("A/B Tests", "ab-uk-containers",
     "If this is switched on an A/B test runs that tries a variation of the containers on the UK network front.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 3, 8)
+    safeState = Off, sellByDate = new DateMidnight(2014, 3, 15)
   )
 
   val ABUsContainers = Switch("A/B Tests", "ab-us-containers",
     "If this is switched on an A/B test runs that tries a variation of the containers on the US network front.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 3, 12)
+    safeState = Off, sellByDate = new DateMidnight(2014, 3, 15)
   )
 
   val ABAuContainers = Switch("A/B Tests", "ab-au-containers",
     "If this is switched on an A/B test runs that tries a variation of the containers on the AU network front.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 3, 12)
+    safeState = Off, sellByDate = new DateMidnight(2014, 3, 15)
   )
 
   val FootballTablePosition = Switch("A/B Tests", "ab-football-table-position",
     "If this switch is on, the football table will vary in position throughout the football tagged pages.",
     safeState = Off, sellByDate = new DateMidnight(2014, 3, 12)
-  )
-
-  val ABFrontsLatestReviewsCard = Switch("A/B Tests", "ab-fronts-latest-reviews-card",
-    "If this switch is on, AB test adding a 'Latest Reviews' card to the Features container on the front.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 3, 8)
-  )
-
-  val ABFrontsCartoonCard = Switch("A/B Tests", "ab-fronts-cartoon-card",
-    "If this swith is on, run an ab test to add a Cartoon card to the C&D container.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 3, 8)
-  )
-
-  val ABFrontsMissedCard = Switch("A/B Tests", "ab-fronts-missed-card",
-    "If this swith is on, run an ab test to add a `You might have missed` card to the News container.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 3, 8)
   )
 
   // Sport Switch
@@ -465,7 +445,6 @@ object Switches extends Collections {
     ABRecommendedRightHand,
     GeoMostPopular,
     FootballTablePosition,
-    ABRelatedContent,
     ToolDisable,
     ToolConfigurationDisable,
     ToolSparklines,
@@ -496,11 +475,8 @@ object Switches extends Collections {
     FrontPressJobSwitch,
     ABUkContainers,
     ABUsContainers,
-    LayoutHintsSwitch,
     ABAuContainers,
-    ABFrontsLatestReviewsCard,
-    ABFrontsCartoonCard,
-    ABFrontsMissedCard,
+    LayoutHintsSwitch,
     HelveticaEasterEggSwitch
   )
 

@@ -36,8 +36,7 @@ module.exports = function (grunt) {
                     noCache: true,
                     quiet: (isDev) ? false : true,
                     loadPath: [
-                        'common/app/assets/stylesheets/components/sass-mq',
-                        'common/app/assets/stylesheets/components/normalize-scss'
+                        'common/app/assets/stylesheets/components/sass-mq'
                     ]
                 }
             }
@@ -58,6 +57,7 @@ module.exports = function (grunt) {
                     imager:       '../../../../common/app/assets/javascripts/components/imager.js/src/strategies/container',
                     omniture:     '../../../../common/app/assets/javascripts/components/omniture/omniture',
                     fence:        '../../../../common/app/assets/javascripts/components/fence/fence',
+                    enhancer:     '../../../../common/app/assets/javascripts/components/enhancer/enhancer',
                     'ophan/ng':   'empty:'
                 },
                 optimize: 'uglify2',

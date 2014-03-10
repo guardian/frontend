@@ -203,7 +203,7 @@ define([
 
     function getBreakpoint() {
         // default to mobile
-        var breakpoint = window.getComputedStyle(document.body, ':after').getPropertyValue('content') || 'mobile';
+        var breakpoint = (document.body && window.getComputedStyle(document.body, ':after').getPropertyValue('content')) || 'mobile';
         // firefox seems to wrap the value in quotes
         return breakpoint.replace(/^"([^"]*)"$/, "$1");
     }

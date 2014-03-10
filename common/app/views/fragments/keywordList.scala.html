@@ -9,10 +9,7 @@
                     <a class="@if(keyword.isFootballTeam){js-football-team} @if(keyword.isFootballCompetition){ js-football-competition}"
                         href="@LinkTo(keyword.url)"
                         data-link-name="keyword: @keyword.id"
-                        itemprop="keywords">
-                            @keyword.name
-                    </a>
-                    @if(!row.isLast){, }
+                        itemprop="keywords">@keyword.name</a>@if(!row.isLast){, }
                 </li>
             }
         </ul>
