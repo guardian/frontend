@@ -39,8 +39,8 @@ define([
                 id: 'cartoon',
                 test: function (context, config) {
                     ajax({
-                        url       : 'tagged.json?tag=theguardian/series/guardiancommentcartoon',
-                        type      : 'json',
+                        url        : 'tagged.json?tag=theguardian/series/guardiancommentcartoon',
+                        type       : 'json',
                         crossDomain: true
                     })
                         .then(function(resp) {
