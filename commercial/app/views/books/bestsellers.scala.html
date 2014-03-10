@@ -13,38 +13,36 @@
             </h2>
 
             <div class="container__body">
-                <div class="related__container" data-count="4" data-link-name="Related Related content" role="complementary" aria-labelledby="related-content-head">
-                    <div class="commercial__body">
-                        <h3>This week's bestsellers</h3>
+                <div class="commercial__body">
+                    <h3>This week's bestsellers</h3>
 
-                        <ul class="unstyled list">
-                        @books.map { book =>
-                            <li class="list__item">
-                                <a href="@book.buyUrl" class="list__link" data-link-name="@book.position | text">
-                                    <span class="list__count">@book.position</span>
-                                    @book.jacketUrl.map { url => <img class="list__img" src="@url" alt="">}
-                                    <h4 class="list__title">@book.title</h4>
-                                @if(book.author) {
-                                    <p class="list__author">by @book.author</p>
-                                }
-                                </a>
-                            @book.offerPrice.map { price =>
-                                <p class="list__price"><span>Our price: </span>&pound;@("%.2f".format(price))</p>
+                    <ul class="unstyled list">
+                    @books.map { book =>
+                        <li class="list__item">
+                            <a href="@book.buyUrl" class="list__link" data-link-name="@book.position | text">
+                                <span class="list__count">@book.position</span>
+                                @book.jacketUrl.map { url => <img class="list__img" src="@url" alt="">}
+                                <h4 class="list__title">@book.title</h4>
+                            @if(book.author) {
+                                <p class="list__author">by @book.author</p>
                             }
-                            </li>
+                            </a>
+                        @book.offerPrice.map { price =>
+                            <p class="list__price"><span>Our price: </span>&pound;@("%.2f".format(price))</p>
                         }
-                        </ul>
-                    </div>
+                        </li>
+                    }
+                    </ul>
+                </div>
 
-                    <div class="commercial__foot">
-                        <form action="http://www.guardianbookshop.co.uk/BerteShopWeb/search.do" method="POST" class="commercial__search" name="QuickSearchForm">
-                            <fieldset>
-                                <input id="bookshop" name="keyword" class="commercial__search--input" type="text" placeholder="Search the Guardian bookshop" />
-                                <input class="commercial__search--submit svg-i-search-white" type="submit" name="go" value="" />
-                                <input value="%JustOmnitureToken%" name="INTCMP" type="hidden" />
-                            </fieldset>
-                        </form>
-                    </div>
+                <div class="commercial__foot">
+                    <form action="http://www.guardianbookshop.co.uk/BerteShopWeb/search.do" method="POST" class="commercial__search" name="QuickSearchForm">
+                        <fieldset>
+                            <input id="bookshop" name="keyword" class="commercial__search--input" type="text" placeholder="Search the Guardian bookshop" />
+                            <input class="commercial__search--submit svg-i-search-white" type="submit" name="go" value="" />
+                            <input value="%JustOmnitureToken%" name="INTCMP" type="hidden" />
+                        </fieldset>
+                    </form>
                 </div>
             </div>
         </div>
