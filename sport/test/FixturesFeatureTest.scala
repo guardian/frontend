@@ -14,16 +14,15 @@ class FixturesFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
       HtmlUnit("/football/fixtures") { browser =>
         import browser._
-        findFirst(".football-filter__label").getText should be("All fixtures")
 
-        Then("I should see todays live matches")
         val matches = $(".details__match-teams").getTexts
-        matches should contain ("Arsenal 1 - 0 Spurs")
-
-        And("The next 3 days fixtures")
+        Then("I should see upcoming fixtures over the next 3 days")
         matches should contain("Liverpool v Man C")
         matches should contain("Wigan v Fulham")
         matches should contain("Stoke v Everton")
+
+        And("I should not see today's live matches")
+        matches should not contain ("Arsenal 1 - 0 Spurs")
       }
     }
 
