@@ -181,8 +181,8 @@ GET         /                                                                   
 GET         /$path<(culture|sport|australia|commentisfree|business|money)>                                           controllers.FaciaController.editionRedirect(path)
 GET         /$path<(us|uk|au|us-alpha|uk-alpha|au-alpha)?>                                                           controllers.FaciaController.renderEditionFront(path)
 GET         /$path<(us|uk|au|us-alpha|uk-alpha|au-alpha)?>.json                                                      controllers.FaciaController.renderEditionFrontJson(path)
-GET         /$path<((uk|us|au)/)?(culture|sport|australia|commentisfree|business|money)>                             controllers.FaciaController.renderEditionSectionFront(path)
-GET         /$path<((uk|us|au)/)?(culture|sport|australia|commentisfree|business|money)>.json                        controllers.FaciaController.renderEditionSectionFrontJson(path)
+GET         /$path<((uk|us|au)/)?(culture|sport|australia|commentisfree|business|money|football)>                    controllers.FaciaController.renderEditionSectionFront(path)
+GET         /$path<((uk|us|au)/)?(culture|sport|australia|commentisfree|business|money|football)>.json               controllers.FaciaController.renderEditionSectionFrontJson(path)
 
 #Facia Press
 GET         /pressed/*path                                                                                           controllers.FaciaController.renderFaciaPress(path)
