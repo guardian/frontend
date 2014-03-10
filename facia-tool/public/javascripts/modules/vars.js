@@ -9,6 +9,7 @@ define(['knockout'], function(ko) {
             'news/special',
             'news/sport',
             'features',
+            'features/multimedia',
             'features/section',
             'comment',
             'comment/comment-and-debate',

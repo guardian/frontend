@@ -1,0 +1,23 @@
+.container--multimedia {
+
+    .item__byline {
+        display: none;
+    }
+    .collection__item:first-child .item__link {
+        border-top-width: 0;
+    }
+    @include mq(tablet) {
+        .l-row--items-2 {
+            .collection__item:first-child {
+                @include flex-grow(2);
+            }
+            .item__link {
+                border-top-width: 0;
+            }
+            .item__image-container {
+                margin-top: 0;
+            }
+        }
+    }
+
+}
