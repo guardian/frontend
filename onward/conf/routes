@@ -28,4 +28,3 @@ GET        /preference/front-alphas/:optAction      controllers.ChangeAlphaContr
 
 # Experimental
 GET        /cards/opengraph/*path.json              controllers.CardController.opengraph(path)
-GET        /popular-in-tag/*tag.json                controllers.PopularInTag.renderJson(tag)

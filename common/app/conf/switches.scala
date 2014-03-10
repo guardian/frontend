@@ -311,11 +311,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 3, 17)
   )
 
-  val ABRelatedContent = Switch("A/B Tests", "ab-onward-related-sports",
-    "If this switch is on the related content popular-in-tag override A/B test is run",
-    safeState = Off, sellByDate = new DateMidnight(2014, 3, 10)
-  )
-
   val TagLinking = Switch("Feature Switches", "tag-linking",
     "If this is switched on articles that have no in body links will auto link to their tags where possible",
     safeState = Off, sellByDate = endOfQ4
@@ -450,7 +445,6 @@ object Switches extends Collections {
     ABRecommendedRightHand,
     GeoMostPopular,
     FootballTablePosition,
-    ABRelatedContent,
     ToolDisable,
     ToolConfigurationDisable,
     ToolSparklines,
