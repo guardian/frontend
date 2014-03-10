@@ -36,8 +36,7 @@ module.exports = function (grunt) {
                     noCache: true,
                     quiet: (isDev) ? false : true,
                     loadPath: [
-                        'common/app/assets/stylesheets/components/sass-mq',
-                        'common/app/assets/stylesheets/components/normalize-scss'
+                        'common/app/assets/stylesheets/components/sass-mq'
                     ]
                 }
             }
