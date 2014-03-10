@@ -11,7 +11,6 @@ define([
 
     //Modules
     'common/modules/ui/togglepanel',
-    'common/modules/ui/expandable',
     'common/modules/sport/football/fixtures',
     'common/modules/sport/football/tables',
     'common/modules/sport/football/more-matches',
@@ -27,7 +26,6 @@ define([
     qwery,
     bean,
     TogglePanel,
-    Expandable,
     FootballFixtures,
     FootballTable,
     MoreMatches,
@@ -49,6 +47,12 @@ define([
 
                 new MatchNav().load(url, context);
             }
+        },
+
+        competitionSelector: function() {
+            bean.on(context, 'change', qwery('form.football-leagues'), function() {
+                window.location = this.elements.competitionUrl.value +'/'+ this.elements.pageType.value;
+            });
         },
 
         matchScores: function() {
@@ -180,13 +184,6 @@ define([
         }
     };
 
-    var bindings = function() {
-        mediator.on('modules:footballfixtures:expand', function(id) {
-            var expandable = new Expandable({ id: id, expanded: false });
-            expandable.initalise();
-        });
-    };
-
     var ready = function() {
         var bits = window.location.pathname.split('/'),
             action = config.page.contentType === 'Article' ? 'article' : (bits.length === 3 ? bits[2] : bits[3]);
@@ -204,6 +201,7 @@ define([
             case 'table':
             case 'tables':
                 modules.showMoreMatches();
+                modules.competitionSelector();
                 break;
 
             case undefined:
@@ -212,6 +210,7 @@ define([
 
             case 'live':
                 modules.showMoreMatches();
+                modules.competitionSelector();
                 if (context.querySelector('.match.live-match')) {
                     modules.initAutoUpdate(context.querySelector('.matches-container'), config.switches, '.matches-container > *');
                 }

@@ -11,22 +11,35 @@
     </div>
     <div class="article-wrapper monocolumn-wrapper tone-news">
         <article id="article" class="article" itemprop="mainContentOfPage" itemtype="http://schema.org/Article" role="main">
-            <div class="football-leagues input">
-                <select class="football-leagues__list">
+            <form class="football-leagues js-visible" method="get">
+                <label for="football-leagues" class="football-leagues__label">Choose league: </label>
+                <select class="football-leagues__list" name="competitionUrl" id="football-leagues">
                     @matchesList.competitions.competitions.map{ comp =>
-                        <option>@comp.fullName</option>
+                        <option
+                            @matchesList match {
+                                case ml: CompetitionList if ml.competitionId == comp.id => { selected="selected"}
+                                case _ => {}
+                            }
+                            value="@comp.url">@comp.fullName</option>
                     }
                 </select>
-            </div>
+                <input type="hidden" name="pageType" value="@matchesList.pageType" />
+            </form>
 
             <div class="article__columning-wrapper">
                 <div class="article__main-column">
+                    <div class="football-leagues football-leagues--list js-hidden">
+                        <ul class="football-leagues-list unstyled">
+                            @matchesList.competitions.competitions.map{ comp =>
+                            <li class="football-leagues__item"><a href="@comp.url/@matchesList.pageType">@comp.fullName</option></a></li>
+                            }
+                        </ul>
+                    </div>
                     @football.views.html.matchList.matchesList(matchesList)
                 </div>
 
                 <div class="article__secondary-column" aria-hidden="true">
                     <div class="article__secondary-column__inner article__secondary-column__inner--fill-vertically">
-                        @* TODO (jamesgorrie): add onwards journeys *@
                     </div>
                 </div>
             </div>

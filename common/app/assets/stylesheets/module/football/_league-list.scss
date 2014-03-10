@@ -1,15 +1,49 @@
 .football-leagues {
+    @include fs-data(4);
     @include rem((
         margin: $gs-baseline 0 $gs-baseline*2
     ));
+
+    @include mq($from: tablet) {
+        margin-top: 0;
+        @include fs-data(5);
+    }
 }
 
-.football-leagues__list {
+.football-leagues__label {
+    display: none;
+
     @include rem((
-        padding: $gs-baseline/2 0
+        margin-right: $gs-gutter/3
     ));
 
-    option {
-        @include fs-bodyCopy(3);
+    @include mq($from: tablet) {
+        display: inline-block;
     }
+}
+
+.football-leagues__list,
+.football-leagues__submit {
+    @include rem((
+        padding: $gs-baseline/2 $gs-gutter/4
+    ));
+}
+
+
+/* No JS version */
+.football-leagues--list {
+    font-size: 0;
+}
+.football-leagues__list {}
+
+.football-leagues__item {
+    @include box-sizing(border-box);
+    @include fs-data(4, true);
+    @include rem((
+        margin-bottom: $gs-baseline/2
+    ));
+
+    display: inline-block;
+    vertical-align: top;
+    width: 50%;
 }
