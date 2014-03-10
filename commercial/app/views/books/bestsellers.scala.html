@@ -1,7 +1,5 @@
 @(books: Seq[model.commercial.books.Book])(implicit request: RequestHeader)
 
-<link rel="stylesheet" href="@Static("stylesheets/head.default.css")" />
-<link rel="stylesheet" href="@Static("stylesheets/global.css")" />
 <link rel="stylesheet" href="@Static("stylesheets/commercial.css")" />
 
 <aside class="commercial books-component" role="complementary">
@@ -41,7 +39,7 @@
                     <div class="commercial__foot">
                         <form action="http://www.guardianbookshop.co.uk/BerteShopWeb/search.do" method="POST" class="commercial__search" name="QuickSearchForm">
                             <input id="bookshop" name="keyword" class="commercial__search--input" type="text" placeholder="Search the Guardian bookshop" />
-                            <input class="commercial__search--submit svg-i-search" type="submit" name="go" value="" />
+                            <input class="commercial__search--submit svg-i-search-white" type="submit" name="go" value="" />
                             <input value="%JustOmnitureToken%" name="INTCMP" type="hidden" />
                         </form>
                     </div>
