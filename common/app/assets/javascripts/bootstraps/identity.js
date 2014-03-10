@@ -6,9 +6,11 @@ define([
     'common/modules/identity/password-strength',
     'common/modules/identity/validation-email',
     'common/modules/identity/api',
+    'common/modules/identity/account-profile',
     'common/modules/adverts/userAdTargeting',
     'common/modules/discussion/user-avatars',
-    'common/utils/mediator'
+    'common/utils/mediator',
+    'common/modules/ui/tabs'
 ], function(
     $,
     Identity,
@@ -17,9 +19,11 @@ define([
     PasswordStrength,
     ValidationEmail,
     Id,
+    AccountProfile,
     UserAdTargeting,
     UserAvatars,
-    mediator
+    mediator,
+    Tabs
 ) {
 
     var modules = {
@@ -27,9 +31,7 @@ define([
             Id.init(config);
             // Used to show elements that need signin. Use .sign-in-required
             if (Id.isUserLoggedIn()) {
-                $('html').addClass('id--signed-in');
-            } else {
-                $('html').addClass('id--signed-out');
+                document.documentElement.className = document.documentElement.className.replace(/\bid--signed-out\b/, 'id--signed-in');
             }
         },
         initFormstack: function () {
@@ -80,6 +82,20 @@ define([
             mediator.on('page:identity:ready', function(config, context) {
                 ValidationEmail.init(context);
             });
+        },
+
+        tabs: function () {
+            var tabs = new Tabs();
+            mediator.on('page:identity:ready', function(config, context) {
+                tabs.init(context);
+            });
+        },
+
+        accountProfile: function () {
+            var accountProfile = new AccountProfile();
+            mediator.on('page:identity:ready', function(config, context) {
+                accountProfile.init(context);
+            });
         }
     };
 
@@ -95,6 +111,8 @@ define([
             modules.userAdTargeting();
             modules.userAvatars();
             modules.validationEmail();
+            modules.tabs();
+            modules.accountProfile();
         }
         mediator.emit('page:identity:ready', config, context);
     };

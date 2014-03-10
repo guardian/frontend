@@ -65,7 +65,7 @@ define([
         });
 
         Images.upgrade(container);
-        bean.on(document, 'click', '.right-recommended-item__url', function() {
+        bean.on(document.body, 'click', '.right-recommended-item__url', function() {
             s.events = "events37";
             s.evar7 = "s.pageName";
 

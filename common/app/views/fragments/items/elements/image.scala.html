@@ -5,7 +5,7 @@
         @ImgSrc.imager(imageContainer, maxWidth).map { imgSrc =>
             <div class="item__media-wrapper">
                 <div
-                    class="item__image-container js-image-upgrade @if(inlineImage){inlined-image}"
+                    class="item__image-container u-responsive-ratio js-image-upgrade @if(inlineImage){inlined-image}"
                     data-src="@imgSrc">
                     @if(inlineImage){
                         @Item300.bestFor(imageContainer).map{ url =>

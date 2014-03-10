@@ -6,11 +6,9 @@ define([
     "fence",
     "common/modules/ui/autoupdate",
     "common/modules/live/filter",
-    "common/modules/sport/football/matchnav",
     "common/modules/discussion/loader",
     "common/modules/sport/cricket",
     "common/modules/ui/notification-counter",
-    "common/modules/experiments/left-hand-card",
     "common/modules/open/cta",
     "common/modules/commercial/loader",
     "common/modules/experiments/layoutHints"
@@ -22,37 +20,15 @@ define([
     fence,
     AutoUpdate,
     LiveFilter,
-    MatchNav,
     DiscussionLoader,
     Cricket,
     NotificationCounter,
-    LeftHandCard,
     OpenCta,
     CommercialLoader,
     Layout
 ) {
 
     var modules = {
-
-        matchNav: function(){
-            var matchNav = new MatchNav();
-            common.mediator.on('page:article:ready', function(config, context) {
-                if(config.page.section === "football") {
-                    var teamIds = config.referencesOfType('paFootballTeam'),
-                        isRightTypeOfContent = config.hasTone("Match reports") || config.page.isLiveBlog;
-
-                    if(teamIds.length === 2 && isRightTypeOfContent){
-                        var url = "/football/api/match-nav/" +
-                                  config.webPublicationDateAsUrlPart() + "/" +
-                                  teamIds[0] + "/" + teamIds[1] +
-                                  ".json?page=" + encodeURIComponent(config.page.pageId);
-
-                        matchNav.load(url, context);
-                    }
-                }
-            });
-        },
-
         initLiveBlogging: function() {
             common.mediator.on('page:article:ready', function(config, context) {
                 if (config.page.isLive) {
@@ -91,14 +67,6 @@ define([
             });
         },
 
-        initDoge: function() {
-            common.mediator.on('page:article:ready', function(config, context) {
-                if (config.switches.doge) {
-                    $('.article__headline').css({fontFamily:'"Comic Sans MS", cursive', color:'pink'});
-                }
-            });
-        },
-
         initCricket: function() {
             common.mediator.on('page:article:ready', function(config, context) {
 
@@ -113,17 +81,6 @@ define([
                                 summaryManipulation: 'after',
                                 scorecardManipulation: 'after' };
                     Cricket.cricketArticle(config, context, options);
-                }
-            });
-        },
-
-        externalLinksCards: function () {
-            common.mediator.on('page:article:ready', function(config, context) {
-                if (config.switches && config.switches.externalLinksCards) {
-                    var card = new LeftHandCard({
-                            origin: 'internal',
-                            context: context
-                    });
                 }
             });
         },
@@ -155,21 +112,28 @@ define([
             if(config.switches.layoutHints && /\/-sp-/g.test(config.page.pageId)) {
                 var l = new Layout(config);
             }
+        },
+
+        initHelvetica: function(config) {
+            if(config.switches.helvetica && /\/helvetica-one-font-to-rule-them-all/g.test(config.page.pageId)) {
+                var articleHeadline = document.querySelector('.article__headline');
+                articleHeadline.style.fontFamily = 'Helvetica, "EgyptianHeadline", georgia, serif';
+                articleHeadline.style.fontWeight = 'bold';
+                articleHeadline.style.letterSpacing = '-1px';
+            }
         }
     };
 
     var ready = function (config, context) {
         if (!this.initialised) {
             this.initialised = true;
-            modules.matchNav();
             modules.initLiveBlogging();
             modules.initDiscussion();
-            modules.initDoge();
             modules.initCricket();
-            modules.externalLinksCards();
             modules.initOpen(config);
             modules.initFence();
             modules.initLayoutHints(config);
+            modules.initHelvetica(config);
         }
         common.mediator.emit("page:article:ready", config, context);
     };

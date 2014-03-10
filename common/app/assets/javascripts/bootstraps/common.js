@@ -9,6 +9,7 @@ define([
     'domReady',
     'bonzo',
     'bean',
+    'enhancer',
     'lodash/functions/debounce',
     //Modules
     'common/utils/storage',
@@ -16,7 +17,6 @@ define([
     'common/modules/onward/popular',
     'common/modules/onward/related',
     'common/modules/ui/images',
-    'common/modules/navigation/top-stories',
     'common/modules/navigation/profile',
     'common/modules/navigation/sections',
     'common/modules/navigation/search',
@@ -39,8 +39,8 @@ define([
     "common/modules/ui/message",
     "common/modules/identity/autosignin",
     'common/modules/adverts/article-body-adverts',
+    'common/modules/adverts/dfp',
     "common/modules/analytics/commercial/tags/container",
-    "common/modules/interactive/loader",
     "common/modules/onward/right-hand-component-factory"
 ], function (
     $,
@@ -52,14 +52,14 @@ define([
     domReady,
     bonzo,
     bean,
+    enhancer,
     debounce,
 
     storage,
     detect,
     popular,
-    related,
+    Related,
     images,
-    TopStories,
     Profile,
     Sections,
     Search,
@@ -83,8 +83,8 @@ define([
     Message,
     AutoSignin,
     ArticleBodyAdverts,
+    DFP,
     TagContainer,
-    Interactive,
     RightHandComponentFactory
 ) {
 
@@ -98,8 +98,7 @@ define([
         },
 
         initialiseNavigation: function (config) {
-             var topStories = new TopStories(),
-                sections = new Sections(config),
+            var sections = new Sections(config),
                 search = new Search(config),
                 header = document.getElementById('header');
 
@@ -110,7 +109,6 @@ define([
                     });
                     profile.init();
                 }
-                topStories.load(config, header);
             }
 
             sections.init(document);
@@ -118,9 +116,8 @@ define([
         },
 
         transcludeRelated: function (config, context) {
-            if (!config.switches.abOnwardRelated) {
-                related(config, context);
-            }
+            var r = new Related();
+            r.renderRelatedComponent(config, context);
         },
 
         transcludePopular: function () {
@@ -236,6 +233,8 @@ define([
 
         loadAdverts: function (config) {
             if(!userPrefs.isOff('adverts') && config.switches.adverts && !config.page.blockVideoAds && !config.page.shouldHideAdverts) {
+                var dfpAds = new DFP(config);
+
                 var resizeCallback = function() {
                     hasBreakpointChanged(function() {
                         Adverts.reload();
@@ -260,7 +259,14 @@ define([
                 mediator.on('page:common:deferred:loaded', function(config, context) {
                     Adverts.init(config, context);
                 });
-                mediator.on('modules:adverts:docwrite:loaded', Adverts.load);
+                mediator.on('modules:adverts:docwrite:loaded', function() {
+
+                    if(config.switches.dfpAdverts) {
+                        dfpAds.load();
+                    }
+
+                    Adverts.load();
+                });
 
                 mediator.on('window:resize', debounce(resizeCallback, 2000));
             }
@@ -419,9 +425,8 @@ define([
         augmentInteractive: function () {
             mediator.on('page:common:ready', function(config, context) {
                 if (/Article|Interactive/.test(config.page.contentType)) {
-                    var interactives = context.querySelectorAll('figure.interactive');
-                    Array.prototype.forEach.call(interactives, function (i) {
-                        new Interactive(i, context, config).init();
+                    $('figure.interactive').each(function (el) {
+                        enhancer.render(el, context, config, mediator);
                     });
                 }
             });

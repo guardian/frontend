@@ -1,10 +1,8 @@
 package controllers
 
 import common._
-import conf._
 import model._
 import play.api.mvc._
-import play.api.libs.json._
 import services.{Index, IndexPage}
 import views.support.TemplateDeduping
 
@@ -14,16 +12,25 @@ trait IndexController extends Controller with Index with Logging with Paging wit
   implicit def getTemplateDedupingInstance: TemplateDeduping = TemplateDeduping()
 
   def renderCombiner(leftSide: String, rightSide: String) = DogpileAction { implicit request =>
-    index(Edition(request), leftSide, rightSide).map {
+    logGoogleBot(request)
+    index(Edition(request), leftSide, rightSide, extractPage(request)).map {
       case Left(page) => renderFaciaFront(page)
       case Right(other) => other
+    }
+  }
+
+
+  private def logGoogleBot(request: Request[AnyContent]) = {
+    request.headers.get("User-Agent").filter(_.contains("Googlebot")).foreach { bot =>
+      log.info(s"GoogleBot => ${request.uri}")
     }
   }
 
   def renderJson(path: String) = render(path)
 
   def render(path: String) = DogpileAction { implicit request =>
-    index(Edition(request), path) map {
+    logGoogleBot(request)
+    index(Edition(request), path, extractPage(request)) map {
       case Left(model) => renderFaciaFront(model)
       case Right(other) => other
     }
@@ -31,7 +38,7 @@ trait IndexController extends Controller with Index with Logging with Paging wit
 
   def renderTrailsJson(path: String) = renderTrails(path)
   def renderTrails(path: String) = DogpileAction { implicit request =>
-    index(Edition(request), path) map {
+    index(Edition(request), path, extractPage(request)) map {
       case Left(model) => renderTrailsFragment(model)
       case Right(notFound) => notFound
     }

@@ -2,8 +2,8 @@
    ========================================================================== */
 
 .d2-comment-embedded {
-    background-color: #fff;
-    color: #333;
+    background-color: #ffffff;
+    color: $c-neutral1;
     font-family: sans-serif;
     overflow: hidden;
     position: relative;
@@ -27,7 +27,7 @@
 }
 
 .d2-comment-embedded a {
-    color: #005689;
+    color: $c-newsDefault;
     text-decoration: none;
 }
 

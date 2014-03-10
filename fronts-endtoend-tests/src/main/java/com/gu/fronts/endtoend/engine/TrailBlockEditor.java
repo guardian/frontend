@@ -4,20 +4,18 @@ import hu.meza.aao.RestfulActor;
 import hu.meza.tools.HttpClientWrapper;
 import org.apache.http.cookie.Cookie;
 import org.apache.http.impl.cookie.BasicClientCookie2;
-import org.joda.time.DateTime;
 
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.util.Date;
 
 public class TrailBlockEditor extends RestfulActor {
 
     private final String baseUrl;
-    private final String cookieValue;
+    private final org.openqa.selenium.Cookie cookie;
     private HttpClientWrapper client;
 
-    public TrailBlockEditor(String baseUrl, String cookieValue) {
+    public TrailBlockEditor(String baseUrl, org.openqa.selenium.Cookie playSession) {
         this.baseUrl = baseUrl;
-        this.cookieValue = cookieValue;
+        this.cookie = playSession;
 
         client = new HttpClientWrapper();
         client.dontCareAboutSSL();
@@ -28,23 +26,19 @@ public class TrailBlockEditor extends RestfulActor {
     @Override
     public Cookie authenticationData() {
 
-        String cookieName = "PLAY_SESSION";
-        BasicClientCookie2 cookie = new BasicClientCookie2(cookieName, cookieValue);
+        BasicClientCookie2 authCookie = new BasicClientCookie2(cookie.getName(), cookie.getValue());
+        authCookie.setDomain(cookie.getDomain());
+        authCookie.setPath(cookie.getPath());
+        authCookie.setSecure(cookie.isSecure());
+        setExpiry(authCookie);
 
-        URL url;
-        try {
-            url = new URL(baseUrl);
-        } catch (MalformedURLException e) {
-            throw new RuntimeException(String.format("Could not decode url: %s", baseUrl));
-        }
+        return authCookie;
+    }
 
-        cookie.setDomain(url.getHost());
-        cookie.setPath("/");
-        cookie.setSecure(false);
-        DateTime expiry = new DateTime().plusYears(10);
-        cookie.setExpiryDate(expiry.toDate());
-
-        return cookie;
+    private void setExpiry(BasicClientCookie2 authCookie) {
+        Date expiry = cookie.getExpiry();
+        if(expiry==null) return;
+        authCookie.setExpiryDate(expiry);
     }
 
     public void execute(TrailBlockAction action) {

@@ -11,8 +11,15 @@
 
     .nav__link {
         border-top-color: $c-sportBright;
-        line-height: 21px;
-        line-height: 2.1rem;
+        @include rem((
+            line-height: 21px
+        ));
+        -webkit-font-smoothing: antialiased;
+
+        &:link,
+        &:visited {
+            color: #ffffff;
+        }
     }
 
     .cta {
@@ -35,8 +42,9 @@
 .football-filters__heading {
     font-weight: bold;
     font-family: $sans-serif;
-    font-size: 14px;
-    font-size: 1.4rem;
+    @include rem((
+        font-size: 14px
+    ));
     color: #ffffff;
     padding-bottom: $gs-baseline/3;
     margin-top: 10px;

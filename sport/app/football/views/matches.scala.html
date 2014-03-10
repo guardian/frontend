@@ -1,6 +1,6 @@
 @(model: MatchesPage)(implicit request: RequestHeader)
 
-@main(model.page){
+@main(model.page, "football"){
 }{
 <div class="article__zone left-col-deport tone-news tone-accent-border">
     <h2 class="page-heading--football left-col-deport__body">
@@ -27,6 +27,8 @@
         </div>
     </article>
     @fragments.footballCompetitionNav(model.comp)
-    @views.html.fragments.mostPopularPlaceholder("sport")
 </div>
+
+@views.html.fragments.mostPopularPlaceholder("sport")
+
 }

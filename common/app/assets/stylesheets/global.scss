@@ -42,11 +42,6 @@
 @import "module/_live-filter";
 @import "module/_circular-progress";
 
-@import "module/football/_matches";
-@import "module/sport/_summary";
-@import "module/sport/_mini-scorecard";
-@import "module/sport/_full-scorecard";
-
 @import "module/_discussion";
 @import "module/_interactive";
 @import "module/_overlay";
@@ -56,7 +51,6 @@
 @import "module/onward/_right-recommended";
 @import "module/onward/_popular";
 @import "module/_clamp";
-
 
 /* ==========================================================================
    External modules
@@ -84,14 +78,27 @@
 @import "module/containers/_misc";
 @import "module/containers/_popular";
 @import "module/containers/_related";
+@import "module/facia/_pagination";
+
+
+/* ==========================================================================
+   Sport
+   ========================================================================== */
+@import "module/football/_matches";
+@import "module/football/_tables";
+@import "module/football/_match-stat";
+@import "module/football/_match-summary";
+@import "module/football/_live-summary";
+
+@import "module/sport/_summary";
+@import "module/sport/_mini-scorecard";
+@import "module/sport/_full-scorecard";
 
 
 /* ==========================================================================
    Experiments
    ========================================================================== */
 
-@import "module/experiments/_ab-inline-link-card";
-@import "module/experiments/_ab-inline-elements";
 @import "module/experiments/_ab-football-table-position";
 @import "module/experiments/_layout-hints";
 
