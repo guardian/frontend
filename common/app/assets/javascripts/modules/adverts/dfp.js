@@ -96,7 +96,7 @@ define([
 
     DFP.prototype.loadLibrary = function() {
         var gads   = document.createElement('script'),
-            node   = document.getElementsByTagName('script')[0];
+            node   = document.getElementsByTagName('script')[0],
             useSSL = 'https:' === document.location.protocol;
 
         gads.async = true;
@@ -104,6 +104,10 @@ define([
         gads.src   = (useSSL ? 'https:' : 'http:') + this.config.dfpUrl;
 
         node.parentNode.insertBefore(gads, node);
+    };
+
+    DFP.prototype.destroy = function() {
+        this.dfpAdSlots = [];
     };
 
     DFP.prototype.load = function() {

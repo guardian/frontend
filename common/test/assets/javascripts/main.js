@@ -34,6 +34,9 @@ requirejs.config({
         }
     },
     shim: {
+        postscribe: {
+            exports: 'postscribe'
+        },
         imager: {
             deps: ['/base/common/app/assets/javascripts/components/imager.js/src/imager.js'],
             exports: 'Imager'
