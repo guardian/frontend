@@ -44,7 +44,6 @@ GET         /top-stories/trails                                                 
 GET         /top-stories/trails.json                                                                                 controllers.TopStoriesController.renderJsonTrails()
 GET         /related/*path.json                                                                                      controllers.RelatedController.renderJson(path)
 GET         /related/*path                                                                                           controllers.RelatedController.render(path)
-GET         /popular-in-tag/*tag.json                                                                                controllers.PopularInTag.renderJson(tag)
 
 GET         /preference/platform/:platform                                                                           controllers.ChangeViewController.render(platform, page)
 GET         /preference/edition/:edition                                                                             controllers.ChangeEditionController.render(edition)

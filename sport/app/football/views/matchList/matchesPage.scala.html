@@ -1,9 +1,8 @@
 @(page: model.Page, matchesList: football.model.MatchesList)(implicit request: RequestHeader)
 
 @import football.model._
-@import feed.Competitions
 
-@main(page){
+@main(page, "football"){
 }{
     <div class="article__zone left-col-deport tone-news tone-accent-border">
         <h2 class="page-heading--football left-col-deport__body">
@@ -12,9 +11,9 @@
     </div>
     <div class="article-wrapper monocolumn-wrapper tone-news">
         <article id="article" class="article" itemprop="mainContentOfPage" itemtype="http://schema.org/Article" role="main">
-            <div class="football-leagues">
+            <div class="football-leagues input">
                 <select class="football-leagues__list">
-                    @Competitions().competitions.map{ comp =>
+                    @matchesList.competitions.competitions.map{ comp =>
                         <option>@comp.fullName</option>
                     }
                 </select>

@@ -13,8 +13,10 @@ GET     /register                                       @controllers.Registratio
 POST    /register                                       @controllers.RegistrationController.processForm
 GET     /email-prefs                                    @controllers.EmailController.preferences
 POST    /email-prefs                                    @controllers.EmailController.savePreferences
-GET     /profile/public                                 @controllers.PublicProfileController.displayForm
-POST    /profile/public                                 @controllers.PublicProfileController.submitForm
+GET     /public/edit                                    @controllers.PublicProfileController.displayPublicProfileForm
+GET     /account/edit                                   @controllers.PublicProfileController.displayAccountForm
+POST    /public/edit                                    @controllers.PublicProfileController.submitPublicProfileForm
+POST    /account/edit                                   @controllers.PublicProfileController.submitAccountForm
 GET     /verify-email/:token                            @controllers.EmailVerificationController.verify(token: String)
 
 GET     /ethical-awards/complete                        @controllers.EthicalAwardsController.complete

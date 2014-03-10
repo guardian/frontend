@@ -1,2 +1,15 @@
-.football-leagues {}
-.football-leagues__list {}
+.football-leagues {
+    @include rem((
+        margin: $gs-baseline 0 $gs-baseline*2
+    ));
+}
+
+.football-leagues__list {
+    @include rem((
+        padding: $gs-baseline/2 0
+    ));
+
+    option {
+        @include fs-bodyCopy(3);
+    }
+}
