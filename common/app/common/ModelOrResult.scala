@@ -20,12 +20,14 @@ object ModelOrResult extends Results with Logging {
 // Content API owns the URL space, if they say this belongs on a different URL then we follow
 private object ItemOrRedirect extends ItemResponses with Logging{
 
+  private def paramString(r: RequestHeader) = if (r.rawQueryString.isEmpty) "" else s"?${r.rawQueryString}"
+
   def apply[T](item: T, response: ItemResponse)(implicit request: RequestHeader) = {
     val itemPath = response.webUrl.map(new URI(_)).map(_.getPath)
     itemPath match {
       case Some(itemPath) if needsRedirect(itemPath) =>
-        val redirectPath = request.getQueryString("page").map(page => s"$itemPath?page=$page").getOrElse(itemPath)
-        Right(Found(redirectPath))
+        val itemPathWithQueryString = itemPath + paramString(request)
+        Right(Found(itemPathWithQueryString))
       case _ => Left(item)
     }
   }
