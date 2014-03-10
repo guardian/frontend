@@ -97,8 +97,7 @@ case class CompetitionFixturesList(date: DateMidnight, competitions: Competition
   override def filterMatches(fMatch: FootballMatch, competition: Competition): Boolean =
     competition.id == competitionId && fMatch.isFixture
 }
-case class TeamFixturesList(date: DateMidnight, competitions: CompetitionSupport, teamId: String) extends Fixtures with TeamList {
-  override val daysToDisplay = 20
+case class TeamFixturesList(date: DateMidnight, competitions: CompetitionSupport, teamId: String, daysToDisplay: Int = 20) extends Fixtures with TeamList {
   override def filterMatches(fMatch: FootballMatch, competition: Competition): Boolean =
     fMatch.isFixture && fMatch.hasTeam(teamId)
 }
