@@ -39,11 +39,12 @@ define([
                 id: 'cartoon',
                 test: function (context, config) {
                     ajax({
-                        url: 'http://content.guardianapis.com/search?tag=theguardian%2Fseries%2Fguardiancommentcartoon&page-size=1&show-fields=thumbnail',
-                        type: 'jsonp'
+                        url       : 'tagged.json?tag=theguardian/series/guardiancommentcartoon',
+                        type      : 'json',
+                        crossDomain: true
                     })
                         .then(function(resp) {
-                            var $card = getProperty(resp, 'response.results', [])
+                            var $card = getProperty(resp, 'trails', [])
                                     .map(function(result) {
                                         return bonzo(bonzo.create(
                                             template(
@@ -57,7 +58,7 @@ define([
                                                 {
                                                     headline : result.webTitle,
                                                     url      : result.webUrl.replace(/https?:\/\/[^/]*/, ''),
-                                                    thumbnail: result.fields.thumbnail
+                                                    thumbnail: result.thumbnail
                                                 }
                                             )
                                         ));

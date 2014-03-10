@@ -39,16 +39,17 @@ define([
                 id: 'live',
                 test: function (context, config) {
                     ajax({
-                        url: 'http://content.guardianapis.com/search?tag=tone%2Fminutebyminute&page-size=3&show-fields=liveBloggingNow',
-                        type: 'jsonp'
+                        url        : '/tagged.json?tag=tone/minutebyminute',
+                        type       : 'json',
+                        crossOrigin: true
                     })
                         .then(function(resp) {
-                            var items = getProperty(resp, 'response.results', []).map(function(result, index) {
+                            var items = getProperty(resp, 'trails', []).map(function(result, index) {
                                     return template(
                                         '<li data-link-name="trail | {{index}}" class="card__item">' +
                                             '<a href="{{url}}" class="card__item__link" data-link-name="article">' +
                                                 '<h4 class="card__item__title">' +
-                                                    ((result.fields.liveBloggingNow === 'true') ?
+                                                    ((result.liveBloggingNow === 'true') ?
                                                         '<span class="item__live-indicator">Live</span> ' : '') +
                                                     '{{headline}}' +
                                             '   </h4>' +
