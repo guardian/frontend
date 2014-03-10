@@ -1,164 +1,114 @@
-.football-table__heading {
-    @include rem((
-        margin: $gs-baseline 0
-    ));
-    border-top: 1px solid $c-neutral5;
-    display: block;
+.football-matches {
+    margin-bottom: $gs-baseline*2;
 }
 
-.football-matches__day {
-    .table--football-match {
-        @include rem((
-            margin-bottom: $gs-baseline*2
-        ));
-    }
-}
+.football-match {
+    position: relative;
 
-.js-on .table--football-match {
-    cursor: pointer;
-}
+    &:hover {
+        background: darken($c-neutral8, 4%);
 
-.table--football-match {
-    a,
-    a:hover,
-    a:active,
-    a:focus {
-        color: $c-neutral1;
-        text-decoration: none;
-    }
+        @include mq($from: desktop) {
+            .football-match__report {
+                visibility: visible;
 
-    tr:hover {
-        background-color: darken($c-neutral8, 4%);
-
-        a {
-            visibility: visible;
+                a {
+                    @include rem((
+                        padding-left: $gs-gutter/2
+                    ));
+                    background: darken($c-neutral8, 4%);
+                }
+            }
         }
     }
 }
 
 .football-match--live {
-    td {
-        font-weight: bold;
-    }
-
     .football-match__status {
-        color: $c-newsAccent;
-    }
-}
-
-.football-match--result {
-    .football-match__status {
+        colour: $c-newsAccent;
         font-weight: 900;
     }
 }
 
-.football-match__status {
-    width: 20%;
-
-    @include mq($to: tablet) {
-        width: auto;
-    }
-}
-
-.football-match__details {
-    width: 60%;
-    text-align: center;
-
-    @include mq($to: tablet) {
-        width: 100%;
-    }
-}
-
 .football-match__report {
-    text-align: right;
-    width: 20%;
-    white-space: nowrap;
-
-    a {
-        @include fs-data(2);
-        text-decoration: underline;
-        visibility: hidden;
-    }
-
-    @include mq($to: tablet) {
-        display: none;
-    }
+    position: absolute;
+    right: 0;
+    visibility: hidden;
 }
 
-.article__secondary-column {
-    .table__container {
+/* Teams */
+.football-match__teams {
+    position: relative;
+}
+
+.football-match__team {
+    @include box-sizing(border-box);
+    display: inline-block;
+    position: relative;
+    width: 50%;
+}
+
+.football-match__team--home {
+    @include rem((
+        padding-right: $gs-gutter*1.5
+    ));
+    float: left;
+    text-align: right;
+
+    .football-team__score {
         @include rem((
-            margin-bottom: $gs-baseline
+            right: $gs-gutter/2
         ));
     }
 }
 
-.details__match-teams {
-    position: relative;
-}
-
-.details__team {
-    display: inline-block;
-    overflow: hidden;
-    position: relative;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    width: 49%;
-}
-
-.details__team--home {
-    text-align: right;
-
-    .team__score {
-        right: ($gs-gutter/4)+3;
-    }
-}
-
-.details__team--away {
+.football-match__team--away {
+    @include rem((
+        padding-left: $gs-gutter*1.5
+    ));
+    float: right; /* [1] */
     text-align: left;
 
-    .team__score {
-        left: ($gs-gutter/4)+3;
-    }
-
-    .team__name {
+    .football-team__score {
         @include rem((
-            padding: 0 0 0 $gs-gutter*2
+            left: $gs-gutter/2
         ));
     }
 }
 
-.details__versus {
-    color: $c-statusNeutral;
-}
-
-.details__versus,
-.details__score {
-    display: inline-block;
+.football-team__name {
     overflow: hidden;
+    text-overflow: clip;
     white-space: nowrap;
-    width: 15%;
 }
 
-.details__meta {
-    @include fs-data(2);
+.football-team__score {
+    position: absolute;
+    top: 0;
+}
+
+.football-teams__battleline {
     @include rem((
-        margin-top: $gs-baseline/2
+        top: 24%
     ));
-}
-
-.matches-nav {
+    left: 0; /* [1] */
+    position: absolute;
     text-align: center;
-}
+    width: 100%;
 
-.team__battle-line--small {
-    @include fs-data(2);
-    display: block;
-    top: 2px;
-}
-
-.team__battle-line--fixture {
     &:after {
-        content: 'v';
+        content: "\2013";
     }
 }
+
+.football-match--fixture {
+    .football-teams__battleline {
+        &:after {
+            content: "v";
+        }
+    }
+}
+
+/* Footnotes */
+// [1] See: http://css-tricks.com/fighting-the-space-between-inline-block-elements/
+//     It would be nice to not do this, but I felt the tidyness of the HTML was more important in this instant.
