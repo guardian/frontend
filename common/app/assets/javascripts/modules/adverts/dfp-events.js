@@ -5,14 +5,9 @@ https://github.com/mcountis/dfp-events
 
 MIT License: http://opensource.org/licenses/MIT
 */
-define(['js!'+ (document.location.protocol === 'https:' ? 'https' : 'http') +'://www.googletagservices.com/tag/js/gpt.js'], function() {
+define(function() {
 
-    'use strict';
-
-    window.googletag = window.googletag || {};
-    window.googletag.cmd = window.googletag.cmd || [];
-
-    googletag.cmd.push(function() {
+    var init = function() {
 
         if(googletag.hasOwnProperty('on') || googletag.hasOwnProperty('off') || googletag.hasOwnProperty('trigger') || googletag.hasOwnProperty('events')) {
             return;
@@ -141,5 +136,9 @@ define(['js!'+ (document.location.protocol === 'https:' ? 'https' : 'http') +':/
 
             return old_log.apply(this,arguments);
         };
-    });
+    };
+
+    return {
+        init: init
+    };
 });
