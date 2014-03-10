@@ -164,8 +164,9 @@
         ));
     }
     .is-active .nav__link {
-        color: $c-brandLightBlue;
+        color: map-get($c-brandLightBlueAccessible, c-neutral8);
     }
+
     .nav__link,
     .nav__link:active,
     .nav__link:focus,
@@ -209,10 +210,14 @@
                                              // text looks cleaner that way
         color: #ffffff;
     }
-    .is-active .nav__link:after {
-        border-bottom-color: transparent;
-        border-top-color: $c-brandBlue;
-        bottom: -24px;
+    .is-active .nav__link {
+        color: lighten($c-brandLightBlue, 10%);
+
+        &:after {
+            border-bottom-color: transparent;
+            border-top-color: $c-brandBlue;
+            bottom: -24px;
+        }
     }
 }
 

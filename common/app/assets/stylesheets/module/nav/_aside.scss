@@ -74,7 +74,7 @@
 }
 
 .switcher__option--active {
-    color: $c-brandLightBlue;
+    color: map-get($c-brandLightBlueAccessible, white);
 
     &:before {
         content: '';
