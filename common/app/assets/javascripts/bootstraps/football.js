@@ -1,21 +1,25 @@
 define([
     'common/$',
     'bonzo',
+    'bean',
     'common/utils/context',
     'common/utils/config',
     'common/modules/sport/football/match-info',
-    'common/modules/sport/football/score-board'
+    'common/modules/sport/football/score-board',
+    'common/modules/sport/football/table'
 ], function (
     $,
     bonzo,
+    bean,
     context,
     config,
     MatchInfo,
-    ScoreBoard
+    ScoreBoard,
+    Table
 ) {
     context = context();
 
-    function isAMatch(yes) {
+    function isAMatchPage(yes) {
         var teams = config.referencesOfType('paFootballTeam'),
             footballMatch = config.page.footballMatch;
 
@@ -28,8 +32,15 @@ define([
         }
     }
 
-    function ready() {
-        isAMatch(function(match) {
+    function isACompetitionPage(yes) {
+        var competition = ($('.js-football-competition').attr('data-link-name') || '').replace('keyword: ', '');
+        if (competition) {
+            return yes(competition);
+        }
+    }
+
+    function init() {
+        isAMatchPage(function(match) {
             var $h = $('.article__headline', context),
                 matchInfo = new MatchInfo(match, config.page.pageId),
                 scoreBoard = new ScoreBoard(),
@@ -54,17 +65,25 @@ define([
             });
         });
 
-        /*var trs = $('.table tr[data-link-to]').css({ 'cursor': 'pointer' }).map(function(elem) { return elem; });
+        isACompetitionPage(function(competition) {
+            var table = new Table(competition),
+                tableEl = bonzo.create('<div class="js-football-table" data-link-name="football-table-embed"></div>');
+
+            $('.js-right-hand-component', context).append(tableEl);
+            table.fetch(tableEl);
+        });
+
+
+        var trs = $('.table tr[data-link-to]').css({ 'cursor': 'pointer' }).map(function(elem) { return elem; });
         bean.on(context, 'click', trs, function(e) {
             window.location = this.getAttribute('data-link-to');
-        });*/
+        });
     }
 
-
-
     return {
-        isAMatch: isAMatch,
-        init: ready
+        isAMatchPage: isAMatchPage,
+        isACompetition: isACompetitionPage,
+        init: init
     };
 
 });
