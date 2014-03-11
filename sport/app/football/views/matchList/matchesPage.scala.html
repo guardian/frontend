@@ -21,7 +21,7 @@
                     <div class="football-leagues football-leagues--list js-hidden">
                         <ul class="football-leagues-list unstyled">
                             @matchesList.competitions.competitions.map{ comp =>
-                            <li class="football-leagues__item"><a href="@comp.url/@matchesList.pageType">@comp.fullName</option></a></li>
+                            <li class="football-leagues__item"><a href="@comp.url/@matchesList.pageType" data-link-name="view competition @matchesList.pageType">@comp.fullName</option></a></li>
                             }
                         </ul>
                     </div>

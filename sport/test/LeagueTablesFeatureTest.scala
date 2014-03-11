@@ -33,12 +33,13 @@ class LeagueTablesFeatureTest extends FeatureSpec with GivenWhenThen with Matche
       HtmlUnit("/football/premierleague/table") { browser =>
         import browser._
 
-        $("h1").getTexts should contain("Premier League table")
-        val teams = $(".table--football td").getTexts
+        Then("I should see all the teams in this league")
+        val teams = $(".football-stat--team").getTexts
         teams should contain("Arsenal")
-
         teams should contain ("Wigan") // I can now see all items
 
+        And("I should see a nice SEO h1 el on the page, describing the current competition")
+        $("h1").getTexts should contain("Premier League table")
         $("h1").getTexts should not contain("Championship League table")
       }
     }
