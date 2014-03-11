@@ -1,6 +1,9 @@
 @(page: MatchPage)(implicit request: RequestHeader)
-@import feed._
+
 @import implicits.Football._
+
+@main(page, "football"){
+}{
 
 <h2 class="article__zone left-col-deport tone-news tone-accent-border">
     <span class="left-col-deport__body">
@@ -11,7 +14,7 @@
     <article class="article football-article @if(page.theMatch.isLive){is-live}" role="main">
         <div class="article__inner article__inner--head">
             <header class="article__head">
-                @matchSummary(page.theMatch)
+                @football.views.html.fragments.matchSummary(page.theMatch)
             </header>
             <div class="after-header">
                 @* this 'Stats' header gets replaced by the match navigation tabs (if available) *@
@@ -25,9 +28,9 @@
                 <div class="js-article__container article__container u-cf">
 
                     @if(page.theMatch.isLive) {
-                        <div class="live-toolbar">
-                            <div class="update update-live-matches update-match-stats" data-link-name="autoupdate"></div>
-                        </div>
+                    <div class="live-toolbar">
+                        <div class="update update-live-matches update-match-stats" data-link-name="autoupdate"></div>
+                    </div>
                     }
                     <div class="match-stats">
                         @matchStats(page)
@@ -54,3 +57,5 @@
 </div>
 
 @fragments.mostPopularPlaceholder("sport")
+
+}

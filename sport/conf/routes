@@ -36,17 +36,6 @@ GET        /football/tables.json                                                
 GET        /football/:competition/table                                                        football.controllers.LeagueTableController.renderCompetition(competition)
 GET        /football/:competition/table.json                                                   football.controllers.LeagueTableController.renderCompetitionJson(competition)
 
-GET        /football/api/frontscores                                                           football.controllers.FrontScoresController.renderFrontScores()
-GET        /football/api/frontscores.json                                                      football.controllers.FrontScoresController.renderFrontScoresJson()
-GET        /football/api/competitiontable                                                      football.controllers.CompetitionTablesController.renderCompetition()
-GET        /football/api/competitiontable.json                                                 football.controllers.CompetitionTablesController.renderCompetitionJson()
-GET        /football/api/teamtable/:teamId.json                                                football.controllers.CompetitionTablesController.renderTeamJson(teamId)
-GET        /football/api/teamtable/:teamId                                                     football.controllers.CompetitionTablesController.renderTeam(teamId)
-GET        /football/api/teamfixtures/:teamId.json                                             football.controllers.FixturesController.teamFixturesComponentJson(teamId)
-GET        /football/api/teamfixtures/:teamId                                                  football.controllers.FixturesController.teamFixturesComponent(teamId)
-
-GET        /football/api/matchDay                                                              football.controllers.LiveMatchesController.matchDayComponent
-
 GET        /football/api/match-nav/:year/:month/:day/:home/:away.json                          football.controllers.MoreOnMatchController.matchNavJson(year, month, day, home, away)
 GET        /football/api/match-nav/:year/:month/:day/:home/:away                               football.controllers.MoreOnMatchController.matchNav(year, month, day, home, away)
 GET        /football/api/match-nav/:matchId.json                                               football.controllers.MoreOnMatchController.moreOnJson(matchId)

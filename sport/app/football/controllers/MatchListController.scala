@@ -20,9 +20,9 @@ trait MatchListController extends Controller with Requests {
     Cached(page) {
       if (request.isJson)
         JsonComponent(
-          page,
-          "html" -> football.views.html.matchList.matchesList(matchesList),
-          "more" -> Html(matchesList.nextPage.getOrElse(""))
+          "html" -> football.views.html.matchList.matchesComponent(matchesList),
+          "next" -> Html(matchesList.nextPage.getOrElse("")),
+          "previous" -> Html(matchesList.previousPage.getOrElse(""))
         )
       else
         Ok(football.views.html.matchList.matchesPage(page, matchesList))

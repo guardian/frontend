@@ -2,7 +2,7 @@
 
 @import football.model._
 
-@main(page){
+@main(page, "football"){
 }{
     <div class="article__zone left-col-deport tone-news tone-accent-border">
         <h2 class="page-heading--football left-col-deport__body">
@@ -11,15 +11,59 @@
     </div>
     <div class="article-wrapper monocolumn-wrapper tone-news">
         <article id="article" class="article" itemprop="mainContentOfPage" itemtype="http://schema.org/Article" role="main">
+            <form class="football-leagues js-visible" method="get">
+                <label for="football-leagues" class="football-leagues__label">Choose league: </label>
+                <select class="football-leagues__list" name="competitionUrl" id="football-leagues">
+                    @matchesList.competitions.competitions.map{ comp =>
+                        <option
+                            @matchesList match {
+                                case ml: CompetitionList if ml.competitionId == comp.id => { selected="selected"}
+                                case _ => {}
+                            }
+                            value="@comp.url">@comp.fullName</option>
+                    }
+                </select>
+                <input type="hidden" name="pageType" value="@matchesList.pageType" />
+            </form>
+
             <div class="article__columning-wrapper">
                 <div class="article__main-column">
-                    @football.views.html.matchList.matchesList(matchesList)
-                </div>
-            </div>
+                    <div class="football-leagues football-leagues--list js-hidden">
+                        <ul class="football-leagues-list unstyled">
+                            @matchesList.competitions.competitions.map{ comp =>
+                            <li class="football-leagues__item"><a href="@comp.url/@matchesList.pageType" data-link-name="view competition @matchesList.pageType">@comp.fullName</option></a></li>
+                            }
+                        </ul>
+                    </div>
 
-            <div class="article__secondary-column" aria-hidden="true">
-                <div class="article__secondary-column__inner article__secondary-column__inner--fill-vertically">
-                    @* TODO (jamesgorrie): add onwards journeys *@
+                    @matchesList.matchesGroupedByDateAndCompetition.map { case (date, competitionMatches) =>
+                        <div class="football-matches__day">
+                            <div class="date-divider">@date.toString("EEEE d MMMM yyyy")</div>
+                            @competitionMatches.map { case (competition, matches) =>
+                                <div class="football-table__container">
+                                    <div class="article__meta-container">
+                                        <h3 class="article__meta-heading"><a href="@LinkTo{@competition.url}" data-link-name="view competition">@competition.fullName</a></h3>
+                                    </div>
+
+                                    <div class="article__container u-cf">
+                                        @football.views.html.matchList.matchesList(matches, competition)
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
+
+                    @if(matchesList.previousPage.isDefined || matchesList.nextPage.isDefined) {
+                        <div class="js-matches-nav matches-nav u-cf js-not-ajax" data-link-name="@matchesList.pageType nav">
+                            @matchesList.previousPage.map{url => <a href="@LinkTo{@url}" data-link-name="previous"><span class="i i-toggle-collapse-neutral" title="Previous day"></span></a>}
+                            @matchesList.nextPage.map{url => <a href="@LinkTo{@url}" data-link-name="next"><span class="i i-toggle-expand-neutral" title="Next few days"></span></a>}
+                        </div>
+                    }
+                </div>
+
+                <div class="article__secondary-column" aria-hidden="true">
+                    <div class="article__secondary-column__inner article__secondary-column__inner--fill-vertically">
+                    </div>
                 </div>
             </div>
         </article>

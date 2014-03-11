@@ -3,8 +3,9 @@ package test
 import org.scalatest.{ FeatureSpec, GivenWhenThen }
 import org.scalatest.Matchers
 import collection.JavaConversions._
+import tools.MatchListFeatureTools
 
-class ResultsFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
+class ResultsFeatureTest extends FeatureSpec with GivenWhenThen with Matchers with MatchListFeatureTools {
 
   feature("Football Results") {
 
@@ -15,16 +16,21 @@ class ResultsFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
       HtmlUnit("/football/results") { browser =>
         import browser._
 
-        val matches = $(".details__match-teams").getTexts
+        val matches = $(".football-match__team")
 
         Then("I should see results for previous days")
-        matches should contain ("Sunderland 1 - 1 West Ham")
-        matches should contain ("Wigan 1 - 1 Everton")
-        matches should contain ("Bolton 1 - 1 Derby")
-        matches should contain ("Fulham 0 - 0 Norwich")
+        assertTeamWithScore(matches, "Sunderland", "1")
+        assertTeamWithScore(matches, "West Ham", "1")
+        assertTeamWithScore(matches, "Wigan", "1")
+        assertTeamWithScore(matches, "Everton", "1")
+        assertTeamWithScore(matches, "Bolton", "1")
+        assertTeamWithScore(matches, "Derby", "1")
+        assertTeamWithScore(matches, "Fulham", "0")
+        assertTeamWithScore(matches, "Norwich", "0")
 
         And("I should not see today's live matches")
-        matches should not contain ("Arsenal 1 - 0 Spurs")
+        assertNotTeamWithScore(matches, "Arsenal", "1")
+        assertNotTeamWithScore(matches, "Spurs", "0")
       }
     }
 
@@ -37,7 +43,9 @@ class ResultsFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         findFirst("[data-link-name=next]").click()
 
         Then("I should see additional results")
-        $(".details__match-teams").getTexts should contain ("Stoke 1 - 1 Villa")
+        val matches = $(".football-match__team")
+        assertTeamWithScore(matches, "Stoke", "1")
+        assertTeamWithScore(matches, "Villa", "1")
       }
     }
 
@@ -53,10 +61,13 @@ class ResultsFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         browser.await()
 
         Then("I should navigate to the premier league results page")
-        $(".details__match-teams").getTexts should contain("Arsenal 1 - 0 Spurs")
+        val matches = $(".football-match__team")
+        assertTeamWithScore(matches, "Arsenal", "1")
+        assertTeamWithScore(matches, "Spurs", "0")
 
         And("I should not see other leagues results")
-        $(".details__match-teams").getTexts should not contain("Bolton 1 - 1 Derby")
+        assertNotTeamWithScore(matches, "Bolton", "1")
+        assertNotTeamWithScore(matches, "Derby", "1")
       }
     }
 

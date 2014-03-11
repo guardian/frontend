@@ -2,8 +2,10 @@ package test
 
 import org.scalatest.{ FeatureSpec, GivenWhenThen }
 import org.scalatest.Matchers
+import tools.MatchListFeatureTools
 
-class LiveMatchesFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
+
+class LiveMatchesFeatureTest extends FeatureSpec with GivenWhenThen with Matchers with MatchListFeatureTools {
 
   feature("Live Matches") {
 
@@ -13,12 +15,18 @@ class LiveMatchesFeatureTest extends FeatureSpec with GivenWhenThen with Matcher
 
       HtmlUnit("/football/live") { browser =>
         import browser._
+
+        val matches = $(".football-match__team")
+
         Then("I should see todays live matches")
-        val matches = $(".details__match-teams").getTexts
-        matches should contain ("Arsenal 1 - 0 Spurs")
-        matches should contain ("Chelsea 0 - 0 Man U")
+        assertTeamWithScore(matches, "Arsenal", "1")
+        assertTeamWithScore(matches, "Spurs", "0")
+        assertTeamWithScore(matches, "Man U", "0")
+        assertTeamWithScore(matches, "Chelsea", "0")
+
         And("Should not show matches that have finished")
-        matches should not contain ("Sunderland 1 - 1 West Ham")
+        assertNotTeamWithScore(matches, "Sunderland", "1")
+        assertNotTeamWithScore(matches, "West Ham", "1")
       }
     }
 
@@ -27,11 +35,15 @@ class LiveMatchesFeatureTest extends FeatureSpec with GivenWhenThen with Matcher
       Given("I am on the premier league live matches page")
       HtmlUnit("/football/premierleague/live") { browser =>
         import browser._
+
+        val matches = $(".football-match__team")
+
         Then("I should see premier league live games")
-        $(".details__match-teams").getTexts should contain ("Arsenal 1 - 0 Spurs")
+        assertTeamWithScore(matches, "Arsenal", "1")
+        assertTeamWithScore(matches, "Spurs", "0")
 
         And("I should not see other leagues games")
-        $(".details__match-teams").getTexts should not contain ("Cardiff 2 - 0 Brighton")
+        assertNotTeamWithScore(matches, "Cardiff", "2")
       }
     }
 
@@ -54,8 +66,6 @@ class LiveMatchesFeatureTest extends FeatureSpec with GivenWhenThen with Matcher
         Then("the 'Classic version' link should point to '/football/matches?view=classic'")
         findFirst(".js-main-site-link").getAttribute("href") should be(ClassicVersionLink("/football/live"))
       }
-
     }
-
   }
 }
