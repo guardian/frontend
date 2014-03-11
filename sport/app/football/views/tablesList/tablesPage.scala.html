@@ -1,17 +1,56 @@
-@(model: TablesPage)(implicit request: RequestHeader)
+@(page: TablesPage, competitions: Seq[model.Competition])(implicit request: RequestHeader)
 
-@main(model.page, "football"){
+@main(page.page, "football"){
 }{
 <div class="article__zone left-col-deport tone-news tone-accent-border">
-    <h2 class="page-heading--football left-col-deport__body">
+    <@if(!page.singleCompetition){h1}else{h2} class="page-heading--football left-col-deport__body">
         tables
-    </h2>
+    </@if(!page.singleCompetition){h1}else{h2}>
 </div>
+
 <div class="article-wrapper monocolumn-wrapper tone-news">
     <article id="article" class="article" itemprop="mainContentOfPage" itemtype="http://schema.org/Article" role="main">
+        @football.views.html.fragments.leagueSelector(competitions, "table", page.comp)
+
         <div class="article__columning-wrapper">
             <div class="article__main-column">
-                @football.views.html.tablesList.tablesBody(model)
+                @page.tables.map { table =>
+                    <div class="football-table__container">
+                        <div class="article__meta-container">
+                            @if(page.singleCompetition){
+                                <h1 class="article__meta-heading"><a href="@table.competition.url">@table.competition.fullName</a></h1>
+                                <p class="article__dateline" aria-hidden="true">
+                                    <i class="i i-clock-grey relative-timestamp__icon"></i>
+                                    <time itemprop="datePublished">
+                                        Last updated: a minute ago
+                                    </time>
+                                </p>
+                            } else {
+                                <h3 class="article__meta-heading"><a href="@table.competition.url">@table.competition.fullName</a></h3>
+                            }
+                        </div>
+
+                        <div class="article__container u-cf">
+                            @table.groups.map{ group =>
+                                @if(table.multiGroup){
+                                    @group.round.map { round =>
+                                        @round.name.map { name =>
+                                            <div class="football__group">
+                                                <h4 class="table__headline">@name</h4>
+                                                @tableView(table.competition, group)
+                                            </div>
+                                        }
+                                    }
+                                }else{
+                                    @tableView(table.competition, group)
+                                }
+                            }
+                            @if(!page.singleCompetition){
+                                <a href='@{table.competition.url + "/table"}' data-link-name="full table" class="cta-small tone-colour">View full @table.competition.fullName table<i class="i i-sport-arrow i-sport-arrow--small"></i></a>
+                            }
+                        </div>
+                    </div>
+                }
             </div>
 
             <div class="article__secondary-column" aria-hidden="true">
@@ -21,9 +60,8 @@
             </div>
         </div>
     </article>
-    @football.views.html.fragments.footballCompetitionNav(model.comp)
+    @football.views.html.fragments.footballCompetitionNav(page.comp)
 </div>
 
 @views.html.fragments.mostPopularPlaceholder("sport")
-
 }

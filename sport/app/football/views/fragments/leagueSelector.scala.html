@@ -1,0 +1,10 @@
+@(competitions: Seq[model.Competition], pageType: String, selectedCompetition: Option[model.Competition])(implicit request: RequestHeader)
+<form class="football-leagues js-visible" method="get">
+    <label for="football-leagues" class="football-leagues__label">Choose league: </label>
+    <select class="football-leagues__list" name="competitionUrl" id="football-leagues">
+        @competitions.map{ comp =>
+            <option value="@comp.url">@comp.fullName</option>
+        }
+    </select>
+    <input type="hidden" name="pageType" value="@pageType" />
+</form>

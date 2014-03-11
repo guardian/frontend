@@ -11,20 +11,10 @@
     </div>
     <div class="article-wrapper monocolumn-wrapper tone-news">
         <article id="article" class="article" itemprop="mainContentOfPage" itemtype="http://schema.org/Article" role="main">
-            <form class="football-leagues js-visible" method="get">
-                <label for="football-leagues" class="football-leagues__label">Choose league: </label>
-                <select class="football-leagues__list" name="competitionUrl" id="football-leagues">
-                    @matchesList.competitions.competitions.map{ comp =>
-                        <option
-                            @matchesList match {
-                                case ml: CompetitionList if ml.competitionId == comp.id => { selected="selected"}
-                                case _ => {}
-                            }
-                            value="@comp.url">@comp.fullName</option>
-                    }
-                </select>
-                <input type="hidden" name="pageType" value="@matchesList.pageType" />
-            </form>
+            @football.views.html.fragments.leagueSelector(matchesList.competitions.competitions, matchesList.pageType, matchesList match {
+                case ml: CompetitionList => ml.competition
+                case _ => None
+            })
 
             <div class="article__columning-wrapper">
                 <div class="article__main-column">
