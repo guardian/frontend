@@ -14,7 +14,7 @@ object Title {
       case t: Tag     => s"${t.webTitle}${pagination(page)}${section.map(s => s" | ${s.capitalize}").getOrElse("")}"
       case _          => s"${page.webTitle}${pagination(page)}${section.map(s => s" | ${s.capitalize}").getOrElse("")}"
     }
-    title.trim + " | The Guardian"
+    s"${title.trim} | The Guardian"
   }
 
   private def pagination(page: MetaData) = page.pagination.filterNot(_.isFirstPage).map{ pagination =>
