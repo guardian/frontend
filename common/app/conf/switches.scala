@@ -341,11 +341,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 3, 15)
   )
 
-  val FootballTablePosition = Switch("A/B Tests", "ab-football-table-position",
-    "If this switch is on, the football table will vary in position throughout the football tagged pages.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 3, 12)
-  )
-
   // Sport Switch
 
   val LiveCricketSwitch = Switch("Live Cricket", "live-cricket",
@@ -450,7 +445,6 @@ object Switches extends Collections {
     ABAa,
     ABRecommendedRightHand,
     GeoMostPopular,
-    FootballTablePosition,
     ToolDisable,
     ToolConfigurationDisable,
     ToolSparklines,
