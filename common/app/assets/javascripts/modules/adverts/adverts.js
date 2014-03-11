@@ -23,49 +23,35 @@ function (
     userAdTargeting
 ) {
 
-    var currConfig,
-        currContext,
-        slots,
-        contexts = {};
+    var slots,
+        currConfig;
 
-    function init(config, context) {
-        var id = context.id;
+    function init(config) {
+        slots = [];
+        currConfig = config;
 
-        if(id) {
+        var size = (window.innerWidth > 810) ? 'median' : 'base';
 
-            contexts[id] = context;
-            currConfig  = config;
-            currContext = context;
-            slots = [];
+        // Run through slots and create documentWrite for each.
+        // Other ad types such as iframes and custom can be plugged in here later
 
-            var size = (window.innerWidth > 810) ? 'median' : 'base';
+        var els = document.querySelectorAll('.ad-slot');
 
-            // Run through slots and create documentWrite for each.
-            // Other ad types such as iframes and custom can be plugged in here later
+        for(var i = 0, l = els.length; i < l; i++) {
+            var el = els[i];
 
-            for (var c in contexts) {
-                var els = contexts[c].querySelectorAll('.ad-slot');
+            if($(el).css('display') !== 'none') {
+                var container = el.querySelector('.ad-container'),
+                    name,
+                    slot;
 
-                for(var i = 0, l = els.length; i < l; i++) {
-                    var el = els[i];
+                // Empty all ads in the DOM
+                container.innerHTML = '';
 
-                    if($(el).css('display') !== 'none') {
-                        var container = el.querySelector('.ad-container'),
-                            name,
-                            slot;
-
-                        // Empty all ads in the DOM
-                        container.innerHTML = '';
-
-                        // Load the currContext ads only
-                        if (contexts[c] === currContext) {
-                            name = el.getAttribute('data-' + size);
-                            slot = new DocumentWriteSlot(name, container);
-                            slot.setDimensions(dimensionMap[name]);
-                            slots.push(slot);
-                        }
-                    }
-                }
+                name = el.getAttribute('data-' + size);
+                slot = new DocumentWriteSlot(name, container);
+                slot.setDimensions(dimensionMap[name]);
+                slots.push(slot);
             }
         }
 
@@ -98,7 +84,7 @@ function (
 
     function reload() {
         destroy();
-        init(currConfig, currContext);
+        init(currConfig);
     }
 
     function isOnScreen(el) {
