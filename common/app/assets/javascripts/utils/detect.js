@@ -109,12 +109,6 @@ define([
         return format;
     }
 
-    // http://modernizr.com/download/#-svg
-    function hasSvgSupport() {
-        var ns = {'svg': 'http://www.w3.org/2000/svg'};
-        return !!document.createElementNS && !!document.createElementNS(ns.svg, 'svg').createSVGRect;
-    }
-
     function hasCSSSupport(property, value, noPrefixes) {
         // Thanks Modernizr: https://github.com/filamentgroup/fixed-sticky/blob/master/fixedsticky.js
         // and Filament Group: https://github.com/filamentgroup/fixed-sticky/blob/master/fixedsticky.js
@@ -235,7 +229,6 @@ define([
         getConnectionSpeed: getConnectionSpeed,
         getFontFormatSupport: getFontFormatSupport,
         getVideoFormatSupport: getVideoFormatSupport,
-        hasSvgSupport: hasSvgSupport,
         hasCSSSupport: hasCSSSupport,
         hasTouchScreen: hasTouchScreen,
         hasPushStateSupport: hasPushStateSupport,
