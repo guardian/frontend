@@ -252,3 +252,12 @@
         border-top: none; // Included so as not to break tabs metaphor
     }
 }
+
+/* Public Profile Page
+   ========================================================================== */
+
+.identity-public-profile {
+    .identity-section__text {
+        white-space: pre-line;
+    }
+}
