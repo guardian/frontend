@@ -5,6 +5,7 @@ define([
     'qwery',
     'bean',
     'common/modules/component',
+    'common/modules/analytics/register',
     'common/modules/analytics/discussion',
     'common/modules/identity/api',
     'common/modules/discussion/api',
@@ -18,6 +19,7 @@ define([
     qwery,
     bean,
     Component,
+    register,
     DiscussionAnalytics,
     Id,
     DiscussionApi,
@@ -42,6 +44,7 @@ var Loader = function(context, mediator, options) {
     this.context = context || document;
     this.mediator = mediator;
     this.setOptions(options);
+    register.begin('discussion');
 };
 Component.define(Loader);
 
@@ -133,6 +136,8 @@ Loader.prototype.ready = function() {
     if (window.location.hash === '#comments') {
         this.mediator.emit('discussion:seen:comments-anchor');
     }
+
+    register.end('discussion');
 };
 
 Loader.prototype.loadComments = function(args) {
