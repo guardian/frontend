@@ -355,6 +355,7 @@
     @include rounded-corners($buttonSize);
     position: relative;
     display: inline-block;
+
     .i {
         position: absolute;
         text-indent: -9999px;
