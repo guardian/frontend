@@ -52,7 +52,7 @@
     @include rem((
         padding-right: $gs-gutter*1.5
     ));
-    float: left;
+    float: left; /* [1] */
     text-align: right;
 
     .football-team__score {
@@ -87,11 +87,18 @@
     top: 0;
 }
 
+.football-team__form {
+    @include rem((
+        margin-top: 2px
+    ));
+}
+
 .football-teams__battleline {
     @include rem((
-        top: 24%
+        top: 18%
     ));
-    left: 0; /* [1] */
+    color: $c-neutral2;
+    left: 0;
     position: absolute;
     text-align: center;
     width: 100%;
