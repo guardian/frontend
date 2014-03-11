@@ -10,9 +10,9 @@ object Title {
   def apply(page: MetaData)(implicit request: RequestHeader): Html = Html{
     val section = Navigation.topLevelItem(Edition(request).navigation(page), page).map(_.name.title)
     val title = page match {
-      case c: Content => s"${c.webTitle} | ${section.getOrElse(c.sectionName).capitalize}"
-      case t: Tag     => s"${t.webTitle}${section.map(s => s" | ${s.capitalize}").getOrElse("")}"
-      case _          => s"${page.webTitle}${section.map(s => s" | ${s.capitalize}").getOrElse("")}"
+      case c: Content => s"${c.webTitle}${pagination(page)} | ${section.getOrElse(c.sectionName).capitalize}"
+      case t: Tag     => s"${t.webTitle}${pagination(page)}${section.map(s => s" | ${s.capitalize}").getOrElse("")}"
+      case _          => s"${page.webTitle}${pagination(page)}${section.map(s => s" | ${s.capitalize}").getOrElse("")}"
     }
     title.trim + " | The Guardian"
   }
