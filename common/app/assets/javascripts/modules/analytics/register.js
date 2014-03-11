@@ -18,10 +18,18 @@ define([
 
     function end(name) {
         _where(register, {name: name})
-        .forEach(function(module){
-            module.status = "completed";
-            module.loadTime = Date.now() - startTime + "ms";
-        });
+            .forEach(function(module){
+                module.status = "completed";
+                module.endTime = Date.now() - startTime + "ms";
+            });
+    }
+
+    function error(name) {
+        _where(register, {name: name})
+            .forEach(function(module){
+                module.status = "failed";
+                module.endTime = Date.now() - startTime + "ms";
+            });
     }
 
     function initialise() {
@@ -35,6 +43,7 @@ define([
     return {
         initialise: initialise,
         begin: begin,
-        end: end
+        end: end,
+        error: error
     };
 });
