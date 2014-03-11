@@ -8,13 +8,6 @@ if [ -f "~/.sbtconfig" ]; then
   . ~/.sbtconfig
 fi
 
-# SBT configuration
-export SBT_BOOT_DIR=${HOME}/.sbt/boot/
-
-if [ ! -d "${SBT_BOOT_DIR}" ]; then
-  mkdir -p ${SBT_BOOT_DIR}
-fi
-
 # Debug option
 DEBUG_PARAMS=""
 for arg in "$@"
@@ -65,7 +58,6 @@ echo ''
 fake_secret="myKV8HQkjcaxygbDuyneHBeyFgsyyM8yCFFOxyDoT0QGuyrY7IyammSyP1VivCxS"
 
 java $FRONTEND_JVM_ARGS  \
-  -Dsbt.boot.directory=$SBT_BOOT_DIR \
   $DEBUG_PARAMS \
   -DAPP_SECRET=$fake_secret \
   -jar `dirname $0`/dev/sbt-launch-0.13.0.jar "$@"

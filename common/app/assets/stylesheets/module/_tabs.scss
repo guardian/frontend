@@ -15,7 +15,7 @@
     border-bottom: none;
     list-style-type: none;
     overflow: hidden;
-    background: #fff;
+    background: #ffffff;
 
     @include mq(tablet) {
         margin-bottom: -1px;
@@ -46,7 +46,7 @@
 
         &:active,
         &:focus {
-            background-color: #fff;
+            background-color: #ffffff;
             text-decoration: none;
         }
 

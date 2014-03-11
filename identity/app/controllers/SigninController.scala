@@ -11,7 +11,7 @@ import idapiclient.IdApiClient
 import play.api.i18n.Messages
 import idapiclient.EmailPassword
 import utils.SafeLogging
-import form.Mappings.{idEmail}
+import form.Mappings
 import scala.concurrent.Future
 
 
@@ -21,7 +21,7 @@ class SigninController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
                                  idRequestParser: IdRequestParser,
                                  idUrlBuilder: IdentityUrlBuilder,
                                  signInService : PlaySigninService)
-  extends Controller with ExecutionContexts with SafeLogging {
+  extends Controller with ExecutionContexts with SafeLogging with Mappings{
 
   val page = IdentityPage("/signin", "Sign in", "signin")
 
@@ -58,7 +58,7 @@ class SigninController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
         logger.trace("authing with ID API")
         val authResponse = api.authBrowser(EmailPassword(email, password), idRequest.trackingData)
         signInService.getCookies(authResponse, rememberMe) map {
-          case Left(errors) => {
+          case Left(errors) =>
             logger.error(errors.toString())
             logger.info(s"Auth failed for user, ${errors.toString()}")
             val formWithErrors = errors.foldLeft(boundForm) { (formFold, error) =>
@@ -68,12 +68,11 @@ class SigninController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
               formFold.withError(error.context.getOrElse(""), errorMessage)
             }
             Ok(views.html.signin(page.signinAuthenticationError(idRequest), idRequest, idUrlBuilder, formWithErrors))
-          }
-          case Right(responseCookies) => {
+
+          case Right(responseCookies) =>
             logger.trace("Logging user in")
             SeeOther(returnUrlVerifier.getVerifiedReturnUrl(request).getOrElse(returnUrlVerifier.defaultReturnUrl))
               .withCookies(responseCookies:_*)
-          }
         }
     }
 

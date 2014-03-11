@@ -2,6 +2,17 @@
 /* Identity and registration
    ========================================================================== */
 
+#header.identity-header {
+    height: 44px;
+    background-color: #ffffff;
+
+    @include mq(tablet) {
+        height: 133px;
+        border-bottom: 2px solid #214583;
+        background: $c-neutral8;
+    }
+}
+
 .identity-wrapper {
     margin-left: auto;
     margin-right: auto;
@@ -75,7 +86,7 @@
     }
 
     .social-signin__action {
-        color: #fff;
+        color: #ffffff;
         display: block;
         font-family: $sans-serif;
         font-size: 14px;
@@ -230,5 +241,14 @@
         position: absolute;
         top: 0;
         left: 0;
+    }
+}
+
+/* Account Edit page
+   ========================================================================== */
+
+.identity-wrapper .tabs {
+    .fieldset:first-of-type {
+        border-top: none; // Included so as not to break tabs metaphor
     }
 }

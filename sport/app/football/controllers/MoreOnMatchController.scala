@@ -40,7 +40,9 @@ object MoreOnMatchController extends Controller with Football with Requests with
       related map { _ filter hasExactlyTwoTeams } map {
         case Nil => JsonNotFound()
         case filtered => JsonComponent(
-          "nav" -> football.views.html.fragments.matchNav(populateNavModel(theMatch, filtered))
+          "nav" -> football.views.html.fragments.matchNav(populateNavModel(theMatch, filtered)),
+          "summary" -> football.views.html.fragments.matchSummary(theMatch),
+          "scoreSummary" -> football.views.html.fragments.scoreSummary(theMatch)
         )
       }
     }

@@ -5,6 +5,7 @@ import com.gu.fronts.endtoend.engine.TrailBlockEditor;
 import com.gu.fronts.endtoend.engine.TrailBlockEditors;
 import com.gu.fronts.endtoend.engine.TrailBlocks;
 import com.gu.fronts.endtoend.engine.actions.PublishDraftAction;
+import com.gu.fronts.endtoend.engine.actions.ViewTrailBlockAction;
 import cucumber.api.java.en.When;
 import hu.meza.aao.DefaultScenarioContext;
 
@@ -26,12 +27,16 @@ public class PublishSteps {
 	@When("^([\\w]*) publishes the draft of ([\\w]*)$")
 	public void publishesTheDraftOfTrailBlock(String actorLabel, String trailBlockLabel) {
 		TrailBlock trailBlock = trailBlocks.get(trailBlockLabel);
-		context.setSubject(trailBlock);
 
-		TrailBlockEditor editor = editors.getActor(actorLabel);
-		PublishDraftAction action = new PublishDraftAction(trailBlock);
+        TrailBlockEditor editor = editors.getActor(actorLabel);
 
-		editor.execute(action);
+        ViewTrailBlockAction view = new ViewTrailBlockAction(trailBlock);
+        editor.execute(view);
+        context.setSubject(view.draftStories());
+
+        PublishDraftAction action = new PublishDraftAction(trailBlock);
+
+        editor.execute(action);
 	}
 
 	@When("^([\\w]*) publishes the draft$")

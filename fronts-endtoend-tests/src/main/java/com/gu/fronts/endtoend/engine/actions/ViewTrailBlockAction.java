@@ -40,7 +40,7 @@ public class ViewTrailBlockAction implements TrailBlockAction {
 
 	@Override
 	public void execute() {
-		final String requestUrl = String.format("/fronts/api/%s", trailBlock.uri());
+		final String requestUrl = String.format("/collection/%s", trailBlock.uri());
 		httpCall = client.getFrom(requestUrl);
 	}
 

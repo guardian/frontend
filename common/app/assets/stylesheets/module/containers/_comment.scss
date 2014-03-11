@@ -1,11 +1,21 @@
 .container--comment {
     @include mq($to: tablet) {
         @include first-row(1);
+
+        .item__image-container,
+        .item__media-wrapper {
+            display: none;
+        }
         .item:nth-child(-n+3) {
             @include card-mobile;
         }
         .item:first-child {
             @include card-mobile-image;
+
+            .item__image-container,
+            .item__media-wrapper {
+                display: block;
+            }
         }
         .item__byline {
             @include fs-headline(2, $size-only: true);
@@ -47,6 +57,12 @@
         .item:nth-child(4) {
             @include card-image;
         }
+        .item:nth-child(n+5) {
+            .item__image-container,
+            .item__media-wrapper {
+                display: none;
+            }
+        }
         .collection--show-more {
             .item:nth-child(n+5) {
                 display: none;
@@ -55,8 +71,15 @@
     }
     @include mq(desktop) {
         @include first-row(3);
+
         .item:first-child {
             @include card-double-width;
+        }
+        .item:nth-child(n+6) {
+            .item__image-container,
+            .item__media-wrapper {
+                display: none;
+            }
         }
         .item:nth-child(3) {
             @include card-image;

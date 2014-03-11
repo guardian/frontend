@@ -9,7 +9,7 @@ object Frontend extends Build with Prototypes {
   val common = application("common").settings(
     libraryDependencies ++= Seq(
       "com.gu" %% "configuration" % "3.9",
-      "com.gu.openplatform" %% "content-api-client" % "2.7",
+      "com.gu.openplatform" %% "content-api-client" % "2.9",
 
       "com.typesafe.akka" %% "akka-agent" % "2.1.0",
 
@@ -102,15 +102,20 @@ object Frontend extends Build with Prototypes {
       "joda-time" % "joda-time" % "2.2",
       "hu.meza" % "aao" % "2.0.0",
       "hu.meza.tools" % "config" % "1.0.1",
+      "hu.meza.tools" % "galib" % "1.0.2",
       "hu.meza.tools" % "http-client-wrapper" % "0.1.9",
-      "info.cukes" % "cucumber-java" % "1.1.3",
-      "info.cukes" % "cucumber-junit" % "1.1.3",
-      "info.cukes" % "cucumber-picocontainer" % "1.1.3",
+      "commons-codec" % "commons-codec" % "1.6",
+      "info.cukes" % "cucumber-java" % "1.1.5",
+      "info.cukes" % "cucumber-junit" % "1.1.5",
+      "org.apache.velocity" % "velocity" % "1.7",
+      "info.cukes" % "cucumber-picocontainer" % "1.1.5",
+      "org.seleniumhq.selenium" % "selenium-java" % "2.39.0",
+      "org.seleniumhq.selenium" % "selenium-server" % "2.39.0",
       "junit" % "junit" % "4.11" % "test",
       "com.novocode" % "junit-interface" % "0.10" % "test->default"
     ),
     testOptions += Tests.Argument(TestFrameworks.JUnit, "-q", "-v"),
-    javacOptions ++= Seq("-source", "7", "-target", "1.7"),
+    javacOptions ++= Seq("-source", "7", "-target", "1.8"),
     autoScalaLibrary := false,
     unmanagedSourceDirectories in Compile <+= baseDirectory(_ / "src"),
     unmanagedSourceDirectories in Test <+= baseDirectory(_ / "src"),

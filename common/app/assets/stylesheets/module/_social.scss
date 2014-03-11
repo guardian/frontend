@@ -19,10 +19,6 @@
 .social__action {
     display: block;
 }
-.sticky-upper--social {
-    position: relative;
-    top: ($gs-baseline/3) * -4;
-}
 
 /**
  * Social icons
@@ -38,7 +34,7 @@
 $social-icon: (
     width: 32px,
     height: 32px,
-    color: #767676,
+    color: $c-neutral2,
     space-in-between: 2px
 );
 

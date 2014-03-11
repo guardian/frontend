@@ -7,6 +7,7 @@ define([
     'common/utils/mediator',
     'common/modules/adverts/adverts',
     'common/utils/cookies',
+    'common/modules/discussion/comment-count',
     'require'
 ], function(
     $,
@@ -16,6 +17,7 @@ define([
     mediator,
     adverts,
     cookies,
+    commentCount,
     require
 ) {
 
@@ -40,6 +42,8 @@ define([
                 mediator.emit('ui:images:upgrade');
                 // reload ads
                 adverts.reload();
+                // comment counts
+                commentCount.init(qwery('.facia-container').shift());
                 // ui stuff
                 mediator.emit('ui:collection-show-more:add');
                 mediator.emit('ui:container-toggle:add');
@@ -55,7 +59,7 @@ define([
     return function() {
 
         this.id = 'UkContainers';
-        this.expiry = '2014-03-08';
+        this.expiry = '2014-03-15';
         this.audience = 0.1;
         this.audienceOffset = 0.0;
         this.description = 'Testing different combination of containers on the UK network front';

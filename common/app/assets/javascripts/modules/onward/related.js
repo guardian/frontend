@@ -18,9 +18,18 @@ define([
     $
 ) {
 
-    function related(config, context, url, popularInTag) {
-        var container;
+    function Related() {
+    }
 
+    Related.overrideUrl = "";
+
+    Related.setOverrideUrl = function(url) {
+        Related.overrideUrl = url;
+    };
+
+    Related.prototype.renderRelatedComponent = function(config, context) {
+
+        var container;
 
         function removeSeenTrails(container) {
             // removes seen trails if there are enough unseen trails
@@ -47,7 +56,7 @@ define([
             }
         }
 
-        if (config.page && config.page.hasStoryPackage && !popularInTag) {
+        if (config.page && config.page.hasStoryPackage && !Related.overrideUrl) {
 
             new Expandable({
                 dom: context.querySelector('.related-trails'),
@@ -61,10 +70,10 @@ define([
             container = context.querySelector('.js-related');
             if (container) {
                 new LazyLoad({
-                    url: url || '/related/' + config.page.pageId + '.json',
+                    url: Related.overrideUrl || '/related/' + config.page.pageId + '.json',
                     container: container,
                     success: function () {
-                        if (popularInTag) {
+                        if (Related.overrideUrl) {
                             removeSeenTrails(container);
                             if (config.page.hasStoryPackage) {
                                 $('.more-on-this-story').addClass('u-h');
@@ -83,8 +92,7 @@ define([
                 }).load();
             }
         }
+    };
 
-    }
-
-    return related;
+    return Related;
 });

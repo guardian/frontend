@@ -56,3 +56,12 @@
     @include mq($to: tablet) { @include table-football--small; }
     &.table--small { @include table-football--small; }
 }
+
+.football-table__container {
+    position: relative;
+}
+
+// Hack for fronts until we tidy them up properly
+.fromage .table {
+    border-top-color: $c-neutral3;
+}
