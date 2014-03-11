@@ -1,0 +1,24 @@
+.open {
+    margin-bottom: $gs-baseline;
+    border-top: 2px solid $c-commentAccent;
+    border-bottom: 1px solid $c-neutral3;
+}
+
+.open__head {
+    margin-bottom: $gs-baseline !important;
+    color: $c-neutral2;
+    @include fs-bodyHeading(3);
+}
+
+.open__head__accent {
+    color: $c-commentDefault;
+}
+
+.open__body {
+    @include fs-bodyCopy(2);
+}
+
+.open__cta {
+    color: $c-neutral2;
+    @include fs-bodyHeading(2);
+}
