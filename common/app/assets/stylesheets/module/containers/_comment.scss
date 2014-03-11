@@ -1,11 +1,21 @@
 .container--comment {
     @include mq($to: tablet) {
         @include first-row(1);
+
+        .item__image-container,
+        .item__media-wrapper {
+            display: none;
+        }
         .item:nth-child(-n+3) {
             @include card-mobile;
         }
         .item:first-child {
             @include card-mobile-image;
+
+            .item__image-container,
+            .item__media-wrapper {
+                display: block;
+            }
         }
         .item__byline {
             @include fs-headline(2, $size-only: true);
