@@ -23,7 +23,9 @@
                         <li class="list__item">
                             <a href="@book.buyUrl" class="list__link" data-link-name="@book.position | text">
                                 <span class="list__count">@book.position</span>
-                                @book.jacketUrl.map { url => <img class="list__img" src="@url" alt="" />}
+                            @book.jacketUrl.map { url =>
+                                <div class="list__img js-image-upgrade" data-src="@url"></div>
+                            }
                                 <h4 class="list__title">@book.title</h4>
                             @if(book.author) {
                                 <p class="list__author">by @book.author</p>

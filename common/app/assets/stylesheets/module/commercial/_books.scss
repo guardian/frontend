@@ -77,11 +77,16 @@
         @include fs-headline(7);
     }
     .list__img {
-        width: auto;
         height: 90px;
         display: none;
         margin-right: ($gs-baseline/3)*2;
         float: left;
+        text-align: center;
+
+        .responsive-img {
+            width: auto;
+            height: 100%;
+        }
     }
     .list__title {
         color: $c-neutral1;
@@ -182,7 +187,7 @@
         }
         .list__img {
             height: 100px;
-            margin: 0 auto $gs-baseline auto;
+            margin-bottom: $gs-baseline;
             display: block;
             float: none;
         }
