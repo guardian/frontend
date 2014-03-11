@@ -94,12 +94,12 @@ function (
         );
     }
 
-    function hide() {
-        $('.ad-slot').addClass('is-invisible');
+    function hideAds() {
+        $('.ad-slot, .top-banner-ad-container').addClass('is-hidden');
     }
 
     return {
-        hide: hide,
+        hideAds: hideAds,
         init: init,
         load: load,
         reload: reload,

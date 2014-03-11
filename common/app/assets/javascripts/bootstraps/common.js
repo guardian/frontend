@@ -269,6 +269,8 @@ define([
                 });
 
                 mediator.on('window:resize', debounce(resizeCallback, 2000));
+            } else {
+                Adverts.hideAds();
             }
         },
 
