@@ -14,20 +14,32 @@
             height: 40px
         ));
     }
-    .commercial__title {
-        width: 80%;
-        height: 26px;
-        background-position: 6px $gs-baseline;
-        background-repeat: no-repeat;
+    .container__border {
+        border-top: 1px solid $c-neutral4;
+    }
+    .container__title {
+        background: none !important;
+        padding: 0;
+        margin-top: ($gs-baseline/3);
+        float: none;
+    }
+    .container__logo {
+        width: 98px;
+        height: 24px;
+        display: inline-block;
+        @include background-size(contain);
+        @include fs-headline(4);
         color: transparent;
-        font-weight: bold;
+
+        &.svg-i-bookshop-logo--bookshop {
+            margin-left: -14px;
+        }
     }
     .commercial__body {
         padding: 0;
 
         h3 {
-            background-color: $c-neutral6;
-            padding: ($gs-baseline/3)*2 8px ($gs-baseline/3)*4 8px;
+            padding: $gs-baseline/2 0 ($gs-baseline/3)*2 0;
             margin-bottom: 0;
             @include fs-headline(2);
         }
@@ -44,17 +56,12 @@
         color: $c-neutral1;
         @include fs-headline(1);
 
-        img {
-             width: auto;
-             height: 90px;
-             display: none;
-         }
-         &:first-child img {
-             display: block;
-         }
-         + .list__item {
-             border-top: 1px solid $c-neutral4;
-         }
+        &:first-child .list__img {
+            display: block;
+        }
+        + .list__item {
+            border-top: 1px solid $c-neutral4;
+        }
      }
     .list__link {
         width: 80%;
@@ -70,11 +77,18 @@
         @include fs-headline(7);
     }
     .list__img {
+        height: 90px;
+        display: none;
         margin-right: ($gs-baseline/3)*2;
         float: left;
+        text-align: center;
+
+        .responsive-img {
+            width: auto;
+            height: 100%;
+        }
     }
     .list__title {
-        margin-bottom: $gs-baseline/3;
         color: $c-neutral1;
         @include fs-bodyCopy(1);
         font-weight: normal;
@@ -83,54 +97,71 @@
         overflow: hidden;
     }
     .list__author {
+        margin-bottom: 0;
         color: #8f8f8f;
         @include fs-data(3);
     }
     .list__price {
         width: 18%;
         display: inline-block;
+        margin-bottom: 0;
         vertical-align: top;
         text-align: right;
-        @include fs-bodyCopy(1);
+        @include fs-data(3);
+    }
+    .list__price__label {
+        display: none;
     }
     .commercial__foot {
-        background-color: $c-neutral6;
-        padding: $gs-baseline/3 $gs-gutter/5;
+        padding: ($gs-baseline/3)*2 0;
         border: 0;
         margin: 0;
+        overflow: hidden;
     }
     .commercial__search {
         position: relative;
+        width: 100%;
         margin-bottom: 0;
+        float: right;
+        overflow: hidden;
+    }
+    .commercial__search__input {
+        @include box-sizing(border-box);
+        width: 100%;
+        height: 32px;
+        padding: $gs-baseline/3 32px $gs-baseline/3 ($gs-baseline/3) * 2;
+        border: 1px solid $c-neutral4;
+        @include fs-bodyCopy(1);
+        float: left;
         overflow: hidden;
 
-        label {
-            display: none;
-            @include box-sizing(border-box);
-            padding: 8px 0 8px ($gs-gutter/5)*2;
-            float: left;
-            @include fs-bodyCopy(1);
+        &:hover,
+        &:focus {
+            border-color: $c-neutral4;
+            outline: none;
         }
-        .text-input {
-            width: 78%;
-            height: 32px;
-            background-position: 6px center;
-            padding: $gs-baseline/3 $gs-gutter/5;
-            padding-left: 1.8em;
-            @include fs-bodyCopy(1);
-            float: left;
-            overflow: hidden;
+    }
+    .commercial__search__submit {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 32px;
+        height: 32px;
+        background-color: $c-neutral4;
+        background-position: center center;
+        padding: 0;
+        border: none;
+        font-weight: bold;
+
+        &:hover,
+        &:focus {
+            background-color: $c-neutral4;
+            outline: none;
         }
-        .submit-input {
-            width: 22%;
-            min-width: 0;
-            background-color: #791052;
-            @include rem((
-                padding: 8px 0
-            ));
-            margin: 1px 0 0 0;
-            font-weight: bold;
-            float: left;
+
+        &:active {
+            background-color: darken($c-neutral4, 5%);
+            outline: none;
         }
     }
 
@@ -141,26 +172,28 @@
         }
     }
 
-    @include mq($from: tablet) {
+    @include mq(tablet) {
+        .commercial__search {
+            width: 40%;
+        }
         .list__item {
             width: 20%;
             padding-left: 8px;
             float: left;
 
-            img {
-                height: 100px;
-                margin-right: 0;
-                margin-bottom: 10px;
-                display: block;
-                float: right;
-            }
             + .list__item {
                 border-top: none;
+                border-left: 1px solid $c-neutral5;
             }
+        }
+        .list__img {
+            height: 100px;
+            margin-bottom: $gs-baseline;
+            display: block;
+            float: none;
         }
         .list__link {
             width: 100%;
-            height: 200px;
         }
         .list__title {
             white-space: nowrap;
@@ -170,33 +203,46 @@
             left: 8px;
         }
         .list__price {
-            position: absolute;
-            left: 8px;
-            bottom: 0;
             width: 100%;
-            margin-top: 20px;
+            margin-top: $gs-baseline/2;
             text-align: left;
+        }
+
+        .list__price__label {
+            display: inline;
         }
     }
 
-    @include mq($from: desktop) {
+    @include mq($from: tablet, $to: leftCol) {
+        .commercial__body h3 {
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+    }
+
+    @include mq($from: leftCol, $to: wide) {
+        .container__title {
+            padding: $gs-baseline/3 0 ($gs-baseline/3)*2 0;
+            float: left;
+
+            .svg-i-bookshop-logo--bookshop {
+                margin-left: 0;
+                display: block;
+            }
+        }
+    }
+
+    @include mq(desktop) {
         .list__title {
             white-space: normal;
         }
-        .commercial__search {
-            @include placeholder {
-                color: #ffffff;
-            }
-            label {
-                width: 37%;
-                display: block;
-            }
-            .text-input {
-                width: 43%;
-            }
-            .submit-input {
-                width: 20%;
-            }
+    }
+
+    @include mq(wide) {
+        .container__title {
+            padding: $gs-baseline/3 0 ($gs-baseline/3)*2 0;
+            float: left;
         }
     }
 }
