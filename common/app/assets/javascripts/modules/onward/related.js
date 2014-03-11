@@ -6,7 +6,8 @@ define([
     'common/modules/onward/history',
     'qwery',
     'bonzo',
-    'common/$'
+    'common/$',
+    'common/modules/analytics/register'
 ], function (
     common,
     LazyLoad,
@@ -15,7 +16,8 @@ define([
     History,
     qwery,
     bonzo,
-    $
+    $,
+    register
 ) {
 
     function Related() {
@@ -31,31 +33,6 @@ define([
 
         var container;
 
-        function removeSeenTrails(container) {
-            // removes seen trails if there are enough unseen trails
-            var history = new History({});
-            var allTrails = qwery('li.item', container);
-            // remove current page
-            allTrails.some(function(trail, i) {
-                if ($('.item__link', trail).attr('href').slice(1) === config.page.pageId) {
-                    bonzo(trail).remove();
-                    allTrails.splice(i,1);
-                    return true;
-                }
-                return false;
-            });
-
-            var seenTrails = allTrails.filter(function(trail) {
-                var url = $('.item__link',trail).attr('href');
-                return history.contains(url);
-            });
-            if (allTrails.length - seenTrails.length >= 4) {
-                seenTrails.forEach(function(trail) {
-                    bonzo(trail).remove();
-                });
-            }
-        }
-
         if (config.page && config.page.hasStoryPackage && !Related.overrideUrl) {
 
             new Expandable({
@@ -66,6 +43,7 @@ define([
             common.mediator.emit('modules:related:loaded', config, context);
 
         } else if (config.switches && config.switches.relatedContent) {
+            register.begin('related-content');
 
             container = context.querySelector('.js-related');
             if (container) {
@@ -74,7 +52,6 @@ define([
                     container: container,
                     success: function () {
                         if (Related.overrideUrl) {
-                            removeSeenTrails(container);
                             if (config.page.hasStoryPackage) {
                                 $('.more-on-this-story').addClass('u-h');
                             }
@@ -85,9 +62,11 @@ define([
                         // upgrade images
                         images.upgrade(relatedTrails);
                         common.mediator.emit('modules:related:loaded', config, context);
+                        register.end('related-content');
                     },
                     error: function(req) {
                         common.mediator.emit('module:error', 'Failed to load related: ' + req.statusText, 'common/modules/related.js');
+                        register.error('related-content');
                     }
                 }).load();
             }
