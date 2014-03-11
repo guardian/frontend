@@ -1,8 +1,18 @@
 .container--sport {
     @include mq($to: tablet) {
         @include first-row(1);
+
+        .item__image-container,
+        .item__media-wrapper {
+            display: none;
+        }
         .item:first-child {
             @include card-mobile($with-image: true);
+
+            .item__image-container,
+            .item__media-wrapper {
+                display: block;
+            }
         }
         .collection--without-sport-stats {
             .item:nth-child(n+2):nth-child(-n+5) {
@@ -50,6 +60,13 @@
     }
     @include mq(tablet, desktop) {
         @include first-row(2);
+
+        .item:nth-child(n+7) {
+            .item__image-container,
+            .item__media-wrapper {
+                display: none;
+            }
+        }
         .collection--without-sport-stats {
             .item:nth-child(2),
             .item:nth-child(n+4):nth-child(-n+6) {
@@ -74,8 +91,15 @@
     }
     @include mq(desktop) {
         @include first-row(3);
+
         .item:nth-child(3) {
             @include card-image;
+        }
+        .item:nth-child(n+6) {
+            .item__image-container,
+            .item__media-wrapper {
+                display: none;
+            }
         }
         .collection--without-sport-stats {
             .item:nth-child(2) {
