@@ -52,6 +52,9 @@ class FaciaController extends Controller with Logging with ExecutionContexts {
   def renderArbitraryFront(path: String) = renderFront(path)
   def renderFrontJson(path: String) = renderFront(path)
 
+  def renderFrontTrails(path: String) = renderFront(path)
+  def renderFrontTrailsJson(path: String) = renderFront(path)
+
   def renderEditionCollection(id: String) = renderCollection(id)
   def renderEditionCollectionJson(id: String) = renderCollection(id)
 
