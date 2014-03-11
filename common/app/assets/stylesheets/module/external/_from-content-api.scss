@@ -175,6 +175,7 @@
     display: inline-block;
     color: $c-neutral3;
     vertical-align: bottom;
+    font-style: normal;
 
     @include rem((
         font-size: 48px,
