@@ -8,9 +8,9 @@
     <div class="identity-section form">
         <div class="fieldset__heading">
             <div class="user-avatar" data-userid="@user.id"></div>
-            <h2 class="form__heading">
+            <h1 class="form__heading">
                 @user.publicFields.displayName
-            </h2>
+            </h1>
             @user.dates.accountCreatedDate.map { joinDate =>
                 <p class="form-field__note">Joined: @joinDate.toString("d MMM yyyy")</p>
             }
