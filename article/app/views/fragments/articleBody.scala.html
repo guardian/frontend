@@ -18,7 +18,9 @@
             <div class="article__inner article__inner--head">
                 <header class="article__head">
 
-                    @if(article.isAdvertisementFeature){<p>Advertisement feature</p>}
+                    @if(article.isAdvertisementFeature){
+                        <div class="article__advertisement__label">Advertisement feature</div>
+                    }
 
                     @fragments.headline(article.headline)
 
