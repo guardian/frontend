@@ -14,8 +14,7 @@ define([
     common
 ) {
 
-    var mobileOS,
-        supportsPushState,
+    var supportsPushState,
         pageVisibility = document.visibilityState ||
                          document.webkitVisibilityState ||
                          document.mozVisibilityState ||
@@ -169,34 +168,6 @@ define([
         return types;
     }
 
-    function getMobileOS() {
-        var ua,
-            uaindex;
-
-        if(mobileOS !== undefined) {
-            return mobileOS;
-        }
-
-        ua = navigator.userAgent;
-
-        if (ua.match(/iPad/i) || ua.match(/iPhone/i)) {
-            uaindex = ua.indexOf('OS ');
-            mobileOS = {
-                name: 'iOS',
-                version: uaindex > -1 ? parseFloat(ua.substr(uaindex + 3, 3).replace('_', '.'), 10) : -1
-            };
-        } else if (ua.match(/Android/i)) {
-            uaindex = ua.indexOf('Android ');
-            mobileOS = {
-                name: 'Android',
-                version: uaindex > -1 ? parseFloat(ua.substr(uaindex + 8, 3), 10) : -1
-            };
-        } else {
-            mobileOS = false;
-        }
-        return mobileOS;
-    }
-
     function getOrientation() {
         return (window.innerHeight > window.innerWidth) ? 'portrait' : 'landscape';
     }
@@ -264,7 +235,6 @@ define([
     }
 
     return {
-        getMobileOS: getMobileOS,
         hasCrossedBreakpoint: hasCrossedBreakpoint,
         getPixelRatio: getPixelRatio,
         getConnectionSpeed: getConnectionSpeed,
