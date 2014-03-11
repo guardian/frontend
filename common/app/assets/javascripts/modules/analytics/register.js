@@ -6,36 +6,35 @@ define([
     deferToLoadEvent,
     _where
 ) {
-    var modules = [];
+    var register = [];
+    var startTime = Date.now();
 
     function begin(name) {
-        modules.push({
+        register.push({
             name: name,
             status: "unfinished"
         });
     }
 
     function end(name) {
-        _where(modules, {name: name})
+        _where(register, {name: name})
         .forEach(function(module){
             module.status = "completed";
+            module.loadTime = Date.now() - startTime + "ms";
         });
     }
 
     function initialise() {
         deferToLoadEvent(function() {
             require('ophan/ng', function (ophan) {
-                ophan.record({'register': modules});
+                ophan.record({'register': register});
             });
         });
     }
 
-    var register = {
-
+    return {
         initialise: initialise,
         begin: begin,
         end: end
     };
-
-    return register;
 });
