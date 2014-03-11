@@ -17,23 +17,21 @@
         margin: 0 auto;
     }
 
-    .ad-slot__label {
-        display: none;
-        @include box-sizing(border-box);
-        height: 34px;
-        background-color: $c-neutral8;
-        padding: 0 ($gs-baseline/3)*2;
-        border-top: 1px solid $c-neutral5;
-        color: $c-neutral2;
-        font-family: $sans-serif;
-        @include font-size(12, 20);
-        text-align: right;
-        -webkit-font-smoothing: antialiased;
-    }
-
     .no-js & {
         display: none;
     }
+}
+.ad-slot__label {
+    @include box-sizing(border-box);
+    height: $mpu-ad-label-height;
+    background-color: $c-neutral8;
+    padding: 0 ($gs-baseline/3)*2;
+    border-top: 1px solid $c-neutral5;
+    color: $c-neutral2;
+    font-family: $sans-serif;
+    @include font-size(12, 20);
+    text-align: right;
+    -webkit-font-smoothing: antialiased;
 }
 .ad-slot__inner {
     max-width: 100%;
@@ -54,16 +52,34 @@
         margin: 0 auto;
     }
 }
+.ad-slot--mpu-in-row-pattern {
+    position: absolute;
+    left: 0;
+    right: 0;
+    @if $browser-supports-flexbox {
+        @include rem((
+            bottom: $mpu-align-offset
+        ));
+    } @else {
+        bottom: 0;
+    }
+    top: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    width: auto;
+    @include rem((
+        margin: 0 $gs-gutter/2
+    ));
+    background-color: $c-neutral8;
+
+    .ad-container {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+    }
+}
 .ad-slot--top-banner-ad {
     background-color: #f0f0f0;
-
-    @include mq($to: tablet) {
-        .ad-slot__label {
-            background-color: #f0f0f0;
-            height: auto;
-            border: none;
-        }
-    }
 
     @include mq(tablet) {
         background-color: transparent;
@@ -73,6 +89,10 @@
         width: auto;
         margin-left: gs-span(2) + $gs-gutter;
         text-align: left;
+    }
+
+    .ad-slot__label {
+        display: none;
     }
 }
 .top-banner-ad-container--above-header {
@@ -140,7 +160,7 @@
 }
 .ad-slot--commercial-component {
     width: 100%;
-    min-height: initial;
+    min-height: 0;
     padding: 0 0 $gs-baseline 0;
 }
 

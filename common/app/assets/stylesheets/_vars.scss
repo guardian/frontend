@@ -197,6 +197,20 @@ $c-statusNeutral: #999999;
 $c-statusNegative: #da1d1d;
 
 
+// MPU
+// =============================================================================
+
+$mpu-original-width: 300px;
+$mpu-original-height: 250px;
+$mpu-align-offset: 20px; // Align bottom of ad with text on desktop
+$mpu-ad-label-height: 34px;
+
+// Scale the ad down on tablet
+$mpu-target-width: gs-span(3) + $gs-gutter/2;
+$mpu-scale-ratio: $mpu-target-width/$mpu-original-width;
+$mpu-resulting-height: ceil($mpu-original-height*$mpu-scale-ratio);
+
+
 // Dimensions
 // =============================================================================
 
