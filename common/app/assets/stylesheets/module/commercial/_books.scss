@@ -103,10 +103,9 @@
         vertical-align: top;
         text-align: right;
         @include fs-data(3);
-
-        span {
-            display: none;
-        }
+    }
+    .list__price__label {
+        display: none;
     }
     .commercial__foot {
         padding: ($gs-baseline/3)*2 0;
@@ -201,10 +200,10 @@
             width: 100%;
             margin-top: $gs-baseline/2;
             text-align: left;
+        }
 
-            span {
-                display: inline;
-            }
+        .list__price__label {
+            display: inline;
         }
     }
 
