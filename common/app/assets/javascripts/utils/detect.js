@@ -109,21 +109,6 @@ define([
         return format;
     }
 
-    function hasCSSSupport(property, value, noPrefixes) {
-        // Thanks Modernizr: https://github.com/filamentgroup/fixed-sticky/blob/master/fixedsticky.js
-        // and Filament Group: https://github.com/filamentgroup/fixed-sticky/blob/master/fixedsticky.js
-        var prop = property + ':',
-            el = document.createElement('test'),
-            mStyle = el.style;
-
-        if (!noPrefixes) {
-            mStyle.cssText = prop + ['-webkit-', '-moz-', '-ms-', '-o-', ''].join(value + ';' + prop) + value + ';';
-        } else {
-            mStyle.cssText = prop + value;
-        }
-        return mStyle[property].indexOf(value) !== -1;
-    }
-
     function hasTouchScreen() {
         return ('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch;
     }
@@ -229,7 +214,6 @@ define([
         getConnectionSpeed: getConnectionSpeed,
         getFontFormatSupport: getFontFormatSupport,
         getVideoFormatSupport: getVideoFormatSupport,
-        hasCSSSupport: hasCSSSupport,
         hasTouchScreen: hasTouchScreen,
         hasPushStateSupport: hasPushStateSupport,
         getOrientation: getOrientation,
