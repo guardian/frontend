@@ -44,7 +44,7 @@ trait MatchesList extends Football with RichList {
       eligibleDates.contains(fMatch.date.toDateMidnight)
     }
   }
-  lazy val matchesGroupedByDate = relevantMatches.segmentBy(_._1.date.toDateMidnight)
+  lazy val matchesGroupedByDate = relevantMatches.segmentBy(key = _._1.date.toDateMidnight)
   lazy val matchesGroupedByDateAndCompetition = matchesGroupedByDate.map { case (d, ms) =>
     (d, ms.groupBy(_._2).mapValues(_.map {
       case (matches, _) => matches
@@ -127,4 +127,17 @@ case class CompetitionLiveMatchesList(competitions: CompetitionSupport, competit
   override val date = DateMidnight.now
   override def filterMatches(fMatch: FootballMatch, competition: Competition): Boolean =
     competition.id == competitionId && fMatch.isLive
+}
+
+case class MatchDayList(competitions: CompetitionSupport) extends MatchesList {
+  override def timeComesFirstInList(d: DateTime, other: DateTime): Boolean = d.isBefore(other)
+  override def filterMatches(fMatch: FootballMatch, competition: Competition): Boolean = true
+
+  override val daysToDisplay = 1
+  override val date = DateMidnight.now
+  override val pageType = "matchDay"
+  override val baseUrl = "/football"
+
+  override lazy val previousPage: Option[String] = None
+  override lazy val nextPage: Option[String] = None
 }

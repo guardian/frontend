@@ -5,6 +5,7 @@ import play.api.mvc.{AnyContent, Action}
 import org.joda.time.DateMidnight
 import model._
 import football.model._
+import common.JsonComponent
 
 
 object LiveMatchesController extends MatchListController {
@@ -15,7 +16,7 @@ object LiveMatchesController extends MatchListController {
 
   private def renderLiveMatches(date: DateMidnight) = Action { implicit request =>
     val liveMatches = new LiveMatchesList(Competitions())
-    val page = new Page("football/live", "football", "Today's matches", "GFE:Football:automatic:live matches")
+    val page = new Page("football/live", "football", "Live matches", "GFE:Football:automatic:live matches")
     renderMatchList(page, liveMatches)
   }
 
@@ -30,6 +31,14 @@ object LiveMatchesController extends MatchListController {
       renderMatchList(page, liveMatches)
     }.getOrElse {
       NotFound
+    }
+  }
+
+  def matchDayComponent = Action { implicit request =>
+    val matches = new MatchDayList(Competitions())
+    val page = new Page("football", "football", "Today's matches", "GFE:Football:automatic:live matches")
+    Cached(page) {
+      JsonComponent(page, football.views.html.matchList.matchesComponent(matches))
     }
   }
 }

@@ -6,16 +6,14 @@ trait RichList {
 
   implicit class RichList[T](list: List[T]) {
 
-    def segment(mapValue: T => T = (t: T) => t,
-                compare: (T, T) => Boolean = (t1: T, t2: T) => t1 == t2): List[(T, List[T])] =
-      segmentByAndMap[T, T](identity, mapValue, compare)
+    def segment(compare: (T, T) => Boolean = (t1: T, t2: T) => t1 == t2): List[(T, List[T])] =
+      segmentByAndMap[T, T](identity, compare, identity)
     def segmentBy[U](key: T => U,
-                     mapValue: T => T = (t: T) => t,
                      compare: (U, U) => Boolean = (u1: U, u2: U) => u1 == u2): List[(U, List[T])] =
-      segmentByAndMap[U, T](key, mapValue, compare)
+      segmentByAndMap[U, T](key, compare, identity)
     def segmentByAndMap[U, V](key: T => U,
-                              mapValue: T => V,
-                              compare: (U, U) => Boolean = (u1: U, u2: U) => u1 == u2): List[(U, List[V])] = {
+                        compare: (U, U) => Boolean = (u1: U, u2: U) => u1 == u2,
+                        mapValue: T => V): List[(U, List[V])] = {
       @tailrec
       def loop(xs: List[T], acc: List[(U, List[V])]): List[(U, List[V])] = {
         if (xs.isEmpty) acc

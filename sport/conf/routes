@@ -45,6 +45,8 @@ GET        /football/api/teamtable/:teamId                                      
 GET        /football/api/teamfixtures/:teamId.json                                             football.controllers.FixturesController.teamFixturesComponentJson(teamId)
 GET        /football/api/teamfixtures/:teamId                                                  football.controllers.FixturesController.teamFixturesComponent(teamId)
 
+GET        /football/api/matchDay                                                              football.controllers.LiveMatchesController.matchDayComponent
+
 GET        /football/api/match-nav/:year/:month/:day/:home/:away.json                          football.controllers.MoreOnMatchController.matchNavJson(year, month, day, home, away)
 GET        /football/api/match-nav/:year/:month/:day/:home/:away                               football.controllers.MoreOnMatchController.matchNav(year, month, day, home, away)
 GET        /football/api/match-nav/:matchId.json                                               football.controllers.MoreOnMatchController.moreOnJson(matchId)
