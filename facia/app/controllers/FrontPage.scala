@@ -51,7 +51,7 @@ object FrontPage {
     new FrontPage(isNetworkFront = false) {
       override val id = "business"
       override val section = "business"
-      override val webTitle = "Business"
+      override val webTitle = "Latest financial, market &amp; economic news and analysis"
       override lazy val analyticsName = "GFE:business"
 
       override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
@@ -203,7 +203,7 @@ object FrontPage {
 
     new FrontPage(isNetworkFront = false) {
       override val id = "lifeandstyle"
-      override val section = "lifeandstyle"
+      override val section = "Life and style"
       override val webTitle = "The Guardian"
       override lazy val analyticsName = "GFE:Life and style"
 
