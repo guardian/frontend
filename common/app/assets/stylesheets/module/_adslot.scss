@@ -51,6 +51,9 @@
         ));
         margin: 0 auto;
     }
+    @include mq(desktopAd) {
+        min-height: 110px;
+    }
 }
 .ad-slot--mpu-in-row-pattern {
     position: absolute;
