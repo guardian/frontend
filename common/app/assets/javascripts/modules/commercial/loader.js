@@ -8,14 +8,16 @@ define([
     'common/utils/storage',
     'common/modules/lazyload',
     'common/modules/component',
-    'common/modules/onward/history'
+    'common/modules/onward/history',
+    'common/modules/ui/images'
 ], function (
     $,
     mediator,
     storage,
     LazyLoad,
     Component,
-    History
+    History,
+    images
 ) {
 
     /**
@@ -82,6 +84,7 @@ define([
                 return html.replace(/%OASToken%/g, self.oastoken).replace(/%OmnitureToken%/g, '');
             },
             success: function () {
+                images.upgrade(target);
                 mediator.emit('modules:commercial/loader:loaded');
             },
             error: function (req) {
