@@ -95,7 +95,8 @@ function (
     }
 
     function hideAds() {
-        $('.ad-slot, .top-banner-ad-container').addClass('is-hidden');
+        $('.ad-slot').addClass('is-hidden');
+        $('.top-banner-ad-container').addClass('is-invisible');
     }
 
     return {
