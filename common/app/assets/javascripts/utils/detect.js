@@ -14,8 +14,7 @@ define([
     common
 ) {
 
-    var mobileOS,
-        supportsPushState,
+    var supportsPushState,
         pageVisibility = document.visibilityState ||
                          document.webkitVisibilityState ||
                          document.mozVisibilityState ||
@@ -40,10 +39,6 @@ define([
                 callback(is);
             }
         };
-    }
-
-    function getPixelRatio() {
-        return window.devicePixelRatio;
     }
 
     /**
@@ -114,12 +109,6 @@ define([
         return format;
     }
 
-    // http://modernizr.com/download/#-svg
-    function hasSvgSupport() {
-        var ns = {'svg': 'http://www.w3.org/2000/svg'};
-        return !!document.createElementNS && !!document.createElementNS(ns.svg, 'svg').createSVGRect;
-    }
-
     function hasTouchScreen() {
         return ('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch;
     }
@@ -152,34 +141,6 @@ define([
         } catch(e){}
 
         return types;
-    }
-
-    function getMobileOS() {
-        var ua,
-            uaindex;
-
-        if(mobileOS !== undefined) {
-            return mobileOS;
-        }
-
-        ua = navigator.userAgent;
-
-        if (ua.match(/iPad/i) || ua.match(/iPhone/i)) {
-            uaindex = ua.indexOf('OS ');
-            mobileOS = {
-                name: 'iOS',
-                version: uaindex > -1 ? parseFloat(ua.substr(uaindex + 3, 3).replace('_', '.'), 10) : -1
-            };
-        } else if (ua.match(/Android/i)) {
-            uaindex = ua.indexOf('Android ');
-            mobileOS = {
-                name: 'Android',
-                version: uaindex > -1 ? parseFloat(ua.substr(uaindex + 8, 3), 10) : -1
-            };
-        } else {
-            mobileOS = false;
-        }
-        return mobileOS;
     }
 
     function getOrientation() {
@@ -249,13 +210,10 @@ define([
     }
 
     return {
-        getMobileOS: getMobileOS,
         hasCrossedBreakpoint: hasCrossedBreakpoint,
-        getPixelRatio: getPixelRatio,
         getConnectionSpeed: getConnectionSpeed,
         getFontFormatSupport: getFontFormatSupport,
         getVideoFormatSupport: getVideoFormatSupport,
-        hasSvgSupport: hasSvgSupport,
         hasTouchScreen: hasTouchScreen,
         hasPushStateSupport: hasPushStateSupport,
         getOrientation: getOrientation,

@@ -92,14 +92,6 @@ define(['common/utils/detect', 'bonzo'], function(detect, bonzo) {
         });
     });
 
-    describe("SVG support", function() {
-
-        it("should determine SVG support", function() {
-            expect(detect.hasSvgSupport()).toBe(true);
-        });
-
-    });
-
     describe("Breakpoint", function() {
 
         var breakpointName = 'a-breakpoint',
