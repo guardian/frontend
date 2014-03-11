@@ -41,10 +41,6 @@ define([
         };
     }
 
-    function getPixelRatio() {
-        return window.devicePixelRatio;
-    }
-
     /**
      * @param Object performance Allow passing in of window.performance, for testing
      */
@@ -236,7 +232,6 @@ define([
 
     return {
         hasCrossedBreakpoint: hasCrossedBreakpoint,
-        getPixelRatio: getPixelRatio,
         getConnectionSpeed: getConnectionSpeed,
         getFontFormatSupport: getFontFormatSupport,
         getVideoFormatSupport: getVideoFormatSupport,
