@@ -100,15 +100,6 @@ define(['common/utils/detect', 'bonzo'], function(detect, bonzo) {
 
     });
 
-    describe("CSS support", function() {
-
-        it("should determine CSS support for any property", function() {
-            expect(detect.hasCSSSupport('position', 'relative', true)).toBe(true);
-            expect(detect.hasCSSSupport('position', 'sixtynine')).toBe(false);
-        });
-
-    });
-
     describe("Breakpoint", function() {
 
         var breakpointName = 'a-breakpoint',
