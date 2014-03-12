@@ -2,7 +2,7 @@
 @import views.support.{ImgSrc, Item220, Item620}
 
 @image.map{ picture =>
-    <figure itemprop="associatedMedia primaryImageOfPage" itemscope itemtype="http://schema.org/ImageObject" class="media-primary media-content">
+    <figure itemprop="associatedMedia primaryImageOfPage" itemscope itemtype="http://schema.org/ImageObject" class="media-primary media-content" data-component="image">
         <div class="js-image-upgrade" data-src="@ImgSrc.imager(picture, Item620).map(Html(_))">
             <img src="@Item220.bestFor(picture).map(Html(_))"
                  class="maxed responsive-img"
