@@ -169,20 +169,26 @@ GET         /commercial/books/book/*pageId                                      
 # Onward journeys
 GET         /onward/recently-published                                                                               controllers.LatestContentController.recentlyPublished()
 
+
 # Facia
 GET         /                                                                                                        controllers.FaciaController.editionRedirect(path = "")
 GET         /$path<(culture|sport|commentisfree|business|money)>                                                     controllers.FaciaController.editionRedirect(path)
-GET         /$path<(us|uk|au|us-alpha|uk-alpha|au-alpha)?>                                                           controllers.FaciaController.renderEditionFront(path)
-GET         /$path<(us|uk|au|us-alpha|uk-alpha|au-alpha)?>.json                                                      controllers.FaciaController.renderEditionFrontJson(path)
-GET         /$path<(\w+/)?([\d\w-]*)>                                                                                controllers.FaciaController.renderEditionSectionFront(path)
-GET         /$path<(\w+/)?([\d\w-]*)>.json                                                                           controllers.FaciaController.renderEditionSectionFrontJson(path)
 
 #Facia Press
-GET         /pressed/*path                                                                                           controllers.FaciaController.renderFaciaPress(path)
+GET         /pressed/*path                                                                                           controllers.FaciaController.renderFrontPress(path)
 
-GET         /collection/$id<[\w\d-/]*>/rss                                                                           controllers.FaciaController.renderCollectionRss(id)
-GET         /collection/$id<[\w\d-/]*>                                                                               controllers.FaciaController.renderEditionCollection(id)
-GET         /collection/$id<[\w\d-/]*>.json                                                                          controllers.FaciaController.renderEditionCollectionJson(id)
+GET         /collection/*id/rss                                                                                      controllers.FaciaController.renderCollectionRss(id)
+GET         /collection/*id.json                                                                                     controllers.FaciaController.renderCollectionJson(id)
+GET         /collection/*id                                                                                          controllers.FaciaController.renderCollection(id)
+
+# Editionalised pages
+GET         /$path<(us|uk|au|us-alpha|uk-alpha|au-alpha)(/(culture|sport|commentisfree|business|money))?>/rss        controllers.FaciaController.renderFrontRss(path)
+GET         /$path<(us|uk|au|us-alpha|uk-alpha|au-alpha)(/(culture|sport|commentisfree|business|money))?>.json       controllers.FaciaController.renderFrontJson(path)
+GET         /$path<(us|uk|au|us-alpha|uk-alpha|au-alpha)(/(culture|sport|commentisfree|business|money))?>            controllers.FaciaController.renderFront(path)
+GET         /$path<(lifeandstyle/(love-and-sex|home-and-garden)|world/asia|business/companies|football)>/rss         controllers.FaciaController.renderCustomFrontRss(path)
+GET         /$path<(lifeandstyle/(love-and-sex|home-and-garden)|world/asia|business/companies|football)>.json        controllers.FaciaController.renderCustomFrontJson(path)
+GET         /$path<(lifeandstyle/(love-and-sex|home-and-garden)|world/asia|business/companies|football)>             controllers.FaciaController.renderCustomFront(path)
+
 
 # Applications
 GET         /sections                                                                                                controllers.SectionsController.renderSections()
