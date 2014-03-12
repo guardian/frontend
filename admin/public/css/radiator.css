@@ -21,7 +21,6 @@ ul {
     margin: 0;
 }
 
-
 .pingdom-wrapper small,
 .riffraff-wrapper small {
 
@@ -30,8 +29,8 @@ ul {
 #pingdom li,
 .riffraff li,
 #sell-by-date li {
-    min-width: 30px;
-    min-height: 30px;
+    width: 30px;
+    height: 30px;
     font-size: 0;
     color: transparent;
     float: left;
@@ -49,6 +48,17 @@ ul {
 
 .Expiring {
     background-color: orange;
+}
+
+.riffraff li.Behind {
+    background-color: #21fa41;
+}
+
+.riffraff li.Behind, .riffraff li.Failed,  .riffraff li.Running {
+    color: #000000;
+    font-size: 9px;
+    text-align: center;
+    line-height: 10px;
 }
 
 .expiry-days-0, .expiry-days-1, .expiry-days-2 {
