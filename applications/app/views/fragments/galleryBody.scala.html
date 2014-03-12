@@ -2,7 +2,7 @@
 @import conf.Switches._
 
 <h2 class="article__zone left-col-deport tone-@VisualTone(gallery) tone-accent-border">
-    <span class="left-col-deport__body">
+    <span class="left-col-deport__body" data-component="gallery-meta">
         <a class="tone-colour" data-link-name="article section" href="/@gallery.section">@Html(gallery.sectionName.toLowerCase)</a>
     </span>
 </h2>
@@ -59,7 +59,7 @@
                         }
                     </div>
                 </div>
-                <div class="article__container">
+                <div class="article__container" data-component="gallery-body>
                     @fragments.standfirst(gallery)
 
                     @if(ArticleKeywordsSwitch.isSwitchedOn){
@@ -69,7 +69,7 @@
                     }
                 </div>
 
-                <div class="social-wrapper">
+                <div class="social-wrapper" data-component="gallery-share">
                     @fragments.social(gallery)
                 </div>
             </div>

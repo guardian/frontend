@@ -3,7 +3,7 @@
 
 @defining(page.video){ video =>
     <h2 class="article__zone left-col-deport tone-@VisualTone(video) tone-accent-border">
-        <span class="left-col-deport__body">
+        <span class="left-col-deport__body" data-component="video-meta">
             <a class="tone-colour tone-border" data-link-name="article section" href="/@LinkTo(video.section)">@Html(video.sectionName.toLowerCase)</a>
         </span>
     </h2>
@@ -46,7 +46,7 @@
 
                     @fragments.contentMeta(video)
 
-                    <div class="article__container">
+                    <div class="article__container" data-component="video-body">
                         <div class="video-standfirst">
                             @fragments.standfirst(video)
                         </div>
@@ -58,7 +58,7 @@
                         }
                     </div>
 
-                    <div class="social-wrapper">
+                    <div class="social-wrapper" data-component="video-share">
                         @fragments.social(video)
                     </div>
                 </div>
