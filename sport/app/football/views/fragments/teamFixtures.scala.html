@@ -6,7 +6,7 @@
     @upcomingFixtures.map{ fixture =>
         <h2 class="competitions-date type-7">@fixture.fixture.date.toString("EEEE d MMMM yyyy")</h2>
 
-        <div class="matches unstyled">
+        <div class="matches u-unstyled">
             <a href="@LinkTo{@fixture.competition.url}" class="football-table__heading" data-link-name="view competition">@fixture.competition.fullName</a>
             @tableMatches(List(fixture.fixture))
         </div>
@@ -24,7 +24,7 @@
     @previousResult.map{ result =>
         <h2 class="competitions-date type-7">@result.fixture.date.toString("EEEE d MMMM yyyy")</h2>
 
-        <div class="matches unstyled">
+        <div class="matches u-unstyled">
             <a href="@LinkTo{@result.competition.url}" class="football-table__heading" data-link-name="view competition">@result.competition.fullName</a>
             @tableMatches(List(result.fixture))
         </div>

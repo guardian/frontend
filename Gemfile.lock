@@ -1,12 +1,10 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    rake (10.1.1)
-    sass (3.3.0)
-      rake
+    sass (3.3.1)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  sass (~> 3.3.0)
+  sass (~> 3.3.1)
