@@ -5,22 +5,17 @@ import play.api.mvc._
 import views.support._
 import services.{Archive, DynamoDB}
 import java.net.URLDecoder
+import model.Cached
+import services.Googlebot404Count
 
 object ArchiveController extends Controller with Logging with ExecutionContexts {
  
-  private def destinationFor(path: String) = {
-    val destination = DynamoDB.destinationFor(path)
-    log.info(s"Checking '$path' is a redirect in DynamoDB: ${!destination.isEmpty}")
-    destination.filterNot { destination =>
+  private def destinationFor(path: String) = DynamoDB.destinationFor(path)
+    .filterNot { destination =>
       linksToItself(path, destination.location) 
     }
-  }
 
-  private def isArchived(path: String) = {
-    val archive = services.S3Archive.getHtml(path)
-    log.info(s"Checking '$path' is a archived in S3: ${!archive.isEmpty}")
-    archive
-  }
+  private def isArchived(path: String) = services.S3Archive.getHtml(path)
 
   def isEncoded(path: String): Option[String] = {
     val decodedPath = URLDecoder.decode(path, "UTF-8")
@@ -82,29 +77,51 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
     isEncoded(path).map(url => Redirect(s"http://$url", 301))
 
     //blocking
-    .orElse{ // DynamoDB lookup. This needs to happen *before* we poke around S3 for the file.
-        destinationFor(normalise(path).getOrElse(path)).map {
-          case services.Redirect(url) => Redirect(url, 301)
-          case Archive(path) =>
-            // http://wiki.nginx.org/X-accel
-            Ok.withHeaders("X-Accel-Redirect" -> s"/s3-archive/$path")
+    .orElse { // DynamoDB lookup. This needs to happen *before* we poke around S3 for the file.
+      destinationFor(normalise(path).getOrElse(path)).map {
+        case services.Redirect(url) =>
+          logDestination(path, "redirect", url)
+          Cached(300)(Redirect(url, 301))
+        case Archive(path) =>
+          // http://wiki.nginx.org/X-accel
+          logDestination(path, "archive", path)
+          Cached(300)(Ok.withHeaders("X-Accel-Redirect" -> s"/s3-archive/$path"))
+      }
+    }.orElse { // S3 lookup
+      //TODO this block disappears after X-Accel-Redirect above is working
+      isArchived(normalise(path, zeros = "00").getOrElse(path)).map {
+        body => {
+          val section = sectionFromR1Path(path).getOrElse("")
+          val clean = withJsoup(body)(InBodyLinkCleanerForR1(section))
+          logDestination(path, "old archive", "N.A.")
+          Cached(300)(Ok(views.html.archive(clean)).as("text/html"))
         }
-      }.orElse { // S3 lookup
-        //TODO this block disappears after X-Accel-Redirect above is working
-        isArchived(normalise(path, zeros = "00").getOrElse(path)).map {
-          body => {
-            val section = sectionFromR1Path(path).getOrElse("")
-            val clean = withJsoup(body)(InBodyLinkCleanerForR1(section))
-            Ok(views.html.archive(clean)).as("text/html")
-          } 
-        }
-      }.orElse { // needs to happen *after* s3 lookup as some old galleries
-                 // are still served under the URL 'gallery' 
-        isGallery(path).map {
-          url => Redirect(s"http://$url", 301)
-        }
-      }.getOrElse(NotFound)
-      
+      }
+    }.orElse {
+      // needs to happen *after* s3 lookup as some old galleries
+      // are still served under the URL 'gallery'
+      isGallery(path).map { url =>
+        logDestination(path, "gallery", url)
+        Redirect(s"http://$url", 301)
+      }
+    }.getOrElse{
+      log.info(s"Not Found (404): $path")
+      logGoogleBot(request)
+      NotFound
+    }
+  }
+
+  private def logDestination(path: String, msg: String, destination: String) {
+    log.info(s"Destination: $msg : $path -> $destination")
+  }
+
+  // do some specific logging for Googlebot.
+  // we really want to know how many of these (and what) are 404'ing
+  private def logGoogleBot(request: Request[AnyContent]) = {
+    request.headers.get("User-Agent").filter(_.contains("Googlebot")).foreach { bot =>
+      log.info(s"GoogleBot => ${request.uri}")
+      Googlebot404Count.increment()
+    }
   }
 
 }
