@@ -57,10 +57,10 @@
                 </div>
             </div>
         </article>
+        @football.views.html.fragments.footballCompetitionNav(matchesList match {
+            case ml: CompetitionList => ml.competition
+            case _ => None
+        })
     </div>
-    @football.views.html.fragments.footballCompetitionNav(matchesList match {
-        case ml: CompetitionList => ml.competition
-        case _ => None
-    })
     @views.html.fragments.mostPopularPlaceholder("sport")
 }
