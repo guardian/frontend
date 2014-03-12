@@ -3,7 +3,7 @@
     <label for="football-leagues" class="football-leagues__label">Choose league: </label>
     <select class="football-leagues__list" name="competitionUrl" id="football-leagues">
         <option value="/football/@if(pageType == "table"){tables}else{@pageType}">All @if(pageType == "table"){tables}else{@pageType}</option>
-        @competitions.map{ comp =>
+        @competitions.filter{ _.showInTeamsList }.map{ comp =>
             <option value="@comp.url/@pageType"@selectedCompetition.collect{ case selectedComp if selectedComp.id == comp.id => { selected="selected"}}>@comp.fullName</option>
         }
     </select>
