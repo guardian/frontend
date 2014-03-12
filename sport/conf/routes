@@ -41,6 +41,8 @@ GET        /football/api/match-nav/:year/:month/:day/:home/:away                
 GET        /football/api/match-nav/:matchId.json                                               football.controllers.MoreOnMatchController.moreOnJson(matchId)
 GET        /football/api/match-nav/:matchId                                                    football.controllers.MoreOnMatchController.moreOn(matchId)
 
+GET        /football/api/match-day                                                             football.controllers.LiveMatchesController.matchDayComponent()
+
 GET        /football/competitions                                                              football.controllers.CompetitionListController.renderCompetitionList()
 GET        /football/competitions.json                                                         football.controllers.CompetitionListController.renderCompetitionListJson()
 GET        /football/teams                                                                     football.controllers.LeagueTableController.renderTeamlist()
