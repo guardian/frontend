@@ -24,6 +24,14 @@ class LeagueTablesFeatureTest extends FeatureSpec with GivenWhenThen with Matche
         teams should contain("Chelsea")
 
         teams should not contain ("Wigan") // 5th in prem league not visible
+
+        And("I should have a generic H1, with league name H2s")
+
+        Then("The <h1> Should be tables")
+        val h2 = $("h2")
+        $("h1").getTexts should contain("tables")
+        h2.getTexts should contain("Premier League")
+        h2.getTexts should contain("Champions League")
       }
     }
 
@@ -39,8 +47,8 @@ class LeagueTablesFeatureTest extends FeatureSpec with GivenWhenThen with Matche
         teams should contain ("Wigan") // I can now see all items
 
         And("I should see a nice SEO h1 el on the page, describing the current competition")
-        $("h1").getTexts should contain("Premier League table")
-        $("h1").getTexts should not contain("Championship League table")
+        $("h1").getTexts should contain("Premier League")
+        $("h1").getTexts should not contain("Championship League")
       }
     }
 
@@ -48,5 +56,6 @@ class LeagueTablesFeatureTest extends FeatureSpec with GivenWhenThen with Matche
       val result = football.controllers.LeagueTableController.renderCompetition("sfgsfgsfg")(FakeRequest())
       status(result) should be(303)
     }
+
   }
 }
