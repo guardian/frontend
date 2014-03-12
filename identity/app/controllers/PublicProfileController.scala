@@ -67,6 +67,7 @@ class PublicProfileController @Inject()(idUrlBuilder: IdentityUrlBuilder,
     val idRequest = idRequestParser(request)
     identityApiClient.userFromVanityUrl(vanityUrl).map {
       case Left(errors) => {
+        logger.info(s"public profile page returned errors ${errors.toString()}")
         NotFound(views.html.errors._404())
       }
       case Right(user) => {
