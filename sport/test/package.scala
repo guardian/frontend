@@ -99,6 +99,10 @@ object TestHttp extends Http with ExecutionContexts {
       file.replace(today.toString("yyyyMMdd"), "20121020")
     }
 
+    println("**************************")
+    println(fileName)
+    println("**************************")
+
     try {
       // spoof todays date
       val xml = Source.fromFile(fileName).getLines.mkString.replace("20/10/2012", today.toString("dd/MM/yyyy"))

@@ -49,7 +49,7 @@ class ResultsFeatureTest extends FeatureSpec with GivenWhenThen with Matchers wi
       }
     }
 
-    ignore("Competition results filter") { // filter has been removed and will be re-implemented differently
+    scenario("Competition results filter") { // filter has been removed and will be re-implemented differently
 
       Given("I am on the the results page")
       HtmlUnit("/football/results") { browser =>
@@ -57,17 +57,18 @@ class ResultsFeatureTest extends FeatureSpec with GivenWhenThen with Matchers wi
 
         When("I click the filter to premier league link")
 
-        findFirst("[data-link-name='Premier League']").click()
+        findFirst("[data-link-name='view Premier League matches']").click()
         browser.await()
 
         Then("I should navigate to the premier league results page")
         val matches = $(".football-match__team")
-        assertTeamWithScore(matches, "Arsenal", "1")
-        assertTeamWithScore(matches, "Spurs", "0")
+        browser.url() should endWith("/football/premierleague/results")
+        assertTeamWithScore(matches, "Sunderland", "1")
+        assertTeamWithScore(matches, "West Ham", "1")
 
         And("I should not see other leagues results")
-        assertNotTeamWithScore(matches, "Bolton", "1")
-        assertNotTeamWithScore(matches, "Derby", "1")
+        assertNotTeamWithScore(matches, "Arsenal", "1")
+        assertNotTeamWithScore(matches, "Spurs", "0")
       }
     }
 
