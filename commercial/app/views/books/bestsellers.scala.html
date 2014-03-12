@@ -19,7 +19,7 @@
                     <ul class="unstyled list">
                     @books.map { book =>
                         <li class="list__item">
-                            <a href="@book.buyUrl" class="list__link" data-link-name="merchandising-bookshop-v0_1-low-12-March14-@{book.isbn}-@{book.author}-@{book.title}">
+                            <a href="@book.buyUrl" class="list__link" data-link-name="merchandising-bookshop-v0_1_2014-03-12-low-@{book.isbn}-@{book.author}-@{book.title}">
                                 <span class="list__count">@book.position</span>
                             @book.jacketUrl.map { url =>
                                 <div class="list__img js-image-upgrade" data-src="@url"></div>
