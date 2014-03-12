@@ -47,9 +47,6 @@ class FaciaController extends Controller with Logging with ExecutionContexts {
   // Needed as aliases for reverse routing
   def renderFrontRss(id: String) = renderFront(id)
   def renderFrontJson(id: String) = renderFront(id)
-  def renderCustomFront(id: String) = renderFront(id)
-  def renderCustomFrontRss(id: String) = renderFront(id)
-  def renderCustomFrontJson(id: String) = renderFront(id)
   def renderCollectionRss(id: String) = renderCollection(id)
   def renderCollectionJson(id: String) = renderCollection(id)
 
