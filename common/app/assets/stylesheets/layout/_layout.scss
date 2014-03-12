@@ -249,7 +249,7 @@ a.edition {
     text-align: center;
 
     .accessible-link {
-        display: block;
+        display: inline-block;
         @include fs-data(2);
     }
 }

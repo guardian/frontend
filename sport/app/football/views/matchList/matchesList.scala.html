@@ -13,6 +13,11 @@
     <tbody>
         @matchesList.map{ theMatch =>
             <tr data-link-to="@LinkTo{@theMatch.url}"
+                data-match-id="@theMatch.id"
+                data-score-home="@theMatch.homeTeam.score"
+                data-score-away="@theMatch.awayTeam.score"
+                data-match-status="@MatchStatus(theMatch.matchStatus)"
+                id="football-match-@theMatch.id"
                 class="@RenderClasses(Map(
                     "football-match" -> true,
                     "football-match--live" -> theMatch.isLive,
@@ -52,7 +57,7 @@
                     </div>
                 </td>
                 <td class="football-match__report">
-                    <a href="@LinkTo{@theMatch.url}" data-link-name="stats" data-match-id="@theMatch.id">Match report</a>
+                    <a href="@LinkTo{@theMatch.url}" data-link-name="stats" data-match-id="@theMatch.id">Match stats</a>
                 </td>
             </tr>
         }

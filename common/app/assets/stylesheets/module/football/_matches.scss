@@ -1,5 +1,6 @@
 .football-matches {
     margin-bottom: $gs-baseline*2;
+    position: relative;
 }
 
 .football-match {
@@ -24,11 +25,20 @@
 }
 
 .football-match--live {
+    font-weight: 900;
+
     .football-match__status {
         colour: $c-newsAccent;
-        font-weight: 900;
     }
 }
+
+.football-match--updated {
+    .football-team__score,
+    .football-teams__battleline {
+        color: $c-newsAccent;
+    }
+}
+
 
 .football-match__report {
     position: absolute;
@@ -61,7 +71,7 @@
 
     .football-team__score {
         @include rem((
-            right: $gs-gutter/2
+            right: ($gs-gutter/4)+1
         ));
     }
 }
@@ -75,7 +85,7 @@
 
     .football-team__score {
         @include rem((
-            left: $gs-gutter/2
+            left: ($gs-gutter/4)+1
         ));
     }
 }
@@ -118,6 +128,10 @@
             content: "v";
         }
     }
+}
+
+.js-on .football-matches tr {
+    cursor: pointer;
 }
 
 /* Footnotes */
