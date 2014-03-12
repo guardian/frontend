@@ -52,7 +52,7 @@ trait Index extends ConciergeRepository with QueryDefaults {
             val tag2 = head.tags.find(_.id == secondTag).head
             val pageName = s"${tag1.name} + ${tag2.name}"
             val page = Page(s"$leftSide+$rightSide", tag1.section, pageName,
-              s"GFE:${tag1.section}:$pageName", pagination = Some(Pagination(1, 2, 3)),
+              s"GFE:${tag1.section}:$pageName", pagination = pagination(response)),
               description = Some(s"Articles and other features published by The Guardian about ${tag1.name} and ${tag2.name}"))
 
             Left(IndexPage(page, trails))
