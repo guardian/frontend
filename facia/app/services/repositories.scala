@@ -8,7 +8,6 @@ import com.gu.openplatform.contentapi.model.{SearchResponse, ItemResponse}
 import org.joda.time.DateTime
 import org.scala_tools.time.Implicits._
 import contentapi.QueryDefaults
-//import controllers.ImageContentPage
 import scala.concurrent.Future
 import play.api.mvc.{RequestHeader, SimpleResult}
 import com.gu.openplatform.contentapi.ApiError
