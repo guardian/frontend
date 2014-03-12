@@ -15,7 +15,8 @@
 }
 
 .open__body {
-    @include fs-bodyCopy(2);
+    margin-bottom: $gs-baseline*1.5;
+    @include fs-bodyCopy(1);
 }
 
 .open__cta {
