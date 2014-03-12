@@ -28,7 +28,7 @@ object Us extends Edition(
   def navigation(metadata: MetaData) = Seq(
     NavItem(home),
     NavItem(us),
-    NavItem(world),
+    NavItem(world, Seq(europeNews, us, americas, asia, australia, africa, middleEast)),
     NavItem(sports, Seq(nfl, mlb, nba, mls, nhl, football)),
     footballNav(metadata),
     NavItem(cif),

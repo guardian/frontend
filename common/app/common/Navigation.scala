@@ -14,7 +14,7 @@ case class NavItem(name: SectionLink, links: Seq[SectionLink] = Nil, current: Bo
   def currentFor(page: MetaData): Boolean = name.currentFor(page) ||
     links.exists(_.currentFor(page)) || exactFor(page)
 
-  def exactFor(page: MetaData): Boolean = page.section == name.href.dropWhile(_ == '/')
+  def exactFor(page: MetaData): Boolean = page.section == name.href.dropWhile(_ == '/') || page.url == name.href
 }
 
 trait Navigation  {
@@ -23,8 +23,8 @@ trait Navigation  {
   val home = SectionLink("news", "home", "/")
   val news  = SectionLink("news", "news", "/")
   val world = SectionLink("world", "world", "/world")
-  val uk    = SectionLink("uk", "UK", "/uk-news")
-  val us    = SectionLink("us", "US", "/world/usa")
+  val uk    = SectionLink("uk-news", "UK", "/uk-news")
+  val us    = SectionLink("world", "US", "/world/usa")
   val politics = SectionLink("politics", "politics", "/politics")
   val technology = SectionLink("technology", "tech", "/technology")
   val environment = SectionLink("environment", "environment", "/environment")
