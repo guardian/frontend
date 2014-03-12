@@ -358,7 +358,7 @@
     overflow: hidden;
     @include rounded-corners(50%);
     background-color: $c-neutral7;
-
+    
     @include mq(leftCol) {
         width: gs-span(2);
         height: gs-span(2); //This is intentionally square
@@ -449,7 +449,7 @@
             display: none;
         }
     }
-
+    
     @include mq(leftCol) {
         position: static;
     }
