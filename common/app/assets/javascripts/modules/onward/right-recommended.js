@@ -28,7 +28,7 @@ define([
     ) {
 
     function RightRecommendedForYou(mediator, config) {
-        register.begin('right-recommended');
+        register.begin('right-gravity-recommendations');
         this.config = extend(this.config, config);
         this.maxTrails = ('maxTrails' in config) ? config.maxTrails : 5;
         this.mediator = mediator;
@@ -109,7 +109,7 @@ define([
     };
 
     RightRecommendedForYou.prototype.ready = function() {
-        register.end('right-recommended');
+        register.end('right-gravity-recommendations');
     };
 
     return RightRecommendedForYou;
