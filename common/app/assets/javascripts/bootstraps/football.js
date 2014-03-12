@@ -96,7 +96,7 @@ define([
 
         showFrontFixtures: function() {
             // wrap the return sports stats component in an 'item'
-            var prependTo = bonzo.create('<div class="fromage tone-accent-border tone-news unstyled item--sport-stats"></div>');
+            var prependTo = bonzo.create('<div class="fromage tone-accent-border tone-news u-unstyled item--sport-stats"></div>');
             mediator.on('modules:footballfixtures:render', function() {
                 bonzo($('.collection-wrapper', context).get(1))
                     .append(prependTo);
@@ -116,8 +116,8 @@ define([
         },
 
         showCompetitionData: function(competition) {
-            var fixtures = bonzo.create('<div class="fromage tone-accent-border tone-news unstyled item--sport-stats"></div>'),
-                table = bonzo.create('<div class="fromage tone-accent-border tone-news unstyled item--sport-stats"></div>');
+            var fixtures = bonzo.create('<div class="fromage tone-accent-border tone-news u-unstyled item--sport-stats"></div>'),
+                table = bonzo.create('<div class="fromage tone-accent-border tone-news u-unstyled item--sport-stats"></div>');
             mediator.on('modules:footballfixtures:render', function() {
                 bonzo($('.collection-wrapper', context).get(1))
                     .append(fixtures)

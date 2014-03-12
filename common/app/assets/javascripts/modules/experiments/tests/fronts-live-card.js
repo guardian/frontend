@@ -67,7 +67,7 @@ define([
                                         template(
                                             '<div class="container__card container__card--live tone-news tone-accent-border" data-link-name="card | live">' +
                                                 '<h3 class="container__card__title tone-colour">What\'s happening now</h3>' +
-                                                '<ul class="unstyled">{{items}}</ul>' +
+                                                '<ul class="u-unstyled">{{items}}</ul>' +
                                             '</div>',
                                             {
                                                 items:  items.join('')

@@ -4,13 +4,13 @@
 
     <h3 class="type-5">Today's matches</h3>
 
-    <div class="matches unstyled">
+    <div class="matches u-unstyled">
         <a href="@LinkTo{@competition.url}" class="football-table__heading" data-link-name="all todays matches">@competition.fullName</a>
         @tableMatches(competition.matches.take(numVisible))
     </div>
 
     @if(competition.matches.length > numVisible) {
-    <div class="matches unstyled panel">
+    <div class="matches u-unstyled panel">
         @tableMatches(competition.matches.drop(numVisible))
     </div>
     }

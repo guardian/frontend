@@ -1,6 +1,6 @@
 @(trails: Seq[Trail], numItemsVisible: Int = 5, related: Boolean = false, numThumbnails: Int = 5, headingLevel: Int = 2)(implicit request: RequestHeader)
 
-<ul class="unstyled">
+<ul class="u-unstyled">
     @trails.take(numItemsVisible).zipWithRowInfo.map{ case (trail, info) =>
         @if(info.rowNum == 1) {
             @trail match {
