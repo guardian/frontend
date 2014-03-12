@@ -179,10 +179,11 @@ GET         /onward/recently-published                                          
 
 # Facia
 GET         /                                                                                                        controllers.FaciaController.editionRedirect(path = "")
+GET         /$path<(culture|sport|australia|commentisfree|business|money)>                                           controllers.FaciaController.editionRedirect(path)
+GET         /$path<(us|uk|au|us-alpha|uk-alpha|au-alpha)?>                                                           controllers.FaciaController.renderEditionFront(path)
+GET         /$path<(us|uk|au|us-alpha|uk-alpha|au-alpha)?>.json                                                      controllers.FaciaController.renderEditionFrontJson(path)
 GET         /$path<(\w+/)?([\d\w-]*)>                                                                                controllers.FaciaController.renderEditionSectionFront(path)
 GET         /$path<(\w+/)?([\d\w-]*)>.json                                                                           controllers.FaciaController.renderEditionSectionFrontJson(path)
-GET         /$path<(culture|sport|australia|commentisfree|business|money)>                                           controllers.FaciaController.editionRedirect(path)
-GET         /$path<(us|uk|au|us-alpha|uk-alpha|au-alpha)?>.json                                                      controllers.FaciaController.renderEditionFrontJson(path)
 
 #Facia Press
 GET         /pressed/*path                                                                                           controllers.FaciaController.renderFaciaPress(path)
