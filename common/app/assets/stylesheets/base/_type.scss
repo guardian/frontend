@@ -64,7 +64,3 @@ h3 {
     margin-bottom: 7px;
     @include fs-bodyCopy(3);
 }
-th,
-td {
-    @extend %type-10;
-}
