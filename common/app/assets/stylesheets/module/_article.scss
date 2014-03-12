@@ -736,7 +736,7 @@
     }
 }
 
-.article__advertisement__label {
+.article-hat-label {
     @include fs-data(3);
     @include rem((
         margin-top: $gs-baseline/2
