@@ -81,7 +81,7 @@ define([
         });
 
         bean.on(context, 'change', $('form.football-leagues')[0], function() {
-            window.location = this.value +'/'+ this.form.pageType.value;
+            window.location = this.value;
         });
     }
 
