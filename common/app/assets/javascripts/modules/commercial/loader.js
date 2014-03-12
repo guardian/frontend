@@ -8,14 +8,16 @@ define([
     'common/utils/storage',
     'common/modules/lazyload',
     'common/modules/component',
-    'common/modules/onward/history'
+    'common/modules/onward/history',
+    'common/modules/ui/images'
 ], function (
     $,
     mediator,
     storage,
     LazyLoad,
     Component,
-    History
+    History,
+    images
 ) {
 
     /**
@@ -25,7 +27,7 @@ define([
      *
      * ```
      * require(['common/modules/commercial/loader'], function (CommercialComponent) {
-     *     var slot = document.querySelector('data-base="SLOT_NAME"');
+     *     var slot = document.querySelector('[data-base="SLOT_NAME"]');
      *     var c = new CommercialComponent({config: guardian, oastoken: '%%C%%?'}).init('COMPONENT_NAME', slot);
      * })
      * ```
@@ -82,6 +84,7 @@ define([
                 return html.replace(/%OASToken%/g, self.oastoken).replace(/%OmnitureToken%/g, '');
             },
             success: function () {
+                images.upgrade(target);
                 mediator.emit('modules:commercial/loader:loaded');
             },
             error: function (req) {

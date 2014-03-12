@@ -1,22 +1,18 @@
 define([
-    'reqwest',
     'bonzo',
     'qwery',
+    'common/utils/ajax',
     'common/utils/detect',
-    'common/utils/get-property'
+    'common/utils/get-property',
+    'common/utils/template'
 ], function(
-    reqwest,
     bonzo,
     qwery,
+    ajax,
     detect,
-    getProperty
+    getProperty,
+    template
 ) {
-
-    function fillTemplate(template, params) {
-        return Object.keys(params).reduce(function(template, token) {
-            return template.replace('{{' + token + '}}', params[token]);
-        }, template);
-    }
 
     return function() {
 
@@ -42,15 +38,16 @@ define([
             {
                 id: 'cartoon',
                 test: function (context, config) {
-                    reqwest({
-                        url: 'http://content.guardianapis.com/search?tag=theguardian%2Fseries%2Fguardiancommentcartoon&page-size=1&show-fields=all',
-                        type: 'jsonp'
+                    ajax({
+                        url        : 'tagged.json?tag=theguardian/series/guardiancommentcartoon',
+                        type       : 'json',
+                        crossDomain: true
                     })
                         .then(function(resp) {
-                            var $card = getProperty(resp, 'response.results', [])
+                            var $card = getProperty(resp, 'trails', [])
                                     .map(function(result) {
                                         return bonzo(bonzo.create(
-                                            fillTemplate(
+                                            template(
                                                 '<div class="container__card tone-comment tone-accent-border" data-link-name="card | cartoon">' +
                                                     '<h3 class="container__card__title tone-colour">Cartoon</h3>' +
                                                     '<a href="{{url}}" data-link-name="article" class="card__item card__item__link">' +
@@ -59,16 +56,16 @@ define([
                                                     '</a>' +
                                                 '</div>',
                                                 {
-                                                    headline: result.webTitle,
-                                                    url: result.webUrl.replace(/https?:\/\/[^/]*/, ''),
-                                                    thumbnail: result.fields.thumbnail
+                                                    headline : result.webTitle,
+                                                    url      : result.webUrl.replace(/https?:\/\/[^/]*/, ''),
+                                                    thumbnail: result.thumbnail
                                                 }
                                             )
                                         ));
                                     })
                                     .shift()
                                     .appendTo(qwery('.container--commentanddebate').shift()),
-                                yPosition = 379 - $card.dim().height;
+                                yPosition = 383 - $card.dim().height;
                             $card.css('top', yPosition + 'px');
                         });
                 }

@@ -14,7 +14,7 @@ class TitleTest extends FlatSpec with Matchers {
   it should "should create a 'default' title" in {
     val page = Page("", "", "The title", "", None)
     //without pagination
-    Title(page).body should be ("The title | theguardian.com")
+    Title(page).body should be ("The title | Home | The Guardian")
 
     val withPagination = new MetaData() {
       override def analyticsName = ""
@@ -25,22 +25,22 @@ class TitleTest extends FlatSpec with Matchers {
     }
 
     //with pagination
-    Title(withPagination).body should be ("The title | theguardian.com | Page 7 of 50")
+    Title(withPagination).body should be ("The title | Page 7 of 50 | Home | The Guardian")
   }
 
   it should "should create a title for Content" in {
     val content = ApiContent("lifeandstyle/foobar", Some("lifeandstyle"), Some("Life & Style"), new DateTime(),
       "The title", "http://www.guardian.co.uk/canonical", "http://foo.bar", elements = None)
 
-    Title(Content(content))(FakeRequest("GET", "/sport/foobar")).body should be ("The title | life | theguardian.com")
+    Title(Content(content))(FakeRequest("GET", "/sport/foobar")).body should be ("The title | Life | The Guardian")
   }
 
   it should "should create a title for a Tag" in {
     val tag = new ApiTag("sport/foobar", "type", webTitle = "The title", webUrl = "http://foo.bar",
       apiUrl = "http://foo.bar", sectionId = Some("sport"))
 
-    Title(Tag(tag))(FakeRequest("GET", "/sport/foobar")).body should be ("The title | sport | theguardian.com")
+    Title(Tag(tag))(FakeRequest("GET", "/sport/foobar")).body should be ("The title | Sport | The Guardian")
 
-    Title(Tag(tag, Some(Pagination(3, 4, 10))))(FakeRequest("GET", "/sport/foobar")).body should be ("The title | sport | theguardian.com | Page 3 of 4")
+    Title(Tag(tag, Some(Pagination(3, 4, 10))))(FakeRequest("GET", "/sport/foobar")).body should be ("The title | Page 3 of 4 | Sport | The Guardian")
   }
 }
