@@ -457,7 +457,7 @@
 
 .commentcount__label {
     .article__head & {
-        @extend .u-h;
+        @extend %u-h;
     }
 }
 
