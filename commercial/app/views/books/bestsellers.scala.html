@@ -1,7 +1,5 @@
 @(books: Seq[model.commercial.books.Book])(implicit request: RequestHeader)
 
-<link rel="stylesheet" href="@Static("stylesheets/head.default.css")" />
-<link rel="stylesheet" href="@Static("stylesheets/global.css")" />
 <link rel="stylesheet" href="@Static("stylesheets/commercial.css")" />
 
 <aside class="commercial books-component" role="complementary">
@@ -21,7 +19,7 @@
                     <ul class="unstyled list">
                     @books.map { book =>
                         <li class="list__item">
-                            <a href="@book.buyUrl" class="list__link" data-link-name="@book.position | text">
+                            <a href="@book.buyUrl" class="list__link" data-link-name="merchandising-bookshop-v0_1-low-12-March14-@{book.isbn}-@{book.author}-@{book.title}">
                                 <span class="list__count">@book.position</span>
                             @book.jacketUrl.map { url =>
                                 <div class="list__img js-image-upgrade" data-src="@url"></div>
