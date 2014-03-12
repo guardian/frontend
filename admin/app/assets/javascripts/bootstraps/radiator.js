@@ -75,16 +75,17 @@ define([
                 function renderDeploys(stage, target) {
                     Object.keys(latestDeployments[stage]).forEach(function (deployment)  {
                         var d  = latestDeployments[stage][deployment];
+                        var nameAbbreviation = d.projectName.substr(10, 4) //start at 10 to drop 'frontend::'
                         var li = document.createElement('li');
                         li.className = d.status;
-                        li.innerHTML = d.projectName;
+                        li.innerHTML = nameAbbreviation;
                         li.setAttribute('title', d.projectName);
                         target.appendChild(li);
 
                         if (stage === "PROD") {
                             var codeBuild = (latestDeployments["CODE"][deployment] || {}).build;
                             if (codeBuild !== d.build){
-                                li.innerHTML = codeBuild;
+                                li.innerHTML = nameAbbreviation + " " + codeBuild;
                                 li.className = "Behind";
                             }
                         }
