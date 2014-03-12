@@ -4,21 +4,17 @@ define([
     'common/utils/ajax',
     'common/utils/detect',
     'common/modules/onward/history',
-    'common/utils/get-property'
+    'common/utils/get-property',
+    'common/utils/template'
 ], function(
     bonzo,
     qwery,
     ajax,
     detect,
     History,
-    getProperty
+    getProperty,
+    template
 ) {
-
-    function fillTemplate(template, params) {
-        return Object.keys(params).reduce(function(template, token) {
-            return template.replace('{{' + token + '}}', params[token]);
-        }, template);
-    }
 
     var editionMappings = {
         'UK': 'GB',
@@ -63,7 +59,7 @@ define([
                                     })
                                     .slice(0, 3)
                                     .map(function(article, index) {
-                                        return fillTemplate(
+                                        return template(
                                             '<li data-link-name="trail | {{index}}" class="card__item">' +
                                                 '<a href="{{url}}" class="card__item__link" data-link-name="article">' +
                                                     '<h4 class="card__item__title">{{headline}}</h4>' +
@@ -78,10 +74,10 @@ define([
                                     }),
                                 $card = bonzo(
                                     bonzo.create(
-                                        fillTemplate(
+                                        template(
                                             '<div class="container__card container__card--missed tone-news tone-accent-border" data-link-name="card | missed">' +
-                                                '<h3 class="container__card__title tone-colour">You may have missed…</h3>' +
-                                                '<ul class="unstyled">{{articles}}</ul>' +
+                                                '<h3 class="container__card__title tone-colour">You may have missed</h3>' +
+                                                '<ul class="u-unstyled">{{articles}}</ul>' +
                                             '</div>',
                                             {
                                                 articles:  articles.join('')

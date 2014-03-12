@@ -31,7 +31,9 @@ trait MetaData extends Tags {
 
   def openGraph: List[(String, Any)] = List(
     "og:site_name" -> "the Guardian",
-    "fb:app_id"    -> Configuration.facebook.appId
+    "fb:app_id"    -> Configuration.facebook.appId,
+    "og:type"      -> "website",
+    "og:url"       -> s"${Configuration.site.host}$url"
   )
 
   def cards: List[(String, Any)] = List(

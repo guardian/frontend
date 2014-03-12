@@ -2,7 +2,7 @@
 
 
 <div class="gallery gallery--lightbox" data-total="@gallery.size" data-link-name="Lightbox gallery">
-    <ul class="gallery__images unstyled">
+    <ul class="gallery__images u-unstyled">
         @gallery.largestCrops.zipWithRowInfo.map{ case(image, row) =>
             <li class="js-gallery-item-@row.rowNum gallery__item @if(image.width > image.height){gallery__item--landscape} else {gallery__item--portrait}"
                 data-index="@row.rowNum">

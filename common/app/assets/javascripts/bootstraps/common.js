@@ -39,6 +39,7 @@ define([
     "common/modules/ui/message",
     "common/modules/identity/autosignin",
     'common/modules/adverts/article-body-adverts',
+    'common/modules/adverts/dfp',
     "common/modules/analytics/commercial/tags/container",
     "common/modules/onward/right-hand-component-factory"
 ], function (
@@ -82,6 +83,7 @@ define([
     Message,
     AutoSignin,
     ArticleBodyAdverts,
+    DFP,
     TagContainer,
     RightHandComponentFactory
 ) {
@@ -231,6 +233,8 @@ define([
 
         loadAdverts: function (config) {
             if(!userPrefs.isOff('adverts') && config.switches.adverts && !config.page.blockVideoAds && !config.page.shouldHideAdverts) {
+                var dfpAds = new DFP(config);
+
                 var resizeCallback = function() {
                     hasBreakpointChanged(function() {
                         Adverts.reload();
@@ -255,7 +259,14 @@ define([
                 mediator.on('page:common:deferred:loaded', function(config, context) {
                     Adverts.init(config, context);
                 });
-                mediator.on('modules:adverts:docwrite:loaded', Adverts.load);
+                mediator.on('modules:adverts:docwrite:loaded', function() {
+
+                    if(config.switches.dfpAdverts) {
+                        dfpAds.load();
+                    }
+
+                    Adverts.load();
+                });
 
                 mediator.on('window:resize', debounce(resizeCallback, 2000));
             }
@@ -301,7 +312,7 @@ define([
                             'You’re viewing a beta release of the Guardian’s responsive website.' +
                             ' We’d love to hear your <a href="https://www.surveymonkey.com/s/theguardian-beta-feedback" data-link-name="feedback">feedback</a>' +
                       '</p>' +
-                      '<ul class="site-message__actions unstyled">' +
+                      '<ul class="site-message__actions u-unstyled">' +
                            '<li class="site-message__actions__item">' +
                                '<i class="i i-back"></i>' +
                                    '<a class="js-main-site-link" rel="nofollow" href="' + exitLink + '"' +
@@ -339,7 +350,7 @@ define([
                     '<li class="site-message__list__item">We love feedback - <a href="https://www.surveymonkey.com/s/theguardian-beta-feedback">let us know yours</a>.</li>' +
                     '<li class="site-message__list__item">Stay up to date with new releases on <a href="http://next.theguardian.com/blog/">our blog</a>.</li>' +
                     '</ul>' +
-                    '<ul class="site-message__actions unstyled">' +
+                    '<ul class="site-message__actions u-unstyled">' +
                     '<li class="site-message__actions__item"><i class="i i-arrow-white-circle"></i>  '+
                     '<a class="js-site-message-close" data-link-name="R2 alpha opt in" href="#" tabindex=1>Got it</a>' +
                     '<li class="site-message__actions__item">' +

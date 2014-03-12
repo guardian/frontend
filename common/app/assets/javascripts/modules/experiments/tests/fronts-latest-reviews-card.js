@@ -1,22 +1,18 @@
 define([
-    'reqwest',
     'bonzo',
     'qwery',
+    'common/utils/ajax',
     'common/utils/detect',
-    'common/utils/get-property'
+    'common/utils/get-property',
+    'common/utils/template'
 ], function(
-    reqwest,
     bonzo,
     qwery,
+    ajax,
     detect,
-    getProperty
+    getProperty,
+    template
 ) {
-
-    function fillTemplate(template, params) {
-        return Object.keys(params).reduce(function(template, token) {
-            return template.replace('{{' + token + '}}', params[token]);
-        }, template);
-    }
 
     return function() {
 
@@ -42,20 +38,19 @@ define([
             {
                 id: 'latest-reviews',
                 test: function (context, config) {
-                    reqwest({
-                        url: 'http://content.guardianapis.com/search?tag=tone%2Freviews%2Cculture%2Fculture&page-size=3&show-fields=starRating',
-                        type: 'jsonp'
+                    ajax({
+                        url        : '/tagged.json?tag=tone/reviews,culture/culture',
+                        type       : 'json',
+                        crossOrigin: true
                     })
                         .then(function(resp) {
-                            var reviews = [];
-                            getProperty(resp, 'response.results', []).forEach(function(result, index) {
-                                var starRating = result.fields.starRating;
-                                reviews.push(
-                                    fillTemplate(
+                            var reviews = getProperty(resp, 'trails', [])
+                                .map(function(result, index) {
+                                    return template(
                                         '<li data-link-name="trail | {{index}}" class="card__item">' +
                                             '<a href="{{url}}" class="card__item__link" data-link-name="article">' +
-                                                '<h4 class="card__item__title">{{section}}: {{title}}</h4>' +
-                                                ((starRating !== undefined) ?
+                                                '<h4 class="card__item__title">{{section}}: {{headline}}</h4>' +
+                                                ((result.starRating !== undefined) ?
                                                     '<span class="stars s-{{rating}}" itemprop="reviewRating" itemscope itemtype="http://schema.org/Rating">' +
                                                         '<meta itemprop="worstRating" content="1" />' +
                                                         '<span itemprop="ratingValue">{{rating}}</span> /' +
@@ -64,27 +59,26 @@ define([
                                             '</a>' +
                                         '</li>',
                                         {
-                                            url: result.webUrl.replace(/https?:\/\/[^/]*/, ''),
-                                            title: result.webTitle,
-                                            section: result.sectionName,
-                                            rating: result.fields.starRating,
-                                            index: index + 1
+                                            headline: result.webTitle,
+                                            url     : result.webUrl.replace(/https?:\/\/[^/]*/, ''),
+                                            section : result.sectionName,
+                                            rating  : result.starRating,
+                                            index   : index + 1
                                         }
-                                    )
-                                );
-                            });
-                            var $card = bonzo(
+                                    );
+                                }),
+                                $card = bonzo(
                                     bonzo.create(
-                                        fillTemplate(
+                                        template(
                                             '<div class="container__card tone-feature tone-accent-border" data-link-name="card | latest reviews">' +
                                                 '<h3 class="container__card__title tone-colour">Latest reviews</h3>' +
-                                                '<ul class="unstyled">{{reviews}}</ul>' +
+                                                '<ul class="u-unstyled">{{reviews}}</ul>' +
                                             '</div>',
                                             {reviews:  reviews.join('')}
                                         )
                                     )
                                 ).appendTo(qwery('.container--features').shift()),
-                                yPosition = 513 - $card.dim().height;
+                                yPosition = 518 - $card.dim().height;
                             $card.css('top', yPosition + 'px');
                         });
                 }

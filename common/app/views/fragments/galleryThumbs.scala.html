@@ -8,7 +8,7 @@
             Open gallery<i class="i i-double-arrow-right-blue"></i>
         </a>
     }
-    <ul class="unstyled">
+    <ul class="u-unstyled">
         @if(gallery.landscapes.length >= 3) {
             @gallery.landscapes.take(3).zipWithRowInfo.map{ case(image, info) => @thumbItem(image, info, "landscapes") }
         } else {

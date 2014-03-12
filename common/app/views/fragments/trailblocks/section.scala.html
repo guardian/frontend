@@ -1,6 +1,6 @@
 @(trails: Seq[Trail], numItemsVisible: Int = 5, numWithImages: Int = 5, related: Boolean = false, showFeatured: Boolean = true)(implicit request: RequestHeader)
 
-<ul class="unstyled">
+<ul class="u-unstyled">
     @trails.take(numItemsVisible).zipWithRowInfo.map{ case (trail, info) =>
         @info.rowNum match {
             case featuredRow if featuredRow == 1 & showFeatured => { @fragments.trails.featured(trail, featuredRow, related) }
