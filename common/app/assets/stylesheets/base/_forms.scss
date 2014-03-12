@@ -2,10 +2,10 @@
    ========================================================================== */
 
 @if $old-ie {
-   // IE 8 won't display webfonts in password fields…
-   [type=password] {
-      font-family: sans-serif !important;
-   }
+    // IE 8 won't display webfonts in password fields…
+    [type=password] {
+        font-family: sans-serif !important;
+    }
 }
 
 .form {
