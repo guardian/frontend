@@ -18,8 +18,6 @@ GET        /$path<(us|uk|au|us-alpha|uk-alpha|au-alpha)?>                   cont
 GET        /$path<(us|uk|au|us-alpha|uk-alpha|au-alpha)?>.json              controllers.FaciaController.renderEditionFrontJson(path)
 GET        /$path<(\w+/)?([\d\w-]*)>                                        controllers.FaciaController.renderEditionSectionFront(path)
 GET        /$path<(\w+/)?([\d\w-]*)>.json                                   controllers.FaciaController.renderEditionSectionFrontJson(path)
-GET        /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>/trails.json             controllers.FaciaController.renderFrontTrails(path)
-GET        /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>/trails                  controllers.FaciaController.renderFrontTrailsJson(path)
 
 GET        /collection/$id<[\w\d-/]*>/rss                                   controllers.FaciaController.renderCollectionRss(id)
 GET        /collection/$id<[\w\d-/]*>                                       controllers.FaciaController.renderEditionCollection(id)
