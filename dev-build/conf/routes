@@ -50,6 +50,7 @@ GET         /preference/edition/:edition                                        
 GET         /preference/front-alphas/:optAction                                                                      controllers.ChangeAlphaController.render(optAction, page)
 
 GET         /cards/opengraph/*path.json                                                                              controllers.CardController.opengraph(path)
+GET         /tagged.json                                                                                             controllers.TaggedContentController.renderJson(tag: String)
 
 # Sport
 GET         /sport/cricket/match/:matchId.json                                                                       controllers.CricketMatchController.renderMatchIdJson(matchId)

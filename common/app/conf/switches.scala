@@ -98,6 +98,11 @@ object Switches extends Collections {
     safeState = On, sellByDate = never
   )
 
+  val DFPAdvertSwitch = Switch("Advertising", "dfp-adverts",
+    "If this switch is on then DFP adverts will be loaded with JavaScript.",
+    safeState = Off, sellByDate = never
+  )
+
   val VideoAdvertSwitch = Switch("Advertising", "video-adverts",
     "If this switch is on then OAS video adverts will be loaded with JavaScript.",
     safeState = Off, sellByDate = endOfQ4
@@ -336,11 +341,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 3, 15)
   )
 
-  val FootballTablePosition = Switch("A/B Tests", "ab-football-table-position",
-    "If this switch is on, the football table will vary in position throughout the football tagged pages.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 3, 12)
-  )
-
   // Sport Switch
 
   val LiveCricketSwitch = Switch("Live Cricket", "live-cricket",
@@ -415,6 +415,7 @@ object Switches extends Collections {
     DoubleCacheTimesSwitch,
     RelatedContentSwitch,
     AdvertSwitch,
+    DFPAdvertSwitch,
     VideoAdvertSwitch,
     AudienceScienceSwitch,
     DiscussionSwitch,
@@ -444,7 +445,6 @@ object Switches extends Collections {
     ABAa,
     ABRecommendedRightHand,
     GeoMostPopular,
-    FootballTablePosition,
     ToolDisable,
     ToolConfigurationDisable,
     ToolSparklines,

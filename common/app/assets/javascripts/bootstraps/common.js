@@ -39,6 +39,7 @@ define([
     "common/modules/ui/message",
     "common/modules/identity/autosignin",
     'common/modules/adverts/article-body-adverts',
+    'common/modules/adverts/dfp',
     "common/modules/analytics/commercial/tags/container",
     "common/modules/onward/right-hand-component-factory"
 ], function (
@@ -82,6 +83,7 @@ define([
     Message,
     AutoSignin,
     ArticleBodyAdverts,
+    DFP,
     TagContainer,
     RightHandComponentFactory
 ) {
@@ -231,6 +233,8 @@ define([
 
         loadAdverts: function (config) {
             if(!userPrefs.isOff('adverts') && config.switches.adverts && !config.page.blockVideoAds && !config.page.shouldHideAdverts) {
+                var dfpAds = new DFP(config);
+
                 var resizeCallback = function() {
                     hasBreakpointChanged(function() {
                         Adverts.reload();
@@ -255,7 +259,14 @@ define([
                 mediator.on('page:common:deferred:loaded', function(config, context) {
                     Adverts.init(config, context);
                 });
-                mediator.on('modules:adverts:docwrite:loaded', Adverts.load);
+                mediator.on('modules:adverts:docwrite:loaded', function() {
+
+                    if(config.switches.dfpAdverts) {
+                        dfpAds.load();
+                    }
+
+                    Adverts.load();
+                });
 
                 mediator.on('window:resize', debounce(resizeCallback, 2000));
             }
