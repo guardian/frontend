@@ -65,7 +65,7 @@ class PublicProfileController @Inject()(idUrlBuilder: IdentityUrlBuilder,
 
   def publicProfilePage(vanityUrl: String) = Action.async { implicit request =>
     val idRequest = idRequestParser(request)
-    identityApiClient.userFromVanityUrl(userName = vanityUrl).map {
+    identityApiClient.userFromVanityUrl(vanityUrl).map {
       case Left(errors) => {
         NotFound(views.html.errors._404())
       }

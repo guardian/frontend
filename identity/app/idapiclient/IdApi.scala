@@ -54,8 +54,8 @@ abstract class IdApi(val apiRootUrl: String, http: Http, jsonBodyParser: JsonBod
     response map jsonBodyParser.extract(jsonField("user"))
   }
 
-  def userFromVanityUrl(userName: String, auth: Auth = Anonymous): Future[Response[User]] = {
-    val apiPath = urlJoin("user", "vanityurl", userName)
+  def userFromVanityUrl(vanityUrl: String, auth: Auth = Anonymous): Future[Response[User]] = {
+    val apiPath = urlJoin("user", "vanityurl", vanityUrl)
     val params = buildParams(Some(auth))
     val headers = buildHeaders(Some(auth))
     val response = http.GET(apiUrl(apiPath), params, headers)
