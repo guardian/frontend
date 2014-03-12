@@ -11,7 +11,10 @@
 }
 
 .open__head__accent {
-    color: $c-commentDefault;
+    display: block;
+    @include mq(leftCol) {
+        display: inline;
+    }
 }
 
 .open__body {
@@ -22,4 +25,9 @@
 .open__cta {
     color: $c-neutral2;
     @include fs-bodyHeading(2);
+}
+
+.open__cta-icon {
+    margin-bottom: -5px;
+    margin-right: $gs-baseline / 3;
 }
