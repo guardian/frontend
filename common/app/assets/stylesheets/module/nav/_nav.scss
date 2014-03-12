@@ -321,7 +321,8 @@
 /* No left-right spacing
    ========================================================================== */
 
-%nav--no-horizontal-spacing {
+%nav--no-horizontal-spacing,
+.nav--no-horizontal-spacing {
     padding-left: 0;
     padding-right: 0;
 }
