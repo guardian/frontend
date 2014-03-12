@@ -103,7 +103,7 @@
         </article>
 
         @if(DiscussionSwitch.isSwitchedOn && article.isCommentable) {
-            <div class="article__inner js-comments" data-component="article-comments" data-component="discussion">
+            <div class="article__inner js-comments" data-component="discussion">
                 @fragments.discussion(article.isClosedForComments, article.shortUrlId)
             </div>
         }
