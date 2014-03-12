@@ -27,8 +27,9 @@
 }
 // Align "×" icon (cancel search button)
 span.gscb_a {
+    font: normal 24px/16px Georgia, serif !important;
     position: relative;
-    top: 5px;
+    top: 2px;
 }
 .gsc-search-box {
     padding: 0;
