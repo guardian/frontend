@@ -2,10 +2,6 @@
    Site wide search
    ========================================================================== */
 
-.gsc-search-box {
-    padding: 0;
-    max-width: none;
-}
 .search-placeholder {
     min-height: 50px;
     padding-top: $gs-baseline/2;
@@ -22,56 +18,55 @@
         ));
     }
 }
+.gsc-control-cse {
+    padding: 0 $gs-gutter/2 !important;
 
-.gsc-search-box .gsib_a {
-    padding-top: 2px;
+    @include mq(mobileLandscape) {
+        padding: 0 $gs-gutter !important;
+    }
 }
-
+// Align "×" icon (cancel search button)
+span.gscb_a {
+    position: relative;
+    top: 5px;
+}
+.gsc-search-box {
+    padding: 0;
+    max-width: none;
+}
 .gsc-search-box .gsc-input-box {
     height: 28px;
 }
-
 .gsc-search-box .gsc-input {
     padding: 0 !important;
     margin: 0 !important;
 }
-
 td.gsc-search-button {
     margin: 0 !important;
     padding: 5px 0 0 0 !important;
 }
-
-input.gsc-search-button,
-input.gsc-search-button-v2 {
+.gsc-search-button-v2 {
     @include rounded-corners(0 !important);
     margin: 0 !important;
-    padding: 7px 8px !important;
-    width: 14px !important;
-    height: 14px !important;
+    padding: 7px 9px 8px !important;
 }
-
-.gs-result {
+.gsc-completion-container,
+.gsc-input {
     font-family: $sans-serif;
 }
-
-.gsc-control-cse {
-    padding: 0 $gs-gutter !important;
+.gs-title {
+    @include fs-headline(1);
 }
-
+.gsc-result-info {
+    padding-left: 0; // Remove space before "About x results (x seconds)"
+}
 .gsc-results .gsc-thumbnail-inside,
 .gsc-results .gsc-url-top {
     padding-left: 0;
 }
-
-.gsc-results .gs-snippet {
-    line-height: 1.6rem;
-}
-
 .gsc-results .gs-visibleUrl-long {
     white-space: nowrap;
-    overflow: hidden;
 }
-
 .gsc-result .gs-title,
 .gsc-result .gs-title * {
     height: inherit !important;
@@ -79,11 +74,10 @@ input.gsc-search-button-v2 {
     text-decoration: none !important;
 }
 
+// Add space between pagination links to make them more touch friendly
 .gsc-results .gsc-cursor-box {
     margin: 0 0 ($gs-baseline/3)*4 0 !important;
 }
-
 .gsc-results .gsc-cursor-box .gsc-cursor-page {
     margin-right: 22px !important;
 }
-
