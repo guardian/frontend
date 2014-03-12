@@ -16,7 +16,7 @@ trait MatchListController extends Controller with Requests {
   protected def createDate(year: String, month: String, day: String): DateMidnight =
     datePattern.parseDateTime(s"$year$month$day").toDateMidnight
 
-  protected def renderMatchList(page: Page, matchesList: MatchesList)(implicit request: RequestHeader) = {
+  protected def renderMatchList(page: Page, matchesList: MatchesList, filters: Map[String, Seq[CompetitionFilter]])(implicit request: RequestHeader) = {
     Cached(page) {
       if (request.isJson)
         JsonComponent(
@@ -25,7 +25,7 @@ trait MatchListController extends Controller with Requests {
           "previous" -> Html(matchesList.previousPage.getOrElse(""))
         )
       else
-        Ok(football.views.html.matchList.matchesPage(page, matchesList))
+        Ok(football.views.html.matchList.matchesPage(page, matchesList, filters))
     }
   }
 

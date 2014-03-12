@@ -8,7 +8,7 @@ import football.model._
 import common.JsonComponent
 
 
-object LiveMatchesController extends MatchListController {
+object LiveMatchesController extends MatchListController with CompetitionLiveFilters {
 
   def liveMatchesJson() = liveMatches()
   def liveMatches(): Action[AnyContent] =
@@ -17,7 +17,7 @@ object LiveMatchesController extends MatchListController {
   private def renderLiveMatches(date: DateMidnight) = Action { implicit request =>
     val liveMatches = new LiveMatchesList(Competitions())
     val page = new Page("football/live", "football", "Live matches", "GFE:Football:automatic:live matches")
-    renderMatchList(page, liveMatches)
+    renderMatchList(page, liveMatches, filters)
   }
 
   def competitionMatchesJson(competitionTag: String) = competitionMatches(competitionTag)
@@ -28,7 +28,7 @@ object LiveMatchesController extends MatchListController {
     lookupCompetition(competitionTag).map { competition =>
       val page = new Page(s"football/$competitionTag/live", "football", s"Today's ${competition.fullName} matches", "GFE:Football:automatic:live matches")
       val liveMatches = new CompetitionLiveMatchesList(Competitions(), competition.id)
-      renderMatchList(page, liveMatches)
+      renderMatchList(page, liveMatches, filters)
     }.getOrElse {
       NotFound
     }

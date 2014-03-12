@@ -9,7 +9,7 @@ import pa.FootballTeam
 import model.Competition
 
 
-object ResultsController extends MatchListController {
+object ResultsController extends MatchListController with CompetitionResultFilters {
 
   def allResultsForJson(year: String, month: String, day: String) = allResultsFor(year, month, day)
   def allResultsFor(year: String, month: String, day: String): Action[AnyContent] =
@@ -22,7 +22,7 @@ object ResultsController extends MatchListController {
   private def renderAllResults(date: DateMidnight) = Action { implicit request =>
     val results = new ResultsList(date, Competitions())
     val page = new Page("football/results", "football", "All results", "GFE:Football:automatic:results")
-    renderMatchList(page, results)
+    renderMatchList(page, results, filters)
   }
 
   def tagResultsJson(tag: String) = tagResults(tag)
@@ -46,12 +46,12 @@ object ResultsController extends MatchListController {
   private def renderCompetitionResults(competitionName: String, competition: Competition, date: DateMidnight) = Action { implicit request =>
     val results = new CompetitionResultsList(date, Competitions(), competition.id)
     val page = new Page(s"football/$competitionName/results", "football", s"${competition.fullName} results", "GFE:Football:automatic:competition results")
-    renderMatchList(page, results)
+    renderMatchList(page, results, filters)
   }
 
   private def renderTeamResults(teamName: String, team: FootballTeam, date: DateMidnight) = Action { implicit request =>
     val results = new TeamResultsList(date, Competitions(), team.id)
     val page = new Page(s"/football/$teamName/results", "football", s"${team.name} results", "GFE:Football:automatic:team results")
-    renderMatchList(page, results)
+    renderMatchList(page, results, filters)
   }
 }

@@ -3,17 +3,32 @@
 <div class="team__results">
 @competition.teamResults(teamId).takeRight(5).map { result =>
     @if(result.won) {
-        <span class="team-result team-result--won" data-foe="@result.foe.name" data-score="@result.self.score.get" data-score-foe="@result.foe.score.get">
+        <span
+            class="team-result team-result--won"
+            data-foe="@result.foe.name"
+            data-score="@result.self.score.get"
+            data-score-foe="@result.foe.score.get"
+            title="Won @result.self.score.get-@result.foe.score.get against @result.foe.name">
             <span class="u-h">Won against @result.foe.name</span>
         </span>
     }
     @if(result.drew) {
-        <span class="team-result team-result--drew" data-foe="@result.foe.name" data-score="@result.self.score.get" data-score-foe="@result.foe.score.get">
+        <span
+            class="team-result team-result--drew"
+            data-foe="@result.foe.name"
+            data-score="@result.self.score.get"
+            data-score-foe="@result.foe.score.get"
+            title="Drew @result.self.score.get-@result.foe.score.get with @result.foe.name">
             <span class="u-h">Drew with @result.foe.name</span>
         </span>
     }
     @if(result.lost) {
-        <span class="team-result team-result--lost" data-foe="@result.foe.name" data-score="@result.self.score.get" data-score-foe="@result.foe.score.get">
+        <span
+            class="team-result team-result--lost"
+            data-foe="@result.foe.name"
+            data-score="@result.self.score.get"
+            data-score-foe="@result.foe.score.get"
+            title="Lost @result.self.score.get-@result.foe.score.get to @result.foe.name">
             <span class="u-h">Lost to @result.foe.name</span>
         </span>
     }

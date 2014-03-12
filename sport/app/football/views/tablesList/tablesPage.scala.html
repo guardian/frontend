@@ -1,4 +1,4 @@
-@(page: TablesPage, competitions: Seq[model.Competition])(implicit request: RequestHeader)
+@(page: TablesPage)(implicit request: RequestHeader)
 
 @main(page.page, "football"){
 }{
@@ -10,7 +10,7 @@
 
 <div class="article-wrapper monocolumn-wrapper tone-news">
     <article id="article" class="article" itemprop="mainContentOfPage" itemtype="http://schema.org/Article" role="main">
-        @football.views.html.fragments.leagueSelector(competitions, "table", page.comp)
+        @football.views.html.fragments.leagueSelector(page.filters, "tables", page.comp)
 
         <div class="article__columning-wrapper">
             <div class="article__main-column">
