@@ -53,7 +53,8 @@ class Page(
   val section: String,
   val webTitle: String,
   val analyticsName: String,
-  pagination: Option[Pagination] = None) extends MetaData
+  override val pagination: Option[Pagination],
+  override val description: Option[String]) extends MetaData
 
 object Page {
   def apply(
@@ -61,7 +62,8 @@ object Page {
     section: String,
     webTitle: String,
     analyticsName: String,
-    pagination: Option[Pagination] = None) = new Page(id, section, webTitle, analyticsName, pagination)
+    pagination: Option[Pagination] = None,
+    description: Option[String] = None) = new Page(id, section, webTitle, analyticsName, pagination, description)
 }
 
 trait Elements {
