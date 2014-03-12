@@ -21,7 +21,6 @@ ul {
     margin: 0;
 }
 
-
 .pingdom-wrapper small,
 .riffraff-wrapper small {
 
@@ -49,6 +48,13 @@ ul {
 
 .Expiring {
     background-color: orange;
+}
+
+.riffraff li.Behind {
+    background-color: #21fa41;
+    color: #000000;
+    font-size: 9px;
+    text-align: center;
 }
 
 .expiry-days-0, .expiry-days-1, .expiry-days-2 {
