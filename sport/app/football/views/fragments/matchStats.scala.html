@@ -11,7 +11,7 @@
      data-home-stat="@home" data-home-percent="@homePercent"
      data-away-stat="@away" data-away-percent="@awayPercent">
     <h5 class="type-7"><b>@title</b></h5>
-    <ol class="unstyled u-cf">
+    <ol class="u-unstyled u-cf">
         <li class="match-stat__item" style="width:@{NudgePercent(homePercent, awayPercent)}%">
             <div class="home-num type-7" >@home@if(home+away == 100){%}</div>
             <div class="home-stat">&nbsp;</div>
@@ -42,7 +42,7 @@
 }
 
 @team(players: Seq[LineUpPlayer]) = {
-    <ul class="team-list unstyled">
+    <ul class="team-list u-unstyled">
         @players.map{ player =>
         <li class="team-list__item">
             @player.name

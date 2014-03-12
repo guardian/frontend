@@ -1,7 +1,7 @@
 @(items: Seq[Trail], style: PeopleContainer, containerIndex: Int)(implicit request: RequestHeader)
 
 <div class="collection-wrapper collection-wrapper--position-1">
-    <ul class="unstyled l-row l-row--items-3 collection">
+    <ul class="u-unstyled l-row l-row--items-3 collection">
         @items.slice(0, 3).zipWithIndex.map{ case (trail, index) =>
             @fragments.collections.items.standard(trail, index, containerIndex)
         }
@@ -12,7 +12,7 @@
     @if(items.nonEmpty) {
         <div class="collection-wrapper collection-wrapper--position-2@if(style.adSlot.isEmpty){ collection-wrapper--no-outer-margins}">
             @style.adSlot.map { adSlot =>
-                <ul class="unstyled l-row l-row--items-3 collection collection--linkslist-and-mpu">
+                <ul class="u-unstyled l-row l-row--items-3 collection collection--linkslist-and-mpu">
                     <li class="l-row__item l-row__item--boost-2 collection__item">
             }
                         <ul class="l-columns linkslist features__columns">

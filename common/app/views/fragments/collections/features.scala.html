@@ -1,7 +1,7 @@
 @(items: Seq[Trail], style: FeaturesContainer, containerIndex: Int)(implicit request: RequestHeader)
 
 <div class="collection-wrapper collection-wrapper--spacing-thin collection-wrapper--position-1">
-    <ul class="unstyled l-row l-row--items-3 l-row--layout-m collection l-row--background-features">
+    <ul class="u-unstyled l-row l-row--items-3 l-row--layout-m collection l-row--background-features">
         @items.slice(0, 1).zipWithIndex.map{ case (trail, index) =>
             @fragments.collections.items.standard(trail, index, containerIndex, "l-row__item--break-m")
         }
@@ -14,7 +14,7 @@
     @if(items.nonEmpty) {
         <div class="collection-wrapper collection-wrapper--position-2@if(style.adSlot.isEmpty){ collection-wrapper--no-outer-margins}">
             @style.adSlot.map { adSlot =>
-                <ul class="unstyled l-row l-row--items-3 collection collection--linkslist-and-mpu">
+                <ul class="u-unstyled l-row l-row--items-3 collection collection--linkslist-and-mpu">
                     <li class="l-row__item l-row__item--boost-2 collection__item">
             }
                         <ul class="l-columns linkslist features__columns">

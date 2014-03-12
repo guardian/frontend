@@ -44,7 +44,7 @@
     }
 }
 .linkslist {
-    @extend .unstyled;
+    @extend %u-unstyled;
 }
 .linkslist__item {
     border-top: 1px solid $c-neutral5;
