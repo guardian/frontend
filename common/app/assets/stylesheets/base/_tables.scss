@@ -4,23 +4,10 @@ $table-gutter: 4px;
 table {
     width: 100%;
 }
+
 th,
 td {
-    padding: $gs-baseline/3 $gs-gutter/5;
     text-align: left;
-}
-
-[colspan] {
-    text-align: center;
-}
-[colspan="1"] {
-    text-align: left;
-}
-[rowspan] {
-    vertical-align: middle;
-}
-[rowspan="1"] {
-    vertical-align: top;
 }
 
 @mixin table--small {
@@ -75,7 +62,6 @@ td {
     abbr {
         border-bottom: 1px dotted $c-neutral8;
     }
-
 
     @include mq($to: tablet) { @include table--small; }
 }
