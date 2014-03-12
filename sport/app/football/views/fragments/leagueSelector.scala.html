@@ -5,7 +5,7 @@
         <optgroup label="@name">
             @filter.map{ competition =>
                 <option value="@competition.url"
-                        @selectedCompetition.map{ selectedComp => if(selectedComp.url == competition.url){ selected="selected"}}>
+                        @selectedCompetition.map{ selectedComp => @if(selectedComp.fullName == competition.name){ selected="selected"}}>
                     @competition.name
                 </option>
             }

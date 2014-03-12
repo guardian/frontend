@@ -41,6 +41,10 @@
     position: relative;
 }
 
+.football-teams {
+    position: relative;
+}
+
 .football-match__team {
     @include box-sizing(border-box);
     display: inline-block;
@@ -95,7 +99,7 @@
 
 .football-teams__battleline {
     @include rem((
-        top: 18%
+        top: 0
     ));
     color: $c-neutral2;
     left: 0;
