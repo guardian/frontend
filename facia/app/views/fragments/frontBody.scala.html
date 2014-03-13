@@ -2,7 +2,6 @@
 
 @if(faciaTrailblock.collections.nonEmpty) {
     <div class="facia-container facia-container--layout-front monocolumn-wrapper monocolumn-wrapper--no-limit" data-link-name="Front" role="main">
-        <span class="is-updating"></span>
         @defining(faciaTrailblock.collections.filter(_._2.items.nonEmpty)) { collections =>
             @defining(collections.filter(c => (c._1.collectionType == Some("features") || c._1.collectionType == Some("news/people")))) { adCollections =>
                 @collections.zipWithIndex.map{ case(block, index) =>
