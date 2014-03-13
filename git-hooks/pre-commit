@@ -12,7 +12,7 @@ fi
 cssValidateResult=$?
 
 # Validate JS
-JS_SRC_PATTERN="\.js"
+JS_SRC_PATTERN="\.js$"
 git diff --cached --name-only | if grep "$JS_SRC_PATTERN"
 then
     grunt validate:js
