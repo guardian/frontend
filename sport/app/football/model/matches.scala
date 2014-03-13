@@ -72,7 +72,7 @@ trait Results extends MatchesList {
   override val pageType = "results"
   override def timeComesFirstInList(d: DateTime, other: DateTime): Boolean = d.isAfter(other)
 }
-trait LiveMatches extends MatchesList {
+trait MatchDays extends MatchesList {
   override val baseUrl: String = "/football/live"
   override val pageType = "live"
   override val daysToDisplay = 1
@@ -118,26 +118,12 @@ case class TeamResultsList(date: DateMidnight, competitions: CompetitionSupport,
     fMatch.isResult && fMatch.hasTeam(teamId)
 }
 
-case class LiveMatchesList(competitions: CompetitionSupport) extends LiveMatches {
+case class MatchDayList(competitions: CompetitionSupport) extends MatchDays {
   override val date = DateMidnight.now
-  override def filterMatches(fMatch: FootballMatch, competition: Competition): Boolean =
-    fMatch.isLive
-}
-case class CompetitionLiveMatchesList(competitions: CompetitionSupport, competitionId: String) extends LiveMatches with CompetitionList {
-  override val date = DateMidnight.now
-  override def filterMatches(fMatch: FootballMatch, competition: Competition): Boolean =
-    competition.id == competitionId && fMatch.isLive
-}
-
-case class MatchDayList(competitions: CompetitionSupport) extends MatchesList {
-  override def timeComesFirstInList(d: DateTime, other: DateTime): Boolean = d.isBefore(other)
   override def filterMatches(fMatch: FootballMatch, competition: Competition): Boolean = true
-
-  override val daysToDisplay = 1
+}
+case class CompetitionMatchDayList(competitions: CompetitionSupport, competitionId: String) extends MatchDays with CompetitionList {
   override val date = DateMidnight.now
-  override val pageType = "matchDay"
-  override val baseUrl = "/football"
-
-  override lazy val previousPage: Option[String] = None
-  override lazy val nextPage: Option[String] = None
+  override def filterMatches(fMatch: FootballMatch, competition: Competition): Boolean =
+    competition.id == competitionId
 }
