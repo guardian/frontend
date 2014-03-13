@@ -31,6 +31,9 @@ class ResultsFeatureTest extends FeatureSpec with GivenWhenThen with Matchers wi
         And("I should not see today's live matches")
         assertNotTeamWithScore(matches, "Arsenal", "1")
         assertNotTeamWithScore(matches, "Spurs", "0")
+
+        And("Matches should not contain form")
+        $(".football-team__form").size() should be(0)
       }
     }
 
