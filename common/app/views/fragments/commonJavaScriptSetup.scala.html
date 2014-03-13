@@ -109,34 +109,6 @@
                 }
             }
         }
-        function containersAb(switches) {
-            // are we on a front
-            var isFront = /^\/(pressed\/)?(uk|us|au)$/.exec(window.location.pathname);
-            if (isFront) {
-                var front = isFront[2],
-                    participations = JSON.parse(localStorage.getItem('gu.ab.participations')),
-                    capitalisedFront = front.slice(0, 1).toUpperCase() + front.slice(1),
-                    notInAlphaVariant =
-                        participations &&
-                        participations.value &&
-                        participations.value[capitalisedFront + 'Containers'] &&
-                        ['notintest', 'control'].indexOf(participations.value[capitalisedFront + 'Containers'].variant) > -1;
-                // only run if we're in the alpha variant, and switch is on
-                if (!notInAlphaVariant && switches['ab' + capitalisedFront + 'Containers']) {
-                    // make sure we can access local storage
-                    try {
-                        localStorage.setItem('test', 'test');
-                        localStorage.removeItem('test');
-                        document.documentElement.className += (' ab-' + front + '-containers');
-                        // set timeout to remove class to be safe
-                        setTimeout(function() {
-                            document.documentElement.className = document.documentElement.className.replace(/\bab-\w+-containers\b/g, ' ');
-                        }, 2000);
-                    }
-                    catch(e) { }
-                }
-            }
-        }
 
         @* we want to add/remove classes to HTML ASAP to avoid FOUC *@
         var htmlClassNames = "";
@@ -168,8 +140,6 @@
         @if(CssFromStorageSwitch.isSwitchedOn && !play.Play.isDev()) {
             loadCssFromStorage();
         }
-
-        containersAb(guardian.config.switches);
 
     })(guardian.isModernBrowser);
 </script>
