@@ -22,7 +22,7 @@
             @include box-sizing(border-box);
             @include rem((
                 padding-bottom: $gs-baseline,
-                min-height: 82px
+                min-height: 86px
             ));
         }
         @include mq($to: tablet) {

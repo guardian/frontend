@@ -13,6 +13,7 @@ GET     /register                                       @controllers.Registratio
 POST    /register                                       @controllers.RegistrationController.processForm
 GET     /email-prefs                                    @controllers.EmailController.preferences
 POST    /email-prefs                                    @controllers.EmailController.savePreferences
+GET     /user/:vanityUrl                                @controllers.PublicProfileController.publicProfilePage(vanityUrl: String)
 GET     /public/edit                                    @controllers.PublicProfileController.displayPublicProfileForm
 GET     /account/edit                                   @controllers.PublicProfileController.displayAccountForm
 POST    /public/edit                                    @controllers.PublicProfileController.submitPublicProfileForm

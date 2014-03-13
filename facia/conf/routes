@@ -8,7 +8,7 @@ GET        /assets/*path                                                    dev.
 
 # Editionalised redirects
 GET        /                                                                controllers.FaciaController.editionRedirect(path = "")
-GET        /$path<(culture|sport|australia|commentisfree|business|money)>   controllers.FaciaController.editionRedirect(path)
+GET        /$path<(culture|sport|commentisfree|business|money)>             controllers.FaciaController.editionRedirect(path)
 
 #Facia Press
 GET        /pressed/*path                                                   controllers.FaciaController.renderFaciaPress(path)

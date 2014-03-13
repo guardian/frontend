@@ -2,49 +2,50 @@
 
 <link rel="stylesheet" href="@Static("stylesheets/commercial.css")" />
 
-<aside class="related js-related commercial books-component" role="complementary">
+<aside class="commercial books-component" role="complementary">
     <div class="facia-container facia-container--layout-article monocolumn-wrapper monocolumn-wrapper--no-limit">
         <div class="container container--row-pattern">
             <div class="container__border hide-on-mobile"></div>
 
-            <h2 id="related-content-head" class="container__title">
-                <span class="container__title__label u-text-hyphenate">Guardian Bookshop</span>
+            <h2 class="container__title">
+                <span class="container__logo svg-i-bookshop-logo--guardian"></span>
+                <span class="container__logo svg-i-bookshop-logo--bookshop"></span>
             </h2>
 
             <div class="container__body">
-                <div class="related__container collection-wrapper" data-count="4" data-link-name="Related Related content" role="complementary" aria-labelledby="related-content-head">
-                    <div class="commercial__body">
-                        <h3>This week's bestsellers</h3>
+                <div class="commercial__body">
+                    <h3>This week's bestsellers</h3>
 
-                        <ul class="unstyled list">
-                        @books.map { book =>
-                            <li class="list__item">
-                                <a href="@book.buyUrl" class="list__link" data-link-name="@book.position | text">
-                                    <span class="list__count">@book.position</span>
-                                    @book.jacketUrl.map { url => <img class="list__img" src="@url" alt="">}
-                                    <h4 class="list__title">@book.title</h4>
-                                @if(book.author) {
-                                    <p class="list__author">by @book.author</p>
-                                }
-                                </a>
-                            @book.offerPrice.map { price =>
-                                <p class="list__price">&pound;@("%.2f".format(price))</p>
+                    <ul class="u-unstyled list">
+                    @books.map { book =>
+                        <li class="list__item">
+                            <a href="@book.buyUrl" class="list__link" data-link-name="merchandising-bookshop-v0_7_2014-03-12-low-@{book.isbn}-@{book.author}-@{book.title}">
+                                <span class="list__count">@book.position</span>
+                            @book.jacketUrl.map { url =>
+                                <div class="list__img js-image-upgrade" data-src="@url"></div>
                             }
-                            </li>
+                                <h4 class="list__title">@book.title</h4>
+                            @if(book.author) {
+                                <p class="list__author">by @book.author</p>
+                            }
+                            </a>
+                        @book.offerPrice.map { price =>
+                            <p class="list__price"><span class-"list__price__label">Our price: </span>&pound;@("%.2f".format(price))</p>
                         }
-                        </ul>
-                    </div>
+                        </li>
+                    }
+                    </ul>
+                </div>
 
-                    <div class="commercial__foot">
-                        <form action="http://www.guardianbookshop.co.uk/BerteShopWeb/search.do" method="POST" class="commercial__search" name="QuickSearchForm">
-                            <fieldset>
-                                <label for="bookshop">Search the Guardian bookshop:</label>
-                                <input id="bookshop" name="keyword" class="text-input svg-i-search-grey" type="text" placeholder="Search the Guardian bookshop" />
-                                <input value="Search" name="go" class="submit-input" type="submit" />
-                                <input value="%JustOmnitureToken%" name="INTCMP" type="hidden" />
-                            </fieldset>
-                        </form>
-                    </div>
+                <div class="commercial__foot">
+                    <form action="http://www.guardianbookshop.co.uk/BerteShopWeb/search.do" method="POST" class="commercial__search" name="QuickSearchForm">
+                        <div>
+                            <label for="bookshop" class="u-h">Search the Guardian bookshop:</label>
+                            <input id="bookshop" name="keyword" class="commercial__search__input" type="text" placeholder="Search the Guardian bookshop" />
+                            <input class="commercial__search__submit svg-i-search-white" type="submit" name="go" value="" />
+                            <input value="%JustOmnitureToken%" name="INTCMP" type="hidden" />
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

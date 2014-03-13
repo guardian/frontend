@@ -102,7 +102,7 @@
     @include mq(leftCol) {
         float: left;
         @include rem((
-            padding-top: ($gs-baseline/3)*4,
+            padding-top: $gs-baseline,
             width: $a-leftCol-width
         ));
         margin-left: 0;
@@ -121,8 +121,9 @@
 
 .article__head {
     @include rem((
-        padding-top: ($gs-baseline/3)
+        margin-top: ($gs-baseline/3)
     ));
+    border-top: 1px dotted $c-neutral5;
 }
 
 .article__headline {
@@ -131,7 +132,6 @@
         margin-bottom: $gs-baseline*2,
         padding-top: ($gs-baseline/3)*2
     ));
-    border-top: 1px dotted $c-neutral5;
 
     @include mq(mobileLandscape) {
         @include fs-headline(6, true);
@@ -457,7 +457,7 @@
 
 .commentcount__label {
     .article__head & {
-        @extend .u-h;
+        @extend %u-h;
     }
 }
 
@@ -522,6 +522,9 @@
     .main-caption {
         padding-left: 0 !important;
         padding-right: 0 !important;
+    }
+    .article__head {
+        border-top: none;
     }
     .media-primary {
         margin-left: 0 !important;
@@ -628,7 +631,7 @@
 
     .article__head {
         @include rem((
-            padding-top: ($gs-baseline/3)*2
+            padding-top: ($gs-baseline/3)
         ));
     }
 
@@ -679,6 +682,77 @@
         @include rotate(-90deg);
         @include rem((
             margin-top: 10px
+        ));
+    }
+}
+
+/*
+    This shares too much similarity with the `article__zone` block, so will merge once
+    we get some proper direction over where/what the messaging we need for sponsored
+    articles.
+ */
+.article__sponsor {
+    min-height: $gs-row-height;
+    @include rem((
+        padding: 0 $gs-gutter/2
+    ));
+
+    @include mq(mobileLandscape) {
+        @include rem((
+            padding-left: $gs-gutter,
+            padding-right: $gs-gutter
+        ));
+    }
+
+    @include mq(tablet) {
+        min-height: 0;
+        @include rem((
+            padding: $gs-baseline 0,
+            max-width: gs-span(8)
+        ));
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    @include mq(rightCol) {
+        @include rem((
+            margin-left: $gs-gutter,
+            margin-right: $gs-gutter
+        ));
+        max-width: none;
+    }
+
+    @include mq(leftCol) {
+        @include rem((
+            padding-left: $a-leftCol-width + $gs-gutter
+        ));
+    }
+
+    @include mq(wide) {
+        @include rem((
+            padding-left:  gs-span(3) + $gs-gutter,
+            padding-right: $a-rightCol-width + gs-span(1) + $gs-gutter*2
+        ));
+    }
+}
+
+.article-hat-label {
+    @include fs-data(3);
+    @include rem((
+        margin-top: $gs-baseline/2
+    ));
+
+    @include mq(tablet) {
+        @include rem((
+            margin-top: 0,
+            margin-bottom: $gs-baseline/2
+        ));
+    }
+
+    @include mq(leftCol) {
+        @include rem((
+            margin-top: $gs-baseline/3,
+            margin-bottom: $gs-baseline/2
         ));
     }
 }

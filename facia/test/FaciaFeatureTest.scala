@@ -14,7 +14,7 @@ class FaciaFeatureTest extends FeatureSpec with GivenWhenThen with Matchers with
 
     // Scenarios
 
-    scenario("Display the news container") {
+    ignore("Display the news container") {
 
       Given("I am on the UK network front")
       HtmlUnit("/uk") { browser =>
@@ -26,7 +26,7 @@ class FaciaFeatureTest extends FeatureSpec with GivenWhenThen with Matchers with
       }
     }
 
-    scenario("Render a tag page if it is not in config.json") {
+    ignore("Render a tag page if it is not in config.json") {
 
       Given("I go to a tag page")
       HtmlUnit("/sport/cycling") { browser =>

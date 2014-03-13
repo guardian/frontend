@@ -8,14 +8,18 @@ define([
     'common/utils/storage',
     'common/modules/lazyload',
     'common/modules/component',
-    'common/modules/onward/history'
+    'common/modules/onward/history',
+    'common/modules/ui/images',
+    'bean'
 ], function (
     $,
     mediator,
     storage,
     LazyLoad,
     Component,
-    History
+    History,
+    images,
+    bean
 ) {
 
     /**
@@ -55,6 +59,22 @@ define([
             soulmates:     this.host + 'soulmates/mixed.json?'   + this.userSegments + '&s=' + this.section,
             travel:        this.host + 'travel/offers.json?'     + this.userSegments + '&s=' + this.section + '&' + this.getKeywords()
         };
+        this.postLoadEvents = {
+            books: function(el) {
+                bean.on(el, 'click', '.commercial__search__submit', function() {
+                    var str = 'merchandising-bookshop-v0_7_2014-03-12-low-'+ el.querySelector('.commercial__search__input').value,
+                        val = (conf.contentType) ? conf.contentType + ':' + str : str;
+
+                    s.linkTrackVars = 'eVar22,eVar37,events';
+                    s.linkTrackEvents = 'event7,event37';
+                    s.events = 'event7,event37';
+                    s.prop22 = val;
+                    s.eVar22 = val;
+                    s.eVar37 = val;
+                    s.tl(true, 'o', str);
+                });
+            }
+        };
 
         return this;
     };
@@ -70,8 +90,9 @@ define([
     /**
      * @param {Element} target
      */
-    Loader.prototype.load = function(url, target) {
-        var self = this;
+    Loader.prototype.load = function(name, target) {
+        var self = this,
+            url  = this.components[name];
 
         new LazyLoad({
             url: url,
@@ -82,6 +103,12 @@ define([
                 return html.replace(/%OASToken%/g, self.oastoken).replace(/%OmnitureToken%/g, '');
             },
             success: function () {
+                images.upgrade(target);
+
+                if(name in self.postLoadEvents) {
+                    self.postLoadEvents[name](target);
+                }
+
                 mediator.emit('modules:commercial/loader:loaded');
             },
             error: function (req) {
@@ -103,7 +130,7 @@ define([
             return false;
         }
 
-        return this.load(this.components[name], el);
+        return this.load(name, el);
     };
 
     return Loader;

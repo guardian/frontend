@@ -1,6 +1,6 @@
 @(popular: model.MostPopular, country: Option[String], countryCode: String)(implicit request: RequestHeader)
 
-<div class="right-most-popular right-most-popular--image">
+<div class="right-most-popular right-most-popular--image" data-component="geo-most-popular">
     <h3 class="right-most-popular__title">Most popular @{country.map{ name => s"in ${name}"}}</h3>
     <ul class="right-most-popular__items u-unstyled" data-link-name="Right hand most popular geo @countryCode">
         @popular.trails.take(5).zipWithRowInfo.map{ case(trail, row) =>

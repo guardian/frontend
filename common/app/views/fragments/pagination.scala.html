@@ -11,7 +11,7 @@
     <div class="pagination u-cf">
         <div class="pagination_legend hide-on-mobile-inline">About @Format(pagination.totalContent) results for @Html(page.webTitle)</div>
 
-        <ol class="unstyled pagination__links">
+        <ol class="u-unstyled pagination__links">
             <li class="pagination__item pagination__item--next">
                 @pagination.next.map { next =>
                     <a rel="next" href="@paginated(page.url, next)">Next</a>
