@@ -24,14 +24,7 @@ GET        /$path<[\w\d-]*(/[\w\d-]*)?/(cartoon|picture|graphic)/.*>        cont
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/video/.*>.json                   controllers.VideoController.renderJson(path)
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/video/.*>                        controllers.VideoController.render(path)
 
-# Note: culture|sport|australia are already routed to front.
-GET        /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>/trails.json         controllers.IndexController.renderTrailsJson(path)
-GET        /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>/trails              controllers.IndexController.renderTrails(path)
-GET        /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>.json                controllers.IndexController.renderJson(path)
-GET        /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>                     controllers.IndexController.render(path)
 
-# Tag combiners
-GET        /$leftSide<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>+$rightSide<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>    controllers.IndexController.renderCombiner(leftSide, rightSide)
 
 # Interactive paths 
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/(interactive|ng-interactive)/.*>.json  controllers.InteractiveController.renderInteractiveJson(path) 
