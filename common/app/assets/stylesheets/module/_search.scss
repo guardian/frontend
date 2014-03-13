@@ -55,12 +55,18 @@ td.gsc-search-button {
 .gsc-input {
     font-family: $sans-serif;
 }
-.gs-title {
-    @include fs-headline(1);
-}
+
 .gsc-result-info {
     padding-left: 0; // Remove space before "About x results (x seconds)"
 }
+// Stack "About … results" and "Sort by" on mobile
+@include mq($to: mobileLandscape) {
+    .gsc-result-info-container,
+    .gsc-orderby-container {
+        display: block;
+    }
+}
+
 .gsc-results .gsc-thumbnail-inside,
 .gsc-results .gsc-url-top {
     padding-left: 0;
@@ -81,4 +87,81 @@ td.gsc-search-button {
 }
 .gsc-results .gsc-cursor-box .gsc-cursor-page {
     margin-right: 22px !important;
+}
+
+// Remove border on thumbnails
+.gs-result img.gs-image,
+.gs-result img.gs-promotion-image {
+    border: none !important;
+}
+// Thumbnails are on the grid
+.gs-web-image-box-landscape img.gs-image {
+    margin-top: 1px; // align with top of text
+    width: gs-span(2) !important;
+    height: 84px !important;
+    max-width: none !important;
+    max-height: none !important;
+}
+.gs-image-box.gs-web-image-box.gs-web-image-box-landscape {
+    width: gs-span(2) + $gs-gutter/2;
+}
+// Float image to the left
+.gsc-table-result {
+    > tr > td,
+    > tbody > tr > td {
+        display: inline;
+    }
+    .gsc-table-cell-thumbnail {
+        float: left;
+    }
+}
+// Make snippet look like a standfirst
+.gs-webResult .gs-snippet,
+.gs-imageResult .gs-snippet {
+    @include f-headline;
+    font-size: 14px !important; // out of the font-scale to add some hierarchy
+    line-height: 18px !important;
+    color: $c-neutral2 !important;
+}
+// Hide URLs
+.gsc-url-top {
+    display: none !important;
+}
+// Make titles look like story headlines
+.gsc-thumbnail-inside a.gs-title {
+    display: block;
+    @include fs-headline(1);
+    padding-bottom: 10px;
+}
+.gs-webResult.gs-result a.gs-title,
+.gs-imageResult a.gs-title {
+    &,
+    b {
+        color: $c-neutral1 !important;
+    }
+
+    &:visited {
+        &,
+        b {
+            color: $c-neutral2;
+        }
+    }
+
+    &:active {
+        &,
+        b {
+            color: $c-neutral1;
+        }
+    }
+
+    &:hover {
+        text-decoration: underline !important;
+    }
+}
+.gsc-expansionArea .gsc-result {
+    border-top: 1px solid $c-neutral5 !important;
+}
+.gsc-webResult .gsc-result {
+    padding-top: 2px;
+    padding-bottom: 20px;
 }
