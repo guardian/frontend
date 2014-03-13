@@ -27,9 +27,6 @@
     <link rel="dns-prefetch" href="//oas.theguardian.com" />
     <link rel="dns-prefetch" href="//beacon.www.theguardian.com" />
 
-    @* http://www.chromium.org/spdy/link-headers-and-server-hint/link-rel-subresource *@
-    <link rel="subresource" href="@Static("javascripts/bootstraps/app.js")" />
-
     @item.pagination.map{ pagination =>
         @pagination.next.map{ next => <link rel="next" href="@LinkTo(item.url)?page=@next" /> }
         @pagination.previous.map{ prev => <link rel="prev" href="@LinkTo(item.url)@if(prev != 1){?page=@prev}" /> }
