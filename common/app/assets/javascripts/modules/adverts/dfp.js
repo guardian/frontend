@@ -36,8 +36,8 @@ define([
     Component.define(DFP);
 
     DFP.prototype.config = {
-        accountId: '158186692',
-        server: 'test-theguardian.com',
+        accountId: '59666047',
+        server: 'theguardian.com',
         dfpUrl: '//www.googletagservices.com/tag/js/gpt.js'
     };
 
@@ -61,7 +61,7 @@ define([
     };
 
     DFP.prototype.defineSlots = function() {
-        var section = this.config.page.section === '' ? 'network-front' : this.config.page.section,
+        var section = this.config.page.section === '' ? 'networkfront' : this.config.page.section,
             account = '/'+ this.config.accountId +'/'+ this.config.server +'/'+ section;
 
         this.dfpAdSlots.each(function(adSlot) {
