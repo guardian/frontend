@@ -10,11 +10,15 @@ h2.open__head { // element selector here in order to override .from-content-api 
     margin-top: 2px;
 
     @include fs-header(2);
-    @include rem((line-height: 2.2rem));
+    @include rem((
+        line-height: 2.2rem
+    ));
 
     @include mq(tablet) {
         @include fs-header(3);
-        @include rem((line-height: 2.4rem));
+        @include rem((
+            line-height: 2.4rem
+        ));
     }
 }
 
