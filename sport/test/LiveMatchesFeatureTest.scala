@@ -18,15 +18,15 @@ class LiveMatchesFeatureTest extends FeatureSpec with GivenWhenThen with Matcher
 
         val matches = $(".football-match__team")
 
-        Then("I should see todays live matches")
+        Then("I should see today's live matches")
         assertTeamWithScore(matches, "Arsenal", "1")
         assertTeamWithScore(matches, "Spurs", "0")
         assertTeamWithScore(matches, "Man U", "0")
         assertTeamWithScore(matches, "Chelsea", "0")
 
-        And("Should not show matches that have finished")
-        assertNotTeamWithScore(matches, "Sunderland", "1")
-        assertNotTeamWithScore(matches, "West Ham", "1")
+        And("Should also show today's results")
+        assertTeamWithScore(matches, "Sunderland", "1")
+        assertTeamWithScore(matches, "West Ham", "1")
       }
     }
 

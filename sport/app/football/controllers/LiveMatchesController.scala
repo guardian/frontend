@@ -15,9 +15,9 @@ object LiveMatchesController extends MatchListController with CompetitionLiveFil
     renderLiveMatches(DateMidnight.now)
 
   private def renderLiveMatches(date: DateMidnight) = Action { implicit request =>
-    val liveMatches = new LiveMatchesList(Competitions())
+    val matches = new MatchDayList(Competitions())
     val page = new Page("football/live", "football", "Live matches", "GFE:Football:automatic:live matches")
-    renderMatchList(page, liveMatches, filters)
+    renderMatchList(page, matches, filters)
   }
 
   def competitionMatchesJson(competitionTag: String) = competitionMatches(competitionTag)
@@ -27,8 +27,8 @@ object LiveMatchesController extends MatchListController with CompetitionLiveFil
   private def renderCompetitionMatches(competitionTag: String): Action[AnyContent] = Action { implicit request =>
     lookupCompetition(competitionTag).map { competition =>
       val page = new Page(s"football/$competitionTag/live", "football", s"Today's ${competition.fullName} matches", "GFE:Football:automatic:live matches")
-      val liveMatches = new CompetitionLiveMatchesList(Competitions(), competition.id)
-      renderMatchList(page, liveMatches, filters)
+      val matches = new CompetitionMatchDayList(Competitions(), competition.id)
+      renderMatchList(page, matches, filters)
     }.getOrElse {
       NotFound
     }
