@@ -1,18 +1,26 @@
 .open {
     margin-bottom: $gs-baseline;
-    border-top: 2px solid $c-commentAccent;
-    border-bottom: 1px solid $c-neutral3;
+    border-top: 2px solid;
+    border-bottom: 1px solid $c-neutral4 !important;
 }
 
-.open__head {
+h2.open__head { // element selector here in order to override .from-content-api style
     margin-bottom: $gs-baseline !important;
     color: $c-neutral2;
-    @include fs-bodyHeading(3);
+    margin-top: 2px;
+
+    @include fs-header(2);
+    @include rem((line-height: 2.2rem));
+
+    @include mq(tablet) {
+        @include fs-header(3);
+        @include rem((line-height: 2.4rem));
+    }
 }
 
 .open__head__accent {
     display: block;
-    @include mq(leftCol) {
+    @include mq(desktop) {
         display: inline;
     }
 }
@@ -23,8 +31,10 @@
 }
 
 .open__cta {
-    color: $c-neutral2;
-    @include fs-bodyHeading(2);
+    @include fs-bodyHeading(1);
+    @include mq(tablet) {
+        @include fs-bodyHeading(2);
+    }
 }
 
 .open__cta-icon {
