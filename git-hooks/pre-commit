@@ -5,7 +5,7 @@
 
 # Validate CSS
 CSS_SRC_PATTERN="\.scss"
-git diff --cached --name-only | if grep "$SRC_PATTERN"
+git diff --cached --name-only | if grep "CSS_SRC_PATTERN"
 then
     grunt validate:css
 fi
@@ -20,7 +20,7 @@ fi
 jsValidateResult=$?
 
 # Test JS
-git diff --cached --name-only | if grep "[^/]+/app/assets/javascripts/.*$JS_SRC_PATTERN"
+git diff --cached --name-only | if grep "[^/]\+/\(app\|test\)/assets/javascripts/.*$JS_SRC_PATTERN"
 then
     grunt test:unit
 fi
