@@ -1,0 +1,28 @@
+@(filterGroups: Map[String, Seq[CompetitionFilter]], pageType: String, selectedCompetition: Option[model.Competition])(implicit request: RequestHeader)
+
+@renderOpts(name: String) = {
+    @filterGroups.get(name).map{ filter =>
+        <optgroup label="@name">
+            @filter.map{ competition =>
+                <option value="@competition.url"
+                        @selectedCompetition.map{ selectedComp => @if(selectedComp.fullName == competition.name){ selected="selected"}}>
+                    @competition.name
+                </option>
+            }
+        </optgroup>
+    }
+}
+
+@if(filterGroups.nonEmpty){
+<form class="football-leagues js-visible" method="get">
+    <label for="football-leagues" class="football-leagues__label">Choose league: </label>
+    <select class="football-leagues__list" name="competitionUrl" id="football-leagues">
+        <option value="/football/@pageType">All @pageType</option>
+        @renderOpts("English")
+        @renderOpts("European")
+        @renderOpts("Scottish")
+        @renderOpts("Internationals")
+        @renderOpts("Rest of world")
+    </select>
+</form>
+}
