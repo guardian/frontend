@@ -36,7 +36,6 @@ define([
         it('should be able to initialise', function() {
             var containerDisplayToggle = new ContainerDisplayToggle(container);
             expect(containerDisplayToggle).toBeDefined();
-            expect(false).toBeTruthy();
         });
 
         it('should remove "js-container--toggle" class from container', function() {
