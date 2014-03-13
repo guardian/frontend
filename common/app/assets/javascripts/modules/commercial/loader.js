@@ -62,7 +62,7 @@ define([
         this.postLoadEvents = {
             books: function(el) {
                 bean.on(el, 'click', '.commercial__search__submit', function() {
-                    var str = 'merchandising-bookshop-v0_1_2014-03-12-low-'+ el.querySelector('.commercial__search__input').value,
+                    var str = 'merchandising-bookshop-v0_7_2014-03-12-low-'+ el.querySelector('.commercial__search__input').value,
                         val = (conf.contentType) ? conf.contentType + ':' + str : str;
 
                     s.linkTrackVars = 'eVar22,eVar37,events';
