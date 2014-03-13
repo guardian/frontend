@@ -53,8 +53,8 @@ class Page(
   val section: String,
   val webTitle: String,
   val analyticsName: String,
-  override val pagination: Option[Pagination],
-  override val description: Option[String]) extends MetaData
+  override val pagination: Option[Pagination] = None,
+  override val description: Option[String] = None) extends MetaData
 
 object Page {
   def apply(
