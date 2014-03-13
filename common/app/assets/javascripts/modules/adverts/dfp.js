@@ -61,7 +61,8 @@ define([
     };
 
     DFP.prototype.defineSlots = function() {
-        var account = '/'+ this.config.accountId +'/'+ this.config.server;
+        var section = this.config.page.section === '' ? 'network-front' : this.config.page.section,
+            account = '/'+ this.config.accountId +'/'+ this.config.server +'/'+ section;
 
         this.dfpAdSlots.each(function(adSlot) {
             var id    = adSlot.id,
