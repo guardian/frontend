@@ -6,8 +6,15 @@ import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
 import com.amazonaws.services.dynamodbv2.model.GetItemRequest;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import scala.collection.JavaConversions._
-import play.Play
+import scala.collection.JavaConverters._
 
+sealed trait Destination {
+  def location: String
+}
+case class Redirect(location: String) extends Destination
+case class Archive(location: String) extends Destination
+
+// TODO this all needs to go proper Async
 trait DynamoDB extends Logging {
 
   lazy val tableName = "redirects"
@@ -18,23 +25,25 @@ trait DynamoDB extends Logging {
     client
   }
 
-  def destinationFor(source: String) = {
+  def destinationFor(source: String): Option[Destination] = {
     
     val url = new AttributeValue().withS(s"http://$source")
 
     val getItemRequest = new GetItemRequest()
           .withTableName(tableName)
           .withKey(mapAsJavaMap(Map("source" -> url)))
-          .withAttributesToGet(List("destination"))
+          .withAttributesToGet("destination", "archive")
    
     // wrap result in an option
     val result = Option(client.getItem(getItemRequest).getItem)
 
-    // given we search on the key we shouldn't expect more than one record
-    result.map(_.get("destination").getS).headOption
+    result.map(_.asScala).flatMap{item =>
+      item.get("destination").map(_.getS).map(Redirect).orElse{
+        item.get("archive").map(_.getS).map(Archive)
+      }
+    }
 
   }
-
 }
 
 object DynamoDB extends DynamoDB

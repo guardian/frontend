@@ -20,7 +20,7 @@ case class Competition(
 
   lazy val hasMatches = matches.nonEmpty
   lazy val hasLiveMatches = matches.exists(_.isLive)
-  lazy val hasResults = matches.exists(_.isResult)
+  lazy val hasResults = results.nonEmpty
   lazy val hasFixtures = matches.exists(_.isFixture)
   lazy val hasLeagueTable = leagueTable.nonEmpty
   lazy val hasTeams = teams.nonEmpty
@@ -30,9 +30,17 @@ case class Competition(
   lazy val teams = leagueTable.map(_.team).sortBy(_.name)
 
   lazy val descriptionFullyLoaded = startDate.isDefined
+
+  lazy val results = matches.filter(_.isResult)
+
+  def teamResults(teamId: String): List[PrevResult] = {
+    results
+      .filter(fmatch => fmatch.homeTeam.id == teamId || fmatch.awayTeam.id == teamId)
+      .map(fmatch => PrevResult(fmatch, teamId))
+  }
 }
 
-case class Group(round: Option[Round], entries: Seq[LeagueTableEntryWithForm])
+case class Group(round: Option[Round], entries: Seq[LeagueTableEntry])
 
 case class Table(competition: Competition, groups: Seq[Group]) {
   lazy val multiGroup = groups.size > 1
@@ -66,12 +74,7 @@ object Table {
   def apply(competition: Competition): Table = {
     val groups = competition.leagueTable
       .groupBy(_.round)
-      .map { case (round, table) =>
-        table.map { leagueTableEntry =>
-
-        }
-        Group(round, table.map(LeagueTableEntryWithForm(competition, _)))
-      }
+      .map { case (round, table) => Group(round, table) }
       .toSeq.sortBy(_.round.map(_.roundNumber).map {
         case IsNumber(num) => num.toInt
         case other => 0
@@ -87,11 +90,10 @@ case class StatusSummary(description: String, status: String, homeScore: Option[
 case class LeagueTableEntryWithForm(stageNumber: String, round: Option[Round], team: LeagueTeam, prevResults: List[PrevResult])
 object LeagueTableEntryWithForm {
   def apply(competition: Competition, leagueTableEntry: LeagueTableEntry): LeagueTableEntryWithForm = {
-    val prevResults = competition.matches
-      .filter(fmatch => fmatch.homeTeam.id == leagueTableEntry.team.id || fmatch.awayTeam.id == leagueTableEntry.team.id)
-      .map(fmatch => PrevResult(fmatch, leagueTableEntry.team.id))
-      .filter(_.hasResult)
-    LeagueTableEntryWithForm(leagueTableEntry.stageNumber, leagueTableEntry.round, leagueTableEntry.team, prevResults)
+    LeagueTableEntryWithForm(
+      leagueTableEntry.stageNumber, leagueTableEntry.round, leagueTableEntry.team,
+      competition.teamResults(leagueTableEntry.team.id)
+    )
   }
 }
 

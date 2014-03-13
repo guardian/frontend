@@ -304,6 +304,11 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 4, 30)
   )
 
+  val LeadAdTopPageSwitch = Switch("Feature Switches", "lead-ad-top-page",
+    "If this switch is on, the lead ad is placed on top of the page on desktop",
+    safeState = Off, sellByDate = new DateMidnight(2014, 4, 30)
+  )
+
   // A/B Test Switches
 
   val ABAa = Switch("A/B Tests", "ab-abcd",
@@ -477,7 +482,8 @@ object Switches extends Collections {
     ABUsContainers,
     ABAuContainers,
     LayoutHintsSwitch,
-    HelveticaEasterEggSwitch
+    HelveticaEasterEggSwitch,
+    LeadAdTopPageSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }

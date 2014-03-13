@@ -468,7 +468,7 @@ trait CloudWatchApplicationMetrics extends GlobalSettings {
     (s"$applicationName-dogpile-miss", PerformanceMetrics.dogPileMissMetric.count.getAndSet(0).toDouble)
   )
 
-  def report() {
+  private def report() {
     val systemMetrics: Map[String, Double] = this.systemMetrics
     val applicationMetrics: Map[String, Double] = this.applicationMetrics
     CloudWatch.put("ApplicationSystemMetrics", systemMetrics)
