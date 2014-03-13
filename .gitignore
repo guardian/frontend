@@ -50,3 +50,8 @@ developer.properties
 
 static/requirejs
 static/abtests.json
+
+common/app/assets/stylesheets/theme/_commercial-icons-sprite.scss
+common/app/assets/stylesheets/theme/_commercial-icons-svg.scss
+common/app/assets/stylesheets/theme/_global-icons-sprite.scss
+common/app/assets/stylesheets/theme/_global-icons-svg.scss
