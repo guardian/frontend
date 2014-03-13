@@ -25,7 +25,7 @@
 
     @include mq($from: desktop) {
         @include rem((
-        margin-left: $gs-gutter
+            margin-left: $gs-gutter
         ));
     }
 }
