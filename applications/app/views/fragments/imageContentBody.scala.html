@@ -3,7 +3,7 @@
 
 @defining((page.image, page.storyPackage)) { case (image, storyPackage) =>
     <h2 class="article__zone left-col-deport tone-@VisualTone(image) tone-accent-border">
-        <span class="left-col-deport__body" data-component="image-meta">
+        <span class="left-col-deport__body" data-component="meta">
             <a class="tone-colour" data-link-name="article section" href="/@image.section">@Html(image.sectionName.toLowerCase)</a>
         </span>
     </h2>
@@ -21,7 +21,7 @@
 
                 <div class="after-header"></div>
             </div>
-            <div class="article__columning-wrapper" data-component="image-body">
+            <div class="article__columning-wrapper" data-component="body">
                 <div class="article__main-column">
 
                     @fragments.img(image.mainPicture)
@@ -32,7 +32,7 @@
                         @fragments.social(image)
                     </div>
                 </div>
-                <div class="article__secondary-column" aria-hidden="true" data-component="image-share">
+                <div class="article__secondary-column" aria-hidden="true" data-component="share">
                     <div class="article__secondary-column__inner">
                         <div class="u-table">
                             <div class="u-table__row">
