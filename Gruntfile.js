@@ -626,15 +626,23 @@ module.exports = function (grunt) {
 
     grunt.registerTask('default', ['compile', 'test', 'analyse']);
 
-    grunt.registerTask('validate', function(app) {
+    // NOTE: ideally this would just check sass, rather that full compile - can't get it to work
+    grunt.registerTask('validate:css', ['sass:compile']);
+    grunt.registerTask('validate:js', function(app) {
         if (!app) {
             grunt.task.run('jshint');
         } else {
-            // jsihnt target exist?
+            // target exist?
             if (grunt.config('jshint')[app]) {
                 grunt.task.run('jshint:' + app);
             }
         }
+    });
+    grunt.registerTask('validate', function(app) {
+        grunt.task.run([
+            'validate:css',
+            'validate:js:' + (app || '')
+        ]);
     });
 
     // Compile tasks

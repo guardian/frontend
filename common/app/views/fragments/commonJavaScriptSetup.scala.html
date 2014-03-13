@@ -23,7 +23,8 @@
         css: {
             loaded: false,
             gallery: '@Static("stylesheets/gallery.css")'
-        }
+        },
+        config: @fragments.javaScriptConfig(item)
     },
     curl = {
         baseUrl: '@{Configuration.assets.path}javascripts',
@@ -42,6 +43,10 @@
     };
 
     (function(isModern) {
+
+        // must always be set before the Omniture file is parsed
+        window.s_account = guardian.config.page.omnitureAccount;
+
         if (!isModern) { return false; }
 
         @if(CssFromStorageSwitch.isSwitchedOn && !play.Play.isDev()) {
@@ -164,17 +169,9 @@
             loadCssFromStorage();
         }
 
-        guardian.config = @fragments.javaScriptConfig(item);
-
         containersAb(guardian.config.switches);
 
-        // must be set before the Omniture file is parsed
-        window.s_account = guardian.config.page.omnitureAccount;
-
-        var script = document.createElement('script');
-        script.async = 'async';
-        script.src = '@Static("javascripts/bootstraps/app.js")';
-
-        document.getElementsByTagName("head")[0].appendChild(script);
     })(guardian.isModernBrowser);
 </script>
+
+<script defer="defer" src="@Static("javascripts/bootstraps/app.js")"></script>

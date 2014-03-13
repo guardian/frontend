@@ -48,8 +48,17 @@ object FaciaApi extends FaciaApiRead with FaciaApiWrite {
     newBlock
   }
 
-  def publishBlock(id: String, identity: Identity): Option[Block] = getBlock(id) map (updateIdentity(_, identity)) map { block => putBlock(id, block.copy(live = block.draft.getOrElse(Nil), draft = None), identity)}
-  def discardBlock(id: String, identity: Identity): Option[Block] = getBlock(id) map (updateIdentity(_, identity)) map { block => putBlock(id, block.copy(draft = None), identity)}
+  def publishBlock(id: String, identity: Identity): Option[Block] =
+    getBlock(id)
+      .filter(_.draft.isDefined)
+      .map(updateIdentity(_, identity))
+      .map { block => putBlock(id, block.copy(live = block.draft.get, draft = None), identity)}
+
+  def discardBlock(id: String, identity: Identity): Option[Block] =
+    getBlock(id)
+      .map (updateIdentity(_, identity))
+      .map { block => putBlock(id, block.copy(draft = None), identity)}
+
   def archive(id: String, block: Block, update: JsValue, identity: Identity): Unit = {
     val newBlock: Block = block.copy(diff = Some(update))
     S3FrontsApi.archive(id, Json.prettyPrint(Json.toJson(newBlock)), identity)
