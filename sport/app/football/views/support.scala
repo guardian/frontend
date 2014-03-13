@@ -42,9 +42,9 @@ object MatchStatus extends Logging {
     ("ETHT", "ET"), // Extra Time Half Time has been called.
     ("ETSHS", "ET"), // Extra Time, Second Half has Started.
 
-    ("FTPT", "P"), // Full Time, Penalties are To be played.
-    ("PT", "P"), // Penalty ShooT Out has started.
-    ("ETFTPT", "P"), // Extra Time, Full Time, Penalties are To be played.
+    ("FTPT", "PT"), // Full Time, Penalties are To be played.
+    ("PT", "PT"), // Penalty ShooT Out has started.
+    ("ETFTPT", "PT"), // Extra Time, Full Time, Penalties are To be played.
 
     ("Suspended", "S"), // Match has been Suspended.
 
