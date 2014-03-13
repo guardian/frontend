@@ -1,0 +1,205 @@
+package football.model
+
+import org.scalatest.{OptionValues, FreeSpec, ShouldMatchers}
+import implicits.Football
+import pa.{Fixture, FootballMatch, MatchDay}
+import model.Competition
+
+class FixturesListTest extends FreeSpec with ShouldMatchers with MatchTestData with Football with OptionValues {
+
+  "the all fixtures list" - {
+    "for today" - {
+      val fixtures = new FixturesList(today, competitions)
+
+      "should be showing the correct matches from the test data" in {
+        fixtures.relevantMatches.map { case (fmatch, _) =>
+          fmatch.id
+        }.sortBy(_.toInt) should equal(List("7", "8", "9", "10", "32", "33", "34"))
+      }
+
+      "should group matches correctly" in {
+        fixtures.matchesGroupedByDateAndCompetition.map(_._1) should equal(List(today, today.plusDays(1), today.plusDays(3)))
+        val (_, competitionMatches1) = fixtures.matchesGroupedByDateAndCompetition(0)
+        competitionMatches1.keys.map(_.id) should equal(Set("1", "2"))
+      }
+
+      "should only contain matches happening on one of next 3 days that have fixtures (includes today)" in {
+        val allowedDates = List(today, today.plusDays(1), today.plusDays(3))  // look at the test data to see why
+
+        fixtures.relevantMatches.foreach { case (fMatch, _) =>
+          allowedDates should contain(fMatch.date.toDateMidnight)
+        }
+      }
+
+      "matches should be ordered by datetime" in {
+        val matchDates = fixtures.relevantMatches.map { case (fMatch, _) => fMatch.date }
+        matchDates should equal(matchDates.sortWith((match1Date, match2Date) => match1Date.isBefore(match2Date)))
+      }
+
+      "should only show fixtures" in {
+        fixtures.relevantMatches.foreach(checkIsFixture)
+      }
+
+      "matches should have the correct, populated, competition alongside" in {
+        fixtures.relevantMatches.foreach { case (fMatch, comp) =>
+          if (fMatch.id.toInt < 30) comp.id should equal("1")
+          else comp.id should equal("2")
+        }
+      }
+    }
+
+    "for a day in the future (paginated)" - {
+      val targetDate = today.plusDays(3)
+      val fixtures = new FixturesList(targetDate, competitions)
+
+      "should be showing the correct matches from the test data" in {
+        fixtures.relevantMatches.map { case (fmatch, _) =>
+          fmatch.id
+        }.sortBy(_.toInt) should equal(List("10", "11", "12", "35", "36"))
+      }
+
+      "should show matches that appear on three days thereafter, inclusive" in {
+        val allowedDates = List(targetDate, targetDate.plusDays(1), targetDate.plusDays(7))  // look at the test data to see why
+
+        fixtures.relevantMatches.foreach { case (fMatch, _) =>
+          allowedDates should contain(fMatch.date.toDateMidnight)
+        }
+      }
+
+      "matches should be ordered by datetime" in {
+        val matchDates = fixtures.relevantMatches.map { case (fMatch, _) => fMatch.date }
+        matchDates should equal(matchDates.sortWith((match1Date, match2Date) => match1Date.isBefore(match2Date)))
+      }
+
+      "should only show fixtures" in {
+        fixtures.relevantMatches.foreach(checkIsFixture)
+      }
+
+      "matches should have the correct, populated, competition alongside" in {
+        fixtures.relevantMatches.foreach { case (fMatch, comp) =>
+          if (fMatch.id.toInt < 30) comp.id should equal("1")
+          else comp.id should equal("2")
+        }
+      }
+    }
+
+    "should paginate correctly" - {
+      "for today" - {
+        val fixtures = new FixturesList(today, competitions)
+
+        "should find correct value for 'nextPage'" in {
+          val expectedDate = today.plusDays(4) // see test data
+          fixtures.nextPage.value should equal("/football/fixtures/" + expectedDate.toString("yyyy/MMM/dd"))
+        }
+
+        "should find correct value for 'prevPage'" in {
+          fixtures.previousPage should be(None)
+        }
+      }
+
+      "for tomorrow" - {
+        val fixtures = new FixturesList(today.plusDays(1), competitions)
+
+        "should find correct value for 'nextPage'" in {
+          val expectedDate = today.plusDays(10) // see test data
+          fixtures.nextPage.value should equal("/football/fixtures/" + expectedDate.toString("yyyy/MMM/dd"))
+        }
+
+        "should find correct value for 'prevPage'" in {
+          val expectedDate = today // see test data
+          fixtures.previousPage.value should equal("/football/fixtures/" + expectedDate.toString("yyyy/MMM/dd"))
+        }
+      }
+
+      "for a date with no matches" - {
+        val fixtures = new FixturesList(today.plusDays(2), competitions)
+
+        "should find correct value for 'nextPage'" in {
+          val expectedDate = today.plusDays(11) // see test data
+          fixtures.nextPage.value should equal("/football/fixtures/" + expectedDate.toString("yyyy/MMM/dd"))
+        }
+
+        "should find correct value for 'prevPage'" in {
+          val expectedDate = today.plusDays(1) // see test data
+          fixtures.previousPage.value should equal("/football/fixtures/" + expectedDate.toString("yyyy/MMM/dd"))
+        }
+      }
+    }
+  }
+
+  "the competition fixtures list" - {
+    "given competition 1" - {
+      val fixtures = new CompetitionFixturesList(today, competitions, "1")
+
+      "should be showing the correct matches from the test data" in {
+        fixtures.relevantMatches.map { case (fmatch, _) =>
+          fmatch.id
+        }.sortBy(_.toInt) should equal(List("7", "8", "9", "10", "11", "12", "13"))
+      }
+
+      "matches should be ordered by datetime" in {
+        val matchDates = fixtures.relevantMatches.map { case (fMatch, _) => fMatch.date }
+        matchDates should equal(matchDates.sortWith((match1Date, match2Date) => match1Date.isBefore(match2Date)))
+      }
+
+      "should only show fixtures" in {
+        fixtures.relevantMatches.foreach(checkIsFixture)
+      }
+
+      "matches should only come from the specified competition" in {
+        fixtures.relevantMatches.foreach { case (fMatch, comp) =>
+          comp.id should equal("1")
+        }
+      }
+    }
+
+    "given competition 2" - {
+      val fixtures = new CompetitionFixturesList(today, competitions, "2")
+
+      "should be showing the correct matches from the test data" in {
+        fixtures.relevantMatches.map { case (fmatch, _) =>
+          fmatch.id
+        }.sortBy(_.toInt) should equal(List("32", "33", "34", "35", "36"))
+      }
+
+      "matches should only come from the specified competition" in {
+        fixtures.relevantMatches.foreach { case (fMatch, comp) =>
+          comp.id should equal("2")
+        }
+      }
+    }
+  }
+
+  "the team fixtures list" - {
+    "give spurs" - {
+      val fixtures = new TeamFixturesList(today, competitions, spurs.id)
+
+      "should be showing the correct matches from the test data" in {
+        fixtures.relevantMatches.map { case (fmatch, _) =>
+          fmatch.id
+        }.sortBy(_.toInt) should equal(List("7", "11", "12", "36"))
+      }
+
+      "matches should be ordered by datetime" in {
+        val matchDates = fixtures.relevantMatches.map { case (fMatch, _) => fMatch.date }
+        matchDates should equal(matchDates.sortWith((match1Date, match2Date) => match1Date.isBefore(match2Date)))
+      }
+
+      "should only show fixtures" in {
+        fixtures.relevantMatches.foreach(checkIsFixture)
+      }
+
+      "matches should only come from the specified team" in {
+        fixtures.relevantMatches.foreach { case (fMatch, _) =>
+          fMatch.hasTeam(spurs.id) should equal(true)
+        }
+      }
+    }
+  }
+
+  def checkIsFixture: Function1[(FootballMatch, Competition), Unit] = {
+    case (fMatch: Fixture, _) =>
+    case (fMatch: MatchDay, _) => if ("-" != fMatch.matchStatus) fail(s"$fMatch is not a fixture (status is ${fMatch.matchStatus})")
+    case (fMatch, _) => fail(s"$fMatch was not a fixture")
+  }
+}

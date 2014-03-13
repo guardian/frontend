@@ -341,12 +341,16 @@ case class InBodyLinkCleaner(dataLinkName: String)(implicit val edition: Edition
   }
 }
 
+// TODO make this separate
+// this does not fix other links, just the ones in these pages.
 case class InBodyLinkCleanerForR1(section: String) extends HtmlCleaner {
+
+  private val subdomains = "^/(Business|Music|Lifeandhealth|Users|Sport|Books|Media|Society|Travel|Money|Education|Arts|Politics|Observer|Football|Film|Technology|Environment|Shopping|Century)/(.*)".r
 
   def FixR1Link(href: String, section: String = "") = {
 
-   /**
-    * We moved some R1 HTML files from subdomains to www.theguardian.com.
+    /**
+     * We moved some R1 HTML files from subdomains to www.theguardian.com.
     * This means we broke some of the <a href="...">'s in the HTML.
     *
     * Here's how this works :-
@@ -365,27 +369,21 @@ case class InBodyLinkCleanerForR1(section: String) extends HtmlCleaner {
     */
 
     // #1
-    val subdomains = "^/(Business|Music|Lifeandhealth|Users|Sport|Books|Media|Society|Travel|Money|Education|Arts|Politics|Observer|Football|Film|Technology|Environment|Shopping|Century)/(.*)".r
     href match {
-        case subdomains(section, path) => {
-          s"/${section.toLowerCase}/${path}"
-        }
-        case _ => {
-          (href contains "/Guardian") match {
-            case true => href.replace("/Guardian", "") // #2
-            case _ => s"${section}${href}" // #3
-          }
-        }
+      case subdomains(section, path) => s"/${section.toLowerCase}/$path"
+      case _ =>
+        if (href.contains("/Guardian"))
+          href.replace("/Guardian", "") // #2
+        else
+          s"$section$href" // #3
     }
   }
 
   def clean(body: Document): Document = {
     val links = body.getElementsByTag("a")
-    links.filter{
-      link => link.attr("href") startsWith "/" // #4
-    }.foreach { link =>
-      link.attr("href", FixR1Link(link.attr("href"), section))
-    }
+    links.filter(_.attr("href") startsWith "/") // #4
+    .foreach(link => link.attr("href", FixR1Link(link.attr("href"), section)))
+
     body
   }
 }

@@ -44,7 +44,7 @@ class FootballStatsPlugin(app: PlayApp) extends Plugin {
     }
 
     // Have all these run once at load, then on the scheduled times
-    AkkaAsync.after(5.seconds){
+    AkkaAsync.after(1.seconds){
       Competitions.refreshCompetitionData()
       Competitions.refreshMatchDay()
       LiveBlogAgent.refresh()

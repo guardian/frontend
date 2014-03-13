@@ -276,7 +276,7 @@ p + video {
         @include fs-bodyCopy(1);
 
         a {
-            color: #666666;
+            color: $c-neutral2;
 
             &:hover,
             &:focus,

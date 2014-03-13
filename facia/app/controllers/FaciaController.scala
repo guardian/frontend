@@ -56,30 +56,35 @@ class FaciaController extends Controller with Logging with ExecutionContexts {
   def renderEditionCollectionJson(id: String) = renderCollection(id)
 
   def renderFront(path: String) =
-    if (Switches.PressedFacia.isSwitchedOn)
-      renderFaciaPress(path)
-    else
-      DogpileAction { implicit request =>
-          Future {
-            val editionalisedPath = editionPath(path, Edition(request))
+    if (!ConfigAgent.getPathIds.contains(path)) {
+      IndexController.render(path)
+    }
+    else {
+      if (Switches.PressedFacia.isSwitchedOn)
+        renderFaciaPress(path)
+      else
+        DogpileAction { implicit request =>
+            Future {
+              val editionalisedPath = editionPath(path, Edition(request))
 
-            FrontPage(editionalisedPath).flatMap {
-              frontPage =>
+              FrontPage(editionalisedPath).flatMap {
+                frontPage =>
 
-              // get the trailblocks
-                val faciaPageOption: Option[FaciaPage] = front(editionalisedPath)
-                faciaPageOption map {
-                  faciaPage =>
-                    Cached(frontPage) {
-                      if (request.isJson)
-                        JsonFront(frontPage, faciaPage)
-                      else
-                        Ok(views.html.front(frontPage, faciaPage))
-                    }
-                }
-            }.getOrElse(Cached(60)(NotFound))
-          }
-      }
+                // get the trailblocks
+                  val faciaPageOption: Option[FaciaPage] = front(editionalisedPath)
+                  faciaPageOption map {
+                    faciaPage =>
+                      Cached(frontPage) {
+                        if (request.isJson)
+                          JsonFront(frontPage, faciaPage)
+                        else
+                          Ok(views.html.front(frontPage, faciaPage))
+                      }
+                  }
+              }.getOrElse(Cached(60)(NotFound))
+            }
+        }
+    }
 
   def renderFaciaPress(path: String) = DogpileAction { implicit request =>
 

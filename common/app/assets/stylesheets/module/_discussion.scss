@@ -1,6 +1,6 @@
 $comment-meta-breakpoint: desktop;
 $avatarSize: 44px;
-$c-replyText: #555;
+$c-replyText: $c-body;
 $replyIndent: 26px;
 
 /* ==========================================================================
@@ -794,7 +794,7 @@ $replyIndent: 26px;
     .d-discussion__comment-count { display: none; }
 
     .d-image-fade {
-        background-color: #fff;
+        background-color: #ffffff;
         display: block;
         position: absolute;
         bottom: 0;
@@ -947,7 +947,7 @@ $replyIndent: 26px;
     padding: .275em .6em .375em;
     border: 0;
     text-align: center;
-    color: white;
+    color: #ffffff;
 
     &,
     &:hover,

@@ -51,6 +51,9 @@
         ));
         margin: 0 auto;
     }
+    @include mq(desktopAd) {
+        min-height: 110px;
+    }
 }
 .ad-slot--mpu-in-row-pattern {
     position: absolute;
@@ -82,7 +85,7 @@
     background-color: #f0f0f0;
 
     @include mq(tablet) {
-        background-color: #ffffff;
+        background-color: transparent;
     }
 
     @include mq(faciaLeftCol) {
@@ -93,6 +96,26 @@
 
     .ad-slot__label {
         display: none;
+    }
+}
+.top-banner-ad-container--above-header {
+    &,
+    .ad-slot {
+        display: none;
+
+        @include mq(desktop) {
+            display: block;
+        }
+    }
+}
+.top-banner-ad-container--below-header {
+    &,
+    .ad-slot {
+        display: block;
+
+        @include mq(desktop) {
+            display: none;
+        }
     }
 }
 .parts__head {
