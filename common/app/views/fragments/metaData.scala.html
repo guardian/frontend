@@ -44,18 +44,18 @@
     <meta name="HandheldFriendly" content="True" />
 
     @item.contributors.map{ contributor =>
-        <meta name="author" content="@contributor.name">
+        <meta name="author" content="@contributor.name" />
     }
 
     @item.description.map { description =>
-        <meta name="description" content="@description">
+        <meta name="description" content="@description" />
     }
 
     @* https://support.google.com/news/publisher/answer/68297?hl=en-GB *@
     @if(item.keywords.nonEmpty) {
         @defining(item.keywords.map(_.name).mkString(",")){ keywords =>
-            <meta name="keywords" content="@keywords">
-            <meta name="news_keywords" content="@keywords">
+            <meta name="keywords" content="@keywords" />
+            <meta name="news_keywords" content="@keywords" />
         }
     }
 
