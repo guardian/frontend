@@ -374,6 +374,7 @@
 .byline-img__img {
     width: 100%;
 
+    //This centres the image within its container
     @include mq(leftCol) {
         position: absolute;
         width: auto;
