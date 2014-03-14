@@ -65,7 +65,7 @@ class FaciaController extends Controller with Logging with ExecutionContexts {
       else
         DogpileAction { implicit request =>
             Future {
-              val editionalisedPath = editionPath(path, Edition(request))
+              val editionalisedPath = editionPath(getPathForUkAlpha(path, request), Edition(request))
 
               FrontPage(editionalisedPath).flatMap {
                 frontPage =>
@@ -88,8 +88,10 @@ class FaciaController extends Controller with Logging with ExecutionContexts {
 
   def renderFaciaPress(path: String) = DogpileAction { implicit request =>
 
-    FrontPage(path).map { frontPage =>
-      FrontJson.get(path).map(_.map{ faciaPage =>
+    val newPath = getPathForUkAlpha(path, request)
+
+    FrontPage(newPath).map { frontPage =>
+      FrontJson.get(newPath).map(_.map{ faciaPage =>
         Cached(frontPage) {
           if (request.isJson) {
             JsonFront(frontPage, faciaPage)
@@ -189,6 +191,14 @@ class FaciaController extends Controller with Logging with ExecutionContexts {
         faciaPage.collections.find{ case (c, col) => c.id == collectionId}.map(_._2)
       })
     }.getOrElse(Future.successful(None))
+
+  private def getPathForUkAlpha(path: String, request: RequestHeader): String =
+    Seq("uk", "us", "au").find { page =>
+      path == page &&
+        request.headers.get(s"X-Gu-Front-Alphas").exists(_.toLowerCase == "true")
+    }.map{ page =>
+      s"$page-alpha"
+    }.getOrElse(path)
 }
 
 object FaciaController extends FaciaController
