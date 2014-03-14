@@ -427,7 +427,7 @@ define([
         },
         
         runForseeSurvey: function(config) {
-            if(config.switches.Foresee) {
+            if(config.switches.foresee) {
                 Foresee.load();
             }
         },
