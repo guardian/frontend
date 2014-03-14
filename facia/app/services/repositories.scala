@@ -38,17 +38,21 @@ trait Index extends ConciergeRepository with QueryDefaults {
     val section = leftSide.split('/').head
 
     // if the first tag is just one part then change it to a section tag...
-    val firstTag = leftSide match {
-      case SinglePart(wordsForUrl) => s"$wordsForUrl/$wordsForUrl"
-      case other => other
-    }
+    val firstTag = normaliseTag(
+      leftSide match {
+        case SinglePart(wordsForUrl) => s"$wordsForUrl/$wordsForUrl"
+        case other => other
+      }
+    )
 
     // if the second tag is just one part then it is in the same section as the first tag...
-    val secondTag = rightSide match {
-      case SinglePart(wordsForUrl) => s"$section/$wordsForUrl"
-      case SeriesInSameSection(series) => s"$section/$series"
-      case other => other
-    }
+    val secondTag = normaliseTag(
+      rightSide match {
+        case SinglePart(wordsForUrl) => s"$section/$wordsForUrl"
+        case SeriesInSameSection(series) => s"$section/$series"
+        case other => other
+      }
+    )
 
     val promiseOfResponse = SwitchingContentApi().search(edition)
       .tag(s"$firstTag,$secondTag")
