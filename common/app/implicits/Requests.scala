@@ -19,7 +19,9 @@ trait Requests {
       header.contains("application/javascript")
     } || r.path.endsWith(".json")
 
-    lazy val isRss = r.path.endsWith("/rss")
+    lazy val isRss = r.headers.get("Accept").exists{ header =>
+      header.contains("application/rss+xml")
+    } || r.path.endsWith("/rss")
 
     lazy val isWebp = {
       val requestedContentType = r.acceptedTypes.sorted(MediaRange.ordering)
