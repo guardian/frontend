@@ -181,6 +181,9 @@ GET         /collection/*id/rss                                                 
 GET         /collection/*id.json                                                                                     controllers.FaciaController.renderCollectionJson(id)
 GET         /collection/*id                                                                                          controllers.FaciaController.renderCollection(id)
 
+# Tag combiners
+GET        /$leftSide<[^+]+>+*rightSide                                                                              controllers.IndexController.renderCombiner(leftSide, rightSide)
+
 # Editionalised pages
 GET         /$path<[^/]+(/[^/]+)?>/rss                                                                               controllers.FaciaController.renderFrontRss(path)
 GET         /$path<[^/]+(/[^/]+)?>.json                                                                              controllers.FaciaController.renderFrontJson(path)
