@@ -74,14 +74,11 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
      */
 
     // redirect common uses cases
-    isEncoded(path)
-      .orElse(normalise(path))
-      .map(url => Redirect(s"http://$url", 301))
-
+    isEncoded(path).map(url => Redirect(s"http://$url", 301))
 
     // lookup redirect or archive
     .orElse { // DynamoDB lookup. This needs to happen *before* we poke around S3 for the file.
-      destinationFor(path).map {
+      destinationFor(normalise(path).getOrElse(path)).map {
         case services.Redirect(url) =>
           logDestination(path, "redirect", url)
           Cached(300)(Redirect(url, 301))
