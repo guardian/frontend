@@ -41,7 +41,7 @@ define([
                     ajax({
                         url        : '/tagged.json?tag=theguardian/series/guardiancommentcartoon',
                         type       : 'json',
-                        crossDomain: true
+                        crossOrigin: true
                     })
                         .then(function(resp) {
                             var $card = getProperty(resp, 'trails', [])
