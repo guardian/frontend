@@ -20,6 +20,19 @@ case class IndexPage(page: MetaData, trails: Seq[Content])
 
 trait Index extends ConciergeRepository with QueryDefaults {
 
+  def normaliseTag(tag: String): String = {
+    val conversions: Map[String, String] =
+      Map("content" -> "type")
+
+    conversions.foldLeft(tag){
+      case (newTag, (from, to)) =>
+        if (newTag.startsWith(s"$from/"))
+          newTag.replace(from, to)
+        else
+          newTag
+    }
+  }
+
   def index(edition: Edition, leftSide: String, rightSide: String, page: Int): Future[Either[IndexPage, SimpleResult]] = {
 
     val section = leftSide.split('/').head
