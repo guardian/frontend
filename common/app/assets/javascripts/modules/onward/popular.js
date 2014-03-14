@@ -1,12 +1,16 @@
 define([
     'common/common',
-    'common/modules/lazyload'
+    'common/modules/lazyload',
+    'common/modules/analytics/register'
 ], function (
     common,
-    LazyLoad
+    LazyLoad,
+    register
 ) {
 
     function popular(config, context, isExpandable, url, targetSelector) {
+        register.begin('popular-in-section');
+
         targetSelector = targetSelector || '.js-popular';
         var container = context.querySelector(targetSelector);
 
@@ -22,9 +26,11 @@ define([
                 success: function () {
                     common.mediator.emit('modules:popular:loaded', container);
                     common.mediator.emit('fragment:ready:images', container);
+                    register.end('popular-in-section');
                 },
                 error: function(req) {
                     common.mediator.emit('module:error', 'Failed to load most read: ' + req.statusText, 'common/modules/popular.js');
+                    register.error('popular-in-section');
                 }
             }).load();
         }

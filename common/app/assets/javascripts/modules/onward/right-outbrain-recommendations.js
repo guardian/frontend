@@ -4,6 +4,7 @@ define([
     'lodash/objects/assign',
     'common/modules/component',
     'bean',
+    'common/modules/analytics/register',
 
     'common/modules/onward/right-outbrain-recommended-item',
     'common/modules/ui/images'
@@ -12,14 +13,16 @@ define([
     extend,
     Component,
     bean,
+    register,
     RecommendedItem,
     Images
     ){
 
     function RightOutbrainRecommendations(mediator, config) {
-         this.pageId = config.pageId;
-         this.config = extend(this.config, config);
-         this.fetch();
+        register.begin('right-outbrain-recommendations');
+        this.pageId = config.pageId;
+        this.config = extend(this.config, config);
+        this.fetch();
     }
 
     Component.define(RightOutbrainRecommendations);
@@ -33,7 +36,7 @@ define([
     RightOutbrainRecommendations.prototype.classes = { items: 'items' };
     RightOutbrainRecommendations.prototype.useBem = true;
 
-    RightOutbrainRecommendations.prototype.template = '<div class="right-recommended"><h3 class="right-recommended__title">Recommended for you</h3>' +
+    RightOutbrainRecommendations.prototype.template = '<div class="right-recommended" data-component="right-outbrain-recommendations"><h3 class="right-recommended__title">Recommended for you</h3>' +
         '<ul class="right-recommended__items u-unstyled"></ul></div></div>';
 
     RightOutbrainRecommendations.prototype.fetch = function(config) {
@@ -75,6 +78,10 @@ define([
             s.linkTrackEvents="event37";
             s.tl(true,"e","right-popular-contentrec");
         });
+    };
+
+    RightOutbrainRecommendations.prototype.ready = function() {
+        register.end('right-outbrain-recommendations');
     };
 
     return RightOutbrainRecommendations;

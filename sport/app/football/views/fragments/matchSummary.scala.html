@@ -26,7 +26,7 @@
                 @if(theMatch.isLive || theMatch.isResult){<span class="team__score">@homeTeam.score</span>}
             </h2>
 
-            <dl class="team__scorers unstyled">
+            <dl class="team__scorers u-unstyled">
                 <dt class="u-h">Home team scorers</dt>
                 @homeTeam.scorers.map{scorers => @scorers.split(",").map{ scorer => <dd>@scorer.replace("(", "").replace(")", "′")</dd>}}
             </dl>
@@ -38,7 +38,7 @@
                 @if(theMatch.isLive || theMatch.isResult){<span class="team__score">@awayTeam.score</span>}
             </h2>
 
-            <dl class="team__scorers unstyled">
+            <dl class="team__scorers u-unstyled">
                 <dt class="u-h">Away team scorers</dt>
                 @awayTeam.scorers.map{scorers => @scorers.split(",").map{ scorer => <dd>@scorer.replace("(", "").replace(")", "′")</dd>}}
             </dl>

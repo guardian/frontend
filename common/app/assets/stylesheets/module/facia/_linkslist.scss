@@ -44,13 +44,10 @@
     }
 }
 .linkslist {
-    @extend .unstyled;
+    @extend %u-unstyled;
 }
 .linkslist__item {
     border-top: 1px solid $c-neutral5;
-    @include rem((
-        padding-top: $gs-baseline/4
-    ));
 
     &.show-more--hidden {
         display: none;
@@ -62,6 +59,7 @@
     display: block;
     @include fs-headline(1);
     @include rem((
+        margin-top: $gs-baseline/4,
         margin-bottom: get-line-height($fs-headlines, 1)
     ));
     @include mq(tablet) {
@@ -71,23 +69,11 @@
         ));
     }
 
-
     &:visited {
         color: $c-neutral2;
     }
     &:active {
         color: $c-neutral1;
-    }
-}
-
-.linkslist--with-images {
-    @include mq(desktop) {
-        .linkslist__action {
-            @include rem((
-                // Force min height of 3 baselines on all items
-                min-height: get-line-height($fs-headlines, 1) * 3,
-            ));
-        }
     }
 }
 

@@ -26,6 +26,7 @@
 /* ==========================================================================
    Hide other page content when overlay is visible
    ========================================================================== */
+
 .has-overlay {
     background-color: #222222;
 
@@ -41,10 +42,11 @@
 /* ==========================================================================
    CTA styles
    ========================================================================== */
+
 .overlay__cta {
     height: $gs-baseline*4;
     padding: 0 $gutter / 2;
-    color: #FFFFFF;
+    color: #ffffff;
     float: left;
     border: 0;
     background: transparent;

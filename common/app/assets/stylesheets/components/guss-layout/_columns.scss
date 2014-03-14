@@ -53,21 +53,28 @@ $guss-columns-fallback-columns: 3 !default;
             -webkit-column-width: rem($column-min-width);
             -webkit-column-rule: $column-rule;
             -webkit-column-gap: rem($column-gap);
+            -webkit-column-fill: balance;
 
             -moz-column-width: rem($column-min-width);
             -moz-column-rule: $column-rule;
             -moz-column-gap: rem($column-gap);
+            -moz-column-fill: balance;
 
             column-width: rem($column-min-width);
             column-rule: $column-rule;
             column-gap: rem($column-gap);
+            column-fill: balance;
         }
         #{$base-class}__item {
-            -webkit-column-break-inside: avoid;
-               -moz-column-break-inside: avoid;
-                    column-break-inside: avoid;
-            // column-break-inside: avoid; does not work in all browsers
-            // so we use inline-block instead
+            // Fix a bug in IE where hovering items would change
+            // the column container's height
+            height: 100%;
+
+            // `column-break-inside: avoid;` does not work in all browsers
+            // so we use `display: inline-block;` instead
+            // -webkit-column-break-inside: avoid;
+            //    -moz-column-break-inside: avoid;
+            //         column-break-inside: avoid;
             display: inline-block;
             width: 100%;
         }

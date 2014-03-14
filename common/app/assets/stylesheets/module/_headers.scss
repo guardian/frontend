@@ -40,6 +40,7 @@
     }
 }
 
+%section-head,
 .section-head {
     @include fs-header(4);
     height: $gs-row-height + ($gs-baseline/3)*2;

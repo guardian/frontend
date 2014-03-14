@@ -17,7 +17,7 @@ html {
     font-size: calc(1em * .625);
 }
 body {
-    color: #545454;
+    color: $c-body;
     font-size: 1.6em; // Bump font-size back up to 16px
     line-height: 1.4;
 }
@@ -63,8 +63,4 @@ h3 {
     font-weight: normal;
     margin-bottom: 7px;
     @include fs-bodyCopy(3);
-}
-th,
-td {
-    @extend %type-10;
 }

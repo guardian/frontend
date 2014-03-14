@@ -1,0 +1,60 @@
+@(matchesList: List[FootballMatch], competition: model.Competition)(implicit request: RequestHeader)
+@import implicits.Football._
+
+<table class="table football-matches">
+    <thead hidden>
+        <tr>
+            <th class="match__status">Match status / kick off time</th>
+            <th class="match__details">Match details</th>
+            <th class="match__report">Reports</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @matchesList.map{ theMatch =>
+            <tr data-link-to="@LinkTo{@theMatch.url}"
+                class="@RenderClasses(Map(
+                    "football-match" -> true,
+                    "football-match--live" -> theMatch.isLive,
+                    "football-match--fixture" -> theMatch.isFixture,
+                    "football-match--result" -> theMatch.isResult
+                ))">
+                <td class="football-match__status football-match__status--@MatchStatus(theMatch.matchStatus).toString.toLowerCase table-column--sub">
+                    @if(theMatch.isFixture){
+                        @theMatch.date.toString("HH:mm")
+                    }else{
+                        @MatchStatus(theMatch.matchStatus)
+                    }
+                </td>
+                <td class="football-match__teams table-column--main">
+                    <div class="football-teams u-cf">
+                        <div class="football-match__team football-match__team--home football-team">
+                            <div class="football-team__name">@theMatch.homeTeam.name</div>
+                            <div class="football-team__score">@theMatch.homeTeam.score</div>
+                            @if(theMatch.isFixture){
+                                <div class="football-team__form team__results--shrink">
+                                    @football.views.html.fragments.teamForm(theMatch.homeTeam.id, competition)
+                                </div>
+                            }
+                        </div>
+
+                        <div class="football-match__team football-match__team--away football-team">
+                            <div class="football-team__name">@theMatch.awayTeam.name</div>
+                            <div class="football-team__score">@theMatch.awayTeam.score</div>
+                            @if(theMatch.isFixture){
+                                <div class="football-team__form team__results--shrink">
+                                    @football.views.html.fragments.teamForm(theMatch.awayTeam.id, competition)
+                                </div>
+                            }
+                        </div>
+
+                        <div class="football-teams__battleline"></div>
+                    </div>
+                </td>
+                <td class="football-match__report">
+                    <a href="@LinkTo{@theMatch.url}" data-link-name="stats" data-match-id="@theMatch.id">Match report</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

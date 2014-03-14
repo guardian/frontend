@@ -56,35 +56,42 @@ class FaciaController extends Controller with Logging with ExecutionContexts {
   def renderEditionCollectionJson(id: String) = renderCollection(id)
 
   def renderFront(path: String) =
-    if (Switches.PressedFacia.isSwitchedOn)
-      renderFaciaPress(path)
-    else
-      DogpileAction { implicit request =>
-          Future {
-            val editionalisedPath = editionPath(path, Edition(request))
+    if (!ConfigAgent.getPathIds.contains(path)) {
+      IndexController.render(path)
+    }
+    else {
+      if (Switches.PressedFacia.isSwitchedOn)
+        renderFaciaPress(path)
+      else
+        DogpileAction { implicit request =>
+            Future {
+              val editionalisedPath = editionPath(getPathForUkAlpha(path, request), Edition(request))
 
-            FrontPage(editionalisedPath).flatMap {
-              frontPage =>
+              FrontPage(editionalisedPath).flatMap {
+                frontPage =>
 
-              // get the trailblocks
-                val faciaPageOption: Option[FaciaPage] = front(editionalisedPath)
-                faciaPageOption map {
-                  faciaPage =>
-                    Cached(frontPage) {
-                      if (request.isJson)
-                        JsonFront(frontPage, faciaPage)
-                      else
-                        Ok(views.html.front(frontPage, faciaPage))
-                    }
-                }
-            }.getOrElse(Cached(60)(NotFound))
-          }
-      }
+                // get the trailblocks
+                  val faciaPageOption: Option[FaciaPage] = front(editionalisedPath)
+                  faciaPageOption map {
+                    faciaPage =>
+                      Cached(frontPage) {
+                        if (request.isJson)
+                          JsonFront(frontPage, faciaPage)
+                        else
+                          Ok(views.html.front(frontPage, faciaPage))
+                      }
+                  }
+              }.getOrElse(Cached(60)(NotFound))
+            }
+        }
+    }
 
   def renderFaciaPress(path: String) = DogpileAction { implicit request =>
 
-    FrontPage(path).map { frontPage =>
-      FrontJson.get(path).map(_.map{ faciaPage =>
+    val newPath = getPathForUkAlpha(path, request)
+
+    FrontPage(newPath).map { frontPage =>
+      FrontJson.get(newPath).map(_.map{ faciaPage =>
         Cached(frontPage) {
           if (request.isJson) {
             JsonFront(frontPage, faciaPage)
@@ -184,6 +191,14 @@ class FaciaController extends Controller with Logging with ExecutionContexts {
         faciaPage.collections.find{ case (c, col) => c.id == collectionId}.map(_._2)
       })
     }.getOrElse(Future.successful(None))
+
+  private def getPathForUkAlpha(path: String, request: RequestHeader): String =
+    Seq("uk", "us", "au").find { page =>
+      path == page &&
+        request.headers.get(s"X-Gu-Front-Alphas").exists(_.toLowerCase == "true")
+    }.map{ page =>
+      s"$page-alpha"
+    }.getOrElse(path)
 }
 
 object FaciaController extends FaciaController

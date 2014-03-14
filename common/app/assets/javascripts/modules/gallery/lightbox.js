@@ -332,8 +332,6 @@ define([
                 if (itemIndex === index) {
                     bonzo(el).addClass('gallery__item--active');
 
-                    self.alignNavArrows();
-
                     self.currentImageNode = el;
                 } else {
                     bonzo(el).removeClass('gallery__item--active');
@@ -431,26 +429,18 @@ define([
 
             if (mode === 'fullimage') {
                 // Size all images to the height of the screen
-                $images.css({'height': contentHeight + 'px', 'width': 'auto'});
+                $images.css({'max-height': contentHeight + 'px', 'width': 'auto', 'max-width': '100%'});
                 $items.css('height', contentHeight+'px');
             } else {
                 // Lets the default stylesheets do the work here
                 $images.removeAttr('style');
                 $items.removeAttr('style');
             }
-
-            self.alignNavArrows();
         };
 
         this.jumpToContent = function() {
             window.scrollTo(0, overlay.headerNode.offsetHeight);
         };
-
-        this.alignNavArrows = function() {
-            // Match arrows to the height of image, minus height of the caption control to prevent overlap
-            $navArrows.css('height', ($images[currentImage-1].offsetHeight - captionControlHeight) + 'px');
-        };
-
 
         // Swipe methods
         this.setupSwipe = function() {
@@ -477,7 +467,6 @@ define([
                     }
                 });
 
-                self.alignNavArrows();
                 swipeActive = true;
             });
         };

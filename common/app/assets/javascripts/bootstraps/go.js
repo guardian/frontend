@@ -4,5 +4,7 @@ require([
 ], function(
     bootstrap
 ) {
-    bootstrap.go();
+    if (guardian.isModernBrowser) {
+        bootstrap.go();
+    }
 });

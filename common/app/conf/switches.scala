@@ -308,6 +308,16 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 4, 30)
   )
 
+  val LeadAdTopPageSwitch = Switch("Feature Switches", "lead-ad-top-page",
+    "If this switch is on, the lead ad is placed on top of the page on desktop",
+    safeState = Off, sellByDate = new DateMidnight(2014, 4, 30)
+  )
+
+  val DeferApplicationScriptSwitch = Switch("Feature Switches", "defer-application",
+    "If this switch is on, the application js script tag will be defer rather than async",
+    safeState = Off, sellByDate = new DateMidnight(2014, 4, 30)
+  )
+
   // A/B Test Switches
 
   val ABAa = Switch("A/B Tests", "ab-abcd",
@@ -328,21 +338,6 @@ object Switches extends Collections {
   val GeoMostPopular = Switch("A/B Tests", "ab-most-popular-in-country",
     "If this is switched on an A/B test runs to test if locally popular articles yield better click-through.",
     safeState = Off, sellByDate = new DateMidnight(2014, 3, 17)
-  )
-
-  val ABUkContainers = Switch("A/B Tests", "ab-uk-containers",
-    "If this is switched on an A/B test runs that tries a variation of the containers on the UK network front.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 3, 15)
-  )
-
-  val ABUsContainers = Switch("A/B Tests", "ab-us-containers",
-    "If this is switched on an A/B test runs that tries a variation of the containers on the US network front.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 3, 15)
-  )
-
-  val ABAuContainers = Switch("A/B Tests", "ab-au-containers",
-    "If this is switched on an A/B test runs that tries a variation of the containers on the AU network front.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 3, 15)
   )
 
   // Sport Switch
@@ -478,11 +473,10 @@ object Switches extends Collections {
     ShowAllArticleEmbedsSwitch,
     PressedFacia,
     FrontPressJobSwitch,
-    ABUkContainers,
-    ABUsContainers,
-    ABAuContainers,
     LayoutHintsSwitch,
-    HelveticaEasterEggSwitch
+    HelveticaEasterEggSwitch,
+    LeadAdTopPageSwitch,
+    DeferApplicationScriptSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }

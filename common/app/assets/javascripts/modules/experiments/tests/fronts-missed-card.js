@@ -77,7 +77,7 @@ define([
                                         template(
                                             '<div class="container__card container__card--missed tone-news tone-accent-border" data-link-name="card | missed">' +
                                                 '<h3 class="container__card__title tone-colour">You may have missed</h3>' +
-                                                '<ul class="unstyled">{{articles}}</ul>' +
+                                                '<ul class="u-unstyled">{{articles}}</ul>' +
                                             '</div>',
                                             {
                                                 articles:  articles.join('')

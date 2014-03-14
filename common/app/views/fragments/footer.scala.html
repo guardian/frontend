@@ -1,7 +1,7 @@
 @(page: MetaData)(implicit request: RequestHeader)
 @import conf.Switches._
 
-<footer class="footer u-cf" data-link-name="footer">
+<footer class="footer u-cf" data-link-name="footer" data-component="footer">
     <div class="footer__primary">
         <div id="footer-nav">
             <div class="footer__banner u-cf">
@@ -30,7 +30,7 @@
                 <li class="colophon__item"><a data-link-name="terms" href="@LinkTo("/help/terms-of-service")">Terms &amp; conditions</a></li>
                 <li class="colophon__item"><a data-link-name="privacy" href="@LinkTo("/help/privacy-policy")">Privacy policy</a></li>
                 <li class="colophon__item"><a data-link-name="cookie" href="@LinkTo("/info/cookies")">Cookie policy</a></li>
-                <li class="colophon__item hide-on-mobile">@fragments.mainSiteLink(page, label = "Desktop")</li>
+                <li class="colophon__item hide-on-mobile">@fragments.mainSiteLink(page, label = "Current version")</li>
             </ul>
             <div class="footer__misc">
                 <div class="really-serious-copyright">© Guardian News and Media Limited or its affiliated companies. All rights reserved.</div>

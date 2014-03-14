@@ -62,7 +62,7 @@
         background: $c-neutral7;
         padding: $gs-baseline $gutter/2;
         line-height: 1;
-        color: #666 !important;
+        color: $c-neutral2 !important;
     }
 
     .element-witness--metadata img {
@@ -73,7 +73,7 @@
         @include fs-data(3);
 
         padding-left: $gutter/2;
-        color: #666;
+        color: $c-neutral2;
     }
 
     .element-witness--author {

@@ -72,7 +72,7 @@ define([
                                         template(
                                             '<div class="container__card tone-feature tone-accent-border" data-link-name="card | latest reviews">' +
                                                 '<h3 class="container__card__title tone-colour">Latest reviews</h3>' +
-                                                '<ul class="unstyled">{{reviews}}</ul>' +
+                                                '<ul class="u-unstyled">{{reviews}}</ul>' +
                                             '</div>',
                                             {reviews:  reviews.join('')}
                                         )

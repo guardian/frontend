@@ -9,7 +9,7 @@
             <h2 class="article__zone article__zone--bleed-out tone-news tone-border">Most popular in @Html(section.heading)</h2>
             <div class="headline-list"
                  data-link-name="@section.heading">
-                <ul class="unstyled">
+                <ul class="u-unstyled">
                     @section.trails.zipWithRowInfo.map{ case (trail, info) =>
                     <li class="headline-list__item">
                         <span class="headline-list__count">@info.rowNum</span>

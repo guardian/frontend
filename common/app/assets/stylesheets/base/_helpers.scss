@@ -1,6 +1,7 @@
 /* Accessible hidden content.
    ========================================================================== */
 
+%u-h,
 .u-h {
     @include u-h;
 }
@@ -37,8 +38,16 @@
     }
 }
 
+.hide-on-mobile-inline {
+    display: none !important;
+
+    @include mq(tablet) {
+        display: inline !important;
+    }
+}
+
 .is-invisible {
-    visibility: hidden;
+    visibility: hidden !important;
 }
 
 

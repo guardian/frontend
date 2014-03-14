@@ -2,7 +2,7 @@
     @include fs-data(3);
     -webkit-font-smoothing: subpixel-antialiased; // Text look fatter, better for a CTA
     line-height: 1;
-    color: #545454;
+    color: $c-body;
     text-align: center;
     display: block;
     padding: $gs-baseline 0 $gs-baseline 0;

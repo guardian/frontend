@@ -9,6 +9,7 @@ define([
     'lodash/objects/assign',
     'common/modules/component',
     'bean',
+    'common/modules/analytics/register',
 
     'common/modules/onward/right-recommended-item',
     'common/modules/ui/images'
@@ -20,12 +21,14 @@ define([
     extend,
     Component,
     bean,
+    register,
 
     RecommendedItem,
     images
     ) {
 
     function RightRecommendedForYou(mediator, config) {
+        register.begin('right-gravity-recommendations');
         this.config = extend(this.config, config);
         this.maxTrails = ('maxTrails' in config) ? config.maxTrails : 5;
         this.mediator = mediator;
@@ -51,7 +54,7 @@ define([
     RightRecommendedForYou.prototype.classes = { items: 'items' };
     RightRecommendedForYou.prototype.useBem = true;
 
-    RightRecommendedForYou.prototype.template = '<div class="right-recommended"><h3 class="right-recommended__title">Recommended for you</h3>' +
+    RightRecommendedForYou.prototype.template = '<div class="right-recommended" data-comsponent="right-gravity-recommendations"><h3 class="right-recommended__title">Recommended for you</h3>' +
         '<ul class="right-recommended__items u-unstyled"></ul></div></div>';
 
     RightRecommendedForYou.prototype.fetch = function() {
@@ -103,6 +106,10 @@ define([
             s.linkTrackEvents="event37";
             s.tl(true,"e","right-popular-contentrec");
         });
+    };
+
+    RightRecommendedForYou.prototype.ready = function() {
+        register.end('right-gravity-recommendations');
     };
 
     return RightRecommendedForYou;

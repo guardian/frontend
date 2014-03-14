@@ -2,9 +2,12 @@ package test
 
 import org.scalatest.{ FeatureSpec, GivenWhenThen }
 import org.scalatest.Matchers
+import org.fluentlenium.core.domain.{FluentWebElement, FluentList}
 import collection.JavaConversions._
+import tools.MatchListFeatureTools
 
-class FixturesFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
+
+class FixturesFeatureTest extends FeatureSpec with GivenWhenThen with Matchers with MatchListFeatureTools {
 
   feature("Football Fixtures") {
 
@@ -14,16 +17,18 @@ class FixturesFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
       HtmlUnit("/football/fixtures") { browser =>
         import browser._
-        findFirst(".football-filter__label").getText should be("All fixtures")
 
-        Then("I should see todays live matches")
-        val matches = $(".details__match-teams").getTexts
-        matches should contain ("Arsenal 1 - 0 Spurs")
+        val matches = $(".football-teams")
+        Then("I should see upcoming fixtures over the next 3 days")
+        assertFixture(matches, "Liverpool", "Man C")
+        assertFixture(matches, "Wigan", "Fulham")
+        assertFixture(matches, "Stoke", "Everton")
 
-        And("The next 3 days fixtures")
-        matches should contain("Liverpool v Man C")
-        matches should contain("Wigan v Fulham")
-        matches should contain("Stoke v Everton")
+        And("I should not see today's live matches")
+        assertNotFixture(matches, "Arsenal", "Spurs")
+
+        And("Team form should be shown with matches")
+        $(".football-team__form").size() should be($(".football-match__team").size())
       }
     }
 
@@ -37,8 +42,8 @@ class FixturesFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         findFirst("[data-link-name=next]").click()
 
         Then("I should see the next set of upcoming matches")
-        $(".details__match-teams").getTexts should contain ("Swansea v Reading")
-
+        val matches = $(".football-teams")
+        assertFixture(matches, "Swansea", "Reading")
       }
     }
 
@@ -72,7 +77,6 @@ class FixturesFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         Then("the 'Classic version' link should point to '/football/fixtures?view=classic'")
         findFirst(".js-main-site-link").getAttribute("href") should be(ClassicVersionLink("/football/fixtures"))
       }
-
     }
   }
 }
