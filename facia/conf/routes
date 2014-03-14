@@ -24,4 +24,4 @@ GET        /collection/$id<[\w\d-/]*>                                       cont
 GET        /collection/$id<[\w\d-/]*>.json                                  controllers.FaciaController.renderEditionCollectionJson(id)
 
 # Tag combiners
-GET        /$leftSide<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>+$rightSide<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>    controllers.IndexController.renderCombiner(leftSide, rightSide)
+GET        /$leftSide<[^+]+>+*rightSide    controllers.IndexController.renderCombiner(leftSide, rightSide)
