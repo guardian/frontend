@@ -17,18 +17,18 @@ define([
     return function() {
 
         this.id = 'FrontsLatestReviewsCard';
-        this.start = '2014-02-28';
-        this.expiry = '2014-03-08';
+        this.start = '2014-03-14';
+        this.expiry = '2014-03-20';
         this.author = 'Darren Hurley';
         this.description = 'Add a latest reviews card to the features container';
-        this.audience = 0.1;
-        this.audienceOffset = 0.0;
+        this.audience = 0.25;
+        this.audienceOffset = 0.25;
         this.successMeasure = 'Click-through for the page as a whole.';
         this.audienceCriteria = 'Users who are not on desktop or bigger, on the network front.';
         this.dataLinkNames = 'card | latest reviews | trail | {{index}}';
         this.idealOutcome = 'Click-through for the front increases, i.e. the card does not detract from the page\'s CTR.';
         this.canRun = function(config) {
-            return ['desktop', 'wide'].indexOf(detect.getBreakpoint()) > -1 && config.page.isFront && config.page.pageId === '';
+            return ['desktop', 'wide'].indexOf(detect.getBreakpoint()) > -1 && /^\w{2}-alpha$/.test(config.page.pageId);
         };
         this.variants = [
             {
@@ -50,7 +50,7 @@ define([
                                         '<li data-link-name="trail | {{index}}" class="card__item">' +
                                             '<a href="{{url}}" class="card__item__link" data-link-name="article">' +
                                                 '<h4 class="card__item__title">{{section}}: {{headline}}</h4>' +
-                                                ((result.starRating !== undefined) ?
+                                                ((result.starRating !== null) ?
                                                     '<span class="stars s-{{rating}}" itemprop="reviewRating" itemscope itemtype="http://schema.org/Rating">' +
                                                         '<meta itemprop="worstRating" content="1" />' +
                                                         '<span itemprop="ratingValue">{{rating}}</span> /' +
@@ -78,7 +78,7 @@ define([
                                         )
                                     )
                                 ).appendTo(qwery('.container--features').shift()),
-                                yPosition = 518 - $card.dim().height;
+                                yPosition = 594 - $card.dim().height;
                             $card.css('top', yPosition + 'px');
                         });
                 }
