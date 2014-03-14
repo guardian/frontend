@@ -40,6 +40,7 @@ define([
     'common/modules/adverts/article-body-adverts',
     'common/modules/adverts/dfp',
     "common/modules/analytics/commercial/tags/container",
+    "common/modules/analytics/foresee-survey",
     "common/modules/onward/right-hand-component-factory",
     "common/modules/analytics/register"
 ], function (
@@ -84,6 +85,7 @@ define([
     ArticleBodyAdverts,
     DFP,
     TagContainer,
+    Foresee,
     RightHandComponentFactory,
     register
 ) {
@@ -423,6 +425,12 @@ define([
                 $('html').addClass('iframed');
             }
         },
+        
+        runForseeSurvey: function(config) {
+            if(config.switches.Foresee) {
+                Foresee.load();
+            }
+        },
 
         augmentInteractive: function() {
             mediator.on('page:common:ready', function(config, context) {
@@ -480,6 +488,7 @@ define([
             modules.initAutoSignin(config);
             modules.loadTags(config);
             modules.augmentInteractive();
+            modules.runForseeSurvey(config);
             modules.startRegister();
         }
         mediator.emit("page:common:ready", config, context);
