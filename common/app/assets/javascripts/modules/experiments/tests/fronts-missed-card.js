@@ -41,7 +41,7 @@ define([
         this.variants = [
             {
                 id: 'control',
-                test: function(context, config) { }
+                test: function() { }
             },
             {
                 id: 'missed',

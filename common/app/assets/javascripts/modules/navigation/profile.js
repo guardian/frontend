@@ -50,8 +50,6 @@ define([
 
     /** */
     Profile.prototype.init = function() {
-        var self = this;
-
         this.setFragmentFromCookie();
     };
 

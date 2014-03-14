@@ -1,4 +1,3 @@
-/* global _: true */
 define([
     'utils/clean-clone'
 ], function(

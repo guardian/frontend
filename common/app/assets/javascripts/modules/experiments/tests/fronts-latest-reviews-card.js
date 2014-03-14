@@ -33,11 +33,11 @@ define([
         this.variants = [
             {
                 id: 'control',
-                test: function(context, config) { }
+                test: function() { }
             },
             {
                 id: 'latest-reviews',
-                test: function (context, config) {
+                test: function () {
                     ajax({
                         url        : '/tagged.json?tag=tone/reviews,culture/culture',
                         type       : 'json',

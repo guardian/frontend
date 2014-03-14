@@ -56,7 +56,7 @@ define([
                 .prepend(_$button)
                 .removeClass('js-container--toggle');
             // listen to event
-            bean.on(_$button[0], 'click', function(e) {
+            bean.on(_$button[0], 'click', function() {
                 _state = (_state === 'displayed') ? 'hidden' : 'displayed';
                 // add/remove rolled class
                 _$container[_state === 'displayed' ? 'removeClass' : 'addClass']('container--rolled-up');

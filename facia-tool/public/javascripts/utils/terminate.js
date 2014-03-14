@@ -1,4 +1,3 @@
-/* global _: true */
 define([], function() {
     return function (msg, redirectTo) {
         if (msg) { window.alert(msg); }

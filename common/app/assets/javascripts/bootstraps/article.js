@@ -33,8 +33,8 @@ define([
             common.mediator.on('page:article:ready', function(config, context) {
                 if (config.page.isLive) {
 
-                    var timerDelay = /desktop|wide/.test(detect.getBreakpoint()) ? 30000 : 60000,
-                        a = new AutoUpdate({
+                    var timerDelay = /desktop|wide/.test(detect.getBreakpoint()) ? 30000 : 60000;
+                    new AutoUpdate({
                         path: function() {
                             var id = context.querySelector('.article-body .block').id,
                                 path = window.location.pathname;
@@ -51,8 +51,8 @@ define([
                     }).init();
                 }
                 if (config.page.isLiveBlog) {
-                    var lf = new LiveFilter(context).init(),
-                        nc = new NotificationCounter().init();
+                    new LiveFilter(context).init();
+                    new NotificationCounter().init();
                 }
             });
         },
@@ -101,7 +101,7 @@ define([
         },
 
         initFence: function() {
-            common.mediator.on('page:article:ready', function(config, context) {
+            common.mediator.on('page:article:ready', function() {
                 $('.fenced').each(function(el) {
                     fence.render(el);
                 });
@@ -109,8 +109,9 @@ define([
         },
 
         initLayoutHints: function(config) {
+            /* jshint nonew: false */
             if(config.switches.layoutHints && /\/-sp-/g.test(config.page.pageId)) {
-                var l = new Layout(config);
+                new Layout(config);
             }
         },
 

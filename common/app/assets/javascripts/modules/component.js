@@ -17,7 +17,7 @@ define([
      *   Perhaps in the create method somewhere.
      * @constructor
      */
-    var Component = function(config, options) {};
+    var Component = function() {};
 
     /** @type {boolean} */
     Component.prototype.useBem = false;

@@ -191,7 +191,7 @@ define([
                 // drop empty arrays:
                 .filter(function(p){ return _.isArray(p[1]) ? p[1].length : true; })
                 // return as obj, or as undefined if empty (this ommits it from any subsequent JSON.stringify result)
-                .reduce(function(obj, p, key) {
+                .reduce(function(obj, p) {
                     obj = obj || {};
                     obj[p[0]] = p[1];
                     return obj;
@@ -200,8 +200,7 @@ define([
         };
 
         Article.prototype._save = function() {
-            var self = this,
-                timestamp,
+            var timestamp,
                 itemMeta;
 
             if (!this.parent) {
@@ -218,9 +217,9 @@ define([
 
                 itemMeta = this.getMeta();
                 timestamp = Math.floor(new Date().getTime()/1000);
-                
+
                 itemMeta.updatedAt = (itemMeta.updatedAt ? itemMeta.updatedAt + ',' : '') + timestamp + ':0C0'; // green for overrides etc.
-                
+
                 authedAjax.updateCollections({
                     update: {
                         collection: this.parent,

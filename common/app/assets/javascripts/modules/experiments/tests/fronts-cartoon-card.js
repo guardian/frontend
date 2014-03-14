@@ -33,11 +33,11 @@ define([
         this.variants = [
             {
                 id: 'control',
-                test: function(context, config) { }
+                test: function() { }
             },
             {
                 id: 'cartoon',
-                test: function (context, config) {
+                test: function () {
                     ajax({
                         url        : '/tagged.json?tag=theguardian/series/guardiancommentcartoon',
                         type       : 'json',

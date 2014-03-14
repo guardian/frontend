@@ -10,7 +10,7 @@ define([
     detect
 ) {
 
-    function Sections(config) {
+    function Sections() {
         var className = 'is-off',
             that = this,
             hasCrossedBreakpoint = detect.hasCrossedBreakpoint(),
@@ -32,7 +32,7 @@ define([
                     return;
                 }
 
-                mediator.addListener('window:resize', function(e) {
+                mediator.addListener('window:resize', function() {
                     hasCrossedBreakpoint(function(layoutMode) {
 
                         bonzo(sectionsHeader).addClass(className);
@@ -53,7 +53,7 @@ define([
                 }
             },
 
-            showColumns : function(sectionsHeader, sectionsNav) {
+            showColumns : function(sectionsHeader) {
                 common.$g('.nav__item', sectionsHeader).removeClass('u-h');
             },
 

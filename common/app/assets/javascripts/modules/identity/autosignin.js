@@ -83,8 +83,8 @@ function(
             var msg = '<p class="site-message__message">' +
                           'Welcome ' + name + ", you're signed into the Guardian using Facebook, or " +
                           '<a href="' + self.config.page.idUrl + '/signout"/>sign out</a>.' +
-                      '</p>',
-                fbMessage = new Message('fbauto', { important: true }).show(msg);
+                      '</p>';
+            new Message('fbauto', { important: true }).show(msg);
         };
     }
     return AutoSignin;

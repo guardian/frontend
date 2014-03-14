@@ -1,4 +1,3 @@
-/*global OAS_RICH:true */
 define([
     'common/utils/mediator',
     'bonzo',

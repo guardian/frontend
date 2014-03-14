@@ -1,4 +1,3 @@
-/* global _: true */
 define([
     'modules/vars',
     'modules/authed-ajax',

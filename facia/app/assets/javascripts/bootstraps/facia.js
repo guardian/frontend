@@ -66,7 +66,7 @@ define([
             });
         },
 
-        showFootballFixtures: function(path) {
+        showFootballFixtures: function() {
             mediator.on('page:front:ready', function(config, context) {
                 if (config.page.edition === 'UK' && (['', 'sport', 'uk-alpha'].indexOf(config.page.pageId) !== -1)) {
                     // wrap the return sports stats component in an appropriate element

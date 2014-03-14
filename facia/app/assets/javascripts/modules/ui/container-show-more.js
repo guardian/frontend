@@ -59,7 +59,7 @@ define([
             this._$button.attr('data-link-name', newDataAttr);
         };
 
-        this.showMore = function(e) {
+        this.showMore = function() {
             this._$button.attr('disabled', true);
             this._$container.removeClass(this._className);
             bonzo(this._items.splice(0, this._showCount))

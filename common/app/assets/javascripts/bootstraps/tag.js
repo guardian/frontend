@@ -10,7 +10,7 @@ define([
     var modules = {
 
         showPopular: function () {
-            mediator.on('page:tag:ready', function(config, context) {
+            mediator.on('page:tag:ready', function(config) {
                 popular.render(config);
             });
         },
