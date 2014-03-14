@@ -198,7 +198,7 @@ GET         /$path<[\w\d-]*(/[\w\d-]*)?/video/.*>.json                          
 GET         /$path<[\w\d-]*(/[\w\d-]*)?/video/.*>                                                                    controllers.VideoController.render(path)
 
 
-GET         /$leftSide<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>+$rightSide<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>                controllers.IndexController.renderCombiner(leftSide, rightSide)
+GET         /$leftSide<[^+]+>+*rightSide                                                                              controllers.IndexController.renderCombiner(leftSide, rightSide)
 
 GET         /$path<[\w\d-]*(/[\w\d-]*)?/(interactive|ng-interactive)/.*>.json                                        controllers.InteractiveController.renderInteractiveJson(path)
 GET         /$path<[\w\d-]*(/[\w\d-]*)?/(interactive|ng-interactive)/.*>                                             controllers.InteractiveController.renderInteractive(path)
