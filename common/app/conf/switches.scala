@@ -126,7 +126,7 @@ object Switches extends Collections {
     "Enable the AMAA audience segment tracking.",
     safeState = Off, sellByDate = endOfQ4)
   
-  val ForeseeSwitch = Switch("Commercial Tags", "Foresee",
+  val ForeseeSwitch = Switch("Commercial Tags", "foresee",
     "Enable Forsee surveys for a sample of our audience",
     safeState = Off, sellByDate = new DateMidnight(2014,5,1)) // 3 month trial
 
