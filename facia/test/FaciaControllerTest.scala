@@ -20,7 +20,7 @@ class FaciaControllerTest extends FlatSpec with Matchers with BeforeAndAfterAll 
   }
 
   ignore should "200 when content type is front" in Fake {
-    val result = FaciaController.renderEditionFront("uk")(TestRequest())
+    val result = FaciaController.renderFront("uk")(TestRequest())
     status(result) should be(200)
   }
 
@@ -37,12 +37,12 @@ class FaciaControllerTest extends FlatSpec with Matchers with BeforeAndAfterAll 
   }
 
   ignore should "understand the editionalised network front" in Fake {
-    val result2 = FaciaController.renderEditionFront("uk")(TestRequest())
+    val result2 = FaciaController.renderFront("uk")(TestRequest())
     status(result2) should be(200)
   }
 
   ignore should "understand editionalised section fronts" in Fake {
-    val result2 = FaciaController.renderEditionSectionFront("uk/culture")(TestRequest())
+    val result2 = FaciaController.renderFront("uk/culture")(TestRequest())
     status(result2) should be(200)
   }
 
@@ -50,7 +50,7 @@ class FaciaControllerTest extends FlatSpec with Matchers with BeforeAndAfterAll 
     val fakeRequest = FakeRequest(GET, s"?callback=$callbackName")
       .withHeaders("host" -> "localhost:9000")
 
-    val result = FaciaController.renderEditionFront("uk")(fakeRequest)
+    val result = FaciaController.renderFront("uk")(fakeRequest)
     status(result) should be(200)
     contentType(result).get should be("application/javascript")
     contentAsString(result) should startWith(s"""$callbackName({\"html\"""")
@@ -61,14 +61,14 @@ class FaciaControllerTest extends FlatSpec with Matchers with BeforeAndAfterAll 
       .withHeaders("Host" -> "localhost:9000")
       .withHeaders("Origin" -> "http://www.theorigin.com")
 
-    val result = FaciaController.renderEditionFrontJson("uk")(fakeRequest)
+    val result = FaciaController.renderFrontJson("uk")(fakeRequest)
     status(result) should be(200)
     contentType(result).get should be("application/json")
     contentAsString(result) should startWith("{\"html\"")
   }
 
   ignore should "200 when hitting the front" in Fake {
-    val result = FaciaController.renderEditionFront("uk")(TestRequest())
+    val result = FaciaController.renderFront("uk")(TestRequest())
     status(result) should be(200)
   }
 }
