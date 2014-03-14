@@ -5,7 +5,7 @@ import front._
 import model._
 import conf._
 import play.api.mvc._
-import play.api.libs.json.{JsArray, Json}
+import play.api.libs.json.Json
 import Switches.EditionRedirectLoggingSwitch
 import views.support.{TemplateDeduping, NewsContainer}
 import scala.concurrent.Future
@@ -14,7 +14,6 @@ import play.api.templates.Html
 
 class FaciaController extends Controller with Logging with ExecutionContexts with implicits.Collections {
 
-  val front: Front = Front
   val EditionalisedKey = """^\w\w(/.*)?$""".r
 
   implicit def getTemplateDedupingInstance: TemplateDeduping = TemplateDeduping()
