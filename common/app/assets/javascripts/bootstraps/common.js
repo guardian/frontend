@@ -488,11 +488,8 @@ define([
             modules.initAutoSignin(config);
             modules.loadTags(config);
             modules.augmentInteractive();
-<<<<<<< HEAD
             modules.runForseeSurvey(config);
-=======
             modules.startRegister();
->>>>>>> b876ee64e1c0b5f399c5878c27a7529f68360376
         }
         mediator.emit("page:common:ready", config, context);
     };
