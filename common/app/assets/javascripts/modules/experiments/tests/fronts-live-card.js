@@ -49,7 +49,7 @@ define([
                                         '<li data-link-name="trail | {{index}}" class="card__item">' +
                                             '<a href="{{url}}" class="card__item__link" data-link-name="article">' +
                                                 '<h4 class="card__item__title">' +
-                                                    ((result.liveBloggingNow === 'true') ?
+                                                    ((result.isLive === 'true') ?
                                                         '<span class="item__live-indicator">Live</span> ' : '') +
                                                     '{{headline}}' +
                                             '   </h4>' +

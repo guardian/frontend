@@ -28,7 +28,8 @@ object TaggedContentController extends Controller with Related with Logging with
           ("webUrl", trail.webUrl),
           ("sectionName", trail.sectionName),
           ("thumbnail", trail.thumbnailPath),
-          ("starRating", trail.starRating)
+          ("starRating", trail.starRating),
+          ("isLive", trail.isLive)
         )
       })
     )
