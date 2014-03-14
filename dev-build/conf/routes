@@ -173,8 +173,8 @@ GET         /                                                                   
 GET         /$path<(culture|sport|commentisfree|business|money)>                                                     controllers.FaciaController.editionRedirect(path)
 GET         /$path<(us|uk|au|us-alpha|uk-alpha|au-alpha)?>                                                           controllers.FaciaController.renderEditionFront(path)
 GET         /$path<(us|uk|au|us-alpha|uk-alpha|au-alpha)?>.json                                                      controllers.FaciaController.renderEditionFrontJson(path)
-GET         /$path<((uk|us|au)/)?(culture|sport|commentisfree|business|money|football)>                              controllers.FaciaController.renderEditionSectionFront(path)
-GET         /$path<((uk|us|au)/)?(culture|sport|commentisfree|business|money|football)>.json                         controllers.FaciaController.renderEditionSectionFrontJson(path)
+GET         /$path<(\w+/)?([\d\w-]*)>                                                                                controllers.FaciaController.renderEditionSectionFront(path)
+GET         /$path<(\w+/)?([\d\w-]*)>.json                                                                           controllers.FaciaController.renderEditionSectionFrontJson(path)
 
 #Facia Press
 GET         /pressed/*path                                                                                           controllers.FaciaController.renderFaciaPress(path)
@@ -198,10 +198,6 @@ GET         /$path<[\w\d-]*(/[\w\d-]*)?/video/.*>.json                          
 GET         /$path<[\w\d-]*(/[\w\d-]*)?/video/.*>                                                                    controllers.VideoController.render(path)
 
 
-GET         /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>/trails.json                                                     controllers.IndexController.renderTrailsJson(path)
-GET         /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>/trails                                                          controllers.IndexController.renderTrails(path)
-GET         /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>.json                                                            controllers.IndexController.renderJson(path)
-GET         /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>                                                                 controllers.IndexController.render(path)
 GET         /$leftSide<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>+$rightSide<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>                controllers.IndexController.renderCombiner(leftSide, rightSide)
 
 GET         /$path<[\w\d-]*(/[\w\d-]*)?/(interactive|ng-interactive)/.*>.json                                        controllers.InteractiveController.renderInteractiveJson(path)
