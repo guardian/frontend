@@ -9,6 +9,7 @@ define([
     'lodash/objects/assign',
     'common/modules/component',
     'bean',
+    'common/modules/analytics/register',
 
     'common/modules/onward/right-recommended-item',
     'common/modules/ui/images'
@@ -20,12 +21,14 @@ define([
     extend,
     Component,
     bean,
+    register,
 
     RecommendedItem,
     images
     ) {
 
     function RightRecommendedForYou(mediator, config) {
+        register.begin('right-gravity-recommendations');
         this.config = extend(this.config, config);
         this.maxTrails = ('maxTrails' in config) ? config.maxTrails : 5;
         this.mediator = mediator;
@@ -103,6 +106,10 @@ define([
             s.linkTrackEvents="event37";
             s.tl(true,"e","right-popular-contentrec");
         });
+    };
+
+    RightRecommendedForYou.prototype.ready = function() {
+        register.end('right-gravity-recommendations');
     };
 
     return RightRecommendedForYou;

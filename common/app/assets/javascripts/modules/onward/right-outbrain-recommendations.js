@@ -4,6 +4,7 @@ define([
     'lodash/objects/assign',
     'common/modules/component',
     'bean',
+    'common/modules/analytics/register',
 
     'common/modules/onward/right-outbrain-recommended-item',
     'common/modules/ui/images'
@@ -12,14 +13,16 @@ define([
     extend,
     Component,
     bean,
+    register,
     RecommendedItem,
     Images
     ){
 
     function RightOutbrainRecommendations(mediator, config) {
-         this.pageId = config.pageId;
-         this.config = extend(this.config, config);
-         this.fetch();
+        register.begin('right-outbrain-recommendations');
+        this.pageId = config.pageId;
+        this.config = extend(this.config, config);
+        this.fetch();
     }
 
     Component.define(RightOutbrainRecommendations);
@@ -75,6 +78,10 @@ define([
             s.linkTrackEvents="event37";
             s.tl(true,"e","right-popular-contentrec");
         });
+    };
+
+    RightOutbrainRecommendations.prototype.ready = function() {
+        register.end('right-outbrain-recommendations');
     };
 
     return RightOutbrainRecommendations;

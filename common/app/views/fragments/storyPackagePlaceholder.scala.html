@@ -4,5 +4,6 @@
     <aside role="complementary" class="related more-on-this-story@if(storyPackage.size == 1){ more-on-this-story--one-item}">
     @fragments.relatedTrails(storyPackage, heading = "More on this story", visibleTrails = 15, dataComponent = "story-package")
     </aside>
+} else {
+	<aside class="related js-related" role="complementary" data-component="related-content"></aside>
 }
-<aside class="related js-related" role="complementary" data-component="related-content"></aside>

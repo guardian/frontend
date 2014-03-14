@@ -6,7 +6,6 @@ define([
     'common/utils/ajax',
     'common/modules/userPrefs',
     //Vendor libraries
-    'domReady',
     'bonzo',
     'bean',
     'enhancer',
@@ -41,7 +40,8 @@ define([
     'common/modules/adverts/article-body-adverts',
     'common/modules/adverts/dfp',
     "common/modules/analytics/commercial/tags/container",
-    "common/modules/onward/right-hand-component-factory"
+    "common/modules/onward/right-hand-component-factory",
+    "common/modules/analytics/register"
 ], function (
     $,
     mediator,
@@ -49,7 +49,6 @@ define([
     ajax,
     userPrefs,
 
-    domReady,
     bonzo,
     bean,
     enhancer,
@@ -85,7 +84,8 @@ define([
     ArticleBodyAdverts,
     DFP,
     TagContainer,
-    RightHandComponentFactory
+    RightHandComponentFactory,
+    register
 ) {
 
     var hasBreakpointChanged = detect.hasCrossedBreakpoint();
@@ -424,7 +424,7 @@ define([
             }
         },
 
-        augmentInteractive: function () {
+        augmentInteractive: function() {
             mediator.on('page:common:ready', function(config, context) {
                 if (/Article|Interactive/.test(config.page.contentType)) {
                     $('figure.interactive').each(function (el) {
@@ -432,6 +432,10 @@ define([
                     });
                 }
             });
+        },
+
+        startRegister: function() {
+            register.initialise();
         }
     };
 
@@ -476,6 +480,7 @@ define([
             modules.initAutoSignin(config);
             modules.loadTags(config);
             modules.augmentInteractive();
+            modules.startRegister();
         }
         mediator.emit("page:common:ready", config, context);
     };
