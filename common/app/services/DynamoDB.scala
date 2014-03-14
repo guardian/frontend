@@ -3,8 +3,7 @@ package services
 import conf.Configuration
 import common.Logging
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
-import com.amazonaws.services.dynamodbv2.model.GetItemRequest;
-import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import com.amazonaws.services.dynamodbv2.model.{GetItemRequest, AttributeValue}
 import scala.collection.JavaConversions._
 import scala.collection.JavaConverters._
 
@@ -26,14 +25,14 @@ trait DynamoDB extends Logging {
   }
 
   def destinationFor(source: String): Option[Destination] = {
-    
+
     val url = new AttributeValue().withS(s"http://$source")
 
     val getItemRequest = new GetItemRequest()
           .withTableName(tableName)
           .withKey(mapAsJavaMap(Map("source" -> url)))
           .withAttributesToGet("destination", "archive")
-   
+
     // wrap result in an option
     val result = Option(client.getItem(getItemRequest).getItem)
 
