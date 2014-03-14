@@ -49,6 +49,7 @@ GET         /metrics/errors/4xx           controllers.admin.DashboardController.
 GET         /metrics/errors/5xx           controllers.admin.DashboardController.render5XX()
 GET         /metrics/memory               controllers.admin.DashboardController.renderMemory()
 GET         /metrics/assets               controllers.admin.DashboardController.renderAssets()
+GET         /metrics/googlebot/404        controllers.admin.DashboardController.renderGooglebot404s()
 
 # Radiator
 GET         /radiator                     controllers.admin.RadiatorController.renderRadiator()
