@@ -12,7 +12,7 @@ import scala.concurrent.Future
 import play.api.templates.Html
 
 
-class FaciaController extends Controller with Logging with ExecutionContexts {
+class FaciaController extends Controller with Logging with ExecutionContexts with implicits.Collections {
 
   val front: Front = Front
   val EditionalisedKey = """^\w\w(/.*)?$""".r
@@ -69,7 +69,7 @@ class FaciaController extends Controller with Logging with ExecutionContexts {
               faciaPageOption map { faciaPage =>
                 if (request.isRss) {
                   Cached(frontPage) {
-                    Ok(TrailsToRss(Some(frontPage.webTitle), faciaPage.collections.map(_._2).flatMap(_.items)))
+                    Ok(TrailsToRss(Some(frontPage.webTitle), faciaPage.collections.map(_._2).flatMap(_.items).toSeq.distinctBy(_.id)))
                   }.as("text/xml; charset=utf-8")
                 } else {
                   Cached(frontPage) {
@@ -93,7 +93,7 @@ class FaciaController extends Controller with Logging with ExecutionContexts {
       FrontJson.get(newPath).map(_.map{ faciaPage =>
         if (request.isRss) {
           Cached(frontPage) {
-            Ok(TrailsToRss(Some(frontPage.webTitle), faciaPage.collections.map(_._2).flatMap(_.items)))
+            Ok(TrailsToRss(Some(frontPage.webTitle), faciaPage.collections.map(_._2).flatMap(_.items).toSeq.distinctBy(_.id)))
           }.as("text/xml; charset=utf-8")
         } else {
           Cached(frontPage) {

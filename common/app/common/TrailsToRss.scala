@@ -13,7 +13,7 @@ object TrailsToRss {
     import com.sun.syndication.feed.synd._
     import com.sun.syndication.io.{FeedException, SyndFeedOutput}
 
-    val feedTitle = s"${title.getOrElse("")} | The Guardian"
+    val feedTitle = title.map(t => s"$t | The Guardian").getOrElse("The Guardian")
 
     // Feed: image
     val image = new SyndImageImpl
