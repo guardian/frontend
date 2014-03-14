@@ -12,23 +12,13 @@ trait FrontLifecycle extends GlobalSettings {
 
     Jobs.deschedule("FrontRefreshJob")
     Jobs.schedule("FrontRefreshJob", "0 * * * * ?") {
-
-      // stagger refresh jobs to avoid dogpiling the api
-      Front.refreshJobs().zipWithIndex.foreach{ case (job, index) =>
-        val sec = (index * 2) % 60
-        AkkaAsync.after(sec.seconds){
-          job()
-        }
-      }
+      ConfigAgent.refresh()
     }
-
-    Front.refreshCollections()
   }
 
   override def onStop(app: play.api.Application) {
     Jobs.deschedule("FrontRefreshJob")
     ConfigAgent.close()
-    CollectionAgent.close()
     super.onStop(app)
   }
 }
