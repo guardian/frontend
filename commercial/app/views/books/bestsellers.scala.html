@@ -1,5 +1,7 @@
 @(books: Seq[model.commercial.books.Book])(implicit request: RequestHeader)
 
+<link rel="stylesheet" href="@Static("stylesheets/head.default.css")" />
+<link rel="stylesheet" href="@Static("stylesheets/global.css")" />
 <link rel="stylesheet" href="@Static("stylesheets/commercial.css")" />
 
 <aside class="commercial books-component" role="complementary">
@@ -16,21 +18,23 @@
                 <div class="commercial__body">
                     <h3>This week's bestsellers</h3>
 
-                    <ul class="u-unstyled list">
+                    <ul class="u-unstyled lineitems">
                     @books.map { book =>
-                        <li class="list__item">
-                            <a href="@book.buyUrl" class="list__link" data-link-name="merchandising-bookshop-v0_7_2014-03-12-low-@{book.isbn}-@{book.author}-@{book.title}">
-                                <span class="list__count">@book.position</span>
+                        <li class="lineitem">
+                            <a href="@book.buyUrl" class="lineitem__link" data-link-name="merchandising-bookshop-v0_7_2014-03-12-low-@{book.isbn}-@{book.author}-@{book.title}">
+                                <span class="lineitem__count">@book.position</span>
                             @book.jacketUrl.map { url =>
-                                <div class="list__img js-image-upgrade" data-src="@url"></div>
+                                <div class="lineitem__img js-image-upgrade" data-src="@url">
+                                    <img class="responsive-img" src="@url">
+                                </div>
                             }
-                                <h4 class="list__title">@book.title</h4>
+                                <h4 class="lineitem__title">@book.title</h4>
                             @if(book.author) {
-                                <p class="list__author">by @book.author</p>
+                                <p class="lineitem__meta">by @book.author</p>
                             }
                             </a>
                         @book.offerPrice.map { price =>
-                            <p class="list__price"><span class-"list__price__label">Our price: </span>&pound;@("%.2f".format(price))</p>
+                            <p class="books-component__price"><span class-"books-component__price__label">Our price: </span>&pound;@("%.2f".format(price))</p>
                         }
                         </li>
                     }

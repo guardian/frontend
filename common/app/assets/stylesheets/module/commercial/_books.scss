@@ -2,27 +2,8 @@
    Books component
    ========================================================================== */
 
-.commercial.books-component {
-    background-color: #ffffff;
-}
-
 .books-component {
-    .commercial__head {
-        background-color: #ffffff;
-        border-top: 1px solid $c-neutral4;
-        @include rem((
-            height: 40px
-        ));
-    }
-    .container__border {
-        border-top: 1px solid $c-neutral4;
-    }
-    .container__title {
-        background: none !important;
-        padding: 0;
-        margin-top: ($gs-baseline/3);
-        float: none;
-    }
+
     .container__logo {
         width: 98px;
         height: 24px;
@@ -35,6 +16,30 @@
             margin-left: -14px;
         }
     }
+
+
+    .lineitem:first-child .lineitem__img {
+        display: block;
+    }
+    .lineitem__link {
+        width: 80%;
+    }
+
+    .books-component__price {
+        width: 18%;
+        display: inline-block;
+        margin-bottom: 0;
+        vertical-align: top;
+        text-align: right;
+        @include fs-data(3);
+    }
+    .books-component__price__label {
+        display: none;
+    }
+
+
+
+
     .commercial__body {
         padding: 0;
 
@@ -44,205 +49,25 @@
             @include fs-headline(2);
         }
     }
-    .list {
-        padding: 0;
-        overflow: hidden;
-    }
-    .list__item {
-        @include box-sizing(border-box);
-        position: relative;
-        padding: 8px 0 0 30px;
-
-        color: $c-neutral1;
-        @include fs-headline(1);
-
-        &:first-child .list__img {
-            display: block;
-        }
-        + .list__item {
-            border-top: 1px solid $c-neutral4;
-        }
-     }
-    .list__link {
-        width: 80%;
-        display: inline-block;
-        color: $c-neutral1;
-        overflow: hidden;
-    }
-    .list__count {
-        position: absolute;
-        top: 2px;
-        left: 0;
-        color: $c-neutral4;
-        @include fs-headline(7);
-    }
-    .list__img {
-        height: 90px;
-        display: none;
-        margin-right: ($gs-baseline/3)*2;
-        float: left;
-        text-align: center;
-
-        .responsive-img {
-            width: auto;
-            height: 100%;
-        }
-    }
-    .list__title {
-        color: $c-neutral1;
-        @include fs-bodyCopy(1);
-        font-weight: normal;
-        text-overflow: ellipsis;
-        white-space: pre;
-        overflow: hidden;
-    }
-    .list__author {
-        margin-bottom: 0;
-        color: #8f8f8f;
-        @include fs-data(3);
-    }
-    .list__price {
-        width: 18%;
-        display: inline-block;
-        margin-bottom: 0;
-        vertical-align: top;
-        text-align: right;
-        @include fs-data(3);
-    }
-    .list__price__label {
-        display: none;
-    }
-    .commercial__foot {
-        padding: ($gs-baseline/3)*2 0;
-        border: 0;
-        margin: 0;
-        overflow: hidden;
-    }
-    .commercial__search {
-        position: relative;
-        width: 100%;
-        margin-bottom: 0;
-        float: right;
-        overflow: hidden;
-    }
-    .commercial__search__input {
-        @include box-sizing(border-box);
-        width: 100%;
-        height: 32px;
-        padding: $gs-baseline/3 32px $gs-baseline/3 ($gs-baseline/3) * 2;
-        border: 1px solid $c-neutral4;
-        @include fs-bodyCopy(1);
-        float: left;
-        overflow: hidden;
-
-        &:hover,
-        &:focus {
-            border-color: $c-neutral4;
-            outline: none;
-        }
-    }
-    .commercial__search__submit {
-        position: absolute;
-        top: 0;
-        right: 0;
-        width: 32px;
-        height: 32px;
-        background-color: $c-neutral4;
-        background-position: center center;
-        padding: 0;
-        border: none;
-        font-weight: bold;
-
-        &:hover,
-        &:focus {
-            background-color: $c-neutral4;
-            outline: none;
-        }
-
-        &:active {
-            background-color: darken($c-neutral4, 5%);
-            outline: none;
-        }
-    }
-
-    @include mq($to: tablet) {
-        .commercial__body,
-        .commercial__foot {
-            display: block;
-        }
-    }
 
     @include mq(tablet) {
-        .commercial__search {
-            width: 40%;
-        }
-        .list__item {
-            width: 20%;
-            padding-left: 8px;
-            float: left;
-
-            + .list__item {
-                border-top: none;
-                border-left: 1px solid $c-neutral5;
-            }
-        }
-        .list__img {
-            height: 100px;
-            margin-bottom: $gs-baseline;
-            display: block;
-            float: none;
-        }
-        .list__link {
-            width: 100%;
-        }
-        .list__title {
-            white-space: nowrap;
-            clear: both;
-        }
-        .list__count {
-            left: 8px;
-        }
-        .list__price {
+        .books-component__price {
             width: 100%;
             margin-top: $gs-baseline/2;
             text-align: left;
         }
 
-        .list__price__label {
+        .books-component__price__label {
             display: inline;
-        }
-    }
-
-    @include mq($from: tablet, $to: leftCol) {
-        .commercial__body h3 {
-            position: absolute;
-            top: 0;
-            right: 0;
         }
     }
 
     @include mq($from: leftCol, $to: wide) {
         .container__title {
-            padding: $gs-baseline/3 0 ($gs-baseline/3)*2 0;
-            float: left;
-
             .svg-i-bookshop-logo--bookshop {
                 margin-left: 0;
                 display: block;
             }
-        }
-    }
-
-    @include mq(desktop) {
-        .list__title {
-            white-space: normal;
-        }
-    }
-
-    @include mq(wide) {
-        .container__title {
-            padding: $gs-baseline/3 0 ($gs-baseline/3)*2 0;
-            float: left;
         }
     }
 }
