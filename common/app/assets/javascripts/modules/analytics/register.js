@@ -32,11 +32,15 @@ define([
             });
     }
 
+    function sendEvent() {
+        require('ophan/ng', function (ophan) {
+            ophan.record({'register': register});
+        });
+    }
+
     function initialise() {
         deferToLoadEvent(function() {
-            require('ophan/ng', function (ophan) {
-                ophan.record({'register': register});
-            });
+            window.setTimeout(sendEvent, 5000);
         });
     }
 
