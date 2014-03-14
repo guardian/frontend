@@ -21,7 +21,7 @@
         "beaconUrl": "@Configuration.debug.beaconUrl",
         "renderTime": "@{(new DateTime).toISODateTimeNoMillisString}",
         "isSSL": @Configuration.environment.secure,
-        "assetsPath": @Configuration.assets.path
+        "assetsPath": "@Configuration.assets.path"
     },
     "switches" : { @{Html(conf.Switches.all.map{ switch =>
             s""""${JavaScriptVariableName(switch.name)}":${switch.isSwitchedOn}"""
