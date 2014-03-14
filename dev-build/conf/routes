@@ -118,6 +118,7 @@ GET         /analytics/pageviews                                                
 GET         /analytics/browsers                                                                                      controllers.admin.AnalyticsController.browsers()
 GET         /analytics/abtests                                                                                       controllers.admin.AnalyticsController.abtests()
 GET         /metrics/loadbalancers                                                                                   controllers.admin.DashboardController.renderDashboard()
+GET         /metrics/googlebot/404                                                                                   controllers.admin.DashboardController.renderGooglebot404s()
 GET         /analytics/confidence                                                                                    controllers.admin.AnalyticsConfidenceController.renderConfidence()
 GET         /metrics/fastly                                                                                          controllers.admin.FastlyController.renderFastly()
 GET         /metrics/errors                                                                                          controllers.admin.DashboardController.renderErrors()

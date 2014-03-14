@@ -31,6 +31,10 @@ object DashboardController extends Controller with Logging with AuthLogging {
     NoCache(Ok(views.html.lineCharts("PROD", HttpErrors.errors.map(_.withFormat(ChartFormat.SingleLineRed)))))
   }
 
+  def renderGooglebot404s() = Authenticated { request =>
+    NoCache(Ok(views.html.lineCharts("PROD", HttpErrors.googlebot404s, Some("GoogleBot 404s"))))
+  }
+
   def renderMemory() = Authenticated{ request =>
     val metrics = MemoryMetrics.memory.map(_.withFormat(ChartFormat.DoubleLineBlueRed))
     NoCache(Ok(views.html.lineCharts(stage, metrics)))
