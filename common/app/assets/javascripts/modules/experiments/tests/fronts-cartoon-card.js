@@ -18,7 +18,7 @@ define([
 
         this.id = 'FrontsCartoonCard';
         this.start = '2014-03-14';
-        this.expiry = '2014-03-24';
+        this.expiry = '2014-03-21';
         this.author = 'Darren Hurley';
         this.description = 'Add a cartoon card to the Comment and Debate container';
         this.audience = 0.25;

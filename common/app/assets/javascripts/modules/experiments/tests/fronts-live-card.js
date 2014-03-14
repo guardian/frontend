@@ -18,7 +18,7 @@ define([
 
         this.id = 'FrontsLiveCard';
         this.start = '2014-03-14';
-        this.expiry = '2014-03-24';
+        this.expiry = '2014-03-21';
         this.author = 'Darren Hurley';
         this.description = 'Add a live card to the news container';
         this.audience = 0.25;

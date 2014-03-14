@@ -18,7 +18,7 @@ define([
 
         this.id = 'FrontsLatestReviewsCard';
         this.start = '2014-03-14';
-        this.expiry = '2014-03-20';
+        this.expiry = '2014-03-21';
         this.author = 'Darren Hurley';
         this.description = 'Add a latest reviews card to the features container';
         this.audience = 0.25;
