@@ -14,10 +14,10 @@ object TaggedContentController extends Controller with Related with Logging with
   def renderJson(tag: String) = Action.async { implicit request =>
     tagWhitelist.find(_ == tag).map { tag =>
       lookup(tag, Edition(request)) map {
-        case Nil    => JsonNotFound()
+        case Nil    => Cached(300) { JsonNotFound() }
         case trails => render(trails)
       }
-    } getOrElse(Future { BadRequest })
+    } getOrElse(Future { Cached(300) { BadRequest } })
   }
 
   private def render(trails: Seq[Content])(implicit request: RequestHeader) = Cached(300) {
