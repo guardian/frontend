@@ -103,7 +103,7 @@ td.gsc-search-button {
     max-height: none !important;
 }
 .gs-image-box.gs-web-image-box.gs-web-image-box-landscape {
-    width: gs-span(2) + $gs-gutter/2;
+    width: gs-span(2) + $gs-gutter/2 !important;
 }
 // Float image to the left
 .gsc-table-result {
