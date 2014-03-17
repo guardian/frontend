@@ -14,7 +14,7 @@
         padding: $gs-baseline/3 0;
         margin-top: ($gs-baseline/3);
         float: none;
-        color: $businessBlue;
+        color: $c-newsDefault;
     }
 }
 .commercial__head {
@@ -31,6 +31,8 @@
 }
 .commercial__title {
     @include fs-header(3);
+    margin-bottom: $gs-baseline*2;
+    clear: both;
 }
 .commercial__call-to-action {
     display: block;
@@ -62,37 +64,37 @@
     width: 100%;
     height: 32px;
     padding: $gs-baseline/3 32px $gs-baseline/3 ($gs-baseline/3) * 2;
-    border: 1px solid $c-neutral4;
     @include fs-bodyCopy(1);
+    border: none;
     float: left;
     overflow: hidden;
 
     &:hover,
     &:focus {
-        border-color: $c-neutral4;
         outline: none;
     }
 }
 .commercial__search__submit {
     position: absolute;
-    top: 0;
-    right: 0;
-    width: 32px;
-    height: 32px;
-    background-color: $c-neutral4;
+    top: 2px;
+    right: 2px;
+    width: 28px;
+    height: 28px;
+    background-color: #ffffff;
     background-position: center center;
     padding: 0;
-    border: none;
+    border: 1px solid $c-neutral1;
+    border-radius: 50%;
     font-weight: bold;
 
     &:hover,
     &:focus {
-        background-color: $c-neutral4;
+        background-color: #ffffff;
         outline: none;
     }
 
     &:active {
-        background-color: darken($c-neutral4, 5%);
+        background-color: #ffffff;
         outline: none;
     }
 }
@@ -110,7 +112,7 @@
 .lineitem {
     @include box-sizing(border-box);
     position: relative;
-    padding-top: ($gs-baseline/3)*2;
+    padding: ($gs-baseline/3)*2 0;
 
     color: $c-neutral1;
     @include fs-headline(1);

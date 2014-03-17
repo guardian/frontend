@@ -16,9 +16,18 @@
                 </div>
                 <h3 class="commercial__title hide-on-mobile">This week's bestsellers</h3>
 
+                <form action="http://www.guardianbookshop.co.uk/BerteShopWeb/search.do" method="POST" class="commercial__search hide-on-mobile" name="QuickSearchForm">
+                    <div>
+                        <label for="bookshop" class="u-h">Search bookshop:</label>
+                        <input id="bookshop" name="keyword" class="commercial__search__input" type="text" placeholder="Search bookshop" />
+                        <input class="commercial__search__submit svg-i svg-i-search" type="submit" name="go" value="" />
+                        <input value="%JustOmnitureToken%" name="INTCMP" type="hidden" />
+                    </div>
+                </form>
+
                 <a class="commercial__call-to-action">
-                    <span>Visit shop</span>
-                    <span class="i svg-i-chevron-right-mask"></span>
+                    <span class="commercial__call-to-action__label">Visit shop</span>
+                    <span class="i i-Chevron-right-20"></span>
                 </a>
             </div>
 
@@ -55,9 +64,9 @@
                 <div class="commercial__foot">
                     <form action="http://www.guardianbookshop.co.uk/BerteShopWeb/search.do" method="POST" class="commercial__search" name="QuickSearchForm">
                         <div>
-                            <label for="bookshop" class="u-h">Search the Guardian bookshop:</label>
-                            <input id="bookshop" name="keyword" class="commercial__search__input" type="text" placeholder="Search the Guardian bookshop" />
-                            <input class="commercial__search__submit svg-i-search-white" type="submit" name="go" value="" />
+                            <label for="bookshop" class="u-h">Search bookshop:</label>
+                            <input id="bookshop" name="keyword" class="commercial__search__input" type="text" placeholder="Search bookshop" />
+                            <input class="commercial__search__submit svg-i svg-i-search" type="submit" name="go" value="" />
                             <input value="%JustOmnitureToken%" name="INTCMP" type="hidden" />
                         </div>
                     </form>
@@ -66,3 +75,5 @@
         </div>
     </div>
 </aside>
+
+<script>document.body.classList.add('svg')</script>
