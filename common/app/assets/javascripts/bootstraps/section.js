@@ -8,7 +8,7 @@ define([
     var modules = {
 
         showPopular: function () {
-            mediator.on('page:section:ready', function(config, context) {
+            mediator.on('page:section:ready', function(config) {
                 popular.render(config);
             });
         }

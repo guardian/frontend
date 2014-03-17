@@ -76,7 +76,7 @@ define([
 
         // Binding
         var trs = $('.table tr[data-link-to]').css({ 'cursor': 'pointer' }).map(function(elem) { return elem; });
-        bean.on(context, 'click', trs, function(e) {
+        bean.on(context, 'click', trs, function() {
             window.location = this.getAttribute('data-link-to');
         });
 

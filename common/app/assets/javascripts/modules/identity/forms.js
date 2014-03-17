@@ -24,7 +24,7 @@ define([
                 link = form.querySelector('.js-forgotten-password'),
                 href = link.getAttribute('href');
 
-            bean.add(link, 'click', function(e) {
+            bean.add(link, 'click', function() {
                 var emailAddress = email.value;
                 if (emailAddress !== '') {
                     link.setAttribute('href', href + '#email=' + emailAddress);

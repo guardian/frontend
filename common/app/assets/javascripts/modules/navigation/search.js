@@ -1,13 +1,11 @@
 define([
     'common/$',
     'common/common',
-    'bean',
-    'common/utils/detect'
+    'bean'
 ], function (
     $,
     common,
-    bean,
-    detect
+    bean
 ) {
 
     var Search = function (config) {

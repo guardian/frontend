@@ -24,7 +24,7 @@ define([
                 return defer.promise();
             },
 
-            newItemPersister: function(newItem, sourceItem, sourceList, targetList, id, position, isAfter) {
+            newItemPersister: function(newItem, sourceItem, sourceList, targetList) {
 
                 if (newItem.parents.indexOf(targetList.parent) < 0) {
                     newItem.parents.push(targetList.parent);

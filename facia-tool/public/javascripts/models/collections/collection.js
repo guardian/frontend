@@ -22,7 +22,6 @@ define([
     contentApi
     ) {
     function Collection(opts) {
-        var self = this;
 
         if (!opts || !opts.id) { return; }
 
@@ -86,7 +85,7 @@ define([
         this.closeAllArticles();
     };
 
-    Collection.prototype.toggleEditingConfig = function(e) {
+    Collection.prototype.toggleEditingConfig = function() {
         this.state.editingConfig(!this.state.editingConfig());
     };
 

@@ -35,7 +35,6 @@ define([
             isSwiping,
             slideshowActive,
             slideshowDelay = 5000, // in milliseconds
-            captionControlHeight = 35, // If the caption CTA is hidden, we can't read the height; so hardcoded it goes
             pushUrlChanges = true,
             originalImagesHtml, // Used to keep a copy of the markup, before Swipe rewrites it
             $navArrows,
@@ -284,7 +283,7 @@ define([
             overlay.toolbarNode.querySelector('.js-stop-slideshow').style.display  = 'none';
         };
 
-        this.removeOverlay = debounce(function(e){
+        this.removeOverlay = debounce(function(){
             // Needs a delay to give time for analytics to fire before DOM removal
             overlay.remove();
             return true;
@@ -452,7 +451,7 @@ define([
                     startSlide: currentImage - 1,
                     speed: 200,
                     continuous: true,
-                    callback: function(index, elm) {
+                    callback: function(index) {
                         var swipeDir = (index + 1 > currentImage) ? 'next' : 'prev';
                         self.trackInteraction('Lightbox gallery swipe - ' + swipeDir);
 

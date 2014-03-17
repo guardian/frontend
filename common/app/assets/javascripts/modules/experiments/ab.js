@@ -54,10 +54,6 @@ define([
         store.local.set(participationsKey, participations);
     }
 
-    function clearParticipations() {
-        return store.local.remove(participationsKey);
-    }
-
     function cleanParticipations(config) {
         // Removes any tests from localstorage that have been
         // renamed/deleted from the backend

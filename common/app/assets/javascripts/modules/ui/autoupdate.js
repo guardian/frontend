@@ -149,7 +149,7 @@ define([
 
 
         // Model
-        this.load = function (url) {
+        this.load = function () {
             var that = this,
                 path = (typeof options.path === 'function') ? options.path() : options.path + '.json';
 
