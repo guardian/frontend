@@ -242,18 +242,20 @@ a.edition {
 /* Ajax loading helpers
    ========================================================================== */
 
+.loading,
 .preload-msg {
     @include rem((
         padding: 50px 50px 250px 50px
     ));
     text-align: center;
 
+    .loading__link,
     .accessible-link {
         display: inline-block;
         @include fs-data(2);
     }
 }
-
+.loading .loading__animation,
 .preload-msg .is-updating {
     display: block;
     @include rem((

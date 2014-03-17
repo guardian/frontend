@@ -85,10 +85,10 @@ define([
 
     function loading(elem, message, link) {
         bonzo(elem).append(bonzo.create(
-            '<div class="preload-msg">'+
+            '<div class="loading">'+
                 '<div class="loading__message">'+ (message||'Loading…') +'</div>'+
-                (link ? '<a href="'+ link.href +'" class="accessible-link">'+ link.text +'</a>' : '') +
-                '<div class="is-updating"></div>'+
+                (link ? '<a href="'+ link.href +'" class="loading__link">'+ link.text +'</a>' : '') +
+                '<div class="loading__animation"></div>'+
             '</div>'
         ));
     }
