@@ -15,7 +15,7 @@ component.define(MatchList);
 
 MatchList.prototype.endpoint = '/';
 MatchList.prototype.autoupdated = true;
-MatchList.prototype.updateEvery = 45;
+MatchList.prototype.updateEvery = 10;
 
 MatchList.prototype.prerender = function() {
     var elem = this.elem;

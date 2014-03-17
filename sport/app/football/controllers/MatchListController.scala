@@ -17,7 +17,7 @@ trait MatchListController extends Controller with Requests {
     datePattern.parseDateTime(s"$year$month$day").toDateMidnight
 
   protected def renderMatchList(page: Page, matchesList: MatchesList, filters: Map[String, Seq[CompetitionFilter]])(implicit request: RequestHeader) = {
-    Cached(60) {
+    Cached(10) {
       if (request.isJson)
         JsonComponent(
           "html" -> football.views.html.matchList.matchesComponent(matchesList),

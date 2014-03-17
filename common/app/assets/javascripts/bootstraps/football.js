@@ -72,7 +72,6 @@ define([
             });
         });
 
-
         // Binding
         bean.on(context, 'click', '.table tr[data-link-to]', function() {
             window.location = this.getAttribute('data-link-to');

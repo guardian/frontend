@@ -37,7 +37,7 @@ object LiveMatchesController extends MatchListController with CompetitionLiveFil
   def matchDayComponent = Action { implicit request =>
     val matches = new MatchDayList(Competitions())
     val page = new Page("football", "football", "Today's matches", "GFE:Football:automatic:live matches")
-    Cached(page) {
+    Cached(10) {
       JsonComponent(page, football.views.html.matchList.matchesComponent(matches))
     }
   }
