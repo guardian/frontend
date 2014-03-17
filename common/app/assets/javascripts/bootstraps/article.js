@@ -110,6 +110,7 @@ define([
 
         initLayoutHints: function(config) {
             /* jshint nonew: false */
+            /* TODO - fix module constructors so we can remove the above jshint override */
             if(config.switches.layoutHints && /\/-sp-/g.test(config.page.pageId)) {
                 new Layout(config);
             }
