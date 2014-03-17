@@ -34,7 +34,7 @@ function isClockwatch(yes) {
 
 function isLiveClockwatch(yes) {
     isClockwatch(function() {
-        if (config.page.live) {
+        if (config.page.isLive) {
             return yes();
         }
     });
