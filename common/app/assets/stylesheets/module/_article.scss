@@ -165,6 +165,9 @@
     @include rem((
         height: 16px + $gs-baseline //font-size + $gs-baseline
     ))
+    @include mq(tablet) {
+        display: none;
+    }
 }
 
 .article__dateline {
