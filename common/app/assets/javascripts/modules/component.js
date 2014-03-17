@@ -176,7 +176,7 @@ define([
 
         function update() {
             self._fetch().then(function(resp) {
-                self.autoupdate(bonzo.create(resp[self.responseDataKey])[0], resp);
+                self.autoupdate(bonzo.create(resp[self.responseDataKey])[0]);
                 if (self.autoupdated) {
                     t = setTimeout(update, self.updateEvery*1000);
                 }
@@ -204,9 +204,8 @@ define([
 
     /**
      * @param {Element} elem new element
-     * @param {Object.<string.*>} resp
      */
-    Component.prototype.autoupdate = function(elem, resp) {
+    Component.prototype.autoupdate = function(elem) {
         var oldElem = this.elem;
         this.elem = elem;
 

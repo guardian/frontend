@@ -1,13 +1,11 @@
 define([
     'common/modules/component',
     'common/$',
-    'bonzo',
-    'common/utils/mediator'
+    'bonzo'
 ], function(
     component,
     $,
-    bonzo,
-    mediator
+    bonzo
 ) {
 
 var MatchList = function(type, filter) {
@@ -32,7 +30,7 @@ MatchList.prototype.prerender = function() {
     }
 };
 
-MatchList.prototype.autoupdate = function(elem, resp) {
+MatchList.prototype.autoupdate = function(elem) {
     var updated = $('.football-match', elem),
         self = this,
         $match, $updated;

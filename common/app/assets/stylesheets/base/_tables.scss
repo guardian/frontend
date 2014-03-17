@@ -27,7 +27,7 @@ td {
     color: $c-neutral1;
 
     caption,
-    .table__caption{
+    .table__caption {
         @include fs-header(2);
         @include rem((
             padding-top: $gs-baseline/4,
