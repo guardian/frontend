@@ -26,7 +26,7 @@ class MatchDayListTest extends FreeSpec with ShouldMatchers with MatchTestData w
 
     "should subgroup matches correctly league, with the leagues ordered correctly" in {
       val (_, competitionMatches1) = matches.matchesGroupedByDateAndCompetition(0)
-      competitionMatches1.map { case (comp, fMatches) => comp.id } should equal(List("100", "102"))
+      competitionMatches1.map { case (comp, fMatches) => comp.id } should equal(List("100", "500"))
     }
 
     "should show all matches happening today" in {
@@ -45,8 +45,8 @@ class MatchDayListTest extends FreeSpec with ShouldMatchers with MatchTestData w
 
     "matches should have the correct, populated, competition alongside" in {
       matches.relevantMatches.foreach { case (fMatch, comp) =>
-        if (fMatch.id.toInt < 30) comp.id should equal("100")
-        else comp.id should equal("102")
+        if (fMatch.id.toInt < 30) comp.id should equal("500")
+        else comp.id should equal("100")
       }
     }
   }
