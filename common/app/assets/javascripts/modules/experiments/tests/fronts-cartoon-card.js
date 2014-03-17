@@ -21,7 +21,7 @@ define([
         this.expiry = '2014-03-24';
         this.author = 'Darren Hurley';
         this.description = 'Add a cartoon card to the Comment and Debate container';
-        this.audience = 0.4;
+        this.audience = 0.04;
         this.audienceOffset = 0;
         this.successMeasure = 'Click-through for the page as a whole.';
         this.audienceCriteria = 'Users who are not on desktop or bigger, on the network front.';
