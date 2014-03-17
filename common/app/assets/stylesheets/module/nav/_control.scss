@@ -43,8 +43,12 @@
 }
 
 
-/* Control info (text label next to it)
+/* Profile control & control info (text label next to it)
    ========================================================================== */
+
+.control--profile {
+   overflow: visible; // Makes control__info visible
+}
 
 .control__info {
     display: none;
