@@ -32,6 +32,7 @@
 .commercial__title {
     @include fs-header(3);
     margin-bottom: $gs-baseline*2;
+    float: left;
     clear: both;
 }
 .commercial__call-to-action {
@@ -81,10 +82,8 @@
     width: 28px;
     height: 28px;
     background-color: #ffffff;
-    background-position: center center;
     padding: 0;
     border: 1px solid $c-neutral1;
-    border-radius: 50%;
     font-weight: bold;
 
     &:hover,
@@ -96,6 +95,11 @@
     &:active {
         background-color: #ffffff;
         outline: none;
+    }
+
+    &.svg-i-search {
+        background-position: center center;
+        border-radius: 50%;
     }
 }
 
@@ -216,9 +220,13 @@
         padding-left: 8px;
         float: left;
 
+        &:nth-child(n + 4) {
+            display: block;
+        }
+
         + .lineitem {
             border-top: none;
-            border-left: 1px solid $c-neutral5;
+            border-left: 1px solid $c-neutral4;
         }
     }
     .lineitem__link {
@@ -231,13 +239,6 @@
     .lineitem__img {
         display: block;
         margin-bottom: $gs-baseline;
-    }
-}
-
-@include mq($from: leftCol, $to: wide) {
-    .commercial .container__title .svg-i-bookshop-logo--bookshop {
-        margin-left: 0;
-        display: block;
     }
 }
 

@@ -161,10 +161,12 @@
     height: 250px;
     overflow: hidden;
 }
-.ad-slot--commercial-component {
+.ad-slot__commercial-component {
     width: 100%;
     min-height: 0;
-    padding: 0 0 $gs-baseline 0;
+    @include rem((
+        margin-top: $gs-baseline*2
+    ));
 }
 
 
