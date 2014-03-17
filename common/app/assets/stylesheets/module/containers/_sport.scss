@@ -6,13 +6,14 @@
         .item__media-wrapper {
             display: none;
         }
-        .item:first-child {
-            @include card-mobile($with-image: true);
-
+        .item--has-image:nth-child(-n+3) {
             .item__image-container,
             .item__media-wrapper {
                 display: block;
             }
+        }
+        .item:first-child {
+            @include card-mobile($with-image: true);
         }
         .collection--without-sport-stats {
             .item:nth-child(n+2):nth-child(-n+5) {
