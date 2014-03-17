@@ -54,7 +54,7 @@ object TrailsToRss {
           case _ => ""
         }
       val intro = trail match {
-          case a: Article => Jsoup.parseBodyFragment(a.body).body.children.toArray.take(3).map(_.toString).mkString("")
+          case a: Article => Jsoup.parseBodyFragment(a.body).body.children.toArray.take(2).map(_.toString).mkString("")
           case _ => ""
         }
       description.setValue(standfirst + intro)
