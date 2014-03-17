@@ -33,9 +33,10 @@ td {
             padding-top: $gs-baseline/4,
             padding-bottom: $gs-baseline
         ));
+        
         border-top: 1px dotted $c-neutral5;
         color: $c-neutral1;
-        font-weight: 400;
+        font-weight: normal;
         text-align: left;
     }
 
