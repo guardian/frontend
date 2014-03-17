@@ -25,20 +25,6 @@ class RichListTest extends FunSuite with ShouldMatchers with RichList {
     )
   }
 
-  test("groupByOrdered will correctly collect elements, grouping them in the order the key appears") {
-    val l = List(1, 1, 2, 3, 4, 6, 7, 8, 9, 10)
-    l.groupByOrdered(_ % 3) should equal(
-      List((1, List(1, 1, 4, 7, 10)), (2, List(2, 8)), (0, List(3, 6, 9)))
-    )
-  }
-
-  test("groupByOrdered can collect up elements and map the resulting lists as it goes") {
-    val l = List("Adam", "Brian", "Andrew", "Dan", "Charlie", "David", "Bobby")
-    l.groupByOrdered(_.head, _.tail) should equal(
-      List(('A', List("dam", "ndrew")), ('B', List("rian", "obby")), ('D', List("an", "avid")), ('C', List("harlie")))
-    )
-  }
-
   test("indexOfOpt will return the index of an item in list") {
     val l = List(0, 1, 2, 3, 4)
     l.indexOfOpt(0) should equal (Some(0))
