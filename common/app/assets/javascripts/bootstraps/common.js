@@ -41,7 +41,7 @@ define([
     'common/modules/adverts/dfp',
     "common/modules/analytics/commercial/tags/container",
     "common/modules/analytics/foresee-survey",
-    "common/modules/onward/right-hand-component-factory",
+    "common/modules/onward/right-most-popular",
     "common/modules/analytics/register"
 ], function (
     $,
@@ -86,7 +86,7 @@ define([
     DFP,
     TagContainer,
     Foresee,
-    RightHandComponentFactory,
+    RightMostPopular,
     register
 ) {
 
@@ -190,10 +190,9 @@ define([
         initRightHandComponent: function(config, context) {
 
             if(config.switches.rightHandMostPopular && config.page.contentType === 'Article') {
-              var r = new RightHandComponentFactory({
-                  wordCount: config.page.wordCount,
-                  pageId: config.page.pageId
-              });
+                if(detect.getBreakpoint() !== 'mobile' && parseInt(config.page.wordCount, 10) > 500  ) {
+                    var r = new RightMostPopular(mediator, {type: 'image', maxTrails: 5});
+                }
            }
         },
 

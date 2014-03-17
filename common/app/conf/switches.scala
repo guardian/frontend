@@ -275,11 +275,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
-  val RightHandMostPopularSwitch = Switch("Feature Switches", "right-hand-most-popular",
-    "If this switch is on, a component with most popular content from around the Guardian is displayed in the article right hand column at desktop breakpoints.",
-    safeState = On, sellByDate = endOfQ4
-  )
-
   val IdentityEthicalAwardsSwitch = Switch("Feature Switches", "id-ethical-awards",
     "If this switch is on, Ethical awards forms will be available",
     safeState = Off, sellByDate = endOfQ4)
@@ -333,11 +328,6 @@ object Switches extends Collections {
   val TagLinking = Switch("Feature Switches", "tag-linking",
     "If this is switched on articles that have no in body links will auto link to their tags where possible",
     safeState = Off, sellByDate = endOfQ4
-  )
-
-  val GeoMostPopular = Switch("A/B Tests", "ab-most-popular-in-country",
-    "If this is switched on an A/B test runs to test if locally popular articles yield better click-through.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 3, 17)
   )
 
   val ABFrontsMissedCard = Switch("A/B Tests", "ab-fronts-missed-card",
@@ -458,12 +448,10 @@ object Switches extends Collections {
     EditionRedirectLoggingSwitch,
     FacebookAutoSigninSwitch,
     IdentityFormstackSwitch,
-    RightHandMostPopularSwitch,
     IdentityEthicalAwardsSwitch,
     IdentityFilmAwardsSwitch,
     ABAa,
     ABRecommendedRightHand,
-    GeoMostPopular,
     ABFrontsMissedCard,
     ABFrontsLiveCard,
     ABFrontsLatestReviewsCard,
