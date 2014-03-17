@@ -125,7 +125,7 @@ object Switches extends Collections {
   val AmaaSwitch = Switch("Commercial Tags", "amaa",
     "Enable the AMAA audience segment tracking.",
     safeState = Off, sellByDate = endOfQ4)
-  
+
   val ForeseeSwitch = Switch("Commercial Tags", "foresee",
     "Enable Forsee surveys for a sample of our audience",
     safeState = Off, sellByDate = new DateMidnight(2014,5,1)) // 3 month trial
@@ -327,22 +327,22 @@ object Switches extends Collections {
 
   val ABFrontsMissedCard = Switch("A/B Tests", "ab-fronts-missed-card",
     "If this is switched on an A/B test runs that adds a 'You may have missed' card to the alpha network fronts.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 3, 22)
+    safeState = Off, sellByDate = new DateMidnight(2014, 3, 25)
   )
 
   val ABFrontsLiveCard = Switch("A/B Tests", "ab-fronts-live-card",
     "If this is switched on an A/B test runs that adds a 'What's happening now' card to the alpha network fronts.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 3, 22)
+    safeState = Off, sellByDate = new DateMidnight(2014, 3, 25)
   )
 
   val ABFrontsLatestReviewsCard = Switch("A/B Tests", "ab-fronts-latest-reviews-card",
     "If this is switched on an A/B test runs that adds a 'Latest reviews' card to the alpha network fronts.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 3, 22)
+    safeState = Off, sellByDate = new DateMidnight(2014, 3, 25)
   )
 
   val ABFrontsCartoonCard = Switch("A/B Tests", "ab-fronts-cartoon-card",
     "If this is switched on an A/B test runs that adds a 'Cartoon' card to the alpha network fronts.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 3, 22)
+    safeState = Off, sellByDate = new DateMidnight(2014, 3, 25)
   )
 
   // Sport Switch
