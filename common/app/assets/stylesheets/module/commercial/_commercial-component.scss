@@ -218,6 +218,7 @@
     .lineitem {
         width: 20%;
         padding-left: 8px;
+        padding-right: 8px;
         float: left;
 
         &:nth-child(n + 4) {
