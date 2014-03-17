@@ -21,8 +21,8 @@ define([
         this.expiry = '2014-03-24';
         this.author = 'Darren Hurley';
         this.description = 'Add a latest reviews card to the features container';
-        this.audience = 0.4;
-        this.audienceOffset = 0.4;
+        this.audience = 0.25;
+        this.audienceOffset = 0.25;
         this.successMeasure = 'Click-through for the page as a whole.';
         this.audienceCriteria = 'Users who are not on desktop or bigger, on the network front.';
         this.dataLinkNames = 'card | latest reviews | trail | {{index}}';
