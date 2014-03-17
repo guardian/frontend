@@ -74,7 +74,7 @@ define([
                         id = event.testData ? event.testData : event.dataTransfer.getData('Text'),
                         sourceItem,
                         position,
-                        newItem,
+                        newItems,
                         groups,
                         insertAt,
                         isAfter = false;
@@ -138,16 +138,16 @@ define([
                     insertAt = targetList.items().indexOf(targetItem) + isAfter;
                     insertAt = insertAt === -1 ? targetList.items().length : insertAt;
 
-                    newItem = opts.newItemConstructor(id, sourceItem, targetList);
+                    newItems = opts.newItemsConstructor(id, sourceItem, targetList);
 
-                    if (!newItem) {
+                    if (!newItems[0]) {
                         alertBadContent(id);
                         return;
                     }
 
-                    targetList.items.splice(insertAt, 0, newItem);
+                    targetList.items.splice(insertAt, 0, newItems[0]);
 
-                    opts.newItemValidator(newItem)
+                    opts.newItemsValidator(newItems)
                     .fail(function() {
                         removeById(targetList.items, id);
                         alertBadContent(id);
@@ -161,7 +161,7 @@ define([
                             return;
                         }
 
-                        opts.newItemPersister(newItem, sourceItem, sourceList, targetList, id, position, isAfter);
+                        opts.newItemsPersister(newItems, sourceItem, sourceList, targetList, id, position, isAfter);
                     });
                 }, false);
             }
