@@ -22,32 +22,45 @@
         display: block;
     }
     .lineitem__link {
-        width: 80%;
+        width: 68%;
     }
 
     .books-component__price {
-        width: 18%;
-        display: inline-block;
-        margin-bottom: 0;
-        vertical-align: top;
-        text-align: right;
+        display: block;
+        margin-top: $gs-baseline/2;
+        float: left;
+    }
+    .books-component__price__rrp,
+    .books-component__price__our {
+        display: block;
+        color: $c-neutral1;
         @include fs-data(3);
     }
-    .books-component__price__label {
-        display: none;
+    .books-component__price__our {
+        font-weight: bold;
     }
 
+    .books-component__buy-now-button {
+        background-color: #e657ad;
+        padding: $gs-baseline/3 12px;
+        border: none;
+        @include rounded-corners(2px);
+        float: right;
+        color: #fff;
+        font-weight: bold;
+        font-size: 13px;
+        line-height: 19px;
+        font-family: $serifheadline;
+
+        &:focus {
+            outline: none;
+        }
+    }
 
 
 
     .commercial__body {
         padding: 0;
-
-        h3 {
-            padding: $gs-baseline/2 0 ($gs-baseline/3)*2 0;
-            margin-bottom: 0;
-            @include fs-headline(2);
-        }
     }
 
     @include mq(tablet) {

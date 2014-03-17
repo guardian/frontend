@@ -9,20 +9,25 @@
         <div class="container container--row-pattern">
             <div class="container__border hide-on-mobile"></div>
 
-            <h2 class="container__title">
-                <span class="container__logo svg-i-bookshop-logo--guardian"></span>
-                <span class="container__logo svg-i-bookshop-logo--bookshop"></span>
-            </h2>
+            <div class="container__title u-cf">
+                <div class="commercial__logo">
+                    <span class="container__logo svg-i-bookshop-logo--guardian"></span>
+                    <span class="container__logo svg-i-bookshop-logo--bookshop"></span>
+                </div>
+                <h3 class="commercial__title hide-on-mobile">This week's bestsellers</h3>
+
+                <a class="commercial__call-to-action">
+                    <span>Visit shop</span>
+                    <span class="i svg-i-chevron-right-mask"></span>
+                </a>
+            </div>
 
             <div class="container__body">
                 <div class="commercial__body">
-                    <h3>This week's bestsellers</h3>
-
                     <ul class="u-unstyled lineitems">
                     @books.map { book =>
-                        <li class="lineitem">
+                        <li class="lineitem u-cf">
                             <a href="@book.buyUrl" class="lineitem__link" data-link-name="merchandising-bookshop-v0_7_2014-03-12-low-@{book.isbn}-@{book.author}-@{book.title}">
-                                <span class="lineitem__count">@book.position</span>
                             @book.jacketUrl.map { url =>
                                 <div class="lineitem__img js-image-upgrade" data-src="@url">
                                     <img class="responsive-img" src="@url">
@@ -30,12 +35,18 @@
                             }
                                 <h4 class="lineitem__title">@book.title</h4>
                             @if(book.author) {
-                                <p class="lineitem__meta">by @book.author</p>
+                                <p class="lineitem__meta">By @book.author</p>
                             }
+                                <p class="books-component__price">
+                                @book.price.map { price =>
+                                    <span class="books-component__price__rrp">RRP &pound;@("%.2f".format(price))</span>
+                                }
+                                @book.offerPrice.map { price =>
+                                    <span class="books-component__price__our">Our price: &pound;@("%.2f".format(price))</span>
+                                }
+                                </p>
                             </a>
-                        @book.offerPrice.map { price =>
-                            <p class="books-component__price"><span class-"books-component__price__label">Our price: </span>&pound;@("%.2f".format(price))</p>
-                        }
+                            <button class="btn books-component__buy-now-button">Buy now</button>
                         </li>
                     }
                     </ul>
