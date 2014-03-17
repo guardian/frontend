@@ -59,12 +59,12 @@ define([
 
         page.isLiveClockwatch(function() {
             var ml = new MatchList('live', 'premierleague'),
-                $img = $('.media-primary'),
+                $img = $('.media-primary').addClass('u-h'),
                 matchListContainer = bonzo.create('<div class="football-match__list" data-link-name="football-matches-clockwatch"></div>');
 
             loading(matchListContainer, 'Fetching today\'s matches…', { text: 'Impatient?', href: '/football/live' });
 
-            $img.addClass('u-h').after(matchListContainer);
+            $('.article__meta-container').before(matchListContainer);
             ml.fetch(matchListContainer).fail(function() {
                 $img.removeClass('u-h');
             }).always(function() {
