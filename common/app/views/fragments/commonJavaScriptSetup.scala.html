@@ -145,8 +145,4 @@
     })(guardian.isModernBrowser);
 </script>
 
-@if(DeferApplicationScriptSwitch.isSwitchedOn) {
-    <script defer='defer' src="@Static("javascripts/bootstraps/app.js")"></script>
-} else {
-    <script async='async' src="@Static("javascripts/bootstraps/app.js")"></script>
-}
+<script async="async" src="@Static("javascripts/bootstraps/app.js")"></script>

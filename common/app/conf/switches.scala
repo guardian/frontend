@@ -308,11 +308,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 4, 30)
   )
 
-  val DeferApplicationScriptSwitch = Switch("Feature Switches", "defer-application",
-    "If this switch is on, the application js script tag will be defer rather than async",
-    safeState = Off, sellByDate = new DateMidnight(2014, 4, 30)
-  )
-
   // A/B Test Switches
 
   val ABAa = Switch("A/B Tests", "ab-abcd",
@@ -481,8 +476,7 @@ object Switches extends Collections {
     FrontPressJobSwitch,
     LayoutHintsSwitch,
     HelveticaEasterEggSwitch,
-    LeadAdTopPageSwitch,
-    DeferApplicationScriptSwitch
+    LeadAdTopPageSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
