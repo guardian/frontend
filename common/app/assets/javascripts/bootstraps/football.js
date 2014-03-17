@@ -94,7 +94,7 @@ define([
     }
 
     function loaded(elem) {
-        $('.preload-msg', elem).remove();
+        $('.loading', elem).remove();
     }
 
     return {
