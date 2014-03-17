@@ -9,13 +9,13 @@
         data-@switch.name="@switch.state"
     }>
     <div class="d-discussion__header d-discussion__comment-count">
-        <div class="d-discussion__meta d-meta-item">
+        <div class="d-discussion__meta d-dicussion__meta--counts d-meta-item">
             @if(page.commentCount > 0){
                 @page.commentCount comment@if(page.commentCount != 1){s} in @page.topLevelCommentCount thread@if(page.topLevelCommentCount != 1){s}. 
             }
         </div>
 
-        <div class="d-discussion__meta d-meta-item">
+        <div class="d-discussion__meta d-dicussion__meta--sorting d-meta-item">
             Comments sorted
             <select class="d-discussion__order-control">
                 <option value="oldest"@if(page.orderBy == "oldest"){ selected="selected"}>oldest</option>

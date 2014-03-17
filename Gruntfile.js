@@ -236,6 +236,70 @@ module.exports = function (grunt) {
                         }
                     ]
                 }
+            },
+            WebTextSansWoff: {
+                options: {
+                    "filename": staticTargetDir + "fonts/WebTextSans.woff.json",
+                    "callback": "guFont",
+                    "fonts": [
+                        {
+                            "font-family": "TextSans",
+                            "file": "resources/fonts/TextSans-Regular.woff",
+                            "format": "woff"
+                        },
+                        {
+                            "font-family": "TextSans",
+                            "font-style": "italic",
+                            "file": "resources/fonts/TextSans-RegularIt.woff",
+                            "format": "woff"
+                        },
+                        {
+                            "font-family": "TextSans",
+                            "font-weight": "700",
+                            "file": "resources/fonts/TextSans-Medium.woff",
+                            "format": "woff"
+                        },
+                        {
+                            "font-family": "TextSans",
+                            "font-weight": "700",
+                            "font-style": "italic",
+                            "file": "resources/fonts/TextSans-MediumIt.woff",
+                            "format": "woff"
+                        }
+                    ]
+                }
+            },
+            WebTextSansTtf: {
+                options: {
+                    "filename": staticTargetDir + "fonts/WebTextSans.ttf.json",
+                    "callback": "guFont",
+                    "fonts": [
+                        {
+                            "font-family": "TextSans",
+                            "file": "resources/fonts/TextSans-Regular.ttf",
+                            "format": "ttf"
+                        },
+                        {
+                            "font-family": "TextSans",
+                            "font-style": "italic",
+                            "file": "resources/fonts/TextSans-RegularIt.ttf",
+                            "format": "ttf"
+                        },
+                        {
+                            "font-family": "TextSans",
+                            "font-weight": "700",
+                            "file": "resources/fonts/TextSans-Medium.ttf",
+                            "format": "ttf"
+                        },
+                        {
+                            "font-family": "TextSans",
+                            "font-weight": "700",
+                            "font-style": "italic",
+                            "file": "resources/fonts/TextSans-MediumIt.ttf",
+                            "format": "ttf"
+                        }
+                    ]
+                }
             }
         },
 
