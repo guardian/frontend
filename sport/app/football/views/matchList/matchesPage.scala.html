@@ -44,9 +44,25 @@
                     }
 
                     @if(matchesList.previousPage.isDefined || matchesList.nextPage.isDefined) {
-                        <div class="js-matches-nav matches-nav u-cf js-not-ajax" data-link-name="@matchesList.pageType nav">
-                            @matchesList.previousPage.map{url => <a href="@LinkTo{@url}" data-link-name="previous"><span class="i i-toggle-collapse-neutral" title="Previous day"></span></a>}
-                            @matchesList.nextPage.map{url => <a href="@LinkTo{@url}" data-link-name="next"><span class="i i-toggle-expand-neutral" title="Next few days"></span></a>}
+                        <div class="matches-nav" data-link-name="@matchesList.pageType nav">
+                            @matchesList.previousPage.map{url =>
+                                <a href="@url" class="collection__show-more tone-background tone-news" data-link-name="previous" title="Previous page">
+                                    <span class="collection__show-more__icon">
+                                        <span class="i i-minus-white-mask"></span>
+                                        <span class="i i-minus-white"></span>
+                                    </span>
+                                    <span class="u-h">Previous</span>
+                                </a>
+                            }
+                            @matchesList.nextPage.map{url =>
+                                <a href="@url" class="collection__show-more tone-background tone-news" data-link-name="next" title="Next page">
+                                    <span class="collection__show-more__icon">
+                                        <span class="i i-plus-white-mask"></span>
+                                        <span class="i i-plus-white"></span>
+                                    </span>
+                                    <span class="u-h">Next</span>
+                                </a>
+                            }
                         </div>
                     }
                 </div>
