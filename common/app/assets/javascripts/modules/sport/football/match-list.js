@@ -24,7 +24,7 @@ MatchList.prototype.prerender = function() {
     $(this.elem).addClass('table--small');
 
     if ($('.table__caption', this.elem).length === 0) {
-        bonzo(bonzo.create('<caption class="table__caption">Scores</caption>')).each(function(el) {
+        bonzo(bonzo.create('<caption class="table__caption">Live scores</caption>')).each(function(el) {
             $('.football-matches', elem).prepend(el);
         });
     }
