@@ -45,8 +45,8 @@ trait MatchTestData {
   val leagueTable1 = Seq()
   val leagueTable2 = Seq()
 
-  val competition1 = Competition("1", "/football/test", "Test competition", "Test comp", "English", Some(today.minusDays(-50)), matches1, leagueTable1, showInTeamsList = true)
-  val competition2 = Competition("2", "/football/test2", "Test competition 2", "Test comp 2", "Scottish", Some(today.minusDays(50)), matches2, leagueTable2, showInTeamsList = true)
+  val competition1 = Competition("100", "/football/test", "Test competition", "Test comp", "English", Some(today.minusDays(-50)), matches1, leagueTable1, showInTeamsList = true)
+  val competition2 = Competition("102", "/football/test2", "Test competition 2", "Test comp 2", "Scottish", Some(today.minusDays(50)), matches2, leagueTable2, showInTeamsList = true)
 
   val competitions = CompetitionSupport(Seq(competition1, competition2))
 }

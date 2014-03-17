@@ -1,6 +1,6 @@
 package football.model
 
-import feed.CompetitionSupport
+import feed.{CompetitionSupport, Competitions}
 import org.joda.time.{Interval, DateTime, DateMidnight}
 import model.Competition
 import pa.FootballMatch
@@ -46,9 +46,13 @@ trait MatchesList extends Football with RichList {
   }
   lazy val matchesGroupedByDate = relevantMatches.segmentBy(key = _._1.date.toDateMidnight)
   lazy val matchesGroupedByDateAndCompetition = matchesGroupedByDate.map { case (d, ms) =>
-    (d, ms.groupBy(_._2).mapValues(_.map {
+    val competitionsWithMatches = ms.groupBy(_._2).mapValues(_.map {
       case (matches, _) => matches
-    }))
+    }).toList.sortWith { case ((comp1, matches1), (comp2, matches2)) =>
+      val competitionOrder = Competitions.competitionDefinitions.map(_.id).toList
+      competitionOrder.indexOfOpt(comp1.id).getOrElse(competitionOrder.size) < competitionOrder.indexOfOpt(comp2.id).getOrElse(competitionOrder.size)
+    }
+    (d, competitionsWithMatches)
   }
 
   lazy val nextPage: Option[String] = {

@@ -26,5 +26,44 @@ trait RichList {
       }
       loop(list, Nil).reverse
     }
+
+    def groupByOrdered[U](key: T => U): List[(U, List[T])] = {
+      @tailrec
+      def loop(xs: List[T], acc: List[(U, List[T])]): List[(U, List[T])] = {
+        if (xs.isEmpty) acc
+        else {
+          val thisKey = key(xs.head)
+          val (group, rest) = xs.partition(x => key(x) == thisKey)
+          loop(rest, (thisKey, group) :: acc)
+        }
+      }
+      loop(list, Nil).reverse
+    }
+    def groupByOrdered[U, V](key: T => U, mapValue: T => V): List[(U, List[V])] = {
+      @tailrec
+      def loop(xs: List[T], acc: List[(U, List[V])]): List[(U, List[V])] = {
+        if (xs.isEmpty) acc
+        else {
+          val thisKey = key(xs.head)
+          val (group, rest) = xs.partition(x => key(x) == thisKey)
+          loop(rest, (thisKey, group.map(mapValue)) :: acc)
+        }
+      }
+      loop(list, Nil).reverse
+    }
+
+    def indexOfOpt(el: T): Option[Int] = {
+      list.indexOf(el) match {
+        case -1 => None
+        case i => Some(i)
+      }
+    }
+    def indexOfOpt(el: T, from: Int): Option[Int] = {
+      list.indexOf(el, from) match {
+        case -1 => None
+        case i => Some(i)
+      }
+    }
+
   }
 }
