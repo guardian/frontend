@@ -161,6 +161,12 @@
     }
 }
 
+.article__head__comment-count {
+    @include rem((
+        height: 16px + $gs-baseline //font-size + $gs-baseline
+    ))
+}
+
 .article__dateline {
     position: relative;
     color: $c-neutral2;
