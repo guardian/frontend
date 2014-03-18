@@ -1,4 +1,4 @@
-/* global _: true, humanized_time_span: true */
+/* global _: true */
 define([
     'knockout',
     'modules/vars',

@@ -98,7 +98,7 @@ define([
             bean.on(dom.$form[0], 'submit', self.submit);
         };
 
-        self.submit = function(event) {
+        self.submit = function() {
             // TODO: FML
             setTimeout(function() {
                 // Remove any existing errors
@@ -118,7 +118,7 @@ define([
             }, 100);
         };
 
-        self.unload = function(event) {
+        self.unload = function() {
             // Listen for navigation to success page
             self.postMessage('unload');
         };

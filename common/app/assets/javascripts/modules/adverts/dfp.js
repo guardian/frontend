@@ -1,4 +1,4 @@
-/*global guardian, googletag */
+/* global googletag: false */
 define([
     'common/$',
     'bonzo',
@@ -80,7 +80,7 @@ define([
     DFP.prototype.defineSlots = function() {
         var self    = this,
             section = this.config.page.isFront ? 'networkfront' : this.config.page.section,
-            account = '/'+ this.config.page.dfpAccountId +'/'+ this.config.page.dfpServer;
+            account = '/'+ this.config.page.dfpAccountId +'/'+ this.config.page.dfpServer +'/'+ section;
 
         this.dfpAdSlots.each(function(adSlot) {
 
@@ -123,7 +123,7 @@ define([
         return mapping.build();
     };
 
-    DFP.prototype.parseAd = function(e, level, message, service, slot, reference) {
+    DFP.prototype.parseAd = function(e, level, message, service, slot) {
         var $slot = $('#'+ slot.getSlotId().getDomId());
 
         this.checkForBreakout($slot);

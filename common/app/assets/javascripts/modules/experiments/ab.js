@@ -6,8 +6,6 @@ define([
 
     //Current tests
     'common/modules/experiments/tests/aa',
-    'common/modules/experiments/tests/recommended-right-hand',
-    'common/modules/experiments/tests/geo-most-popular',
     'common/modules/experiments/tests/fronts-latest-reviews-card',
     'common/modules/experiments/tests/fronts-cartoon-card',
     'common/modules/experiments/tests/fronts-missed-card',
@@ -18,8 +16,6 @@ define([
     mediator,
     mvtCookie,
     Aa,
-    RightHandRecommendations,
-    GeoMostPopular,
     FrontsLatestReviewsCard,
     FrontsCartoonCard,
     FrontsMissedCard,
@@ -28,8 +24,6 @@ define([
 
     var TESTS = [
             new Aa(),
-            new RightHandRecommendations(),
-            new GeoMostPopular(),
             new FrontsLatestReviewsCard(),
             new FrontsCartoonCard(),
             new FrontsMissedCard(),
@@ -58,10 +52,6 @@ define([
         var participations = getParticipations();
         delete participations[test.id];
         store.local.set(participationsKey, participations);
-    }
-
-    function clearParticipations() {
-        return store.local.remove(participationsKey);
     }
 
     function cleanParticipations(config) {

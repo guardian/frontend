@@ -12,7 +12,7 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
  
   private def destinationFor(path: String) = DynamoDB.destinationFor(path)
     .filterNot { destination =>
-      linksToItself(path, destination.location) 
+      linksToItself(path, destination.location)
     }
 
   private def isArchived(path: String) = services.S3Archive.getHtml(path)
@@ -73,10 +73,10 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
      * Beware of creating redirect loops!
      */
 
-    // not blocking
+    // redirect common uses cases
     isEncoded(path).map(url => Redirect(s"http://$url", 301))
 
-    //blocking
+    // lookup redirect or archive
     .orElse { // DynamoDB lookup. This needs to happen *before* we poke around S3 for the file.
       destinationFor(normalise(path).getOrElse(path)).map {
         case services.Redirect(url) =>
@@ -87,8 +87,11 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
           logDestination(path, "archive", path)
           Cached(300)(Ok.withHeaders("X-Accel-Redirect" -> s"/s3-archive/$path"))
       }
-    }.orElse { // S3 lookup
-      //TODO this block disappears after X-Accel-Redirect above is working
+    }
+
+    // old style archive
+    // TODO this block disappears after X-Accel-Redirect above is working
+    .orElse { // S3 lookup
       isArchived(normalise(path, zeros = "00").getOrElse(path)).map {
         body => {
           val section = sectionFromR1Path(path).getOrElse("")
@@ -97,14 +100,19 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
           Cached(300)(Ok(views.html.archive(clean)).as("text/html"))
         }
       }
-    }.orElse {
+    }
+
+    .orElse {
       // needs to happen *after* s3 lookup as some old galleries
       // are still served under the URL 'gallery'
       isGallery(path).map { url =>
         logDestination(path, "gallery", url)
         Redirect(s"http://$url", 301)
       }
-    }.getOrElse{
+    }
+
+    // finally give up an serve a 404
+    .getOrElse{
       log.info(s"Not Found (404): $path")
       logGoogleBot(request)
       NotFound

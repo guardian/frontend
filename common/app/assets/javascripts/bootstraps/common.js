@@ -1,3 +1,5 @@
+/* jshint nonew: false */
+/* TODO - fix module constructors so we can remove the above jshint override */
 define([
     //Commmon libraries
     'common/$',
@@ -41,7 +43,7 @@ define([
     'common/modules/adverts/dfp',
     "common/modules/analytics/commercial/tags/container",
     "common/modules/analytics/foresee-survey",
-    "common/modules/onward/right-hand-component-factory",
+    "common/modules/onward/right-most-popular",
     "common/modules/analytics/register"
 ], function (
     $,
@@ -86,7 +88,7 @@ define([
     DFP,
     TagContainer,
     Foresee,
-    RightHandComponentFactory,
+    RightMostPopular,
     register
 ) {
 
@@ -138,7 +140,7 @@ define([
         showToggles: function() {
             var toggles = new Toggles();
             toggles.init(document);
-            mediator.on('page:common:ready', function(config, context) {
+            mediator.on('page:common:ready', function() {
                 toggles.reset();
             });
         },
@@ -154,7 +156,7 @@ define([
         },
 
         initClickstream: function () {
-            var cs = new Clickstream({filter: ["a", "button"]});
+            new Clickstream({filter: ["a", "button"]});
         },
 
         transcludeCommentCounts: function () {
@@ -187,13 +189,12 @@ define([
             ab.run(config, context);
         },
 
-        initRightHandComponent: function(config, context) {
+        initRightHandComponent: function(config) {
 
             if(config.switches.rightHandMostPopular && config.page.contentType === 'Article') {
-              var r = new RightHandComponentFactory({
-                  wordCount: config.page.wordCount,
-                  pageId: config.page.pageId
-              });
+                if(detect.getBreakpoint() !== 'mobile' && parseInt(config.page.wordCount, 10) > 500  ) {
+                    new RightMostPopular(mediator, {type: 'image', maxTrails: 5});
+                }
            }
         },
 
@@ -210,7 +211,7 @@ define([
                 Array.prototype.forEach.call(context.getElementsByTagName("video"), function(video){
                     if (!bonzo(video).hasClass('tracking-applied')) {
                         bonzo(video).addClass('tracking-applied');
-                        var v = new OmnitureMedia({
+                        new OmnitureMedia({
                             el: video,
                             config: config
                         }).init();
@@ -225,7 +226,7 @@ define([
                     if(config.switches.scrollDepth) {
                         mediator.on('scrolldepth:data', ophan.record);
 
-                        var sd = new ScrollDepth({
+                        new ScrollDepth({
                             isContent: config.page.contentType === "Article"
                         });
                     }
@@ -262,12 +263,12 @@ define([
             }
         },
 
-        loadVideoAdverts: function(config) {
+        loadVideoAdverts: function() {
             mediator.on('page:common:ready', function(config, context) {
                 if(config.switches.videoAdverts && !config.page.blockVideoAds) {
                     Array.prototype.forEach.call(context.querySelectorAll('video'), function(el) {
                         var support = detect.getVideoFormatSupport();
-                        var a = new VideoAdvert({
+                        new VideoAdvert({
                             el: el,
                             support: support,
                             config: config,
@@ -413,7 +414,7 @@ define([
         },
 
         runForseeSurvey: function(config) {
-            if(config.switches.Foresee) {
+            if(config.switches.foresee) {
                 Foresee.load();
             }
         },

@@ -669,10 +669,8 @@ object VisualTone {
   private val commentMappings = Seq(
     "tone/comment",
     "tone/letters",
-    "tone/obituaries",
     "tone/profiles",
-    "tone/editorials",
-    "tone/analysis"
+    "tone/editorials"
   )
 
   private val featureMappings = Seq(

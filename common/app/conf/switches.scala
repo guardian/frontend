@@ -125,7 +125,7 @@ object Switches extends Collections {
   val AmaaSwitch = Switch("Commercial Tags", "amaa",
     "Enable the AMAA audience segment tracking.",
     safeState = Off, sellByDate = endOfQ4)
-  
+
   val ForeseeSwitch = Switch("Commercial Tags", "foresee",
     "Enable Forsee surveys for a sample of our audience",
     safeState = Off, sellByDate = new DateMidnight(2014,5,1)) // 3 month trial
@@ -275,11 +275,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
-  val RightHandMostPopularSwitch = Switch("Feature Switches", "right-hand-most-popular",
-    "If this switch is on, a component with most popular content from around the Guardian is displayed in the article right hand column at desktop breakpoints.",
-    safeState = On, sellByDate = endOfQ4
-  )
-
   val IdentityEthicalAwardsSwitch = Switch("Feature Switches", "id-ethical-awards",
     "If this switch is on, Ethical awards forms will be available",
     safeState = Off, sellByDate = endOfQ4)
@@ -313,11 +308,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 4, 30)
   )
 
-  val DeferApplicationScriptSwitch = Switch("Feature Switches", "defer-application",
-    "If this switch is on, the application js script tag will be defer rather than async",
-    safeState = Off, sellByDate = new DateMidnight(2014, 4, 30)
-  )
-
   // A/B Test Switches
 
   val ABAa = Switch("A/B Tests", "ab-abcd",
@@ -325,19 +315,29 @@ object Switches extends Collections {
     safeState = Off, sellByDate = endOfQ4
   )
 
-  val ABRecommendedRightHand = Switch("A/B Tests", "ab-recommended-right-hand",
-    "Sets different recommendation providers against each other for the right hand component",
-    safeState = Off, sellByDate = new DateMidnight(2014, 3, 17)
-  )
-
   val TagLinking = Switch("Feature Switches", "tag-linking",
     "If this is switched on articles that have no in body links will auto link to their tags where possible",
     safeState = Off, sellByDate = endOfQ4
   )
 
-  val GeoMostPopular = Switch("A/B Tests", "ab-most-popular-in-country",
-    "If this is switched on an A/B test runs to test if locally popular articles yield better click-through.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 3, 17)
+  val ABFrontsMissedCard = Switch("A/B Tests", "ab-fronts-missed-card",
+    "If this is switched on an A/B test runs that adds a 'You may have missed' card to the alpha network fronts.",
+    safeState = Off, sellByDate = new DateMidnight(2014, 3, 25)
+  )
+
+  val ABFrontsLiveCard = Switch("A/B Tests", "ab-fronts-live-card",
+    "If this is switched on an A/B test runs that adds a 'What's happening now' card to the alpha network fronts.",
+    safeState = Off, sellByDate = new DateMidnight(2014, 3, 25)
+  )
+
+  val ABFrontsLatestReviewsCard = Switch("A/B Tests", "ab-fronts-latest-reviews-card",
+    "If this is switched on an A/B test runs that adds a 'Latest reviews' card to the alpha network fronts.",
+    safeState = Off, sellByDate = new DateMidnight(2014, 3, 25)
+  )
+
+  val ABFrontsCartoonCard = Switch("A/B Tests", "ab-fronts-cartoon-card",
+    "If this is switched on an A/B test runs that adds a 'Cartoon' card to the alpha network fronts.",
+    safeState = Off, sellByDate = new DateMidnight(2014, 3, 25)
   )
 
   // Sport Switch
@@ -438,12 +438,13 @@ object Switches extends Collections {
     EditionRedirectLoggingSwitch,
     FacebookAutoSigninSwitch,
     IdentityFormstackSwitch,
-    RightHandMostPopularSwitch,
     IdentityEthicalAwardsSwitch,
     IdentityFilmAwardsSwitch,
     ABAa,
-    ABRecommendedRightHand,
-    GeoMostPopular,
+    ABFrontsMissedCard,
+    ABFrontsLiveCard,
+    ABFrontsLatestReviewsCard,
+    ABFrontsCartoonCard,
     ToolDisable,
     ToolConfigurationDisable,
     ToolSparklines,
@@ -475,8 +476,7 @@ object Switches extends Collections {
     FrontPressJobSwitch,
     LayoutHintsSwitch,
     HelveticaEasterEggSwitch,
-    LeadAdTopPageSwitch,
-    DeferApplicationScriptSwitch
+    LeadAdTopPageSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }

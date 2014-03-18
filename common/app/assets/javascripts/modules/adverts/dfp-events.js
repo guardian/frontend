@@ -1,4 +1,4 @@
-/*global guardian, googletag */
+/* global googletag: false */
 /*
 Copyright 2013 Michael Countis
 https://github.com/mcountis/dfp-events
@@ -122,7 +122,7 @@ define(function() {
         };
 
 
-        googletag.debug_log.log = function(level,message,service,slot,reference) {
+        googletag.debug_log.log = function(level,message) {
             if(message && message.getMessageId && typeof (message.getMessageId()) === 'number') {
                 var e = 0,
                     args = Array.prototype.slice.call(arguments);

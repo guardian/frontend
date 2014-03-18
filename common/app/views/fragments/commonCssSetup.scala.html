@@ -1,5 +1,10 @@
 @(projectName: Option[String])(implicit request: RequestHeader)
-<!--[if (gt IE 9) | (IEMobile)]><!-->
+@*
+  - Include all browsers [<!-->]
+  - Exclude IE < 10 [(gt IE 9)]
+  - Include IE Mobile [|(IEMobile)]
+*@
+<!--[if (gt IE 9)|(IEMobile)]><!-->
 @if(play.Play.isDev()) {
     <link rel="stylesheet" type="text/css" href="@Static("stylesheets/head" + projectName.map("." + _).getOrElse(".default") + ".css")" />
 } else {
@@ -8,11 +13,19 @@
     </style>
 }
 <!--<![endif]-->
-<!--[if (lt IE 9) & (!IEMobile)]>
+@*
+  - Include IE < 9 [(lt IE 9)]
+  - Exclude IE Mobile [&(!IEMobile)]
+*@
+<!--[if (lt IE 9)&(!IEMobile)]>
     <link rel="stylesheet" type="text/css" href="@Static("stylesheets/webfonts.css")" />
     <link rel="stylesheet" type="text/css" href="@Static(Static.css.headOldIE(projectName))" />
 <![endif]-->
-<!--[if (IE 9) & (!IEMobile)]>
+@*
+  - Include IE 9 [(IE 9)]
+  - Exclude IE Mobile [&(!IEMobile)]
+*@
+<!--[if (IE 9)&(!IEMobile)]>
     <link rel="stylesheet" type="text/css" href="@Static(Static.css.headIE9(projectName))" />
 <![endif]-->
 
@@ -26,11 +39,28 @@
     .stars, .stars:after { background-image: url(@Static("images/star-sprite.png")); }
 </style>
 
-<!--[if (lt IE 9) & (!IEMobile)]>
+@*
+  - Include IE 9 [(IE 9)]
+  - Exclude IE Mobile [&(!IEMobile)]
+*@
+<!--[if (IE 9)&(!IEMobile)]>
+    <link rel="stylesheet" type="text/css" href="@Static("stylesheets/ie9.global.css")" />
+<![endif]-->
+
+@*
+  - Include IE < 9 [(lt IE 9)]
+  - Exclude IE Mobile [&(!IEMobile)]
+*@
+<!--[if (lt IE 9)&(!IEMobile)]>
     <link rel="stylesheet" type="text/css" href="@Static("stylesheets/old-ie.global.css")" />
 <![endif]-->
-<!--[if (IE 9) & (!IEMobile)]>
-    <link rel="stylesheet" type="text/css" href="@Static("stylesheets/ie9.global.css")" />
+
+@*
+  - Include IE Mobile [IEMobile]
+  - Note: does not include IE10 on Windows Phone 8 (which does not support conditional comments)
+*@
+<!--[if IEMobile]>
+    <link rel="stylesheet" type="text/css" href="@Static("stylesheets/global.css")" />
 <![endif]-->
 
 <style class="initial" data-cache-name="WebEgyptian" data-cache-file-woff="@Static("fonts/WebEgyptian.woff.json")" data-cache-file-ttf="@Static("fonts/WebEgyptian.ttf.json")"></style>

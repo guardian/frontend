@@ -1,19 +1,20 @@
-package common 
+package common
 
-import model.Trail
+import model.{Content, Article, Trail}
 import views.support.{ImgSrc, cleanTrailText}
 import play.api.mvc.RequestHeader
 import scala.collection.JavaConverters._
 import org.joda.time.DateTime
 import java.io.StringWriter
+import org.jsoup.Jsoup
 
-object TrailsToRss { 
+object TrailsToRss {
   def apply(title: Option[String], trails: Seq[Trail])(implicit request: RequestHeader): String = {
 
     import com.sun.syndication.feed.synd._
     import com.sun.syndication.io.{FeedException, SyndFeedOutput}
-   
-    val feedTitle = s"${title.getOrElse("")} | theguardian.com"
+
+    val feedTitle = title.map(t => s"$t | The Guardian").getOrElse("The Guardian")
 
     // Feed: image
     val image = new SyndImageImpl
@@ -31,27 +32,33 @@ object TrailsToRss {
     feed.setLink("http://www.theguardian.com")
     feed.setLanguage("en-gb")
     feed.setCopyright(s"Guardian News and Media Limited or its affiliated companies. All rights reserved. ${DateTime.now.getYear}.")
-    feed.setImage(image) 
+    feed.setImage(image)
     feed.setPublishedDate(DateTime.now.toDate)
     feed.setEncoding("utf-8")
 
     // Feed: entries
-    val entries = trails.map{ trail => 
-      
+    val entries = trails.map{ trail =>
+
       // Entry: categories
-      val categories = trail.keywords.map{ tag => 
+      val categories = trail.keywords.map{ tag =>
         val category = new SyndCategoryImpl
         category.setName(tag.name)
-        category.setTaxonomyUri(tag.webUrl) 
+        category.setTaxonomyUri(tag.webUrl)
         category
       }.asJava
 
       // Entry: description
       val description = new SyndContentImpl
-      description.setValue(trail.trailText.map{ text =>
-        cleanTrailText(text)(Edition(request)).toString()
-      }.getOrElse(""))
-      
+      val standfirst = trail match {
+          case c: Content => c.standfirst.getOrElse("")
+          case _ => ""
+        }
+      val intro = trail match {
+          case a: Article => Jsoup.parseBodyFragment(a.body).select("p:lt(2)").toArray.map(_.toString).mkString("")
+          case _ => ""
+        }
+      description.setValue(standfirst + intro)
+
       // Entry
       val entry = new SyndEntryImpl
       entry.setTitle(trail.headline)
@@ -65,7 +72,7 @@ object TrailsToRss {
     }.asJava
 
     feed.setEntries(entries)
-    
+
     val writer = new StringWriter()
     val output = new SyndFeedOutput()
     output.output(feed, writer)

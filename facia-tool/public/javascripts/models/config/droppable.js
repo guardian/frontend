@@ -12,25 +12,24 @@ define([
 ) {
     function init() {
         droppable({
-            newItemConstructor: function(id) {
-                return findFirstById(vars.model.collections, id);
+            newItemsConstructor: function(id) {
+                return [findFirstById(vars.model.collections, id)];
             },
 
-            newItemValidator: function(newItem) {
+            newItemsValidator: function(newItems) {
                 var defer = $.Deferred();
 
-                defer[newItem? 'resolve' : 'reject']();
+                defer[newItems[0]? 'resolve' : 'reject']();
 
                 return defer.promise();
             },
 
-            newItemPersister: function(newItem, sourceItem, sourceList, targetList, id, position, isAfter) {
-
-                if (newItem.parents.indexOf(targetList.parent) < 0) {
-                    newItem.parents.push(targetList.parent);
+            newItemsPersister: function(newItems, sourceItem, sourceList, targetList) {
+                if (newItems[0].parents.indexOf(targetList.parent) < 0) {
+                    newItems[0].parents.push(targetList.parent);
                 }
 
-                vars.model.save(newItem);
+                vars.model.save(newItems[0]);
             }
         });
     }

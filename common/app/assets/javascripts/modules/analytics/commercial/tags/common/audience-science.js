@@ -27,7 +27,7 @@ define([
                 }
             }
         };
-        window.DM_onSegsAvailable = function(segments, id) {
+        window.DM_onSegsAvailable = function(segments) {
             storage.local.set("gu.ads.audsci", processSegments(segments));
             // Kill any legacy cookies
             Cookies.cleanUp(["rsi_segs"]);

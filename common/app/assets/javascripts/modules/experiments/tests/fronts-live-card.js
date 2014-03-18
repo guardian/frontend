@@ -17,27 +17,27 @@ define([
     return function() {
 
         this.id = 'FrontsLiveCard';
-        this.start = '2014-02-28';
-        this.expiry = '2014-03-08';
+        this.start = '2014-03-17';
+        this.expiry = '2014-03-24';
         this.author = 'Darren Hurley';
         this.description = 'Add a live card to the news container';
-        this.audience = 0.1;
-        this.audienceOffset = 0.0;
+        this.audience = 0.04;
+        this.audienceOffset = 0.08;
         this.successMeasure = 'Click-through for the page as a whole.';
         this.audienceCriteria = 'Users who are not on desktop or bigger, on the network front.';
         this.dataLinkNames = 'card | live | trail | {{index}}';
         this.idealOutcome = 'Click-through for the front increases, i.e. the card does not detract from the page\'s CTR.';
         this.canRun = function(config) {
-            return ['desktop', 'wide'].indexOf(detect.getBreakpoint()) > -1 && config.page.isFront && config.page.pageId === '';
+            return ['desktop', 'wide'].indexOf(detect.getBreakpoint()) > -1 && /^\w{2}-alpha$/.test(config.page.pageId);
         };
         this.variants = [
             {
                 id: 'control',
-                test: function(context, config) { }
+                test: function() { }
             },
             {
                 id: 'live',
-                test: function (context, config) {
+                test: function () {
                     ajax({
                         url        : '/tagged.json?tag=tone/minutebyminute',
                         type       : 'json',
@@ -49,7 +49,7 @@ define([
                                         '<li data-link-name="trail | {{index}}" class="card__item">' +
                                             '<a href="{{url}}" class="card__item__link" data-link-name="article">' +
                                                 '<h4 class="card__item__title">' +
-                                                    ((result.liveBloggingNow === 'true') ?
+                                                    ((result.isLive) ?
                                                         '<span class="item__live-indicator">Live</span> ' : '') +
                                                     '{{headline}}' +
                                             '   </h4>' +

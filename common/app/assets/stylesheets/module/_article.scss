@@ -161,6 +161,15 @@
     }
 }
 
+.article__head__comment-count {
+    @include rem((
+        height: 16px + $gs-baseline //font-size + $gs-baseline
+    ));
+    @include mq(tablet) {
+        display: none;
+    }
+}
+
 .article__dateline {
     position: relative;
     color: $c-neutral2;
@@ -191,8 +200,9 @@
 
     @include mq(leftCol) {
         @include rem((
+            height: $gs-row-height,
             padding-top: 2px,
-            margin-bottom: $gs-baseline
+            padding-bottom: $gs-baseline
         ));
         border-top: 1px dotted $c-neutral5;
 
@@ -350,6 +360,7 @@
 }
 
 .byline-img {
+    position: relative;
     width: gs-span(1);
     height: 60px; //Intentionally off grid
     @include rem((
@@ -358,7 +369,7 @@
     overflow: hidden;
     @include rounded-corners(50%);
     background-color: $c-neutral7;
-    
+
     @include mq(leftCol) {
         width: gs-span(2);
         height: gs-span(2); //This is intentionally square
@@ -367,9 +378,18 @@
             margin-bottom: $gs-baseline,
         ));
     }
+}
 
-    img {
-        width: 100%;
+.byline-img__img {
+    position: absolute;
+    width: auto;
+    //This centres the image within its container
+    height: 110%;
+    bottom: -6px;
+    left: -15%;
+
+    @include mq(leftCol) {
+        bottom: -14px;
     }
 }
 

@@ -7,7 +7,7 @@ var $$FSR = {
    'sessionreplay': true,
    'auto' : true,
    'encode' : true,
-   'files': '/assets/javascripts/vendor/foresee/',
+   'files': guardian.config.page.assetsPath + 'javascripts/vendor/foresee/',
    // needs to be set when foresee-transport.swf is not located at 'files'
    //'swf_files': '__swf_files_'
    'id': 'fdIXz/UlLcgRJ+Qwv25S0Q==',

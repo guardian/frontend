@@ -43,13 +43,13 @@ function (
 
         listen: function() {
             mediator.addListeners({
-                'window:resize': function(e) {
+                'window:resize': function() {
                     images.upgrade();
                 },
-                'window:orientationchange': function(e) {
+                'window:orientationchange': function() {
                     images.upgrade();
                 },
-                'ui:images:upgrade': function(e) {
+                'ui:images:upgrade': function() {
                     images.upgrade();
                 }
             });

@@ -27,7 +27,7 @@ define(['modules/vars'], function(vars) {
             url: vars.CONST.apiBase + '/edits',
             type: 'POST',
             data: JSON.stringify(edits)
-        }).fail(function(xhr) {
+        }).fail(function() {
             _.each(collections, function(collection) { collection.load(); });
         }).done(function(resp) {
             _.each(collections, function(collection) { collection.populate(resp[collection.id]); });

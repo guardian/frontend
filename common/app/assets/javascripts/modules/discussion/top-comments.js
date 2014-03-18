@@ -137,8 +137,7 @@ TopComments.prototype.fetch = function(parent) {
 
 /** @override */
 TopComments.prototype.ready = function() {
-    var initialShow = this.options.initialShow,
-        self = this;
+    var self = this;
 
     // Ease of use
     this.user = this.options.user;
@@ -150,7 +149,7 @@ TopComments.prototype.ready = function() {
     var maxHeight = bonzo.viewport().height * 0.66;
     maxHeight = Math.max(maxHeight, 200);
     maxHeight = Math.min(maxHeight, 800);
-    
+
     if (this.commentsContainer.offsetHeight > maxHeight) {
         this.truncateFeatured(parseInt(maxHeight, 10));
         this.on('click', this.getClass('showMoreFeaturedButton'), this.showAllFeatured);
@@ -159,7 +158,7 @@ TopComments.prototype.ready = function() {
     var heading = document.querySelector('.js-top-comments');
 
     heading.childNodes[0].nodeValue = self.options.sectionHeading;
-    
+
     if (self.topCommentsAmount === 1) {
         heading.childNodes[0].nodeValue = heading.childNodes[0].nodeValue.replace(/s\b/, '');
     } else {
@@ -177,7 +176,7 @@ TopComments.prototype.bindCommentEvents = function() {
         this.on('click', this.getClass('commentReply'), this.replyToComment);
     }
 };
- 
+
 TopComments.prototype.truncateFeatured = function(maxHeight){
     this.hasHiddenComments = true;
     $('.d-image-fade', this.parent).removeClass('u-h');

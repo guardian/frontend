@@ -147,8 +147,7 @@ CommentBox.prototype.ready = function() {
         throw new Error('CommentBox: You need to set the "data-discussion-key" on your element');
     }
 
-    var commentBody = this.getElem('body'),
-        submitButton = this.getElem('submit');
+    var commentBody = this.getElem('body');
 
     this.setFormState();
 
@@ -172,7 +171,6 @@ CommentBox.prototype.ready = function() {
  */
 CommentBox.prototype.postComment = function(e) {
     var self = this,
-        body = this.getElem('body'),
         comment = {
             body: this.getElem('body').value
         };
@@ -313,14 +311,14 @@ CommentBox.prototype.clearErrors = function() {
 /**
  * @param {Event=} e (optional)
  */
-CommentBox.prototype.setExpanded = function(e) {
+CommentBox.prototype.setExpanded = function() {
     this.setState('expanded');
 };
 
 /**
  * @param {Event=} e (optional)
  */
-CommentBox.prototype.verificationEmailSuccess = function(e) {
+CommentBox.prototype.verificationEmailSuccess = function() {
     this.clearErrors();
     this.error('EMAIL_VERIFIED');
 };
@@ -328,7 +326,7 @@ CommentBox.prototype.verificationEmailSuccess = function(e) {
 /**
  * @param {Event=} e (optional)
  */
-CommentBox.prototype.verificationEmailFail = function(e) {
+CommentBox.prototype.verificationEmailFail = function() {
     this.clearErrors();
     this.error('EMAIL_VERIFIED_FAIL');
 };
@@ -336,7 +334,7 @@ CommentBox.prototype.verificationEmailFail = function(e) {
 /**
  * @param {Event=} e (optional)
  */
-CommentBox.prototype.cancelComment = function(e) {
+CommentBox.prototype.cancelComment = function() {
     if (this.options.state === 'response') {
         this.destroy();
     } else {

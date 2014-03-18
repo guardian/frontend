@@ -1,4 +1,3 @@
-/*global guardian */
 define([
     'common/$',
     'common/common',
@@ -32,7 +31,7 @@ define([
         inlineAdTemplate: '<div class="ad-slot__dfp ad-slot--inline" data-name="%slot%" data-mobile="300,50" data-tabletportrait="300,250"><div id="inline-ad-slot__%slot%" class="ad-container"></div></div>'
     };
 
-    ArticleBodyAdverts.prototype.generateInlineAdSlot = function(id, i) {
+    ArticleBodyAdverts.prototype.generateInlineAdSlot = function(id) {
         var template = this.config.inlineAdTemplate;
 
         return bonzo(bonzo.create(template.replace(/%slot%/g, id)));

@@ -9,7 +9,7 @@ define([], function () {
         this.audience = 0.25;
         this.audienceOffset = 0;
         this.description = 'A/A test to prove we bucket users evenly';
-        this.canRun = function(config) {
+        this.canRun = function() {
             return true;
         };
         this.variants = [
@@ -45,7 +45,7 @@ define([], function () {
             }
         ];
     };
-    
+
     return Aa;
 
 });

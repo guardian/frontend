@@ -14,7 +14,7 @@ object TaggedContentController extends Controller with Related with Logging with
   def renderJson(tag: String) = Action.async { implicit request =>
     tagWhitelist.find(_ == tag).map { tag =>
       lookup(tag, Edition(request)) map {
-        case Nil    => JsonNotFound()
+        case Nil    => Cached(300) { JsonNotFound() }
         case trails => render(trails)
       }
     } getOrElse(Future { BadRequest })
@@ -28,7 +28,8 @@ object TaggedContentController extends Controller with Related with Logging with
           ("webUrl", trail.webUrl),
           ("sectionName", trail.sectionName),
           ("thumbnail", trail.thumbnailPath),
-          ("starRating", trail.starRating)
+          ("starRating", trail.starRating),
+          ("isLive", trail.isLive)
         )
       })
     )

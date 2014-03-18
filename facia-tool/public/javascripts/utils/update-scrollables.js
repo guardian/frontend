@@ -1,4 +1,3 @@
-/* global _: true */
 define([], function() {
     return function () {
         var height = window.innerHeight;

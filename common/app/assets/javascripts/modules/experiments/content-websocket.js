@@ -29,7 +29,7 @@ define([
             }
         };
 
-        var disconnectEvent = function(event) {
+        var disconnectEvent = function() {
             chatSocket.close();
             connect(config);
         };

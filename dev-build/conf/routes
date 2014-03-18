@@ -118,6 +118,7 @@ GET         /analytics/pageviews                                                
 GET         /analytics/browsers                                                                                      controllers.admin.AnalyticsController.browsers()
 GET         /analytics/abtests                                                                                       controllers.admin.AnalyticsController.abtests()
 GET         /metrics/loadbalancers                                                                                   controllers.admin.DashboardController.renderDashboard()
+GET         /metrics/googlebot/404                                                                                   controllers.admin.DashboardController.renderGooglebot404s()
 GET         /analytics/confidence                                                                                    controllers.admin.AnalyticsConfidenceController.renderConfidence()
 GET         /metrics/fastly                                                                                          controllers.admin.FastlyController.renderFastly()
 GET         /metrics/errors                                                                                          controllers.admin.DashboardController.renderErrors()
@@ -168,20 +169,23 @@ GET         /commercial/books/book/*pageId                                      
 # Onward journeys
 GET         /onward/recently-published                                                                               controllers.LatestContentController.recentlyPublished()
 
+
 # Facia
 GET         /                                                                                                        controllers.FaciaController.editionRedirect(path = "")
 GET         /$path<(culture|sport|commentisfree|business|money)>                                                     controllers.FaciaController.editionRedirect(path)
-GET         /$path<(us|uk|au|us-alpha|uk-alpha|au-alpha)?>                                                           controllers.FaciaController.renderEditionFront(path)
-GET         /$path<(us|uk|au|us-alpha|uk-alpha|au-alpha)?>.json                                                      controllers.FaciaController.renderEditionFrontJson(path)
-GET         /$path<(\w+/)?([\d\w-]*)>                                                                                controllers.FaciaController.renderEditionSectionFront(path)
-GET         /$path<(\w+/)?([\d\w-]*)>.json                                                                           controllers.FaciaController.renderEditionSectionFrontJson(path)
 
 #Facia Press
-GET         /pressed/*path                                                                                           controllers.FaciaController.renderFaciaPress(path)
+GET         /pressed/*path                                                                                           controllers.FaciaController.renderFrontPress(path)
 
-GET         /collection/$id<[\w\d-/]*>/rss                                                                           controllers.FaciaController.renderCollectionRss(id)
-GET         /collection/$id<[\w\d-/]*>                                                                               controllers.FaciaController.renderEditionCollection(id)
-GET         /collection/$id<[\w\d-/]*>.json                                                                          controllers.FaciaController.renderEditionCollectionJson(id)
+GET         /collection/*id/rss                                                                                      controllers.FaciaController.renderCollectionRss(id)
+GET         /collection/*id.json                                                                                     controllers.FaciaController.renderCollectionJson(id)
+GET         /collection/*id                                                                                          controllers.FaciaController.renderCollection(id)
+
+# Editionalised pages
+GET         /$path<[^/]+(/[^/]+)?>/rss                                                                               controllers.FaciaController.renderFrontRss(path)
+GET         /$path<[^/]+(/[^/]+)?>.json                                                                              controllers.FaciaController.renderFrontJson(path)
+GET         /$path<[^/]+(/[^/]+)?>                                                                                   controllers.FaciaController.renderFront(path)
+
 
 # Applications
 GET         /sections                                                                                                controllers.SectionsController.renderSections()
@@ -196,9 +200,6 @@ GET         /$path<[\w\d-]*(/[\w\d-]*)?/(cartoon|graphic|picture)/.*>           
 
 GET         /$path<[\w\d-]*(/[\w\d-]*)?/video/.*>.json                                                               controllers.VideoController.renderJson(path)
 GET         /$path<[\w\d-]*(/[\w\d-]*)?/video/.*>                                                                    controllers.VideoController.render(path)
-
-
-GET         /$leftSide<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>+$rightSide<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>                controllers.IndexController.renderCombiner(leftSide, rightSide)
 
 GET         /$path<[\w\d-]*(/[\w\d-]*)?/(interactive|ng-interactive)/.*>.json                                        controllers.InteractiveController.renderInteractiveJson(path)
 GET         /$path<[\w\d-]*(/[\w\d-]*)?/(interactive|ng-interactive)/.*>                                             controllers.InteractiveController.renderInteractive(path)
