@@ -144,9 +144,9 @@
     -webkit-font-smoothing: antialiased;
 }
 @mixin fs-textsans($level, $size-only: false) {
-    $text: nth($fs-text, $level);
+    $textsans: nth($fs-textsans, $level);
 
-    @include font-size(nth($text, 1), nth($text, 2));
+    @include font-size(nth($textsans, 1), nth($textsans, 2));
 
     @if $size-only == false {
         @include f-textsans;
