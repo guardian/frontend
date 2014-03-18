@@ -36,7 +36,7 @@ define([
                 'webPublicationDate']);
 
             this.fields = asObservableProps([
-                    'headline',
+                'headline',
                 'trailText',
                 'thumbnail']);
 
