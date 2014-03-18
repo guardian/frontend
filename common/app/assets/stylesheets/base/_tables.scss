@@ -26,14 +26,17 @@ td {
     border-top: 2px solid $c-newsAccent;
     color: $c-neutral1;
 
-    caption {
+    caption,
+    .table__caption {
         @include fs-header(2);
         @include rem((
             padding-top: $gs-baseline/4,
             padding-bottom: $gs-baseline
         ));
+        
         border-top: 1px dotted $c-neutral5;
         color: $c-neutral1;
+        font-weight: normal;
         text-align: left;
     }
 
