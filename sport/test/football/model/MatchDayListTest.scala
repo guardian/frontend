@@ -3,6 +3,7 @@ package football.model
 import org.scalatest._
 import implicits.Football
 import pa.FootballMatch
+import org.joda.time.{Duration, DateTimeUtils}
 
 
 class MatchDayListTest extends FreeSpec with ShouldMatchers with MatchTestData with Football with OptionValues {
@@ -20,6 +21,14 @@ class MatchDayListTest extends FreeSpec with ShouldMatchers with MatchTestData w
       matchDates should equal(matchDates.sortWith((match1Date, match2Date) => match1Date.isBefore(match2Date)))
     }
 
+    "should group matches correctly by date" in {
+      matches.matchesGroupedByDateAndCompetition.map(_._1) should equal(List(today))
+    }
+
+    "should subgroup matches correctly league, with the leagues ordered correctly" in {
+      val (_, competitionMatches1) = matches.matchesGroupedByDateAndCompetition(0)
+      competitionMatches1.map { case (comp, fMatches) => comp.id } should equal(List("100", "500"))
+    }
 
     "should show all matches happening today" in {
       matches.relevantMatches.foreach { case (fMatch, _) =>
@@ -37,9 +46,21 @@ class MatchDayListTest extends FreeSpec with ShouldMatchers with MatchTestData w
 
     "matches should have the correct, populated, competition alongside" in {
       matches.relevantMatches.foreach { case (fMatch, comp) =>
-        if (fMatch.id.toInt < 30) comp.id should equal("1")
-        else comp.id should equal("2")
+        if (fMatch.id.toInt < 30) comp.id should equal("500")
+        else comp.id should equal("100")
       }
     }
+  }
+
+  "if there are no matches today" - {
+    DateTimeUtils.setCurrentMillisFixed(today.minusDays(20).getMillis)
+
+    val matches = new MatchDayList(competitions)
+
+    "should be empty" in {
+      matches.relevantMatches.size should equal(0)
+    }
+
+    DateTimeUtils.setCurrentMillisSystem()
   }
 }

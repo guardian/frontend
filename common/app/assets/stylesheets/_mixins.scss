@@ -349,7 +349,7 @@
 }
 
 // icon button (circular element containing an offset/centered icon)
-@mixin icon-button($buttonSize, $iconOffsetX, $iconOffsetY: "") {
+@mixin icon-button($buttonSize, $iconOffsetX, $iconOffsetY: null) {
     width: $buttonSize;
     height: $buttonSize;
     @include rounded-corners($buttonSize);
