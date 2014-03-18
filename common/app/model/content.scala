@@ -134,7 +134,6 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   }
   override def openGraph: List[(String, Any)] = super.openGraph ++ List(
     "og:title" -> webTitle,
-    "og:url" -> webUrl,
     "og:description" -> trailText.map(StripHtmlTagsAndUnescapeEntities(_)).getOrElse("")
   )
 
