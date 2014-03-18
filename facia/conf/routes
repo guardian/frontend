@@ -6,7 +6,7 @@
 # For dev machines
 GET        /assets/*path                                           dev.DevAssetsController.at(path)
 
-GET        /humans.txt                                                  controllers.Assets.at(path="/public", file="humans.txt")
+GET        /humans.txt                                             controllers.Assets.at(path="/public", file="humans.txt")
 
 # Editionalised redirects
 GET        /                                                       controllers.FaciaController.editionRedirect(path = "")
