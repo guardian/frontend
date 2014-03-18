@@ -67,6 +67,9 @@ define([
     /** @type {Number} in seconds */
     Component.prototype.updateEvery = 60;
 
+    /** @type {Number} id of autoupdate timer */
+    Component.prototype.t = null;
+
 
     /**
      * Uses the this.componentClass
@@ -171,20 +174,19 @@ define([
      * Check if we should auto update, if so, do so
      */
     Component.prototype._autoupdate = function() {
-        var self = this,
-            t;
+        var self = this;
 
         function update() {
             self._fetch().then(function(resp) {
                 self.autoupdate(bonzo.create(resp[self.responseDataKey])[0]);
                 if (self.autoupdated) {
-                    t = setTimeout(update, self.updateEvery*1000);
+                    self.t = setTimeout(update, self.updateEvery*1000);
                 }
             });
         }
 
         if (this.autoupdated) {
-            t = setTimeout(update, this.updateEvery*1000);
+            this.t = setTimeout(update, this.updateEvery*1000);
         }
     };
 
@@ -320,6 +322,11 @@ define([
             bonzo(this.elem).remove();
             delete this.elem;
         }
+
+        clearTimeout(this.t);
+        this.t = null;
+        this.autoupdated = false;
+
         this.detach();
         this.destroyed = true;
     };
