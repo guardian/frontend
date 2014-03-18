@@ -1,0 +1,135 @@
+/* TEAM */
+
+Head of User Experience: Nick Haley
+Twitter: @twobobswerver
+From: London, England
+
+Developer Manager: Matt Chadburn
+Twitter: @commuterjoy
+
+Discussion Developer/Desperado: James Gorrie
+Twitter: @jamesgorrie
+From: KwaZulu-Natal, South Africa
+Location: London, UK
+
+Product Manager: Chris Mulholland
+LinkedIn: chrismulholland
+Twitter: @kungpochicken
+From: Glasgow, Scotland
+
+Design and art direction: Katrina Stubbings
+Twitter: @vilderness
+Location: London, UK
+
+Engineer (Tech Lead): Grant Klopper
+Twitter: @grantklopper
+From: Durban, South Africa
+Location: London, UK
+
+Client-side Engineer: Patrick Hamann
+Twitter: @patrickhamann
+From: London, UK
+
+Developer: Kaelig Deloumeau-Prigent
+Twitter: @kaelig
+From: Rennes, Brittany, France
+
+Engineer: Richard Nguyen
+Twitter: @Sherbet_Noin
+From: London, UK
+
+Engineer (Tech lead): Ken Lim
+Twitter: @kenlim
+Location: London, UK
+
+Designer and front-end developer: Paul Lloyd
+Twitter: @paulrobertlloyd
+From: Brighton, UK
+
+Developer: Stephan Fowler
+Twitter: @stephanfowler
+From: London, UK
+
+User Experience Architect: Alastair Jardine
+Twitter: @aj_ux
+From: London, UK
+
+Developer: Ben James
+Twitter: @bmjames
+From: Liverpool, UK
+
+QA: Michael McNamara
+Twitter: @m_w_mcnamara
+From: Melbourne, Aus
+
+Software Engineer in Test: Gideon Goldberg
+Twitter: @gidsg
+From: London, UK, Earth, the Universe
+
+Developer Manager (ID/Discussion): Nick Smith
+From: London, UK
+
+Agile Programme Manager: Nichola Johnson
+linkedin: nicholajohnson
+Location: London, UK
+
+Developer: Matt Andrews
+Twitter: @mattpointblank
+Location: London, UK
+
+Software Engineer in Test: Marc Jones
+Twitter: @marcpjones
+LinkedIn: jonesmarc
+Location: London, UK
+
+Developer: Darren Hurley
+Twitter: no
+Favourite John Carpenter film: The Thing
+From: London, England
+
+Product Manager: Cantlin Ashrowan
+Twitter: @cantlin
+Location: London, UK
+
+Developer: Matt Osborn
+Location: London, UK
+
+Front-end Developer: Chris Finch
+Twitter: @chrisfinchy
+Linkedin: chrisfinch
+From: Brighton, England
+Location: London, England
+
+Developer: Max Harlow
+Twitter: @maxharlow
+From: London, UK
+
+Developer: Robert Berry
+Twitter: @yrrebjr
+From: Manchester, UK
+
+Software Architect/Hacker: Phil Wills
+Twitter: @philwills
+
+Developer (Tech Lead): Jenny Sivapalan
+Twitter: @jenny_sivapalan
+From: London, UK
+
+Developer: Mariot Chauvin
+Twitter: @mchv
+
+Developer: Nicolas Long
+Twitter: @room271
+Website: http://room271.net
+From: London, UK
+
+Developer: Justin Pinner
+Twitter: @_JustinPinner
+
+QA: Troy Harris
+LinkedIn: troyharris
+Twitter: @troyharrisoz
+From: Wollongong, Australia
+
+Agile Project Manager: Huma Islam
+From: London, UK
