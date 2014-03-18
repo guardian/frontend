@@ -10,20 +10,21 @@ function (
     cache
 ){
     function validateItem (item) {
-        var data = cache.get('contentApi', item.id),
+        var result = cache.get('contentApi', item.id),
             defer = $.Deferred();
 
-        if(data) {
-            populate(data, item);
-            defer.resolve();
+        if(result) {
+            populate(result, item);
+            defer.resolve(result);
         } else {
             fetchData([item.id])
             .done(function(result){
-                if (result.length === 1) {
-                    result = result[0];
+                result = result.length === 1 ? result[0] : undefined;
+
+                if (result) {
                     cache.put('contentApi', result.id, result);
                     populate(result, item);
-                    defer.resolve();
+                    defer.resolve(result);
                 } else {
                     defer.reject();
                 }
@@ -38,9 +39,9 @@ function (
         var ids = [];
 
         items.forEach(function(item){
-            var data = cache.get('contentApi', item.id);
-            if(data) {
-                populate(data, item);
+            var result = cache.get('contentApi', item.id);
+            if(result) {
+                populate(result, item);
             } else {
                 ids.push(item.id);
             }

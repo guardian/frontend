@@ -152,7 +152,7 @@ define([
                         removeById(targetList.items, id);
                         alertBadContent(id);
                     })
-                    .done(function() {
+                    .done(function(result) {
                         if (_.isFunction(targetList.reflow)) {
                             targetList.reflow();
                         }
@@ -161,7 +161,7 @@ define([
                             return;
                         }
 
-                        opts.newItemsPersister(newItems, sourceItem, sourceList, targetList, id, position, isAfter);
+                        opts.newItemsPersister(newItems, sourceItem, sourceList, targetList, id, position, isAfter, result);
                     });
                 }, false);
             }
