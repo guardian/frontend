@@ -295,7 +295,6 @@
             }
 
             &:before {
-                top: 0;
                 @include rem((
                     font-size: 50px,
                     left: -20px
