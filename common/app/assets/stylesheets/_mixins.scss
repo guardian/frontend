@@ -139,17 +139,17 @@
     }
 }
 
-@mixin f-text {
+@mixin f-textsans {
     font-family: $text-sans;
     -webkit-font-smoothing: antialiased;
 }
-@mixin fs-text($level, $size-only: false) {
+@mixin fs-textsans($level, $size-only: false) {
     $text: nth($fs-text, $level);
 
     @include font-size(nth($text, 1), nth($text, 2));
 
     @if $size-only == false {
-        @include f-text;
+        @include f-textsans;
     }
 }
 
