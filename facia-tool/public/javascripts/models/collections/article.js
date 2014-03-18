@@ -32,13 +32,13 @@ define([
             this.uneditable = opts.uneditable;
 
             this.props = asObservableProps([
+                'webUrl',
                 'webPublicationDate']);
 
             this.fields = asObservableProps([
-                'headline',
+                    'headline',
                 'trailText',
-                'thumbnail',
-                'shortId']);
+                'thumbnail']);
 
             this.meta = asObservableProps([
                 'updatedAt',

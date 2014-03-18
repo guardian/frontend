@@ -2,12 +2,14 @@
 define([
     'modules/authed-ajax',
     'modules/vars',
-    'modules/cache'
+    'modules/cache',
+    'utils/internal-content-code'
 ],
 function (
     authedAjax,
     vars,
-    cache
+    cache,
+    icc
 ){
     function validateItem (item) {
         var result = cache.get('contentApi', item.id),
@@ -22,7 +24,7 @@ function (
                 result = result.length === 1 ? result[0] : undefined;
 
                 if (result) {
-                    cache.put('contentApi', result.id, result);
+                    cache.put('contentApi', icc(result), result);
                     populate(result, item);
                     defer.resolve(result);
                 } else {
@@ -49,10 +51,14 @@ function (
 
         fetchData(ids)
         .done(function(results){
-            results.forEach(function(article){
-                cache.put('contentApi', article.id, article);
+            results.forEach(function(article) {
+                var id = icc(article);
+
+                if (!id) { return; }
+
+                cache.put('contentApi', id, article);
                 _.filter(items, function(item){
-                    return item.id === article.id;
+                    return item.id === id || item.id === article.id;
                 }).forEach(function(item){
                     populate(article, item);
                 });
@@ -73,7 +79,7 @@ function (
             defer = $.Deferred();
 
         if (ids.length) {
-            apiUrl = vars.CONST.apiSearchBase + "/search?page-size=50&format=json&show-fields=all";
+            apiUrl = vars.CONST.apiSearchBase + "/search?format=json&show-fields=all";
             apiUrl += "&ids=" + ids.map(function(id){
                 return encodeURIComponent(id);
             }).join(',');

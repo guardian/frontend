@@ -1,12 +1,14 @@
 /* global _: true */
 define([
     'knockout',
+    'utils/internal-content-code',
     'utils/parse-query-params',
     'utils/url-abs-path',
     'utils/remove-by-id',
     'models/group'
 ], function(
     ko,
+    icc,
     parseQueryParams,
     urlAbsPath,
     removeById,
@@ -156,7 +158,9 @@ define([
                             return;
                         }
 
-                        opts.newItemsPersister(newItems, sourceItem, sourceList, targetList, id, position, isAfter, result);
+                        id = icc(result) || id;
+
+                        opts.newItemsPersister(newItems, sourceItem, sourceList, targetList, id, position, isAfter);
                     });
                 }, false);
             }
