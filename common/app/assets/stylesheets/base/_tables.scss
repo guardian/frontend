@@ -14,7 +14,7 @@ td {
     th,
     td,
     thead td {
-        @include fs-data(4);
+        @include fs-data(4, true);
         @include rem((
             padding: $table-baseline*2
         ));
@@ -64,6 +64,13 @@ td {
     }
 
     @include mq($to: tablet) { @include table--small; }
+    @include mq($to: desktop) {
+        th,
+        td,
+        thead td {
+            @include fs-data(4, true);
+        }
+    }
 }
 
 .table--small {
