@@ -774,12 +774,12 @@ $c-replyText: $c-body;
     }
     .d-comment__recommend {
         @include rem((
-            top: 15px,
-            right: 16px
+            top: $gs-baseline * 1.25,
+            right: $gs-gutter * 0.8
         ));
         @include mq(rightCol) {
             @include rem((
-                right: 12px
+                right: $gs-gutter * 0.6
             ));
         }
     }
