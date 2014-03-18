@@ -62,7 +62,7 @@ define([
         });
 
         it("Should find a DFP ad slot", function() {
-            dfpAds.load();
+            dfpAds.init();
             expect(dfpAds.dfpAdSlots.length).toBe(2);
         });
 
@@ -74,9 +74,9 @@ define([
                     text = 'This is a test iframe with HTML content',
                     html = '<div class="breakout__html"><div class="dfp-iframe-content">'+ text +'</div></div>';
 
-                dfpAds.load();
+                dfpAds.init();
                 createTestIframe(id, html);
-                dfpAds.checkForBreakout(null, null, null, null, slot, null);
+                dfpAds.checkForBreakout($('#'+ slot.getSlotId().getDomId()));
 
                 expect($('.dfp-iframe-content').length).toBe(1);
                 expect($('.dfp-iframe-content').text()).toBe(text);
@@ -88,9 +88,9 @@ define([
                     slot = generateSlotFunction(id),
                     html = '<script class="breakout__script">window.dfpModuleTestVar = "'+ str +'"</script>';
 
-                dfpAds.load();
+                dfpAds.init();
                 createTestIframe(id, html);
-                dfpAds.checkForBreakout(null, null, null, null, slot, null);
+                dfpAds.checkForBreakout($('#'+ slot.getSlotId().getDomId()));
 
                 expect(window.dfpModuleTestVar).toBe(str);
             });

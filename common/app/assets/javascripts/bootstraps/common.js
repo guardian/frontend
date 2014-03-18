@@ -248,10 +248,12 @@ define([
                     var articleBodyAdverts = new ArticleBodyAdverts();
 
                     articleBodyAdverts.init();
+                    dfpAds.init();
 
                     resizeCallback = function(e) {
                         hasBreakpointChanged(function() {
                             articleBodyAdverts.reload();
+                            dfpAds.reload();
                             Adverts.reload();
                             mediator.emit('modules:adverts:reloaded');
                         });
@@ -261,15 +263,7 @@ define([
                 mediator.on('page:common:deferred:loaded', function(config, context) {
                     Adverts.init(config, context);
                 });
-                mediator.on('modules:adverts:docwrite:loaded', function() {
-
-                    if(config.switches.dfpAdverts) {
-                        dfpAds.load();
-                    }
-
-                    Adverts.load();
-                });
-
+                mediator.on('modules:adverts:docwrite:loaded', Adverts.load);
                 mediator.on('window:resize', debounce(resizeCallback, 2000));
             } else {
                 Adverts.hideAds();
@@ -425,7 +419,7 @@ define([
                 $('html').addClass('iframed');
             }
         },
-        
+
         runForseeSurvey: function(config) {
             if(config.switches.Foresee) {
                 Foresee.load();

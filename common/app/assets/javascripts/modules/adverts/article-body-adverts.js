@@ -29,10 +29,10 @@ define([
     ArticleBodyAdverts.prototype.inlineSlots = [];
 
     ArticleBodyAdverts.prototype.config = {
-        inlineAdTemplate: '<div class="ad-slot ad-slot--inline" data-base="%slot%" data-median="%slot%"><div class="ad-slot__label">Advertisement</div><div class="ad-container"></div></div>'
+        inlineAdTemplate: '<div class="ad-slot__dfp ad-slot--inline" data-name="%slot%" data-size="300,50"><div id="inline-ad-slot__%slot%" class="ad-container"></div></div>'
     };
 
-    ArticleBodyAdverts.prototype.generateInlineAdSlot = function(id) {
+    ArticleBodyAdverts.prototype.generateInlineAdSlot = function(id, i) {
         var template = this.config.inlineAdTemplate;
 
         return bonzo(bonzo.create(template.replace(/%slot%/g, id)));
@@ -43,7 +43,7 @@ define([
 
         this.inlineSlots.push(slot);
 
-        return slot;
+        return bonzo(slot);
     };
 
     ArticleBodyAdverts.prototype.destroy = function() {
@@ -55,25 +55,25 @@ define([
     };
 
     ArticleBodyAdverts.prototype.reload = function() {
-        this.destroy();
-        this.init();
+        // this.destroy();
+        // this.init();
     };
 
     ArticleBodyAdverts.prototype.init = function() {
         var breakpoint  = detect.getBreakpoint();
 
         if((/wide|desktop/).test(breakpoint)) {
-            bonzo(this.getNewSlot('adRight')).html(this.generateInlineAdSlot('Middle1'));
+            this.getNewSlot('adRight').html(this.generateInlineAdSlot('inline1'));
         }
 
         if((/tablet/).test(breakpoint)) {
-            bonzo(this.getNewSlot('adRight')).html(this.generateInlineAdSlot('Middle'));
-            bonzo(this.getNewSlot('adRight')).html(this.generateInlineAdSlot('Middle1'));
+            this.getNewSlot('adRight').html(this.generateInlineAdSlot('inline1'));
+            // this.getNewSlot('adRight').html(this.generateInlineAdSlot('inline2'));
         }
 
         if((/mobile/).test(breakpoint)) {
-            bonzo(this.getNewSlot('adBlock')).html(this.generateInlineAdSlot('x49'));
-            bonzo(this.getNewSlot('adBlock')).html(this.generateInlineAdSlot('Bottom2'));
+            this.getNewSlot('adBlock').html(this.generateInlineAdSlot('inline1'));
+            // this.getNewSlot('adBlock').html(this.generateInlineAdSlot('inline2'));
         }
     };
 

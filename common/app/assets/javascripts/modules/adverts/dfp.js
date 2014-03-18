@@ -5,6 +5,7 @@ define([
     'postscribe',
     'common/modules/component',
     'lodash/objects/assign',
+    'lodash/functions/debounce',
     'common/utils/cookies',
     'common/utils/mediator',
     'common/modules/analytics/commercial/tags/common/audience-science',
@@ -16,12 +17,19 @@ define([
     postscribe,
     Component,
     extend,
+    debounce,
     Cookies,
     mediator,
     AudienceScience,
     UserAdTargeting,
     DFPEvents
 ) {
+
+    /**
+     * <div class="ad-slot__dfp AD_SLOT_CLASS" data-name="AD_SLOT_NAME" data-size="300,250">
+     *     <div id="SLOT_ID" class="ad-container"></div>  <-- preferably generate this
+     * </div>
+     */
 
     var breakoutHash = {
         'breakout__html': '%content%',
@@ -35,40 +43,122 @@ define([
 
     Component.define(DFP);
 
+    DFP.prototype.dfpAdSlots   = [];
+    DFP.prototype.adsToRefresh = [];
+
     DFP.prototype.config = {
-        dfpUrl: '//www.googletagservices.com/tag/js/gpt.js'
+        dfpUrl: '//www.googletagservices.com/tag/js/gpt.js',
+        adContainerClass: '.ad-container'
     };
 
     DFP.prototype.setListeners = function() {
-        googletag.on('gpt-slot_rendered', this.checkForBreakout);
+        // googletag.on('gpt-slot_rendered', this.parseAd.bind(this));
     };
 
-    DFP.prototype.setTargetting = function() {
-        var conf             = this.config.page,
-            keywords         = conf.keywords    ? conf.keywords.split(',')       : '',
-            section          = conf.section     ? conf.section.toLowerCase()     : '',
-            contentType      = conf.contentType ? conf.contentType.toLowerCase() : '';
+    DFP.prototype.setPageTargetting = function() {
+        var conf         = this.config.page,
+            keywords     = conf.keywords    ? conf.keywords.split(',')       : '',
+            section      = conf.section     ? conf.section.toLowerCase()     : '',
+            contentType  = conf.contentType ? conf.contentType.toLowerCase() : '';
 
-        googletag.pubads().setTargeting('k', keywords);
-        googletag.pubads().setTargeting('at', Cookies.get('adtest') || '');
-        googletag.pubads().setTargeting('pt', contentType);
-        googletag.pubads().setTargeting('ct', contentType);
-        googletag.pubads().setTargeting('cat', section);
-        googletag.pubads().setTargeting('a', AudienceScience.getSegments() || []);
-        googletag.pubads().setTargeting('gdncrm', UserAdTargeting.getUserSegments() || []);
+        googletag.pubads().setTargeting('k', keywords)
+                          .setTargeting('at', Cookies.get('adtest') || '')
+                          .setTargeting('pt', contentType)
+                          .setTargeting('ct', contentType)
+                          .setTargeting('cat', section)
+                          .setTargeting('a', AudienceScience.getSegments() || [])
+                          .setTargeting('gdncrm', UserAdTargeting.getUserSegments() || []);
     };
 
     DFP.prototype.defineSlots = function() {
-        var section = this.config.page.isFront ? 'networkfront' : this.config.page.section,
-            account = '/'+ this.config.page.dfpAccountId +'/'+ this.config.page.dfpServer +'/'+ section;
+        var section          = this.config.page.isFront ? 'networkfront' : this.config.page.section,
+            account          = '/'+ this.config.page.dfpAccountId +'/'+ this.config.page.dfpServer,
+            adsToRefresh     = this.adsToRefresh,
+            adContainerClass = this.config.adContainerClass,
+            defineSlotSizes  = this.defineSlotSizes;
 
         this.dfpAdSlots.each(function(adSlot) {
-            var id    = adSlot.id,
-                name  = adSlot.getAttribute('data-name'),
-                sizes = adSlot.getAttribute('data-size').split(',').map(Number);
+            if(adSlot.style.display === 'none') {
+                return false;
+            }
 
-            googletag.defineSlot(account, sizes, id).addService(googletag.pubads()).setTargeting('slot', name);
+            var id          = adSlot.querySelector(adContainerClass).id,
+                name        = adSlot.getAttribute('data-name'),
+                sizes       = adSlot.getAttribute('data-size').split(',').map(Number),
+                refresh     = adSlot.getAttribute('data-refresh') !== 'false',
+                sizeMapping = defineSlotSizes(adSlot);
+
+            var slot = googletag.defineSlot(account, sizes, id)
+                                .addService(googletag.pubads())
+                                .defineSizeMapping(sizeMapping)
+                                .setTargeting('slot', name);
+
+            if(refresh) {
+                adsToRefresh.push(slot);
+            }
         });
+    };
+
+    DFP.prototype.defineSlotSizes = function(slot) {
+        // example
+        // data-size-mobile="" data-size-tabletPort="" data-size-tabletLand="" data-size-desktop="" data-size-wide=""
+
+        var breakpoints = {
+            mobile: 0,
+            tabletPort: 740,
+            tabletLand: 900,
+            desktop: 980,
+            wide: 1300
+        };
+
+        return googletag.sizeMapping()
+
+            // addSize([browser dimensions], [ad dimensions]);
+            .addSize([breakpoints.mobile, 0], slot.getAttribute('data-size').split(',').map(Number))
+            .addSize([breakpoints.tabletPort, 0], [300, 250])
+            // .addSize([breakpoints['tabletLand'], 0], [300, 250])
+            // .addSize([breakpoints['desktop'], 0], [300, 250])
+            // .addSize([breakpoints['wide'], 0], [300, 250])
+
+            .build();
+    };
+
+    DFP.prototype.parseAd = function(e, level, message, service, slot, reference) {
+        var $slot = $('#'+ slot.getSlotId().getDomId());
+
+        this.checkForBreakout($slot);
+        // this.addLabel($slot);
+    };
+
+    DFP.prototype.checkForBreakout = function($slot) {
+        var frameContents = $slot[0].querySelector('iframe').contentDocument.body;
+
+        // Make sure the parent is showing
+        // $slot.parent().show();
+
+        for(var cls in breakoutHash) {
+            var $el = bonzo(frameContents.querySelector('.'+ cls));
+
+            if($el.length > 0) {
+                $slot.html('');
+                postscribe($slot[0], breakoutHash[cls].replace(/%content%/g, $el.html()));
+            }
+        }
+
+        // if(frameContents.innerHTML !== '') {
+        //     this.addLabel($slot);
+        // }
+    };
+
+    DFP.prototype.addLabel = function($slot) {
+        var $parent = $slot.parent();
+
+        if($parent.hasClass('ad-label--showing') || $parent.data('label') === false) {
+            return false;
+        }
+
+        $parent.prepend('<div class="ad-slot__label">Advertisement</div>');
+        $parent.addClass('ad-label--showing');
     };
 
     DFP.prototype.fireAdRequest = function() {
@@ -76,21 +166,7 @@ define([
         googletag.pubads().enableAsyncRendering();
         googletag.pubads().collapseEmptyDivs();
         googletag.enableServices();
-        googletag.display(this.dfpAdSlots[0].id);
-    };
-
-    DFP.prototype.checkForBreakout = function(e, level, message, service, slot, reference) {
-        var $slotEl       = $('#'+ slot.getSlotId().getDomId()),
-            frameContents = $slotEl[0].querySelector('iframe').contentDocument.body;
-
-        for(var cls in breakoutHash) {
-            var $el = bonzo(frameContents.querySelector('.'+ cls));
-
-            if($el.length > 0) {
-                $slotEl.html('');
-                postscribe($slotEl[0], breakoutHash[cls].replace(/%content%/g, $el.html()));
-            }
-        }
+        googletag.display(this.dfpAdSlots[0].querySelector(this.config.adContainerClass).id);
     };
 
     DFP.prototype.loadLibrary = function() {
@@ -105,11 +181,20 @@ define([
         node.parentNode.insertBefore(gads, node);
     };
 
-    DFP.prototype.destroy = function() {
-        this.dfpAdSlots = [];
+    DFP.prototype.reload = function() {
+        try {
+            // console.log('refreshing ads');
+            var adSlots = this.adsToRefresh;
+
+            // console.log(adSlots);
+
+            googletag.pubads().refresh(adSlots);
+        } catch(e) {
+            // console.log(e);
+        }
     };
 
-    DFP.prototype.load = function() {
+    DFP.prototype.init = function() {
         this.dfpAdSlots = $('.ad-slot__dfp');
 
         if(this.dfpAdSlots.length === 0) {
@@ -123,7 +208,7 @@ define([
         try {
             googletag.cmd.push(DFPEvents.init);
             googletag.cmd.push(this.setListeners.bind(this));
-            googletag.cmd.push(this.setTargetting.bind(this));
+            googletag.cmd.push(this.setPageTargetting.bind(this));
             googletag.cmd.push(this.defineSlots.bind(this));
             googletag.cmd.push(this.fireAdRequest.bind(this));
         } catch(e) {
