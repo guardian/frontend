@@ -74,7 +74,7 @@ define([
                 }
             },
 
-            // there is not a 'no javascript' version of this.
+            // there is not a 'no JavaScript' version of this.
             upgradeLocalNav: function(context) {
                 if (context.querySelector('.js-localnav--small')) {
                     common.$g('#preloads').addClass('has-localnav');
