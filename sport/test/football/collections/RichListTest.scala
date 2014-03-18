@@ -24,4 +24,15 @@ class RichListTest extends FunSuite with ShouldMatchers with RichList {
       List((2, List(3, 3)), (4, List(6)), (6, List(9, 9, 9)), (8, List(12)), (10, List(15, 15)))
     )
   }
+
+  test("indexOfOpt will return the index of an item in list") {
+    val l = List(0, 1, 2, 3, 4)
+    l.indexOfOpt(0) should equal (Some(0))
+    l.indexOfOpt(4) should equal (Some(4))
+  }
+
+  test("indexOfOpt will return None if item is not in list") {
+    val l = List(0, 1, 2)
+    l.indexOfOpt(5) should equal(None)
+  }
 }

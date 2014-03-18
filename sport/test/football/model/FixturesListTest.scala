@@ -17,10 +17,13 @@ class FixturesListTest extends FreeSpec with ShouldMatchers with MatchTestData w
         }.sortBy(_.toInt) should equal(List("7", "8", "9", "10", "32", "33", "34"))
       }
 
-      "should group matches correctly" in {
+      "should group matches correctly by date" in {
         fixtures.matchesGroupedByDateAndCompetition.map(_._1) should equal(List(today, today.plusDays(1), today.plusDays(3)))
+      }
+
+      "should group matches correctly by date and league, with league ordered correctly" in {
         val (_, competitionMatches1) = fixtures.matchesGroupedByDateAndCompetition(0)
-        competitionMatches1.keys.map(_.id) should equal(Set("1", "2"))
+        competitionMatches1.map { case (comp, matches) => comp.id } should equal(List("100", "500"))
       }
 
       "should only contain matches happening on one of next 3 days that have fixtures (includes today)" in {
@@ -42,8 +45,8 @@ class FixturesListTest extends FreeSpec with ShouldMatchers with MatchTestData w
 
       "matches should have the correct, populated, competition alongside" in {
         fixtures.relevantMatches.foreach { case (fMatch, comp) =>
-          if (fMatch.id.toInt < 30) comp.id should equal("1")
-          else comp.id should equal("2")
+          if (fMatch.id.toInt < 30) comp.id should equal("500")
+          else comp.id should equal("100")
         }
       }
     }
@@ -77,8 +80,8 @@ class FixturesListTest extends FreeSpec with ShouldMatchers with MatchTestData w
 
       "matches should have the correct, populated, competition alongside" in {
         fixtures.relevantMatches.foreach { case (fMatch, comp) =>
-          if (fMatch.id.toInt < 30) comp.id should equal("1")
-          else comp.id should equal("2")
+          if (fMatch.id.toInt < 30) comp.id should equal("500")
+          else comp.id should equal("100")
         }
       }
     }
@@ -128,8 +131,8 @@ class FixturesListTest extends FreeSpec with ShouldMatchers with MatchTestData w
   }
 
   "the competition fixtures list" - {
-    "given competition 1" - {
-      val fixtures = new CompetitionFixturesList(today, competitions, "1")
+    "given competition 500" - {
+      val fixtures = new CompetitionFixturesList(today, competitions, "500")
 
       "should be showing the correct matches from the test data" in {
         fixtures.relevantMatches.map { case (fmatch, _) =>
@@ -148,13 +151,13 @@ class FixturesListTest extends FreeSpec with ShouldMatchers with MatchTestData w
 
       "matches should only come from the specified competition" in {
         fixtures.relevantMatches.foreach { case (fMatch, comp) =>
-          comp.id should equal("1")
+          comp.id should equal("500")
         }
       }
     }
 
-    "given competition 2" - {
-      val fixtures = new CompetitionFixturesList(today, competitions, "2")
+    "given competition 100" - {
+      val fixtures = new CompetitionFixturesList(today, competitions, "100")
 
       "should be showing the correct matches from the test data" in {
         fixtures.relevantMatches.map { case (fmatch, _) =>
@@ -164,14 +167,14 @@ class FixturesListTest extends FreeSpec with ShouldMatchers with MatchTestData w
 
       "matches should only come from the specified competition" in {
         fixtures.relevantMatches.foreach { case (fMatch, comp) =>
-          comp.id should equal("2")
+          comp.id should equal("100")
         }
       }
     }
   }
 
   "the team fixtures list" - {
-    "give spurs" - {
+    "given spurs" - {
       val fixtures = new TeamFixturesList(today, competitions, spurs.id)
 
       "should be showing the correct matches from the test data" in {
