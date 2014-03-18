@@ -3,6 +3,7 @@ package football.model
 import org.scalatest._
 import implicits.Football
 import pa.FootballMatch
+import org.joda.time.{Duration, DateTimeUtils}
 
 
 class MatchDayListTest extends FreeSpec with ShouldMatchers with MatchTestData with Football with OptionValues {
@@ -41,5 +42,17 @@ class MatchDayListTest extends FreeSpec with ShouldMatchers with MatchTestData w
         else comp.id should equal("2")
       }
     }
+  }
+
+  "if there are no matches today" - {
+    DateTimeUtils.setCurrentMillisFixed(today.minusDays(20).getMillis)
+
+    val matches = new MatchDayList(competitions)
+
+    "should be empty" in {
+      matches.relevantMatches.size should equal(0)
+    }
+
+    DateTimeUtils.setCurrentMillisSystem()
   }
 }

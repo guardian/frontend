@@ -18,6 +18,8 @@ trait MatchesList extends Football with RichList {
   val date: DateMidnight
   val daysToDisplay: Int
 
+  lazy val isEmpty = allRelevantMatches.isEmpty
+
   def filterMatches(fMatch: FootballMatch, competition: Competition): Boolean
 
   // ordering for the displayed matches
@@ -120,10 +122,11 @@ case class TeamResultsList(date: DateMidnight, competitions: CompetitionSupport,
 
 case class MatchDayList(competitions: CompetitionSupport) extends MatchDays {
   override val date = DateMidnight.now
-  override def filterMatches(fMatch: FootballMatch, competition: Competition): Boolean = true
+  override def filterMatches(fMatch: FootballMatch, competition: Competition): Boolean =
+    fMatch.date.toDateMidnight == date
 }
 case class CompetitionMatchDayList(competitions: CompetitionSupport, competitionId: String) extends MatchDays with CompetitionList {
   override val date = DateMidnight.now
   override def filterMatches(fMatch: FootballMatch, competition: Competition): Boolean =
-    competition.id == competitionId
+    fMatch.date.toDateMidnight == date && competition.id == competitionId
 }
