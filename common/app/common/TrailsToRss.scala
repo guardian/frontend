@@ -1,11 +1,12 @@
 package common
 
-import model.Trail
+import model.{Content, Article, Trail}
 import views.support.{ImgSrc, cleanTrailText}
 import play.api.mvc.RequestHeader
 import scala.collection.JavaConverters._
 import org.joda.time.DateTime
 import java.io.StringWriter
+import org.jsoup.Jsoup
 
 object TrailsToRss {
   def apply(title: Option[String], trails: Seq[Trail])(implicit request: RequestHeader): String = {
@@ -48,9 +49,15 @@ object TrailsToRss {
 
       // Entry: description
       val description = new SyndContentImpl
-      description.setValue(trail.trailText.map{ text =>
-        cleanTrailText(text)(Edition(request)).toString()
-      }.getOrElse(""))
+      val standfirst = trail match {
+          case c: Content => c.standfirst.getOrElse("")
+          case _ => ""
+        }
+      val intro = trail match {
+          case a: Article => Jsoup.parseBodyFragment(a.body).select("p:lt(2)").toArray.map(_.toString).mkString("")
+          case _ => ""
+        }
+      description.setValue(standfirst + intro)
 
       // Entry
       val entry = new SyndEntryImpl
