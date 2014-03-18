@@ -123,116 +123,116 @@ module.exports = function (grunt) {
         webfontjson: {
             WebAgateSansWoff: {
                 options: {
-                    'filename': staticTargetDir + 'fonts/WebAgateSans.woff.json',
-                    'callback': 'guFont',
-                    'fonts': [
+                    filename: staticTargetDir + 'fonts/WebAgateSans.woff.json',
+                    callback: 'guFont',
+                    fonts: [
                         {
                             'font-family': 'AgateSans',
-                            'file': 'resources/fonts/AgateSans-Regular.woff',
-                            'format': 'woff'
+                            file: 'resources/fonts/AgateSans-Regular.woff',
+                            format: 'woff'
                         }
                     ]
                 }
             },
             WebAgateSansTtf: {
                 options: {
-                    'filename': staticTargetDir + 'fonts/WebAgateSans.ttf.json',
-                    'callback': 'guFont',
-                    'fonts': [
+                    filename: staticTargetDir + 'fonts/WebAgateSans.ttf.json',
+                    callback: 'guFont',
+                    fonts: [
                         {
                             'font-family': 'AgateSans',
-                            'file': 'resources/fonts/AgateSans-Regular.ttf',
-                            'format': 'ttf'
+                            file: 'resources/fonts/AgateSans-Regular.ttf',
+                            format: 'ttf'
                         }
                     ]
                 }
             },
             WebEgyptianWoff: {
                 options: {
-                    'filename': staticTargetDir + 'fonts/WebEgyptian.woff.json',
-                    'callback': 'guFont',
-                    'fonts': [
+                    filename: staticTargetDir + 'fonts/WebEgyptian.woff.json',
+                    callback: 'guFont',
+                    fonts: [
                         {
                             'font-family': 'EgyptianText',
-                            'file': 'resources/fonts/EgyptianText-Regular.woff',
-                            'format': 'woff'
+                            file: 'resources/fonts/EgyptianText-Regular.woff',
+                            format: 'woff'
                         },
                         {
                             'font-family': 'EgyptianText',
                             'font-style': 'italic',
-                            'file': 'resources/fonts/EgyptianText-RegularItalic.woff',
-                            'format': 'woff'
+                            file: 'resources/fonts/EgyptianText-RegularItalic.woff',
+                            format: 'woff'
                         },
                         {
                             'font-family': 'EgyptianText',
                             'font-weight': '700',
-                            'file': 'resources/fonts/EgyptianText-Medium.woff',
-                            'format': 'woff'
+                            file: 'resources/fonts/EgyptianText-Medium.woff',
+                            format: 'woff'
                         },
                         {
                             'font-family': 'EgyptianHeadline',
                             'font-weight': '200',
-                            'file': 'resources/fonts/EgyptianHeadline-Light.woff',
-                            'format': 'woff'
+                            file: 'resources/fonts/EgyptianHeadline-Light.woff',
+                            format: 'woff'
                         },
                         {
                             'font-family': 'EgyptianHeadline',
                             'font-weight': '400',
-                            'file': 'resources/fonts/EgyptianHeadline-Regular.woff',
-                            'format': 'woff'
+                            file: 'resources/fonts/EgyptianHeadline-Regular.woff',
+                            format: 'woff'
                         },
                         // This weight contains only a certain set of chars
                         // since it is used only in one place (section names)
                         {
                             'font-family': 'EgyptianHeadline',
                             'font-weight': '900',
-                            'file': 'resources/fonts/EgyptianHeadline-Semibold-redux.woff',
-                            'format': 'woff'
+                            file: 'resources/fonts/EgyptianHeadline-Semibold-redux.woff',
+                            format: 'woff'
                         }
                     ]
                 }
             },
             WebEgyptianTtf: {
                 options: {
-                    'filename': staticTargetDir + 'fonts/WebEgyptian.ttf.json',
-                    'callback': 'guFont',
-                    'fonts': [
+                    filename: staticTargetDir + 'fonts/WebEgyptian.ttf.json',
+                    callback: 'guFont',
+                    fonts: [
                         {
                             'font-family': 'EgyptianText',
-                            'file': 'resources/fonts/EgyptianText-Regular.ttf',
-                            'format': 'ttf'
+                            file: 'resources/fonts/EgyptianText-Regular.ttf',
+                            format: 'ttf'
                         },
                         {
                             'font-family': 'EgyptianText',
                             'font-style': 'italic',
-                            'file': 'resources/fonts/EgyptianText-RegularItalic.ttf',
-                            'format': 'ttf'
+                            file: 'resources/fonts/EgyptianText-RegularItalic.ttf',
+                            format: 'ttf'
                         },
                         {
                             'font-family': 'EgyptianText',
                             'font-weight': '700',
-                            'file': 'resources/fonts/EgyptianText-Medium.ttf',
-                            'format': 'ttf'
+                            file: 'resources/fonts/EgyptianText-Medium.ttf',
+                            format: 'ttf'
                         },
                         {
                             'font-family': 'EgyptianHeadline',
                             'font-weight': '200',
-                            'file': 'resources/fonts/EgyptianHeadline-Light.ttf',
-                            'format': 'ttf'
+                            file: 'resources/fonts/EgyptianHeadline-Light.ttf',
+                            format: 'ttf'
                         },
                         {
                             'font-family': 'EgyptianHeadline',
                             'font-weight': '400',
-                            'file': 'resources/fonts/EgyptianHeadline-Regular.ttf',
-                            'format': 'ttf'
+                            file: 'resources/fonts/EgyptianHeadline-Regular.ttf',
+                            format: 'ttf'
                         },
                         // This weight contains only a certain set of chars
                         // since it is used only in one place (section names)
                         {
                             'font-family': 'EgyptianHeadline',
                             'font-weight': '900',
-                            'file': 'resources/fonts/EgyptianHeadline-Semibold-redux.ttf',
-                            'format': 'ttf'
+                            file: 'resources/fonts/EgyptianHeadline-Semibold-redux.ttf',
+                            format: 'ttf'
                         }
                     ]
                 }
