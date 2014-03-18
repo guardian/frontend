@@ -34,7 +34,7 @@
             data-link-name="Show more comments"
             data-age="newer"
             data-page="@(page.currentPage - 1)">
-            <span class="d-discussion__show-more-button"><i class="i i-plus-white-large"></i></span>
+            <span class="d-discussion__show-more-button"><i class="i i-plus-white-med"></i></span>
             <span class="d-discussion__show-more-text">Show @if(page.orderBy == "newest"){newer}else{older} comments</span>
         </a>
         }
@@ -50,7 +50,7 @@
 
     <div class="show-more__container show-more__container--hidden u-h">
         <a class="d-discussion__show-hidden d-discussion__show-more" data-link-name="Show hidden comments" data-disabled="true" title="Show comments">
-            <span class="d-discussion__show-more-button"><i class="i i-plus-white-large"></i></span>
+            <span class="d-discussion__show-more-button"><i class="i i-plus-white-med"></i></span>
             <span class="d-discussion__show-more-text">Show comments</span>
         </a>
     </div>
@@ -62,7 +62,7 @@
             data-link-name="Show more comments"
             data-age="older"
             data-page="@(page.currentPage + 1)">
-            <span class="d-discussion__show-more-button"><i class="i i-plus-white-large"></i></span>
+            <span class="d-discussion__show-more-button"><i class="i i-plus-white-med"></i></span>
             <span class="d-discussion__show-more-text">Show more comments</span>
         </a>
         }
@@ -74,7 +74,7 @@
             data-remove="true" 
             href="@LinkTo{/discussion@if(page.orderBy == "oldest"){/oldest}/@page.id?page=1}"
             title="Show more featured comments">
-            <span class="d-discussion__show-more-button"><i class="i i-plus-white-large"></i></span>
+            <span class="d-discussion__show-more-button"><i class="i i-plus-white-med"></i></span>
             <span class="d-discussion__show-more-text">Show more featured comments</span>
         </a>    
     </div>

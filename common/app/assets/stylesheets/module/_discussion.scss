@@ -82,7 +82,7 @@ $c-replyText: $c-body;
     &:hover span { text-decoration: underline; }
 }
 .d-discussion__show-more-button {
-    @include icon-button(24px, -15px);
+    @include icon-button(24px, -9px);
     position: absolute;
     left: 0;
     background-color: $c-newsDefault;
@@ -134,7 +134,7 @@ $c-replyText: $c-body;
     overflow: hidden;
 }
 .d-comment--top-level {
-    border-top: 1px solid $c-neutral3;
+    border-top: 1px solid $c-neutral4;
 }
 .d-comment:target {
     background-color: $c-neutral7;
@@ -280,6 +280,9 @@ $c-replyText: $c-body;
     @include fs-text(3);
     color: $c-neutral1;
     font-weight: bold;
+    @include rem((
+    margin-bottom: $gs-baseline/6
+    ));
     .i-gupickasterisk {
         margin-bottom: -4px;
         margin-right: $gs-gutter/4;
@@ -294,7 +297,7 @@ $c-replyText: $c-body;
 
     @include mq(rightCol) {
         @include rem((
-            padding-right: $gs-gutter*2
+            padding-right: $gs-column-width
         ));
     }
 }
@@ -511,6 +514,12 @@ $c-replyText: $c-body;
 .d-comment-box--response {
     border-top: 1px dotted $c-neutral3;
 
+    .d-comment__pick {
+        @include rem((
+            margin-bottom: $gs-baseline/2
+        ));
+    }
+
     .d-comment__main {
         @include rem((
             margin-top: $gs-baseline/3
@@ -645,7 +654,7 @@ $c-replyText: $c-body;
     }
 
     span {
-        @include icon-button(18px, -9px);
+        @include icon-button(18px, -7px);
         background-color: $c-newsDefault;
         @include rem((
             margin-bottom: $gs-baseline/3 * -1,
@@ -660,7 +669,7 @@ $c-replyText: $c-body;
 
 .discussion__heading {
     color: $c-neutral1;
-    border-top: 1px dotted $c-neutral3;
+    border-top: 1px solid $c-neutral4;
     margin-bottom: 0;
     @include rem((
         padding-top: $gs-baseline/10
@@ -678,11 +687,6 @@ $c-replyText: $c-body;
         overflow: hidden;
     }
     .d-comment__main {
-        @include mq(rightCol) {
-            @include rem((
-                padding-right: 40px
-            ));
-        }
         padding-bottom: 0;
     }
     .d-comment__body {
@@ -701,7 +705,7 @@ $c-replyText: $c-body;
         @include mq($comment-meta-breakpoint) {
             position: static;
             @include rem((
-                margin-top: $gs-baseline/2,
+                margin-top: $gs-baseline,
                 width: 160px
             ));
             top: 0;
@@ -719,6 +723,11 @@ $c-replyText: $c-body;
             ));
         }
     }
+    .d-comment__pick {
+        @include rem((
+            margin-bottom: $gs-baseline/2
+        ));
+    }
     .show-more__container--newer,
     .show-more__container--older,
     .d-comment__actions {
@@ -727,10 +736,16 @@ $c-replyText: $c-body;
     .d-comment__content {
         background-color: $c-neutral7;
         @include rem((
-            padding: $gs-baseline/2 $gs-gutter/2,
+            padding: $gs-baseline $gs-gutter*0.8 ($gs-baseline/6)*5 $gs-gutter*0.8,
             margin-bottom: $gs-baseline
         ));
         position: relative;
+
+        @include mq(rightCol) {
+            @include rem((
+                padding-right: 0
+            ));
+        }
 
         &:before {
             position: absolute;
@@ -759,12 +774,12 @@ $c-replyText: $c-body;
     }
     .d-comment__recommend {
         @include rem((
-            top: ($gs-baseline/3)*2,
-            right: ($gs-baseline/3)*2
+            top: 15px,
+            right: 16px
         ));
         @include mq(rightCol) {
             @include rem((
-                right: $gs-gutter/5
+                right: 12px
             ));
         }
     }
