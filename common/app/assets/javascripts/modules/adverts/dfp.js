@@ -48,7 +48,14 @@ define([
 
     DFP.prototype.config = {
         dfpUrl: '//www.googletagservices.com/tag/js/gpt.js',
-        adContainerClass: '.ad-container'
+        adContainerClass: '.ad-container',
+        breakpoints: {
+            mobile: 0,
+            tabletportrait: 740,
+            tabletlandscape: 900,
+            desktop: 980,
+            wide: 1300
+        }
     };
 
     DFP.prototype.setListeners = function() {
@@ -71,16 +78,15 @@ define([
     };
 
     DFP.prototype.defineSlots = function() {
-        var section          = this.config.page.isFront ? 'networkfront' : this.config.page.section,
-            account          = '/'+ this.config.page.dfpAccountId +'/'+ this.config.page.dfpServer,
-            adsToRefresh     = this.adsToRefresh,
-            adContainerClass = this.config.adContainerClass,
-            defineSlotSizes  = this.defineSlotSizes;
+        var self    = this,
+            section = this.config.page.isFront ? 'networkfront' : this.config.page.section,
+            account = '/'+ this.config.page.dfpAccountId +'/'+ this.config.page.dfpServer;
 
         this.dfpAdSlots.each(function(adSlot) {
-            var id          = adSlot.querySelector(adContainerClass).id,
+
+            var id          = adSlot.querySelector(self.config.adContainerClass).id,
                 name        = adSlot.getAttribute('data-name'),
-                sizeMapping = defineSlotSizes(adSlot),
+                sizeMapping = self.defineSlotSizes(adSlot),
                 sizes       = [sizeMapping[0][1][0], sizeMapping[0][1][1]],
                 refresh     = adSlot.getAttribute('data-refresh') !== 'false',
 
@@ -90,28 +96,27 @@ define([
                                 .setTargeting('slot', name);
 
             if(refresh) {
-                adsToRefresh.push(slot);
+                self.adsToRefresh.push(slot);
             }
         });
     };
 
+    DFP.prototype.createSizeMapping = function(attr) {
+        return attr.split('|').map(function(size) {
+            return size.split(',').map(Number);
+        });
+    };
+
     DFP.prototype.defineSlotSizes = function(slot) {
-        var breakpoints = {
-            mobile: 0,
-            tabletportrait: 740,
-            tabletlandscape: 900,
-            desktop: 980,
-            wide: 1300
-        };
+        var self    = this,
+            mapping = googletag.sizeMapping();
 
-        var mapping = googletag.sizeMapping();
-
-        for(var breakpoint in breakpoints) {
+        for(var breakpoint in this.config.breakpoints) {
             var attr  = slot.getAttribute('data-'+ breakpoint),
-                width = breakpoints[breakpoint];
+                width = self.config.breakpoints[breakpoint];
 
             if(attr) {
-                mapping.addSize([width, 0], attr.split(',').map(Number));
+                mapping.addSize([width, 0], self.createSizeMapping(attr));
             }
         }
 
@@ -177,16 +182,9 @@ define([
     };
 
     DFP.prototype.reload = function() {
-        try {
-            // console.log('refreshing ads');
-            var adSlots = this.adsToRefresh;
+        var adsToRefresh = this.adsToRefresh;
 
-            // console.log(adSlots);
-
-            googletag.pubads().refresh(adSlots);
-        } catch(e) {
-            // console.log(e);
-        }
+        googletag.pubads().refresh(adsToRefresh);
     };
 
     DFP.prototype.init = function() {

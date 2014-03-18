@@ -66,6 +66,16 @@ define([
             expect(dfpAds.dfpAdSlots.length).toBe(2);
         });
 
+        it("Should map a string to a correct array of sizes", function() {
+            var attr;
+
+            attr = '300,50';
+            expect(dfpAds.createSizeMapping(attr)).toEqual([[300, 50]]);
+
+            attr = '300,50|320,50';
+            expect(dfpAds.createSizeMapping(attr)).toEqual([[300, 50], [320, 50]]);
+        });
+
         describe("Should place the iframe code on to the parent page when", function() {
 
             it("has content with the class 'breakout__html'", function() {
@@ -74,7 +84,6 @@ define([
                     text = 'This is a test iframe with HTML content',
                     html = '<div class="breakout__html"><div class="dfp-iframe-content">'+ text +'</div></div>';
 
-                dfpAds.init();
                 createTestIframe(id, html);
                 dfpAds.checkForBreakout($('#'+ slot.getSlotId().getDomId()));
 
@@ -88,7 +97,6 @@ define([
                     slot = generateSlotFunction(id),
                     html = '<script class="breakout__script">window.dfpModuleTestVar = "'+ str +'"</script>';
 
-                dfpAds.init();
                 createTestIframe(id, html);
                 dfpAds.checkForBreakout($('#'+ slot.getSlotId().getDomId()));
 
