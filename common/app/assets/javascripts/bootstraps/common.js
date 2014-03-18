@@ -239,6 +239,7 @@ define([
 
                 var resizeCallback = function() {
                     hasBreakpointChanged(function() {
+                        dfpAds.reload();
                         Adverts.reload();
                         mediator.emit('modules:adverts:reloaded');
                     });
@@ -249,15 +250,6 @@ define([
 
                     articleBodyAdverts.init();
                     dfpAds.init();
-
-                    resizeCallback = function(e) {
-                        hasBreakpointChanged(function() {
-                            articleBodyAdverts.reload();
-                            dfpAds.reload();
-                            Adverts.reload();
-                            mediator.emit('modules:adverts:reloaded');
-                        });
-                    };
                 }
 
                 mediator.on('page:common:deferred:loaded', function(config, context) {

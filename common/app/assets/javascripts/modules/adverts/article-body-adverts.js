@@ -29,7 +29,7 @@ define([
     ArticleBodyAdverts.prototype.inlineSlots = [];
 
     ArticleBodyAdverts.prototype.config = {
-        inlineAdTemplate: '<div class="ad-slot__dfp ad-slot--inline" data-name="%slot%" data-size="300,50"><div id="inline-ad-slot__%slot%" class="ad-container"></div></div>'
+        inlineAdTemplate: '<div class="ad-slot__dfp ad-slot--inline" data-name="%slot%" data-mobile="300,50" data-tabletportrait="300,250"><div id="inline-ad-slot__%slot%" class="ad-container"></div></div>'
     };
 
     ArticleBodyAdverts.prototype.generateInlineAdSlot = function(id, i) {
@@ -54,11 +54,6 @@ define([
         this.inlineSlots = [];
     };
 
-    ArticleBodyAdverts.prototype.reload = function() {
-        // this.destroy();
-        // this.init();
-    };
-
     ArticleBodyAdverts.prototype.init = function() {
         var breakpoint  = detect.getBreakpoint();
 
@@ -67,13 +62,20 @@ define([
         }
 
         if((/tablet/).test(breakpoint)) {
-            this.getNewSlot('adRight').html(this.generateInlineAdSlot('inline1'));
-            // this.getNewSlot('adRight').html(this.generateInlineAdSlot('inline2'));
+            var portrait = window.innerWidth < 810;
+
+            if(portrait) {
+                this.getNewSlot('adRight').html(this.generateInlineAdSlot('right'));
+                this.getNewSlot('adRight').html(this.generateInlineAdSlot('inline1'));
+            } else {
+                this.getNewSlot('adRight').html(this.generateInlineAdSlot('inline1'));
+                this.getNewSlot('adRight').html(this.generateInlineAdSlot('inline2'));
+            }
         }
 
         if((/mobile/).test(breakpoint)) {
             this.getNewSlot('adBlock').html(this.generateInlineAdSlot('inline1'));
-            // this.getNewSlot('adBlock').html(this.generateInlineAdSlot('inline2'));
+            this.getNewSlot('adBlock').html(this.generateInlineAdSlot('inline2'));
         }
     };
 

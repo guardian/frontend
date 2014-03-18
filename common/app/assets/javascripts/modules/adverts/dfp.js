@@ -78,17 +78,13 @@ define([
             defineSlotSizes  = this.defineSlotSizes;
 
         this.dfpAdSlots.each(function(adSlot) {
-            if(adSlot.style.display === 'none') {
-                return false;
-            }
-
             var id          = adSlot.querySelector(adContainerClass).id,
                 name        = adSlot.getAttribute('data-name'),
-                sizes       = adSlot.getAttribute('data-size').split(',').map(Number),
+                sizeMapping = defineSlotSizes(adSlot),
+                sizes       = [sizeMapping[0][1][0], sizeMapping[0][1][1]],
                 refresh     = adSlot.getAttribute('data-refresh') !== 'false',
-                sizeMapping = defineSlotSizes(adSlot);
 
-            var slot = googletag.defineSlot(account, sizes, id)
+                slot = googletag.defineSlot(account, sizes, id)
                                 .addService(googletag.pubads())
                                 .defineSizeMapping(sizeMapping)
                                 .setTargeting('slot', name);
@@ -100,27 +96,26 @@ define([
     };
 
     DFP.prototype.defineSlotSizes = function(slot) {
-        // example
-        // data-size-mobile="" data-size-tabletPort="" data-size-tabletLand="" data-size-desktop="" data-size-wide=""
-
         var breakpoints = {
             mobile: 0,
-            tabletPort: 740,
-            tabletLand: 900,
+            tabletportrait: 740,
+            tabletlandscape: 900,
             desktop: 980,
             wide: 1300
         };
 
-        return googletag.sizeMapping()
+        var mapping = googletag.sizeMapping();
 
-            // addSize([browser dimensions], [ad dimensions]);
-            .addSize([breakpoints.mobile, 0], slot.getAttribute('data-size').split(',').map(Number))
-            .addSize([breakpoints.tabletPort, 0], [300, 250])
-            // .addSize([breakpoints['tabletLand'], 0], [300, 250])
-            // .addSize([breakpoints['desktop'], 0], [300, 250])
-            // .addSize([breakpoints['wide'], 0], [300, 250])
+        for(var breakpoint in breakpoints) {
+            var attr  = slot.getAttribute('data-'+ breakpoint),
+                width = breakpoints[breakpoint];
 
-            .build();
+            if(attr) {
+                mapping.addSize([width, 0], attr.split(',').map(Number));
+            }
+        }
+
+        return mapping.build();
     };
 
     DFP.prototype.parseAd = function(e, level, message, service, slot, reference) {
