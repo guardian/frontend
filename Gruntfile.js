@@ -258,6 +258,13 @@ module.exports = function (grunt) {
                             "font-weight": "700",
                             "file": "resources/fonts/TextSans-Medium.woff",
                             "format": "woff"
+                        },
+                        {
+                            "font-family": "TextSans",
+                            "font-weight": "700",
+                            "font-style": "italic",
+                            "file": "resources/fonts/TextSans-MediumIt.woff",
+                            "format": "woff"
                         }
                     ]
                 }
@@ -282,6 +289,13 @@ module.exports = function (grunt) {
                             "font-family": "TextSans",
                             "font-weight": "700",
                             "file": "resources/fonts/TextSans-Medium.ttf",
+                            "format": "ttf"
+                        },
+                        {
+                            "font-family": "TextSans",
+                            "font-weight": "700",
+                            "font-style": "italic",
+                            "file": "resources/fonts/TextSans-MediumIt.ttf",
                             "format": "ttf"
                         }
                     ]
