@@ -59,16 +59,25 @@ define([
 
         page.isLiveClockwatch(function() {
             var ml = new MatchList('live', 'premierleague'),
-                $img = $('.media-primary').addClass('u-h'),
-                matchListContainer = bonzo.create('<div class="football-match__list" data-link-name="football-matches-clockwatch"></div>');
+                $img = $('.media-primary'),
+                $matchListContainer = bonzo(bonzo.create('<div class="football-match__list" data-link-name="football-matches-clockwatch"></div>'))
+                                          .css({ minHeight: $img[0].offsetHeight });
 
-            loading(matchListContainer, 'Fetching today\'s matches…', { text: 'Impatient?', href: '/football/live' });
+            $img.addClass('u-h');
+            loading($matchListContainer[0], 'Fetching today\'s matches…', { text: 'Impatient?', href: '/football/live' });
 
-            $('.article__meta-container').before(matchListContainer);
-            ml.fetch(matchListContainer).fail(function() {
+            $('.article__meta-container').before($matchListContainer);
+            ml.fetch($matchListContainer[0]).fail(function() {
+                ml.destroy();
+                $matchListContainer.remove();
                 $img.removeClass('u-h');
             }).always(function() {
-                loaded(matchListContainer);
+                if ($('.football-match', $matchListContainer[0]).length === 0) {
+                    ml.destroy();
+                    $matchListContainer.remove();
+                    $img.removeClass('u-h');
+                }
+                loaded($matchListContainer[0]);
             });
         });
 
