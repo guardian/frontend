@@ -1,5 +1,5 @@
 define([
-    "common/utils/mediator"
+    'common/utils/mediator'
 ], function(
     mediator
 ) {
@@ -8,7 +8,7 @@ define([
         if (!this.initialised) {
             this.initialised = true;
         }
-        mediator.emit("page:gallery:ready", config, context);
+        mediator.emit('page:gallery:ready', config, context);
     };
 
     return {

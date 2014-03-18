@@ -33,19 +33,19 @@ define([
     'common/modules/analytics/omnitureMedia',
     'common/modules/analytics/livestats',
     'common/modules/experiments/ab',
-    "common/modules/adverts/video",
-    "common/modules/discussion/comment-count",
-    "common/modules/gallery/lightbox",
-    "common/modules/onward/history",
-    "common/modules/onward/sequence",
-    "common/modules/ui/message",
-    "common/modules/identity/autosignin",
+    'common/modules/adverts/video',
+    'common/modules/discussion/comment-count',
+    'common/modules/gallery/lightbox',
+    'common/modules/onward/history',
+    'common/modules/onward/sequence',
+    'common/modules/ui/message',
+    'common/modules/identity/autosignin',
     'common/modules/adverts/article-body-adverts',
     'common/modules/adverts/dfp',
-    "common/modules/analytics/commercial/tags/container",
-    "common/modules/analytics/foresee-survey",
-    "common/modules/onward/right-most-popular",
-    "common/modules/analytics/register"
+    'common/modules/analytics/commercial/tags/container',
+    'common/modules/analytics/foresee-survey',
+    'common/modules/onward/right-most-popular',
+    'common/modules/analytics/register'
 ], function (
     $,
     mediator,
@@ -158,7 +158,7 @@ define([
         },
 
         initClickstream: function () {
-            new Clickstream({filter: ["a", "button"]});
+            new Clickstream({filter: ['a', 'button']});
         },
 
         transcludeCommentCounts: function () {
@@ -210,7 +210,7 @@ define([
             omniture.go(config, function(){
                 // callback:
 
-                Array.prototype.forEach.call(context.getElementsByTagName("video"), function(video){
+                Array.prototype.forEach.call(context.getElementsByTagName('video'), function(video){
                     if (!bonzo(video).hasClass('tracking-applied')) {
                         bonzo(video).addClass('tracking-applied');
                         new OmnitureMedia({
@@ -229,7 +229,7 @@ define([
                         mediator.on('scrolldepth:data', ophan.record);
 
                         new ScrollDepth({
-                            isContent: config.page.contentType === "Article"
+                            isContent: config.page.contentType === 'Article'
                         });
                     }
                 });
@@ -308,13 +308,13 @@ define([
                         }).init(config.page);
                     });
                 } else {
-                    mediator.emit("video:ads:finished", config, context);
+                    mediator.emit('video:ads:finished', config, context);
                 }
             });
         },
 
         cleanupCookies: function() {
-            Cookies.cleanUp(["mmcore.pd", "mmcore.srv", "mmid", 'GU_ABFACIA', 'GU_FACIA']);
+            Cookies.cleanUp(['mmcore.pd', 'mmcore.srv', 'mmid', 'GU_ABFACIA', 'GU_FACIA']);
             Cookies.cleanUpDuplicates(['GU_ALPHA','GU_VIEW']);
         },
 
@@ -322,7 +322,7 @@ define([
         optIn: function () {
             var countMeIn = /#countmein/.test(window.location.hash);
             if (countMeIn) {
-                Cookies.add("GU_VIEW", "responsive", 365);
+                Cookies.add('GU_VIEW', 'responsive', 365);
             }
         },
 
@@ -348,7 +348,7 @@ define([
 
             if (config.switches.releaseMessage && !alreadyOptedIn && (detect.getBreakpoint() !== 'mobile')) {
                 // force the visitor in to the alpha release for subsequent visits
-                Cookies.add("GU_VIEW", "responsive", 365);
+                Cookies.add('GU_VIEW', 'responsive', 365);
                 releaseMessage.show(msg);
             }
         },
@@ -356,12 +356,12 @@ define([
         displayOnboardMessage: function (config) {
             if(window.location.hash === '#opt-in-message' && config.switches.networkFrontOptIn && detect.getBreakpoint() !== 'mobile') {
                 bean.on(document, 'click', '.js-site-message-close', function() {
-                    Cookies.add("GU_VIEW", "responsive", 365);
-                    Cookies.add("GU_ALPHA", "2", 365);
+                    Cookies.add('GU_VIEW', 'responsive', 365);
+                    Cookies.add('GU_ALPHA', '2', 365);
                 });
                 bean.on(document, 'click', '.js-site-message', function() {
-                    Cookies.add("GU_VIEW", "responsive", 365);
-                    Cookies.add("GU_ALPHA", "2", 365);
+                    Cookies.add('GU_VIEW', 'responsive', 365);
+                    Cookies.add('GU_ALPHA', '2', 365);
                 });
                 var message = new Message('onboard', { type: 'modal' }),
                     path = (document.location.pathname) ? document.location.pathname : '/',
@@ -480,7 +480,7 @@ define([
                 modules.transcludeRelated(config, context);
                 modules.initRightHandComponent(config, context);
             }
-            mediator.emit("page:common:deferred:loaded", config, context);
+            mediator.emit('page:common:deferred:loaded', config, context);
         });
     };
 
@@ -510,7 +510,7 @@ define([
             modules.runForseeSurvey(config);
             modules.startRegister();
         }
-        mediator.emit("page:common:ready", config, context);
+        mediator.emit('page:common:ready', config, context);
     };
 
     var init = function (config, context) {
