@@ -2,8 +2,9 @@ define([
     'bonzo',
     'qwery',
     'bean',
-    'common/utils/detect'
-], function(bonzo, qwery, bean, detect){
+    'common/utils/detect',
+    'lodash/collections/filter'
+], function(bonzo, qwery, bean, detect, _filter){
 
     function Layout(config) {
         var slug = config.page.pageId.split("/").pop().replace('-sp-', '');
@@ -40,6 +41,23 @@ define([
 
                 vid.play();
             });
+        },
+
+        "mps-debate-ukraine-politics-live-blog" : function() {
+            var containerTmp = '<ul class="key-events js-key-events" data-link-name="key-events">{{items}}</ul>';
+            var itemTmp = '<li class="key-events__item"><a href="{{hash}}">{{title}}</a></li>';
+
+            //Loop over key events and append to fragment
+            var items = _filter(qwery('.is-key-event', this.container), function(el) {
+                return qwery('.block-title', el).length;
+            }).map(function(el) {
+                var tmp = itemTmp.replace('{{hash}}', '#' + el.id);
+                    tmp = tmp.replace('{{title}}', bonzo(qwery('.block-title', el)).text());
+               return tmp;
+            }).join(' ');
+
+            //Clear right hand column and insert items
+            bonzo(qwery('.js-right-hand-component')).empty().addClass('u-sticky').prepend(containerTmp.replace('{{items}}', items));
         }
     };
 
