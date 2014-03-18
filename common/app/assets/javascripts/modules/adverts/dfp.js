@@ -59,7 +59,7 @@ define([
     };
 
     DFP.prototype.setListeners = function() {
-        // googletag.on('gpt-slot_rendered', this.parseAd.bind(this));
+        googletag.on('gpt-slot_rendered', this.parseAd.bind(this));
     };
 
     DFP.prototype.setPageTargetting = function() {
@@ -127,14 +127,11 @@ define([
         var $slot = $('#'+ slot.getSlotId().getDomId());
 
         this.checkForBreakout($slot);
-        // this.addLabel($slot);
+        this.addLabel($slot);
     };
 
     DFP.prototype.checkForBreakout = function($slot) {
         var frameContents = $slot[0].querySelector('iframe').contentDocument.body;
-
-        // Make sure the parent is showing
-        // $slot.parent().show();
 
         for(var cls in breakoutHash) {
             var $el = bonzo(frameContents.querySelector('.'+ cls));
@@ -144,16 +141,12 @@ define([
                 postscribe($slot[0], breakoutHash[cls].replace(/%content%/g, $el.html()));
             }
         }
-
-        // if(frameContents.innerHTML !== '') {
-        //     this.addLabel($slot);
-        // }
     };
 
     DFP.prototype.addLabel = function($slot) {
         var $parent = $slot.parent();
 
-        if($parent.hasClass('ad-label--showing') || $parent.data('label') === false) {
+        if($slot[0].style.display === 'none' || $parent.hasClass('ad-label--showing') || $parent.data('label') === false) {
             return false;
         }
 
