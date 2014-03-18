@@ -140,11 +140,6 @@ define([
 
                     newItems = opts.newItemsConstructor(id, sourceItem, targetList);
 
-                    if (!newItems[0]) {
-                        alertBadContent(id);
-                        return;
-                    }
-
                     targetList.items.splice(insertAt, 0, newItems[0]);
 
                     opts.newItemsValidator(newItems)
