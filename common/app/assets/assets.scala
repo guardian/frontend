@@ -71,6 +71,7 @@ class Assets(base: String, assetMap: String = "assets/assets.map") extends Loggi
       project match {
         case "facia" => "stylesheets/old-ie.head.facia.css"
         case "identity" => "stylesheets/old-ie.head.identity.css"
+        case "football" => "stylesheets/old-ie.head.football.css"
         case _ => "stylesheets/old-ie.head.default.css"
       }
     }
@@ -78,6 +79,7 @@ class Assets(base: String, assetMap: String = "assets/assets.map") extends Loggi
       project match {
         case "facia" => "stylesheets/ie9.head.facia.css"
         case "identity" => "stylesheets/ie9.head.identity.css"
+        case "football" => "stylesheets/ie9.head.football.css"
         case _ => "stylesheets/ie9.head.default.css"
       }
     }

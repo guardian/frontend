@@ -161,6 +161,15 @@
     }
 }
 
+.article__head__comment-count {
+    @include rem((
+        height: 16px + $gs-baseline //font-size + $gs-baseline
+    ));
+    @include mq(tablet) {
+        display: none;
+    }
+}
+
 .article__dateline {
     position: relative;
     color: $c-neutral2;
@@ -351,6 +360,7 @@
 }
 
 .byline-img {
+    position: relative;
     width: gs-span(1);
     height: 60px; //Intentionally off grid
     @include rem((
@@ -361,7 +371,6 @@
     background-color: $c-neutral7;
 
     @include mq(leftCol) {
-        position: relative;
         width: gs-span(2);
         height: gs-span(2); //This is intentionally square
         margin-right: 0;
@@ -372,15 +381,15 @@
 }
 
 .byline-img__img {
-    width: 100%;
-
+    position: absolute;
+    width: auto;
     //This centres the image within its container
+    height: 110%;
+    bottom: -6px;
+    left: -15%;
+
     @include mq(leftCol) {
-        position: absolute;
-        width: auto;
-        height: 110%;
         bottom: -14px;
-        left: -15%;
     }
 }
 

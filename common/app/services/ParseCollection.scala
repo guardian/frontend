@@ -28,6 +28,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
 
   case class InvalidContent(id: String) extends Throwable(s"Invalid Content: $id")
   val showFieldsQuery: String = FaciaDefaults.showFields
+  val showFieldsWithBodyQuery: String = FaciaDefaults.showFieldsWithBody
   val queryMessage: Option[String] = Option("facia")
 
   case class CollectionMeta(lastUpdated: Option[String], updatedBy: Option[String], updatedEmail: Option[String])
@@ -147,7 +148,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
           lazy val supportingLinks: List[CollectionItem] = retrieveSupportingLinks(collectionItem)
           if (!hasParent) getArticles(supportingLinks, edition, hasParent=true) else Future.successful(Nil)
         }
-        val response = ContentApi().item(collectionItem.id, edition, queryMessage).showFields(showFieldsQuery).response
+        val response = ContentApi().item(collectionItem.id, edition, queryMessage).showFields(showFieldsWithBodyQuery).response
 
         val content = response.map(_.content).recover {
           case apiError: com.gu.openplatform.contentapi.ApiError if apiError.httpStatus == 404 => {

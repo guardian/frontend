@@ -14,7 +14,7 @@ td {
     th,
     td,
     thead td {
-        @include fs-data(4);
+        @include fs-data(4, true);
         @include rem((
             padding: $table-baseline*2
         ));
@@ -26,14 +26,17 @@ td {
     border-top: 2px solid $c-newsAccent;
     color: $c-neutral1;
 
-    caption {
+    caption,
+    .table__caption {
         @include fs-header(2);
         @include rem((
             padding-top: $gs-baseline/4,
             padding-bottom: $gs-baseline
         ));
+        
         border-top: 1px dotted $c-neutral5;
         color: $c-neutral1;
+        font-weight: normal;
         text-align: left;
     }
 
@@ -64,6 +67,13 @@ td {
     }
 
     @include mq($to: tablet) { @include table--small; }
+    @include mq($to: desktop) {
+        th,
+        td,
+        thead td {
+            @include fs-data(4, true);
+        }
+    }
 }
 
 .table--small {

@@ -2,16 +2,15 @@
 @import conf.Switches._
 
 @if(CssFromStorageSwitch.isSwitchedOn && !play.Play.isDev()) {
-
-    <noscript>
-        <!--[if (gt IE 9) | (IEMobile)]><!-->
+    @*
+      - Include any browser [<!-->]
+      - Exclude IE < 10 [(gt IE 9)]
+          - As a result, no IE mobile should parse this code
+    *@
+    <!--[if (gt IE 9)]><!-->
+        <noscript>
             <link rel="stylesheet" id="global-css" type="text/css" href="@Static("stylesheets/global.css")" />
-        <!--<![endif]-->
-    </noscript>
-    <!--[if (gt IE 9) | (IEMobile)]>
-        <link rel="stylesheet" type="text/css" href="@Static("stylesheets/global.css")" />
-    <![endif]-->
-    <!--[if (gt IE 9) & (!IEMobile)]><!-->
+        </noscript>
         <script>
             (function() {
                 function injectElement(e) {
@@ -64,15 +63,19 @@
 
                 if(guardian.isModernBrowser && !guardian.css.loaded && 'withCredentials' in new XMLHttpRequest() && !/W(indows Phone|PDesktop)/.test(navigator.userAgent)) {
                     loadCssWithAjax();
-                } else if(!guardian.isModernBrowser || !('withCredentials' in new XMLHttpRequest())){
+                } else {
                     loadCssWithLink();
                 }
             })();
         </script>
     <!--<![endif]-->
 } else {
-    <!--[if (gt IE 9) | (IEMobile)]><!-->
+    @*
+      - Include any browser [<!-->]
+      - Exclude IE < 10 [(gt IE 9)]
+      - Exclude IE Mobile [&(!IEMobile)]
+    *@
+    <!--[if (gt IE 9)&(!IEMobile)]><!-->
         <link rel="stylesheet" id="global-css" type="text/css" href="@Static("stylesheets/global.css")" />
     <!--<![endif]-->
-
 }

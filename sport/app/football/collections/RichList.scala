@@ -26,5 +26,18 @@ trait RichList {
       }
       loop(list, Nil).reverse
     }
+
+    def indexOfOpt(el: T): Option[Int] = {
+      list.indexOf(el) match {
+        case -1 => None
+        case i => Some(i)
+      }
+    }
+    def indexOfOpt(el: T, from: Int): Option[Int] = {
+      list.indexOf(el, from) match {
+        case -1 => None
+        case i => Some(i)
+      }
+    }
   }
 }
