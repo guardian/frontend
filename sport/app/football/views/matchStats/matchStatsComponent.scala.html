@@ -48,8 +48,8 @@
 
         <dt class="match-stats__caption">Offsides</dt>
         @defining(PercentMaker(home.offsides, away.offsides)){ case (homePercent, awayPercent) =>
-            <dd class="bar-fight__bar bar-fight__bar--home" style="background-color: @home.teamColour; width: @NudgePercent(homePercent, awayPercent)%;">@home.fouls</dd>
-            <dd class="bar-fight__bar" style="background-color: @away.teamColour; width: @NudgePercent(awayPercent, homePercent)%;">@away.fouls</dd>
+            <dd class="bar-fight__bar bar-fight__bar--home" style="background-color: @home.teamColour; width: @NudgePercent(homePercent, awayPercent)%;">@home.offsides</dd>
+            <dd class="bar-fight__bar" style="background-color: @away.teamColour; width: @NudgePercent(awayPercent, homePercent)%;">@away.offsides</dd>
         }
     </dl>
 </div>
