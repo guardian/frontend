@@ -54,7 +54,7 @@
         ));
         border: none;
         float: right;
-        color: #fff;
+        color: #ffffff;
         font-weight: bold;
         font-size: 13px;
         line-height: 19px;
@@ -72,7 +72,7 @@
             line-height: 28px;
         }
 
-        .i-chevron-right-white {
+        .i-filter-arrow-down {
             width: 20px;
             height: 20px;
             background-color: $c-newsDefault;
@@ -81,6 +81,7 @@
                 padding: 4px
             ));
             border-radius: 50%;
+            @include transform(rotate(-90deg));
         }
     }
 
@@ -112,7 +113,7 @@
                 line-height: 32px;
             }
 
-            .i-chevron-right-white {
+            .i-filter-arrow-down {
                 @include rem((
                     padding: 6px
                 ));
