@@ -64,6 +64,13 @@ object MatchStatus extends Logging {
 
 }
 
+object colourCheck {
+  def apply(colour: String) = {
+    if (colour == "#FFFFFF") "#EEEEEE"
+    else colour
+  }
+}
+
 object NudgePercent {
   // the realities of padding and margins means we never actually want 100%
   def apply(main: Int, other: Int) = {

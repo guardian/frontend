@@ -39,7 +39,7 @@
 
 .goal-attempts__label {
     @include rem((
-        left: $gs-gutter/2
+        left: $gs-gutter/3
     ));
     font-weight: normal;
     position: absolute;
@@ -58,7 +58,7 @@
     @include box-sizing(border-box);
     @include fs-bodyCopy(4);
     @include rem((
-        padding-left: $gs-gutter/2,
+        padding-left: $gs-gutter/3,
         padding-top: $gs-baseline*2
     ));
     font-weight: 900;
@@ -111,6 +111,28 @@
     background-color: $c-neutral1;
     border-right: 2px solid #ffffff;
     text-align: left;
+}
+
+
+/**
+ * This will be our unfortunate solution until we do colour checking in play.
+ */
+.match-stats--darken-home {
+    .bar-fight__bar--home,
+    .goal-attempts__label,
+    .goal-attempts__off-target--home-team,
+    .goal-attempts__on-target--home-team {
+        color: $c-neutral1;
+        text-shadow: none;
+    }
+}
+
+.match-stats--darken-away {
+    .bar-fight__bar--away,
+    .goal-attempts__off-target--away-team,
+    .goal-attempts__on-target--away-team {
+        color: $c-neutral1;
+    }
 }
 
 
