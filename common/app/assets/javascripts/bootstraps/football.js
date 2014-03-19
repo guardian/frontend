@@ -4,9 +4,11 @@ define([
     'bean',
     'common/utils/context',
     'common/utils/config',
-    'common/modules/sport/football/page',
+    'common/utils/page',
+    'common/modules/sport/football/info',
     'common/modules/sport/football/match-list',
     'common/modules/sport/football/match-info',
+    'common/modules/sport/football/match-stats',
     'common/modules/sport/football/score-board',
     'common/modules/sport/football/table'
 ], function (
@@ -16,15 +18,19 @@ define([
     context,
     config,
     page,
+    info,
     MatchList,
     MatchInfo,
+    MatchStats,
     ScoreBoard,
     Table
 ) {
     context = context();
 
     function init() {
-        page.isMatch(function(match) {
+        var $article = $('.js-article__container', context);
+
+        info.isMatch(function(match) {
             var $h = $('.article__headline', context),
                 matchInfo = new MatchInfo(match, config.page.pageId),
                 scoreBoard = new ScoreBoard(),
@@ -46,18 +52,34 @@ define([
                 scoreBoard.template = config.page.isLiveBlog ? resp.matchSummary : resp.scoreSummary;
                 scoreContainer.innerHTML = '';
                 scoreBoard.render(scoreContainer);
+
+                // TODO (jamesgorrie): The stats component should travel with this lot. Two calls is a bit crap
+                if (!match.id) {
+                    var statsUrl = $('.tab--stats a', context).attr('href').replace(/^.*\/\/[^\/]+/, ''),
+                        statsContainer = bonzo.create('<div class="match-stats__container"></div>'),
+                        matchStats = new MatchStats(statsUrl);
+
+                    page.rightHandComponentVisible(function(el) {
+                        bonzo(el).append(statsContainer);
+                    }, function() {
+                        $article.append(statsContainer);
+                    });
+                    matchStats.fetch(statsContainer);
+                }
             });
         });
 
-        page.isCompetition(function(competition) {
+        info.isCompetition(function(competition) {
             var table = new Table(competition),
                 tableContainer = bonzo.create('<div class="js-football-table" data-link-name="football-table-embed"></div>');
 
-            $('.js-right-hand-component', context).append(tableContainer);
-            table.fetch(tableContainer);
+            page.rightHandComponentVisible(function(el) {
+                bonzo(el).append(tableContainer);
+                table.fetch(tableContainer);
+            });
         });
 
-        page.isLiveClockwatch(function() {
+        info.isLiveClockwatch(function() {
             var ml = new MatchList('live', 'premierleague'),
                 $img = $('.media-primary'),
                 $matchListContainer = bonzo(bonzo.create('<div class="football-match__list" data-link-name="football-matches-clockwatch"></div>'))

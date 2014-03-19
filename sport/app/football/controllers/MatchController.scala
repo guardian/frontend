@@ -58,8 +58,8 @@ object MatchController extends Controller with Football with Requests with Loggi
 
       page map { page =>
         val htmlResponse = () => football.views.html.matchStats.matchStatsPage(page)
-        val jsonResponse = () => football.views.html.matchStats.matchStats(page)
-        renderFormat(htmlResponse, jsonResponse, page, Switches.all)
+        val jsonResponse = () => football.views.html.matchStats.matchStatsComponent(page)
+        renderFormat(htmlResponse, jsonResponse, page)
       }
     }
 

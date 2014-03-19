@@ -67,10 +67,10 @@ object MatchStatus extends Logging {
 object NudgePercent {
   // the realities of padding and margins means we never actually want 100%
   def apply(main: Int, other: Int) = {
-    if (main == 0 && other == 0) 49.5
-    else if (main >= 99) 98
-    else if (main < 1) 1
-    else main - 0.5
+    if (main == 0 && other == 0) 50
+    else if (main >= 91) 91
+    else if (main < 9) 9
+    else main
   }
 }
 
