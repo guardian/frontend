@@ -261,7 +261,7 @@ $c-replyText: $c-body;
 .d-comment__content {
     @include mq($comment-meta-breakpoint) {
         @include rem((
-            margin-left: 160px
+            margin-left: gs-span(2) + $gs-gutter
         ));
     }
     @include mq(leftCol) {
@@ -281,7 +281,7 @@ $c-replyText: $c-body;
     color: $c-neutral1;
     font-weight: bold;
     @include rem((
-    margin-bottom: $gs-baseline/6
+        margin-bottom: $gs-baseline/6
     ));
     .i-gupickasterisk {
         margin-bottom: -4px;
@@ -620,12 +620,15 @@ $c-replyText: $c-body;
 .d-thread--responses {
     padding-left: $gs-gutter;
     @include mq(tablet) {
-        padding-left: $gs-gutter * 2.5;
+        @include rem((
+            padding-left: $gs-gutter * 2.5
+        ))
+
     }
 
     @include mq($comment-meta-breakpoint) {
         @include rem((
-            margin-left: $gs-gutter * 8
+            margin-left: gs-span(2) + $gs-gutter
         ));
     }
     @include mq(leftCol) {
