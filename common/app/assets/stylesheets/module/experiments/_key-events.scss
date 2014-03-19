@@ -1,0 +1,29 @@
+.key-events__head {
+    @include fs-header(2);
+    padding: $gs-baseline*2 0;
+    color: $c-neutral1;
+}
+
+.key-events {
+    width: 100%;
+    background: $c-neutral8;
+    border: 1px solid $c-neutral3;
+}
+
+.key-events__item {
+    padding: $gs-baseline;
+
+    &:hover {
+        background: $c-neutral6;
+    }
+}
+
+.key-events__item__time {
+    width: gs-span(1);
+
+}
+
+.key-events__item__text {
+    color: $c-neutral2;
+    @include fs-bodyCopy(1);
+}

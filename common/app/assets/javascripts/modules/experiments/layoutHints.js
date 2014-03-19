@@ -44,14 +44,16 @@ define([
         },
 
         "mps-debate-ukraine-politics-live-blog" : function() {
-            var containerTmp = '<ul class="key-events js-key-events" data-link-name="key-events">{{items}}</ul>';
-            var itemTmp = '<li class="key-events__item"><a href="{{hash}}">{{title}}</a></li>';
+            var containerTmp = '<h2 class="key-events__head">In brief...</h2><ul class="key-events js-key-events u-unstyled" data-link-name="key-events">{{items}}</ul>';
+            var itemTmp = '<li class="key-events__item media"><span class="key-events__item__time media__img">{{time}}</span>' +
+                            '<a class="key-events__item__text media__body" href="{{hash}}">{{title}}</a></li>';
 
             //Loop over key events and append to fragment
             var items = _filter(qwery('.is-key-event', this.container), function(el) {
                 return qwery('.block-title', el).length;
             }).map(function(el) {
                 var tmp = itemTmp.replace('{{hash}}', '#' + el.id);
+                    tmp = tmp.replace('{{time}}', bonzo(qwery('.block-time', el)).text());
                     tmp = tmp.replace('{{title}}', bonzo(qwery('.block-title', el)).text());
                return tmp;
             }).join(' ');
