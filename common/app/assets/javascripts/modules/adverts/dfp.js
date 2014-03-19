@@ -28,9 +28,27 @@ define([
 ) {
 
     /**
-     * <div class="ad-slot__dfp AD_SLOT_CLASS" data-name="AD_SLOT_NAME" data-size="300,250">
-     *     <div id="SLOT_ID" class="ad-container"></div>  <-- preferably generate this
+     * Right, so an explanation as to how this works...
+     *
+     * Create a new ad slot using the following code:
+     *
+     * <div class="ad-slot__dfp AD_SLOT_CLASS" data-name="AD_SLOT_NAME" data-mobile="300,50|320,50" data-desktop="300,250">
+     *     <div id="SLOT_ID" class="ad-container"></div>
      * </div>
+     *
+     * You can set the set which size ad(s) should be loaded at which breakpoint by using the
+     * data attribute. The available breakpoints and their sizes are listed in the config below.
+     * You do not need to specify all of these. If you set a mobile size, then that size will be used
+     * for all ads in that slot until another breakpoint is detected, in the above case, that's desktop.
+     *
+     * There is also a function for breaking the ad content out of their iframes. This can be done by
+     * adding the classes below (breakoutHash) to the ad content (in DFP).
+     *
+     * Labels are automatically prepended to an ad that was successfully loaded.
+     *
+     * TODO: breakoutHash could just be one class and the script tag moved to inside the ad
+     * TODO: remove labels when changing breakpoint
+     *
      */
 
     var breakoutHash = {

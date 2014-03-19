@@ -242,7 +242,6 @@ define([
             if(!userPrefs.isOff('adverts') && config.switches.adverts && !config.page.blockVideoAds && !config.page.shouldHideAdverts) {
 
                 var hasAdsToLoad = config.switches.oasAdverts || config.switches.dfpAdverts,
-                    isArticle    = config.page.contentType === 'Article' && !config.page.isLiveBlog,
                     onResize = {
                         cmd: [],
                         execute: function() {
@@ -256,7 +255,7 @@ define([
 
                 // If either OAS or DFP is switched on, and it's an article
                 // excluding live blogs, then create our inline adverts
-                if(hasAdsToLoad && isArticle) {
+                if(hasAdsToLoad && config.page.contentType === 'Article' && !config.page.isLiveBlog) {
                     new ArticleBodyAdverts().init();
                 }
 
