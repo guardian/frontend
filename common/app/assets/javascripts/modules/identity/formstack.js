@@ -1,3 +1,18 @@
+/**
+    Formstack - composer integration
+
+    This script runs INSIDE a formstack iframe and is initialised by the NGW
+    requireJs setup
+
+    It is set up to send messages to the parent script in window.top to allow
+    the cross domain adjustment of height for variable content from formstack.
+
+    It also takes care of removing the formstack default styling and applying
+    Guardian styling via the NGW scss system.
+
+     - Chris Finch, CSD - Identity, March '14
+*/
+
 define([
     'common/$',
     'common/common',
@@ -124,8 +139,8 @@ define([
         };
 
         self.postMessage = function(message) {
-            var domain = config.page.idUrl;
-            window.top.postMessage(message, domain);
+            //var domain = config.page.idUrl;
+            window.top.postMessage(message, "*");
         };
 
     }
