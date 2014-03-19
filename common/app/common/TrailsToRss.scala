@@ -1,6 +1,6 @@
 package common
 
-import model.{Content, Article, Trail}
+import model.{MetaData, Content, Article, Trail}
 import views.support.{ImgSrc, cleanTrailText}
 import play.api.mvc.RequestHeader
 import scala.collection.JavaConverters._
@@ -9,10 +9,14 @@ import java.io.StringWriter
 import org.jsoup.Jsoup
 
 object TrailsToRss {
-  def apply(title: Option[String], trails: Seq[Trail])(implicit request: RequestHeader): String = {
+
+  def apply(metaData: MetaData, trails: Seq[Trail])(implicit request: RequestHeader): String =
+    TrailsToRss(Some(metaData.webTitle), trails, Some(metaData.url), metaData.description)
+
+  def apply(title: Option[String], trails: Seq[Trail], url: Option[String] = None, description: Option[String] = None)(implicit request: RequestHeader): String = {
 
     import com.sun.syndication.feed.synd._
-    import com.sun.syndication.io.{FeedException, SyndFeedOutput}
+    import com.sun.syndication.io.SyndFeedOutput
 
     val feedTitle = title.map(t => s"$t | The Guardian").getOrElse("The Guardian")
 
@@ -22,16 +26,16 @@ object TrailsToRss {
 
     // This image fits this spec. - https://support.google.com/news/publisher/answer/1407682
     image.setUrl("http://assets.guim.co.uk/images/guardian-logo-rss.c45beb1bafa34b347ac333af2e6fe23f.png")
-    image.setTitle(feedTitle)
+    image.setTitle("The Guardian")
 
     // Feed
     val feed = new SyndFeedImpl
     feed.setFeedType("rss_2.0")
     feed.setTitle(feedTitle)
-    feed.setDescription("Latest news and features from theguardian.com, the world's leading liberal voice")
-    feed.setLink("http://www.theguardian.com")
+    feed.setDescription(description.getOrElse("Latest news and features from theguardian.com, the world's leading liberal voice"))
+    feed.setLink("http://www.theguardian.com" + url.getOrElse(""))
     feed.setLanguage("en-gb")
-    feed.setCopyright(s"Guardian News and Media Limited or its affiliated companies. All rights reserved. ${DateTime.now.getYear}.")
+    feed.setCopyright(s"Guardian News and Media Limited or its affiliated companies. All rights reserved. ${DateTime.now.getYear}")
     feed.setImage(image)
     feed.setPublishedDate(DateTime.now.toDate)
     feed.setEncoding("utf-8")
