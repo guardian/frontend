@@ -5,7 +5,6 @@ define([
     'common/utils/context',
     'common/utils/config',
     'common/utils/page',
-    'common/modules/sport/football/info',
     'common/modules/sport/football/match-list',
     'common/modules/sport/football/match-info',
     'common/modules/sport/football/match-stats',
@@ -18,7 +17,6 @@ define([
     context,
     config,
     page,
-    info,
     MatchList,
     MatchInfo,
     MatchStats,
@@ -30,7 +28,7 @@ define([
     function init() {
         var $article = $('.js-article__container', context);
 
-        info.isMatch(function(match) {
+        page.isMatch(function(match) {
             var $h = $('.article__headline', context),
                 matchInfo = new MatchInfo(match, config.page.pageId),
                 scoreBoard = new ScoreBoard(),
@@ -69,7 +67,7 @@ define([
             });
         });
 
-        info.isCompetition(function(competition) {
+        page.isCompetition(function(competition) {
             var table = new Table(competition),
                 tableContainer = bonzo.create('<div class="js-football-table" data-link-name="football-table-embed"></div>');
 
@@ -79,7 +77,7 @@ define([
             });
         });
 
-        info.isLiveClockwatch(function() {
+        page.isLiveClockwatch(function() {
             var ml = new MatchList('live', 'premierleague'),
                 $img = $('.media-primary'),
                 $matchListContainer = bonzo(bonzo.create('<div class="football-match__list" data-link-name="football-matches-clockwatch"></div>'))
