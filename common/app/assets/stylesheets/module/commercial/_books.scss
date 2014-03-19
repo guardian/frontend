@@ -105,10 +105,13 @@
         }
 
         .commercial__call-to-action {
-            line-height: 32px;
             @include rem((
                 margin-top: ($gs-baseline/3)*2
             ));
+
+            .commercial__call-to-action__label {
+                line-height: 32px;
+            }
 
             .i-chevron-right-white {
                 @include rem((
