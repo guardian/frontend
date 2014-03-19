@@ -44,6 +44,9 @@
 }
 .top-banner-ad-container {
     min-height: 70px;
+    @include rem((
+        padding: 10px 0 4px 0
+    ));
 
     @include mq(faciaLeftCol) {
         @include rem((

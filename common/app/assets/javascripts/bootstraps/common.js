@@ -11,6 +11,7 @@ define([
     'bonzo',
     'bean',
     'enhancer',
+    'lodash/objects/assign',
     'lodash/functions/debounce',
     //Modules
     'common/utils/storage',
@@ -55,6 +56,7 @@ define([
     bonzo,
     bean,
     enhancer,
+    extend,
     debounce,
 
     storage,
@@ -270,7 +272,14 @@ define([
                 }
 
                 if(config.switches.dfpAdverts) {
-                    var dfpAds = new DFP(config);
+                    var dfpAds,
+                        options = {};
+
+                    if(config.switches.loadOnlyCommercialComponents) {
+                        options.dfpSelector = '.ad-slot__commercial-component';
+                    }
+
+                    dfpAds = new DFP(extend(config, options));
                     dfpAds.init();
                     onResize.cmd.push(dfpAds.reload);
                 }

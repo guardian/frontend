@@ -108,6 +108,11 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
+  val LoadOnlyCommercialComponents = Switch("Advertising", "load-only-commercial-components",
+    "If this switch is on then only commercial components will be loaded via DFP.",
+    safeState = On, sellByDate = endOfQ4
+  )
+
   val VideoAdvertSwitch = Switch("Advertising", "video-adverts",
     "If this switch is on then OAS video adverts will be loaded with JavaScript.",
     safeState = Off, sellByDate = endOfQ4
@@ -421,6 +426,7 @@ object Switches extends Collections {
     AdvertSwitch,
     OASAdvertSwitch,
     DFPAdvertSwitch,
+    LoadOnlyCommercialComponents,
     VideoAdvertSwitch,
     AudienceScienceSwitch,
     DiscussionSwitch,

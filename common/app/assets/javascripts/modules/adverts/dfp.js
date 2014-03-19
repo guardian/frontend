@@ -50,6 +50,7 @@ define([
 
     DFP.prototype.config = {
         dfpUrl: '//www.googletagservices.com/tag/js/gpt.js',
+        dfpSelector: '.ad-slot__dfp',
         adContainerClass: '.ad-container',
         breakpoints: {
             mobile: 0,
@@ -185,7 +186,7 @@ define([
     };
 
     DFP.prototype.init = function() {
-        this.dfpAdSlots = $('.ad-slot__dfp');
+        this.dfpAdSlots = $(this.config.dfpSelector);
 
         if(this.dfpAdSlots.length === 0) {
             return false;
