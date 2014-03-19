@@ -1,5 +1,9 @@
 @(books: Seq[model.commercial.books.Book])(implicit request: RequestHeader)
 
+@if(play.Play.isDev()) {
+    <link rel="stylesheet" href="@Static("stylesheets/head.default.css")" />
+    <link rel="stylesheet" href="@Static("stylesheets/global.css")" />
+}
 <link rel="stylesheet" href="@Static("stylesheets/commercial.css")" />
 
 <div class="commercial books-component" role="complementary">
@@ -18,7 +22,9 @@
                     <div>
                         <label for="bookshop" class="u-h">Search bookshop:</label>
                         <input id="bookshop" name="keyword" class="commercial__search__input" type="text" placeholder="Search bookshop" />
-                        <input class="commercial__search__submit svg-i-search" type="submit" name="go" />
+                        <button type="submit" class="u-button-reset commercial__search__submit">
+                            <i class="i i-search"></i>
+                        </button>
                         <input value="%JustOmnitureToken%" name="INTCMP" type="hidden" />
                     </div>
                 </form>
@@ -51,9 +57,7 @@
                                 }
                                 </p>
                             </a>
-                            <a href="@book.buyUrl" data-link-name="merchandising-bookshop-v0_7_2014-03-12-low-@{book.isbn}-@{book.author}-@{book.title}-button">
-                                <button class="btn books-component__buy-now-button">Buy now</button>
-                            </a>
+                            <a href="@book.buyUrl" class="books-component__buy-now-button" data-link-name="merchandising-bookshop-v0_7_2014-03-12-low-@{book.isbn}-@{book.author}-@{book.title}-button">Buy now</a>
                         </li>
                     }
                     </ul>
@@ -64,7 +68,9 @@
                         <div>
                             <label for="bookshop" class="u-h">Search bookshop:</label>
                             <input id="bookshop" name="keyword" class="commercial__search__input" type="text" placeholder="Search bookshop" />
-                            <input class="commercial__search__submit svg-i-search" type="submit" name="go" />
+                            <button type="submit" class="u-button-reset commercial__search__submit">
+                                <i class="i i-search"></i>
+                            </button>
                             <input value="%JustOmnitureToken%" name="INTCMP" type="hidden" />
                         </div>
                     </form>

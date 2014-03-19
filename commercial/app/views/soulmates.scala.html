@@ -1,7 +1,11 @@
 @(members: Seq[model.commercial.soulmates.Member])(implicit request: RequestHeader)
 
-<link rel="stylesheet" href="@Static("stylesheets/commercial.css")" />
+@if(play.Play.isDev()) {
+    <link rel="stylesheet" href="@Static("stylesheets/head.default.css")" />
+    <link rel="stylesheet" href="@Static("stylesheets/global.css")" />
+}
 
+<link rel="stylesheet" href="@Static("stylesheets/commercial.css")" />
 
 <aside class="commercial soulmates-component" role="complementary">
     <div class="facia-container facia-container--layout-article monocolumn-wrapper monocolumn-wrapper--no-limit">
