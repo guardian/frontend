@@ -1,37 +1,63 @@
 @(books: Seq[model.commercial.books.Book])(implicit request: RequestHeader)
 
+@if(play.Play.isDev()) {
+    <link rel="stylesheet" href="@Static("stylesheets/head.default.css")" />
+    <link rel="stylesheet" href="@Static("stylesheets/global.css")" />
+}
 <link rel="stylesheet" href="@Static("stylesheets/commercial.css")" />
 
-<aside class="commercial books-component" role="complementary">
+<div class="commercial books-component" role="complementary">
     <div class="facia-container facia-container--layout-article monocolumn-wrapper monocolumn-wrapper--no-limit">
         <div class="container container--row-pattern">
             <div class="container__border hide-on-mobile"></div>
 
-            <h2 class="container__title">
-                <span class="container__logo svg-i-bookshop-logo--guardian"></span>
-                <span class="container__logo svg-i-bookshop-logo--bookshop"></span>
-            </h2>
+            <div class="container__title u-cf">
+                <div class="commercial__logo">
+                    <span class="container__logo svg-i-bookshop-logo--guardian"></span>
+                    <span class="container__logo svg-i-bookshop-logo--bookshop"></span>
+                </div>
+                <h3 class="commercial__title hide-on-mobile">This week's bestsellers</h3>
+
+                <form action="http://www.guardianbookshop.co.uk/BerteShopWeb/search.do" method="POST" class="commercial__search hide-on-mobile" name="QuickSearchForm">
+                    <div>
+                        <label for="bookshop" class="u-h">Search bookshop:</label>
+                        <input id="bookshop" name="keyword" class="commercial__search__input" type="text" placeholder="Search bookshop" />
+                        <button type="submit" class="u-button-reset commercial__search__submit">
+                            <i class="i i-search"></i>
+                        </button>
+                        <input value="%JustOmnitureToken%" name="INTCMP" type="hidden" />
+                    </div>
+                </form>
+
+                <a href="http://www.guardianbookshop.co.uk/" class="commercial__call-to-action">
+                    <span class="commercial__call-to-action__label">Visit shop</span>
+                    <span class="i i-filter-arrow-down"></span>
+                </a>
+            </div>
 
             <div class="container__body">
                 <div class="commercial__body">
-                    <h3>This week's bestsellers</h3>
-
-                    <ul class="u-unstyled list">
+                    <ul class="u-unstyled lineitems">
                     @books.map { book =>
-                        <li class="list__item">
-                            <a href="@book.buyUrl" class="list__link" data-link-name="merchandising-bookshop-v0_7_2014-03-12-low-@{book.isbn}-@{book.author}-@{book.title}">
-                                <span class="list__count">@book.position</span>
+                        <li class="lineitem u-cf">
+                            <a href="@book.buyUrl" class="lineitem__link" data-link-name="merchandising-bookshop-v0_7_2014-03-12-low-@{book.isbn}-@{book.author}-@{book.title}">
                             @book.jacketUrl.map { url =>
-                                <div class="list__img js-image-upgrade" data-src="@url"></div>
+                                <div class="lineitem__img js-image-upgrade" data-src="@url"></div>
                             }
-                                <h4 class="list__title">@book.title</h4>
+                                <h4 class="lineitem__title">@book.title</h4>
                             @if(book.author) {
-                                <p class="list__author">by @book.author</p>
+                                <p class="lineitem__meta">By @book.author</p>
                             }
+                                <p class="books-component__price">
+                                @book.price.map { price =>
+                                    <span class="books-component__price__rrp">RRP &pound;@("%.2f".format(price))</span>
+                                }
+                                @book.offerPrice.map { price =>
+                                    <span class="books-component__price__our">Our price: &pound;@("%.2f".format(price))</span>
+                                }
+                                </p>
                             </a>
-                        @book.offerPrice.map { price =>
-                            <p class="list__price"><span class-"list__price__label">Our price: </span>&pound;@("%.2f".format(price))</p>
-                        }
+                            <a href="@book.buyUrl" class="books-component__buy-now-button" data-link-name="merchandising-bookshop-v0_7_2014-03-12-low-@{book.isbn}-@{book.author}-@{book.title}-button">Buy now</a>
                         </li>
                     }
                     </ul>
@@ -40,9 +66,11 @@
                 <div class="commercial__foot">
                     <form action="http://www.guardianbookshop.co.uk/BerteShopWeb/search.do" method="POST" class="commercial__search" name="QuickSearchForm">
                         <div>
-                            <label for="bookshop" class="u-h">Search the Guardian bookshop:</label>
-                            <input id="bookshop" name="keyword" class="commercial__search__input" type="text" placeholder="Search the Guardian bookshop" />
-                            <input class="commercial__search__submit svg-i-search-white" type="submit" name="go" value="" />
+                            <label for="bookshop" class="u-h">Search bookshop:</label>
+                            <input id="bookshop" name="keyword" class="commercial__search__input" type="text" placeholder="Search bookshop" />
+                            <button type="submit" class="u-button-reset commercial__search__submit">
+                                <i class="i i-search"></i>
+                            </button>
                             <input value="%JustOmnitureToken%" name="INTCMP" type="hidden" />
                         </div>
                     </form>
@@ -50,4 +78,4 @@
             </div>
         </div>
     </div>
-</aside>
+</div>

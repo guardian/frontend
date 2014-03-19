@@ -139,6 +139,20 @@
     }
 }
 
+@mixin f-textsans {
+    font-family: $text-sans;
+    -webkit-font-smoothing: antialiased;
+}
+@mixin fs-textsans($level, $size-only: false) {
+    $textsans: nth($fs-textsans, $level);
+
+    @include font-size(nth($textsans, 1), nth($textsans, 2));
+
+    @if $size-only == false {
+        @include f-textsans;
+    }
+}
+
 // CSS3 helpers
 // =============================================================================
 
