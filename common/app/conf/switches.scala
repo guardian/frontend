@@ -364,12 +364,6 @@ object Switches extends Collections {
     safeState = On, new DateMidnight().minusDays(1)
   )
 
-  // Facia
-  val PressedFacia = Switch("Facia", "pressed-facia",
-    "If this switch is on then it will use pressed JSON for all requests",
-    safeState = Off, sellByDate = never
-  )
-
   // Facia Tool Switches
   val ToolDisable = Switch("Facia Tool", "facia-tool-disable",
     "If this is switched on then the fronts tool is disabled",
@@ -472,7 +466,6 @@ object Switches extends Collections {
     FaciaToolPressSwitch,
     DogpileSwitch,
     ShowAllArticleEmbedsSwitch,
-    PressedFacia,
     FrontPressJobSwitch,
     LayoutHintsSwitch,
     HelveticaEasterEggSwitch,
