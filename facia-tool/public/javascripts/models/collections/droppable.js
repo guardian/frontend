@@ -19,23 +19,40 @@ define([
     function init() {
         droppable({
 
-            newItemConstructor: function (id, sourceItem, targetList) {
-                return new Article({
-                    id: id,
-                    meta: sourceItem ? cleanClone(sourceItem.meta) : undefined,
-                    parent: targetList.parent,
-                    parentType: targetList.parentType
+            newItemsConstructor: function (id, sourceItem, targetList) {
+                var items = [sourceItem || { id: id }];
+
+                if(sourceItem && sourceItem.meta && sourceItem.meta.supporting) {
+                    items = items.concat(sourceItem.meta.supporting);
+                }
+
+                return _.map(items, function(item) {
+                    return new Article({
+                        id: item.id,
+                        meta: cleanClone(item.meta),
+                        parent: targetList.parent,
+                        parentType: targetList.parentType
+                    });
                 });
             },
 
-            newItemValidator: contentApi.validateItem,
+            newItemsValidator: function(newItems) {
+                return contentApi.validateItem(newItems[0]);
+            },
 
-            newItemPersister: function(newItem, sourceItem, sourceList, targetList, id, position, isAfter) {
+            newItemsPersister: function(newItems, sourceItem, sourceList, targetList, id, position, isAfter) {
                 var itemMeta,
                     timestamp,
+                    supporting,
                     edits = {};
 
                 if (targetList.parentType === 'Article') {
+                    supporting = targetList.parent.meta.supporting.items;
+                    _.each(newItems.slice(1), function(item) {
+                        supporting.remove(function (supp) { return supp.id === item.id; });
+                        supporting.push(item);
+                    });
+                    contentApi.decorateItems(supporting());
                     targetList.parent.save();
                     return;
                 }
