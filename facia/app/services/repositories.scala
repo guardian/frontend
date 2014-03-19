@@ -20,22 +20,39 @@ case class IndexPage(page: MetaData, trails: Seq[Content])
 
 trait Index extends ConciergeRepository with QueryDefaults {
 
+  def normaliseTag(tag: String): String = {
+    val conversions: Map[String, String] =
+      Map("content" -> "type")
+
+    conversions.foldLeft(tag){
+      case (newTag, (from, to)) =>
+        if (newTag.startsWith(s"$from/"))
+          newTag.replace(from, to)
+        else
+          newTag
+    }
+  }
+
   def index(edition: Edition, leftSide: String, rightSide: String, page: Int): Future[Either[IndexPage, SimpleResult]] = {
 
     val section = leftSide.split('/').head
 
     // if the first tag is just one part then change it to a section tag...
-    val firstTag = leftSide match {
-      case SinglePart(wordsForUrl) => s"$wordsForUrl/$wordsForUrl"
-      case other => other
-    }
+    val firstTag = normaliseTag(
+      leftSide match {
+        case SinglePart(wordsForUrl) => s"$wordsForUrl/$wordsForUrl"
+        case other => other
+      }
+    )
 
     // if the second tag is just one part then it is in the same section as the first tag...
-    val secondTag = rightSide match {
-      case SinglePart(wordsForUrl) => s"$section/$wordsForUrl"
-      case SeriesInSameSection(series) => s"$section/$series"
-      case other => other
-    }
+    val secondTag = normaliseTag(
+      rightSide match {
+        case SinglePart(wordsForUrl) => s"$section/$wordsForUrl"
+        case SeriesInSameSection(series) => s"$section/$series"
+        case other => other
+      }
+    )
 
     val promiseOfResponse = SwitchingContentApi().search(edition)
       .tag(s"$firstTag,$secondTag")
