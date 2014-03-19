@@ -3,8 +3,9 @@ define([
     'qwery',
     'bean',
     'common/utils/detect',
+    'common/modules/ui/relativedates',
     'lodash/collections/filter'
-], function(bonzo, qwery, bean, detect, _filter){
+], function(bonzo, qwery, bean, detect, relativeDates, _filter){
 
     function Layout(config) {
         var slug = config.page.pageId.split("/").pop().replace('-sp-', '');
@@ -44,22 +45,38 @@ define([
         },
 
         "mps-debate-ukraine-politics-live-blog" : function() {
-            var containerTmp = '<h2 class="key-events__head">In brief...</h2><ul class="key-events js-key-events u-unstyled" data-link-name="key-events">{{items}}</ul>';
-            var itemTmp = '<li class="key-events__item media"><span class="key-events__item__time media__img">{{time}}</span>' +
-                            '<a class="key-events__item__text media__body" href="{{hash}}">{{title}}</a></li>';
+            var containerTmp = '<div class="key-events js-key-events"><div class="key-events__container u-sticky"><h2 class="key-events__head">In brief...</h2>' +
+                '               <ul class="key-events__list u-unstyled" data-link-name="key-events">{{items}}</ul></div></div>';
+            var itemTmp = '<li class="key-events__item js-key-event"><span class="key-events__item__time">{{time}}</span>' +
+                            '<a class="key-events__item__text" href="{{hash}}">{{title}}</a></li>';
+            var articleHeight = bonzo(qwery('.js-article__container')).dim().height;
 
             //Loop over key events and append to fragment
             var items = _filter(qwery('.is-key-event', this.container), function(el) {
                 return qwery('.block-title', el).length;
             }).map(function(el) {
                 var tmp = itemTmp.replace('{{hash}}', '#' + el.id);
-                    tmp = tmp.replace('{{time}}', bonzo(qwery('.block-time', el)).text());
+                    tmp = tmp.replace('{{time}}', qwery('.block-time', el)[0].innerHTML);
                     tmp = tmp.replace('{{title}}', bonzo(qwery('.block-title', el)).text());
                return tmp;
             }).join(' ');
 
             //Clear right hand column and insert items
-            bonzo(qwery('.js-right-hand-component')).empty().addClass('u-sticky').prepend(containerTmp.replace('{{items}}', items));
+            bonzo(qwery('.js-right-hand-component')).empty().prepend(containerTmp.replace('{{items}}', items));
+            bonzo(qwery('.js-key-events')).css('height', articleHeight);
+            bonzo(qwery('.js-key-event')).each(function(el) {
+                bonzo(qwery('time', el)).addClass('js-timestamp').attr('data-relativeformat', 'short');
+            });
+            relativeDates.init(qwery('.js-key-events'));
+
+            //HIde toolbar
+            bonzo(qwery('.live-toolbar')).addClass('mobile-and-tablet-only');
+
+            //Bind listeners
+            bean.on(qwery('.js-key-events')[0], 'click', '.js-key-event', function() {
+                bonzo(qwery('.js-key-event')).removeClass('is-active');
+                bonzo(this).addClass('is-active');
+            });
         }
     };
 
