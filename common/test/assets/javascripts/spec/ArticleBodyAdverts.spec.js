@@ -46,7 +46,7 @@ define([ 'common/common',
 
             it("Should insert an inline ad container to the available slot", function() {
                 articleBodyAdverts.init();
-                expect($('.ad-slot--inline').length).toBe(1);
+                expect($('.ad-slot.ad-slot--inline').length).toBe(1);
             });
         });
     });
