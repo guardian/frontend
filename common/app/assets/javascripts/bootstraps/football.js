@@ -4,9 +4,10 @@ define([
     'bean',
     'common/utils/context',
     'common/utils/config',
-    'common/modules/sport/football/page',
+    'common/utils/page',
     'common/modules/sport/football/match-list',
     'common/modules/sport/football/match-info',
+    'common/modules/sport/football/match-stats',
     'common/modules/sport/football/score-board',
     'common/modules/sport/football/table'
 ], function (
@@ -18,12 +19,15 @@ define([
     page,
     MatchList,
     MatchInfo,
+    MatchStats,
     ScoreBoard,
     Table
 ) {
     context = context();
 
     function init() {
+        var $article = $('.js-article__container', context);
+
         page.isMatch(function(match) {
             var $h = $('.article__headline', context),
                 matchInfo = new MatchInfo(match, config.page.pageId),
@@ -46,6 +50,20 @@ define([
                 scoreBoard.template = config.page.isLiveBlog ? resp.matchSummary : resp.scoreSummary;
                 scoreContainer.innerHTML = '';
                 scoreBoard.render(scoreContainer);
+
+                // TODO (jamesgorrie): The stats component should travel with this lot. Two calls is a bit crap
+                if (!match.id) {
+                    var statsUrl = $('.tab--stats a', context).attr('href').replace(/^.*\/\/[^\/]+/, ''),
+                        statsContainer = bonzo.create('<div class="match-stats__container"></div>'),
+                        matchStats = new MatchStats(statsUrl);
+
+                    page.rightHandComponentVisible(function(el) {
+                        bonzo(el).append(statsContainer);
+                    }, function() {
+                        $article.append(statsContainer);
+                    });
+                    matchStats.fetch(statsContainer);
+                }
             });
         });
 
@@ -53,8 +71,10 @@ define([
             var table = new Table(competition),
                 tableContainer = bonzo.create('<div class="js-football-table" data-link-name="football-table-embed"></div>');
 
-            $('.js-right-hand-component', context).append(tableContainer);
-            table.fetch(tableContainer);
+            page.rightHandComponentVisible(function(el) {
+                bonzo(el).append(tableContainer);
+                table.fetch(tableContainer);
+            });
         });
 
         page.isLiveClockwatch(function() {
