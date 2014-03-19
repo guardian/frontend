@@ -33,7 +33,7 @@ trait BestsellersApi extends XmlAdsApi[Book] {
           offerPrice = (book \ "offerprice").headOption.map(_.text).map(_.toDouble),
           description = OptString((book \ "description").text),
           jacketUrl = (book \ "jacketurl").headOption.map(node => (s"http:${node.text}").
-            replace("http://images.bertrams.com/", "http://c.guim.co.uk/books/")),
+            replace("http://images.bertrams.com/ProductImages/services/GetImage", "http://c.guim.co.uk/books")),
           buyUrl = Some((book \ "bookurl").text),
           position = Some((entry \ "Position").text).map(_.toInt),
           Some(category),
