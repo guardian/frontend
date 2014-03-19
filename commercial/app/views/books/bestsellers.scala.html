@@ -38,9 +38,7 @@
                         <li class="lineitem u-cf">
                             <a href="@book.buyUrl" class="lineitem__link" data-link-name="merchandising-bookshop-v0_7_2014-03-12-low-@{book.isbn}-@{book.author}-@{book.title}">
                             @book.jacketUrl.map { url =>
-                                <div class="lineitem__img js-image-upgrade" data-src="@url">
-                                    <img class="responsive-img" src="@url">
-                                </div>
+                                <div class="lineitem__img js-image-upgrade" data-src="@url"></div>
                             }
                                 <h4 class="lineitem__title">@book.title</h4>
                             @if(book.author) {
