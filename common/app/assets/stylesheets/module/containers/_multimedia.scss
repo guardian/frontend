@@ -3,37 +3,33 @@
     padding-bottom: $gs-baseline;
 
     .container__title,
-    .container__toggle__text,
-    .item__standfirst {
+    .container__toggle__text {
         color: #ffffff;
+    }
+    .collection__item {
+        margin-bottom: 0;
     }
     .item {
         margin-bottom: 0;
     }
     .item__title,
-    .item__standfirst {
-        @include rem((
-            margin-left: 7px,
-            margin-right: 7px
-        ));
+    .linkslist__action {
+        color: #ffffff;
     }
-    .item__title,
+    .item__link:visited .item__title,
+    .linkslist__action:visited {
+       color: mix(#ffffff, lighten($c-neutral1, 7%), 80%);
+    }
     .item__link {
-        color: $c-commentAccent
+        border-top-color: $c-commentAccent;
     }
+    .item__standfirst,
     .item__byline,
     .item__meta{
         display: none;
     }
-    .collection__item {
-        margin-bottom: 0;
-
-        .item__title {
-            @include fs-headline(2, $size-only: true);
-        }
-    }
-    .collection-wrapper--position-2 .item__media-wrapper {
-        display: none;
+    .collection-wrapper--position-1 .collection__item:first-child .item__link {
+        border-top-width: 0;
     }
     @include mq(tablet) {
         .container__title {
@@ -46,48 +42,21 @@
                 margin-right: 7px,
             ));
         }
-        .item__link {
-            border-top-width: 0;
-        }
-        .collection__item {
-            &:before {
-                border-left-color: #6c6c6c;
-            }
-            .item__standfirst {
-                display: block;
-            }
+        .collection__item:before {
+           border-left-color: #6c6c6c;
         }
         .collection-wrapper--position-1 {
-            .collection__item {
-                &:first-child {
-                    @include flex-grow(2);
-
-                    .item__title,
-                    .item__standfirst {
-                        margin: 0;
-                    }
-                    .item__title {
-                        position: absolute;
-                        color: #ffffff;
-                        background-color: rgba(#000000, 0.5);
-                        border-right: $gs-gutter solid $c-neutral1;
-                        width: 100%;
-                        bottom: 0;
-                        @include box-sizing(border-box);
-                        @include rem((
-                            padding-left: $gs-gutter/2,
-                            padding-right: $gs-gutter/2,
-                            padding-bottom: $gs-baseline/2
-                        ));
-                    }
-                    .item__standfirst {
-                        display: none;
-                    }
-                }
-                &:before {
-                    display: none;
-                }
+            .collection__item:first-child {
+                @include flex-grow(2);
             }
+            .item__link {
+                border-top-width: 0;
+            }
+        }
+        .collection-wrapper--position-2 {
+            @include rem((
+                margin-top: $gs-baseline*2
+            ));
         }
     }
 
