@@ -235,29 +235,53 @@ define([
         },
 
         loadAdverts: function (config) {
+            // Having to check 3 switches for ads so that DFP and OAS can run in parallel
+            // with each other and still have a master switch to turn off all adverts
             if(!userPrefs.isOff('adverts') && config.switches.adverts && !config.page.blockVideoAds && !config.page.shouldHideAdverts) {
-                var dfpAds = new DFP(config);
 
-                var resizeCallback = function() {
-                    hasBreakpointChanged(function() {
-                        dfpAds.reload();
-                        Adverts.reload();
-                        mediator.emit('modules:adverts:reloaded');
-                    });
-                };
+                var hasAdsToLoad = config.switches.oasAdverts || config.switches.dfpAdverts,
+                    isArticle    = config.page.contentType === 'Article' && !config.page.isLiveBlog,
+                    onResize = {
+                        cmd: [],
+                        execute: function() {
+                            hasBreakpointChanged(function() {
+                                onResize.cmd.forEach(function(func) {
+                                    func();
+                                });
+                            });
+                        }
+                    };
 
-                if(config.page.contentType === 'Article' && !config.page.isLiveBlog) {
-                    var articleBodyAdverts = new ArticleBodyAdverts();
-
-                    articleBodyAdverts.init();
-                    dfpAds.init();
+                // If either OAS or DFP is switched on, and it's an article
+                // excluding live blogs, then create our inline adverts
+                if(hasAdsToLoad && isArticle) {
+                    new ArticleBodyAdverts().init();
                 }
 
-                mediator.on('page:common:deferred:loaded', function(config, context) {
-                    Adverts.init(config, context);
-                });
-                mediator.on('modules:adverts:docwrite:loaded', Adverts.load);
-                mediator.on('window:resize', debounce(resizeCallback, 2000));
+                if(config.switches.oasAdverts) {
+                    onResize.cmd.push(Adverts.reload);
+
+                    mediator.on('page:common:deferred:loaded', function(config, context) {
+                        Adverts.init(config, context);
+                    });
+                    mediator.on('modules:adverts:docwrite:loaded', Adverts.load);
+                } else {
+                    Adverts.hideAds();
+                }
+
+                if(config.switches.dfpAdverts) {
+                    var dfpAds = new DFP(config);
+                    dfpAds.init();
+                    onResize.cmd.push(dfpAds.reload);
+                }
+
+                if(hasAdsToLoad) {
+                    // Push the reloaded command once
+                    onResize.cmd.push(function() {
+                        mediator.emit('modules:adverts:reloaded');
+                    });
+                    mediator.on('window:resize', debounce(onResize.execute.bind(this), 2000));
+                }
             } else {
                 Adverts.hideAds();
             }

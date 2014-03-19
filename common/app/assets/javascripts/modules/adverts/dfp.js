@@ -70,13 +70,15 @@ define([
             section      = conf.section     ? conf.section.toLowerCase()     : '',
             contentType  = conf.contentType ? conf.contentType.toLowerCase() : '';
 
-        googletag.pubads().setTargeting('k', keywords)
+        googletag.pubads().setTargeting('a', AudienceScience.getSegments() || [])
                           .setTargeting('at', Cookies.get('adtest') || '')
-                          .setTargeting('pt', contentType)
-                          .setTargeting('ct', contentType)
+                          .setTargeting('bp', detect.getBreakpoint())
                           .setTargeting('cat', section)
-                          .setTargeting('a', AudienceScience.getSegments() || [])
-                          .setTargeting('gdncrm', UserAdTargeting.getUserSegments() || []);
+                          .setTargeting('ct', contentType)
+                          .setTargeting('gdncrm', UserAdTargeting.getUserSegments() || [])
+                          .setTargeting('k', keywords)
+                          .setTargeting('p', detect.getBreakpoint())
+                          .setTargeting('pt', contentType);
     };
 
     DFP.prototype.defineSlots = function() {
