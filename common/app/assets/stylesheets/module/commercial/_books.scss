@@ -53,7 +53,6 @@
             padding: $gs-baseline/3 12px
         ));
         border: none;
-        @include rounded-corners(2px);
         float: right;
         color: #fff;
         font-weight: bold;
@@ -146,7 +145,7 @@
         .commercial__call-to-action {
             position: absolute;
             left: 0;
-            bottom: 0;
+            bottom: $gs-baseline*2;
         }
         .commercial__search {
             position: relative;

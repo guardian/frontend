@@ -27,11 +27,13 @@
 }
 .commercial__logo {
     margin-bottom: $gs-baseline/2;
-    float: left
+    float: left;
 }
 .commercial__title {
     @include fs-header(3);
-    margin-bottom: $gs-baseline*2;
+    @include rem((
+        margin-bottom: $gs-baseline*2
+    ));
     float: left;
     clear: both;
 }
