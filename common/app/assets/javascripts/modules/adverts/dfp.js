@@ -1,4 +1,4 @@
-/*global guardian, googletag */
+/* global googletag: false */
 define([
     'common/$',
     'bonzo',
@@ -79,7 +79,7 @@ define([
         googletag.display(this.dfpAdSlots[0].id);
     };
 
-    DFP.prototype.checkForBreakout = function(e, level, message, service, slot, reference) {
+    DFP.prototype.checkForBreakout = function(e, level, message, service, slot) {
         var $slotEl       = $('#'+ slot.getSlotId().getDomId()),
             frameContents = $slotEl[0].querySelector('iframe').contentDocument.body;
 

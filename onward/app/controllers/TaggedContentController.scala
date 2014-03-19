@@ -17,7 +17,7 @@ object TaggedContentController extends Controller with Related with Logging with
         case Nil    => Cached(300) { JsonNotFound() }
         case trails => render(trails)
       }
-    } getOrElse(Future { Cached(300) { BadRequest } })
+    } getOrElse(Future { BadRequest })
   }
 
   private def render(trails: Seq[Content])(implicit request: RequestHeader) = Cached(300) {

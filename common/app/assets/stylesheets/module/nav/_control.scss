@@ -6,29 +6,13 @@
    ========================================================================== */
 
 .control {
-    position: relative;
+    @extend %icon-holder-circle;
     float: left;
-    width: 30px;
-    height: 30px;
-    border: 1px solid $c-neutral1;
-    padding: 0;
-    @include rounded-corners(50%);
-    @include box-sizing(content-box); // Force proper sizing on button elements
-    text-align: center;
-    background-color: transparent;
-    vertical-align: top;
     font-family: $serif;
     @include rem((
         font-size: 13px
     ));
 
-    &,
-    &:active,
-    &:focus,
-    &:hover {
-        text-decoration: none;
-        color: #000000;
-    }
     .is-signed-in & {
         color: $c-brandBlue;
         border-color: $c-brandBlue;
@@ -59,8 +43,12 @@
 }
 
 
-/* Control info (text label next to it)
+/* Profile control & control info (text label next to it)
    ========================================================================== */
+
+.control--profile {
+   overflow: visible; // Makes control__info visible
+}
 
 .control__info {
     display: none;

@@ -19,8 +19,7 @@ define([
     History
     ){
 
-    var context,
-        currentPageId,
+    var currentPageId,
         store = storage.session,
         prefixes = {
             contextName: 'gu.context.name',

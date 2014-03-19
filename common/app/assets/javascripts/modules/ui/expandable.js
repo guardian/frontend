@@ -24,9 +24,6 @@ define([
             dom = common.$g(opts.dom), // root element of the trailblock
             expanded = (opts.expanded === false) ? false : true, // true = open, false = closed
             cta = document.createElement('button'),
-            domCount,
-            count,
-            self = this,
             showCount = (opts.showCount === false) ? false : true;
 
         // View
@@ -53,7 +50,7 @@ define([
             },
 
             renderCallToAction: function () {
-                bean.add(cta, 'click', function (e) {
+                bean.add(cta, 'click', function () {
                     model.toggleExpanded();
                 });
                 cta.className = 'cta';

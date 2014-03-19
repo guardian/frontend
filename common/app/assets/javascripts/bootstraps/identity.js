@@ -69,12 +69,12 @@ define([
             });
         },
         userAdTargeting : function () {
-            mediator.on('page:identity:ready', function(config, context) {
+            mediator.on('page:identity:ready', function() {
                 UserAdTargeting.requestUserSegmentsFromId();
             });
         },
         userAvatars: function() {
-            mediator.on('page:identity:ready', function(config, context) {
+            mediator.on('page:identity:ready', function() {
                 UserAvatars.init();
             });
         },

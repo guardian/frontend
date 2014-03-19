@@ -181,9 +181,6 @@ GET         /collection/*id/rss                                                 
 GET         /collection/*id.json                                                                                     controllers.FaciaController.renderCollectionJson(id)
 GET         /collection/*id                                                                                          controllers.FaciaController.renderCollection(id)
 
-# Tag combiners
-GET        /$leftSide<[^+]+>+*rightSide                                                                              controllers.IndexController.renderCombiner(leftSide, rightSide)
-
 # Editionalised pages
 GET         /$path<[^/]+(/[^/]+)?>/rss                                                                               controllers.FaciaController.renderFrontRss(path)
 GET         /$path<[^/]+(/[^/]+)?>.json                                                                              controllers.FaciaController.renderFrontJson(path)
@@ -203,7 +200,6 @@ GET         /$path<[\w\d-]*(/[\w\d-]*)?/(cartoon|graphic|picture)/.*>           
 
 GET         /$path<[\w\d-]*(/[\w\d-]*)?/video/.*>.json                                                               controllers.VideoController.renderJson(path)
 GET         /$path<[\w\d-]*(/[\w\d-]*)?/video/.*>                                                                    controllers.VideoController.render(path)
-
 
 GET         /$path<[\w\d-]*(/[\w\d-]*)?/(interactive|ng-interactive)/.*>.json                                        controllers.InteractiveController.renderInteractiveJson(path)
 GET         /$path<[\w\d-]*(/[\w\d-]*)?/(interactive|ng-interactive)/.*>                                             controllers.InteractiveController.renderInteractive(path)

@@ -85,6 +85,12 @@ object LeagueTableController extends Controller with Logging with CompetitionTab
 
       renderFormat(htmlResponse, jsonResponse, page)
 
-    }.getOrElse(Redirect("/football/tables"))
+    }.getOrElse(
+      if(request.isJson) {
+        JsonNotFound()
+      } else {
+        Redirect("/football/tables")
+      }
+    )
   }
 }

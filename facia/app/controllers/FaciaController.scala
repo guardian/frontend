@@ -69,7 +69,7 @@ class FaciaController extends Controller with Logging with ExecutionContexts wit
               faciaPageOption map { faciaPage =>
                 if (request.isRss) {
                   Cached(frontPage) {
-                    Ok(TrailsToRss(Some(frontPage.webTitle), faciaPage.collections.map(_._2).flatMap(_.items).toSeq.distinctBy(_.id)))
+                    Ok(TrailsToRss(frontPage, faciaPage.collections.map(_._2).flatMap(_.items).toSeq.distinctBy(_.id)))
                   }.as("text/xml; charset=utf-8")
                 } else {
                   Cached(frontPage) {
@@ -93,7 +93,7 @@ class FaciaController extends Controller with Logging with ExecutionContexts wit
       FrontJson.get(newPath).map(_.map{ faciaPage =>
         if (request.isRss) {
           Cached(frontPage) {
-            Ok(TrailsToRss(Some(frontPage.webTitle), faciaPage.collections.map(_._2).flatMap(_.items).toSeq.distinctBy(_.id)))
+            Ok(TrailsToRss(frontPage, faciaPage.collections.map(_._2).flatMap(_.items).toSeq.distinctBy(_.id)))
           }.as("text/xml; charset=utf-8")
         } else {
           Cached(frontPage) {

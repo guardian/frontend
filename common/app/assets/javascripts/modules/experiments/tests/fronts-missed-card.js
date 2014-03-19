@@ -25,12 +25,12 @@ define([
     return function() {
 
         this.id = 'FrontsMissedCard';
-        this.start = '2014-03-14';
-        this.expiry = '2014-03-21';
+        this.start = '2014-03-17';
+        this.expiry = '2014-03-24';
         this.author = 'Darren Hurley';
         this.description = 'Add a `You might have missed` card to the news container';
-        this.audience = 0.25;
-        this.audienceOffset = 0.75;
+        this.audience = 0.04;
+        this.audienceOffset = 0.12;
         this.successMeasure = 'Click-through for the page as a whole.';
         this.audienceCriteria = 'Users who are not on desktop or bigger, on the network front.';
         this.dataLinkNames = 'card | missed | trail | {{index}}';
@@ -41,7 +41,7 @@ define([
         this.variants = [
             {
                 id: 'control',
-                test: function(context, config) { }
+                test: function() { }
             },
             {
                 id: 'missed',

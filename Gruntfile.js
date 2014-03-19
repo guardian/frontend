@@ -3,7 +3,6 @@ module.exports = function (grunt) {
 
     var isDev = (grunt.option('dev') !== undefined) ? Boolean(grunt.option('dev')) : process.env.GRUNT_ISDEV === '1',
         singleRun = grunt.option('single-run') !== false,
-        env = grunt.option('env') || 'code',
         screenshotsDir = './screenshots',
         staticTargetDir = './static/target/',
         testConfDir = './common/test/assets/javascripts/conf/',
@@ -403,7 +402,9 @@ module.exports = function (grunt) {
 
         // Lint Javascript sources
         jshint: {
-            options: require('./resources/jshint_conf'),
+            options: {
+                jshintrc: './resources/jshint_conf.json'
+            },
             self: [
                 'Gruntfile.js'
             ],

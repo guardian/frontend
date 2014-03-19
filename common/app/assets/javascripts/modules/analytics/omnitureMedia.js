@@ -71,7 +71,7 @@ define([
             s.Media.play(mediaName, this.getPosition());
         };
 
-        this.trackUserInteraction = function(type, name, debounce, callback) {
+        this.trackUserInteraction = function(type, name, debounce) {
            clearTimeout(deBounced);
            var log = function(){
                 var event;

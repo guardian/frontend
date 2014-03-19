@@ -1,13 +1,11 @@
 define([
     'common/common',
     'bean',
-    'bonzo',
-    'qwery'
+    'bonzo'
 ], function (
     common,
     bean,
-    bonzo,
-    qwery
+    bonzo
 ) {
 
     /*

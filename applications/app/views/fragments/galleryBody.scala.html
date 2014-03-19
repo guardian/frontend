@@ -13,7 +13,9 @@
             <header class="article__head">
                 @fragments.headline(gallery.headline)
 
-                <div class="js-comment-count"></div>
+                @if(gallery.isCommentable) {
+                    <div class="article__head__comment-count js-comment-count"></div>
+                }
             </header>
         </div>
         <div class="article__columning-wrapper">
@@ -83,7 +85,7 @@
 
 @fragments.storyPackagePlaceholder(storyPackage)
 
-@fragments.mostPopularPlaceholder(gallery.section)
+@fragments.mostPopularPlaceholder(gallery.section, VisualTone(gallery))
 
 
 <div class="gallery-overlay-bg"></div>

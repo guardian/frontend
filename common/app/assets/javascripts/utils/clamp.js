@@ -11,7 +11,7 @@ var clamp = function(elem, lines, showMore) {
     if (height < maxHeight) {
         return;
     }
-    
+
     $elem.css({
         maxHeight: maxHeight + 'px',
         overflow: 'hidden'
@@ -22,7 +22,7 @@ var clamp = function(elem, lines, showMore) {
     if (showMore) {
         $showMore = bonzo(bonzo.create('<span class="clamp__fade-content u-fauxlink" role="button">Read more</span>'));
         $fade.append($showMore);
-        bean.on($showMore[0], 'click', function(e) {
+        bean.on($showMore[0], 'click', function() {
             $fade.remove();
             $elem.css({
                 maxHeight: 'none',

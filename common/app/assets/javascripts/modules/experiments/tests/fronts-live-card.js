@@ -17,12 +17,12 @@ define([
     return function() {
 
         this.id = 'FrontsLiveCard';
-        this.start = '2014-03-14';
-        this.expiry = '2014-03-21';
+        this.start = '2014-03-17';
+        this.expiry = '2014-03-24';
         this.author = 'Darren Hurley';
         this.description = 'Add a live card to the news container';
-        this.audience = 0.25;
-        this.audienceOffset = 0.5;
+        this.audience = 0.04;
+        this.audienceOffset = 0.08;
         this.successMeasure = 'Click-through for the page as a whole.';
         this.audienceCriteria = 'Users who are not on desktop or bigger, on the network front.';
         this.dataLinkNames = 'card | live | trail | {{index}}';
@@ -33,11 +33,11 @@ define([
         this.variants = [
             {
                 id: 'control',
-                test: function(context, config) { }
+                test: function() { }
             },
             {
                 id: 'live',
-                test: function (context, config) {
+                test: function () {
                     ajax({
                         url        : '/tagged.json?tag=tone/minutebyminute',
                         type       : 'json',
