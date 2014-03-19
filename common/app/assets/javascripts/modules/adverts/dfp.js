@@ -96,7 +96,7 @@ define([
                           .setTargeting('ct', contentType)
                           .setTargeting('gdncrm', UserAdTargeting.getUserSegments() || [])
                           .setTargeting('k', keywords)
-                          .setTargeting('p', detect.getBreakpoint())
+                          .setTargeting('p', 'ng')
                           .setTargeting('pt', contentType);
     };
 
