@@ -30,8 +30,9 @@
                 </header>
 
                 @fragments.witnessCallToAction(article)
-
-                <div class="after-header"></div>
+                <div class="after-header">
+                    <button type="button" class="submit-input follow-btn" onclick="window.location.href='http://next.theguardian.com/follow-a-blog.html?blog=@helper.urlEncode(article.webTitle)'">Follow</button>
+                </div>
             </div>
             <div class="article__columning-wrapper">
                 <div class="article__main-column">
