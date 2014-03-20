@@ -1,9 +1,7 @@
+/* global _: true */
 define(function() {
-    return function(obj, props) {
-        props = (props + '').split(/\.+/).filter(function(str) {return str;});
-        while (obj && props.length) {
-          obj = obj[props.shift()];
-        }
-        return obj;
+    return function deepGet(obj, props) {
+        props = _.isArray(props) ? props : (props || '').split(/\.+/).filter(function(str) {return str;});
+        return obj && _.first(props) ? deepGet(obj[_.first(props)], _.rest(props)) : obj;
     };
 });
