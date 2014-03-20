@@ -96,7 +96,7 @@ define([
                         $openCtaContainer = $.create('<div class="open-cta"></div>');
 
                     openCta.fetch($openCtaContainer[0]);
-                    rhc.addComponent($openCtaContainer[0], 3);
+                    rhc.addComponent($openCtaContainer[0]);
                 }
             });
         },

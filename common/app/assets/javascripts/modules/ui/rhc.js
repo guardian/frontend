@@ -3,28 +3,27 @@ define(['common/$', 'bonzo'], function($, bonzo) {
 
     /**
      * @param {Element|Bonzo} c
-     * @param {number} importance number
+     * @param {number} importance number (optional)
      */
     function addComponent(c, importance) {
+        importance = importance || 1;
         var classname = 'component--rhc',
             $cs;
-        $.create('<div class="'+ classname +'" data-importance="'+ importance +'"></div>')
+
+        return $.create('<div class="'+ classname +'" data-importance="'+ importance +'"></div>')
             .append(c)
             .each(function(el) {
                 $cs = $('.'+ classname, $rhc[0]);
-                if ($cs.length === 0) {
+                var $inferior = bonzo($cs.map(function(el) {
+                    return importance > parseInt(el.getAttribute('data-importance'), 10) ? el : false;
+                })).first();
+
+                if ($inferior.length === 0) {
                     $rhc.append(el);
                 } else {
-                    $cs.each(function(existingComponent, i) {
-                        if (parseInt(existingComponent.getAttribute('data-importance'), 10) > importance) {
-                            bonzo(existingComponent).before(el);
-                        } else if ($cs.length-1 === i) {
-                            $rhc.append(el);
-                        }
-                    });
+                    $inferior.before(el);
                 }
             });
-
     }
 
     return {

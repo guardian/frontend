@@ -60,7 +60,7 @@ define([
                         matchStats = new MatchStats(statsUrl);
 
                     page.rightHandComponentVisible(function() {
-                        rhc.addComponent(statsContainer, 1);
+                        rhc.addComponent(statsContainer, 3);
                     }, function() {
                         $article.append(statsContainer);
                     });
