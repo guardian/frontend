@@ -39,9 +39,9 @@ object PlayerController extends Controller with ExecutionContexts with GetPaClie
       client.appearances(playerId, new DateMidnight(2013, 7, 1), DateMidnight.now())
     ).map { case (playerProfile, playerStats, playerAppearances) =>
       val result = playerProfile.position match {
-        case Some("Goal Keeper") => Ok(views.html.football.player.cards.goalkeeper(playerStats, playerAppearances))
-        case Some("Defender") => Ok(views.html.football.player.cards.defensive(playerStats, playerAppearances))
-        case _ => Ok(views.html.football.player.cards.offensive(playerStats, playerAppearances))
+        case Some("Goal Keeper") => Ok(views.html.football.player.cards.goalkeeper(playerId: String, playerStats, playerAppearances))
+        case Some("Defender") => Ok(views.html.football.player.cards.defensive(playerId: String, playerStats, playerAppearances))
+        case _ => Ok(views.html.football.player.cards.offensive(playerId: String, playerStats, playerAppearances))
       }
       Cached(60)(result)
     }
