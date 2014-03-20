@@ -33,7 +33,8 @@ private object ItemOrRedirect extends ItemResponses with Logging{
   }
 
   private def needsRedirect[T](itemPath: String)(implicit request: RequestHeader): Boolean = {
-    itemPath != request.path && !request.isJson
+    // redirect if itemPath is not the same as request's, and this isn't a JSON or RSS request
+    itemPath != request.path && !(request.isJson || request.isRss)
   }
 }
 
