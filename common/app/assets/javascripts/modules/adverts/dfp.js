@@ -218,12 +218,16 @@ define([
     DFP.prototype.addLabel = function($slot) {
         var $parent = $slot.parent();
 
-        if($slot[0].style.display === 'none' || $parent.hasClass('ad-label--showing') || $parent.data('label') === false) {
-            return false;
+        if(this.shouldRenderLabel($slot)) {
+            $parent.prepend('<div class="ad-slot__label">Advertisement</div>');
+            $parent.addClass('ad-label--showing');
         }
+    };
 
-        $parent.prepend('<div class="ad-slot__label">Advertisement</div>');
-        $parent.addClass('ad-label--showing');
+    DFP.prototype.shouldRenderLabel = function($slot) {
+        var $parent = $slot.parent();
+
+        return !($slot[0].style.display === 'none' || $parent.hasClass('ad-label--showing') || $parent.data('label') === false);
     };
 
     DFP.prototype.removeLabel = function($slot) {

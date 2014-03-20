@@ -80,6 +80,11 @@ define([
             expect($slot.previous().hasClass('ad-slot__label')).toBe(true);
         });
 
+        it("Should check if a label is to be rendered", function() {
+            var $slot = $('#dfp-already-labelled');
+            expect(dfpAds.shouldRenderLabel($slot)).toBe(false);
+        });
+
         it("Should NOT prepend a label when one is already displaying", function() {
             var $slot = $('#dfp-already-labelled');
             dfpAds.addLabel($slot);
