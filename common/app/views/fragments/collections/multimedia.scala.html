@@ -23,7 +23,7 @@
 }
 @defining(items.drop(7)) { items =>
     @if(items.nonEmpty) {
-        <div class="linkslist-container @if(style.showMore){js-container--show-more} tone-@{style.tone}" data-tone="@style.tone">
+        <div class="linkslist-container @if(style.showMore){js-container--show-more} tone-@{style.tone} container--neutral1-background" data-tone="@style.tone">
             <ul class="l-columns linkslist">
                 @items.zipWithIndex.map{ case (trail, index) =>
                     @trail match {
