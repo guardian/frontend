@@ -83,6 +83,19 @@ define([
         googletag.on('gpt-slot_rendered', this.parseAd.bind(this));
     };
 
+    /**
+     * Sets the approiate page level targetting
+     *
+     * a      = audience science
+     * at     = adtest cookie
+     * bp     = current breakpoint
+     * cat    = section
+     * ct     = content type
+     * gdncrm = user ad targetting
+     * k      = keywords
+     * p      = platform
+     * pt     = content type
+     */
     DFP.prototype.setPageTargetting = function() {
         var conf         = this.config.page,
             keywords     = conf.keywords    ? conf.keywords.split(',')       : '',
@@ -100,6 +113,10 @@ define([
                           .setTargeting('pt', contentType);
     };
 
+    /**
+     * Loop through each slot detected on the page and define it based on the data
+     * attributes on the element.
+     */
     DFP.prototype.defineSlots = function() {
         var self    = this,
             section = this.config.page.isFront ? 'networkfront' : this.config.page.section,
@@ -110,26 +127,45 @@ define([
             var id          = adSlot.querySelector(self.config.adContainerClass).id,
                 name        = adSlot.getAttribute('data-name'),
                 sizeMapping = self.defineSlotSizes(adSlot),
-                sizes       = [sizeMapping[0][1][0], sizeMapping[0][1][1]],
+                size        = [sizeMapping[0][1][0], sizeMapping[0][1][1]],
                 refresh     = adSlot.getAttribute('data-refresh') !== 'false',
 
-                slot = googletag.defineSlot(account, sizes, id)
+                slot = googletag.defineSlot(account, size, id)
                                 .addService(googletag.pubads())
                                 .defineSizeMapping(sizeMapping)
                                 .setTargeting('slot', name);
 
+            // Add to the array of ads to be refreshed (when the breakpoint changes)
+            // only if it's `data-refresh` attribute isn't set to false.
             if(refresh) {
                 self.adsToRefresh.push(slot);
             }
         });
     };
 
+    /** A breakpoint can have various sizes assigned to it. You can assign either on
+     * set of sizes or multiple.
+     *
+     * One size       - `data-mobile="300,50"`
+     * Multiple sizes - `data-mobile="300,50|320,50"`
+     */
     DFP.prototype.createSizeMapping = function(attr) {
         return attr.split('|').map(function(size) {
             return size.split(',').map(Number);
         });
     };
 
+
+    /**
+     * Builds and assigns the correct size map for a slot based on the breakpoints
+     * attached to the element via data attributes.
+     *
+     * A new size map is created for a given slot. We then loop through each breakpoint
+     * defined in the config, checking if that breakpoint has been set on the slot.
+     *
+     * If it has been defined, then we add that size to the size mapping.
+     *
+     */
     DFP.prototype.defineSlotSizes = function(slot) {
         var self    = this,
             mapping = googletag.sizeMapping();
@@ -153,6 +189,15 @@ define([
         this.addLabel($slot);
     };
 
+    /**
+     * Checks the contents of the ad for special classes (see breakoutHash).
+     *
+     * If one of these classes is detected, then the contents of that iframe is retrieved
+     * and written onto the parent page.
+     *
+     * Currently this is being used for sponsered logos and commercial components so they
+     * can inherit fonts.
+     */
     DFP.prototype.checkForBreakout = function($slot) {
         var frameContents = $slot[0].querySelector('iframe').contentDocument.body;
 
@@ -185,6 +230,12 @@ define([
         googletag.display(this.dfpAdSlots[0].querySelector(this.config.adContainerClass).id);
     };
 
+    /**
+     * Asynchronously load the library needed for DFP to work.
+     *
+     * This was originally loaded in the define funciton at the top, but
+     * didn't play well with the unit tests, so it's been moved to here.
+     */
     DFP.prototype.loadLibrary = function() {
         var gads   = document.createElement('script'),
             node   = document.getElementsByTagName('script')[0],
@@ -206,6 +257,7 @@ define([
     DFP.prototype.init = function() {
         this.dfpAdSlots = $(this.config.dfpSelector);
 
+        // If there's no ads on the page, then don't load anything
         if(this.dfpAdSlots.length === 0) {
             return false;
         }
