@@ -6,11 +6,12 @@ define(['common/$', 'bonzo'], function($, bonzo) {
      * @param {number} importance number
      */
     function addComponent(c, importance) {
-        var classname = 'component--rhc';
+        var classname = 'component--rhc',
+            $cs;
         $.create('<div class="'+ classname +'" data-importance="'+ importance +'"></div>')
             .append(c)
             .each(function(el) {
-                var $cs = $('.'+ classname, $rhc[0]);
+                $cs = $('.'+ classname, $rhc[0]);
                 if ($cs.length === 0) {
                     $rhc.append(el);
                 } else {
