@@ -10,8 +10,7 @@ define([
     'common/utils/detect',
     'common/utils/mediator',
     'common/modules/analytics/commercial/tags/common/audience-science',
-    'common/modules/adverts/userAdTargeting',
-    'common/modules/adverts/dfp-events'
+    'common/modules/adverts/userAdTargeting'
 ], function (
     $,
     bonzo,
@@ -23,8 +22,7 @@ define([
     detect,
     mediator,
     AudienceScience,
-    UserAdTargeting,
-    DFPEvents
+    UserAdTargeting
 ) {
 
     /**
@@ -47,7 +45,6 @@ define([
      * Labels are automatically prepended to an ad that was successfully loaded.
      *
      * TODO: breakoutHash could just be one class and the script tag moved to inside the ad
-     * TODO: remove labels when changing breakpoint
      *
      */
 
@@ -81,7 +78,8 @@ define([
     };
 
     DFP.prototype.setListeners = function() {
-        googletag.on('gpt-slot_rendered', this.parseAd.bind(this));
+        var parseAd = this.parseAd;
+        googletag.pubads().addEventListener('slotRenderEnded', parseAd.bind(this));
     };
 
     /**
@@ -183,11 +181,16 @@ define([
         return mapping.build();
     };
 
-    DFP.prototype.parseAd = function(e, level, message, service, slot) {
-        var $slot = $('#'+ slot.getSlotId().getDomId());
+    DFP.prototype.parseAd = function(event) {
+        var $slot = $('#'+ event.slot.getSlotId().getDomId());
 
-        this.checkForBreakout($slot);
-        this.addLabel($slot);
+        if(event.isEmpty) {
+            this.removeLabel($slot);
+        } else {
+            this.checkForBreakout($slot);
+            this.addLabel($slot);
+        }
+
     };
 
     /**
@@ -221,6 +224,11 @@ define([
 
         $parent.prepend('<div class="ad-slot__label">Advertisement</div>');
         $parent.addClass('ad-label--showing');
+    };
+
+    DFP.prototype.removeLabel = function($slot) {
+        $slot.parent().removeClass('ad-label--showing');
+        $slot.previous().remove();
     };
 
     DFP.prototype.fireAdRequest = function() {
@@ -268,7 +276,6 @@ define([
         this.loadLibrary();
 
         try {
-            googletag.cmd.push(DFPEvents.init);
             googletag.cmd.push(this.setListeners.bind(this));
             googletag.cmd.push(this.setPageTargetting.bind(this));
             googletag.cmd.push(this.defineSlots.bind(this));
