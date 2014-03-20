@@ -163,6 +163,12 @@
     }
 }
 
+.from-content-api pre {
+    overflow-x: auto;
+    // Unset from `.from-content-api`
+    word-wrap: normal;
+}
+
 
 /* Bullet points
    ========================================================================== */
