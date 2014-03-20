@@ -14,7 +14,7 @@ define([
         if(slug in this.content) {
             this.container = document.getElementById('article');
             bonzo(this.container).addClass('layout-hints ' + slug);
-            this.content[slug]();
+            this.content[slug](config);
         }
     }
 
@@ -45,8 +45,11 @@ define([
             });
         },
 
-        "mps-debate-ukraine-politics-live-blog" : function() {
+        "mps-debate-ukraine-politics-live-blog" : function(config) {
             /*jshint nonew:false */
+
+            if(!config.switches.keyEvents) { return false; }
+
             var containerTmp = '<div class="key-events js-key-events"><div class="key-events__container js-key-events__container"><h2 class="key-events__head">In brief...</h2>' +
                 '               <ul class="key-events__list u-unstyled" data-link-name="key-events">{{items}}</ul></div></div>';
             var itemTmp = '<li class="key-events__item js-key-event u-cf"><span class="key-events__item__time">{{time}}</span>' +
@@ -67,13 +70,12 @@ define([
             bonzo(qwery('.js-right-hand-component')).empty().prepend(containerTmp.replace('{{items}}', items));
 
             var eventsEl = qwery('.js-key-events');
-            bonzo(eventsEl).css('height', articleHeight);
-            bonzo(eventsEl).each(function(el) {
+            bonzo(eventsEl).css('height', articleHeight).each(function(el) {
                 bonzo(qwery('time', el)).addClass('js-timestamp').attr('data-relativeformat', 'short');
             });
             new Affix({
                 element: qwery('.js-key-events__container', eventsEl)[0],
-                offset: 500
+                offset: 600
             });
             relativeDates.init(qwery('.js-key-events'));
 
