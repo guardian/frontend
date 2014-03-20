@@ -60,7 +60,7 @@ define([
 
     Component.define(DFP);
 
-    DFP.prototype.dfpAdSlots   = [];
+    DFP.prototype.$dfpAdSlots   = [];
     DFP.prototype.adsToRefresh = [];
 
     DFP.prototype.config = {
@@ -121,7 +121,7 @@ define([
             section = this.config.page.isFront ? 'networkfront' : this.config.page.section,
             account = '/'+ this.config.page.dfpAccountId +'/'+ this.config.page.dfpAdUnitRoot +'/'+ section;
 
-        this.dfpAdSlots.each(function(adSlot) {
+        this.$dfpAdSlots.each(function(adSlot) {
 
             var id          = adSlot.querySelector(self.config.adContainerClass).id,
                 name        = adSlot.getAttribute('data-name'),
@@ -236,7 +236,7 @@ define([
         googletag.pubads().enableAsyncRendering();
         googletag.pubads().collapseEmptyDivs();
         googletag.enableServices();
-        googletag.display(this.dfpAdSlots[0].querySelector(this.config.adContainerClass).id);
+        googletag.display(this.$dfpAdSlots[0].querySelector(this.config.adContainerClass).id);
     };
 
     /**
@@ -264,10 +264,10 @@ define([
     };
 
     DFP.prototype.init = function() {
-        this.dfpAdSlots = $(this.config.dfpSelector);
+        this.$dfpAdSlots = $(this.config.dfpSelector);
 
         // If there's no ads on the page, then don't load anything
-        if(this.dfpAdSlots.length === 0) {
+        if(this.$dfpAdSlots.length === 0) {
             return false;
         }
 

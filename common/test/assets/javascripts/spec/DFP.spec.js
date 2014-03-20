@@ -71,7 +71,7 @@ define([
 
         it("Should find a DFP ad slot", function() {
             dfpAds.init();
-            expect(dfpAds.dfpAdSlots.length).toBe(4);
+            expect(dfpAds.$dfpAdSlots.length).toBe(4);
         });
 
         it("Should prepend a label", function() {
