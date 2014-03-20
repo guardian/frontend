@@ -203,7 +203,6 @@ $bullet-offset: (
     display: list-item;
     list-style-position: outside;
     list-style-type: none;
-    position: relative;
     @include rem((
         text-indent: map-get($bullet-offset, default)
     ));
@@ -217,6 +216,7 @@ $bullet-offset: (
     + * {
         margin-top: .6em;
     }
+
     @include faux-bullet-point;
 
     .bullet {
