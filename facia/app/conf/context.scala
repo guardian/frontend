@@ -13,14 +13,7 @@ object Management extends GuManagement {
 
   lazy val pages = List(
     new ManifestPage,
-    new UrlPagesHealthcheckManagementPage(
-      "/",
-      "/uk",
-      "/us",
-      "/au",
-      "/environment",
-      "/science"
-    ),
+    new UrlPagesHealthcheckManagementPage("/uk"),
     StatusPage(applicationName, metrics),
     new PropertiesPage(Configuration.toString),
     new LogbackLevelPage(applicationName),
