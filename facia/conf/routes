@@ -20,6 +20,7 @@ GET        /collection/*id.json                                    controllers.F
 GET        /collection/*id                                         controllers.FaciaController.renderCollection(id)
 
 # Tag combiners
+GET        /$leftSide<[^+]+>+*rightSide/rss                        controllers.IndexController.renderCombinerRss(leftSide, rightSide)
 GET        /$leftSide<[^+]+>+*rightSide                            controllers.IndexController.renderCombiner(leftSide, rightSide)
 
 # Editionalised pages

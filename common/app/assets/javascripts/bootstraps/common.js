@@ -11,6 +11,7 @@ define([
     'bonzo',
     'bean',
     'enhancer',
+    'lodash/objects/assign',
     'lodash/functions/debounce',
     //Modules
     'common/utils/storage',
@@ -55,6 +56,7 @@ define([
     bonzo,
     bean,
     enhancer,
+    extend,
     debounce,
 
     storage,
@@ -235,43 +237,59 @@ define([
         },
 
         loadAdverts: function (config) {
+            // Having to check 3 switches for ads so that DFP and OAS can run in parallel
+            // with each other and still have a master switch to turn off all adverts
             if(!userPrefs.isOff('adverts') && config.switches.adverts && !config.page.blockVideoAds && !config.page.shouldHideAdverts) {
-                var dfpAds = new DFP(config);
 
-                var resizeCallback = function() {
-                    hasBreakpointChanged(function() {
-                        Adverts.reload();
-                        mediator.emit('modules:adverts:reloaded');
-                    });
-                };
-
-                if(config.page.contentType === 'Article' && !config.page.isLiveBlog) {
-                    var articleBodyAdverts = new ArticleBodyAdverts();
-
-                    articleBodyAdverts.init();
-
-                    resizeCallback = function() {
-                        hasBreakpointChanged(function() {
-                            articleBodyAdverts.reload();
-                            Adverts.reload();
-                            mediator.emit('modules:adverts:reloaded');
-                        });
+                var hasAdsToLoad = config.switches.oasAdverts || config.switches.dfpAdverts,
+                    onResize = {
+                        cmd: [],
+                        execute: function() {
+                            hasBreakpointChanged(function() {
+                                onResize.cmd.forEach(function(func) {
+                                    func();
+                                });
+                            });
+                        }
                     };
+
+                // If either OAS or DFP is switched on, and it's an article
+                // excluding live blogs, then create our inline adverts
+                if(hasAdsToLoad && config.page.contentType === 'Article' && !config.page.isLiveBlog) {
+                    new ArticleBodyAdverts().init();
                 }
 
-                mediator.on('page:common:deferred:loaded', function(config, context) {
-                    Adverts.init(config, context);
-                });
-                mediator.on('modules:adverts:docwrite:loaded', function() {
+                if(config.switches.oasAdverts) {
+                    onResize.cmd.push(Adverts.reload);
 
-                    if(config.switches.dfpAdverts) {
-                        dfpAds.load();
+                    mediator.on('page:common:deferred:loaded', function(config, context) {
+                        Adverts.init(config, context);
+                    });
+                    mediator.on('modules:adverts:docwrite:loaded', Adverts.load);
+                } else {
+                    Adverts.hideAds();
+                }
+
+                if(config.switches.dfpAdverts) {
+                    var dfpAds,
+                        options = {};
+
+                    if(config.switches.loadOnlyCommercialComponents) {
+                        options.dfpSelector = '.ad-slot__commercial-component';
                     }
 
-                    Adverts.load();
-                });
+                    dfpAds = new DFP(extend(config, options));
+                    dfpAds.init();
+                    onResize.cmd.push(dfpAds.reload);
+                }
 
-                mediator.on('window:resize', debounce(resizeCallback, 2000));
+                if(hasAdsToLoad) {
+                    // Push the reloaded command once
+                    onResize.cmd.push(function() {
+                        mediator.emit('modules:adverts:reloaded');
+                    });
+                    mediator.on('window:resize', debounce(onResize.execute.bind(this), 2000));
+                }
             } else {
                 Adverts.hideAds();
             }
@@ -279,7 +297,7 @@ define([
 
         loadVideoAdverts: function() {
             mediator.on('page:common:ready', function(config, context) {
-                if(config.switches.videoAdverts && !config.page.blockVideoAds) {
+                if(config.switches.adverts && config.switches.videoAdverts && !config.page.blockVideoAds) {
                     Array.prototype.forEach.call(context.querySelectorAll('video'), function(el) {
                         var support = detect.getVideoFormatSupport();
                         new VideoAdvert({
