@@ -2,6 +2,9 @@
     background-color: $c-neutral1;
     padding-bottom: $gs-baseline;
     overflow: visible;
+    @include rem((
+        min-height: 30px
+    ));
 
     $bgWidth: 600px;
     &:before,
@@ -24,6 +27,9 @@
     .container__title,
     .container__toggle__text {
         color: #ffffff;
+    }
+    .container__title {
+        background-color: transparent;
     }
     .item {
         margin-bottom: 0;
