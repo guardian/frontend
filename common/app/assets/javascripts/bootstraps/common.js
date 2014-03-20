@@ -16,7 +16,6 @@ define([
     'common/modules/onward/popular',
     'common/modules/onward/related',
     'common/modules/ui/images',
-    'common/modules/navigation/top-stories',
     'common/modules/navigation/profile',
     'common/modules/navigation/sections',
     'common/modules/navigation/search',
@@ -59,7 +58,6 @@ define([
     popular,
     Related,
     images,
-    TopStories,
     Profile,
     Sections,
     Search,
@@ -98,8 +96,7 @@ define([
         },
 
         initialiseNavigation: function (config) {
-             var topStories = new TopStories(),
-                sections = new Sections(config),
+            var sections = new Sections(config),
                 search = new Search(config),
                 header = document.getElementById('header');
 
@@ -110,7 +107,6 @@ define([
                     });
                     profile.init();
                 }
-                topStories.load(config, header);
             }
 
             sections.init(document);

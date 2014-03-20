@@ -216,7 +216,7 @@ case class VideoEmbedCleaner(contentVideos: Seq[VideoElement]) extends HtmlClean
 
   override def clean(document: Document): Document = {
     document.getElementsByClass("element-video").foreach { element: Element =>
-      element.child(0).wrap("<div class=\"element-video__wrap\"></div>")
+      element.child(0).wrap("<div class=\"embed-video-wrapper\"></div>")
     }
 
     document.getElementsByClass("gu-video").foreach { element: Element =>
@@ -239,7 +239,7 @@ case class VideoEmbedCleaner(contentVideos: Seq[VideoElement]) extends HtmlClean
                 Sorry, your browser is unable to play this video.
               </object>""")
 
-        element.wrap("<div class=\"u-responsive-ratio\"></div>")
+        element.wrap("<div class=\"gu-video-wrapper\"><div class=\"u-responsive-ratio u-responsive-ratio--hd\"></div></div>")
       })
     }
     document
@@ -413,7 +413,7 @@ case class InlineSlotGenerator(articleWordCount: Int) extends HtmlCleaner {
 
   private def isBlock(element: Element): Boolean = {
       (element.hasClass("img") && !element.hasClass("img--inline")) ||
-      element.hasClass("u-responsive-ratio") || // @Todo: be more specific - was "media-proportional-container"
+      element.hasClass("embed-video-wrapper") ||
       element.tagName == "video"
   }
 

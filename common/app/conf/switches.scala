@@ -246,13 +246,6 @@ object Switches extends Collections {
     safeState = On, sellByDate = endOfQ4
   )
 
-  val ExternalLinksCardsSwitch = Switch("Feature Switches", "external-links-cards",
-    "If this switch is on, external links are turned into cards in body content on wide viewports.",
-    safeState = Off,
-
-    sellByDate = new DateMidnight(2014, 3, 7)
-  )
-
   val ArticleKeywordsSwitch = Switch("Feature Switches", "article-keywords",
     "If this is switched on then keywords will be shown at the end of articles.",
     safeState = On, sellByDate = endOfQ4
@@ -297,7 +290,12 @@ object Switches extends Collections {
   )
 
   val LayoutHintsSwitch = Switch("Feature Switches", "layout-hints",
-    "If this switch is on, javascript will enable the inline-hinting css experiments",
+    "If this switch is on, JavaScript will enable the inline-hinting css experiments",
+    safeState = Off, sellByDate = new DateMidnight(2014, 4, 30)
+  )
+
+  val HelveticaEasterEggSwitch = Switch("Feature Switches", "helvetica",
+    "If this switch is on, the article about Helvetica will have its title Helvetica'd",
     safeState = Off, sellByDate = new DateMidnight(2014, 4, 30)
   )
 
@@ -345,7 +343,7 @@ object Switches extends Collections {
 
   val FootballTablePosition = Switch("A/B Tests", "ab-football-table-position",
     "If this switch is on, the football table will vary in position throughout the football tagged pages.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 3, 7)
+    safeState = Off, sellByDate = new DateMidnight(2014, 3, 12)
   )
 
   val ABFrontsLatestReviewsCard = Switch("A/B Tests", "ab-fronts-latest-reviews-card",
@@ -355,6 +353,11 @@ object Switches extends Collections {
 
   val ABFrontsCartoonCard = Switch("A/B Tests", "ab-fronts-cartoon-card",
     "If this swith is on, run an ab test to add a Cartoon card to the C&D container.",
+    safeState = Off, sellByDate = new DateMidnight(2014, 3, 8)
+  )
+
+  val ABFrontsMissedCard = Switch("A/B Tests", "ab-fronts-missed-card",
+    "If this swith is on, run an ab test to add a `You might have missed` card to the News container.",
     safeState = Off, sellByDate = new DateMidnight(2014, 3, 8)
   )
 
@@ -446,7 +449,6 @@ object Switches extends Collections {
     ClientSideErrorSwitch,
     LightboxGalleriesSwitch,
     IdentityProfileNavigationSwitch,
-    ExternalLinksCardsSwitch,
     LiveCricketSwitch,
     LiveStatsSwitch,
     LiveAbTestStatsSwitch,
@@ -497,7 +499,9 @@ object Switches extends Collections {
     LayoutHintsSwitch,
     ABAuContainers,
     ABFrontsLatestReviewsCard,
-    ABFrontsCartoonCard
+    ABFrontsCartoonCard,
+    ABFrontsMissedCard,
+    HelveticaEasterEggSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }

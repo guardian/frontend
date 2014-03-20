@@ -31,13 +31,13 @@ define([
         return {
             init: function (context) {
 
-                var accountProfileForms = context.querySelector(self.classes.forms);
+                self.accountProfileForms = context.querySelector(self.classes.forms);
 
-                if (accountProfileForms) {
-                    self.bindInputs(accountProfileForms.querySelector(self.classes.accountForm));
-                    self.bindInputs(accountProfileForms.querySelector(self.classes.publicForm));
+                if (self.accountProfileForms) {
+                    self.bindInputs(self.accountProfileForms.querySelector(self.classes.accountForm));
+                    self.bindInputs(self.accountProfileForms.querySelector(self.classes.publicForm));
 
-                    var tabs = accountProfileForms.querySelector(self.classes.tabs);
+                    var tabs = self.accountProfileForms.querySelector(self.classes.tabs);
 
                     bean.on(tabs, 'click', self.handleTabsClick.bind(self));
                 }
@@ -50,17 +50,18 @@ define([
      *  message if form contains unsaved changes.
      */
     accountProfile.prototype.handleTabsClick = function(event) {
+        var self = this;
         if (event.target.nodeName.toLowerCase() === "a") {
-            if (this.unsavedChangesForm) {
+            if (self.unsavedChangesForm) {
                 event.preventDefault();
                 event.stopImmediatePropagation();
                 // Prevent multiple errors from appearing
-                if (!this.unsavedChangesForm.querySelector(this.classes.formError)) {
+                if (!self.unsavedChangesForm.querySelector(self.classes.formError)) {
                     // Append error message
-                    bonzo(this.unsavedChangesForm).prepend(this.genUnsavedError());
+                    bonzo(self.unsavedChangesForm).prepend(self.genUnsavedError());
                     // Bind form submit to error message 'save' action
-                    bean.on(this.unsavedChangesForm.querySelector('.js-save-unsaved'), 'click', function () {
-                        this.unsavedChangesForm.submit();
+                    bean.on(self.unsavedChangesForm.querySelector('.js-save-unsaved'), 'click', function () {
+                        self.unsavedChangesForm.submit();
                     });
                 }
             } else {
@@ -80,7 +81,9 @@ define([
             errorMessageStart = "Your form has unsaved changes in ";
 
         for (var i = 0; i < this.unsavedFields.length; i++) {
-            errorMessageStart += "'" + this.unsavedFields[i].labels[0].innerHTML + "'";
+            var labelId = this.unsavedFields[i].id;
+            var text = this.accountProfileForms.querySelector("[for='"+labelId+"']").innerHTML;
+            errorMessageStart += "'" + text + "'";
             if (i === this.unsavedFields.length-1) {
                 errorMessageStart += ". ";
             } else if (i === this.unsavedFields.length-2) {
@@ -109,9 +112,15 @@ define([
      */
     accountProfile.prototype.bindInputs = function (form) {
         var inputs = Array.prototype.slice.call(form.querySelectorAll(this.classes.textInput));
+        inputs = inputs.concat(Array.prototype.slice.call(form.querySelectorAll('select')));
         for (var i = inputs.length - 1; i >= 0; i--) {
-            inputs[i].form = form;
-            inputs[i].addEventListener("keyup", this.onInputChange.bind(this));
+            var input = inputs[i];
+            input.form = form;
+            if (input.type === "select-one") {
+                input.addEventListener("change", this.onInputChange.bind(this));
+            } else {
+                input.addEventListener("input", this.onInputChange.bind(this));
+            }
         }
     };
 

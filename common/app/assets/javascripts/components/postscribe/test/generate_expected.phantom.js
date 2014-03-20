@@ -1,5 +1,4 @@
-/*global phantom:true window:true*/
-
+/*globals phantom:false, window:false*/
 var fs = require('fs');
 
 var page = require('webpage').create();

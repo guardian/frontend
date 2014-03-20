@@ -67,23 +67,12 @@ define([
             $content.text(user.displayName);
             $container.addClass('is-signed-in');
             $popup.html(
-                '<ul class="nav nav--columns nav--top-border-off nav--additional-sections" data-link-name="Sub Sections">'+
+                '<ul class="nav nav--columns" data-link-name="Sub Sections">'+
                     this.menuListItem("Edit profile", this.config.url+'/public/edit')+
                     this.menuListItem("Email preferences", this.config.url+'/email-prefs')+
                     this.menuListItem("Sign out", this.config.url+'/signout')+
                 '</ul>'
             );
-
-            var three_col = 220, // Magic number for 3 grid columns
-                width = $container.parent()[0].offsetWidth,
-                offsetLeft = $content.parent()[0].offsetLeft;
-
-            if (detect.getBreakpoint() !== 'mobile' && detect.getBreakpoint() !== 'tablet') {
-                $popup.css({
-                    left: Math.min(offsetLeft, width - three_col)
-                });
-            }
-
         } else {
             $popup.remove();
         }
@@ -103,7 +92,7 @@ define([
     Profile.prototype.emitLoadedEvent = function(user) {
         common.mediator.emit(Profile.CONFIG.eventName + ':loaded', user);
     };
-    
+
     /**
      * @param {Object} resp response from the server
      */

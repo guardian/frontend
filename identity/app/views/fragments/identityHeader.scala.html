@@ -1,28 +1,39 @@
 @(page: MetaData)(implicit request: RequestHeader)
 @import conf.Switches.{SearchSwitch, ReleaseMessageSwitch, IdentityProfileNavigationSwitch}
 
-<header id="header" role="banner" data-link-name="global navigation: header" itemscope itemtype="http://schema.org/Organization">
-    <div class="header__inner gs-container u-cf">
-        <meta itemprop="logo" content="https://static-secure.guim.co.uk/icons/social/og/gu-logo-fallback.png" />
-        <a href="@LinkTo{/}" data-link-name="site logo" id="logo" class="guardian-logo-wrapper" itemprop="url">
-            <span class="u-h">The Guardian</span>
-            <i class="i i-guardian-logo"></i>
-        </a>
-
-        <span class="release">beta</span>
-
-        @if(IdentityProfileNavigationSwitch.isSwitchedOn) {
-        <div class="js-profile-nav js-hidden">
-            <a href="@Configuration.id.url/signin" data-link-name="User profile" data-toggle="nav-popup-profile"
-               class="control control--profile">
-                <span class="js-profile-info control__info">Sign in</span>
-                <i class="i i-profile"></i>
-            </a>
+<header id="header" role="banner" data-link-name="global navigation: header" itemscope itemtype="http://schema.org/Organization" class="identity-header">
+    <div class="header-pre">
+        <div class="header-pre__inner gs-container u-cf">
+            <div class="top-nav">
+                @if(IdentityProfileNavigationSwitch.isSwitchedOn) {
+                    <div class="top-nav__item">
+                        <div class="js-profile-nav js-hidden">
+                            <a href="@Configuration.id.url/signin" data-link-name="User profile" data-toggle="nav-popup--profile"
+                               class="control control--profile">
+                                <span class="control__icon">
+                                    <i class="i i-profile control--active__hide"></i>
+                                    <i class="i i-profile-active control--active__show"></i>
+                                </span>
+                                <span class="js-profile-info control__info">Sign in</span>
+                            </a>
+                        </div>
+                    </div>
+                }
+            </div>
         </div>
-        }
+    </div>
+    <div class="header-main">
+        <div class="gs-container">
+            <meta itemprop="logo" content="http://static-secure.guim.co.uk/icons/social/og/gu-logo-fallback.png" />
+            <a href="@LinkTo{/}" data-link-name="site logo" id="logo" class="guardian-logo-wrapper" itemprop="url">
+                <span class="u-h">The Guardian</span>
+                <i class="i i-guardian-logo-160 mobile-only"></i>
+                <i class="i i-guardian-logo-big hide-on-mobile"></i>
+            </a>
 
-        @if(IdentityProfileNavigationSwitch.isSwitchedOn) {
-        <div class="nav-popup-profile js-profile-nav-popup nav-popup nav-popup--box is-off"></div>
-        }
+            @if(IdentityProfileNavigationSwitch.isSwitchedOn) {
+                <div class="nav-popup--profile nav-popup--profile-docked-left nav-popup--small js-profile-nav-popup nav-popup is-off"></div>
+            }
+        </div>
     </div>
 </header>

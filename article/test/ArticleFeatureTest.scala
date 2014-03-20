@@ -72,6 +72,16 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
       }
     }
 
+    scenario("Display the byline image of the article author", ArticleComponents) {
+      Given("I am on an article entitled 'This generational smugness about paedophilia is wrong'")
+      HtmlUnit("/commentisfree/2014/feb/28/paedophilia-generation-mail-nccl") { browser =>
+        import browser._
+
+        Then("I should see a large byline image")
+        $(".byline-img img").getAttribute("src") should endWith("Pix/pictures/2014/1/20/1390230835044/JonathanFreedland.png?width=140&height=-&quality=95")
+      }
+    }
+
     scenario("Keyword metadata", ArticleComponents) {
 
       Given("I am on an article entitled 'TV highlights 09/08/2012'")

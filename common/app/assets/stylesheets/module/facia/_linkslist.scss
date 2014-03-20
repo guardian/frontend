@@ -88,11 +88,6 @@
                 min-height: get-line-height($fs-headlines, 1) * 3,
             ));
         }
-        .linkslist__label {
-            // Make sure 3 lines is the maximum so that elements are balanced
-            // between columns
-            @include text-clamp(3, get-line-height($fs-headlines, 1));
-        }
     }
 }
 

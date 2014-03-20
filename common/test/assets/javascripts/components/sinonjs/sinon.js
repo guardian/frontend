@@ -1,5 +1,5 @@
 /**
- * Sinon.JS 1.7.1, 2013/05/07
+ * Sinon.JS 1.7.3, 2013/06/20
  *
  * @author Christian Johansen (christian@cjohansen.no)
  * @author Contributors: https://github.com/cjohansen/Sinon.JS/blob/master/AUTHORS
@@ -619,6 +619,10 @@ var sinon = (function (buster) {
                 return true;
             }
 
+            if (aString == "[object Date]") {
+                return a.valueOf() === b.valueOf();
+            }
+
             var prop, aLength = 0, bLength = 0;
 
             for (prop in a) {
@@ -777,7 +781,6 @@ var sinon = (function (buster) {
         } catch (e) {}
         module.exports = sinon;
         module.exports.spy = require("./sinon/spy");
-        module.exports.spyCall = require("./sinon/call");
         module.exports.stub = require("./sinon/stub");
         module.exports.mock = require("./sinon/mock");
         module.exports.collection = require("./sinon/collection");
@@ -1066,16 +1069,13 @@ var sinon = (function (buster) {
   * Copyright (c) 2013 Maximilian Antoni
   */
 
+var commonJSModule = typeof module == "object" && typeof require == "function";
+
+if (!this.sinon && commonJSModule) {
+    var sinon = require("../sinon");
+}
+
 (function (sinon) {
-    var commonJSModule = typeof module == "object" && typeof require == "function";
-    if (!sinon && commonJSModule) {
-        sinon = require("../sinon");
-    }
-
-    if (!sinon) {
-        return;
-    }
-
     function throwYieldError(proxy, text, args) {
         var msg = sinon.functionName(proxy) + text;
         if (args.length) {
@@ -1244,17 +1244,11 @@ var sinon = (function (buster) {
     };
     createSpyCall.toString = callProto.toString; // used by mocks
 
-    if (commonJSModule) {
-        module.exports = createSpyCall;
-    } else {
-        sinon.spyCall = createSpyCall;
-    }
+    sinon.spyCall = createSpyCall;
 }(typeof sinon == "object" && sinon || null));
-
 
 /**
   * @depend ../sinon.js
-  * @depend call.js
   */
 /*jslint eqeqeq: false, onevar: false, plusplus: false*/
 /*global module, require, sinon*/
@@ -1272,14 +1266,6 @@ var sinon = (function (buster) {
     var push = Array.prototype.push;
     var slice = Array.prototype.slice;
     var callId = 0;
-
-    if (!sinon && commonJSModule) {
-        sinon = require("../sinon");
-    }
-
-    if (!sinon) {
-        return;
-    }
 
     function spy(object, property) {
         if (!property && typeof object == "function") {
@@ -3078,8 +3064,9 @@ sinon.xhr = { XMLHttpRequest: this.XMLHttpRequest };
         this.statusText = "";
 
         var xhr = this;
+        var events = ["loadstart", "load", "abort", "loadend"];
 
-        ["loadstart", "load", "abort", "loadend"].forEach(function (eventName) {
+        function addEventListener(eventName) {
             xhr.addEventListener(eventName, function (event) {
                 var listener = xhr["on" + eventName];
 
@@ -3087,7 +3074,11 @@ sinon.xhr = { XMLHttpRequest: this.XMLHttpRequest };
                     listener(event);
                 }
             });
-        });
+        }
+
+        for (var i = events.length - 1; i >= 0; i--) {
+            addEventListener(events[i]);
+        }
 
         if (typeof FakeXMLHttpRequest.onCreate == "function") {
             FakeXMLHttpRequest.onCreate(this);
@@ -3408,7 +3399,7 @@ sinon.xhr = { XMLHttpRequest: this.XMLHttpRequest };
             if (typeof this.onload === "function"){
                 this.onload();
             }
-            
+
         }
     });
 

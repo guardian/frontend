@@ -7,7 +7,7 @@ import idapiclient.UserUpdate
 
 object AccountDetailsMapping extends UserFormMapping[AccountFormData] with AddressMapping{
 
-  private val genders = List("Male", "Female", "unknown", "")
+  private val genders = List("Male", "Female", "Transgender", "unknown", "")
 
   protected lazy val formMapping = {
     mapping(
