@@ -1,3 +1,18 @@
+/**
+    Formstack - composer integration
+
+    This script runs INSIDE a formstack iframe and is initialised by the NGW
+    requireJs setup
+
+    It is set up to send messages to the parent script in window.top to allow
+    the cross domain adjustment of height for variable content from formstack.
+
+    It also takes care of removing the formstack default styling and applying
+    Guardian styling via the NGW scss system.
+
+     - Chris Finch, CSD - Identity, March '14
+*/
+
 define([
     'common/$',
     'common/common',
@@ -69,8 +84,8 @@ define([
             $(el).removeClass(config.idClasses.hide);
             $('html').addClass('iframed--overflow-hidden');
 
-            // Update iframe height, see "modules/identity/formstack-iframe"
-            self.postMessage('ready');
+            // Update iframe height
+            self.sendHeight();
         };
 
         self.dom = function(user) {
@@ -114,18 +129,33 @@ define([
                     bean.fire(textarea, 'keyup');
                 });
 
-                self.postMessage('refreshHeight');
+                self.sendHeight();
             }, 100);
         };
 
         self.unload = function() {
             // Listen for navigation to success page
-            self.postMessage('unload');
+            self.sendHeight(true);
         };
 
-        self.postMessage = function(message) {
-            var domain = config.page.idUrl;
-            window.top.postMessage(message, domain);
+        self.sendHeight = function () {
+            var body = document.body,
+                html = document.documentElement,
+                height = Math.max(body.scrollHeight, body.offsetHeight,
+                                  html.clientHeight, html.scrollHeight, html.offsetHeight);
+
+            self.postMessage("set-height", height);
+        };
+
+        self.postMessage = function(type, value) {
+
+            var message = {
+                type: type,
+                value: value,
+                href: window.location.href
+            };
+
+            window.top.postMessage(JSON.stringify(message), "*");
         };
 
     }
