@@ -15,10 +15,10 @@ GET     /email-prefs                                    @controllers.EmailContro
 POST    /email-prefs                                    @controllers.EmailController.savePreferences
 GET     /user/id/:id                                    @controllers.PublicProfileController.renderProfileFromId(id: String)
 GET     /user/:vanityUrl                                @controllers.PublicProfileController.renderProfileFromVanityUrl(vanityUrl: String)
-GET     /public/edit                                    @controllers.PublicProfileController.displayPublicProfileForm
-GET     /account/edit                                   @controllers.PublicProfileController.displayAccountForm
-POST    /public/edit                                    @controllers.PublicProfileController.submitPublicProfileForm
-POST    /account/edit                                   @controllers.PublicProfileController.submitAccountForm
+GET     /public/edit                                    @controllers.EditProfileController.displayPublicProfileForm
+GET     /account/edit                                   @controllers.EditProfileController.displayAccountForm
+POST    /public/edit                                    @controllers.EditProfileController.submitPublicProfileForm
+POST    /account/edit                                   @controllers.EditProfileController.submitAccountForm
 GET     /verify-email/:token                            @controllers.EmailVerificationController.verify(token: String)
 
 GET     /ethical-awards/complete                        @controllers.EthicalAwardsController.complete
