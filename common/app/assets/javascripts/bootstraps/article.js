@@ -4,6 +4,7 @@ define([
     "common/utils/detect",
     "common/$",
     "fence",
+    "common/modules/ui/rhc",
     "common/modules/ui/autoupdate",
     "common/modules/live/filter",
     "common/modules/discussion/loader",
@@ -18,6 +19,7 @@ define([
     detect,
     $,
     fence,
+    rhc,
     AutoUpdate,
     LiveFilter,
     DiscussionLoader,
@@ -91,11 +93,10 @@ define([
                     var openCta = new OpenCta(context, common.mediator, {
                             discussionKey: config.page.shortUrl.replace('http://gu.com/', '')
                         }),
-                        $openCtaElem = $('.open-cta');
+                        $openCtaContainer = $.create('<div class="open-cta"></div>');
 
-                    if ($openCtaElem[0]) {
-                        openCta.fetch($openCtaElem[0]);
-                    }
+                    openCta.fetch($openCtaContainer[0]);
+                    rhc.addComponent($openCtaContainer[0], 3);
                 }
             });
         },

@@ -1,7 +1,11 @@
+.match-stats {
+    margin: 0;
+}
+
 .match-stats__caption {
     @include fs-data(5);
     @include rem((
-        margin: $gs-baseline 0 $gs-baseline/1.5
+        margin: $gs-baseline+4 0 $gs-baseline/1.5
     ));
     color: $c-neutral1;
     font-weight: 400;
@@ -43,7 +47,6 @@
     ));
     font-weight: normal;
     position: absolute;
-    text-shadow: 0 0 8px $c-neutral1;
     z-index: 2;
 }
 .goal-attempts__label--off-target,
@@ -56,13 +59,12 @@
 .goal-attempts__off-target,
 .goal-attempts__on-target {
     @include box-sizing(border-box);
-    @include fs-bodyCopy(4);
+    @include fs-header(2);
     @include rem((
         padding-left: $gs-gutter/3,
         padding-top: $gs-baseline*2
     ));
     font-weight: 900;
-    text-shadow: 0 0 8px $c-neutral1;
     width: 50%;
 }
 .goal-attempts__off-target {
@@ -95,7 +97,7 @@
    ========================================================================== */
 .bar-fight__bar {
     @include box-sizing(border-box);
-    @include fs-bodyCopy(4);
+    @include fs-header(2);
     @include rem((
         padding: 0 ($gs-gutter/4)+3
     ));
@@ -105,7 +107,6 @@
     float: left;
     margin: 0;
     text-align: right;
-    text-shadow: 0 0 8px $c-neutral1;
 }
 
 .bar-fight__bar--home {
@@ -113,7 +114,6 @@
     border-right: 2px solid #ffffff;
     text-align: left;
 }
-
 
 /**
  * This will be our unfortunate solution until we do colour checking in play.
@@ -124,7 +124,6 @@
     .goal-attempts__off-target--home-team,
     .goal-attempts__on-target--home-team {
         color: $c-neutral1;
-        text-shadow: none;
     }
 }
 
@@ -140,10 +139,6 @@
 /* ==========================================================================
    Legacy
    ========================================================================== */
-.match-stats {
-    margin-bottom: ($gs-baseline/3)*4;
-}
-
 .match-aggregate,
 .match-comment {
     text-align: center;
