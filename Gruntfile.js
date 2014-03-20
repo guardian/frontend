@@ -336,6 +336,15 @@ module.exports = function (grunt) {
         },
 
         copy: {
+            // 3rd party javascript applications
+            'vendor': {
+                files: [{
+                    expand: true,
+                    cwd: 'common/app/public/javascripts/vendor',
+                    src: ['**/foresee/**'],
+                    dest: staticTargetDir + 'javascripts/vendor'
+                }]
+            },
             'javascript-common': {
                 files: [{
                     expand: true,
@@ -732,6 +741,7 @@ module.exports = function (grunt) {
             'compile:flash',
             'clean:assets',
             'copy:headCss',
+            'copy:vendor',
             'hash'
         ]);
     });
