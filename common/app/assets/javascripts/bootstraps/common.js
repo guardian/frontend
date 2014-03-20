@@ -1,3 +1,5 @@
+/* jshint nonew: false */
+/* TODO - fix module constructors so we can remove the above jshint override */
 define([
     //Commmon libraries
     'common/$',
@@ -6,9 +8,9 @@ define([
     'common/utils/ajax',
     'common/modules/userPrefs',
     //Vendor libraries
-    'domReady',
     'bonzo',
     'bean',
+    'enhancer',
     'lodash/functions/debounce',
     //Modules
     'common/utils/storage',
@@ -38,9 +40,11 @@ define([
     "common/modules/ui/message",
     "common/modules/identity/autosignin",
     'common/modules/adverts/article-body-adverts',
+    'common/modules/adverts/dfp',
     "common/modules/analytics/commercial/tags/container",
-    "common/modules/interactive/loader",
-    "common/modules/onward/right-hand-component-factory"
+    "common/modules/analytics/foresee-survey",
+    "common/modules/onward/right-most-popular",
+    "common/modules/analytics/register"
 ], function (
     $,
     mediator,
@@ -48,9 +52,9 @@ define([
     ajax,
     userPrefs,
 
-    domReady,
     bonzo,
     bean,
+    enhancer,
     debounce,
 
     storage,
@@ -81,9 +85,11 @@ define([
     Message,
     AutoSignin,
     ArticleBodyAdverts,
+    DFP,
     TagContainer,
-    Interactive,
-    RightHandComponentFactory
+    Foresee,
+    RightMostPopular,
+    register
 ) {
 
     var hasBreakpointChanged = detect.hasCrossedBreakpoint();
@@ -134,7 +140,7 @@ define([
         showToggles: function() {
             var toggles = new Toggles();
             toggles.init(document);
-            mediator.on('page:common:ready', function(config, context) {
+            mediator.on('page:common:ready', function() {
                 toggles.reset();
             });
         },
@@ -150,7 +156,7 @@ define([
         },
 
         initClickstream: function () {
-            var cs = new Clickstream({filter: ["a", "button"]});
+            new Clickstream({filter: ["a", "button"]});
         },
 
         transcludeCommentCounts: function () {
@@ -183,13 +189,12 @@ define([
             ab.run(config, context);
         },
 
-        initRightHandComponent: function(config, context) {
+        initRightHandComponent: function(config) {
 
             if(config.switches.rightHandMostPopular && config.page.contentType === 'Article') {
-              var r = new RightHandComponentFactory({
-                  wordCount: config.page.wordCount,
-                  pageId: config.page.pageId
-              });
+                if(detect.getBreakpoint() !== 'mobile' && parseInt(config.page.wordCount, 10) > 500  ) {
+                    new RightMostPopular(mediator, {type: 'image', maxTrails: 5});
+                }
            }
         },
 
@@ -206,7 +211,7 @@ define([
                 Array.prototype.forEach.call(context.getElementsByTagName("video"), function(video){
                     if (!bonzo(video).hasClass('tracking-applied')) {
                         bonzo(video).addClass('tracking-applied');
-                        var v = new OmnitureMedia({
+                        new OmnitureMedia({
                             el: video,
                             config: config
                         }).init();
@@ -221,7 +226,7 @@ define([
                     if(config.switches.scrollDepth) {
                         mediator.on('scrolldepth:data', ophan.record);
 
-                        var sd = new ScrollDepth({
+                        new ScrollDepth({
                             isContent: config.page.contentType === "Article"
                         });
                     }
@@ -231,6 +236,8 @@ define([
 
         loadAdverts: function (config) {
             if(!userPrefs.isOff('adverts') && config.switches.adverts && !config.page.blockVideoAds && !config.page.shouldHideAdverts) {
+                var dfpAds = new DFP(config);
+
                 var resizeCallback = function() {
                     hasBreakpointChanged(function() {
                         Adverts.reload();
@@ -243,7 +250,7 @@ define([
 
                     articleBodyAdverts.init();
 
-                    resizeCallback = function(e) {
+                    resizeCallback = function() {
                         hasBreakpointChanged(function() {
                             articleBodyAdverts.reload();
                             Adverts.reload();
@@ -255,18 +262,27 @@ define([
                 mediator.on('page:common:deferred:loaded', function(config, context) {
                     Adverts.init(config, context);
                 });
-                mediator.on('modules:adverts:docwrite:loaded', Adverts.load);
+                mediator.on('modules:adverts:docwrite:loaded', function() {
+
+                    if(config.switches.dfpAdverts) {
+                        dfpAds.load();
+                    }
+
+                    Adverts.load();
+                });
 
                 mediator.on('window:resize', debounce(resizeCallback, 2000));
+            } else {
+                Adverts.hideAds();
             }
         },
 
-        loadVideoAdverts: function(config) {
+        loadVideoAdverts: function() {
             mediator.on('page:common:ready', function(config, context) {
                 if(config.switches.videoAdverts && !config.page.blockVideoAds) {
                     Array.prototype.forEach.call(context.querySelectorAll('video'), function(el) {
                         var support = detect.getVideoFormatSupport();
-                        var a = new VideoAdvert({
+                        new VideoAdvert({
                             el: el,
                             support: support,
                             config: config,
@@ -301,7 +317,7 @@ define([
                             'You’re viewing a beta release of the Guardian’s responsive website.' +
                             ' We’d love to hear your <a href="https://www.surveymonkey.com/s/theguardian-beta-feedback" data-link-name="feedback">feedback</a>' +
                       '</p>' +
-                      '<ul class="site-message__actions unstyled">' +
+                      '<ul class="site-message__actions u-unstyled">' +
                            '<li class="site-message__actions__item">' +
                                '<i class="i i-back"></i>' +
                                    '<a class="js-main-site-link" rel="nofollow" href="' + exitLink + '"' +
@@ -339,7 +355,7 @@ define([
                     '<li class="site-message__list__item">We love feedback - <a href="https://www.surveymonkey.com/s/theguardian-beta-feedback">let us know yours</a>.</li>' +
                     '<li class="site-message__list__item">Stay up to date with new releases on <a href="http://next.theguardian.com/blog/">our blog</a>.</li>' +
                     '</ul>' +
-                    '<ul class="site-message__actions unstyled">' +
+                    '<ul class="site-message__actions u-unstyled">' +
                     '<li class="site-message__actions__item"><i class="i i-arrow-white-circle"></i>  '+
                     '<a class="js-site-message-close" data-link-name="R2 alpha opt in" href="#" tabindex=1>Got it</a>' +
                     '<li class="site-message__actions__item">' +
@@ -411,15 +427,24 @@ define([
             }
         },
 
-        augmentInteractive: function () {
+        runForseeSurvey: function(config) {
+            if(config.switches.foresee) {
+                Foresee.load();
+            }
+        },
+
+        augmentInteractive: function() {
             mediator.on('page:common:ready', function(config, context) {
                 if (/Article|Interactive/.test(config.page.contentType)) {
-                    var interactives = context.querySelectorAll('figure.interactive');
-                    Array.prototype.forEach.call(interactives, function (i) {
-                        new Interactive(i, context, config).init();
+                    $('figure.interactive').each(function (el) {
+                        enhancer.render(el, context, config, mediator);
                     });
                 }
             });
+        },
+
+        startRegister: function() {
+            register.initialise();
         }
     };
 
@@ -464,6 +489,8 @@ define([
             modules.initAutoSignin(config);
             modules.loadTags(config);
             modules.augmentInteractive();
+            modules.runForseeSurvey(config);
+            modules.startRegister();
         }
         mediator.emit("page:common:ready", config, context);
     };

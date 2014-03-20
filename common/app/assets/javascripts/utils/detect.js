@@ -14,8 +14,7 @@ define([
     common
 ) {
 
-    var mobileOS,
-        supportsPushState,
+    var supportsPushState,
         pageVisibility = document.visibilityState ||
                          document.webkitVisibilityState ||
                          document.mozVisibilityState ||
@@ -40,10 +39,6 @@ define([
                 callback(is);
             }
         };
-    }
-
-    function getPixelRatio() {
-        return window.devicePixelRatio;
     }
 
     /**
@@ -114,27 +109,6 @@ define([
         return format;
     }
 
-    // http://modernizr.com/download/#-svg
-    function hasSvgSupport() {
-        var ns = {'svg': 'http://www.w3.org/2000/svg'};
-        return !!document.createElementNS && !!document.createElementNS(ns.svg, 'svg').createSVGRect;
-    }
-
-    function hasCSSSupport(property, value, noPrefixes) {
-        // Thanks Modernizr: https://github.com/filamentgroup/fixed-sticky/blob/master/fixedsticky.js
-        // and Filament Group: https://github.com/filamentgroup/fixed-sticky/blob/master/fixedsticky.js
-        var prop = property + ':',
-            el = document.createElement('test'),
-            mStyle = el.style;
-
-        if (!noPrefixes) {
-            mStyle.cssText = prop + ['-webkit-', '-moz-', '-ms-', '-o-', ''].join(value + ';' + prop) + value + ';';
-        } else {
-            mStyle.cssText = prop + value;
-        }
-        return mStyle[property].indexOf(value) !== -1;
-    }
-
     function hasTouchScreen() {
         return ('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch;
     }
@@ -169,41 +143,13 @@ define([
         return types;
     }
 
-    function getMobileOS() {
-        var ua,
-            uaindex;
-
-        if(mobileOS !== undefined) {
-            return mobileOS;
-        }
-
-        ua = navigator.userAgent;
-
-        if (ua.match(/iPad/i) || ua.match(/iPhone/i)) {
-            uaindex = ua.indexOf('OS ');
-            mobileOS = {
-                name: 'iOS',
-                version: uaindex > -1 ? parseFloat(ua.substr(uaindex + 3, 3).replace('_', '.'), 10) : -1
-            };
-        } else if (ua.match(/Android/i)) {
-            uaindex = ua.indexOf('Android ');
-            mobileOS = {
-                name: 'Android',
-                version: uaindex > -1 ? parseFloat(ua.substr(uaindex + 8, 3), 10) : -1
-            };
-        } else {
-            mobileOS = false;
-        }
-        return mobileOS;
-    }
-
     function getOrientation() {
         return (window.innerHeight > window.innerWidth) ? 'portrait' : 'landscape';
     }
 
     function getBreakpoint() {
         // default to mobile
-        var breakpoint = window.getComputedStyle(document.body, ':after').getPropertyValue('content') || 'mobile';
+        var breakpoint = (document.body && window.getComputedStyle(document.body, ':after').getPropertyValue('content')) || 'mobile';
         // firefox seems to wrap the value in quotes
         return breakpoint.replace(/^"([^"]*)"$/, "$1");
     }
@@ -264,14 +210,10 @@ define([
     }
 
     return {
-        getMobileOS: getMobileOS,
         hasCrossedBreakpoint: hasCrossedBreakpoint,
-        getPixelRatio: getPixelRatio,
         getConnectionSpeed: getConnectionSpeed,
         getFontFormatSupport: getFontFormatSupport,
         getVideoFormatSupport: getVideoFormatSupport,
-        hasSvgSupport: hasSvgSupport,
-        hasCSSSupport: hasCSSSupport,
         hasTouchScreen: hasTouchScreen,
         hasPushStateSupport: hasPushStateSupport,
         getOrientation: getOrientation,

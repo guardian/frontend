@@ -19,7 +19,6 @@
         span {
             display: block;
             overflow: hidden;
-            text-overflow: ellipsis;
             white-space: nowrap;
             width: 100%;
         }
@@ -34,7 +33,7 @@
     }
 
     .table-column--main {
-        max-width: 90px;
+        max-width: 50px;
     }
 
     // This makes sure that all table columns are equally spaced

@@ -37,18 +37,20 @@ object MoreOnMatchController extends Controller with Football with Requests with
     val maybeResponse: Option[Future[SimpleResult]] = Competitions().matchFor(interval, team1, team2) map { theMatch =>
       val related: Future[Seq[Content]] = loadMoreOn(request, theMatch)
       // We are only interested in content with exactly 2 team tags
-      related map { _ filter hasExactlyTwoTeams } map {
-        case Nil => JsonNotFound()
-        case filtered => JsonComponent(
-          "nav" -> football.views.html.fragments.matchNav(populateNavModel(theMatch, filtered)),
-          "summary" -> football.views.html.fragments.matchSummary(theMatch),
-          "scoreSummary" -> football.views.html.fragments.scoreSummary(theMatch)
-        )
+
+    related map { _ filter hasExactlyTwoTeams } map {
+        case Nil => Cached(300){JsonNotFound()}
+        case filtered => Cached(if(theMatch.isLive) 10 else 300) {
+          JsonComponent(
+            "nav" -> football.views.html.fragments.matchNav(populateNavModel(theMatch, filtered)),
+            "matchSummary" -> football.views.html.fragments.matchSummary(theMatch),
+            "scoreSummary" -> football.views.html.fragments.scoreSummary(theMatch)
+          )
+        }
       }
     }
 
-    val response = maybeResponse.getOrElse(Future { JsonNotFound() })
-    response map { Cached(300) }
+    maybeResponse.getOrElse(Future.successful(Cached(300){ JsonNotFound() }))
   }
 
   def moreOnJson(matchId: String) = moreOn(matchId)

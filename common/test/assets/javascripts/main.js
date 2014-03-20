@@ -24,7 +24,8 @@ requirejs.config({
         reqwest:      '/base/common/app/assets/javascripts/components/reqwest/src/reqwest',
         postscribe:   '/base/common/app/assets/javascripts/components/postscribe/dist/postscribe',
         lodash:       '/base/common/app/assets/javascripts/components/lodash-amd/modern',
-        imager:       '/base/common/app/assets/javascripts/components/imager.js/src/strategies/container'
+        imager:       '/base/common/app/assets/javascripts/components/imager.js/src/strategies/container',
+        enhancer:     '/base/common/app/assets/javascripts/components/enhancer/enhancer'
     },
     map: {
         '*': {
@@ -34,6 +35,9 @@ requirejs.config({
         }
     },
     shim: {
+        postscribe: {
+            exports: 'postscribe'
+        },
         imager: {
             deps: ['/base/common/app/assets/javascripts/components/imager.js/src/imager.js'],
             exports: 'Imager'

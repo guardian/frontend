@@ -1,80 +1,102 @@
 .commercial {
     @include box-sizing(border-box);
-    text-align: left;
-    color: $c-neutral1;
-    background-color: lighten($c-neutral7, 2%);
     width: 100%;
     position: relative;
+    background-color: $c-neutral6;
+    color: $c-neutral1;
+    text-align: left;
+
+    .container__border {
+        border-top: none;
+    }
+    .container__title {
+        background: none !important;    // Overriding default page styles
+        padding: $gs-baseline/3 0;
+        margin-top: ($gs-baseline/3);
+        float: none;
+        color: $c-newsDefault;
+    }
 }
 .commercial__head {
-    background-color: $c-neutral6;
+    background-color: #ffffff;
+    border-top: 1px solid $c-neutral4;
     overflow: hidden;
     @include rem((
         height: 40px
     ));
 }
-.commercial__title {
-    padding: ($gs-baseline/3)*2;
-    margin: 0;
+.commercial__logo {
+    margin-bottom: $gs-baseline/2;
     float: left;
-    color: $c-brandBlue;
-    text-transform: lowercase;
-    word-spacing: -0.25em;
-    @include fs-headline(2);
-
-    .em {
-        font-style: italic;
-    }
 }
-.commercial__subtitle {
-    color: #ffffff;
-    @include f-headline;
-    @include font-size(12, 12);
-    margin: 0;
-    position: absolute;
-    bottom: $gs-baseline/3;
-    padding: $gs-baseline/3 ($gs-gutter/5)*2;
+.commercial__title {
+    @include fs-header(3);
+    @include rem((
+        margin-bottom: $gs-baseline*2
+    ));
+    float: left;
+    clear: both;
+}
+.commercial__call-to-action {
+    display: block;
+    float: right;
+    @include fs-bodyHeading(2);
+
+    &:hover {
+        text-decoration: none;
+    }
 }
 .commercial__body {
     padding: ($gs-baseline/3)*2;
     overflow: hidden;
 }
 .commercial__foot {
-    border-top: 1px dotted $c-neutral5;
-    padding: $gs-baseline/3 $gs-gutter/5;
-    margin: 0 $gs-gutter/5;
+    padding: ($gs-baseline/3)*2 0;
     clear: both;
+    overflow: hidden;
 }
-.commercial__link {
-    @include fs-data(4);
+.commercial__search {
+    position: relative;
+    width: 100%;
+    margin-bottom: 0;
+    float: right;
+    overflow: hidden;
+}
+.commercial__search__input {
+    @include box-sizing(border-box);
+    width: 100%;
+    height: $gs-row-height;
+    padding: $gs-baseline/3 32px $gs-baseline/3 ($gs-baseline/3) * 2;
+    @include fs-bodyCopy(1);
+    border: none;
+    float: left;
+    overflow: hidden;
 
-    .i {
-        position: relative;
-        top: 2px;
-        margin-left: 4px;
-    }
-    .commercial__head & {
-        @include rem((
-            line-height: 32px
-        ));
-        padding: $gs-baseline/3 $gs-gutter/5;
-        display: block;
-        float: right;
-
-        .i {
-            background-color: $c-newsDefault;
-            background-position: 9px 9px;
-            border-radius: 100%;
-            margin-left: $gs-gutter/5;
-            top: 0;
-            width: 32px;
-            height: 32px;
-            float: right;
-        }
+    &:hover,
+    &:focus {
+        outline: none;
     }
 }
-.commercial__label {
-    display: block;
+.commercial__search__submit {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    @extend %icon-holder-circle;
+
+    &:hover,
+    &:focus {
+        background-color: #ffffff;
+        outline: none;
+    }
+
+    &:active {
+        background-color: #ffffff;
+        outline: none;
+    }
+
+    .i-search {
+        margin-top: 1px;
+    }
 }
 
 
@@ -83,19 +105,39 @@
    ========================================================================== */
 
 .lineitems {
-    list-style-type: none;
+    padding: 0;
     margin: 0;
+    overflow: hidden;
+}
+.lineitem {
+    @include box-sizing(border-box);
+    position: relative;
+    padding: ($gs-baseline/3)*2 0;
+
+    color: $c-neutral1;
+    @include fs-headline(1);
+
+    &:nth-child(n + 4) {
+        display: none;
+    }
+    &:first-child .lineitem__img {
+        display: block;
+    }
+    + .lineitem {
+        border-top: 1px solid $c-neutral4;
+    }
 }
 .lineitem__title {
-    @include f-headline;
-    @include font-size(18, 20);
-
-    a {
-        color: $c-neutral1;
-    }
+    color: $c-neutral1;
+    @include fs-headline(1);
+    font-weight: normal;
+    text-overflow: ellipsis;
+    white-space: pre;
+    overflow: hidden;
 }
 .lineitem__description,
 .lineitem__link {
+    color: $c-neutral1;
     @include fs-data(4);
 
     strong {
@@ -104,7 +146,9 @@
     }
 }
 .lineitem__link {
-    margin-top: $gs-baseline/3;
+    display: block;
+    float: left;
+    overflow: hidden;
 
     .i.i-single-arrow-right-blue {
         background-position: 6px 4px;
@@ -129,9 +173,17 @@
     @include fs-data(2);
     margin: 0;
 }
-.lineitem__image {
-    max-width: 100%;
-    outline: 1px solid $c-neutral7;
+.lineitem__img {
+    height: 100px;
+    display: none;
+    margin-right: ($gs-baseline/3)*2;
+    float: left;
+    text-align: center;
+
+    .responsive-img {
+        width: auto;
+        height: 100%;
+    }
 }
 
 
@@ -153,20 +205,49 @@
             margin-top: $gs-baseline/3;
         }
     }
-    .commercial__subtitle {
-        padding: $gs-baseline/3 $gs-gutter/5;
+}
+
+@include mq(tablet) {
+    .commercial__search {
+        width: 40%;
     }
-    .commercial__title a {
-        color: #ffffff;
+    .lineitem {
+        width: 20%;
+        padding-left: 8px;
+        padding-right: 8px;
+        float: left;
+
+        &:nth-child(n + 4) {
+            display: block;
+        }
+
+        + .lineitem {
+            border-top: none;
+            border-left: 1px solid $c-neutral4;
+        }
     }
-    .commercial__body,
-    .commercial__foot {
-        display: none; // this is not a very good idea
+    .lineitem__link {
+        width: 100%;
+    }
+    .lineitem__title {
+        white-space: nowrap;
+        clear: both;
+    }
+    .lineitem__img {
+        display: block;
+        margin-bottom: $gs-baseline;
     }
 }
 
-@include mq($from: tablet) {
-    .commercial__subtitle {
-        display: none; // this is not a very good idea
+@include mq(desktop) {
+    .lineitem__title {
+        white-space: normal;
+    }
+}
+
+@include mq(leftCol) {
+    .commercial .container__title {
+        padding: $gs-baseline/3 0 ($gs-baseline/3)*2 0;
+        float: left;
     }
 }

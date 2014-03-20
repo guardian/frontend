@@ -57,9 +57,9 @@ object MatchController extends Controller with Football with Requests with Loggi
       val page: Future[MatchPage] = lineup map { MatchPage(theMatch, _) }
 
       page map { page =>
-        val htmlResponse = () => football.views.html.footballMatch(page)
-        val jsonResponse = () => football.views.html.fragments.footballMatchBody(page)
-        renderFormat(htmlResponse, jsonResponse, page, Switches.all)
+        val htmlResponse = () => football.views.html.matchStats.matchStatsPage(page)
+        val jsonResponse = () => football.views.html.matchStats.matchStatsComponent(page)
+        renderFormat(htmlResponse, jsonResponse, page)
       }
     }
 

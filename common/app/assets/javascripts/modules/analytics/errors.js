@@ -1,12 +1,9 @@
-/*global Event:true */
 define([
     'common/modules/userPrefs',
-    'common/modules/analytics/beacon',
-    'common/common'
+    'common/modules/analytics/beacon'
 ], function (
     userPrefs,
-    beacon,
-    common
+    beacon
 ) {
 
     var Errors = function (config) {

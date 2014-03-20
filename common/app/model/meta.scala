@@ -11,6 +11,7 @@ trait MetaData extends Tags {
   def url: String  = s"/$id"
   def linkText: String = webTitle
   def pagination: Option[Pagination] = None
+  def description: Option[String] = None
 
   // this is here so it can be included in analytics.
   // Basically it helps us understand the impact of changes and needs
@@ -31,7 +32,9 @@ trait MetaData extends Tags {
 
   def openGraph: List[(String, Any)] = List(
     "og:site_name" -> "the Guardian",
-    "fb:app_id"    -> Configuration.facebook.appId
+    "fb:app_id"    -> Configuration.facebook.appId,
+    "og:type"      -> "website",
+    "og:url"       -> s"${Configuration.site.host}$url"
   )
 
   def cards: List[(String, Any)] = List(
@@ -50,7 +53,8 @@ class Page(
   val section: String,
   val webTitle: String,
   val analyticsName: String,
-  pagination: Option[Pagination] = None) extends MetaData
+  override val pagination: Option[Pagination] = None,
+  override val description: Option[String] = None) extends MetaData
 
 object Page {
   def apply(
@@ -58,7 +62,8 @@ object Page {
     section: String,
     webTitle: String,
     analyticsName: String,
-    pagination: Option[Pagination] = None) = new Page(id, section, webTitle, analyticsName, pagination)
+    pagination: Option[Pagination] = None,
+    description: Option[String] = None) = new Page(id, section, webTitle, analyticsName, pagination, description)
 }
 
 trait Elements {

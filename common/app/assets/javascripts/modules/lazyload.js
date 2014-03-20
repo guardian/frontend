@@ -24,9 +24,9 @@ define([
 
         var into,
             defaultOpts = {
-                success: function(resp) {},
-                error:   function(req) {},
-                always:  function(resp) {},
+                success: function() {},
+                error:   function() {},
+                always:  function() {},
                 beforeInsert: function(html) { return html; },
                 force: false
             },

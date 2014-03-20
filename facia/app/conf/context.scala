@@ -5,7 +5,7 @@ import com.gu.management.{ PropertiesPage, StatusPage, ManifestPage, ManagementP
 import com.gu.management.play.{ Management => GuManagement }
 import com.gu.management.logback.LogbackLevelPage
 import com.gu.management.HttpRequest
-import controllers.front.{CollectionAgent, ConfigAgent}
+import controllers.front.ConfigAgent
 
 object Management extends GuManagement {
   val applicationName = "frontend-facia"
@@ -13,12 +13,11 @@ object Management extends GuManagement {
 
   lazy val pages = List(
     new ManifestPage,
-    new UrlPagesHealthcheckManagementPage("/"),
+    new UrlPagesHealthcheckManagementPage("/uk"),
     StatusPage(applicationName, metrics),
     new PropertiesPage(Configuration.toString),
     new LogbackLevelPage(applicationName),
-    new ConfigAgentStatus,
-    new CollectionAgentStatus
+    new ConfigAgentStatus
   )
 }
 
@@ -26,10 +25,4 @@ class ConfigAgentStatus extends ManagementPage {
   val path: String = "/management/configagentstatus"
   override lazy val linktext = "/management/configagentstatus - ONLY use for debugging"
   def get(request: HttpRequest) = PlainTextResponse(ConfigAgent.contentsAsJsonString)
-}
-
-class CollectionAgentStatus extends ManagementPage {
-  val path: String = "/management/collectionagentstatus"
-  override lazy val linktext = "/management/collectionagentstatus - ONLY use for debugging"
-  def get(request: HttpRequest) = PlainTextResponse(CollectionAgent.contentsAsJsonString)
 }

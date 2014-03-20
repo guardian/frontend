@@ -1,0 +1,82 @@
+@(page: model.Page, matchesList: football.model.MatchesList, filters: Map[String, Seq[CompetitionFilter]])(implicit request: RequestHeader)
+
+@import football.model._
+
+@main(page, "football"){
+}{
+    <div class="article__zone left-col-deport tone-news tone-accent-border">
+        <h2 class="page-heading--football left-col-deport__body">
+            @matchesList.pageType
+        </h2>
+    </div>
+    <div class="article-wrapper monocolumn-wrapper tone-news">
+        <article id="article" class="article" itemprop="mainContentOfPage" itemtype="http://schema.org/Article" role="main">
+            @football.views.html.fragments.leagueSelector(filters, matchesList.pageType, matchesList match {
+                case ml: CompetitionList => ml.competition
+                case _ => None
+            })
+
+            <div class="article__columning-wrapper">
+                <div class="article__main-column">
+                    <div class="football-leagues football-leagues--list js-hidden">
+                        <ul class="football-leagues-list u-unstyled">
+                            @matchesList.competitions.competitions.map{ comp =>
+                                <li class="football-leagues__item"><a href="@comp.url/@matchesList.pageType" data-link-name="view @comp.fullName matches">@comp.fullName</option></a></li>
+                            }
+                        </ul>
+                    </div>
+
+                    @matchesList.matchesGroupedByDateAndCompetition.map { case (date, competitionMatches) =>
+                        <div class="football-matches__day">
+                            <div class="date-divider">@date.toString("EEEE d MMMM yyyy")</div>
+                            @competitionMatches.map { case (competition, matches) =>
+                                <div class="football-table__container">
+                                    <div class="article__meta-container">
+                                        <h3 class="article__meta-heading"><a href="@LinkTo{@competition.url}" data-link-name="view competition">@competition.fullName</a></h3>
+                                    </div>
+
+                                    <div class="article__container u-cf">
+                                        @football.views.html.matchList.matchesList(matches, competition)
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
+
+                    @if(matchesList.previousPage.isDefined || matchesList.nextPage.isDefined) {
+                        <div class="matches-nav" data-link-name="@matchesList.pageType nav">
+                            @matchesList.previousPage.map{url =>
+                                <a href="@url" class="collection__show-more tone-background tone-news" data-link-name="previous" title="Previous page">
+                                    <span class="collection__show-more__icon">
+                                        <span class="i i-minus-white-mask"></span>
+                                        <span class="i i-minus-white"></span>
+                                    </span>
+                                    <span class="u-h">Previous</span>
+                                </a>
+                            }
+                            @matchesList.nextPage.map{url =>
+                                <a href="@url" class="collection__show-more tone-background tone-news" data-link-name="next" title="Next page">
+                                    <span class="collection__show-more__icon">
+                                        <span class="i i-plus-white-mask"></span>
+                                        <span class="i i-plus-white"></span>
+                                    </span>
+                                    <span class="u-h">Next</span>
+                                </a>
+                            }
+                        </div>
+                    }
+                </div>
+
+                <div class="article__secondary-column" aria-hidden="true">
+                    <div class="article__secondary-column__inner article__secondary-column__inner--fill-vertically">
+                    </div>
+                </div>
+            </div>
+        </article>
+        @football.views.html.fragments.footballCompetitionNav(matchesList match {
+            case ml: CompetitionList => ml.competition
+            case _ => None
+        })
+    </div>
+    @views.html.fragments.mostPopularPlaceholder("sport")
+}

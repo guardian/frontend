@@ -92,29 +92,12 @@ define(['common/utils/detect', 'bonzo'], function(detect, bonzo) {
         });
     });
 
-    describe("SVG support", function() {
-
-        it("should determine SVG support", function() {
-            expect(detect.hasSvgSupport()).toBe(true);
-        });
-
-    });
-
-    describe("CSS support", function() {
-
-        it("should determine CSS support for any property", function() {
-            expect(detect.hasCSSSupport('position', 'relative', true)).toBe(true);
-            expect(detect.hasCSSSupport('position', 'sixtynine')).toBe(false);
-        });
-
-    });
-
     describe("Breakpoint", function() {
 
         var breakpointName = 'a-breakpoint',
             style;
 
-        beforeEach(function () {
+        beforeEach(function() {
             // add css to page
             style = bonzo(bonzo.create('<style type="text/css"></style>'))
                 .html('body:after{ content: "' + breakpointName + '"}')
@@ -128,6 +111,11 @@ define(['common/utils/detect', 'bonzo'], function(detect, bonzo) {
 
         it("should be able to get current breakpoint", function() {
             expect(detect.getBreakpoint()).toBe(breakpointName);
+        });
+
+        it('shoule return "mobile" if no css value', function() {
+            style.remove();
+            expect(detect.getBreakpoint()).toBe('mobile');
         });
 
     });

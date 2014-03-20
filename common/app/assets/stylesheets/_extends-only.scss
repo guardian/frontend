@@ -32,3 +32,24 @@
     text-align: center;
     cursor: help;
 }
+
+%icon-holder-circle {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    width: 30px;
+    height: 30px;
+    border: 1px solid $c-neutral1;
+    padding: 0;
+    @include rounded-corners(50%);
+    @include box-sizing(content-box); // Force proper sizing on button elements
+    background-color: transparent;
+
+    &,
+    &:active,
+    &:focus,
+    &:hover {
+        text-decoration: none;
+        color: $c-body;
+    }
+}

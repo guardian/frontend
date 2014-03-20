@@ -5,9 +5,10 @@ import common.ExecutionContexts
 import services.{IdRequestParser, IdentityUrlBuilder}
 import com.google.inject.{Inject, Singleton}
 import utils.SafeLogging
-import model.{NoCache, IdentityPage}
-import play.api.data.Form
-import idapiclient.IdApiClient
+import model.{NoCache, Cached, IdentityPage}
+import play.api.data.{Forms, Form}
+import idapiclient.{IdApiClient, UserUpdate}
+import com.gu.identity.model.{PrivateFields, PublicFields, User}
 import actions.AuthActionWithUser
 import play.filters.csrf.{CSRFCheck, CSRFAddToken}
 import form._
@@ -61,6 +62,19 @@ class PublicProfileController @Inject()(idUrlBuilder: IdentityUrlBuilder,
         }
     }
   }
+
+  def publicProfilePage(vanityUrl: String) = Action.async { implicit request =>
+    val idRequest = idRequestParser(request)
+    identityApiClient.userFromVanityUrl(vanityUrl).map {
+      case Left(errors) => {
+        logger.info(s"public profile page returned errors ${errors.toString()}")
+        NotFound(views.html.errors._404())
+      }
+      case Right(user) => {
+        Cached(60)(Ok(views.html.public_profile_page(page, idRequest, idUrlBuilder, user)))
+      }
+    }
+  }
 }
 
 case class ProfileForms(publicForm: Form[ProfileFormData], accountForm: Form[AccountFormData], isPublicFormActive: Boolean)
@@ -112,4 +126,4 @@ object ProfileForms
       accountForm = accountDetailsMapping.bindForm(user),
       isPublicFormActive = isPublicFormActive
     )
-}
+  }

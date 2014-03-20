@@ -25,7 +25,7 @@
         </div>
 
         <div class="fieldset__fields">
-            <ul class="unstyled">
+            <ul class="u-unstyled">
 
                 @inputField(Input(accountDetailsForm("primaryEmailAddress"), ('_label, "Email address")))
 
@@ -55,10 +55,10 @@
         </div>
 
         <div class="fieldset__fields">
-            <ul class="unstyled">
+            <ul class="u-unstyled">
 
-            	@inputField(Input(accountDetailsForm("firstName"), ('_label, "First name")))
-            	@inputField(Input(accountDetailsForm("secondName"), ('_label, "Last name")))
+                @inputField(Input(accountDetailsForm("firstName"), ('_label, "First name")))
+                @inputField(Input(accountDetailsForm("secondName"), ('_label, "Last name")))
                 @select(
                     accountDetailsForm("gender"),
                     List(("Male", "Male"), ("Female", "Female"), ("Transgender", "Transgender"), ("unknown", "Prefer not to say")),

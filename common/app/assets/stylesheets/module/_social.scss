@@ -19,10 +19,6 @@
 .social__action {
     display: block;
 }
-.sticky-upper--social {
-    position: relative;
-    top: ($gs-baseline/3) * -4;
-}
 
 /**
  * Social icons
@@ -57,14 +53,8 @@ $social-icon: (
     }
 }
 .social-icon {
-    @include box-sizing(border-box);
-    display: block;
-    overflow: hidden;
-    width: map-get($social-icon, width);
-    height: map-get($social-icon, height);
-    border: 1px solid map-get($social-icon, color);
-    @include rounded-corners(50%);
-    background: #ffffff;
+    @extend %icon-holder-circle;
+    border-color: map-get($social-icon, color);
 
     i {
         display: block;

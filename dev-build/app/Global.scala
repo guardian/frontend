@@ -4,7 +4,7 @@ import controllers.front.FrontLifecycle
 import dev.DevParametersLifecycle
 import implicits.Requests
 import model.AdminLifecycle
-import feed.{OnwardJourneyLifecycle, MostReadLifecycle}
+import feed.OnwardJourneyLifecycle
 
 import play.api.mvc.{RequestHeader, EssentialAction, EssentialFilter, WithFilters}
 
@@ -58,4 +58,3 @@ with DevParametersLifecycle
 with AdminLifecycle
 with DiagnosticsLifecycle
 with OnwardJourneyLifecycle
-with MostReadLifecycle

@@ -30,7 +30,7 @@ define([
                                     $resendButton.replaceWith("<p>Sent. Please check your email and follow the link.</p>");
                                 }
                             },
-                            function fail (err, resp) {
+                            function fail () {
                                 mediator.emit('module:identity:validation-email:fail');
                                 $resendButton.innerHTML = "An error occured, please click here to try again.";
                             }

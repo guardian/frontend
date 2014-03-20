@@ -144,7 +144,7 @@ define([
     }
 
     function replaceValidTimestamps(context) {
-        findValidTimestamps(context).each(function(el, i) {
+        findValidTimestamps(context).each(function(el) {
             var $el = bonzo(el),
                 timestamp = parseInt($el.attr('data-timestamp'), 10) || $el.attr('datetime'), // Epoch dates are more reliable, fallback to datetime for liveblog blocks
                 datetime = new Date(timestamp),

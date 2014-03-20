@@ -13,6 +13,7 @@ GET     /register                                       @controllers.Registratio
 POST    /register                                       @controllers.RegistrationController.processForm
 GET     /email-prefs                                    @controllers.EmailController.preferences
 POST    /email-prefs                                    @controllers.EmailController.savePreferences
+GET     /user/:vanityUrl                                @controllers.PublicProfileController.publicProfilePage(vanityUrl: String)
 GET     /public/edit                                    @controllers.PublicProfileController.displayPublicProfileForm
 GET     /account/edit                                   @controllers.PublicProfileController.displayAccountForm
 POST    /public/edit                                    @controllers.PublicProfileController.submitPublicProfileForm
@@ -24,6 +25,7 @@ GET     /ethical-awards/:formReference                  @controllers.EthicalAwar
 GET     /film-awards/complete                           @controllers.FilmAwardsController.complete
 GET     /film-awards/:formReference                     @controllers.FilmAwardsController.filmAwardsForm(formReference: String)
 GET     /form/complete                                  @controllers.FormstackController.complete
-GET     /form/:formReference                            @controllers.FormstackController.formstackForm(formReference: String)
+GET     /form/:formReference                            @controllers.FormstackController.formstackForm(formReference: String, composer: Boolean = false)
+GET     /form/embed/:formReference                      @controllers.FormstackController.formstackForm(formReference: String, composer: Boolean = true)
 
 GET     /et/subscribe/:subDefId                         @controllers.ExactTargetController.subscribe(subDefId: String, returnUrl: String)

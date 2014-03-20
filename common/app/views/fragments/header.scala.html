@@ -22,7 +22,7 @@ to apply any necessary changes to non-shared code there too.
                     </a>
                 </div>
                 @if(SearchSwitch.isSwitchedOn) {
-                    <div class="top-nav__item">
+                    <div class="top-nav__item" data-component="search">
                         <a href="https://www.google.co.uk/advanced_search?q=site:www.theguardian.com" data-is-ajax data-link-name="Search icon" 
                            class="control control--search js-search-toggle" data-toggle="nav-popup--search">
                            <span class="u-h">Search</span>
@@ -33,7 +33,7 @@ to apply any necessary changes to non-shared code there too.
                         </a>
                     </div>
                 }
-                <div class="top-nav__item hide-on-mobile">
+                <div class="top-nav__item hide-on-mobile" data-component="edition">
                     <div class="preheader__editions">
                         <dl class="editions">
                             <dt class="editions__title">
@@ -55,7 +55,7 @@ to apply any necessary changes to non-shared code there too.
                     </div>
                 </div>
                 @if(IdentityProfileNavigationSwitch.isSwitchedOn) {
-                    <div class="top-nav__item">
+                    <div class="top-nav__item" data-component="identity-profile">
                         <div class="js-profile-nav js-hidden">
                             <a href="@Configuration.id.url/signin" data-link-name="User profile" data-toggle="nav-popup--profile"
                                class="control control--profile">
@@ -100,7 +100,7 @@ to apply any necessary changes to non-shared code there too.
             *@
             <div itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
                 @* Top level nav *@
-                <div class="nav-container u-cf">
+                <div class="nav-container u-cf" data-component="navigation">
                     <div class="gs-container">
                         <ul class="nav nav--global" data-link-name="Sections">
                             @navigation.map { nav =>

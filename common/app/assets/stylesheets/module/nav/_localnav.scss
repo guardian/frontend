@@ -4,7 +4,7 @@
 #preloads.has-localnav {
     .ad-slot-top-banner-ad {
         padding-top: 5px;
-        background-color: #eee;
+        background-color: #eeeeee;
 
         @include mq(tablet) {
             padding-top: 10px;
@@ -21,7 +21,7 @@
             display: block;
         }
     }
-    .article__headline {
+    .article__head {
         border-top: 0;
     }
 }

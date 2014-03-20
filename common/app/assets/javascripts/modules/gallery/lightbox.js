@@ -35,7 +35,6 @@ define([
             isSwiping,
             slideshowActive,
             slideshowDelay = 5000, // in milliseconds
-            captionControlHeight = 35, // If the caption CTA is hidden, we can't read the height; so hardcoded it goes
             pushUrlChanges = true,
             originalImagesHtml, // Used to keep a copy of the markup, before Swipe rewrites it
             $navArrows,
@@ -284,7 +283,7 @@ define([
             overlay.toolbarNode.querySelector('.js-stop-slideshow').style.display  = 'none';
         };
 
-        this.removeOverlay = debounce(function(e){
+        this.removeOverlay = debounce(function(){
             // Needs a delay to give time for analytics to fire before DOM removal
             overlay.remove();
             return true;
@@ -331,8 +330,6 @@ define([
 
                 if (itemIndex === index) {
                     bonzo(el).addClass('gallery__item--active');
-
-                    self.alignNavArrows();
 
                     self.currentImageNode = el;
                 } else {
@@ -431,26 +428,18 @@ define([
 
             if (mode === 'fullimage') {
                 // Size all images to the height of the screen
-                $images.css({'height': contentHeight + 'px', 'width': 'auto'});
+                $images.css({'max-height': contentHeight + 'px', 'width': 'auto', 'max-width': '100%'});
                 $items.css('height', contentHeight+'px');
             } else {
                 // Lets the default stylesheets do the work here
                 $images.removeAttr('style');
                 $items.removeAttr('style');
             }
-
-            self.alignNavArrows();
         };
 
         this.jumpToContent = function() {
             window.scrollTo(0, overlay.headerNode.offsetHeight);
         };
-
-        this.alignNavArrows = function() {
-            // Match arrows to the height of image, minus height of the caption control to prevent overlap
-            $navArrows.css('height', ($images[currentImage-1].offsetHeight - captionControlHeight) + 'px');
-        };
-
 
         // Swipe methods
         this.setupSwipe = function() {
@@ -462,7 +451,7 @@ define([
                     startSlide: currentImage - 1,
                     speed: 200,
                     continuous: true,
-                    callback: function(index, elm) {
+                    callback: function(index) {
                         var swipeDir = (index + 1 > currentImage) ? 'next' : 'prev';
                         self.trackInteraction('Lightbox gallery swipe - ' + swipeDir);
 
@@ -477,7 +466,6 @@ define([
                     }
                 });
 
-                self.alignNavArrows();
                 swipeActive = true;
             });
         };

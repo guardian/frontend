@@ -52,6 +52,8 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
     }
   }
 
+  lazy val isAdvertisementFeature: Boolean = tags.exists(_.id == "tone/advertisement-features")
+
   lazy val shouldHideAdverts: Boolean = fields.get("shouldHideAdverts").exists(_.toBoolean)
 
   lazy val witnessAssignment = delegate.references.find(_.`type` == "witness-assignment")
@@ -132,7 +134,6 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   }
   override def openGraph: List[(String, Any)] = super.openGraph ++ List(
     "og:title" -> webTitle,
-    "og:url" -> webUrl,
     "og:description" -> trailText.map(StripHtmlTagsAndUnescapeEntities(_)).getOrElse("")
   )
 

@@ -2,10 +2,6 @@
    Site wide search
    ========================================================================== */
 
-.gsc-search-box {
-    padding: 0;
-    max-width: none;
-}
 .search-placeholder {
     min-height: 50px;
     padding-top: $gs-baseline/2;
@@ -22,56 +18,62 @@
         ));
     }
 }
+.gsc-control-cse {
+    padding: 0 $gs-gutter/2 !important;
 
-.gsc-search-box .gsib_a {
-    padding-top: 2px;
+    @include mq(mobileLandscape) {
+        padding: 0 $gs-gutter !important;
+    }
 }
-
+// Align "×" icon (cancel search button)
+span.gscb_a {
+    font: normal 24px/16px Georgia, serif !important;
+    position: relative;
+    top: 2px;
+}
+.gsc-search-box {
+    padding: 0;
+    max-width: none;
+}
 .gsc-search-box .gsc-input-box {
     height: 28px;
 }
-
 .gsc-search-box .gsc-input {
     padding: 0 !important;
     margin: 0 !important;
 }
-
 td.gsc-search-button {
     margin: 0 !important;
     padding: 5px 0 0 0 !important;
 }
-
-input.gsc-search-button,
-input.gsc-search-button-v2 {
+.gsc-search-button-v2 {
     @include rounded-corners(0 !important);
     margin: 0 !important;
-    padding: 7px 8px !important;
-    width: 14px !important;
-    height: 14px !important;
+    padding: 7px 9px 8px !important;
 }
-
-.gs-result {
+.gsc-completion-container,
+.gsc-input {
     font-family: $sans-serif;
 }
 
-.gsc-control-cse {
-    padding: 0 $gs-gutter !important;
+.gsc-result-info {
+    padding-left: 0; // Remove space before "About x results (x seconds)"
+}
+// Stack "About … results" and "Sort by" on mobile
+@include mq($to: mobileLandscape) {
+    .gsc-result-info-container,
+    .gsc-orderby-container {
+        display: block;
+    }
 }
 
 .gsc-results .gsc-thumbnail-inside,
 .gsc-results .gsc-url-top {
     padding-left: 0;
 }
-
-.gsc-results .gs-snippet {
-    line-height: 1.6rem;
-}
-
 .gsc-results .gs-visibleUrl-long {
     white-space: nowrap;
-    overflow: hidden;
 }
-
 .gsc-result .gs-title,
 .gsc-result .gs-title * {
     height: inherit !important;
@@ -79,11 +81,87 @@ input.gsc-search-button-v2 {
     text-decoration: none !important;
 }
 
+// Add space between pagination links to make them more touch friendly
 .gsc-results .gsc-cursor-box {
     margin: 0 0 ($gs-baseline/3)*4 0 !important;
 }
-
 .gsc-results .gsc-cursor-box .gsc-cursor-page {
     margin-right: 22px !important;
 }
 
+// Remove border on thumbnails
+.gs-result img.gs-image,
+.gs-result img.gs-promotion-image {
+    border: none !important;
+}
+// Thumbnails are on the grid
+.gs-web-image-box-landscape img.gs-image {
+    margin-top: 1px; // align with top of text
+    width: gs-span(2) !important;
+    height: 84px !important;
+    max-width: none !important;
+    max-height: none !important;
+}
+.gs-image-box.gs-web-image-box.gs-web-image-box-landscape {
+    width: gs-span(2) + $gs-gutter/2 !important;
+}
+// Float image to the left
+.gsc-table-result {
+    > tr > td,
+    > tbody > tr > td {
+        display: inline;
+    }
+    .gsc-table-cell-thumbnail {
+        float: left;
+    }
+}
+// Make snippet look like a standfirst
+.gs-webResult .gs-snippet,
+.gs-imageResult .gs-snippet {
+    @include f-headline;
+    font-size: 14px !important; // out of the font-scale to add some hierarchy
+    line-height: 18px !important;
+    color: $c-neutral2 !important;
+}
+// Hide URLs
+.gsc-url-top {
+    display: none !important;
+}
+// Make titles look like story headlines
+.gsc-thumbnail-inside a.gs-title {
+    display: block;
+    @include fs-headline(1);
+    padding-bottom: 10px;
+}
+.gs-webResult.gs-result a.gs-title,
+.gs-imageResult a.gs-title {
+    &,
+    b {
+        color: $c-neutral1 !important;
+    }
+
+    &:visited {
+        &,
+        b {
+            color: $c-neutral2;
+        }
+    }
+
+    &:active {
+        &,
+        b {
+            color: $c-neutral1;
+        }
+    }
+
+    &:hover {
+        text-decoration: underline !important;
+    }
+}
+.gsc-expansionArea .gsc-result {
+    border-top: 1px solid $c-neutral5 !important;
+}
+.gsc-webResult .gsc-result {
+    padding-top: 2px;
+    padding-bottom: 20px;
+}

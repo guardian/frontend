@@ -3,7 +3,6 @@ module.exports = function (grunt) {
 
     var isDev = (grunt.option('dev') !== undefined) ? Boolean(grunt.option('dev')) : process.env.GRUNT_ISDEV === '1',
         singleRun = grunt.option('single-run') !== false,
-        env = grunt.option('env') || 'code',
         screenshotsDir = './screenshots',
         staticTargetDir = './static/target/',
         testConfDir = './common/test/assets/javascripts/conf/',
@@ -36,8 +35,7 @@ module.exports = function (grunt) {
                     noCache: true,
                     quiet: (isDev) ? false : true,
                     loadPath: [
-                        'common/app/assets/stylesheets/components/sass-mq',
-                        'common/app/assets/stylesheets/components/normalize-scss'
+                        'common/app/assets/stylesheets/components/sass-mq'
                     ]
                 }
             }
@@ -58,6 +56,7 @@ module.exports = function (grunt) {
                     imager:       '../../../../common/app/assets/javascripts/components/imager.js/src/strategies/container',
                     omniture:     '../../../../common/app/assets/javascripts/components/omniture/omniture',
                     fence:        '../../../../common/app/assets/javascripts/components/fence/fence',
+                    enhancer:     '../../../../common/app/assets/javascripts/components/enhancer/enhancer',
                     'ophan/ng':   'empty:'
                 },
                 optimize: 'uglify2',
@@ -237,6 +236,56 @@ module.exports = function (grunt) {
                         }
                     ]
                 }
+            },
+            WebTextSansWoff: {
+                options: {
+                    "filename": staticTargetDir + "fonts/WebTextSans.woff.json",
+                    "callback": "guFont",
+                    "fonts": [
+                        {
+                            "font-family": "TextSans",
+                            "file": "resources/fonts/TextSans-Regular.woff",
+                            "format": "woff"
+                        },
+                        {
+                            "font-family": "TextSans",
+                            "font-style": "italic",
+                            "file": "resources/fonts/TextSans-RegularIt.woff",
+                            "format": "woff"
+                        },
+                        {
+                            "font-family": "TextSans",
+                            "font-weight": "700",
+                            "file": "resources/fonts/TextSans-Medium.woff",
+                            "format": "woff"
+                        }
+                    ]
+                }
+            },
+            WebTextSansTtf: {
+                options: {
+                    "filename": staticTargetDir + "fonts/WebTextSans.ttf.json",
+                    "callback": "guFont",
+                    "fonts": [
+                        {
+                            "font-family": "TextSans",
+                            "file": "resources/fonts/TextSans-Regular.ttf",
+                            "format": "ttf"
+                        },
+                        {
+                            "font-family": "TextSans",
+                            "font-style": "italic",
+                            "file": "resources/fonts/TextSans-RegularIt.ttf",
+                            "format": "ttf"
+                        },
+                        {
+                            "font-family": "TextSans",
+                            "font-weight": "700",
+                            "file": "resources/fonts/TextSans-Medium.ttf",
+                            "format": "ttf"
+                        }
+                    ]
+                }
             }
         },
 
@@ -403,7 +452,9 @@ module.exports = function (grunt) {
 
         // Lint Javascript sources
         jshint: {
-            options: require('./resources/jshint_conf'),
+            options: {
+                jshintrc: './resources/jshint_conf.json'
+            },
             self: [
                 'Gruntfile.js'
             ],
@@ -626,15 +677,23 @@ module.exports = function (grunt) {
 
     grunt.registerTask('default', ['compile', 'test', 'analyse']);
 
-    grunt.registerTask('validate', function(app) {
+    // NOTE: ideally this would just check sass, rather that full compile - can't get it to work
+    grunt.registerTask('validate:css', ['sass:compile']);
+    grunt.registerTask('validate:js', function(app) {
         if (!app) {
             grunt.task.run('jshint');
         } else {
-            // jsihnt target exist?
+            // target exist?
             if (grunt.config('jshint')[app]) {
                 grunt.task.run('jshint:' + app);
             }
         }
+    });
+    grunt.registerTask('validate', function(app) {
+        grunt.task.run([
+            'validate:css',
+            'validate:js:' + (app || '')
+        ]);
     });
 
     // Compile tasks

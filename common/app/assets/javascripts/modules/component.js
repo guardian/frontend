@@ -8,7 +8,7 @@ define([
     qwery,
     bonzo,
     ajax
-) {
+    ) {
 
     /**
      * TODO (jamesgorrie):
@@ -17,7 +17,7 @@ define([
      *   Perhaps in the create method somewhere.
      * @constructor
      */
-    var Component = function(config, options) {};
+    var Component = function() {};
 
     /** @type {boolean} */
     Component.prototype.useBem = false;
@@ -58,6 +58,19 @@ define([
     /** @type {Object.<string.*>} */
     Component.prototype.defaultOptions = {};
 
+    /** @type {String} */
+    Component.prototype.responseDataKey = 'html';
+
+    /** @type {Boolean} */
+    Component.prototype.autoupdated = false;
+
+    /** @type {Number} in seconds */
+    Component.prototype.updateEvery = 60;
+
+    /** @type {Number} id of autoupdate timer */
+    Component.prototype.t = null;
+
+
     /**
      * Uses the this.componentClass
      * TODO (jamesgorrie): accept strings etc Also what to do with multiple objects?
@@ -89,12 +102,41 @@ define([
     };
 
     /**
+     * Throws an error if this is already attached to the DOM
+     */
+    Component.prototype.checkAttached = function() {
+        if (this.rendered) {
+            throw new ComponentError('Already rendered');
+        }
+    };
+
+    /**
      * @param {Element} parent
+     * @param {String} key
+     * @return {Reqwest}
      */
     Component.prototype.fetch = function(parent, key) {
         this.checkAttached();
-        var self = this,
-            endpoint = this.endpoint,
+
+        this.responseDataKey = key || 'html';
+        var self = this;
+
+        return this._fetch().then(function render(resp) {
+            self.elem = bonzo.create(resp[self.responseDataKey])[0];
+            self._prerender();
+
+            if (!self.destroyed) {
+                bonzo(parent).append(self.elem);
+                self._ready();
+            }
+        });
+    };
+
+    /**
+     * @return Reqwest
+     */
+    Component.prototype._fetch = function() {
+        var endpoint = this.endpoint,
             opt;
 
         for (opt in this.options) {
@@ -106,26 +148,7 @@ define([
             type: 'json',
             method: 'get',
             crossOrigin: true
-        }).then(
-            function render(resp) {
-                self.elem = bonzo.create(resp[(key) ? key : 'html'])[0];
-                self._prerender();
-
-                if (!self.destroyed) {
-                    bonzo(parent).append(self.elem);
-                    self._ready();
-                }
-            }
-        );
-    };
-
-    /**
-     * Throws an error if this is already attached to the DOM
-     */
-    Component.prototype.checkAttached = function() {
-        if (this.rendered) {
-            throw new ComponentError('Already rendered');
-        }
+        });
     };
 
     /**
@@ -134,6 +157,7 @@ define([
     Component.prototype._ready = function() {
         if (!this.destroyed) {
             this.rendered = true;
+            this._autoupdate();
             this.ready();
         }
     };
@@ -144,6 +168,26 @@ define([
     Component.prototype._prerender = function() {
         this.elems = {};
         this.prerender();
+    };
+
+    /**
+     * Check if we should auto update, if so, do so
+     */
+    Component.prototype._autoupdate = function() {
+        var self = this;
+
+        function update() {
+            self._fetch().then(function(resp) {
+                self.autoupdate(bonzo.create(resp[self.responseDataKey])[0]);
+                if (self.autoupdated) {
+                    self.t = setTimeout(update, self.updateEvery*1000);
+                }
+            });
+        }
+
+        if (this.autoupdated) {
+            this.t = setTimeout(update, this.updateEvery*1000);
+        }
     };
 
     /**
@@ -159,6 +203,17 @@ define([
      * This function is made to be overridden
      */
     Component.prototype.ready = function() {};
+
+    /**
+     * @param {Element} elem new element
+     */
+    Component.prototype.autoupdate = function(elem) {
+        var oldElem = this.elem;
+        this.elem = elem;
+
+        this._prerender();
+        bonzo(oldElem).replaceWith(this.elem);
+    };
 
     /**
      * Once we're done with it, remove event bindings etc
@@ -267,6 +322,11 @@ define([
             bonzo(this.elem).remove();
             delete this.elem;
         }
+
+        clearTimeout(this.t);
+        this.t = null;
+        this.autoupdated = false;
+
         this.detach();
         this.destroyed = true;
     };

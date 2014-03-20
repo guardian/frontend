@@ -1,4 +1,3 @@
-/*global guardian */
 define([
     'common/$',
     'common/common',

@@ -71,6 +71,7 @@ object CloudWatch extends implicits.Futures{
     "global.css",
     "head.default.css",
     "head.facia.css",
+    "head.football.css",
     "head.identity.css"
   )
 

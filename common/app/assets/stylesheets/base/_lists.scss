@@ -21,14 +21,14 @@ nav ol {
 
 // Remove margin and bullets from lists.
 .u-unstyled,
-.unstyled {
+%u-unstyled {
     margin: 0;
     list-style: none;
 }
 
 // List of inline items
 .inline-list {
-    @extend .unstyled;
+    @extend %u-unstyled;
 }
 .inline-list__item {
     display: inline-block; // Prevent linebreak within an item

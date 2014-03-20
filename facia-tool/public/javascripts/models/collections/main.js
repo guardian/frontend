@@ -30,7 +30,6 @@ define([
     Article,
     LatestArticles
 ) {
-    var prefKeyDefaultMode = 'gu.frontsTool.defaultToLiveMode';
 
     return function() {
 

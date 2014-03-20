@@ -1,6 +1,7 @@
 /* Accessible hidden content.
    ========================================================================== */
 
+%u-h,
 .u-h {
     @include u-h;
 }
@@ -46,7 +47,7 @@
 }
 
 .is-invisible {
-    visibility: hidden;
+    visibility: hidden !important;
 }
 
 

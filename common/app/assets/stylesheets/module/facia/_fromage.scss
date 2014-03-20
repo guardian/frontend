@@ -64,7 +64,7 @@
     @include clearfix;
 }
 .fromage__container {
-    border-top: 0 solid white;
+    border-top: 0 solid #ffffff;
     position: relative;
     @include rem((
         padding-bottom: 32px
@@ -397,7 +397,7 @@
     &,
     .fromage__container,
     .supporting {
-        background: $c-neutral7;
+        background: $c-neutral8;
     }
     .fromage__standfirst {
         color: $c-neutral2-contrasted;

@@ -2,10 +2,10 @@
    ========================================================================== */
 
 @if $old-ie {
-   // IE 8 won't display webfonts in password fields…
-   [type=password] {
-      font-family: sans-serif !important;
-   }
+    // IE 8 won't display webfonts in password fields…
+    [type=password] {
+        font-family: sans-serif !important;
+    }
 }
 
 .form {
@@ -131,7 +131,7 @@
     border: 1px solid $c-neutral4;
     @include box-shadow(none);
     @include box-sizing(border-box);
-    color: #545454;
+    color: $c-body;
     display: inline-block;
     font-family: $sans-serif;
     font-size: 16px;

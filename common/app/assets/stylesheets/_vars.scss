@@ -78,6 +78,7 @@ $mq-breakpoints: (
 $sans-serif: "AgateSans", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 $serif: "EgyptianText", georgia, serif;
 $serifheadline: "EgyptianHeadline", georgia, serif;
+$text-sans: "TextSans", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 
 // Font scale
 // Usage:
@@ -126,6 +127,12 @@ $fs-data: (
     18 22  // 6
 );
 
+$fs-textsans: (
+    12 16, // 1
+    13 18, // 2
+    14 22, // 3
+);
+
 // Colours
 // =============================================================================
 
@@ -133,15 +140,17 @@ $c-brandBlue: #214583;
 $c-brandLightBlue: #94b1ca;
 $c-error: #d61d00;
 
+$c-body: #545454;
+
 $c-neutral1: #333333;
 $c-neutral2: #767676;
 // Enhance contrast of grey text on light grey background
 $c-neutral2-contrasted: darken($c-neutral2, 3%);
 $c-neutral3: #bdbdbd;
 $c-neutral4: #dcdcdc;
-$c-neutral5: #e3e3db;
-$c-neutral6: #edede7;
-$c-neutral7: #f4f4ee;
+$c-neutral5: #dfdfdf;
+$c-neutral6: #eaeaea;
+$c-neutral7: #f1f1f1;
 $c-neutral8: #f6f6f6;
 
 $c-live: #e81818;
@@ -195,6 +204,20 @@ $c-sportAway: $c-sportDark;
 $c-statusPositive: #6ca843;
 $c-statusNeutral: #999999;
 $c-statusNegative: #da1d1d;
+
+
+// MPU
+// =============================================================================
+
+$mpu-original-width: 300px;
+$mpu-original-height: 250px;
+$mpu-align-offset: 20px; // Align bottom of ad with text on desktop
+$mpu-ad-label-height: 34px;
+
+// Scale the ad down on tablet
+$mpu-target-width: gs-span(3) + $gs-gutter/2;
+$mpu-scale-ratio: $mpu-target-width/$mpu-original-width;
+$mpu-resulting-height: ceil($mpu-original-height*$mpu-scale-ratio);
 
 
 // Dimensions

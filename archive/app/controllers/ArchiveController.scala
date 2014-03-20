@@ -2,28 +2,20 @@ package controllers
 
 import common._
 import play.api.mvc._
-import views.support.RenderOtherStatus
 import views.support._
-import services.S3
-import services.DynamoDB
-import play.api.templates.Html
+import services.{Archive, DynamoDB}
 import java.net.URLDecoder
+import model.Cached
+import services.Googlebot404Count
 
 object ArchiveController extends Controller with Logging with ExecutionContexts {
  
-  def isRedirect(path: String): Option[String] = {
-    val redirects = DynamoDB.destinationFor(path)
-    log.info(s"Checking '${path}' is a redirect in DynamoDB: ${!redirects.isEmpty}")
-    redirects.filterNot { url => 
-      linksToItself(path, url) 
+  private def destinationFor(path: String) = DynamoDB.destinationFor(path)
+    .filterNot { destination =>
+      linksToItself(path, destination.location)
     }
-  }
 
-  def isArchived(path: String): Option[String] = {
-    val archive = services.S3Archive.getHtml(path)
-    log.info(s"Checking '${path}' is a archived in S3: ${!archive.isEmpty}")
-    archive
-  }
+  private def isArchived(path: String) = services.S3Archive.getHtml(path)
 
   def isEncoded(path: String): Option[String] = {
     val decodedPath = URLDecoder.decode(path, "UTF-8")
@@ -31,40 +23,36 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
   } 
 
   // arts/gallery/image/0,,-126 -> arts/pictures/image/0,,-126
-  def isGallery(path: String): Option[String] = {
-    if (path contains "/gallery/") Some(path.replace("/gallery/", "/pictures/")) else None
-  }
+  def isGallery(path: String): Option[String] = if (path contains "/gallery/")
+    Some(path.replace("/gallery/", "/pictures/"))
+  else
+    None
+
 
   // Our redirects are 'normalised' Vignette URLs, Ie. path/to/0,<n>,123,<n>.html -> path/to/0,,123,.html
+  private val r1ArtifactUrl = """www.theguardian.com/(.*)/[0|1]?,[\d]*,(-?\d+),[\d]*(.*)""".r
   def normalise(path: String, zeros: String = ""): Option[String] = {
-    val r1ArtifactUrl = """www.theguardian.com/(.*)/[0|1]?,[\d]*,(-?\d+),[\d]*(.*)""".r
     path match {
-      case r1ArtifactUrl(path, artifactOrContextId, extension) => {
-        val normalisedUrl = s"www.theguardian.com/${path}/0,,${artifactOrContextId},${zeros}.html"
+      case r1ArtifactUrl(path, artifactOrContextId, extension) =>
+        val normalisedUrl = s"www.theguardian.com/$path/0,,$artifactOrContextId,$zeros.html"
         Some(normalisedUrl)
-      }
       case _ => None
     }
   }
 
   // film/features/featurepages/0,,2291929,00.html -> 'film'
-  def sectionFromR1Path(path: String): Option[String] = {
-    val r1Url = s"""www.theguardian.com/([\\w\\d-]+)/(.*)/[0|1]?,.*""".r
-    path match {
-      case r1Url(s, path) => Option(s"/${s}")
-      case _ => None
-    } 
+  private val SectionPattern = s"""www.theguardian.com/([\\w\\d-]+)/(.*)/[0|1]?,.*""".r
+  private def sectionFromR1Path(path: String): Option[String] = path match {
+    case SectionPattern(s, _) => Option(s"/$s")
+    case _ => None
   }
 
-  def linksToItself(path: String, destination: String): Boolean = {
-    val r1Url = s"""www.theguardian.com/([\\w\\d-]+)/(.*)""".r
-    path match {
-      case r1Url(s, r1path) => {
-        destination contains r1path
-      } 
-      case _ => false
-    } 
-     
+
+
+  private val PathPattern = s"""www.theguardian.com/([\\w\\d-]+)/(.*)""".r
+  def linksToItself(path: String, destination: String): Boolean = path match {
+    case PathPattern(_, r1path) => destination contains r1path
+    case _ => false
   }
 
   def lookup(path: String) = Action { implicit request =>
@@ -85,28 +73,63 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
      * Beware of creating redirect loops!
      */
 
-    isEncoded(path)
-      .map {
-        url => Redirect(s"http://${url}", 301)
-      }.orElse { // DynamoDB lookup. This needs to happen *before* we poke around S3 for the file. 
-        isRedirect(normalise(path).getOrElse(path)).map {
-          url => Redirect(url, 301)
+    // redirect common uses cases
+    isEncoded(path).map(url => Redirect(s"http://$url", 301))
+
+    // lookup redirect or archive
+    .orElse { // DynamoDB lookup. This needs to happen *before* we poke around S3 for the file.
+      destinationFor(normalise(path).getOrElse(path)).map {
+        case services.Redirect(url) =>
+          logDestination(path, "redirect", url)
+          Cached(300)(Redirect(url, 301))
+        case Archive(path) =>
+          // http://wiki.nginx.org/X-accel
+          logDestination(path, "archive", path)
+          Cached(300)(Ok.withHeaders("X-Accel-Redirect" -> s"/s3-archive/$path"))
+      }
+    }
+
+    // old style archive
+    // TODO this block disappears after X-Accel-Redirect above is working
+    .orElse { // S3 lookup
+      isArchived(normalise(path, zeros = "00").getOrElse(path)).map {
+        body => {
+          val section = sectionFromR1Path(path).getOrElse("")
+          val clean = withJsoup(body)(InBodyLinkCleanerForR1(section))
+          logDestination(path, "old archive", "N.A.")
+          Cached(300)(Ok(views.html.archive(clean)).as("text/html"))
         }
-      }.orElse { // S3 lookup
-        isArchived(normalise(path, zeros = "00").getOrElse(path)).map {
-          body => {
-            val section = sectionFromR1Path(path).getOrElse("")
-            val clean = withJsoup(body)(InBodyLinkCleanerForR1(section))
-            Ok(views.html.archive(clean)).as("text/html")
-          } 
-        }
-      }.orElse { // needs to happen *after* s3 lookup as some old galleries
-                 // are still served under the URL 'gallery' 
-        isGallery(path).map {
-          url => Redirect(s"http://${url}", 301) 
-        }
-      }.getOrElse(NotFound)
-      
+      }
+    }
+
+    .orElse {
+      // needs to happen *after* s3 lookup as some old galleries
+      // are still served under the URL 'gallery'
+      isGallery(path).map { url =>
+        logDestination(path, "gallery", url)
+        Redirect(s"http://$url", 301)
+      }
+    }
+
+    // finally give up an serve a 404
+    .getOrElse{
+      log.info(s"Not Found (404): $path")
+      logGoogleBot(request)
+      NotFound
+    }
+  }
+
+  private def logDestination(path: String, msg: String, destination: String) {
+    log.info(s"Destination: $msg : $path -> $destination")
+  }
+
+  // do some specific logging for Googlebot.
+  // we really want to know how many of these (and what) are 404'ing
+  private def logGoogleBot(request: Request[AnyContent]) = {
+    request.headers.get("User-Agent").filter(_.contains("Googlebot")).foreach { bot =>
+      log.info(s"GoogleBot => ${request.uri}")
+      Googlebot404Count.increment()
+    }
   }
 
 }
