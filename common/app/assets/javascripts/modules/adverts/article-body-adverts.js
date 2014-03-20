@@ -28,7 +28,7 @@ define([
     ArticleBodyAdverts.prototype.inlineSlots = [];
 
     ArticleBodyAdverts.prototype.config = {
-        inlineAdTemplate: '<div class="ad-slot__oas ad-slot--inline" data-base="%oas_slot%" data-median="%oas_slot%"><div class="ad-slot__label">Advertisement</div><div class="ad-container"></div></div><div class="ad-slot__dfp ad-slot--inline" data-name="%slot%" data-mobile="300,50" data-tabletportrait="300,250"><div id="inline-ad-slot__%slot%" class="ad-container"></div></div>'
+        inlineAdTemplate: '<div class="ad-slot__oas ad-slot--inline" data-base="%oas_slot%" data-median="%oas_slot%"><div class="ad-slot__label">Advertisement</div><div class="ad-container"></div></div><div class="ad-slot__dfp ad-slot--inline" data-name="%dfp_slot%" data-mobile="300,50" data-tabletportrait="300,250"><div id="inline-ad-slot__%dfp_slot%" class="ad-container"></div></div>'
     };
 
     ArticleBodyAdverts.prototype.generateInlineAdSlot = function(oasName, dfpName) {
