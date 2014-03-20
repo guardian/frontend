@@ -114,6 +114,16 @@
     }
 }
 
+// Horizontal offsets of text in blockquotes and bulletted lists
+$quoted-offset: (
+    default: 40px,
+    tablet: 44px
+);
+$bullet-offset: (
+    default: 16px,
+    tablet: 20px
+);
+
 .from-content-api blockquote {
     font-style: italic;
     @include rem((
@@ -143,33 +153,33 @@
         p,
         h2 {
             &:first-child {
-                text-indent: 40px;
+                text-indent: map-get($quoted-offset, default);
 
                 @include mq(tablet) {
-                    text-indent: 44px;
+                    text-indent: map-get($quoted-offset, tablet);
                 }
             }
         }
         > ul:first-child {
             // Fix list and quote icon overlap - #2026
-            margin-left: 40px;
+            margin-left: map-get($quoted-offset, default);
 
             @include mq(tablet) {
-                margin-left: 44px;
+                margin-left: map-get($quoted-offset, tablet);
             }
         }
         .bullet-container:first-child {
-            text-indent: 40px + 16px;
+            text-indent: map-get($quoted-offset, default) + map-get($bullet-offset, default);
 
             @include mq(tablet) {
-                text-indent: 44px + 20px;
+                text-indent: map-get($quoted-offset, tablet) + map-get($bullet-offset, tablet);
             }
 
             &:before {
-                left: 40px;
+                left: map-get($quoted-offset, default);
 
                 @include mq(tablet) {
-                    left: 44px;
+                    left: map-get($quoted-offset, tablet);
                 }
             }
         }
@@ -195,12 +205,12 @@
     list-style-type: none;
     position: relative;
     @include rem((
-        text-indent: 16px
+        text-indent: map-get($bullet-offset, default)
     ));
 
     @include mq(tablet) {
         @include rem((
-            text-indent: 20px
+            text-indent: map-get($bullet-offset, tablet)
         ));
     }
 
