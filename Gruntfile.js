@@ -290,7 +290,7 @@ module.exports = function (grunt) {
                 files: [{
                     expand: true,
                     cwd: 'common/app/public/javascripts',
-                    src: ['**/*.js'],
+                    src: ['**/*.js', '**/foresee/**'],
                     dest: staticTargetDir + 'javascripts'
                 }]
             },
