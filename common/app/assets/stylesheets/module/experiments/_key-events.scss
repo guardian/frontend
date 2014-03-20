@@ -1,4 +1,17 @@
+.affix {
+    position: fixed;
+}
+
+.affix--top {
+    position: relative;
+}
+
+.affix--bottom {
+    position: absolute;
+}
+
 .key-events {
+    position: relative;
     border-left: 1px solid $c-neutral3;
 }
 
@@ -23,7 +36,6 @@
 .key-events__item {
     position: relative;
     padding: $gs-baseline $gs-gutter/2;
-    overflow: auto;
     border-bottom: 1px solid $c-neutral3;
 
     &:last-child {

@@ -197,12 +197,3 @@
 .u-nobr {
     white-space: nowrap;
 }
-
-
-/**
- * Sticky
- */
-
-.u-sticky {
-    @include sticky;
-}

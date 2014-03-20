@@ -4,8 +4,9 @@ define([
     'bean',
     'common/utils/detect',
     'common/modules/ui/relativedates',
-    'lodash/collections/filter'
-], function(bonzo, qwery, bean, detect, relativeDates, _filter){
+    'lodash/collections/filter',
+    'common/modules/experiments/affix'
+], function(bonzo, qwery, bean, detect, relativeDates, _filter, Affix){
 
     function Layout(config) {
         var slug = config.page.pageId.split("/").pop().replace('-sp-', '');
@@ -45,9 +46,10 @@ define([
         },
 
         "mps-debate-ukraine-politics-live-blog" : function() {
-            var containerTmp = '<div class="key-events js-key-events"><div class="key-events__container u-sticky"><h2 class="key-events__head">In brief...</h2>' +
+            /*jshint nonew:false */
+            var containerTmp = '<div class="key-events js-key-events"><div class="key-events__container js-key-events__container"><h2 class="key-events__head">In brief...</h2>' +
                 '               <ul class="key-events__list u-unstyled" data-link-name="key-events">{{items}}</ul></div></div>';
-            var itemTmp = '<li class="key-events__item js-key-event"><span class="key-events__item__time">{{time}}</span>' +
+            var itemTmp = '<li class="key-events__item js-key-event u-cf"><span class="key-events__item__time">{{time}}</span>' +
                             '<a class="key-events__item__text" href="{{hash}}">{{title}}</a></li>';
             var articleHeight = bonzo(qwery('.js-article__container')).dim().height;
 
@@ -63,9 +65,15 @@ define([
 
             //Clear right hand column and insert items
             bonzo(qwery('.js-right-hand-component')).empty().prepend(containerTmp.replace('{{items}}', items));
-            bonzo(qwery('.js-key-events')).css('height', articleHeight);
-            bonzo(qwery('.js-key-event')).each(function(el) {
+
+            var eventsEl = qwery('.js-key-events');
+            bonzo(eventsEl).css('height', articleHeight);
+            bonzo(eventsEl).each(function(el) {
                 bonzo(qwery('time', el)).addClass('js-timestamp').attr('data-relativeformat', 'short');
+            });
+            new Affix({
+                element: qwery('.js-key-events__container', eventsEl)[0],
+                offset: 500
             });
             relativeDates.init(qwery('.js-key-events'));
 
