@@ -94,13 +94,23 @@ object Switches extends Collections {
   // Advertising Switches
 
   val AdvertSwitch = Switch("Advertising", "adverts",
-    "If this switch is on then OAS adverts will be loaded with JavaScript.",
+    "If this switch is on then adverts will be loaded with JavaScript.",
     safeState = On, sellByDate = never
+  )
+
+  val OASAdvertSwitch = Switch("Advertising", "oas-adverts",
+    "If this switch is on then OAS adverts will be loaded with JavaScript.",
+    safeState = Off, sellByDate = never
   )
 
   val DFPAdvertSwitch = Switch("Advertising", "dfp-adverts",
     "If this switch is on then DFP adverts will be loaded with JavaScript.",
     safeState = Off, sellByDate = never
+  )
+
+  val LoadOnlyCommercialComponents = Switch("Advertising", "load-only-commercial-components",
+    "If this switch is on then only commercial components will be loaded via DFP.",
+    safeState = On, sellByDate = endOfQ4
   )
 
   val VideoAdvertSwitch = Switch("Advertising", "video-adverts",
@@ -364,12 +374,6 @@ object Switches extends Collections {
     safeState = On, new DateMidnight().minusDays(1)
   )
 
-  // Facia
-  val PressedFacia = Switch("Facia", "pressed-facia",
-    "If this switch is on then it will use pressed JSON for all requests",
-    safeState = Off, sellByDate = never
-  )
-
   // Facia Tool Switches
   val ToolDisable = Switch("Facia Tool", "facia-tool-disable",
     "If this is switched on then the fronts tool is disabled",
@@ -414,7 +418,9 @@ object Switches extends Collections {
     DoubleCacheTimesSwitch,
     RelatedContentSwitch,
     AdvertSwitch,
+    OASAdvertSwitch,
     DFPAdvertSwitch,
+    LoadOnlyCommercialComponents,
     VideoAdvertSwitch,
     AudienceScienceSwitch,
     DiscussionSwitch,
@@ -472,7 +478,6 @@ object Switches extends Collections {
     FaciaToolPressSwitch,
     DogpileSwitch,
     ShowAllArticleEmbedsSwitch,
-    PressedFacia,
     FrontPressJobSwitch,
     LayoutHintsSwitch,
     HelveticaEasterEggSwitch,

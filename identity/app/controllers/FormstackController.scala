@@ -21,13 +21,17 @@ class FormstackController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
 
   val page = IdentityPage("/form", "Form", "formstack")
 
-  def formstackForm(formReference: String) = authAction.async { implicit request =>
+  def formstackForm(formReference: String, composer: Boolean) = authAction.async { implicit request =>
     if (Switches.IdentityFormstackSwitch.isSwitchedOn) {
       FormstackForm.extractFromSlug(formReference).map { formstackForm =>
         formStackApi.checkForm(formstackForm).map {
           case Right(_) => {
             logger.trace(s"Rendering formstack form ${formstackForm.formId}")
-            Ok(views.html.formstack.formstackForm(page, formstackForm))
+            if (composer) {
+              Ok(views.html.formstack.formstackFormComposer(page, formstackForm))
+            } else {
+              Ok(views.html.formstack.formstackForm(page, formstackForm))
+            }
           }
           case Left(errors) => {
             logger.warn(s"Unable to render formstack form ${formstackForm.formReference}, $errors")

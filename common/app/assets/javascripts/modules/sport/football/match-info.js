@@ -11,8 +11,7 @@ define([
  * @param {string} whoscalling (url)
  */
 var MatchInfo = function(match, whosCalling) {
-    this.endpoint +=
-            (match.id ? match.id : [match.date].concat(match.teams).join('/')) +
+    this.endpoint += (match.id ? match.id : [match.date].concat(match.teams).join('/')) +
             '.json?page=' + encodeURIComponent(whosCalling);
 };
 

@@ -1,0 +1,20 @@
+@(metaData: model.MetaData, formstackForm: _root_.formstack.FormstackForm, projectName: Option[String] = Some(conf.Configuration.environment.projectName))(implicit request: RequestHeader)
+
+<!DOCTYPE html>
+<html class="js-off id--signed-out" lang="en-GB">
+<head>
+    <meta charset="utf-8" />
+    <title>@Html(metaData.webTitle)</title>
+    @fragments.commonCssSetup(projectName)
+    @fragments.commonJavaScriptSetup(metaData)
+</head>
+<body id="top">
+
+    <div id="preload-1">
+        <div data-formstack-id="@formstackForm.formReference" class="is-hidden formstack-embed">
+            <script src="https://www.formstack.com/forms/js.php?@formstackForm.formReference"></script>
+        </div>
+    </div>
+
+</body>
+</html>

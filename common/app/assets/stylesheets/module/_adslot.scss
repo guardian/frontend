@@ -1,7 +1,7 @@
-.ad-slot {
+.ad-slot__oas {
     width: 100%;
     overflow-x: hidden;
-    padding: 10px 0 4px 0;
+    padding: ($gs-baseline/6)*5 0 ($gs-baseline/3) 0;
     text-align: center;
     min-height: 56px;
 
@@ -44,6 +44,9 @@
 }
 .top-banner-ad-container {
     min-height: 70px;
+    @include rem((
+        padding: ($gs-baseline/6)*5 0 ($gs-baseline/3) 0
+    ));
 
     @include mq(faciaLeftCol) {
         @include rem((
@@ -161,10 +164,12 @@
     height: 250px;
     overflow: hidden;
 }
-.ad-slot--commercial-component {
+.ad-slot__commercial-component {
     width: 100%;
     min-height: 0;
-    padding: 0 0 $gs-baseline 0;
+    @include rem((
+        margin-top: $gs-baseline*2
+    ));
 }
 
 
