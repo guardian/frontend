@@ -226,7 +226,9 @@
             width: 16px
         ));
     }
-    color: transparent;
+    // IE8 does not support `color: transparent`. In this case the bullet
+    // should be the same colour as the fake bullet point
+    color: if($old-ie, $c-neutral3, transparent);
     @include faux-bullet-point;
 }
 
