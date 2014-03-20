@@ -49,11 +49,13 @@ class FaciaController extends Controller with Logging with ExecutionContexts wit
   def renderCollectionRss(id: String) = renderCollection(id)
   def renderCollectionJson(id: String) = renderCollection(id)
 
-  def renderFront(path: String) =
+  def renderFront(path: String) = {
+    log.info(s"Serving Path: $path")
     if (!ConfigAgent.getPathIds.contains(path))
       IndexController.render(path)
     else
       renderFrontPress(path)
+  }
 
   def renderFrontPress(path: String) = DogpileAction { implicit request =>
 
@@ -76,6 +78,7 @@ class FaciaController extends Controller with Logging with ExecutionContexts wit
   }
 
   def renderCollection(id: String) = DogpileAction { implicit request =>
+    log.info(s"Serving collection ID: $id")
     getPressedCollection(id).map { collectionOption =>
       collectionOption.map { collection =>
         Cached(60) {
