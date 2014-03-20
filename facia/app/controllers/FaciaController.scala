@@ -82,6 +82,7 @@ class FaciaController extends Controller with Logging with ExecutionContexts wit
   }
 
   def renderCollection(id: String) = DogpileAction { implicit request =>
+    log.info(s"Serving collection ID: $id")
     getPressedCollection(id).map { collectionOption =>
       collectionOption.map { collection =>
         if (request.isRss) {
