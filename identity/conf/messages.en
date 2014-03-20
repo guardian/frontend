@@ -5,6 +5,7 @@ error.login=That email address/password combination doesn''t match our records. 
 error.passwordReset=We could not reset your password please request another password reset email
 error.usernameLength=Please enter a username between 6 and 20 characters
 error.url=Please enter a valid URL, including http://
+error.address=This line of the address is invalid.
 
 # default errors for edge cases
 error.required=This field is required

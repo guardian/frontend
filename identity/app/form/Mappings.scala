@@ -5,8 +5,14 @@ import play.api.data.validation.Constraints
 import play.api.data.Forms._
 import play.api.data.format.Formats._
 import play.api.i18n.Messages
+import model.Countries
 
 trait Mappings {
+
+  val textField = text(maxLength = 255)
+  val textArea = text(maxLength = 1500)
+
+  def comboList(values: Seq[String]) = text verifying { values contains _}
 
   private val UrlPattern = """^(http|https)://([^/?#]*)?([^?#]*)(\?([^#]*))?(#(.*))?""".r
   val idUrl = text verifying (
@@ -23,9 +29,11 @@ trait Mappings {
     Messages("error.passwordLength"), {value => 6 <= value.length && value.length <= 20}
   )
 
-  val textField = text(maxLength = 255)
-  val textArea = text(maxLength = 1500)
+  val idCountry = comboList("" :: Countries.all)
 
-  def comboList(values: Seq[String]) = text verifying { values contains _}
-
+//  val idBirthDate = mapping(
+//    "day" -> number(min = 1, max = 31),
+//    "month" -> number(min = 1, max = 12),
+//    "year" -> number(min = 1800)
+//  )
 }

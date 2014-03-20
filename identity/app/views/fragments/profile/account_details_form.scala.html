@@ -4,6 +4,7 @@
 @import form.IdFormHelpers._
 @import form.Input
 @import conf.Switches.IdentityEmailVerificationSwitch
+@import model.Countries
 @import helper._
 
 <form class="form js-account-details-form" novalidate action="@idUrlBuilder.buildUrl("/account/edit", idRequest)" role="main" method="post">
@@ -62,6 +63,18 @@
                     accountDetailsForm("gender"),
                     List(("Male", "Male"), ("Female", "Female"), ("unknown", "Prefer not to say")),
                     ('_label, "Gender"),
+                    ('_default, "")
+                )
+
+                @inputField(Input(accountDetailsForm("address.line1"), ('_label, "Address 1")))
+                @inputField(Input(accountDetailsForm("address.line2"), ('_label, "Address 2")))
+                @inputField(Input(accountDetailsForm("address.line3"), ('_label, "Address 3")))
+                @inputField(Input(accountDetailsForm("address.line4"), ('_label, "Address 4")))
+                @inputField(Input(accountDetailsForm("address.postcode"), ('_label, "Postcode/Zipcode")))
+                @select(
+                    accountDetailsForm("address.country"),
+                    ("", "None") :: (Countries.all map {c => (c, c)}),
+                    ('_label, "Country"),
                     ('_default, "")
                 )
 
