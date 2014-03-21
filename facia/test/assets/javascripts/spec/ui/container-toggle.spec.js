@@ -3,8 +3,16 @@ define([
     'common/common',
     'bonzo',
     'bean',
-    'common/modules/userPrefs'
-], function(ContainerDisplayToggle, common, bonzo, bean, userPrefs) {
+    'common/modules/userPrefs',
+    'qwery'
+], function(
+    ContainerDisplayToggle,
+    common,
+    bonzo,
+    bean,
+    userPrefs,
+    qwery
+) {
 
     describe('Container Toggle', function() {
 
@@ -23,7 +31,7 @@ define([
         beforeEach(function(){
             container = bonzo.create(
                 '<section class="container js-container--toggle" data-id="' + containerId + '">' +
-                    '<h2>A container</h2>' +
+                    '<h2 class="container__title">A container</h2>' +
                 '</section>'
             )[0];
             $container = bonzo(container);
@@ -50,9 +58,9 @@ define([
             expect(window.localStorage.getItem(oldStorageKey)).toBeNull();
         });
 
-        it('should add button to the beginning of the container', function() {
+        it('should add button to the container\'s title', function() {
             new ContainerDisplayToggle(container).addToggle();
-            expect(container.childNodes[0].nodeName.toLowerCase()).toBe('button');
+            expect(qwery('.container__title .container__toggle', container).length).toBe(1);
         });
 
         it('initial state should be open', function() {

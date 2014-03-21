@@ -25,7 +25,7 @@
 .container__title {
     @include fs-header(5);
     @include rem((
-        padding: $gs-baseline/3 $gs-gutter/5,
+        padding: $gs-baseline/3 gs-span(1)+$gs-gutter/5 $gs-baseline/3 $gs-gutter/5,
         min-height: gs-height(1) - $gs-baseline*(2/3)
     ));
     background-color: $c-newsDefault;
@@ -110,13 +110,14 @@
     @include rem((
         min-height: gs-height(1),
         min-width: gs-span(1),
-        top: $gs-baseline/3
     ));
+    top: 0;
     right: 0;
     border: none;
     background-color: transparent;
     padding: 0;
     @include fs-data(4, $size-only: true);
+    height: 100%;
 
     .container__toggle__text {
         position: relative;
@@ -130,6 +131,10 @@
 
         i {
             @include transform(rotate(180deg));
+            position: absolute;
+            top: 17px;
+            left: 50%;
+            margin-left: -12px;
         }
         .container--rolled-up & i {
             @include transform(rotate(0));
@@ -139,7 +144,6 @@
         }
     }
     @include mq(tablet) {
-        top: 0;
         text-align: right;
         color: $c-neutral2;
 
