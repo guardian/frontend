@@ -7,7 +7,7 @@ import scala.collection.JavaConverters._
 import org.joda.time.DateTime
 import java.io.StringWriter
 import org.jsoup.Jsoup
-import com.sun.syndication.feed.module.mediarss.types.{Metadata, UrlReference, MediaContent}
+import com.sun.syndication.feed.module.mediarss.types.{Credit, Metadata, UrlReference, MediaContent}
 
 object TrailsToRss {
 
@@ -19,6 +19,7 @@ object TrailsToRss {
     import com.sun.syndication.feed.synd._
     import com.sun.syndication.feed.module.mediarss._
     import com.sun.syndication.io.{FeedException, SyndFeedOutput}
+    import collection.JavaConversions._
 
     val feedTitle = title.map(t => s"$t | The Guardian").getOrElse("The Guardian")
 
@@ -65,21 +66,27 @@ object TrailsToRss {
         }
       description.setValue(standfirst + intro)
 
-      var modules = trail.bodyImages.map{ img =>
+      var modules: Seq[MediaEntryModuleImpl] = trail.bodyImages.map{ img =>
         img.largestImage.map { i =>
-          val item = new MediaContent(new UrlReference(i.url.get))
-          val md = new Metadata()
-          item.setMetadata(md)
-          val contents = List(item)
+          // create image
+          val image = new MediaContent(new UrlReference(i.url.get))
+          image.setHeight(i.height)
+          image.setWidth(i.width)
+          i.mimeType.map(image.setType)
+          // create image's metadata
+          val imageMetadata = new Metadata()
+          i.altText.map(imageMetadata.setDescription)
+          i.credit.map{ creditName =>
+            val credit = new Credit(null, null, creditName)
+            imageMetadata.setCredits(Seq(credit).toArray)
+          }
+          image.setMetadata(imageMetadata)
+          // create image module
           val module = new MediaEntryModuleImpl()
-          module.setMediaContents(contents.toArray)
+          module.setMediaContents(Seq(image).toArray)
           module
         }
-      }.asJava
-
-    //val module: MediaEntryModuleImpl = new MediaEntryModuleImpl()
-
-
+      }.flatten
 
       // Entry
       val entry = new SyndEntryImpl
@@ -89,7 +96,7 @@ object TrailsToRss {
       entry.setAuthor(trail.byline.getOrElse(""))
       entry.setPublishedDate(trail.webPublicationDate.toDate)
       entry.setCategories(categories)
-      entry.setModules(modules)
+      entry.setModules(new java.util.ArrayList(modules))
       entry
 
     }.asJava

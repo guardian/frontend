@@ -18,6 +18,7 @@ case class ImageAsset(private val delegate: Asset, index: Int) {
   }
 
   lazy val mediaType: String = delegate.`type`
+  lazy val mimeType: Option[String] = delegate.mimeType
 
   lazy val url: Option[String] = delegate.file
   lazy val path: Option[String] = url.map(ImgSrc(_, Naked))
