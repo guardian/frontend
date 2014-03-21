@@ -7,7 +7,7 @@ define([
     id,
     time
 ) {
-    var userSegmentsKey = "gu.ads.userSegmentsData";
+    var userSegmentsKey = 'gu.ads.userSegmentsData';
 
     function getUserSegments() {
         if(storage.local.isAvailable()) {

@@ -24,15 +24,15 @@ define([
                             function success (resp) {
                                 if (resp.status === 'error') {
                                     mediator.emit('module:identity:validation-email:fail');
-                                    $resendButton.innerHTML = "An error occured, please click here to try again.";
+                                    $resendButton.innerHTML = 'An error occured, please click here to try again.';
                                 } else {
                                     mediator.emit('module:identity:validation-email:success');
-                                    $resendButton.replaceWith("<p>Sent. Please check your email and follow the link.</p>");
+                                    $resendButton.replaceWith('<p>Sent. Please check your email and follow the link.</p>');
                                 }
                             },
                             function fail () {
                                 mediator.emit('module:identity:validation-email:fail');
-                                $resendButton.innerHTML = "An error occured, please click here to try again.";
+                                $resendButton.innerHTML = 'An error occured, please click here to try again.';
                             }
                         );
                     }

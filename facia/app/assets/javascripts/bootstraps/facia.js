@@ -98,7 +98,7 @@ define([
                         competitions: ['500', '510', '100', '400'],
                         contextual: false,
                         expandable: true,
-                        numVisible: config.page.pageId === "" ? 3 : 5
+                        numVisible: config.page.pageId === '' ? 3 : 5
                     }).init();
                 }
             });
@@ -118,7 +118,7 @@ define([
             modules.showContainerToggle();
             modules.showFootballFixtures();
         }
-        mediator.emit("page:front:ready", config, context);
+        mediator.emit('page:front:ready', config, context);
     };
 
     return {

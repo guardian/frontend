@@ -61,7 +61,7 @@ define([
         var currentDepth = this.getPercentageInViewPort(this.config[type + 'El']);
         if((currentDepth - this.data[type].depth) > this.config.changeThreshold) {
             this.data[type].depth = currentDepth;
-            if(typeof this.data[type].duration === "number") {
+            if(typeof this.data[type].duration === 'number') {
                 this.data[type].duration = this.timeSince(this.data[type].start);
             }
             return true;

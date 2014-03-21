@@ -14,7 +14,7 @@ define([
 
     function getSegments(segments) {
        return segments.map(function(segment) {
-          return "&a=" + segment;
+          return '&a=' + segment;
         }).join('');
     }
 
@@ -25,7 +25,7 @@ define([
 
     function getKeywords(config) {
         return config.keywords.split(',').map(function(keyword){
-            return 'k=' + encodeURIComponent(keyword.replace(/\s/g, "-").toLowerCase());
+            return 'k=' + encodeURIComponent(keyword.replace(/\s/g, '-').toLowerCase());
         }).join('&');
     }
 

@@ -33,8 +33,8 @@ define([
 
             bean.on(document, 'click touchstart', '.search-results', function(e) {
                 var targetEl = e.target;
-                if (targetEl.nodeName.toLowerCase() === "a") {
-                    targetEl.target = "_self";
+                if (targetEl.nodeName.toLowerCase() === 'a') {
+                    targetEl.target = '_self';
                 }
             });
         }

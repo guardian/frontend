@@ -1,6 +1,6 @@
 define([
-    "common/common",
-    "bean"
+    'common/common',
+    'bean'
 ], function(
     common,
     bean
@@ -11,11 +11,11 @@ define([
         var self = this,
             config = options.config,
             video = options.el,
-            videoType = "content",
-            player = "HTML5 Video",
+            videoType = 'content',
+            player = 'HTML5 Video',
             mediaName = config.page.webTitle,
-            provider = config.page.source || "",
-            restricted = config.page.blockVideoAds || "",
+            provider = config.page.source || '',
+            restricted = config.page.blockVideoAds || '',
             deBounced,
             initialPlay =  {
                 advert: true,
@@ -33,9 +33,9 @@ define([
         this.play = function() {
             if (initialPlay.content === true && initialPlay.advert === true) {
                 self.execWhenDuration(function() {
-                   self.trackUserInteraction("Play", "User clicked play", false);
+                   self.trackUserInteraction('Play', 'User clicked play', false);
                        if(video.advertWasRequested) {
-                           self.trackUserInteraction("Advert", "Video advert was requested", false);
+                           self.trackUserInteraction('Advert', 'Video advert was requested', false);
                        }
                 });
             }
@@ -76,22 +76,22 @@ define([
            var log = function(){
                 var event;
                 switch(type){
-                    case "Play" :
-                        event = "event98";
+                    case 'Play' :
+                        event = 'event98';
                         break;
-                    case "Advert" :
-                        event = "event97";
+                    case 'Advert' :
+                        event = 'event97';
                         break;
                     default :
-                        event = "event14";
+                        event = 'event14';
                         break;
                 }
                 s.prop41 = type;
-                s.linkTrackVars = "prop43,prop44,prop45,eVar43,eVar44,eVar45,prop41,events";
+                s.linkTrackVars = 'prop43,prop44,prop45,eVar43,eVar44,eVar45,prop41,events';
                 s.linkTrackEvents = event;
                 s.events = event;
 
-                s.tl(true, "o", name);
+                s.tl(true, 'o', name);
             };
 
             if(debounce) {
@@ -127,7 +127,7 @@ define([
 
             s.loadMediaModule(provider, restricted);
 
-            s.prop43 = "Video";
+            s.prop43 = 'Video';
             s.prop44 = config.page.analyticsName;
             s.prop45 = s.channel;
 
@@ -142,7 +142,7 @@ define([
             bean.on(video, 'pause', function() { that.pause(); });
             bean.on(video, 'seeking', function() { that.seeking(); });
             bean.on(video, 'seeked', function() {that.seeked(); });
-            bean.on(video, 'volumechange', function() {that.trackUserInteraction("Volume", "User Changed Volume", true); });
+            bean.on(video, 'volumechange', function() {that.trackUserInteraction('Volume', 'User Changed Volume', true); });
 
             bean.on(video, 'play:advert', function() { that.trackVideoAdvert(); });
             bean.on(video, 'play:content', function() { that.trackVideoContent(); });
