@@ -1,9 +1,11 @@
+$football-crest-small: 44px;
+$football-crest-large: 60px;
+
 .match-summary {
     @include rem((
         padding-bottom: $gs-baseline,
         margin-bottom: $gs-baseline*2
     ));
-
     border-bottom: 1px dotted $c-neutral2;
     position: relative;
 }
@@ -77,7 +79,6 @@
 
 .team__heading {
     @include fs-headline(5);
-
     position: relative;
 
     @include mq($from: tablet) {
@@ -85,33 +86,29 @@
     }
 }
 
-.team__crest-container {
-
-}
-
 .team__crest {
     @include rem((
         margin-bottom: $gs-baseline
     ));
     display: table;
-    height: 44px;
+    height: $football-crest-small;
     float: left;
     overflow: hidden;
 
     @include mq($from: tablet) {
-        height: 60px;
+        height: $football-crest-large;
         float: none;
         width: 100%;
     }
 }
 
 .team__crest__img {
-    max-height: 44px;
-    max-width: 44px;
+    max-height: $football-crest-small;
+    max-width: $football-crest-small;
 
     @include mq($from: tablet) {
-        max-height: 60px;
-        max-width: 60px;
+        max-height: $football-crest-large;
+        max-width: $football-crest-large;
     }
 }
 
@@ -128,7 +125,7 @@
 
 .team__info {
     @include rem((
-        margin-left: $gs-gutter+44
+        margin-left: $gs-gutter+$football-crest-small
     ));
 
     @include mq($from: tablet) {
@@ -141,7 +138,6 @@
     @include rem((
         padding-right: $gs-gutter*2
     ));
-
     display: block;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -179,9 +175,9 @@
     @include fs-data(2);
     @include rounded-corners(24px);
     @include rem((
-        height: 44px,
-        line-height: 44px,
-        width: 44px
+        height: $football-crest-small,
+        line-height: $football-crest-small,
+        width: $football-crest-small
     ));
 
     border: 2px dotted $c-neutral2;
@@ -190,7 +186,7 @@
 
     @include mq($from: tablet) {
         @include rem((
-            top: 60-44px
+            top: ($football-crest-large - $football-crest-small)
         ));
         position: relative;
     }
