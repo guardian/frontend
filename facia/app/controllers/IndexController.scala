@@ -5,11 +5,15 @@ import model._
 import play.api.mvc._
 import services.{Index, IndexPage}
 import views.support.TemplateDeduping
+import services.IndexPage
 
 
 trait IndexController extends Controller with Index with Logging with Paging with ExecutionContexts {
 
   implicit def getTemplateDedupingInstance: TemplateDeduping = TemplateDeduping()
+
+  // Needed as aliases for reverse routing
+  def renderCombinerRss(leftSide: String, rightSide: String) = renderCombiner(leftSide, rightSide)
 
   def renderCombiner(leftSide: String, rightSide: String) = DogpileAction { implicit request =>
     logGoogleBot(request)
@@ -45,8 +49,11 @@ trait IndexController extends Controller with Index with Logging with Paging wit
   }
 
   private def renderFaciaFront(model: IndexPage)(implicit request: RequestHeader) = {
-    Cached(model.page){
-      if (request.isJson)
+    Cached(model.page) {
+      if (request.isRss)
+        Ok(TrailsToRss(model.page, model.trails))
+          .as("text/xml; charset=utf-8")
+      else if (request.isJson)
         JsonComponent(
           "html" -> views.html.fragments.indexBody(model)
         )

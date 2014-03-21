@@ -21,7 +21,7 @@ define([
         if (storage.session.get(key)) {
             newSession = false;
         } else {
-            storage.session.set(key, "true");
+            storage.session.set(key, 'true');
             newSession = true;
         }
 

@@ -127,7 +127,7 @@ CommentBox.prototype.prerender = function() {
     if (this.options.replyTo) {
         var replyToAuthor = this.getElem('reply-to-author');
         replyToAuthor.innerHTML = this.options.replyTo.author;
-        this.getElem('parent-comment-author').innerHTML = this.options.replyTo.author + " @ " + this.options.replyTo.timestamp + " said:";
+        this.getElem('parent-comment-author').innerHTML = this.options.replyTo.author + ' @ ' + this.options.replyTo.timestamp + ' said:';
 
         this.getElem('parent-comment-body').innerHTML = this.options.replyTo.body;
 

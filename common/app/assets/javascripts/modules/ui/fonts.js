@@ -11,7 +11,7 @@ define([
 
     function Fonts(styleNodes, fileFormat) {
 
-        var storagePrefix = "gu.fonts.";
+        var storagePrefix = 'gu.fonts.';
 
         this.ajax = ajax; // expose publicly so we can inspect it in unit tests
 

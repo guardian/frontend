@@ -39,7 +39,7 @@ $guss-column-rule: none;
 // Name your breakpoints in a way that creates a ubiquitous language
 // across team members. It will improve communication between
 // stakeholders, designers, developers, and testers.
-// NB. If these change, please update detect.js to match
+// NB. If these change, please update dfp.js to match
 
 @import 'layout/_grid-system';
 
@@ -78,6 +78,7 @@ $mq-breakpoints: (
 $sans-serif: "AgateSans", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 $serif: "EgyptianText", georgia, serif;
 $serifheadline: "EgyptianHeadline", georgia, serif;
+$text-sans: "TextSans", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 
 // Font scale
 // Usage:
@@ -124,6 +125,12 @@ $fs-data: (
     14 18, // 4
     16 20, // 5
     18 22  // 6
+);
+
+$fs-textsans: (
+    12 16, // 1
+    13 18, // 2
+    14 22, // 3
 );
 
 // Colours

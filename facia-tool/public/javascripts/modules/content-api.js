@@ -90,8 +90,8 @@ function (
             defer = $.Deferred();
 
         if (ids.length) {
-            apiUrl = vars.CONST.apiSearchBase + "/search?format=json&show-fields=all&page-size=" + apiPageSize;
-            apiUrl += "&ids=" + ids.map(function(id){
+            apiUrl = vars.CONST.apiSearchBase + '/search?format=json&show-fields=all&page-size=' + apiPageSize;
+            apiUrl += '&ids=' + ids.map(function(id){
                 return encodeURIComponent(id);
             }).join(',');
 

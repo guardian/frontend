@@ -12,23 +12,23 @@ define([
     function begin(name) {
         register.push({
             name: name,
-            status: "unfinished"
+            status: 'unfinished'
         });
     }
 
     function end(name) {
         _where(register, {name: name})
             .forEach(function(module){
-                module.status = "completed";
-                module.endTime = Date.now() - startTime + "ms";
+                module.status = 'completed';
+                module.endTime = Date.now() - startTime + 'ms';
             });
     }
 
     function error(name) {
         _where(register, {name: name})
             .forEach(function(module){
-                module.status = "failed";
-                module.endTime = Date.now() - startTime + "ms";
+                module.status = 'failed';
+                module.endTime = Date.now() - startTime + 'ms';
             });
     }
 

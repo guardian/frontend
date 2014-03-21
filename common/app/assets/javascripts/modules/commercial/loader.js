@@ -65,7 +65,7 @@ define([
                     var str = 'merchandising-bookshop-v0_7_2014-03-12-low-'+ el.querySelector('.commercial__search__input').value,
                         val = (conf.contentType) ? conf.contentType + ':' + str : str;
 
-                    s.linkTrackVars = 'eVar22,eVar37,events';
+                    s.linkTrackVars = 'prop22,eVar22,eVar37,events';
                     s.linkTrackEvents = 'event7,event37';
                     s.events = 'event7,event37';
                     s.prop22 = val;

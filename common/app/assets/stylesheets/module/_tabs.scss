@@ -99,6 +99,7 @@
     display: none;
 }
 
+
 /* Multiple tabs
  *
  * used for cases where more than 2 tabs are wanted (eg not two 50% width tabs)
@@ -117,9 +118,8 @@
         width: auto;
         float: none;
     }
+
+    .tab--stats {
+        display: none;
+    }
 }
-
-
-
-
-

@@ -6,6 +6,8 @@
 # For dev machines
 GET        /assets/*path                                           dev.DevAssetsController.at(path)
 
+GET        /humans.txt                                             controllers.Assets.at(path="/public", file="humans.txt")
+
 # Editionalised redirects
 GET        /                                                       controllers.FaciaController.editionRedirect(path = "")
 GET        /$path<(culture|sport|commentisfree|business|money)>    controllers.FaciaController.editionRedirect(path)
@@ -18,6 +20,7 @@ GET        /collection/*id.json                                    controllers.F
 GET        /collection/*id                                         controllers.FaciaController.renderCollection(id)
 
 # Tag combiners
+GET        /$leftSide<[^+]+>+*rightSide/rss                        controllers.IndexController.renderCombinerRss(leftSide, rightSide)
 GET        /$leftSide<[^+]+>+*rightSide                            controllers.IndexController.renderCombiner(leftSide, rightSide)
 
 # Editionalised pages

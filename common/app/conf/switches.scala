@@ -94,13 +94,23 @@ object Switches extends Collections {
   // Advertising Switches
 
   val AdvertSwitch = Switch("Advertising", "adverts",
-    "If this switch is on then OAS adverts will be loaded with JavaScript.",
+    "If this switch is on then adverts will be loaded with JavaScript.",
     safeState = On, sellByDate = never
+  )
+
+  val OASAdvertSwitch = Switch("Advertising", "oas-adverts",
+    "If this switch is on then OAS adverts will be loaded with JavaScript.",
+    safeState = Off, sellByDate = never
   )
 
   val DFPAdvertSwitch = Switch("Advertising", "dfp-adverts",
     "If this switch is on then DFP adverts will be loaded with JavaScript.",
     safeState = Off, sellByDate = never
+  )
+
+  val LoadOnlyCommercialComponents = Switch("Advertising", "load-only-commercial-components",
+    "If this switch is on then only commercial components will be loaded via DFP.",
+    safeState = On, sellByDate = endOfQ4
   )
 
   val VideoAdvertSwitch = Switch("Advertising", "video-adverts",
@@ -275,6 +285,11 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
+  val RightHandMostPopularSwitch = Switch("Feature Switches", "right-hand-most-popular",
+    "If this switch is on, a component with most popular content from around the Guardian is displayed in the article right hand column at desktop breakpoints.",
+    safeState = On, sellByDate = endOfQ4
+  )
+
   val IdentityEthicalAwardsSwitch = Switch("Feature Switches", "id-ethical-awards",
     "If this switch is on, Ethical awards forms will be available",
     safeState = Off, sellByDate = endOfQ4)
@@ -340,6 +355,16 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 3, 25)
   )
 
+  val KeyEvents = Switch("A/B Tests", "key-events",
+    "If this is switched on an experiment runs to display a keyevents panel on live blogs.",
+    safeState = On, sellByDate = new DateMidnight(2014, 3, 24)
+  )
+
+  val FollowButton = Switch("A/B Tests", "follow-button",
+    "If this is switched on an experiment runs to display a follow button on live blogs.",
+    safeState = Off, sellByDate = new DateMidnight(2014, 3, 28)
+  )
+
   // Sport Switch
 
   val LiveCricketSwitch = Switch("Live Cricket", "live-cricket",
@@ -362,12 +387,6 @@ object Switches extends Collections {
   val AlwaysExpiredSwitch = Switch("Unwired Test Switch", "always-expired",
     "Switch that is only used while running tests. You never need to change this switch.",
     safeState = On, new DateMidnight().minusDays(1)
-  )
-
-  // Facia
-  val PressedFacia = Switch("Facia", "pressed-facia",
-    "If this switch is on then it will use pressed JSON for all requests",
-    safeState = Off, sellByDate = never
   )
 
   // Facia Tool Switches
@@ -414,7 +433,9 @@ object Switches extends Collections {
     DoubleCacheTimesSwitch,
     RelatedContentSwitch,
     AdvertSwitch,
+    OASAdvertSwitch,
     DFPAdvertSwitch,
+    LoadOnlyCommercialComponents,
     VideoAdvertSwitch,
     AudienceScienceSwitch,
     DiscussionSwitch,
@@ -438,6 +459,7 @@ object Switches extends Collections {
     EditionRedirectLoggingSwitch,
     FacebookAutoSigninSwitch,
     IdentityFormstackSwitch,
+    RightHandMostPopularSwitch,
     IdentityEthicalAwardsSwitch,
     IdentityFilmAwardsSwitch,
     ABAa,
@@ -445,6 +467,8 @@ object Switches extends Collections {
     ABFrontsLiveCard,
     ABFrontsLatestReviewsCard,
     ABFrontsCartoonCard,
+    KeyEvents,
+    FollowButton,
     ToolDisable,
     ToolConfigurationDisable,
     ToolSparklines,
@@ -472,7 +496,6 @@ object Switches extends Collections {
     FaciaToolPressSwitch,
     DogpileSwitch,
     ShowAllArticleEmbedsSwitch,
-    PressedFacia,
     FrontPressJobSwitch,
     LayoutHintsSwitch,
     HelveticaEasterEggSwitch,

@@ -1,8 +1,8 @@
 define([
-    "common/$",
-    "bean",
-    "common/utils/storage",
-    "common/modules/userPrefs",
+    'common/$',
+    'bean',
+    'common/utils/storage',
+    'common/modules/userPrefs',
     'lodash/arrays/uniq'
 ], function (
     $,
