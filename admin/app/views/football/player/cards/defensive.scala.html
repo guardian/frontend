@@ -1,4 +1,4 @@
-@(player: pa.StatsSummary, playerAppearances: pa.PlayerAppearances)
+@(playerId: String, player: pa.StatsSummary, playerAppearances: pa.PlayerAppearances)
 
 @views.html.football.main("Player card") {
 <h1>Player head to head</h1>
@@ -7,6 +7,7 @@
     <thead>
     <tr>
         <th rowspan="2">Player</th>
+        <th rowspan="2">Image</th>
         <th rowspan="2">Appearances</th>
         <th colspan="3">Fouls</th>
         <th colspan="3">Clearances</th>
@@ -39,6 +40,7 @@
     <tbody>
     <tr>
         <td>@playerAppearances.playerName</td>
+        <td><img src="@Configuration.staticSport.path/football/player-images/@{playerId}.jpg" alt="@playerAppearances.playerName" /></td>
 
         <td>@playerAppearances.total.appearances</td>
 
