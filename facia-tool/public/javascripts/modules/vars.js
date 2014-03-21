@@ -34,6 +34,7 @@ define(['knockout'], function(ko) {
 
         apiBase:               '',
         apiSearchBase:         '/api/proxy',
+        apiPageSize:           50,
 
         sparksServer:          'http://sparklines.ophan.co.uk',
         sparksParams: {

@@ -11,6 +11,8 @@ function (
     cache,
     icc
 ){
+    var apiPageSize = vars.CONST.apiPageSize || 50;
+
     function validateItem (item) {
         var result = cache.get('contentApi', item.id),
             defer = $.Deferred();
@@ -38,6 +40,13 @@ function (
     }
 
     function decorateItems (items) {
+        if (items.length) {
+            decorateItemsBatch(_.first(items, apiPageSize));
+            decorateItems(_.rest(items, apiPageSize));
+        }
+    }
+
+    function decorateItemsBatch (items) {
         var ids = [];
 
         items.forEach(function(item){
@@ -48,6 +57,8 @@ function (
                 ids.push(item.id);
             }
         });
+
+        if (!ids.length) { return; }
 
         fetchData(ids)
         .done(function(results){
@@ -79,7 +90,7 @@ function (
             defer = $.Deferred();
 
         if (ids.length) {
-            apiUrl = vars.CONST.apiSearchBase + "/search?format=json&show-fields=all";
+            apiUrl = vars.CONST.apiSearchBase + "/search?format=json&show-fields=all&page-size=" + apiPageSize;
             apiUrl += "&ids=" + ids.map(function(id){
                 return encodeURIComponent(id);
             }).join(',');
