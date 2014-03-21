@@ -85,17 +85,21 @@
     }
 }
 
+.team__crest-container {
+
+}
+
 .team__crest {
     @include rem((
         margin-bottom: $gs-baseline
     ));
     height: 44px;
-    float: left;
     overflow: hidden;
+    width: 100%;
 
     .team__crest__img {
-        height: 44px;
-        width: 44px;
+        max-height: 44px;
+        max-width: 44px;
     }
 
     @include mq($from: tablet) {
@@ -103,8 +107,8 @@
         float: none;
 
         .team__crest__img {
-            height: 60px;
-            width: 60px;
+            max-height: 60px;
+            max-width: 60px;
         }
     }
 }
