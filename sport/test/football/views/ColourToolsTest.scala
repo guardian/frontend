@@ -3,7 +3,7 @@ package football.views
 import org.scalatest.{ShouldMatchers, FunSuite}
 import views.ColourTools
 
-class colourCheckTest extends FunSuite with ShouldMatchers {
+class ColourToolsTest extends FunSuite with ShouldMatchers {
   test("Whtie should be a light colour") {
     ColourTools.isLight("ffffff") should equal(true)
   }
