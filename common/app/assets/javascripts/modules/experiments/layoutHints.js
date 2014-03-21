@@ -45,7 +45,7 @@ define([
             });
         },
 
-        "russia-sanctions-keep-markets-anxious" : function(config) {
+        'russia-sanctions-keep-markets-anxious' : function(config) {
             /*jshint nonew:false */
 
             if(!config.switches.keyEvents) { return false; }
