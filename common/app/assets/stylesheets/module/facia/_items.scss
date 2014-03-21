@@ -23,6 +23,7 @@
     }
 }
 .container__title {
+    position: relative;
     @include fs-header(5);
     @include rem((
         padding: $gs-baseline/3 gs-span(1)+$gs-gutter/5 $gs-baseline/3 $gs-gutter/5,
@@ -121,6 +122,7 @@
 
     .container__toggle__text {
         position: relative;
+        font-weight: normal;
         @include rem((
             top: -6px
         ));
@@ -132,7 +134,7 @@
         i {
             @include transform(rotate(180deg));
             position: absolute;
-            top: 17px;
+            top: 13px;
             left: 50%;
             margin-left: -12px;
         }
@@ -154,6 +156,9 @@
         &:focus {
             color: $c-neutral1;
         }
+    }
+    @include mq(wide) {
+        left: gs-span(15) + $gs-gutter;
     }
 }
 
