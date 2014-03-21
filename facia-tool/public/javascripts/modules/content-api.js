@@ -69,7 +69,7 @@ function (
 
                 cache.put('contentApi', id, article);
                 _.filter(items, function(item){
-                    return item.id === id || item.id === article.id;
+                    return item.id === id || item.id === article.id; // TODO: remove 2nd clause after full transition to internal-code/content/... IDs
                 }).forEach(function(item){
                     populate(article, item);
                 });
