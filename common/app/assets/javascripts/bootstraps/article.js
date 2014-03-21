@@ -1,18 +1,18 @@
 define([
-    "common/common",
-    "common/utils/mediator",
-    "common/utils/detect",
-    "common/$",
-    "fence",
-    "common/modules/ui/rhc",
-    "common/modules/ui/autoupdate",
-    "common/modules/live/filter",
-    "common/modules/discussion/loader",
-    "common/modules/sport/cricket",
-    "common/modules/ui/notification-counter",
-    "common/modules/open/cta",
-    "common/modules/commercial/loader",
-    "common/modules/experiments/layoutHints"
+    'common/common',
+    'common/utils/mediator',
+    'common/utils/detect',
+    'common/$',
+    'fence',
+    'common/modules/ui/rhc',
+    'common/modules/ui/autoupdate',
+    'common/modules/live/filter',
+    'common/modules/discussion/loader',
+    'common/modules/sport/cricket',
+    'common/modules/ui/notification-counter',
+    'common/modules/open/cta',
+    'common/modules/commercial/loader',
+    'common/modules/experiments/layoutHints'
 ], function (
     common,
     mediator,
@@ -44,7 +44,7 @@ define([
                            return path + '.json' + '?lastUpdate=' + id;
                         },
                         delay: timerDelay,
-                        attachTo: context.querySelector(".article-body"),
+                        attachTo: context.querySelector('.article-body'),
                         switches: config.switches,
                         manipulationType: 'prepend',
                         animateInserts: true,
@@ -139,7 +139,7 @@ define([
             modules.initLayoutHints(config);
             modules.initHelvetica(config);
         }
-        common.mediator.emit("page:article:ready", config, context);
+        common.mediator.emit('page:article:ready', config, context);
     };
 
     return {

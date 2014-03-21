@@ -45,7 +45,7 @@ TopComments.prototype.classes = {
     reply: 'd-comment--response',
     showReplies: 'd-show-more-replies',
 
-    topCommentTitle: "page-sub-header",
+    topCommentTitle: 'page-sub-header',
 
     comment: 'd-comment',
     commentActions: 'd-comment__actions__main',
@@ -118,19 +118,19 @@ TopComments.prototype.fetch = function(parent) {
                 self.prerender();
                 self.ready();
 
-                self.mediator.emit("module:topcomments:loadcomments", { amount: 0 });
+                self.mediator.emit('module:topcomments:loadcomments', { amount: 0 });
             } else {
 
                 $('.discussion__comments--top-comments').remove();
 
                 // Render Regular Comments
-                self.mediator.emit("module:topcomments:loadcomments", { amount: 2, showLoader: true });
+                self.mediator.emit('module:topcomments:loadcomments', { amount: 2, showLoader: true });
             }
         },
         function () {
             // Error: Render Regular Comments
             $('.discussion__comments--top-comments').remove();
-            self.mediator.emit("module:topcomments:loadcomments", { amount: 2, showLoader: true });
+            self.mediator.emit('module:topcomments:loadcomments', { amount: 2, showLoader: true });
         }
     );
 };
@@ -163,7 +163,7 @@ TopComments.prototype.ready = function() {
         heading.childNodes[0].nodeValue = heading.childNodes[0].nodeValue.replace(/s\b/, '');
     } else {
         // Append top comment count to section title
-       $(self.getClass('titleCounter')).removeClass('u-h')[0].innerHTML = "(" + self.topCommentsAmount + ")";
+       $(self.getClass('titleCounter')).removeClass('u-h')[0].innerHTML = '(' + self.topCommentsAmount + ')';
     }
 
     self.emit('ready');
@@ -181,7 +181,7 @@ TopComments.prototype.truncateFeatured = function(maxHeight){
     this.hasHiddenComments = true;
     $('.d-image-fade', this.parent).removeClass('u-h');
     $(this.getClass('showMoreFeatured'), this.elem).removeClass('u-h');
-    $(this.commentsContainer).css("max-height", maxHeight + "px");
+    $(this.commentsContainer).css('max-height', maxHeight + 'px');
 };
 
 TopComments.prototype.showAllFeatured = function(e) {
@@ -189,7 +189,7 @@ TopComments.prototype.showAllFeatured = function(e) {
     this.hasHiddenComments = false;
     $('.d-image-fade', this.parent).addClass('u-h');
     $(this.getClass('showMoreFeatured'), this.elem).addClass('u-h');
-    $(this.commentsContainer).css("max-height", "none");
+    $(this.commentsContainer).css('max-height', 'none');
 };
 
 /** @param {Event} e */

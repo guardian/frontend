@@ -51,7 +51,7 @@ define([
      */
     accountProfile.prototype.handleTabsClick = function(event) {
         var self = this;
-        if (event.target.nodeName.toLowerCase() === "a") {
+        if (event.target.nodeName.toLowerCase() === 'a') {
             if (self.unsavedChangesForm) {
                 event.preventDefault();
                 event.stopImmediatePropagation();
@@ -65,7 +65,7 @@ define([
                     });
                 }
             } else {
-                url.pushUrl({}, event.target.innerHTML, event.target.getAttribute("data-pushstate-url"));
+                url.pushUrl({}, event.target.innerHTML, event.target.getAttribute('data-pushstate-url'));
             }
         }
     };
@@ -75,21 +75,21 @@ define([
      *  a form with unsaved changes.
      */
     accountProfile.prototype.genUnsavedError = function () {
-        var errorDivStart = "<div class='form__error'>",
-            errorDivEnd = "</div>",
-            errorSaveLink = "<a href='#' class='js-save-unsaved'>Save changes</a>",
-            errorMessageStart = "Your form has unsaved changes in ";
+        var errorDivStart = '<div class="form__error">',
+            errorDivEnd = '</div>',
+            errorSaveLink = '<a href="#" class="js-save-unsaved">Save changes</a>',
+            errorMessageStart = 'Your form has unsaved changes in ';
 
         for (var i = 0; i < this.unsavedFields.length; i++) {
             var labelId = this.unsavedFields[i].id;
-            var text = this.accountProfileForms.querySelector("[for='"+labelId+"']").innerHTML;
-            errorMessageStart += "'" + text + "'";
+            var text = this.accountProfileForms.querySelector('[for="'+labelId+'"]').innerHTML;
+            errorMessageStart += '"' + text + '"';
             if (i === this.unsavedFields.length-1) {
-                errorMessageStart += ". ";
+                errorMessageStart += '. ';
             } else if (i === this.unsavedFields.length-2) {
-                errorMessageStart += " and ";
+                errorMessageStart += ' and ';
             } else {
-                errorMessageStart += ", ";
+                errorMessageStart += ', ';
             }
         }
 
@@ -116,10 +116,10 @@ define([
         for (var i = inputs.length - 1; i >= 0; i--) {
             var input = inputs[i];
             input.form = form;
-            if (input.type === "select-one") {
-                input.addEventListener("change", this.onInputChange.bind(this));
+            if (input.type === 'select-one') {
+                input.addEventListener('change', this.onInputChange.bind(this));
             } else {
-                input.addEventListener("input", this.onInputChange.bind(this));
+                input.addEventListener('input', this.onInputChange.bind(this));
             }
         }
     };

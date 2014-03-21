@@ -94,13 +94,23 @@ object Switches extends Collections {
   // Advertising Switches
 
   val AdvertSwitch = Switch("Advertising", "adverts",
-    "If this switch is on then OAS adverts will be loaded with JavaScript.",
+    "If this switch is on then adverts will be loaded with JavaScript.",
     safeState = On, sellByDate = never
+  )
+
+  val OASAdvertSwitch = Switch("Advertising", "oas-adverts",
+    "If this switch is on then OAS adverts will be loaded with JavaScript.",
+    safeState = Off, sellByDate = never
   )
 
   val DFPAdvertSwitch = Switch("Advertising", "dfp-adverts",
     "If this switch is on then DFP adverts will be loaded with JavaScript.",
     safeState = Off, sellByDate = never
+  )
+
+  val LoadOnlyCommercialComponents = Switch("Advertising", "load-only-commercial-components",
+    "If this switch is on then only commercial components will be loaded via DFP.",
+    safeState = On, sellByDate = endOfQ4
   )
 
   val VideoAdvertSwitch = Switch("Advertising", "video-adverts",
@@ -340,6 +350,16 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 3, 25)
   )
 
+  val KeyEvents = Switch("A/B Tests", "key-events",
+    "If this is switched on an experiment runs to display a keyevents panel on live blogs.",
+    safeState = On, sellByDate = new DateMidnight(2014, 3, 24)
+  )
+
+  val FollowButton = Switch("A/B Tests", "follow-button",
+    "If this is switched on an experiment runs to display a follow button on live blogs.",
+    safeState = Off, sellByDate = new DateMidnight(2014, 3, 28)
+  )
+
   // Sport Switch
 
   val LiveCricketSwitch = Switch("Live Cricket", "live-cricket",
@@ -408,7 +428,9 @@ object Switches extends Collections {
     DoubleCacheTimesSwitch,
     RelatedContentSwitch,
     AdvertSwitch,
+    OASAdvertSwitch,
     DFPAdvertSwitch,
+    LoadOnlyCommercialComponents,
     VideoAdvertSwitch,
     AudienceScienceSwitch,
     DiscussionSwitch,
@@ -439,6 +461,8 @@ object Switches extends Collections {
     ABFrontsLiveCard,
     ABFrontsLatestReviewsCard,
     ABFrontsCartoonCard,
+    KeyEvents,
+    FollowButton,
     ToolDisable,
     ToolConfigurationDisable,
     ToolSparklines,

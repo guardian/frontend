@@ -1,8 +1,9 @@
 define([
 	'common/$',
     'common/modules/identity/forms',
-    'common/modules/identity/formstack',
-    'common/modules/identity/formstack-iframe',
+    'common/modules/identity/formstack', // oldskool inside
+    'common/modules/identity/formstack-iframe', // oldskool outside
+    'common/modules/identity/formstack-iframe-embed', // newskool inside
     'common/modules/identity/password-strength',
     'common/modules/identity/validation-email',
     'common/modules/identity/api',
@@ -16,6 +17,7 @@ define([
     Identity,
     Formstack,
     FormstackIframe,
+    FormstackEmbedIframe,
     PasswordStrength,
     ValidationEmail,
     Id,
@@ -39,8 +41,18 @@ define([
                 var attr = 'data-formstack-id';
                 $('[' + attr + ']').each(function(el) {
                     var id = el.getAttribute(attr);
-                    new Formstack(el, id, context, config).init();
+
+                    var isEmbed = el.className.match(/\bformstack-embed\b/);
+
+                    if (isEmbed) {
+                        new FormstackEmbedIframe(el, id, context, config).init();
+                    } else {
+                        new Formstack(el, id, context, config).init();
+                    }
+
                 });
+
+                // Load old js if necessary
                 $('.js-formstack-iframe').each(function(el) {
                     new FormstackIframe(el, context, config).init();
                 });

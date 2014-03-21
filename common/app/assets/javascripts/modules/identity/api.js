@@ -23,7 +23,7 @@ define([
 
     Id.cookieName = 'GU_U';
     Id.signOutCookieName = 'GU_SO';
-    Id.fbCheckKey = "gu.id.nextFbCheck";
+    Id.fbCheckKey = 'gu.id.nextFbCheck';
     Id.idApiRoot = null;
     Id.idUrl = null;
 

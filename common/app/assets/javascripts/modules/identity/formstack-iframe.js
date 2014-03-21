@@ -32,16 +32,16 @@ define([
 
         self.onMessage = function(event) {
             switch (event.data) {
-                case "ready":
+                case 'ready':
                     self.show();
                     self.refreshHeight();
                     break;
 
-                case "unload":
+                case 'unload':
                     self.refreshHeight(true);
                     break;
 
-                case "refreshHeight":
+                case 'refreshHeight':
                     self.refreshHeight();
                     break;
             }

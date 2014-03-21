@@ -157,7 +157,7 @@ define([
             addParticipation(test, variantIds[testVariantId]);
 
         } else {
-            addParticipation(test, "notintest");
+            addParticipation(test, 'notintest');
         }
     }
 
