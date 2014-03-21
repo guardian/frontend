@@ -64,10 +64,19 @@ object MatchStatus extends Logging {
 
 }
 
-object colourCheck {
-  def apply(colour: String) = {
+object ColourTools {
+  def darkenWhite(colour: String) = {
     if (colour == "#FFFFFF") "#EEEEEE"
     else colour
+  }
+
+  def isLight(colour: String) = {
+    val hex = colour.dropWhile('#' == _)
+    val r = Integer.parseInt(hex.take(2), 16)
+    val g = Integer.parseInt(hex.drop(2).take(2), 16)
+    val b = Integer.parseInt(hex.drop(4).take(2), 16)
+    val yiq = ((r*299) + (g*587) + (b*114)) / 1000
+    yiq > 128
   }
 }
 
