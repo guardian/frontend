@@ -10,7 +10,7 @@
 
 <link rel="stylesheet" href="@Static("stylesheets/commercial.css")" />
 
-<aside class="commercial soulmates-component" role="complementary">
+<aside class="commercial soulmates-component" role="complementary" data-link-name="Soulmates component">
     <div class="facia-container facia-container--layout-article monocolumn-wrapper monocolumn-wrapper--no-limit">
         <div class="container container--row-pattern">
             <div class="container__border hide-on-mobile"></div>
@@ -18,7 +18,7 @@
             <div class="container__title">
                 <span class="container__logo i i-soulmates-logo"></span>
                 <p class="soulmates-component__explainer">The Guardian's online dating site with over 200,000 members</p>
-                <a href="@AdLink{https://soulmates.theguardian.com}" class="soulmates-component__buy-now-button">
+                <a href="@AdLink{https://soulmates.theguardian.com}?INTCMP=mic_232613" class="soulmates-component__buy-now-button">
                     Join now
                 </a>
             </div>
@@ -28,7 +28,7 @@
                     <ul class="u-unstyled lineitems">
                         @members.map { member =>
                             <li class="lineitem">
-                                <a class="lineitem__link" href="@AdLink{@member.profileUrl}">
+                                <a class="lineitem__link" href="@AdLink{@member.profileUrl}?INTCMP=mic_232613">
                                     <img class="lineitem__image" src="@member.profilePhoto" alt="" width="80" height="100" />
                                     <h4 class="lineitem__title">@member.username, @member.age</h4>
                                     <p class="lineitem__meta">@member.location</p>
