@@ -89,7 +89,7 @@ define([
 
         initOpen: function() {
             common.mediator.on('page:article:ready', function(config, context) {
-                if (config.switches.openCta && config.page.commentable || true) {
+                if (config.switches.openCta && config.page.commentable) {
                     var openCta = new OpenCta(context, common.mediator, {
                             discussionKey: config.page.shortUrl.replace('http://gu.com/', '')
                         });
