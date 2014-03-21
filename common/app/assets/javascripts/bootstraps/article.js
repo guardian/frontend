@@ -89,14 +89,15 @@ define([
 
         initOpen: function() {
             common.mediator.on('page:article:ready', function(config, context) {
-                if (config.switches.openCta && config.page.commentable) {
+                if (config.switches.openCta && config.page.commentable || true) {
                     var openCta = new OpenCta(context, common.mediator, {
                             discussionKey: config.page.shortUrl.replace('http://gu.com/', '')
-                        }),
-                        $openCtaContainer = $.create('<div class="open-cta"></div>');
+                        });
 
-                    openCta.fetch($openCtaContainer[0]);
-                    rhc.addComponent($openCtaContainer[0]);
+                    $.create('<div class="open-cta"></div>').each(function(el) {
+                        openCta.fetch(el);
+                        rhc.addComponent(el);
+                    });
                 }
             });
         },
