@@ -31,9 +31,7 @@
 
                 @fragments.witnessCallToAction(article)
                 <div class="after-header">
-                    @if(FollowButton.isSwitchedOn) {
-                        <button type="button" class="submit-input follow-btn" onclick="window.location.href='http://next.theguardian.com/follow-a-blog.html?blog=@helper.urlEncode(article.webTitle)'">Follow</button>
-                    }
+                        <button type="button" class="submit-input follow-btn" style="visibility:hidden" onclick="window.location.href='http://next.theguardian.com/follow-a-blog.html?blog=@helper.urlEncode(article.webTitle)'">Follow</button>
                 </div>
             </div>
             <div class="article__columning-wrapper">

@@ -9,7 +9,8 @@ define([
     'common/modules/experiments/tests/fronts-latest-reviews-card',
     'common/modules/experiments/tests/fronts-cartoon-card',
     'common/modules/experiments/tests/fronts-missed-card',
-    'common/modules/experiments/tests/fronts-live-card'
+    'common/modules/experiments/tests/fronts-live-card',
+    'common/modules/experiments/tests/live-blog-follow-button'
 ], function (
     common,
     store,
@@ -19,7 +20,8 @@ define([
     FrontsLatestReviewsCard,
     FrontsCartoonCard,
     FrontsMissedCard,
-    FrontsLiveCard
+    FrontsLiveCard,
+    LiveBlogFollowButton
 ) {
 
     var TESTS = [
@@ -27,7 +29,8 @@ define([
             new FrontsLatestReviewsCard(),
             new FrontsCartoonCard(),
             new FrontsMissedCard(),
-            new FrontsLiveCard()
+            new FrontsLiveCard(),
+            new LiveBlogFollowButton()
        ],
        participationsKey = 'gu.ab.participations';
 
