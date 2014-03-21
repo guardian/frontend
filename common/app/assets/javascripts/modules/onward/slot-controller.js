@@ -21,22 +21,22 @@ define([
     //      requester for them to inject content
     // rules - defines the valid slot types for each content type
 
-    var prefix = "slot",
+    var prefix = 'slot',
         rules = { // contentType: [validSlotType1,validSlotType2,...]
             story: ['text'],
             adRight: ['posth2','block','text'],
             adBlock: ['preh2', 'block','text']
         },
         insertionMethods = {
-            story: "largestBucket",
-            adRight: "firstAvailable",
-            adBlock: "firstAvailable"
+            story: 'largestBucket',
+            adRight: 'firstAvailable',
+            adBlock: 'firstAvailable'
         },
         priority = ['adRight','adBlock','commercialLeft','commercialRight','story'],
         containers = _.mapValues(rules, function() { return []; });
 
     function slotTypeToCssSelector(type, empty) {
-        return '.' + prefix + '--' + type + (empty ? ":empty" : "");
+        return '.' + prefix + '--' + type + (empty ? ':empty' : '');
     }
 
     function getSlotsOfTypes(types, empty) {

@@ -23,7 +23,7 @@ define([
     function Related() {
     }
 
-    Related.overrideUrl = "";
+    Related.overrideUrl = '';
 
     Related.setOverrideUrl = function(url) {
         Related.overrideUrl = url;

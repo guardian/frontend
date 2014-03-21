@@ -3,9 +3,9 @@ define([
 ], function (
     cookies
 ) {
-    var MULTIVARIATE_ID_COOKIE = "GU_mvt_id",
-        VISITOR_ID_COOKIE ="s_vi",
-        BROWSER_ID_COOKIE = "bwid";
+    var MULTIVARIATE_ID_COOKIE = 'GU_mvt_id',
+        VISITOR_ID_COOKIE ='s_vi',
+        BROWSER_ID_COOKIE = 'bwid';
 
     // Nice manageable range :)
     var MAX_INT = 1000000;
@@ -31,18 +31,18 @@ define([
             visitoridCookie = cookies.get(VISITOR_ID_COOKIE);
 
         if (!visitoridCookie) {
-            visitoridCookie = "unknown-visitor-id";
+            visitoridCookie = 'unknown-visitor-id';
         }
 
         if (!bwidCookie) {
-            bwidCookie = "unknown-browser-id";
+            bwidCookie = 'unknown-browser-id';
         }
 
         if (!mvtidCookie) {
-            mvtidCookie = "unknown-mvt-id";
+            mvtidCookie = 'unknown-mvt-id';
         }
 
-        return visitoridCookie + " " + bwidCookie + " " + mvtidCookie;
+        return visitoridCookie + ' ' + bwidCookie + ' ' + mvtidCookie;
     }
 
     function getMvtValue() {

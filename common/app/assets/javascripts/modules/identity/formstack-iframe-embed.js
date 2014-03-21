@@ -144,7 +144,7 @@ define([
                 height = Math.max(body.scrollHeight, body.offsetHeight,
                                   html.clientHeight, html.scrollHeight, html.offsetHeight);
 
-            self.postMessage("set-height", height);
+            self.postMessage('set-height', height);
         };
 
         self.postMessage = function(type, value) {
@@ -155,7 +155,7 @@ define([
                 href: window.location.href
             };
 
-            window.top.postMessage(JSON.stringify(message), "*");
+            window.top.postMessage(JSON.stringify(message), '*');
         };
 
     }

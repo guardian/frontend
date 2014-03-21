@@ -22,7 +22,7 @@ define([
                 } else {
                     var $pushedContent = bonzo.create('<div>' + data.headline + ' ' + data.url + '</div>');
                     bonzo($pushedContent).addClass('pushed-content lazyloaded');
-                    common.$g(".monocolumn-wrapper").after($pushedContent);
+                    common.$g('.monocolumn-wrapper').after($pushedContent);
                 }
             } else {
                 common.mediator.emit('module:error', 'Invalid data returned from socket, module/websocket.js');

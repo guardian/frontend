@@ -9,7 +9,7 @@ define([
 ], function(bonzo, qwery, bean, detect, relativeDates, _filter, Affix){
 
     function Layout(config) {
-        var slug = config.page.pageId.split("/").pop().replace('-sp-', '');
+        var slug = config.page.pageId.split('/').pop().replace('-sp-', '');
 
         if(slug in this.content) {
             this.container = document.getElementById('article');
@@ -19,7 +19,7 @@ define([
     }
 
     Layout.prototype.content = {
-        "rescue-from-antarctica" : function() {
+        'rescue-from-antarctica' : function() {
             var img = bonzo(new Image()),
                 imgs = qwery('.element-image', this.container),
                 videos = bonzo(qwery('video', this.container)),
@@ -45,7 +45,7 @@ define([
             });
         },
 
-        "mps-debate-ukraine-politics-live-blog" : function(config) {
+        'russia-sanctions-keep-markets-anxious' : function(config) {
             /*jshint nonew:false */
 
             if(!config.switches.keyEvents) { return false; }
@@ -59,7 +59,9 @@ define([
             //Loop over key events and append to fragment
             var items = _filter(qwery('.is-key-event', this.container), function(el) {
                 return qwery('.block-title', el).length;
-            }).map(function(el) {
+            })
+            .slice(0, 10)
+            .map(function(el) {
                 var tmp = itemTmp.replace('{{hash}}', '#' + el.id);
                     tmp = tmp.replace('{{time}}', qwery('.block-time', el)[0].innerHTML);
                     tmp = tmp.replace('{{title}}', bonzo(qwery('.block-title', el)).text());
@@ -75,7 +77,7 @@ define([
             });
             new Affix({
                 element: qwery('.js-key-events__container', eventsEl)[0],
-                offset: 600
+                offset: { top : 600, bottom: 1000 }
             });
             relativeDates.init(qwery('.js-key-events'));
 

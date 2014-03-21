@@ -201,6 +201,10 @@ a.edition {
     border-top: 1px dotted $c-neutral1;
 }
 
+.component--rhc {
+    margin-top: $gs-baseline*3;
+}
+
 .box-indent {
     @include rem((
         padding: 0 $gs-gutter/2 ($gs-baseline/3)

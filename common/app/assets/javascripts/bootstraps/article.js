@@ -1,23 +1,25 @@
 define([
-    "common/common",
-    "common/utils/mediator",
-    "common/utils/detect",
-    "common/$",
-    "fence",
-    "common/modules/ui/autoupdate",
-    "common/modules/live/filter",
-    "common/modules/discussion/loader",
-    "common/modules/sport/cricket",
-    "common/modules/ui/notification-counter",
-    "common/modules/open/cta",
-    "common/modules/commercial/loader",
-    "common/modules/experiments/layoutHints"
+    'common/common',
+    'common/utils/mediator',
+    'common/utils/detect',
+    'common/$',
+    'fence',
+    'common/modules/ui/rhc',
+    'common/modules/ui/autoupdate',
+    'common/modules/live/filter',
+    'common/modules/discussion/loader',
+    'common/modules/sport/cricket',
+    'common/modules/ui/notification-counter',
+    'common/modules/open/cta',
+    'common/modules/commercial/loader',
+    'common/modules/experiments/layoutHints'
 ], function (
     common,
     mediator,
     detect,
     $,
     fence,
+    rhc,
     AutoUpdate,
     LiveFilter,
     DiscussionLoader,
@@ -42,7 +44,7 @@ define([
                            return path + '.json' + '?lastUpdate=' + id;
                         },
                         delay: timerDelay,
-                        attachTo: context.querySelector(".article-body"),
+                        attachTo: context.querySelector('.article-body'),
                         switches: config.switches,
                         manipulationType: 'prepend',
                         animateInserts: true,
@@ -90,12 +92,12 @@ define([
                 if (config.switches.openCta && config.page.commentable) {
                     var openCta = new OpenCta(context, common.mediator, {
                             discussionKey: config.page.shortUrl.replace('http://gu.com/', '')
-                        }),
-                        $openCtaElem = $('.open-cta');
+                        });
 
-                    if ($openCtaElem[0]) {
-                        openCta.fetch($openCtaElem[0]);
-                    }
+                    $.create('<div class="open-cta"></div>').each(function(el) {
+                        openCta.fetch(el);
+                        rhc.addComponent(el);
+                    });
                 }
             });
         },
@@ -137,7 +139,7 @@ define([
             modules.initLayoutHints(config);
             modules.initHelvetica(config);
         }
-        common.mediator.emit("page:article:ready", config, context);
+        common.mediator.emit('page:article:ready', config, context);
     };
 
     return {

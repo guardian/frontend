@@ -6,18 +6,18 @@ define([
     storage
 ) {
 
-    var revenueScienceUrl = "js!http://js.revsci.net/gateway/gw.js?csid=E05516";
+    var revenueScienceUrl = 'js!http://js.revsci.net/gateway/gw.js?csid=E05516';
 
     function getSegments() {
-        var segments = storage.local.get("gu.ads.audsci");
+        var segments = storage.local.get('gu.ads.audsci');
         return (segments) ? segments : [];
     }
 
     function load(config) {
         // Audience Science calls these functions on window.
         window.DM_prepClient = function(csid, client) {
-            client.DM_addEncToLoc('siteName', "");
-            client.DM_addEncToLoc('comFolder', "");
+            client.DM_addEncToLoc('siteName', '');
+            client.DM_addEncToLoc('comFolder', '');
             client.DM_addEncToLoc('mobile', true);
 
             if(config.audienceScienceData) {
@@ -28,9 +28,9 @@ define([
             }
         };
         window.DM_onSegsAvailable = function(segments) {
-            storage.local.set("gu.ads.audsci", processSegments(segments));
+            storage.local.set('gu.ads.audsci', processSegments(segments));
             // Kill any legacy cookies
-            Cookies.cleanUp(["rsi_segs"]);
+            Cookies.cleanUp(['rsi_segs']);
         };
         // Then load audsci to get latests segments.
         require([revenueScienceUrl], function() {
