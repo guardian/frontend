@@ -94,8 +94,8 @@
         margin-bottom: $gs-baseline
     ));
     height: 44px;
+    float: left;
     overflow: hidden;
-    width: 100%;
 
     .team__crest__img {
         max-height: 44px;
@@ -105,6 +105,7 @@
     @include mq($from: tablet) {
         height: 60px;
         float: none;
+        width: 100%;
 
         .team__crest__img {
             max-height: 60px;
