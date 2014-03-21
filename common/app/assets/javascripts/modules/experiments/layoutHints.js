@@ -59,7 +59,9 @@ define([
             //Loop over key events and append to fragment
             var items = _filter(qwery('.is-key-event', this.container), function(el) {
                 return qwery('.block-title', el).length;
-            }).map(function(el) {
+            })
+            .slice(0, 10)
+            .map(function(el) {
                 var tmp = itemTmp.replace('{{hash}}', '#' + el.id);
                     tmp = tmp.replace('{{time}}', qwery('.block-time', el)[0].innerHTML);
                     tmp = tmp.replace('{{title}}', bonzo(qwery('.block-title', el)).text());
