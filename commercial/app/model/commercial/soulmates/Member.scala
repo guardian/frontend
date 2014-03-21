@@ -19,7 +19,7 @@ object Member {
 }
 
 
-case class Gender(name: String) {
+sealed case class Gender(name: String) {
   override def toString = name
 }
 
