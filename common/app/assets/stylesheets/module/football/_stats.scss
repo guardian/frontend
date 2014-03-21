@@ -9,7 +9,6 @@
     ));
     color: $c-neutral1;
     font-weight: 400;
-    float: left;
     text-align: left;
     width: 100%;
 }
@@ -105,6 +104,12 @@
 /* ==========================================================================
    Bar fights
    ========================================================================== */
+.bar-fight {
+    .match-stats__caption {
+        float: left;
+    }
+}
+
 .bar-fight__bar {
     @include box-sizing(border-box);
     @include fs-header(2);
