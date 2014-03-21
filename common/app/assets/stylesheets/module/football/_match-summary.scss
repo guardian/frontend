@@ -93,25 +93,31 @@
     @include rem((
         margin-bottom: $gs-baseline
     ));
+    display: table;
     height: 44px;
     float: left;
     overflow: hidden;
-
-    .team__crest__img {
-        max-height: 44px;
-        max-width: 44px;
-    }
 
     @include mq($from: tablet) {
         height: 60px;
         float: none;
         width: 100%;
-
-        .team__crest__img {
-            max-height: 60px;
-            max-width: 60px;
-        }
     }
+}
+
+.team__crest__img {
+    max-height: 44px;
+    max-width: 44px;
+
+    @include mq($from: tablet) {
+        max-height: 60px;
+        max-width: 60px;
+    }
+}
+
+.team__crest__img-container {
+    display: table-cell;
+    vertical-align: middle;
 }
 
 .team__crest--away {
