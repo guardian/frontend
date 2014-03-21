@@ -3,6 +3,9 @@
 @if(play.Play.isDev()) {
     <link rel="stylesheet" href="@Static("stylesheets/head.default.css")" />
     <link rel="stylesheet" href="@Static("stylesheets/global.css")" />
+    <style>
+        .i { background-image: url(@Static("images/global/sprite.png")); }
+    </style>
 }
 
 <link rel="stylesheet" href="@Static("stylesheets/commercial.css")" />
@@ -12,27 +15,27 @@
         <div class="container container--row-pattern">
             <div class="container__border hide-on-mobile"></div>
 
-            <h2 class="container__title">
-                <span class="container__logo svg-i-bookshop-logo--guardian"></span>
-                <span class="container__logo svg-i-bookshop-logo--bookshop"></span>
-            </h2>
+            <div class="container__title">
+                <span class="container__logo i i-soulmates-logo"></span>
+                <p class="soulmates-component__explainer">The Guardian's online dating site with over 200,000 members</p>
+                <a href="@AdLink{https://soulmates.theguardian.com}" class="soulmates-component__buy-now-button">
+                    Join now
+                </a>
+            </div>
 
             <div class="container__body">
                 <div class="commercial__body">
-                    <ul class="lineitems">
-                        @members.take(5).map { member =>
+                    <ul class="u-unstyled lineitems">
+                        @members.map { member =>
                             <li class="lineitem">
-                                <a class="lineitem__blocklink" href="%OASToken%http://soulmates.theguardian.com/%OmnitureToken%">
+                                <a class="lineitem__link" href="@AdLink{@member.profileUrl}">
                                     <img class="lineitem__image" src="@member.profilePhoto" alt="" width="80" height="100" />
-                                    <h4 class="lineitem__title">@member.username</h4>
-                                    <p class="lineitem__meta"><strong>@member.age</strong>, @member.location</p>
+                                    <h4 class="lineitem__title">@member.username, @member.age</h4>
+                                    <p class="lineitem__meta">@member.location</p>
                                 </a>
                             </li>
                         }
                     </ul>
-                </div>
-                <div class="commercial__foot">
-                    <a class="commercial__link" href="%OASToken%http://soulmates.theguardian.com/%OmnitureToken%">Join Guardian Soulmates<i class="i i-double-arrow-right-blue"></i></a>
                 </div>
             </div>
         </div>

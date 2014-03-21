@@ -170,7 +170,7 @@
 }
 .lineitem__meta {
     color: $c-neutral2;
-    @include fs-data(2);
+    @include fs-textsans(2);
     margin: 0;
 }
 .lineitem__img {
