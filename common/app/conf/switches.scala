@@ -285,6 +285,11 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
+  val RightHandMostPopularSwitch = Switch("Feature Switches", "right-hand-most-popular",
+    "If this switch is on, a component with most popular content from around the Guardian is displayed in the article right hand column at desktop breakpoints.",
+    safeState = On, sellByDate = endOfQ4
+  )
+
   val IdentityEthicalAwardsSwitch = Switch("Feature Switches", "id-ethical-awards",
     "If this switch is on, Ethical awards forms will be available",
     safeState = Off, sellByDate = endOfQ4)
@@ -454,6 +459,7 @@ object Switches extends Collections {
     EditionRedirectLoggingSwitch,
     FacebookAutoSigninSwitch,
     IdentityFormstackSwitch,
+    RightHandMostPopularSwitch,
     IdentityEthicalAwardsSwitch,
     IdentityFilmAwardsSwitch,
     ABAa,
