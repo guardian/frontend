@@ -3,6 +3,9 @@
 @if(play.Play.isDev()) {
     <link rel="stylesheet" href="@Static("stylesheets/head.default.css")" />
     <link rel="stylesheet" href="@Static("stylesheets/global.css")" />
+    <style>
+        .i { background-image: url(@Static("images/global/sprite.png")); }
+    </style>
 }
 
 <link rel="stylesheet" href="@Static("stylesheets/commercial.css")" />
@@ -13,8 +16,8 @@
             <div class="container__border hide-on-mobile"></div>
 
             <div class="container__title">
-                <span class="container__logo svg-i-soulmates-logo"></span>
-                <p class="soulmates-component_explainer">The Guardian's online dating site with over 200,000 members</p>
+                <span class="container__logo i i-soulmates-logo"></span>
+                <p class="soulmates-component__explainer">The Guardian's online dating site with over 200,000 members</p>
                 <a href="@AdLink{https://soulmates.theguardian.com}" class="soulmates-component__buy-now-button">
                     Join now
                 </a>

@@ -15,7 +15,7 @@ case class Member(username: String, gender: Gender, age: Int, profilePhoto: Stri
   def isTargetedAt(segment: Segment) = true
 }
 object Member {
-  val IdPattern = """.*/([0-9a-f]+)/.*""".r
+  val IdPattern = """.*/([\da-f]+)/.*""".r
 }
 
 
