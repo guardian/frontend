@@ -3,13 +3,16 @@
    ========================================================================== */
 
 .soulmates-component {
-    background-color: #f4f8fd;
+    background-color: $c-neutral6;
 
     .commercial__head {
         background-color: #deebf9;
         position: relative;
         overflow: hidden;
         clear: both;
+    }
+    .container__title {
+        width: 25rem !important;
     }
     .commercial__subtitle {
         color: $c-neutral2;
@@ -21,11 +24,10 @@
     /* Entries */
     .lineitem {
         text-align: center;
-        width: 50%;
         float: left;
+        width: 20%;
     }
     .lineitem__title {
-        color: #1a1570;
         @include rem((
             font-size: 13px
         ));
@@ -41,6 +43,9 @@
         color: $c-neutral1;
         font-weight: normal;
     }
+    .lineitem__meta {
+        margin-top: -3px;
+    }
     .lineitem__image {
         padding: $gs-baseline/3 $gs-gutter/5;
         background-color: #ffffff;
@@ -49,10 +54,8 @@
         position: relative;
         z-index: 2;
     }
-
-    .lineitem__blocklink {
+    .lineitem__link {
         margin: 0 auto;
-        display: block;
         position: relative;
 
         &:before {
@@ -62,7 +65,6 @@
             padding: 1px;
             width: 88px;
             height: 108px;
-            display: block;
             position: absolute;
             left: 50%;
             z-index: 1;
@@ -74,49 +76,55 @@
     }
     .lineitem {
         &:nth-child(2n) {
-            .lineitem__blocklink {
+            .lineitem__link {
                 &:before {
                     background-color: #5994dd;
                 }
             }
         }
         &:nth-child(3n) {
-            .lineitem__blocklink {
+            .lineitem__link {
                 &::before {
                     background-color: #039763;
                 }
             }
         }
     }
-
-    @include mq($to: tablet) {
-        .commercial__head {
-            background-color: #ffffff;
-        }
+    @include mq($to: desktop) {
+        display: none;
     }
-    @include mq($from: tablet) {
-        .commercial__title {
-            padding-top: $gs-baseline/3;
-        }
-        .commercial__subtitle {
-            display: block; // this is not a very good idea
-            bottom: 0;
-        }
+    .container__title {
+        padding: $gs-baseline/3 0 ($gs-baseline/3)*2 0;
+        float: left;
     }
+    .container__logo {
+        width: 176px;
+        height: 32px;
+        display: block;
+    }
+}
 
-//    &.commercial--w600 {
-//        .commercial__item {
-//            float: left;
-//            width: 80%;
-//        }
-//        
-//        .commercial__search {
-//            float: left;
-//            width: 20%;
-//        }
-//        
-//        .lineitem {
-//            width: 25%;
-//        }
-//    }
+.soulmates-component__explainer {
+    @include fs-headline(1);
+    color: $c-neutral2;
+    margin-top: $gs-baseline;
+}
+
+.soulmates-component__buy-now-button {
+    display: inline-block;
+    background-color: #e657ad;
+    position: absolute;
+    @include rem((
+        padding: $gs-baseline/3 $gs-baseline*2,
+        bottom: 19px
+    ));
+    border: none;
+    color: #ffffff !important;
+    font-weight: bold;
+    @include font-size(13, 19);
+    font-family: $serifheadline;
+
+    &:focus {
+        outline: none;
+    }
 }

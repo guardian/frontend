@@ -5,6 +5,7 @@ define([
     'common/utils/context',
     'common/utils/config',
     'common/utils/page',
+    'common/modules/ui/rhc',
     'common/modules/sport/football/match-list',
     'common/modules/sport/football/match-info',
     'common/modules/sport/football/match-stats',
@@ -17,6 +18,7 @@ define([
     context,
     config,
     page,
+    rhc,
     MatchList,
     MatchInfo,
     MatchStats,
@@ -57,8 +59,8 @@ define([
                         statsContainer = bonzo.create('<div class="match-stats__container"></div>'),
                         matchStats = new MatchStats(statsUrl);
 
-                    page.rightHandComponentVisible(function(el) {
-                        bonzo(el).append(statsContainer);
+                    page.rightHandComponentVisible(function() {
+                        rhc.addComponent(statsContainer, 3);
                     }, function() {
                         $article.append(statsContainer);
                     });
@@ -71,8 +73,8 @@ define([
             var table = new Table(competition),
                 tableContainer = bonzo.create('<div class="js-football-table" data-link-name="football-table-embed"></div>');
 
-            page.rightHandComponentVisible(function(el) {
-                bonzo(el).append(tableContainer);
+            page.rightHandComponentVisible(function() {
+                rhc.addComponent(tableContainer, 2);
                 table.fetch(tableContainer);
             });
         });
