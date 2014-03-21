@@ -16,7 +16,7 @@ define([
         })
         .fail(function () {
             if(terminateOnFail) {
-                terminate("the config is invalid or unvailable");
+                terminate('the config is invalid or unvailable');
             }
             deferred.reject();
         })
@@ -24,7 +24,7 @@ define([
             if (_.isObject(config.fronts) && _.isObject(config.collections)) {
                 deferred.resolve(config);
             } else if (terminateOnFail ) {
-                terminate("the config is invalid.");
+                terminate('the config is invalid.');
             } else {
                 deferred.reject();
             }

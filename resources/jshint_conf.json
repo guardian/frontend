@@ -11,6 +11,7 @@
     "nonew"    : true,
     "undef"    : true,
     "nonew"    : true,
+    "quotmark" : "single",
     "unused"   : true,
     "undef"    : true,
     "trailing" : true,
