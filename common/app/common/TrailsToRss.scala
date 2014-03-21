@@ -66,9 +66,9 @@ object TrailsToRss extends implicits.Collections {
 
       val images: Seq[ImageAsset] = (trail.bodyImages ++ trail.mainPicture ++ trail.thumbnail).map{ i =>
         i.imageCrops.filter(c => (c.width == 140 && c.height == 84) || (c.width == 460 && c.height == 276))
-      }.flatten.filter(_.url.nonEmpty).toSeq.distinctBy(_.url)
+      }.flatten.toSeq.distinctBy(_.url)
 
-      val modules: Seq[MediaEntryModuleImpl] = images.map { i =>
+      val modules: Seq[MediaEntryModuleImpl] = images.filter(_.url.nonEmpty).map { i =>
         // create image
         val image = new MediaContent(new UrlReference(i.url.get))
         image.setHeight(i.height)
