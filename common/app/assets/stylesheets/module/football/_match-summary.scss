@@ -206,7 +206,7 @@ $football-crest-large: 60px;
     height: 50px;
     position: absolute;
     text-align: center;
-    top: 70px; /* crest size+10 */
+    top: $football-crest-large+10; /* crest size+10 */
     width: 100%;
 
     &:after {
@@ -243,7 +243,7 @@ $football-crest-large: 60px;
     .team__battle-line {
         @include fs-headline(4);
         @include rem((
-            top: $gs-baseline
+            top: $football-crest-large+25
         ));
 
         &:after {
