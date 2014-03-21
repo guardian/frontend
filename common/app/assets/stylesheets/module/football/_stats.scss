@@ -23,37 +23,32 @@
     position: relative;
 }
 
-.off-target {
-    @include rem((
-        height: $gs-baseline*10
-    ));
-    position: relative;
-    width: 100%;
-}
-
-.on-target {
-    @include box-sizing(border-box);
-    border: 4px solid #ffffff;
-    border-bottom: 0 none;
-    bottom: 0;
-    left: 25%;
-    position: absolute;
-    width: 50%;
-}
-
 .goal-attempts__label {
+    @include box-sizing(border-box);
     @include rem((
-        left: $gs-gutter/3
+        padding: $gs-baseline/2 $gs-gutter/2
     ));
     font-weight: normal;
     position: absolute;
+    margin: 0;
+    width: 100%;
     z-index: 2;
 }
-.goal-attempts__label--off-target,
-.goal-attempts__label--on-target {
+.goal-attempts__label--off-target-away,
+.goal-attempts__label--on-target-away {
+    text-align: right;
+}
+.goal-attempts__label--on-target-away,
+.goal-attempts__label--on-target-home {
     @include rem((
-        padding-top: $gs-baseline/2
+        bottom: $gs-baseline*2
     ));
+}
+.goal-attempts__label--on-target-home {
+    left: 21%;
+}
+.goal-attempts__label--on-target-away {
+    right: 21%;
 }
 
 .goal-attempts__off-target,
@@ -61,10 +56,10 @@
     @include box-sizing(border-box);
     @include fs-header(2);
     @include rem((
-        padding-left: $gs-gutter/3,
-        padding-top: $gs-baseline*2
+        padding: $gs-baseline*2 $gs-gutter/2
     ));
     font-weight: 900;
+    margin: 0;
     width: 50%;
 }
 .goal-attempts__off-target {
@@ -75,20 +70,38 @@
     background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyRpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoTWFjaW50b3NoKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozQUMzMDYzOTVCNkYxMUUzOEEwODgwNEJDQ0EzMjVCQiIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozQUMzMDYzQTVCNkYxMUUzOEEwODgwNEJDQ0EzMjVCQiI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjk5RjZENjA0NUI2RDExRTM4QTA4ODA0QkNDQTMyNUJCIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjNBQzMwNjM4NUI2RjExRTM4QTA4ODA0QkNDQTMyNUJCIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+XheURAAAAExJREFUeNpi/P//PwMZwJgBpJFEbAy2jBxNpGo0RuaTpYlYjcbYxMnSREijMT5DydKES6MxMQFGliZ0jcakJAayNME0GpORXhkAAgwAA0clxfmXgX4AAAAASUVORK5CYII=);
 }
 .goal-attempts__on-target {
+    @include box-sizing(border-box);
     @include rem((
         height: $gs-baseline*5
     ));
+    border: 4px solid #ffffff;
+    border-bottom: 0 none;
+    bottom: 0;
+    position: absolute;
+    width: 30%;
 }
 
-.goal-attempts__off-target--home-team,
-.goal-attempts__on-target--home-team {
+.goal-attempts__off-target--home,
+.goal-attempts__on-target--home {
     background-color: $c-neutral1;
     float: left;
 }
-.goal-attempts__off-target--away-team,
-.goal-attempts__on-target--away-team {
+.goal-attempts__off-target--away,
+.goal-attempts__on-target--away {
     background-color: $c-statusNeutral;
     float: right;
+    text-align: right;
+}
+.goal-attempts__off-target--away{
+
+}
+.goal-attempts__on-target--home {
+    border-right: 0 none;
+    left: 20%;
+}
+.goal-attempts__on-target--away {
+    border-left: 0 none;
+    right: 20%;
 }
 
 
@@ -120,17 +133,20 @@
  */
 .match-stats--darken-home {
     .bar-fight__bar--home,
-    .goal-attempts__label,
-    .goal-attempts__off-target--home-team,
-    .goal-attempts__on-target--home-team {
+    .goal-attempts__label--off-target-home,
+    .goal-attempts__label--on-target-home,
+    .goal-attempts__off-target--home,
+    .goal-attempts__on-target--home {
         color: $c-neutral1;
     }
 }
 
 .match-stats--darken-away {
     .bar-fight__bar--away,
-    .goal-attempts__off-target--away-team,
-    .goal-attempts__on-target--away-team {
+    .goal-attempts__label--off-target-away,
+    .goal-attempts__label--on-target-away,
+    .goal-attempts__off-target--away,
+    .goal-attempts__on-target--away {
         color: $c-neutral1;
     }
 }

@@ -9,29 +9,21 @@
             "match-stats--darken-home" -> (home.teamColour == "#FFFFFF"),
             "match-stats--darken-away" -> (away.teamColour == "#FFFFFF")
         ))"">
+
     <h3 class="component__heading">Match stats</h3>
-    <table class="match-stats goal-attempts">
-        <caption class="match-stats__caption">Goal attempts</caption>
-        <thead class="u-h">
-            <tr>
-                <th>Stat</th>
-                <th>@home.name</th>
-                <th>@away.name</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr class="off-target">
-                <th class="goal-attempts__label goal-attempts__label--off-target">Off target</th>
-                <td class="goal-attempts__off-target goal-attempts__off-target--home-team" style="background-color: @colourCheck(home.teamColour)">@home.shotsOff</td>
-                <td class="goal-attempts__off-target goal-attempts__off-target--away-team" style="background-color: @colourCheck(away.teamColour)">@away.shotsOff</td>
-            </tr>
-            <tr class="on-target">
-                <th class="goal-attempts__label goal-attempts__label--on-target">On target</th>
-                <td class="goal-attempts__on-target goal-attempts__on-target--home-team" style="background-color: @colourCheck(home.teamColour)">@home.shotsOn</td>
-                <td class="goal-attempts__on-target goal-attempts__on-target--away-team" style="background-color: @colourCheck(away.teamColour)">@away.shotsOn</td>
-            </tr>
-        </tbody>
-    </table>
+
+    <h4 class="match-stats__caption">Goal attempts</h4>
+    <dl class="match-stats goal-attempts u-cf">
+        <dt class="goal-attempts__label goal-attempts__label--off-target-home"><span class="u-h">@home.name </span>Off target</dt>
+        <dd class="goal-attempts__off-target goal-attempts__off-target--home" style="background-color: @colourCheck(home.teamColour);">@home.shotsOff</dd>
+        <dt class="goal-attempts__label goal-attempts__label--off-target-away"><span class="u-h">@away.name </span>Off target</dt>
+        <dd class="goal-attempts__off-target goal-attempts__off-target--away" style="background-color: @colourCheck(away.teamColour);">@away.shotsOff</dd>
+
+        <dt class="goal-attempts__label goal-attempts__label--on-target-home"><span class="u-h">@home.name </span>On target</dt>
+        <dd class="goal-attempts__on-target goal-attempts__on-target--home" style="background-color: @colourCheck(home.teamColour);">@home.shotsOn</dd>
+        <dt class="goal-attempts__label goal-attempts__label--on-target-away"><span class="u-h">@away.name </span>On target</dt>
+        <dd class="goal-attempts__on-target goal-attempts__on-target--away" style="background-color: @colourCheck(away.teamColour);">@away.shotsOn</dd>
+    </dl>
 
     <dl class="u-cf match-stats bar-fight">
         <dt class="match-stats__caption">Possession</dt>
