@@ -154,6 +154,11 @@ object Switches extends Collections {
     "If this switch is on, commercial components will be fed by masterclass feed.",
     safeState = Off, sellByDate = endOfQ4)
 
+  val OmnitureVerificationSwitch = Switch("Analytics", "omniture-verification",
+    "Enables the new Ophan tracking javascript which support multiple events per page",
+    safeState = Off, new DateMidnight(2014, 3, 26)
+  )
+
   val SoulmatesFeedSwitch = Switch("Commercial Feeds", "gu-soulmates",
     "If this switch is on, commercial components will be fed by soulmates feed.",
     safeState = Off, sellByDate = endOfQ4)
@@ -499,7 +504,8 @@ object Switches extends Collections {
     FrontPressJobSwitch,
     LayoutHintsSwitch,
     HelveticaEasterEggSwitch,
-    LeadAdTopPageSwitch
+    LeadAdTopPageSwitch,
+    OmnitureVerificationSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
