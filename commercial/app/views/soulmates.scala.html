@@ -10,34 +10,41 @@
 
 <link rel="stylesheet" href="@Static("stylesheets/commercial.css")" />
 
-<aside class="commercial soulmates-component" role="complementary" data-link-name="Soulmates component">
-    <div class="facia-container facia-container--layout-article monocolumn-wrapper monocolumn-wrapper--no-limit">
-        <div class="container container--row-pattern">
-            <div class="container__border hide-on-mobile"></div>
+@defining(("1_0", "2014-03-21")) { case (version, date) =>
+   <aside class="commercial soulmates-component" role="complementary">
+        <div class="facia-container facia-container--layout-article monocolumn-wrapper monocolumn-wrapper--no-limit">
+            <div class="container container--row-pattern">
+                <div class="container__border hide-on-mobile"></div>
 
-            <div class="container__title">
-                <span class="container__logo i i-soulmates-logo"></span>
-                <p class="soulmates-component__explainer">The Guardian's online dating site with over 200,000 members</p>
-                <a href="@AdLink{https://soulmates.theguardian.com}?INTCMP=mic_232613" class="soulmates-component__buy-now-button">
-                    Join now
-                </a>
-            </div>
+                <div class="container__title">
+                    <span class="container__logo i i-soulmates-logo"></span>
+                    <p class="soulmates-component__explainer">
+                        The Guardian's online dating site with over 200,000 members</p>
+                    <a href="@AdLink {https://soulmates.theguardian.com}?INTCMP=mic_232613"
+                        class="soulmates-component__buy-now-button"
+                        data-link-name="merchandising-soulmates-v@{version}_@{date}-low-join-now">
+                        Join now
+                    </a>
+                </div>
 
-            <div class="container__body">
-                <div class="commercial__body">
-                    <ul class="u-unstyled lineitems">
+                <div class="container__body">
+                    <div class="commercial__body">
+                        <ul class="u-unstyled lineitems">
                         @members.map { member =>
                             <li class="lineitem">
-                                <a class="lineitem__link" href="@AdLink{@member.profileUrl}?INTCMP=mic_232613">
+                                <a class="lineitem__link"
+                                    data-link-name="merchandising-soulmates-v@{version}_@{date}-low-profile-@{member.gender}"
+                                    href="@AdLink{@member.profileUrl}?INTCMP=mic_232613">
                                     <img class="lineitem__image" src="@member.profilePhoto" alt="" width="80" height="100" />
                                     <h4 class="lineitem__title">@member.username, @member.age</h4>
                                     <p class="lineitem__meta">@member.location</p>
                                 </a>
                             </li>
                         }
-                    </ul>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</aside>
+    </aside>
+}
