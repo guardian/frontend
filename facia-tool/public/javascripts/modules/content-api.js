@@ -82,7 +82,7 @@ function (
     }
 
     function populate(opts, article) {
-        article.populate(opts, true);
+        article.populate(opts);
     }
 
     function fetchData(ids) {

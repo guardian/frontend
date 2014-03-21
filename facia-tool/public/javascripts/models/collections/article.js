@@ -4,6 +4,7 @@ define([
     'utils/as-observable-props',
     'utils/populate-observables',
     'utils/full-trim',
+    'utils/url-abs-path',
     'models/group',
     'modules/authed-ajax',
     'modules/content-api',
@@ -15,6 +16,7 @@ define([
         asObservableProps,
         populateObservables,
         fullTrim,
+        urlAbsPath,
         Group,
         authedAjax,
         contentApi,
@@ -84,8 +86,6 @@ define([
 
                 contentApi.decorateItems(self.meta.supporting.items());
             }
-
-            this.sparkline();
         }
 
         Article.prototype.overrider = function(key) {
@@ -109,12 +109,15 @@ define([
             };
         };
 
-        Article.prototype.populate = function(opts, withContent) {
+        Article.prototype.populate = function(opts) {
             populateObservables(this.props,  opts);
             populateObservables(this.meta,   opts.meta);
             populateObservables(this.fields, opts.fields);
             populateObservables(this.state,  opts.state);
-            this.state.isLoaded(!!withContent);
+            if (this.props.webUrl()) {
+                this.state.isLoaded(true);
+                this.sparkline();
+            }
         };
 
         Article.prototype.toggleIsBreaking = function() {
@@ -125,7 +128,7 @@ define([
         Article.prototype.sparkline = function() {
             this.state.sparkUrl(undefined);
             if (vars.state.switches['facia-tool-sparklines']) {
-                this.state.sparkUrl(vars.sparksBase + this.id + (this.meta.updatedAt() ? '&markers=' + this.meta.updatedAt() : ''));
+                this.state.sparkUrl(vars.sparksBase + urlAbsPath(this.props.webUrl()) + (this.meta.updatedAt() ? '&markers=' + this.meta.updatedAt() : ''));
             }
         };
 
