@@ -314,6 +314,9 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
     scenario("correct placeholder for ad is rendered") {
 
       Given("the user navigates to a page")
+
+      OASAdvertSwitch.switchOn()
+
       HtmlUnit("/environment/2012/feb/22/capitalise-low-carbon-future") { browser =>
         import browser._
 
@@ -333,6 +336,9 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         And("the placeholder has the correct analytics name")
         adPlaceholder.getAttribute("data-link-name") should be("ad slot top-banner-ad")
       }
+
+      // put it back in the state we found it
+      OASAdvertSwitch.switchOff()
     }
 
     scenario("Navigate to the classic site (UK edition - www.guardian.co.uk)") {
