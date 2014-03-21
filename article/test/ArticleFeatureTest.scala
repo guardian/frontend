@@ -342,7 +342,6 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
     }
 
     scenario("Navigate to the classic site (UK edition - www.guardian.co.uk)") {
-
       Given("I'm on article entitled 'We must capitalise on a low-carbon future'")
       And("I am using the UK edition")
       HtmlUnit("/environment/2012/feb/22/capitalise-low-carbon-future") { browser =>
