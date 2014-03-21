@@ -28,8 +28,8 @@ define([
         //Mappings can be found here: http://cms.guprod.gnl/tools/mappings/pafootballtournament
         this.competitions = ['500', '501', '510', '511', '100', '300', '301', '101', '120', '127', '301', '213', '320', '701', '650', '102', '103', '121', '122', '123'];
 
-        this.path =  "/football/api/frontscores.json?";
-        this.queryString = "&competitionId=";
+        this.path =  '/football/api/frontscores.json?';
+        this.queryString = '&competitionId=';
 
         // View
         this.view = {
@@ -62,7 +62,7 @@ define([
                     that.view.render(response.html);
                 },
                 function (req) {
-                    common.mediator.emit("modules:error", 'Failed to load football fixtures: ' + req.statusText, 'common/modules/footballfixtures.js');
+                    common.mediator.emit('modules:error', 'Failed to load football fixtures: ' + req.statusText, 'common/modules/footballfixtures.js');
                 }
             );
         };

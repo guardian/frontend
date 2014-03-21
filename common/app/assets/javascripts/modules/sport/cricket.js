@@ -27,7 +27,7 @@ define([
         }
 
         ajax({
-            url: "/sport" + options.url + ".json",
+            url: '/sport' + options.url + '.json',
             type: 'json',
             crossOrigin: true
         }).then(
@@ -69,7 +69,7 @@ define([
         var firstCricketBlock = bonzo(cricketElement);
 
         ajax({
-            url: "/sport" + cricketElement.getAttribute('data-cricket-match') + '.json',
+            url: '/sport' + cricketElement.getAttribute('data-cricket-match') + '.json',
             type: 'json',
             crossOrigin: true
         }).then(

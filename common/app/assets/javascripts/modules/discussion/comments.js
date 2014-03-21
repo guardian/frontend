@@ -420,23 +420,23 @@ Comments.prototype.addMoreRepliesButtons = function (comments) {
 
     comments = comments || this.topLevelComments;
     comments.forEach(function(elem) {
-        var replies = parseInt(elem.getAttribute("data-comment-replies"), 10);
+        var replies = parseInt(elem.getAttribute('data-comment-replies'), 10);
         var rendered_replies = qwery(self.getClass('reply'), elem);
 
         if (rendered_replies.length < replies) {
 
             var numHiddenReplies = replies - rendered_replies.length;
 
-            var showButton = "";
+            var showButton = '';
             showButton += '<li class="' + self.getClass('showReplies', true) + '" ';
             showButton += 'data-link-name="Show more replies" ';
-            showButton += 'data-is-ajax data-comment-id="' + elem.getAttribute("data-comment-id") + '">';
+            showButton += 'data-is-ajax data-comment-id="' + elem.getAttribute('data-comment-id') + '">';
             showButton += '<span><i class="i i-plus-white-small"></i></span>';
             showButton += 'Show ' + numHiddenReplies + ' more ' + (numHiddenReplies === 1 ? 'reply' : 'replies');
             showButton += '</li>';
 
             showButton = bonzo.create(showButton);
-            bonzo(showButton).data("source-comment", elem);
+            bonzo(showButton).data('source-comment', elem);
 
             bonzo(qwery('.d-thread--responses', elem)).append(showButton);
         }

@@ -15,11 +15,11 @@ define([
     var storage = window.localStorage,
         storageKey ='gu.fronts-tool.drag-source';
 
-    window.addEventListener("dragover", function(event) {
+    window.addEventListener('dragover', function(event) {
         event.preventDefault();
     },false);
 
-    window.addEventListener("drop", function(event) {
+    window.addEventListener('drop', function(event) {
         event.preventDefault();
     },false);
 

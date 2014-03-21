@@ -30,8 +30,11 @@
                 </header>
 
                 @fragments.witnessCallToAction(article)
-
-                <div class="after-header"></div>
+                <div class="after-header">
+                    @if(FollowButton.isSwitchedOn) {
+                        <button type="button" class="submit-input follow-btn" onclick="window.location.href='http://next.theguardian.com/follow-a-blog.html?blog=@helper.urlEncode(article.webTitle)'">Follow</button>
+                    }
+                </div>
             </div>
             <div class="article__columning-wrapper">
                 <div class="article__main-column">
@@ -89,9 +92,12 @@
                                                 <h2 class="article__meta-heading">Share this live blog</h2>
                                                 @fragments.social(article, "next to content")
                                             </div>
-                                            <div class="ad-slot ad-slot--mpu-banner-ad" data-link-name="ad slot mpu-banner-ad" data-base="Middle" data-median="Middle"><div class="ad-slot__label">Advertisement</div><div class="ad-container"></div></div>
+                                            <div class="ad-slot__oas ad-slot--mpu-banner-ad" data-link-name="ad slot mpu-banner-ad" data-base="Middle" data-median="Middle"><div class="ad-slot__label">Advertisement</div><div class="ad-container"></div></div>
+                                            <div class="ad-slot__dfp ad-slot--mpu-banner-ad" data-name="right" data-tabletlandscape="300,250">
+                                                <div id="mpu-ad-slot" class="ad-container"></div>
+                                            </div>
                                         </div>
-                                        <div class="open-cta"></div>
+                                        <div class="js-components"></div>
                                     </div>
                                 </div>
                             </div>

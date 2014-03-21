@@ -58,6 +58,7 @@ trait Index extends ConciergeRepository with QueryDefaults {
       .tag(s"$firstTag,$secondTag")
       .page(page)
       .pageSize(IndexPagePagination.pageSize)
+      .showFields(trailFields + ",body,standfirst") // need for rss
       .response.map {response =>
         val trails = response.results map { Content(_) }
         trails match {
@@ -96,6 +97,7 @@ trait Index extends ConciergeRepository with QueryDefaults {
       .page(pageNum)
       .pageSize(IndexPagePagination.pageSize)
       .showEditorsPicks(pageNum == 1) //only show ed pics on first page
+      .showFields(trailFields + ",body,standfirst") // need for rss
       .response.map {
       response =>
         val page = response.tag.flatMap(t => tag(response, pageNum))

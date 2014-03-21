@@ -31,7 +31,7 @@ define(function () {
 
     function remove(name) {
         // Remove cookie, implicitly using the document's domain.
-        document.cookie = name + "=;path=/;expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+        document.cookie = name + '=;path=/;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
     }
 
     function add(name, value, daysToLive) {
@@ -45,7 +45,7 @@ define(function () {
             expires.setDate(1);
         }
 
-        document.cookie = name + "=" + value + "; path=/; expires=" + expires.toUTCString() + "; domain=" + getShortDomain() + ";";
+        document.cookie = name + '=' + value + '; path=/; expires=' + expires.toUTCString() + '; domain=' + getShortDomain() + ';';
     }
 
     function getCookieValues(name) {

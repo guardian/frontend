@@ -5,7 +5,7 @@ define( function() {
     function mark(label) {
 
         if (perf && 'mark' in perf) {
-             perf.mark("gu." + label);
+             perf.mark('gu.' + label);
         }
     }
 

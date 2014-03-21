@@ -1,14 +1,14 @@
 define([
     'common/$',
-    "bean",
-    "common/utils/mediator",
+    'bean',
+    'common/utils/mediator',
     'lodash/functions/debounce',
-    "common/utils/ajax",
-    "bonzo",
-    "qwery",
-    "common/utils/detect",
-    "common/utils/url",
-    "common/modules/ui/overlay"
+    'common/utils/ajax',
+    'bonzo',
+    'qwery',
+    'common/utils/detect',
+    'common/utils/url',
+    'common/modules/ui/overlay'
 ], function (
     $,
     bean,
@@ -56,7 +56,7 @@ define([
                     var currentTarget = e.currentTarget,
                         galleryUrl = $(currentTarget).attr('data-gallery-url');
                     if (!galleryUrl) {
-                        var el = (currentTarget.nodeName === "A") ? currentTarget : currentTarget.querySelector('a');
+                        var el = (currentTarget.nodeName === 'A') ? currentTarget : currentTarget.querySelector('a');
                         galleryUrl = el.getAttribute('href');
                     }
 

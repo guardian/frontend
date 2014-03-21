@@ -101,21 +101,6 @@
     }
 }
 
-.from-content-api--small {
-    @include fs-bodyCopy(2, true);
-
-    @include mq(tablet) {
-        @include fs-bodyCopy(3, true);
-    }
-    h2 {
-        @include fs-bodyHeading(2, true);
-
-        @include mq(tablet) {
-            @include fs-bodyHeading(3, true);
-        }
-    }
-}
-
 .from-content-api blockquote {
     font-style: italic;
     @include rem((
@@ -161,6 +146,11 @@
             }
         }
     }
+}
+
+.from-content-api pre {
+    // Unset from `.from-content-api`
+    word-wrap: normal;
 }
 
 

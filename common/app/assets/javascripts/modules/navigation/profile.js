@@ -66,9 +66,9 @@ define([
             $container.addClass('is-signed-in');
             $popup.html(
                 '<ul class="nav nav--columns" data-link-name="Sub Sections">'+
-                    this.menuListItem("Edit profile", this.config.url+'/public/edit')+
-                    this.menuListItem("Email preferences", this.config.url+'/email-prefs')+
-                    this.menuListItem("Sign out", this.config.url+'/signout')+
+                    this.menuListItem('Edit profile', this.config.url+'/public/edit')+
+                    this.menuListItem('Email preferences', this.config.url+'/email-prefs')+
+                    this.menuListItem('Sign out', this.config.url+'/signout')+
                 '</ul>'
             );
         } else {

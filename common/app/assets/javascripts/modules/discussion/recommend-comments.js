@@ -123,7 +123,7 @@ RecommendComments.fail = function(xhr) {
     var resp = xhr.responseText !== 'NOT FOUND' && xhr.responseText !== '' ? JSON.parse(xhr.responseText) : {};
 
     RecommendComments.renderRecommendation(this, true);
-    if (resp.errorCode === "CAN'T_RECOMMEND_SAME_COMMENT_TWICE") {
+    if (resp.errorCode === 'CAN\'T_RECOMMEND_SAME_COMMENT_TWICE') {
         this.className = this.className.replace(RecommendComments.CONFIG.classes.active, '');
         this.title = 'You cannot recommend the same comment twice';
     }

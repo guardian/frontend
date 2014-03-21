@@ -23,6 +23,12 @@
     }
 }
 
+.mobile-and-tablet-only {
+    @include mq(leftCol) {
+        display: none !important;
+    }
+}
+
 .hide-on-mobile {
     display: none !important;
 
