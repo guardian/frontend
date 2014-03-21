@@ -75,7 +75,7 @@ define([
             });
             new Affix({
                 element: qwery('.js-key-events__container', eventsEl)[0],
-                offset: 600
+                offset: { top : 600, bottom: 1000 }
             });
             relativeDates.init(qwery('.js-key-events'));
 
