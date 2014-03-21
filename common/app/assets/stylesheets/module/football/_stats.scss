@@ -19,6 +19,7 @@
 .goal-attempts {
     @include fs-data(5);
     color: #ffffff;
+    overflow: hidden;
     position: relative;
 }
 
