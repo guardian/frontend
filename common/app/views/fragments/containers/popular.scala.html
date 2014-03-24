@@ -14,22 +14,22 @@
 
             <div class="container__border tone-@style.tone tone-accent-border"></div>
 
-            @title.map { title =>
-                <h2 class="container__title tone-@style.tone tone-background">
-                    @href.map { href =>
-                        <a data-link-name="section heading" href="@LinkTo{/@href}">@Html(title)</a>
-                    }.getOrElse{
-                        @Html(title)
-                    }
-                </h2>
-            }
-
+            <div class="container__header">
+                @title.map { title =>
+                    <h2 class="container__title tone-@style.tone tone-background">
+                        @href.map { href =>
+                            <a data-link-name="section heading" href="@LinkTo{/@href}">@Html(title)</a>
+                        }.getOrElse{
+                            @Html(title)
+                        }
+                    </h2>
+                }
+            </div>
             <div class="container__body container--rolled-up-hide">
                 @defining(Seq(MostPopular("Popular", "popular", collection.items.slice(0, 10)))){ popular =>
                     @fragments.collections.popular(popular)
                 }
             </div>
-
         </section>
     }
 
