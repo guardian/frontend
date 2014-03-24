@@ -7,13 +7,14 @@ import services.{Archive, DynamoDB}
 import java.net.URLDecoder
 import model.Cached
 import services.Googlebot404Count
+import scala.concurrent.Await
+import scala.concurrent.duration._
 
 object ArchiveController extends Controller with Logging with ExecutionContexts {
  
-  private def destinationFor(path: String) = DynamoDB.destinationFor(path)
-    .filterNot { destination =>
+  private def destinationFor(path: String) = DynamoDB.destinationFor(path).map(_.filterNot { destination =>
       linksToItself(path, destination.location)
-    }
+  })
 
   private def isArchived(path: String) = services.S3Archive.getHtml(path)
 
@@ -78,7 +79,11 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
 
     // lookup redirect or archive
     .orElse { // DynamoDB lookup. This needs to happen *before* we poke around S3 for the file.
-      destinationFor(normalise(path).getOrElse(path)).map {
+
+      // TODO don't be too hard on me about the Await. This is temporary.
+      // the next step is to do a data migration and then remove the blocking S3 call below.
+      // After that the Await goes and this is fully async
+      Await.result(destinationFor(s"http://${normalise(path).getOrElse(path)}"), 2.seconds).map {
         case services.Redirect(url) =>
           logDestination(path, "redirect", url)
           Cached(300)(Redirect(url, 301))
