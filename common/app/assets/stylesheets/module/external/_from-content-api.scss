@@ -5,6 +5,17 @@
 
 //This is the only place where direct element selectors are allowed!
 
+// Horizontal offsets of text in blockquotes and bulletted lists
+$quoted-offset: (
+    default: 40px,
+    tablet: 44px
+);
+$bullet-offset: (
+    default: 16px,
+    tablet: 20px
+);
+
+
 /* Core elements
    ========================================================================== */
 
@@ -55,22 +66,19 @@
             @include fs-header(2, true);
         }
     }
+    > ul > li,
     > blockquote > ul > li {
         @include rem((
-            text-indent: 16px
+            text-indent: map-get($bullet-offset, default)
         ));
 
         @include mq(tablet) {
             @include rem((
-                text-indent: 20px
+                text-indent: map-get($bullet-offset, tablet)
             ));
         }
-    }
-    > blockquote > ul > li,
-    > ul > li {
         @include faux-bullet-point;
     }
-
     > ol > li,
     > ul > li {
         position: relative;
@@ -113,16 +121,6 @@
         }
     }
 }
-
-// Horizontal offsets of text in blockquotes and bulletted lists
-$quoted-offset: (
-    default: 40px,
-    tablet: 44px
-);
-$bullet-offset: (
-    default: 16px,
-    tablet: 20px
-);
 
 .from-content-api blockquote {
     font-style: italic;
