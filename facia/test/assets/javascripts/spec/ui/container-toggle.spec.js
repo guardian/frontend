@@ -31,7 +31,9 @@ define([
         beforeEach(function(){
             container = bonzo.create(
                 '<section class="container js-container--toggle" data-id="' + containerId + '">' +
-                    '<h2 class="container__title">A container</h2>' +
+                    '<div class="container__header">' +
+                        '<h2>A container</h2>' +
+                    '<div>' +
                 '</section>'
             )[0];
             $container = bonzo(container);
@@ -58,9 +60,9 @@ define([
             expect(window.localStorage.getItem(oldStorageKey)).toBeNull();
         });
 
-        it('should add button to the container\'s title', function() {
+        it('should add button to the container\'s header', function() {
             new ContainerDisplayToggle(container).addToggle();
-            expect(qwery('.container__title .container__toggle', container).length).toBe(1);
+            expect(qwery('.container__header .container__toggle', container).length).toBe(1);
         });
 
         it('initial state should be open', function() {

@@ -54,7 +54,7 @@ define([
 
         this.addToggle =  function () {
             // append toggle button
-            $('.container__title', _$container[0]).append(_$button);
+            $('.container__header', _$container[0]).append(_$button);
             _$container.removeClass('js-container--toggle');
             // listen to event
             bean.on(_$button[0], 'click', function() {
