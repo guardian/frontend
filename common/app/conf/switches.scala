@@ -154,6 +154,11 @@ object Switches extends Collections {
     "If this switch is on, commercial components will be fed by masterclass feed.",
     safeState = Off, sellByDate = endOfQ4)
 
+  val OmnitureVerificationSwitch = Switch("Analytics", "omniture-verification",
+    "Enables the new Ophan tracking javascript which support multiple events per page",
+    safeState = Off, new DateMidnight(2014, 3, 26)
+  )
+
   val SoulmatesFeedSwitch = Switch("Commercial Feeds", "gu-soulmates",
     "If this switch is on, commercial components will be fed by soulmates feed.",
     safeState = Off, sellByDate = endOfQ4)
@@ -285,6 +290,11 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
+  val RightHandMostPopularSwitch = Switch("Feature Switches", "right-hand-most-popular",
+    "If this switch is on, a component with most popular content from around the Guardian is displayed in the article right hand column at desktop breakpoints.",
+    safeState = On, sellByDate = endOfQ4
+  )
+
   val IdentityEthicalAwardsSwitch = Switch("Feature Switches", "id-ethical-awards",
     "If this switch is on, Ethical awards forms will be available",
     safeState = Off, sellByDate = endOfQ4)
@@ -348,11 +358,6 @@ object Switches extends Collections {
   val ABFrontsCartoonCard = Switch("A/B Tests", "ab-fronts-cartoon-card",
     "If this is switched on an A/B test runs that adds a 'Cartoon' card to the alpha network fronts.",
     safeState = Off, sellByDate = new DateMidnight(2014, 3, 25)
-  )
-
-  val KeyEvents = Switch("A/B Tests", "key-events",
-    "If this is switched on an experiment runs to display a keyevents panel on live blogs.",
-    safeState = On, sellByDate = new DateMidnight(2014, 3, 24)
   )
 
   val ABLiveBlogFollowButton = Switch("A/B Tests", "ab-live-blog-follow-button",
@@ -454,6 +459,7 @@ object Switches extends Collections {
     EditionRedirectLoggingSwitch,
     FacebookAutoSigninSwitch,
     IdentityFormstackSwitch,
+    RightHandMostPopularSwitch,
     IdentityEthicalAwardsSwitch,
     IdentityFilmAwardsSwitch,
     ABAa,
@@ -461,8 +467,12 @@ object Switches extends Collections {
     ABFrontsLiveCard,
     ABFrontsLatestReviewsCard,
     ABFrontsCartoonCard,
+<<<<<<< HEAD
     KeyEvents,
     ABLiveBlogFollowButton,
+=======
+    FollowButton,
+>>>>>>> origin/master
     ToolDisable,
     ToolConfigurationDisable,
     ToolSparklines,
@@ -493,7 +503,8 @@ object Switches extends Collections {
     FrontPressJobSwitch,
     LayoutHintsSwitch,
     HelveticaEasterEggSwitch,
-    LeadAdTopPageSwitch
+    LeadAdTopPageSwitch,
+    OmnitureVerificationSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
