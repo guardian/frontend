@@ -74,6 +74,9 @@
         .collection-wrapper--position-1 {
             .collection__item:first-child {
                 @include flex-grow(2);
+                @if not $browser-supports-flexbox {
+                    width: 66%;
+                }
             }
             .item__link {
                 border-top-width: 0;
