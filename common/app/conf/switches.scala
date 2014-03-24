@@ -343,26 +343,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = endOfQ4
   )
 
-  val ABFrontsMissedCard = Switch("A/B Tests", "ab-fronts-missed-card",
-    "If this is switched on an A/B test runs that adds a 'You may have missed' card to the alpha network fronts.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 3, 25)
-  )
-
-  val ABFrontsLiveCard = Switch("A/B Tests", "ab-fronts-live-card",
-    "If this is switched on an A/B test runs that adds a 'What's happening now' card to the alpha network fronts.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 3, 25)
-  )
-
-  val ABFrontsLatestReviewsCard = Switch("A/B Tests", "ab-fronts-latest-reviews-card",
-    "If this is switched on an A/B test runs that adds a 'Latest reviews' card to the alpha network fronts.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 3, 25)
-  )
-
-  val ABFrontsCartoonCard = Switch("A/B Tests", "ab-fronts-cartoon-card",
-    "If this is switched on an A/B test runs that adds a 'Cartoon' card to the alpha network fronts.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 3, 25)
-  )
-
   val ABLiveBlogFollowButton = Switch("A/B Tests", "ab-live-blog-follow-button",
     "If this is switched on an experiment runs to display a follow button on live blogs.",
     safeState = Off, sellByDate = new DateMidnight(2014, 3, 28)
@@ -466,10 +446,6 @@ object Switches extends Collections {
     IdentityEthicalAwardsSwitch,
     IdentityFilmAwardsSwitch,
     ABAa,
-    ABFrontsMissedCard,
-    ABFrontsLiveCard,
-    ABFrontsLatestReviewsCard,
-    ABFrontsCartoonCard,
     ABLiveBlogFollowButton,
     ToolDisable,
     ToolConfigurationDisable,
