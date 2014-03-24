@@ -461,7 +461,7 @@
 }
 
 .article__meta-heading {
-    @include fs-header(2);
+    @include fs-header(1);
     @include rem((
         padding-top: ($gs-baseline/3),
         padding-bottom: ($gs-baseline/3)*4
