@@ -242,7 +242,7 @@
         > li {
             position: relative;
             @include rem((
-                text-indent: 16px
+                text-indent: 18px
             ));
 
             + li {
@@ -284,33 +284,12 @@
         }
     }
 
-    > ul {
-        > li {
-            @include faux-bullet-point($c-neutral4);
-
-            @include mq($to: tablet) {
-                @include rem((
-                    text-indent: 16px
-                ));
-            }
-
-            &:before {
-                top: 0;
-                @include rem((
-                    font-size: 50px,
-                    left: -20px
-                ));
-
-                @include mq(tablet) {
-                    @include rem((
-                        font-size: 61px,
-                        left: -24px
-                    ));
-                }
-            }
-        }
+    > ul > li,
+    .bullet {
+        @include faux-bullet-point($offset-y: (default: 4px, tablet: 5px));
     }
 }
+
 .article-body {
     @include mq(tablet) {
         @include rem((

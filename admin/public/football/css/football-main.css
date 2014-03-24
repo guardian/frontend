@@ -60,6 +60,3 @@ label[for] {
 .table tbody .table-row--break td {
   border-top: 1px solid #666;
 }
-.form-control--team {
-    display: none;
-}

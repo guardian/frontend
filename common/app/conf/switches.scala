@@ -156,7 +156,10 @@ object Switches extends Collections {
 
   val OmnitureVerificationSwitch = Switch("Analytics", "omniture-verification",
     "Enables the new Ophan tracking javascript which support multiple events per page",
-    safeState = Off, new DateMidnight(2014, 3, 26)
+    safeState = Off,
+    // extending this till mid April. We are going to use it to see what effect moving Omniture higher up the
+    // call stack makes.
+    new DateMidnight(2014, 4, 15)
   )
 
   val SoulmatesFeedSwitch = Switch("Commercial Feeds", "gu-soulmates",
@@ -340,32 +343,7 @@ object Switches extends Collections {
     safeState = Off, sellByDate = endOfQ4
   )
 
-  val ABFrontsMissedCard = Switch("A/B Tests", "ab-fronts-missed-card",
-    "If this is switched on an A/B test runs that adds a 'You may have missed' card to the alpha network fronts.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 3, 25)
-  )
-
-  val ABFrontsLiveCard = Switch("A/B Tests", "ab-fronts-live-card",
-    "If this is switched on an A/B test runs that adds a 'What's happening now' card to the alpha network fronts.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 3, 25)
-  )
-
-  val ABFrontsLatestReviewsCard = Switch("A/B Tests", "ab-fronts-latest-reviews-card",
-    "If this is switched on an A/B test runs that adds a 'Latest reviews' card to the alpha network fronts.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 3, 25)
-  )
-
-  val ABFrontsCartoonCard = Switch("A/B Tests", "ab-fronts-cartoon-card",
-    "If this is switched on an A/B test runs that adds a 'Cartoon' card to the alpha network fronts.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 3, 25)
-  )
-
-  val KeyEvents = Switch("A/B Tests", "key-events",
-    "If this is switched on an experiment runs to display a keyevents panel on live blogs.",
-    safeState = On, sellByDate = new DateMidnight(2014, 3, 24)
-  )
-
-  val FollowButton = Switch("A/B Tests", "follow-button",
+  val ABLiveBlogFollowButton = Switch("A/B Tests", "ab-live-blog-follow-button",
     "If this is switched on an experiment runs to display a follow button on live blogs.",
     safeState = Off, sellByDate = new DateMidnight(2014, 3, 28)
   )
@@ -468,12 +446,7 @@ object Switches extends Collections {
     IdentityEthicalAwardsSwitch,
     IdentityFilmAwardsSwitch,
     ABAa,
-    ABFrontsMissedCard,
-    ABFrontsLiveCard,
-    ABFrontsLatestReviewsCard,
-    ABFrontsCartoonCard,
-    KeyEvents,
-    FollowButton,
+    ABLiveBlogFollowButton,
     ToolDisable,
     ToolConfigurationDisable,
     ToolSparklines,

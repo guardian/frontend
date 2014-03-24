@@ -26,8 +26,9 @@ object Frontend extends Build with Prototypes {
       "org.scalaj" % "scalaj-time_2.10.2" % "0.7",
 
       "org.apache.commons" % "commons-math3" % "3.2",
-    
-      "rome" % "rome" % "1.0"
+
+      "rome" % "rome" % "1.0",
+      "org.rometools" % "rome-modules" % "1.0"
     )
   )
 

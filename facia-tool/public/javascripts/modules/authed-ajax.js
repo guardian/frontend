@@ -17,10 +17,12 @@ define(['modules/vars'], function(vars) {
         var collections = [];
 
         _.each(edits, function(edit) {
-            edit.collection.setPending(true);
-            edit.id = edit.collection.id;
-            collections.push(edit.collection);
-            delete edit.collection;
+            if(_.isObject(edit)) {
+                edit.collection.setPending(true);
+                edit.id = edit.collection.id;
+                collections.push(edit.collection);
+                delete edit.collection;
+            }
         });
 
         return request({

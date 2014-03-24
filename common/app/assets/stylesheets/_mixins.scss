@@ -314,21 +314,30 @@
     }
 }
 
-@mixin faux-bullet-point($color: $c-neutral3) {
+@mixin faux-bullet-point($color: $c-neutral3, $offset-y: (default: 6px, tablet: 7px)) {
     position: relative;
-    @include rem((
-        text-indent: 20px
-    ));
 
     &:before {
         position: absolute;
-        content: "\2022";
+        content: "";
+        display: block;
+        @include rounded-corners(50%);
         @include rem((
-            left: -22px,
-            top: 2px,
-            font-size: 48px
+            height: 12px,
+            width: 12px,
+            left: 0,
+            top: map-get($offset-y, default),
+            font-size: 20px
         ));
-        color: $color;
+        background-color: $color;
+
+        @include mq(tablet) {
+            @include rem((
+                top: if(map-get($offset-y, tablet) == map-get($offset-y, default), null, map-get($offset-y, tablet)),
+                height: 14px,
+                width: 14px
+            ));
+        }
     }
 }
 
