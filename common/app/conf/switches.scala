@@ -360,11 +360,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 3, 25)
   )
 
-  val KeyEvents = Switch("A/B Tests", "key-events",
-    "If this is switched on an experiment runs to display a keyevents panel on live blogs.",
-    safeState = On, sellByDate = new DateMidnight(2014, 3, 24)
-  )
-
   val FollowButton = Switch("A/B Tests", "follow-button",
     "If this is switched on an experiment runs to display a follow button on live blogs.",
     safeState = Off, sellByDate = new DateMidnight(2014, 3, 28)
@@ -472,7 +467,6 @@ object Switches extends Collections {
     ABFrontsLiveCard,
     ABFrontsLatestReviewsCard,
     ABFrontsCartoonCard,
-    KeyEvents,
     FollowButton,
     ToolDisable,
     ToolConfigurationDisable,
