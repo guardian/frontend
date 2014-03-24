@@ -156,7 +156,10 @@ object Switches extends Collections {
 
   val OmnitureVerificationSwitch = Switch("Analytics", "omniture-verification",
     "Enables the new Ophan tracking javascript which support multiple events per page",
-    safeState = Off, new DateMidnight(2014, 3, 26)
+    safeState = Off,
+    // extending this till mid April. We are going to use it to see what effect moving Omniture higher up the
+    // call stack makes.
+    new DateMidnight(2014, 4, 15)
   )
 
   val SoulmatesFeedSwitch = Switch("Commercial Feeds", "gu-soulmates",
