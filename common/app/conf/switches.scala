@@ -467,12 +467,7 @@ object Switches extends Collections {
     ABFrontsLiveCard,
     ABFrontsLatestReviewsCard,
     ABFrontsCartoonCard,
-<<<<<<< HEAD
-    KeyEvents,
     ABLiveBlogFollowButton,
-=======
-    FollowButton,
->>>>>>> origin/master
     ToolDisable,
     ToolConfigurationDisable,
     ToolSparklines,

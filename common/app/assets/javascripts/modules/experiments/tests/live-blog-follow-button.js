@@ -1,4 +1,8 @@
-define([], function() {
+define([
+    'common/$'
+], function(
+    $
+    ) {
 
     var LiveBlogFollowButton = function(){
 
@@ -20,7 +24,7 @@ define([], function() {
             {
                 id: 'show-button',
                 test: function() {
-                    document.getElementById('follow-btn').classList.remove('follow-btn--invisible');
+                    $('.follow-btn').removeClass('is-invisible');
                 }
             }
         ];

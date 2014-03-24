@@ -31,7 +31,7 @@
 
                 @fragments.witnessCallToAction(article)
                 <div class="after-header">
-                        <button type="button" id="follow-btn" class="submit-input follow-btn follow-btn--invisible" onclick="window.location.href='http://next.theguardian.com/follow-a-blog.html?blog=@helper.urlEncode(article.webTitle)'">Follow</button>
+                        <a href="http://next.theguardian.com/follow-a-blog.html?blog=@helper.urlEncode(article.webTitle)" id="follow-btn" class="submit-input follow-btn is-invisible">Follow</a>
                 </div>
             </div>
             <div class="article__columning-wrapper">
