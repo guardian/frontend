@@ -151,11 +151,11 @@ jQuery(function($){
         window.location = '/team/images/'+ select.options[select.selectedIndex].value;
     });
 
-    $('.fautocomplete').fautocomplete();
+    $('.foot-autocomplete').footAutocomplete();
 });
 
 // autocomplete
-$.widget('custom.fautocomplete', {
+$.widget('custom.footAutocomplete', {
     _create: function() {
         var self = this;
         $('<input type="text" class="fautocomplete__input form-control" />').autocomplete({
@@ -166,19 +166,16 @@ $.widget('custom.fautocomplete', {
                     .append($('<a>').text( item.value ))
                     .appendTo(ul);
             },
+
+            source: self.element.find('option')
+                .filter(function(i, o) { return o.value; })
+                .map(function(i, o) { return { id: o.value, value: o.innerHTML }; })
+                .toArray(),
+
             select: function(event, ui) {
                 self.element.val(ui.item.id);
                 $('#focus-on-team').attr('checked', 'checked');
-            },
-            source: (function() {
-                var data = [];
-                self.element.find('option').each(function(i, o) {
-                    if (o.value) {
-                        data.push({ id: o.value, value: o.innerHTML });
-                    }
-                });
-                return data;
-            })()
+            }
         }).insertBefore(this.element.hide());
     }
 });
