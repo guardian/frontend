@@ -1,6 +1,6 @@
 @(fieldName: String, players: List[pa.SquadMember])
 <div class="form-group">
-    <select name="@fieldName" id="id-@fieldName" class="form-control">
+    <select name="@fieldName" id="id-@fieldName" class="form-control fautocomplete">
         <option>Choose player</option>
         @for(player <- players) {
             <option value="@player.playerId">@player.name</option>

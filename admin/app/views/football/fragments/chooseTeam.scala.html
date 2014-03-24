@@ -1,22 +1,9 @@
 @(fieldName: String, teams: List[pa.Team])
 <div class="form-group">
-    <input class="form-control" type="text" id="auto-@fieldName" data-list="teams" />
-    <select name="@fieldName" id="id-@fieldName" class="form-control form-control--team">
+    <select name="@fieldName" id="id-@fieldName" class="form-control form-control--team fautocomplete">
         <option>Choose team</option>
         @for(team <- teams) {
             <option value="@team.id">@team.name</option>
         }
     </select>
-    <script>
-        // TODO (jamesgorrie): Get rid of this. No scala code here
-        $('#auto-@fieldName').fautocomplete({
-            source: [@for(team <- teams) {
-                { id: '@team.id', value: '@team.name' },
-            }],
-            select: function(event, ui) {
-                $('#id-@fieldName').val(ui.item.id);
-                $('#focus-on-team').attr('checked', 'checked');
-            }
-        });
-    </script>
 </div>
