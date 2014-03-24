@@ -25,7 +25,9 @@
         left: 100%;
     }
     .container__title,
-    .container__toggle__text {
+    .container__toggle__text,
+    .item__title,
+    .linkslist__action {
         color: #ffffff;
     }
     .container__title {
@@ -33,10 +35,6 @@
     }
     .item {
         margin-bottom: 0;
-    }
-    .item__title,
-    .linkslist__action {
-        color: #ffffff;
     }
     .item__link:visited .item__title,
     .linkslist__action:visited {
@@ -54,6 +52,9 @@
         border-top-width: 0;
     }
     @include mq($to: tablet) {
+        .collection-wrapper--position-1 .collection__item:first-child .item__title {
+            @include fs-headline(2, $size-only: true);
+        }
         .collection-wrapper--position-1 .collection__item:nth-child(2),
         .collection-wrapper--position-2 .collection__item {
             &:before {
