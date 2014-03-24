@@ -149,7 +149,7 @@
     .item__image-container {
         display: none;
     }
-    .item--imageadjust-highlight {
+    .item--imageadjust-boost {
         .item__media-wrapper,
         .item__image-container {
             display: block;
@@ -162,7 +162,7 @@
         .item--has-no-image .item__standfirst {
             display: block;
         }
-        .item--imageadjust-highlight,
+        .item--imageadjust-boost,
         .item--imageadjust-default .item__title {
             @include rem((
                 min-height: get-line-height($fs-headlines, 1) * 3
