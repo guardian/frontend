@@ -360,7 +360,7 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 3, 25)
   )
 
-  val FollowButton = Switch("A/B Tests", "follow-button",
+  val ABLiveBlogFollowButton = Switch("A/B Tests", "ab-live-blog-follow-button",
     "If this is switched on an experiment runs to display a follow button on live blogs.",
     safeState = Off, sellByDate = new DateMidnight(2014, 3, 28)
   )
@@ -467,7 +467,7 @@ object Switches extends Collections {
     ABFrontsLiveCard,
     ABFrontsLatestReviewsCard,
     ABFrontsCartoonCard,
-    FollowButton,
+    ABLiveBlogFollowButton,
     ToolDisable,
     ToolConfigurationDisable,
     ToolSparklines,
