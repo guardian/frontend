@@ -6,6 +6,7 @@ define([
     'common/utils/config',
     'common/utils/page',
     'common/modules/ui/rhc',
+    'common/modules/charts/table-doughnut',
     'common/modules/sport/football/match-list',
     'common/modules/sport/football/match-info',
     'common/modules/sport/football/match-stats',
@@ -19,6 +20,7 @@ define([
     config,
     page,
     rhc,
+    Doughnut,
     MatchList,
     MatchInfo,
     MatchStats,
@@ -28,8 +30,6 @@ define([
     context = context();
 
     function init() {
-        var $article = $('.js-article__container', context);
-
         page.isMatch(function(match) {
             var $h = $('.article__headline', context),
                 matchInfo = new MatchInfo(match, config.page.pageId),
@@ -78,9 +78,14 @@ define([
                         page.rightHandComponentVisible(function() {
                             rhc.addComponent(statsContainer, 3);
                         }, function() {
-                            $article.append(statsContainer);
+                            $('.article-body', context).after(statsContainer);
                         });
-                        matchStats.fetch(statsContainer);
+                        matchStats.fetch(statsContainer).then(function() {
+                            $('.js-chart', statsContainer).each(function(el) {
+                                /*jshint nonew:false*/
+                                new Doughnut(el);
+                            });
+                        });
                     }
                 }
             });
@@ -99,7 +104,7 @@ define([
         page.isLiveClockwatch(function() {
             var ml = new MatchList('live', 'premierleague'),
                 $img = $('.media-primary'),
-                $matchListContainer = $.create('<div class="football-matches__container" data-link-name="football-matches-clockwatch"></div>')
+                $matchListContainer = $.create('<div class="football-match__list" data-link-name="football-matches-clockwatch"></div>')
                                           .css({ minHeight: $img[0] ? $img[0].offsetHeight : 0 });
 
             $img.addClass('u-h');
@@ -116,7 +121,6 @@ define([
                     $matchListContainer.remove();
                     $img.removeClass('u-h');
                 }
-                $matchListContainer.css({ minHeight: 0 });
                 loaded($matchListContainer[0]);
             });
         });
@@ -124,7 +128,7 @@ define([
         // Binding
         bean.on(context, 'click', '.table tr[data-link-to]', function(e) {
             if (!e.target.getAttribute('href')) {
-                window.location = this.getAttribute('data-link-to');
+                 window.location = this.getAttribute('data-link-to');
             }
         });
 
