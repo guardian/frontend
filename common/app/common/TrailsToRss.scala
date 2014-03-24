@@ -76,7 +76,7 @@ object TrailsToRss extends implicits.Collections {
         i.mimeType.map(image.setType)
         // create image's metadata
         val imageMetadata = new Metadata()
-        i.altText.map(imageMetadata.setDescription)
+        i.caption.map(imageMetadata.setDescription)
         i.credit.map{ creditName =>
           val credit = new Credit(null, null, creditName)
           imageMetadata.setCredits(Seq(credit).toArray)
