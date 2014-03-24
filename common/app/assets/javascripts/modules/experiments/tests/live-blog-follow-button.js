@@ -20,7 +20,7 @@ define([], function() {
             {
                 id: 'show-button',
                 test: function() {
-                   document.getElementsByClassName('follow-btn')[0].style.visibility='visible';
+                    document.getElementById('follow-btn').classList.remove('follow-btn--invisible');
                 }
             }
         ];

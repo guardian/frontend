@@ -1,4 +1,8 @@
 .follow-btn {
     margin-bottom: $gs-baseline;
-    @include fs-textsans(3);
+    @include fs-textsans(1);
+}
+
+.follow-btn--invisible {
+    visibility: hidden;
 }
