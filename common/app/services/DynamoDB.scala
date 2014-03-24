@@ -17,9 +17,7 @@ sealed trait Destination {
 case class Redirect(location: String) extends Destination
 case class Archive(location: String) extends Destination
 
-// TODO this all needs to go proper Async
 trait DynamoDB extends Logging with ExecutionContexts {
-
 
   private val tableName = "redirects"
   private val DynamoDbGet = "DynamoDB_20120810.GetItem"
