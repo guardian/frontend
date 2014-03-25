@@ -341,9 +341,11 @@ define([
                       '</ul>';
 
             var releaseMessage = new Message('alpha');
-            var alreadyOptedIn = !!releaseMessage.hasSeen('releaseMessage');
 
-            if (config.switches.releaseMessage && !alreadyOptedIn && (detect.getBreakpoint() !== 'mobile')) {
+            // Do not show the release message on -sp- based paths.
+            var spRegExp = new RegExp('.*/-sp-.*');
+
+            if (config.switches.releaseMessage && (detect.getBreakpoint() !== 'mobile') && !spRegExp.test(path)) {
                 // force the visitor in to the alpha release for subsequent visits
                 Cookies.add('GU_VIEW', 'responsive', 365);
                 releaseMessage.show(msg);
