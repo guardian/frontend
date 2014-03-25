@@ -151,7 +151,6 @@ jQuery(function($){
         window.location = '/team/images/'+ select.options[select.selectedIndex].value;
     });
 
-
     $('.foot-autocomplete').footAutocomplete();
 });
 
