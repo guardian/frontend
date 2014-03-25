@@ -151,6 +151,7 @@ jQuery(function($){
         window.location = '/team/images/'+ select.options[select.selectedIndex].value;
     });
 
+
     $('.foot-autocomplete').footAutocomplete();
 });
 
@@ -166,7 +167,6 @@ $.widget('custom.footAutocomplete', {
                     .append($('<a>').text( item.value ))
                     .appendTo(ul);
             },
-
             source: self.element.find('option')
                 .filter(function(i, o) { return o.value; })
                 .map(function(i, o) { return { id: o.value, value: o.innerHTML }; })

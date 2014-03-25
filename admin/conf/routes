@@ -78,7 +78,7 @@ GET         /admin/football/player                                            co
 POST        /admin/football/player/head2head                                  controllers.admin.PlayerController.redirectToHead2Head
 GET         /admin/football/player/head2head/:player1Id/:player2Id            controllers.admin.PlayerController.head2Head(player1Id: String, player2Id: String)
 POST        /admin/football/player/card                                       controllers.admin.PlayerController.redirectToCard
-GET         /admin/football/player/card/:playerId                             controllers.admin.PlayerController.playerCard(playerId: String)
+GET         /admin/football/player/card/:cardType/:playerId                   controllers.admin.PlayerController.playerCard(playerId: String, cardType: String)
 GET         /admin/football/tables                                            controllers.admin.TablesController.tablesIndex
 POST        /admin/football/tables/league                                     controllers.admin.TablesController.redirectToTable
 GET         /admin/football/tables/league/:competitionId                      controllers.admin.TablesController.leagueTable(competitionId: String)
