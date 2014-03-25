@@ -81,11 +81,6 @@ object Switches extends Collections {
     safeState = On, sellByDate = never
   )
 
-  val EditionRedirectLoggingSwitch = Switch("Performance Switches", "edition-redirect-logging",
-    "If this switch is on, then extra logging will be done for edition redirects.",
-    safeState = Off, sellByDate = endOfQ4
-  )
-
   val ShowAllArticleEmbedsSwitch = Switch("Performance Switches", "show-all-embeds",
     "If switched on then all embeds will be shown inside article bodies",
     safeState = On, sellByDate = never
@@ -429,7 +424,6 @@ object Switches extends Collections {
     CssFromStorageSwitch,
     ElasticSearchSwitch,
     ArticleKeywordsSwitch,
-    EditionRedirectLoggingSwitch,
     FacebookAutoSigninSwitch,
     IdentityFormstackSwitch,
     RightHandMostPopularSwitch,
