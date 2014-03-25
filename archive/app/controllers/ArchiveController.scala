@@ -96,7 +96,7 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
       Cached(300)(Ok.withHeaders("X-Accel-Redirect" -> s"/s3-archive/$archivePath"))
   }}
 
-  // needs to happen *after* s3 lookup as some old galleries
+  // needs to happen *after* path lookup as some old galleries
   // are still served under the URL 'gallery'
   private def redirectGallery(path: String) = isGallery(path).map { url =>
     logDestination(path, "gallery", url)
