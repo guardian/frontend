@@ -14,6 +14,12 @@ object TrailsToRss {
     import com.sun.syndication.feed.synd._
     import com.sun.syndication.io.{FeedException, SyndFeedOutput}
 
+    // http://stackoverflow.com/questions/9710185/how-to-deal-with-invalid-characters-in-a-ws-output-when-using-cxf
+    def cleanInvalidXmlChars(text: String) {
+      val re = "[^\\x09\\x0A\\x0D\\x20-\\xD7FF\\xE000-\\xFFFD\\x10000-x10FFFF]".r;
+      re.replaceAllIn(text, " ");
+    }
+
     val feedTitle = title.map(t => s"$t | The Guardian").getOrElse("The Guardian")
 
     // Feed: image
