@@ -17,11 +17,11 @@ import scala.concurrent.Future
 
 object `package` {
   object HtmlUnit extends EditionalisedHtmlUnit with implicits.Football {
-    override lazy val testPlugins = super.testPlugins ++ Seq(classOf[StubFootballStatsPlugin].getName, classOf[FeedStubPlugin].getName)
+    override lazy val testPlugins = super.testPlugins ++ Seq(classOf[StubFootballStatsPlugin].getName)
     override lazy val disabledPlugins = super.disabledPlugins ++ Seq(classOf[FootballStatsPlugin].getName)
   }
   object Fake extends FakeApp {
-    override lazy val testPlugins = super.testPlugins ++ Seq(classOf[StubFootballStatsPlugin].getName, classOf[FeedStubPlugin].getName)
+    override lazy val testPlugins = super.testPlugins ++ Seq(classOf[StubFootballStatsPlugin].getName)
     override lazy val disabledPlugins = super.disabledPlugins ++ Seq(classOf[FootballStatsPlugin].getName)
   }
 }
@@ -59,18 +59,6 @@ object FeedHttpRecorder extends HttpRecorder[Response] {
     } else {
       s"Error:${response.status}"
     }
-  }
-}
-
-class FeedStubPlugin(val app: play.api.Application) extends Plugin with ExecutionContexts {
-
-  override def onStart() {
-    val http = cricketOpta.Feed.http
-    cricketOpta.Feed.http = url => FeedHttpRecorder.load(url){
-      http(url)
-    }
-
-    super.onStart()
   }
 }
 
