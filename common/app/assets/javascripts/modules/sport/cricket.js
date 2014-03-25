@@ -22,10 +22,6 @@ define([
          scorecardManipulation  - the manipulation type for the scorecard DOM injection
          */
 
-        if (!config.switches.liveCricket) {
-            return;
-        }
-
         ajax({
             url: '/sport' + options.url + '.json',
             type: 'json',
@@ -59,10 +55,6 @@ define([
         var cricketElement = context.querySelector('[data-cricket-match]');
 
         if (!cricketElement) {
-            return;
-        }
-
-        if (!config.switches.liveCricket) {
             return;
         }
 

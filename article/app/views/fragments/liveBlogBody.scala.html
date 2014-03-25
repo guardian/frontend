@@ -14,13 +14,11 @@
                 <header class="article__head">
                     @fragments.headline(article.headline)
 
-                    @if(LiveCricketSwitch.isSwitchedOn) {
-                        @article.cricketMatch.map { id =>
-                            <div class="after-headline">
-                                <a class="cta-small c-neutral1" href="@LinkTo{/sport@id}" data-link-name="view scorecard: @id"
-                                    itemprop="significantLink">View full scorecard<i class="i i-sport-arrow-small"></i></a>
-                            </div>
-                        }
+                    @article.cricketMatch.map { id =>
+                        <div class="after-headline">
+                            <a class="cta-small c-neutral1" href="@LinkTo{/sport@id}" data-link-name="view scorecard: @id"
+                                itemprop="significantLink">View full scorecard<i class="i i-sport-arrow-small"></i></a>
+                        </div>
                     }
 
                     @fragments.standfirst(article)

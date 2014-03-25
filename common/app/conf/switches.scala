@@ -305,13 +305,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 3, 28)
   )
 
-  // Sport Switch
-
-  val LiveCricketSwitch = Switch("Live Cricket", "live-cricket",
-    "If this is switched on the live cricket blocks are added to cricket articles, cricket tag and sport front.",
-    safeState = Off, sellByDate = endOfQ4
-  )
-
   // Dummy Switches
 
   val IntegrationTestSwitch = Switch("Unwired Test Switch", "integration-test-switch",
@@ -389,7 +382,6 @@ object Switches extends Collections {
     IntegrationTestSwitch,
     ClientSideErrorSwitch,
     IdentityProfileNavigationSwitch,
-    LiveCricketSwitch,
     LiveStatsSwitch,
     CssFromStorageSwitch,
     ElasticSearchSwitch,
