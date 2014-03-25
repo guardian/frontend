@@ -8,7 +8,7 @@
 <div class="player-card-container">
     <div data-embed-type="table" class="player-card player-card--football" itemscope itemtype="http://schema.org/Person">
         <div class="player-card__image-container">
-            <img class="player-card__image" itemprop="image" src="@Configuration.staticSport.path/football/player-images/100/@{playerId}.jpg" />
+            <img class="player-card__image" itemprop="image" src="@Configuration.staticSport.path/football/player-images/100/@{playerId}.jpg" alt="Photo of @player.fullName" />
         </div>
         <div class="player-card__player">
             <div class="player-card__position" itemprop="jobTitle">@player.position</div>
