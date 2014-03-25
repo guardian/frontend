@@ -86,7 +86,7 @@
     }
     @include mq(wide) {
         @include rem((
-            padding-left: $gs-gutter/2
+            padding-left: $gs-gutter*2
         ));
 
         .i--clock {

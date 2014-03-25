@@ -31,11 +31,12 @@ trait DiagnosticsLifecycle extends GlobalSettings with Logging {
   }
 
   override def onRouteRequest(request: RequestHeader): Option[Handler] = {
-    if(Switches.DiagnosticsRequestLogging.isSwitchedOn) {
+    if(Switches.DiagnosticsLogging.isSwitchedOn) {
       log.info(RequestLog(request))
-    }
-    if(Switches.DiagnosticsJavascriptErrorLogging.isSwitchedOn && request.uri.startsWith("/js.gif")) {
-      log.info(diagnostics.JavascriptRequestLog(request))
+
+      if(request.uri.startsWith("/js.gif")) {
+        log.info(diagnostics.JavascriptRequestLog(request))
+      }
     }
     super.onRouteRequest(request)
   }

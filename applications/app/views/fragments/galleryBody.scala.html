@@ -24,12 +24,10 @@
                 @fragments.contentMeta(gallery)
 
                 <!-- Lightbox JS Gallery -->
-                @if(LightboxGalleriesSwitch.isSwitchedOn) {
-                    @fragments.galleryThumbs(gallery, showCta=true)
-                }
+                @fragments.galleryThumbs(gallery, showCta=true)
 
                 <!-- Non-JS Gallery / LightboxSwitch off mode -->
-                <div class="@if(LightboxGalleriesSwitch.isSwitchedOn) { js-hidden }">
+                <div class="js-hidden">
                     <p class="gallery-nav">
 
                         @if(index > 1) {

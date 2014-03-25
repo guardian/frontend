@@ -64,10 +64,8 @@ define([
             var portrait = window.innerWidth < 810;
 
             if(portrait) {
-                this.getNewSlot('adRight').html(this.generateInlineAdSlot('Middle', 'right'));
                 this.getNewSlot('adRight').html(this.generateInlineAdSlot('Middle1', 'inline1'));
             } else {
-                this.getNewSlot('adRight').html(this.generateInlineAdSlot('Middle', 'inline1'));
                 this.getNewSlot('adRight').html(this.generateInlineAdSlot('Middle1', 'inline2'));
             }
         }
