@@ -2,7 +2,7 @@
 @import conf.Switches._
 
 @defining((page.image, page.storyPackage)) { case (image, storyPackage) =>
-    <h2 class="article__zone left-col-deport tone-@VisualTone(image) tone-accent-border">
+    <h2 class="article__zone left-col-deport tone-@VisualTone(image) tone-accent-border hide-on-mobile-if-localnav">
         <span class="left-col-deport__body" data-component="meta">
             <a class="tone-colour" data-link-name="article section" href="/@image.section">@Html(image.sectionName.toLowerCase)</a>
         </span>
