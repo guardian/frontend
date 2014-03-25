@@ -69,14 +69,7 @@
 .container__title a {
     color: inherit;
 }
-@include mq($to: tablet) {
-    .has-localnav .container--first {
-        .container__title,
-        .container__border {
-            display: none;
-        }
-    }
-}
+
 .container__updated {
     display: block;
     @include fs-headline(1);
