@@ -192,14 +192,7 @@ a.edition {
     ));
 }
 
-.component__heading {
-    @include fs-header(1);
-    @include rem((
-        padding-top: $gs-baseline/3,
-        margin-bottom: $gs-baseline/2
-    ));
-    border-top: 1px dotted $c-neutral1;
-}
+.component__heading {}
 
 .component--rhc {
     margin-top: $gs-baseline*3;

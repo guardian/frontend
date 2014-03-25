@@ -5,7 +5,7 @@
 .match-stats__caption {
     @include fs-data(5);
     @include rem((
-        margin: ($gs-baseline/3)*4 0 $gs-baseline/1.5
+        margin-bottom: $gs-baseline/1.5
     ));
     color: $c-neutral1;
     font-weight: 400;
@@ -109,6 +109,9 @@
 .bar-fight {
     .match-stats__caption {
         float: left;
+        @include rem((
+            margin-top: ($gs-baseline/3)*4
+        ));
     }
 }
 
