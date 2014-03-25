@@ -40,6 +40,7 @@ object Switches extends Collections {
 
   private lazy val never = new DateMidnight(2100, 1, 1)
   private lazy val endOfQ4 = new DateMidnight(2014, 4, 1)
+  private lazy val summer = new DateMidnight(2014, 6, 21)
 
   // this is 3 months - at the end of this a decision is expected
   // and one (or both) of the 2 needs to go.
@@ -121,8 +122,8 @@ object Switches extends Collections {
   // Commercial Tags
 
   val AudienceScienceSwitch = Switch("Commercial Tags", "audience-science",
-    "If this switch is on the Audience Science will be enabled.",
-    safeState = Off, sellByDate = endOfQ4)
+    "If this switch is on Audience Science segments will be used to target ads.",
+    safeState = Off, sellByDate = summer)
 
   val ImrWorldwideSwitch = Switch("Commercial Tags", "imr-worldwide",
     "Enable the IMR Worldwide audience segment tracking.",
@@ -144,15 +145,15 @@ object Switches extends Collections {
 
   val TravelOffersFeedSwitch = Switch("Commercial Feeds", "gu-travel-offers",
     "If this switch is on, commercial components will be fed by travel offer feed.",
-    safeState = Off, sellByDate = endOfQ4)
+    safeState = Off, sellByDate = summer)
 
   val JobFeedSwitch = Switch("Commercial Feeds", "gu-jobs",
     "If this switch is on, commercial components will be fed by job feed.",
-    safeState = Off, sellByDate = endOfQ4)
+    safeState = Off, sellByDate = summer)
 
   val MasterclassFeedSwitch = Switch("Commercial Feeds", "gu-masterclasses",
     "If this switch is on, commercial components will be fed by masterclass feed.",
-    safeState = Off, sellByDate = endOfQ4)
+    safeState = Off, sellByDate = summer)
 
   val OmnitureVerificationSwitch = Switch("Analytics", "omniture-verification",
     "Enables the new Ophan tracking javascript which support multiple events per page",
@@ -164,19 +165,19 @@ object Switches extends Collections {
 
   val SoulmatesFeedSwitch = Switch("Commercial Feeds", "gu-soulmates",
     "If this switch is on, commercial components will be fed by soulmates feed.",
-    safeState = Off, sellByDate = endOfQ4)
+    safeState = Off, sellByDate = summer)
 
   val MoneysupermarketFeedsSwitch = Switch("Commercial Feeds", "moneysupermarket",
     "If this switch is on, commercial components will be fed by Moneysupermarket feeds.",
-    safeState = Off, sellByDate = endOfQ4)
+    safeState = Off, sellByDate = summer)
 
   val LCMortgageFeedSwitch = Switch("Commercial Feeds", "lc-mortgages",
     "If this switch is on, commercial components will be fed by London & Country mortgage feed.",
-    safeState = Off, sellByDate = endOfQ4)
+    safeState = Off, sellByDate = summer)
 
   val GuBookshopFeedsSwitch = Switch("Commercial Feeds", "gu-bookshop",
     "If this switch is on, commercial components will be fed by the Guardian Bookshop feed.",
-    safeState = Off, sellByDate = endOfQ4)
+    safeState = Off, sellByDate = summer)
 
 
   // Analytics Switches
