@@ -15,3 +15,10 @@
 @import "module/_social";
 @import "module/football/_global";
 @import "module/football/_league-list";
+
+
+/* ==========================================================================
+   Duplication
+   ========================================================================== */
+@import "module/football/_tables";
+@import "module/football/_matches";
