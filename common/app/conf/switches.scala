@@ -53,14 +53,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
-  val DogpileSwitch = Switch("Performance Switches", "dogpile",
-    "If switched on this will enable the anti-dogpile cache, which will help absorb large spikes on single pieces of content e.g. live blogs",
-    safeState = Off,
-
-    //extended to end of March 2014 we will reevaluate once we see how successful it is with the pressed fronts
-    sellByDate = new DateMidnight(2014, 3, 31)
-  )
-
   val DoubleCacheTimesSwitch = Switch("Performance Switches", "double-cache-times",
     "Doubles the cache time of every endpoint. Turn on to help handle exceptional load.",
     safeState = On, sellByDate = never
@@ -455,7 +447,6 @@ object Switches extends Collections {
     ArticleSlotsSwitch,
     ImageServerSwitch,
     FaciaToolPressSwitch,
-    DogpileSwitch,
     ShowAllArticleEmbedsSwitch,
     FrontPressJobSwitch,
     LayoutHintsSwitch,

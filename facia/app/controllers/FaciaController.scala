@@ -3,7 +3,6 @@ package controllers
 import common._
 import front._
 import model._
-import conf._
 import play.api.mvc._
 import play.api.libs.json.Json
 import views.support.{TemplateDeduping, NewsContainer}
@@ -49,7 +48,7 @@ class FaciaController extends Controller with Logging with ExecutionContexts wit
       renderFrontPress(path)
   }
 
-  def renderFrontPress(path: String) = DogpileAction { implicit request =>
+  def renderFrontPress(path: String) = Action.async { implicit request =>
 
     val newPath = getPathForUkAlpha(path, request)
 
@@ -69,7 +68,7 @@ class FaciaController extends Controller with Logging with ExecutionContexts wit
 
   }
 
-  def renderCollection(id: String) = DogpileAction { implicit request =>
+  def renderCollection(id: String) = Action.async { implicit request =>
     log.info(s"Serving collection ID: $id")
     getPressedCollection(id).map { collectionOption =>
       collectionOption.map { collection =>
