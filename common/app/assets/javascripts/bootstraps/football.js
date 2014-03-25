@@ -51,7 +51,9 @@ define([
                 $('.after-header', context).append(resp.nav);
                 scoreBoard.template = config.page.isLiveBlog ? resp.matchSummary : resp.scoreSummary;
                 scoreContainer.innerHTML = '';
-                scoreBoard.render(scoreContainer);
+                if(! /^\s+$/.test(scoreBoard.template)) {
+                    scoreBoard.render(scoreContainer);
+                }
 
                 // TODO (jamesgorrie): The stats component should travel with this lot. Two calls is a bit crap
                 if (!match.id) {

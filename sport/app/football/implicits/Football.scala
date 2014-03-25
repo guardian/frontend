@@ -25,6 +25,10 @@ trait Football extends Collections {
     lazy val squadSheet = c.tags.exists(_.id == "football/series/squad-sheets")
   }
 
+  implicit class Content2preview(c: Content) {
+    lazy val preview = c.tags.exists(_.id == "football/series/match-previews")
+  }
+
   implicit class Match2StatusSummary(m: FootballMatch) {
     lazy val statusSummary = StatusSummary(s"${m.homeTeam.name} v ${m.awayTeam.name}",
       MatchStatus(m.matchStatus).toString, m.homeTeam.score, m.awayTeam.score)
