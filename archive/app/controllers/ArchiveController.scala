@@ -2,13 +2,10 @@ package controllers
 
 import common._
 import play.api.mvc._
-import views.support._
-import services.{Archive, DynamoDB}
+import services.{Archive, DynamoDB, Googlebot404Count}
 import java.net.URLDecoder
 import model.Cached
-import services.Googlebot404Count
-import scala.concurrent.Await
-import scala.concurrent.duration._
+import scala.concurrent.Future.successful
 
 object ArchiveController extends Controller with Logging with ExecutionContexts {
  
@@ -41,22 +38,13 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
     }
   }
 
-  // film/features/featurepages/0,,2291929,00.html -> 'film'
-  private val SectionPattern = s"""www.theguardian.com/([\\w\\d-]+)/(.*)/[0|1]?,.*""".r
-  private def sectionFromR1Path(path: String): Option[String] = path match {
-    case SectionPattern(s, _) => Option(s"/$s")
-    case _ => None
-  }
-
-
-
   private val PathPattern = s"""www.theguardian.com/([\\w\\d-]+)/(.*)""".r
   def linksToItself(path: String, destination: String): Boolean = path match {
     case PathPattern(_, r1path) => destination contains r1path
     case _ => false
   }
 
-  def lookup(path: String) = Action { implicit request =>
+  def lookup(path: String) = Action.async{ implicit request =>
   
     /*
      * This is a chain of tests that look at the URL path and attempt to figure
@@ -74,54 +62,14 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
      * Beware of creating redirect loops!
      */
 
-    // redirect common uses cases
-    isEncoded(path).map(url => Redirect(s"http://$url", 301))
-
-    // lookup redirect or archive
-    .orElse { // DynamoDB lookup. This needs to happen *before* we poke around S3 for the file.
-
-      // TODO don't be too hard on me about the Await. This is temporary.
-      // the next step is to do a data migration and then remove the blocking S3 call below.
-      // After that the Await goes and this is fully async
-      Await.result(destinationFor(s"http://${normalise(path).getOrElse(path)}"), 2.seconds).map {
-        case services.Redirect(url) =>
-          logDestination(path, "redirect", url)
-          Cached(300)(Redirect(url, 301))
-        case Archive(path) =>
-          // http://wiki.nginx.org/X-accel
-          logDestination(path, "archive", path)
-          Cached(300)(Ok.withHeaders("X-Accel-Redirect" -> s"/s3-archive/$path"))
-      }
-    }
-
-    // old style archive
-    // TODO this block disappears after X-Accel-Redirect above is working
-    .orElse { // S3 lookup
-      isArchived(normalise(path, zeros = "00").getOrElse(path)).map {
-        body => {
-          val section = sectionFromR1Path(path).getOrElse("")
-          val clean = withJsoup(body)(InBodyLinkCleanerForR1(section))
-          logDestination(path, "old archive", "N.A.")
-          Cached(300)(Ok(views.html.archive(clean)).as("text/html"))
-        }
-      }
-    }
-
-    .orElse {
-      // needs to happen *after* s3 lookup as some old galleries
-      // are still served under the URL 'gallery'
-      isGallery(path).map { url =>
-        logDestination(path, "gallery", url)
-        Redirect(s"http://$url", 301)
-      }
-    }
-
-    // finally give up an serve a 404
-    .getOrElse{
-      log.info(s"Not Found (404): $path")
-      logGoogleBot(request)
-      NotFound
-    }
+    isEncoded(path).map(url => successful(Redirect(s"http://$url", 301)))
+      .getOrElse(lookupPath(path)
+      .map( _.orElse(redirectGallery(path))
+      .getOrElse{
+        log.info(s"Not Found (404): $path")
+        logGoogleBot(request)
+        NotFound
+      }))
   }
 
   private def logDestination(path: String, msg: String, destination: String) {
@@ -130,11 +78,26 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
 
   // do some specific logging for Googlebot.
   // we really want to know how many of these (and what) are 404'ing
-  private def logGoogleBot(request: Request[AnyContent]) = {
-    request.headers.get("User-Agent").filter(_.contains("Googlebot")).foreach { bot =>
+  private def logGoogleBot(request: Request[AnyContent]) = request.headers.get("User-Agent")
+    .filter(_.contains("Googlebot")).foreach { bot =>
       log.info(s"GoogleBot => ${request.uri}")
       Googlebot404Count.increment()
-    }
   }
 
+  private def lookupPath(path: String) = destinationFor(s"http://${normalise(path).getOrElse(path)}").map { _.map {
+    case services.Redirect(url) =>
+      logDestination(path, "redirect", url)
+      Cached(300)(Redirect(url, 301))
+    case Archive(archivePath) =>
+      // http://wiki.nginx.org/X-accel
+      logDestination(path, "archive", archivePath)
+      Cached(300)(Ok.withHeaders("X-Accel-Redirect" -> s"/s3-archive/$archivePath"))
+  }}
+
+  // needs to happen *after* s3 lookup as some old galleries
+  // are still served under the URL 'gallery'
+  private def redirectGallery(path: String) = isGallery(path).map { url =>
+    logDestination(path, "gallery", url)
+    Redirect(s"http://$url", 301)
+  }
 }
