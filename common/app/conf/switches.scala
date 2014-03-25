@@ -53,14 +53,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
-  val DogpileSwitch = Switch("Performance Switches", "dogpile",
-    "If switched on this will enable the anti-dogpile cache, which will help absorb large spikes on single pieces of content e.g. live blogs",
-    safeState = Off,
-
-    //extended to end of March 2014 we will reevaluate once we see how successful it is with the pressed fronts
-    sellByDate = new DateMidnight(2014, 3, 31)
-  )
-
   val DoubleCacheTimesSwitch = Switch("Performance Switches", "double-cache-times",
     "Doubles the cache time of every endpoint. Turn on to help handle exceptional load.",
     safeState = On, sellByDate = never
@@ -79,11 +71,6 @@ object Switches extends Collections {
   val ElasticSearchSwitch = Switch("Performance Switches", "elastic-search-content-api",
     "If this switch is on then (parts of) the application will use the Elastic Search content api",
     safeState = On, sellByDate = never
-  )
-
-  val EditionRedirectLoggingSwitch = Switch("Performance Switches", "edition-redirect-logging",
-    "If this switch is on, then extra logging will be done for edition redirects.",
-    safeState = Off, sellByDate = endOfQ4
   )
 
   val ShowAllArticleEmbedsSwitch = Switch("Performance Switches", "show-all-embeds",
@@ -333,11 +320,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = endOfQ4
   )
 
-  val TagLinking = Switch("Feature Switches", "tag-linking",
-    "If this is switched on articles that have no in body links will auto link to their tags where possible",
-    safeState = Off, sellByDate = endOfQ4
-  )
-
   val ABLiveBlogFollowButton = Switch("A/B Tests", "ab-live-blog-follow-button",
     "If this is switched on an experiment runs to display a follow button on live blogs.",
     safeState = Off, sellByDate = new DateMidnight(2014, 3, 28)
@@ -434,7 +416,6 @@ object Switches extends Collections {
     CssFromStorageSwitch,
     ElasticSearchSwitch,
     ArticleKeywordsSwitch,
-    EditionRedirectLoggingSwitch,
     FacebookAutoSigninSwitch,
     IdentityFormstackSwitch,
     RightHandMostPopularSwitch,
@@ -445,7 +426,6 @@ object Switches extends Collections {
     ToolDisable,
     ToolConfigurationDisable,
     ToolSparklines,
-    TagLinking,
     SponsoredContentSwitch,
     OphanSwitch,
     ScrollDepthSwitch,
@@ -467,7 +447,6 @@ object Switches extends Collections {
     ArticleSlotsSwitch,
     ImageServerSwitch,
     FaciaToolPressSwitch,
-    DogpileSwitch,
     ShowAllArticleEmbedsSwitch,
     FrontPressJobSwitch,
     LayoutHintsSwitch,
