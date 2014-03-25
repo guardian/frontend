@@ -46,7 +46,7 @@ define([
         this.init = function(opts) {
             self.opts = opts || {};
 
-            if (config.switches.lightboxGalleries || self.opts.overrideSwitch) {
+            if (self.opts.overrideSwitch) {
                 // Apply tracking to links
                 $(self.selector + ' a', context).attr('data-is-ajax', '1');
 

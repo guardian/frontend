@@ -230,11 +230,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = endOfQ4
   )
 
-  val LightboxGalleriesSwitch = Switch("Feature Switches", "lightbox-galleries",
-    "If this switch is on, galleries open in a lightbox.",
-    safeState = On, sellByDate = endOfQ4
-  )
-
   val IdentityProfileNavigationSwitch = Switch("Feature Switches", "id-profile-navigation",
     "If this switch is on you will see the link in the topbar taking you through to the users profile or sign in..",
     safeState = On, sellByDate = endOfQ4
@@ -398,7 +393,6 @@ object Switches extends Collections {
     ReleaseMessageSwitch,
     IntegrationTestSwitch,
     ClientSideErrorSwitch,
-    LightboxGalleriesSwitch,
     IdentityProfileNavigationSwitch,
     LiveCricketSwitch,
     LiveStatsSwitch,
