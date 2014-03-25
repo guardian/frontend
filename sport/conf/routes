@@ -5,7 +5,6 @@
 # For dev machines
 GET        /assets/*path                                                                       dev.DevAssetsController.at(path)
 
-GET        /sport/cricket/match/:matchId.json                                                  controllers.CricketMatchController.renderMatchIdJson(matchId)
 GET        /sport/cricket/match/:matchId                                                       controllers.CricketMatchController.renderMatchId(matchId)
 
 GET        /football/fixtures/:year/:month/:day.json                                           football.controllers.FixturesController.allFixturesForJson(year, month, day)

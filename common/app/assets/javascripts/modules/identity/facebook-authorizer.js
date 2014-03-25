@@ -81,7 +81,7 @@ define([''], function() {
     };
 
     FacebookAuthorizer.prototype._getUserData = function () {
-        FB.api("/me", this._handleGotUserData.bind(this));
+        FB.api('/me', this._handleGotUserData.bind(this));
     };
 
     FacebookAuthorizer.prototype._handleGotUserData = function (data) {

@@ -9,7 +9,6 @@ GET         /assets/internal/*file                                              
 GET         /assets/*path                                                                                            dev.DevAssetsController.at(path)
 
 # Diagnostics
-GET         /px.gif                                                                                                  controllers.DiagnosticsController.px
 GET         /ab.gif                                                                                                  controllers.DiagnosticsController.ab
 GET         /js.gif                                                                                                  controllers.DiagnosticsController.js
 GET         /count/$prefix<.+>.gif                                                                                   controllers.DiagnosticsController.analytics(prefix)
@@ -53,7 +52,6 @@ GET         /cards/opengraph/*path.json                                         
 GET         /tagged.json                                                                                             controllers.TaggedContentController.renderJson(tag: String)
 
 # Sport
-GET         /sport/cricket/match/:matchId.json                                                                       controllers.CricketMatchController.renderMatchIdJson(matchId)
 GET         /sport/cricket/match/:matchId                                                                            controllers.CricketMatchController.renderMatchId(matchId)
 
 GET         /football/fixtures/:year/:month/:day.json                                                                football.controllers.FixturesController.allFixturesForJson(year, month, day)
@@ -129,7 +127,6 @@ GET         /metrics/assets                                                     
 GET         /radiator                                                                                                controllers.admin.RadiatorController.renderRadiator()
 GET         /radiator/pingdom                                                                                        controllers.admin.RadiatorController.pingdom()
 GET         /radiator/commit/*hash                                                                                   controllers.admin.RadiatorController.commitDetail(hash)
-GET         /radiator/livestats                                                                                      controllers.admin.RadiatorController.liveStats()
 GET         /troubleshoot/football                                                                                   controllers.admin.FootballTroubleshooterController.renderFootballTroubleshooter()
 GET         /troubleshoot/pages                                                                                      controllers.admin.TroubleshooterController.index()
 GET         /troubleshoot/test                                                                                       controllers.admin.TroubleshooterController.test(id, testPath)
@@ -149,7 +146,7 @@ GET         /admin/football/player                                              
 POST        /admin/football/player/head2head                                                                         controllers.admin.PlayerController.redirectToHead2Head
 GET         /admin/football/player/head2head/:player1Id/:player2Id                                                   controllers.admin.PlayerController.head2Head(player1Id: String, player2Id: String)
 POST        /admin/football/player/card                                                                              controllers.admin.PlayerController.redirectToCard
-GET         /admin/football/player/card/:playerId                                                                    controllers.admin.PlayerController.playerCard(playerId: String)
+GET         /admin/football/player/card/:cardType/:playerId                                                          controllers.admin.PlayerController.playerCard(playerId: String, cardType: String)
 GET         /admin/football/tables                                                                                   controllers.admin.TablesController.tablesIndex
 POST        /admin/football/tables/league                                                                            controllers.admin.TablesController.redirectToTable
 GET         /admin/football/tables/league/:competitionId                                                             controllers.admin.TablesController.leagueTable(competitionId: String)
@@ -172,7 +169,7 @@ GET         /onward/recently-published                                          
 
 # Facia
 GET         /                                                                                                        controllers.FaciaController.editionRedirect(path = "")
-GET         /$path<(culture|sport|commentisfree|business|money)>                                                     controllers.FaciaController.editionRedirect(path)
+GET         /$path<(culture|sport|commentisfree|business|money|rss)>                                                 controllers.FaciaController.editionRedirect(path)
 
 #Facia Press
 GET         /pressed/*path                                                                                           controllers.FaciaController.renderFrontPress(path)

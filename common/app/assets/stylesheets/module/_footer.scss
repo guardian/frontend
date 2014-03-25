@@ -31,7 +31,7 @@
 .footer {
     @include rem((
         padding: 0 0 ($gs-baseline/3)*4,
-        margin-top: $gs-baseline*2
+        margin-top: $gs-baseline*3
     ));
     background: $c-neutral8;
 

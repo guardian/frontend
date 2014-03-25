@@ -14,11 +14,6 @@ class FaciaControllerTest extends FlatSpec with Matchers with BeforeAndAfterAll 
 
   val responsiveRequest = FakeRequest().withHeaders("host" -> "www.theguardian.com")
 
-  object Front extends TestFront
-  object FaciaController extends FaciaController {
-    override val front = Front
-  }
-
   ignore should "200 when content type is front" in Fake {
     val result = FaciaController.renderFront("uk")(TestRequest())
     status(result) should be(200)

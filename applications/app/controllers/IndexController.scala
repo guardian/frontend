@@ -11,7 +11,7 @@ trait IndexController extends Controller with Index with Logging with Paging wit
 
   implicit def getTemplateDedupingInstance: TemplateDeduping = TemplateDeduping()
 
-  def renderCombiner(leftSide: String, rightSide: String) = DogpileAction { implicit request =>
+  def renderCombiner(leftSide: String, rightSide: String) = Action.async { implicit request =>
     logGoogleBot(request)
     index(Edition(request), leftSide, rightSide, extractPage(request)).map {
       case Left(page) => renderFaciaFront(page)
@@ -28,7 +28,7 @@ trait IndexController extends Controller with Index with Logging with Paging wit
 
   def renderJson(path: String) = render(path)
 
-  def render(path: String) = DogpileAction { implicit request =>
+  def render(path: String) = Action.async { implicit request =>
     logGoogleBot(request)
     index(Edition(request), path, extractPage(request)) map {
       case Left(model) => renderFaciaFront(model)
@@ -37,7 +37,7 @@ trait IndexController extends Controller with Index with Logging with Paging wit
   }
 
   def renderTrailsJson(path: String) = renderTrails(path)
-  def renderTrails(path: String) = DogpileAction { implicit request =>
+  def renderTrails(path: String) = Action.async { implicit request =>
     index(Edition(request), path, extractPage(request)) map {
       case Left(model) => renderTrailsFragment(model)
       case Right(notFound) => notFound

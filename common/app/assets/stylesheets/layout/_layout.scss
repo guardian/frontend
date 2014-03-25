@@ -192,6 +192,12 @@ a.edition {
     ));
 }
 
+.component__heading {}
+
+.component--rhc {
+    margin-top: $gs-baseline*3;
+}
+
 .box-indent {
     @include rem((
         padding: 0 $gs-gutter/2 ($gs-baseline/3)

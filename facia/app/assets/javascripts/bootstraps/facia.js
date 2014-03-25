@@ -11,8 +11,7 @@ define([
     'common/modules/ui/collection-show-more',
     'modules/ui/container-show-more',
     'modules/ui/container-toggle',
-    'common/modules/sport/football/fixtures',
-    'common/modules/sport/cricket'
+    'common/modules/sport/football/fixtures'
 ], function (
     $,
     mediator,
@@ -24,8 +23,7 @@ define([
     CollectionShowMore,
     ContainerShowMore,
     ContainerToggle,
-    FootballFixtures,
-    cricket
+    FootballFixtures
     ) {
 
     var modules = {
@@ -98,15 +96,9 @@ define([
                         competitions: ['500', '510', '100', '400'],
                         contextual: false,
                         expandable: true,
-                        numVisible: config.page.pageId === "" ? 3 : 5
+                        numVisible: config.page.pageId === '' ? 3 : 5
                     }).init();
                 }
-            });
-        },
-
-        showCricket: function(){
-            mediator.on('page:front:ready', function(config, context) {
-                cricket.cricketTrail(config, context);
             });
         }
     };
@@ -118,7 +110,7 @@ define([
             modules.showContainerToggle();
             modules.showFootballFixtures();
         }
-        mediator.emit("page:front:ready", config, context);
+        mediator.emit('page:front:ready', config, context);
     };
 
     return {

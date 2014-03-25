@@ -1,18 +1,23 @@
 package common
 
-import model.{Content, Article, Trail}
-import views.support.{ImgSrc, cleanTrailText}
+import model._
 import play.api.mvc.RequestHeader
-import scala.collection.JavaConverters._
 import org.joda.time.DateTime
 import java.io.StringWriter
 import org.jsoup.Jsoup
+import com.sun.syndication.feed.synd._
+import com.sun.syndication.feed.module.mediarss._
+import com.sun.syndication.feed.module.mediarss.types.{Credit, Metadata, UrlReference, MediaContent}
+import com.sun.syndication.io.SyndFeedOutput
+import scala.collection.JavaConverters._
+import collection.JavaConversions._
 
-object TrailsToRss {
-  def apply(title: Option[String], trails: Seq[Trail])(implicit request: RequestHeader): String = {
+object TrailsToRss extends implicits.Collections {
 
-    import com.sun.syndication.feed.synd._
-    import com.sun.syndication.io.{FeedException, SyndFeedOutput}
+  def apply(metaData: MetaData, trails: Seq[Trail])(implicit request: RequestHeader): String =
+    TrailsToRss(Some(metaData.webTitle), trails, Some(metaData.url), metaData.description)
+
+  def apply(title: Option[String], trails: Seq[Trail], url: Option[String] = None, description: Option[String] = None)(implicit request: RequestHeader): String = {
 
     // http://stackoverflow.com/questions/9710185/how-to-deal-with-invalid-characters-in-a-ws-output-when-using-cxf
     def cleanInvalidXmlChars(text: String) {
@@ -28,16 +33,16 @@ object TrailsToRss {
 
     // This image fits this spec. - https://support.google.com/news/publisher/answer/1407682
     image.setUrl("http://assets.guim.co.uk/images/guardian-logo-rss.c45beb1bafa34b347ac333af2e6fe23f.png")
-    image.setTitle(feedTitle)
+    image.setTitle("The Guardian")
 
     // Feed
     val feed = new SyndFeedImpl
     feed.setFeedType("rss_2.0")
     feed.setTitle(feedTitle)
-    feed.setDescription("Latest news and features from theguardian.com, the world's leading liberal voice")
-    feed.setLink("http://www.theguardian.com")
+    feed.setDescription(description.getOrElse("Latest news and features from theguardian.com, the world's leading liberal voice"))
+    feed.setLink("http://www.theguardian.com" + url.getOrElse(""))
     feed.setLanguage("en-gb")
-    feed.setCopyright(s"Guardian News and Media Limited or its affiliated companies. All rights reserved. ${DateTime.now.getYear}.")
+    feed.setCopyright(s"Guardian News and Media Limited or its affiliated companies. All rights reserved. ${DateTime.now.getYear}")
     feed.setImage(image)
     feed.setPublishedDate(DateTime.now.toDate)
     feed.setEncoding("utf-8")
@@ -65,6 +70,30 @@ object TrailsToRss {
         }
       description.setValue(standfirst + intro)
 
+      val images: Seq[ImageAsset] = (trail.bodyImages ++ trail.mainPicture ++ trail.thumbnail).map{ i =>
+        i.imageCrops.filter(c => (c.width == 140 && c.height == 84) || (c.width == 460 && c.height == 276))
+      }.flatten.toSeq.distinctBy(_.url)
+
+      val modules: Seq[MediaEntryModuleImpl] = images.filter(_.url.nonEmpty).map { i =>
+        // create image
+        val image = new MediaContent(new UrlReference(i.url.get))
+        image.setHeight(i.height)
+        image.setWidth(i.width)
+        i.mimeType.map(image.setType)
+        // create image's metadata
+        val imageMetadata = new Metadata()
+        i.caption.map(imageMetadata.setDescription)
+        i.credit.map{ creditName =>
+          val credit = new Credit(null, null, creditName)
+          imageMetadata.setCredits(Seq(credit).toArray)
+        }
+        image.setMetadata(imageMetadata)
+        // create image module
+        val module = new MediaEntryModuleImpl()
+        module.setMediaContents(Seq(image).toArray)
+        module
+      }
+
       // Entry
       val entry = new SyndEntryImpl
       entry.setTitle(trail.headline)
@@ -73,6 +102,7 @@ object TrailsToRss {
       entry.setAuthor(trail.byline.getOrElse(""))
       entry.setPublishedDate(trail.webPublicationDate.toDate)
       entry.setCategories(categories)
+      entry.setModules(new java.util.ArrayList(modules))
       entry
 
     }.asJava

@@ -5,29 +5,17 @@ define([
     'common/modules/analytics/mvt-cookie',
 
     //Current tests
-    'common/modules/experiments/tests/aa',
-    'common/modules/experiments/tests/fronts-latest-reviews-card',
-    'common/modules/experiments/tests/fronts-cartoon-card',
-    'common/modules/experiments/tests/fronts-missed-card',
-    'common/modules/experiments/tests/fronts-live-card'
+    'common/modules/experiments/tests/live-blog-follow-button'
 ], function (
     common,
     store,
     mediator,
     mvtCookie,
-    Aa,
-    FrontsLatestReviewsCard,
-    FrontsCartoonCard,
-    FrontsMissedCard,
-    FrontsLiveCard
+    LiveBlogFollowButton
 ) {
 
     var TESTS = [
-            new Aa(),
-            new FrontsLatestReviewsCard(),
-            new FrontsCartoonCard(),
-            new FrontsMissedCard(),
-            new FrontsLiveCard()
+            new LiveBlogFollowButton()
        ],
        participationsKey = 'gu.ab.participations';
 
@@ -157,7 +145,7 @@ define([
             addParticipation(test, variantIds[testVariantId]);
 
         } else {
-            addParticipation(test, "notintest");
+            addParticipation(test, 'notintest');
         }
     }
 

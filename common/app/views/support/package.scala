@@ -1,7 +1,7 @@
 package views.support
 
 import common._
-import conf.Switches.{ TagLinking, ShowAllArticleEmbedsSwitch, ArticleSlotsSwitch }
+import conf.Switches.{ ShowAllArticleEmbedsSwitch, ArticleSlotsSwitch }
 import model._
 
 import java.net.URLEncoder._
@@ -97,6 +97,10 @@ case class SpecialContainer(showMore: Boolean = true) extends Container {
 }
 case class SectionContainer(showMore: Boolean = true, tone: String = "news") extends Container {
   val containerType = "section"
+}
+case class MultimediaContainer(showMore: Boolean = true) extends Container {
+  val containerType = "multimedia"
+  val tone = "comment"
 }
 
 sealed trait AdSlot {
@@ -472,7 +476,7 @@ case class InlineSlotGenerator(articleWordCount: Int) extends HtmlCleaner {
 
 class TagLinker(article: Article)(implicit val edition: Edition) extends HtmlCleaner{
   def clean(d: Document): Document = {
-    if (TagLinking.isSwitchedOn && article.linkCounts.noLinks) {
+    if (article.linkCounts.noLinks) {
       val paragraphs = d.getElementsByTag("p")
 
       // order by length of name so we do not make simple match errors
@@ -488,7 +492,7 @@ class TagLinker(article: Article)(implicit val edition: Edition) extends HtmlCle
           tagLink.attr("data-link-name", "auto-linked-tag")
           tagLink.addClass("u-underline")
 
-          p.html(p.html().replaceFirst(keyword.name, tagLink.toString))
+          p.html(p.html().replaceFirst(" " + keyword.name + " ", " " + tagLink.toString + " "))
         }
       }
     }

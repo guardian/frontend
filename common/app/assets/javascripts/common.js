@@ -6,7 +6,6 @@ define([
     'lodash/functions/debounce',
     'lodash/functions/throttle',
     'common/utils/to-array',
-    'common/utils/lazy-load-css',
     'common/utils/atob',
     'common/utils/request-animation-frame'
 ], function (
@@ -17,7 +16,6 @@ define([
     debounce,
     rateLimit,
     toArray,
-    lazyLoadCss,
     atob,
     requestAnimationFrame
 ) {
@@ -29,7 +27,6 @@ define([
         debounce: debounce,
         rateLimit: rateLimit,
         toArray: toArray,
-        lazyLoadCss: lazyLoadCss,
         atob: atob,
         requestAnimationFrame: requestAnimationFrame
     };

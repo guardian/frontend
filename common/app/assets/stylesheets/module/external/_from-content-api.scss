@@ -1,9 +1,20 @@
-//Module: from-content-api
+// Module: from-content-api
 
-//Desc: This file contains all styles for in
-//article content returned from content api
+// Desc: This file contains all styles for in
+// article content returned from content api
 
-//This is the only place where direct element selectors are allowed!
+// This is the only place where direct element selectors are allowed!
+
+// Horizontal offsets of text in blockquotes and bulletted lists
+$quoted-offset: (
+    default: $gs-gutter*2,
+    tablet: $gs-gutter*2 + $gs-gutter/5
+);
+$bullet-offset: (
+    default: $gs-gutter - $gs-gutter/5,
+    tablet: $gs-gutter
+);
+
 
 /* Core elements
    ========================================================================== */
@@ -37,6 +48,7 @@
         }
     }
     > ol,
+    > blockquote > ul,
     > ul {
        margin-top: 0.8em;
        list-style: none;
@@ -54,10 +66,19 @@
             @include fs-header(2, true);
         }
     }
-    > ul > li {
+    > ul > li,
+    > blockquote > ul > li {
+        @include rem((
+            text-indent: map-get($bullet-offset, default)
+        ));
+
+        @include mq(tablet) {
+            @include rem((
+                text-indent: map-get($bullet-offset, tablet)
+            ));
+        }
         @include faux-bullet-point;
     }
-
     > ol > li,
     > ul > li {
         position: relative;
@@ -101,21 +122,6 @@
     }
 }
 
-.from-content-api--small {
-    @include fs-bodyCopy(2, true);
-
-    @include mq(tablet) {
-        @include fs-bodyCopy(3, true);
-    }
-    h2 {
-        @include fs-bodyHeading(2, true);
-
-        @include mq(tablet) {
-            @include fs-bodyHeading(3, true);
-        }
-    }
-}
-
 .from-content-api blockquote {
     font-style: italic;
     @include rem((
@@ -145,22 +151,46 @@
         p,
         h2 {
             &:first-child {
-                text-indent: 40px;
+                text-indent: map-get($quoted-offset, default);
 
                 @include mq(tablet) {
-                    text-indent: 44px;
+                    text-indent: map-get($quoted-offset, tablet);
                 }
             }
         }
         > ul:first-child {
             // Fix list and quote icon overlap - #2026
-            margin-left: 40px;
+            margin-left: map-get($quoted-offset, default);
 
             @include mq(tablet) {
-                margin-left: 44px;
+                margin-left: map-get($quoted-offset, tablet);
+            }
+        }
+        .bullet-container:first-child {
+            text-indent: map-get($quoted-offset, default) + map-get($bullet-offset, default);
+
+            @include mq(tablet) {
+                text-indent: map-get($quoted-offset, tablet) + map-get($bullet-offset, tablet);
+            }
+
+            &:before {
+                left: map-get($quoted-offset, default);
+
+                @include mq(tablet) {
+                    left: map-get($quoted-offset, tablet);
+                }
             }
         }
     }
+}
+
+
+/* Code
+   ========================================================================== */
+
+.from-content-api pre {
+    // Unset from `.from-content-api`
+    word-wrap: normal;
 }
 
 
@@ -168,20 +198,46 @@
    ========================================================================== */
 
 .bullet-container {
-    text-indent: 0 !important;
-    margin-bottom: .8em !important;
+    display: list-item;
+    list-style-position: outside;
+    list-style-type: none;
+    @include rem((
+        text-indent: map-get($bullet-offset, default)
+    ));
+
+    @include mq(tablet) {
+        @include rem((
+            text-indent: map-get($bullet-offset, tablet)
+        ));
+    }
+
+    + * {
+        margin-top: .6em;
+    }
+
+    @include faux-bullet-point;
+
+    .bullet {
+        display: none;
+    }
 }
 .bullet {
+    speak: none;
     display: inline-block;
-    color: $c-neutral3;
     vertical-align: bottom;
-    font-style: normal;
-
+    margin-top: .6em;
     @include rem((
-        font-size: 48px,
-        margin-top: 15px,
-        margin-bottom: -2px
+        width: 14px
     ));
+    @include mq(tablet) {
+        @include rem((
+            width: 16px
+        ));
+    }
+    // IE8 does not support `color: transparent`. In this case the bullet
+    // should be the same colour as the fake bullet point
+    color: if($old-ie, $c-neutral3, transparent);
+    @include faux-bullet-point;
 }
 
 
@@ -349,4 +405,3 @@ p + video {
         width: 100%;
     }
 }
-

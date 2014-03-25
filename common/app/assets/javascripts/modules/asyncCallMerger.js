@@ -16,7 +16,7 @@ define([], function () {
 
         function targetCallbackHandler() {
             callbackArguments = arguments;
-            status = "complete";
+            status = 'complete';
 
             for(var i = 0; i < callbacks.length; i++) {
                 callbacks[i].apply(null, callbackArguments);
@@ -24,11 +24,11 @@ define([], function () {
         }
 
         function callMergingFunction(callback) {
-            if(status === "init") {
-                status = "waiting";
+            if(status === 'init') {
+                status = 'waiting';
                 callbacks.push(callback);
                 targetFunction(targetCallbackHandler);
-            } else if(status === "waiting") {
+            } else if(status === 'waiting') {
                 callbacks.push(callback);
             } else {
                 callback.apply(null, callbackArguments);
@@ -37,7 +37,7 @@ define([], function () {
 
         function reset() {
             callbacks = [];
-            status = "init";
+            status = 'init';
             callbackArguments = null;
         }
 

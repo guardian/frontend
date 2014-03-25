@@ -9,10 +9,13 @@
 <head>
     @fragments.head(metaData, projectName, head, curlPaths)
 </head>
-<body id="top" itemscope itemtype="http://schema.org/WebPage">
+<body
+    @Navigation.topLevelItem(Edition(request).navigation(metaData), metaData).filter(_.links.nonEmpty).map{ localNav => class="has-localnav" }
+    id="top"
+    itemscope itemtype="http://schema.org/WebPage">
 
     @fragments.message(metaData)
-    @if(LeadAdTopPageSwitch.isSwitchedOn) {
+    @if(AdvertSwitch.isSwitchedOn && LeadAdTopPageSwitch.isSwitchedOn) {
         <div class="top-banner-ad-container top-banner-ad-container--above-header">
             @fragments.adSlot(id="top-banner-ad", baseSlot="Top2", medianSlot="Top", extendedSlot="Top")
         </div>
@@ -24,9 +27,11 @@
             <div id="preload-1" class="preload">
                 <div class="parts">
                     <div class="parts__head">
-                        <div class="top-banner-ad-container@if(LeadAdTopPageSwitch.isSwitchedOn){ top-banner-ad-container--below-header}">
-                            @fragments.adSlot(id="top-banner-ad", baseSlot="Top2", medianSlot="Top", extendedSlot="Top")
-                        </div>
+                        @if(AdvertSwitch.isSwitchedOn) {
+                            <div class="top-banner-ad-container@if(LeadAdTopPageSwitch.isSwitchedOn){ top-banner-ad-container--below-header}">
+                                @fragments.adSlot(id="top-banner-ad", baseSlot="Top2", medianSlot="Top", extendedSlot="Top")
+                            </div>
+                        }
                         @fragments.localNav(metaData)
                     </div>
                     <div class="parts__body">

@@ -64,13 +64,29 @@ object MatchStatus extends Logging {
 
 }
 
+object ColourTools {
+  def darkenWhite(colour: String) = {
+    if (colour == "#FFFFFF") "#EEEEEE"
+    else colour
+  }
+
+  def isLight(colour: String) = {
+    val hex = colour.dropWhile('#' == _)
+    val r = Integer.parseInt(hex.take(2), 16)
+    val g = Integer.parseInt(hex.drop(2).take(2), 16)
+    val b = Integer.parseInt(hex.drop(4).take(2), 16)
+    val yiq = ((r*299) + (g*587) + (b*114)) / 1000
+    yiq > 128
+  }
+}
+
 object NudgePercent {
   // the realities of padding and margins means we never actually want 100%
   def apply(main: Int, other: Int) = {
-    if (main == 0 && other == 0) 49.5
-    else if (main >= 99) 98
-    else if (main < 1) 1
-    else main - 0.5
+    if (main == 0 && other == 0) 50
+    else if (main >= 91) 91
+    else if (main < 9) 9
+    else main
   }
 }
 

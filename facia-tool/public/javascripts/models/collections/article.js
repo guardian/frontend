@@ -134,8 +134,8 @@ define([
             this._save();
         };
 
-        Article.prototype.toggleImageAdjustHighlight = function() {
-            this.meta.imageAdjust(this.meta.imageAdjust() === 'highlight' ? undefined : 'highlight');
+        Article.prototype.toggleImageAdjustBoost = function() {
+            this.meta.imageAdjust(this.meta.imageAdjust() === 'boost' ? undefined : 'boost');
             this._save();
         };
 

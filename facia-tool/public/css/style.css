@@ -110,7 +110,7 @@ a, a:hover {
 .droppable {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-    padding: 0 0 10px 0;
+    padding: 0 0 25px 0;
     -webkit-transition: background-color 50ms;
     -moz-transition: background-color 50ms;
     transition: background-color 50ms;

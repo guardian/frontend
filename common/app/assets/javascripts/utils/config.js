@@ -18,10 +18,10 @@ define(['lodash/objects/assign'], function (extend) {
 
     return extend({
         hasTone: function (name) {
-            return (config.page.tones || "").indexOf(name) > -1;
+            return (config.page.tones || '').indexOf(name) > -1;
         },
         hasSeries: function (name) {
-            return (config.page.series || "").indexOf(name) > -1;
+            return (config.page.series || '').indexOf(name) > -1;
         },
         referencesOfType: function (name) {
             return (config.page.references || []).filter(function (reference) {

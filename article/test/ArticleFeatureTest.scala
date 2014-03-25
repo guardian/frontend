@@ -248,7 +248,6 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
     scenario("Articles should auto link to keywords") {
 
       Given("An article that has no in body links")
-      Switches.TagLinking.switchOn()
       HtmlUnit("/law/2014/jan/20/pakistan-drone-strike-relative-loses-gchq-court-case") { browser =>
         import browser._
 
@@ -267,7 +266,6 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
     scenario("Articles should link section tags") {
 
       Given("An article that has no in body links")
-      Switches.TagLinking.switchOn()
       HtmlUnit("/environment/2014/jan/09/penguins-ice-walls-climate-change-antarctica") { browser =>
         import browser._
 
@@ -282,7 +280,6 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
       // so you don't overlap similar tags
 
       Given("An article that has no in body links")
-      Switches.TagLinking.switchOn()
       HtmlUnit("/uk-news/2013/dec/27/high-winds-heavy-rain-uk-ireland") { browser =>
         import browser._
 
@@ -314,6 +311,9 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
     scenario("correct placeholder for ad is rendered") {
 
       Given("the user navigates to a page")
+
+      OASAdvertSwitch.switchOn()
+
       HtmlUnit("/environment/2012/feb/22/capitalise-low-carbon-future") { browser =>
         import browser._
 
@@ -328,11 +328,14 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         adPlaceholder.getAttribute("data-extended") should be("Top")
 
         And("the placeholder has the correct class name")
-        adPlaceholder.getAttribute("class") should be("ad-slot ad-slot--top-banner-ad")
+        adPlaceholder.getAttribute("class") should be("ad-slot__oas ad-slot--top-banner-ad")
 
         And("the placeholder has the correct analytics name")
         adPlaceholder.getAttribute("data-link-name") should be("ad slot top-banner-ad")
       }
+
+      // put it back in the state we found it
+      OASAdvertSwitch.switchOff()
     }
 
     scenario("Navigate to the classic site (UK edition - www.guardian.co.uk)") {

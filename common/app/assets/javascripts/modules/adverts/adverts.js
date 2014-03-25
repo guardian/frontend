@@ -35,7 +35,7 @@ function (
         // Run through slots and create documentWrite for each.
         // Other ad types such as iframes and custom can be plugged in here later
 
-        var els = document.querySelectorAll('.ad-slot');
+        var els = document.querySelectorAll('.ad-slot__oas');
 
         for(var i = 0, l = els.length; i < l; i++) {
             var el = els[i];
@@ -95,8 +95,8 @@ function (
     }
 
     function hideAds() {
-        $('.ad-slot').addClass('is-hidden');
-        $('.top-banner-ad-container').addClass('is-invisible');
+        $('.ad-slot__oas').addClass('is-hidden');
+        $('ad-slot__oas.ad-slot--top-banner-ad').addClass('is-invisible');
     }
 
     return {

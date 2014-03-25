@@ -4,9 +4,11 @@ define([
     'bean',
     'common/utils/context',
     'common/utils/config',
-    'common/modules/sport/football/page',
+    'common/utils/page',
+    'common/modules/ui/rhc',
     'common/modules/sport/football/match-list',
     'common/modules/sport/football/match-info',
+    'common/modules/sport/football/match-stats',
     'common/modules/sport/football/score-board',
     'common/modules/sport/football/table'
 ], function (
@@ -16,14 +18,18 @@ define([
     context,
     config,
     page,
+    rhc,
     MatchList,
     MatchInfo,
+    MatchStats,
     ScoreBoard,
     Table
 ) {
     context = context();
 
     function init() {
+        var $article = $('.js-article__container', context);
+
         page.isMatch(function(match) {
             var $h = $('.article__headline', context),
                 matchInfo = new MatchInfo(match, config.page.pageId),
@@ -42,10 +48,35 @@ define([
             }
 
             matchInfo.fetch().then(function(resp) {
-                $('.after-header', context).append(resp.nav);
-                scoreBoard.template = config.page.isLiveBlog ? resp.matchSummary : resp.scoreSummary;
-                scoreContainer.innerHTML = '';
-                scoreBoard.render(scoreContainer);
+                var $nav = $.create(resp.nav).first().each(function(nav) {
+                    if (match.id || $('.tabs__tab', nav).length > 2) {
+                        $('.after-header', context).append(nav);
+                    }
+                });
+
+                if (!match.id) {
+                    scoreContainer.innerHTML = '';
+                    scoreBoard.template = config.page.isLiveBlog ? resp.matchSummary : resp.scoreSummary;
+                    scoreBoard.render(scoreContainer);
+
+                    $('.tab--min-by-min a', $nav).first().each(function(el) {
+                        bonzo(scoreBoard.elem).addClass('u-fauxlink');
+                        bean.on(scoreBoard.elem, 'click', function() {
+                            window.location = el.getAttribute('href');
+                        });
+                    });
+
+                    var statsUrl = $('.tab--stats a', $nav).attr('href').replace(/^.*\/\/[^\/]+/, ''),
+                        statsContainer = bonzo.create('<div class="match-stats__container"></div>'),
+                        matchStats = new MatchStats(statsUrl);
+
+                    page.rightHandComponentVisible(function() {
+                        rhc.addComponent(statsContainer, 3);
+                    }, function() {
+                        $article.append(statsContainer);
+                    });
+                    matchStats.fetch(statsContainer);
+                }
             });
         });
 
@@ -53,8 +84,10 @@ define([
             var table = new Table(competition),
                 tableContainer = bonzo.create('<div class="js-football-table" data-link-name="football-table-embed"></div>');
 
-            $('.js-right-hand-component', context).append(tableContainer);
-            table.fetch(tableContainer);
+            page.rightHandComponentVisible(function() {
+                rhc.addComponent(tableContainer, 2);
+                table.fetch(tableContainer);
+            });
         });
 
         page.isLiveClockwatch(function() {
@@ -82,8 +115,10 @@ define([
         });
 
         // Binding
-        bean.on(context, 'click', '.table tr[data-link-to]', function() {
-            window.location = this.getAttribute('data-link-to');
+        bean.on(context, 'click', '.table tr[data-link-to]', function(e) {
+            if (!e.target.getAttribute('href')) {
+                window.location = this.getAttribute('data-link-to');
+            }
         });
 
         bean.on(context, 'change', $('form.football-leagues')[0], function() {

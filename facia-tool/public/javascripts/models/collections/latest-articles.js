@@ -111,7 +111,7 @@ define([
 
                     if (count !== counter) { return; }
 
-                    self.flush(rawArticles.length === 0 ? "...sorry, no articles were found." : "");
+                    self.flush(rawArticles.length === 0 ? '...sorry, no articles were found.' : '');
 
                     ([].concat(rawArticles)).forEach(function(article, index){
                         article.index = index;

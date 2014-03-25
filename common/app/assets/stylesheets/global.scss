@@ -53,6 +53,7 @@
 @import "module/onward/_popular";
 @import "module/_clamp";
 
+
 /* ==========================================================================
    External modules
    ========================================================================== */
@@ -80,6 +81,7 @@
 @import "module/containers/_misc";
 @import "module/containers/_popular";
 @import "module/containers/_related";
+@import "module/containers/_multimedia";
 @import "module/facia/_pagination";
 
 
@@ -92,10 +94,7 @@
 @import "module/football/_match-summary";
 @import "module/football/_matches";
 @import "module/football/_live-summary";
-
-@import "module/sport/_summary";
-@import "module/sport/_mini-scorecard";
-@import "module/sport/_full-scorecard";
+@import "module/football/_stats";
 
 
 /* ==========================================================================
@@ -103,6 +102,8 @@
    ========================================================================== */
 
 @import "module/experiments/_layout-hints";
+@import "module/experiments/_follow-btn";
+
 
 /* ==========================================================================
    Icons

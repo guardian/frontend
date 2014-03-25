@@ -49,7 +49,7 @@ define([
     }
 
     function isValidDate(date) {
-        if (Object.prototype.toString.call(date) !== "[object Date]") {
+        if (Object.prototype.toString.call(date) !== '[object Date]') {
             return false;
         }
         return !isNaN(date.getTime());

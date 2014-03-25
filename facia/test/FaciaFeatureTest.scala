@@ -6,10 +6,6 @@ import conf.Switches
 
 class FaciaFeatureTest extends FeatureSpec with GivenWhenThen with Matchers with BeforeAndAfter {
 
-  before {
-    Switches.PressedFacia.switchOn()
-  }
-
   feature("Facia") {
 
     // Scenarios

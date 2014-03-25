@@ -6,17 +6,17 @@ define([
 ], function(bonzo, qwery, bean, detect){
 
     function Layout(config) {
-        var slug = config.page.pageId.split("/").pop().replace('-sp-', '');
+        var slug = config.page.pageId.split('/').pop().replace('-sp-', '');
 
         if(slug in this.content) {
             this.container = document.getElementById('article');
             bonzo(this.container).addClass('layout-hints ' + slug);
-            this.content[slug]();
+            this.content[slug](config);
         }
     }
 
     Layout.prototype.content = {
-        "rescue-from-antarctica" : function() {
+        'rescue-from-antarctica' : function() {
             var img = bonzo(new Image()),
                 imgs = qwery('.element-image', this.container),
                 videos = bonzo(qwery('video', this.container)),
