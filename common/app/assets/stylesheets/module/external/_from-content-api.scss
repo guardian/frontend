@@ -1,18 +1,18 @@
-//Module: from-content-api
+// Module: from-content-api
 
-//Desc: This file contains all styles for in
-//article content returned from content api
+// Desc: This file contains all styles for in
+// article content returned from content api
 
-//This is the only place where direct element selectors are allowed!
+// This is the only place where direct element selectors are allowed!
 
 // Horizontal offsets of text in blockquotes and bulletted lists
 $quoted-offset: (
-    default: 40px,
-    tablet: 44px
+    default: $gs-gutter*2,
+    tablet: $gs-gutter*2 + $gs-gutter/5
 );
 $bullet-offset: (
-    default: 16px,
-    tablet: 20px
+    default: $gs-gutter - $gs-gutter/5,
+    tablet: $gs-gutter
 );
 
 
