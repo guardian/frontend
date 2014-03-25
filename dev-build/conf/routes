@@ -169,7 +169,7 @@ GET         /onward/recently-published                                          
 
 # Facia
 GET         /                                                                                                        controllers.FaciaController.editionRedirect(path = "")
-GET         /$path<(culture|sport|commentisfree|business|money)>                                                     controllers.FaciaController.editionRedirect(path)
+GET         /$path<(culture|sport|commentisfree|business|money|rss)>                                                 controllers.FaciaController.editionRedirect(path)
 
 #Facia Press
 GET         /pressed/*path                                                                                           controllers.FaciaController.renderFrontPress(path)
