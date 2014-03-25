@@ -196,8 +196,8 @@ object Switches extends Collections {
   // Feature Switches
 
   val ReleaseMessageSwitch = Switch("Feature Switches", "release-message",
-    "If this is switched on users will be messaged that they are inside the alpha/beta/whatever release",
-    safeState = Off, sellByDate = endOfQ4
+    "If this is switched on users will be messaged that they are inside the beta release",
+    safeState = Off, sellByDate = new DateMidnight(2014, 5, 1)
   )
 
   val FontSwitch = Switch("Feature Switches", "web-fonts",
