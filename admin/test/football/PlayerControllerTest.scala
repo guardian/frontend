@@ -46,13 +46,13 @@ class PlayerControllerTest extends FreeSpec with ShouldMatchers with GetPaClient
   }
 
   "test redirects player card form submission to correct player page" in Fake {
-    val Some(result) = route(FakeRequest(POST, "/admin/football/player/card", FakeHeaders(), AnyContentAsFormUrlEncoded(Map("player" -> List("123456")))))
+    val Some(result) = route(FakeRequest(POST, "/admin/football/player/card", FakeHeaders(), AnyContentAsFormUrlEncoded(Map("player" -> List("123456"), "playerCardType" -> List("overview")))))
     status(result) should equal(SEE_OTHER)
-    redirectLocation(result) should equal(Some("/admin/football/player/card/123456"))
+    redirectLocation(result) should equal(Some("/admin/football/player/card/overview/123456"))
   }
 
   "test player card renders correctly" in Fake {
-    val Some(result) = route(FakeRequest(GET, "/admin/football/player/card/237670"))
+    val Some(result) = route(FakeRequest(GET, "/admin/football/player/card/overview/237670"))
     status(result) should equal(OK)
     val content = contentAsString(result)
 
