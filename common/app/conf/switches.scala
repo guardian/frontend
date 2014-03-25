@@ -315,11 +315,6 @@ object Switches extends Collections {
 
   // A/B Test Switches
 
-  val ABAa = Switch("A/B Tests", "ab-abcd",
-    "If this is switched on an AA test runs to prove the assignment of users in to segments is working reliably.",
-    safeState = Off, sellByDate = endOfQ4
-  )
-
   val ABLiveBlogFollowButton = Switch("A/B Tests", "ab-live-blog-follow-button",
     "If this is switched on an experiment runs to display a follow button on live blogs.",
     safeState = Off, sellByDate = new DateMidnight(2014, 3, 28)
@@ -421,7 +416,6 @@ object Switches extends Collections {
     RightHandMostPopularSwitch,
     IdentityEthicalAwardsSwitch,
     IdentityFilmAwardsSwitch,
-    ABAa,
     ABLiveBlogFollowButton,
     ToolDisable,
     ToolConfigurationDisable,
