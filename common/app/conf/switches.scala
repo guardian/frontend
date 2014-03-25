@@ -60,7 +60,7 @@ object Switches extends Collections {
 
   val RelatedContentSwitch = Switch("Performance Switches", "related-content",
     "If this switch is turned on then related content will show. Turn off to help handle exceptional load.",
-    safeState = On, sellByDate = endOfQ4
+    safeState = On, sellByDate = never
   )
 
   val CssFromStorageSwitch = Switch("Performance Switches", "css-from-storage",
@@ -170,11 +170,6 @@ object Switches extends Collections {
 
   // Analytics Switches
 
-  val LiveStatsSwitch = Switch("Analytics", "live-stats",
-    "Turns on our real-time KPIs",
-    safeState = Off, sellByDate = endOfQ4
-  )
-
   val OphanSwitch = Switch("Analytics", "ophan",
     "Enables the new Ophan tracking javascript",
     safeState = On, never
@@ -199,7 +194,7 @@ object Switches extends Collections {
 
   val FontSwitch = Switch("Feature Switches", "web-fonts",
     "If this is switched on then the custom Guardian web font will load.",
-    safeState = Off, sellByDate = endOfQ4
+    safeState = Off, sellByDate = never
   )
 
   val SponsoredContentSwitch = Switch("Feature Switches", "sponsored-content",
@@ -240,11 +235,6 @@ object Switches extends Collections {
   val IdentityFormstackSwitch = Switch("Feature Switches", "id-formstack",
     "If this switch is on, formstack forms will be available",
     safeState = Off, sellByDate = never
-  )
-
-  val RightHandMostPopularSwitch = Switch("Feature Switches", "right-hand-most-popular",
-    "If this switch is on, a component with most popular content from around the Guardian is displayed in the article right hand column at desktop breakpoints.",
-    safeState = On, sellByDate = endOfQ4
   )
 
   val IdentityEthicalAwardsSwitch = Switch("Feature Switches", "id-ethical-awards",
@@ -373,13 +363,11 @@ object Switches extends Collections {
     IntegrationTestSwitch,
     ClientSideErrorSwitch,
     IdentityProfileNavigationSwitch,
-    LiveStatsSwitch,
     CssFromStorageSwitch,
     ElasticSearchSwitch,
     ArticleKeywordsSwitch,
     FacebookAutoSigninSwitch,
     IdentityFormstackSwitch,
-    RightHandMostPopularSwitch,
     IdentityEthicalAwardsSwitch,
     IdentityFilmAwardsSwitch,
     ABLiveBlogFollowButton,
