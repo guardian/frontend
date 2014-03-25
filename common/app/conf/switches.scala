@@ -193,14 +193,9 @@ object Switches extends Collections {
     safeState = On, never
   )
 
-  val DiagnosticsRequestLogging = Switch("Diagnostics", "enable-diagnostics-request-logging",
-    "If this switch is on, then requests to the Diagnostics servers will be logged.",
-    safeState = Off, endOfQ4
-  )
-
-  val DiagnosticsJavascriptErrorLogging = Switch("Diagnostics", "enable-diagnostics-js-error-logging",
-    "If this switch is on, then js error reports sent to the Diagnostics servers will be logged.",
-    safeState = Off, endOfQ4
+  val DiagnosticsLogging = Switch("Diagnostics", "enable-diagnostics-logging",
+    "If this switch is on, then js error reports and requests sent to the Diagnostics servers will be logged.",
+    safeState = Off, never
   )
 
   val ScrollDepthSwitch = Switch("Analytics", "scroll-depth",
@@ -428,8 +423,7 @@ object Switches extends Collections {
     EffectiveMeasureSwitch,
     ImrWorldwideSwitch,
     ForeseeSwitch,
-    DiagnosticsRequestLogging,
-    DiagnosticsJavascriptErrorLogging,
+    DiagnosticsLogging,
     TravelOffersFeedSwitch,
     JobFeedSwitch,
     MasterclassFeedSwitch,
