@@ -58,11 +58,4 @@ object RadiatorController extends Controller with Logging with AuthLogging {
         NoCache(Ok(Json.toJson(response.body)))
       }
   }
-  
-  def liveStats() = Authenticated { implicit request =>
-    val responsive = CloudWatch.liveStats("viewsOverSessions.responsive")
-    val desktop = CloudWatch.liveStats("viewsOverSessions.desktop")
-    NoCache(Ok(views.html.liveStats(responsive, desktop, Configuration.environment.stage)))
-  }
-  
 }

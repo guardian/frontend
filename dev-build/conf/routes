@@ -9,7 +9,6 @@ GET         /assets/internal/*file                                              
 GET         /assets/*path                                                                                            dev.DevAssetsController.at(path)
 
 # Diagnostics
-GET         /px.gif                                                                                                  controllers.DiagnosticsController.px
 GET         /ab.gif                                                                                                  controllers.DiagnosticsController.ab
 GET         /js.gif                                                                                                  controllers.DiagnosticsController.js
 GET         /count/$prefix<.+>.gif                                                                                   controllers.DiagnosticsController.analytics(prefix)
@@ -128,7 +127,6 @@ GET         /metrics/assets                                                     
 GET         /radiator                                                                                                controllers.admin.RadiatorController.renderRadiator()
 GET         /radiator/pingdom                                                                                        controllers.admin.RadiatorController.pingdom()
 GET         /radiator/commit/*hash                                                                                   controllers.admin.RadiatorController.commitDetail(hash)
-GET         /radiator/livestats                                                                                      controllers.admin.RadiatorController.liveStats()
 GET         /troubleshoot/football                                                                                   controllers.admin.FootballTroubleshooterController.renderFootballTroubleshooter()
 GET         /troubleshoot/pages                                                                                      controllers.admin.TroubleshooterController.index()
 GET         /troubleshoot/test                                                                                       controllers.admin.TroubleshooterController.test(id, testPath)

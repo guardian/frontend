@@ -192,12 +192,9 @@ define([
         },
 
         initRightHandComponent: function(config) {
-
-            if(config.switches.rightHandMostPopular && config.page.contentType === 'Article') {
-                if(detect.getBreakpoint() !== 'mobile' && parseInt(config.page.wordCount, 10) > 500  ) {
-                    new RightMostPopular(mediator, {type: 'image', maxTrails: 5});
-                }
-           }
+            if(config.page.contentType === 'Article' && detect.getBreakpoint() !== 'mobile' && parseInt(config.page.wordCount, 10) > 500  ) {
+                new RightMostPopular(mediator, {type: 'image', maxTrails: 5});
+            }
         },
 
         logLiveStats: function (config) {
