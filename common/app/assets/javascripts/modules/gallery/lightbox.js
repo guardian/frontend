@@ -46,42 +46,40 @@ define([
         this.init = function(opts) {
             self.opts = opts || {};
 
-            if (self.opts.overrideSwitch) {
-                // Apply tracking to links
-                $(self.selector + ' a', context).attr('data-is-ajax', '1');
+            // Apply tracking to links
+            $(self.selector + ' a', context).attr('data-is-ajax', '1');
 
-                bean.on(context, 'click', self.selector, function(e) {
-                    e.preventDefault();
+            bean.on(context, 'click', self.selector, function(e) {
+                e.preventDefault();
 
-                    var currentTarget = e.currentTarget,
-                        galleryUrl = $(currentTarget).attr('data-gallery-url');
-                    if (!galleryUrl) {
-                        var el = (currentTarget.nodeName === 'A') ? currentTarget : currentTarget.querySelector('a');
-                        galleryUrl = el.getAttribute('href');
-                    }
-
-                    // Go to a specific image if it's in the query string. eg: index=3
-                    if (galleryUrl.indexOf('index=') !== -1) {
-                        var urlParams = url.getUrlVars({
-                            query: galleryUrl.split('?')[1]
-                        });
-                        currentImage = parseInt(urlParams.index, 10);
-                    }
-
-
-                    self.loadGallery({
-                        url: galleryUrl
-                    });
-                });
-
-                // Load gallery straight away if url contains a direct image link
-                var urlParams = url.getUrlVars();
-                if (urlParams.index) {
-                    this.loadGallery({
-                        url: '/' + config.page.pageId,
-                        startingImage: parseInt(urlParams.index, 10)
-                    });
+                var currentTarget = e.currentTarget,
+                    galleryUrl = $(currentTarget).attr('data-gallery-url');
+                if (!galleryUrl) {
+                    var el = (currentTarget.nodeName === 'A') ? currentTarget : currentTarget.querySelector('a');
+                    galleryUrl = el.getAttribute('href');
                 }
+
+                // Go to a specific image if it's in the query string. eg: index=3
+                if (galleryUrl.indexOf('index=') !== -1) {
+                    var urlParams = url.getUrlVars({
+                        query: galleryUrl.split('?')[1]
+                    });
+                    currentImage = parseInt(urlParams.index, 10);
+                }
+
+
+                self.loadGallery({
+                    url: galleryUrl
+                });
+            });
+
+            // Load gallery straight away if url contains a direct image link
+            var urlParams = url.getUrlVars();
+            if (urlParams.index) {
+                this.loadGallery({
+                    url: '/' + config.page.pageId,
+                    startingImage: parseInt(urlParams.index, 10)
+                });
             }
         };
 
