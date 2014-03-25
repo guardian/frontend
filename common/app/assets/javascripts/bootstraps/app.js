@@ -94,7 +94,7 @@ define([
         userTiming.mark('App Begin');
 
         domReady(function() {
-            var context = document.getElementById('preload-1');
+            var context = document.getElementById('js-context');
 
             Context.set(context);
 
