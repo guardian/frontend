@@ -53,14 +53,7 @@ define([
                 scoreContainer.innerHTML = '';
                 scoreBoard.render(scoreContainer);
 
-                $('.score-summary').addClass('u-fauxlink').each(function(el) {
-                    bean.on(el, 'click', function() {
-                        $('.tabs__tab a').first().each(function(el) {
-                            window.location = el.getAttribute('href');
-                        });
-                    });
-                });
-
+                // TODO (jamesgorrie): The stats component should travel with this lot. Two calls is a bit crap
                 if (!match.id) {
                     var statsUrl = $('.tab--stats a', context).attr('href').replace(/^.*\/\/[^\/]+/, ''),
                         statsContainer = bonzo.create('<div class="match-stats__container"></div>'),
@@ -111,10 +104,8 @@ define([
         });
 
         // Binding
-        bean.on(context, 'click', '.table tr[data-link-to]', function(e) {
-            if (!e.target.getAttribute('href')) {
-                window.location = this.getAttribute('data-link-to');
-            }
+        bean.on(context, 'click', '.table tr[data-link-to]', function() {
+            window.location = this.getAttribute('data-link-to');
         });
 
         bean.on(context, 'change', $('form.football-leagues')[0], function() {
