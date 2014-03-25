@@ -55,17 +55,15 @@ define([
                 }
             }
 
-            if (config.switches.liveAbTestStats) {
-                // Also log views and sessions for each participating ab test.
-                var abValues = ab.getAbLoggableObject(config);
+            // Also log views and sessions for each participating ab test.
+            var abValues = ab.getAbLoggableObject(config);
 
-                if (isNewSession()) {
-                    abValues.type = 'session';
-                } else {
-                    abValues.type = 'view';
-                }
-                beacon.fire(makeUrl(abValues, '/ab.gif'));
+            if (isNewSession()) {
+                abValues.type = 'session';
+            } else {
+                abValues.type = 'view';
             }
+            beacon.fire(makeUrl(abValues, '/ab.gif'));
         }
     };
 

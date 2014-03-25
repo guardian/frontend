@@ -183,11 +183,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = endOfQ4
   )
 
-  val LiveAbTestStatsSwitch = Switch("Analytics", "live-ab-test-stats",
-    "Turns on our real-time ab test logging",
-    safeState = Off, sellByDate = endOfQ4
-  )
-
   val OphanSwitch = Switch("Analytics", "ophan",
     "Enables the new Ophan tracking javascript",
     safeState = On, never
@@ -396,7 +391,6 @@ object Switches extends Collections {
     IdentityProfileNavigationSwitch,
     LiveCricketSwitch,
     LiveStatsSwitch,
-    LiveAbTestStatsSwitch,
     CssFromStorageSwitch,
     ElasticSearchSwitch,
     ArticleKeywordsSwitch,
