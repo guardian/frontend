@@ -333,11 +333,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = endOfQ4
   )
 
-  val TagLinking = Switch("Feature Switches", "tag-linking",
-    "If this is switched on articles that have no in body links will auto link to their tags where possible",
-    safeState = Off, sellByDate = endOfQ4
-  )
-
   val ABLiveBlogFollowButton = Switch("A/B Tests", "ab-live-blog-follow-button",
     "If this is switched on an experiment runs to display a follow button on live blogs.",
     safeState = Off, sellByDate = new DateMidnight(2014, 3, 28)
@@ -445,7 +440,6 @@ object Switches extends Collections {
     ToolDisable,
     ToolConfigurationDisable,
     ToolSparklines,
-    TagLinking,
     SponsoredContentSwitch,
     OphanSwitch,
     ScrollDepthSwitch,
