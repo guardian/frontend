@@ -48,21 +48,25 @@ define([
             }
 
             matchInfo.fetch().then(function(resp) {
-                $('.after-header', context).append(resp.nav);
-                scoreBoard.template = config.page.isLiveBlog ? resp.matchSummary : resp.scoreSummary;
-                scoreContainer.innerHTML = '';
-                scoreBoard.render(scoreContainer);
-
-                $('.score-summary').addClass('u-fauxlink').each(function(el) {
-                    bean.on(el, 'click', function() {
-                        $('.tabs__tab a').first().each(function(el) {
-                            window.location = el.getAttribute('href');
-                        });
-                    });
+                var $nav = $.create(resp.nav).first().each(function(nav) {
+                    if (match.id || $('.tabs__tab', nav).length > 2) {
+                        $('.after-header', context).append(nav);
+                    }
                 });
 
                 if (!match.id) {
-                    var statsUrl = $('.tab--stats a', context).attr('href').replace(/^.*\/\/[^\/]+/, ''),
+                    scoreContainer.innerHTML = '';
+                    scoreBoard.template = config.page.isLiveBlog ? resp.matchSummary : resp.scoreSummary;
+                    scoreBoard.render(scoreContainer);
+
+                    $('.tab--min-by-min a', $nav).first().each(function(el) {
+                        bonzo(scoreBoard.elem).addClass('u-fauxlink');
+                        bean.on(scoreBoard.elem, 'click', function() {
+                            window.location = el.getAttribute('href');
+                        });
+                    });
+
+                    var statsUrl = $('.tab--stats a', $nav).attr('href').replace(/^.*\/\/[^\/]+/, ''),
                         statsContainer = bonzo.create('<div class="match-stats__container"></div>'),
                         matchStats = new MatchStats(statsUrl);
 
