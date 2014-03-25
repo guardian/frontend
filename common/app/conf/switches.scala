@@ -97,29 +97,25 @@ object Switches extends Collections {
 
   val OASAdvertSwitch = Switch("Advertising", "oas-adverts",
     "If this switch is on then OAS adverts will be loaded with JavaScript.",
-    safeState = Off, sellByDate = never
+    safeState = Off, sellByDate = new DateMidnight(2014, 4, 8)
   )
 
   val DFPAdvertSwitch = Switch("Advertising", "dfp-adverts",
     "If this switch is on then DFP adverts will be loaded with JavaScript.",
-    safeState = Off, sellByDate = never
+    safeState = Off, sellByDate = new DateMidnight(2014, 4, 8)
   )
 
   val LoadOnlyCommercialComponents = Switch("Advertising", "load-only-commercial-components",
     "If this switch is on then only commercial components will be loaded via DFP.",
-    safeState = On, sellByDate = endOfQ4
+    safeState = On, sellByDate = new DateMidnight(2014, 4, 8)
   )
 
   val VideoAdvertSwitch = Switch("Advertising", "video-adverts",
     "If this switch is on then OAS video adverts will be loaded with JavaScript.",
-    safeState = Off, sellByDate = endOfQ4
+    safeState = Off, sellByDate = new DateMidnight(2014, 4, 8)
   )
 
   // Commercial Tags
-
-  val AudienceScienceSwitch = Switch("Commercial Tags", "audience-science",
-    "If this switch is on the Audience Science will be enabled.",
-    safeState = Off, sellByDate = endOfQ4)
 
   val ImrWorldwideSwitch = Switch("Commercial Tags", "imr-worldwide",
     "Enable the IMR Worldwide audience segment tracking.",
@@ -129,27 +125,23 @@ object Switches extends Collections {
     "Enable the Effective Measure audience segment tracking.",
     safeState = Off, sellByDate = profilingEvalDeadline)
 
-  val AmaaSwitch = Switch("Commercial Tags", "amaa",
-    "Enable the AMAA audience segment tracking.",
-    safeState = Off, sellByDate = endOfQ4)
-
   val ForeseeSwitch = Switch("Commercial Tags", "foresee",
     "Enable Forsee surveys for a sample of our audience",
     safeState = Off, sellByDate = new DateMidnight(2014,5,1)) // 3 month trial
 
   // Commercial Feeds
 
-  val TravelOffersFeedSwitch = Switch("Commercial Feeds", "gu-travel-offers",
+  val TravelOffersFeedSwitch = Switch("Performance Switches", "gu-travel-offers",
     "If this switch is on, commercial components will be fed by travel offer feed.",
-    safeState = Off, sellByDate = endOfQ4)
+    safeState = Off, sellByDate = never)
 
-  val JobFeedSwitch = Switch("Commercial Feeds", "gu-jobs",
+  val JobFeedSwitch = Switch("Performance Switches", "gu-jobs",
     "If this switch is on, commercial components will be fed by job feed.",
-    safeState = Off, sellByDate = endOfQ4)
+    safeState = Off, sellByDate = never)
 
-  val MasterclassFeedSwitch = Switch("Commercial Feeds", "gu-masterclasses",
+  val MasterclassFeedSwitch = Switch("Performance Switches", "gu-masterclasses",
     "If this switch is on, commercial components will be fed by masterclass feed.",
-    safeState = Off, sellByDate = endOfQ4)
+    safeState = Off, sellByDate = never)
 
   val OmnitureVerificationSwitch = Switch("Analytics", "omniture-verification",
     "Enables the new Ophan tracking javascript which support multiple events per page",
@@ -159,21 +151,21 @@ object Switches extends Collections {
     new DateMidnight(2014, 4, 15)
   )
 
-  val SoulmatesFeedSwitch = Switch("Commercial Feeds", "gu-soulmates",
+  val SoulmatesFeedSwitch = Switch("Performance Switches", "gu-soulmates",
     "If this switch is on, commercial components will be fed by soulmates feed.",
-    safeState = Off, sellByDate = endOfQ4)
+    safeState = Off, sellByDate = never)
 
-  val MoneysupermarketFeedsSwitch = Switch("Commercial Feeds", "moneysupermarket",
+  val MoneysupermarketFeedsSwitch = Switch("Performance Switches", "moneysupermarket",
     "If this switch is on, commercial components will be fed by Moneysupermarket feeds.",
-    safeState = Off, sellByDate = endOfQ4)
+    safeState = Off, sellByDate = never)
 
-  val LCMortgageFeedSwitch = Switch("Commercial Feeds", "lc-mortgages",
+  val LCMortgageFeedSwitch = Switch("Performance Switches", "lc-mortgages",
     "If this switch is on, commercial components will be fed by London & Country mortgage feed.",
-    safeState = Off, sellByDate = endOfQ4)
+    safeState = Off, sellByDate = never)
 
-  val GuBookshopFeedsSwitch = Switch("Commercial Feeds", "gu-bookshop",
+  val GuBookshopFeedsSwitch = Switch("Performance Switches", "gu-bookshop",
     "If this switch is on, commercial components will be fed by the Guardian Bookshop feed.",
-    safeState = Off, sellByDate = endOfQ4)
+    safeState = Off, sellByDate = never)
 
 
   // Analytics Switches
@@ -370,7 +362,6 @@ object Switches extends Collections {
     DFPAdvertSwitch,
     LoadOnlyCommercialComponents,
     VideoAdvertSwitch,
-    AudienceScienceSwitch,
     DiscussionSwitch,
     DiscussionVerifiedEmailPosting,
     IdentityEmailVerificationSwitch,
@@ -399,7 +390,6 @@ object Switches extends Collections {
     OphanSwitch,
     ScrollDepthSwitch,
     ContentApiPutSwitch,
-    AmaaSwitch,
     EffectiveMeasureSwitch,
     ImrWorldwideSwitch,
     ForeseeSwitch,
