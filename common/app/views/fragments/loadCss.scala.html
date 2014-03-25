@@ -61,10 +61,12 @@
                     xhr.send();
                 }
 
-                if(guardian.isModernBrowser && !guardian.css.loaded && 'withCredentials' in new XMLHttpRequest() && !/W(indows Phone|PDesktop)/.test(navigator.userAgent)) {
-                    loadCssWithAjax();
-                } else {
-                    loadCssWithLink();
+                if(!guardian.css.loaded) {
+                    if(guardian.isModernBrowser && 'withCredentials' in new XMLHttpRequest() && !/W(indows Phone|PDesktop)/.test(navigator.userAgent)) {
+                        loadCssWithAjax();
+                    } else {
+                        loadCssWithLink();
+                    }
                 }
             })();
         </script>
