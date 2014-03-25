@@ -1,7 +1,7 @@
 /* Local navigation - Global container overrides
    ========================================================================== */
 
-#preloads.has-localnav {
+.js-on .has-localnav {
     .ad-slot-top-banner-ad {
         padding-top: 5px;
         background-color: #eeeeee;
@@ -23,6 +23,15 @@
     }
     .article__head {
         border-top: 0;
+    }
+
+    @include mq($to: tablet) {
+        .container--first {
+            .container__title,
+            .container__border {
+                display: none;
+            }
+        }
     }
 }
 
