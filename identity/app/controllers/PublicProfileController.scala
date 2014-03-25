@@ -7,14 +7,12 @@ import com.google.inject.{Inject, Singleton}
 import utils.SafeLogging
 import model.{Cached, IdentityPage}
 import idapiclient.IdApiClient
-import actions.AuthActionWithUser
 import scala.concurrent.Future
 import com.gu.identity.model.User
 import client.Response
 
 @Singleton
 class PublicProfileController @Inject()(idUrlBuilder: IdentityUrlBuilder,
-                                        authActionWithUser: AuthActionWithUser,
                                         identityApiClient: IdApiClient,
                                         idRequestParser: IdRequestParser)
   extends Controller

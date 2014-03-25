@@ -50,7 +50,7 @@ class FormstackControllerTest extends path.FreeSpec with ShouldMatchers with Moc
     Switches.IdentityFormstackSwitch.switchOff()
 
     "the formstack page will not be displayed" in Fake {
-      val result = controller.formstackForm("test-reference")(TestRequest())
+      val result = controller.formstackForm("test-reference", false)(TestRequest())
       status(result) should equal(NOT_FOUND)
     }
   }
@@ -62,7 +62,7 @@ class FormstackControllerTest extends path.FreeSpec with ShouldMatchers with Moc
       when(formstackApi.checkForm(Matchers.any[FormstackForm])) thenReturn Future.successful(Right(FormstackForm("test-reference", "view-id", None)))
 
       "the formstack page is displayed" in Fake {
-        val result = controller.formstackForm("test-reference")(TestRequest())
+        val result = controller.formstackForm("test-reference", false)(TestRequest())
         status(result) should equal(OK)
       }
     }
@@ -71,7 +71,7 @@ class FormstackControllerTest extends path.FreeSpec with ShouldMatchers with Moc
       when(formstackApi.checkForm(Matchers.any[FormstackForm])) thenReturn Future.successful(Left(List(Error("Test message", "Test description", 404))))
 
       "the formstack page should not be shown and passes status code from errors" in Fake {
-        val result = controller.formstackForm("test-reference")(TestRequest())
+        val result = controller.formstackForm("test-reference", false)(TestRequest())
         status(result) should equal(404)
       }
     }
