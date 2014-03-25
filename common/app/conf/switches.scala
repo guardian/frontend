@@ -183,24 +183,14 @@ object Switches extends Collections {
     safeState = Off, sellByDate = endOfQ4
   )
 
-  val LiveAbTestStatsSwitch = Switch("Analytics", "live-ab-test-stats",
-    "Turns on our real-time ab test logging",
-    safeState = Off, sellByDate = endOfQ4
-  )
-
   val OphanSwitch = Switch("Analytics", "ophan",
     "Enables the new Ophan tracking javascript",
     safeState = On, never
   )
 
-  val DiagnosticsRequestLogging = Switch("Diagnostics", "enable-diagnostics-request-logging",
-    "If this switch is on, then requests to the Diagnostics servers will be logged.",
-    safeState = Off, endOfQ4
-  )
-
-  val DiagnosticsJavascriptErrorLogging = Switch("Diagnostics", "enable-diagnostics-js-error-logging",
-    "If this switch is on, then js error reports sent to the Diagnostics servers will be logged.",
-    safeState = Off, endOfQ4
+  val DiagnosticsLogging = Switch("Diagnostics", "enable-diagnostics-logging",
+    "If this switch is on, then js error reports and requests sent to the Diagnostics servers will be logged.",
+    safeState = Off, never
   )
 
   val ScrollDepthSwitch = Switch("Analytics", "scroll-depth",
@@ -235,11 +225,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = endOfQ4
   )
 
-  val LightboxGalleriesSwitch = Switch("Feature Switches", "lightbox-galleries",
-    "If this switch is on, galleries open in a lightbox.",
-    safeState = On, sellByDate = endOfQ4
-  )
-
   val IdentityProfileNavigationSwitch = Switch("Feature Switches", "id-profile-navigation",
     "If this switch is on you will see the link in the topbar taking you through to the users profile or sign in..",
     safeState = On, sellByDate = endOfQ4
@@ -252,7 +237,7 @@ object Switches extends Collections {
 
   val ClientSideErrorSwitch = Switch("Feature Switches", "client-side-errors",
     "If this is switch on the the browser will log JavaScript errors to the server (via a beacon)",
-    safeState = Off, sellByDate = endOfQ4
+    safeState = Off, sellByDate = never
   )
 
   val FacebookAutoSigninSwitch = Switch("Feature Switches", "facebook-autosignin",
@@ -315,21 +300,9 @@ object Switches extends Collections {
 
   // A/B Test Switches
 
-  val ABAa = Switch("A/B Tests", "ab-abcd",
-    "If this is switched on an AA test runs to prove the assignment of users in to segments is working reliably.",
-    safeState = Off, sellByDate = endOfQ4
-  )
-
   val ABLiveBlogFollowButton = Switch("A/B Tests", "ab-live-blog-follow-button",
     "If this is switched on an experiment runs to display a follow button on live blogs.",
     safeState = Off, sellByDate = new DateMidnight(2014, 3, 28)
-  )
-
-  // Sport Switch
-
-  val LiveCricketSwitch = Switch("Live Cricket", "live-cricket",
-    "If this is switched on the live cricket blocks are added to cricket articles, cricket tag and sport front.",
-    safeState = Off, sellByDate = endOfQ4
   )
 
   // Dummy Switches
@@ -408,11 +381,8 @@ object Switches extends Collections {
     ReleaseMessageSwitch,
     IntegrationTestSwitch,
     ClientSideErrorSwitch,
-    LightboxGalleriesSwitch,
     IdentityProfileNavigationSwitch,
-    LiveCricketSwitch,
     LiveStatsSwitch,
-    LiveAbTestStatsSwitch,
     CssFromStorageSwitch,
     ElasticSearchSwitch,
     ArticleKeywordsSwitch,
@@ -421,7 +391,6 @@ object Switches extends Collections {
     RightHandMostPopularSwitch,
     IdentityEthicalAwardsSwitch,
     IdentityFilmAwardsSwitch,
-    ABAa,
     ABLiveBlogFollowButton,
     ToolDisable,
     ToolConfigurationDisable,
@@ -434,8 +403,7 @@ object Switches extends Collections {
     EffectiveMeasureSwitch,
     ImrWorldwideSwitch,
     ForeseeSwitch,
-    DiagnosticsRequestLogging,
-    DiagnosticsJavascriptErrorLogging,
+    DiagnosticsLogging,
     TravelOffersFeedSwitch,
     JobFeedSwitch,
     MasterclassFeedSwitch,

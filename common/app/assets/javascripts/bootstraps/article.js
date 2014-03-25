@@ -8,7 +8,6 @@ define([
     'common/modules/ui/autoupdate',
     'common/modules/live/filter',
     'common/modules/discussion/loader',
-    'common/modules/sport/cricket',
     'common/modules/ui/notification-counter',
     'common/modules/open/cta',
     'common/modules/commercial/loader',
@@ -23,7 +22,6 @@ define([
     AutoUpdate,
     LiveFilter,
     DiscussionLoader,
-    Cricket,
     NotificationCounter,
     OpenCta,
     CommercialLoader,
@@ -65,24 +63,6 @@ define([
                 if (config.page.commentable && config.switches.discussion) {
                     var discussionLoader = new DiscussionLoader(context, common.mediator, { 'switches': config.switches });
                     discussionLoader.attachTo($('.discussion')[0]);
-                }
-            });
-        },
-
-        initCricket: function() {
-            common.mediator.on('page:article:ready', function(config, context) {
-
-                var cricketMatchRefs = config.referencesOfType('esaCricketMatch');
-
-                if(cricketMatchRefs[0]) {
-                    var options = { url: cricketMatchRefs[0],
-                                loadSummary: true,
-                                loadScorecard: true,
-                                summaryElement: '.article__headline',
-                                scorecardElement: '.article__headline',
-                                summaryManipulation: 'after',
-                                scorecardManipulation: 'after' };
-                    Cricket.cricketArticle(config, context, options);
                 }
             });
         },
@@ -133,7 +113,6 @@ define([
             this.initialised = true;
             modules.initLiveBlogging();
             modules.initDiscussion();
-            modules.initCricket();
             modules.initOpen(config);
             modules.initFence();
             modules.initLayoutHints(config);
