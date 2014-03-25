@@ -121,10 +121,6 @@ object Switches extends Collections {
 
   // Commercial Tags
 
-  val AudienceScienceSwitch = Switch("Commercial Tags", "audience-science",
-    "If this switch is on Audience Science segments will be used to target ads.",
-    safeState = Off, sellByDate = summer)
-
   val ImrWorldwideSwitch = Switch("Commercial Tags", "imr-worldwide",
     "Enable the IMR Worldwide audience segment tracking.",
     safeState = Off, sellByDate = profilingEvalDeadline)
@@ -132,10 +128,6 @@ object Switches extends Collections {
   val EffectiveMeasureSwitch = Switch("Commercial Tags", "effective-measure",
     "Enable the Effective Measure audience segment tracking.",
     safeState = Off, sellByDate = profilingEvalDeadline)
-
-  val AmaaSwitch = Switch("Commercial Tags", "amaa",
-    "Enable the AMAA audience segment tracking.",
-    safeState = Off, sellByDate = endOfQ4)
 
   val ForeseeSwitch = Switch("Commercial Tags", "foresee",
     "Enable Forsee surveys for a sample of our audience",
@@ -421,7 +413,6 @@ object Switches extends Collections {
     DFPAdvertSwitch,
     LoadOnlyCommercialComponents,
     VideoAdvertSwitch,
-    AudienceScienceSwitch,
     DiscussionSwitch,
     DiscussionVerifiedEmailPosting,
     IdentityEmailVerificationSwitch,
@@ -456,7 +447,6 @@ object Switches extends Collections {
     OphanSwitch,
     ScrollDepthSwitch,
     ContentApiPutSwitch,
-    AmaaSwitch,
     EffectiveMeasureSwitch,
     ImrWorldwideSwitch,
     ForeseeSwitch,
