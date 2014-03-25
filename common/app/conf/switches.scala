@@ -60,7 +60,7 @@ object Switches extends Collections {
 
   val RelatedContentSwitch = Switch("Performance Switches", "related-content",
     "If this switch is turned on then related content will show. Turn off to help handle exceptional load.",
-    safeState = On, sellByDate = endOfQ4
+    safeState = On, sellByDate = never
   )
 
   val CssFromStorageSwitch = Switch("Performance Switches", "css-from-storage",
