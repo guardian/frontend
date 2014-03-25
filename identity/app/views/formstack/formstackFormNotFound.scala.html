@@ -1,19 +1,14 @@
 @(metaData: model.MetaData, projectName: Option[String] = Some(conf.Configuration.environment.projectName))(implicit request: RequestHeader)
 
 <!DOCTYPE html>
-<html class="js-off id--signed-out" lang="en-GB">
+<html lang="en-GB">
 <head>
     <meta charset="utf-8" />
     <title>@Html(metaData.webTitle)</title>
     @fragments.commonCssSetup(projectName)
-    @fragments.commonJavaScriptSetup(metaData)
 </head>
-<body id="top">
-
-    <div id="preload-1">
-        <h2 class="formstack-heading formstack-heading--first">Form not found</h2>
-        <p>Sorry - we haven't been able to serve the page you asked for.</p>
-    </div>
-
+<body>
+    <h2 class="formstack-heading formstack-heading--first">Form not found</h2>
+    <p>Sorry - we haven't been able to serve the page you asked for.</p>
 </body>
 </html>
