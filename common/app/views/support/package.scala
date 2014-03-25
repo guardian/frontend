@@ -98,6 +98,10 @@ case class SpecialContainer(showMore: Boolean = true) extends Container {
 case class SectionContainer(showMore: Boolean = true, tone: String = "news") extends Container {
   val containerType = "section"
 }
+case class MultimediaContainer(showMore: Boolean = true) extends Container {
+  val containerType = "multimedia"
+  val tone = "comment"
+}
 
 sealed trait AdSlot {
   val baseName: String
@@ -488,7 +492,7 @@ class TagLinker(article: Article)(implicit val edition: Edition) extends HtmlCle
           tagLink.attr("data-link-name", "auto-linked-tag")
           tagLink.addClass("u-underline")
 
-          p.html(p.html().replaceFirst(keyword.name, tagLink.toString))
+          p.html(p.html().replaceFirst(" " + keyword.name + " ", " " + tagLink.toString + " "))
         }
       }
     }

@@ -8,7 +8,7 @@
 }{
 <div class="identity-wrapper monocolumn-wrapper">
     <h1 class="identity-title">Sign in to the Guardian</h1>
-    <p>Don't have an account? <a href="@idUrlBuilder.buildUrl("/register", idRequest)">Register now</a>.</p>
+    <p>Don't have an account? <a class="u-underline" href="@idUrlBuilder.buildUrl("/register", idRequest)">Register now</a>.</p>
 
     <form class="form js-signin-form" novalidate action="@idUrlBuilder.buildUrl("/signin", idRequest)" role="main" method="post">
         @if(signinForm.globalError.isDefined) {

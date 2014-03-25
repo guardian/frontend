@@ -9,7 +9,7 @@ case class Member(username: String, gender: Gender, age: Int, profilePhoto: Stri
     case _ => None
   }
 
-  val profileUrl: String = profileId.map(id => s"https://soulmates.theguardian.com/profile/$id")
+  val profileUrl: String = profileId.map(id => s"https://soulmates.theguardian.com/landing/$id")
     .getOrElse("http://soulmates.theguardian.com/")
 
   def isTargetedAt(segment: Segment) = true

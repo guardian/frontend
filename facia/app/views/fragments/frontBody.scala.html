@@ -29,6 +29,7 @@
                         case Some("news/section")               => { @containers.section(block._1, block._2, SectionContainer(), index) }
                         case Some("features/section")           => { @containers.section(block._1, block._2, SectionContainer(tone = "feature"), index) }
                         case Some("comment/section")            => { @containers.section(block._1, block._2, SectionContainer(tone = "comment"), index) }
+                        case Some("features/multimedia")        => { @containers.multimedia(block._1, block._2, MultimediaContainer(), index) }
                         case _                                  => { @containers.section(block._1, block._2, SectionContainer(), index) }
                     }
                 }

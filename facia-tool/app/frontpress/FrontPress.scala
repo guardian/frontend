@@ -147,11 +147,9 @@ trait FrontPress extends Logging {
       "mimeType" -> asset.mimeType,
       "file" -> asset.file,
       "typeData" -> Json.obj(
-        ("source", asset.typeData.get("source")),
-        //("altText", a.typeData.get("altText")),
         ("height", asset.typeData.get("height")),
-        //("credit", a.typeData.get("credit")),
-        //("caption", a.typeData.get("caption")),
+        ("credit", asset.typeData.get("credit")),
+        ("caption", asset.typeData.get("caption")),
         ("width", asset.typeData.get("width"))
       )
     )
