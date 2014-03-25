@@ -65,11 +65,10 @@
             @include fs-headline(2, $size-only: true);
         }
     }
+    a {
+        color: inherit;
+    }
 }
-.container__title a {
-    color: inherit;
-}
-
 .container__updated {
     display: block;
     @include fs-headline(1);
@@ -79,29 +78,31 @@
     position: relative;
     @include box-sizing(border-box);
     width: 100%;
+
     @include mq(faciaLeftCol) {
         .i--clock {
             display: none;
         }
     }
     @include mq(wide) {
+        @include rem((
+            padding-left: $gs-gutter/2
+        ));
+
         .i--clock {
             display: block;
         }
-        padding-left: 40px;
     }
     time {
         display: block;
     }
 }
-
 .container__toggle,
 .item__live-indicator,
 .item__meta,
 .collection__show-more {
     @include f-data;
 }
-
 .container__toggle {
     position: absolute;
     @include rem((
@@ -154,7 +155,6 @@
         left: gs-span(15) + $gs-gutter;
     }
 }
-
 .collection {
     font-size: 0;
     overflow: hidden;
@@ -179,7 +179,6 @@
         display: inline-block;
         vertical-align: top;
     }
-
 }
 .item__link {
     display: block;
@@ -195,11 +194,9 @@
             color: $c-neutral2;
         }
     }
-
     &:active {
         color: $c-neutral1;
     }
-
     &:hover {
         .item__cta {
             background-color: rgba($c-neutral2, 1);
@@ -400,7 +397,6 @@
         top: 30%;
         left: 30%;
     }
-
     p {
         width: 0;
         height: 0;
@@ -463,7 +459,6 @@ $cta-icon-gap: 2px;
         margin-top: -1 * (map-get($video-cta-icon, height) / 2);
     }
 }
-
 .item--dark {
     .item__container,
     .item__meta {
@@ -498,6 +493,7 @@ $cta-icon-gap: 2px;
         color: #9c9c9c; //Darkest we can go to pass accessiblity
     }
 }
+
 $show-more-icon: (
     width: 32px,
     height: 32px,
@@ -511,6 +507,7 @@ $show-more-icon: (
     75%  { -webkit-transform: rotate(270deg); }
     100% { -webkit-transform: rotate(360deg); }
 }
+
 .collection__show-more {
     display: block;
     border: none;
