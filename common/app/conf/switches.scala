@@ -252,7 +252,7 @@ object Switches extends Collections {
 
   val ClientSideErrorSwitch = Switch("Feature Switches", "client-side-errors",
     "If this is switch on the the browser will log JavaScript errors to the server (via a beacon)",
-    safeState = Off, sellByDate = endOfQ4
+    safeState = Off, sellByDate = never
   )
 
   val FacebookAutoSigninSwitch = Switch("Feature Switches", "facebook-autosignin",
