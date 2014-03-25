@@ -91,6 +91,16 @@ object Switches extends Collections {
     safeState = On, sellByDate = never
   )
 
+  val DiscussionSwitch = Switch("Performance Switches", "discussion",
+    "If this switch is on, comments are displayed on articles. Turn this off if the Discussion API is blowing up.",
+    safeState = Off, sellByDate = never
+  )
+
+  val OpenCtaSwitch = Switch("Performance Switches", "open-cta",
+    "If this switch is on, will see a CTA to comments on the right hand side. Turn this off if the Open API is blowing up.",
+    safeState = Off, sellByDate = never
+  )
+
   // Advertising Switches
 
   val AdvertSwitch = Switch("Advertising", "adverts",
@@ -211,33 +221,8 @@ object Switches extends Collections {
     safeState = Off, never
   )
 
-  // Discussion Switches
-
-  val DiscussionSwitch = Switch("Discussion", "discussion",
-    "If this switch is on, comments are displayed on articles. Turn this off if the Discussion API is blowing up.",
-    safeState = Off, sellByDate = never
-  )
-
-  val DiscussionVerifiedEmailPosting = Switch("Discussion", "discussion-verified-email-posting",
-    "If this switch is on, posters to discussions must have a verified email address.",
-    safeState = Off, sellByDate = endOfQ4
-  )
-
-  // Identity Switches
-
-  val IdentityEmailVerificationSwitch = Switch("Identity Email verification", "id-email-verification",
-    "If this switch is on, the option to resend your verification email is displayed.",
-    safeState = Off, sellByDate = endOfQ4
-  )
-
-  // Open
-
-  val OpenCtaSwitch = Switch("Open", "open-cta",
-    "If this switch is on, will see a CTA to comments on the right hand side. Turn this off if the Open API is blowing up.",
-    safeState = Off, sellByDate = never
-  )
-
   // Feature Switches
+
   val ReleaseMessageSwitch = Switch("Feature Switches", "release-message",
     "If this is switched on users will be messaged that they are inside the alpha/beta/whatever release",
     safeState = Off, sellByDate = endOfQ4
@@ -329,6 +314,16 @@ object Switches extends Collections {
   val LeadAdTopPageSwitch = Switch("Feature Switches", "lead-ad-top-page",
     "If this switch is on, the lead ad is placed on top of the page on desktop",
     safeState = Off, sellByDate = new DateMidnight(2014, 4, 30)
+  )
+
+  val DiscussionVerifiedEmailPosting = Switch("Feature Switches", "discussion-verified-email-posting",
+    "If this switch is on, posters to discussions must have a verified email address.",
+    safeState = Off, sellByDate = endOfQ4
+  )
+
+  val IdentityEmailVerificationSwitch = Switch("Feature Switches", "id-email-verification",
+    "If this switch is on, the option to resend your verification email is displayed.",
+    safeState = Off, sellByDate = endOfQ4
   )
 
   // A/B Test Switches

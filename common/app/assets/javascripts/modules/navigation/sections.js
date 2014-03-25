@@ -72,20 +72,11 @@ define([
                 for(var i=0, l=visibleItems.length; i < l; i++) {
                     bonzo(popupItems[i]).addClass('u-h');
                 }
-            },
-
-            // there is not a 'no JavaScript' version of this.
-            upgradeLocalNav: function(context) {
-                if (context.querySelector('.js-localnav--small')) {
-                    common.$g('#preloads').addClass('has-localnav');
-                    common.$g('.js-localnav--small').removeClass('is-hidden');
-                }
             }
         };
 
         this.init = function (context) {
             this.view.bindings(context);
-            this.view.upgradeLocalNav(context);
         };
      }
 
