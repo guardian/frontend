@@ -23,7 +23,7 @@ object TrailsToRss extends implicits.Collections {
     // subjects … Philip Hoare
     def cleanInvalidXmlChars(text: String): String = {
       val re = "[^\\x09\\x0A\\x0D\\x20-\\xD7FF\\xE000-\\xFFFD\\x10000-x10FFFF]".r;
-      re.replaceAllIn(text, " ")
+      re.replaceAllIn(text, "")
     }
 
     val feedTitle = title.map(t => s"$t | The Guardian").getOrElse("The Guardian")
@@ -97,7 +97,7 @@ object TrailsToRss extends implicits.Collections {
 
       // Entry
       val entry = new SyndEntryImpl
-      entry.setTitle(trail.headline)
+      entry.setTitle(cleanInvalidXmlChars(trail.headline))
       entry.setLink(trail.webUrl)
       entry.setDescription(description)
       entry.setAuthor(trail.byline.getOrElse(""))
