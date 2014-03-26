@@ -236,9 +236,9 @@ define([
             try {
                 getActiveTests().forEach(function (test) {
 
-                    if (isParticipating(test)) {
+                    if (isParticipating(test) && testCanBeRun(test, config)) {
                         var variant = getTestVariant(test.id);
-                        if (isTestSwitchedOn(test, config) && testCanBeRun(test, config) && variant && variant !== 'notintest') {
+                        if (variant && variant !== 'notintest') {
                             abLogObject['ab' + test.id] = variant;
                         }
                     }
