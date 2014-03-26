@@ -21,13 +21,18 @@ class TrailsToRssTest extends FlatSpec with Matchers {
     val rss = XML.loadString(TrailsToRss(Option("foo"), trails)(request))
     ((rss \ "channel" \ "item").size) should be(2)
   }
+  
+  "TrailsToRss" should "clean invalid XML characters" in {
+    val rss = XML.loadString(TrailsToRss(Option("foo"), trails)(request))
+    ((rss \\ "item" \\ "title" )(1).text) should be("hello")
+  }
 
 
 case class TestTrail(url: String) extends Trail {
   def webPublicationDate: DateTime = DateTime.now
   def shortUrl: String = ""
   def linkText: String = ""
-  def headline: String = ""
+  def headline: String = "hello …"
   def webUrl: String = ""
   def trailText: Option[String] = None
   def section: String = ""
