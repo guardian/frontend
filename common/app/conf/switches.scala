@@ -221,11 +221,6 @@ object Switches extends Collections {
     safeState = On, sellByDate = endOfQ4
   )
 
-  val ArticleKeywordsSwitch = Switch("Feature Switches", "article-keywords",
-    "If this is switched on then keywords will be shown at the end of articles.",
-    safeState = On, sellByDate = endOfQ4
-  )
-
   val ClientSideErrorSwitch = Switch("Feature Switches", "client-side-errors",
     "If this is switch on the the browser will log JavaScript errors to the server (via a beacon)",
     safeState = Off, sellByDate = never
@@ -369,7 +364,6 @@ object Switches extends Collections {
     IdentityProfileNavigationSwitch,
     CssFromStorageSwitch,
     ElasticSearchSwitch,
-    ArticleKeywordsSwitch,
     FacebookAutoSigninSwitch,
     IdentityFormstackSwitch,
     IdentityEthicalAwardsSwitch,
