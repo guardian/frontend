@@ -235,10 +235,6 @@ object Switches extends Collections {
     "If this switch is on, Ethical awards forms will be available",
     safeState = Off, sellByDate = new DateMidnight(2014, 5, 15))
 
-  val IdentityFilmAwardsSwitch = Switch("Feature Switches", "id-film-awards",
-    "If this switch is on, Film awards forms will be available",
-    safeState = Off, sellByDate = endOfQ4)
-
   val NetworkFrontOptIn = Switch("Feature Switches", "network-front-opt-in",
     "If this is switched on then an opt-in message will be displayed to users coming from the R2 network front",
     safeState = Off, sellByDate = new DateMidnight(2014, 4, 30)
@@ -349,7 +345,6 @@ object Switches extends Collections {
     FacebookAutoSigninSwitch,
     IdentityFormstackSwitch,
     IdentityEthicalAwardsSwitch,
-    IdentityFilmAwardsSwitch,
     ABLiveBlogFollowButton,
     ToolDisable,
     ToolConfigurationDisable,
