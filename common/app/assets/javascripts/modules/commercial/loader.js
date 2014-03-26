@@ -125,8 +125,6 @@ define([
      */
     Loader.prototype.init = function(name, el) {
 
-
-
         if(this.components[name] === undefined) {
             mediator.emit('module:error', 'Unknown commercial component: ' + name, 'common/modules/commercial/loader.js');
             return false;
