@@ -1,0 +1,19 @@
+.element.element-table {
+    @include rem((
+        margin-top: $gs-baseline*2,
+        margin-bottom: $gs-baseline
+    ));
+    @include mq(mobileLandscape) {
+        @include rem((
+            margin: 0 0 0 $gs-gutter
+        ));
+        float: right;
+        margin-top: 0;
+        width: $gs-column-width*5;
+    }
+
+    .table td,
+    .table th {
+        @include fs-data(4);
+    }
+}

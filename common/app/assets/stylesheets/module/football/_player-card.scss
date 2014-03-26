@@ -1,0 +1,68 @@
+$player-card: (
+    default: 44px,
+    mobileLandscape: 100px
+);
+
+.player-card {
+    background: $c-neutral8;
+    border-top: 2px solid $c-sportMid;
+    color: #333333;
+    padding: 10px;
+}
+
+.player-card__image-container {
+    float: right;
+}
+.player-card__image {
+    border-radius: 50px;
+    height: map-get($player-card, default);
+    float: right;
+    width: map-get($player-card, default);
+
+    @include mq(mobileLandscape) {
+        height: map-get($player-card, mobileLandscape);
+        width: map-get($player-card, mobileLandscape);
+    }
+}
+
+.player-card__player {
+    margin-bottom: $gs-baseline*2;
+    min-height: map-get($player-card, default);
+    padding-right: map-get($player-card, default);
+
+    @include mq(mobileLandscape) {
+        min-height: map-get($player-card, mobileLandscape);
+        padding-right: map-get($player-card, mobileLandscape);
+    }
+}
+.player-card__name {
+    @include fs-header(5);
+    font-weight: normal;
+}
+.player-card__position {
+    @include fs-data(5);
+    color: $c-sportMid;
+}
+
+.player-card__stats {
+    margin: 0;
+    padding: 0;
+}
+.player-card__stat-name,
+.player-card__stat-value {
+    margin: 0;
+    padding: $gs-baseline/3 0 ($gs-baseline/3)*2;
+}
+.player-card__stat-name {
+    @include fs-data(4);
+    display: block;
+    float: left;
+    font-weight: normal;
+}
+.player-card__stat-value {
+    @include fs-data(4);
+    border-top: 1px solid $c-neutral3;
+    font-weight: bold;
+    padding-left: 85%;
+    text-align: right;
+}
