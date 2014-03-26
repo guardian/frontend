@@ -429,8 +429,6 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
       Given("I read an article and want to share it with my friends")
 
-      SocialSwitch.switchOn()
-
       HtmlUnit("/film/2012/nov/11/margin-call-cosmopolis-friends-with-kids-dvd-review") { browser =>
         import browser._
 
@@ -447,8 +445,6 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
       }
 
       Given("I want to track the responsive share buttons using Facebook Insights")
-
-      SocialSwitch.switchOn()
 
       HtmlUnit("/film/2012/nov/11/margin-call-cosmopolis-friends-with-kids-dvd-review") { browser =>
         import browser._
@@ -467,7 +463,6 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
       Given("I read an article")
 
-      SocialSwitch.switchOn()
       SearchSwitch.switchOn()
 
       HtmlUnit("/world/2013/jan/27/brazil-nightclub-blaze-high-death-toll") { browser =>
