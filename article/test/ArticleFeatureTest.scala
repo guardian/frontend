@@ -511,8 +511,6 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
     scenario("Show keywords in an article"){
       Given("I am on an article entitled 'Iran's Rouhani may meet Obama at UN after American president reaches out'")
 
-      ArticleKeywordsSwitch.switchOn()
-
       HtmlUnit("/world/2013/sep/15/obama-rouhani-united-nations-meeting"){ browser =>
         import browser._
 
@@ -523,8 +521,6 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
     scenario("Don't show keywords in an article with only section tags (eg info/info) or no keywords"){
       Given("I am on an article entitled 'Removed: Eyeball-licking: the fetish that is making Japanese teenagers sick'")
-
-      ArticleKeywordsSwitch.switchOn()
 
       HtmlUnit("/info/2013/aug/26/2"){ browser =>
         import browser._
@@ -566,8 +562,6 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
     scenario("Ensure that 'comment' always takes precedence before 'feature' when selecting article tone"){
       Given("I am on an article entitled 'Who would you like to see honoured by a blue plaque?'")
-
-      ArticleKeywordsSwitch.switchOn()
 
       HtmlUnit("/commentisfree/2013/jan/07/blue-plaque-english-heritage"){ browser =>
         import browser._
