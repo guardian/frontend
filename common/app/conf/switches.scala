@@ -208,7 +208,7 @@ object Switches extends Collections {
 
   val IdentityProfileNavigationSwitch = Switch("Feature Switches", "id-profile-navigation",
     "If this switch is on you will see the link in the topbar taking you through to the users profile or sign in..",
-    safeState = On, sellByDate = endOfQ4
+    safeState = On, sellByDate = never
   )
 
   val ClientSideErrorSwitch = Switch("Feature Switches", "client-side-errors",
@@ -229,10 +229,6 @@ object Switches extends Collections {
   val IdentityEthicalAwardsSwitch = Switch("Feature Switches", "id-ethical-awards",
     "If this switch is on, Ethical awards forms will be available",
     safeState = Off, sellByDate = new DateMidnight(2014, 5, 15))
-
-  val IdentityFilmAwardsSwitch = Switch("Feature Switches", "id-film-awards",
-    "If this switch is on, Film awards forms will be available",
-    safeState = Off, sellByDate = endOfQ4)
 
   val NetworkFrontOptIn = Switch("Feature Switches", "network-front-opt-in",
     "If this is switched on then an opt-in message will be displayed to users coming from the R2 network front",
@@ -352,7 +348,6 @@ object Switches extends Collections {
     FacebookAutoSigninSwitch,
     IdentityFormstackSwitch,
     IdentityEthicalAwardsSwitch,
-    IdentityFilmAwardsSwitch,
     ABLiveBlogFollowButton,
     ToolDisable,
     ToolConfigurationDisable,

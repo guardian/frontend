@@ -23,8 +23,6 @@ GET     /verify-email/:token                            @controllers.EmailVerifi
 
 GET     /ethical-awards/complete                        @controllers.EthicalAwardsController.complete
 GET     /ethical-awards/:formReference                  @controllers.EthicalAwardsController.ethicalAwardsForm(formReference: String)
-GET     /film-awards/complete                           @controllers.FilmAwardsController.complete
-GET     /film-awards/:formReference                     @controllers.FilmAwardsController.filmAwardsForm(formReference: String)
 GET     /form/complete                                  @controllers.FormstackController.complete
 GET     /form/:formReference                            @controllers.FormstackController.formstackForm(formReference: String, composer: Boolean = false)
 GET     /form/embed/:formReference                      @controllers.FormstackController.formstackForm(formReference: String, composer: Boolean = true)
