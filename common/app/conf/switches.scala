@@ -264,11 +264,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 4, 30)
   )
 
-  val DiscussionVerifiedEmailPosting = Switch("Feature Switches", "discussion-verified-email-posting",
-    "If this switch is on, posters to discussions must have a verified email address.",
-    safeState = Off, sellByDate = endOfQ4
-  )
-
   // A/B Test Switches
 
   val ABLiveBlogFollowButton = Switch("A/B Tests", "ab-live-blog-follow-button",
@@ -342,7 +337,6 @@ object Switches extends Collections {
     LoadOnlyCommercialComponents,
     VideoAdvertSwitch,
     DiscussionSwitch,
-    DiscussionVerifiedEmailPosting,
     OpenCtaSwitch,
     FontSwitch,
     SearchSwitch,
