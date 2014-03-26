@@ -238,7 +238,7 @@ define([
 
                     if (isParticipating(test)) {
                         var variant = getTestVariant(test.id);
-                        if (isTestSwitchedOn(test, config) && variant && variant !== 'notintest') {
+                        if (isTestSwitchedOn(test, config) && testCanBeRun(test, config) && variant && variant !== 'notintest') {
                             abLogObject['ab' + test.id] = variant;
                         }
                     }
