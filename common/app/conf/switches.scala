@@ -69,7 +69,7 @@ object Switches extends Collections {
 
   val CssFromStorageSwitch = Switch("Performance Switches", "css-from-storage",
     "If this switch is on CSS will be cached in users localStorage and read from there on subsequent requests.",
-    safeState = Off, sellByDate = endOfQ4
+    safeState = Off, sellByDate = never
   )
 
   val ElasticSearchSwitch = Switch("Performance Switches", "elastic-search-content-api",
