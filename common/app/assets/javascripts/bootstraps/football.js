@@ -57,7 +57,10 @@ define([
                 if (!match.id) {
                     scoreContainer.innerHTML = '';
                     scoreBoard.template = config.page.isLiveBlog ? resp.matchSummary : resp.scoreSummary;
-                    scoreBoard.render(scoreContainer);
+
+                    if(! /^\s+$/.test(scoreBoard.template)) {
+                        scoreBoard.render(scoreContainer);
+                    }
 
                     $('.tab--min-by-min a', $nav).first().each(function(el) {
                         bonzo(scoreBoard.elem).addClass('u-fauxlink');
