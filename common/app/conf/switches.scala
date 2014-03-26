@@ -69,7 +69,7 @@ object Switches extends Collections {
 
   val CssFromStorageSwitch = Switch("Performance Switches", "css-from-storage",
     "If this switch is on CSS will be cached in users localStorage and read from there on subsequent requests.",
-    safeState = Off, sellByDate = endOfQ4
+    safeState = Off, sellByDate = never
   )
 
   val ElasticSearchSwitch = Switch("Performance Switches", "elastic-search-content-api",
@@ -116,7 +116,7 @@ object Switches extends Collections {
 
   val VideoAdvertSwitch = Switch("Advertising", "video-adverts",
     "If this switch is on then OAS video adverts will be loaded with JavaScript.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 4, 8)
+    safeState = Off, sellByDate = never
   )
 
   // Commercial Tags
@@ -203,11 +203,6 @@ object Switches extends Collections {
 
   val SponsoredContentSwitch = Switch("Feature Switches", "sponsored-content",
     "If this is switched on the articles will display a simple 'Advertisement feature' notice.",
-    safeState = Off, sellByDate = endOfQ4
-  )
-
-  val SocialSwitch = Switch("Feature Switches", "social-icons",
-    "Enable the social media share icons (Facebook, Twitter etc.)",
     safeState = Off, sellByDate = endOfQ4
   )
 
@@ -356,7 +351,6 @@ object Switches extends Collections {
     IdentityEmailVerificationSwitch,
     OpenCtaSwitch,
     FontSwitch,
-    SocialSwitch,
     SearchSwitch,
     ReleaseMessageSwitch,
     IntegrationTestSwitch,
