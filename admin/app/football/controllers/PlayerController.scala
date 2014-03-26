@@ -29,24 +29,22 @@ object PlayerController extends Controller with ExecutionContexts with GetPaClie
     NoCache(SeeOther(s"/admin/football/player/card/$playerCardType/$playerId"))
   }
 
-  def playerCard(playerId: String, cardType: String) = {
-    Authenticated.async { implicit request =>
-      FutureZippers.zip(
-        client.playerProfile(playerId),
-        client.playerStats(playerId, new DateMidnight(2013, 7, 1), DateMidnight.now()),
-        client.appearances(playerId, new DateMidnight(2013, 7, 1), DateMidnight.now())
-      ).map { case (playerProfile, playerStats, playerAppearances) =>
-        val result = cardType match {
-          case "attack" => Ok(views.html.football.player.cards.attack(playerId: String, playerProfile: PlayerProfile, playerStats, playerAppearances))
-          case "assist" => Ok(views.html.football.player.cards.assist(playerId: String, playerProfile: PlayerProfile, playerStats, playerAppearances))
-          case "discipline" => Ok(views.html.football.player.cards.discipline(playerId: String, playerProfile: PlayerProfile, playerStats, playerAppearances))
-          case "defence" => Ok(views.html.football.player.cards.defence(playerId: String, playerProfile: PlayerProfile, playerStats, playerAppearances))
-          case "goalkeeper" => Ok(views.html.football.player.cards.goalkeeper(playerId: String, playerProfile: PlayerProfile, playerStats, playerAppearances))
-          case "overview" => Ok(views.html.football.player.cards.overview(playerId: String, playerStats, playerAppearances))
-          case _ => Ok(views.html.football.player.cards.overview(playerId: String, playerStats, playerAppearances))
-        }
-        Cors(NoCache(result))
+  def playerCard(playerId: String, cardType: String) = Authenticated.async { implicit request =>
+    FutureZippers.zip(
+      client.playerProfile(playerId),
+      client.playerStats(playerId, new DateMidnight(2013, 7, 1), DateMidnight.now()),
+      client.appearances(playerId, new DateMidnight(2013, 7, 1), DateMidnight.now())
+    ).map { case (playerProfile, playerStats, playerAppearances) =>
+      val result = cardType match {
+        case "attack" => Ok(views.html.football.player.cards.attack(playerId: String, playerProfile: PlayerProfile, playerStats, playerAppearances))
+        case "assist" => Ok(views.html.football.player.cards.assist(playerId: String, playerProfile: PlayerProfile, playerStats, playerAppearances))
+        case "discipline" => Ok(views.html.football.player.cards.discipline(playerId: String, playerProfile: PlayerProfile, playerStats, playerAppearances))
+        case "defence" => Ok(views.html.football.player.cards.defence(playerId: String, playerProfile: PlayerProfile, playerStats, playerAppearances))
+        case "goalkeeper" => Ok(views.html.football.player.cards.goalkeeper(playerId: String, playerProfile: PlayerProfile, playerStats, playerAppearances))
+        case "overview" => Ok(views.html.football.player.cards.overview(playerId: String, playerStats, playerAppearances))
+        case _ => Ok(views.html.football.player.cards.overview(playerId: String, playerStats, playerAppearances))
       }
+      Cors(NoCache(result))
     }
   }
 
