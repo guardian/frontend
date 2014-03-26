@@ -35,7 +35,7 @@ object TablesController extends Controller with ExecutionContexts with GetPaClie
         }
       case _ => SeeOther(s"/admin/football/tables/league/$competitionId")
     }
-    NoCache(result)_pay
+    NoCache(result)
   }
 
   def leagueTableFragment(competitionId: String, focus: String) = Authenticated.async { implicit request =>
