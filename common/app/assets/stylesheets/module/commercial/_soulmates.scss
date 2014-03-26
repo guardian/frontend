@@ -7,17 +7,19 @@
     @include rem((
         padding: $gs-baseline $gs-gutter/2
     ));
-    @include mq(tablet) {
-        @include rem((
-            padding-left: $gs-gutter,
-            padding-right: $gs-gutter
-        ));
-    }
 
     .commercial__inner {
         position: relative;
         margin: 0 auto;
-        max-width: gs-span(16);
+        @include rem((
+            max-width: gs-span(16)
+        ));
+    }
+    @include mq(mobileLandscape) {
+        @include rem((
+            padding-left: $gs-gutter,
+            padding-right: $gs-gutter
+        ));
     }
     @include mq(tablet) {
         .commercial__header {
@@ -36,10 +38,11 @@
         @include fs-headline(1);
         @include rem((
             margin: $gs-baseline 0 0
-        ))
+        ));
     }
     .commercial__buy-now-button {
         display: none;
+
         @include mq(tablet) {
             display: block;
             background-color: #e657ad;
@@ -60,9 +63,12 @@
         @include rem((
             margin-top: $gs-baseline
         ));
+
         @include mq(tablet) {
-            margin-right: gs-span(3);
-            padding: 0 $gs-gutter;
+            @include rem((
+                margin-right: gs-span(3),
+                padding: 0 $gs-gutter
+            ));
         }
     }
     .lineitem {
@@ -72,12 +78,6 @@
         border: 0;
         float: left;
         padding: 0;
-        @include mq(desktop) {
-            width: 33%;
-        }
-        @include mq(wide) {
-            width: 25%;
-        }
 
         &:nth-child(n+3) {
             display: none;
@@ -89,11 +89,13 @@
             background-color: #039763;
         }
         @include mq(desktop) {
+            width: 33%;
             &:nth-child(3) {
                 display: block;
             }
         }
         @include mq(wide) {
+            width: 25%;
             &:nth-child(4) {
                 display: block;
             }
@@ -142,11 +144,14 @@
         @include rem((
             margin-top: $gs-baseline
         ));
+
         @include mq(tablet) {
-            width: gs-span(3);
             position: absolute;
             top: 0;
             right: 0;
+            @include rem((
+                width: gs-span(3)
+            ));
         }
     }
     .search__dropdown {
