@@ -583,5 +583,23 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         navigation.find(".nav--local").find(".nav__item").size should be (6)
       }
     }
+
+    scenario("'Classic' link") {
+      Given("I am on a piece of content that has an R2 version")
+      HtmlUnit("/world/2014/mar/24/egypt-death-sentence-529-morsi-supporters") { browser =>
+        import browser._
+        Then("I should see a 'Classic' link")
+        $(".js-main-site-link").isEmpty should be (false)
+      }
+    }
+
+    scenario("Remove 'Classic' link") {
+      Given("I am on a piece of content that is only Next Gen")
+      HtmlUnit("/science/antarctica-live/2014/feb/28/-sp-rescue-from-antarctica") { browser =>
+        import browser._
+        Then("I should not see a 'Classic' link")
+        $(".js-main-site-link").isEmpty should be (true)
+      }
+    }
   }
 }

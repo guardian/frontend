@@ -80,5 +80,11 @@ object ClassicLink {
     val targetUrl = encode(s"${LinkTo(s"/$fixedId")}?view=classic", "UTF-8")
     s"${LinkTo{"/preference/platform/classic"}}?page=$targetUrl"
   }
+
+  // As we move towards taking over full site traffic, we will get pages that only work on the Next Gen platform.
+  // add whatever identifies them here so that we do not show users a 'Classic' link on those pages
+  def hasClassicVersion()(implicit request: RequestHeader): Boolean = !specialLiveBlog(request)
+
+  private def specialLiveBlog(request: RequestHeader) = request.path.contains("-sp-")
 }
 

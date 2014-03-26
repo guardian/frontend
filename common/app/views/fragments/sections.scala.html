@@ -42,26 +42,28 @@
                 }
             </ul>
         </div>
-        <div class="switcher u-cf @if(isFooter){switcher--columns }switcher--version">
-            <h2 class="switcher__label">View:</h2>
-            <ul class="u-unstyled switcher__options">
-                <li class="switcher__option switcher__option--active">
-                    <span class="hide-on-mobile-inline">
-                        Beta
-                    </span>
-                    <span class="mobile-only">
-                        Mobile
-                    </span>
-                </li>
-                <li class="switcher__option">
-                    <span class="hide-on-mobile-inline">
+        @if(ClassicLink.hasClassicVersion()) {
+            <div class="switcher u-cf @if(isFooter){switcher--columns }switcher--version">
+                <h2 class="switcher__label">View:</h2>
+                <ul class="u-unstyled switcher__options">
+                    <li class="switcher__option switcher__option--active">
+                        <span class="hide-on-mobile-inline">
+                            Beta
+                        </span>
+                        <span class="mobile-only">
+                            Mobile
+                        </span>
+                    </li>
+                    <li class="switcher__option">
+                        <span class="hide-on-mobile-inline">
                         @fragments.mainSiteLink(page, "Current version")
-                    </span>
-                    <span class="mobile-only">
+                        </span>
+                        <span class="mobile-only">
                         @fragments.mainSiteLink(page, "Desktop")
-                    </span>
-                </li>
-            </ul>
-        </div>
+                        </span>
+                    </li>
+                </ul>
+            </div>
+        }
     </div>
 </nav>
