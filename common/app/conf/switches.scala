@@ -213,7 +213,7 @@ object Switches extends Collections {
 
   val SearchSwitch = Switch("Feature Switches", "google-search",
     "If this switch is turned on then Google search is added to the sections nav.",
-    safeState = Off, sellByDate = endOfQ4
+    safeState = Off, sellByDate = never
   )
 
   val IdentityProfileNavigationSwitch = Switch("Feature Switches", "id-profile-navigation",
