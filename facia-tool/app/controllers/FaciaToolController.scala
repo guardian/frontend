@@ -139,6 +139,7 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
 
   def pressCollection(id: String) = AjaxExpiringAuthentication { request =>
     pressCollectionId(id)
+    notifyContentApi(id)
     NoCache(Ok)
   }
 
