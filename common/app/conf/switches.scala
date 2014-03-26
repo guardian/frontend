@@ -5,7 +5,7 @@ import common._
 import implicits.Collections
 import play.api.{Application, Plugin}
 import play.api.libs.ws.WS
-import org.joda.time.DateMidnight
+import org.joda.time.{Days, DateTime, DateMidnight}
 
 sealed trait SwitchState
 case object On extends SwitchState
@@ -32,6 +32,10 @@ case class Switch( group: String,
       delegate.switchOff()
     }
   }
+
+  def daysToExpiry = Days.daysBetween(new DateTime(), sellByDate).getDays
+
+  def expiresSoon = daysToExpiry < 7
 }
 
 object Switches extends Collections {
@@ -65,7 +69,7 @@ object Switches extends Collections {
 
   val CssFromStorageSwitch = Switch("Performance Switches", "css-from-storage",
     "If this switch is on CSS will be cached in users localStorage and read from there on subsequent requests.",
-    safeState = Off, sellByDate = endOfQ4
+    safeState = Off, sellByDate = never
   )
 
   val ElasticSearchSwitch = Switch("Performance Switches", "elastic-search-content-api",
@@ -112,7 +116,7 @@ object Switches extends Collections {
 
   val VideoAdvertSwitch = Switch("Advertising", "video-adverts",
     "If this switch is on then OAS video adverts will be loaded with JavaScript.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 4, 8)
+    safeState = Off, sellByDate = never
   )
 
   // Commercial Tags
@@ -202,14 +206,9 @@ object Switches extends Collections {
     safeState = Off, sellByDate = endOfQ4
   )
 
-  val SocialSwitch = Switch("Feature Switches", "social-icons",
-    "Enable the social media share icons (Facebook, Twitter etc.)",
-    safeState = Off, sellByDate = endOfQ4
-  )
-
   val SearchSwitch = Switch("Feature Switches", "google-search",
     "If this switch is turned on then Google search is added to the sections nav.",
-    safeState = Off, sellByDate = endOfQ4
+    safeState = Off, sellByDate = never
   )
 
   val IdentityProfileNavigationSwitch = Switch("Feature Switches", "id-profile-navigation",
@@ -357,7 +356,6 @@ object Switches extends Collections {
     IdentityEmailVerificationSwitch,
     OpenCtaSwitch,
     FontSwitch,
-    SocialSwitch,
     SearchSwitch,
     ReleaseMessageSwitch,
     IntegrationTestSwitch,
