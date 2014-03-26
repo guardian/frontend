@@ -53,18 +53,21 @@
 
     .site-message__list {
         list-style: none;
-        margin-left: 4px;
+        margin-left: 0;
     }
 
     .site-message__list__item {
-        @include faux-bullet-point(#ffffff);
+        @include faux-bullet-point(#ffffff, $offset-y: (3px, 3px));
         @include fs-headline(1);
         font-weight: 200;
+        margin-top: .6em;
+        @include rem((
+            text-indent: map-get($bullet-offset, default)
+        ));
 
-        &:before {
-            top: 0;
+        @include mq(tablet) {
             @include rem((
-                left: -18px
+                text-indent: map-get($bullet-offset, tablet)
             ));
         }
     }
