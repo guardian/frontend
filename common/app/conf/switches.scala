@@ -116,7 +116,7 @@ object Switches extends Collections {
 
   val VideoAdvertSwitch = Switch("Advertising", "video-adverts",
     "If this switch is on then OAS video adverts will be loaded with JavaScript.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 4, 8)
+    safeState = Off, sellByDate = never
   )
 
   // Commercial Tags
