@@ -206,11 +206,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = endOfQ4
   )
 
-  val SocialSwitch = Switch("Feature Switches", "social-icons",
-    "Enable the social media share icons (Facebook, Twitter etc.)",
-    safeState = Off, sellByDate = endOfQ4
-  )
-
   val SearchSwitch = Switch("Feature Switches", "google-search",
     "If this switch is turned on then Google search is added to the sections nav.",
     safeState = Off, sellByDate = endOfQ4
@@ -361,7 +356,6 @@ object Switches extends Collections {
     IdentityEmailVerificationSwitch,
     OpenCtaSwitch,
     FontSwitch,
-    SocialSwitch,
     SearchSwitch,
     ReleaseMessageSwitch,
     IntegrationTestSwitch,
