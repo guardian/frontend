@@ -35,10 +35,12 @@ define(['fixtures/config', 'analytics/omniture', 'common/common'], function(test
             o.go(config);
             o.populateEventProperties('outer:link');
 
-            expect(s.linkTrackVars).toBe('eVar37,events');
+            expect(s.linkTrackVars).toBe('eVar37,eVar7,prop37,events');
             expect(s.linkTrackEvents).toBe('event37');
             expect(s.events).toBe('event37');
             expect(s.eVar37).toBe("Article:outer:link");
+            expect(s.prop37).toBe("D=v37");
+            expect(s.eVar7).toBe("D=pageName");
 
         });
 
