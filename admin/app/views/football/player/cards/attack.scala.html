@@ -15,13 +15,13 @@
             <div class="player-card__name" itemprop="name">@player.fullName</div>
         </div>
         <dl class="player-card__stats">
-            <dt class="player-card__stat-name">Goals<dt>
+            <dt class="player-card__stat-name">Goals</dt>
             <dd class="player-card__stat-value">@playerStats.offence.goals.total</dd>
 
             <dt class="player-card__stat-name">Shots</dt>
             <dd class="player-card__stat-value">@(playerStats.offence.shotsOnTarget.total+playerStats.offence.shotsOffTarget.total)</dd>
 
-            <dt class="player-card__stat-name">Shots on target<dt>
+            <dt class="player-card__stat-name">Shots on target</dt>
             <dd class="player-card__stat-value">@playerStats.offence.shotsOnTargetPercentage.total%</dd>
 
             <dt class="player-card__stat-name">Offsides</dt>
