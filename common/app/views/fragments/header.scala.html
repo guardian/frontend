@@ -39,15 +39,31 @@ to apply any necessary changes to non-shared code there too.
                             <dt class="editions__title">
                                 Edition:
                             </dt>
-                            <dd class="edition__item">
-                                <span class="edition">@Edition(request).id</span>
-                            </dd>
+
+                            @common.Region(request).filter(r => conf.Switches.IndiaRegionSwitch.isSwitchedOn).map{ region =>
+                                <dd class="edition__item">
+                                    <span class="edition">@region.id</span>
+                                </dd>
+                            }.getOrElse{
+                                <dd class="edition__item">
+                                    <span class="edition">@Edition(request).id</span>
+                                </dd>
+                            }
                             @Edition.others(request).map{ edition =>
                                 <dd class="edition__item">
                                     <a class="edition" data-edition="@edition.id"
                                         data-link-name="switch to @edition.id edition"
                                         href="@LinkTo(s"/preference/edition/${edition.id.toLowerCase}")">
                                         @edition.id
+                                    </a>
+                                </dd>
+                            }
+                            @common.Region.others(request).map{ region =>
+                                <dd class="edition__item">
+                                    <a class="edition" data-edition="@region.id"
+                                        data-link-name="switch to @region.id region"
+                                        href="@LinkTo(s"/preference/edition/${region.id.toLowerCase}")">
+                                        @region.id
                                     </a>
                                 </dd>
                             }

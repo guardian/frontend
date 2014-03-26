@@ -244,6 +244,14 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 4, 30)
   )
 
+  val IndiaRegionSwitch = Switch("Feature Switches", "india-region",
+    "If this switch is switched on then the India region will be enabled",
+    safeState = Off,
+    // I know this is far away, but this will lie dormant for a while (other than testing) while
+    // the planets align for the rest of the project
+    sellByDate = new DateMidnight(2014, 10, 30)
+  )
+
   val LayoutHintsSwitch = Switch("Feature Switches", "layout-hints",
     "If this switch is on, JavaScript will enable the inline-hinting css experiments",
     safeState = Off, sellByDate = new DateMidnight(2014, 4, 30)
@@ -372,7 +380,8 @@ object Switches extends Collections {
     LayoutHintsSwitch,
     HelveticaEasterEggSwitch,
     LeadAdTopPageSwitch,
-    OmnitureVerificationSwitch
+    OmnitureVerificationSwitch,
+    IndiaRegionSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
