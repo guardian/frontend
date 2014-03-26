@@ -1,3 +1,10 @@
+/*
+ *  The register module is used to measure whether a module was executed, how
+ *  long it took, and whether an error was caught. The data is sent to Ophan.
+ *
+ *  The system is passive, and is typically used for modules which we want to
+ *  run analytics over (eg. ab tests, enhancement).
+ */
 define([
     'common/utils/deferToLoad',
     'lodash/collections/where'
