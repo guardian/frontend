@@ -5,7 +5,7 @@ import common._
 import implicits.Collections
 import play.api.{Application, Plugin}
 import play.api.libs.ws.WS
-import org.joda.time.DateMidnight
+import org.joda.time.{Days, DateTime, DateMidnight}
 
 sealed trait SwitchState
 case object On extends SwitchState
@@ -32,6 +32,10 @@ case class Switch( group: String,
       delegate.switchOff()
     }
   }
+
+  def daysToExpiry = Days.daysBetween(new DateTime(), sellByDate).getDays
+
+  def expiresSoon = daysToExpiry < 7
 }
 
 object Switches extends Collections {
