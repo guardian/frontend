@@ -142,7 +142,7 @@
 
             <div data-bind="if: id() && state.open()">
                 <div class="cnf-front__inner">
-                    <div data-bind="visible: state.editingProps">
+                    <div data-bind="visible: state.openProps">
                         <div class="cnf-form" data-bind="">
                                 <label>Title</label>
                                 <input type="text" data-bind="
@@ -150,10 +150,10 @@
                                 <label>Description</label>
                                 <input type="text" data-bind="
                                     value: props.description"/>
-                            <div class="tools"><span class="tool" data-bind="click: unsetEditingProps">Save</span></div>
+                            <div class="tools"><span class="tool" data-bind="click: save">Save</span></div>
                         </div>
                     </div>
-                    <div data-bind="visible: !state.editingProps(), click: setEditingProps">
+                    <div data-bind="visible: !state.openProps(), click: openProps">
                         <div class="cnf-form" data-bind="">
                             <div>
                                 <label>Title</label>

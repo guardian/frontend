@@ -6,6 +6,7 @@ define([
     'models/group',
     'models/config/collection',
     'utils/as-observable-props',
+    'utils/populate-observables',
     'utils/find-first-by-id'
 ], function(
     ko,
@@ -14,6 +15,7 @@ define([
     Group,
     Collection,
     asObservableProps,
+    populateObservables,
     findFirstById
 ) {
     function Front(opts) {
@@ -38,9 +40,11 @@ define([
             'webTitle',
             'description']);
 
-        this.state  = asObservableProps([
+        populateObservables(this.props,  opts);
+
+        this.state = asObservableProps([
             'open',
-            'editingProps']);
+            'openProps']);
 
         this.collections = new Group({
             parent: self,
@@ -67,12 +71,8 @@ define([
         this.state.open(!this.state.open());
     };
 
-    Front.prototype.setEditingProps = function() {
-        this.state.editingProps(true);
-    };
-
-    Front.prototype.unsetEditingProps = function() {
-        this.state.editingProps(false);
+    Front.prototype.openProps = function() {
+        this.state.openProps(true);
     };
 
     Front.prototype.createCollection = function() {
@@ -89,6 +89,11 @@ define([
         collection.parents.remove(this);
         this.collections.items.remove(collection);
         vars.model.save(collection);
+    };
+
+    Front.prototype.save = function() {
+        vars.model.save();
+        this.state.openProps(false);
     };
 
     return Front;
