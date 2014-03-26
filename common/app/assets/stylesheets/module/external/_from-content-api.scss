@@ -5,16 +5,6 @@
 
 // This is the only place where direct element selectors are allowed!
 
-// Horizontal offsets of text in blockquotes and bulletted lists
-$quoted-offset: (
-    default: $gs-gutter*2,
-    tablet: $gs-gutter*2 + $gs-gutter/5
-);
-$bullet-offset: (
-    default: $gs-gutter - $gs-gutter/5,
-    tablet: $gs-gutter
-);
-
 
 /* Core elements
    ========================================================================== */

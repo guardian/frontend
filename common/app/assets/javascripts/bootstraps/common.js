@@ -460,8 +460,8 @@ define([
             });
         },
 
-        startRegister: function() {
-            register.initialise();
+        startRegister: function(config) {
+            register.initialise(config);
         }
     };
 
@@ -507,7 +507,7 @@ define([
             modules.loadTags(config);
             modules.augmentInteractive();
             modules.runForseeSurvey(config);
-            modules.startRegister();
+            modules.startRegister(config);
         }
         mediator.emit('page:common:ready', config, context);
     };

@@ -336,14 +336,30 @@
 .fromage--volume-1,
 .fromage--volume-2 {
     .supporting__item {
-        border-top-color: #ffffff;
+        border-color: #ffffff;
 
-        @include rem((
-            padding-left: $gs-gutter/4
-        ));
+        @include mq($to: tablet) {
+            .supporting__action {
+                @include rem((
+                    margin-left: $gs-gutter/5
+                ));
+            }
+        }
         @include mq(tablet) {
             + .supporting__item {
                 border-left-color: #ffffff;
+            }
+            &:first-child {
+                .supporting__action {
+                    @include rem((
+                        margin-left: $gs-gutter/5
+                    ));
+                }
+            }
+            &:last-child .supporting__action {
+                @include rem((
+                    margin-right: $gs-gutter/5
+                ));
             }
         }
     }

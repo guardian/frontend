@@ -27,11 +27,11 @@
    Hide other page content when overlay is visible
    ========================================================================== */
 
-.has-overlay {
+/*body*/.has-overlay {
     background-color: #222222;
 
     #header,
-    #preloads,
+    #js-context,
     .footer,
     .site-message {
         display: none;

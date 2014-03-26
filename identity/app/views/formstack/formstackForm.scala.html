@@ -10,11 +10,13 @@
 </head>
 <body id="top">
 
-    <div id="preload-1">
+    <div id="js-context">
         <div data-formstack-id="@formstackForm.formReference" class="is-hidden">
             <script src="https://www.formstack.com/forms/js.php?@formstackForm.formReference"></script>
         </div>
     </div>
+
+    @fragments.loadCss()
 
 </body>
 </html>

@@ -1,7 +1,5 @@
 @(page: MetaData, position: String = "after content")(implicit request: RequestHeader)
 
-@if(Switches.SocialSwitch.isSwitchedOn) {
-
 @defining(s"http://${request.host}${request.path}"){ url =>
     <ul class="social u-unstyled u-cf" data-link-name="@position">
         <li class="social__item">
@@ -49,5 +47,4 @@
             </a>
         </li>
     </ul>
-}
 }

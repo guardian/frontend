@@ -1,7 +1,7 @@
 @(gallery: Gallery, storyPackage: List[Trail], index: Int, trail: Boolean)(implicit request: RequestHeader)
 @import conf.Switches._
 
-<h2 class="article__zone left-col-deport tone-@VisualTone(gallery) tone-accent-border">
+<h2 class="article__zone left-col-deport tone-@VisualTone(gallery) tone-accent-border hide-on-mobile-if-localnav">
     <span class="left-col-deport__body" data-component="meta">
         <a class="tone-colour" data-link-name="article section" href="/@gallery.section">@Html(gallery.sectionName.toLowerCase)</a>
     </span>
@@ -62,11 +62,9 @@
                 <div class="article__container" data-component="body">
                     @fragments.standfirst(gallery)
 
-                    @if(ArticleKeywordsSwitch.isSwitchedOn){
-                        <div class="article__keywords" data-link-name="gallery keywords">
-                            @fragments.keywordList(gallery.keywords)
-                        </div>
-                    }
+                    <div class="article__keywords" data-link-name="gallery keywords">
+                        @fragments.keywordList(gallery.keywords)
+                    </div>
                 </div>
 
                 <div class="social-wrapper" data-component="share">

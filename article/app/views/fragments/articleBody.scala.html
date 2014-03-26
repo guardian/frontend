@@ -3,7 +3,7 @@
 
 @defining((model.article, model.storyPackage)) { case (article, storyPackage) =>
 
-    <h2 class="article__zone left-col-deport tone-@VisualTone(article) tone-accent-border">
+    <h2 class="article__zone left-col-deport tone-@VisualTone(article) tone-accent-border hide-on-mobile-if-localnav">
         <span class="left-col-deport__body" data-component="meta">
             <a class="tone-colour" data-link-name="article section" href="@LinkTo{/@article.section}">@Html(article.sectionName.toLowerCase)</a>
         </span>
@@ -73,11 +73,9 @@
                             @BodyCleaner(article, article.body)
                         </div>
 
-                        @if(ArticleKeywordsSwitch.isSwitchedOn){
-                            <div class="article__keywords" data-link-name="article keywords">
-                                @fragments.keywordList(article.keywords)
-                            </div>
-                        }
+                        <div class="article__keywords" data-link-name="article keywords">
+                            @fragments.keywordList(article.keywords)
+                        </div>
                     </div>
 
                     <div class="social-wrapper">
