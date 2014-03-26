@@ -415,8 +415,9 @@ case class InlineSlotGenerator(articleWordCount: Int) extends HtmlCleaner {
 
   private def isBlock(element: Element): Boolean = {
       (element.hasClass("img") && !element.hasClass("img--inline")) ||
-      element.hasClass("embed-video-wrapper") ||
-      element.tagName == "video"
+       element.hasClass("embed-video-wrapper") ||
+       element.hasClass("gu-video-wrapper") ||
+       element.tagName == "video"
   }
 
   private def insertSlot(paragraph: Element, document: Document) {

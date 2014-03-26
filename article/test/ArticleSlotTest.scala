@@ -83,7 +83,7 @@ class ArticleSlotTest extends FlatSpec with Matchers with BeforeAndAfterEach {
     for (element <- elements) {
       val sibling = element.previousElementSibling()
       sibling should not be (null)
-      sibling.classNames.asScala should contain ("gu-video")
+      sibling.classNames.asScala should contain ("gu-video-wrapper")
     }
   }
 

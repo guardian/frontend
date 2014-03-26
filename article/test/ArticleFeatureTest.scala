@@ -78,7 +78,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         import browser._
 
         Then("I should see a large byline image")
-        $(".byline-img img").getAttribute("src") should endWith("Pix/pictures/2014/1/20/1390230835044/JonathanFreedland.png?width=140&height=-&quality=95")
+        $(".byline-img img").getAttribute("src") should endWith("Pix/pictures/2014/3/13/1394733740842/JonathanFreedland.png?width=140&height=-&quality=95")
       }
     }
 
