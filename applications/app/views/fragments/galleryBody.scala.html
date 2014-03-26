@@ -62,11 +62,9 @@
                 <div class="article__container" data-component="body">
                     @fragments.standfirst(gallery)
 
-                    @if(ArticleKeywordsSwitch.isSwitchedOn){
-                        <div class="article__keywords" data-link-name="gallery keywords">
-                            @fragments.keywordList(gallery.keywords)
-                        </div>
-                    }
+                    <div class="article__keywords" data-link-name="gallery keywords">
+                        @fragments.keywordList(gallery.keywords)
+                    </div>
                 </div>
 
                 <div class="social-wrapper" data-component="share">

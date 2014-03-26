@@ -53,11 +53,9 @@
                             @fragments.standfirst(video)
                         </div>
 
-                        @if(ArticleKeywordsSwitch.isSwitchedOn){
-                            <div class="article__keywords" data-link-name="video keywords">
-                                @fragments.keywordList(video.keywords)
-                            </div>
-                        }
+                        <div class="article__keywords" data-link-name="video keywords">
+                            @fragments.keywordList(video.keywords)
+                        </div>
                     </div>
 
                     <div class="social-wrapper" data-component="share">

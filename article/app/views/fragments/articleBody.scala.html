@@ -73,11 +73,9 @@
                             @BodyCleaner(article, article.body)
                         </div>
 
-                        @if(ArticleKeywordsSwitch.isSwitchedOn){
-                            <div class="article__keywords" data-link-name="article keywords">
-                                @fragments.keywordList(article.keywords)
-                            </div>
-                        }
+                        <div class="article__keywords" data-link-name="article keywords">
+                            @fragments.keywordList(article.keywords)
+                        </div>
                     </div>
 
                     <div class="social-wrapper">
