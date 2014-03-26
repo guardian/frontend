@@ -548,7 +548,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
     scenario("Signify to the user an article is sponsored"){
       Given("I visit a sponsored article entitled 'Young people debt worries'")
-      SponsoredContentSwitch.switchOn()
+      DFPAdvertSwitch.switchOn()
       HtmlUnit("/carphone-warehouse-mobile-living/melody-makers") { browser =>
         import browser._
         Then("I should see a message")

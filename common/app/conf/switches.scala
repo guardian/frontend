@@ -201,11 +201,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
-  val SponsoredContentSwitch = Switch("Feature Switches", "sponsored-content",
-    "If this is switched on the articles will display a simple 'Advertisement feature' notice.",
-    safeState = Off, sellByDate = endOfQ4
-  )
-
   val SearchSwitch = Switch("Feature Switches", "google-search",
     "If this switch is turned on then Google search is added to the sections nav.",
     safeState = Off, sellByDate = never
@@ -372,7 +367,6 @@ object Switches extends Collections {
     ToolDisable,
     ToolConfigurationDisable,
     ToolSparklines,
-    SponsoredContentSwitch,
     OphanSwitch,
     ScrollDepthSwitch,
     ContentApiPutSwitch,
