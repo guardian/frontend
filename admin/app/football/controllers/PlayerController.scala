@@ -1,18 +1,14 @@
 package controllers.admin
 
-import play.api._
 import play.api.mvc._
-import play.api.Play.current
-import football.services.{GetPaClient, Client}
-import pa.{PlayerProfile, Player, TeamEventMatch}
+import football.services.{GetPaClient}
+import pa.{PlayerProfile}
 import util.FutureZippers
 import common.ExecutionContexts
 import org.joda.time.DateMidnight
-import java.net.URLDecoder
-import football.model.{PrevResult, PA}
-import play.api.templates.Html
+import football.model.{PA}
 import scala.concurrent.Future
-import model.{NoCache, Cached}
+import model.{Cors, NoCache, Cached}
 
 
 object PlayerController extends Controller with ExecutionContexts with GetPaClient {
@@ -33,7 +29,7 @@ object PlayerController extends Controller with ExecutionContexts with GetPaClie
     NoCache(SeeOther(s"/admin/football/player/card/$playerCardType/$playerId"))
   }
 
-  def playerCard(playerId: String, cardType: String) = Authenticated.async { request =>
+  def playerCard(playerId: String, cardType: String) = Authenticated.async { implicit request =>
     FutureZippers.zip(
       client.playerProfile(playerId),
       client.playerStats(playerId, new DateMidnight(2013, 7, 1), DateMidnight.now()),
@@ -48,7 +44,7 @@ object PlayerController extends Controller with ExecutionContexts with GetPaClie
         case "overview" => Ok(views.html.football.player.cards.overview(playerId: String, playerStats, playerAppearances))
         case _ => Ok(views.html.football.player.cards.overview(playerId: String, playerStats, playerAppearances))
       }
-      Cached(60)(result)
+      Cors(Cached(60)(result))
     }
   }
 
