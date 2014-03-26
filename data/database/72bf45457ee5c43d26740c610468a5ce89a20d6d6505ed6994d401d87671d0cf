@@ -1,0 +1,3123 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"business/2012/aug/19/shell-spending-security-nigeria-leak",
+      "sectionId":"business",
+      "sectionName":"Business",
+      "webPublicationDate":"2012-08-19T17:38:51Z",
+      "webTitle":"Shell spending millions of dollars on security in Nigeria, leaked data shows",
+      "webUrl":"http://www.theguardian.com/business/2012/aug/19/shell-spending-security-nigeria-leak",
+      "apiUrl":"http://content.guardianapis.com/business/2012/aug/19/shell-spending-security-nigeria-leak",
+      "fields":{
+        "trailText":"<p>Internal documents reveal oil company spent $383m over three years protecting staff and installations in Niger delta region</p>",
+        "headline":"Shell spending millions of dollars on security in Nigeria, leaked data shows",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/39p8b",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pixies/2012/8/19/1345397841020/Shell-in-the-Niger-delta-003.jpg",
+        "wordcount":"996",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2012-08-22T17:38:51Z"
+      },
+      "tags":[{
+        "id":"business/royaldutchshell",
+        "type":"keyword",
+        "webTitle":"Royal Dutch Shell",
+        "webUrl":"http://www.theguardian.com/business/royaldutchshell",
+        "apiUrl":"http://content.guardianapis.com/business/royaldutchshell",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"world/nigeria",
+        "type":"keyword",
+        "webTitle":"Nigeria",
+        "webUrl":"http://www.theguardian.com/world/nigeria",
+        "apiUrl":"http://content.guardianapis.com/world/nigeria",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"business/oil",
+        "type":"keyword",
+        "webTitle":"Oil",
+        "webUrl":"http://www.theguardian.com/business/oil",
+        "apiUrl":"http://content.guardianapis.com/business/oil",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/oilandgascompanies",
+        "type":"keyword",
+        "webTitle":"Oil and gas companies",
+        "webUrl":"http://www.theguardian.com/business/oilandgascompanies",
+        "apiUrl":"http://content.guardianapis.com/business/oilandgascompanies",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"world/africa",
+        "type":"keyword",
+        "webTitle":"Africa",
+        "webUrl":"http://www.theguardian.com/world/africa",
+        "apiUrl":"http://content.guardianapis.com/world/africa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/afuahirsch",
+        "type":"contributor",
+        "webTitle":"Afua Hirsch",
+        "webUrl":"http://www.theguardian.com/profile/afuahirsch",
+        "apiUrl":"http://content.guardianapis.com/profile/afuahirsch",
+        "bio":"<p>Afua Hirsch is the Guardian's west Africa correspondent based in Ghana</p>",
+        "r2ContributorId":"28094",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/11/8/1289231487480/afua-hirsch.jpg",
+        "references":[]
+      },{
+        "id":"profile/johnvidal",
+        "type":"contributor",
+        "webTitle":"John Vidal",
+        "webUrl":"http://www.theguardian.com/profile/johnvidal",
+        "apiUrl":"http://content.guardianapis.com/profile/johnvidal",
+        "bio":"<p>John Vidal is the Guardian's <a href=\"http://www.guardian.co.uk/environment\">environment</a> editor. He joined the paper in 1995 after working for Agence France Presse, North Wales Newspapers and the Cumberland News. He is the author of McLibel: Burger Culture on Trial (1998) and has contributed chapters to books on topics such as the Gulf war, new Europe and development</p>",
+        "rcsId":"GNL001546",
+        "r2ContributorId":"15886",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/john_vidal_140x140.jpg",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/topstories",
+        "type":"newspaper-book-section",
+        "webTitle":"Top stories",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/topstories",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/topstories",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"publication/guardianweekly",
+        "type":"publication",
+        "webTitle":"Guardian Weekly",
+        "webUrl":"http://www.theguardian.com/weekly",
+        "apiUrl":"http://content.guardianapis.com/weekly",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-394951270",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pixies/2012/8/19/1345397839294/Shell-in-the-Niger-delta-002.jpg",
+          "typeData":{
+            "source":"Corbis",
+            "photographer":"Adrian Arbib",
+            "altText":"Shell in the Niger delta",
+            "height":"130",
+            "credit":"Adrian Arbib/Corbis",
+            "caption":"If it were a country Shell would have the third highest security budget in Africa. Photograph: Adrian Arbib/Corbis",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pixies/2012/8/19/1345397841020/Shell-in-the-Niger-delta-003.jpg",
+          "typeData":{
+            "source":"Corbis",
+            "photographer":"Adrian Arbib",
+            "altText":"Shell in the Niger delta",
+            "height":"84",
+            "credit":"Adrian Arbib/Corbis",
+            "caption":"If it were a country Shell would have the third highest security budget in Africa. Photograph: Adrian Arbib/Corbis",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pixies/2012/8/19/1345397842360/Shell-in-the-Niger-delta-004.jpg",
+          "typeData":{
+            "source":"Corbis",
+            "photographer":"Adrian Arbib",
+            "altText":"Shell in the Niger delta",
+            "height":"132",
+            "credit":"Adrian Arbib/Corbis",
+            "caption":"If it were a country Shell would have the third highest security budget in Africa. Photograph: Adrian Arbib/Corbis",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pixies/2012/8/19/1345397843635/Shell-in-the-Niger-delta-005.jpg",
+          "typeData":{
+            "source":"Corbis",
+            "photographer":"Adrian Arbib",
+            "altText":"Shell in the Niger delta",
+            "height":"168",
+            "credit":"Adrian Arbib/Corbis",
+            "caption":"If it were a country Shell would have the third highest security budget in Africa. Photograph: Adrian Arbib/Corbis",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pixies/2012/8/19/1345397844925/Shell-in-the-Niger-delta-006.jpg",
+          "typeData":{
+            "source":"Corbis",
+            "photographer":"Adrian Arbib",
+            "altText":"Shell in the Niger delta",
+            "height":"180",
+            "credit":"Adrian Arbib/Corbis",
+            "caption":"If it were a country Shell would have the third highest security budget in Africa. Photograph: Adrian Arbib/Corbis",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pixies/2012/8/19/1345397846235/Shell-in-the-Niger-delta-007.jpg",
+          "typeData":{
+            "source":"Corbis",
+            "photographer":"Adrian Arbib",
+            "altText":"Shell in the Niger delta",
+            "height":"228",
+            "credit":"Adrian Arbib/Corbis",
+            "caption":"If it were a country Shell would have the third highest security budget in Africa. Photograph: Adrian Arbib/Corbis",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pixies/2012/8/19/1345397848955/Shell-in-the-Niger-delta-009.jpg",
+          "typeData":{
+            "source":"Corbis",
+            "photographer":"Adrian Arbib",
+            "altText":"Shell in the Niger delta",
+            "height":"276",
+            "credit":"Adrian Arbib/Corbis",
+            "caption":"If it were a country Shell would have the third highest security budget in Africa. Photograph: Adrian Arbib/Corbis",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pixies/2012/8/19/1345397848955/Shell-in-the-Niger-delta-009.jpg",
+          "typeData":{
+            "source":"Corbis",
+            "photographer":"Adrian Arbib",
+            "altText":"Shell in the Niger delta",
+            "height":"276",
+            "credit":"Adrian Arbib/Corbis",
+            "caption":"If it were a country Shell would have the third highest security budget in Africa. Photograph: Adrian Arbib/Corbis",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-394951271",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pixies/2012/8/19/1345397841020/Shell-in-the-Niger-delta-003.jpg",
+          "typeData":{
+            "source":"Corbis",
+            "photographer":"Adrian Arbib",
+            "altText":"Shell in the Niger delta",
+            "height":"84",
+            "credit":"Adrian Arbib/Corbis",
+            "caption":"If it were a country Shell would have the third highest security budget in Africa. Photograph: Adrian Arbib/Corbis",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },
+    "relatedContent":[{
+      "id":"environment/gallery/2010/mar/05/curse-black-gold-nigeria",
+      "sectionId":"environment",
+      "sectionName":"Environment",
+      "webPublicationDate":"2010-03-10T15:19:03Z",
+      "webTitle":"In pictures: Curse of the Black Gold: 50 Years of Oil in the Niger Delta",
+      "webUrl":"http://www.theguardian.com/environment/gallery/2010/mar/05/curse-black-gold-nigeria",
+      "apiUrl":"http://content.guardianapis.com/environment/gallery/2010/mar/05/curse-black-gold-nigeria",
+      "fields":{
+        "trailText":"<p>Curse of the Black Gold: 50 Years of Oil in the Niger Delta by the photojournalist Ed Kashi documents the consequences of 50 years of oil extraction in the Niger delta</p>",
+        "headline":"Curse of the Black Gold: 50 Years of Oil in the Niger Delta",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/2fdjg",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Environment/Pix/columnists/2010/3/5/1267804948000/The-Curse-of-Black-Gold---004.jpg",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2010-03-13T15:19:03Z"
+      },
+      "tags":[{
+        "id":"environment/oil",
+        "type":"keyword",
+        "webTitle":"Oil",
+        "webUrl":"http://www.theguardian.com/environment/oil",
+        "apiUrl":"http://content.guardianapis.com/environment/oil",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"environment/environment",
+        "type":"keyword",
+        "webTitle":"Environment",
+        "webUrl":"http://www.theguardian.com/environment/environment",
+        "apiUrl":"http://content.guardianapis.com/environment/environment",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"environment/pollution",
+        "type":"keyword",
+        "webTitle":"Pollution",
+        "webUrl":"http://www.theguardian.com/environment/pollution",
+        "apiUrl":"http://content.guardianapis.com/environment/pollution",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"world/nigeria",
+        "type":"keyword",
+        "webTitle":"Nigeria",
+        "webUrl":"http://www.theguardian.com/world/nigeria",
+        "apiUrl":"http://content.guardianapis.com/world/nigeria",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"artanddesign/photography",
+        "type":"keyword",
+        "webTitle":"Photography",
+        "webUrl":"http://www.theguardian.com/artanddesign/photography",
+        "apiUrl":"http://content.guardianapis.com/artanddesign/photography",
+        "sectionId":"artanddesign",
+        "sectionName":"Art and design",
+        "references":[]
+      },{
+        "id":"environment/energy",
+        "type":"keyword",
+        "webTitle":"Energy",
+        "webUrl":"http://www.theguardian.com/environment/energy",
+        "apiUrl":"http://content.guardianapis.com/environment/energy",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"business/royaldutchshell",
+        "type":"keyword",
+        "webTitle":"Royal Dutch Shell",
+        "webUrl":"http://www.theguardian.com/business/royaldutchshell",
+        "apiUrl":"http://content.guardianapis.com/business/royaldutchshell",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"profile/erichilaire",
+        "type":"contributor",
+        "webTitle":"Eric Hilaire",
+        "webUrl":"http://www.theguardian.com/profile/erichilaire",
+        "apiUrl":"http://content.guardianapis.com/profile/erichilaire",
+        "bio":"<p>Eric Hilaire is the assistant picture editor for <a href=\"http://www.guardian.co.uk/environment\">environment</a> and <a href=\"http://www.guardian.co.uk/science\">science</a></p>",
+        "r2ContributorId":"23749",
+        "references":[]
+      },{
+        "id":"profile/shiona-tregaskis",
+        "type":"contributor",
+        "webTitle":"Shiona Tregaskis",
+        "webUrl":"http://www.theguardian.com/profile/shiona-tregaskis",
+        "apiUrl":"http://content.guardianapis.com/profile/shiona-tregaskis",
+        "bio":"<p>Shiona Tregaskis is Guardian Technology's production editor</p>",
+        "r2ContributorId":"29333",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Environment/Pix/columnists/2011/1/25/1295952991143/Shiona-Tregaskis-Guardian-001.jpg",
+        "references":[]
+      },{
+        "id":"environment/fossil-fuels",
+        "type":"keyword",
+        "webTitle":"Fossil fuels",
+        "webUrl":"http://www.theguardian.com/environment/fossil-fuels",
+        "apiUrl":"http://content.guardianapis.com/environment/fossil-fuels",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/oil",
+        "type":"keyword",
+        "webTitle":"Oil",
+        "webUrl":"http://www.theguardian.com/business/oil",
+        "apiUrl":"http://content.guardianapis.com/business/oil",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/oilandgascompanies",
+        "type":"keyword",
+        "webTitle":"Oil and gas companies",
+        "webUrl":"http://www.theguardian.com/business/oilandgascompanies",
+        "apiUrl":"http://content.guardianapis.com/business/oilandgascompanies",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"world/africa",
+        "type":"keyword",
+        "webTitle":"Africa",
+        "webUrl":"http://www.theguardian.com/world/africa",
+        "apiUrl":"http://content.guardianapis.com/world/africa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/gallery",
+        "type":"type",
+        "webTitle":"Gallery",
+        "webUrl":"http://www.theguardian.com/inpictures",
+        "apiUrl":"http://content.guardianapis.com/inpictures",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-360539911",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/columnists/2010/3/5/1267804948000/The-Curse-of-Black-Gold---004.jpg",
+          "typeData":{
+            "source":"Corbis",
+            "photographer":"Ed Kashi",
+            "altText":"The Curse of Black Gold : Environmental and human impact of oil extraction in Niger Delta, Nigeria",
+            "height":"84",
+            "credit":"Ed Kashi/Corbis",
+            "caption":"Along the Niger Delta, local Urohobo people bake \"krokpo-garri\", or tapioca in the heat of a gas flare, Afiesere, Warri North, Nigeria. Photograph: Ed Kashi/Corbis",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-image-360077948",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":1,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/3/5/1267804609970/Environmental-and-human-i-020.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"Ed Kashi",
+            "altText":"The Curse of Black Gold: Environmental and human impact of oil extraction in Niger Delta, Nigeria",
+            "height":"390",
+            "credit":"Ed Kashi/Corbis",
+            "caption":"An oil spill, polluting groundwater and ruining cropland, from a well owned by Shell that had been left abandoned for over 25 years. Badly maintained equipment is the cause of many leaks, but oil operators blame sabotage, saying oil spills are caused for compensation money",
+            "width":"585"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/3/5/1267804609970/Environmental-and-human-i-020-thumb-8726.jpg",
+          "typeData":{
+            "source":"Corbis",
+            "photographer":"Ed Kashi",
+            "altText":"The Curse of Black Gold: Environmental and human impact of oil extraction in Niger Delta, Nigeria",
+            "height":"68",
+            "credit":"Ed Kashi/Corbis",
+            "caption":"An oil spill from an abandoned Shell Petroleum Development Company well in Oloibiri, Bayelsa.  Wellhead 14 was closed in 1977 but has been leaking for years, and in June of 2004 it finally released an oil spill of over 20,000 barrels of crude. Workers subcontracted by Shell Oil Company clean it up.",
+            "width":"68"
+          }
+        }]
+      },{
+        "id":"gu-image-360077976",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":2,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/3/5/1267804596774/Environmental-and-human-i-010.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"Ed Kashi",
+            "altText":"The Curse of Black Gold: Environmental and human impact of oil extraction in Niger Delta, Nigeria",
+            "height":"500",
+            "credit":"Ed Kashi/Corbis",
+            "caption":"Workers push heavy barrels of gas from the waterfront into the main market road of Yenagoa, Bayelsa. Mangroves cleared for pipelines and the acid rain from gas flares have killed off fish, once the main source of employment",
+            "width":"333"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/3/5/1267804596774/Environmental-and-human-i-010-thumb-6167.jpg",
+          "typeData":{
+            "source":"Corbis",
+            "photographer":"Ed Kashi",
+            "altText":"The Curse of Black Gold: Environmental and human impact of oil extraction in Niger Delta, Nigeria",
+            "height":"68",
+            "credit":"Ed Kashi/Corbis",
+            "caption":"09 Jun 2006, Yenagoa, Bayelsa, Nigeria --- Workers push heavy barrels of gas from the waterfront into the main market road of Yenagoa, Bayelsa.",
+            "width":"68"
+          }
+        }]
+      },{
+        "id":"gu-image-360077853",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":3,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/3/5/1267804616272/Environmental-and-human-i-025.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"Ed Kashi",
+            "altText":"The Curse of Black Gold: Environmental and human impact of oil extraction in Niger Delta, Nigeria",
+            "height":"390",
+            "credit":"Ed Kashi/Corbis",
+            "caption":"Oil companies, led by Chevron, ExxonMobil, Total, Agip and Royal Dutch Shell, have transformed what was once a waterlogged equatorial forest, stripping away mangroves to lay 4,500 miles of pipelines, over 150 oil fields and 275 flow stations",
+            "width":"585"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/3/5/1267804616272/Environmental-and-human-i-025-thumb-4359.jpg",
+          "typeData":{
+            "source":"Corbis",
+            "photographer":"Ed Kashi",
+            "altText":"The Curse of Black Gold: Environmental and human impact of oil extraction in Niger Delta, Nigeria",
+            "height":"68",
+            "credit":"Ed Kashi/Corbis",
+            "caption":"People row a boat next to pipelines to the coast terminal run by the Nigerian National Petroleum Company (NNPC) which are marked with evidence of oil leaks and oil fires, Okrika, Rivers.",
+            "width":"68"
+          }
+        }]
+      },{
+        "id":"gu-image-360077957",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":4,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/3/5/1267804607614/Environmental-and-human-i-018.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"Ed Kashi",
+            "altText":"The Curse of Black Gold: Environmental and human impact of oil extraction in Niger Delta, Nigeria",
+            "height":"390",
+            "credit":"Ed Kashi/Corbis",
+            "caption":"A young girl crosses over pipelines that run directly through the town. A troubled area near Port Harcourt, factional fighting is common in Okrika",
+            "width":"585"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/3/5/1267804607614/Environmental-and-human-i-018-thumb-7189.jpg",
+          "typeData":{
+            "source":"Corbis",
+            "photographer":"Ed Kashi",
+            "altText":"The Curse of Black Gold: Environmental and human impact of oil extraction in Niger Delta, Nigeria",
+            "height":"68",
+            "credit":"Ed Kashi/Corbis",
+            "caption":"A young girl crosses over NNPC, Nigerian National Petroleum, pipelines that run directly through the community of Okrika, Rivers. A troubled area near Port Harcourt, Okrika has oil, refineries, pipelines and violence. Factional fighting is common here. Fishing is struggling, like in most of the delta, but was once the main source of employment.",
+            "width":"68"
+          }
+        }]
+      },{
+        "id":"gu-image-360077966",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":5,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/3/5/1267804602129/Environmental-and-human-i-014.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"Ed Kashi",
+            "altText":"The Curse of Black Gold: Environmental and human impact of oil extraction in Niger Delta, Nigeria",
+            "height":"390",
+            "credit":"Ed Kashi/Corbis",
+            "caption":"The Bonny Island Nigerian Liquified Natural Gas terminal is the largest of its kind in the delta and is a owned by a consortium of oil companies. No inhabitants from the surrounding villages work in this facility",
+            "width":"585"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/3/5/1267804602129/Environmental-and-human-i-014-thumb-2988.jpg",
+          "typeData":{
+            "source":"Corbis",
+            "photographer":"Ed Kashi",
+            "altText":"The Curse of Black Gold: Environmental and human impact of oil extraction in Niger Delta, Nigeria",
+            "height":"68",
+            "credit":"Ed Kashi/Corbis",
+            "caption":"The Bonny Island NLNG (Nigerian Liquified Natural Gas) terminal is the largest of it's kind in the delta and is a owned by a consortium of Shell, Total of France, Exxon Mobil and Agip of Italy. The local villages are very close and none of the inhabitants work in this facility.",
+            "width":"68"
+          }
+        }]
+      },{
+        "id":"gu-image-360077972",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":6,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/3/5/1267804598274/Environmental-and-human-i-011.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"Ed Kashi",
+            "altText":"The Curse of Black Gold: Environmental and human impact of oil extraction in Niger Delta, Nigeria",
+            "height":"390",
+            "credit":"Ed Kashi/Corbis",
+            "caption":"Hundreds of flares like this burn continuously, releasing greenhouse gases and causing acid rain",
+            "width":"585"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/3/5/1267804598274/Environmental-and-human-i-011-thumb-1598.jpg",
+          "typeData":{
+            "source":"Corbis",
+            "photographer":"Ed Kashi",
+            "altText":"The Curse of Black Gold: Environmental and human impact of oil extraction in Niger Delta, Nigeria",
+            "height":"68",
+            "credit":"Ed Kashi/Corbis",
+            "caption":"Unemployed local youths observe a gas flare, as it blasts heat and pollution into the Niger Delta at the Etelebou Flow Station, Bayelsa, operated by SPDC, Shell Petroleum Development Corp. ",
+            "width":"68"
+          }
+        }]
+      },{
+        "id":"gu-image-360077822",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":7,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/3/5/1267804628337/Environmental-and-human-i-035.jpg",
+          "typeData":{
+            "source":"Corbis",
+            "photographer":"Ed Kashi",
+            "altText":"The Curse of Black Gold: Environmental and human impact of oil extraction in Niger Delta, Nigeria",
+            "height":"390",
+            "credit":"Ed Kashi/Corbis",
+            "caption":"An Urhobo woman bakes <em>krokpo-garri</em>, or tapioca, in the heat of a gas flare in Afiesere. Local people have worked in this way since 1961, when Shell first opened this flow station. Pollutants from the flare cause serious health problems and life expectancy is short",
+            "width":"585"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/3/5/1267804628337/Environmental-and-human-i-035-thumb-4126.jpg",
+          "typeData":{
+            "source":"Corbis",
+            "photographer":"Ed Kashi",
+            "altText":"The Curse of Black Gold: Environmental and human impact of oil extraction in Niger Delta, Nigeria",
+            "height":"68",
+            "credit":"Ed Kashi/Corbis",
+            "caption":"Along the Niger Delta, local Urohobo people bake \"krokpo-garri\", or tapioca in the heat of a gas flare in Afiesere, Warri North. Since 1961, when Shell Petroleum Development Company first opened this flow station, residents of the local community have worked in this way. Life span is short for these people, as pollutants from the flare cause serious health problems.",
+            "width":"68"
+          }
+        }]
+      },{
+        "id":"gu-image-360077851",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":8,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/3/5/1267804617393/Environmental-and-human-i-026.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"Ed Kashi",
+            "altText":"The Curse of Black Gold: Environmental and human impact of oil extraction in Niger Delta, Nigeria",
+            "height":"390",
+            "credit":"Ed Kashi/Corbis",
+            "caption":"Workers subcontracted by Shell to clean up an oil spill from an abandoned well. A <a href=\"http://www.guardian.co.uk/business/2009/jun/30/oil-royaldutchshell\">report by Amnesty International </a>suggests in the past 50 years at least 9m barrels worth of oil have leaked into land and rivers in the region",
+            "width":"585"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/3/5/1267804617393/Environmental-and-human-i-026-thumb-1100.jpg",
+          "typeData":{
+            "source":"Corbis",
+            "photographer":"Ed Kashi",
+            "altText":"The Curse of Black Gold: Environmental and human impact of oil extraction in Niger Delta, Nigeria",
+            "height":"68",
+            "credit":"Ed Kashi/Corbis",
+            "caption":"Workers subcontracted by Shell Oil Company clean up an oil spill from an abandoned Shell Petroleum Development Company well, Oloibiri Town, Bayelsa. Wellhead #14 was closed in 1977 but has been leaking for years, and in June of 2004 it finally released an oil spill of over 20,000 barrels of crude oil. ",
+            "width":"68"
+          }
+        }]
+      },{
+        "id":"gu-image-360077817",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":9,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/3/5/1267804629469/Environmental-and-human-i-036.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"Ed Kashi",
+            "altText":"The Curse of Black Gold: Environmental and human impact of oil extraction in Niger Delta, Nigeria",
+            "height":"390",
+            "credit":"Ed Kashi/Corbis",
+            "caption":"In the village of Kalabilema, Bayelsa, a felled mangrove forest shows the damage of a fire which killed four people in March 2004. The cause of the fire was an old oil spill from leaking pipelines",
+            "width":"585"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/3/5/1267804629469/Environmental-and-human-i-036-thumb-895.jpg",
+          "typeData":{
+            "source":"Corbis",
+            "photographer":"Ed Kashi",
+            "altText":"The Curse of Black Gold: Environmental and human impact of oil extraction in Niger Delta, Nigeria",
+            "height":"68",
+            "credit":"Ed Kashi/Corbis",
+            "caption":"In the village of Kalabilema, Bayelsa, a felled mangrove forest bears the scars of a fire that killed four locals in March of 2004. The cause was an old oil spill from leaking Shell Petroleum pipelines that were ignited by accident. ",
+            "width":"68"
+          }
+        }]
+      },{
+        "id":"gu-image-360077994",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":10,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/3/5/1267804590943/Environmental-and-human-i-006.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"Ed Kashi",
+            "altText":"The Curse of Black Gold: Environmental and human impact of oil extraction in Niger Delta, Nigeria",
+            "height":"390",
+            "credit":"Ed Kashi/Corbis",
+            "caption":"The home of Papa Isamu in Ogulagha lays sunken in sand since the encroaching waters of the delta creeks eroded the unprotected shoreline. Hundreds of homes in this town have been lost to the same fate. It is estimated that between more than 20,000 hectares (50,000 acres) of mangroves have disappeared from the coast",
+            "width":"585"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/3/5/1267804590943/Environmental-and-human-i-006-thumb-4623.jpg",
+          "typeData":{
+            "source":"Corbis",
+            "photographer":"Ed Kashi",
+            "altText":"The Curse of Black Gold: Environmental and human impact of oil extraction in Niger Delta, Nigeria",
+            "height":"68",
+            "credit":"Ed Kashi/Corbis",
+            "caption":"The home of Papa Isamu in Ogulagha lays sunken in sand since 2004, when the encroaching waters of the Niger Delta creeks eroded the unprotected shoreline. In this town of 20,000 located in the middle of the Delta, hundreds of homes have been lost to this same fate. The local residents are bitter about the lack of protection that the oil companies and government have provided for them, while the oil industry has been allowed to protect their facilities and dredge the nearby waters, which has only exacerbated the problems of the local communities. Erosion is one of the main environmental impacts of the oil industry.",
+            "width":"68"
+          }
+        }]
+      },{
+        "id":"gu-image-360077990",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":11,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/3/5/1267804594074/Environmental-and-human-i-008.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"Ed Kashi",
+            "altText":"The Curse of Black Gold: Environmental and human impact of oil extraction in Niger Delta, Nigeria",
+            "height":"390",
+            "credit":"Ed Kashi/Corbis",
+            "caption":"Old Bonny Town on Bonnie Island, where the slave trade and palm oil trade previously thrived. Now the town is in poverty while the oil and gas companies continue to grow",
+            "width":"585"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/3/5/1267804594074/Environmental-and-human-i-008-thumb-5309.jpg",
+          "typeData":{
+            "source":"Corbis",
+            "photographer":"Ed Kashi",
+            "altText":"The Curse of Black Gold: Environmental and human impact of oil extraction in Niger Delta, Nigeria",
+            "height":"68",
+            "credit":"Ed Kashi/Corbis",
+            "caption":"Pollution and environmental degradation in old Bonny Town on Bonnie Island. This is a historical town, where the slave trade and palm oil trade was previously based and thrived. Now, the town is stuck in poverty and under development while the oil and gas companies expand and grow.",
+            "width":"68"
+          }
+        }]
+      },{
+        "id":"gu-image-360077836",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":12,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/3/5/1267804624860/Environmental-and-human-i-032.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"Ed Kashi",
+            "altText":"The Curse of Black Gold: Environmental and human impact of oil extraction in Niger Delta, Nigeria",
+            "height":"390",
+            "credit":"Ed Kashi/Corbis",
+            "caption":"The head of Nigeria's anti-corruption agency has estimated that during 2003, 70% of oil revenues, more than $14bn, was stolen or wasted",
+            "width":"585"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/3/5/1267804624860/Environmental-and-human-i-032-thumb-5326.jpg",
+          "typeData":{
+            "source":"Corbis",
+            "photographer":"Ed Kashi",
+            "altText":"The Curse of Black Gold: Environmental and human impact of oil extraction in Niger Delta, Nigeria",
+            "height":"68",
+            "credit":"Ed Kashi/Corbis",
+            "caption":"A beggar sits next to a median on a road congested with trucks carrying refined petrol in the main city along the Niger Delta, Port Harcourt, Rivers. This scene encapsulates the contradiction between impoverished living standards and the country's wealth derived from oil industry.",
+            "width":"68"
+          }
+        }]
+      },{
+        "id":"gu-image-360078025",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":13,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/3/5/1267804584341/Environmental-and-human-i-001.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"Ed Kashi",
+            "altText":"The Curse of Black Gold: Environmental and human impact of oil extraction in Niger Delta, Nigeria",
+            "height":"390",
+            "credit":"Ed Kashi/Corbis",
+            "caption":"On the streets of Warri, hawkers sell fuel illegally. Because of shortages and high prices, sellers are common",
+            "width":"585"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/3/5/1267804584341/Environmental-and-human-i-001-thumb-3326.jpg",
+          "typeData":{
+            "source":"Corbis",
+            "photographer":"Ed Kashi",
+            "altText":"The Curse of Black Gold: Environmental and human impact of oil extraction in Niger Delta, Nigeria",
+            "height":"68",
+            "credit":"Ed Kashi/Corbis",
+            "caption":"On the streets of Warri, in the Niger Delta, \"hawkers\" sell fuel illegally. Due to shortages, high prices and lines at the gas stations, there are many of these sellers on the streets of Warri. ",
+            "width":"68"
+          }
+        }]
+      },{
+        "id":"gu-image-360077855",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":14,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/3/5/1267804615055/Environmental-and-human-i-024.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"Ed Kashi",
+            "altText":"The Curse of Black Gold: Environmental and human impact of oil extraction in Niger Delta, Nigeria",
+            "height":"390",
+            "credit":"Ed Kashi/Corbis",
+            "caption":"A roaster tends a fire created by old tire remnants, at the Trans-Amadi slaughter, the main abattoir of Port Harcourt. At the open-air slaughter, animals' blood spills into the waterways below and their skin is burned by the flames of old tires, which creates thick clouds of black smoke over the city",
+            "width":"585"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/3/5/1267804615055/Environmental-and-human-i-024-thumb-8040.jpg",
+          "typeData":{
+            "source":"Corbis",
+            "photographer":"Ed Kashi",
+            "altText":"The Curse of Black Gold: Environmental and human impact of oil extraction in Niger Delta, Nigeria",
+            "height":"68",
+            "credit":"Ed Kashi/Corbis",
+            "caption":"A roaster tends the fire, created by old tire remnants, at the Trans-Amadi Slaughter, the main abbatoir of Port Harcourt, Rivers. At the slaughter, animals are killed in the open, their blood spilt into the waterways below and their skin is burned by the flames of old tires, which creates thick clouds of black smoke over the city. Fish had been the  traditional source of protein in the Niger Delta, but as fish stocks have dwindled due to pollution from the oil industry and over fishing, meat is becoming more common.",
+            "width":"68"
+          }
+        }]
+      },{
+        "id":"gu-image-360077840",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":15,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/3/5/1267804622411/Environmental-and-human-i-030.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"Ed Kashi",
+            "altText":"The Curse of Black Gold: Environmental and human impact of oil extraction in Niger Delta, Nigeria",
+            "height":"390",
+            "credit":"Ed Kashi/Photograph by Ed Kashi",
+            "caption":"King Nemi Tamunoiyala Oputibeya the Xth sits on his thrown in Okrika. He was made a new king in 2002, as part of the evolution of the tribal communities",
+            "width":"585"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/3/5/1267804622411/Environmental-and-human-i-030-thumb-5220.jpg",
+          "typeData":{
+            "source":"Photograph by Ed Kashi",
+            "photographer":"Ed Kashi",
+            "altText":"The Curse of Black Gold: Environmental and human impact of oil extraction in Niger Delta, Nigeria",
+            "height":"68",
+            "credit":"Ed Kashi/Photograph by Ed Kashi",
+            "caption":"King Nemi Tamunoiyala Oputibeya the Xth sits on his thrown in Okrika, Rivers, July 20, 2004. He was made a new king in 2002, as part of the evolution of the tribal communities in the oil rich Niger Delta.",
+            "width":"68"
+          }
+        }]
+      },{
+        "id":"gu-image-360078004",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":16,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/3/5/1267804588566/Environmental-and-human-i-004.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"Ed Kashi",
+            "altText":"The Curse of Black Gold: Environmental and human impact of oil extraction in Niger Delta, Nigeria",
+            "height":"390",
+            "credit":"Ed Kashi/Corbis",
+            "caption":"Fighters with Movement for the Emancipation of the Niger Delta (Mend) brandish weapons near their camp in Oporoza. The movement vows to shut off oil if demands for access to the oil wealth in their territories and local control of resources aren't met",
+            "width":"585"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/3/5/1267804588566/Environmental-and-human-i-004-thumb-2500.jpg",
+          "typeData":{
+            "source":"Corbis",
+            "photographer":"Ed Kashi",
+            "altText":"The Curse of Black Gold: Environmental and human impact of oil extraction in Niger Delta, Nigeria",
+            "height":"68",
+            "credit":"Ed Kashi/Corbis",
+            "caption":"Fighters with MEND (Movement for the Emancipation of the Niger Delta) brandish weapons near their camp, in Oporoza. The movement vows to shut off the oil if calls for local control of resources aren't met.",
+            "width":"68"
+          }
+        }]
+      },{
+        "id":"gu-image-360246160",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":17,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/3/10/1268221701670/Ed-Kashi-on-oil-in-Niger--003.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"Ed Kashi",
+            "altText":"Curse of Black Gold: Ed Kashi on oil in Niger Delta : MEND, Nigeria",
+            "height":"390",
+            "credit":"Ed Kashi/Ed Kashi",
+            "caption":"Mend militants, who wear red-and-white knots as protection from Egbesu, the Ijaw god of war, have in the past year intensified a guerrilla offensive. <a href=\"http://www.guardian.co.uk/world/2010/jan/12/britons-colombian-kidnapped-nigeria\">Hostages</a> and casualties cause oil prices to rise",
+            "width":"630"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/3/10/1268221701670/Ed-Kashi-on-oil-in-Niger--003-thumb-3740.jpg",
+          "typeData":{
+            "source":"Ed Kashi",
+            "photographer":"Ed Kashi",
+            "altText":"Curse of Black Gold: Ed Kashi on oil in Niger Delta : MEND, Nigeria",
+            "height":"68",
+            "credit":"Ed Kashi/Ed Kashi",
+            "caption":"02 Sep 2006, Oporoza, Delta, Nigeria --- Fighters with MEND (Movement for the Emancipation of the Niger Delta) brandish weapons near their camp. The movement vows to shut off the oil if calls for local control of resources aren't met. ",
+            "width":"68"
+          }
+        }]
+      },{
+        "id":"gu-image-360077828",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":18,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/3/5/1267804627197/Environmental-and-human-i-034.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"Ed Kashi",
+            "altText":"The Curse of Black Gold: Environmental and human impact of oil extraction in Niger Delta, Nigeria",
+            "height":"390",
+            "credit":"Ed Kashi/Corbis",
+            "caption":"A woman and child in Sanghana, Bayelsa. Most of the delta's 30 million people live off $1 a day",
+            "width":"585"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/3/5/1267804627197/Environmental-and-human-i-034-thumb-7867.jpg",
+          "typeData":{
+            "source":"Corbis",
+            "photographer":"Ed Kashi",
+            "altText":"The Curse of Black Gold: Environmental and human impact of oil extraction in Niger Delta, Nigeria",
+            "height":"68",
+            "credit":"Ed Kashi/Corbis",
+            "caption":"A Nigerian woman and child peer out from a shack in a Niger Delta town of Sanghana, Bayelsa. Graffitti on the corrugated metal wall reads \"Trust Nobody.\"",
+            "width":"68"
+          }
+        }]
+      },{
+        "id":"gu-image-360246141",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":19,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/3/10/1268221700259/Ed-Kashi-on-oil-in-Niger--002.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"Ed Kashi",
+            "altText":"Curse of Black Gold: Ed Kashi on oil in Niger Delta : Aker Camp Community, Nigeria",
+            "height":"390",
+            "credit":"Ed Kashi/Corbis",
+            "caption":"Preye Godswill, 27, owner of The Booze bar and restaurant, looks at photographs of expats and Nigerians in her bar, after returning to the burned out remains of the Aker Camp Community. Aker Camp, a slum of 3,000 people in Port Harcourt, was attacked and burned down by the Nigerian military. The attack was prompted by the killing of a soldier, as he tried to foil a kidnapping of an Italian expat at Godswill's bar. This kind of attack on civilians by the military is not uncommon",
+            "width":"630"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/3/10/1268221700259/Ed-Kashi-on-oil-in-Niger--002-thumb-5621.jpg",
+          "typeData":{
+            "source":"Corbis",
+            "photographer":"Ed Kashi",
+            "altText":"Curse of Black Gold: Ed Kashi on oil in Niger Delta : Aker Camp Community, Nigeria",
+            "height":"68",
+            "credit":"Ed Kashi/Corbis",
+            "caption":"01 Sep 2006, Port Harcourt, Rivers, Nigeria --- Preye Godswill, 27, owner of The Booze bar and restaurant, looks at photographs of expats and Nigerians in her bar, after returning to the burned out remains of the Aker Camp Community. Aker Camp, a slum of 3000 people in Port Harcourt, was attacked and burned down by the Nigerian military. The attacked was prompted by the killing of a nigerian soldier, as he tried to foil a kidnapping of an Italian expat at a local bar. In response the military burned the community slum to the ground. This kind of brutal attack on innocent civilians by the military is a constant reminder of the lack of human rights in the Niger Delta. ",
+            "width":"68"
+          }
+        }]
+      },{
+        "id":"gu-image-360077843",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":20,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/3/5/1267804621082/Environmental-and-human-i-029.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"Ed Kashi",
+            "altText":"The Curse of Black Gold: Environmental and human impact of oil extraction in Niger Delta, Nigeria",
+            "height":"390",
+            "credit":"Ed Kashi/Corbis",
+            "caption":"Last year, Friends of the Earth Netherlands and four Nigerian farmers brought a <a href=\"http://www.guardian.co.uk/business/2009/dec/30/shell-oruma-alleged-pollution-claim\">compensation case against Shell over environmental degradation</a>. Friends of the Earth claims the decades of oil spills are not accidents but represent a pattern of systematic pollution",
+            "width":"585"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/3/5/1267804621082/Environmental-and-human-i-029-thumb-9701.jpg",
+          "typeData":{
+            "source":"Corbis",
+            "photographer":"Ed Kashi",
+            "altText":"The Curse of Black Gold: Environmental and human impact of oil extraction in Niger Delta, Nigeria",
+            "height":"68",
+            "credit":"Ed Kashi/Corbis",
+            "caption":"Workers subcontracted by Shell Oil Company clean up an oil spill from an abandoned Shell Petroleum Development Company well, Oloibiri Town, Bayelsa. Wellhead #14 was closed in 1977 but has been leaking for years, and in June of 2004 it finally released an oil spill of over 20,000 barrels of crude oil.",
+            "width":"68"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"business/2004/jun/11/oilandpetrol.money",
+      "sectionId":"business",
+      "sectionName":"Business",
+      "webPublicationDate":"2004-06-11T12:26:43Z",
+      "webTitle":"Shell 'may have to leave Nigeria'",
+      "webUrl":"http://www.theguardian.com/business/2004/jun/11/oilandpetrol.money",
+      "apiUrl":"http://content.guardianapis.com/business/2004/jun/11/oilandpetrol.money",
+      "fields":{
+        "trailText":"<p>The embattled Anglo-Dutch oil giant Shell was today facing fresh embarrassment as an internal report said it could have to pull out of Nigeria because of violence in the Niger delta region.</p>",
+        "headline":"Shell 'may have to leave Nigeria'",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/dmhc",
+        "wordcount":"762",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/oil",
+        "type":"keyword",
+        "webTitle":"Oil",
+        "webUrl":"http://www.theguardian.com/business/oil",
+        "apiUrl":"http://content.guardianapis.com/business/oil",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"money/money",
+        "type":"keyword",
+        "webTitle":"Money",
+        "webUrl":"http://www.theguardian.com/money/money",
+        "apiUrl":"http://content.guardianapis.com/money/money",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"profile/marktran",
+        "type":"contributor",
+        "webTitle":"Mark Tran",
+        "webUrl":"http://www.theguardian.com/profile/marktran",
+        "apiUrl":"http://content.guardianapis.com/profile/marktran",
+        "bio":"<p>Mark Tran reports on general news. He was previously a reporter on the Guardian's Global development site (June 2011-March 2014). Before that, he worked as a correspondent for the Guardian in Washington (1984-90) and New York (1990-99). Follow <a href=\"http://twitter.com/marktran\">Mark on Twitter</a> and <a href=\"https://plus.google.com/104680581124639975151?rel=author\">Google+</a></p>",
+        "rcsId":"GNL004704",
+        "r2ContributorId":"16072",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2007/11/08/mark_tran_140x140.jpg",
+        "references":[]
+      },{
+        "id":"business/royaldutchshell",
+        "type":"keyword",
+        "webTitle":"Royal Dutch Shell",
+        "webUrl":"http://www.theguardian.com/business/royaldutchshell",
+        "apiUrl":"http://content.guardianapis.com/business/royaldutchshell",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"world/nigeria",
+        "type":"keyword",
+        "webTitle":"Nigeria",
+        "webUrl":"http://www.theguardian.com/world/nigeria",
+        "apiUrl":"http://content.guardianapis.com/world/nigeria",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/africa",
+        "type":"keyword",
+        "webTitle":"Africa",
+        "webUrl":"http://www.theguardian.com/world/africa",
+        "apiUrl":"http://content.guardianapis.com/world/africa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[],
+      "references":[]
+    },{
+      "id":"artanddesign/gallery/2013/jan/17/illegal-oil-refining-nigeria-in-pictures",
+      "sectionId":"artanddesign",
+      "sectionName":"Art and design",
+      "webPublicationDate":"2013-01-17T13:14:00Z",
+      "webTitle":"Illegal oil refineries in the Niger Delta – in pictures",
+      "webUrl":"http://www.theguardian.com/artanddesign/gallery/2013/jan/17/illegal-oil-refining-nigeria-in-pictures",
+      "apiUrl":"http://content.guardianapis.com/artanddesign/gallery/2013/jan/17/illegal-oil-refining-nigeria-in-pictures",
+      "fields":{
+        "trailText":"<p>The Nigerian-born Reuters photographer Akintunde Akinleye won a World Press Photo award in 2007. He documents the dangerous practice of illegal oil refining in the Niger Delta, which damages the environment and the health of local people</p>",
+        "headline":"Illegal oil refineries in the Niger Delta – in pictures",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3d5me",
+        "thumbnail":"http://static.guim.co.uk/sys-images/guardian/Pix/pictures/2013/1/16/1358360957873/An-illegal-oil-refinery-i-004.jpg",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-01-20T13:14:58Z"
+      },
+      "tags":[{
+        "id":"artanddesign/series/from-the-agencies",
+        "type":"series",
+        "webTitle":"From the agencies",
+        "webUrl":"http://www.theguardian.com/artanddesign/series/from-the-agencies",
+        "apiUrl":"http://content.guardianapis.com/artanddesign/series/from-the-agencies",
+        "sectionId":"artanddesign",
+        "sectionName":"Art and design",
+        "references":[]
+      },{
+        "id":"environment/environment",
+        "type":"keyword",
+        "webTitle":"Environment",
+        "webUrl":"http://www.theguardian.com/environment/environment",
+        "apiUrl":"http://content.guardianapis.com/environment/environment",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"artanddesign/photography",
+        "type":"keyword",
+        "webTitle":"Photography",
+        "webUrl":"http://www.theguardian.com/artanddesign/photography",
+        "apiUrl":"http://content.guardianapis.com/artanddesign/photography",
+        "sectionId":"artanddesign",
+        "sectionName":"Art and design",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"artanddesign/artanddesign",
+        "type":"keyword",
+        "webTitle":"Art and design",
+        "webUrl":"http://www.theguardian.com/artanddesign/artanddesign",
+        "apiUrl":"http://content.guardianapis.com/artanddesign/artanddesign",
+        "sectionId":"artanddesign",
+        "sectionName":"Art and design",
+        "references":[]
+      },{
+        "id":"world/nigeria",
+        "type":"keyword",
+        "webTitle":"Nigeria",
+        "webUrl":"http://www.theguardian.com/world/nigeria",
+        "apiUrl":"http://content.guardianapis.com/world/nigeria",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"business/royaldutchshell",
+        "type":"keyword",
+        "webTitle":"Royal Dutch Shell",
+        "webUrl":"http://www.theguardian.com/business/royaldutchshell",
+        "apiUrl":"http://content.guardianapis.com/business/royaldutchshell",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/oil",
+        "type":"keyword",
+        "webTitle":"Oil",
+        "webUrl":"http://www.theguardian.com/business/oil",
+        "apiUrl":"http://content.guardianapis.com/business/oil",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"environment/oil",
+        "type":"keyword",
+        "webTitle":"Oil",
+        "webUrl":"http://www.theguardian.com/environment/oil",
+        "apiUrl":"http://content.guardianapis.com/environment/oil",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"business/oilandgascompanies",
+        "type":"keyword",
+        "webTitle":"Oil and gas companies",
+        "webUrl":"http://www.theguardian.com/business/oilandgascompanies",
+        "apiUrl":"http://content.guardianapis.com/business/oilandgascompanies",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"environment/pollution",
+        "type":"keyword",
+        "webTitle":"Pollution",
+        "webUrl":"http://www.theguardian.com/environment/pollution",
+        "apiUrl":"http://content.guardianapis.com/environment/pollution",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"world/africa",
+        "type":"keyword",
+        "webTitle":"Africa",
+        "webUrl":"http://www.theguardian.com/world/africa",
+        "apiUrl":"http://content.guardianapis.com/world/africa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"global-development/global-development",
+        "type":"keyword",
+        "webTitle":"Global development",
+        "webUrl":"http://www.theguardian.com/global-development/global-development",
+        "apiUrl":"http://content.guardianapis.com/global-development/global-development",
+        "sectionId":"global-development",
+        "sectionName":"Global development",
+        "references":[]
+      },{
+        "id":"type/gallery",
+        "type":"type",
+        "webTitle":"Gallery",
+        "webUrl":"http://www.theguardian.com/inpictures",
+        "apiUrl":"http://content.guardianapis.com/inpictures",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-402576201",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/guardian/Pix/pictures/2013/1/16/1358360957873/An-illegal-oil-refinery-i-004.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Akintunde Akinleye",
+            "altText":"An illegal oil refinery in Nigeria by Akintunde Akinleye",
+            "height":"84",
+            "credit":"Akintunde Akinleye/Reuters",
+            "caption":"An illegal oil refinery in Nigeria.  Photograph: Akintunde Akinleye/Reuters",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-image-402519618",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":1,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/1/16/1358360698379/Illegal-oil-refinery-in-N-008.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Akintunde Akinleye",
+            "altText":"from the agencies: Illegal oil refinery in Nigeria by Akintunde Akinleye",
+            "height":"480",
+            "credit":"Akintunde Akinleye/Reuters",
+            "caption":"A labourer drags a hose used to help siphon crude oil in a makeshift refinery on the banks of the Nun river. The practice is known locally as oil bunkering ",
+            "width":"720"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/1/16/1358360698379/Illegal-oil-refinery-in-N-008-thumb-70.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Akintunde Akinleye",
+            "altText":"from the agencies: Illegal oil refinery in Nigeria by Akintunde Akinleye",
+            "height":"68",
+            "credit":"Akintunde Akinleye/Reuters",
+            "caption":"A labourer drags a hose used to help siphon crude oil. The practice known locally as oil bunkering ",
+            "width":"68"
+          }
+        }]
+      },{
+        "id":"gu-image-402519621",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":2,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/1/16/1358360695793/Illegal-oil-refinery-in-N-007.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Akintunde Akinleye",
+            "altText":"from the agencies: Illegal oil refinery in Nigeria by Akintunde Akinleye",
+            "height":"480",
+            "credit":"Akintunde Akinleye/Reuters",
+            "caption":"A worker collects crude by hand from a hole in the ground which acts as a storage tank for crude oil. The oil is taken from one of the thousands of pipelines which run through the Niger Delta",
+            "width":"720"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/1/16/1358360695793/Illegal-oil-refinery-in-N-007-thumb-2110.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Akintunde Akinleye",
+            "altText":"from the agencies: Illegal oil refinery in Nigeria by Akintunde Akinleye",
+            "height":"68",
+            "credit":"Akintunde Akinleye/Reuters",
+            "caption":"A man named worker collects crude by hand from a hole in the ground which acts as a storage tank for crude oil",
+            "width":"68"
+          }
+        }]
+      },{
+        "id":"gu-image-402519643",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":3,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/1/16/1358360690045/Illegal-oil-refinery-in-N-005.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Akintunde Akinleye",
+            "altText":"from the agencies: Illegal oil refinery in Nigeria by Akintunde Akinleye",
+            "height":"480",
+            "credit":"Akintunde Akinleye/Reuters",
+            "caption":"A labourer feeds a fire with crude oil at the illegal refinery ",
+            "width":"720"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/1/16/1358360690045/Illegal-oil-refinery-in-N-005-thumb-6350.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Akintunde Akinleye",
+            "altText":"from the agencies: Illegal oil refinery in Nigeria by Akintunde Akinleye",
+            "height":"68",
+            "credit":"Akintunde Akinleye/Reuters",
+            "caption":"A labourer feeds a fire with crude oil at the illegal refinery ",
+            "width":"68"
+          }
+        }]
+      },{
+        "id":"gu-image-402519647",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":4,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/1/16/1358360684783/Illegal-oil-refinery-in-N-003.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Akintunde Akinleye",
+            "altText":"from the agencies: Illegal oil refinery in Nigeria by Akintunde Akinleye",
+            "height":"479",
+            "credit":"Akintunde Akinleye/Reuters",
+            "caption":"Vessels used by labourers lie on the ground  after a meal",
+            "width":"760"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/1/16/1358360684783/Illegal-oil-refinery-in-N-003-thumb-529.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Akintunde Akinleye",
+            "altText":"from the agencies: Illegal oil refinery in Nigeria by Akintunde Akinleye",
+            "height":"68",
+            "credit":"Akintunde Akinleye/Reuters",
+            "caption":"Vessels used by labourers lie on the ground  after a meal",
+            "width":"68"
+          }
+        }]
+      },{
+        "id":"gu-image-402519651",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":5,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/1/16/1358360682212/Illegal-oil-refinery-in-N-002.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Akintunde Akinleye",
+            "altText":"from the agencies: Illegal oil refinery in Nigeria by Akintunde Akinleye",
+            "height":"480",
+            "credit":"Akintunde Akinleye/Reuters",
+            "caption":"A worker carries makeshift buckets of oil. The refined product is sold on locally",
+            "width":"721"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/1/16/1358360682212/Illegal-oil-refinery-in-N-002-thumb-3039.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Akintunde Akinleye",
+            "altText":"from the agencies: Illegal oil refinery in Nigeria by Akintunde Akinleye",
+            "height":"68",
+            "credit":"Akintunde Akinleye/Reuters",
+            "caption":"A man worker carries makeshift buckets of oil",
+            "width":"68"
+          }
+        }]
+      },{
+        "id":"gu-image-402519649",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":6,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/1/16/1358360679642/Illegal-oil-refinery-in-N-001.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Akintunde Akinleye",
+            "altText":"from the agencies: Illegal oil refinery in Nigeria by Akintunde Akinleye",
+            "height":"480",
+            "credit":"Akintunde Akinleye/Reuters",
+            "caption":"Refinery workers are reflected in a pool of polluted water ",
+            "width":"722"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/1/16/1358360679642/Illegal-oil-refinery-in-N-001-thumb-5736.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Akintunde Akinleye",
+            "altText":"from the agencies: Illegal oil refinery in Nigeria by Akintunde Akinleye",
+            "height":"68",
+            "credit":"Akintunde Akinleye/Reuters",
+            "caption":"Refinery workers are reflected in a pool of polluted water ",
+            "width":"68"
+          }
+        }]
+      },{
+        "id":"gu-image-402519602",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":7,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/1/16/1358360703464/Illegal-oil-refinery-in-N-010.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Akintunde Akinleye",
+            "altText":"from the agencies: Illegal oil refinery in Nigeria by Akintunde Akinleye",
+            "height":"473",
+            "credit":"Akintunde Akinleye/Reuters",
+            "caption":"A warning sign belonging to Royal Dutch Shell on the banks of Nembe creek in Bayelsa state. The company has approximately 6,000 kilometres of pipelines running through the country. ",
+            "width":"760"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/1/16/1358360703464/Illegal-oil-refinery-in-N-010-thumb-4002.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Akintunde Akinleye",
+            "altText":"from the agencies: Illegal oil refinery in Nigeria by Akintunde Akinleye",
+            "height":"68",
+            "credit":"Akintunde Akinleye/Reuters",
+            "caption":"A warning sign belonging to Royal Dutch Shell on the banks of Nembe creek in Bayelsa state. The comapny has approximately 6,000 kilometres of pipelines running through the country",
+            "width":"68"
+          }
+        }]
+      },{
+        "id":"gu-image-402519645",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":8,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/1/16/1358360687500/Illegal-oil-refinery-in-N-004.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Akintunde Akinleye",
+            "altText":"from the agencies: Illegal oil refinery in Nigeria by Akintunde Akinleye",
+            "height":"480",
+            "credit":"Akintunde Akinleye/Reuters",
+            "caption":"Steam rises from pipes carrying refined oil from a burner into containers",
+            "width":"711"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/1/16/1358360687500/Illegal-oil-refinery-in-N-004-thumb-8157.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Akintunde Akinleye",
+            "altText":"from the agencies: Illegal oil refinery in Nigeria by Akintunde Akinleye",
+            "height":"68",
+            "credit":"Akintunde Akinleye/Reuters",
+            "caption":"Steam rises from pipes carrying refined oil from a burner into broken containers",
+            "width":"68"
+          }
+        }]
+      },{
+        "id":"gu-image-402519616",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":9,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/1/16/1358360701114/Illegal-oil-refinery-in-N-009.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Akintunde Akinleye",
+            "altText":"from the agencies: Illegal oil refinery in Nigeria by Akintunde Akinleye",
+            "height":"480",
+            "credit":"Akintunde Akinleye/Reuters",
+            "caption":"A young woman sits in a canoe while fishing in a tributary of the river Nun. She suffers skin irritation from exposure to crude oil in the polluted water",
+            "width":"720"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/1/16/1358360701114/Illegal-oil-refinery-in-N-009-thumb-7266.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Akintunde Akinleye",
+            "altText":"from the agencies: Illegal oil refinery in Nigeria by Akintunde Akinleye",
+            "height":"68",
+            "credit":"Akintunde Akinleye/Reuters",
+            "caption":"A young woman sits in a canoe while fishing in a tributary of the river Nun. She suffers from rashes from exposure to crude oil in the polluted water",
+            "width":"68"
+          }
+        }]
+      },{
+        "id":"gu-image-402519641",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":10,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/1/16/1358360692837/Illegal-oil-refinery-in-N-006.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Akintunde Akinleye",
+            "altText":"from the agencies: Illegal oil refinery in Nigeria by Akintunde Akinleye",
+            "height":"480",
+            "credit":"Akintunde Akinleye/Reuters",
+            "caption":"A petrol station which has no fuel for sale near the oil city of Port Harcourt. Nigeria's finance ministry has reported that one-fifth of the country's 2m barrels-per-day oil output was stolen last year",
+            "width":"720"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/1/16/1358360692837/Illegal-oil-refinery-in-N-006-thumb-4425.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Akintunde Akinleye",
+            "altText":"from the agencies: Illegal oil refinery in Nigeria by Akintunde Akinleye",
+            "height":"68",
+            "credit":"Akintunde Akinleye/Reuters",
+            "caption":"A petrol station which has no fuel for sale near the oil city of Port Harcourt. Nigeria's finance minstry has reported that a fifth of the country's two million barrels a day oil output was stolen last year",
+            "width":"68"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"business/2008/feb/01/oilindustry.shell",
+      "sectionId":"business",
+      "sectionName":"Business",
+      "webPublicationDate":"2008-02-01T00:08:12Z",
+      "webTitle":"Militants and government force rethink for oil group",
+      "webUrl":"http://www.theguardian.com/business/2008/feb/01/oilindustry.shell",
+      "apiUrl":"http://content.guardianapis.com/business/2008/feb/01/oilindustry.shell",
+      "fields":{
+        "trailText":"<p>Shell has started to \"streamline\" its operations in the delta region of Nigeria as it appears to have accepted that it is fighting a losing battle against armed militants - and the government</p>",
+        "headline":"Militants and government force rethink for oil group",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/x2p3x",
+        "wordcount":"392",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"business/oil",
+        "type":"keyword",
+        "webTitle":"Oil",
+        "webUrl":"http://www.theguardian.com/business/oil",
+        "apiUrl":"http://content.guardianapis.com/business/oil",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/royaldutchshell",
+        "type":"keyword",
+        "webTitle":"Royal Dutch Shell",
+        "webUrl":"http://www.theguardian.com/business/royaldutchshell",
+        "apiUrl":"http://content.guardianapis.com/business/royaldutchshell",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"profile/terrymacalister",
+        "type":"contributor",
+        "webTitle":"Terry Macalister",
+        "webUrl":"http://www.theguardian.com/profile/terrymacalister",
+        "apiUrl":"http://content.guardianapis.com/profile/terrymacalister",
+        "bio":"<p>Terry Macalister is energy editor of the Guardian. He has been employed at the paper and website for 12 years and previously worked for the Independent and other national titles</p>",
+        "rcsId":"GNL030712",
+        "r2ContributorId":"16511",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/10/03/terry_macallister_140x140.jpg",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/financial3",
+        "type":"newspaper-book-section",
+        "webTitle":"Financial",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/financial3",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/financial3",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"world/nigeria",
+        "type":"keyword",
+        "webTitle":"Nigeria",
+        "webUrl":"http://www.theguardian.com/world/nigeria",
+        "apiUrl":"http://content.guardianapis.com/world/nigeria",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"business/oilandgascompanies",
+        "type":"keyword",
+        "webTitle":"Oil and gas companies",
+        "webUrl":"http://www.theguardian.com/business/oilandgascompanies",
+        "apiUrl":"http://content.guardianapis.com/business/oilandgascompanies",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"world/africa",
+        "type":"keyword",
+        "webTitle":"Africa",
+        "webUrl":"http://www.theguardian.com/world/africa",
+        "apiUrl":"http://content.guardianapis.com/world/africa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[],
+      "references":[]
+    },{
+      "id":"business/2009/jun/30/oil-royaldutchshell",
+      "sectionId":"business",
+      "sectionName":"Business",
+      "webPublicationDate":"2009-06-30T19:56:13Z",
+      "webTitle":"Amnesty attacks oil industry for decades of damage in Niger Delta",
+      "webUrl":"http://www.theguardian.com/business/2009/jun/30/oil-royaldutchshell",
+      "apiUrl":"http://content.guardianapis.com/business/2009/jun/30/oil-royaldutchshell",
+      "fields":{
+        "trailText":"Serious allegations of human rights abuses caused by oil companies in the Niger Delta have been made by Amnesty International",
+        "headline":"Amnesty attacks oil industry for decades of damage in Niger Delta",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/29v2n",
+        "wordcount":"361",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2009-07-03T19:56:13Z"
+      },
+      "tags":[{
+        "id":"business/oil",
+        "type":"keyword",
+        "webTitle":"Oil",
+        "webUrl":"http://www.theguardian.com/business/oil",
+        "apiUrl":"http://content.guardianapis.com/business/oil",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/royaldutchshell",
+        "type":"keyword",
+        "webTitle":"Royal Dutch Shell",
+        "webUrl":"http://www.theguardian.com/business/royaldutchshell",
+        "apiUrl":"http://content.guardianapis.com/business/royaldutchshell",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"environment/oil",
+        "type":"keyword",
+        "webTitle":"Oil",
+        "webUrl":"http://www.theguardian.com/environment/oil",
+        "apiUrl":"http://content.guardianapis.com/environment/oil",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"environment/pollution",
+        "type":"keyword",
+        "webTitle":"Pollution",
+        "webUrl":"http://www.theguardian.com/environment/pollution",
+        "apiUrl":"http://content.guardianapis.com/environment/pollution",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"business/oilandgascompanies",
+        "type":"keyword",
+        "webTitle":"Oil and gas companies",
+        "webUrl":"http://www.theguardian.com/business/oilandgascompanies",
+        "apiUrl":"http://content.guardianapis.com/business/oilandgascompanies",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"world/nigeria",
+        "type":"keyword",
+        "webTitle":"Nigeria",
+        "webUrl":"http://www.theguardian.com/world/nigeria",
+        "apiUrl":"http://content.guardianapis.com/world/nigeria",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"profile/nickmathiason",
+        "type":"contributor",
+        "webTitle":"Nick Mathiason",
+        "webUrl":"http://www.theguardian.com/profile/nickmathiason",
+        "apiUrl":"http://content.guardianapis.com/profile/nickmathiason",
+        "bio":"<p>Nick Mathiason is business correspondent at the <a href=\"http://www.thebureauinvestigates.com\">Bureau of Investigative Journalism</a> and also works with the <a href=\"http://www.financialtaskforce.org/\">Task Force on Financial Integrity and Economic Development</a>. He was previously Business Correspondent at the Guardian and Observer newspapers for 10 years</p>",
+        "rcsId":"GNL003503",
+        "r2ContributorId":"16184",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Observer/Pix/pictures/2008/10/08/nick_mathiason_140x140.jpg",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"world/amnesty-international",
+        "type":"keyword",
+        "webTitle":"Amnesty International",
+        "webUrl":"http://www.theguardian.com/world/amnesty-international",
+        "apiUrl":"http://content.guardianapis.com/world/amnesty-international",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/africa",
+        "type":"keyword",
+        "webTitle":"Africa",
+        "webUrl":"http://www.theguardian.com/world/africa",
+        "apiUrl":"http://content.guardianapis.com/world/africa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[],
+      "references":[]
+    },{
+      "id":"global-development/video/2013/oct/07/niger-delta-nigeria-oil-spill-cost-crude-video",
+      "sectionId":"global-development",
+      "sectionName":"Global development",
+      "webPublicationDate":"2013-10-07T09:57:00Z",
+      "webTitle":"Niger delta oil spills: the real cost of crude - video",
+      "webUrl":"http://www.theguardian.com/global-development/video/2013/oct/07/niger-delta-nigeria-oil-spill-cost-crude-video",
+      "apiUrl":"http://content.guardianapis.com/global-development/video/2013/oct/07/niger-delta-nigeria-oil-spill-cost-crude-video",
+      "fields":{
+        "trailText":"<p>A series of oil spills have devastated the Niger delta. John Vidal visits the region to find out what can be done to improve the situation</p>",
+        "headline":"Niger delta oil spills: the real cost of crude - video",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/3jak6",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/4/1380922857404/Whos-responsible-for-Nige-009.jpg",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-10-10T09:57:08Z"
+      },
+      "tags":[{
+        "id":"global-development/natural-resources-and-development",
+        "type":"keyword",
+        "webTitle":"Natural resources and development",
+        "webUrl":"http://www.theguardian.com/global-development/natural-resources-and-development",
+        "apiUrl":"http://content.guardianapis.com/global-development/natural-resources-and-development",
+        "sectionId":"global-development",
+        "sectionName":"Global development",
+        "references":[]
+      },{
+        "id":"global-development/global-development",
+        "type":"keyword",
+        "webTitle":"Global development",
+        "webUrl":"http://www.theguardian.com/global-development/global-development",
+        "apiUrl":"http://content.guardianapis.com/global-development/global-development",
+        "sectionId":"global-development",
+        "sectionName":"Global development",
+        "references":[]
+      },{
+        "id":"world/nigeria",
+        "type":"keyword",
+        "webTitle":"Nigeria",
+        "webUrl":"http://www.theguardian.com/world/nigeria",
+        "apiUrl":"http://content.guardianapis.com/world/nigeria",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"business/oil",
+        "type":"keyword",
+        "webTitle":"Oil",
+        "webUrl":"http://www.theguardian.com/business/oil",
+        "apiUrl":"http://content.guardianapis.com/business/oil",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"environment/oil",
+        "type":"keyword",
+        "webTitle":"Oil",
+        "webUrl":"http://www.theguardian.com/environment/oil",
+        "apiUrl":"http://content.guardianapis.com/environment/oil",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"business/oilandgascompanies",
+        "type":"keyword",
+        "webTitle":"Oil and gas companies",
+        "webUrl":"http://www.theguardian.com/business/oilandgascompanies",
+        "apiUrl":"http://content.guardianapis.com/business/oilandgascompanies",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"environment/oil-spills",
+        "type":"keyword",
+        "webTitle":"Oil spills",
+        "webUrl":"http://www.theguardian.com/environment/oil-spills",
+        "apiUrl":"http://content.guardianapis.com/environment/oil-spills",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"business/royaldutchshell",
+        "type":"keyword",
+        "webTitle":"Royal Dutch Shell",
+        "webUrl":"http://www.theguardian.com/business/royaldutchshell",
+        "apiUrl":"http://content.guardianapis.com/business/royaldutchshell",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"profile/johnvidal",
+        "type":"contributor",
+        "webTitle":"John Vidal",
+        "webUrl":"http://www.theguardian.com/profile/johnvidal",
+        "apiUrl":"http://content.guardianapis.com/profile/johnvidal",
+        "bio":"<p>John Vidal is the Guardian's <a href=\"http://www.guardian.co.uk/environment\">environment</a> editor. He joined the paper in 1995 after working for Agence France Presse, North Wales Newspapers and the Cumberland News. He is the author of McLibel: Burger Culture on Trial (1998) and has contributed chapters to books on topics such as the Gulf war, new Europe and development</p>",
+        "rcsId":"GNL001546",
+        "r2ContributorId":"15886",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/john_vidal_140x140.jpg",
+        "references":[]
+      },{
+        "id":"profile/noah-payne-frank",
+        "type":"contributor",
+        "webTitle":"Noah Payne-Frank",
+        "webUrl":"http://www.theguardian.com/profile/noah-payne-frank",
+        "apiUrl":"http://content.guardianapis.com/profile/noah-payne-frank",
+        "bio":"<p>Noah Payne-Frank is a writer, director and freelance video producer</p>",
+        "r2ContributorId":"46742",
+        "references":[]
+      },{
+        "id":"profile/jacqui-timberlake",
+        "type":"contributor",
+        "webTitle":"Jacqui Timberlake",
+        "webUrl":"http://www.theguardian.com/profile/jacqui-timberlake",
+        "apiUrl":"http://content.guardianapis.com/profile/jacqui-timberlake",
+        "bio":"<p>Jacqui Timberlake is head of production for multimedia at the Guardian</p>",
+        "r2ContributorId":"31260",
+        "references":[]
+      },{
+        "id":"type/video",
+        "type":"type",
+        "webTitle":"Video",
+        "webUrl":"http://www.theguardian.com/video",
+        "apiUrl":"http://content.guardianapis.com/video",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-video-419119012",
+        "relation":"main",
+        "type":"video",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/4/1380922844929/Whos-responsible-for-Nige-001.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"guardian.co.uk",
+            "altText":"Who's responsible for Nigeria's oil spills? - video",
+            "height":"360",
+            "credit":"guardian.co.uk/guardian.co.uk",
+            "caption":"Who's responsible for Nigeria's oil spills? - video\r Photograph: guardian.co.uk",
+            "width":"640"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/4/1380922849390/Whos-responsible-for-Nige-002.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"guardian.co.uk",
+            "altText":"Who's responsible for Nigeria's oil spills? - video",
+            "height":"90",
+            "credit":"guardian.co.uk/guardian.co.uk",
+            "caption":"Who's responsible for Nigeria's oil spills? - video\r Photograph: guardian.co.uk",
+            "width":"120"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/4/1380922850693/Whos-responsible-for-Nige-003.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"guardian.co.uk",
+            "altText":"Who's responsible for Nigeria's oil spills? - video",
+            "height":"225",
+            "credit":"guardian.co.uk/guardian.co.uk",
+            "caption":"Who's responsible for Nigeria's oil spills? - video\r Photograph: guardian.co.uk",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/4/1380922851840/Whos-responsible-for-Nige-004.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"guardian.co.uk",
+            "altText":"Who's responsible for Nigeria's oil spills? - video",
+            "height":"360",
+            "credit":"guardian.co.uk/guardian.co.uk",
+            "caption":"Who's responsible for Nigeria's oil spills? - video\r Photograph: guardian.co.uk",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/4/1380922854224/Whos-responsible-for-Nige-006.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"guardian.co.uk",
+            "altText":"Who's responsible for Nigeria's oil spills? - video",
+            "height":"54",
+            "credit":"guardian.co.uk/guardian.co.uk",
+            "caption":"Who's responsible for Nigeria's oil spills? - video\r Photograph: guardian.co.uk",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/4/1380922855277/Whos-responsible-for-Nige-007.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"guardian.co.uk",
+            "altText":"Who's responsible for Nigeria's oil spills? - video",
+            "height":"340",
+            "credit":"guardian.co.uk/guardian.co.uk",
+            "caption":"Who's responsible for Nigeria's oil spills? - video\r Photograph: guardian.co.uk",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/4/1380922856355/Whos-responsible-for-Nige-008.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"guardian.co.uk",
+            "altText":"Who's responsible for Nigeria's oil spills? - video",
+            "height":"130",
+            "credit":"guardian.co.uk/guardian.co.uk",
+            "caption":"Who's responsible for Nigeria's oil spills? - video\r Photograph: guardian.co.uk",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/4/1380922857404/Whos-responsible-for-Nige-009.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"guardian.co.uk",
+            "altText":"Who's responsible for Nigeria's oil spills? - video",
+            "height":"84",
+            "credit":"guardian.co.uk/guardian.co.uk",
+            "caption":"Who's responsible for Nigeria's oil spills? - video\r Photograph: guardian.co.uk",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/4/1380922858577/Whos-responsible-for-Nige-010.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"guardian.co.uk",
+            "altText":"Who's responsible for Nigeria's oil spills? - video",
+            "height":"132",
+            "credit":"guardian.co.uk/guardian.co.uk",
+            "caption":"Who's responsible for Nigeria's oil spills? - video\r Photograph: guardian.co.uk",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/4/1380922860012/Whos-responsible-for-Nige-011.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"guardian.co.uk",
+            "altText":"Who's responsible for Nigeria's oil spills? - video",
+            "height":"168",
+            "credit":"guardian.co.uk/guardian.co.uk",
+            "caption":"Who's responsible for Nigeria's oil spills? - video\r Photograph: guardian.co.uk",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/4/1380922861104/Whos-responsible-for-Nige-012.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"guardian.co.uk",
+            "altText":"Who's responsible for Nigeria's oil spills? - video",
+            "height":"180",
+            "credit":"guardian.co.uk/guardian.co.uk",
+            "caption":"Who's responsible for Nigeria's oil spills? - video\r Photograph: guardian.co.uk",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/4/1380922862336/Whos-responsible-for-Nige-013.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"guardian.co.uk",
+            "altText":"Who's responsible for Nigeria's oil spills? - video",
+            "height":"228",
+            "credit":"guardian.co.uk/guardian.co.uk",
+            "caption":"Who's responsible for Nigeria's oil spills? - video\r Photograph: guardian.co.uk",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/4/1380922863532/Whos-responsible-for-Nige-014.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"guardian.co.uk",
+            "altText":"Who's responsible for Nigeria's oil spills? - video",
+            "height":"276",
+            "credit":"guardian.co.uk/guardian.co.uk",
+            "caption":"Who's responsible for Nigeria's oil spills? - video\r Photograph: guardian.co.uk",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/4/1380922864653/Whos-responsible-for-Nige-015.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"guardian.co.uk",
+            "altText":"Who's responsible for Nigeria's oil spills? - video",
+            "height":"372",
+            "credit":"guardian.co.uk/guardian.co.uk",
+            "caption":"Who's responsible for Nigeria's oil spills? - video\r Photograph: guardian.co.uk",
+            "width":"620"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/webm",
+          "file":"http://cdn.theguardian.tv/webM/640/2013/10/04/131007NIgerDeltaOilTheft_vpx.webm",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/4/131007NIgerDeltaOilTheft_8158341.jpg",
+            "height":"360",
+            "durationMinutes":"17",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/4/131007NIgerDeltaOilTheft_8158341.jpg",
+            "width":"480",
+            "durationSeconds":"49"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/10/11/131007NIgerDeltaOilTheft/131007NIgerDeltaOilTheft.m3u8",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/4/131007NIgerDeltaOilTheft_8158341.jpg",
+            "height":"360",
+            "durationMinutes":"17",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/4/131007NIgerDeltaOilTheft_8158341.jpg",
+            "width":"480",
+            "durationSeconds":"49"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/10/11/131007NIgerDeltaOilTheft_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/4/131007NIgerDeltaOilTheft_8158341.jpg",
+            "height":"360",
+            "durationMinutes":"17",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/4/131007NIgerDeltaOilTheft_8158341.jpg",
+            "width":"480",
+            "durationSeconds":"49"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:large",
+          "file":"http://cdn.theguardian.tv/3gp/large/2013/10/11/131007NIgerDeltaOilTheft_3gpLg16x9.3gp",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/4/131007NIgerDeltaOilTheft_8158341.jpg",
+            "height":"360",
+            "durationMinutes":"17",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/4/131007NIgerDeltaOilTheft_8158341.jpg",
+            "width":"480",
+            "durationSeconds":"49"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/10/11/131007NIgerDeltaOilTheft-16x9.mp4",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "embeddable":"true",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/4/131007NIgerDeltaOilTheft_8158341.jpg",
+            "height":"360",
+            "durationMinutes":"17",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/4/131007NIgerDeltaOilTheft_8158341.jpg",
+            "width":"480",
+            "durationSeconds":"49"
+          }
+        }]
+      },{
+        "id":"gu-image-419350041",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/4/1380922857404/Whos-responsible-for-Nige-009.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "photographer":"guardian.co.uk",
+            "altText":"Who's responsible for Nigeria's oil spills? - video",
+            "height":"84",
+            "credit":"guardian.co.uk/guardian.co.uk",
+            "caption":"Who's responsible for Nigeria's oil spills? - video\r Photograph: guardian.co.uk",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"environment/2011/dec/22/nigerian-shell-oil-spill",
+      "sectionId":"environment",
+      "sectionName":"Environment",
+      "webPublicationDate":"2011-12-22T13:01:02Z",
+      "webTitle":"Nigeria on alert as Shell announces worst oil spill in a decade",
+      "webUrl":"http://www.theguardian.com/environment/2011/dec/22/nigerian-shell-oil-spill",
+      "apiUrl":"http://content.guardianapis.com/environment/2011/dec/22/nigerian-shell-oil-spill",
+      "fields":{
+        "trailText":"The oil company says up to 40,000 barrels of crude oil was spilled 75 miles off the coast of the Niger delta",
+        "headline":"Nigeria on alert as Shell announces worst oil spill in a decade",
+        "hasStoryPackage":"true",
+        "shortUrl":"http://gu.com/p/34a2d",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Environment/Pix/pictures/2011/12/9/1323434357822/Oil-spill-003.jpg",
+        "wordcount":"381",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2011-12-25T13:01:02Z"
+      },
+      "tags":[{
+        "id":"environment/oil-spills",
+        "type":"keyword",
+        "webTitle":"Oil spills",
+        "webUrl":"http://www.theguardian.com/environment/oil-spills",
+        "apiUrl":"http://content.guardianapis.com/environment/oil-spills",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"business/oil",
+        "type":"keyword",
+        "webTitle":"Oil",
+        "webUrl":"http://www.theguardian.com/business/oil",
+        "apiUrl":"http://content.guardianapis.com/business/oil",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"environment/environment",
+        "type":"keyword",
+        "webTitle":"Environment",
+        "webUrl":"http://www.theguardian.com/environment/environment",
+        "apiUrl":"http://content.guardianapis.com/environment/environment",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"environment/oil",
+        "type":"keyword",
+        "webTitle":"Oil",
+        "webUrl":"http://www.theguardian.com/environment/oil",
+        "apiUrl":"http://content.guardianapis.com/environment/oil",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"environment/energy",
+        "type":"keyword",
+        "webTitle":"Energy",
+        "webUrl":"http://www.theguardian.com/environment/energy",
+        "apiUrl":"http://content.guardianapis.com/environment/energy",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"environment/fossil-fuels",
+        "type":"keyword",
+        "webTitle":"Fossil fuels",
+        "webUrl":"http://www.theguardian.com/environment/fossil-fuels",
+        "apiUrl":"http://content.guardianapis.com/environment/fossil-fuels",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"business/royaldutchshell",
+        "type":"keyword",
+        "webTitle":"Royal Dutch Shell",
+        "webUrl":"http://www.theguardian.com/business/royaldutchshell",
+        "apiUrl":"http://content.guardianapis.com/business/royaldutchshell",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/oilandgascompanies",
+        "type":"keyword",
+        "webTitle":"Oil and gas companies",
+        "webUrl":"http://www.theguardian.com/business/oilandgascompanies",
+        "apiUrl":"http://content.guardianapis.com/business/oilandgascompanies",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"world/nigeria",
+        "type":"keyword",
+        "webTitle":"Nigeria",
+        "webUrl":"http://www.theguardian.com/world/nigeria",
+        "apiUrl":"http://content.guardianapis.com/world/nigeria",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/africa",
+        "type":"keyword",
+        "webTitle":"Africa",
+        "webUrl":"http://www.theguardian.com/world/africa",
+        "apiUrl":"http://content.guardianapis.com/world/africa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"environment/coastlines",
+        "type":"keyword",
+        "webTitle":"Coastlines",
+        "webUrl":"http://www.theguardian.com/environment/coastlines",
+        "apiUrl":"http://content.guardianapis.com/environment/coastlines",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"profile/johnvidal",
+        "type":"contributor",
+        "webTitle":"John Vidal",
+        "webUrl":"http://www.theguardian.com/profile/johnvidal",
+        "apiUrl":"http://content.guardianapis.com/profile/johnvidal",
+        "bio":"<p>John Vidal is the Guardian's <a href=\"http://www.guardian.co.uk/environment\">environment</a> editor. He joined the paper in 1995 after working for Agence France Presse, North Wales Newspapers and the Cumberland News. He is the author of McLibel: Burger Culture on Trial (1998) and has contributed chapters to books on topics such as the Gulf war, new Europe and development</p>",
+        "rcsId":"GNL001546",
+        "r2ContributorId":"15886",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/john_vidal_140x140.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-383670262",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/pictures/2011/12/9/1323434361580/Oil-spill-007.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Pius Utomi Ekpei",
+            "altText":"Oil spill",
+            "height":"276",
+            "credit":"Pius Utomi Ekpei/AFP/Getty Images",
+            "caption":"An oil spill on the shores of the Niger Delta swamps. Shell has said the recent oil spill is likely to be worst in a decade. Photograph: Pius Utomi Ekpei/AFP/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-383670263",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/pictures/2011/12/9/1323434357822/Oil-spill-003.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Pius Utomi Ekpei",
+            "altText":"Oil spill",
+            "height":"84",
+            "credit":"Pius Utomi Ekpei/AFP/Getty Images",
+            "caption":"An oil spill on the shores of the Niger Delta swamps of Bodo. Environmental degradation can have a ruinous effect on farming and fishing. Photograph: Pius Utomi Ekpei/AFP/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"commentisfree/2010/may/18/financialtimes-pressandpublishing",
+      "sectionId":"commentisfree",
+      "sectionName":"Comment is free",
+      "webPublicationDate":"2010-05-18T15:17:50Z",
+      "webTitle":"Why did the FT pull Amnesty's Shell ad? | Naomi McAuliffe",
+      "webUrl":"http://www.theguardian.com/commentisfree/2010/may/18/financialtimes-pressandpublishing",
+      "apiUrl":"http://content.guardianapis.com/commentisfree/2010/may/18/financialtimes-pressandpublishing",
+      "fields":{
+        "trailText":"<p><strong>Naomi McAuliffe:</strong> The Financial Times dropped our advert criticising Shell for polluting the Niger Delta. But we'll take the free publicity instead</p>",
+        "headline":"Why did the FT pull Amnesty's Shell ad?",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/2h4tt",
+        "wordcount":"479",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2010-05-21T15:17:00Z"
+      },
+      "tags":[{
+        "id":"commentisfree/commentisfree",
+        "type":"blog",
+        "webTitle":"Comment is free",
+        "webUrl":"http://www.theguardian.com/commentisfree/commentisfree",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/commentisfree",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"media/financialtimes",
+        "type":"keyword",
+        "webTitle":"Financial Times",
+        "webUrl":"http://www.theguardian.com/media/financialtimes",
+        "apiUrl":"http://content.guardianapis.com/media/financialtimes",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"commentisfree/libertycentral",
+        "type":"blog",
+        "webTitle":"liberty central",
+        "webUrl":"http://www.theguardian.com/commentisfree/libertycentral",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/libertycentral",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"media/media",
+        "type":"keyword",
+        "webTitle":"Media",
+        "webUrl":"http://www.theguardian.com/media/media",
+        "apiUrl":"http://content.guardianapis.com/media/media",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"media/pressandpublishing",
+        "type":"keyword",
+        "webTitle":"Newspapers & magazines",
+        "webUrl":"http://www.theguardian.com/media/pressandpublishing",
+        "apiUrl":"http://content.guardianapis.com/media/pressandpublishing",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"media/newspapers",
+        "type":"keyword",
+        "webTitle":"Newspapers",
+        "webUrl":"http://www.theguardian.com/media/newspapers",
+        "apiUrl":"http://content.guardianapis.com/media/newspapers",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"media/advertising",
+        "type":"keyword",
+        "webTitle":"Advertising",
+        "webUrl":"http://www.theguardian.com/media/advertising",
+        "apiUrl":"http://content.guardianapis.com/media/advertising",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"world/amnesty-international",
+        "type":"keyword",
+        "webTitle":"Amnesty International",
+        "webUrl":"http://www.theguardian.com/world/amnesty-international",
+        "apiUrl":"http://content.guardianapis.com/world/amnesty-international",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"business/royaldutchshell",
+        "type":"keyword",
+        "webTitle":"Royal Dutch Shell",
+        "webUrl":"http://www.theguardian.com/business/royaldutchshell",
+        "apiUrl":"http://content.guardianapis.com/business/royaldutchshell",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"tone/comment",
+        "type":"tone",
+        "webTitle":"Comment",
+        "webUrl":"http://www.theguardian.com/tone/comment",
+        "apiUrl":"http://content.guardianapis.com/tone/comment",
+        "references":[]
+      },{
+        "id":"world/nigeria",
+        "type":"keyword",
+        "webTitle":"Nigeria",
+        "webUrl":"http://www.theguardian.com/world/nigeria",
+        "apiUrl":"http://content.guardianapis.com/world/nigeria",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"business/oil",
+        "type":"keyword",
+        "webTitle":"Oil",
+        "webUrl":"http://www.theguardian.com/business/oil",
+        "apiUrl":"http://content.guardianapis.com/business/oil",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"environment/oil",
+        "type":"keyword",
+        "webTitle":"Oil",
+        "webUrl":"http://www.theguardian.com/environment/oil",
+        "apiUrl":"http://content.guardianapis.com/environment/oil",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"business/oilandgascompanies",
+        "type":"keyword",
+        "webTitle":"Oil and gas companies",
+        "webUrl":"http://www.theguardian.com/business/oilandgascompanies",
+        "apiUrl":"http://content.guardianapis.com/business/oilandgascompanies",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"environment/oil-spills",
+        "type":"keyword",
+        "webTitle":"Oil spills",
+        "webUrl":"http://www.theguardian.com/environment/oil-spills",
+        "apiUrl":"http://content.guardianapis.com/environment/oil-spills",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"environment/environment",
+        "type":"keyword",
+        "webTitle":"Environment",
+        "webUrl":"http://www.theguardian.com/environment/environment",
+        "apiUrl":"http://content.guardianapis.com/environment/environment",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"profile/naomi-mcauliffe",
+        "type":"contributor",
+        "webTitle":"Naomi McAuliffe",
+        "webUrl":"http://www.theguardian.com/profile/naomi-mcauliffe",
+        "apiUrl":"http://content.guardianapis.com/profile/naomi-mcauliffe",
+        "bio":"<p>Naomi McAuliffe tweets as <a href=\"http://twitter.com/#!/naomimc\">NaomiMc</a>. She has led the Stop Violence Against Women campaign for Scotland as well as working at various times campaigning on refugee rights, electro-shock Taser weapons, extraordinary rendition, lesbian, gay, bisexual and transgender rights, China and the death penalty. She has a <a href=\"http://www.vaginadentatablog.net/\">blog</a></p>",
+        "r2ContributorId":"38071",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/12/11/1323624154705/naomi_mcAuliffe.jpg",
+        "references":[]
+      },{
+        "id":"business/financial-sector",
+        "type":"keyword",
+        "webTitle":"Financial sector",
+        "webUrl":"http://www.theguardian.com/business/financial-sector",
+        "apiUrl":"http://content.guardianapis.com/business/financial-sector",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"world/africa",
+        "type":"keyword",
+        "webTitle":"Africa",
+        "webUrl":"http://www.theguardian.com/world/africa",
+        "apiUrl":"http://content.guardianapis.com/world/africa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-362804475",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/5/18/1274197377451/shell.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "altText":"shell",
+            "height":"400",
+            "credit":"guardian.co.uk",
+            "caption":"The Amnesty ad rejected by the Financial Times. Photograph: Amnesty International",
+            "width":"401"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"environment/2012/apr/23/shell-nigeria-oil-spill-bigger",
+      "sectionId":"environment",
+      "sectionName":"Environment",
+      "webPublicationDate":"2012-04-23T16:46:07Z",
+      "webTitle":"Shell Nigeria oil spill '60 times bigger than it claimed'",
+      "webUrl":"http://www.theguardian.com/environment/2012/apr/23/shell-nigeria-oil-spill-bigger",
+      "apiUrl":"http://content.guardianapis.com/environment/2012/apr/23/shell-nigeria-oil-spill-bigger",
+      "fields":{
+        "trailText":"<p>As the company faces a lawsuit by residents, an assessment by a US oil spill consultancy casts doubt on Shell's estimate of the Nigerian leak</p>",
+        "headline":"Shell Nigeria oil spill '60 times bigger than it claimed'",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3749x",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Environment/Pix/columnists/2012/4/23/1335199470319/Fishing-boats-lie-abandon-003.jpg",
+        "wordcount":"710",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2012-04-26T16:46:00Z"
+      },
+      "tags":[{
+        "id":"environment/oil-spills",
+        "type":"keyword",
+        "webTitle":"Oil spills",
+        "webUrl":"http://www.theguardian.com/environment/oil-spills",
+        "apiUrl":"http://content.guardianapis.com/environment/oil-spills",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"environment/environment",
+        "type":"keyword",
+        "webTitle":"Environment",
+        "webUrl":"http://www.theguardian.com/environment/environment",
+        "apiUrl":"http://content.guardianapis.com/environment/environment",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"environment/pollution",
+        "type":"keyword",
+        "webTitle":"Pollution",
+        "webUrl":"http://www.theguardian.com/environment/pollution",
+        "apiUrl":"http://content.guardianapis.com/environment/pollution",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"business/royaldutchshell",
+        "type":"keyword",
+        "webTitle":"Royal Dutch Shell",
+        "webUrl":"http://www.theguardian.com/business/royaldutchshell",
+        "apiUrl":"http://content.guardianapis.com/business/royaldutchshell",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/oil",
+        "type":"keyword",
+        "webTitle":"Oil",
+        "webUrl":"http://www.theguardian.com/business/oil",
+        "apiUrl":"http://content.guardianapis.com/business/oil",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/oilandgascompanies",
+        "type":"keyword",
+        "webTitle":"Oil and gas companies",
+        "webUrl":"http://www.theguardian.com/business/oilandgascompanies",
+        "apiUrl":"http://content.guardianapis.com/business/oilandgascompanies",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"world/nigeria",
+        "type":"keyword",
+        "webTitle":"Nigeria",
+        "webUrl":"http://www.theguardian.com/world/nigeria",
+        "apiUrl":"http://content.guardianapis.com/world/nigeria",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/africa",
+        "type":"keyword",
+        "webTitle":"Africa",
+        "webUrl":"http://www.theguardian.com/world/africa",
+        "apiUrl":"http://content.guardianapis.com/world/africa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"profile/johnvidal",
+        "type":"contributor",
+        "webTitle":"John Vidal",
+        "webUrl":"http://www.theguardian.com/profile/johnvidal",
+        "apiUrl":"http://content.guardianapis.com/profile/johnvidal",
+        "bio":"<p>John Vidal is the Guardian's <a href=\"http://www.guardian.co.uk/environment\">environment</a> editor. He joined the paper in 1995 after working for Agence France Presse, North Wales Newspapers and the Cumberland News. He is the author of McLibel: Burger Culture on Trial (1998) and has contributed chapters to books on topics such as the Gulf war, new Europe and development</p>",
+        "rcsId":"GNL001546",
+        "r2ContributorId":"15886",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/john_vidal_140x140.jpg",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-389101968",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/columnists/2012/4/23/1335199467707/Fishing-boats-lie-abandon-001.jpg",
+          "typeData":{
+            "source":"AFP/Getty",
+            "photographer":"Pius Utomi Ekpei",
+            "altText":"Fishing boats lie abandoned in oil-polluted water near Bodo, Nigeria.",
+            "height":"54",
+            "credit":"Pius Utomi Ekpei/AFP/Getty",
+            "caption":"Several years on ... fishing boats lie abandoned in oil-polluted water near Bodo, Nigeria. Photograph: Pius Utomi Ekpei/AFP/Getty",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/columnists/2012/4/23/1335199469091/Fishing-boats-lie-abandon-002.jpg",
+          "typeData":{
+            "source":"AFP/Getty",
+            "photographer":"Pius Utomi Ekpei",
+            "altText":"Fishing boats lie abandoned in oil-polluted water near Bodo, Nigeria.",
+            "height":"130",
+            "credit":"Pius Utomi Ekpei/AFP/Getty",
+            "caption":"Several years on ... fishing boats lie abandoned in oil-polluted water near Bodo, Nigeria. Photograph: Pius Utomi Ekpei/AFP/Getty",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/columnists/2012/4/23/1335199470319/Fishing-boats-lie-abandon-003.jpg",
+          "typeData":{
+            "source":"AFP/Getty",
+            "photographer":"Pius Utomi Ekpei",
+            "altText":"Fishing boats lie abandoned in oil-polluted water near Bodo, Nigeria.",
+            "height":"84",
+            "credit":"Pius Utomi Ekpei/AFP/Getty",
+            "caption":"Several years on ... fishing boats lie abandoned in oil-polluted water near Bodo, Nigeria. Photograph: Pius Utomi Ekpei/AFP/Getty",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/columnists/2012/4/23/1335199471559/Fishing-boats-lie-abandon-004.jpg",
+          "typeData":{
+            "source":"AFP/Getty",
+            "photographer":"Pius Utomi Ekpei",
+            "altText":"Fishing boats lie abandoned in oil-polluted water near Bodo, Nigeria.",
+            "height":"132",
+            "credit":"Pius Utomi Ekpei/AFP/Getty",
+            "caption":"Several years on ... fishing boats lie abandoned in oil-polluted water near Bodo, Nigeria. Photograph: Pius Utomi Ekpei/AFP/Getty",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/columnists/2012/4/23/1335199472790/Fishing-boats-lie-abandon-005.jpg",
+          "typeData":{
+            "source":"AFP/Getty",
+            "photographer":"Pius Utomi Ekpei",
+            "altText":"Fishing boats lie abandoned in oil-polluted water near Bodo, Nigeria.",
+            "height":"168",
+            "credit":"Pius Utomi Ekpei/AFP/Getty",
+            "caption":"Several years on ... fishing boats lie abandoned in oil-polluted water near Bodo, Nigeria. Photograph: Pius Utomi Ekpei/AFP/Getty",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/columnists/2012/4/23/1335199474199/Fishing-boats-lie-abandon-006.jpg",
+          "typeData":{
+            "source":"AFP/Getty",
+            "photographer":"Pius Utomi Ekpei",
+            "altText":"Fishing boats lie abandoned in oil-polluted water near Bodo, Nigeria.",
+            "height":"180",
+            "credit":"Pius Utomi Ekpei/AFP/Getty",
+            "caption":"Several years on ... fishing boats lie abandoned in oil-polluted water near Bodo, Nigeria. Photograph: Pius Utomi Ekpei/AFP/Getty",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/columnists/2012/4/23/1335199475413/Fishing-boats-lie-abandon-007.jpg",
+          "typeData":{
+            "source":"AFP/Getty",
+            "photographer":"Pius Utomi Ekpei",
+            "altText":"Fishing boats lie abandoned in oil-polluted water near Bodo, Nigeria.",
+            "height":"228",
+            "credit":"Pius Utomi Ekpei/AFP/Getty",
+            "caption":"Several years on ... fishing boats lie abandoned in oil-polluted water near Bodo, Nigeria. Photograph: Pius Utomi Ekpei/AFP/Getty",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/columnists/2012/4/23/1335199476597/Fishing-boats-lie-abandon-008.jpg",
+          "typeData":{
+            "source":"AFP/Getty",
+            "photographer":"Pius Utomi Ekpei",
+            "altText":"Fishing boats lie abandoned in oil-polluted water near Bodo, Nigeria.",
+            "height":"276",
+            "credit":"Pius Utomi Ekpei/AFP/Getty",
+            "caption":"Several years on ... fishing boats lie abandoned in oil-polluted water near Bodo, Nigeria. Photograph: Pius Utomi Ekpei/AFP/Getty",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/columnists/2012/4/23/1335199476597/Fishing-boats-lie-abandon-008.jpg",
+          "typeData":{
+            "source":"AFP/Getty",
+            "photographer":"Pius Utomi Ekpei",
+            "altText":"Fishing boats lie abandoned in oil-polluted water near Bodo, Nigeria.",
+            "height":"276",
+            "credit":"Pius Utomi Ekpei/AFP/Getty",
+            "caption":"Several years on ... fishing boats lie abandoned in oil-polluted water near Bodo, Nigeria. Photograph: Pius Utomi Ekpei/AFP/Getty",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-389101969",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Environment/Pix/columnists/2012/4/23/1335199470319/Fishing-boats-lie-abandon-003.jpg",
+          "typeData":{
+            "source":"AFP/Getty",
+            "photographer":"Pius Utomi Ekpei",
+            "altText":"Fishing boats lie abandoned in oil-polluted water near Bodo, Nigeria.",
+            "height":"84",
+            "credit":"Pius Utomi Ekpei/AFP/Getty",
+            "caption":"Several years on ... fishing boats lie abandoned in oil-polluted water near Bodo, Nigeria. Photograph: Pius Utomi Ekpei/AFP/Getty",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"world/2006/jan/12/oil.uk",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2006-01-12T11:11:15Z",
+      "webTitle":"Four foreign oil workers kidnapped in Nigeria",
+      "webUrl":"http://www.theguardian.com/world/2006/jan/12/oil.uk",
+      "apiUrl":"http://content.guardianapis.com/world/2006/jan/12/oil.uk",
+      "fields":{
+        "trailText":"Four foreign oil workers, including a Briton, have been taken hostage by gunmen who stormed a supply boat anchored at an offshore oil platform in Nigeria, officials for Royal Dutch Shell said today.\n \nThe incident occurred late yesterday in the shallow waters off the Niger delta and was the second major attack on Shell facilities in Nigeria within three weeks, following the blowing up of a pipeline in December.",
+        "headline":"Four foreign oil workers kidnapped in Nigeria",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/zxmp",
+        "wordcount":"205",
+        "liveBloggingNow":"false"
+      },
+      "tags":[{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"business/oil",
+        "type":"keyword",
+        "webTitle":"Oil",
+        "webUrl":"http://www.theguardian.com/business/oil",
+        "apiUrl":"http://content.guardianapis.com/business/oil",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/royaldutchshell",
+        "type":"keyword",
+        "webTitle":"Royal Dutch Shell",
+        "webUrl":"http://www.theguardian.com/business/royaldutchshell",
+        "apiUrl":"http://content.guardianapis.com/business/royaldutchshell",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"world/nigeria",
+        "type":"keyword",
+        "webTitle":"Nigeria",
+        "webUrl":"http://www.theguardian.com/world/nigeria",
+        "apiUrl":"http://content.guardianapis.com/world/nigeria",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/africa",
+        "type":"keyword",
+        "webTitle":"Africa",
+        "webUrl":"http://www.theguardian.com/world/africa",
+        "apiUrl":"http://content.guardianapis.com/world/africa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[],
+      "references":[]
+    }],
+    "storyPackage":[]
+  }
+}
