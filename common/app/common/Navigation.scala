@@ -52,6 +52,7 @@ trait Navigation  {
   val usSport = SectionLink("sport", "US sports", "/sport/us-sport")
 
   val football = SectionLink("football", "football", "/football")
+  val soccer = football.copy(title = "soccer")
   val cricket = SectionLink("sport", "cricket", "/sport/cricket")
   val sportblog = SectionLink("sport", "sport blog", "/sport/blog")
   val cycling = SectionLink("sport", "cycling", "/sport/cycling")
@@ -72,6 +73,7 @@ trait Navigation  {
 
   //Cif
   val cif = SectionLink("commentisfree", "comment", "/commentisfree")
+  val opinion = SectionLink("commentisfree", "opinion", "/commentisfree")
   val cifbelief = SectionLink("commentisfree", "cif belief", "/commentisfree/belief")
   val cifgreen = SectionLink("commentisfree", "cif green", "/commentisfree/cif-green")
 
@@ -80,6 +82,7 @@ trait Navigation  {
   val artanddesign = SectionLink("culture", "art & design", "/artanddesign")
   val books = SectionLink("culture", "books", "/books")
   val film = SectionLink("culture", "film", "/film")
+  val movies = film.copy(title = "movies")
   val music = SectionLink("culture", "music", "/music")
   val stage = SectionLink("culture", "stage", "/stage")
   val televisionAndRadio = SectionLink("culture", "tv & radio", "/tv-and-radio")
@@ -96,6 +99,7 @@ trait Navigation  {
 
   //Business
   val economy =  SectionLink("business", "economy", "/business")
+  val business =  economy.copy(title = "business")
   val companies =  SectionLink("business", "companies", "/business/companies")
   val economics = SectionLink("business", "economics", "/business/economics")
   val markets = SectionLink("business", "markets", "/business/stock-markets")
@@ -125,7 +129,7 @@ trait Navigation  {
   val lostinshowbiz = SectionLink("lifeandstyle", "lost in showbiz", "/lifeandstyle/lostinshowbiz")
   val women = SectionLink("lifeandstyle", "women", "/lifeandstyle/women")
   val relationships = SectionLink("lifeandstyle", "relationships", "/lifeandstyle/relationships")
-  val healthandwellbeing = SectionLink("lifeandstyle", "health and wellbeing", "/lifeandstyle/health-and-wellbeing")
+  val healthandwellbeing = SectionLink("lifeandstyle", "health", "/lifeandstyle/health-and-wellbeing")
   val loveAndSex = SectionLink("lifeandstyle", "love & sex", "/lifeandstyle/love-and-sex")
   val homeAndGarden = SectionLink("lifeandstyle", "home & garden", "/lifeandstyle/home-and-garden")
 
@@ -135,6 +139,7 @@ trait Navigation  {
   val uktravel = SectionLink("travel", "UK", "/travel/uk")
   val europetravel = SectionLink("travel", "europe", "/travel/europe")
   val usTravel = SectionLink("travel", "US", "/travel/usa")
+  val usaTravel = usTravel.copy(title = "USA")
   val hotels = SectionLink("travel", "hotels", "/travel/hotels")
   val resturants = SectionLink("travel", "restaurants", "/travel/restaurants")
   val budget = SectionLink("travel", "budget travel", "/travel/budget")
@@ -148,14 +153,14 @@ trait Navigation  {
   val cities = SectionLink("environment", "cities", "/cities")
   val globalDevelopment = SectionLink("environment", "development", "/global-development")
 
-  def footballNav(metaData: MetaData) = NavItem(football, Seq(
+  val footballNav = Seq(
     SectionLink("football", "live scores", "/football/live"),
     SectionLink("football", "tables", "/football/tables"),
     SectionLink("football", "competitions", "/football/competitions"),
     SectionLink("football", "results", "/football/results"),
     SectionLink("football", "fixtures", "/football/fixtures"),
     SectionLink("football", "clubs", "/football/teams")
-  ))
+  )
 }
 
 // helper for the views
