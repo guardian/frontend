@@ -228,7 +228,7 @@ object Switches extends Collections {
 
   val IdentityEthicalAwardsSwitch = Switch("Feature Switches", "id-ethical-awards",
     "If this switch is on, Ethical awards forms will be available",
-    safeState = Off, sellByDate = endOfQ4)
+    safeState = Off, sellByDate = new DateMidnight(2014, 5, 15))
 
   val IdentityFilmAwardsSwitch = Switch("Feature Switches", "id-film-awards",
     "If this switch is on, Film awards forms will be available",
@@ -257,16 +257,6 @@ object Switches extends Collections {
   val LeadAdTopPageSwitch = Switch("Feature Switches", "lead-ad-top-page",
     "If this switch is on, the lead ad is placed on top of the page on desktop",
     safeState = Off, sellByDate = new DateMidnight(2014, 4, 30)
-  )
-
-  val DiscussionVerifiedEmailPosting = Switch("Feature Switches", "discussion-verified-email-posting",
-    "If this switch is on, posters to discussions must have a verified email address.",
-    safeState = Off, sellByDate = endOfQ4
-  )
-
-  val IdentityEmailVerificationSwitch = Switch("Feature Switches", "id-email-verification",
-    "If this switch is on, the option to resend your verification email is displayed.",
-    safeState = Off, sellByDate = endOfQ4
   )
 
   // A/B Test Switches
@@ -342,8 +332,6 @@ object Switches extends Collections {
     LoadOnlyCommercialComponents,
     VideoAdvertSwitch,
     DiscussionSwitch,
-    DiscussionVerifiedEmailPosting,
-    IdentityEmailVerificationSwitch,
     OpenCtaSwitch,
     FontSwitch,
     SearchSwitch,
