@@ -14,10 +14,8 @@ class GalleryTemplateTest extends FlatSpec with Matchers {
 
   it should "render gallery story package links" in HtmlUnit("/music/gallery/2012/jun/23/simon-bolivar-orchestra-dudamel-southbank-centre") { browser =>
     import browser._
-    val linkNames = $("a").getTexts
     val linkUrls = $("a").getAttributes("href")
 
-    linkNames should contain("Gustavo Dudamel: 'I'm not the messiah'")
     linkUrls should contain(WithHost("/music/2010/sep/16/gustavo-dudamel-simon-bolivar-orchestra"))
   }
 
