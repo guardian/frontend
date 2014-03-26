@@ -9,8 +9,12 @@
 <head>
     @fragments.head(metaData, projectName, head, curlPaths)
 </head>
-<body id="top" itemscope itemtype="http://schema.org/WebPage">
+<body
+    @Navigation.topLevelItem(Edition(request).navigation(metaData), metaData).filter(_.links.nonEmpty).map{ localNav => class="has-localnav" }
+    id="top"
+    itemscope itemtype="http://schema.org/WebPage">
 
+    @fragments.message(metaData)
     @if(AdvertSwitch.isSwitchedOn && LeadAdTopPageSwitch.isSwitchedOn) {
         <div class="top-banner-ad-container top-banner-ad-container--above-header">
             @fragments.adSlot(id="top-banner-ad", baseSlot="Top2", medianSlot="Top", extendedSlot="Top")

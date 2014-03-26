@@ -248,7 +248,6 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
     scenario("Articles should auto link to keywords") {
 
       Given("An article that has no in body links")
-      Switches.TagLinking.switchOn()
       HtmlUnit("/law/2014/jan/20/pakistan-drone-strike-relative-loses-gchq-court-case") { browser =>
         import browser._
 
@@ -267,7 +266,6 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
     scenario("Articles should link section tags") {
 
       Given("An article that has no in body links")
-      Switches.TagLinking.switchOn()
       HtmlUnit("/environment/2014/jan/09/penguins-ice-walls-climate-change-antarctica") { browser =>
         import browser._
 
@@ -282,7 +280,6 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
       // so you don't overlap similar tags
 
       Given("An article that has no in body links")
-      Switches.TagLinking.switchOn()
       HtmlUnit("/uk-news/2013/dec/27/high-winds-heavy-rain-uk-ireland") { browser =>
         import browser._
 

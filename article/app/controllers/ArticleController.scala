@@ -10,7 +10,6 @@ import views.support._
 import views.BodyCleaner
 import scala.concurrent.Future
 import scala.collection.JavaConversions._
-import play.api.templates.Html
 
 trait ArticleWithStoryPackage {
   def article: Article
@@ -21,14 +20,14 @@ case class LiveBlogPage(article: LiveBlog, storyPackage: List[Trail]) extends Ar
 
 object ArticleController extends Controller with Logging with ExecutionContexts {
 
-  def renderArticle(path: String) = DogpileAction { implicit request =>
+  def renderArticle(path: String) = Action.async { implicit request =>
     lookup(path) map {
       case Left(model) => render(model)
       case Right(other) => RenderOtherStatus(other)
     }
   }
 
-  def renderLatestFrom(path: String, lastUpdateBlockId: String) = DogpileAction { implicit request =>
+  def renderLatestFrom(path: String, lastUpdateBlockId: String) = Action.async { implicit request =>
     lookup(path) map {
       case Right(other) => RenderOtherStatus(other)
       case Left(model) =>

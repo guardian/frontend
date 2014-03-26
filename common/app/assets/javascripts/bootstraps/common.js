@@ -192,12 +192,9 @@ define([
         },
 
         initRightHandComponent: function(config) {
-
-            if(config.switches.rightHandMostPopular && config.page.contentType === 'Article') {
-                if(detect.getBreakpoint() !== 'mobile' && parseInt(config.page.wordCount, 10) > 500  ) {
-                    new RightMostPopular(mediator, {type: 'image', maxTrails: 5});
-                }
-           }
+            if(config.page.contentType === 'Article' && detect.getBreakpoint() !== 'mobile' && parseInt(config.page.wordCount, 10) > 500  ) {
+                new RightMostPopular(mediator, {type: 'image', maxTrails: 5});
+            }
         },
 
         logLiveStats: function (config) {
@@ -344,9 +341,11 @@ define([
                       '</ul>';
 
             var releaseMessage = new Message('alpha');
-            var alreadyOptedIn = !!releaseMessage.hasSeen('releaseMessage');
 
-            if (config.switches.releaseMessage && !alreadyOptedIn && (detect.getBreakpoint() !== 'mobile')) {
+            // Do not show the release message on -sp- based paths.
+            var spRegExp = new RegExp('.*/-sp-.*');
+
+            if (config.switches.releaseMessage && (detect.getBreakpoint() !== 'mobile') && !spRegExp.test(path)) {
                 // force the visitor in to the alpha release for subsequent visits
                 Cookies.add('GU_VIEW', 'responsive', 365);
                 releaseMessage.show(msg);

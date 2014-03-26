@@ -40,32 +40,15 @@ define([
 
         log : function (config) {
 
-            if (config.switches.liveStats) {
-                var inAlphaTest = !!Cookies.get('GU_ALPHA');
+            // Also log views and sessions for each participating ab test.
+            var abValues = ab.getAbLoggableObject(config);
 
-                if (inAlphaTest) {
-                    var liveStatsView = {platform: 'responsive'};
-
-                    if (isNewSession()) {
-                        liveStatsView.type = 'session';
-                    } else {
-                        liveStatsView.type = 'view';
-                    }
-                    beacon.fire(makeUrl(liveStatsView, '/px.gif'));
-                }
+            if (isNewSession()) {
+                abValues.type = 'session';
+            } else {
+                abValues.type = 'view';
             }
-
-            if (config.switches.liveAbTestStats) {
-                // Also log views and sessions for each participating ab test.
-                var abValues = ab.getAbLoggableObject(config);
-
-                if (isNewSession()) {
-                    abValues.type = 'session';
-                } else {
-                    abValues.type = 'view';
-                }
-                beacon.fire(makeUrl(abValues, '/ab.gif'));
-            }
+            beacon.fire(makeUrl(abValues, '/ab.gif'));
         }
     };
 

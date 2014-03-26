@@ -15,8 +15,14 @@
             <div class="player-card__name" itemprop="name">@player.fullName</div>
         </div>
         <dl class="player-card__stats">
-            <dt class="player-card__stat-name">Saves</dt>
-            <dd class="player-card__stat-value">@playerStats.defence.saves.total</dd>
+            <dt class="player-card__stat-name">Fouls Committed</dt>
+            <dd class="player-card__stat-value">@playerStats.discipline.foulsCommitted.total</dd>
+
+            <dt class="player-card__stat-name">Bookings</dt>
+            <dd class="player-card__stat-value">@playerStats.discipline.bookings.total</dd>
+
+            <dt class="player-card__stat-name">Dismissals</dt>
+            <dd class="player-card__stat-value">@playerStats.discipline.dismissals.total</dd>
         </dl>
     </div>
 </div>

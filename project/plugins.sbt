@@ -4,7 +4,7 @@ logLevel := Level.Warn
 resolvers ++= Seq(
   "Typesafe repository" at "http://repo.typesafe.com/typesafe/releases/",
   "Sonatype OSS" at "https://oss.sonatype.org/content/repositories/releases/",
-  Classpaths.typesafeResolver
+  Classpaths.typesafeReleases
 )
 
 addSbtPlugin("com.github.mpeltonen" % "sbt-idea" % "1.6.0")

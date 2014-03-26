@@ -1,3 +1,3 @@
 package services
 
-class DiagnosticsHealthcheckTest extends HealthcheckTest("/px.gif")
+class DiagnosticsHealthcheckTest extends HealthcheckTest("/ab.gif")

@@ -5,19 +5,16 @@ define([
     'common/modules/analytics/mvt-cookie',
 
     //Current tests
-    'common/modules/experiments/tests/aa',
     'common/modules/experiments/tests/live-blog-follow-button'
 ], function (
     common,
     store,
     mediator,
     mvtCookie,
-    Aa,
     LiveBlogFollowButton
 ) {
 
     var TESTS = [
-            new Aa(),
             new LiveBlogFollowButton()
        ],
        participationsKey = 'gu.ab.participations';

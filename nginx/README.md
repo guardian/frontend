@@ -2,9 +2,9 @@
 
 ## Setup Mac
 
-Install Homebrew:
+[Install Homebrew:](http://brew.sh/#install)
 
-    ruby -e "$(curl -fsSL https://raw.github.com/mxcl/homebrew/go)"
+    ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"
 
 Install nginx:
 
