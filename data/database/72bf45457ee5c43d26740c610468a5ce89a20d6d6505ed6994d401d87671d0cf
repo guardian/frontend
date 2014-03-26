@@ -388,7 +388,7 @@
         "webTitle":"Shiona Tregaskis",
         "webUrl":"http://www.theguardian.com/profile/shiona-tregaskis",
         "apiUrl":"http://content.guardianapis.com/profile/shiona-tregaskis",
-        "bio":"<p>Shiona Tregaskis is the deputy production editor of <a href=\"http://www.guardian.co.uk/environment\">environment</a> for the <a href=\"http://www.guardian.co.uk/theguardian\">Guardian</a></p>",
+        "bio":"<p>Shiona Tregaskis is Guardian Technology's production editor</p>",
         "r2ContributorId":"29333",
         "bylineImageUrl":"http://static.guim.co.uk/sys-images/Environment/Pix/columnists/2011/1/25/1295952991143/Shiona-Tregaskis-Guardian-001.jpg",
         "references":[]
@@ -1154,7 +1154,7 @@
         "webTitle":"Mark Tran",
         "webUrl":"http://www.theguardian.com/profile/marktran",
         "apiUrl":"http://content.guardianapis.com/profile/marktran",
-        "bio":"<p>Mark Tran was appointed correspondent for the Guardian's Global development site in June 2011. He previously worked as a correspondent for the Guardian in Washington (1984-90) and New York (1990-99). Upon his return to London he covered business, domestic and international news for the website and the paper until his present position. Follow <a href=\"http://twitter.com/marktran\">Mark on Twitter</a> and <a href=\"https://plus.google.com/104680581124639975151?rel=author\">Google+</a></p>",
+        "bio":"<p>Mark Tran reports on general news. He was previously a reporter on the Guardian's Global development site (June 2011-March 2014). Before that, he worked as a correspondent for the Guardian in Washington (1984-90) and New York (1990-99). Follow <a href=\"http://twitter.com/marktran\">Mark on Twitter</a> and <a href=\"https://plus.google.com/104680581124639975151?rel=author\">Google+</a></p>",
         "rcsId":"GNL004704",
         "r2ContributorId":"16072",
         "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2007/11/08/mark_tran_140x140.jpg",
@@ -2530,6 +2530,229 @@
       }],
       "references":[]
     },{
+      "id":"commentisfree/2010/may/18/financialtimes-pressandpublishing",
+      "sectionId":"commentisfree",
+      "sectionName":"Comment is free",
+      "webPublicationDate":"2010-05-18T15:17:50Z",
+      "webTitle":"Why did the FT pull Amnesty's Shell ad? | Naomi McAuliffe",
+      "webUrl":"http://www.theguardian.com/commentisfree/2010/may/18/financialtimes-pressandpublishing",
+      "apiUrl":"http://content.guardianapis.com/commentisfree/2010/may/18/financialtimes-pressandpublishing",
+      "fields":{
+        "trailText":"<p><strong>Naomi McAuliffe:</strong> The Financial Times dropped our advert criticising Shell for polluting the Niger Delta. But we'll take the free publicity instead</p>",
+        "headline":"Why did the FT pull Amnesty's Shell ad?",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/2h4tt",
+        "wordcount":"479",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2010-05-21T15:17:00Z"
+      },
+      "tags":[{
+        "id":"commentisfree/commentisfree",
+        "type":"blog",
+        "webTitle":"Comment is free",
+        "webUrl":"http://www.theguardian.com/commentisfree/commentisfree",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/commentisfree",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"media/financialtimes",
+        "type":"keyword",
+        "webTitle":"Financial Times",
+        "webUrl":"http://www.theguardian.com/media/financialtimes",
+        "apiUrl":"http://content.guardianapis.com/media/financialtimes",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"commentisfree/libertycentral",
+        "type":"blog",
+        "webTitle":"liberty central",
+        "webUrl":"http://www.theguardian.com/commentisfree/libertycentral",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/libertycentral",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"media/media",
+        "type":"keyword",
+        "webTitle":"Media",
+        "webUrl":"http://www.theguardian.com/media/media",
+        "apiUrl":"http://content.guardianapis.com/media/media",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"media/pressandpublishing",
+        "type":"keyword",
+        "webTitle":"Newspapers & magazines",
+        "webUrl":"http://www.theguardian.com/media/pressandpublishing",
+        "apiUrl":"http://content.guardianapis.com/media/pressandpublishing",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"media/newspapers",
+        "type":"keyword",
+        "webTitle":"Newspapers",
+        "webUrl":"http://www.theguardian.com/media/newspapers",
+        "apiUrl":"http://content.guardianapis.com/media/newspapers",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"media/advertising",
+        "type":"keyword",
+        "webTitle":"Advertising",
+        "webUrl":"http://www.theguardian.com/media/advertising",
+        "apiUrl":"http://content.guardianapis.com/media/advertising",
+        "sectionId":"media",
+        "sectionName":"Media",
+        "references":[]
+      },{
+        "id":"world/amnesty-international",
+        "type":"keyword",
+        "webTitle":"Amnesty International",
+        "webUrl":"http://www.theguardian.com/world/amnesty-international",
+        "apiUrl":"http://content.guardianapis.com/world/amnesty-international",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"business/royaldutchshell",
+        "type":"keyword",
+        "webTitle":"Royal Dutch Shell",
+        "webUrl":"http://www.theguardian.com/business/royaldutchshell",
+        "apiUrl":"http://content.guardianapis.com/business/royaldutchshell",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"tone/comment",
+        "type":"tone",
+        "webTitle":"Comment",
+        "webUrl":"http://www.theguardian.com/tone/comment",
+        "apiUrl":"http://content.guardianapis.com/tone/comment",
+        "references":[]
+      },{
+        "id":"world/nigeria",
+        "type":"keyword",
+        "webTitle":"Nigeria",
+        "webUrl":"http://www.theguardian.com/world/nigeria",
+        "apiUrl":"http://content.guardianapis.com/world/nigeria",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"business/oil",
+        "type":"keyword",
+        "webTitle":"Oil",
+        "webUrl":"http://www.theguardian.com/business/oil",
+        "apiUrl":"http://content.guardianapis.com/business/oil",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"environment/oil",
+        "type":"keyword",
+        "webTitle":"Oil",
+        "webUrl":"http://www.theguardian.com/environment/oil",
+        "apiUrl":"http://content.guardianapis.com/environment/oil",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"business/oilandgascompanies",
+        "type":"keyword",
+        "webTitle":"Oil and gas companies",
+        "webUrl":"http://www.theguardian.com/business/oilandgascompanies",
+        "apiUrl":"http://content.guardianapis.com/business/oilandgascompanies",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"environment/oil-spills",
+        "type":"keyword",
+        "webTitle":"Oil spills",
+        "webUrl":"http://www.theguardian.com/environment/oil-spills",
+        "apiUrl":"http://content.guardianapis.com/environment/oil-spills",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"environment/environment",
+        "type":"keyword",
+        "webTitle":"Environment",
+        "webUrl":"http://www.theguardian.com/environment/environment",
+        "apiUrl":"http://content.guardianapis.com/environment/environment",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"profile/naomi-mcauliffe",
+        "type":"contributor",
+        "webTitle":"Naomi McAuliffe",
+        "webUrl":"http://www.theguardian.com/profile/naomi-mcauliffe",
+        "apiUrl":"http://content.guardianapis.com/profile/naomi-mcauliffe",
+        "bio":"<p>Naomi McAuliffe tweets as <a href=\"http://twitter.com/#!/naomimc\">NaomiMc</a>. She has led the Stop Violence Against Women campaign for Scotland as well as working at various times campaigning on refugee rights, electro-shock Taser weapons, extraordinary rendition, lesbian, gay, bisexual and transgender rights, China and the death penalty. She has a <a href=\"http://www.vaginadentatablog.net/\">blog</a></p>",
+        "r2ContributorId":"38071",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/12/11/1323624154705/naomi_mcAuliffe.jpg",
+        "references":[]
+      },{
+        "id":"business/financial-sector",
+        "type":"keyword",
+        "webTitle":"Financial sector",
+        "webUrl":"http://www.theguardian.com/business/financial-sector",
+        "apiUrl":"http://content.guardianapis.com/business/financial-sector",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"world/africa",
+        "type":"keyword",
+        "webTitle":"Africa",
+        "webUrl":"http://www.theguardian.com/world/africa",
+        "apiUrl":"http://content.guardianapis.com/world/africa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-362804475",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/5/18/1274197377451/shell.jpg",
+          "typeData":{
+            "source":"guardian.co.uk",
+            "altText":"shell",
+            "height":"400",
+            "credit":"guardian.co.uk",
+            "caption":"The Amnesty ad rejected by the Financial Times. Photograph: Amnesty International",
+            "width":"401"
+          }
+        }]
+      }],
+      "references":[]
+    },{
       "id":"environment/2012/apr/23/shell-nigeria-oil-spill-bigger",
       "sectionId":"environment",
       "sectionName":"Environment",
@@ -2801,229 +3024,6 @@
             "credit":"Pius Utomi Ekpei/AFP/Getty",
             "caption":"Several years on ... fishing boats lie abandoned in oil-polluted water near Bodo, Nigeria. Photograph: Pius Utomi Ekpei/AFP/Getty",
             "width":"140"
-          }
-        }]
-      }],
-      "references":[]
-    },{
-      "id":"commentisfree/2010/may/18/financialtimes-pressandpublishing",
-      "sectionId":"commentisfree",
-      "sectionName":"Comment is free",
-      "webPublicationDate":"2010-05-18T15:17:50Z",
-      "webTitle":"Why did the FT pull Amnesty's Shell ad? | Naomi McAuliffe",
-      "webUrl":"http://www.theguardian.com/commentisfree/2010/may/18/financialtimes-pressandpublishing",
-      "apiUrl":"http://content.guardianapis.com/commentisfree/2010/may/18/financialtimes-pressandpublishing",
-      "fields":{
-        "trailText":"<p><strong>Naomi McAuliffe:</strong> The Financial Times dropped our advert criticising Shell for polluting the Niger Delta. But we'll take the free publicity instead</p>",
-        "headline":"Why did the FT pull Amnesty's Shell ad?",
-        "hasStoryPackage":"false",
-        "shortUrl":"http://gu.com/p/2h4tt",
-        "wordcount":"479",
-        "liveBloggingNow":"false",
-        "commentCloseDate":"2010-05-21T15:17:00Z"
-      },
-      "tags":[{
-        "id":"commentisfree/commentisfree",
-        "type":"blog",
-        "webTitle":"Comment is free",
-        "webUrl":"http://www.theguardian.com/commentisfree/commentisfree",
-        "apiUrl":"http://content.guardianapis.com/commentisfree/commentisfree",
-        "sectionId":"commentisfree",
-        "sectionName":"Comment is free",
-        "references":[]
-      },{
-        "id":"media/financialtimes",
-        "type":"keyword",
-        "webTitle":"Financial Times",
-        "webUrl":"http://www.theguardian.com/media/financialtimes",
-        "apiUrl":"http://content.guardianapis.com/media/financialtimes",
-        "sectionId":"media",
-        "sectionName":"Media",
-        "references":[]
-      },{
-        "id":"commentisfree/libertycentral",
-        "type":"blog",
-        "webTitle":"liberty central",
-        "webUrl":"http://www.theguardian.com/commentisfree/libertycentral",
-        "apiUrl":"http://content.guardianapis.com/commentisfree/libertycentral",
-        "sectionId":"commentisfree",
-        "sectionName":"Comment is free",
-        "references":[]
-      },{
-        "id":"media/media",
-        "type":"keyword",
-        "webTitle":"Media",
-        "webUrl":"http://www.theguardian.com/media/media",
-        "apiUrl":"http://content.guardianapis.com/media/media",
-        "sectionId":"media",
-        "sectionName":"Media",
-        "references":[]
-      },{
-        "id":"media/pressandpublishing",
-        "type":"keyword",
-        "webTitle":"Newspapers & magazines",
-        "webUrl":"http://www.theguardian.com/media/pressandpublishing",
-        "apiUrl":"http://content.guardianapis.com/media/pressandpublishing",
-        "sectionId":"media",
-        "sectionName":"Media",
-        "references":[]
-      },{
-        "id":"media/newspapers",
-        "type":"keyword",
-        "webTitle":"Newspapers",
-        "webUrl":"http://www.theguardian.com/media/newspapers",
-        "apiUrl":"http://content.guardianapis.com/media/newspapers",
-        "sectionId":"media",
-        "sectionName":"Media",
-        "references":[]
-      },{
-        "id":"media/advertising",
-        "type":"keyword",
-        "webTitle":"Advertising",
-        "webUrl":"http://www.theguardian.com/media/advertising",
-        "apiUrl":"http://content.guardianapis.com/media/advertising",
-        "sectionId":"media",
-        "sectionName":"Media",
-        "references":[]
-      },{
-        "id":"world/amnesty-international",
-        "type":"keyword",
-        "webTitle":"Amnesty International",
-        "webUrl":"http://www.theguardian.com/world/amnesty-international",
-        "apiUrl":"http://content.guardianapis.com/world/amnesty-international",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"business/royaldutchshell",
-        "type":"keyword",
-        "webTitle":"Royal Dutch Shell",
-        "webUrl":"http://www.theguardian.com/business/royaldutchshell",
-        "apiUrl":"http://content.guardianapis.com/business/royaldutchshell",
-        "sectionId":"business",
-        "sectionName":"Business",
-        "references":[]
-      },{
-        "id":"business/business",
-        "type":"keyword",
-        "webTitle":"Business",
-        "webUrl":"http://www.theguardian.com/business/business",
-        "apiUrl":"http://content.guardianapis.com/business/business",
-        "sectionId":"business",
-        "sectionName":"Business",
-        "references":[]
-      },{
-        "id":"tone/comment",
-        "type":"tone",
-        "webTitle":"Comment",
-        "webUrl":"http://www.theguardian.com/tone/comment",
-        "apiUrl":"http://content.guardianapis.com/tone/comment",
-        "references":[]
-      },{
-        "id":"world/nigeria",
-        "type":"keyword",
-        "webTitle":"Nigeria",
-        "webUrl":"http://www.theguardian.com/world/nigeria",
-        "apiUrl":"http://content.guardianapis.com/world/nigeria",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"business/oil",
-        "type":"keyword",
-        "webTitle":"Oil",
-        "webUrl":"http://www.theguardian.com/business/oil",
-        "apiUrl":"http://content.guardianapis.com/business/oil",
-        "sectionId":"business",
-        "sectionName":"Business",
-        "references":[]
-      },{
-        "id":"environment/oil",
-        "type":"keyword",
-        "webTitle":"Oil",
-        "webUrl":"http://www.theguardian.com/environment/oil",
-        "apiUrl":"http://content.guardianapis.com/environment/oil",
-        "sectionId":"environment",
-        "sectionName":"Environment",
-        "references":[]
-      },{
-        "id":"business/oilandgascompanies",
-        "type":"keyword",
-        "webTitle":"Oil and gas companies",
-        "webUrl":"http://www.theguardian.com/business/oilandgascompanies",
-        "apiUrl":"http://content.guardianapis.com/business/oilandgascompanies",
-        "sectionId":"business",
-        "sectionName":"Business",
-        "references":[]
-      },{
-        "id":"environment/oil-spills",
-        "type":"keyword",
-        "webTitle":"Oil spills",
-        "webUrl":"http://www.theguardian.com/environment/oil-spills",
-        "apiUrl":"http://content.guardianapis.com/environment/oil-spills",
-        "sectionId":"environment",
-        "sectionName":"Environment",
-        "references":[]
-      },{
-        "id":"environment/environment",
-        "type":"keyword",
-        "webTitle":"Environment",
-        "webUrl":"http://www.theguardian.com/environment/environment",
-        "apiUrl":"http://content.guardianapis.com/environment/environment",
-        "sectionId":"environment",
-        "sectionName":"Environment",
-        "references":[]
-      },{
-        "id":"profile/naomi-mcauliffe",
-        "type":"contributor",
-        "webTitle":"Naomi McAuliffe",
-        "webUrl":"http://www.theguardian.com/profile/naomi-mcauliffe",
-        "apiUrl":"http://content.guardianapis.com/profile/naomi-mcauliffe",
-        "bio":"<p>Naomi McAuliffe tweets as <a href=\"http://twitter.com/#!/naomimc\">NaomiMc</a>. She has led the Stop Violence Against Women campaign for Scotland as well as working at various times campaigning on refugee rights, electro-shock Taser weapons, extraordinary rendition, lesbian, gay, bisexual and transgender rights, China and the death penalty. She has a <a href=\"http://www.vaginadentatablog.net/\">blog</a></p>",
-        "r2ContributorId":"38071",
-        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/12/11/1323624154705/naomi_mcAuliffe.jpg",
-        "references":[]
-      },{
-        "id":"business/financial-sector",
-        "type":"keyword",
-        "webTitle":"Financial sector",
-        "webUrl":"http://www.theguardian.com/business/financial-sector",
-        "apiUrl":"http://content.guardianapis.com/business/financial-sector",
-        "sectionId":"business",
-        "sectionName":"Business",
-        "references":[]
-      },{
-        "id":"world/africa",
-        "type":"keyword",
-        "webTitle":"Africa",
-        "webUrl":"http://www.theguardian.com/world/africa",
-        "apiUrl":"http://content.guardianapis.com/world/africa",
-        "sectionId":"world",
-        "sectionName":"World news",
-        "references":[]
-      },{
-        "id":"type/article",
-        "type":"type",
-        "webTitle":"Article",
-        "webUrl":"http://www.theguardian.com/articles",
-        "apiUrl":"http://content.guardianapis.com/articles",
-        "references":[]
-      }],
-      "elements":[{
-        "id":"gu-image-362804475",
-        "relation":"main",
-        "type":"image",
-        "assets":[{
-          "type":"image",
-          "mimeType":"image/jpeg",
-          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/5/18/1274197377451/shell.jpg",
-          "typeData":{
-            "source":"guardian.co.uk",
-            "altText":"shell",
-            "height":"400",
-            "credit":"guardian.co.uk",
-            "caption":"The Amnesty ad rejected by the Financial Times. Photograph: Amnesty International",
-            "width":"401"
           }
         }]
       }],
