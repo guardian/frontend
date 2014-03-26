@@ -225,3 +225,13 @@ $mpu-resulting-height: ceil($mpu-original-height*$mpu-scale-ratio);
 
 $action-icon-width: 23px;
 $action-icon-rightspace: 7px;
+
+// Horizontal offsets of text in blockquotes and bulletted lists
+$quoted-offset: (
+    default: $gs-gutter*2,
+    tablet: $gs-gutter*2 + $gs-gutter/5
+);
+$bullet-offset: (
+    default: $gs-gutter - $gs-gutter/5,
+    tablet: $gs-gutter
+);
