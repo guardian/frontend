@@ -3,7 +3,6 @@
 @import views.html.fragments.form.{inputField, textareaField}
 @import form.IdFormHelpers._
 @import form.Input
-@import conf.Switches.IdentityEmailVerificationSwitch
 @import helper._
 
 <form class="form js-account-details-form" novalidate action="@idUrlBuilder.buildUrl("/account/edit", idRequest)" role="main" method="post">
@@ -28,20 +27,18 @@
 
                 @inputField(Input(accountDetailsForm("primaryEmailAddress"), ('_label, "Email address")))
 
-                @if(IdentityEmailVerificationSwitch.isSwitchedOn){
-                    <li class="form-field form-field--email-validation">
-                        @if(user.statusFields.userEmailValidated.getOrElse(false)){
-                            <i class="i i-id-ok"></i>
-                            <p class="form__note">Your email address has been validated.</p>
-                        }else{
-                            <i class="i i-id-alert"></i>
-                            <p class="form__note">
-                                Please confirm your email address to post comments.<br />
-                                <a class="js-id-send-validation-email" data-link-name="Resend verification email">Send validation email</a>
-                            </p>
-                        }
-                    </li>
-                }
+                <li class="form-field form-field--email-validation">
+                    @if(user.statusFields.userEmailValidated.getOrElse(false)){
+                        <i class="i i-id-ok"></i>
+                        <p class="form__note">Your email address has been validated.</p>
+                    }else{
+                        <i class="i i-id-alert"></i>
+                        <p class="form__note">
+                            Please confirm your email address to post comments.<br />
+                            <a class="js-id-send-validation-email" data-link-name="Resend verification email">Send validation email</a>
+                        </p>
+                    }
+                </li>
             </ul>
         </div>
 

@@ -269,11 +269,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = endOfQ4
   )
 
-  val IdentityEmailVerificationSwitch = Switch("Feature Switches", "id-email-verification",
-    "If this switch is on, the option to resend your verification email is displayed.",
-    safeState = Off, sellByDate = endOfQ4
-  )
-
   // A/B Test Switches
 
   val ABLiveBlogFollowButton = Switch("A/B Tests", "ab-live-blog-follow-button",
@@ -348,7 +343,6 @@ object Switches extends Collections {
     VideoAdvertSwitch,
     DiscussionSwitch,
     DiscussionVerifiedEmailPosting,
-    IdentityEmailVerificationSwitch,
     OpenCtaSwitch,
     FontSwitch,
     SearchSwitch,
