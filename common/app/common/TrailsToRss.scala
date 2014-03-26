@@ -20,9 +20,10 @@ object TrailsToRss extends implicits.Collections {
   def apply(title: Option[String], trails: Seq[Trail], url: Option[String] = None, description: Option[String] = None)(implicit request: RequestHeader): String = {
 
     // http://stackoverflow.com/questions/9710185/how-to-deal-with-invalid-characters-in-a-ws-output-when-using-cxf
-    def cleanInvalidXmlChars(text: String) {
+    // subjects … Philip Hoare
+    def cleanInvalidXmlChars(text: String): String = {
       val re = "[^\\x09\\x0A\\x0D\\x20-\\xD7FF\\xE000-\\xFFFD\\x10000-x10FFFF]".r;
-      re.replaceAllIn(text, " ");
+      re.replaceAllIn(text, " ")
     }
 
     val feedTitle = title.map(t => s"$t | The Guardian").getOrElse("The Guardian")
@@ -68,7 +69,7 @@ object TrailsToRss extends implicits.Collections {
           case a: Article => Jsoup.parseBodyFragment(a.body).select("p:lt(2)").toArray.map(_.toString).mkString("")
           case _ => ""
         }
-      description.setValue(standfirst + intro)
+      description.setValue(cleanInvalidXmlChars(standfirst + intro))
 
       val images: Seq[ImageAsset] = (trail.bodyImages ++ trail.mainPicture ++ trail.thumbnail).map{ i =>
         i.imageCrops.filter(c => (c.width == 140 && c.height == 84) || (c.width == 460 && c.height == 276))
@@ -82,9 +83,9 @@ object TrailsToRss extends implicits.Collections {
         i.mimeType.map(image.setType)
         // create image's metadata
         val imageMetadata = new Metadata()
-        i.caption.map(imageMetadata.setDescription)
+        i.caption.map(d => { imageMetadata.setDescription(cleanInvalidXmlChars(d)) })
         i.credit.map{ creditName =>
-          val credit = new Credit(null, null, creditName)
+          val credit = new Credit(null, null, cleanInvalidXmlChars(creditName))
           imageMetadata.setCredits(Seq(credit).toArray)
         }
         image.setMetadata(imageMetadata)
