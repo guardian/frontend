@@ -34,8 +34,13 @@ define([
             }
         });
 
+        this.props  = asObservableProps([
+            'webTitle',
+            'description']);
+
         this.state  = asObservableProps([
-            'open']);
+            'open',
+            'editingProps']);
 
         this.collections = new Group({
             parent: self,
@@ -60,6 +65,14 @@ define([
 
     Front.prototype.toggleOpen = function() {
         this.state.open(!this.state.open());
+    };
+
+    Front.prototype.setEditingProps = function() {
+        this.state.editingProps(true);
+    };
+
+    Front.prototype.unsetEditingProps = function() {
+        this.state.editingProps(false);
     };
 
     Front.prototype.createCollection = function() {

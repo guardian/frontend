@@ -61,7 +61,8 @@
                 </span>
             </span>
 
-            <div class="cnf-form" data-bind="if: state.open">
+            <!-- ko if: state.open -->
+            <div class="cnf-form">
                 <label>Title</label>
                 <input type="text" data-bind="
                     value: meta.displayName"/>
@@ -113,6 +114,8 @@
                     <!-- /ko -->
                 </div>
             </div>
+            <!-- /ko -->
+
         </div>
     </script>
 
@@ -124,7 +127,8 @@
                 click: toggleOpen,
                 text: id"></div>
 
-            <div class="cnf-form" data-bind="if: !id()">
+            <!-- ko if: !id() -->
+            <div class="cnf-form">
                 <div class="title">New Front</div>
                 <label>Path</label>
                 <input type="text" data-bind="
@@ -134,9 +138,35 @@
                     <button class="tool">OK</button>
                 </div>
             </div>
+            <!-- /ko -->
 
             <div data-bind="if: id() && state.open()">
                 <div class="cnf-front__inner">
+                    <div data-bind="visible: state.editingProps">
+                        <div class="cnf-form" data-bind="">
+                                <label>Title</label>
+                                <input type="text" data-bind="
+                                    value: props.webTitle"/>
+                                <label>Description</label>
+                                <input type="text" data-bind="
+                                    value: props.description"/>
+                            <div class="tools"><span class="tool" data-bind="click: unsetEditingProps">Save</span></div>
+                        </div>
+                    </div>
+                    <div data-bind="visible: !state.editingProps(), click: setEditingProps">
+                        <div class="cnf-form" data-bind="">
+                            <div>
+                                <label>Title</label>
+                                <span data-bind="text: props.webTitle() || 'None!'"></span>
+                            </div>
+                            <div>
+                                <label>Description</label>
+                                <span data-bind="text: props.description() || 'None!'"></span>
+                            </div>
+                        </div>
+                    </div>
+
+
                     <div data-bind="with: collections">
                         <div class="droppable" data-bind="
                             makeDropabble: true,

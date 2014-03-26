@@ -131,7 +131,12 @@ define([
                              .value();
 
                         if (collections.length > 0) {
-                            fronts[front.id()] = { collections: collections };
+                            fronts[front.id()] = _.reduce(front.props, function(obj, val, key) {
+                                if (val()) {
+                                    obj[key] = val();
+                                }
+                                return obj;
+                            }, {collections: collections});
                         }
                         return fronts;
                     }, {})
