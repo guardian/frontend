@@ -7,6 +7,12 @@
     @include rem((
         padding: $gs-baseline $gs-gutter/2
     ));
+    @include mq(tablet) {
+        @include rem((
+            padding-left: $gs-gutter,
+            padding-right: $gs-gutter
+        ));
+    }
 
     .commercial__inner {
         position: relative;
@@ -187,7 +193,23 @@
 
         .i {
             display: none;
-            @include transform(rotate(-90deg));
+
+            $arrow-size: (
+                width: 8px,
+                height: 15px,
+            );
+            .svg & {
+                display: block;
+                background-size: contain;
+                width: map-get($arrow-size, height);
+                height: map-get($arrow-size, width);
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                margin-top: -(map-get($arrow-size, width)/2);
+                margin-left: -(map-get($arrow-size, height)/2 - 1);
+                @include transform(rotate(-90deg));
+            }
         }
     }
 }
