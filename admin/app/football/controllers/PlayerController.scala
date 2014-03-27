@@ -44,7 +44,7 @@ object PlayerController extends Controller with ExecutionContexts with GetPaClie
         case "overview" => Ok(views.html.football.player.cards.overview(playerId: String, playerStats, playerAppearances))
         case _ => Ok(views.html.football.player.cards.overview(playerId: String, playerStats, playerAppearances))
       }
-      Cors(Cached(60)(result))
+      Cors(NoCache(result))
     }
   }
 

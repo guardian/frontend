@@ -1,0 +1,87 @@
+$player-card-avatar: (
+    default: 44px,
+    mobileLandscape: 100px
+);
+
+
+/**
+ * The Markup for these classes come from the content API
+ * Which in turn gets the content from our Football tool
+ * You can find the templates here:
+ * https://github.com/guardian/frontend/tree/master/admin/app/views/football/player/cards
+ **/
+.player-card {
+    @include rem((
+        padding: $gs-baseline $gs-gutter/2
+    ));
+    background: $c-neutral8;
+    border-top: 2px solid $c-sportMid;
+    color: $c-neutral1;
+}
+
+.player-card__image-container {
+    float: right;
+}
+.player-card__image {
+    @include rounded-corners(50%);
+    @include rem((
+        height: map-get($player-card-avatar, default),
+        width: map-get($player-card-avatar, default)
+    ));
+    float: right;
+
+    @include mq(mobileLandscape) {
+        @include rem((
+            height: map-get($player-card-avatar, mobileLandscape),
+            width: map-get($player-card-avatar, mobileLandscape)
+        ));
+    }
+}
+
+.player-card__player {
+    @include rem((
+        margin-bottom: $gs-baseline*2,
+        min-height: map-get($player-card-avatar, default),
+        padding-right: map-get($player-card-avatar, default)
+    ));
+
+    @include mq(mobileLandscape) {
+        @include rem((
+            min-height: map-get($player-card-avatar, mobileLandscape),
+            padding-right: map-get($player-card-avatar, mobileLandscape)
+        ));
+    }
+}
+.player-card__name {
+    @include fs-header(5);
+    font-weight: normal;
+}
+.player-card__position {
+    @include fs-data(5);
+    color: $c-sportMid;
+}
+
+.player-card__stats {
+    margin: 0;
+    padding: 0;
+}
+.player-card__stat-name,
+.player-card__stat-value {
+    @include rem((
+        margin: 0,
+        padding: $gs-baseline/3 0 ($gs-baseline/3)*2
+    ));
+}
+.player-card__stat-name {
+    @include fs-data(4);
+    display: block;
+    float: left;
+    font-weight: normal;
+}
+.player-card__stat-value {
+    @include fs-data(4);
+    border-top: 1px solid $c-neutral3;
+    font-weight: bold;
+    padding-left: 85%;
+    text-align: right;
+}

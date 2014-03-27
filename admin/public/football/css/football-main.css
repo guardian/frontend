@@ -117,13 +117,13 @@ label[for] {
     padding: 4px 0 8px;
 }
 .player-card__stat-name {
-  display: block;
-  float: left;
-  font-weight: normal;
+    display: block;
+    float: left;
+    font-weight: normal;
 }
 .player-card__stat-value {
-  border-top: 1px solid #ececec;
-  font-weight: bold;
-  padding-left: 90%;
-  text-align: right;
+    border-top: 1px solid #ececec;
+    font-weight: bold;
+    padding-left: 90%;
+    text-align: right;
 }
