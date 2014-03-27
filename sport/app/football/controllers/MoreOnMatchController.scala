@@ -11,7 +11,8 @@ import pa.FootballMatch
 import implicits.{ Requests, Football }
 
 import scala.concurrent.Future
-import conf.ContentApiDoNotUseForNewQueries
+import conf.{SwitchingContentApi, ContentApiDoNotUseForNewQueries}
+import org.joda.time.{DateMidnight, Interval}
 
 case class Report(trail: Trail, name: String)
 
@@ -26,6 +27,7 @@ case class MatchNav(theMatch: FootballMatch, matchReport: Option[Trail],
 }
 
 object MoreOnMatchController extends Controller with Football with Requests with Logging with ExecutionContexts {
+  def interval(contentDate: DateMidnight) = new Interval(contentDate - 2.days, contentDate + 3.days)
 
   private val dateFormat = DateTimeFormat.forPattern("yyyyMMdd")
 
@@ -33,9 +35,8 @@ object MoreOnMatchController extends Controller with Football with Requests with
   def matchNavJson(year: String, month: String, day: String, team1: String, team2: String) = matchNav(year, month, day, team1, team2)
   def matchNav(year: String, month: String, day: String, team1: String, team2: String) = Action.async { implicit request =>
     val contentDate = dateFormat.parseDateTime(year + month + day).toDateMidnight
-    val interval = new Interval(contentDate - 2.days, contentDate + 3.days)
 
-    val maybeResponse: Option[Future[SimpleResult]] = Competitions().matchFor(interval, team1, team2) map { theMatch =>
+    val maybeResponse: Option[Future[SimpleResult]] = Competitions().matchFor(interval(contentDate), team1, team2) map { theMatch =>
       val related: Future[Seq[Content]] = loadMoreOn(request, theMatch)
       // We are only interested in content with exactly 2 team tags
 
@@ -89,15 +90,44 @@ object MoreOnMatchController extends Controller with Football with Requests with
     }
   }
 
+  def redirectToMatchId(matchId: String) = Action.async { implicit request =>
+    val maybeMatch: Option[FootballMatch] = Competitions().findMatch(matchId)
+    canonicalRedirectForMatch(maybeMatch, request)
+  }
+
+  def redirectToMatch(year: String, month: String, day: String, home: String, away: String) = Action.async { implicit request =>
+    val contentDate = DateTimeFormat.forPattern("yyyyMMMdd").parseDateTime(year + month + day).toDateMidnight
+    val maybeMatch = Competitions().matchFor(interval(contentDate), home, away)
+    canonicalRedirectForMatch(maybeMatch, request)
+  }
+
+  private def canonicalRedirectForMatch(maybeMatch: Option[FootballMatch], request: RequestHeader): Future[SimpleResult] = {
+    maybeMatch.map { theMatch =>
+      loadMoreOn(request, theMatch).map { related =>
+        val (matchReport, minByMin, preview, stats) = fetchRelatedMatchContent(theMatch, related)
+        val canonicalPage = matchReport.orElse(minByMin).orElse { if (theMatch.isFixture) preview else None }.getOrElse(stats)
+        Cached(60)(TemporaryRedirect(canonicalPage.url))
+      }
+    }.getOrElse {
+      // we do not keep historical data, so just redirect old stuff to the results page (see also MatchController)
+      Future.successful(Cached(60)(TemporaryRedirect("/football/results")))
+    }
+  }
+
   //for our purposes we expect exactly 2 football teams
   private def hasExactlyTwoTeams(content: Content) = content.tags.count(_.isFootballTeam) == 2
 
-  private def populateNavModel(theMatch: FootballMatch, related: Seq[Content])(implicit request: RequestHeader) = {
+  private def fetchRelatedMatchContent(theMatch: FootballMatch, related: Seq[Content]): (Option[Trail], Option[Trail], Option[Trail], Trail) = {
     val matchDate = theMatch.date.toDateMidnight
     val matchReport = related.find { c => c.webPublicationDate >= matchDate && c.matchReport && !c.minByMin && !c.preview }
     val minByMin = related.find { c => c.webPublicationDate.toDateMidnight == matchDate && c.matchReport && c.minByMin && !c.preview }
     val preview = related.find { c => c.webPublicationDate <= matchDate && (c.preview || c.squadSheet) && !c.matchReport && !c.minByMin }
     val stats: Trail = theMatch
+    (matchReport, minByMin, preview, stats)
+  }
+
+  private def populateNavModel(theMatch: FootballMatch, related: Seq[Content])(implicit request: RequestHeader) = {
+    val (matchReport, minByMin, preview, stats) = fetchRelatedMatchContent(theMatch, related)
 
     val currentPage = request.getParameter("page").flatMap { pageId =>
       (stats :: List(matchReport, minByMin, preview).flatten).find(_.url.endsWith(pageId))
