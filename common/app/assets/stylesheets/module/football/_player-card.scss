@@ -1,8 +1,15 @@
-$player-card: (
+$player-card-avatar: (
     default: 44px,
     mobileLandscape: 100px
 );
 
+
+/**
+ * The Markup for these classes come from the content API
+ * Which in turn get's the content from our Football tool
+ * You can find the templates here:
+ * https://github.com/guardian/frontend/tree/master/admin/app/views/football/player/cards
+ **/
 .player-card {
     background: $c-neutral8;
     border-top: 2px solid $c-sportMid;
@@ -14,25 +21,25 @@ $player-card: (
     float: right;
 }
 .player-card__image {
-    border-radius: 50px;
-    height: map-get($player-card, default);
+    @include rounded-corners(50%);
+    height: map-get($player-card-avatar, default);
     float: right;
-    width: map-get($player-card, default);
+    width: map-get($player-card-avatar, default);
 
     @include mq(mobileLandscape) {
-        height: map-get($player-card, mobileLandscape);
-        width: map-get($player-card, mobileLandscape);
+        height: map-get($player-card-avatar, mobileLandscape);
+        width: map-get($player-card-avatar, mobileLandscape);
     }
 }
 
 .player-card__player {
     margin-bottom: $gs-baseline*2;
-    min-height: map-get($player-card, default);
-    padding-right: map-get($player-card, default);
+    min-height: map-get($player-card-avatar, default);
+    padding-right: map-get($player-card-avatar, default);
 
     @include mq(mobileLandscape) {
-        min-height: map-get($player-card, mobileLandscape);
-        padding-right: map-get($player-card, mobileLandscape);
+        min-height: map-get($player-card-avatar, mobileLandscape);
+        padding-right: map-get($player-card-avatar, mobileLandscape);
     }
 }
 .player-card__name {

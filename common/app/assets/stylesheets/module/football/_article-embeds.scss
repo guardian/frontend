@@ -5,15 +5,15 @@
     ));
     @include mq(mobileLandscape) {
         @include rem((
-            margin: 0 0 0 $gs-gutter
+            margin: 0 0 0 $gs-gutter,
+            width: $gs-column-width*5;
         ));
         float: right;
         margin-top: 0;
-        width: $gs-column-width*5;
     }
 
     .table td,
     .table th {
-        @include fs-data(4);
+        @include fs-data(4, true);
     }
 }
