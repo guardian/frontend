@@ -1,12 +1,14 @@
 /* global _: true */
 define([
     'knockout',
+    'utils/internal-content-code',
     'utils/parse-query-params',
     'utils/url-abs-path',
     'utils/remove-by-id',
     'models/group'
 ], function(
     ko,
+    icc,
     parseQueryParams,
     urlAbsPath,
     removeById,
@@ -140,11 +142,6 @@ define([
 
                     newItems = opts.newItemsConstructor(id, sourceItem, targetList);
 
-                    if (!newItems[0]) {
-                        alertBadContent(id);
-                        return;
-                    }
-
                     targetList.items.splice(insertAt, 0, newItems[0]);
 
                     opts.newItemsValidator(newItems)
@@ -152,7 +149,7 @@ define([
                         removeById(targetList.items, id);
                         alertBadContent(id);
                     })
-                    .done(function() {
+                    .done(function(result) {
                         if (_.isFunction(targetList.reflow)) {
                             targetList.reflow();
                         }
@@ -160,6 +157,8 @@ define([
                         if (!targetList.parent) {
                             return;
                         }
+
+                        id = icc(result) || id;
 
                         opts.newItemsPersister(newItems, sourceItem, sourceList, targetList, id, position, isAfter);
                     });

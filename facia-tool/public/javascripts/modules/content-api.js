@@ -2,28 +2,33 @@
 define([
     'modules/authed-ajax',
     'modules/vars',
-    'modules/cache'
+    'modules/cache',
+    'utils/internal-content-code'
 ],
 function (
     authedAjax,
     vars,
-    cache
+    cache,
+    icc
 ){
+    var apiPageSize = vars.CONST.apiPageSize || 50;
+
     function validateItem (item) {
-        var data = cache.get('contentApi', item.id),
+        var result = cache.get('contentApi', item.id),
             defer = $.Deferred();
 
-        if(data) {
-            populate(data, item);
-            defer.resolve();
+        if(result) {
+            populate(result, item);
+            defer.resolve(result);
         } else {
             fetchData([item.id])
             .done(function(result){
-                if (result.length === 1) {
-                    result = result[0];
-                    cache.put('contentApi', result.id, result);
+                result = result.length === 1 ? result[0] : undefined;
+
+                if (result) {
+                    cache.put('contentApi', icc(result), result);
                     populate(result, item);
-                    defer.resolve();
+                    defer.resolve(result);
                 } else {
                     defer.reject();
                 }
@@ -35,23 +40,36 @@ function (
     }
 
     function decorateItems (items) {
+        if (items.length) {
+            decorateItemsBatch(_.first(items, apiPageSize));
+            decorateItems(_.rest(items, apiPageSize));
+        }
+    }
+
+    function decorateItemsBatch (items) {
         var ids = [];
 
         items.forEach(function(item){
-            var data = cache.get('contentApi', item.id);
-            if(data) {
-                populate(data, item);
+            var result = cache.get('contentApi', item.id);
+            if(result) {
+                populate(result, item);
             } else {
                 ids.push(item.id);
             }
         });
 
+        if (!ids.length) { return; }
+
         fetchData(ids)
         .done(function(results){
-            results.forEach(function(article){
-                cache.put('contentApi', article.id, article);
+            results.forEach(function(article) {
+                var id = icc(article);
+
+                if (!id) { return; }
+
+                cache.put('contentApi', id, article);
                 _.filter(items, function(item){
-                    return item.id === article.id;
+                    return item.id === id || item.id === article.id; // TODO: remove 2nd clause after full transition to internal-code/content/... IDs
                 }).forEach(function(item){
                     populate(article, item);
                 });
@@ -64,7 +82,7 @@ function (
     }
 
     function populate(opts, article) {
-        article.populate(opts, true);
+        article.populate(opts);
     }
 
     function fetchData(ids) {
@@ -72,7 +90,7 @@ function (
             defer = $.Deferred();
 
         if (ids.length) {
-            apiUrl = vars.CONST.apiSearchBase + '/search?page-size=50&format=json&show-fields=all';
+            apiUrl = vars.CONST.apiSearchBase + '/search?format=json&show-fields=all&page-size=' + apiPageSize;
             apiUrl += '&ids=' + ids.map(function(id){
                 return encodeURIComponent(id);
             }).join(',');

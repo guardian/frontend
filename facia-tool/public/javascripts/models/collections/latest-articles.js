@@ -3,6 +3,7 @@ define([
     'modules/vars',
     'utils/query-params',
     'utils/url-abs-path',
+    'utils/internal-content-code',
     'models/collections/article',
     'modules/auto-complete',
     'modules/cache',
@@ -12,6 +13,7 @@ define([
     vars,
     queryParams,
     urlAbsPath,
+    icc,
     Article,
     autoComplete,
     cache,
@@ -113,9 +115,8 @@ define([
 
                     self.flush(rawArticles.length === 0 ? '...sorry, no articles were found.' : '');
 
-                    ([].concat(rawArticles)).forEach(function(article, index){
-                        article.index = index;
-                        article.uneditable = true;
+                    ([].concat(rawArticles)).forEach(function(article) {
+                        article.id = icc(article);
                         self.articles.push(new Article(article));
                         cache.put('contentApi', article.id, article);
                     });
