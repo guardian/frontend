@@ -147,9 +147,6 @@
                                 <label>Title</label>
                                 <input type="text" data-bind="
                                     value: props.webTitle"/>
-                                <label>Description</label>
-                                <input type="text" data-bind="
-                                    value: props.description"/>
                             <div class="tools"><span class="tool" data-bind="click: save">Save</span></div>
                         </div>
                     </div>
@@ -158,10 +155,6 @@
                             <div>
                                 <label>Title</label>
                                 <span data-bind="text: props.webTitle() || 'None!'"></span>
-                            </div>
-                            <div>
-                                <label>Description</label>
-                                <span data-bind="text: props.description() || 'None!'"></span>
                             </div>
                         </div>
                     </div>
