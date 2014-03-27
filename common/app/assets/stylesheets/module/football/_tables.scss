@@ -1,9 +1,8 @@
 @mixin table-football--small() {
-    .table-column--priority { display: table-cell; }
+    .table-column--inferior { display: none; }
 
     th,
     td {
-        display: none;
         min-width: 0;
     }
 
@@ -58,9 +57,4 @@
 
 .football-table__container {
     position: relative;
-}
-
-// Hack for fronts until we tidy them up properly
-.fromage .table {
-    border-top-color: $c-neutral3;
 }
