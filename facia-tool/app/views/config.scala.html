@@ -144,9 +144,9 @@
                 <div class="cnf-front__inner">
                     <div data-bind="visible: state.openProps">
                         <div class="cnf-form" data-bind="">
-                                <label>title</label>
+                                <label>displayName</label>
                                 <input type="text" data-bind="
-                                    value: props.title"/>
+                                    value: props.displayName"/>
                                 <label>webTitle</label>
                                 <input type="text" data-bind="
                                     value: props.webTitle"/>
@@ -156,8 +156,8 @@
                     <div data-bind="visible: !state.openProps(), click: openProps">
                         <div class="cnf-form" data-bind="">
                             <div>
-                                <label>title</label>
-                                <span data-bind="text: props.title() || 'None!'"></span>
+                                <label>displayName</label>
+                                <span data-bind="text: props.displayName() || 'None!'"></span>
                             </div>
                             <div>
                                 <label>webTitle</label>
