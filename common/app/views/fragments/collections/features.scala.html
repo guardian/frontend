@@ -1,6 +1,7 @@
 @(items: Seq[Trail], style: FeaturesContainer, containerIndex: Int)(implicit request: RequestHeader)
+@import conf.Switches._
 
-<div class="collection-wrapper collection-wrapper--spacing-thin collection-wrapper--position-1">
+    <div class="collection-wrapper collection-wrapper--spacing-thin collection-wrapper--position-1">
     <ul class="u-unstyled l-row l-row--items-3 l-row--layout-m collection l-row--background-features">
         @items.slice(0, 1).zipWithIndex.map{ case (trail, index) =>
             @fragments.collections.items.standard(trail, index, containerIndex, "l-row__item--break-m")
@@ -31,10 +32,9 @@
             @style.adSlot.map { adSlot =>
                     </li>
                     <li class="l-row__item l-row__item--mpu hide-on-mobile">
-                        <div class="ad-slot__oas ad-slot--mpu-in-row-pattern hide-on-mobile" data-link-name="ad slot mpu-banner-ad" data-base="@adSlot.medianName" data-median="@adSlot.medianName">
-                            <div class="ad-slot__label">Advertisement</div>
-                            <div class="ad-container"></div>
-                        </div>
+                        @if(AdvertSwitch.isSwitchedOn) {
+                            @fragments.inlineAdSlot(id="mpu-in-row-pattern", adSlot=adSlot, mobileOnly=false)
+                        }
                     </li>
                 </ul>
             }
@@ -59,5 +59,7 @@
     }
 }
 @style.adSlot.map { adSlot =>
-    <div class="ad-slot__oas ad-slot--inline mobile-only" data-base="@adSlot.baseName"><div class="ad-slot__label">Advertisement</div><div class="ad-container"></div></div>
+    @if(AdvertSwitch.isSwitchedOn && OASAdvertSwitch.isSwitchedOn) {
+        <div class="ad-slot__oas ad-slot--inline mobile-only" data-base="@adSlot.baseName"><div class="ad-slot__label">Advertisement</div><div class="ad-container"></div></div>
+    }
 }
