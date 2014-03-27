@@ -6,7 +6,7 @@
     @include mq(mobileLandscape) {
         @include rem((
             margin: 0 0 0 $gs-gutter,
-            width: $gs-column-width*5;
+            width: $gs-column-width*5
         ));
         float: right;
         margin-top: 0;
