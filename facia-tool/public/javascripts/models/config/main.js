@@ -110,7 +110,7 @@ define([
 
         function pressCollection(collection) {
             return authedAjax.request({
-                url: vars.CONST.apiBase + '/collection/press/' + collection.id,
+                url: vars.CONST.apiBase + '/collection/update/' + collection.id,
                 type: 'post'
             });
         }
