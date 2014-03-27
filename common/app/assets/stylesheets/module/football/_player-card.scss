@@ -6,15 +6,17 @@ $player-card-avatar: (
 
 /**
  * The Markup for these classes come from the content API
- * Which in turn get's the content from our Football tool
+ * Which in turn gets the content from our Football tool
  * You can find the templates here:
  * https://github.com/guardian/frontend/tree/master/admin/app/views/football/player/cards
  **/
 .player-card {
+    @include rem((
+        padding: $gs-baseline $gs-gutter/2
+    ));
     background: $c-neutral8;
     border-top: 2px solid $c-sportMid;
-    color: #333333;
-    padding: 10px;
+    color: $c-neutral1;
 }
 
 .player-card__image-container {
