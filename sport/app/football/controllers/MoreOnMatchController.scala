@@ -106,7 +106,6 @@ object MoreOnMatchController extends Controller with Football with Requests with
       loadMoreOn(request, theMatch).map { related =>
         val (matchReport, minByMin, preview, stats) = fetchRelatedMatchContent(theMatch, related)
         val canonicalPage = matchReport.orElse(minByMin).orElse { if (theMatch.isFixture) preview else None }.getOrElse(stats)
-        print(canonicalPage)
         Cached(60)(TemporaryRedirect(canonicalPage.url))
       }
     }.getOrElse {
