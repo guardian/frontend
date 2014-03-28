@@ -6,16 +6,10 @@ import conf.Configuration
 import common.{SimpleCountMetric, FrontendTimingMetric, ExecutionContexts}
 import java.util.concurrent.TimeoutException
 import play.api.libs.ws.WS
-import com.gu.management.{CountMetric, TimingMetric}
+import com.gu.management.TimingMetric
 import common.ContentApiMetrics.ContentApi404Metric
 import java.net.InetAddress
 import scala.util.Try
-import java.util.concurrent.atomic.AtomicInteger
-
-object Foo {
-  private val c = new AtomicInteger(0)
-  def apply(): Int = c.incrementAndGet()
-}
 
 class WsHttp(val httpTimingMetric: TimingMetric, val httpTimeoutMetric: SimpleCountMetric) extends Http[Future]
                                                                                               with ExecutionContexts {
@@ -23,8 +17,6 @@ class WsHttp(val httpTimingMetric: TimingMetric, val httpTimeoutMetric: SimpleCo
   import System.currentTimeMillis
 
   override def GET(url: String, headers: Iterable[(String, String)]) = {
-
-    println(Foo())
 
     //append with a & as there are always params in there already
     val urlWithDebugInfo = s"$url&${RequestDebugInfo.debugParams}"
