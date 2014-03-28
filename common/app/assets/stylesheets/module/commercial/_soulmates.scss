@@ -187,16 +187,17 @@ $soulmates-red: #d70851;
         color: $soulmates-red;
         float: right;
         position: relative;
-        padding-right: ($search-submit-cta-diameter/4)*5;
+        padding: 0;
+        padding-left: ($search-submit-cta-diameter/4)*5;
         @include fs-header(1);
         @include rem((
-            margin-top: $gs-baseline/2
+            margin-top: $gs-baseline
         ))
     }
     .search__submit__cta {
         position: absolute;
         top: 50%;
-        right: 0;
+        left: 0;
         width: $search-submit-cta-diameter;
         height: $search-submit-cta-diameter;
         margin-top: -($search-submit-cta-diameter/2);
