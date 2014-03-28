@@ -265,6 +265,11 @@ object Switches extends Collections {
 
   // A/B Test Switches
 
+  val ABExternalLinksNewWindow = Switch("A/B Tests", "ab-external-links-new-window",
+    "If this switch is on, AB test opening external links in a new tab/window.",
+    safeState = Off, sellByDate = new DateMidnight(2014, 4, 3)
+  )
+
   // Dummy Switches
 
   val IntegrationTestSwitch = Switch("Unwired Test Switch", "integration-test-switch",
@@ -370,7 +375,8 @@ object Switches extends Collections {
     HelveticaEasterEggSwitch,
     LeadAdTopPageSwitch,
     OmnitureVerificationSwitch,
-    IndiaRegionSwitch
+    IndiaRegionSwitch,
+    ABExternalLinksNewWindow
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
