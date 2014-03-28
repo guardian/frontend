@@ -4,6 +4,7 @@ import akka.agent.Agent
 import play.api.libs.concurrent.{Akka => PlayAkka}
 import scala.concurrent.duration._
 import play.api.Play
+import play.api.Play.current
 
 trait ExecutionContexts {
   implicit lazy val executionContext = play.api.libs.concurrent.Execution.Implicits.defaultContext
@@ -17,7 +18,10 @@ object AkkaAsync extends ExecutionContexts {
 
   def apply(body: => Unit): Unit = after(1.second){ body }
 
-  def after(delay: FiniteDuration)(body: => Unit): Unit = {
+  // running scheduled jobs in tests is useless
+  // it just results in unexpected data files when you
+  // want to check in
+  def after(delay: FiniteDuration)(body: => Unit): Unit = if (!Play.isTest) {
     PlayAkka.system(Play.current).scheduler.scheduleOnce(delay) { body }
   }
 }

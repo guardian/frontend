@@ -1,8 +1,7 @@
 package feed
 
-import common.Jobs
-import play.api.{ Application => PlayApp, Play, GlobalSettings }
-import play.api.Play.current
+import common.{AkkaAsync, Jobs}
+import play.api.{ Application => PlayApp, GlobalSettings }
 
 trait OnwardJourneyLifecycle extends GlobalSettings {
   override def onStart(app: PlayApp) {
@@ -11,27 +10,30 @@ trait OnwardJourneyLifecycle extends GlobalSettings {
     Jobs.deschedule("OnwardJourneyAgentsRefreshJob")
     Jobs.deschedule("OnwardJourneyAgentsRefreshHourlyJob")
 
-    // fire every min
-    Jobs.schedule("OnwardJourneyAgentsRefreshJob", "0 * * * * ?") {
-      LatestContentAgent.update()
-      MostPopularAgent.refresh()
-      MostPopularExpandableAgent.refresh()
-      GeoMostPopularAgent.refresh()
-    }
+      // fire every min
+      Jobs.schedule("OnwardJourneyAgentsRefreshJob", "0 * * * * ?") {
+        LatestContentAgent.update()
+        MostPopularAgent.refresh()
+        MostPopularExpandableAgent.refresh()
+        GeoMostPopularAgent.refresh()
+      }
 
-    // fire every hour
-    Jobs.schedule("OnwardJourneyAgentsRefreshHourlyJob", "0 0 * * * ?") {
-      DayMostPopularAgent.refresh()
-    }
+      // fire every hour
+      Jobs.schedule("OnwardJourneyAgentsRefreshHourlyJob", "0 0 * * * ?") {
+        DayMostPopularAgent.refresh()
+      }
 
-    if (Play.isDev && !Play.isTest) {
-      LatestContentAgent.update()
-      MostPopularAgent.refresh()
-      MostPopularExpandableAgent.refresh()
-      GeoMostPopularAgent.refresh()
-    }
-    // kick off refresh now, as this happens hourly
-    DayMostPopularAgent.refresh()
+      AkkaAsync {
+        LatestContentAgent.update()
+        MostPopularAgent.refresh()
+        MostPopularExpandableAgent.refresh()
+        GeoMostPopularAgent.refresh()
+      }
+
+      AkkaAsync{
+        // kick off refresh now, as this happens hourly
+        DayMostPopularAgent.refresh()
+      }
   }
 
   override def onStop(app: PlayApp) {

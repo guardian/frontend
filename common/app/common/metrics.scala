@@ -1,6 +1,6 @@
 package common
 
-import play.api.{Application => PlayApp, Play, GlobalSettings}
+import play.api.{Application => PlayApp, GlobalSettings}
 import com.gu.management._
 import conf.RequestMeasurementMetrics
 import java.lang.management.ManagementFactory
@@ -481,11 +481,8 @@ trait CloudWatchApplicationMetrics extends GlobalSettings {
     Jobs.deschedule("ApplicationSystemMetricsJob")
     super.onStart(app)
 
-    // don't fire off metrics during test runs
-    if (!Play.isTest(app)) {
-      Jobs.schedule("ApplicationSystemMetricsJob", "0 * * * * ?"){
-        report()
-      }
+    Jobs.schedule("ApplicationSystemMetricsJob", "0 * * * * ?"){
+      report()
     }
   }
 
