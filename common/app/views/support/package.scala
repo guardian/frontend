@@ -1,7 +1,7 @@
 package views.support
 
 import common._
-import conf.Switches.{ TagLinking, ShowAllArticleEmbedsSwitch, ArticleSlotsSwitch }
+import conf.Switches.{ ShowAllArticleEmbedsSwitch, ArticleSlotsSwitch, ABExternalLinksNewWindow }
 import model._
 
 import java.net.URLEncoder._
@@ -98,21 +98,28 @@ case class SpecialContainer(showMore: Boolean = true) extends Container {
 case class SectionContainer(showMore: Boolean = true, tone: String = "news") extends Container {
   val containerType = "section"
 }
+case class MultimediaContainer(showMore: Boolean = true) extends Container {
+  val containerType = "multimedia"
+  val tone = "comment"
+}
 
 sealed trait AdSlot {
   val baseName: String
   val medianName: String
+  val dfpDataName: String
 }
 object AdSlot {
 
   object First extends AdSlot {
     val baseName = "x49"
     val medianName = "Middle1"
+    val dfpDataName = "inline1"
   }
 
   object Second extends AdSlot {
     val baseName = "Bottom2"
     val medianName = "Middle"
+    val dfpDataName = "inline2"
   }
 
 }
@@ -337,6 +344,22 @@ case class InBodyLinkCleaner(dataLinkName: String)(implicit val edition: Edition
       }
     }
 
+    // Force external links to open in a new window
+    if (ABExternalLinksNewWindow.isSwitchedOn) {
+      links.filter{
+        link => link.tagName == "a"
+      }.filterNot{
+        link => link.attr("href") startsWith "/"
+      }.filterNot{
+        link => link.attr("href") startsWith "#"
+      }.filterNot{
+        link => link.attr("href") startsWith "http://www.theguardian.com"
+      }.filterNot{
+        link => link.attr("href") startsWith "http://www.guardian.co.uk"
+      }.foreach { link =>
+        link.attr("target", "_blank")
+      }
+    }
     body
   }
 }
@@ -411,8 +434,9 @@ case class InlineSlotGenerator(articleWordCount: Int) extends HtmlCleaner {
 
   private def isBlock(element: Element): Boolean = {
       (element.hasClass("img") && !element.hasClass("img--inline")) ||
-      element.hasClass("embed-video-wrapper") ||
-      element.tagName == "video"
+       element.hasClass("embed-video-wrapper") ||
+       element.hasClass("gu-video-wrapper") ||
+       element.tagName == "video"
   }
 
   private def insertSlot(paragraph: Element, document: Document) {
@@ -439,7 +463,8 @@ case class InlineSlotGenerator(articleWordCount: Int) extends HtmlCleaner {
       var lastInline = -200
 
       var offset = 0
-      val spacing = 850
+      val scaling = ((articleWordCount - 350) / 1500.0f) * 400.0f
+      val spacing = 850 + scaling.toInt.max(400)
       val minFollowingText = 750
       val children = document.select("body > *")
 
@@ -472,7 +497,7 @@ case class InlineSlotGenerator(articleWordCount: Int) extends HtmlCleaner {
 
 class TagLinker(article: Article)(implicit val edition: Edition) extends HtmlCleaner{
   def clean(d: Document): Document = {
-    if (TagLinking.isSwitchedOn && article.linkCounts.noLinks) {
+    if (article.linkCounts.noLinks) {
       val paragraphs = d.getElementsByTag("p")
 
       // order by length of name so we do not make simple match errors
@@ -488,7 +513,7 @@ class TagLinker(article: Article)(implicit val edition: Edition) extends HtmlCle
           tagLink.attr("data-link-name", "auto-linked-tag")
           tagLink.addClass("u-underline")
 
-          p.html(p.html().replaceFirst(keyword.name, tagLink.toString))
+          p.html(p.html().replaceFirst(" " + keyword.name + " ", " " + tagLink.toString + " "))
         }
       }
     }
@@ -657,6 +682,18 @@ object CricketMatch {
   def apply(trail: Trail): Option[String] = trail match {
     case c: Content => c.cricketMatch
     case _ => None
+  }
+}
+
+object TableEmbedComplimentaryToP extends HtmlCleaner {
+
+  override def clean(document: Document): Document = {
+    document.getElementsByClass("element-table").foreach { element =>
+      Option(element.nextElementSibling).map { nextSibling =>
+        if (nextSibling.tagName == "p") element.addClass("element-table--complimentary")
+      }
+    }
+    document
   }
 }
 

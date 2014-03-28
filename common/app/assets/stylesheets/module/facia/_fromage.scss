@@ -3,7 +3,7 @@
  *
  * Single full width story, featuring:
  * - volume
- * - image adjustment (hide/default/highlight)
+ * - image adjustment (hide/default/boost)
  * - supporting links
  */
 
@@ -140,7 +140,7 @@
 }
 
 
-/* Modifier: image hide/default/highlight
+/* Modifier: image hide/default/boost
    ========================================================================== */
 
 .fromage__media-wrapper--first {
@@ -260,7 +260,7 @@
         }
     }
 }
-.fromage--imageadjust-highlight {
+.fromage--imageadjust-boost {
     .item__title {
         @include rem((
             padding-top: $gs-baseline/3
@@ -336,14 +336,30 @@
 .fromage--volume-1,
 .fromage--volume-2 {
     .supporting__item {
-        border-top-color: #ffffff;
+        border-color: #ffffff;
 
-        @include rem((
-            padding-left: $gs-gutter/4
-        ));
+        @include mq($to: tablet) {
+            .supporting__action {
+                @include rem((
+                    margin-left: $gs-gutter/5
+                ));
+            }
+        }
         @include mq(tablet) {
             + .supporting__item {
                 border-left-color: #ffffff;
+            }
+            &:first-child {
+                .supporting__action {
+                    @include rem((
+                        margin-left: $gs-gutter/5
+                    ));
+                }
+            }
+            &:last-child .supporting__action {
+                @include rem((
+                    margin-right: $gs-gutter/5
+                ));
             }
         }
     }
@@ -383,7 +399,7 @@
             ));
         }
     }
-    &.fromage--imageadjust-highlight {
+    &.fromage--imageadjust-boost {
         .fromage__standfirst {
             @include mq(desktop) {
                 @include rem((

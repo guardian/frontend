@@ -234,9 +234,9 @@ Loader.prototype.renderDiscussionClosedMessage = function() {
 Loader.prototype.renderSignin = function() {
     var url = Id.getUrl() +'/{1}?returnUrl='+ window.location.href;
     this.getElem('commentBox').innerHTML =
-        '<div class="d-bar d-bar--signin">Open for comments. <a href="'+
+        '<div class="d-bar d-bar--signin">Open for comments. <a class="u-underline" href="'+
             url.replace('{1}', 'signin') +'">Sign in</a> or '+
-            '<a href="'+ url.replace('{1}', 'register') +'">create your Guardian account</a> '+
+            '<a class="u-underline" href="'+ url.replace('{1}', 'register') +'">create your Guardian account</a> '+
             'to join the discussion.'+
         '</div>';
 };

@@ -3,7 +3,7 @@
 
 @defining((model.article, model.storyPackage)) { case (article, storyPackage) =>
 
-    <h2 class="article__zone left-col-deport tone-@VisualTone(article) tone-accent-border">
+    <h2 class="article__zone left-col-deport tone-@VisualTone(article) tone-accent-border hide-on-mobile-if-localnav">
         <span class="left-col-deport__body" data-component="meta">
             <a class="tone-colour" data-link-name="article section" href="@LinkTo{/@article.section}">@Html(article.sectionName.toLowerCase)</a>
         </span>
@@ -73,11 +73,9 @@
                             @BodyCleaner(article, article.body)
                         </div>
 
-                        @if(ArticleKeywordsSwitch.isSwitchedOn){
-                            <div class="article__keywords" data-link-name="article keywords">
-                                @fragments.keywordList(article.keywords)
-                            </div>
-                        }
+                        <div class="article__keywords" data-link-name="article keywords">
+                            @fragments.keywordList(article.keywords)
+                        </div>
                     </div>
 
                     <div class="social-wrapper">
@@ -95,9 +93,17 @@
                                                 <h2 class="article__meta-heading">Share this article</h2>
                                                 @fragments.social(article, "next to content")
                                             </div>
-                                            <div class="ad-slot ad-slot--mpu-banner-ad" data-link-name="ad slot mpu-banner-ad" data-base="" data-median="Middle"><div class="ad-slot__label">Advertisement</div><div class="ad-container"></div></div>
+                                            @if(OASAdvertSwitch.isSwitchedOn) {
+                                                <div class="ad-slot__oas ad-slot--mpu-banner-ad" data-link-name="ad slot mpu-banner-ad" data-base="" data-median="Middle"><div class="ad-slot__label">
+                                                    Advertisement</div><div class="ad-container"></div></div>
+                                            }
+                                            @if(DFPAdvertSwitch.isSwitchedOn && !LoadOnlyCommercialComponents.isSwitchedOn) {
+                                                <div class="ad-slot__dfp ad-slot--mpu-banner-ad" data-name="right" data-tabletlandscape="300,250">
+                                                    <div id="mpu-ad-slot" class="ad-container"></div>
+                                                </div>
+                                            }
                                         </div>
-                                        <div class="open-cta"></div>
+                                        <div class="js-components"></div>
                                     </div>
                                 </div>
                             </div>
@@ -117,4 +123,10 @@
     @fragments.storyPackagePlaceholder(storyPackage)
 
     @fragments.mostPopularPlaceholder(article.section, VisualTone(article))
+
+    @if(DFPAdvertSwitch.isSwitchedOn) {
+        <div class="ad-slot__dfp ad-slot__commercial-component" data-name="merchandising" data-mobile="888,88" data-label="false" data-refresh="false">
+            <div id="dfp-commercial-component" class="ad-container"></div>
+        </div>
+    }
 }

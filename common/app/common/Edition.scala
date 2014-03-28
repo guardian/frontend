@@ -27,8 +27,7 @@ object Edition {
     editions.Au
   )
 
-  def apply(request: RequestHeader): Edition = {
-
+  def editionId(request: RequestHeader): String = {
     // override for Ajax calls
     val editionFromParameter = request.getQueryString("_edition").map(_.toUpperCase)
 
@@ -39,15 +38,18 @@ object Edition {
     // in production no cookies make it this far
     val editionFromCookie = request.cookies.get("GU_EDITION").map(_.value.toUpperCase)
 
-    val editionId = editionFromParameter
-      .orElse(editionFromHeader)
-      .orElse(editionFromCookie)
-      .getOrElse(Edition.defaultEdition.id)
-
-    all.find(_.id == editionId).getOrElse(defaultEdition)
+    editionFromParameter
+     .orElse(editionFromHeader)
+     .orElse(editionFromCookie)
+     .getOrElse(Edition.defaultEdition.id)
   }
 
-  def others(implicit request: RequestHeader): Seq[Edition] = {
+  def apply(request: RequestHeader): Edition = {
+    val id = editionId(request)
+    all.find(_.id == id).getOrElse(defaultEdition)
+  }
+
+  def others(implicit request: RequestHeader): Seq[Edition] = Region(request).map(r =>  all).getOrElse {
     val currentEdition = Edition(request)
     all.filter(_ != currentEdition)
   }

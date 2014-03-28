@@ -1,19 +1,13 @@
-/* Global wrapper
-   ========================================================================== */
-
-#preloads {
-    @include gs-container;
-    clear: both;
-}
-
-
 /* Global header and navigation
    ========================================================================== */
 
 #header {
     position: relative;
     z-index: 1051; // On top of Google "Adchoices" label which has z-index: 1050
-    background: $c-neutral8;
+
+    @include mq(tablet) {
+        background: $c-neutral8;
+    }
 }
 
 .guardian-logo-wrapper {
@@ -192,13 +186,10 @@ a.edition {
     ));
 }
 
-.component__heading {
-    @include fs-header(1);
-    @include rem((
-        padding-top: $gs-baseline/3,
-        margin-bottom: $gs-baseline/2
-    ));
-    border-top: 1px dotted $c-neutral1;
+.component__heading {}
+
+.component--rhc {
+    margin-top: $gs-baseline*3;
 }
 
 .box-indent {

@@ -1,0 +1,29 @@
+@(playerId: String, player: pa.PlayerProfile, playerStats: pa.StatsSummary, playerAppearances: pa.PlayerAppearances)
+
+@views.html.football.main("Player card") {
+<hgroup class="page-header">
+    <h1>Player card - defence</h1>
+</hgroup>
+
+<div class="player-card-container">
+    <div data-embed-type="table" class="player-card player-card--football" itemscope itemtype="http://schema.org/Person">
+        <div class="player-card__image-container">
+            <img class="player-card__image" itemprop="image" src="@Configuration.staticSport.path/football/player-images/100/@{playerId}.jpg" alt="Photo of @player.fullName" />
+        </div>
+        <div class="player-card__player">
+            <div class="player-card__position" itemprop="jobTitle">@player.position</div>
+            <div class="player-card__name" itemprop="name">@player.fullName</div>
+        </div>
+        <dl class="player-card__stats">
+            <dt class="player-card__stat-name">Throw ins</dt>
+            <dd class="player-card__stat-value">@playerStats.offence.throwIns.total</dd>
+
+            <dt class="player-card__stat-name">Shots blocked</dt>
+            <dd class="player-card__stat-value">@playerStats.defence.blocks.total</dd>
+
+            <dt class="player-card__stat-name">Clearances</dt>
+            <dd class="player-card__stat-value">@playerStats.defence.clearances.total</dd>
+        </dl>
+    </div>
+</div>
+}

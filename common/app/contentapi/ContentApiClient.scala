@@ -58,33 +58,28 @@ trait QueryDefaults extends implicits.Collections with ExecutionContexts {
 trait ApiQueryDefaults extends QueryDefaults with implicits.Collections with Logging {
   self: Api[Future] =>
 
-  def item (id: String, edition: Edition, queryMessage: Option[String] = None): ItemQuery = item(id, edition.id, queryMessage)
+  def item (id: String, edition: Edition): ItemQuery = item(id, edition.id)
 
   //common fields that we use across most queries.
-  def item(id: String, edition: String, queryMessage: Option[String]): ItemQuery = {
-    val query = item.itemId(id)
-                .edition(edition)
-                .showTags("all")
-                .showFields(trailFields)
-                .showInlineElements(inlineElements)
-                .showElements("all")
-                .showReferences(references)
-                .showStoryPackage(true)
-    queryMessage.map(query.stringParam("application-name", _)).getOrElse(query)
-  }
+  def item(id: String, edition: String): ItemQuery = item.itemId(id)
+    .edition(edition)
+    .showTags("all")
+    .showFields(trailFields)
+    .showInlineElements(inlineElements)
+    .showElements("all")
+    .showReferences(references)
+    .showStoryPackage(true)
+
+
 
   //common fields that we use across most queries.
-  def search(edition: Edition, queryMessage: Option[String] = None): SearchQuery = {
-    val query = search
-                .edition(edition.id)
-                .showTags("all")
-                .showInlineElements(inlineElements)
-                .showReferences(references)
-                .showFields(trailFields)
-                .showElements("all")
-    //This is assuming you actually give the application name
-    queryMessage.map(query.stringParam("application-name", _)).getOrElse(query)
-  }
+  def search(edition: Edition): SearchQuery = search
+    .edition(edition.id)
+    .showTags("all")
+    .showInlineElements(inlineElements)
+    .showReferences(references)
+    .showFields(trailFields)
+    .showElements("all")
 }
 
 trait ContentApiClient extends FutureAsyncApi with ApiQueryDefaults with DelegateHttp

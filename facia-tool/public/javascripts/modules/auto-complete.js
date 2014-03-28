@@ -14,8 +14,8 @@ function (
     return function (opts) {
         var defer = $.Deferred(),
             q = opts.query || '',
-            path = opts.path || "tags",
-            url  = "/" + path + "?q=" + q,
+            path = opts.path || 'tags',
+            url  = '/' + path + '?q=' + q,
             count = counter += 1,
             results;
 
@@ -28,10 +28,10 @@ function (
         if(results) {
             defer.resolve(results);
         } else {
-            defer.notify([{_alert : "searching for " + path + "..."}]);
+            defer.notify([{_alert : 'searching for ' + path + '...'}]);
 
             authedAjax.request({
-                url: vars.CONST.apiSearchBase + url + "&page-size=" + maxItems
+                url: vars.CONST.apiSearchBase + url + '&page-size=' + maxItems
             }).then(
                 function(resp) {
                     var results = resp.response && resp.response.results ? resp.response.results : false;
@@ -49,7 +49,7 @@ function (
                     }
 
                     if (results.length === 0) {
-                        defer.resolve([{_alert : "...sorry, no " + path + " found."}]);
+                        defer.resolve([{_alert : '...sorry, no ' + path + ' found.'}]);
                         return;
                     }
 

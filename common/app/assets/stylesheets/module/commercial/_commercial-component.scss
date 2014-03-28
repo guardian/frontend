@@ -63,6 +63,7 @@
     overflow: hidden;
 }
 .commercial__search__input {
+    @include rounded-corners(0);
     @include box-sizing(border-box);
     width: 100%;
     height: $gs-row-height;
@@ -170,7 +171,7 @@
 }
 .lineitem__meta {
     color: $c-neutral2;
-    @include fs-data(2);
+    @include fs-textsans(2);
     margin: 0;
 }
 .lineitem__img {

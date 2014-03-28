@@ -152,7 +152,7 @@ abstract class IdApi(val apiRootUrl: String, http: Http, jsonBodyParser: JsonBod
   }
 
   def resendEmailValidationEmail(auth: Auth, trackingParameters: TrackingData): Future[Response[Unit]] = {
-    val apiPath = urlJoin("user","send-validtion-email")
+    val apiPath = urlJoin("user","send-validation-email")
     val params = buildParams(tracking = Some(trackingParameters), auth = Some(auth))
     val response = http.GET(apiUrl(apiPath), params)
     response map jsonBodyParser.extractUnit

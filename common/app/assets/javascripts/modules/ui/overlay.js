@@ -1,7 +1,7 @@
 define([
-    "bean",
-    "common/common",
-    "bonzo"
+    'bean',
+    'common/common',
+    'bonzo'
 ], function (
     bean,
     common,

@@ -1,7 +1,7 @@
 define([
-    "common/common",
-    "bonzo",
-    "bean"
+    'common/common',
+    'bonzo',
+    'bean'
 ], function (
     common,
     bonzo,
@@ -71,7 +71,7 @@ define([
         this.checkStrength = function() {
             if (active) {
                 var score = zxcvbn(dom.element.value).score,
-                    label = config.text.label + ": " + config.labels[score];
+                    label = config.text.label + ': ' + config.labels[score];
 
                 if (dom.element.value.length < config.minLength) {
                     label = config.text['short'];

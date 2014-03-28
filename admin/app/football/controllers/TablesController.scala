@@ -47,7 +47,7 @@ object TablesController extends Controller with ExecutionContexts with GetPaClie
           case "none" => tableEntries
           case teamId => surroundingItems[LeagueTableEntry](2, tableEntries, _.team.id == teamId)
         }
-        Cors(Cached(60)(Ok(views.html.football.leagueTables.leagueTable(league, entries, List(focus)))))
+        Cors(NoCache(Ok(views.html.football.leagueTables.leagueTable(league, entries, List(focus)))))
       }
     } getOrElse Future.successful(Cors(NoCache(InternalServerError(views.html.football.error("Please provide a valid league")))))
   }
@@ -63,7 +63,7 @@ object TablesController extends Controller with ExecutionContexts with GetPaClie
           else
             (aroundTeam2 ++ aroundTeam1).distinct
         }
-        Cors(Cached(60)(Ok(views.html.football.leagueTables.leagueTable(league, entries, List(team1Id, team2Id)))))
+        Cors(NoCache(Ok(views.html.football.leagueTables.leagueTable(league, entries, List(team1Id, team2Id)))))
       }
     } getOrElse Future.successful(Cors(NoCache(InternalServerError(views.html.football.error("Please provide a valid league")))))
   }
@@ -71,7 +71,7 @@ object TablesController extends Controller with ExecutionContexts with GetPaClie
   def leagueTable(competitionId: String) = Authenticated.async { implicit request =>
     PA.competitions.find(_.competitionId == competitionId).map { league =>
       client.leagueTable(league.competitionId, DateMidnight.now()).map { tableEntries =>
-        Cors(Cached(60)(Ok(views.html.football.leagueTables.leagueTable(league, tableEntries))))
+        Cors(NoCache(Ok(views.html.football.leagueTables.leagueTable(league, tableEntries))))
       }
     } getOrElse Future.successful(Cors(NoCache(InternalServerError(views.html.football.error("Please provide a valid league")))))
   }

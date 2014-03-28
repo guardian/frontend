@@ -18,18 +18,18 @@
                         <ul class="l-columns linkslist features__columns">
                             @items.zipWithIndex.map{ case (trail, index) =>
                                 @trail match {
-                                    case l: LiveBlog if l.isLive         => { @fragments.items.linksList.live(l, index + 3, Some("highlight")) }
-                                    case g: Gallery                      => { @fragments.items.linksList.gallery(g, index + 3, Some("highlight")) }
-                                    case v: Video                        => { @fragments.items.linksList.video(v, index + 3, Some("highlight")) }
-                                    case c if VisualTone(c) == "comment" => { @fragments.items.linksList.comment(c, index + 3, Some("highlight")) }
-                                    case t                               => { @fragments.items.linksList.standard(t, index + 3, Some("highlight")) }
+                                    case l: LiveBlog if l.isLive         => { @fragments.items.linksList.live(l, index + 3, Some("boost")) }
+                                    case g: Gallery                      => { @fragments.items.linksList.gallery(g, index + 3, Some("boost")) }
+                                    case v: Video                        => { @fragments.items.linksList.video(v, index + 3, Some("boost")) }
+                                    case c if VisualTone(c) == "comment" => { @fragments.items.linksList.comment(c, index + 3, Some("boost")) }
+                                    case t                               => { @fragments.items.linksList.standard(t, index + 3, Some("boost")) }
                                 }
                             }
                         </ul>
             @style.adSlot.map { adSlot =>
                     </li>
                     <li class="l-row__item l-row__item--mpu hide-on-mobile">
-                        <div class="ad-slot ad-slot--mpu-in-row-pattern hide-on-mobile" data-link-name="ad slot mpu-banner-ad" data-base="@adSlot.medianName" data-median="@adSlot.medianName">
+                        <div class="ad-slot__oas ad-slot--mpu-in-row-pattern hide-on-mobile" data-link-name="ad slot mpu-banner-ad" data-base="@adSlot.medianName" data-median="@adSlot.medianName">
                             <div class="ad-slot__label">Advertisement</div>
                             <div class="ad-container"></div>
                         </div>
@@ -57,5 +57,5 @@
     }
 }
 @style.adSlot.map { adSlot =>
-    <div class="ad-slot ad-slot--inline mobile-only" data-base="@adSlot.baseName"><div class="ad-slot__label">Advertisement</div><div class="ad-container"></div></div>
+    <div class="ad-slot__oas ad-slot--inline mobile-only" data-base="@adSlot.baseName"><div class="ad-slot__label">Advertisement</div><div class="ad-container"></div></div>
 }

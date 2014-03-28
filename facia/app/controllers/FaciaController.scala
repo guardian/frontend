@@ -3,10 +3,8 @@ package controllers
 import common._
 import front._
 import model._
-import conf._
 import play.api.mvc._
 import play.api.libs.json.Json
-import Switches.EditionRedirectLoggingSwitch
 import views.support.{TemplateDeduping, NewsContainer}
 import scala.concurrent.Future
 import play.api.templates.Html
@@ -33,13 +31,6 @@ class FaciaController extends Controller with Logging with ExecutionContexts wit
       case sectionFront => s"$editionBase/$sectionFront"
     }
 
-    if (EditionRedirectLoggingSwitch.isSwitchedOn) {
-      val country = request.headers.get("X-GU-GeoLocation").getOrElse("not set")
-      val editionCookie = request.headers.get("X-GU-Edition-From-Cookie").getOrElse("false")
-
-      log.info(s"Edition redirect: geolocation: $country | edition: ${edition.id} | edition cookie set: $editionCookie"  )
-    }
-
     Cached(60)(Redirect(redirectPath))
   }
 
@@ -57,7 +48,7 @@ class FaciaController extends Controller with Logging with ExecutionContexts wit
       renderFrontPress(path)
   }
 
-  def renderFrontPress(path: String) = DogpileAction { implicit request =>
+  def renderFrontPress(path: String) = Action.async { implicit request =>
 
     val newPath = getPathForUkAlpha(path, request)
 
@@ -77,7 +68,7 @@ class FaciaController extends Controller with Logging with ExecutionContexts wit
 
   }
 
-  def renderCollection(id: String) = DogpileAction { implicit request =>
+  def renderCollection(id: String) = Action.async { implicit request =>
     log.info(s"Serving collection ID: $id")
     getPressedCollection(id).map { collectionOption =>
       collectionOption.map { collection =>

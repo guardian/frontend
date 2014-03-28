@@ -78,7 +78,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         import browser._
 
         Then("I should see a large byline image")
-        $(".byline-img img").getAttribute("src") should endWith("Pix/pictures/2014/1/20/1390230835044/JonathanFreedland.png?width=140&height=-&quality=95")
+        $(".byline-img img").getAttribute("src") should endWith("Pix/pictures/2014/3/13/1394733740842/JonathanFreedland.png?width=140&height=-&quality=95")
       }
     }
 
@@ -248,7 +248,6 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
     scenario("Articles should auto link to keywords") {
 
       Given("An article that has no in body links")
-      Switches.TagLinking.switchOn()
       HtmlUnit("/law/2014/jan/20/pakistan-drone-strike-relative-loses-gchq-court-case") { browser =>
         import browser._
 
@@ -267,7 +266,6 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
     scenario("Articles should link section tags") {
 
       Given("An article that has no in body links")
-      Switches.TagLinking.switchOn()
       HtmlUnit("/environment/2014/jan/09/penguins-ice-walls-climate-change-antarctica") { browser =>
         import browser._
 
@@ -282,7 +280,6 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
       // so you don't overlap similar tags
 
       Given("An article that has no in body links")
-      Switches.TagLinking.switchOn()
       HtmlUnit("/uk-news/2013/dec/27/high-winds-heavy-rain-uk-ireland") { browser =>
         import browser._
 
@@ -314,6 +311,9 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
     scenario("correct placeholder for ad is rendered") {
 
       Given("the user navigates to a page")
+
+      OASAdvertSwitch.switchOn()
+
       HtmlUnit("/environment/2012/feb/22/capitalise-low-carbon-future") { browser =>
         import browser._
 
@@ -328,11 +328,14 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         adPlaceholder.getAttribute("data-extended") should be("Top")
 
         And("the placeholder has the correct class name")
-        adPlaceholder.getAttribute("class") should be("ad-slot ad-slot--top-banner-ad")
+        adPlaceholder.getAttribute("class") should be("ad-slot__oas ad-slot--top-banner-ad")
 
         And("the placeholder has the correct analytics name")
         adPlaceholder.getAttribute("data-link-name") should be("ad slot top-banner-ad")
       }
+
+      // put it back in the state we found it
+      OASAdvertSwitch.switchOff()
     }
 
     scenario("Navigate to the classic site (UK edition - www.guardian.co.uk)") {
@@ -426,8 +429,6 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
       Given("I read an article and want to share it with my friends")
 
-      SocialSwitch.switchOn()
-
       HtmlUnit("/film/2012/nov/11/margin-call-cosmopolis-friends-with-kids-dvd-review") { browser =>
         import browser._
 
@@ -444,8 +445,6 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
       }
 
       Given("I want to track the responsive share buttons using Facebook Insights")
-
-      SocialSwitch.switchOn()
 
       HtmlUnit("/film/2012/nov/11/margin-call-cosmopolis-friends-with-kids-dvd-review") { browser =>
         import browser._
@@ -464,7 +463,6 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
       Given("I read an article")
 
-      SocialSwitch.switchOn()
       SearchSwitch.switchOn()
 
       HtmlUnit("/world/2013/jan/27/brazil-nightclub-blaze-high-death-toll") { browser =>
@@ -513,8 +511,6 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
     scenario("Show keywords in an article"){
       Given("I am on an article entitled 'Iran's Rouhani may meet Obama at UN after American president reaches out'")
 
-      ArticleKeywordsSwitch.switchOn()
-
       HtmlUnit("/world/2013/sep/15/obama-rouhani-united-nations-meeting"){ browser =>
         import browser._
 
@@ -525,8 +521,6 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
     scenario("Don't show keywords in an article with only section tags (eg info/info) or no keywords"){
       Given("I am on an article entitled 'Removed: Eyeball-licking: the fetish that is making Japanese teenagers sick'")
-
-      ArticleKeywordsSwitch.switchOn()
 
       HtmlUnit("/info/2013/aug/26/2"){ browser =>
         import browser._
@@ -550,7 +544,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
     scenario("Signify to the user an article is sponsored"){
       Given("I visit a sponsored article entitled 'Young people debt worries'")
-      SponsoredContentSwitch.switchOn()
+      DFPAdvertSwitch.switchOn()
       HtmlUnit("/carphone-warehouse-mobile-living/melody-makers") { browser =>
         import browser._
         Then("I should see a message")
@@ -568,8 +562,6 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
     scenario("Ensure that 'comment' always takes precedence before 'feature' when selecting article tone"){
       Given("I am on an article entitled 'Who would you like to see honoured by a blue plaque?'")
-
-      ArticleKeywordsSwitch.switchOn()
 
       HtmlUnit("/commentisfree/2013/jan/07/blue-plaque-english-heritage"){ browser =>
         import browser._
@@ -589,6 +581,24 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         val navigation = findFirst("[itemtype='http://data-vocabulary.org/Breadcrumb']")
         navigation.findFirst("[itemprop='url']").getAttribute("href") should endWith ("/football")
         navigation.find(".nav--local").find(".nav__item").size should be (6)
+      }
+    }
+
+    scenario("'Classic' link") {
+      Given("I am on a piece of content that has an R2 version")
+      HtmlUnit("/world/2014/mar/24/egypt-death-sentence-529-morsi-supporters") { browser =>
+        import browser._
+        Then("I should see a 'Classic' link")
+        $(".js-main-site-link").isEmpty should be (false)
+      }
+    }
+
+    scenario("Remove 'Classic' link") {
+      Given("I am on a piece of content that is only Next Gen")
+      HtmlUnit("/science/antarctica-live/2014/feb/28/-sp-rescue-from-antarctica") { browser =>
+        import browser._
+        Then("I should not see a 'Classic' link")
+        $(".js-main-site-link").isEmpty should be (true)
       }
     }
   }

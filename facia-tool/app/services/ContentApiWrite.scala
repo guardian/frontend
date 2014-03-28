@@ -55,11 +55,11 @@ trait ContentApiWrite extends ExecutionContexts with Logging {
           case 202 => ContentApiPutSuccess.increment()
           case _   => ContentApiPutFailure.increment()
         }
-        log.info(s"Successful Put to content api with status ${r.status}: ${r.body}")
+        log.info(s"Successful Put for ${config.id} to content api with status ${r.status}: ${r.body}")
       }
       response.onFailure{case e =>
       ContentApiPutFailure.increment()
-        log.warn(s"Failure to put to content api with exception ${e.toString}")
+        log.warn(s"Failure to put ${config.id} to content api with exception ${e.toString}")
       }
       response
     }) getOrElse Future.failed(new Throwable(s"${config.id} does not exist"))

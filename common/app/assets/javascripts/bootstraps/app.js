@@ -91,10 +91,10 @@ define([
 
     var routes = function() {
 
-        userTiming.mark("App Begin");
+        userTiming.mark('App Begin');
 
         domReady(function() {
-            var context = document.getElementById('preload-1');
+            var context = document.getElementById('js-context');
 
             Context.set(context);
 
@@ -149,7 +149,7 @@ define([
             mediator.emit('page:ready', config, context);
 
             // Mark the end of synchronous execution.
-            userTiming.mark("App End");
+            userTiming.mark('App End');
         });
     };
 
