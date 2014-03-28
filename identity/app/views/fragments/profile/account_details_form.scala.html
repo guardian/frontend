@@ -66,10 +66,10 @@
                     ('_default, "")
                 )
 
-                @inputField(Input(accountDetailsForm("address.line1"), ('_label, "Address 1")))
-                @inputField(Input(accountDetailsForm("address.line2"), ('_label, "Address 2")))
-                @inputField(Input(accountDetailsForm("address.line3"), ('_label, "Address 3")))
-                @inputField(Input(accountDetailsForm("address.line4"), ('_label, "Address 4")))
+                @inputField(Input(accountDetailsForm("address.line1"), ('_label, "Address line #1")))
+                @inputField(Input(accountDetailsForm("address.line2"), ('_label, "Address line #2")))
+                @inputField(Input(accountDetailsForm("address.line3"), ('_label, "Town")))
+                @inputField(Input(accountDetailsForm("address.line4"), ('_label, "County or State")))
                 @inputField(Input(accountDetailsForm("address.postcode"), ('_label, "Postcode/Zipcode")))
                 @select(
                     accountDetailsForm("address.country"),
