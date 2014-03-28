@@ -37,6 +37,7 @@ define([
         });
 
         this.props  = asObservableProps([
+            'displayName',
             'webTitle']);
 
         populateObservables(this.props,  opts);
