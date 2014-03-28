@@ -3,19 +3,19 @@
 @if(play.Play.isDev()) {
     <link rel="stylesheet" href="@Static("stylesheets/head.default.css")" />
     <link rel="stylesheet" href="@Static("stylesheets/global.css")" />
-    <style>
-        .i { background-image: url(@Static("images/global/sprite.png")); }
-    </style>
 }
 
+<style>
+    .i--commercial { background-image: url(@Static("images/commercial/sprite.png")); }
+</style>
 <link rel="stylesheet" href="@Static("stylesheets/commercial.css")" />
 
-@defining(("2_1", "2014-03-26")) { case (version, date) =>
+@defining(("2_2", "2014-03-28")) { case (version, date) =>
    <aside class="commercial commercial--soulmates" role="complementary">
         <div class="commercial__inner">
             <div class="commercial__header">
-                <h3>
-                    <span class="commercial__logo i i-soulmates-logo"></span>
+                <h3 class="commercial__logo">
+                    <span class="i i--commercial i-soulmates-logo"></span>
                     <span class="u-h">Soulmates</span>
                 </h3>
                 <p class="commercial__explainer">The Guardian's online dating site with over 200,000 members</p>

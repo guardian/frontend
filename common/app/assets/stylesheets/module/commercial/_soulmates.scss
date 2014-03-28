@@ -2,8 +2,9 @@
    Soulmates component
    ========================================================================== */
 
+$soulmates-red: #d70851;
 .commercial--soulmates {
-    background-color: $c-neutral6;
+    background-color: $commercial-component-bg;
     @include rem((
         padding: $gs-baseline $gs-gutter/2
     ));
@@ -34,8 +35,9 @@
         margin-bottom: 0;
     }
     .commercial__explainer {
-        color: $c-neutral2;
-        @include fs-headline(1);
+        color: $c-neutral1;
+        @include f-headline;
+        @include font-size(14.5, 19);
         @include rem((
             margin: $gs-baseline 0 0
         ));
@@ -45,7 +47,7 @@
 
         @include mq(tablet) {
             display: block;
-            background-color: #e657ad;
+            background-color: $soulmates-red;
             position: absolute;
             border: none;
             color: #ffffff;
@@ -65,6 +67,7 @@
         ));
 
         @include mq(tablet) {
+            margin-top: 0;
             @include rem((
                 margin-right: gs-span(3),
                 padding: 0 $gs-gutter
@@ -103,7 +106,7 @@
     }
     .lineitem__link {
         padding: 4px;
-        width: 96px;
+        width: 110px;
         margin: 0 auto;
         position: relative;
         float: none;
@@ -121,6 +124,15 @@
             @include transform(rotate(-4deg));
         }
     }
+    .lineitem__image {
+        background-color: #ffffff;
+        position: relative;
+        z-index: 2;
+        @include box-shadow(2px 2px 0 0 rgba(#000000, .15));
+        @include rem((
+            padding: $gs-baseline/3 $gs-gutter/5
+        ));
+    }
     .lineitem__title {
         @include fs-bodyHeading(1, $size-only: true);
         @include rem((
@@ -131,14 +143,9 @@
             text-decoration: underline;
         }
     }
-    .lineitem__image {
-        background-color: #ffffff;
-        position: relative;
-        z-index: 2;
-        @include box-shadow(2px 2px 0 0 rgba(#000000, .15));
-        @include rem((
-            padding: $gs-baseline/3 $gs-gutter/5
-        ));
+    .lineitem__meta {
+        color: $c-neutral1;
+        @include font-size(11);
     }
     .commercial__search {
         @include rem((
@@ -149,6 +156,7 @@
             position: absolute;
             top: 0;
             right: 0;
+            margin-top: 0;
             @include rem((
                 width: gs-span(3)
             ));
@@ -176,23 +184,24 @@
     .search__submit {
         border: 0;
         background: transparent;
-        color: #e657ad;
+        color: $soulmates-red;
         float: right;
         position: relative;
-        padding-right: ($search-submit-cta-diameter/4)*5;
+        padding: 0;
+        padding-left: ($search-submit-cta-diameter/4)*5;
         @include fs-header(1);
         @include rem((
-            margin-top: $gs-baseline/2
+            margin-top: $gs-baseline
         ))
     }
     .search__submit__cta {
         position: absolute;
         top: 50%;
-        right: 0;
+        left: 0;
         width: $search-submit-cta-diameter;
         height: $search-submit-cta-diameter;
         margin-top: -($search-submit-cta-diameter/2);
-        background-color: #e657ad;
+        background-color: $soulmates-red;
         @include rounded-corners(50%);
 
         .i {
@@ -211,7 +220,7 @@
                 top: 50%;
                 left: 50%;
                 margin-top: -(map-get($arrow-size, width)/2);
-                margin-left: -(map-get($arrow-size, height)/2 - 1);
+                margin-left: -(map-get($arrow-size, height)/2 - 2);
                 @include transform(rotate(-90deg));
             }
         }
