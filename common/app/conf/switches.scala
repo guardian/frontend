@@ -308,6 +308,11 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
+  val ContainersAbTest = Switch("Facia Tool", "facia-containers-ab-test",
+    "If this switch is on then the bleneded containers test runs on Facia",
+    safeState = Off, sellByDate = new DateMidnight(2014, 4, 7)
+  )
+
   val FaciaToolPressSwitch = Switch("Front Press Switches", "facia-tool-press-front",
     "If this switch is on facia tool will press fronts on each change",
     safeState = Off, sellByDate = never
@@ -355,6 +360,7 @@ object Switches extends Collections {
     OphanSwitch,
     ScrollDepthSwitch,
     ContentApiPutSwitch,
+    ContainersAbTest,
     EffectiveMeasureSwitch,
     ImrWorldwideSwitch,
     ForeseeSwitch,

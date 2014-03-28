@@ -112,3 +112,8 @@
     }
 
 }
+
+// Example hidden collection for AB test
+.containers-ab-test [data-id="uk-alpha/people-in-the-news/feature-stories"] {
+  display: none;
+}

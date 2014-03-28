@@ -10,7 +10,9 @@
     @fragments.head(metaData, projectName, head, curlPaths)
 </head>
 <body
-    @Navigation.topLevelItem(Edition(request).navigation(metaData), metaData).filter(_.links.nonEmpty).map{ localNav => class="has-localnav" }
+    class="
+        @if(ContainersAbTest.isSwitchedOn) {containers-ab-test}
+        @Navigation.topLevelItem(Edition(request).navigation(metaData), metaData).filter(_.links.nonEmpty).map{ localNav =>has-localnav}"
     id="top"
     itemscope itemtype="http://schema.org/WebPage">
 
