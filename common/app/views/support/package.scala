@@ -669,6 +669,18 @@ object CricketMatch {
   }
 }
 
+object TableEmbedComplimentaryToP extends HtmlCleaner {
+
+  override def clean(document: Document): Document = {
+    document.getElementsByClass("element-table").foreach { element =>
+      Option(element.nextElementSibling).map { nextSibling =>
+        if (nextSibling.tagName == "p") element.addClass("element-table--complimentary")
+      }
+    }
+    document
+  }
+}
+
 object VisualTone {
 
   private val Comment = "comment"
