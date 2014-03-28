@@ -64,6 +64,6 @@ object MatchController extends Controller with Football with Requests with Loggi
     }
 
     // we do not keep historical data, so just redirect old stuff to the results page (see also MatchController)
-    response.getOrElse(Future { Found("/football/results") })
+    response.getOrElse(Future.successful(Found("/football/results")))
   }
 }

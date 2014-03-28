@@ -96,7 +96,7 @@ object MoreOnMatchController extends Controller with Football with Requests with
   }
 
   def redirectToMatch(year: String, month: String, day: String, home: String, away: String) = Action.async { implicit request =>
-    val contentDate = DateTimeFormat.forPattern("yyyyMMMdd").parseDateTime(year + month + day).toDateMidnight
+    val contentDate = dateFormat.parseDateTime(year + month + day).toDateMidnight
     val maybeMatch = Competitions().matchFor(interval(contentDate), home, away)
     canonicalRedirectForMatch(maybeMatch, request)
   }
@@ -106,6 +106,7 @@ object MoreOnMatchController extends Controller with Football with Requests with
       loadMoreOn(request, theMatch).map { related =>
         val (matchReport, minByMin, preview, stats) = fetchRelatedMatchContent(theMatch, related)
         val canonicalPage = matchReport.orElse(minByMin).orElse { if (theMatch.isFixture) preview else None }.getOrElse(stats)
+        print(canonicalPage)
         Cached(60)(TemporaryRedirect(canonicalPage.url))
       }
     }.getOrElse {
