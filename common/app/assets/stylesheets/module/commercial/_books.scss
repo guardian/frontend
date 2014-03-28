@@ -108,44 +108,6 @@
     }
 
     @include mq(tablet) {
-        .commercial__search {
-            float: right;
-        }
-        .commercial__call-to-action {
-            @include rem((
-                margin-top: $gs-baseline/2
-            ));
-        }
-        .lineitem {
-            position: relative;
-            @include rem((
-                min-height: 250px,
-                padding-bottom: 30px
-            ))
-        }
-        .lineitem__link,
-        .commercial--books__price {
-            width: 100%;
-        }
-        .commercial--books__price {
-            text-align: left;
-            @include rem((
-                margin-top: $gs-baseline/2
-            ));
-        }
-        .commercial--books__price__label {
-            display: inline;
-        }
-        .commercial--books__buy-now-button {
-            position: absolute;
-            bottom: 0;
-            left: 8px;
-        }
-        .commercial__foot {
-            display: none;
-        }
-    }
-    @include mq(desktop) {
         .commercial__branding {
             float: none;
         }
@@ -173,10 +135,59 @@
         .commercial__body {
             margin-top: 0;
         }
+        .lineitem {
+            position: relative;
+            width: 33%;
+            @include rem((
+                min-height: 250px,
+                padding-bottom: 30px
+            ));
+
+            &:nth-child(n+4) {
+                display: none;
+            }
+        }
+        .lineitem__link,
+        .commercial--books__price {
+            width: 100%;
+        }
+        .commercial--books__price {
+            text-align: left;
+            @include rem((
+                margin-top: $gs-baseline/2
+            ));
+        }
+        .commercial--books__price__label {
+            display: inline;
+        }
+        .commercial--books__buy-now-button {
+            position: absolute;
+            bottom: 0;
+            left: 8px;
+        }
+        .commercial__foot {
+            display: none;
+        }
+    }
+    @include mq(desktop) {
+        .lineitem {
+            width: 25%;
+
+            &:nth-child(4) {
+                display: block;
+            }
+        }
     }
     @include mq(wide) {
         .commercial__header {
             width: gs-span(4);
+        }
+        .lineitem {
+            width: 20%;
+
+            &:nth-child(5) {
+                display: block;
+            }
         }
     }
 }
