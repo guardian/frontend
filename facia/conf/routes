@@ -4,21 +4,26 @@
 
 
 # For dev machines
-GET        /assets/*path                                                    dev.DevAssetsController.at(path)
+GET        /assets/*path                                               dev.DevAssetsController.at(path)
+
+GET        /humans.txt                                                 controllers.Assets.at(path="/public", file="humans.txt")
 
 # Editionalised redirects
-GET        /                                                                controllers.FaciaController.editionRedirect(path = "")
-GET        /$path<(culture|sport|australia|commentisfree|business|money)>   controllers.FaciaController.editionRedirect(path)
+GET        /                                                           controllers.FaciaController.editionRedirect(path = "")
+GET        /$path<(culture|sport|commentisfree|business|money|rss)>    controllers.FaciaController.editionRedirect(path)
 
 #Facia Press
-GET        /pressed/*path                                                   controllers.FaciaController.renderFaciaPress(path)
+GET        /pressed/*path                                              controllers.FaciaController.renderFrontPress(path)
+
+GET        /collection/*id/rss                                         controllers.FaciaController.renderCollectionRss(id)
+GET        /collection/*id.json                                        controllers.FaciaController.renderCollectionJson(id)
+GET        /collection/*id                                             controllers.FaciaController.renderCollection(id)
+
+# Tag combiners
+GET        /$leftSide<[^+]+>+*rightSide/rss                            controllers.IndexController.renderCombinerRss(leftSide, rightSide)
+GET        /$leftSide<[^+]+>+*rightSide                                controllers.IndexController.renderCombiner(leftSide, rightSide)
 
 # Editionalised pages
-GET        /$path<(us|uk|au|us-alpha|uk-alpha|au-alpha)?>                   controllers.FaciaController.renderEditionFront(path)
-GET        /$path<(us|uk|au|us-alpha|uk-alpha|au-alpha)?>.json              controllers.FaciaController.renderEditionFrontJson(path)
-GET        /$path<(\w+/)?([\d\w-]*)>                                        controllers.FaciaController.renderEditionSectionFront(path)
-GET        /$path<(\w+/)?([\d\w-]*)>.json                                   controllers.FaciaController.renderEditionSectionFrontJson(path)
-
-GET        /collection/$id<[\w\d-/]*>/rss                                   controllers.FaciaController.renderCollectionRss(id)
-GET        /collection/$id<[\w\d-/]*>                                       controllers.FaciaController.renderEditionCollection(id)
-GET        /collection/$id<[\w\d-/]*>.json                                  controllers.FaciaController.renderEditionCollectionJson(id)
+GET        /*path/rss                                                  controllers.FaciaController.renderFrontRss(path)
+GET        /*path.json                                                 controllers.FaciaController.renderFrontJson(path)
+GET        /*path                                                      controllers.FaciaController.renderFront(path)

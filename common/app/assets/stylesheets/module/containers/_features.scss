@@ -13,7 +13,7 @@
         }
     }
     .ad-slot--inline {
-        margin-top: $gs-baseline/2;
+        margin-top: $gs-baseline;
         margin-bottom: $gs-baseline/2;
     }
     .collection-wrapper--position-1 {
@@ -22,7 +22,7 @@
             @include box-sizing(border-box);
             @include rem((
                 padding-bottom: $gs-baseline,
-                min-height: 82px
+                min-height: 86px
             ));
         }
         @include mq($to: tablet) {
@@ -99,7 +99,7 @@
         }
     }
     .collection__item {
-        background-color: $c-features-secondary;
+        background-color: $c-featuresVariant;
 
         + .collection__item {
             &:before {
@@ -117,11 +117,11 @@
     }
     .item__link:visited,
     .item__link:visited .item__title {
-        color: mix(#ffffff, $c-features-secondary, 80%);
+        color: mix(#ffffff, $c-featuresVariant, 80%);
     }
     @include item--hide-tone-border;
     .item__title {
-        background-color: $c-features-secondary;
+        background-color: $c-featuresVariant;
     }
     .item__link:hover,
     .item__link:focus {

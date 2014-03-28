@@ -1,7 +1,7 @@
 package views.support
 
 import common._
-import conf.Switches.{ TagLinking, ShowAllArticleEmbedsSwitch, ArticleSlotsSwitch, ABExternalLinksNewWindow }
+import conf.Switches.{ ShowAllArticleEmbedsSwitch, ArticleSlotsSwitch, ABExternalLinksNewWindow }
 import model._
 
 import java.net.URLEncoder._
@@ -18,6 +18,7 @@ import play.api.mvc.RequestHeader
 import play.api.mvc.SimpleResult
 import play.api.templates.Html
 import scala.collection.JavaConversions._
+import java.text.DecimalFormat
 
 sealed trait Style {
   val className: String
@@ -97,21 +98,28 @@ case class SpecialContainer(showMore: Boolean = true) extends Container {
 case class SectionContainer(showMore: Boolean = true, tone: String = "news") extends Container {
   val containerType = "section"
 }
+case class MultimediaContainer(showMore: Boolean = true) extends Container {
+  val containerType = "multimedia"
+  val tone = "comment"
+}
 
 sealed trait AdSlot {
   val baseName: String
   val medianName: String
+  val dfpDataName: String
 }
 object AdSlot {
 
   object First extends AdSlot {
     val baseName = "x49"
     val medianName = "Middle1"
+    val dfpDataName = "inline1"
   }
 
   object Second extends AdSlot {
     val baseName = "Bottom2"
     val medianName = "Middle"
+    val dfpDataName = "inline2"
   }
 
 }
@@ -215,7 +223,7 @@ case class VideoEmbedCleaner(contentVideos: Seq[VideoElement]) extends HtmlClean
 
   override def clean(document: Document): Document = {
     document.getElementsByClass("element-video").foreach { element: Element =>
-      element.child(0).wrap("<div class=\"element-video__wrap\"></div>")
+      element.child(0).wrap("<div class=\"embed-video-wrapper\"></div>")
     }
 
     document.getElementsByClass("gu-video").foreach { element: Element =>
@@ -238,7 +246,7 @@ case class VideoEmbedCleaner(contentVideos: Seq[VideoElement]) extends HtmlClean
                 Sorry, your browser is unable to play this video.
               </object>""")
 
-        element.wrap("<div class=\"media-proportional-container\"></div>")
+        element.wrap("<div class=\"gu-video-wrapper\"><div class=\"u-responsive-ratio u-responsive-ratio--hd\"></div></div>")
       })
     }
     document
@@ -356,14 +364,18 @@ case class InBodyLinkCleaner(dataLinkName: String)(implicit val edition: Edition
   }
 }
 
+// TODO make this separate
+// this does not fix other links, just the ones in these pages.
 case class InBodyLinkCleanerForR1(section: String) extends HtmlCleaner {
 
+  private val subdomains = "^/(Business|Music|Lifeandhealth|Users|Sport|Books|Media|Society|Travel|Money|Education|Arts|Politics|Observer|Football|Film|Technology|Environment|Shopping|Century)/(.*)".r
+
   def FixR1Link(href: String, section: String = "") = {
-  
-   /**
-    * We moved some R1 HTML files from subdomains to www.theguardian.com.
+
+    /**
+     * We moved some R1 HTML files from subdomains to www.theguardian.com.
     * This means we broke some of the <a href="...">'s in the HTML.
-    * 
+    *
     * Here's how this works :-
     *
     * 1. /Books/reviews/travel/0,,343395,.html -> /books/reviews/travel/0,,343395,.html
@@ -373,34 +385,28 @@ case class InBodyLinkCleanerForR1(section: String) extends HtmlCleaner {
     *       - Prefix the current section to any links without a path in them.
     *
     * 3. /Guardian/film/2002/jan/12/awardsandprizes.books -> /film/2002/jan/12/awardsandprizes.books
-    *       - The /Guardian path is an alias for the root (www), so we just remove it. 
+    *       - The /Guardian path is an alias for the root (www), so we just remove it.
     *
     * 4. http://...
     *       - Ignore any links that contain a full URL.
     */
 
     // #1
-    val subdomains = "^/(Business|Music|Lifeandhealth|Users|Sport|Books|Media|Society|Travel|Money|Education|Arts|Politics|Observer|Football|Film|Technology|Environment|Shopping|Century)/(.*)".r
     href match {
-        case subdomains(section, path) => { 
-          s"/${section.toLowerCase}/${path}"
-        }
-        case _ => {
-          (href contains "/Guardian") match {
-            case true => href.replace("/Guardian", "") // #2  
-            case _ => s"${section}${href}" // #3 
-          }
-        }
+      case subdomains(section, path) => s"/${section.toLowerCase}/$path"
+      case _ =>
+        if (href.contains("/Guardian"))
+          href.replace("/Guardian", "") // #2
+        else
+          s"$section$href" // #3
     }
   }
 
   def clean(body: Document): Document = {
     val links = body.getElementsByTag("a")
-    links.filter{
-      link => link.attr("href") startsWith "/" // #4
-    }.foreach { link =>
-      link.attr("href", FixR1Link(link.attr("href"), section))
-    }
+    links.filter(_.attr("href") startsWith "/") // #4
+    .foreach(link => link.attr("href", FixR1Link(link.attr("href"), section)))
+
     body
   }
 }
@@ -428,8 +434,9 @@ case class InlineSlotGenerator(articleWordCount: Int) extends HtmlCleaner {
 
   private def isBlock(element: Element): Boolean = {
       (element.hasClass("img") && !element.hasClass("img--inline")) ||
-      element.hasClass("media-proportional-container") ||
-      element.tagName == "video"
+       element.hasClass("embed-video-wrapper") ||
+       element.hasClass("gu-video-wrapper") ||
+       element.tagName == "video"
   }
 
   private def insertSlot(paragraph: Element, document: Document) {
@@ -456,7 +463,8 @@ case class InlineSlotGenerator(articleWordCount: Int) extends HtmlCleaner {
       var lastInline = -200
 
       var offset = 0
-      val spacing = 850
+      val scaling = ((articleWordCount - 350) / 1500.0f) * 400.0f
+      val spacing = 850 + scaling.toInt.max(400)
       val minFollowingText = 750
       val children = document.select("body > *")
 
@@ -489,7 +497,7 @@ case class InlineSlotGenerator(articleWordCount: Int) extends HtmlCleaner {
 
 class TagLinker(article: Article)(implicit val edition: Edition) extends HtmlCleaner{
   def clean(d: Document): Document = {
-    if (TagLinking.isSwitchedOn && article.linkCounts.noLinks) {
+    if (article.linkCounts.noLinks) {
       val paragraphs = d.getElementsByTag("p")
 
       // order by length of name so we do not make simple match errors
@@ -505,7 +513,7 @@ class TagLinker(article: Article)(implicit val edition: Edition) extends HtmlCle
           tagLink.attr("data-link-name", "auto-linked-tag")
           tagLink.addClass("u-underline")
 
-          p.html(p.html().replaceFirst(keyword.name, tagLink.toString))
+          p.html(p.html().replaceFirst(" " + keyword.name + " ", " " + tagLink.toString + " "))
         }
       }
     }
@@ -647,6 +655,8 @@ object Format {
     val timezone = Edition(request).timezone
     date.toString(DateTimeFormat.forPattern(pattern).withZone(timezone))
   }
+
+  def apply(a: Int): String = new DecimalFormat("#,###").format(a)
 }
 
 object cleanTrailText {
@@ -684,10 +694,8 @@ object VisualTone {
   private val commentMappings = Seq(
     "tone/comment",
     "tone/letters",
-    "tone/obituaries",
     "tone/profiles",
-    "tone/editorials",
-    "tone/analysis"
+    "tone/editorials"
   )
 
   private val featureMappings = Seq(
@@ -801,5 +809,12 @@ object GetClasses {
     val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail, imageAdjust)}
     RenderClasses(classes:_*)
   }
+
+}
+
+object LatestUpdate {
+
+  def apply(collection: Collection, trails: Seq[Trail]): Option[DateTime] =
+    (trails.map(_.webPublicationDate) ++ collection.lastUpdated.map(DateTime.parse(_))).sortBy(-_.getMillis).headOption
 
 }

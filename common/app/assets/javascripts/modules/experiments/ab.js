@@ -5,43 +5,17 @@ define([
     'common/modules/analytics/mvt-cookie',
 
     //Current tests
-    'common/modules/experiments/tests/aa',
-    'common/modules/experiments/tests/right-hand-recommendations',
-    'common/modules/experiments/tests/geo-most-popular',
-    'common/modules/experiments/tests/football-table-position',
-    'common/modules/experiments/tests/uk-containers',
-    'common/modules/experiments/tests/us-containers',
-    'common/modules/experiments/tests/au-containers',
-    'common/modules/experiments/tests/onward-related',
-    'common/modules/experiments/tests/fronts-latest-reviews-card',
     'common/modules/experiments/tests/external-links-new-window'
 ], function (
     common,
     store,
     mediator,
     mvtCookie,
-    Aa,
-    RightHandRecommendations,
-    GeoMostPopular,
-    FootballTablePosition,
-    UkContainers,
-    UsContainers,
-    AuContainers,
-    OnwardRelated,
-    FrontsLatestReviewsCard,
+
     ExternalLinksNewWindow
 ) {
 
     var TESTS = [
-            new Aa(),
-            new RightHandRecommendations(),
-            new GeoMostPopular(),
-            new FootballTablePosition(),
-            new UkContainers(),
-            new UsContainers(),
-            new AuContainers(),
-            new OnwardRelated(),
-            new FrontsLatestReviewsCard(),
             new ExternalLinksNewWindow()
        ],
        participationsKey = 'gu.ab.participations';
@@ -67,10 +41,6 @@ define([
         var participations = getParticipations();
         delete participations[test.id];
         store.local.set(participationsKey, participations);
-    }
-
-    function clearParticipations() {
-        return store.local.remove(participationsKey);
     }
 
     function cleanParticipations(config) {
@@ -176,7 +146,7 @@ define([
             addParticipation(test, variantIds[testVariantId]);
 
         } else {
-            addParticipation(test, "notintest");
+            addParticipation(test, 'notintest');
         }
     }
 
@@ -267,9 +237,9 @@ define([
             try {
                 getActiveTests().forEach(function (test) {
 
-                    if (isParticipating(test)) {
+                    if (isParticipating(test) && testCanBeRun(test, config)) {
                         var variant = getTestVariant(test.id);
-                        if (isTestSwitchedOn(test, config) && variant && variant !== 'notintest') {
+                        if (variant && variant !== 'notintest') {
                             abLogObject['ab' + test.id] = variant;
                         }
                     }

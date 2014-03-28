@@ -71,6 +71,7 @@ object CloudWatch extends implicits.Futures{
     "global.css",
     "head.default.css",
     "head.facia.css",
+    "head.football.css",
     "head.identity.css"
   )
 
@@ -164,17 +165,6 @@ object CloudWatch extends implicits.Futures{
         asyncHandler)
     )
   }.toSeq
-
-  def liveStats(statistic: String) = new LineChart(statistic, Seq("Time", statistic),
-    euWestClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
-      .withStartTime(new DateTime().minusHours(6).toDate)
-      .withEndTime(new DateTime().toDate)
-      .withPeriod(120)
-      .withStatistics("Average")
-      .withNamespace("Diagnostics")
-      .withMetricName(statistic)
-      .withDimensions(stage),
-      asyncHandler))
 
   def cost = new MaximumMetric(defaultClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
     .withNamespace("AWS/Billing")

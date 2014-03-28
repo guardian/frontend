@@ -1,0 +1,52 @@
+@(page: MatchPage)(implicit request: RequestHeader)
+@import support._
+@import FootballHelpers._
+@import feed._
+
+@defining((page.lineUp.homeTeam, page.lineUp.awayTeam, page.lineUp)){ case (home, away, lineUp) =>
+<div class="@RenderClasses(Map(
+            "c-match-stats" -> true,
+            "match-stats--darken-home" -> ColourTools.isLight(home.teamColour),
+            "match-stats--darken-away" -> ColourTools.isLight(away.teamColour)
+        ))">
+
+    <h3 class="component__heading article__meta-heading">Match stats</h3>
+
+    <h4 class="match-stats__caption">Goal attempts</h4>
+    <dl class="match-stats goal-attempts u-cf">
+        <dt class="goal-attempts__label goal-attempts__label--off-target-home"><span class="u-h">@home.name </span>Off target</dt>
+        <dd class="goal-attempts__off-target goal-attempts__off-target--home" style="background-color: @ColourTools.darkenWhite(home.teamColour);">@home.shotsOff</dd>
+        <dt class="goal-attempts__label goal-attempts__label--off-target-away"><span class="u-h">@away.name </span>Off target</dt>
+        <dd class="goal-attempts__off-target goal-attempts__off-target--away" style="background-color: @ColourTools.darkenWhite(away.teamColour);">@away.shotsOff</dd>
+
+        <dt class="goal-attempts__label goal-attempts__label--on-target-home"><span class="u-h">@home.name </span>On target</dt>
+        <dd class="goal-attempts__on-target goal-attempts__on-target--home" style="background-color: @ColourTools.darkenWhite(home.teamColour);">@home.shotsOn</dd>
+        <dt class="goal-attempts__label goal-attempts__label--on-target-away"><span class="u-h">@away.name </span>On target</dt>
+        <dd class="goal-attempts__on-target goal-attempts__on-target--away" style="background-color: @ColourTools.darkenWhite(away.teamColour);">@away.shotsOn</dd>
+    </dl>
+
+    <dl class="u-cf match-stats bar-fight">
+        <dt class="match-stats__caption">Possession</dt>
+        @defining(PercentMaker(lineUp.homeTeamPossession, lineUp.awayTeamPossession)){ case (homePercent, awayPercent) =>
+            <dd class="bar-fight__bar bar-fight__bar--home" style="background-color: @ColourTools.darkenWhite(home.teamColour); width: @NudgePercent(homePercent, awayPercent)%;">@homePercent%</dd>
+            <dd class="bar-fight__bar bar-fight__bar--away" style="background-color: @ColourTools.darkenWhite(away.teamColour); width: @NudgePercent(awayPercent, homePercent)%;">@awayPercent%</dd>
+        }
+        <dt class="match-stats__caption">Corners</dt>
+        @defining(PercentMaker(home.corners, away.corners)){ case (homePercent, awayPercent) =>
+            <dd class="bar-fight__bar bar-fight__bar--home" style="background-color: @ColourTools.darkenWhite(home.teamColour); width: @NudgePercent(homePercent, awayPercent)%;">@home.corners</dd>
+            <dd class="bar-fight__bar bar-fight__bar--away" style="background-color: @ColourTools.darkenWhite(away.teamColour); width: @NudgePercent(awayPercent, homePercent)%;">@away.corners</dd>
+        }
+        <dt class="match-stats__caption">Fouls</dt>
+        @defining(PercentMaker(home.fouls, away.fouls)){ case (homePercent, awayPercent) =>
+            <dd class="bar-fight__bar bar-fight__bar--home" style="background-color: @ColourTools.darkenWhite(home.teamColour); width: @NudgePercent(homePercent, awayPercent)%;">@home.fouls</dd>
+            <dd class="bar-fight__bar bar-fight__bar--away" style="background-color: @ColourTools.darkenWhite(away.teamColour); width: @NudgePercent(awayPercent, homePercent)%;">@away.fouls</dd>
+        }
+
+        <dt class="match-stats__caption">Offsides</dt>
+        @defining(PercentMaker(home.offsides, away.offsides)){ case (homePercent, awayPercent) =>
+            <dd class="bar-fight__bar bar-fight__bar--home" style="background-color: @ColourTools.darkenWhite(home.teamColour); width: @NudgePercent(homePercent, awayPercent)%;">@home.offsides</dd>
+            <dd class="bar-fight__bar bar-fight__bar--away" style="background-color: @ColourTools.darkenWhite(away.teamColour); width: @NudgePercent(awayPercent, homePercent)%;">@away.offsides</dd>
+        }
+    </dl>
+</div>
+}

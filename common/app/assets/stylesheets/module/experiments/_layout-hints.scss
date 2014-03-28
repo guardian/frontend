@@ -27,11 +27,13 @@
     font-style: normal;
     color: $c-neutral2;
 
-    &:before {
-        display: block;
-        content: ' ';
-        @extend %i;
-        @extend %i-quote-blue;
+    @if ($svg-support) {
+        &:before {
+            content: '';
+            display: block;
+            @extend %i-quote-blue;
+            @extend %svg-i-quote-blue;
+        }
     }
 }
 
@@ -57,37 +59,6 @@ figure {
 
 .layout-hints {
 
-    @include mq(leftCol) {
-
-        .element-interactive,
-        .element-video {
-            position: relative;
-            @include deport-left;
-            figcaption { background: #ffffff; }
-        }
-
-        .element-image {
-            position: relative;
-            @include deport-left;
-            @include fs-data(3, true);
-            figcaption {
-                padding-left: 0;
-                background: #ffffff;
-            }
-        }
-
-        figcaption {
-            position: absolute;
-            top: 100%;
-            padding-left: 0;
-            padding-top: $gs-baseline;
-            @include reduce-left;
-
-            &:before { display: none; }
-        }
-
-    }
-
     &.rescue-from-antarctica {
 
         .element-video__wrap { padding-top: 0; }
@@ -104,6 +75,33 @@ figure {
             }
             .media-primary { display: none; }
             .media-primary--full-width { display: block; }
+
+            .element-interactive,
+            .element-video {
+              position: relative;
+              @include deport-left;
+              figcaption { background: #ffffff; }
+            }
+
+            .element-image {
+              position: relative;
+              @include deport-left;
+              @include fs-data(3, true);
+              figcaption {
+                padding-left: 0;
+                background: #ffffff;
+              }
+            }
+
+            figcaption {
+              position: absolute;
+              top: 100%;
+              padding-left: 0;
+              padding-top: $gs-baseline;
+              @include reduce-left;
+
+              &:before { display: none; }
+            }
         }
     }
 }

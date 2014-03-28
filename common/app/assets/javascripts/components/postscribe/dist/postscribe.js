@@ -1,7 +1,5 @@
-/* Asynchronously write javascript, even with document.write., v1.1.2 https://github.com/krux/postscribe
-Copyright (c) 2013 Derek Brans, MIT license https://github.com/krux/postscribe/blob/master/LICENSE */
-
-// An html parser written in JavaScript
+/* Asynchronously write javascript, even with document.write., v1.2.0 https://krux.github.io/postscribe
+Copyright (c) 2014 Derek Brans, MIT license https://github.com/krux/postscribe/blob/master/LICENSE */// An html parser written in JavaScript
 // Based on http://ejohn.org/blog/pure-javascript-html-parser/
 
 (function() {
@@ -359,11 +357,11 @@ Copyright (c) 2013 Derek Brans, MIT license https://github.com/krux/postscribe/b
   this.htmlParser = htmlParser;
 })();
 
-//     postscribe.js 1.1.2
+//     postscribe.js 1.2.0
 //     (c) Copyright 2012 to the present, Krux
 //     postscribe is freely distributable under the MIT license.
 //     For all details and documentation:
-//     http://krux.github.com/postscribe
+//     http://krux.github.io/postscribe
 
 
 (function() {
@@ -373,9 +371,6 @@ Copyright (c) 2013 Derek Brans, MIT license https://github.com/krux/postscribe/b
   if(global.postscribe) {
     return;
   }
-
-  // Debug write tasks.
-  var DEBUG = true;
 
   // Turn on to debug how each chunk affected the DOM.
   var DEBUG_CHUNK = false;
@@ -625,7 +620,7 @@ Copyright (c) 2013 Derek Brans, MIT license https://github.com/krux/postscribe/b
               proxy.push(
                 // ignore atomic tags (e.g., style): they have no "structural" effect
                 tok.type === 'atomicTag' ? '' :
-                  '<'+tok.tagName+' '+BASEATTR+'proxyof='+id+(tok.unary ? '/>' : '>')
+                  '<'+tok.tagName+' '+BASEATTR+'proxyof='+id+(tok.unary ? ' />' : '>')
               );
             }
           }
@@ -739,16 +734,21 @@ Copyright (c) 2013 Derek Brans, MIT license https://github.com/krux/postscribe/b
     // Done is called once script has executed.
     WriteStream.prototype.writeScriptToken = function(tok, done) {
       var el = this.buildScript(tok);
+      var asyncRelease = this.shouldRelease(el);
+      var afterAsync = this.options.afterAsync;
 
       if(tok.src) {
         // Fix for attribute "SRC" (capitalized). IE does not recognize it.
         el.src = tok.src;
-        this.scriptLoadHandler(el, done);
+        this.scriptLoadHandler(el, !asyncRelease ? function() {
+          done();
+          afterAsync();
+        } : afterAsync);
       }
 
       try {
         this.insertScript(el);
-        if(!tok.src) {
+        if(!tok.src || asyncRelease) {
           done();
         }
       } catch(e) {
@@ -815,12 +815,14 @@ Copyright (c) 2013 Derek Brans, MIT license https://github.com/krux/postscribe/b
       });
     };
 
+    WriteStream.prototype.shouldRelease = function(el) {
+      var isScript = /^script$/i.test(el.nodeName);
+      return !isScript || !!(this.options.releaseAsync && el.src && el.hasAttribute('async'));
+    };
+
     return WriteStream;
 
   }());
-
-
-
 
 
 
@@ -859,7 +861,14 @@ Copyright (c) 2013 Derek Brans, MIT license https://github.com/krux/postscribe/b
         options.afterWrite(str);
       }
 
-      set(doc, { write: write, writeln: function(str) { write(str + '\n'); } });
+      set(doc, {
+        write: function(){
+          return write(toArray(arguments).join(''));
+        },
+        writeln: function() {
+          return write(toArray(arguments).join('') + '\n');
+        }
+      });
 
       // Override window.onerror
       var oldOnError = active.win.onerror || doNothing;
@@ -893,6 +902,8 @@ Copyright (c) 2013 Derek Brans, MIT license https://github.com/krux/postscribe/b
         options = { done: options };
       }
       options = defaults(options, {
+        releaseAsync: false,
+        afterAsync: doNothing,
         done: doNothing,
         error: function(e) { throw e; },
         beforeWrite: function(str) { return str; },

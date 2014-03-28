@@ -10,18 +10,19 @@ import org.scala_tools.time.Imports._
 import pa.FootballMatch
 import implicits.{ Requests, Football }
 
-import concurrent.Future
+import scala.concurrent.Future
 import conf.ContentApiDoNotUseForNewQueries
 
 case class Report(trail: Trail, name: String)
 
 case class MatchNav(theMatch: FootballMatch, matchReport: Option[Trail],
-    minByMin: Option[Trail], stats: Trail, currentPage: Option[Trail]) {
+    minByMin: Option[Trail], preview: Option[Trail], stats: Trail, currentPage: Option[Trail]) {
 
   // do not count stats as a report (stats will always be there)
-  lazy val hasReports = hasReport || hasMinByMin
+  lazy val hasReports = hasReport || hasMinByMin || hasPreview
   lazy val hasMinByMin = minByMin.isDefined
   lazy val hasReport = matchReport.isDefined
+  lazy val hasPreview = preview.isDefined
 }
 
 object MoreOnMatchController extends Controller with Football with Requests with Logging with ExecutionContexts {
@@ -37,16 +38,20 @@ object MoreOnMatchController extends Controller with Football with Requests with
     val maybeResponse: Option[Future[SimpleResult]] = Competitions().matchFor(interval, team1, team2) map { theMatch =>
       val related: Future[Seq[Content]] = loadMoreOn(request, theMatch)
       // We are only interested in content with exactly 2 team tags
-      related map { _ filter hasExactlyTwoTeams } map {
-        case Nil => JsonNotFound()
-        case filtered => JsonComponent(
-          "nav" -> football.views.html.fragments.matchNav(populateNavModel(theMatch, filtered))
-        )
+
+    related map { _ filter hasExactlyTwoTeams } map {
+        case Nil => Cached(300){JsonNotFound()}
+        case filtered => Cached(if(theMatch.isLive) 10 else 300) {
+          JsonComponent(
+            "nav" -> football.views.html.fragments.matchNav(populateNavModel(theMatch, filtered)),
+            "matchSummary" -> football.views.html.fragments.matchSummary(theMatch),
+            "scoreSummary" -> football.views.html.fragments.scoreSummary(theMatch)
+          )
+        }
       }
     }
 
-    val response = maybeResponse.getOrElse(Future { JsonNotFound() })
-    response map { Cached(300) }
+    maybeResponse.getOrElse(Future.successful(Cached(300){ JsonNotFound() }))
   }
 
   def moreOnJson(matchId: String) = moreOn(matchId)
@@ -75,7 +80,7 @@ object MoreOnMatchController extends Controller with Football with Requests with
     // TODO search by reference does not work in new content api
     ContentApiDoNotUseForNewQueries.search(Edition(request))
       .section("football")
-      .tag("tone/matchreports|football/series/squad-sheets|football/series/saturday-clockwatch")
+      .tag("tone/matchreports|football/series/squad-sheets|football/series/match-previews|football/series/saturday-clockwatch")
       .fromDate(matchDate.minusDays(2))
       .toDate(matchDate.plusDays(2))
       .reference(s"pa-football-team/${theMatch.homeTeam.id},pa-football-team/${theMatch.awayTeam.id}")
@@ -89,14 +94,15 @@ object MoreOnMatchController extends Controller with Football with Requests with
 
   private def populateNavModel(theMatch: FootballMatch, related: Seq[Content])(implicit request: RequestHeader) = {
     val matchDate = theMatch.date.toDateMidnight
-    val matchReport = related.find { c => c.webPublicationDate >= matchDate && c.matchReport && !c.minByMin }
-    val minByMin = related.find { c => c.webPublicationDate.toDateMidnight == matchDate && c.matchReport && c.minByMin }
+    val matchReport = related.find { c => c.webPublicationDate >= matchDate && c.matchReport && !c.minByMin && !c.preview }
+    val minByMin = related.find { c => c.webPublicationDate.toDateMidnight == matchDate && c.matchReport && c.minByMin && !c.preview }
+    val preview = related.find { c => c.webPublicationDate <= matchDate && (c.preview || c.squadSheet) && !c.matchReport && !c.minByMin }
     val stats: Trail = theMatch
 
     val currentPage = request.getParameter("page").flatMap { pageId =>
-      (stats :: List(matchReport, minByMin).flatten).find(_.url.endsWith(pageId))
+      (stats :: List(matchReport, minByMin, preview).flatten).find(_.url.endsWith(pageId))
     }
 
-    MatchNav(theMatch, matchReport, minByMin, stats, currentPage)
+    MatchNav(theMatch, matchReport, minByMin, preview, stats, currentPage)
   }
 }

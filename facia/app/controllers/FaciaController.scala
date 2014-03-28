@@ -3,18 +3,15 @@ package controllers
 import common._
 import front._
 import model._
-import conf._
 import play.api.mvc._
-import play.api.libs.json.{JsArray, Json}
-import Switches.EditionRedirectLoggingSwitch
+import play.api.libs.json.Json
 import views.support.{TemplateDeduping, NewsContainer}
 import scala.concurrent.Future
 import play.api.templates.Html
 
 
-class FaciaController extends Controller with Logging with ExecutionContexts {
+class FaciaController extends Controller with Logging with ExecutionContexts with implicits.Collections {
 
-  val front: Front = Front
   val EditionalisedKey = """^\w\w(/.*)?$""".r
 
   implicit def getTemplateDedupingInstance: TemplateDeduping = TemplateDeduping()
@@ -34,79 +31,61 @@ class FaciaController extends Controller with Logging with ExecutionContexts {
       case sectionFront => s"$editionBase/$sectionFront"
     }
 
-    if (EditionRedirectLoggingSwitch.isSwitchedOn) {
-      val country = request.headers.get("X-GU-GeoLocation").getOrElse("not set")
-      val editionCookie = request.headers.get("X-GU-Edition-From-Cookie").getOrElse("false")
-
-      log.info(s"Edition redirect: geolocation: $country | edition: ${edition.id} | edition cookie set: $editionCookie"  )
-    }
-
     Cached(60)(Redirect(redirectPath))
   }
 
   // Needed as aliases for reverse routing
-  def renderEditionFrontJson(path: String) = renderFront(path)
-  def renderEditionFront(path: String) = renderFront(path)
-  def renderEditionSectionFrontJson(path: String) = renderFront(path)
-  def renderEditionSectionFront(path: String) = renderFront(path)
-  def renderArbitraryFront(path: String) = renderFront(path)
-  def renderFrontJson(path: String) = renderFront(path)
+  def renderFrontRss(id: String) = renderFront(id)
+  def renderFrontJson(id: String) = renderFront(id)
+  def renderCollectionRss(id: String) = renderCollection(id)
+  def renderCollectionJson(id: String) = renderCollection(id)
 
-  def renderEditionCollection(id: String) = renderCollection(id)
-  def renderEditionCollectionJson(id: String) = renderCollection(id)
-
-  def renderFront(path: String) = DogpileAction { implicit request =>
-    Future{
-      val editionalisedPath = editionPath(path, Edition(request))
-
-      FrontPage(editionalisedPath).flatMap { frontPage =>
-
-      // get the trailblocks
-        val faciaPageOption: Option[FaciaPage] = front(editionalisedPath)
-        faciaPageOption map { faciaPage =>
-          Cached(frontPage) {
-            if (request.isJson)
-              JsonFront(frontPage, faciaPage)
-            else
-              Ok(views.html.front(frontPage, faciaPage))
-          }
-        }
-      }.getOrElse(Cached(60)(NotFound))
-    }
+  def renderFront(path: String) = {
+    log.info(s"Serving Path: $path")
+    if (!ConfigAgent.getPathIds.contains(path))
+      IndexController.render(path)
+    else
+      renderFrontPress(path)
   }
 
-  def renderFaciaPress(path: String) = DogpileAction { implicit request =>
+  def renderFrontPress(path: String) = Action.async { implicit request =>
 
-    FrontPage(path).map { frontPage =>
-      FrontJson.get(path).map(_.map{ faciaPage =>
+    val newPath = getPathForUkAlpha(path, request)
+
+    FrontPage(newPath).map { frontPage =>
+      FrontJson.get(newPath).map(_.map{ faciaPage =>
         Cached(frontPage) {
-          if (request.isJson) {
+          if (request.isRss)
+            Ok(TrailsToRss(frontPage, faciaPage.collections.map(_._2).flatMap(_.items).toSeq.distinctBy(_.id)))
+              .as("text/xml; charset=utf-8")
+          else if (request.isJson)
             JsonFront(frontPage, faciaPage)
-          }
           else
             Ok(views.html.front(frontPage, faciaPage))
         }
-
-      }.getOrElse(Cached(60)(NotFound("No Facia Page"))))
-    }.getOrElse(Future.successful(Cached(60)(NotFound("No Front Page"))))
+      }.getOrElse(Cached(60)(NotFound)))
+    }.getOrElse(Future.successful(Cached(60)(NotFound)))
 
   }
 
-  def renderCollection(id: String) = DogpileAction { implicit request =>
-    Future{
-      if (ConfigAgent.getAllCollectionIds.contains(id)) {
-        CollectionAgent.getCollection(id) map { collection =>
-          val html = views.html.fragments.collections.standard(Config(id), collection.items, NewsContainer(showMore = false), 1)
-          Cached(60) {
+  def renderCollection(id: String) = Action.async { implicit request =>
+    log.info(s"Serving collection ID: $id")
+    getPressedCollection(id).map { collectionOption =>
+      collectionOption.map { collection =>
+        Cached(60) {
+          if (request.isRss) {
+            val config: Config = ConfigAgent.getConfig(id).getOrElse(Config(""))
+            Ok(TrailsToRss(config.displayName, collection.items))
+              .as("text/xml; charset=utf-8")
+          } else {
+            val html = views.html.fragments.collections.standard(Config(id), collection.items, NewsContainer(showMore = false), 1)
             if (request.isJson)
               JsonCollection(html, collection)
             else
               Ok(html)
           }
-        } getOrElse ServiceUnavailable
-      }
-      else
-        Cached(60)(NotFound)
+        }
+      }.getOrElse(ServiceUnavailable)
     }
   }
 
@@ -124,21 +103,20 @@ class FaciaController extends Controller with Logging with ExecutionContexts {
     )
   }
 
-  def renderCollectionRss(id: String) = DogpileAction { implicit request =>
-    Future{
-      if (ConfigAgent.getAllCollectionIds.contains(id)) {
-        CollectionAgent.getCollection(id) map { collection =>
-          Cached(60) {
-            val config: Config = ConfigAgent.getConfig(id).getOrElse(Config(""))
-            Ok(TrailsToRss(config.displayName, collection.items))
-          }.as("text/xml; charset=utf-8")
-        } getOrElse ServiceUnavailable
-      }
-      else
-        Cached(60)(NotFound)
-    }
-  }
+  private def getPressedCollection(collectionId: String): Future[Option[Collection]] =
+    ConfigAgent.getConfigsUsingCollectionId(collectionId).headOption.map { path =>
+      FrontJson.get(path).map(_.flatMap{ faciaPage =>
+        faciaPage.collections.find{ case (c, col) => c.id == collectionId}.map(_._2)
+      })
+    }.getOrElse(Future.successful(None))
 
+  private def getPathForUkAlpha(path: String, request: RequestHeader): String =
+    Seq("uk", "us", "au").find { page =>
+      path == page &&
+        request.headers.get(s"X-Gu-Front-Alphas").exists(_.toLowerCase == "true")
+    }.map{ page =>
+      s"$page-alpha"
+    }.getOrElse(path)
 }
 
 object FaciaController extends FaciaController

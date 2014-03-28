@@ -2,10 +2,10 @@
    ========================================================================== */
 
 @if $old-ie {
-   // IE 8 won't display webfonts in password fields…
-   [type=password] {
-      font-family: sans-serif !important;
-   }
+    // IE 8 won't display webfonts in password fields…
+    [type=password] {
+        font-family: sans-serif !important;
+    }
 }
 
 .form {
@@ -117,7 +117,7 @@
 }
 
 .label {
-    color: #333;
+    color: $c-neutral1;
     cursor: pointer;
     display: block;
     font-size: 16px;
@@ -131,7 +131,7 @@
     border: 1px solid $c-neutral4;
     @include box-shadow(none);
     @include box-sizing(border-box);
-    color: #545454;
+    color: $c-body;
     display: inline-block;
     font-family: $sans-serif;
     font-size: 16px;
@@ -169,7 +169,7 @@
 .submit-input {
     background: $c-newsDefault;
     border: 0 none;
-    color: #fff;
+    color: #ffffff;
     cursor: pointer;
     display: inline-block;
     font-size: 14px;
@@ -186,7 +186,7 @@
     }
 
     &:active {
-        background: #000;
+        background: #000000;
     }
 }
 

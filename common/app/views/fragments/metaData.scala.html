@@ -1,4 +1,4 @@
-@(item: MetaData)(implicit request: RequestHeader)
+@(item: model.MetaData)(implicit request: RequestHeader)
 @import common._
 @import model._
 @import conf._
@@ -27,8 +27,10 @@
     <link rel="dns-prefetch" href="//oas.theguardian.com" />
     <link rel="dns-prefetch" href="//beacon.www.theguardian.com" />
 
-    @* http://www.chromium.org/spdy/link-headers-and-server-hint/link-rel-subresource *@
-    <link rel="subresource" href="@Static("javascripts/bootstraps/app.js")" />
+    @item.pagination.map{ pagination =>
+        @pagination.next.map{ next => <link rel="next" href="@LinkTo(item.url)?page=@next" /> }
+        @pagination.previous.map{ prev => <link rel="prev" href="@LinkTo(item.url)@if(prev != 1){?page=@prev}" /> }
+    }
 
     <meta name="application-name" content="The Guardian" />
     <meta name="msapplication-TileColor" content="#004983" />
@@ -39,14 +41,18 @@
     <meta name="HandheldFriendly" content="True" />
 
     @item.contributors.map{ contributor =>
-        <meta name="author" content="@contributor.name">
+        <meta name="author" content="@contributor.name" />
+    }
+
+    @item.description.map { description =>
+        <meta name="description" content="@description" />
     }
 
     @* https://support.google.com/news/publisher/answer/68297?hl=en-GB *@
     @if(item.keywords.nonEmpty) {
         @defining(item.keywords.map(_.name).mkString(",")){ keywords =>
-            <meta name="keywords" content="@keywords">
-            <meta name="news_keywords" content="@keywords">
+            <meta name="keywords" content="@keywords" />
+            <meta name="news_keywords" content="@keywords" />
         }
     }
 

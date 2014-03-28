@@ -28,7 +28,7 @@ define([
      */
     function Omniture(s, w) {
 
-        var storagePrefix = "gu.analytics.",
+        var storagePrefix = 'gu.analytics.',
             config,
             that = this;
 
@@ -42,11 +42,11 @@ define([
         };
 
         this.logUpdate = function() {
-            s.linkTrackVars="events,eVar7";
-            s.linkTrackEvents="event90";
-            s.events="event90";
+            s.linkTrackVars='events,eVar7';
+            s.linkTrackEvents='event90';
+            s.events='event90';
             s.eVar7=config.page.analyticsName;
-            s.tl(true,'o',"AutoUpdate Refresh");
+            s.tl(true,'o','AutoUpdate Refresh');
         };
 
         this.logTag = function(spec) {
@@ -73,10 +73,14 @@ define([
         };
 
         this.populateEventProperties = function(tag){
-            s.linkTrackVars = 'eVar37,events';
+            s.linkTrackVars = 'eVar37,eVar7,prop37,events';
             s.linkTrackEvents = 'event37';
             s.events = 'event37';
             s.eVar37 = (config.page.contentType) ? config.page.contentType + ':' + tag : tag;
+
+            // this allows 'live' Omniture tracking of Navigation Interactions
+            s.eVar7 = 'D=pageName';
+            s.prop37 = 'D=v37';
         };
 
         // used where we don't have an element to pass as a tag
@@ -92,26 +96,26 @@ define([
         this.populatePageProperties = function() {
 
             // http://www.scribd.com/doc/42029685/15/cookieDomainPeriods
-            s.cookieDomainPeriods = "2";
+            s.cookieDomainPeriods = '2';
 
             s.linkInternalFilters += ',localhost,gucode.co.uk,gucode.com,guardiannews.com,int.gnl,proxylocal.com,theguardian.com';
 
-            s.trackingServer="hits.theguardian.com";
-            s.trackingServerSecure="hits-secure.theguardian.com";
+            s.trackingServer='hits.theguardian.com';
+            s.trackingServerSecure='hits-secure.theguardian.com';
 
-            s.ce= "UTF-8";
+            s.ce= 'UTF-8';
             s.pageName  = config.page.analyticsName;
 
             s.prop1     = config.page.headline || '';
 
             if(id.getUserFromCookie()) {
-                s.prop2 = "GUID:" + id.getUserFromCookie().id;
-                s.eVar2 = "GUID:" + id.getUserFromCookie().id;
+                s.prop2 = 'GUID:' + id.getUserFromCookie().id;
+                s.eVar2 = 'GUID:' + id.getUserFromCookie().id;
             }
 
             s.prop3     = config.page.publication || '';
 
-            s.channel = config.page.contentType === "Network Front" ? "Network Front" : config.page.section || '';
+            s.channel = config.page.contentType === 'Network Front' ? 'Network Front' : config.page.section || '';
             s.prop9     = config.page.contentType || '';  //contentType
 
             s.prop4     = config.page.keywords || '';
@@ -126,12 +130,12 @@ define([
 
             s.prop14    = config.page.buildNumber || '';
 
-            var platform = "frontend";
+            var platform = 'frontend';
             s.prop19     = platform;
             s.eVar19     = platform;
 
-            s.prop31    = id.getUserFromCookie() ? "registered user" : "guest user";
-            s.eVar31    = id.getUserFromCookie() ? "registered user" : "guest user";
+            s.prop31    = id.getUserFromCookie() ? 'registered user' : 'guest user';
+            s.eVar31    = id.getUserFromCookie() ? 'registered user' : 'guest user';
 
             s.prop47    = config.page.edition || '';
 
@@ -143,14 +147,14 @@ define([
             var alphaTag = 'notAlpha,';
 
             // prefix all the MVT tests with the alpha user tag if present
-            if (Cookies.get('GU_ALPHA') === "2") {
+            if (Cookies.get('GU_ALPHA') === '2') {
                 // This tag allows us to easily segment phase one, phase two, or phase one and two.
                 alphaTag = 'r2alph2,';
 
                 s.prop51  = alphaTag + s.prop51;
                 s.eVar51  = alphaTag + s.eVar51;
 
-            } else if (Cookies.get('GU_ALPHA') === "true") {
+            } else if (Cookies.get('GU_ALPHA') === 'true') {
                 // A value of true means phase one.
                 alphaTag = 'r2alpha,';
 
@@ -174,12 +178,12 @@ define([
                 s.events = s.apl(s.events,'event46',',');
             }
 
-            if (config.page.section === "identity")  {
+            if (config.page.section === 'identity')  {
                 s.prop11 = 'Users';
-                s.prop9 = "userid";
+                s.prop9 = 'userid';
                 s.eVar27 = config.page.omnitureErrorMessage || '';
                 s.eVar42 = config.page.returnUrl || '';
-                s.hier2="GU/Users/Registration";
+                s.hier2='GU/Users/Registration';
                 s.events = s.apl(s.events, config.page.omnitureEvent, ',');
             }
 
@@ -187,7 +191,7 @@ define([
 
             s.prop65    = config.page.headline || '';
 
-            s.prop67    = "nextgen-served";
+            s.prop67    = 'nextgen-served';
 
             s.prop68    = detect.getConnectionSpeed(w.performance, null, true);
 
@@ -219,7 +223,11 @@ define([
                 if (d - ni.time < 60 * 1000) { // One minute
                     s.eVar24 = ni.pageName;
                     s.eVar37 = ni.tag;
-                    s.events   = 'event37';
+                    s.events = 'event37';
+
+                    // this allows 'live' Omniture tracking of Navigation Interactions
+                    s.eVar7 = ni.pageName;
+                    s.prop37 = ni.tag;
                 }
                 storage.session.remove('gu.analytics.referrerVars');
             }
@@ -283,7 +291,7 @@ define([
         common.mediator.on('module:analytics:omniture:pageview:sent', function(){
             // independently log this page view
             // used for checking we have not broken analytics
-            beacon.fire("/count/pva.gif");
+            beacon.fire('/count/pva.gif');
         });
 
     }

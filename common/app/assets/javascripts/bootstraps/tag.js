@@ -1,26 +1,17 @@
 define([
     'common/utils/mediator',
-    'common/modules/onward/popular-fronts',
-    'common/modules/sport/cricket'
+    'common/modules/onward/popular-fronts'
 ], function (
     mediator,
-    popular,
-    cricket
+    popular
 ) {
     var modules = {
 
         showPopular: function () {
-            mediator.on('page:tag:ready', function(config, context) {
+            mediator.on('page:tag:ready', function(config) {
                 popular.render(config);
             });
-        },
-
-        showCricket: function() {
-            mediator.on('page:tag:ready', function(config, context) {
-                cricket.cricketTrail(config, context);
-            });
         }
-
     };
 
     var ready = function (config, context) {

@@ -12,14 +12,6 @@ class Front extends Logging {
     if (editions.contains(sectionId)) "" else sectionId
   }
 
-  def refreshCollections(): Unit = ConfigAgent.getAllCollectionIds.foreach { collectionId => CollectionAgent.updateCollectionById(collectionId, isWarmedUp=false) }
-
-  def refreshJobs() = Seq(() => {
-      ConfigAgent.refresh()}
-  ) ++ ConfigAgent.getAllCollectionIds.map{ collectionId => () => CollectionAgent.updateCollectionById(collectionId) }
-
-  def apply(path: String): Option[FaciaPage] = QueryAgents(path)
-
 }
 
 object Front extends Front

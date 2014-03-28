@@ -27,6 +27,10 @@ define([
                     EffectiveMeasure.load();
                 }
 
+                if (config.switches.imrWorldwide) {
+                    IMRWorldwide.load();
+                }
+
                 break;
 
             default:

@@ -1,4 +1,3 @@
-/* global _: true */
 define([
     'modules/vars',
     'modules/authed-ajax',
@@ -16,7 +15,7 @@ define([
         })
         .fail(function () {
             if(terminateOnFail) {
-                terminate("the switches are invalid or unvailable");
+                terminate('the switches are invalid or unvailable');
             }
             deferred.reject();
         })

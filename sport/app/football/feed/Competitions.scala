@@ -103,17 +103,17 @@ trait Competitions extends LiveMatches with Logging with implicits.Collections w
     Competition("103", "/football/leaguetwofootball", "League Two", "League Two", "English", showInTeamsList = true, tableDividers = List(3, 7, 22)),
     Competition("400", "/football/community-shield", "Community Shield", "Community Shield", "English", showInTeamsList = true),
     Competition("120", "/football/scottish-premiership", "Scottish Premier League", "Scottish Premier League", "Scottish", showInTeamsList = true, tableDividers = List(1, 3, 6, 11)),
-    Competition("121", "/football/scottish-division-one", "Scottish Division One", "Scottish Division One", "Scottish", showInTeamsList = true, tableDividers = List(1, 8, 9)),
-    Competition("122", "/football/scottish-division-two", "Scottish Division Two", "Scottish Division Two", "Scottish", showInTeamsList = true, tableDividers = List(1, 4, 8, 9)),
-    Competition("123", "/football/scottish-division-three", "Scottish Division Three", "Scottish Division Three", "Scottish", showInTeamsList = true, tableDividers = List(1, 4)),
+    Competition("121", "/football/scottish-championship", "Scottish Championship", "Scottish Championship", "Scottish", showInTeamsList = true, tableDividers = List(1, 8, 9)),
+    Competition("122", "/football/scottish-league-one", "Scottish League One", "Scottish League One", "Scottish", showInTeamsList = true, tableDividers = List(1, 4, 8, 9)),
+    Competition("123", "/football/scottish-league-two", "Scottish League Two", "Scottish League Two", "Scottish", showInTeamsList = true, tableDividers = List(1, 4)),
     Competition("320", "/football/scottishcup", "Scottish Cup", "Scottish Cup", "Scottish"),
     Competition("321", "/football/cis-insurance-cup", "Scottish League Cup", "Scottish League Cup", "Scottish"),
     Competition("701", "/football/world-cup-2014-qualifiers", "World Cup 2014 qualifiers", "World Cup 2014 qualifiers", "Internationals"),
     Competition("721", "/football/friendlies", "International friendlies", "Friendlies", "Internationals"),
-    Competition("650", "/football/laligafootball", "La Liga", "La Liga", "European", showInTeamsList = true),
-    Competition("620", "/football/ligue1football", "Ligue 1", "Ligue 1", "European", showInTeamsList = true),
+    Competition("650", "/football/laligafootball", "La Liga", "La Liga", "European", showInTeamsList = true, tableDividers = List(4, 6, 17)),
+    Competition("620", "/football/ligue1football", "Ligue 1", "Ligue 1", "European", showInTeamsList = true, tableDividers = List(3, 4, 17)),
     Competition("625", "/football/bundesligafootball", "Bundesliga", "Bundesliga", "European", showInTeamsList = true, tableDividers = List(3, 4, 6, 15, 16)),
-    Competition("635", "/football/serieafootball", "Serie A", "Serie A", "European", showInTeamsList = true)
+    Competition("635", "/football/serieafootball", "Serie A", "Serie A", "European", showInTeamsList = true, tableDividers = List(3, 5, 17))
   )
 
   val competitionAgents = competitionDefinitions map { CompetitionAgent(_) }

@@ -1,14 +1,14 @@
 define([
-    "common/utils/ajax",
-    "bonzo",
-    "common/common",
-    "common/modules/identity/api",
-    "common/modules/identity/facebook-authorizer",
-    "common/modules/navigation/profile",
-    "common/utils/storage",
-    "common/modules/userPrefs",
-    "common/utils/time",
-    "common/modules/ui/message"
+    'common/utils/ajax',
+    'bonzo',
+    'common/common',
+    'common/modules/identity/api',
+    'common/modules/identity/facebook-authorizer',
+    'common/modules/navigation/profile',
+    'common/utils/storage',
+    'common/modules/userPrefs',
+    'common/utils/time',
+    'common/modules/ui/message'
 ],
 function(
     ajax,
@@ -68,7 +68,7 @@ function(
                 },
                 success: function(response) {
                     self.welcome(name);
-                    if(response.status === "ok") {
+                    if(response.status === 'ok') {
                         var profile = new Profile(
                             self.header,{
                             url: self.config.page.idUrl
@@ -81,10 +81,10 @@ function(
 
         this.welcome = function(name) {
             var msg = '<p class="site-message__message">' +
-                          'Welcome ' + name + ", you're signed into the Guardian using Facebook, or " +
+                          'Welcome ' + name + ', you\'re signed into the Guardian using Facebook, or ' +
                           '<a href="' + self.config.page.idUrl + '/signout"/>sign out</a>.' +
-                      '</p>',
-                fbMessage = new Message('fbauto', { important: true }).show(msg);
+                      '</p>';
+            new Message('fbauto', { important: true }).show(msg);
         };
     }
     return AutoSignin;

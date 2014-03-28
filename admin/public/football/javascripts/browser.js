@@ -150,14 +150,31 @@ jQuery(function($){
         var select = this.elements.team;
         window.location = '/team/images/'+ select.options[select.selectedIndex].value;
     });
+
+    $('.foot-autocomplete').footAutocomplete();
 });
 
 // autocomplete
-$.widget('custom.fautocomplete', $.ui.autocomplete, {
-    _renderItem: function(ul, item) {
-        return $('<li>')
-            .attr('data-id', item.id)
-            .append($('<a>').text( item.value ))
-            .appendTo(ul);
+$.widget('custom.footAutocomplete', {
+    _create: function() {
+        var self = this;
+        $('<input type="text" class="fautocomplete__input form-control" />').autocomplete({
+            delay: 0,
+            _renderItem: function(ul, item) {
+                return $('<li>')
+                    .attr('data-id', item.id)
+                    .append($('<a>').text( item.value ))
+                    .appendTo(ul);
+            },
+            source: self.element.find('option')
+                .filter(function(i, o) { return o.value; })
+                .map(function(i, o) { return { id: o.value, value: o.innerHTML }; })
+                .toArray(),
+
+            select: function(event, ui) {
+                self.element.val(ui.item.id);
+                $('#focus-on-team').attr('checked', 'checked');
+            }
+        }).insertBefore(this.element.hide());
     }
 });

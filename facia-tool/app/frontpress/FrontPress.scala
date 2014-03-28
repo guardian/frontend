@@ -24,7 +24,7 @@ trait FrontPress extends Logging {
     editorsPicks: Seq[JsValue],
     mostViewed:   Seq[JsValue],
     results:      Seq[JsValue],
-    lastModified: Option[String],
+    lastUpdated:  Option[String],
     updatedBy:    Option[String],
     updatedEmail: Option[String],
     groups:       Option[Seq[String]],
@@ -86,7 +86,7 @@ trait FrontPress extends Logging {
         editorsPicks   = collection.editorsPicks.map(generateTrailJson),
         mostViewed     = collection.mostViewed.map(generateTrailJson),
         results        = collection.results.map(generateTrailJson),
-        lastModified   = collection.lastUpdated,
+        lastUpdated    = collection.lastUpdated,
         updatedBy      = collection.updatedBy,
         updatedEmail   = collection.updatedEmail,
         groups         = Option(config.groups).filter(_.nonEmpty),
@@ -147,11 +147,9 @@ trait FrontPress extends Logging {
       "mimeType" -> asset.mimeType,
       "file" -> asset.file,
       "typeData" -> Json.obj(
-        ("source", asset.typeData.get("source")),
-        //("altText", a.typeData.get("altText")),
         ("height", asset.typeData.get("height")),
-        //("credit", a.typeData.get("credit")),
-        //("caption", a.typeData.get("caption")),
+        ("credit", asset.typeData.get("credit")),
+        ("caption", asset.typeData.get("caption")),
         ("width", asset.typeData.get("width"))
       )
     )

@@ -9,6 +9,7 @@ define(['knockout'], function(ko) {
             'news/special',
             'news/sport',
             'features',
+            'features/multimedia',
             'features/section',
             'comment',
             'comment/comment-and-debate',
@@ -17,12 +18,12 @@ define(['knockout'], function(ko) {
 
         maxFronts: 100,
 
-        groups: ["standard,big,very big,huge"],
+        groups: ['standard,big,very big,huge'],
 
         viewer: 'http://s3-eu-west-1.amazonaws.com/facia/responsive-viewer.html',
         filterTypes: {
-            section: { display: 'in section:', param: "section", path: "sections", placeholder: "e.g. news" },
-            tag:     { display: 'with tag:',   param: "tag",     path: "tags",     placeholder: "e.g. sport/triathlon" }
+            section: { display: 'in section:', param: 'section', path: 'sections', placeholder: 'e.g. news' },
+            tag:     { display: 'with tag:',   param: 'tag',     path: 'tags',     placeholder: 'e.g. sport/triathlon' }
         },
         searchPageSize:        50,
 

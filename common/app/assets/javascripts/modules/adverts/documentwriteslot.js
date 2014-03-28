@@ -1,4 +1,3 @@
-/*global OAS_RICH:true */
 define([
     'common/utils/mediator',
     'bonzo',
@@ -26,7 +25,7 @@ define([
             var slot = this.el;
             postscribe(slot, '<script>OAS_RICH("'+this.name+'")</script>');
             this.loaded = true;
-            bean.fire(slot, "ad-load");
+            bean.fire(slot, 'ad-load');
          } catch(e) {
              //Hide slot to prevent layout bugs
              var node = (this.name === 'Top2') ? this.el.parentNode.parentNode : this.el.parentNode;

@@ -5,16 +5,18 @@
     @defining(localNav.links.find(_.currentFor(metaData))){ currentSublink =>
 
 
-        <div class="localnav--small tone-news tone-accent-border is-hidden js-localnav--small">
+        <div class="localnav--small tone-@VisualTone(metaData) tone-accent-border js-visible js-localnav--small">
             <div class="localnav__inner u-cf">
-                <h1 class="localnav__title tone-colour">@Html(Navigation.sectionOverride(metaData, localNav, currentSublink))</h1>
-                <button class="cta localnav__cta control" data-link-name="Popup Localnav" data-toggle="nav-popup-localnav">
-                    <i class="i i-local-nav-arrow tone-background"></i>
+                <button class="u-button-reset localnav__cta" data-link-name="Popup Localnav" data-toggle="nav-popup--localnav">
+                    <span class="control tone-border">
+                        <i class="i i-local-nav-arrow tone-background"></i>
+                    </span>
                 </button>
+                <h1 class="localnav__title tone-colour">@Html(Navigation.sectionOverride(metaData, localNav, currentSublink))</h1>
             </div>
         </div>
 
-        <div class="nav-popup-localnav nav-popup nav-popup--small is-off">
+        <div class="nav-popup--localnav nav-popup nav-popup--small is-off">
             <ul class="nav nav--columns nav--top-border-off u-cf" data-link-name="Sub Sections">
                 @localNav.links.map{ link =>
                     <li class="nav__item @currentSublink.filter(_.href == link.href).map{ current => is-active }">

@@ -24,13 +24,13 @@ define(['bonzo'], function (bonzo) {
         this.variants = [
             {
                 id: 'control',
-                test: function (context, config) {
+                test: function (context) {
                     openInBodyLinksInSameWindow(context);
                 }
             },
             {
                 id: 'new-window',
-                test: function (context, config) {}
+                test: function () {}
             }
         ];
 

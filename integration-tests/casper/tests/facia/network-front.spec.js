@@ -1,4 +1,4 @@
-var container = '.container--sport',
+var container = 'section:nth-of-type(2)',
     button = container + ' .container__toggle';
 
 /**

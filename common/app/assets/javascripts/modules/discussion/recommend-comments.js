@@ -105,7 +105,7 @@ RecommendComments.recommendComment = function(id) {
 /**
  * @param {Object} resp
  */
-RecommendComments.success = function(resp) {
+RecommendComments.success = function() {
     mediator.emit(
         RecommendComments.getEvent('success'),
         {
@@ -121,9 +121,9 @@ RecommendComments.success = function(resp) {
  */
 RecommendComments.fail = function(xhr) {
     var resp = xhr.responseText !== 'NOT FOUND' && xhr.responseText !== '' ? JSON.parse(xhr.responseText) : {};
-    
+
     RecommendComments.renderRecommendation(this, true);
-    if (resp.errorCode === "CAN'T_RECOMMEND_SAME_COMMENT_TWICE") {
+    if (resp.errorCode === 'CAN\'T_RECOMMEND_SAME_COMMENT_TWICE') {
         this.className = this.className.replace(RecommendComments.CONFIG.classes.active, '');
         this.title = 'You cannot recommend the same comment twice';
     }
@@ -144,8 +144,7 @@ RecommendComments.fail = function(xhr) {
  * @param {Boolean=} unrecommend
  */
 RecommendComments.renderRecommendation = function(elem, unrecommend) {
-    var recommendCountElem = qwery('.'+ RecommendComments.CONFIG.classes.count, elem)[0],
-        currentCount = parseInt(elem.getAttribute('data-recommend-count'), 10),
+    var currentCount = parseInt(elem.getAttribute('data-recommend-count'), 10),
         newCount = !unrecommend ? currentCount+1 : currentCount-1;
 
     if (!unrecommend) {

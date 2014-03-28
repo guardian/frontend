@@ -1,7 +1,7 @@
 @(popular: model.MostPopular)(implicit request: RequestHeader)
 
-<div class="right-most-popular right-most-popular--image">
-    <h3 class="right-most-popular__title">Most popular</h3>
+<div class="right-most-popular right-most-popular--image" data-component="right-most-popular">
+    <h3 class="article__meta-heading">Most popular</h3>
     <ul class="right-most-popular__items u-unstyled" data-link-name="Right hand most popular">
         @popular.trails.take(5).zipWithRowInfo.map{ case(trail, row) =>
             <li class="right-most-popular-item" data-link-name="trail | @row.rowNum">

@@ -1,7 +1,7 @@
-.ad-slot {
+.ad-slot__oas {
     width: 100%;
     overflow-x: hidden;
-    padding: 10px 0 4px 0;
+    padding: ($gs-baseline/6)*5 0 ($gs-baseline/3) 0;
     text-align: center;
     min-height: 56px;
 
@@ -17,23 +17,21 @@
         margin: 0 auto;
     }
 
-    .ad-slot__label {
-        display: none;
-        @include box-sizing(border-box);
-        height: 34px;
-        background-color: $c-neutral8;
-        padding: 0 ($gs-baseline/3)*2;
-        border-top: 1px solid $c-neutral5;
-        color: $c-neutral2;
-        font-family: $sans-serif;
-        @include font-size(12, 20);
-        text-align: right;
-        -webkit-font-smoothing: antialiased;
-    }
-
     .no-js & {
         display: none;
     }
+}
+.ad-slot__label {
+    @include box-sizing(border-box);
+    height: $mpu-ad-label-height;
+    background-color: $c-neutral8;
+    padding: 0 ($gs-baseline/3)*2;
+    border-top: 1px solid $c-neutral5;
+    color: $c-neutral2;
+    font-family: $sans-serif;
+    @include font-size(12, 20);
+    text-align: right;
+    -webkit-font-smoothing: antialiased;
 }
 .ad-slot__inner {
     max-width: 100%;
@@ -47,26 +45,53 @@
 .top-banner-ad-container {
     min-height: 70px;
 
+    @include mq(tablet) {
+        @include rem((
+            padding-top: $gs-baseline/2,
+            padding-bottom: $gs-baseline/2
+        ));
+    }
     @include mq(faciaLeftCol) {
         @include rem((
             width: gs-span(14)
         ));
         margin: 0 auto;
     }
+    @include mq(desktopAd) {
+        min-height: 110px;
+    }
+}
+.ad-slot--mpu-in-row-pattern {
+    position: absolute;
+    left: 0;
+    right: 0;
+    @if $browser-supports-flexbox {
+        @include rem((
+            bottom: $mpu-align-offset
+        ));
+    } @else {
+        bottom: 0;
+    }
+    top: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    width: auto;
+    @include rem((
+        margin: 0 $gs-gutter/2
+    ));
+    background-color: $c-neutral8;
+
+    .ad-container {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+    }
 }
 .ad-slot--top-banner-ad {
     background-color: #f0f0f0;
 
-    @include mq($to: tablet) {
-        .ad-slot__label {
-            background-color: #f0f0f0;
-            height: auto;
-            border: none;
-        }
-    }
-
     @include mq(tablet) {
-        background-color: #ffffff;
+        background-color: transparent;
     }
 
     @include mq(faciaLeftCol) {
@@ -74,9 +99,30 @@
         margin-left: gs-span(2) + $gs-gutter;
         text-align: left;
     }
+
+    .ad-slot__label {
+        display: none;
+    }
 }
-.parts__head {
-    z-index: 1002;
+.top-banner-ad-container--above-header {
+    &,
+    .ad-slot {
+        display: none;
+
+        @include mq(desktop) {
+            display: block;
+        }
+    }
+}
+.top-banner-ad-container--below-header {
+    &,
+    .ad-slot {
+        display: block;
+
+        @include mq(desktop) {
+            display: none;
+        }
+    }
 }
 .mpu-context {
     // Provides context to sticky positioned blocks
@@ -118,8 +164,75 @@
     height: 250px;
     overflow: hidden;
 }
-.ad-slot--commercial-component {
+.ad-slot__commercial-component {
     width: 100%;
-    min-height: initial;
-    padding: 0 0 $gs-baseline 0;
+    min-height: 0;
+    @include rem((
+        margin-top: $gs-baseline*2
+    ));
+}
+
+
+
+.ad-slot__paid-for-badge {
+    width: 100%;
+    @include rem((
+        padding: ($gs-baseline / 2) 0,
+        margin: $gs-baseline 0
+    ));
+    border-top: 1px dotted $c-neutral5;
+    z-index: 1;
+    color: $c-neutral2;
+    text-align: left;
+    @include fs-data(2);
+
+    @include mq(tablet) {
+        border: none;
+    }
+
+    @include mq(rightCol) {
+        position: absolute;
+        @include rem((
+            top: $gs-baseline / 2,
+            max-width: 200px
+        ));
+        right: 0;
+        width: auto;
+        height: 100px;
+        margin: 0;
+    }
+
+    img {
+        padding-bottom: ($gs-baseline / 2);
+    }
+    a {
+        display: block;
+        float: left;
+    }
+}
+
+.ad-slot__paid-for-badge--fronts {
+    @include clearfix;
+
+    @include mq($from: tablet, $to: faciaLeftCol) {
+        margin-top: -$gs-row-height;
+        text-align: right;
+        float: none;
+    }
+
+    @include mq(rightCol) {
+        position: relative;
+        top: 0;
+    }
+
+    @include mq(faciaLeftCol) {
+        float: left;
+        clear: left;
+    }
+
+    @include mq(faciaLeftCol, wide) {
+        @include rem((
+            margin-top: $gs-baseline
+        ));
+    }
 }

@@ -17,17 +17,19 @@ define(['modules/vars'], function(vars) {
         var collections = [];
 
         _.each(edits, function(edit) {
-            edit.collection.setPending(true);
-            edit.id = edit.collection.id;
-            collections.push(edit.collection);
-            delete edit.collection;
+            if(_.isObject(edit)) {
+                edit.collection.setPending(true);
+                edit.id = edit.collection.id;
+                collections.push(edit.collection);
+                delete edit.collection;
+            }
         });
 
         return request({
             url: vars.CONST.apiBase + '/edits',
             type: 'POST',
             data: JSON.stringify(edits)
-        }).fail(function(xhr) {
+        }).fail(function() {
             _.each(collections, function(collection) { collection.load(); });
         }).done(function(resp) {
             _.each(collections, function(collection) { collection.populate(resp[collection.id]); });

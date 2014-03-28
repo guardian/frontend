@@ -1,14 +1,14 @@
 define([
     'common/$',
-    "bean",
-    "common/utils/mediator",
+    'bean',
+    'common/utils/mediator',
     'lodash/functions/debounce',
-    "common/utils/ajax",
-    "bonzo",
-    "qwery",
-    "common/utils/detect",
-    "common/utils/url",
-    "common/modules/ui/overlay"
+    'common/utils/ajax',
+    'bonzo',
+    'qwery',
+    'common/utils/detect',
+    'common/utils/url',
+    'common/modules/ui/overlay'
 ], function (
     $,
     bean,
@@ -35,7 +35,6 @@ define([
             isSwiping,
             slideshowActive,
             slideshowDelay = 5000, // in milliseconds
-            captionControlHeight = 35, // If the caption CTA is hidden, we can't read the height; so hardcoded it goes
             pushUrlChanges = true,
             originalImagesHtml, // Used to keep a copy of the markup, before Swipe rewrites it
             $navArrows,
@@ -47,42 +46,40 @@ define([
         this.init = function(opts) {
             self.opts = opts || {};
 
-            if (config.switches.lightboxGalleries || self.opts.overrideSwitch) {
-                // Apply tracking to links
-                $(self.selector + ' a', context).attr('data-is-ajax', '1');
+            // Apply tracking to links
+            $(self.selector + ' a', context).attr('data-is-ajax', '1');
 
-                bean.on(context, 'click', self.selector, function(e) {
-                    e.preventDefault();
+            bean.on(context, 'click', self.selector, function(e) {
+                e.preventDefault();
 
-                    var currentTarget = e.currentTarget,
-                        galleryUrl = $(currentTarget).attr('data-gallery-url');
-                    if (!galleryUrl) {
-                        var el = (currentTarget.nodeName === "A") ? currentTarget : currentTarget.querySelector('a');
-                        galleryUrl = el.getAttribute('href');
-                    }
-
-                    // Go to a specific image if it's in the query string. eg: index=3
-                    if (galleryUrl.indexOf('index=') !== -1) {
-                        var urlParams = url.getUrlVars({
-                            query: galleryUrl.split('?')[1]
-                        });
-                        currentImage = parseInt(urlParams.index, 10);
-                    }
-
-
-                    self.loadGallery({
-                        url: galleryUrl
-                    });
-                });
-
-                // Load gallery straight away if url contains a direct image link
-                var urlParams = url.getUrlVars();
-                if (urlParams.index) {
-                    this.loadGallery({
-                        url: '/' + config.page.pageId,
-                        startingImage: parseInt(urlParams.index, 10)
-                    });
+                var currentTarget = e.currentTarget,
+                    galleryUrl = $(currentTarget).attr('data-gallery-url');
+                if (!galleryUrl) {
+                    var el = (currentTarget.nodeName === 'A') ? currentTarget : currentTarget.querySelector('a');
+                    galleryUrl = el.getAttribute('href');
                 }
+
+                // Go to a specific image if it's in the query string. eg: index=3
+                if (galleryUrl.indexOf('index=') !== -1) {
+                    var urlParams = url.getUrlVars({
+                        query: galleryUrl.split('?')[1]
+                    });
+                    currentImage = parseInt(urlParams.index, 10);
+                }
+
+
+                self.loadGallery({
+                    url: galleryUrl
+                });
+            });
+
+            // Load gallery straight away if url contains a direct image link
+            var urlParams = url.getUrlVars();
+            if (urlParams.index) {
+                this.loadGallery({
+                    url: '/' + config.page.pageId,
+                    startingImage: parseInt(urlParams.index, 10)
+                });
             }
         };
 
@@ -284,7 +281,7 @@ define([
             overlay.toolbarNode.querySelector('.js-stop-slideshow').style.display  = 'none';
         };
 
-        this.removeOverlay = debounce(function(e){
+        this.removeOverlay = debounce(function(){
             // Needs a delay to give time for analytics to fire before DOM removal
             overlay.remove();
             return true;
@@ -331,8 +328,6 @@ define([
 
                 if (itemIndex === index) {
                     bonzo(el).addClass('gallery__item--active');
-
-                    self.alignNavArrows();
 
                     self.currentImageNode = el;
                 } else {
@@ -431,26 +426,18 @@ define([
 
             if (mode === 'fullimage') {
                 // Size all images to the height of the screen
-                $images.css({'height': contentHeight + 'px', 'width': 'auto'});
+                $images.css({'max-height': contentHeight + 'px', 'width': 'auto', 'max-width': '100%'});
                 $items.css('height', contentHeight+'px');
             } else {
                 // Lets the default stylesheets do the work here
                 $images.removeAttr('style');
                 $items.removeAttr('style');
             }
-
-            self.alignNavArrows();
         };
 
         this.jumpToContent = function() {
             window.scrollTo(0, overlay.headerNode.offsetHeight);
         };
-
-        this.alignNavArrows = function() {
-            // Match arrows to the height of image, minus height of the caption control to prevent overlap
-            $navArrows.css('height', ($images[currentImage-1].offsetHeight - captionControlHeight) + 'px');
-        };
-
 
         // Swipe methods
         this.setupSwipe = function() {
@@ -462,7 +449,7 @@ define([
                     startSlide: currentImage - 1,
                     speed: 200,
                     continuous: true,
-                    callback: function(index, elm) {
+                    callback: function(index) {
                         var swipeDir = (index + 1 > currentImage) ? 'next' : 'prev';
                         self.trackInteraction('Lightbox gallery swipe - ' + swipeDir);
 
@@ -477,7 +464,6 @@ define([
                     }
                 });
 
-                self.alignNavArrows();
                 swipeActive = true;
             });
         };

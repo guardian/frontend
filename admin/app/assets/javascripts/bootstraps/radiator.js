@@ -48,7 +48,7 @@ define([
 
                         var project = deploy.projectName;
                         var stage = deploy.stage;
-                        if (stage && !latestDeployments[stage].hasOwnProperty(project)) {
+                        if (stage && latestDeployments[stage] && !latestDeployments[stage].hasOwnProperty(project)) {
                             latestDeployments[stage][project] = deploy;
                         }
                     });
@@ -75,11 +75,21 @@ define([
                 function renderDeploys(stage, target) {
                     Object.keys(latestDeployments[stage]).forEach(function (deployment)  {
                         var d  = latestDeployments[stage][deployment];
+                        var nameAbbreviation = d.projectName.substr(10, 4) //start at 10 to drop 'frontend::'
                         var li = document.createElement('li');
                         li.className = d.status;
-                        li.innerHTML = d.projectName;
+                        li.innerHTML = nameAbbreviation;
                         li.setAttribute('title', d.projectName);
                         target.appendChild(li);
+
+                        if (latestDeployments["CODE"][deployment] && stage === "PROD" && d.status == "Completed") {
+                            var codeBuild = (latestDeployments["CODE"][deployment] || {}).build;
+                            if (codeBuild !== d.build){
+                                li.innerHTML = nameAbbreviation + " " + codeBuild;
+                                li.className = "Behind";
+                            }
+                        }
+
                         if(d.status !== "Completed"){
                             renderDeployer(stage, d.tags.vcsRevision, d.deployer);
                         }

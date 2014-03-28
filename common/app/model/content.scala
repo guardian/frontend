@@ -30,6 +30,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   lazy val isExpired = delegate.isExpired.getOrElse(false)
   lazy val blockVideoAds: Boolean = videoAssets.exists(_.blockVideoAds)
   lazy val isLiveBlog: Boolean = delegate.isLiveBlog
+  lazy val hasLargeContributorImage: Boolean = tags.filter(_.hasLargeContributorImage).nonEmpty
 
   // read this before modifying
   // https://developers.facebook.com/docs/opengraph/howtos/maximizing-distribution-media-content#images
@@ -50,6 +51,8 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
       None
     }
   }
+
+  lazy val isAdvertisementFeature: Boolean = tags.exists(_.id == "tone/advertisement-features")
 
   lazy val shouldHideAdverts: Boolean = fields.get("shouldHideAdverts").exists(_.toBoolean)
 
@@ -97,7 +100,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   }
 
   // Inherited from Tags
-  override lazy val tags: Seq[Tag] = delegate.tags map { Tag }
+  override lazy val tags: Seq[Tag] = delegate.tags map { Tag(_) }
 
   // Inherited from MetaData
   override lazy val id: String = delegate.id
@@ -131,7 +134,6 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   }
   override def openGraph: List[(String, Any)] = super.openGraph ++ List(
     "og:title" -> webTitle,
-    "og:url" -> webUrl,
     "og:description" -> trailText.map(StripHtmlTagsAndUnescapeEntities(_)).getOrElse("")
   )
 

@@ -1,20 +1,15 @@
 @(metaData: model.MetaData, projectName: Option[String] = Some(conf.Configuration.environment.projectName))(implicit request: RequestHeader)
 
 <!DOCTYPE html>
-<html class="js-off" lang="en-GB">
+<html lang="en-GB">
 <head>
     <meta charset="utf-8" />
     <title>@Html(metaData.webTitle)</title>
     @fragments.commonCssSetup(projectName)
-    @fragments.commonJavaScriptSetup(metaData)
 </head>
-<body id="top">
-
-    <div id="preload-1">
-        <h2 class="formstack-heading formstack-heading--first">Thank you for nominating</h2>
-        <p>Remember to keep an eye out for the reader voted shortlist in April. Winners will be announced at our awards ceremony in June.</p>
-        <p><a href="http://www.theguardian.com/observer-ethical-awards/nominate-now" target="_top">Nominate again</a>.</p>
-    </div>
-
+<body>
+    <h2 class="formstack-heading formstack-heading--first">Thank you for nominating</h2>
+    <p>Remember to keep an eye out for the reader voted shortlist in April. Winners will be announced at our awards ceremony in June.</p>
+    <p><a href="http://www.theguardian.com/observer-ethical-awards/nominate-now" target="_top">Nominate again</a>.</p>
 </body>
 </html>

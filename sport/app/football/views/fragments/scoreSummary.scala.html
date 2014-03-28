@@ -1,0 +1,8 @@
+@(theMatch: FootballMatch)(implicit request: RequestHeader)
+@import implicits.Football._
+
+@if(theMatch.homeTeam.score.isDefined && theMatch.awayTeam.score.isDefined) {
+    <div class="score-summary" data-link-name="match report score summary">
+        @theMatch.homeTeam.name @theMatch.homeTeam.score @theMatch.awayTeam.name @theMatch.awayTeam.score
+    </div>
+}

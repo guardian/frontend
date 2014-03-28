@@ -1,8 +1,8 @@
-//     postscribe.js 1.1.2
+//     postscribe.js 1.2.0
 //     (c) Copyright 2012 to the present, Krux
 //     postscribe is freely distributable under the MIT license.
 //     For all details and documentation:
-//     http://krux.github.com/postscribe
+//     http://krux.github.io/postscribe
 
 
 (function() {
@@ -12,9 +12,6 @@
   if(global.postscribe) {
     return;
   }
-
-  // Debug write tasks.
-  var DEBUG = true;
 
   // Turn on to debug how each chunk affected the DOM.
   var DEBUG_CHUNK = false;
@@ -264,7 +261,7 @@
               proxy.push(
                 // ignore atomic tags (e.g., style): they have no "structural" effect
                 tok.type === 'atomicTag' ? '' :
-                  '<'+tok.tagName+' '+BASEATTR+'proxyof='+id+(tok.unary ? '/>' : '>')
+                  '<'+tok.tagName+' '+BASEATTR+'proxyof='+id+(tok.unary ? ' />' : '>')
               );
             }
           }
@@ -378,16 +375,21 @@
     // Done is called once script has executed.
     WriteStream.prototype.writeScriptToken = function(tok, done) {
       var el = this.buildScript(tok);
+      var asyncRelease = this.shouldRelease(el);
+      var afterAsync = this.options.afterAsync;
 
       if(tok.src) {
         // Fix for attribute "SRC" (capitalized). IE does not recognize it.
         el.src = tok.src;
-        this.scriptLoadHandler(el, done);
+        this.scriptLoadHandler(el, !asyncRelease ? function() {
+          done();
+          afterAsync();
+        } : afterAsync);
       }
 
       try {
         this.insertScript(el);
-        if(!tok.src) {
+        if(!tok.src || asyncRelease) {
           done();
         }
       } catch(e) {
@@ -454,12 +456,14 @@
       });
     };
 
+    WriteStream.prototype.shouldRelease = function(el) {
+      var isScript = /^script$/i.test(el.nodeName);
+      return !isScript || !!(this.options.releaseAsync && el.src && el.hasAttribute('async'));
+    };
+
     return WriteStream;
 
   }());
-
-
-
 
 
 
@@ -502,7 +506,7 @@
         write: function(){
           return write(toArray(arguments).join(''));
         },
-        writeln: function(str) {
+        writeln: function() {
           return write(toArray(arguments).join('') + '\n');
         }
       });
@@ -539,6 +543,8 @@
         options = { done: options };
       }
       options = defaults(options, {
+        releaseAsync: false,
+        afterAsync: doNothing,
         done: doNothing,
         error: function(e) { throw e; },
         beforeWrite: function(str) { return str; },

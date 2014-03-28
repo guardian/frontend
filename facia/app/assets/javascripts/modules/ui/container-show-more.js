@@ -38,6 +38,12 @@ define([
             this._$button
                 .addClass('tone-' + (this._$container.attr('data-tone') || 'news'))
                 .insertAfter(this._$container);
+            // override button icons
+            if (this._$container.hasClass('container--neutral1-background')) {
+                var buttonIcons = $('.i', this._$button);
+                $(buttonIcons.get(0)).removeClass('i-plus-white-mask').addClass('i-plus-neutral1-mask');
+                $(buttonIcons.get(1)).removeClass('i-plus-white').addClass('i-plus-neutral1');
+            }
             bean.on(this._$button[0], 'click', this.showMore.bind(this));
             mediator.emit('modules:containerShowMore:renderButton', this);
         };
@@ -59,7 +65,7 @@ define([
             this._$button.attr('data-link-name', newDataAttr);
         };
 
-        this.showMore = function(e) {
+        this.showMore = function() {
             this._$button.attr('disabled', true);
             this._$container.removeClass(this._className);
             bonzo(this._items.splice(0, this._showCount))

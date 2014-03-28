@@ -91,9 +91,7 @@ CommentBox.prototype.defaultOptions = {
     focus: false,
     state: 'top-level',
     replyTo: null,
-    switches: {
-        discussionVerifiedEmailPosting: false // Off by default here and in backend
-    },
+    switches: {},
     priorToVerificationDate: new Date(1392719401337) // Tue Feb 18 2014 10:30:01 GMT
 };
 
@@ -127,7 +125,7 @@ CommentBox.prototype.prerender = function() {
     if (this.options.replyTo) {
         var replyToAuthor = this.getElem('reply-to-author');
         replyToAuthor.innerHTML = this.options.replyTo.author;
-        this.getElem('parent-comment-author').innerHTML = this.options.replyTo.author + " @ " + this.options.replyTo.timestamp + " said:";
+        this.getElem('parent-comment-author').innerHTML = this.options.replyTo.author + ' @ ' + this.options.replyTo.timestamp + ' said:';
 
         this.getElem('parent-comment-body').innerHTML = this.options.replyTo.body;
 
@@ -147,8 +145,7 @@ CommentBox.prototype.ready = function() {
         throw new Error('CommentBox: You need to set the "data-discussion-key" on your element');
     }
 
-    var commentBody = this.getElem('body'),
-        submitButton = this.getElem('submit');
+    var commentBody = this.getElem('body');
 
     this.setFormState();
 
@@ -172,7 +169,6 @@ CommentBox.prototype.ready = function() {
  */
 CommentBox.prototype.postComment = function(e) {
     var self = this,
-        body = this.getElem('body'),
         comment = {
             body: this.getElem('body').value
         };
@@ -207,7 +203,7 @@ CommentBox.prototype.postComment = function(e) {
         ValidationEmail.init(self.context);
     };
 
-    if (self.options.switches.discussionVerifiedEmailPosting && !self.getUserData().emailVerified) {
+    if (!self.getUserData().emailVerified) {
         // Cookie could be stale so lets refresh and check from the api
         var createdDate = new Date(self.getUserData().accountCreatedDate);
         if (createdDate > self.options.priorToVerificationDate) {
@@ -313,14 +309,14 @@ CommentBox.prototype.clearErrors = function() {
 /**
  * @param {Event=} e (optional)
  */
-CommentBox.prototype.setExpanded = function(e) {
+CommentBox.prototype.setExpanded = function() {
     this.setState('expanded');
 };
 
 /**
  * @param {Event=} e (optional)
  */
-CommentBox.prototype.verificationEmailSuccess = function(e) {
+CommentBox.prototype.verificationEmailSuccess = function() {
     this.clearErrors();
     this.error('EMAIL_VERIFIED');
 };
@@ -328,7 +324,7 @@ CommentBox.prototype.verificationEmailSuccess = function(e) {
 /**
  * @param {Event=} e (optional)
  */
-CommentBox.prototype.verificationEmailFail = function(e) {
+CommentBox.prototype.verificationEmailFail = function() {
     this.clearErrors();
     this.error('EMAIL_VERIFIED_FAIL');
 };
@@ -336,7 +332,7 @@ CommentBox.prototype.verificationEmailFail = function(e) {
 /**
  * @param {Event=} e (optional)
  */
-CommentBox.prototype.cancelComment = function(e) {
+CommentBox.prototype.cancelComment = function() {
     if (this.options.state === 'response') {
         this.destroy();
     } else {

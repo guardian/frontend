@@ -139,6 +139,20 @@
     }
 }
 
+@mixin f-textsans {
+    font-family: $text-sans;
+    -webkit-font-smoothing: antialiased;
+}
+@mixin fs-textsans($level, $size-only: false) {
+    $textsans: nth($fs-textsans, $level);
+
+    @include font-size(nth($textsans, 1), nth($textsans, 2));
+
+    @if $size-only == false {
+        @include f-textsans;
+    }
+}
+
 // CSS3 helpers
 // =============================================================================
 
@@ -281,12 +295,15 @@
 // Misc
 // =============================================================================
 
-@mixin fix-aspect-ratio($width, $height, $startingWidth: 100%) {
+@function aspect-ratio-height($x, $y, $startingWidth: 100%) {
+    @return ($y / $x) * $startingWidth;
+}
+
+@mixin fix-aspect-ratio($x, $y, $startingWidth: 100%) {
     // To get this working, position the child element
     // to 'absolute' in the top left corner
-    $height: ($height / $width) * $startingWidth;
     width: $startingWidth;
-    padding-bottom: $height;
+    padding-bottom: aspect-ratio-height($x, $y, $startingWidth);
     position: relative;
     overflow: hidden;
 }
@@ -297,21 +314,30 @@
     }
 }
 
-@mixin faux-bullet-point($color: $c-neutral3) {
+@mixin faux-bullet-point($color: $c-neutral3, $offset-y: (default: 6px, tablet: 7px)) {
     position: relative;
-    @include rem((
-        text-indent: 20px
-    ));
 
     &:before {
         position: absolute;
-        content: "\2022";
+        content: "";
+        display: block;
+        @include rounded-corners(50%);
         @include rem((
-            left: -22px,
-            top: 2px,
-            font-size: 48px
+            height: 12px,
+            width: 12px,
+            left: 0,
+            top: map-get($offset-y, default),
+            font-size: 20px
         ));
-        color: $color;
+        background-color: $color;
+
+        @include mq(tablet) {
+            @include rem((
+                top: if(map-get($offset-y, tablet) == map-get($offset-y, default), null, map-get($offset-y, tablet)),
+                height: 14px,
+                width: 14px
+            ));
+        }
     }
 }
 
@@ -346,22 +372,19 @@
 }
 
 // icon button (circular element containing an offset/centered icon)
-@mixin icon-button($buttonSize, $iconOffsetX, $iconOffsetY: "") {
+@mixin icon-button($buttonSize, $iconOffsetX, $iconOffsetY: null) {
     width: $buttonSize;
     height: $buttonSize;
     @include rounded-corners($buttonSize);
     position: relative;
     display: inline-block;
+
     .i {
         position: absolute;
         text-indent: -9999px;
         top: 50%;
         left: 50%;
         margin-top: $iconOffsetX;
-        @if $iconOffsetY == "" {
-            margin-left: $iconOffsetX;
-        } @else {
-            margin-left: $iconOffsetY;
-        }
+        margin-left: if(not $iconOffsetY, $iconOffsetX, $iconOffsetY);
     }
 }

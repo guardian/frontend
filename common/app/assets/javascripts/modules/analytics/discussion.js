@@ -57,7 +57,7 @@ define([
         s.tl(true, 'o', 'Recommend a comment');
     };
 
-    track.jumpedToComments = function(e) {
+    track.jumpedToComments = function() {
         if (!track.seen) {
             s.events = 'event72';
             s.eVar65 = 'seen jump-to-comments';
@@ -69,7 +69,7 @@ define([
         }
     };
 
-    track.commentPermalink = function(e) {
+    track.commentPermalink = function() {
         if (!track.seen) {
             s.events = 'event72';
             s.eVar65 = 'seen comment-permalink';
@@ -96,7 +96,7 @@ define([
     // Convenience functions
     track.areCommentsSeen = function() {
         var timer,
-            scroll = function(e) {
+            scroll = function() {
                 if(!track.seen && !timer && track.areCommentsVisible()) {
                     track.scrolledToComments();
                     mediator.off('window:scroll', scroll);

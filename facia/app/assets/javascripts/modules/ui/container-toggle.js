@@ -1,9 +1,11 @@
 define([
+    'common/$',
     'common/common',
     'bonzo',
     'bean',
     'common/modules/userPrefs'
 ], function (
+    $,
     common,
     bonzo,
     bean,
@@ -52,11 +54,10 @@ define([
 
         this.addToggle =  function () {
             // append toggle button
-            _$container
-                .prepend(_$button)
-                .removeClass('js-container--toggle');
+            $('.container__header', _$container[0]).append(_$button);
+            _$container.removeClass('js-container--toggle');
             // listen to event
-            bean.on(_$button[0], 'click', function(e) {
+            bean.on(_$button[0], 'click', function() {
                 _state = (_state === 'displayed') ? 'hidden' : 'displayed';
                 // add/remove rolled class
                 _$container[_state === 'displayed' ? 'removeClass' : 'addClass']('container--rolled-up');

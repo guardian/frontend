@@ -17,13 +17,17 @@ object SoulmatesAggregatingAgent {
     soulmatesAgents foreach (_.stop())
   }
 
-  def sampleMembers(segment: Segment): List[Member] = {
+  def sampleMembers(segment: Segment): Seq[Member] = {
     val women = Random.shuffle(SoulmatesWomenAgent.adsTargetedAt(segment))
     val men = Random.shuffle(SoulmatesMenAgent.adsTargetedAt(segment))
     if (women.isEmpty || men.isEmpty) {
       Nil
     } else {
-      Random.shuffle(List(women.head, men.head)) ++ Random.shuffle(men.tail.take(2) ++ women.tail.take(2)).take(3)
+      // we are looking for 5 random people, either
+      // woman/man/woman/man/woman
+      // man/woman/man/woman/man or
+      val people = Random.shuffle(Seq(Random.shuffle(men), Random.shuffle(women)))
+      people(0).zip(people(1)).flatMap{ case (p1, p2) => Seq(p1, p2) }.take(4)
     }
   }
 }

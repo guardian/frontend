@@ -176,7 +176,7 @@ Comments.prototype.ready = function() {
     this.mediator.on('discussion:comment:recommend:fail', this.recommendFail.bind(this));
 
     this.addMoreRepliesButtons();
-    
+
     if (!this.isReadOnly()) {
         this.bindCommentEvents();
     }
@@ -281,7 +281,7 @@ Comments.prototype.gotoComment = function(id) {
     return this.fetchComments({
         comment: id,
         position: 'replace'
-    }).then(function(resp) {
+    }).then(function() {
         window.location.replace('#comment-'+ id);
     }.bind(this));
 };
@@ -334,7 +334,7 @@ Comments.prototype.fetchComments = function(options) {
                 '/discussion/'+ (this.options.order === 'oldest' ? 'oldest' : '') + this.options.discussionId +'.json?'+
                 (options.page ? '&page='+ options.page : '') +
                 '&maxResponses=3';
-    
+
     return ajax({
         url: url,
         type: 'json',
@@ -402,7 +402,7 @@ Comments.prototype.renderComments = function(position, resp) {
 Comments.prototype.showHiddenComments = function(e) {
     if (e) { e.preventDefault(); }
 
-    qwery(this.getClass('topLevelComment'), this.elem).forEach(function(elem, i) {
+    qwery(this.getClass('topLevelComment'), this.elem).forEach(function(elem) {
         bonzo(elem).removeClass('u-h');
     });
 
@@ -419,24 +419,24 @@ Comments.prototype.addMoreRepliesButtons = function (comments) {
     var self = this;
 
     comments = comments || this.topLevelComments;
-    comments.forEach(function(elem, i) {
-        var replies = parseInt(elem.getAttribute("data-comment-replies"), 10);
+    comments.forEach(function(elem) {
+        var replies = parseInt(elem.getAttribute('data-comment-replies'), 10);
         var rendered_replies = qwery(self.getClass('reply'), elem);
 
         if (rendered_replies.length < replies) {
 
             var numHiddenReplies = replies - rendered_replies.length;
 
-            var showButton = "";
+            var showButton = '';
             showButton += '<li class="' + self.getClass('showReplies', true) + '" ';
             showButton += 'data-link-name="Show more replies" ';
-            showButton += 'data-is-ajax data-comment-id="' + elem.getAttribute("data-comment-id") + '">';
+            showButton += 'data-is-ajax data-comment-id="' + elem.getAttribute('data-comment-id') + '">';
             showButton += '<span><i class="i i-plus-white-small"></i></span>';
             showButton += 'Show ' + numHiddenReplies + ' more ' + (numHiddenReplies === 1 ? 'reply' : 'replies');
             showButton += '</li>';
 
             showButton = bonzo.create(showButton);
-            bonzo(showButton).data("source-comment", elem);
+            bonzo(showButton).data('source-comment', elem);
 
             bonzo(qwery('.d-thread--responses', elem)).append(showButton);
         }
@@ -450,7 +450,7 @@ Comments.prototype.getMoreReplies = function(event) {
     event.preventDefault();
     var self = this,
         source = bonzo(event.target).data('source-comment');
-    
+
     ajax({
         url: '/discussion/comment/'+ event.target.getAttribute('data-comment-id') +'.json',
         type: 'json',
@@ -504,7 +504,7 @@ Comments.prototype.addComment = function(comment, focus, parent) {
         },
         commentElem = bonzo.create(document.getElementById('tmpl-comment').innerHTML)[0],
         $commentElem = bonzo(commentElem);
-        
+
     $commentElem.addClass('d-comment--new');
 
     for (key in map) {
@@ -597,7 +597,7 @@ Comments.prototype.replyToComment = function(e) {
 /**
  * @param {Object.<string.*>} comment
  */
-Comments.prototype.recommendFail = function(comment) {};
+Comments.prototype.recommendFail = function() {};
 
 Comments.prototype.showDiscussion = function() {
     var showDiscussionElem = $('.d-discussion__show-all-comments');

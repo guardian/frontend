@@ -1,9 +1,6 @@
 package com.gu.fronts.endtoend;
 
-import com.gu.fronts.endtoend.engine.Story;
-import com.gu.fronts.endtoend.engine.TrailBlock;
-import com.gu.fronts.endtoend.engine.TrailBlockEditors;
-import com.gu.fronts.endtoend.engine.TrailBlocks;
+import com.gu.fronts.endtoend.engine.*;
 import com.gu.fronts.endtoend.engine.actions.RemoveStoryFromTrailBlockAction;
 import com.gu.fronts.endtoend.engine.actions.TrailBlockCreateAction;
 import com.gu.fronts.endtoend.engine.actions.ViewTrailBlockAction;
@@ -42,7 +39,7 @@ public class TrailBlockSetupSteps {
 
 		for (String storyTitle : view.draftStories()) {
 			RemoveStoryFromTrailBlockAction remove =
-				new RemoveStoryFromTrailBlockAction(new Story(storyTitle), trailBlock);
+				new RemoveStoryFromTrailBlockAction(new Story(storyTitle), trailBlock, TrailBlockMode.DRAFT);
 			editors.anyone().execute(remove);
 		}
 

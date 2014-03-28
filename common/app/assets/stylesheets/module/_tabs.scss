@@ -15,7 +15,7 @@
     border-bottom: none;
     list-style-type: none;
     overflow: hidden;
-    background: #fff;
+    background: #ffffff;
 
     @include mq(tablet) {
         margin-bottom: -1px;
@@ -46,7 +46,7 @@
 
         &:active,
         &:focus {
-            background-color: #fff;
+            background-color: #ffffff;
             text-decoration: none;
         }
 
@@ -99,6 +99,7 @@
     display: none;
 }
 
+
 /* Multiple tabs
  *
  * used for cases where more than 2 tabs are wanted (eg not two 50% width tabs)
@@ -117,9 +118,8 @@
         width: auto;
         float: none;
     }
+
+    .tab--stats {
+        display: none;
+    }
 }
-
-
-
-
-

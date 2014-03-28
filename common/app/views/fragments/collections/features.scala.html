@@ -1,7 +1,8 @@
 @(items: Seq[Trail], style: FeaturesContainer, containerIndex: Int)(implicit request: RequestHeader)
+@import conf.Switches._
 
-<div class="collection-wrapper collection-wrapper--spacing-thin collection-wrapper--position-1">
-    <ul class="unstyled l-row l-row--items-3 l-row--layout-m collection l-row--background-features">
+    <div class="collection-wrapper collection-wrapper--spacing-thin collection-wrapper--position-1">
+    <ul class="u-unstyled l-row l-row--items-3 l-row--layout-m collection l-row--background-features">
         @items.slice(0, 1).zipWithIndex.map{ case (trail, index) =>
             @fragments.collections.items.standard(trail, index, containerIndex, "l-row__item--break-m")
         }
@@ -10,53 +11,55 @@
         }
     </ul>
 </div>
-@defining(items.slice(3, 9)) { items =>
+@defining(items.slice(3, 11)) { items =>
     @if(items.nonEmpty) {
         <div class="collection-wrapper collection-wrapper--position-2@if(style.adSlot.isEmpty){ collection-wrapper--no-outer-margins}">
             @style.adSlot.map { adSlot =>
-                <ul class="unstyled l-row l-row--items-3 collection collection--linkslist-and-mpu">
-                    <li class="l-row__item collection__item">
+                <ul class="u-unstyled l-row l-row--items-3 collection collection--linkslist-and-mpu">
+                    <li class="l-row__item l-row__item--boost-2 collection__item">
             }
-                    <ul class="l-columns linkslist">
-                        @items.zipWithIndex.map{ case (trail, index) =>
-                            @trail match {
-                                case l: LiveBlog if l.isLive         => { @fragments.items.linksList.live(l, index + 3, Some("highlight")) }
-                                case g: Gallery                      => { @fragments.items.linksList.gallery(g, index + 3, Some("highlight")) }
-                                case v: Video                        => { @fragments.items.linksList.video(v, index + 3, Some("highlight")) }
-                                case c if VisualTone(c) == "comment" => { @fragments.items.linksList.comment(c, index + 3, Some("highlight")) }
-                                case t                               => { @fragments.items.linksList.standard(t, index + 3, Some("highlight")) }
+                        <ul class="l-columns linkslist features__columns">
+                            @items.zipWithIndex.map{ case (trail, index) =>
+                                @trail match {
+                                    case l: LiveBlog if l.isLive         => { @fragments.items.linksList.live(l, index + 3, Some("boost")) }
+                                    case g: Gallery                      => { @fragments.items.linksList.gallery(g, index + 3, Some("boost")) }
+                                    case v: Video                        => { @fragments.items.linksList.video(v, index + 3, Some("boost")) }
+                                    case c if VisualTone(c) == "comment" => { @fragments.items.linksList.comment(c, index + 3, Some("boost")) }
+                                    case t                               => { @fragments.items.linksList.standard(t, index + 3, Some("boost")) }
+                                }
                             }
-                        }
-                    </ul>
+                        </ul>
             @style.adSlot.map { adSlot =>
                     </li>
-                    <li class="l-row__item l-row__item--mpu-300 hide-on-mobile">
-                        <div class="ad-slot ad-slot--mpu-banner-ad hide-on-mobile" data-link-name="ad slot mpu-banner-ad" data-base="@adSlot.medianName" data-median="@adSlot.medianName">
-                            <div class="ad-container"></div>
-                        </div>
+                    <li class="l-row__item l-row__item--mpu hide-on-mobile">
+                        @if(AdvertSwitch.isSwitchedOn) {
+                            @fragments.inlineAdSlot(id="mpu-in-row-pattern", adSlot=adSlot, mobileOnly=false)
+                        }
                     </li>
                 </ul>
             }
         </div>
     }
 }
-@style.adSlot.map { adSlot =>
-    <div class="ad-slot ad-slot--inline mobile-only" data-base="@adSlot.baseName"><div class="ad-container"></div></div>
-}
-@defining(items.slice(9, 29)) { items =>
+@defining(items.slice(11, 31)) { items =>
     @if(items.nonEmpty) {
         <div class="linkslist-container js-container--show-more tone-@{style.tone}" data-tone="@style.tone">
             <ul class="l-columns linkslist">
                 @items.zipWithIndex.map{ case (trail, index) =>
                     @trail match {
-                        case l: LiveBlog if l.isLive         => { @fragments.items.linksList.live(l, index + 9) }
-                        case g: Gallery                      => { @fragments.items.linksList.gallery(g, index + 9) }
-                        case v: Video                        => { @fragments.items.linksList.video(v, index + 9) }
-                        case c if VisualTone(c) == "comment" => { @fragments.items.linksList.comment(c, index + 9) }
-                        case t                               => { @fragments.items.linksList.standard(t, index + 9) }
+                        case l: LiveBlog if l.isLive         => { @fragments.items.linksList.live(l, index + 11) }
+                        case g: Gallery                      => { @fragments.items.linksList.gallery(g, index + 11) }
+                        case v: Video                        => { @fragments.items.linksList.video(v, index + 11) }
+                        case c if VisualTone(c) == "comment" => { @fragments.items.linksList.comment(c, index + 11) }
+                        case t                               => { @fragments.items.linksList.standard(t, index + 11) }
                     }
                 }
             </ul>
         </div>
+    }
+}
+@style.adSlot.map { adSlot =>
+    @if(AdvertSwitch.isSwitchedOn && OASAdvertSwitch.isSwitchedOn) {
+        <div class="ad-slot__oas ad-slot--inline mobile-only" data-base="@adSlot.baseName"><div class="ad-slot__label">Advertisement</div><div class="ad-container"></div></div>
     }
 }

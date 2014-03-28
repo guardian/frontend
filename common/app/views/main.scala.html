@@ -1,44 +1,40 @@
 @(metaData: model.MetaData, projectName: Option[String] = None, curlPaths: Map[String, String] = Map())(head: Html)(body: Html)(implicit request: RequestHeader)
+@import conf.Switches._
 
-@*<!--
-Identity pages use identityMain.scala.html, most of which is shared fragments,
-be sure to apply any necessary changes to non-shared code there too.
--->*@
+@* Identity pages use identityMain.scala.html, most of which is shared fragments,
+   be sure to apply any necessary changes to non-shared code there too. *@
 
 <!DOCTYPE html>
-<html class="js-off" lang="en-GB">
+<html class="js-off id--signed-out" lang="en-GB">
 <head>
     @fragments.head(metaData, projectName, head, curlPaths)
 </head>
-<body id="top">
+<body
+    @Navigation.topLevelItem(Edition(request).navigation(metaData), metaData).filter(_.links.nonEmpty).map{ localNav => class="has-localnav" }
+    id="top"
+    itemscope itemtype="http://schema.org/WebPage">
 
     @fragments.message(metaData)
+    @if(AdvertSwitch.isSwitchedOn && LeadAdTopPageSwitch.isSwitchedOn) {
+        <div class="top-banner-ad-container top-banner-ad-container--above-header">
+            @fragments.adSlot(id="top-banner-ad", baseSlot="Top2", medianSlot="Top", extendedSlot="Top")
+        </div>
+    }
     @fragments.header(metaData)
 
-    <div id="preloads">
-        <div id="preloads-inner">
-            <div id="preload-1" class="preload">
-                <div class="parts">
-                    <div class="parts__head">
-                        <div class="js-sticky-upper" data-id="Top2"></div>
-                        <div class="top-banner-ad-container">
-                            @fragments.adSlot(id="top-banner-ad", baseSlot="Top2", medianSlot="Top", extendedSlot="Top")
-                        </div>
-                        @fragments.localNav(metaData)
-                    </div>
-                    <div class="parts__body">
-                        @body
-                    </div>
-                    <div class="parts__foot">
-                    </div>
-                </div>
+    <div id="js-context" class="gs-container">
+        @if(AdvertSwitch.isSwitchedOn) {
+            <div class="top-banner-ad-container@if(LeadAdTopPageSwitch.isSwitchedOn){ top-banner-ad-container--below-header}">
+                @fragments.adSlot(id="top-banner-ad", baseSlot="Top2", medianSlot="Top", extendedSlot="Top")
             </div>
-        </div>
+        }
+
+        @fragments.localNav(metaData)
+
+        @body
     </div>
 
     @fragments.footer(metaData)
-
-    <div class="js-sticky-lower" data-id="Top2"></div>
 
     @fragments.loadCss()
 

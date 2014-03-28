@@ -39,7 +39,9 @@ trait DevParametersLifecycle extends GlobalSettings with implicits.Requests {
     "_edition", //allows us to spoof edition in tests
     "k", // keywords in commercial component requests
     "s", // section in commercial component requests
-    "seg" // user segments in commercial component requests
+    "seg", // user segments in commercial component requests
+    "build", // used by Forsee surveys
+    "google_console"
   )
 
   override def onRouteRequest(request: RequestHeader) = {

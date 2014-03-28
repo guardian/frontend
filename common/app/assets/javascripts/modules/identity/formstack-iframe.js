@@ -24,7 +24,7 @@ define([
 
             // Listen for load of form confirmation or error page,
             // which has no form, so won't instantiate the Formstack module
-            bean.on(el, 'load', function(event) {
+            bean.on(el, 'load', function() {
                 self.show();
                 self.refreshHeight();
             });
@@ -32,16 +32,16 @@ define([
 
         self.onMessage = function(event) {
             switch (event.data) {
-                case "ready":
+                case 'ready':
                     self.show();
                     self.refreshHeight();
                     break;
 
-                case "unload":
+                case 'unload':
                     self.refreshHeight(true);
                     break;
 
-                case "refreshHeight":
+                case 'refreshHeight':
                     self.refreshHeight();
                     break;
             }

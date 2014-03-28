@@ -15,7 +15,7 @@
 }
 
 .circular-progress__counter {
-    @extend %type-12;
+    @include fs-data(1);
     font-weight: bold;
     color: $c-neutral2;
     line-height: 30px;

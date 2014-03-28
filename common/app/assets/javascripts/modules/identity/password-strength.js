@@ -1,7 +1,7 @@
 define([
-    "common/common",
-    "bonzo",
-    "bean"
+    'common/common',
+    'bonzo',
+    'bean'
 ], function (
     common,
     bonzo,
@@ -60,7 +60,7 @@ define([
             }
         };
 
-        this.checkCount = function(e) {
+        this.checkCount = function() {
             if (dom.element.value.length >= config.minLength) {
                 active = true;
                 bonzo(dom.indicator).removeClass('is-off');
@@ -68,10 +68,10 @@ define([
             }
         };
 
-        this.checkStrength = function(e) {
+        this.checkStrength = function() {
             if (active) {
                 var score = zxcvbn(dom.element.value).score,
-                    label = config.text.label + ": " + config.labels[score];
+                    label = config.text.label + ': ' + config.labels[score];
 
                 if (dom.element.value.length < config.minLength) {
                     label = config.text['short'];

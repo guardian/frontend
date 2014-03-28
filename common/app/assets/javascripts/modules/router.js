@@ -1,20 +1,16 @@
 //Client-side routing module
 //Heavily inspired by https://github.com/PaulKinlan/leviroutes/blob/master/routes.js
 /*jshint boss:true, curly:false */
-define([
-    'common/common'
-], function (
-    common
-) {
+define(function () {
 
     function Router() {
-    
+
         var _routes = [];
 
         this.parseRoute = function(path) {
             this.parseGroups = function(loc) {
-                var nameRegexp = new RegExp(":([^/.\\\\]+)", "g");
-                var newRegexp = "" + loc;
+                var nameRegexp = new RegExp(':([^/.\\\\]+)', 'g');
+                var newRegexp = '' + loc;
                 var groups = {};
                 var matches = null;
                 var i = 0;
@@ -22,12 +18,12 @@ define([
                 // Find the places to edit.
                 while(matches = nameRegexp.exec(loc)) {
                     groups[matches[1]] = i++;
-                    newRegexp = newRegexp.replace(matches[0], "([^/.\\\\]+)");
+                    newRegexp = newRegexp.replace(matches[0], '([^/.\\\\]+)');
                 }
 
-                newRegexp += "$"; // Only do a full string match
+                newRegexp += '$'; // Only do a full string match
 
-                return { "groups" : groups, "regexp": new RegExp(newRegexp)};
+                return { groups : groups, regexp: new RegExp(newRegexp)};
             };
 
             return this.parseGroups(path);
@@ -48,7 +44,7 @@ define([
                         params[g] = routeExec[group + 1];
                     }
 
-                    route.callback({"url": url, "params": params});
+                    route.callback({url: url, params: params});
                     return true;
                 }
             }
@@ -57,7 +53,7 @@ define([
         };
 
         this.get = function(route, callback) {
-            _routes.push({regex: this.parseRoute(route), "callback": callback});
+            _routes.push({regex: this.parseRoute(route), callback: callback});
         };
 
         this.getRoutes = function() {

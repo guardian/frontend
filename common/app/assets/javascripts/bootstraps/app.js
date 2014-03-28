@@ -6,6 +6,7 @@ define([
     'common/utils/detect',
     'common/utils/config',
     'common/utils/context',
+    'common/utils/userTiming',
 
     'common/modules/analytics/errors',
     'common/modules/ui/fonts',
@@ -29,6 +30,7 @@ define([
     detect,
     config,
     Context,
+    userTiming,
 
     Errors,
     Fonts,
@@ -88,8 +90,11 @@ define([
     };
 
     var routes = function() {
+
+        userTiming.mark('App Begin');
+
         domReady(function() {
-            var context = document.getElementById('preload-1');
+            var context = document.getElementById('js-context');
 
             Context.set(context);
 
@@ -142,6 +147,9 @@ define([
 
             mediator.on('page:ready', pageRoute);
             mediator.emit('page:ready', config, context);
+
+            // Mark the end of synchronous execution.
+            userTiming.mark('App End');
         });
     };
 

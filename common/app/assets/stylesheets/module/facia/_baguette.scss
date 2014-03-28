@@ -9,7 +9,7 @@
     }
 
     .item__container {
-        border-top: 4px solid white;
+        border-top: 4px solid #ffffff;
     }
     .item__link {
         border-top-style: none !important;
@@ -49,9 +49,23 @@
     .supporting__item {
         border-color: #ffffff;
     }
-    .supporting__item {
-        @include rem((
-            padding-left: $gs-gutter/4
-        ));
+    @include mq($to: tablet) {
+        .supporting__action {
+            @include rem((
+                margin-left: $gs-gutter/5
+            ));
+        }
+    }
+    @include mq(tablet) {
+        .supporting__item:first-child .supporting__action {
+            @include rem((
+                margin-left: $gs-gutter/5
+            ));
+        }
+        .supporting__item:last-child .supporting__action {
+            @include rem((
+                margin-right: $gs-gutter/5
+            ));
+        }
     }
 }

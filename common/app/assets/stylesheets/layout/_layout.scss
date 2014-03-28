@@ -1,57 +1,21 @@
-/* Global wrapper
-   ========================================================================== */
-
-#preloads {
-    @include gs-container;
-    clear: both;
-}
-
-
 /* Global header and navigation
    ========================================================================== */
 
 #header {
-    min-height: $headerHeight;
     position: relative;
-    z-index: 1051; // On top of Google "Adchoices" label which has z-index: 1050…
+    z-index: 1051; // On top of Google "Adchoices" label which has z-index: 1050
 
-    /* These styles extend the top bars to the screen edges */
     @include mq(tablet) {
-        &:before,
-        &:after {
-            content: "";
-            display: block;
-            position: absolute;
-            width: 100%;
-            z-index: -10;
-        }
-
-        &:before {
-            top: 0;
-            height: $headerHeight;
-            background-color: $c-brandBlue;
-        }
-
-        &.has-nav {
-            min-height: $headerHeight + 40px;
-            &:after {
-                top: $headerHeight;
-                height: 40px;
-                background-color: $c-neutral7;
-                border-bottom: 1px solid $c-neutral5;
-            }
-        }
+        background: $c-neutral8;
     }
 }
-    .header__inner {
-        background-color: $c-brandBlue;
-        height: $headerHeight;
-    }
 
 .guardian-logo-wrapper {
-    float: left;
-    margin: 20px 0 18px $gs-gutter/2;
-    margin-left: rem($gs-gutter/2); // Only horizontal space is scalable
+    position: relative;
+    float: right;
+    @include rem((
+        margin: $gs-baseline/4 $gs-gutter/2 $gs-baseline 0
+    ));
 
     i {
         display: block;
@@ -59,9 +23,116 @@
 
     @include mq(mobileLandscape) {
         @include rem((
-            margin-left: $gs-gutter
+            margin-right: $gs-gutter
         ));
     }
+    @include mq(tablet) {
+        @include rem((
+            margin-top: 7px
+        ));
+
+        &:after {
+            content: "beta";
+            position: absolute;
+            top: 48px;
+            left: 128px;
+            font-size: 13px;
+        }
+    }
+    @include mq(desktop) {
+        @include rem((
+            margin-top: -$gs-row-height,
+            margin-bottom: $gs-baseline * 1.5
+        ));
+    }
+}
+
+/* Pre-header
+   ========================================================================== */
+
+.header-pre {
+    float: left;
+    min-width: gs-span(2);
+    z-index: 1;
+    position: relative;
+
+    @include mq(tablet) {
+        float: none;
+        background: $c-neutral8;
+        border-bottom: 1px solid $c-neutral4;
+    }
+    @include mq(desktop) {
+        border-bottom-color: $c-neutral8;
+    }
+}
+.header-pre__inner {
+    @include box-sizing(border-box);
+    @include rem((
+        padding-left: $gs-gutter/2,
+        padding-right: $gs-gutter/2
+    ));
+
+    @include mq(mobileLandscape) {
+        @include rem((
+            padding-left: $gs-gutter,
+            padding-right: $gs-gutter
+        ));
+    }
+}
+.preheader__editions {
+    float: left;
+    @include rem((
+        width: gs-span(3)
+    ));
+}
+.editions {
+    @include fs-header(1);
+}
+.editions,
+.editions__title,
+.edition__item,
+.edition {
+    padding: 0;
+    margin: 0;
+    display: inline-block;
+}
+.editions__title {
+    font-weight: normal;
+}
+.editions__title,
+.edition {
+    @include rem((
+        padding: $gs-baseline/2 $gs-gutter/4
+    ));
+}
+.edition__item {
+    color: $c-brandLightBlue;
+
+    & + .edition__item {
+        @include rem((
+            margin-left: $gs-gutter/4
+        ));
+    }
+}
+.edition {
+    text-decoration: none;
+    margin: 0;
+}
+a.edition {
+    &:hover,
+    &:focus {
+        color: $c-brandLightBlue;
+        text-decoration: none;
+    }
+}
+
+
+/* Main header (logo, actions)
+   ========================================================================== */
+
+.header-main {
+    position: relative;
+    z-index: 2;
 }
 
 
@@ -115,6 +186,12 @@
     ));
 }
 
+.component__heading {}
+
+.component--rhc {
+    margin-top: $gs-baseline*3;
+}
+
 .box-indent {
     @include rem((
         padding: 0 $gs-gutter/2 ($gs-baseline/3)
@@ -165,18 +242,20 @@
 /* Ajax loading helpers
    ========================================================================== */
 
+.loading,
 .preload-msg {
     @include rem((
         padding: 50px 50px 250px 50px
     ));
     text-align: center;
 
+    .loading__link,
     .accessible-link {
-        display: block;
+        display: inline-block;
         @include fs-data(2);
     }
 }
-
+.loading .loading__animation,
 .preload-msg .is-updating {
     display: block;
     @include rem((

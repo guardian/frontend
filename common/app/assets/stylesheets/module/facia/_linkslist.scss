@@ -5,7 +5,7 @@
  *
  * Image adjust on a story:
  * - hide/default: hidden image
- * - highlight: shows image at desktop breakpoint
+ * - boost: shows image at desktop breakpoint
  */
 
 .linkslist-container {
@@ -44,13 +44,10 @@
     }
 }
 .linkslist {
-    @extend .unstyled;
+    @extend %u-unstyled;
 }
 .linkslist__item {
     border-top: 1px solid $c-neutral5;
-    @include rem((
-        padding-top: $gs-baseline/4
-    ));
 
     &.show-more--hidden {
         display: none;
@@ -62,6 +59,7 @@
     display: block;
     @include fs-headline(1);
     @include rem((
+        margin-top: $gs-baseline/4,
         margin-bottom: get-line-height($fs-headlines, 1)
     ));
     @include mq(tablet) {
@@ -69,14 +67,6 @@
             min-height: get-line-height($fs-headlines, 1) * 2,
             margin-bottom: get-font-size($fs-headlines, 1)
         ));
-    }
-    @include mq(desktop) {
-        .linkslist--with-images & {
-            @include rem((
-                // Force min height of 3 baselines on all items
-                min-height: get-line-height($fs-headlines, 1) * 3,
-            ));
-        }
     }
 
     &:visited {
@@ -147,18 +137,7 @@
             width: $action-image-width
         ));
     }
-    .linkslist__image-container {
-        position: relative;
-        padding-bottom: 60%;
-
-        .responsive-img {
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            top: 0;
-            left: 0;
-        }
-    }
+    .linkslist__image-container {}
     .action--has-image.action--has-icon {
         .i {
             position: absolute;

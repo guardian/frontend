@@ -15,17 +15,16 @@
             && 'addEventListener' in window
             && 'localStorage' in window
             && 'sessionStorage' in window
+            && 'bind' in Function
             && (
                 ('XMLHttpRequest' in window && 'withCredentials' in new XMLHttpRequest())
                 || 'XDomainRequest' in window
             )
         ),
         css: {
-            loaded: false,
-            football: '@Static("stylesheets/football.css")',
-            gallery: '@Static("stylesheets/gallery.css")',
-            video: '@Static("stylesheets/video.css")'
-        }
+            loaded: false
+        },
+        config: @fragments.javaScriptConfig(item)
     },
     curl = {
         baseUrl: '@{Configuration.assets.path}javascripts',
@@ -39,11 +38,16 @@
             zxcvbn: '@Static("javascripts/components/zxcvbn/index.js")',
             gravity: '@Static("javascripts/vendor/gravity.js")',
             'ophan/ng': '@{Configuration.javascript.config("ophanJsUrl")}',
-            outbrain: '@Static("javascripts/vendor/outbrain.js")'
+            outbrain: '@Static("javascripts/vendor/outbrain.js")',
+            foresee: '@Static("javascripts/vendor/foresee/foresee-trigger.js")'
         }
     };
 
     (function(isModern) {
+
+        // must always be set before the Omniture file is parsed
+        window.s_account = guardian.config.page.omnitureAccount;
+
         if (!isModern) { return false; }
 
         @if(CssFromStorageSwitch.isSwitchedOn && !play.Play.isDev()) {
@@ -106,34 +110,6 @@
                 }
             }
         }
-        function containersAb(switches) {
-            // are we on a front
-            var isFront = /^\/(pressed\/)?(uk|us|au)$/.exec(window.location.pathname);
-            if (isFront) {
-                var front = isFront[2],
-                    participations = JSON.parse(localStorage.getItem('gu.ab.participations')),
-                    capitalisedFront = front.slice(0, 1).toUpperCase() + front.slice(1),
-                    notInAlphaVariant =
-                        participations &&
-                        participations.value &&
-                        participations.value[capitalisedFront + 'Containers'] &&
-                        ['notintest', 'control'].indexOf(participations.value[capitalisedFront + 'Containers'].variant) > -1;
-                // only run if we're in the alpha variant, and switch is on
-                if (!notInAlphaVariant && switches['ab' + capitalisedFront + 'Containers']) {
-                    // make sure we can access local storage
-                    try {
-                        localStorage.setItem('test', 'test');
-                        localStorage.removeItem('test');
-                        document.documentElement.className += (' ab-' + front + '-containers');
-                        // set timeout to remove class to be safe
-                        setTimeout(function() {
-                            document.documentElement.className = document.documentElement.className.replace(/\bab-\w+-containers\b/g, ' ');
-                        }, 2000);
-                    }
-                    catch(e) { }
-                }
-            }
-        }
 
         @* we want to add/remove classes to HTML ASAP to avoid FOUC *@
         var htmlClassNames = "";
@@ -166,17 +142,7 @@
             loadCssFromStorage();
         }
 
-        guardian.config = @fragments.javaScriptConfig(item);
-
-        containersAb(guardian.config.switches);
-
-        // must be set before the Omniture file is parsed
-        window.s_account = guardian.config.page.omnitureAccount;
-
-        var script = document.createElement('script');
-        script.async = 'async';
-        script.src = '@Static("javascripts/bootstraps/app.js")';
-
-        document.getElementsByTagName("head")[0].appendChild(script);
     })(guardian.isModernBrowser);
 </script>
+
+<script async="async" src="@Static("javascripts/bootstraps/app.js")"></script>

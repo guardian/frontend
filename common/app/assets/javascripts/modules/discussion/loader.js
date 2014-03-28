@@ -5,6 +5,7 @@ define([
     'qwery',
     'bean',
     'common/modules/component',
+    'common/modules/analytics/register',
     'common/modules/analytics/discussion',
     'common/modules/identity/api',
     'common/modules/discussion/api',
@@ -18,6 +19,7 @@ define([
     qwery,
     bean,
     Component,
+    register,
     DiscussionAnalytics,
     Id,
     DiscussionApi,
@@ -42,6 +44,7 @@ var Loader = function(context, mediator, options) {
     this.context = context || document;
     this.mediator = mediator;
     this.setOptions(options);
+    register.begin('discussion');
 };
 Component.define(Loader);
 
@@ -101,8 +104,8 @@ Loader.prototype.ready = function() {
 
     this.topLoadingElem = bonzo.create('<div class="preload-msg">Loading comments… <a href="/discussion'+ this.getDiscussionId() +'" class="accessible-link">Trouble loading?</a><div class="is-updating"></div></div>')[0];
     bonzo(this.topLoadingElem).insertAfter(topCommentsElem);
-    
-    this.on('user:loaded', function(user) {
+
+    this.on('user:loaded', function() {
         this.topComments = new TopComments(self.context, self.mediator, {
             discussionId: this.getDiscussionId(),
             user: self.user
@@ -121,7 +124,7 @@ Loader.prototype.ready = function() {
     this.renderCommentCount();
     DiscussionAnalytics.init();
 
-    bean.on(window, 'hashchange', function(e) {
+    bean.on(window, 'hashchange', function() {
         var commentId = self.getCommentIdFromHash();
         if (commentId) {
             self.comments.gotoComment(commentId);
@@ -133,6 +136,8 @@ Loader.prototype.ready = function() {
     if (window.location.hash === '#comments') {
         this.mediator.emit('discussion:seen:comments-anchor');
     }
+
+    register.end('discussion');
 };
 
 Loader.prototype.loadComments = function(args) {
@@ -229,9 +234,9 @@ Loader.prototype.renderDiscussionClosedMessage = function() {
 Loader.prototype.renderSignin = function() {
     var url = Id.getUrl() +'/{1}?returnUrl='+ window.location.href;
     this.getElem('commentBox').innerHTML =
-        '<div class="d-bar d-bar--signin">Open for comments. <a href="'+
+        '<div class="d-bar d-bar--signin">Open for comments. <a class="u-underline" href="'+
             url.replace('{1}', 'signin') +'">Sign in</a> or '+
-            '<a href="'+ url.replace('{1}', 'register') +'">create your Guardian account</a> '+
+            '<a class="u-underline" href="'+ url.replace('{1}', 'register') +'">create your Guardian account</a> '+
             'to join the discussion.'+
         '</div>';
 };

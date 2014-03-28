@@ -1,9 +1,8 @@
 @mixin table-football--small() {
-    .table-column--priority { display: table-cell; }
+    .table-column--inferior { display: none; }
 
     th,
     td {
-        display: none;
         min-width: 0;
     }
 
@@ -19,7 +18,6 @@
         span {
             display: block;
             overflow: hidden;
-            text-overflow: ellipsis;
             white-space: nowrap;
             width: 100%;
         }
@@ -34,7 +32,7 @@
     }
 
     .table-column--main {
-        max-width: 90px;
+        max-width: 50px;
     }
 
     // This makes sure that all table columns are equally spaced
@@ -57,7 +55,6 @@
     &.table--small { @include table-football--small; }
 }
 
-// Hack for fronts until we tidy them up properly
-.fromage .table {
-    border-top-color: $c-neutral3;
+.football-table__container {
+    position: relative;
 }

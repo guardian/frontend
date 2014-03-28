@@ -110,7 +110,7 @@ define([
 
         function pressCollection(collection) {
             return authedAjax.request({
-                url: vars.CONST.apiBase + '/collection/press/' + collection.id,
+                url: vars.CONST.apiBase + '/collection/update/' + collection.id,
                 type: 'post'
             });
         }
@@ -131,7 +131,12 @@ define([
                              .value();
 
                         if (collections.length > 0) {
-                            fronts[front.id()] = { collections: collections };
+                            fronts[front.id()] = _.reduce(front.props, function(obj, val, key) {
+                                if (val()) {
+                                    obj[key] = val();
+                                }
+                                return obj;
+                            }, {collections: collections});
                         }
                         return fronts;
                     }, {})

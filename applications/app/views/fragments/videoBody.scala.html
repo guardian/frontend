@@ -2,8 +2,8 @@
 @import conf.Switches._
 
 @defining(page.video){ video =>
-    <h2 class="article__zone left-col-deport tone-@VisualTone(video) tone-accent-border">
-        <span class="left-col-deport__body">
+    <h2 class="article__zone left-col-deport tone-@VisualTone(video) tone-accent-border hide-on-mobile-if-localnav">
+        <span class="left-col-deport__body" data-component="meta">
             <a class="tone-colour tone-border" data-link-name="article section" href="/@LinkTo(video.section)">@Html(video.sectionName.toLowerCase)</a>
         </span>
     </h2>
@@ -14,53 +14,51 @@
             <div class="article__inner article__inner--head">
                 <header class="article__head">
                     @fragments.headline(video.headline)
-
-                    @fragments.article.dateline(video.webPublicationDate, video.isLive)
+                    @if(video.isCommentable) {
+                        <div class="article__head__comment-count js-comment-count"></div>
+                    }
                 </header>
             </div>
             <div class="article__columning-wrapper">
                 <div class="article__main-column">
 
-                    <div class="player media-content">
+                    <div class="media-primary player">
 
-                        <div class="media-proportional-container">
-                            <video controls="controls" @video.mainPicture.map{ img =>  poster="@Item620.bestFor(img)" }>
-                                @video.encodings.map{ encoding =>
-                                    <source src="@encoding.url" />
-                                }
+                        <div class="gu-video-wrapper">
+                            <div class="u-responsive-ratio u-responsive-ratio--hd">
+                                <video controls="controls" class="gu-video" @video.mainPicture.map{ img => poster="@Item620.bestFor(img)" }>
+                                    @video.encodings.map{ encoding =>
+                                        <source src="@encoding.url" />
+                                    }
 
-                                @video.encodings.find(_.format == "video/mp4").map{ encoding =>
-                                    <object type="application/x-shockwave-flash" data="@Static("flash/flashmediaelement.swf")" width="620" height="350">
-                                        <param name="allowFullScreen" value="true" />
-                                        <param name="movie" value="@Static("flash/flashmediaelement.swf")" />
-                                        <param name="flashvars" value="controls=true&amp;file=@encoding.url" />
-                                        <img @video.mainPicture.map{ img =>  src="@Item620.bestFor(img).map(Html(_))" } alt="" width="620" height="350" />
-                                        Sorry, your browser is unable to play this video.
-                                    </object>
-                                }
-                            </video>
+                                    @video.encodings.find(_.format == "video/mp4").map{ encoding =>
+                                        <object type="application/x-shockwave-flash" data="@Static("flash/flashmediaelement.swf")" width="620" height="350">
+                                            <param name="allowFullScreen" value="true" />
+                                            <param name="movie" value="@Static("flash/flashmediaelement.swf")" />
+                                            <param name="flashvars" value="controls=true&amp;file=@encoding.url" />
+                                            <img @video.mainPicture.map{ img =>  src="@Item620.bestFor(img).map(Html(_))" } alt="" width="620" height="350" />
+                                            Sorry, your browser is unable to play this video.
+                                        </object>
+                                    }
+                                </video>
+                            </div>
                         </div>
 
                     </div>
 
-                    <div class="article__meta-container">
-                        @fragments.byline(video.bylineWithSource, video)
-                        @fragments.article.dateline(video.webPublicationDate, secondary=true)
-                        <div class="js-comment-count"></div>
-                    </div>
-                    <div class="article__container">
+                    @fragments.contentMeta(video)
+
+                    <div class="article__container" data-component="body">
                         <div class="video-standfirst">
                             @fragments.standfirst(video)
                         </div>
 
-                        @if(ArticleKeywordsSwitch.isSwitchedOn){
-                            <div class="article__keywords" data-link-name="video keywords">
-                                @fragments.keywordList(video.keywords)
-                            </div>
-                        }
+                        <div class="article__keywords" data-link-name="video keywords">
+                            @fragments.keywordList(video.keywords)
+                        </div>
                     </div>
 
-                    <div class="social-wrapper">
+                    <div class="social-wrapper" data-component="share">
                         @fragments.social(video)
                     </div>
                 </div>
@@ -75,6 +73,6 @@
 
     @fragments.storyPackagePlaceholder(page.storyPackage)
 
-    @fragments.mostPopularPlaceholder(video.section)
+    @fragments.mostPopularPlaceholder(video.section, VisualTone(video))
 
 }

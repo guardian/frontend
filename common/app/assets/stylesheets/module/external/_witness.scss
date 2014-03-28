@@ -10,12 +10,12 @@
 
     .element-witness {
         a {
-            color: #005689;
+            color: $c-newsDefault;
             text-decoration: none;
 
             &:focus,
             &:hover {
-                color: #333;
+                color: $c-neutral1;
             }
         }
     }
@@ -25,7 +25,6 @@
     }
 
     .element-witness--title {
-        @extend %type-3;
         margin-bottom: ($gs-baseline/3)*2;
     }
 
@@ -34,7 +33,6 @@
     }
 
     .element-witness--brand {
-        padding: 0 $gutter/2 0 0;
         line-height: 14px;
     }
 
@@ -58,13 +56,13 @@
 
     .element-witness--metadata {
         p {
-            @extend %type-10;
+            @include fs-data(3);
         }
         border-top: 1px solid $c-neutral5;
         background: $c-neutral7;
         padding: $gs-baseline $gutter/2;
         line-height: 1;
-        color: #666 !important;
+        color: $c-neutral2 !important;
     }
 
     .element-witness--metadata img {
@@ -72,14 +70,14 @@
     }
 
     p.element-witness--source {
-        @extend %type-10;
+        @include fs-data(3);
 
         padding-left: $gutter/2;
-        color: #666;
+        color: $c-neutral2;
     }
 
     .element-witness--author {
-        @extend %type-11;
+        @include fs-data(3);
         display: inline-block;
         margin-bottom: 0;
         width: 100%;
@@ -90,7 +88,7 @@
     }
 
     .element-witness--author-name {
-        @extend %type-11;
+        @include fs-data(3);
         display: inline-block;
         font-weight: bold;
     }
@@ -121,11 +119,10 @@
     margin-bottom: ($gs-baseline/3)*4;
 }
 .witness-cta__body {
-    @extend %type-10;
+    @include fs-data(3);
     float: left;
     padding: 5px $gutter/2 0;
     margin-left: 50px;
-    line-height: 15px;
 
     .witness-cta__logo {
         display: block;

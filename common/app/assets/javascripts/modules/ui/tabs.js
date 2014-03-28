@@ -1,13 +1,11 @@
 define([
     'common/common',
     'bean',
-    'bonzo',
-    'qwery'
+    'bonzo'
 ], function (
     common,
     bean,
-    bonzo,
-    qwery
+    bonzo
 ) {
 
     /*
@@ -76,7 +74,7 @@ define([
                     bean.add(tabSet, 'click', function (e) {
                         var targetElm = e.target;
                         // verify they clicked an <a> element
-                        if (targetElm.nodeName.toLowerCase() === "a") {
+                        if (targetElm.nodeName.toLowerCase() === 'a') {
                             view.showTab(container, targetElm, e);
                             vHeight = bonzo(container).offset().height - tabSetHeight;
                             if (vScroll > vPos) {

@@ -1,0 +1,23 @@
+@(id: String, adSlot: AdSlot, mobileOnly: Boolean)
+@import views.support.AdSlot
+@import conf.Switches._
+
+@if(OASAdvertSwitch.isSwitchedOn && (!DFPAdvertSwitch.isSwitchedOn || LoadOnlyCommercialComponents.isSwitchedOn)) {
+    @*<!--
+    although we do put a data-link-name attribute on here any ad that iframes itself will be untrackable via this, so
+    take ad clicks with a pinch of salt.
+    -->*@
+    <div class="ad-slot__oas ad-slot--@id hide-on-mobile" data-link-name="ad slot @id" data-base="@adSlot.medianName" data-median="@adSlot.medianName">
+        <div class="ad-slot__label">Advertisement</div>
+        <div class="ad-container"></div>
+    </div>
+} else {
+    @if(DFPAdvertSwitch.isSwitchedOn && !LoadOnlyCommercialComponents.isSwitchedOn) {
+
+        <div class="ad-slot__dfp ad-slot--@id ad-label--showing" data-link-name="ad slot @id" data-name="@adSlot.dfpDataName" data-mobile="300,50" data-tabletportrait="300,250">
+             <div class="ad-slot__inner">
+                 <div id="inline-ad-slot__@adSlot.dfpDataName" class="ad-container"></div>
+             </div>
+        </div>
+    }
+}

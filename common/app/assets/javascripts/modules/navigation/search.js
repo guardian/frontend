@@ -17,7 +17,7 @@ define([
             self = this;
 
         if (config.switches.googleSearch && config.page.googleSearchUrl && config.page.googleSearchId) {
-            
+
             enabled = true;
             gcsUrl = config.page.googleSearchUrl + '?cx=' + config.page.googleSearchId;
 
@@ -25,7 +25,7 @@ define([
                 self.load();
             });
 
-            bean.on(document, 'click touchstart', '.control--search', function(e) {
+            bean.on(document, 'click touchstart', '.js-search-toggle', function(e) {
                 searchLoader();
                 self.focusSearchField();
                 e.preventDefault();
@@ -33,8 +33,8 @@ define([
 
             bean.on(document, 'click touchstart', '.search-results', function(e) {
                 var targetEl = e.target;
-                if (targetEl.nodeName.toLowerCase() === "a") {
-                    targetEl.target = "_self";
+                if (targetEl.nodeName.toLowerCase() === 'a') {
+                    targetEl.target = '_self';
                 }
             });
         }
@@ -50,7 +50,7 @@ define([
             var s,
                 x;
 
-            container = currentContext.querySelector('.nav-popup-search');
+            container = currentContext.querySelector('.js-search-placeholder');
 
             // Set so Google know what to do
             window.__gcse = {
@@ -58,7 +58,7 @@ define([
             };
 
             // Unload any search placeholders elsewhere in the DOM
-            Array.prototype.forEach.call(document.querySelectorAll('.nav-popup-search'), function(c){
+            Array.prototype.forEach.call(document.querySelectorAll('.js-search-placeholder'), function(c){
                 if (c !== container) {
                     c.innerHTML = '';
                 }

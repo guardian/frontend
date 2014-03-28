@@ -9,7 +9,7 @@
 }{
 <div class="identity-wrapper monocolumn-wrapper">
     <h1 class="identity-title">Create your Guardian account</h1>
-    <p>Already have an account? <a href="@idUrlBuilder.buildUrl("/signin", idRequest)">Sign in</a>.</p>
+    <p>Already have an account? <a class="u-underline" href="@idUrlBuilder.buildUrl("/signin", idRequest)">Sign in</a>.</p>
 
     <form class="form js-register-form" novalidate action="@idUrlBuilder.buildUrl("/register", idRequest)" role="main" method="post">
         @if(registrationForm.globalError.isDefined) {

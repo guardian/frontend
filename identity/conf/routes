@@ -13,15 +13,18 @@ GET     /register                                       @controllers.Registratio
 POST    /register                                       @controllers.RegistrationController.processForm
 GET     /email-prefs                                    @controllers.EmailController.preferences
 POST    /email-prefs                                    @controllers.EmailController.savePreferences
-GET     /profile/public                                 @controllers.PublicProfileController.displayForm
-POST    /profile/public                                 @controllers.PublicProfileController.submitForm
+GET     /user/id/:id                                    @controllers.PublicProfileController.renderProfileFromId(id: String)
+GET     /user/:vanityUrl                                @controllers.PublicProfileController.renderProfileFromVanityUrl(vanityUrl: String)
+GET     /public/edit                                    @controllers.PublicProfileController.displayPublicProfileForm
+GET     /account/edit                                   @controllers.PublicProfileController.displayAccountForm
+POST    /public/edit                                    @controllers.PublicProfileController.submitPublicProfileForm
+POST    /account/edit                                   @controllers.PublicProfileController.submitAccountForm
 GET     /verify-email/:token                            @controllers.EmailVerificationController.verify(token: String)
 
 GET     /ethical-awards/complete                        @controllers.EthicalAwardsController.complete
 GET     /ethical-awards/:formReference                  @controllers.EthicalAwardsController.ethicalAwardsForm(formReference: String)
-GET     /film-awards/complete                           @controllers.FilmAwardsController.complete
-GET     /film-awards/:formReference                     @controllers.FilmAwardsController.filmAwardsForm(formReference: String)
 GET     /form/complete                                  @controllers.FormstackController.complete
-GET     /form/:formReference                            @controllers.FormstackController.formstackForm(formReference: String)
+GET     /form/:formReference                            @controllers.FormstackController.formstackForm(formReference: String, composer: Boolean = false)
+GET     /form/embed/:formReference                      @controllers.FormstackController.formstackForm(formReference: String, composer: Boolean = true)
 
 GET     /et/subscribe/:subDefId                         @controllers.ExactTargetController.subscribe(subDefId: String, returnUrl: String)

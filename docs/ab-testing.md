@@ -147,7 +147,7 @@ The data is logged under the Omniture property _p51_.
 
 ### Ophan
 
-We have an [AB test dashbord](https://frontend.gutools.co.uk/analytics/abtests) within the frontend tools project.
+We have an [AB test dashboard](https://frontend.gutools.co.uk/analytics/abtests) within the frontend tools project.
 
 For inspection of the raw test data you can query the RedShift instance created by the data team.
 

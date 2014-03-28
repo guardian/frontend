@@ -17,7 +17,15 @@
 
     <form class="form-inline" role="form" action="/admin/football/player/card" method="post">
         <h2>Card</h2>
-
+        <label for="player-card-type">Card type:</label>
+        <select class="form-control" id="player-card-type" name="playerCardType">
+            <option value="attack">Attack</option>
+            <option value="assist">Assist</option>
+            <option value="discipline">Discipline</option>
+            <option value="defence">Defence</option>
+            <option value="goalkeeper">Goalkeeper</option>
+            <option value="overview">Overview</option>
+        </select>
         @views.html.football.fragments.choosePlayer("player", players)
         <button type="submit" class="btn btn-success">View</button>
     </form>
