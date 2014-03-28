@@ -1,20 +1,31 @@
-.element.element-table {
-    @include rem((
-        margin-top: $gs-baseline*2,
-        margin-bottom: $gs-baseline
-    ));
-    @include mq(mobileLandscape) {
+// this is here as we override styles from module/external/_from-content-api
+.from-content-api {
+    .element-table {
+        @include box-sizing(border-box);
         @include rem((
-            margin-left: $gs-gutter,
-            margin-top: 0,
-            width: $gs-column-width*5
+            margin-top: $gs-baseline * 2,
+            margin-bottom: $gs-baseline
         ));
-        float: right;
-        margin-top: 0;
+
+        @include mq(mobileLandscape) {
+            @include rem((
+                margin-left: $gs-gutter,
+                margin-top: 0
+            ));
+            float: right;
+            margin-top: 0;
+            width: 100%;
+        }
+
+        .table td,
+        .table th {
+            @include fs-data(4, true);
+        }
     }
 
-    .table td,
-    .table th {
-        @include fs-data(4, true);
+    .element-table--complimentary {
+        @include rem((
+            width: $gs-column-width * 5
+        ));
     }
 }
