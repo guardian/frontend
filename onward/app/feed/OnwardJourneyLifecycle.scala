@@ -24,7 +24,7 @@ trait OnwardJourneyLifecycle extends GlobalSettings {
       DayMostPopularAgent.refresh()
     }
 
-    if (Play.isDev) {
+    if (Play.isDev && !Play.isTest) {
       LatestContentAgent.update()
       MostPopularAgent.refresh()
       MostPopularExpandableAgent.refresh()
