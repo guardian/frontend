@@ -24,8 +24,10 @@
     }
 
     .element-table--complimentary {
-        @include rem((
-            width: $gs-column-width * 5
-        ));
+        @include mq(mobileLandscape) {
+            @include rem((
+                width: $gs-column-width * 5
+            ));
+        }
     }
 }

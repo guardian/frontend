@@ -669,8 +669,8 @@ object TableEmbedComplimentaryToP extends HtmlCleaner {
 
   override def clean(document: Document): Document = {
     document.getElementsByClass("element-table").foreach { element =>
-      Option(element.nextElementSibling).map { sibling =>
-        if (sibling.tagName == "p") element.addClass("element-table--complimentary")
+      Option(element.nextElementSibling).map { nextSibling =>
+        if (nextSibling.tagName == "p") element.addClass("element-table--complimentary")
       }
     }
     document
