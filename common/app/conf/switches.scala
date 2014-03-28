@@ -216,11 +216,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
-  val FacebookAutoSigninSwitch = Switch("Feature Switches", "facebook-autosignin",
-    "If this switch is on then users who have previously authorized the guardian app in facebook and who have not recently signed out are automatically signed in.",
-    safeState = Off, sellByDate = endOfQ4
-  )
-
   val IdentityFormstackSwitch = Switch("Feature Switches", "id-formstack",
     "If this switch is on, formstack forms will be available",
     safeState = Off, sellByDate = never
@@ -340,7 +335,6 @@ object Switches extends Collections {
     IdentityProfileNavigationSwitch,
     CssFromStorageSwitch,
     ElasticSearchSwitch,
-    FacebookAutoSigninSwitch,
     IdentityFormstackSwitch,
     IdentityEthicalAwardsSwitch,
     ToolDisable,
