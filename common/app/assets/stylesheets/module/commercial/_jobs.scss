@@ -2,48 +2,112 @@
    Jobs component
    ========================================================================== */
 
-.jobs-component {
-    .lineitem__image-logo {
-        margin-left: $gs-gutter/5;
-        @include rem((
-            width: 100px,
-            height: 40px
-        ));
-        float: right;
-    }
-    .lineitem__description {
-        margin-top: $gutter;
-    }
-    .lineitem__list {
-        @include font-size(14, 16);
-        margin: ($gs-baseline/3)*4 0;
-    }
-    @include mq($to: tablet) {
-        .commercial__head {
-            background-color: #08417b;
+.commercial--jobs {
+    .commercial__head {
+        background-color: transparent;
+        padding: 0;
+        height: auto;
+        border: 0;
 
-            .commercial__title {
-                .em {
-                    color: #ffffff;
-                    color: rgba(#ffffff, .8);
+        @include mq(tablet) {
+            width: gs-span(3);
+            float: left;
+            @include rem((
+                margin-right: $gs-gutter
+            ));
+        }
+    }
+    .commercial__title {
+        padding: 0;
+        margin: 0;
+        text-transform: lowercase;
+        color: $c-newsDefault;
+        @include fs-headline(3);
+    }
+    .commercial__title__last-word {
+        font-style: italic;
+        @include rem((
+            margin-left: -5px;
+        ));
+    }
+    .commercial__home-link {
+        float: right;
+
+        @include mq(tablet) {
+            position: absolute;
+            @include rem((
+                left: $gs-gutter,
+                bottom: $gs-baseline
+            ));
+        }
+    }
+    .commercial__body {
+        padding: 0;
+    }
+    .commercial--jobs__sector {
+        width: 50%;
+        min-width: gs-span(1.5);
+        float: left;
+        @include box-sizing(border-box);
+        @include rem((
+            margin-top: $gs-baseline
+        ));
+
+        &:last-child .commercial--jobs__sector__link {
+            font-weight: bold;
+            color: $c-newsDefault;
+        }
+        @include mq($to: tablet) {
+            &:nth-child(2n+1) .commercial--jobs__sector__link {
+                @include rem((
+                    margin-right: $gs-gutter/2
+                ));
+            }
+            &:nth-child(2n) .commercial--jobs__sector__link {
+                @include rem((
+                    margin-left: $gs-gutter/2
+                ));
+            }
+        }
+        @include mq(tablet) {
+            width: 33%;
+
+            &:nth-child(-n+3) {
+                margin-top: 0;
+
+                .commercial--jobs__sector__link {
+                    border-top: 0;
+                    padding-top: 0;
                 }
+            }
+            &:nth-child(3n+1) .commercial--jobs__sector__link {
+                @include rem((
+                    margin-right: $gs-gutter/2
+                ));
+            }
+            &:nth-child(3n+2) .commercial--jobs__sector__link {
+                @include rem((
+                    margin-left: $gs-gutter/2,
+                    margin-right: $gs-gutter/2
+                ));
+            }
+            &:nth-child(3n) .commercial--jobs__sector__link {
+                @include rem((
+                    margin-left: $gs-gutter/2
+                ));
             }
         }
     }
-
-//    &.commercial--w600 {
-//        .commercial__item {
-//            @include box-sizing(border-box);
-//            padding-right: $gs-gutter/2;
-//            width: 40%;
-//            float: left;
-//            &.commercial__item:nth-child(3) {
-//                width: 20%;
-//                .lineitem__title {
-//                    @include f-headline;
-//                    @include font-size(14,16);
-//                }
-//            }
-//        }
-//    }
+    .commercial--jobs__sector__link {
+        color: $c-neutral1;
+        display: block;
+        border-top: 1px solid $c-neutral4;
+        @include fs-headline(1);
+        @include rem((
+            padding-top: $gs-baseline/3,
+        ));
+    }
+    .double-chevron {
+        @include transform(rotate(-90deg));
+    }
 }

@@ -4,11 +4,6 @@
 
 $soulmates-red: #d70851;
 .commercial--soulmates {
-    background-color: $commercial-component-bg;
-    @include rem((
-        padding: $gs-baseline $gs-gutter/2
-    ));
-
     .commercial__inner {
         position: relative;
         margin: 0 auto;
