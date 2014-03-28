@@ -6,11 +6,11 @@ define(['bonzo'], function (bonzo) {
     var ExternalLinksNewWindow = function () {
 
         this.id = 'ExternalLinksNewWindow';
-        this.start = '2014-03-03';
-        this.expiry = '2014-04-03';
+        this.start = '2014-03-28';
+        this.expiry = '2014-04-28';
         this.author = 'Kaelig';
         this.description = 'Open external links in a new window.';
-        this.audience = 1;
+        this.audience = 0.2;
         this.audienceOffset = 0;
         this.successMeasure = 'Dwell time and page views.';
         this.audienceCriteria = 'Users viewing an article.';
