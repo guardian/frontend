@@ -1,9 +1,13 @@
-define(['bonzo'], function (bonzo) {
-    var openInBodyLinksInSameWindow = function (context) {
-        bonzo(context.querySelectorAll('[data-link-name="in body link"]')).attr('target', '_self');
+define([
+    'common/$'
+], function(
+    $
+) {
+    var openInBodyLinksInSameWindow = function() {
+        $('[data-link-name="in body link"]').attr('target', '_self');
     };
 
-    var ExternalLinksNewWindow = function () {
+    var ExternalLinksNewWindow = function() {
 
         this.id = 'ExternalLinksNewWindow';
         this.start = '2014-03-28';
@@ -24,13 +28,13 @@ define(['bonzo'], function (bonzo) {
         this.variants = [
             {
                 id: 'control',
-                test: function (context) {
+                test: function(context) {
                     openInBodyLinksInSameWindow(context);
                 }
             },
             {
                 id: 'new-window',
-                test: function () {}
+                test: function() {}
             }
         ];
 
