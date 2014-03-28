@@ -447,7 +447,8 @@ case class InlineSlotGenerator(articleWordCount: Int) extends HtmlCleaner {
       var lastInline = -200
 
       var offset = 0
-      val spacing = 850
+      val scaling = ((articleWordCount - 350) / 1500.0f) * 400.0f
+      val spacing = 850 + scaling.toInt.max(400)
       val minFollowingText = 750
       val children = document.select("body > *")
 

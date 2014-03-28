@@ -218,7 +218,7 @@ object Switches extends Collections {
 
   val FacebookAutoSigninSwitch = Switch("Feature Switches", "facebook-autosignin",
     "If this switch is on then users who have previously authorized the guardian app in facebook and who have not recently signed out are automatically signed in.",
-    safeState = Off, sellByDate = endOfQ4
+    safeState = Off, sellByDate = never
   )
 
   val IdentityFormstackSwitch = Switch("Feature Switches", "id-formstack",
@@ -264,11 +264,6 @@ object Switches extends Collections {
   )
 
   // A/B Test Switches
-
-  val ABLiveBlogFollowButton = Switch("A/B Tests", "ab-live-blog-follow-button",
-    "If this is switched on an experiment runs to display a follow button on live blogs.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 3, 28)
-  )
 
   // Dummy Switches
 
@@ -348,7 +343,6 @@ object Switches extends Collections {
     FacebookAutoSigninSwitch,
     IdentityFormstackSwitch,
     IdentityEthicalAwardsSwitch,
-    ABLiveBlogFollowButton,
     ToolDisable,
     ToolConfigurationDisable,
     ToolSparklines,
