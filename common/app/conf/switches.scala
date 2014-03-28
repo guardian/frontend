@@ -265,11 +265,6 @@ object Switches extends Collections {
 
   // A/B Test Switches
 
-  val ABLiveBlogFollowButton = Switch("A/B Tests", "ab-live-blog-follow-button",
-    "If this is switched on an experiment runs to display a follow button on live blogs.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 3, 28)
-  )
-
   // Dummy Switches
 
   val IntegrationTestSwitch = Switch("Unwired Test Switch", "integration-test-switch",
@@ -348,7 +343,6 @@ object Switches extends Collections {
     FacebookAutoSigninSwitch,
     IdentityFormstackSwitch,
     IdentityEthicalAwardsSwitch,
-    ABLiveBlogFollowButton,
     ToolDisable,
     ToolConfigurationDisable,
     ToolSparklines,
