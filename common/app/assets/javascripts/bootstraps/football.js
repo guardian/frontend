@@ -58,7 +58,7 @@ define([
                     scoreContainer.innerHTML = '';
                     scoreBoard.template = config.page.isLiveBlog ? resp.matchSummary : resp.scoreSummary;
 
-                    if(! /^\s+$/.test(scoreBoard.template)) {
+                    if(!/^\s+$/.test(scoreBoard.template)) {
                         scoreBoard.render(scoreContainer);
                     }
 
@@ -96,8 +96,8 @@ define([
         page.isLiveClockwatch(function() {
             var ml = new MatchList('live', 'premierleague'),
                 $img = $('.media-primary'),
-                $matchListContainer = bonzo(bonzo.create('<div class="football-match__list" data-link-name="football-matches-clockwatch"></div>'))
-                                          .css({ minHeight: $img[0].offsetHeight });
+                $matchListContainer = $.create('<div class="football-matches__container" data-link-name="football-matches-clockwatch"></div>')
+                                          .css({ minHeight: $img[0] ? $img[0].offsetHeight : 0 });
 
             $img.addClass('u-h');
             loading($matchListContainer[0], 'Fetching today\'s matches…', { text: 'Impatient?', href: '/football/live' });
@@ -113,6 +113,7 @@ define([
                     $matchListContainer.remove();
                     $img.removeClass('u-h');
                 }
+                $matchListContainer.css({ minHeight: 0 });
                 loaded($matchListContainer[0]);
             });
         });
