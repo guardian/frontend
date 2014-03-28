@@ -192,7 +192,7 @@ define([
             crossOrigin: true,
             success: function(response) {
                 if(response && response.documentElement) {
-                    var thirdParty = response.documentElement.querySelector(this.xmlSelectors.adUrl);
+                    var thirdParty = response.documentElement.querySelector(self.xmlSelectors.adUrl);
                     if(thirdParty) {
                         var nextUrl = self.parseVideoAdServingTemplate(response.documentElement);
                         self.getVastData(nextUrl);
@@ -227,7 +227,7 @@ define([
 
             var timestamp = new Date().getTime();
 
-            url = 'http://pubads.g.doubleclick.net/gampad/ads?correlator=' + timestamp + '&gdfp_req=1&env=vp&impl=s&output=xml_vast2&unviewed_position_start=1&iu=' + adUnit + '&sz=400x300&scp=slot%3Dvideo&cust_params=' + custParams;
+            url = 'http://' + config.dfpHost + '/gampad/ads?correlator=' + timestamp + '&gdfp_req=1&env=vp&impl=s&output=xml_vast2&unviewed_position_start=1&iu=' + adUnit + '&sz=400x300&scp=slot%3Dvideo&cust_params=' + custParams;
 
         } else if (this.config.switches.oasAdverts) {
 
