@@ -19,8 +19,9 @@ GET     /public/edit                                    @controllers.PublicProfi
 GET     /account/edit                                   @controllers.PublicProfileController.displayAccountForm
 POST    /public/edit                                    @controllers.PublicProfileController.submitPublicProfileForm
 POST    /account/edit                                   @controllers.PublicProfileController.submitAccountForm
+GET     /password/change                                @controllers.ChangePasswordController.renderChangePasswordPage
 GET     /verify-email/:token                            @controllers.EmailVerificationController.verify(token: String)
-GET         /verify-email        @controllers.EmailVerificationController.resendEmailValidationEmail()
+GET     /verify-email                                   @controllers.EmailVerificationController.resendEmailValidationEmail()
 
 GET     /ethical-awards/complete                        @controllers.EthicalAwardsController.complete
 GET     /ethical-awards/:formReference                  @controllers.EthicalAwardsController.ethicalAwardsForm(formReference: String)
