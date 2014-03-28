@@ -109,7 +109,8 @@ define([
                           .setTargeting('gdncrm', UserAdTargeting.getUserSegments() || [])
                           .setTargeting('k', keywords)
                           .setTargeting('p', 'ng')
-                          .setTargeting('pt', contentType);
+                          .setTargeting('pt', contentType)
+                          .setTargeting('url', window.location.pathname);
     };
 
     /**

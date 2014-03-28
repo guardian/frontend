@@ -121,6 +121,10 @@ object Switches extends Collections {
 
   // Commercial Tags
 
+  val AudienceScienceSwitch = Switch("Commercial Tags", "audience-science",
+    "If this switch is on Audience Science segments will be used to target ads.",
+    safeState = Off, sellByDate = never)
+
   val ImrWorldwideSwitch = Switch("Commercial Tags", "imr-worldwide",
     "Enable the IMR Worldwide audience segment tracking.",
     safeState = Off, sellByDate = profilingEvalDeadline)
@@ -340,6 +344,7 @@ object Switches extends Collections {
     DFPAdvertSwitch,
     LoadOnlyCommercialComponents,
     VideoAdvertSwitch,
+    AudienceScienceSwitch,
     DiscussionSwitch,
     OpenCtaSwitch,
     FontSwitch,
