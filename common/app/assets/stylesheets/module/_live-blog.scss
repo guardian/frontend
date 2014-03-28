@@ -38,8 +38,8 @@
 /* Blocks
    ========================================================================== */
 .block {
+    @include clearfix;
     margin-bottom: $gs-baseline*2;
-    overflow: auto;
 }
 
 
