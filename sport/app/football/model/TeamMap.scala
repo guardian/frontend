@@ -3,6 +3,7 @@ package model
 import common._
 import conf.SwitchingContentApi
 import pa._
+import org.joda.time.DateTime
 
 
 case class Team(team: FootballTeam, tag: Option[Tag], shortName: Option[String]) extends FootballTeam {
@@ -139,12 +140,15 @@ object TeamName {
 // if we have tags for the matches we can make a sensible url for it
 object MatchUrl {
   def apply(theMatch: FootballMatch): String = {
-    val home = TeamMap(theMatch.homeTeam).tag.flatMap(_.url)
-    val away = TeamMap(theMatch.awayTeam).tag.flatMap(_.url)
-    (home, away) match {
-      case (Some(homeTeam), Some(awayTeam)) =>
-        s"/football/match/${theMatch.date.toString("yyyy/MMM/dd").toLowerCase}/${homeTeam.replace("/football/", "")}-v-${awayTeam.replace("/football/", "")}"
-      case _ => s"/football/match/${theMatch.id}"
-    }
+    (for {
+      homeTeam <- TeamMap(theMatch.homeTeam).tag.flatMap(_.url)
+      awayTeam <- TeamMap(theMatch.awayTeam).tag.flatMap(_.url)
+    } yield {
+      s"/football/match/${theMatch.date.toString("yyyy/MMM/dd").toLowerCase}/${homeTeam.replace("/football/", "")}-v-${awayTeam.replace("/football/", "")}"
+    }).getOrElse(s"/football/match/${theMatch.id}")
+  }
+
+  def smartUrl(theMatch: FootballMatch): String = {
+    s"/football/match-redirect/${theMatch.id}"
   }
 }
