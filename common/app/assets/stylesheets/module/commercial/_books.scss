@@ -3,6 +3,7 @@
    ========================================================================== */
 
 .commercial--books {
+    background-color: $commercial-component-bg;
     @include rem((
         padding: $gs-baseline $gs-gutter/2
     ));
@@ -22,6 +23,9 @@
     }
     .commercial__logo {
         margin: 0;
+        @include rem((
+            height: 24px
+        ));
 
         .i:nth-child(2) {
             margin-left: -4px
@@ -29,20 +33,21 @@
     }
     .commercial__title {
         @include rem((
-            margin: $gs-baseline/2 0 0
+            margin: $gs-baseline 0 0
         ));
     }
     $cta-diameter: 32px;
     .commercial__call-to-action {
         position: relative;
-        padding-right: $cta-diameter+5;
+        padding-left: $cta-diameter+5;
         line-height: $cta-diameter;
         clear: right;
+        @include font-size(14, 32);
 
         .i-filter-arrow-down {
             position: absolute;
             top: 0;
-            right: 0;
+            left: 0;
             width: $cta-diameter;
             height: $cta-diameter;
             background-position: center;
@@ -64,6 +69,11 @@
     .lineitem__link {
         width: 68%;
     }
+
+    .lineitem__meta {
+        color: $c-neutral1;
+        @include fs-textsans(1);
+    }
     .commercial--books__price {
         @include rem((
             margin-top: $gs-baseline/2,
@@ -80,16 +90,16 @@
         font-weight: bold;
     }
     .commercial--books__buy-now-button {
-        background-color: #e657ad;
+        background-color: #e657af;
         border: none;
         float: right;
         color: #ffffff;
-        font-weight: bold;
-        font-size: 13px;
-        line-height: 19px;
-        font-family: $serifheadline;
+        text-align: center;
+        @include f-header;
+        @include font-size(12, 20);
         @include rem((
-            padding: $gs-baseline/3 12px
+            padding: 0 $gs-gutter/2,
+            min-width: 60px
         ));
     }
 
