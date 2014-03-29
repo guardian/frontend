@@ -270,6 +270,11 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 3, 28)
   )
 
+  val ABNewContainers = Switch("Facia Tool", "ab-new-containers",
+    "If this switch is on then the bleneded containers test runs on UK newtork front",
+    safeState = Off, sellByDate = new DateMidnight(2014, 4, 7)
+  )
+
   // Dummy Switches
 
   val IntegrationTestSwitch = Switch("Unwired Test Switch", "integration-test-switch",
@@ -306,11 +311,6 @@ object Switches extends Collections {
   val ContentApiPutSwitch = Switch("Facia Tool", "facia-tool-contentapi-put",
     "If this switch is on facia tool will PUT all collection changes to content api",
     safeState = Off, sellByDate = never
-  )
-
-  val ContainersAbTest = Switch("Facia Tool", "facia-containers-ab-test",
-    "If this switch is on then the bleneded containers test runs on Facia",
-    safeState = Off, sellByDate = new DateMidnight(2014, 4, 7)
   )
 
   val FaciaToolPressSwitch = Switch("Front Press Switches", "facia-tool-press-front",
@@ -354,13 +354,13 @@ object Switches extends Collections {
     IdentityFormstackSwitch,
     IdentityEthicalAwardsSwitch,
     ABLiveBlogFollowButton,
+    ABNewContainers,
     ToolDisable,
     ToolConfigurationDisable,
     ToolSparklines,
     OphanSwitch,
     ScrollDepthSwitch,
     ContentApiPutSwitch,
-    ContainersAbTest,
     EffectiveMeasureSwitch,
     ImrWorldwideSwitch,
     ForeseeSwitch,
