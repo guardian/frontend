@@ -270,8 +270,8 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 3, 28)
   )
 
-  val ABNewContainers = Switch("Facia Tool", "ab-new-containers",
-    "If this switch is on then the bleneded containers test runs on UK newtork front",
+  val ABBlendedContainers = Switch("A/B Tests", "ab-blended-containers",
+    "If this switch is on then the bleneded containers test runs on the network front",
     safeState = Off, sellByDate = new DateMidnight(2014, 4, 7)
   )
 
@@ -354,7 +354,7 @@ object Switches extends Collections {
     IdentityFormstackSwitch,
     IdentityEthicalAwardsSwitch,
     ABLiveBlogFollowButton,
-    ABNewContainers,
+    ABBlendedContainers,
     ToolDisable,
     ToolConfigurationDisable,
     ToolSparklines,
