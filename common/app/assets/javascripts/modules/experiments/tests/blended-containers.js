@@ -1,13 +1,17 @@
 define([], function() {
 
     var oldContainers = [
-           'a-b-c',
-           'd-e-f'
+           'uk/culture/regular-stories',
+           'uk/business/regular-stories',
+           'uk/lifeandstyle/regular-stories',
+           'uk/technology/regular-stories',
+           'uk/money/regular-stories',
+           'uk/travel/regular-stories'
         ],
 
         newContainers = [
-            'g-h-i',
-            'j-k-l'
+            'uk-alpha/contributors/feature-stories',
+            'uk-alpha/people-in-the-news/feature-stories'
         ];
 
     function cssDisplayNone(dataIds) {
