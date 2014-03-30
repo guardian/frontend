@@ -30,7 +30,7 @@ define([], function() {
     var hideNew = hide.bind(null, newContainers);
     
     return function() {
-        this.id = 'NewContainers';
+        this.id = 'BlendedContainers';
         this.expiry = '2014-04-08';
         this.audience = 1;
         this.audienceOffset = 0.0;
