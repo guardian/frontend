@@ -52,6 +52,21 @@ object Switches extends Collections {
 
   // Load Switches
 
+  val MemcachedFilterSwitch = Switch("Performance Switches", "memcached-filter",
+    "If this switch is switched on then the MemcacheFilter will be operational",
+    // TODO off by default
+    safeState = On,
+    // giving this a sell by date even though it is a perf switch as it is still a test.
+    sellByDate = new DateMidnight(2014, 4, 30)
+  )
+
+  val IncludeBuildNumberInMemcachedKey = Switch("Performance Switches", "memcached-build-number",
+    "If this switch is switched on then the MemcacheFilter will include the build number in the cache key",
+    safeState = Off,
+    // giving this a sell by date even though it is a perf switch as it is still a test.
+    sellByDate = new DateMidnight(2014, 4, 30)
+  )
+
   val AutoRefreshSwitch = Switch("Performance Switches", "auto-refresh",
     "Enables auto refresh in pages such as live blogs and live scores. Turn off to help handle exceptional load.",
     safeState = Off, sellByDate = never
@@ -387,7 +402,9 @@ object Switches extends Collections {
     OmnitureVerificationSwitch,
     IndiaRegionSwitch,
     ABExternalLinksNewWindow,
-    ABAbcd
+    ABAbcd,
+    MemcachedFilterSwitch,
+    IncludeBuildNumberInMemcachedKey
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
