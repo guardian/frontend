@@ -11,7 +11,9 @@ define([
     'common/utils/mediator',
     'common/modules/analytics/commercial/tags/common/audience-science',
     'common/modules/adverts/userAdTargeting',
-    'common/modules/adverts/document-write'
+    'common/modules/adverts/document-write',
+    'lodash/arrays/flatten',
+    'lodash/arrays/uniq'
 ], function (
     $,
     bonzo,
@@ -24,7 +26,9 @@ define([
     mediator,
     AudienceScience,
     UserAdTargeting,
-    documentWrite
+    documentWrite,
+    _flatten,
+    _uniq
 ) {
 
     /**
@@ -136,7 +140,15 @@ define([
             var id          = adSlot.querySelector(self.config.adContainerClass).id,
                 name        = adSlot.getAttribute('data-name'),
                 sizeMapping = self.defineSlotSizes(adSlot),
-                size        = [sizeMapping[0][1][0], sizeMapping[0][1][1]],
+                // as we're using sizeMapping, pull out all the ad sizes, as an array of arrays
+                size        = _uniq(
+                                  _flatten(sizeMapping, true, function(map) {
+                                      return map[1];
+                                  }),
+                                  function(size) {
+                                      return size[0] + '-' + size[1];
+                                  }
+                              ),
                 refresh     = adSlot.getAttribute('data-refresh') !== 'false',
 
                 slot = googletag.defineSlot(account, size, id)
