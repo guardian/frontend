@@ -36,15 +36,15 @@ define([
         if (!config.switches.popularInTag) { return; }
         var whitelistedTags = [ // order matters here (first match wins)
             // sport tags
-            "sport/cricket", "sport/rugby-union", "sport/rugbyleague", "sport/formulaone",
-            "sport/tennis", "sport/cycling", "sport/motorsports", "sport/golf", "sport/horse-racing",
-            "sport/boxing", "sport/us-sport", "sport/australia-sport",
+            'sport/cricket', 'sport/rugby-union', 'sport/rugbyleague', 'sport/formulaone',
+            'sport/tennis', 'sport/cycling', 'sport/motorsports', 'sport/golf', 'sport/horse-racing',
+            'sport/boxing', 'sport/us-sport', 'sport/australia-sport',
             // football tags
-            "football/championsleague", "football/premierleague", "football/championship",
-            "football/europeanfootball", "football/world-cup-2014",
+            'football/championsleague', 'football/premierleague', 'football/championship',
+            'football/europeanfootball', 'football/world-cup-2014',
             // football team tags
-            "football/manchester-united", "football/chelsea", "football/arsenal",
-            "football/manchestercity", "football/tottenham-hotspur", "football/liverpool"
+            'football/manchester-united', 'football/chelsea', 'football/arsenal',
+            'football/manchestercity', 'football/tottenham-hotspur', 'football/liverpool'
         ];
         var pageTags = config.page.keywordIds.split(',');
 
@@ -68,7 +68,7 @@ define([
 
         } else if (config.switches && config.switches.relatedContent) {
             var popularInTag = this.popularInTagOverride(config),
-                componentName = !Related.overrideUrl && popularInTag ? 'related-popular-in-tag' : 'related-content';
+                componentName = (!Related.overrideUrl && popularInTag) ? 'related-popular-in-tag' : 'related-content';
             register.begin(componentName);
 
             container = context.querySelector('.js-related');
