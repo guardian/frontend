@@ -37,8 +37,7 @@ define([
             this.fields = asObservableProps([
                 'headline',
                 'trailText',
-                'thumbnail',
-                'shortId']);
+                'thumbnail']);
 
             this.meta = asObservableProps([
                 'updatedAt',
@@ -110,11 +109,26 @@ define([
         };
 
         Article.prototype.populate = function(opts, withContent) {
+            var missingFields;
+
             populateObservables(this.props,  opts);
             populateObservables(this.meta,   opts.meta);
             populateObservables(this.fields, opts.fields);
             populateObservables(this.state,  opts.state);
-            this.state.isLoaded(!!withContent);
+
+            if (withContent) {
+                 missingFields = [
+                    opts.fields ? false : 'fields',
+                    opts.fields && opts.fields.headline ? false : 'fields.headline'
+                 ].filter(function(k) { return k; });
+
+                if (missingFields.length) {
+                    vars.model.alertError('ContentApi error! See console for details.');
+                    window.console.error('ContentApi missing: "' + missingFields.join('", "') + '" for ' + this.id);
+                } else {
+                    this.state.isLoaded(true);
+                }
+            }
         };
 
         Article.prototype.toggleIsBreaking = function() {
