@@ -104,7 +104,7 @@ define([
             keywords;
         if (conf.keywords) {
             keywords = conf.keywords.split(',').map(function (keyword) {
-                return documentWrite.formatKeyword(keyword);
+                return documentWrite.formatKeyword(keyword).replace('&', 'and');
             });
         } else {
             keywords = '';
