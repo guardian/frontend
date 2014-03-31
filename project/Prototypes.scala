@@ -121,7 +121,7 @@ trait Prototypes {
       scalaVersion := "2.10.3"
     )
 
-  def application(name: String) = play.Project(name, version, path = file(name),dependencies = Seq(cache))
+  def application(name: String) = play.Project(name, version, path = file(name))
     .settings(frontendDependencyManagementSettings:_*)
     .settings(frontendCompilationSettings:_*)
     .settings(frontendClientSideSettings:_*)
