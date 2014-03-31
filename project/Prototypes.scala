@@ -39,8 +39,6 @@ trait Prototypes {
       "Akka" at "http://repo.akka.io/releases"
     ),
 
-    // TODO ensure no snapshots
-    // or resolvers likely to go missing
     resolvers ++= Seq(
       // where Shade lives
       "BionicSpirit Releases" at "http://maven.bionicspirit.com/releases/",
