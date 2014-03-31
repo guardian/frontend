@@ -34,6 +34,13 @@ trait TimingMetricLogging extends Logging { self: TimingMetric =>
   }
 }
 
+object MemcachedMetrics {
+
+  object FilterCacheHit extends SimpleCountMetric("memcache", "memcached-filter-hit", "Memcached filter hits", "Memcached filter hits")
+  object FilterCacheMiss extends SimpleCountMetric("memcache", "memcached-filter-miss", "Memcached filter misses", "Memcached filter misses")
+
+}
+
 object SystemMetrics extends implicits.Numbers {
 
   // divide by 1048576 to convert bytes to MB
@@ -443,10 +450,14 @@ object PerformanceMetrics {
 }
 
 trait CloudWatchApplicationMetrics extends GlobalSettings {
+  import MemcachedMetrics._
   val applicationMetricsNamespace: String = "Application"
   val applicationDimension: Dimension = new Dimension().withName("ApplicationName").withValue(applicationName)
   def applicationName: String
-  def applicationMetrics: Map[String, Double] = Map.empty
+  def applicationMetrics: Map[String, Double] = Map(
+    (s"$applicationName-${FilterCacheHit.name}", FilterCacheHit.getAndReset),
+    (s"$applicationName-${FilterCacheMiss.name}", FilterCacheMiss.getAndReset)
+  )
 
   def systemMetrics: Map[String, Double] = Map(
     (s"$applicationName-max-heap-memory", SystemMetrics.MaxHeapMemoryMetric.getValue().toDouble),
@@ -469,8 +480,8 @@ trait CloudWatchApplicationMetrics extends GlobalSettings {
   )
 
   private def report() {
-    val systemMetrics: Map[String, Double] = this.systemMetrics
-    val applicationMetrics: Map[String, Double] = this.applicationMetrics
+    val systemMetrics  = this.systemMetrics
+    val applicationMetrics  = this.applicationMetrics
     CloudWatch.put("ApplicationSystemMetrics", systemMetrics)
     if (applicationMetrics.nonEmpty) {
       CloudWatch.putWithDimensions(applicationMetricsNamespace, applicationMetrics, Seq(applicationDimension))

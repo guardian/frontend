@@ -7,7 +7,6 @@ import play.api.mvc.{SimpleResult, Request}
 import idapiclient.ScGuU
 import java.net.URLEncoder
 import play.api.mvc.Results._
-import scala.Some
 import play.api.mvc.SimpleResult
 import actions.AuthRequest
 
