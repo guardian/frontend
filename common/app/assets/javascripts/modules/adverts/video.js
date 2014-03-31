@@ -3,13 +3,21 @@ define([
     'common/utils/mediator',
     'common/utils/to-array',
     'bean',
-    'common/utils/ajax'
+    'common/utils/ajax',
+    'common/utils/detect',
+    'common/utils/cookies',
+    'common/modules/adverts/userAdTargeting',
+    'common/modules/adverts/document-write'
 ], function(
     $,
     mediator,
     toArray,
     bean,
-    ajax
+    ajax,
+    detect,
+    cookies,
+    userAdTargeting,
+    documentWrite
 ) {
 
     function Video(config) {
@@ -21,6 +29,7 @@ define([
         this.timer = false;
         this.events = {};
         this.vastData = {trackingEvents: {}};
+        this.xmlSelectors = {};
     }
 
     function VideoEvent(url) {
@@ -165,9 +174,9 @@ define([
     };
 
     Video.prototype.parseVideoAdServingTemplate = function(xml) {
-        this.vastData.trackingEvents.oasImpression = this.getNodeContent(xml.querySelector('Impression URL'));
-        this.vastData.trackingEvents.oasClickThrough = this.getNodeContent(xml.querySelector('ClickTracking URL'));
-        return this.getNodeContent(xml.querySelector('VASTAdTagURL URL'));
+        this.vastData.trackingEvents.oasImpression = this.getNodeContent(xml.querySelector(this.xmlSelectors.impressionUrl));
+        this.vastData.trackingEvents.oasClickThrough = this.getNodeContent(xml.querySelector(this.xmlSelectors.clickTrackUrl));
+        return this.getNodeContent(xml.querySelector(this.xmlSelectors.adUrl));
     };
 
     Video.prototype.getVastData = function(url) {
@@ -183,7 +192,7 @@ define([
             crossOrigin: true,
             success: function(response) {
                 if(response && response.documentElement) {
-                    var thirdParty = response.documentElement.querySelector('VASTAdTagURL');
+                    var thirdParty = response.documentElement.querySelector(self.xmlSelectors.adUrl);
                     if(thirdParty) {
                         var nextUrl = self.parseVideoAdServingTemplate(response.documentElement);
                         self.getVastData(nextUrl);
@@ -196,9 +205,42 @@ define([
     };
 
     Video.prototype.init = function(config) {
-        var id = (config.pageId === '') ? '' : config.pageId + '/',
-            host = (window.location.hostname === 'localhost') ? 'm.code.dev-theguardian.com' :  window.location.hostname,
+
+        var url;
+
+        if (this.config.switches.dfpAdverts) {
+
+            this.xmlSelectors = {
+                'adUrl': 'VASTAdTagURI',
+                'impressionUrl': 'Impression',
+                'clickTrackUrl': 'ClickTracking'
+            };
+
+            var section = this.config.page.section + (this.config.page.isFront ? '/front' : ''),
+                adUnit = '/' + config.dfpAccountId + '/' + config.dfpAdUnitRoot + '/' + section;
+
+            var rawCustParams = documentWrite.generateQueryString(config, userAdTargeting.getUserSegments());
+            rawCustParams += '&at=' + (cookies.get('adtest') || '');
+            rawCustParams += '&bp=' + detect.getBreakpoint();
+            rawCustParams += '&p=ng';
+            var custParams = encodeURIComponent(rawCustParams);
+
+            var timestamp = new Date().getTime();
+
+            url = 'http://' + config.dfpHost + '/gampad/ads?correlator=' + timestamp + '&gdfp_req=1&env=vp&impl=s&output=xml_vast2&unviewed_position_start=1&iu=' + adUnit + '&sz=400x300&scp=slot%3Dvideo&cust_params=' + custParams;
+
+        } else if (this.config.switches.oasAdverts) {
+
+            this.xmlSelectors = {
+                'adUrl': 'VASTAdTagURL URL',
+                'impressionUrl': 'Impression URL',
+                'clickTrackUrl': 'ClickTracking URL'
+            };
+
+            var id = (config.pageId === '') ? '' : config.pageId + '/',
+                host = (window.location.hostname === 'localhost') ? 'm.code.dev-theguardian.com' : window.location.hostname;
             url = 'http://' + config.oasHost + '//2/' + host + '/' + id + 'oas.html/' + (new Date().getTime()) + '@x50';
+        }
 
         this.getVastData(url);
 
