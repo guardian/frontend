@@ -31,7 +31,7 @@
                     <input value="%JustOmnitureToken%" name="INTCMP" type="hidden" />
                 </div>
             </form>
-            <a href="http://www.guardianbookshop.co.uk/" class="commercial__call-to-action">
+            <a href="@AdLink{http://www.guardianbookshop.co.uk/}" class="commercial__call-to-action">
                 <span class="commercial__call-to-action__label">Visit shop</span>
                 <span class="i i-filter-arrow-down"></span>
             </a>
@@ -41,7 +41,7 @@
             <ul class="u-unstyled lineitems">
             @books.map { book =>
                 <li class="lineitem u-cf">
-                    <a href="@book.buyUrl" class="lineitem__link" data-link-name="merchandising-bookshop-v@{version}_@{date}-low-@{book.isbn}-@{book.author}-@{book.title}">
+                    <a href="@AdLink{@book.buyUrl}" class="lineitem__link" data-link-name="merchandising-bookshop-v@{version}_@{date}-low-@{book.isbn}-@{book.author}-@{book.title}">
                     @book.jacketUrl.map { url =>
                         <div class="lineitem__img js-image-upgrade" data-src="@url"></div>
                     }
