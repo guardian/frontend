@@ -15,8 +15,8 @@
     } else {
         @if(DFPAdvertSwitch.isSwitchedOn && !LoadOnlyCommercialComponents.isSwitchedOn) {
 
-            <div class="ad-slot__dfp ad-slot--@id @if(mobileOnly){mobile-only}else{hide-on-mobile}" data-link-name="ad slot @id" data-name="@adSlot.dfpDataName" data-mobile="300,250" data-tabletportrait="300,250">
-                 <div id="inline-ad-slot__@adSlot.dfpDataName" class="ad-container"></div>
+            <div class="ad-slot__dfp ad-slot--@id @if(mobileOnly){mobile-only}else{hide-on-mobile}" data-link-name="ad slot @id" data-name="@adSlot.dfpDataName" data-mobile="300,50" data-tabletportrait="300,250">
+                 <div id="inline-ad-slot__@{adSlot.dfpDataName}@if(mobileOnly){--mobile}" class="ad-container"></div>
             </div>
         }
     }
