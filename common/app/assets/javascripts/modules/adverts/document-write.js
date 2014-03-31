@@ -23,9 +23,13 @@ define([
         return guardian.config.page.oasSiteIdHost + '/' + id + 'oas.html';
     }
 
+    function formatKeyword(keyword) {
+        return keyword.replace(/\s/g, '-').toLowerCase();
+    }
+
     function getKeywords(config) {
         return config.keywords.split(',').map(function(keyword){
-            return 'k=' + encodeURIComponent(keyword.replace(/\s/g, '-').toLowerCase());
+            return 'k=' + encodeURIComponent(formatKeyword(keyword));
         }).join('&');
     }
 
@@ -119,7 +123,8 @@ define([
         load: load,
         generateUrl: generateUrl,
         getKeywords: getKeywords,
-        generateQueryString: generateQueryString
+        generateQueryString: generateQueryString,
+        formatKeyword: formatKeyword
     };
 
 });

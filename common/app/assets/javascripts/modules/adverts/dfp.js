@@ -10,7 +10,8 @@ define([
     'common/utils/detect',
     'common/utils/mediator',
     'common/modules/analytics/commercial/tags/common/audience-science',
-    'common/modules/adverts/userAdTargeting'
+    'common/modules/adverts/userAdTargeting',
+    'common/modules/adverts/document-write'
 ], function (
     $,
     bonzo,
@@ -22,7 +23,8 @@ define([
     detect,
     mediator,
     AudienceScience,
-    UserAdTargeting
+    UserAdTargeting,
+    documentWrite
 ) {
 
     /**
@@ -97,9 +99,16 @@ define([
      */
     DFP.prototype.setPageTargetting = function() {
         var conf         = this.config.page,
-            keywords     = conf.keywords    ? conf.keywords.split(',')       : '',
             section      = conf.section     ? conf.section.toLowerCase()     : '',
-            contentType  = conf.contentType ? conf.contentType.toLowerCase() : '';
+            contentType  = conf.contentType ? conf.contentType.toLowerCase() : '',
+            keywords;
+        if (conf.keywords) {
+            keywords = conf.keywords.split(',').map(function (keyword) {
+                return documentWrite.formatKeyword(keyword).replace('&', 'and');
+            });
+        } else {
+            keywords = '';
+        }
 
         googletag.pubads().setTargeting('a', AudienceScience.getSegments() || [])
                           .setTargeting('at', Cookies.get('adtest') || '')

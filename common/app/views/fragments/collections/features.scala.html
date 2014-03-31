@@ -32,9 +32,7 @@
             @style.adSlot.map { adSlot =>
                     </li>
                     <li class="l-row__item l-row__item--mpu hide-on-mobile">
-                        @if(AdvertSwitch.isSwitchedOn) {
-                            @fragments.inlineAdSlot(id="mpu-in-row-pattern", adSlot=adSlot, mobileOnly=false)
-                        }
+                        @fragments.inlineAdSlot(id="mpu-in-row-pattern", adSlot=adSlot, mobileOnly=false)
                     </li>
                 </ul>
             }
@@ -59,7 +57,5 @@
     }
 }
 @style.adSlot.map { adSlot =>
-    @if(AdvertSwitch.isSwitchedOn && OASAdvertSwitch.isSwitchedOn) {
-        <div class="ad-slot__oas ad-slot--inline mobile-only" data-base="@adSlot.baseName"><div class="ad-slot__label">Advertisement</div><div class="ad-container"></div></div>
-    }
+    @fragments.inlineAdSlot(id="inline", adSlot=adSlot, mobileOnly=true)
 }
