@@ -52,8 +52,8 @@ object Switches extends Collections {
 
   // Load Switches
 
-  val MemcachedFilterSwitch = Switch("Performance Switches", "memcached-filter",
-    "If this switch is switched on then the MemcacheFilter will be operational",
+  val MemcachedSwitch = Switch("Performance Switches", "memcached",
+    "If this switch is switched on then the MemcacheAction will be operational",
     // TODO off by default
     safeState = On,
     // giving this a sell by date even though it is a perf switch as it is still a test.
@@ -403,7 +403,7 @@ object Switches extends Collections {
     IndiaRegionSwitch,
     ABExternalLinksNewWindow,
     ABAbcd,
-    MemcachedFilterSwitch,
+    MemcachedSwitch,
     IncludeBuildNumberInMemcachedKey
   )
 

@@ -8,7 +8,7 @@ import play.api.libs.iteratee.{Enumerator, Iteratee}
 import scala.concurrent.duration._
 import org.apache.commons.codec.digest.DigestUtils
 import DigestUtils.sha256Hex
-import conf.Switches.{MemcachedFilterSwitch, IncludeBuildNumberInMemcachedKey}
+import conf.Switches.{MemcachedSwitch, IncludeBuildNumberInMemcachedKey}
 import common.MemcachedMetrics._
 import scala.Some
 import play.api.mvc.SimpleResult
@@ -16,16 +16,19 @@ import play.api.mvc.ResponseHeader
 import org.joda.time.{Seconds, DateTime}
 import play.api.Play
 import Play.current
+import conf.Configuration
 
 
 case class CachedResponse(result: SimpleResult, body: String)
 
-trait MemcachedSupport extends ExecutionContexts with implicits.Dates {
+private[performance] trait MemcachedSupport extends ExecutionContexts with implicits.Dates {
   import play.api.libs.json._
 
   private val CacheTime = """.*max-age=(\d+).*""".r
 
-  lazy val memcached = Memcached(MemcachedConf("127.0.0.1:11211"), actorSystem.scheduler, memcachedExecutionContext)
+  lazy val isConfigured = Configuration.memcached.host.isDefined
+  lazy val host = Configuration.memcached.host.head
+  lazy val memcached = Memcached(MemcachedConf(host), actorSystem.scheduler, memcachedExecutionContext)
 
   implicit object ResultCodec extends Codec[CachedResponse] {
 
@@ -100,7 +103,7 @@ object MemcachedAction extends Results with MemcachedSupport {
   def apply(block: RequestHeader => Future[SimpleResult]): Action[AnyContent] = Action.async { request =>
 
     // don't cache during tests
-    if (MemcachedFilterSwitch.isSwitchedOn  && !Play.isTest) {
+    if (isConfigured && MemcachedSwitch.isSwitchedOn && !Play.isTest) {
       val cacheKey = CacheKey(request)
       val promiseOfCachedResult = memcached.get[CachedResponse](cacheKey).map(_.map(_.result))
 

@@ -10,7 +10,6 @@ import views.support._
 import views.BodyCleaner
 import scala.concurrent.Future
 import scala.collection.JavaConversions._
-import performance.MemcachedAction
 
 trait ArticleWithStoryPackage {
   def article: Article
@@ -21,7 +20,7 @@ case class LiveBlogPage(article: LiveBlog, storyPackage: List[Trail]) extends Ar
 
 object ArticleController extends Controller with Logging with ExecutionContexts {
 
-  def renderArticle(path: String) = MemcachedAction { implicit request =>
+  def renderArticle(path: String) = Action.async { implicit request =>
     lookup(path) map {
       case Left(model) => render(model)
       case Right(other) => RenderOtherStatus(other)
