@@ -8,7 +8,6 @@ import play.api.libs.json.Json._
 import play.api.libs.json.{JsObject, JsValue}
 import play.api.libs.ws.Response
 import scala.concurrent.Future
-import scala.Some
 import contentapi.QueryDefaults
 import scala.util.Try
 

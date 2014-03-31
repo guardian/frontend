@@ -12,7 +12,6 @@ import scala.concurrent.Future
 import com.gu.identity.model.{StatusFields, User}
 import play.api.test.Helpers._
 import actions.AuthRequest
-import scala.Some
 import play.api.mvc.SimpleResult
 import services.IdentityRequest
 import idapiclient.TrackingData

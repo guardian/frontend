@@ -10,7 +10,6 @@ import org.apache.commons.codec.digest.DigestUtils
 import DigestUtils.sha256Hex
 import conf.Switches.{MemcachedSwitch, IncludeBuildNumberInMemcachedKey}
 import common.MemcachedMetrics._
-import scala.Some
 import play.api.mvc.SimpleResult
 import play.api.mvc.ResponseHeader
 import org.joda.time.{Seconds, DateTime}

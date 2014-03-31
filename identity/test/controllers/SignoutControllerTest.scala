@@ -16,7 +16,6 @@ import scala.concurrent.Future
 import org.joda.time.DateTime
 import play.api.mvc._
 import test.Fake
-import scala.Some
 import idapiclient.responses.CookieResponse
 import idapiclient.UserCookie
 import services.IdentityRequest

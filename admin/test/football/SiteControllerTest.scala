@@ -3,7 +3,6 @@ import org.scalatest.{ShouldMatchers, FreeSpec}
 import play.api.test._
 import play.api.test.Helpers._
 import scala.concurrent.{Await, Future}
-import scala.Some
 import football.services.GetPaClient
 import test.Fake
 
