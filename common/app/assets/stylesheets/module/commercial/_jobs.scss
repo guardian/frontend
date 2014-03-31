@@ -27,7 +27,7 @@
     .commercial__title__last-word {
         font-style: italic;
         @include rem((
-            margin-left: -5px;
+            margin-left: -5px
         ));
     }
     .commercial__home-link {
@@ -99,6 +99,7 @@
         }
     }
     .commercial--jobs__sector__link {
+        position: relative;
         color: $c-neutral1;
         display: block;
         border-top: 1px solid $c-neutral4;
@@ -108,6 +109,10 @@
         ));
     }
     .double-chevron {
-        @include transform(rotate(-90deg));
+        position: absolute;
+        top: 0;
+        right: 0;
+        display: block;
+        @include transform(rotate(90deg));
     }
 }
