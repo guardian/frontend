@@ -7,7 +7,8 @@ define([
     'qwery',
     'bonzo',
     'common/$',
-    'common/modules/analytics/register'
+    'common/modules/analytics/register',
+    'lodash/arrays/intersection'
 ], function (
     common,
     LazyLoad,
@@ -17,7 +18,8 @@ define([
     qwery,
     bonzo,
     $,
-    register
+    register,
+    _intersection
 ) {
 
     function Related() {
@@ -29,8 +31,30 @@ define([
         Related.overrideUrl = url;
     };
 
-    Related.prototype.renderRelatedComponent = function(config, context) {
+    Related.prototype.popularInTagOverride = function(config) {
+        // whitelist of tags to override related story component with a popular-in-tag component
+        if (!config.switches.popularInTag) { return; }
+        var whitelistedTags = [ // order matters here (first match wins)
+            // sport tags
+            "sport/cricket", "sport/rugby-union", "sport/rugbyleague", "sport/formulaone",
+            "sport/tennis", "sport/cycling", "sport/motorsports", "sport/golf", "sport/horse-racing",
+            "sport/boxing", "sport/us-sport", "sport/australia-sport",
+            // football tags
+            "football/championsleague", "football/premierleague", "football/championship",
+            "football/europeanfootball", "football/world-cup-2014",
+            // football team tags
+            "football/manchester-united", "football/chelsea", "football/arsenal",
+            "football/manchestercity", "football/tottenham-hotspur", "football/liverpool"
+        ];
+        var pageTags = config.page.keywordIds.split(',');
 
+        var match = _intersection(whitelistedTags, pageTags);
+        if (match.length > 0) {
+            return '/popular-in-tag/' + match[0] + '.json';
+        }
+    };
+
+    Related.prototype.renderRelatedComponent = function(config, context) {
         var container;
 
         if (config.page && config.page.hasStoryPackage && !Related.overrideUrl) {
@@ -43,12 +67,15 @@ define([
             common.mediator.emit('modules:related:loaded', config, context);
 
         } else if (config.switches && config.switches.relatedContent) {
-            register.begin('related-content');
+            var popularInTag = this.popularInTagOverride(config),
+                componentName = !Related.overrideUrl && popularInTag ? 'related-popular-in-tag' : 'related-content';
+            register.begin(componentName);
 
             container = context.querySelector('.js-related');
             if (container) {
+                container.setAttribute('data-component', componentName);
                 new LazyLoad({
-                    url: Related.overrideUrl || '/related/' + config.page.pageId + '.json',
+                    url: Related.overrideUrl || popularInTag || '/related/' + config.page.pageId + '.json',
                     container: container,
                     success: function () {
                         if (Related.overrideUrl) {
@@ -62,11 +89,11 @@ define([
                         // upgrade images
                         images.upgrade(relatedTrails);
                         common.mediator.emit('modules:related:loaded', config, context);
-                        register.end('related-content');
+                        register.end(componentName);
                     },
                     error: function(req) {
                         common.mediator.emit('module:error', 'Failed to load related: ' + req.statusText, 'common/modules/related.js');
-                        register.error('related-content');
+                        register.error(componentName);
                     }
                 }).load();
             }
