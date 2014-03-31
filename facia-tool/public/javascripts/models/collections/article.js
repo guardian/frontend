@@ -123,7 +123,7 @@ define([
                  ].filter(function(k) { return k; });
 
                 if (missingFields.length) {
-                    vars.model.alertError('ContentApi error! See console for details.');
+                    vars.model.alertError('ContentApi is misbehaving. This front may fail to update.');
                     window.console.error('ContentApi missing: "' + missingFields.join('", "') + '" for ' + this.id);
                 } else {
                     this.state.isLoaded(true);
