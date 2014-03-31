@@ -1,0 +1,12 @@
+@(user: com.gu.identity.model.User, page: MetaData, idRequest: services.IdentityRequest, idUrlBuilder: services.IdentityUrlBuilder)(implicit request: RequestHeader)
+
+@import views.html.fragments.registrationFooter
+
+@identityMain(page, Switches.all){
+}{
+    <div class="identity-wrapper monocolumn-wrapper">
+        <h1 class="identity-title">A fresh validation email has been sent to your account.</h1>
+        <p>Please check your email (@user.getPrimaryEmailAddress) and follow the enclosed link.</p>
+        @registrationFooter(page, idRequest, idUrlBuilder)
+    </div>
+}

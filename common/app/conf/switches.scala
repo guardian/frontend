@@ -121,6 +121,10 @@ object Switches extends Collections {
 
   // Commercial Tags
 
+  val AudienceScienceSwitch = Switch("Commercial Tags", "audience-science",
+    "If this switch is on Audience Science segments will be used to target ads.",
+    safeState = Off, sellByDate = never)
+
   val ImrWorldwideSwitch = Switch("Commercial Tags", "imr-worldwide",
     "Enable the IMR Worldwide audience segment tracking.",
     safeState = Off, sellByDate = profilingEvalDeadline)
@@ -267,7 +271,12 @@ object Switches extends Collections {
 
   val ABExternalLinksNewWindow = Switch("A/B Tests", "ab-external-links-new-window",
     "If this switch is on, AB test opening external links in a new tab/window.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 4, 3)
+    safeState = Off, sellByDate = new DateMidnight(2014, 4, 28)
+  )
+
+  val ABAbcd = Switch("A/B Tests", "ab-abcd",
+    "If this switch is on, an AB test runs to validate the collection ab test data",
+    safeState = Off, sellByDate = new DateMidnight(2014, 4, 28)
   )
 
   // Dummy Switches
@@ -335,6 +344,7 @@ object Switches extends Collections {
     DFPAdvertSwitch,
     LoadOnlyCommercialComponents,
     VideoAdvertSwitch,
+    AudienceScienceSwitch,
     DiscussionSwitch,
     OpenCtaSwitch,
     FontSwitch,
@@ -376,7 +386,8 @@ object Switches extends Collections {
     LeadAdTopPageSwitch,
     OmnitureVerificationSwitch,
     IndiaRegionSwitch,
-    ABExternalLinksNewWindow
+    ABExternalLinksNewWindow,
+    ABAbcd
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
