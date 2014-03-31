@@ -56,6 +56,7 @@ trait ContentApiWrite extends ExecutionContexts with Logging {
           case _   => ContentApiPutFailure.increment()
         }
         log.info(s"Successful Put for ${config.id} to content api with status ${r.status}: ${r.body}")
+        log.info(s"with request body: ${Json.toJson(contentApiPut)}")
       }
       response.onFailure{case e =>
       ContentApiPutFailure.increment()
