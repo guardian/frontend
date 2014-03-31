@@ -54,8 +54,7 @@ object Switches extends Collections {
 
   val MemcachedSwitch = Switch("Performance Switches", "memcached",
     "If this switch is switched on then the MemcacheAction will be operational",
-    // TODO off by default
-    safeState = On,
+    safeState = Off,
     // giving this a sell by date even though it is a perf switch as it is still a test.
     sellByDate = new DateMidnight(2014, 4, 30)
   )
