@@ -56,7 +56,10 @@ object Global extends FaciaToolLifecycle with GlobalSettings with CloudWatchAppl
     super.onStart(app)
     descheduleJobs()
     scheduleJobs()
-    FaciaToolConfigAgent.refresh()
+
+    AkkaAsync {
+      FaciaToolConfigAgent.refresh()
+    }
   }
 
   override def onStop(app: play.api.Application) {

@@ -424,7 +424,9 @@ class SwitchBoardAgent(config: GuardianConfiguration) extends Plugin with Execut
       refresh()
     }
 
-    refresh()
+    AkkaAsync {
+      refresh()
+    }
   }
 
   override def onStop() {
