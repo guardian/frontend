@@ -105,7 +105,7 @@ define([
         if (conf.keywords) {
             keywords = conf.keywords.split(',').map(function (keyword) {
                 return documentWrite.formatKeyword(keyword);
-            })
+            });
         } else {
             keywords = '';
         }
