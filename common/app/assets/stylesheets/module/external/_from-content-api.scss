@@ -18,8 +18,10 @@
     @include fs-bodyCopy(3);
     color: $c-neutral1;
 
-    @include mq(tablet) {
-        @include fs-bodyCopy(4, true);
+    @include mq(desktop) {
+        @include rem((
+            line-height: 28px
+        ));
     }
 
     > p,
@@ -115,7 +117,7 @@
 .from-content-api blockquote {
     font-style: italic;
     @include rem((
-        margin: 28px 0 28px 24px
+        margin: 16px 0 28px 24px
     ));
 
     @include mq(tablet) {
@@ -125,29 +127,13 @@
     }
 
     &.quoted {
-        margin-left: 0;
-        font-style: normal;
         color: $c-neutral2;
 
-        p {
-            @include fs-headline(1);
-            line-height: inherit;
+        @include rem((
+            margin-left: 30px
+        ));
 
-            @include mq(tablet) {
-                @include fs-headline(2, true);
-                line-height: inherit;
-            }
-        }
-        p,
-        h2 {
-            &:first-child {
-                text-indent: map-get($quoted-offset, default);
 
-                @include mq(tablet) {
-                    text-indent: map-get($quoted-offset, tablet);
-                }
-            }
-        }
         > ul:first-child {
             // Fix list and quote icon overlap - #2026
             margin-left: map-get($quoted-offset, default);
