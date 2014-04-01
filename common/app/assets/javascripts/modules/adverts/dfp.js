@@ -119,7 +119,8 @@ define([
                           .setTargeting('bp', detect.getBreakpoint())
                           .setTargeting('cat', section)
                           .setTargeting('ct', contentType)
-                          .setTargeting('gdncrm', UserAdTargeting.getUserSegments() || [])
+                          // leave out CRM data until needed
+                          //.setTargeting('gdncrm', UserAdTargeting.getUserSegments() || [])
                           .setTargeting('k', keywords)
                           .setTargeting('p', 'ng')
                           .setTargeting('pt', contentType)
