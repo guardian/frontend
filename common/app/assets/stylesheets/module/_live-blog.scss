@@ -63,11 +63,8 @@
         border-left-width: 0;
         padding: $gs-baseline/2 ($gs-baseline/3)*2;
         font-style: normal;
-        @include fs-data(4);
+        @include fs-textsans(3);
 
-        @include mq(tablet) {
-            @include fs-data(5, true);
-        }
     }
     // Temporary fix to issue #1674
     .from-content-api blockquote.tweet {
