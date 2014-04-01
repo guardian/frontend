@@ -123,8 +123,7 @@ define([
                     'webPublicationDate',
                     'fields',
                     'fields.headline'
-                 ].map(function(prop) {return deepGet(opts, prop) ? false : prop;})
-                  .filter(function(prop) {return prop;});
+                 ].filter(function(prop) {return !deepGet(opts, prop);});
 
                 if (missingProps.length) {
                     vars.model.alertError('ContentApi is misbehaving. This front may fail to update.');
