@@ -100,7 +100,7 @@ object Switches extends Collections {
     "If this switch is on, comments are displayed on articles. Turn this off if the Discussion API is blowing up.",
     safeState = Off, sellByDate = never
   )
-
+  
   val OpenCtaSwitch = Switch("Performance Switches", "open-cta",
     "If this switch is on, will see a CTA to comments on the right hand side. Turn this off if the Open API is blowing up.",
     safeState = Off, sellByDate = never
@@ -280,6 +280,12 @@ object Switches extends Collections {
     "If this switch is on, the lead ad is placed on top of the page on desktop",
     safeState = Off, sellByDate = new DateMidnight(2014, 4, 30)
   )
+  
+  val RssLinkSwitch = Switch("Feature Switches", "rss-link",
+    "If this switch is on a link to the RSS is rendered in the HTML",
+    safeState = Off, sellByDate = new DateMidnight(2014, 4, 7)
+  )
+
 
   // A/B Test Switches
 
@@ -398,6 +404,7 @@ object Switches extends Collections {
     LayoutHintsSwitch,
     HelveticaEasterEggSwitch,
     LeadAdTopPageSwitch,
+    RssLinkSwitch,
     OmnitureVerificationSwitch,
     IndiaRegionSwitch,
     ABExternalLinksNewWindow,
