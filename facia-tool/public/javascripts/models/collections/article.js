@@ -4,6 +4,7 @@ define([
     'utils/as-observable-props',
     'utils/populate-observables',
     'utils/full-trim',
+    'utils/deep-get',
     'models/group',
     'modules/authed-ajax',
     'modules/content-api',
@@ -15,6 +16,7 @@ define([
         asObservableProps,
         populateObservables,
         fullTrim,
+        deepGet,
         Group,
         authedAjax,
         contentApi,
@@ -109,7 +111,7 @@ define([
         };
 
         Article.prototype.populate = function(opts, withContent) {
-            var missingFields;
+            var missingProps;
 
             populateObservables(this.props,  opts);
             populateObservables(this.meta,   opts.meta);
@@ -117,14 +119,16 @@ define([
             populateObservables(this.state,  opts.state);
 
             if (withContent) {
-                 missingFields = [
-                    opts.fields ? false : 'fields',
-                    opts.fields && opts.fields.headline ? false : 'fields.headline'
-                 ].filter(function(k) { return k; });
+                 missingProps = [
+                    'webPublicationDate',
+                    'fields',
+                    'fields.headline'
+                 ].map(function(prop) {return deepGet(opts, prop) ? false : prop;})
+                  .filter(function(prop) {return prop;});
 
-                if (missingFields.length) {
+                if (missingProps.length) {
                     vars.model.alertError('ContentApi is misbehaving. This front may fail to update.');
-                    window.console.error('ContentApi missing: "' + missingFields.join('", "') + '" for ' + this.id);
+                    window.console.error('ContentApi missing: "' + missingProps.join('", "') + '" for ' + this.id);
                 } else {
                     this.state.isLoaded(true);
                 }
