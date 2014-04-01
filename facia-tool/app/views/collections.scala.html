@@ -81,6 +81,7 @@
     </div>
 
     <div class="right-col" data-bind="css: {'live-mode': $root.liveMode}">
+        <div class="status status-danger" data-bind="text: alertError, visible: alertError"></div>
         <div class="collections__inner scrollable" data-bind="template: {name: 'template_collection', foreach: collections}"></div>
     </div>
 

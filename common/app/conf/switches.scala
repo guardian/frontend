@@ -287,6 +287,11 @@ object Switches extends Collections {
   )
 
 
+  val PopularInTagSwitch = Switch("Feature Switches", "popular-in-tag",
+    "If this switch is turned on then popular-in-tag will override related content for the selected tags.",
+    safeState = Off, sellByDate = new DateMidnight(2014, 5, 14)
+  )
+
   // A/B Test Switches
 
   val ABExternalLinksNewWindow = Switch("A/B Tests", "ab-external-links-new-window",
@@ -405,6 +410,7 @@ object Switches extends Collections {
     HelveticaEasterEggSwitch,
     LeadAdTopPageSwitch,
     RssLinkSwitch,
+    PopularInTagSwitch,
     OmnitureVerificationSwitch,
     IndiaRegionSwitch,
     ABExternalLinksNewWindow,
