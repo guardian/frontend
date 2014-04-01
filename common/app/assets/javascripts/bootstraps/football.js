@@ -54,31 +54,33 @@ define([
                     }
                 });
 
-                if (!match.id && (config.page.isLiveBlog || resp.hasStarted)) {
+                if (!match.id) {
                     scoreContainer.innerHTML = '';
                     scoreBoard.template = config.page.isLiveBlog ? resp.matchSummary : resp.scoreSummary;
 
-                    if(!/^\s+$/.test(scoreBoard.template)) {
+                    if(!/^\s+$/.test(scoreBoard.template) && (config.page.isLiveBlog || resp.hasStarted)) {
                         scoreBoard.render(scoreContainer);
+
+                        $('.tab--min-by-min a', $nav).first().each(function(el) {
+                            bonzo(scoreBoard.elem).addClass('u-fauxlink');
+                            bean.on(scoreBoard.elem, 'click', function() {
+                                window.location = el.getAttribute('href');
+                            });
+                        });
                     }
 
-                    $('.tab--min-by-min a', $nav).first().each(function(el) {
-                        bonzo(scoreBoard.elem).addClass('u-fauxlink');
-                        bean.on(scoreBoard.elem, 'click', function() {
-                            window.location = el.getAttribute('href');
+                    if (resp.hasStarted) {
+                        var statsUrl = $('.tab--stats a', $nav).attr('href').replace(/^.*\/\/[^\/]+/, ''),
+                            statsContainer = bonzo.create('<div class="match-stats__container"></div>'),
+                            matchStats = new MatchStats(statsUrl);
+
+                        page.rightHandComponentVisible(function() {
+                            rhc.addComponent(statsContainer, 3);
+                        }, function() {
+                            $article.append(statsContainer);
                         });
-                    });
-
-                    var statsUrl = $('.tab--stats a', $nav).attr('href').replace(/^.*\/\/[^\/]+/, ''),
-                        statsContainer = bonzo.create('<div class="match-stats__container"></div>'),
-                        matchStats = new MatchStats(statsUrl);
-
-                    page.rightHandComponentVisible(function() {
-                        rhc.addComponent(statsContainer, 3);
-                    }, function() {
-                        $article.append(statsContainer);
-                    });
-                    matchStats.fetch(statsContainer);
+                        matchStats.fetch(statsContainer);
+                    }
                 }
             });
         });
