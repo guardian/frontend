@@ -89,6 +89,13 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   }
 
   override lazy val byline: Option[String] = fields.get("byline")
+
+  val isScottish: Boolean = {
+    byline startsWith ("mc") || 
+    byline contains ("brown") || 
+    byline contains ("thompson") # TODO needs more work 
+  }
+
   override lazy val trailType: Option[String] = {
     if (tags.exists(_.id == "tone/comment")) {
       Option("comment")
