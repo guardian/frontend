@@ -108,3 +108,14 @@
     font-style: normal;
     font-stretch: normal;
 }
+@font-face {
+    font-family: "Proclaimer";
+    src: url('http://pasteup.guim.co.uk/fonts/latin1/Guardian-Proclaimer-1-Web-Reg.eot');
+    src: url('http://pasteup.guim.co.uk/fonts/latin1/Guardian-Proclaimer-1-Web-Reg.eot?#iefix') format('embedded-opentype'),
+         url('http://pasteup.guim.co.uk/fonts/latin1/Guardian-Proclaimer-1-Web-Reg.woff') format('woff'),
+         url('http://pasteup.guim.co.uk/fonts/latin1/Guardian-Proclaimer-1-Web-Reg.ttf') format('truetype'),
+         url('http://pasteup.guim.co.uk/fonts/latin1/Guardian-Proclaimer-1-Web-Reg.svg#Guardian-Text-Proclaimer-Web-Reg') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+}
