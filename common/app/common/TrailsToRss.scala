@@ -20,7 +20,6 @@ object TrailsToRss extends implicits.Collections {
   def apply(title: Option[String], trails: Seq[Trail], url: Option[String] = None, description: Option[String] = None)(implicit request: RequestHeader): String = {
 
     // http://stackoverflow.com/questions/9710185/how-to-deal-with-invalid-characters-in-a-ws-output-when-using-cxf
-    // subjects … Philip Hoare
     def cleanInvalidXmlChars(text: String): String = {
       val re = "[^\\x09\\x0A\\x0D\\x20-\\xD7FF\\xE000-\\xFFFD\\x10000-x10FFFF]".r;
       re.replaceAllIn(text, "")
@@ -110,10 +109,7 @@ object TrailsToRss extends implicits.Collections {
 
     feed.setEntries(entries)
 
-    val writer = new StringWriter()
     val output = new SyndFeedOutput()
-    output.output(feed, writer)
-    writer.close
-    writer.toString
+    output.outputString(feed)
   }
 }
