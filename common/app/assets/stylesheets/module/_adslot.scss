@@ -77,10 +77,13 @@
         @include mq(mobileLandscape, tablet) {
             position: absolute;
             width: 50%;
-            height: 50px;
+            height: 100%;
             text-align: left;
             z-index: -1;
-            margin: 0 auto;
+            @include rem((
+                padding-left: 2px,
+                font-size: 10px
+            ));
         }
     }
     @include mq(tablet) {
