@@ -90,7 +90,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
 
   override lazy val byline: Option[String] = fields.get("byline")
 
-  val isScottish: Boolean = byline.exists { byline =>
+  lazy val isScottish: Boolean = byline.exists { byline =>
     byline.startsWith("Mc") ||
     byline.contains("Brown") ||
     byline.contains("Thompson")
