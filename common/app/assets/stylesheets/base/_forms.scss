@@ -163,7 +163,7 @@
 }
 
 .textarea--mid {
-    min-height: ($gs-baseline/2)*18;
+    min-height: $gs-baseline*9;
 }
 
 .textarea--long {
