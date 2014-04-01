@@ -62,30 +62,51 @@
         min-height: 110px;
     }
 }
-.ad-slot--mpu-in-row-pattern {
-    position: absolute;
-    left: 0;
-    right: 0;
-    @if $browser-supports-flexbox {
-        @include rem((
-            bottom: $mpu-align-offset
-        ));
-    } @else {
-        bottom: 0;
-    }
-    top: 0;
-    padding-top: 0;
-    padding-bottom: 0;
-    width: auto;
+.ad-slot--container-inline {
+    min-height: 50px;
+    @include box-sizing(border-box);
     @include rem((
-        margin: 0 $gs-gutter/2
+        margin: $gs-baseline 0 $gs-baseline/2,
+        padding: 0 $gs-gutter/2 0
     ));
-    background-color: $c-neutral8;
 
-    .ad-container {
+    .ad-slot__label {
+        max-width: 300px;
+        margin: 0 auto;
+
+        @include mq(mobileLandscape, tablet) {
+            position: absolute;
+            width: 50%;
+            height: 50px;
+            text-align: left;
+            z-index: -1;
+            margin: 0 auto;
+        }
+    }
+    @include mq(tablet) {
         position: absolute;
-        bottom: 0;
+        left: 0;
         right: 0;
+        @if $browser-supports-flexbox {
+            @include rem((
+                bottom: $mpu-align-offset
+            ));
+        } @else {
+            bottom: 0;
+        }
+        top: 0;
+        padding: 0;
+        width: auto;
+        @include rem((
+            margin: 0 $gs-gutter / 2
+        ));
+        background-color: $c-neutral8;
+
+        .ad-container {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+        }
     }
 }
 .ad-slot--top-banner-ad {
