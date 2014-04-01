@@ -2,7 +2,7 @@ package performance
 
 import play.api.mvc._
 import scala.concurrent.Future
-import common.{ManifestData, Edition, ExecutionContexts}
+import common.{Logging, ManifestData, Edition, ExecutionContexts}
 import shade.memcached.{Configuration => MemcachedConf, Codec, Memcached}
 import play.api.libs.iteratee.{Enumerator, Iteratee}
 import scala.concurrent.duration._
@@ -97,14 +97,18 @@ private object CacheKey extends implicits.Requests {
   }
 }
 
-object MemcachedAction extends Results with MemcachedSupport {
+object MemcachedAction extends Results with MemcachedSupport with Logging {
 
   def apply(block: RequestHeader => Future[SimpleResult]): Action[AnyContent] = Action.async { request =>
 
     // don't cache during tests
     if (isConfigured && MemcachedSwitch.isSwitchedOn && !Play.isTest) {
       val cacheKey = CacheKey(request)
-      val promiseOfCachedResult = memcached.get[CachedResponse](cacheKey).map(_.map(_.result))
+      val promiseOfCachedResult = memcached.get[CachedResponse](cacheKey).recover{
+        case e: Exception =>
+          log.error("Exception calling memcached", e)
+          None
+      }.map(_.map(_.result))
 
       promiseOfCachedResult.flatMap {
         case Some(cached) =>
