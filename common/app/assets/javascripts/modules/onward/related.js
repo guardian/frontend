@@ -33,7 +33,7 @@ define([
 
     Related.prototype.popularInTagOverride = function(config) {
         // whitelist of tags to override related story component with a popular-in-tag component
-        if (!config.switches.popularInTag) { return; }
+        if (!config.switches.popularInTag || !config.page.keywordIds) { return; }
         var whitelistedTags = [ // order matters here (first match wins)
             // sport tags
             'sport/cricket', 'sport/rugby-union', 'sport/rugbyleague', 'sport/formulaone',
@@ -67,12 +67,12 @@ define([
             common.mediator.emit('modules:related:loaded', config, context);
 
         } else if (config.switches && config.switches.relatedContent) {
-            var popularInTag = this.popularInTagOverride(config),
-                componentName = (!Related.overrideUrl && popularInTag) ? 'related-popular-in-tag' : 'related-content';
-            register.begin(componentName);
-
             container = context.querySelector('.js-related');
             if (container) {
+                var popularInTag = this.popularInTagOverride(config),
+                    componentName = (!Related.overrideUrl && popularInTag) ? 'related-popular-in-tag' : 'related-content';
+                register.begin(componentName);
+
                 container.setAttribute('data-component', componentName);
                 new LazyLoad({
                     url: Related.overrideUrl || popularInTag || '/related/' + config.page.pageId + '.json',
