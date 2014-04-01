@@ -12,17 +12,13 @@ object PopularInTag extends Controller with Related with Logging with ExecutionC
     val edition = Edition(request)
     getPopularInTag(edition, tag) map {
       case Nil => JsonNotFound()
-      case trails => renderPopularInTag(trails, tag)
+      case trails => renderPopularInTag(trails)
     }
   }
 
-  private def renderPopularInTag(trails: Seq[Trail], tagId: String)(implicit request: RequestHeader) = Cached(600) {
+  private def renderPopularInTag(trails: Seq[Trail])(implicit request: RequestHeader) = Cached(600) {
 
-    val containerTitle: String = trails.headOption.flatMap { content =>
-      content.tags.find(_.id == tagId).map( tag => s"Recent in ${tag.webTitle}")
-    }.getOrElse("Related content")
-
-    val html = views.html.fragments.relatedTrails(trails, containerTitle, 10)
+    val html = views.html.fragments.relatedTrails(trails, "Related content", 10)
 
     if (request.isJson)
       JsonComponent(
