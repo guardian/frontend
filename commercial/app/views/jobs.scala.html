@@ -2,36 +2,52 @@
 
 <link rel="stylesheet" href="@Static("stylesheets/commercial.css")" />
 
-<div class="commercial commercial--jobs">
-    <div class="commercial__head">
-        <h2 class="commercial__title">Guardian <span class="commercial__title__last-word">jobs</span></h2>
-        <a href="http://www.guardianbookshop.co.uk/" class="commercial__home-link">
-            Browse all jobs
-            <span class="commercial__home-link__cta">
-                <span class="i i-filter-arrow-down"></span>
-            </span>
-        </a>
-    </div>
-    <div class="commercial__body">
-        <ul class="u-unstyled commercial--jobs__sectors">
-            @Seq(
-                Seq("arts", "Arts"),
-                Seq("graduate", "Graduate"),
-                Seq("social", "Social care"),
-                Seq("charity", "Charity"),
-                Seq("health", "Health"),
-                Seq("higher", "Higher ed"),
-                Seq("environemnt", "Environment"),
-                Seq("housing", "Housing"),
-                Seq("schools", "Schools"),
-                Seq("government", "Government"),
-                Seq("media", "Media"),
-                Seq("jobs", "All sectors")
-            ).map { sector =>
-                <li class="commercial--jobs__sector">
-                    <a href="http://jobs.theguardian.com/@sector(0)" class="commercial--jobs__sector__link">@sector(1) <span class="double-chevron">︽</span></a>
-                </li>
+@defining("http://jobs.theguardian.com") { jobsHost =>
+    <div class="commercial commercial--jobs">
+        <div class="commercial__head">
+            <h2 class="commercial__title">Guardian <span class="commercial__title__last-word">jobs</span></h2>
+            <a href="@jobsHost" class="commercial__home-link">
+                Browse all jobs
+                <span class="commercial__home-link__cta">
+                    <span class="i i-filter-arrow-down"></span>
+                </span>
+            </a>
+        </div>
+        <div class="commercial__body">
+            <ul class="u-unstyled commercial--jobs__sectors">
+                @Seq(
+                    Seq("arts", "Arts"),
+                    Seq("graduate", "Graduate"),
+                    Seq("social", "Social care"),
+                    Seq("charity", "Charity"),
+                    Seq("health", "Health"),
+                    Seq("higher", "Higher ed"),
+                    Seq("environemnt", "Environment"),
+                    Seq("housing", "Housing"),
+                    Seq("schools", "Schools"),
+                    Seq("government", "Government"),
+                    Seq("media", "Media"),
+                    Seq("jobs", "All sectors")
+                ).map { sector =>
+                    <li class="commercial--jobs__sector">
+                        <a href="@jobsHost/@sector(0)" class="commercial--jobs__sector__link">@sector(1) <span class="double-chevron">︽</span></a>
+                    </li>
+                }
+            </ul>
+            @if(jobs.nonEmpty) {
+                <ul class="u-unstyled commercial--jobs__jobs">
+                    @jobs.map { job =>
+                        <li class="commercial--jobs__job">
+                            <a href="@job.listingUrl" class="commercial--jobs__job__link">
+                                <h3 class="commercial--jobs__job__title">@job.title</h3>
+                                <img src="@job.recruiterLogoUrl" class="commercial--jobs__job__logo" />
+                            </a>
+                            <p class="commercial--jobs__job__description">@job.shortDescription</p>
+                            <p class="commercial--jobs__job__recruiter">@job.recruiterName</p>
+                        </li>
+                    }
+                </ul>
             }
-        </ul>
+        </div>
     </div>
-</div>
+}

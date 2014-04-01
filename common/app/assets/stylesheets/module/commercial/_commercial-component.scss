@@ -302,5 +302,16 @@
         margin-left: -10px;
         margin-top: -5.5px;
         @include transform(rotate(-90deg));
+
+        // resize only if it's using the svg
+        @include mq($to: tablet) {
+            .svg & {
+                width: 12px;
+                height: 8px;
+                margin-left: -5px;
+                margin-top: -4px;
+                background-size: contain;
+            }
+        }
     }
 }
