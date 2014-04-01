@@ -132,7 +132,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
     else if (lastModified > DateTime.now - 1.hour) 60 // an hour gives you time to fix obvious typos and stuff
     else 900
   }
-  override def openGraph: List[(String, Any)] = super.openGraph ++ List(
+  override def openGraph: Map[String, Any] = super.openGraph ++ Map(
     "og:title" -> webTitle,
     "og:description" -> trailText.map(StripHtmlTagsAndUnescapeEntities(_)).getOrElse("")
   )
@@ -265,7 +265,7 @@ class Article(content: ApiContentWithMeta) extends Content(content) {
     ("shouldHideAdverts", shouldHideAdverts)
   )
 
-  override def openGraph: List[(String, Any)] = super.openGraph ++ List(
+  override def openGraph: Map[String, Any] = super.openGraph ++ Map(
     "og:type" -> "article",
     "article:published_time" -> webPublicationDate,
     "article:modified_time" -> lastModified,
@@ -322,7 +322,7 @@ class Video(content: ApiContentWithMeta) extends Content(content) {
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
   override lazy val metaData: Map[String, Any] = super.metaData +("content-type" -> contentType, "blockVideoAds" -> blockVideoAds, "source" -> source.getOrElse(""))
 
-  override def openGraph: List[(String, Any)] = super.openGraph ++ List(
+  override def openGraph: Map[String, Any] = super.openGraph ++ Map(
     "og:type" -> "video",
     "og:video:type" -> "text/html",
     "og:video:url" -> webUrl,
@@ -351,7 +351,7 @@ class Gallery(content: ApiContentWithMeta) extends Content(content) {
   // if you change these rules make sure you update IMAGES.md (in this project)
   override def trailPicture: Option[ImageContainer] = thumbnail
 
-  override def openGraph: List[(String, Any)] = super.openGraph ++ List(
+  override def openGraph: Map[String, Any] = super.openGraph ++ Map(
     "og:type" -> "article",
     "article:published_time" -> webPublicationDate,
     "article:modified_time" -> lastModified,

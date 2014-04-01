@@ -208,7 +208,7 @@ define([
 
         var url;
 
-        if (this.config.switches.dfpAdverts) {
+        if (this.config.switches.dfpAdverts && !this.config.switches.loadOnlyCommercialComponents) {
 
             this.xmlSelectors = {
                 'adUrl': 'VASTAdTagURI',

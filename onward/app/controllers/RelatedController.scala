@@ -5,11 +5,12 @@ import model._
 import play.api.mvc.{ RequestHeader, Controller, Action }
 import services._
 import play.api.libs.json.JsArray
+import performance.MemcachedAction
 
 object RelatedController extends Controller with Related with Logging with ExecutionContexts {
 
   def renderJson(path: String) = render(path)
-  def render(path: String) = Action.async { implicit request =>
+  def render(path: String) = MemcachedAction { implicit request =>
     val edition = Edition(request)
     related(edition, path) map {
       case Nil => JsonNotFound()

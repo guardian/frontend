@@ -13,7 +13,6 @@ import org.mockito.Mockito._
 import org.mockito.Matchers
 import test.{TestRequest, Fake}
 import play.api.test.Helpers._
-import scala.Some
 import play.api.mvc.SimpleResult
 import services.IdentityRequest
 import client.Error

@@ -58,7 +58,8 @@
 
     @if $browser-supports-flexbox {
         @include mq(tablet, desktop) {
-            .ad-slot__oas {
+            .ad-slot__oas,
+            .ad-slot__dfp {
                 margin-left: 0;
             }
 
