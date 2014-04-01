@@ -9,15 +9,21 @@ abstract class FrontPage(val isNetworkFront: Boolean) extends MetaData {
 
 object FrontPage {
 
+  val defaultDescription: String = "Latest news, comment and analysis from the Guardian, the world’s leading liberal voice"
+  val networkFrontAnalytics: String = "GFE:Network Front"
+  val defaultWebTitle: String = "Latest news, sport and comment from the Guardian"
+
+  val networkFrontContentType: String = "Network Front"
+
   val defaultFrontPage: FrontPage = new FrontPage(isNetworkFront = true) {
     override val id = ""
     override val section = ""
-    override val webTitle = "Latest news, sport and comment from the Guardian"
-    override lazy val analyticsName = "GFE:Network Front"
-    override lazy val description = Some("Latest news, comment and analysis from the Guardian, the world’s leading liberal voice")
+    override val webTitle = defaultWebTitle
+    override lazy val analyticsName = networkFrontAnalytics
+    override lazy val description = Some(defaultDescription)
 
     override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
-      "content-type" -> "Network Front",
+      "content-type" -> networkFrontContentType,
       "is-front" -> true
     )
   }
