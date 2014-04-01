@@ -46,7 +46,8 @@ object MoreOnMatchController extends Controller with Football with Requests with
           JsonComponent(
             "nav" -> football.views.html.fragments.matchNav(populateNavModel(theMatch, filtered)),
             "matchSummary" -> football.views.html.fragments.matchSummary(theMatch),
-            "scoreSummary" -> football.views.html.fragments.scoreSummary(theMatch)
+            "scoreSummary" -> football.views.html.fragments.scoreSummary(theMatch),
+            "hasStarted" -> theMatch.hasStarted
           )
         }
       }
