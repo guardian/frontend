@@ -54,7 +54,7 @@ define([
                     }
                 });
 
-                if (!match.id) {
+                if (!match.id && (config.page.isLiveBlog || resp.hasStarted)) {
                     scoreContainer.innerHTML = '';
                     scoreBoard.template = config.page.isLiveBlog ? resp.matchSummary : resp.scoreSummary;
 
