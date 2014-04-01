@@ -54,10 +54,11 @@ define([
                     }
                 });
 
-                if (!match.id) {
+                if (!match.id) { // match.id only exists on match stat pages
                     scoreContainer.innerHTML = '';
                     scoreBoard.template = config.page.isLiveBlog ? resp.matchSummary : resp.scoreSummary;
 
+                    // only show scores on liveblogs or started matches
                     if(!/^\s+$/.test(scoreBoard.template) && (config.page.isLiveBlog || resp.hasStarted)) {
                         scoreBoard.render(scoreContainer);
 
