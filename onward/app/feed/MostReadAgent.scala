@@ -12,7 +12,7 @@ object MostReadAgent extends Logging with ExecutionContexts {
   def update() {
     log.info("Refreshing most read.")
 
-    // limiting to sport/football section for popular/related ABTest
+    // limiting to sport/football section for now as this is only used by popular-in-tag component
     val ophanQuery = OphanApi.getMostReadInSection("sport,football", 2, 1000)
 
     ophanQuery.map{ ophanResults =>
