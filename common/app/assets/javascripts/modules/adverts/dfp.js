@@ -291,6 +291,13 @@ define([
     };
 
     DFP.prototype.init = function() {
+
+        if (detect.getBreakpoint() === 'mobile') {
+            $('.ad-slot--mpu-in-row-pattern').removeClass('ad-slot__dfp');
+        } else {
+            $('.ad-slot--inline').removeClass('ad-slot__dfp');
+        }
+
         this.$dfpAdSlots = $(this.config.dfpSelector);
 
         // If there's no ads on the page, then don't load anything
