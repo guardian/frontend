@@ -58,3 +58,4 @@ with DevParametersLifecycle
 with AdminLifecycle
 with DiagnosticsLifecycle
 with OnwardJourneyLifecycle
+with CommercialLifecycle

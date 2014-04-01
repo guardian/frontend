@@ -8,7 +8,6 @@ import play.api.libs.json.Json._
 import play.api.libs.json.{JsObject, JsValue}
 import play.api.libs.ws.Response
 import scala.concurrent.Future
-import scala.Some
 import contentapi.QueryDefaults
 import scala.util.Try
 
@@ -26,10 +25,9 @@ object Seg {
 
 trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging {
 
-  case class InvalidContent(id: String) extends Throwable(s"Invalid Content: $id")
+  case class InvalidContent(id: String) extends Exception(s"Invalid Content: $id")
   val showFieldsQuery: String = FaciaDefaults.showFields
   val showFieldsWithBodyQuery: String = FaciaDefaults.showFieldsWithBody
-  val queryMessage: Option[String] = Option("facia")
 
   case class CollectionMeta(lastUpdated: Option[String], updatedBy: Option[String], updatedEmail: Option[String])
   object CollectionMeta {
@@ -56,6 +54,8 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
       collectionMeta <- getCollectionMeta(response).fallbackTo(Future.successful(CollectionMeta.empty))
       displayName    <- parseDisplayName(response).fallbackTo(Future.successful(None))
       href           <- parseHref(response).fallbackTo(Future.successful(None))
+
+
       contentApiList <- executeContentApiQuery(config.contentApiQuery, edition)
     } yield Collection(
       collectionList,
@@ -148,7 +148,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
           lazy val supportingLinks: List[CollectionItem] = retrieveSupportingLinks(collectionItem)
           if (!hasParent) getArticles(supportingLinks, edition, hasParent=true) else Future.successful(Nil)
         }
-        val response = ContentApi().item(collectionItem.id, edition, queryMessage).showFields(showFieldsWithBodyQuery).response
+        val response = ContentApi().item(collectionItem.id, edition).showFields(showFieldsWithBodyQuery).response
 
         val content = response.map(_.content).recover {
           case apiError: com.gu.openplatform.contentapi.ApiError if apiError.httpStatus == 404 => {
@@ -181,7 +181,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
         } yield {
           itemResponse
             .map(Content(_, supporting, collectionItem.metaData))
-            .map(validateContent)
+            .flatMap(validateContent)
             .map(_ +: contentList)
             .getOrElse(contentList)
         }
@@ -202,7 +202,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
 
     val newSearch = queryString match {
       case Path(Seg("search" ::  Nil)) => {
-        val search = ContentApi().search(edition, queryMessage)
+        val search = ContentApi().search(edition)
           .showElements("all")
           .pageSize(20)
         val newSearch = queryParamsWithEdition.foldLeft(search){
@@ -213,12 +213,12 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
             curated           = Nil,
             editorsPicks      = Nil,
             mostViewed        = Nil,
-            contentApiResults = r.results.map(Content(_)).map(validateContent)
+            contentApiResults = r.results.map(Content(_)).flatMap(validateContent)
           )
         }
       }
       case Path(id)  => {
-        val search = ContentApi().item(id, edition, queryMessage)
+        val search = ContentApi().item(id, edition)
           .showElements("all")
           .showEditorsPicks(true)
           .pageSize(20)
@@ -228,9 +228,9 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
         newSearch.response map { r =>
           Result(
             curated           = Nil,
-            editorsPicks      = r.editorsPicks.map(Content(_)).map(validateContent),
-            mostViewed        = r.mostViewed.map(Content(_)).map(validateContent),
-            contentApiResults = r.results.map(Content(_)).map(validateContent)
+            editorsPicks      = r.editorsPicks.map(Content(_)).flatMap(validateContent),
+            mostViewed        = r.mostViewed.map(Content(_)).flatMap(validateContent),
+            contentApiResults = r.results.map(Content(_)).flatMap(validateContent)
           )
         }
       }
@@ -240,15 +240,25 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
     newSearch
   } getOrElse Future(Result(Nil, Nil, Nil, Nil))
 
-  def validateContent(content: Content): Content = {
+  private def validateContent(content: Content): Option[Content] = {
     Try {
       //These will throw if they don't exist because of unsafe Map.apply
       content.headline.isEmpty
       content.shortUrl.isEmpty
-      content
+      Some(content)
     }.getOrElse {
       FaciaToolMetrics.InvalidContentExceptionMetric.increment()
-      throw new InvalidContent(content.id)
+
+      try {
+        val id = content.id
+        val headline = Option(content.headline)
+        val shortUrl = Option(content.shortUrl)
+        log.error(s"Invalid Content: $id - $shortUrl - $headline")
+      } catch {
+        case e: Throwable => log.error("Could not even validate", e)
+      }
+
+      None
     }
   }
 

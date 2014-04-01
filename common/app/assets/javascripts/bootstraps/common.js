@@ -10,6 +10,7 @@ define([
     //Vendor libraries
     'bonzo',
     'bean',
+    'qwery',
     'enhancer',
     'lodash/objects/assign',
     'lodash/functions/debounce',
@@ -45,7 +46,8 @@ define([
     'common/modules/analytics/commercial/tags/container',
     'common/modules/analytics/foresee-survey',
     'common/modules/onward/right-most-popular',
-    'common/modules/analytics/register'
+    'common/modules/analytics/register',
+    'common/modules/commercial/loader'
 ], function (
     $,
     mediator,
@@ -55,6 +57,7 @@ define([
 
     bonzo,
     bean,
+    qwery,
     enhancer,
     extend,
     debounce,
@@ -91,7 +94,8 @@ define([
     TagContainer,
     Foresee,
     RightMostPopular,
-    register
+    register,
+    CommercialLoader
 ) {
 
     var hasBreakpointChanged = detect.hasCrossedBreakpoint();
@@ -460,8 +464,17 @@ define([
             });
         },
 
-        startRegister: function() {
-            register.initialise();
+        startRegister: function(config) {
+            register.initialise(config);
+        },
+
+        loadCommercialComponent: function(config) {
+            var commercialComponent = /^#commercial-component=(.*)$/.exec(window.location.hash),
+                slot = qwery('.ad-slot__commercial-component').shift();
+            if (commercialComponent && slot) {
+                new CommercialLoader({ config: config })
+                    .init(commercialComponent[1], slot);
+            }
         }
     };
 
@@ -478,6 +491,7 @@ define([
                 modules.runAbTests(config, context);
                 modules.transcludeRelated(config, context);
                 modules.initRightHandComponent(config, context);
+                modules.loadCommercialComponent(config, context);
             }
             mediator.emit('page:common:deferred:loaded', config, context);
         });
@@ -507,7 +521,7 @@ define([
             modules.loadTags(config);
             modules.augmentInteractive();
             modules.runForseeSurvey(config);
-            modules.startRegister();
+            modules.startRegister(config);
         }
         mediator.emit('page:common:ready', config, context);
     };

@@ -28,15 +28,17 @@ object Us extends Edition(
   def navigation(metadata: MetaData) = Seq(
     NavItem(home),
     NavItem(us),
-    NavItem(world),
-    NavItem(sports, Seq(nfl, mlb, nba, mls, nhl, football)),
-    footballNav(metadata),
-    NavItem(cif),
-    NavItem(lifeandstyle),
-    NavItem(culture, Seq(film, music, books, televisionAndRadio, artanddesign, stage)),
-    NavItem(economy),
-    NavItem(technology),
-    NavItem(environment),
-    NavItem(media)
+    NavItem(world, Seq(uk, europeNews, americas, asia, middleEast, africa, australia)),
+    NavItem(opinion),
+    NavItem(sports, Seq(soccer, mls, nfl, mlb, nba, nhl)),
+    NavItem(soccer, footballNav),
+    NavItem(technology, Seq(games)),
+    NavItem(culture, Seq(movies, televisionAndRadio, music, books, artanddesign, stage)),
+    NavItem(lifeandstyle, Seq(foodanddrink, healthandwellbeing, loveAndSex, family, women, homeAndGarden)),
+    NavItem(fashion),
+    NavItem(business, Seq(markets, companies, media)),
+    NavItem(money),
+    NavItem(travel, Seq(usaTravel, europetravel, uktravel)),
+    NavItem(environment, Seq(globalDevelopment, cities))
   )
 }

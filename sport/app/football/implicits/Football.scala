@@ -25,6 +25,10 @@ trait Football extends Collections {
     lazy val squadSheet = c.tags.exists(_.id == "football/series/squad-sheets")
   }
 
+  implicit class Content2preview(c: Content) {
+    lazy val preview = c.tags.exists(_.id == "football/series/match-previews")
+  }
+
   implicit class Match2StatusSummary(m: FootballMatch) {
     lazy val statusSummary = StatusSummary(s"${m.homeTeam.name} v ${m.awayTeam.name}",
       MatchStatus(m.matchStatus).toString, m.homeTeam.score, m.awayTeam.score)
@@ -91,6 +95,7 @@ trait Football extends Collections {
     override lazy val thumbnail: Option[ImageElement] = None
     override lazy val mainPicture = None
     override lazy val url: String = MatchUrl(m)
+    lazy val smartUrl: String = MatchUrl.smartUrl(m)
     override lazy val webUrl: String = ""
     override lazy val section: String = "football"
     override lazy val webPublicationDate: DateTime = m.date

@@ -24,8 +24,8 @@ define([
     var prefix = 'slot',
         rules = { // contentType: [validSlotType1,validSlotType2,...]
             story: ['text'],
-            adRight: ['posth2','block','text'],
-            adBlock: ['preh2', 'block','text']
+            adRight: ['posth2','text'],
+            adBlock: ['preh2', 'text']
         },
         insertionMethods = {
             story: 'largestBucket',

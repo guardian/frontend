@@ -86,9 +86,7 @@ define([
             commentBox = new CommentBox({
                 discussionId: discussionId,
                 maxLength: maxCommentLength,
-                switches: {
-                    discussionVerifiedEmailPosting: true
-                }
+                switches: {}
             });
 
             spyOn(commentBox, 'getUserData').andReturn({

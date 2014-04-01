@@ -5,7 +5,7 @@ import common._
 import implicits.Collections
 import play.api.{Application, Plugin}
 import play.api.libs.ws.WS
-import org.joda.time.DateMidnight
+import org.joda.time.{Days, DateTime, DateMidnight}
 
 sealed trait SwitchState
 case object On extends SwitchState
@@ -32,6 +32,10 @@ case class Switch( group: String,
       delegate.switchOff()
     }
   }
+
+  def daysToExpiry = Days.daysBetween(new DateTime(), sellByDate).getDays
+
+  def expiresSoon = daysToExpiry < 7
 }
 
 object Switches extends Collections {
@@ -47,6 +51,20 @@ object Switches extends Collections {
 
 
   // Load Switches
+
+  val MemcachedSwitch = Switch("Performance Switches", "memcached",
+    "If this switch is switched on then the MemcacheAction will be operational",
+    safeState = Off,
+    // giving this a sell by date even though it is a perf switch as it is still a test.
+    sellByDate = new DateMidnight(2014, 4, 30)
+  )
+
+  val IncludeBuildNumberInMemcachedKey = Switch("Performance Switches", "memcached-build-number",
+    "If this switch is switched on then the MemcacheFilter will include the build number in the cache key",
+    safeState = Off,
+    // giving this a sell by date even though it is a perf switch as it is still a test.
+    sellByDate = new DateMidnight(2014, 4, 30)
+  )
 
   val AutoRefreshSwitch = Switch("Performance Switches", "auto-refresh",
     "Enables auto refresh in pages such as live blogs and live scores. Turn off to help handle exceptional load.",
@@ -65,7 +83,7 @@ object Switches extends Collections {
 
   val CssFromStorageSwitch = Switch("Performance Switches", "css-from-storage",
     "If this switch is on CSS will be cached in users localStorage and read from there on subsequent requests.",
-    safeState = Off, sellByDate = endOfQ4
+    safeState = Off, sellByDate = never
   )
 
   val ElasticSearchSwitch = Switch("Performance Switches", "elastic-search-content-api",
@@ -112,10 +130,14 @@ object Switches extends Collections {
 
   val VideoAdvertSwitch = Switch("Advertising", "video-adverts",
     "If this switch is on then OAS video adverts will be loaded with JavaScript.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 4, 8)
+    safeState = Off, sellByDate = never
   )
 
   // Commercial Tags
+
+  val AudienceScienceSwitch = Switch("Commercial Tags", "audience-science",
+    "If this switch is on Audience Science segments will be used to target ads.",
+    safeState = Off, sellByDate = never)
 
   val ImrWorldwideSwitch = Switch("Commercial Tags", "imr-worldwide",
     "Enable the IMR Worldwide audience segment tracking.",
@@ -197,29 +219,14 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
-  val SponsoredContentSwitch = Switch("Feature Switches", "sponsored-content",
-    "If this is switched on the articles will display a simple 'Advertisement feature' notice.",
-    safeState = Off, sellByDate = endOfQ4
-  )
-
-  val SocialSwitch = Switch("Feature Switches", "social-icons",
-    "Enable the social media share icons (Facebook, Twitter etc.)",
-    safeState = Off, sellByDate = endOfQ4
-  )
-
   val SearchSwitch = Switch("Feature Switches", "google-search",
     "If this switch is turned on then Google search is added to the sections nav.",
-    safeState = Off, sellByDate = endOfQ4
+    safeState = Off, sellByDate = never
   )
 
   val IdentityProfileNavigationSwitch = Switch("Feature Switches", "id-profile-navigation",
     "If this switch is on you will see the link in the topbar taking you through to the users profile or sign in..",
-    safeState = On, sellByDate = endOfQ4
-  )
-
-  val ArticleKeywordsSwitch = Switch("Feature Switches", "article-keywords",
-    "If this is switched on then keywords will be shown at the end of articles.",
-    safeState = On, sellByDate = endOfQ4
+    safeState = On, sellByDate = never
   )
 
   val ClientSideErrorSwitch = Switch("Feature Switches", "client-side-errors",
@@ -229,7 +236,7 @@ object Switches extends Collections {
 
   val FacebookAutoSigninSwitch = Switch("Feature Switches", "facebook-autosignin",
     "If this switch is on then users who have previously authorized the guardian app in facebook and who have not recently signed out are automatically signed in.",
-    safeState = Off, sellByDate = endOfQ4
+    safeState = Off, sellByDate = never
   )
 
   val IdentityFormstackSwitch = Switch("Feature Switches", "id-formstack",
@@ -239,11 +246,7 @@ object Switches extends Collections {
 
   val IdentityEthicalAwardsSwitch = Switch("Feature Switches", "id-ethical-awards",
     "If this switch is on, Ethical awards forms will be available",
-    safeState = Off, sellByDate = endOfQ4)
-
-  val IdentityFilmAwardsSwitch = Switch("Feature Switches", "id-film-awards",
-    "If this switch is on, Film awards forms will be available",
-    safeState = Off, sellByDate = endOfQ4)
+    safeState = Off, sellByDate = new DateMidnight(2014, 5, 15))
 
   val NetworkFrontOptIn = Switch("Feature Switches", "network-front-opt-in",
     "If this is switched on then an opt-in message will be displayed to users coming from the R2 network front",
@@ -253,6 +256,14 @@ object Switches extends Collections {
   val ArticleSlotsSwitch = Switch("Feature Switches", "article-slots",
     "If this switch is on, inline content slots (for stories, ads, etc) will be generated in article bodies",
     safeState = Off, sellByDate = new DateMidnight(2014, 4, 30)
+  )
+
+  val IndiaRegionSwitch = Switch("Feature Switches", "india-region",
+    "If this switch is switched on then the India region will be enabled",
+    safeState = Off,
+    // I know this is far away, but this will lie dormant for a while (other than testing) while
+    // the planets align for the rest of the project
+    sellByDate = new DateMidnight(2014, 10, 30)
   )
 
   val LayoutHintsSwitch = Switch("Feature Switches", "layout-hints",
@@ -270,21 +281,16 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 4, 30)
   )
 
-  val DiscussionVerifiedEmailPosting = Switch("Feature Switches", "discussion-verified-email-posting",
-    "If this switch is on, posters to discussions must have a verified email address.",
-    safeState = Off, sellByDate = endOfQ4
-  )
-
-  val IdentityEmailVerificationSwitch = Switch("Feature Switches", "id-email-verification",
-    "If this switch is on, the option to resend your verification email is displayed.",
-    safeState = Off, sellByDate = endOfQ4
-  )
-
   // A/B Test Switches
 
-  val ABLiveBlogFollowButton = Switch("A/B Tests", "ab-live-blog-follow-button",
-    "If this is switched on an experiment runs to display a follow button on live blogs.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 3, 28)
+  val ABExternalLinksNewWindow = Switch("A/B Tests", "ab-external-links-new-window",
+    "If this switch is on, AB test opening external links in a new tab/window.",
+    safeState = Off, sellByDate = new DateMidnight(2014, 4, 28)
+  )
+
+  val ABAbcd = Switch("A/B Tests", "ab-abcd",
+    "If this switch is on, an AB test runs to validate the collection ab test data",
+    safeState = Off, sellByDate = new DateMidnight(2014, 4, 28)
   )
 
   // Dummy Switches
@@ -352,12 +358,10 @@ object Switches extends Collections {
     DFPAdvertSwitch,
     LoadOnlyCommercialComponents,
     VideoAdvertSwitch,
+    AudienceScienceSwitch,
     DiscussionSwitch,
-    DiscussionVerifiedEmailPosting,
-    IdentityEmailVerificationSwitch,
     OpenCtaSwitch,
     FontSwitch,
-    SocialSwitch,
     SearchSwitch,
     ReleaseMessageSwitch,
     IntegrationTestSwitch,
@@ -365,16 +369,12 @@ object Switches extends Collections {
     IdentityProfileNavigationSwitch,
     CssFromStorageSwitch,
     ElasticSearchSwitch,
-    ArticleKeywordsSwitch,
     FacebookAutoSigninSwitch,
     IdentityFormstackSwitch,
     IdentityEthicalAwardsSwitch,
-    IdentityFilmAwardsSwitch,
-    ABLiveBlogFollowButton,
     ToolDisable,
     ToolConfigurationDisable,
     ToolSparklines,
-    SponsoredContentSwitch,
     OphanSwitch,
     ScrollDepthSwitch,
     ContentApiPutSwitch,
@@ -398,7 +398,12 @@ object Switches extends Collections {
     LayoutHintsSwitch,
     HelveticaEasterEggSwitch,
     LeadAdTopPageSwitch,
-    OmnitureVerificationSwitch
+    OmnitureVerificationSwitch,
+    IndiaRegionSwitch,
+    ABExternalLinksNewWindow,
+    ABAbcd,
+    MemcachedSwitch,
+    IncludeBuildNumberInMemcachedKey
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
@@ -435,7 +440,9 @@ class SwitchBoardAgent(config: GuardianConfiguration) extends Plugin with Execut
       refresh()
     }
 
-    refresh()
+    AkkaAsync {
+      refresh()
+    }
   }
 
   override def onStop() {

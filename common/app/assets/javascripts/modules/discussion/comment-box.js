@@ -91,9 +91,7 @@ CommentBox.prototype.defaultOptions = {
     focus: false,
     state: 'top-level',
     replyTo: null,
-    switches: {
-        discussionVerifiedEmailPosting: false // Off by default here and in backend
-    },
+    switches: {},
     priorToVerificationDate: new Date(1392719401337) // Tue Feb 18 2014 10:30:01 GMT
 };
 
@@ -205,7 +203,7 @@ CommentBox.prototype.postComment = function(e) {
         ValidationEmail.init(self.context);
     };
 
-    if (self.options.switches.discussionVerifiedEmailPosting && !self.getUserData().emailVerified) {
+    if (!self.getUserData().emailVerified) {
         // Cookie could be stale so lets refresh and check from the api
         var createdDate = new Date(self.getUserData().accountCreatedDate);
         if (createdDate > self.options.priorToVerificationDate) {

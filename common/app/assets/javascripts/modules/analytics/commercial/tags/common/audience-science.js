@@ -10,7 +10,7 @@ define([
 
     function getSegments() {
         var segments = storage.local.get('gu.ads.audsci');
-        return (segments) ? segments : [];
+        return (segments) ? segments.slice(0,70) : [];
     }
 
     function load(config) {

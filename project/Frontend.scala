@@ -27,6 +27,8 @@ object Frontend extends Build with Prototypes {
 
       "org.apache.commons" % "commons-math3" % "3.2",
 
+      "com.bionicspirit" %% "shade" % "1.5.0",
+
       "rome" % "rome" % "1.0",
       "org.rometools" % "rome-modules" % "1.0"
     )

@@ -31,7 +31,7 @@ trait MetaData extends Tags {
     "blockVideoAds" -> false
   )
 
-  def openGraph: List[(String, Any)] = List(
+  def openGraph: Map[String, Any] = Map(
     "og:site_name" -> "the Guardian",
     "fb:app_id"    -> Configuration.facebook.appId,
     "og:type"      -> "website",

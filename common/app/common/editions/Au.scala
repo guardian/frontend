@@ -36,7 +36,7 @@ object Au extends Edition(
     NavItem(world),
     NavItem(cif),
     NavItem(sport, Seq(football, cricket, tennis, rugbyunion, cycling, usSport)),
-    footballNav(metadata),
+    NavItem(football, footballNav),
     NavItem(lifeandstyle),
     NavItem(culture),
     NavItem(economy),

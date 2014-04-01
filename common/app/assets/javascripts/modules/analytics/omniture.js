@@ -73,10 +73,14 @@ define([
         };
 
         this.populateEventProperties = function(tag){
-            s.linkTrackVars = 'eVar37,events';
+            s.linkTrackVars = 'eVar37,eVar7,prop37,events';
             s.linkTrackEvents = 'event37';
             s.events = 'event37';
             s.eVar37 = (config.page.contentType) ? config.page.contentType + ':' + tag : tag;
+
+            // this allows 'live' Omniture tracking of Navigation Interactions
+            s.eVar7 = 'D=pageName';
+            s.prop37 = 'D=v37';
         };
 
         // used where we don't have an element to pass as a tag
@@ -219,7 +223,11 @@ define([
                 if (d - ni.time < 60 * 1000) { // One minute
                     s.eVar24 = ni.pageName;
                     s.eVar37 = ni.tag;
-                    s.events   = 'event37';
+                    s.events = 'event37';
+
+                    // this allows 'live' Omniture tracking of Navigation Interactions
+                    s.eVar7 = ni.pageName;
+                    s.prop37 = ni.tag;
                 }
                 storage.session.remove('gu.analytics.referrerVars');
             }

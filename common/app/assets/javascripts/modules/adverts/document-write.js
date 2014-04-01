@@ -23,9 +23,13 @@ define([
         return guardian.config.page.oasSiteIdHost + '/' + id + 'oas.html';
     }
 
+    function formatKeyword(keyword) {
+        return keyword.replace(/\s/g, '-').toLowerCase();
+    }
+
     function getKeywords(config) {
         return config.keywords.split(',').map(function(keyword){
-            return 'k=' + encodeURIComponent(keyword.replace(/\s/g, '-').toLowerCase());
+            return 'k=' + encodeURIComponent(formatKeyword(keyword));
         }).join('&');
     }
 
@@ -50,7 +54,17 @@ define([
 
         var type = 'mjx';
 
-        var query = '?';
+        var url = oasUrl;
+        url = url.replace('[RANDOM]', Math.random().toString().substring(2,11));
+        url = url.replace('[SLOTS]', getSlots(slots));
+        url = url.replace('[REQUEST_TYPE]', type);
+        url = url.replace('[QUERY]', '?' + generateQueryString(config, userSegments));
+
+        return url;
+    }
+
+    function generateQueryString(config, userSegments) {
+        var query = '';
 
         if (config.keywords) {
             query += getKeywords(config);
@@ -64,7 +78,7 @@ define([
             query += '&cat=' + encodeURIComponent(config.section.toLowerCase());
         }
 
-        var segments = audienceScience.getSegments();
+        var segments = audienceScience.getSegments().slice(0, 70);
         if (segments) {
             query += getSegments(segments);
         }
@@ -73,13 +87,7 @@ define([
             query += getUserSegments(userSegments);
         }
 
-        var url = oasUrl;
-        url = url.replace('[RANDOM]', Math.random().toString().substring(2,11));
-        url = url.replace('[SLOTS]', getSlots(slots));
-        url = url.replace('[REQUEST_TYPE]', type);
-        url = url.replace('[QUERY]', query);
-
-        return url;
+        return query;
     }
 
     function handleStateChange(script) {
@@ -114,7 +122,9 @@ define([
     return {
         load: load,
         generateUrl: generateUrl,
-        getKeywords: getKeywords
+        getKeywords: getKeywords,
+        generateQueryString: generateQueryString,
+        formatKeyword: formatKeyword
     };
 
 });

@@ -5,17 +5,21 @@ define([
     'common/modules/analytics/mvt-cookie',
 
     //Current tests
-    'common/modules/experiments/tests/live-blog-follow-button'
+    'common/modules/experiments/tests/external-links-new-window',
+    'common/modules/experiments/tests/abcd'
 ], function (
     common,
     store,
     mediator,
     mvtCookie,
-    LiveBlogFollowButton
+
+    ExternalLinksNewWindow,
+    Abcd
 ) {
 
     var TESTS = [
-            new LiveBlogFollowButton()
+            new ExternalLinksNewWindow(),
+            new Abcd()
        ],
        participationsKey = 'gu.ab.participations';
 
@@ -236,9 +240,9 @@ define([
             try {
                 getActiveTests().forEach(function (test) {
 
-                    if (isParticipating(test)) {
+                    if (isParticipating(test) && testCanBeRun(test, config)) {
                         var variant = getTestVariant(test.id);
-                        if (isTestSwitchedOn(test, config) && variant && variant !== 'notintest') {
+                        if (variant && variant !== 'notintest') {
                             abLogObject['ab' + test.id] = variant;
                         }
                     }

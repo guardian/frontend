@@ -2,61 +2,114 @@
    Soulmates component
    ========================================================================== */
 
-.soulmates-component {
-    background-color: $c-neutral6;
+$soulmates-red: #d70851;
+.commercial--soulmates {
+    background-color: $commercial-component-bg;
+    @include rem((
+        padding: $gs-baseline $gs-gutter/2
+    ));
 
-    .commercial__head {
-        background-color: #deebf9;
+    .commercial__inner {
         position: relative;
-        overflow: hidden;
-        clear: both;
-    }
-    .container__title {
-        width: 25rem !important;
-    }
-    .commercial__subtitle {
-        color: $c-neutral2;
-    }
-    .commercial__body {
-        padding: ($gs-baseline/3)*2 ($gs-gutter/5)*2;
-    }
-
-    /* Entries */
-    .lineitem {
-        text-align: center;
-        float: left;
-        width: 20%;
-    }
-    .lineitem__title {
+        margin: 0 auto;
         @include rem((
-            font-size: 13px
+            max-width: gs-span(16)
         ));
-        line-height: 1.5385;
-        font-weight: bold;
-        margin-top: $gs-baseline/3;
-
-        &:hover {
-            text-decoration: underline;
+    }
+    @include mq(mobileLandscape) {
+        @include rem((
+            padding-left: $gs-gutter,
+            padding-right: $gs-gutter
+        ));
+    }
+    @include mq(tablet) {
+        .commercial__header {
+            float: left;
+            @include rem((
+                width: gs-span(3)
+            ));
         }
     }
-    .lineitem__meta strong {
+    .commercial__logo {
+        float: none;
+        margin-bottom: 0;
+    }
+    .commercial__explainer {
         color: $c-neutral1;
-        font-weight: normal;
+        @include f-headline;
+        @include font-size(14.5, 19);
+        @include rem((
+            margin: $gs-baseline 0 0
+        ));
     }
-    .lineitem__meta {
-        margin-top: -3px;
+    .commercial__buy-now-button {
+        display: none;
+
+        @include mq(tablet) {
+            display: block;
+            background-color: $soulmates-red;
+            position: absolute;
+            border: none;
+            color: #ffffff;
+            bottom: 0;
+            @include fs-headline(1, $size-only: true);
+            @include rem((
+                padding: $gs-baseline/3 $gs-baseline*2
+            ));
+        }
     }
-    .lineitem__image {
-        padding: $gs-baseline/3 $gs-gutter/5;
-        background-color: #ffffff;
-        outline: 0 none;
-        box-shadow: 2px 2px 0 0 rgba(#000000, .15);
-        position: relative;
-        z-index: 2;
+    .commercial__body {
+        padding: 0;
+    }
+    .lineitems {
+        @include rem((
+            margin-top: $gs-baseline
+        ));
+
+        @include mq(tablet) {
+            margin-top: 0;
+            @include rem((
+                margin-right: gs-span(3),
+                padding: 0 $gs-gutter
+            ));
+        }
+    }
+    .lineitem {
+        text-align: center;
+        width: 50%;
+        min-width: 96px;
+        border: 0;
+        float: left;
+        padding: 0;
+
+        &:nth-child(n+3) {
+            display: none;
+        }
+        &:nth-child(2n) .lineitem__link:before {
+            background-color: #5994dd;
+        }
+        &:nth-child(3n) .lineitem__link:before {
+            background-color: #039763;
+        }
+        @include mq(desktop) {
+            width: 33%;
+            &:nth-child(3) {
+                display: block;
+            }
+        }
+        @include mq(wide) {
+            width: 25%;
+            &:nth-child(4) {
+                display: block;
+            }
+        }
     }
     .lineitem__link {
+        padding: 4px;
+        width: 110px;
         margin: 0 auto;
         position: relative;
+        float: none;
 
         &:before {
             content: " ";
@@ -68,63 +121,108 @@
             position: absolute;
             left: 50%;
             z-index: 1;
-            -webkit-transform:rotate(-4deg);
-            -moz-transform:rotate(-4deg);
-            -ms-transform:rotate(-4deg);
-            transform:rotate(-4deg);
+            @include transform(rotate(-4deg));
         }
     }
-    .lineitem {
-        &:nth-child(2n) {
-            .lineitem__link {
-                &:before {
-                    background-color: #5994dd;
-                }
-            }
+    .lineitem__image {
+        background-color: #ffffff;
+        position: relative;
+        z-index: 2;
+        @include box-shadow(2px 2px 0 0 rgba(#000000, .15));
+        @include rem((
+            padding: $gs-baseline/3 $gs-gutter/5
+        ));
+    }
+    .lineitem__title {
+        @include fs-bodyHeading(1, $size-only: true);
+        @include rem((
+            margin-top: $gs-baseline/3
+        ));
+
+        &:hover {
+            text-decoration: underline;
         }
-        &:nth-child(3n) {
-            .lineitem__link {
-                &::before {
-                    background-color: #039763;
-                }
-            }
+    }
+    .lineitem__meta {
+        color: $c-neutral1;
+        @include font-size(11);
+    }
+    .commercial__search {
+        @include rem((
+            margin-top: $gs-baseline
+        ));
+
+        @include mq(tablet) {
+            position: absolute;
+            top: 0;
+            right: 0;
+            margin-top: 0;
+            @include rem((
+                width: gs-span(3)
+            ));
         }
     }
-    @include mq($to: desktop) {
-        display: none;
-    }
-    .container__title {
-        padding: $gs-baseline/3 0 ($gs-baseline/3)*2 0;
-        float: left;
-    }
-    .container__logo {
-        width: 176px;
-        height: 32px;
+    .search__dropdown {
         display: block;
+        border-top: 1px solid  $c-neutral4;
+        overflow: hidden;
+        @include fs-data(3);
+        @include rem((
+            padding-top: $gs-baseline/2,
+            margin-top: $gs-baseline/2
+        ));
+
+        &:first-child {
+            margin-top: 0;
+        }
     }
-}
+    .search__dropdown__options {
+        float: right;
+        border: 0;
+    }
+    $search-submit-cta-diameter: 20px;
+    .search__submit {
+        border: 0;
+        background: transparent;
+        color: $soulmates-red;
+        float: right;
+        position: relative;
+        padding: 0;
+        padding-left: ($search-submit-cta-diameter/4)*5;
+        @include fs-header(1);
+        @include rem((
+            margin-top: $gs-baseline
+        ))
+    }
+    .search__submit__cta {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: $search-submit-cta-diameter;
+        height: $search-submit-cta-diameter;
+        margin-top: -($search-submit-cta-diameter/2);
+        background-color: $soulmates-red;
+        @include rounded-corners(50%);
 
-.soulmates-component__explainer {
-    @include fs-headline(1);
-    color: $c-neutral2;
-    margin-top: $gs-baseline;
-}
+        .i {
+            display: none;
 
-.soulmates-component__buy-now-button {
-    display: inline-block;
-    background-color: #e657ad;
-    position: absolute;
-    @include rem((
-        padding: $gs-baseline/3 $gs-baseline*2,
-        bottom: 19px
-    ));
-    border: none;
-    color: #ffffff !important;
-    font-weight: bold;
-    @include font-size(13, 19);
-    font-family: $serifheadline;
-
-    &:focus {
-        outline: none;
+            $arrow-size: (
+                width: 8px,
+                height: 15px,
+            );
+            .svg & {
+                display: block;
+                background-size: contain;
+                width: map-get($arrow-size, height);
+                height: map-get($arrow-size, width);
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                margin-top: -(map-get($arrow-size, width)/2);
+                margin-left: -(map-get($arrow-size, height)/2 - 2);
+                @include transform(rotate(-90deg));
+            }
+        }
     }
 }
