@@ -6,7 +6,7 @@
     <div class="commercial commercial--jobs">
         <div class="commercial__head">
             <h2 class="commercial__title">Guardian <span class="commercial__title__last-word">jobs</span></h2>
-            <a href="@jobsHost" class="commercial__home-link">
+            <a href="@jobsHost/jobs" class="commercial__home-link">
                 Browse all jobs
                 <span class="commercial__home-link__cta">
                     <span class="i i-filter-arrow-down"></span>
@@ -18,16 +18,16 @@
                 @Seq(
                     Seq("arts", "Arts"),
                     Seq("graduate", "Graduate"),
-                    Seq("social", "Social care"),
+                    Seq("social-care", "Social care"),
                     Seq("charity", "Charity"),
                     Seq("health", "Health"),
-                    Seq("higher", "Higher ed"),
-                    Seq("environemnt", "Environment"),
+                    Seq("higher-education", "Higher ed"),
+                    Seq("environment", "Environment"),
                     Seq("housing", "Housing"),
                     Seq("schools", "Schools"),
                     Seq("government", "Government"),
                     Seq("media", "Media"),
-                    Seq("jobs", "All sectors")
+                    Seq("", "All sectors")
                 ).map { sector =>
                     <li class="commercial--jobs__sector">
                         <a href="@jobsHost/@sector(0)" class="commercial--jobs__sector__link">@sector(1) <span class="double-chevron">︽</span></a>

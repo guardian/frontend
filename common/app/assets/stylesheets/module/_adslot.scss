@@ -168,8 +168,10 @@
 .ad-slot__commercial-component {
     width: 100%;
     min-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
     @include rem((
-        margin-top: $gs-baseline*2
+        margin-top: $gs-baseline
     ));
 }
 
