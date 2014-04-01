@@ -27,6 +27,10 @@
     <link rel="dns-prefetch" href="//oas.theguardian.com" />
     <link rel="dns-prefetch" href="//beacon.www.theguardian.com" />
 
+    @item.rssPath.map { path =>
+      <link href="@{LinkTo(path)}" rel="alternate" type="application/rss+xml" title="@views.support.Title(item) RSS feed" />
+    }
+
     @item.pagination.map{ pagination =>
         @pagination.next.map{ next => <link rel="next" href="@LinkTo(item.url)?page=@next" /> }
         @pagination.previous.map{ prev => <link rel="prev" href="@LinkTo(item.url)@if(prev != 1){?page=@prev}" /> }

@@ -41,6 +41,8 @@ case class Tag(private val delegate: ApiTag, override val pagination: Option[Pag
   lazy val tagWithoutSection = id.split("/")(1) // used for football nav
 
   override lazy val analyticsName = s"GFE:$section:$name"
+  
+  override lazy val rssPath = Some(s"/$id/rss")
 
   override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
     "keywords" -> name,
