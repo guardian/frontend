@@ -76,7 +76,7 @@ trait ConfigAgentTrait extends ExecutionContexts {
     val json = configAgent.get()
     (json \ "fronts" \ path).asOpt[JsValue].map { frontJson =>
       FrontConfig(
-        (frontJson \ "webTitle").asOpt[String]
+        (frontJson \ "webTitle").asOpt[String].filter(_.nonEmpty)
       )
     }
   }.getOrElse(FrontConfig(None)) //Default
