@@ -105,6 +105,9 @@ define([
         if (delta < 0) {
             return false;
 
+        } else if (opts.hideAfter && delta > opts.hideAfter) {
+            return false;
+
         } else if (delta < 55) {
             return delta + getSuffix('s', opts.format || 'short', delta);
 
@@ -143,7 +146,9 @@ define([
         return common.$g('.js-timestamp, .block-time time, .js-item__timestamp', context);
     }
 
-    function replaceValidTimestamps(context) {
+    function replaceValidTimestamps(context, opts) {
+        opts = opts || {};
+
         findValidTimestamps(context).each(function(el) {
             var $el = bonzo(el),
                 timestamp = parseInt($el.attr('data-timestamp'), 10) || $el.attr('datetime'), // Epoch dates are more reliable, fallback to datetime for liveblog blocks
@@ -151,7 +156,8 @@ define([
                 relativeDate = makeRelativeDate(datetime.getTime(), {
                                   // NOTE: if this is in a block (blog), assume we want added time on > 1 day old dates
                                   showTime: bonzo($el.parent()).hasClass('block-time'),
-                                  format:   $el.attr('data-relativeformat')
+                                  format:   $el.attr('data-relativeformat'),
+                                  hideAfter: opts.hideAfter
                                });
 
             $el.removeClass('js-timestamp');
@@ -164,6 +170,8 @@ define([
                     targetEl.setAttribute('title', bonzo(targetEl).text());
                 }
                 targetEl.innerHTML = relativeDate;
+            } else if (opts.hideAfter) {
+                $el.addClass('js-hidden');
             }
         });
     }
@@ -173,8 +181,8 @@ define([
         common.mediator.on('modules:' + module + ':render', replaceValidTimestamps);
     });
 
-    function init(context) {
-        replaceValidTimestamps(context);
+    function init(context, opts) {
+        replaceValidTimestamps(context, opts);
     }
 
     return {
