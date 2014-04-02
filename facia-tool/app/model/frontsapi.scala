@@ -107,8 +107,10 @@ trait UpdateActions extends Logging {
   private def archiveBlock(id: String, block: Block, action: String, identity: Identity): Block =
     archiveBlock(id, block, Json.obj("action" -> action), identity)
 
-  def archiveBlock(id: String, block: Block, updateJson: JsValue, action: String, identity: Identity): Block =
-    archiveBlock(id, block, Json.obj("action" -> action, "update" -> updateJson), identity)
+  def archiveUpdateBlock(id: String, block: Block, updateJson: JsValue, identity: Identity): Block =
+    archiveBlock(id, block, Json.obj("action" -> "update", "update" -> updateJson), identity)
+  def archiveDeleteBlock(id: String, block: Block, updateJson: JsValue, identity: Identity): Block =
+    archiveBlock(id, block, Json.obj("action" -> "delete", "update" -> updateJson), identity)
 
   private def archiveBlock(id: String, block: Block, updateJson: JsValue, identity: Identity): Block =
     Try(FaciaApi.archive(id, block, updateJson, identity)) match {
@@ -131,7 +133,7 @@ trait UpdateActions extends Logging {
     .map(insertIntoDraft(update, _))
     .map(capCollection)
     .map(putBlock(id, _, identity))
-    .map(archiveBlock(id, _, updateJson, "update", identity))
+    .map(archiveUpdateBlock(id, _, updateJson, identity))
     .orElse(createBlock(id, identity, update))
   }
 
@@ -140,7 +142,7 @@ trait UpdateActions extends Logging {
     getBlock(id)
       .map(deleteFromLive(update, _))
       .map(deleteFromDraft(update, _))
-      .map(archiveBlock(id, _, updateJson, "delete", identity))
+      .map(archiveDeleteBlock(id, _, updateJson, identity))
       .map(putBlock(id, _, identity))
   }
 
