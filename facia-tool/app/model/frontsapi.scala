@@ -115,7 +115,7 @@ trait UpdateActions extends Logging {
 
   def putMasterConfig(config: Config, identity: Identity): Option[Config] = {
     FaciaApi.archiveMasterConfig(config, identity)
-    FaciaApi.putMasterConfig(config, identity)
+    FaciaApi.putMasterConfig(config)
   }
 
   def updateCollectionList(id: String, update: UpdateList, identity: Identity): Option[Block] = {
