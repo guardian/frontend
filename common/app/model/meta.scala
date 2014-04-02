@@ -12,6 +12,7 @@ trait MetaData extends Tags {
   def linkText: String = webTitle
   def pagination: Option[Pagination] = None
   def description: Option[String] = None
+  def rssPath: Option[String] = None
 
   // this is here so it can be included in analytics.
   // Basically it helps us understand the impact of changes and needs
