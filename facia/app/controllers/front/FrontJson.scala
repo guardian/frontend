@@ -73,8 +73,9 @@ trait FrontJson extends ExecutionContexts {
     val json = Json.parse(j)
     Option(
       FaciaPage(
-        (json \ "id").as[String],
-        parseOutTuple(json)
+        id          = (json \ "id").as[String],
+        webTitle    = (json \ "webTitle").asOpt[String].filter(_.nonEmpty),
+        collections = parseOutTuple(json)
       )
     )
   }
