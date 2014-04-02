@@ -1,4 +1,8 @@
-define([], function() {
+define([
+    'common/$'
+], function(
+    $
+) {
 
     var oldContainers = [
            'uk/culture/regular-stories',
@@ -13,20 +17,8 @@ define([], function() {
             'uk-alpha/people-in-the-news/feature-stories'
         ];
 
-    function cssDisplayNone(dataIds) {
-        return [].concat(dataIds).map(function(id) {return '.container[data-id="' + id + '"]';}).join(',') + '{display: none}';
-    }
-    
     function hide(ids) {
-        var el = document.createElement('style');
-
-        el.type = 'text/css';
-        if (el.styleSheet) { // IE
-            el.styleSheet.cssText = cssDisplayNone(ids);
-        } else { // Other browsers
-            el.innerHTML = cssDisplayNone(ids);
-        }
-        document.body.appendChild(el);
+        $([].concat(ids).map(function(id) {return '.container[data-id="' + id + '"]';}).join(',')).addClass('js-hidden');
     }
     
     var hideOld = hide.bind(null, oldContainers);
@@ -39,7 +31,7 @@ define([], function() {
         this.audienceOffset = 0.0;
         this.description = 'Testing new blended containers on the UK network front';
         this.canRun = function() {
-            return ['/uk'].indexOf(window.location.pathname) > -1;
+            return ['/uk', '/uk-alpha'].indexOf(window.location.pathname) === 0;
         };
         this.variants = [
             {
