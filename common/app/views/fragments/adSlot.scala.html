@@ -19,7 +19,13 @@
         </div>
     } else {
         @if(DFPAdvertSwitch.isSwitchedOn && !LoadOnlyCommercialComponents.isSwitchedOn) {
-            <div class="ad-slot__dfp ad-slot--@id" data-name="top" data-mobile="300,50|320,50" data-tabletportrait="728,90" data-tabletlandscape="900,250|728,90">
+            <div
+                class="ad-slot__dfp ad-slot--@id"
+                data-name="top"
+                data-label="false"
+                data-mobile="300,50|320,50"
+                data-tabletportrait="728,90"
+                data-tabletlandscape="728,90|900,250">
                  <div id="dfp-ad-@id" class="ad-container"></div>
             </div>
         }

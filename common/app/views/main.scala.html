@@ -15,11 +15,7 @@
     itemscope itemtype="http://schema.org/WebPage">
 
     @fragments.message(metaData)
-    @if(LeadAdTopPageSwitch.isSwitchedOn) {
-        <div class="top-banner-ad-container top-banner-ad-container--above-header">
-            @fragments.adSlot(id="top-banner-ad", baseSlot="Top2", medianSlot="Top", extendedSlot="Top")
-        </div>
-    }
+
     @fragments.header(metaData)
 
     <div id="js-context" class="gs-container">

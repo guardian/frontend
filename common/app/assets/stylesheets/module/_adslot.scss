@@ -133,29 +133,6 @@
     @include mq(wide) {
         margin-left: gs-span(3) + ($gs-gutter*2);
     }
-    .ad-slot__label {
-        display: none;
-    }
-}
-.top-banner-ad-container--above-header {
-    &,
-    .ad-slot {
-        display: none;
-
-        @include mq(desktop) {
-            display: block;
-        }
-    }
-}
-.top-banner-ad-container--below-header {
-    &,
-    .ad-slot {
-        display: block;
-
-        @include mq(desktop) {
-            display: none;
-        }
-    }
 }
 .mpu-context {
     // Provides context to sticky positioned blocks
