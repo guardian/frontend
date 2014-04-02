@@ -98,6 +98,8 @@ trait UpdateActions extends Logging {
   def putBlock(id: String, block: Block, identity: Identity): Block =
     FaciaApi.putBlock(id, block, identity)
 
+  def archiveBlock(id: String, block: Block, update: JsValue, action: String, identity: Identity): Block =
+    archiveBlock(id, block, Json.obj("action" -> action, "update" -> update), identity)
   def archiveBlock(id: String, block: Block, update: JsValue, identity: Identity): Block =
     Try(FaciaApi.archive(id, block, update, identity)) match {
       case Failure(t: Throwable) => {
@@ -119,7 +121,7 @@ trait UpdateActions extends Logging {
     .map(insertIntoDraft(update, _))
     .map(capCollection)
     .map(putBlock(id, _, identity))
-    .map(archiveBlock(id, _, updateJson, identity))
+    .map(archiveBlock(id, _, updateJson, "update", identity))
     .orElse(createBlock(id, identity, update))
   }
 
@@ -128,7 +130,7 @@ trait UpdateActions extends Logging {
     getBlock(id)
       .map(deleteFromLive(update, _))
       .map(deleteFromDraft(update, _))
-      .map(archiveBlock(id, _, updateJson, identity))
+      .map(archiveBlock(id, _, updateJson, "delete", identity))
       .map(putBlock(id, _, identity))
   }
 
