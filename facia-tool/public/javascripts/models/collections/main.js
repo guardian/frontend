@@ -35,6 +35,8 @@ define([
 
         var model = vars.model = {};
 
+        model.alertError = ko.observable();
+
         model.collections = ko.observableArray();
 
         model.fronts = ko.observableArray();

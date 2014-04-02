@@ -22,7 +22,6 @@
 
                 @fragments.witnessCallToAction(article)
                 <div class="after-header">
-                    <a href="http://next.theguardian.com/follow-a-blog.html?blog=@helper.urlEncode(article.webTitle)" id="follow-btn" class="submit-input follow-btn is-invisible">Follow</a>
                 </div>
             </div>
             <div class="article__columning-wrapper">
@@ -80,7 +79,7 @@
                                                 @fragments.social(article, "next to content")
                                             </div>
                                             @if(OASAdvertSwitch.isSwitchedOn) {
-                                                <div class="ad-slot__oas ad-slot--mpu-banner-ad" data-link-name="ad slot mpu-banner-ad" data-base="Middle" data-median="Middle"><div class="ad-slot__label">
+                                                <div class="ad-slot__oas ad-slot--mpu-banner-ad" data-link-name="ad slot mpu-banner-ad" data-base="" data-median="Middle"><div class="ad-slot__label">
                                                     Advertisement</div><div class="ad-container"></div></div>
                                             }
                                             @if(DFPAdvertSwitch.isSwitchedOn && !LoadOnlyCommercialComponents.isSwitchedOn) {

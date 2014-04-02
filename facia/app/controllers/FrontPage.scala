@@ -3,7 +3,9 @@ package controllers
 import model.MetaData
 
 
-abstract class FrontPage(val isNetworkFront: Boolean) extends MetaData
+abstract class FrontPage(val isNetworkFront: Boolean) extends MetaData {
+  override lazy val rssPath = Some(s"/$id/rss")
+}
 
 object FrontPage {
 

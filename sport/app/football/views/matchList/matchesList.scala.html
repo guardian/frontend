@@ -6,13 +6,12 @@
         <tr>
             <th class="match__status">Match status / kick off time</th>
             <th class="match__details">Match details</th>
-            <th class="match__report">Reports</th>
         </tr>
     </thead>
 
     <tbody>
         @matchesList.map{ theMatch =>
-            <tr data-link-to="@LinkTo{@theMatch.url}"
+            <tr data-link-to="@LinkTo{@theMatch.smartUrl}"
                 data-match-id="@theMatch.id"
                 data-score-home="@theMatch.homeTeam.score"
                 data-score-away="@theMatch.awayTeam.score"
@@ -32,7 +31,7 @@
                     }
                 </td>
                 <td class="football-match__teams table-column--main">
-                    <div class="football-teams u-cf">
+                    <a href="@LinkTo{@theMatch.smartUrl}" class="unstyled football-teams u-cf" data-link-name="match-redirect">
                         <div class="football-match__team football-match__team--home football-team">
                             <div class="football-team__name">@theMatch.homeTeam.name</div>
                             <div class="football-team__score">@theMatch.homeTeam.score</div>
@@ -54,10 +53,7 @@
                         </div>
 
                         <div class="football-teams__battleline"></div>
-                    </div>
-                </td>
-                <td class="football-match__report">
-                    <a href="@LinkTo{@theMatch.url}" data-link-name="stats" data-match-id="@theMatch.id">Match stats</a>
+                    </a>
                 </td>
             </tr>
         }

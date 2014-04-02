@@ -54,31 +54,34 @@ define([
                     }
                 });
 
-                if (!match.id) {
+                if (!match.id) { // match.id only exists on match stat pages
                     scoreContainer.innerHTML = '';
                     scoreBoard.template = config.page.isLiveBlog ? resp.matchSummary : resp.scoreSummary;
 
-                    if(! /^\s+$/.test(scoreBoard.template)) {
+                    // only show scores on liveblogs or started matches
+                    if(!/^\s+$/.test(scoreBoard.template) && (config.page.isLiveBlog || resp.hasStarted)) {
                         scoreBoard.render(scoreContainer);
+
+                        $('.tab--min-by-min a', $nav).first().each(function(el) {
+                            bonzo(scoreBoard.elem).addClass('u-fauxlink');
+                            bean.on(scoreBoard.elem, 'click', function() {
+                                window.location = el.getAttribute('href');
+                            });
+                        });
                     }
 
-                    $('.tab--min-by-min a', $nav).first().each(function(el) {
-                        bonzo(scoreBoard.elem).addClass('u-fauxlink');
-                        bean.on(scoreBoard.elem, 'click', function() {
-                            window.location = el.getAttribute('href');
+                    if (resp.hasStarted) {
+                        var statsUrl = $('.tab--stats a', $nav).attr('href').replace(/^.*\/\/[^\/]+/, ''),
+                            statsContainer = bonzo.create('<div class="match-stats__container"></div>'),
+                            matchStats = new MatchStats(statsUrl);
+
+                        page.rightHandComponentVisible(function() {
+                            rhc.addComponent(statsContainer, 3);
+                        }, function() {
+                            $article.append(statsContainer);
                         });
-                    });
-
-                    var statsUrl = $('.tab--stats a', $nav).attr('href').replace(/^.*\/\/[^\/]+/, ''),
-                        statsContainer = bonzo.create('<div class="match-stats__container"></div>'),
-                        matchStats = new MatchStats(statsUrl);
-
-                    page.rightHandComponentVisible(function() {
-                        rhc.addComponent(statsContainer, 3);
-                    }, function() {
-                        $article.append(statsContainer);
-                    });
-                    matchStats.fetch(statsContainer);
+                        matchStats.fetch(statsContainer);
+                    }
                 }
             });
         });
@@ -96,8 +99,8 @@ define([
         page.isLiveClockwatch(function() {
             var ml = new MatchList('live', 'premierleague'),
                 $img = $('.media-primary'),
-                $matchListContainer = bonzo(bonzo.create('<div class="football-match__list" data-link-name="football-matches-clockwatch"></div>'))
-                                          .css({ minHeight: $img[0].offsetHeight });
+                $matchListContainer = $.create('<div class="football-matches__container" data-link-name="football-matches-clockwatch"></div>')
+                                          .css({ minHeight: $img[0] ? $img[0].offsetHeight : 0 });
 
             $img.addClass('u-h');
             loading($matchListContainer[0], 'Fetching today\'s matches…', { text: 'Impatient?', href: '/football/live' });
@@ -113,6 +116,7 @@ define([
                     $matchListContainer.remove();
                     $img.removeClass('u-h');
                 }
+                $matchListContainer.css({ minHeight: 0 });
                 loaded($matchListContainer[0]);
             });
         });

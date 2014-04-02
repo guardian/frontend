@@ -10,7 +10,6 @@ define([
     'common/modules/discussion/loader',
     'common/modules/ui/notification-counter',
     'common/modules/open/cta',
-    'common/modules/commercial/loader',
     'common/modules/experiments/layoutHints'
 ], function (
     common,
@@ -24,7 +23,6 @@ define([
     DiscussionLoader,
     NotificationCounter,
     OpenCta,
-    CommercialLoader,
     Layout
 ) {
 

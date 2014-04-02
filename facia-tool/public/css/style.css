@@ -18,6 +18,13 @@ a, a:hover {
     cursor: pointer;
 }
 
+.status-danger {
+    background: #d61d00;
+    color: #FFFFFF;
+    padding: 2px 10px;
+    margin: 0 0 10px 0;
+}
+
 .scrollable {
     overflow-y: scroll;
 }
@@ -834,13 +841,16 @@ button {
 
 .cnf-form {
     overflow: auto;
+    margin: 0 0 10px 0;
 }
 
 .cnf-form label {
+    font-size: 12px;
     color: #999999;
-    width: 80px;
+    width: 65px;
     float: left;
     clear: left;
+    margin: 1px 0 0 0;
 }
 
 .cnf-form input,

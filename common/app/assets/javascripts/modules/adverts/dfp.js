@@ -10,7 +10,10 @@ define([
     'common/utils/detect',
     'common/utils/mediator',
     'common/modules/analytics/commercial/tags/common/audience-science',
-    'common/modules/adverts/userAdTargeting'
+    'common/modules/adverts/userAdTargeting',
+    'common/modules/adverts/document-write',
+    'lodash/arrays/flatten',
+    'lodash/arrays/uniq'
 ], function (
     $,
     bonzo,
@@ -22,7 +25,10 @@ define([
     detect,
     mediator,
     AudienceScience,
-    UserAdTargeting
+    UserAdTargeting,
+    documentWrite,
+    _flatten,
+    _uniq
 ) {
 
     /**
@@ -97,19 +103,28 @@ define([
      */
     DFP.prototype.setPageTargetting = function() {
         var conf         = this.config.page,
-            keywords     = conf.keywords    ? conf.keywords.split(',')       : '',
             section      = conf.section     ? conf.section.toLowerCase()     : '',
-            contentType  = conf.contentType ? conf.contentType.toLowerCase() : '';
+            contentType  = conf.contentType ? conf.contentType.toLowerCase() : '',
+            keywords;
+        if (conf.keywords) {
+            keywords = conf.keywords.split(',').map(function (keyword) {
+                return documentWrite.formatKeyword(keyword).replace('&', 'and');
+            });
+        } else {
+            keywords = '';
+        }
 
         googletag.pubads().setTargeting('a', AudienceScience.getSegments() || [])
                           .setTargeting('at', Cookies.get('adtest') || '')
                           .setTargeting('bp', detect.getBreakpoint())
                           .setTargeting('cat', section)
                           .setTargeting('ct', contentType)
-                          .setTargeting('gdncrm', UserAdTargeting.getUserSegments() || [])
+                          // leave out CRM data until needed
+                          //.setTargeting('gdncrm', UserAdTargeting.getUserSegments() || [])
                           .setTargeting('k', keywords)
                           .setTargeting('p', 'ng')
-                          .setTargeting('pt', contentType);
+                          .setTargeting('pt', contentType)
+                          .setTargeting('url', window.location.pathname);
     };
 
     /**
@@ -126,7 +141,15 @@ define([
             var id          = adSlot.querySelector(self.config.adContainerClass).id,
                 name        = adSlot.getAttribute('data-name'),
                 sizeMapping = self.defineSlotSizes(adSlot),
-                size        = [sizeMapping[0][1][0], sizeMapping[0][1][1]],
+                // as we're using sizeMapping, pull out all the ad sizes, as an array of arrays
+                size        = _uniq(
+                                  _flatten(sizeMapping, true, function(map) {
+                                      return map[1];
+                                  }),
+                                  function(size) {
+                                      return size[0] + '-' + size[1];
+                                  }
+                              ),
                 refresh     = adSlot.getAttribute('data-refresh') !== 'false',
 
                 slot = googletag.defineSlot(account, size, id)
@@ -268,6 +291,13 @@ define([
     };
 
     DFP.prototype.init = function() {
+
+        if (detect.getBreakpoint() === 'mobile') {
+            $('.ad-slot--mpu-in-row-pattern').removeClass('ad-slot__dfp');
+        } else {
+            $('.ad-slot--inline').removeClass('ad-slot__dfp');
+        }
+
         this.$dfpAdSlots = $(this.config.dfpSelector);
 
         // If there's no ads on the page, then don't load anything

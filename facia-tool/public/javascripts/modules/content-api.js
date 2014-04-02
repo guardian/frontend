@@ -34,31 +34,31 @@ function (
         return defer.promise();
     }
 
-    function decorateItems (items) {
+    function decorateItems (articles) {
         var ids = [];
 
-        items.forEach(function(item){
-            var data = cache.get('contentApi', item.id);
+        articles.forEach(function(article){
+            var data = cache.get('contentApi', article.id);
             if(data) {
-                populate(data, item);
+                populate(data, article);
             } else {
-                ids.push(item.id);
+                ids.push(article.id);
             }
         });
 
         fetchData(ids)
         .done(function(results){
-            results.forEach(function(article){
-                cache.put('contentApi', article.id, article);
-                _.filter(items, function(item){
-                    return item.id === article.id;
-                }).forEach(function(item){
-                    populate(article, item);
+            results.forEach(function(result) {
+                cache.put('contentApi', result.id, result);
+                _.filter(articles, function(article){
+                    return article.id === result.id;
+                }).forEach(function(article){
+                    populate(result, article);
                 });
             });
 
-            _.each(items, function(item){
-                item.state.isEmpty(!item.state.isLoaded());
+            _.each(articles, function(article){
+                article.state.isEmpty(!article.state.isLoaded());
             });
         });
     }

@@ -63,6 +63,7 @@
     overflow: hidden;
 }
 .commercial__search__input {
+    @include rounded-corners(0);
     @include box-sizing(border-box);
     width: 100%;
     height: $gs-row-height;
