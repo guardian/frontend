@@ -39,4 +39,5 @@ object Collection {
 
 case class FaciaPage(
                    id: String,
+                   webTitle: Option[String],
                    collections: List[(Config, Collection)])
