@@ -10,7 +10,6 @@ define([], function() {
         ],
 
         newContainers = [
-            'uk-alpha/contributors/feature-stories',
             'uk-alpha/people-in-the-news/feature-stories'
         ];
 
