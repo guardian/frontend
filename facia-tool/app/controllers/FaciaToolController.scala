@@ -131,7 +131,6 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
             Ok(Json.toJson(updatedCollections)).as("application/json")
           else
             NotFound
-        case _ => NotFound
       } getOrElse NotFound
     }
   }
