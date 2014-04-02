@@ -2,11 +2,13 @@
 
 <link rel="stylesheet" href="@Static("stylesheets/commercial.css")" />
 
-@defining("http://jobs.theguardian.com") { jobsHost =>
+@defining("http://jobs.theguardian.com", "0_1", "2014-04-02") { case (jobsHost, version, date) =>
     <div class="commercial commercial--jobs">
         <div class="commercial__head">
             <h2 class="commercial__title">Guardian <span class="commercial__title__last-word">jobs</span></h2>
-            <a href="@jobsHost/jobs" class="commercial__home-link">
+            <a href="@jobsHost/jobs"
+                class="commercial__home-link"
+                data-link-name="merchandising-jobs-v@{version}_@{date}-low-profile-browse-all-jobs">
                 Browse all jobs
                 <span class="commercial__home-link__cta">
                     <span class="i i-filter-arrow-down"></span>
@@ -30,7 +32,11 @@
                     Seq("", "All sectors")
                 ).map { sector =>
                     <li class="commercial--jobs__sector">
-                        <a href="@jobsHost/@sector(0)" class="commercial--jobs__sector__link">@sector(1) <span class="i i-double-chevron"></span></a>
+                        <a href="@jobsHost/@sector(0)"
+                           class="commercial--jobs__sector__link"
+                           data-link-name="merchandising-jobs-v@{version}_@{date}-low-profile-sector-@sector(0)">
+                            @sector(1) <span class="i i-double-chevron"></span>
+                        </a>
                     </li>
                 }
             </ul>
@@ -38,7 +44,9 @@
                 <ul class="u-unstyled commercial--jobs__jobs">
                     @jobs.map { job =>
                         <li class="commercial--jobs__job">
-                            <a href="@job.listingUrl" class="commercial--jobs__job__link">
+                            <a href="@job.listingUrl"
+                               class="commercial--jobs__job__link"
+                               data-link-name="merchandising-jobs-v@{version}_@{date}-low-profile-job-@{job.id}">
                                 <h3 class="commercial--jobs__job__title">@job.title</h3>
                                 <img src="@job.recruiterLogoUrl" class="commercial--jobs__job__logo" />
                             </a>
