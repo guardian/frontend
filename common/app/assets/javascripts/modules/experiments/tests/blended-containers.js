@@ -5,6 +5,7 @@ define([
 ) {
 
     var oldContainers = [
+           'uk/commentisfree/regular-stories',
            'uk/culture/regular-stories',
            'uk/business/regular-stories',
            'uk/lifeandstyle/regular-stories',
@@ -14,6 +15,7 @@ define([
         ],
 
         newContainers = [
+            'uk-alpha/contributors/feature-stories',
             'uk-alpha/people-in-the-news/feature-stories'
         ];
 
