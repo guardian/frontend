@@ -71,6 +71,10 @@
         &:last-child .commercial--jobs__sector__link {
             font-weight: bold;
             color: $c-newsDefault;
+
+            .i {
+                background-color: $c-newsDefault;
+            }
         }
         @include mq($to: desktop) {
             &:nth-child(2n+1) .commercial--jobs__sector__link {
@@ -92,6 +96,10 @@
                 .commercial--jobs__sector__link {
                     padding-top: 0;
                     border-top: 0;
+
+                    .i {
+                        top: 0;
+                    }
                 }
             }
         }
@@ -104,6 +112,10 @@
                 .commercial--jobs__sector__link {
                     border-top: 0;
                     padding-top: 0;
+
+                    .i {
+                        top: 0;
+                    }
                 }
             }
             &:nth-child(3n+1) .commercial--jobs__sector__link {
@@ -133,6 +145,15 @@
         @include rem((
             padding-top: $gs-baseline/3,
         ));
+
+        .i {
+            position: absolute;
+            right: 0;
+            background-color: $c-neutral4;
+            @include rem((
+                top: $gs-baseline/3
+            ));
+        }
     }
     .commercial--jobs__jobs {
         border-top: 1px solid $c-neutral4;
@@ -159,6 +180,9 @@
         float: left;
         @include box-sizing(border-box);
 
+        &:nth-child(n+2) {
+            display: none;
+        }
         @include mq(tablet) {
             border-left: 2px solid $c-neutral4;
             @include rem((
@@ -170,11 +194,7 @@
             @include rem((
                 width: gs-span(3.5)
             ));
-        }
-        &:nth-child(n+2) {
-            display: none;
-        }
-        @include mq(wide) {
+
             &:nth-child(2) {
                 display: block;
             }
@@ -197,11 +217,7 @@
             margin: $gs-baseline/2 0 0
         ));
     }
-    .double-chevron {
-        position: absolute;
-        top: 0;
-        right: 0;
-        display: block;
-        @include transform(rotate(90deg));
+    .commercial--jobs__job__recruiter {
+        @include fs-data(5);
     }
 }
