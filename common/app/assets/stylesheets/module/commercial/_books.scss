@@ -171,9 +171,9 @@
     }
     @include mq(desktop) {
         .lineitem {
-            width: 25%;
+            width: 20%;
 
-            &:nth-child(4) {
+            &:nth-child(n+4) {
                 display: block;
             }
         }
@@ -181,13 +181,6 @@
     @include mq(wide) {
         .commercial__header {
             width: gs-span(4);
-        }
-        .lineitem {
-            width: 20%;
-
-            &:nth-child(5) {
-                display: block;
-            }
         }
     }
 }
