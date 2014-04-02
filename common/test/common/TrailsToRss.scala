@@ -31,8 +31,8 @@ class TrailsToRssTest extends FlatSpec with Matchers {
 case class TestTrail(url: String) extends Trail {
   def webPublicationDate: DateTime = DateTime.now
   def shortUrl: String = ""
-  def linkText: String = ""
-  def headline: String = "hello …"
+  def linkText: String = "hello …"
+  def headline: String = ""
   def webUrl: String = ""
   def trailText: Option[String] = None
   def section: String = ""
