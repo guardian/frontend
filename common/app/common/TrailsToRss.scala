@@ -96,7 +96,7 @@ object TrailsToRss extends implicits.Collections {
         module
       }
 
-      // Entry: DublinCore 
+      // Entry: DublinCore - setPublishedDate won't work without this
       val dc = new DCModuleImpl
       dc.setDate(trail.webPublicationDate.toDate);
 
@@ -106,6 +106,7 @@ object TrailsToRss extends implicits.Collections {
       entry.setLink(trail.webUrl)
       entry.setDescription(description)
       entry.setCategories(categories)
+      entry.setPublishedDate(dc.getDate())
       entry.setModules(new java.util.ArrayList(modules ++ Seq(dc)))
       entry
 
