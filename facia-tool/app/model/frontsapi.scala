@@ -95,7 +95,7 @@ trait UpdateActions extends Logging {
   def updateCollectionMeta(block: Block, update: CollectionMetaUpdate, identity: Identity): Block =
     block.copy(displayName=update.displayName, href=update.href)
 
-  def putBlock(id: String, block: Block, identity: Identity, updateJson: JsValue): Block =
+  def putBlock(id: String, block: Block, identity: Identity): Block =
     FaciaApi.putBlock(id, block, identity)
 
   def archiveBlock(id: String, block: Block, update: JsValue, identity: Identity): Block =
@@ -118,7 +118,7 @@ trait UpdateActions extends Logging {
     .map(insertIntoLive(update, _))
     .map(insertIntoDraft(update, _))
     .map(capCollection)
-    .map(putBlock(id, _, identity, updateJson))
+    .map(putBlock(id, _, identity))
     .map(archiveBlock(id, _, updateJson, identity))
     .orElse(createBlock(id, identity, update))
   }
@@ -128,14 +128,14 @@ trait UpdateActions extends Logging {
     getBlock(id)
       .map(deleteFromLive(update, _))
       .map(deleteFromDraft(update, _))
-      .map(putBlock(id, _, identity, updateJson))
       .map(archiveBlock(id, _, updateJson, identity))
+      .map(putBlock(id, _, identity))
   }
 
   def updateCollectionMeta(id: String, update: CollectionMetaUpdate, identity: Identity): Option[Block] =
     getBlock(id)
       .map(updateCollectionMeta(_, update, identity))
-      .map(putBlock(id, _, identity, Json.toJson(update)))
+      .map(putBlock(id, _, identity))
 
   private def updateList(update: UpdateList, blocks: List[Trail]): List[Trail] = {
     val listWithoutItem = blocks.filterNot(_.id == update.item)
