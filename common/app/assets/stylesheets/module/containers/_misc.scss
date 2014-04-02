@@ -50,8 +50,10 @@
 
 .l-row__item--mpu {
     position: relative;
-    min-height: $mpu-ad-label-height + $mpu-resulting-height + $mpu-align-offset;
 
+    @include mq(tablet) {
+        min-height: $mpu-ad-label-height + $mpu-resulting-height + $mpu-align-offset;
+    }
     @include mq(desktop) {
         min-height: $mpu-ad-label-height + $mpu-original-height + $mpu-align-offset;
     }

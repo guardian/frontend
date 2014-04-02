@@ -31,8 +31,8 @@
                         </ul>
             @style.adSlot.map { adSlot =>
                     </li>
-                    <li class="l-row__item l-row__item--mpu hide-on-mobile">
-                        @fragments.inlineAdSlot(id="mpu-in-row-pattern", adSlot=adSlot, mobileOnly=false)
+                    <li class="l-row__item l-row__item--mpu">
+                        @fragments.containerInlineAdSlot(adSlot=adSlot)
                     </li>
                 </ul>
             }
@@ -55,7 +55,4 @@
             </ul>
         </div>
     }
-}
-@style.adSlot.map { adSlot =>
-    @fragments.inlineAdSlot(id="inline", adSlot=adSlot, mobileOnly=true)
 }
