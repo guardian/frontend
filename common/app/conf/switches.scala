@@ -272,7 +272,7 @@ object Switches extends Collections {
 
   val ABBlendedContainers = Switch("A/B Tests", "ab-blended-containers",
     "If this switch is on then the bleneded containers test runs on the network front",
-    safeState = Off, sellByDate = new DateMidnight(2014, 4, 7)
+    safeState = Off, sellByDate = new DateMidnight(2014, 4, 15)
   )
 
   // Dummy Switches
