@@ -18,7 +18,7 @@ class SectionTemplateTest extends FlatSpec with Matchers {
       navigation.find("[itemprop='url']")(1).getAttribute("href") should endWith ("/books")
   }
   
-  it should "Link to an RSS feed" in HtmlUnit("/books") { browser =>
+  ignore should "Link to an RSS feed" in HtmlUnit("/books") { browser =>
       import browser._
       val front = findFirst("link[type='application/rss+xml']")
       front.getAttribute("href") should be ("/books/rss")
