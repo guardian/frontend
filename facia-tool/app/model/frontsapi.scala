@@ -98,7 +98,13 @@ trait UpdateActions extends Logging {
   def putBlock(id: String, block: Block, identity: Identity): Block =
     FaciaApi.putBlock(id, block, identity)
 
-  def archiveBlock(id: String, block: Block, action: String, identity: Identity): Block =
+  //Archiving
+  def archivePublishBlock(id: String, block: Block, identity: Identity): Block =
+    archiveBlock(id, block, "publish", identity)
+  def archiveDiscardBlock(id: String, block: Block, identity: Identity): Block =
+    archiveBlock(id, block, "discard", identity)
+
+  private def archiveBlock(id: String, block: Block, action: String, identity: Identity): Block =
     archiveBlock(id, block, Json.obj("action" -> action), identity)
 
   def archiveBlock(id: String, block: Block, updateJson: JsValue, action: String, identity: Identity): Block =
