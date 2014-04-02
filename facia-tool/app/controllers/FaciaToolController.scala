@@ -81,7 +81,7 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
     FaciaToolMetrics.DraftPublishCount.increment()
     val block = FaciaApi.publishBlock(id, identity)
     block.foreach{ b =>
-      FaciaApi.archive(id, b, JsString("publish"), identity)
+      UpdateActions.archiveBlock(id, b, JsString("publish"), identity)
       pressCollectionId(id)
     }
     notifyContentApi(id)
@@ -92,7 +92,7 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
     val identity = Identity(request).get
     val block = FaciaApi.discardBlock(id, identity)
     block.foreach { b =>
-      FaciaApi.archive(id, b, JsString("discard"), identity)
+      UpdateActions.archiveBlock(id, b, JsString("discard"), identity)
     }
     NoCache(Ok)
   }
