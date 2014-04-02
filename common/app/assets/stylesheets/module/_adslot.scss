@@ -114,6 +114,15 @@
         }
     }
 }
+.top-banner-ad-container {
+    margin: 0 auto;
+
+    @include mq(faciaLeftCol) {
+        @include rem((
+            width: gs-span(14)
+        ));
+    }
+}
 .ad-slot--top-banner-ad {
     background-color: #f0f0f0;
     min-height: 50px;
@@ -123,15 +132,12 @@
 
     @include mq(tablet) {
         background-color: transparent;
-        min-height: 90px !important;
+        min-height: 90px;
     }
     @include mq(faciaLeftCol) {
         width: auto;
-        margin-left: gs-span(2) + ($gs-gutter*2);
+        margin-left: gs-span(2) + $gs-gutter;
         text-align: left;
-    }
-    @include mq(wide) {
-        margin-left: gs-span(3) + ($gs-gutter*2);
     }
 }
 .mpu-context {
