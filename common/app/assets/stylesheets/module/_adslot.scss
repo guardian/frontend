@@ -45,25 +45,6 @@
     width: auto;
     margin: 0 auto !important;
 }
-.top-banner-ad-container {
-    min-height: 70px;
-
-    @include mq(tablet) {
-        @include rem((
-            padding-top: $gs-baseline/2,
-            padding-bottom: $gs-baseline/2
-        ));
-    }
-    @include mq(faciaLeftCol) {
-        @include rem((
-            width: gs-span(14)
-        ));
-        margin: 0 auto;
-    }
-    @include mq(desktopAd) {
-        min-height: 110px;
-    }
-}
 .ad-slot--container-inline {
     min-height: 50px;
     @include box-sizing(border-box);
