@@ -120,9 +120,9 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
           val identity: Identity = Identity(request).get
           val updatedCollections: Map[String, Block] = update.collect {
             case ("update", updateList) =>
-              UpdateActions.updateCollectionList(updateList.id, updateList, identity).map(updateList.id -> _)
+              UpdateActions.updateCollectionList(updateList.id, updateList, identity).map(updateList.id ->)
             case ("remove", updateList) =>
-              UpdateActions.updateCollectionFilter(updateList.id, updateList, identity).map(updateList.id -> _)
+              UpdateActions.updateCollectionFilter(updateList.id, updateList, identity).map(updateList.id ->)
           }.flatten.toMap
 
           pressCollectionIds(updatedCollections.keySet)
