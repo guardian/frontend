@@ -52,7 +52,6 @@ trait ConfigAgentTrait extends ExecutionContexts {
         id,
         (collectionJson \ "apiQuery").asOpt[String],
         (collectionJson \ "displayName").asOpt[String].filter(_.nonEmpty),
-        (collectionJson \ "webTitle").asOpt[String].filter(_.nonEmpty),
         (collectionJson \ "href").asOpt[String],
         (collectionJson \ "groups").asOpt[Seq[String]] getOrElse Nil,
         (collectionJson \ "type").asOpt[String]
@@ -70,4 +69,15 @@ trait ConfigAgentTrait extends ExecutionContexts {
   def close() = configAgent.close()
 
   def contentsAsJsonString: String = Json.prettyPrint(configAgent.get)
+
+  case class FrontConfig(webTitle: Option[String])
+
+  def getFrontConfig(path: String): FrontConfig = {
+    val json = configAgent.get()
+    (json \ "fronts" \ path).asOpt[JsValue].map { frontJson =>
+      FrontConfig(
+        (frontJson \ "webTitle").asOpt[String]
+      )
+    }
+  }.getOrElse(FrontConfig(None)) //Default
 }
