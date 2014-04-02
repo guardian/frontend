@@ -105,7 +105,7 @@ define([
         if (delta < 0) {
             return false;
 
-        } else if (opts.hideAfter && delta > opts.hideAfter) {
+        } else if (opts.notAfter && delta > opts.notAfter) {
             return false;
 
         } else if (delta < 55) {
@@ -157,7 +157,7 @@ define([
                                   // NOTE: if this is in a block (blog), assume we want added time on > 1 day old dates
                                   showTime: bonzo($el.parent()).hasClass('block-time'),
                                   format:   $el.attr('data-relativeformat'),
-                                  hideAfter: opts.hideAfter
+                                  notAfter: opts.notAfter
                                });
 
             $el.removeClass('js-timestamp');
@@ -170,7 +170,7 @@ define([
                     targetEl.setAttribute('title', bonzo(targetEl).text());
                 }
                 targetEl.innerHTML = relativeDate;
-            } else if (opts.hideAfter) {
+            } else if (opts.notAfter) {
                 $el.addClass('js-hidden');
             }
         });

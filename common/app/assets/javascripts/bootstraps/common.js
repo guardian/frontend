@@ -153,7 +153,7 @@ define([
 
         showRelativeDates: function (config) {
             var dates = RelativeDates,
-                opts = {hideAfter: config.page.isFront ? 3600 : undefined}; // 1 hour
+                opts = {notAfter: config.page.isFront ? 3600 : undefined}; // 1 hour
 
             mediator.on('page:common:ready', function(config, context) {
                 dates.init(context, opts);
