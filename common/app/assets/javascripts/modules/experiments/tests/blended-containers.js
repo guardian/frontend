@@ -34,7 +34,7 @@ define([], function() {
     
     return function() {
         this.id = 'BlendedContainers';
-        this.expiry = '2014-04-08';
+        this.expiry = '2014-04-15';
         this.audience = 1;
         this.audienceOffset = 0.0;
         this.description = 'Testing new blended containers on the UK network front';
