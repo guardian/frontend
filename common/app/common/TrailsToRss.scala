@@ -99,7 +99,8 @@ object TrailsToRss extends implicits.Collections {
       // Entry: DublinCore 
       val dc = new DCModuleImpl
       dc.setDate(trail.webPublicationDate.toDate);
-
+      dc.setContributor(trail.byline.getOrElse("Guardian Staff"));
+  
       // Entry
       val entry = new SyndEntryImpl
       entry.setTitle(cleanInvalidXmlChars(trail.linkText))
