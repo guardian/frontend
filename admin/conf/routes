@@ -56,6 +56,10 @@ GET         /radiator                     controllers.admin.RadiatorController.r
 GET         /radiator/pingdom             controllers.admin.RadiatorController.pingdom()
 GET         /radiator/commit/*hash        controllers.admin.RadiatorController.commitDetail(hash)
 
+# Redirects
+GET         /redirects                    controllers.RedirectController.redirect()
+POST        /redirect-post                controllers.RedirectController.redirectPost()
+
 # Football Troubleshooter
 GET         /troubleshoot/football        controllers.admin.FootballTroubleshooterController.renderFootballTroubleshooter()
 

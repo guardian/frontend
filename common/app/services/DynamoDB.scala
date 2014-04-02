@@ -22,12 +22,6 @@ trait DynamoDB extends Logging with ExecutionContexts {
   private val tableName = "redirects"
   private val DynamoDbGet = "DynamoDB_20120810.GetItem"
 
-  lazy val client = {
-    val client = new AmazonDynamoDBClient(Configuration.aws.credentials)
-    client.setEndpoint("dynamodb.eu-west-1.amazonaws.com")
-    client
-  }
-
   def destinationFor(source: String): Future[Option[Destination]] = {
 
     val bodyContent = s"""
