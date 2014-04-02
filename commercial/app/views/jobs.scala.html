@@ -1,12 +1,20 @@
 @(jobs: Seq[model.commercial.jobs.Job])(implicit request: RequestHeader)
 
+@if(play.Play.isDev()) {
+    <link rel="stylesheet" href="@Static("stylesheets/head.default.css")" />
+    <link rel="stylesheet" href="@Static("stylesheets/global.css")" />
+    <style>
+        .i { background-image: url(@Static("images/global/sprite.png")); }
+    </style>
+}
+
 <link rel="stylesheet" href="@Static("stylesheets/commercial.css")" />
 
 @defining("http://jobs.theguardian.com", "0_1", "2014-04-02") { case (jobsHost, version, date) =>
     <div class="commercial commercial--jobs">
         <div class="commercial__head">
             <h2 class="commercial__title">Guardian <span class="commercial__title__last-word">jobs</span></h2>
-            <a href="@jobsHost/jobs"
+            <a href="@AdLink{@jobsHost/jobs}"
                 class="commercial__home-link"
                 data-link-name="merchandising-jobs-v@{version}_@{date}-low-profile-browse-all-jobs">
                 Browse all jobs
@@ -32,9 +40,9 @@
                     Seq("", "All sectors")
                 ).map { sector =>
                     <li class="commercial--jobs__sector">
-                        <a href="@jobsHost/@sector(0)"
+                        <a href="@AdLink{@jobsHost/@sector(0)}"
                            class="commercial--jobs__sector__link"
-                           data-link-name="merchandising-jobs-v@{version}_@{date}-low-profile-sector-@sector(0)">
+                           data-link-name="merchandising-jobs-v@{version}_@{date}-low-profile-sector-@if(sector(0).nonEmpty){sector(0)}else{all}">
                             @sector(1) <span class="i i-double-chevron"></span>
                         </a>
                     </li>
@@ -44,7 +52,7 @@
                 <ul class="u-unstyled commercial--jobs__jobs">
                     @jobs.map { job =>
                         <li class="commercial--jobs__job">
-                            <a href="@job.listingUrl"
+                            <a href="@AdLink{@job.listingUrl}"
                                class="commercial--jobs__job__link"
                                data-link-name="merchandising-jobs-v@{version}_@{date}-low-profile-job-@{job.id}">
                                 <h3 class="commercial--jobs__job__title">@job.title</h3>
