@@ -8,7 +8,13 @@ define([
     Doughnut
 ) {
 
-var TableDoughnut = function(el) {
+var TableDoughnut = function() {};
+
+/**
+ * @param {Element} el
+ * @return {Bonzo} the SVG Element
+ */
+TableDoughnut.prototype.render = function(el) {
     var width = el.scrollWidth,
         headings = $('th', el),
         data = $('td', el).map(function(el, i) {
@@ -24,9 +30,7 @@ var TableDoughnut = function(el) {
         showValues: el.getAttribute('data-chart-show-values') === 'true',
         unit: el.getAttribute('data-chart-unit'),
         width: width
-    })
-    .addClass(el.getAttribute('data-chart-class'))
-    .insertAfter(el);
+    }).addClass(el.getAttribute('data-chart-class')).insertAfter(el);
 };
 
 return TableDoughnut;

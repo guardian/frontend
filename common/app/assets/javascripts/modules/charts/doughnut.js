@@ -11,14 +11,27 @@ define([
     $,
     assign
 ) {
+    /**
+     * @param {string} type
+     * @return {Bonzo}
+     */
     function svgEl(type) {
         return $.create(document.createElementNS('http://www.w3.org/2000/svg', type));
     }
 
+    /**
+     * @param {Array} v
+     * @return {string}
+     */
     function translate(v) {
         return 'translate('+v+')';
     }
 
+    /**
+     * @param {Object.<string, *>} data in the format { label: string, value: number, color: HEX }
+     * @param {Object.<string, *>} o the options
+     * @return {Bonzo} SVG Element
+     */
     var Doughnut = function(data, o) {
         o = assign({
             percentCutout: 35,

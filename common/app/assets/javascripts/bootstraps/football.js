@@ -82,8 +82,7 @@ define([
                         });
                         matchStats.fetch(statsContainer).then(function() {
                             $('.js-chart', statsContainer).each(function(el) {
-                                /*jshint nonew:false*/
-                                new Doughnut(el);
+                                new Doughnut(el).render(el);
                             });
                         });
                     }
