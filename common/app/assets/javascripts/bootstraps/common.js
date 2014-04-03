@@ -464,7 +464,7 @@ define([
 
         loadCommercialComponent: function(config) {
             var commercialComponent = /^#commercial-component=(.*)$/.exec(window.location.hash),
-                slot = qwery('.ad-slot__commercial-component').shift();
+                slot = qwery('.ad-slot--commercial-component').shift();
             if (commercialComponent && slot) {
                 new CommercialLoader({ config: config })
                     .init(commercialComponent[1], slot);
