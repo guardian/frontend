@@ -1,14 +1,16 @@
-@(id: String)
+@(name: String, adType: String, sizeMapping: Map[String, Seq[String]], showLabel: Boolean = true)
+@import views.support.AdSlot
 @import conf.Switches._
 
 @if(AdvertsSwitch.isSwitchedOn && StandardAdvertsSwitch.isSwitchedOn) {
     <div
-        class="ad-slot__dfp ad-slot--@id"
-        data-name="top"
-        data-label="false"
-        data-mobile="300,50|320,50"
-        data-tabletportrait="728,90"
-        data-tabletlandscape="728,90|900,250">
-         <div id="dfp-ad-@id" class="ad-container"></div>
+        class="ad-slot__dfp ad-slot--@adType"
+        data-link-name="ad slot @name"
+        data-name="@name"
+        @if(!showLabel){ data-label="false" }
+        @sizeMapping.map{ case(breakpoint, sizes) =>
+            data-@breakpoint="@sizes.mkString("|")"
+        }>
+        <div id="dfp-ad-@name" class="ad-container"></div>
     </div>
 }
