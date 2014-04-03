@@ -124,6 +124,9 @@ object S3FrontsApi extends S3 {
 
   def putPressedJson(id: String, json: String) =
     putPrivate(s"$location/pressed/$id/pressed.json", json, "application/json")
+
+  def getPressedLastModified(path: String): Option[String] =
+    getLastModified(s"$location/pressed/$path/pressed.json").map(_.toString)
 }
 
 trait SecureS3Request extends implicits.Dates with Logging {
