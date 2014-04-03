@@ -29,7 +29,7 @@ class TrailsToRssTest extends FlatSpec with Matchers {
   
   "TrailsToRss" should "should include published date and byline" in {
     val rss = XML.loadString(TrailsToRss(Option("foo"), trails)(request))
-    ((rss \\ "item" \\ "contributor" ).filter(_.prefix == "dc").head.text) should be("Chadders")
+    ((rss \\ "item" \\ "creator" ).filter(_.prefix == "dc").head.text) should be("Chadders")
     ((rss \\ "item" \\ "pubDate" ).size) should be(2)
   }
 
