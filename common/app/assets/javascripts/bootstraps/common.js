@@ -224,7 +224,7 @@ define([
                 });
             });
 
-            if (config.switches.ophan) {
+            if (config.switches.ophan && config.page.contentType !== 'Identity' && config.page.section !== 'identity') {
                 require('ophan/ng', function (ophan) {
                     ophan.record({'ab': ab.getParticipations()});
 
@@ -242,7 +242,7 @@ define([
         loadAdverts: function (config) {
             // Having to check 3 switches for ads so that DFP and OAS can run in parallel
             // with each other and still have a master switch to turn off all adverts
-            if(!userPrefs.isOff('adverts') && config.switches.adverts && !config.page.shouldHideAdverts) {
+            if(!userPrefs.isOff('adverts') && config.switches.adverts && !config.page.shouldHideAdverts && config.page.contentType !== 'Identity' && config.page.section !== 'identity') {
 
                 var hasAdsToLoad = config.switches.oasAdverts || config.switches.dfpAdverts,
                     onResize = {
@@ -467,7 +467,9 @@ define([
         },
 
         startRegister: function(config) {
-            register.initialise(config);
+            if (config.page.contentType !== 'Identity' && config.page.section !== 'identity') {
+                register.initialise(config);
+            }
         },
 
         loadCommercialComponent: function(config) {
