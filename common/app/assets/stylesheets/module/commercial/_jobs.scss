@@ -10,12 +10,18 @@
         border: 0;
 
         @include mq(tablet) {
-            width: gs-span(2);
+            width: gs-span(3);
             float: left;
-            @include rem((
+/*            @include rem((
                 margin-right: $gs-gutter
             ));
+*/
         }
+		@include mq(desktop) {
+			@include rem((
+				margin-right: $gs-gutter
+		    ));
+		}
     }
     .commercial__title {
         padding: 0;
@@ -50,12 +56,13 @@
         @include mq(tablet) {
             float: left;
             @include rem((
-                width: gs-span(4)
+                width: gs-span(5)
             ));
+			width: 50%;
         }
         @include mq(desktop) {
             @include rem((
-                width: gs-span(7)
+                width: gs-span(6)
             ));
         }
     }
@@ -167,14 +174,16 @@
             margin-top: 0;
             padding-top: 0;
             @include rem((
-                margin-left: gs-span(4)
+                margin-left: gs-span(6)
             ));
+			margin-left: 50%;
         }
-        @include mq(desktop) {
+     @include mq(desktop) {
             @include rem((
-                margin-left: gs-span(7)
+                margin-left: gs-span(6)
             ));
         }
+
     }
     .commercial--jobs__job {
         float: left;
@@ -192,7 +201,7 @@
         }
         @include mq(wide) {
             @include rem((
-                width: gs-span(3.5)
+                width: gs-span(3.25)
             ));
 
             &:nth-child(2) {
@@ -218,6 +227,6 @@
         ));
     }
     .commercial--jobs__job__recruiter {
-        @include fs-data(5);
+        @include fs-textsans(1);
     }
 }
