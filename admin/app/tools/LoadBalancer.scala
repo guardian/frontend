@@ -3,6 +3,7 @@ package tools
 import common.AkkaAgent
 import com.amazonaws.services.elasticloadbalancing.AmazonElasticLoadBalancingClient
 import scala.collection.JavaConversions._
+import services.AwsEndpoints
 
 case class LoadBalancer(id: String,
                         name: String,
@@ -37,7 +38,7 @@ object LoadBalancer {
 
   def refresh() {
     val client = new AmazonElasticLoadBalancingClient(credentials)
-    client.setEndpoint("elasticloadbalancing.eu-west-1.amazonaws.com")
+    client.setEndpoint(AwsEndpoints.elb)
     val elbs = client.describeLoadBalancers().getLoadBalancerDescriptions
     client.shutdown()
     val newLoadBalancers = loadBalancers.map{ lb =>
