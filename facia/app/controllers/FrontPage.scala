@@ -31,7 +31,7 @@ object FrontPage {
   def getId(webTitle: String): String = webTitle.toLowerCase
   def getSection(webTitle: String): String = webTitle.toLowerCase
   def getAnalyticsName(webTitle: String): String = s"GFE:${webTitle.toLowerCase}"
-  def getDescription(webTitle: String): String = s"Latest ${webTitle.toLowerCase} news, comment and analysis from the Guardian, the world’s leading liberal voice"
+  def getDescription(webTitle: String): String = s"Latest $webTitle news, comment and analysis from the Guardian, the world’s leading liberal voice"
   def getFullWebTitle(webTitle: String): String = getDescription(webTitle)
 
   def getFrontPageFromWebTitle(webtitle: Option[String]): Option[FrontPage] = webtitle.map { w =>
