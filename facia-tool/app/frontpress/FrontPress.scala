@@ -18,7 +18,6 @@ trait FrontPress extends Logging {
   case class CollectionJson
   (
     apiQuery:     Option[String],
-    webTitle:     Option[String],
     displayName:  Option[String],
     `type`:       Option[String],
     curated:      Seq[JsValue],
@@ -82,7 +81,6 @@ trait FrontPress extends Logging {
     Json.toJson(
       CollectionJson(
         apiQuery       = config.contentApiQuery,
-        webTitle       = config.webTitle,
         displayName    = collection.displayName orElse config.displayName,
         curated        = collection.curated.map(generateTrailJson),
         editorsPicks   = collection.editorsPicks.map(generateTrailJson),
