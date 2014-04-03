@@ -50,6 +50,7 @@ trait FrontPress extends Logging {
   def generateJson(id: String): Future[JsObject] = {
     lazy val frontConfig: FaciaToolConfigAgent.FrontConfig = FaciaToolConfigAgent.getFrontConfig(id)
     lazy val webTitle: JsObject = frontConfig.webTitle.map(w => Json.obj(("webTitle", w))).getOrElse(JsObject.apply(Seq.empty))
+    lazy val keyword: JsObject =  frontConfig.keyword.map(k => Json.obj(("keyword", k))).getOrElse(JsObject.apply(Seq.empty))
     retrieveFrontByPath(id)
       .map(_.map{case (config, collection) =>
         Json.obj(
@@ -59,6 +60,7 @@ trait FrontPress extends Logging {
       .map( c =>
         Json.obj("id" -> id) ++
         webTitle ++
+        keyword  ++
         Json.obj("collections" -> c)
       )
   }
