@@ -424,7 +424,9 @@ define([
 
         loadTags : function() {
             mediator.on('page:common:ready', function(config) {
-                TagContainer.init(config);
+                if (config.page.contentType !== 'Identity' && config.page.section !== 'identity') {
+                    TagContainer.init(config);
+                }
             });
         },
 
