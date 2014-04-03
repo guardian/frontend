@@ -271,7 +271,7 @@ define([
                 if (!config.switches.standardAdverts) {
                     options.dfpSelector = '.ad-slot--commercial-component';
                 } else if (!config.switches.commercialComponents) {
-                    options.dfpSelector = '.ad-slot--dfp:not(.ad-slot__commercial-component)';
+                    options.dfpSelector = '.ad-slot--dfp:not(.ad-slot--commercial-component)';
                 }
 
                 dfpAds = new DFP(extend(config, options));
