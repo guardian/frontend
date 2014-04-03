@@ -38,12 +38,12 @@ define([
                 x: w/2,
                 y: h/2
             },
-            svg = $.create('<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"></svg>')
+            $svg = $.create('<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"></svg>')
                 .attr({ width: w, height: h, viewbox: '0 0 '+ [w, h].join(' ') })
                 .addClass('chart chart--doughnut');
 
         // Segments
-        var segmentAngle, endRadius, arc, outer, inner, g, t, r, a, d,
+        var segmentAngle, endRadius, arc, outer, inner, r, a, d, $g, $t,
             startRadius = -halfPI;
 
         data.forEach(function(datum) {
@@ -88,16 +88,17 @@ define([
                 'A', cutoutRadius, cutoutRadius, 0, arc, 0, inner.end.x, inner.end.y,
                 'Z'
             ];
-            g = svgEl('g').addClass('chart__arc');
-            svgEl('path').attr({
-                'd': d.join(' '),
-                'fill': datum.color
-            }).appendTo(g);
+            $g = svgEl('g')
+                .addClass('chart__arc')
+                .append(svgEl('path').attr({
+                    'd': d.join(' '),
+                    'fill': datum.color
+                }));
 
             // labels
-            t = svgEl('text');
+            $t = svgEl('text');
             if (o.showValues) {
-                t.append(svgEl('tspan')
+                $t.append(svgEl('tspan')
                     .text(datum.label)
                     .attr({ x: 0, dy: '0' })
                     .addClass('chart__label-text'))
@@ -106,27 +107,24 @@ define([
                     .attr({ x: 0, dy: '1em' })
                     .addClass('chart__label-value'));
             } else {
-                t.text(datum.label);
+                $t.text(datum.label);
             }
-            t.attr({ transform: translate([(Math.cos(a)*r)+center.x, (Math.sin(a)*r)+center.y]) })
+            $t.attr({ transform: translate([(Math.cos(a)*r)+center.x, (Math.sin(a)*r)+center.y]) })
                 .addClass('chart__label')
-                .appendTo(g);
+                .appendTo($g);
 
-            g.appendTo(svg);
+            $g.appendTo($svg);
             startRadius += ((datum.value/totalValue)*doublePI);
         });
 
         // Unit of measurement
-        svgEl('text')
+        return $svg.append(svgEl('text')
             .text(o.unit)
             .addClass('chart__unit')
             .attr({
                 transform: translate(c),
                 dy: '0.4em'
-            })
-            .appendTo(svg);
-
-        return svg;
+            }));
     };
 
     return Doughnut;
