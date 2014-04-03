@@ -14,8 +14,8 @@
             float: left;
         }
         @include mq(desktop) {
-        	@include rem((
-        		margin-right: $gs-gutter
+            @include rem((
+                margin-right: $gs-gutter
             ));
         }
     }
