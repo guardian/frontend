@@ -36,3 +36,17 @@
     background-color: #f5f5f5;
     font-size: 14px;
 }
+
+.redirect-form .controls {
+    margin-left: 50px !important;
+}
+
+.redirect-form .control-label {
+    width: 40px !important;
+    font-weight: bold;
+}
+
+.redirect-form input[type=text] {
+    max-width: 90%;
+    width: 500px;
+}
