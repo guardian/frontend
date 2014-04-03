@@ -281,10 +281,14 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 4, 7)
   )
 
-
   val PopularInTagSwitch = Switch("Feature Switches", "popular-in-tag",
     "If this switch is turned on then popular-in-tag will override related content for the selected tags.",
     safeState = Off, sellByDate = new DateMidnight(2014, 5, 14)
+  )
+
+  val HideOldTimeStampsSwitch = Switch("Feature Switches", "hide-old-timestamps",
+    "If this switch is turned on then timestamps older than an hour get hidden on fronts.",
+    safeState = Off, sellByDate = new DateMidnight(2014, 4, 28)
   )
 
   // A/B Test Switches
@@ -405,6 +409,7 @@ object Switches extends Collections {
     HelveticaEasterEggSwitch,
     RssLinkSwitch,
     PopularInTagSwitch,
+    HideOldTimeStampsSwitch,
     OmnitureVerificationSwitch,
     IndiaRegionSwitch,
     ABExternalLinksNewWindow,

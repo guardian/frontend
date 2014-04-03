@@ -129,6 +129,10 @@ define(['common/modules/ui/relativedates',
             expect(RelativeDates.makeRelativeDate('foo')).toBeFalsy();
         });
 
+        it("Fail politely if the date is older than a 'notAfter' value", function(){
+            expect(RelativeDates.makeRelativeDate(Date.parse(fakeNow), {notAfter: 3600})).toBeFalsy();
+        });
+
         it("Convert valid timestamps in the HTML document into their expected output", function(){
             RelativeDates.init();
             expect(document.getElementById('time-valid').innerHTML).toBe('Yesterday, 7:43pm');

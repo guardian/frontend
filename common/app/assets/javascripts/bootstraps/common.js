@@ -151,13 +151,15 @@ define([
             });
         },
 
-        showRelativeDates: function () {
-            var dates = RelativeDates;
+        showRelativeDates: function (config) {
+            var dates = RelativeDates,
+                opts = config.switches.hideOldTimestamps && config.page.isFront ? {notAfter: 3600} : undefined; // 1 hour
+
             mediator.on('page:common:ready', function(config, context) {
-                dates.init(context);
+                dates.init(context, opts);
             });
             mediator.on('fragment:ready:dates', function(el) {
-                dates.init(el);
+                dates.init(el, opts);
             });
         },
 
@@ -507,7 +509,7 @@ define([
             modules.showTabs();
             modules.initialiseNavigation(config);
             modules.showToggles();
-            modules.showRelativeDates();
+            modules.showRelativeDates(config);
             modules.transcludePopular();
             modules.loadVideoAdverts(config);
             modules.initClickstream();
