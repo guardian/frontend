@@ -75,6 +75,7 @@ trait FrontJson extends ExecutionContexts {
       FaciaPage(
         id          = (json \ "id").as[String],
         webTitle    = (json \ "webTitle").asOpt[String].filter(_.nonEmpty),
+        keyword     = (json \ "keyword").asOpt[String].filter(_.nonEmpty),
         collections = parseOutTuple(json)
       )
     )
