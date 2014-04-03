@@ -1,6 +1,6 @@
 @(config: Config, items: Seq[Trail], style: Container, containerIndex: Int, showSize: Int = 4)(implicit request: RequestHeader)
 
-<ul class="u-unstyled collection collection--without-sport-stats @if(style.showMore){js-collection--show-more collection--show-more}"
+<ul class="u-unstyled collection@if(style.showMore){ js-collection--show-more collection--show-more}"
      data-link-context-path="collection/@config.id"
      data-link-context-name="@config.displayName"
      data-tone="@style.tone"
