@@ -37,7 +37,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         Then("I should see the headline of the article")
 
         And("The article is marked up with the correct schema")
-        val article = findFirst("article[itemtype='http://schema.org/Article']")
+        val article = findFirst("article[itemtype='http://schema.org/NewsArticle']")
 
         article.findFirst("[itemprop=headline]").getText should
           be("Liu Xiang pulls up in opening race at second consecutive Olympics")
@@ -121,11 +121,11 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         ImageServerSwitch.switchOn()
 
         Then("I should see the article's image")
-        findFirst("[itemprop='associatedMedia primaryImageOfPage'] img[itemprop=contentURL]").getAttribute("src") should
-          endWith("Pix/pictures/2012/8/6/1344274679326/Gunnerside-village-Swaled-005.jpg?width=220&height=-&quality=95")
+        findFirst("[itemprop='contentURL representativeOfPage']").getAttribute("src") should
+          endWith("Gunnerside-village-Swaled-009.jpg?width=620&height=-&quality=95")
 
         And("I should see the image caption")
-        findFirst("[itemprop='associatedMedia primaryImageOfPage'] [itemprop=description]").getText should
+        findFirst("[itemprop='associatedMedia image'] [itemprop=description]").getText should
           be("Our rivers and natural resources are to be valued and commodified, a move that will benefit only the rich, argues Goegr Monbiot. Photograph: Alamy")
       }
     }
@@ -390,7 +390,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         import browser._
 
         Then("the main picture should be shown")
-        $("[itemprop='associatedMedia primaryImageOfPage']") should have size 1
+        $("[itemprop='contentURL representativeOfPage']") should have size 1
 
         And("the embedded video should not have a poster when there are no images in the video element")
         findFirst("video").getAttribute("poster") should be("")
@@ -421,7 +421,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
       HtmlUnit("/artanddesign/2013/apr/15/buildings-tall-architecture-guardianwitness") { broswer =>
         import broswer._
         Then("The main picture should be show")
-        $("[itemprop='associatedMedia primaryImageOfPage']") should have size 1
+        $("[itemprop='contentURL representativeOfPage']") should have size 1
       }
     }
 

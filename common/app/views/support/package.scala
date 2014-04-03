@@ -708,9 +708,9 @@ object TableEmbedComplimentaryToP extends HtmlCleaner {
 
 object VisualTone {
 
-  private val Comment = "comment"
-  private val News = "news"
-  private val Feature = "feature"
+  val Comment = "comment"
+  val News = "news"
+  val Feature = "feature"
 
   private val commentMappings = Seq(
     "tone/comment",
