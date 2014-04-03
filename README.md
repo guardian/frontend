@@ -110,6 +110,12 @@ to download Node dependencies
 
 Run
 ```
+bundle
+```
+to install additional dependencies
+
+Run
+```
 grunt compile
 ```
 to compile assets
