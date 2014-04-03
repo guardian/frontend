@@ -31,12 +31,12 @@
                         <td
                             class="bar-fight__bar bar-fight__bar--away"
                             data-chart-value="@awayPercent"
-                            data-chart-color="@away.teamColour"
+                            data-chart-color="@ColourTools.darkenWhite(away.teamColour)"
                             style="background-color: @ColourTools.darkenWhite(away.teamColour); width: @NudgePercent(awayPercent, homePercent)%;">@awayPercent</td>
                         <td
                             class="bar-fight__bar bar-fight__bar--home"
                             data-chart-value="@homePercent"
-                            data-chart-color="@home.teamColour"
+                            data-chart-color="@ColourTools.darkenWhite(home.teamColour)"
                             style="background-color: @ColourTools.darkenWhite(home.teamColour); width: @NudgePercent(homePercent, awayPercent)%;">@homePercent</td>
                     }
                 </tr>

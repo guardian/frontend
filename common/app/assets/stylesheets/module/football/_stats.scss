@@ -176,13 +176,13 @@
 }
 
 .match-stats--darken-away {
-    .chart__arc:first-child .chart__label {
+    .chart__arc:first-of-type .chart__label {
         fill: $c-neutral1;
     }
 }
 
-.match-stats--darken-away {
-    .chart__arc:last-child .chart__label {
+.match-stats--darken-home {
+    .chart__arc:last-of-type .chart__label {
         fill: $c-neutral1;
     }
 }
