@@ -240,11 +240,9 @@ define([
         },
 
         loadAdverts: function (config) {
-            // Having to check 3 switches for ads so that DFP and OAS can run in parallel
-            // with each other and still have a master switch to turn off all adverts
             if(!userPrefs.isOff('adverts') && config.switches.adverts && !config.page.shouldHideAdverts && !config.page.isSSL) {
 
-                var hasAdsToLoad = config.switches.oasAdverts || config.switches.dfpAdverts,
+                var hasAdsToLoad = config.switches.standardAdverts,
                     onResize = {
                         cmd: [],
                         execute: function() {
@@ -256,29 +254,20 @@ define([
                         }
                     };
 
-                // If either OAS or DFP is switched on, and it's an article
+                // If standard adverts is switched on, and it's an article
                 // excluding live blogs, then create our inline adverts
                 if(hasAdsToLoad && config.page.contentType === 'Article' && !config.page.isLiveBlog) {
                     new ArticleBodyAdverts().init();
                 }
 
-                if(config.switches.oasAdverts) {
-                    onResize.cmd.push(Adverts.reload);
-
-                    mediator.on('page:common:deferred:loaded', function(config, context) {
-                        Adverts.init(config, context);
-                    });
-                    mediator.on('modules:adverts:docwrite:loaded', Adverts.load);
-                } else {
-                    Adverts.hideAds();
-                }
-
-                if(config.switches.dfpAdverts) {
+                if (config.switches.standardAdverts || config.switches.commercialComponents) {
                     var dfpAds,
                         options = {};
 
-                    if(config.switches.loadOnlyCommercialComponents) {
+                    if (!config.switches.standardAdverts) {
                         options.dfpSelector = '.ad-slot__commercial-component';
+                    } else if (!config.switches.commercialComponents) {
+                        options.dfpSelector = '.ad-slot__dfp:not(.ad-slot__commercial-component)';
                     }
 
                     dfpAds = new DFP(extend(config, options));
