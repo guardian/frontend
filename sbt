@@ -60,4 +60,4 @@ fake_secret="myKV8HQkjcaxygbDuyneHBeyFgsyyM8yCFFOxyDoT0QGuyrY7IyammSyP1VivCxS"
 java $FRONTEND_JVM_ARGS  \
   $DEBUG_PARAMS \
   -DAPP_SECRET=$fake_secret \
-  -jar `dirname $0`/dev/sbt-launch-0.13.0.jar "$@"
+  -jar `dirname $0`/dev/sbt-launch.jar "$@"
