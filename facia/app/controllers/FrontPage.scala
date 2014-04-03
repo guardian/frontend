@@ -38,9 +38,8 @@ object FrontPage {
       override val id = getId(k)
       override val section = getSection(k)
       override val webTitle = faciaPage.webTitle
-        .getOrElse(faciaPage.keyword.map(getDescription)
-          .getOrElse(defaultDescription)
-        )
+        .orElse(faciaPage.keyword.map(getDescription))
+        .getOrElse(defaultDescription)
       override lazy val analyticsName = getAnalyticsName(k)
       override lazy val description = Some(getDescription(k))
 
