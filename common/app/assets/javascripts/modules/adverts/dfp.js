@@ -71,8 +71,8 @@ define([
 
     DFP.prototype.config = {
         dfpUrl: '//www.googletagservices.com/tag/js/gpt.js',
-        dfpSelector: '.ad-slot__dfp',
-        adContainerClass: '.ad-container',
+        dfpSelector: '.ad-slot--dfp',
+        adContainerClass: '.ad-slot__container',
         // These should match the widths inside _vars.scss
         breakpoints: {
             mobile: 0,

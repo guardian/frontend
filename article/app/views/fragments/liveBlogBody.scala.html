@@ -78,11 +78,7 @@
                                                 <h2 class="article__meta-heading">Share this live blog</h2>
                                                 @fragments.social(article, "next to content")
                                             </div>
-                                            @if(AdvertsSwitch.isSwitchedOn && StandardAdvertsSwitch.isSwitchedOn) {
-                                                <div class="ad-slot__dfp ad-slot--mpu-banner-ad" data-name="right" data-tabletlandscape="300,250">
-                                                    <div id="mpu-ad-slot" class="ad-container"></div>
-                                                </div>
-                                            }
+                                            @fragments.commercial.adSlot(name="right", adType="mpu-banner-ad", sizeMapping=Map("tabletlandscape" -> Seq("300,250")))
                                         </div>
                                         <div class="js-components"></div>
                                     </div>

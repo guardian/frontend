@@ -29,7 +29,6 @@ define([
     'common/modules/analytics/clickstream',
     'common/modules/analytics/omniture',
     'common/modules/analytics/scrollDepth',
-    'common/modules/adverts/adverts',
     'common/utils/cookies',
     'common/modules/analytics/omnitureMedia',
     'common/modules/analytics/livestats',
@@ -77,7 +76,6 @@ define([
     Clickstream,
     Omniture,
     ScrollDepth,
-    Adverts,
     Cookies,
     OmnitureMedia,
     liveStats,
@@ -240,56 +238,57 @@ define([
         },
 
         loadAdverts: function (config) {
-            if(!userPrefs.isOff('adverts') && config.switches.adverts && !config.page.shouldHideAdverts && !config.page.isSSL) {
 
-                var hasAdsToLoad = config.switches.standardAdverts,
-                    onResize = {
+            var showAds =
+                !userPrefs.isOff('adverts') &&
+                config.switches.adverts &&
+                !config.page.shouldHideAdverts &&
+                !config.page.isSSL &&
+                (
+                    config.switches.standardAdverts || config.switches.commercialComponents
+                );
+
+            if (showAds) {
+
+                var onResize = {
                         cmd: [],
-                        execute: function() {
-                            hasBreakpointChanged(function() {
-                                onResize.cmd.forEach(function(func) {
+                        execute: function () {
+                            hasBreakpointChanged(function () {
+                                onResize.cmd.forEach(function (func) {
                                     func();
                                 });
                             });
                         }
-                    };
+                    },
+                    dfpAds,
+                    options = {};
 
-                // If standard adverts is switched on, and it's an article
-                // excluding live blogs, then create our inline adverts
-                if(hasAdsToLoad && config.page.contentType === 'Article' && !config.page.isLiveBlog) {
+                // if it's an article, excluding live blogs, create our inline adverts
+                if (config.page.contentType === 'Article' && !config.page.isLiveBlog) {
                     new ArticleBodyAdverts().init();
                 }
 
-                if (config.switches.standardAdverts || config.switches.commercialComponents) {
-                    var dfpAds,
-                        options = {};
-
-                    if (!config.switches.standardAdverts) {
-                        options.dfpSelector = '.ad-slot__commercial-component';
-                    } else if (!config.switches.commercialComponents) {
-                        options.dfpSelector = '.ad-slot__dfp:not(.ad-slot__commercial-component)';
-                    }
-
-                    dfpAds = new DFP(extend(config, options));
-                    dfpAds.init();
-                    onResize.cmd.push(dfpAds.reload);
+                if (!config.switches.standardAdverts) {
+                    options.dfpSelector = '.ad-slot--commercial-component';
+                } else if (!config.switches.commercialComponents) {
+                    options.dfpSelector = '.ad-slot--dfp:not(.ad-slot__commercial-component)';
                 }
 
-                if(hasAdsToLoad) {
-                    // Push the reloaded command once
-                    onResize.cmd.push(function() {
-                        mediator.emit('modules:adverts:reloaded');
-                    });
-                    mediator.on('window:resize', debounce(onResize.execute.bind(this), 2000));
-                }
-            } else {
-                Adverts.hideAds();
+                dfpAds = new DFP(extend(config, options));
+                dfpAds.init();
+                onResize.cmd.push(dfpAds.reload);
+
+                // Push the reloaded command once
+                onResize.cmd.push(function () {
+                    mediator.emit('modules:adverts:reloaded');
+                });
+                mediator.on('window:resize', debounce(onResize.execute.bind(this), 2000));
             }
         },
 
         loadVideoAdverts: function() {
             mediator.on('page:common:ready', function(config, context) {
-                if(config.switches.adverts && config.switches.videoAdverts && !config.page.blockVideoAds) {
+                if (config.switches.adverts && config.switches.videoAdverts && !config.page.blockVideoAds) {
                     Array.prototype.forEach.call(context.querySelectorAll('video'), function(el) {
                         var support = detect.getVideoFormatSupport();
                         new VideoAdvert({

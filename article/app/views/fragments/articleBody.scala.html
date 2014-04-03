@@ -13,7 +13,7 @@
                  itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType" role="main">
 
             @if(article.isSponsored) {
-                @fragments.sponsored()
+                @fragments.commercial.adSlot(name="badge", adType="sponsored", sizeMapping=Map("mobile" -> Seq("300,80")))
             }
 
             <div class="article__inner article__inner--head">
@@ -93,11 +93,7 @@
                                                 <h2 class="article__meta-heading">Share this article</h2>
                                                 @fragments.social(article, "next to content")
                                             </div>
-                                            @if(AdvertsSwitch.isSwitchedOn && StandardAdvertsSwitch.isSwitchedOn) {
-                                                <div class="ad-slot__dfp ad-slot--mpu-banner-ad" data-name="right" data-tabletlandscape="300,250">
-                                                    <div id="mpu-ad-slot" class="ad-container"></div>
-                                                </div>
-                                            }
+                                            @fragments.commercial.adSlot(name="right", adType="mpu-banner-ad", sizeMapping=Map("tabletlandscape" -> Seq("300,250")))
                                         </div>
                                         <div class="js-components"></div>
                                     </div>
@@ -120,9 +116,5 @@
 
     @fragments.mostPopularPlaceholder(article.section, VisualTone(article))
 
-    @if(AdvertsSwitch.isSwitchedOn && CommercialComponentsSwitch.isSwitchedOn) {
-        <div class="ad-slot__dfp ad-slot__commercial-component" data-name="merchandising" data-mobile="888,88" data-label="false" data-refresh="false">
-            <div id="dfp-commercial-component" class="ad-container"></div>
-        </div>
-    }
+    @fragments.commercial.adSlot(name="merchandising", adType="commercial-component", sizeMapping=Map("mobile" -> Seq("888,88")), showLabel=false, refresh=false)
 }

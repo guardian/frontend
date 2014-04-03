@@ -1,6 +1,0 @@
-@()(implicit request: RequestHeader)
-@import conf.Switches._
-
-@if(AdvertsSwitch.isSwitchedOn && StandardAdvertsSwitch.isSwitchedOn) {
-    <div id="dfp_paid-for-badge" class="ad-slot__dfp ad-slot__paid-for-badge" data-name="badge" data-size="300,80"></div>
-}
