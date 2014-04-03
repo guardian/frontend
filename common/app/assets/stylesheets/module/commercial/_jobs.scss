@@ -12,10 +12,6 @@
         @include mq(tablet) {
             width: gs-span(3);
             float: left;
-/*            @include rem((
-                margin-right: $gs-gutter
-            ));
-*/
         }
 		@include mq(desktop) {
 			@include rem((
