@@ -48,6 +48,8 @@ trait FrontPress extends Logging {
   private lazy implicit val frontPressContext = Akka.system.dispatchers.lookup("play.akka.actor.front-press")
 
   def generateJson(id: String): Future[JsObject] = {
+    lazy val frontConfig: FaciaToolConfigAgent.FrontConfig = FaciaToolConfigAgent.getFrontConfig(id)
+    lazy val webTitle: JsObject = frontConfig.webTitle.map(w => Json.obj(("webTitle", w))).getOrElse(JsObject.apply(Seq.empty))
     retrieveFrontByPath(id)
       .map(_.map{case (config, collection) =>
         Json.obj(
@@ -55,10 +57,9 @@ trait FrontPress extends Logging {
         )})
       .map(_.foldLeft(Json.arr()){case (l, jsObject) => l :+ jsObject})
       .map( c =>
-        Json.obj(
-          ("id", id),
-          ("collections", c)
-        )
+        Json.obj("id" -> id) ++
+        webTitle ++
+        Json.obj("collections" -> c)
       )
   }
 
