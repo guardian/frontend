@@ -161,6 +161,34 @@
 
 
 /* ==========================================================================
+    Possession doughnut
+   ========================================================================== */
+.football-possession {
+    margin: 0 auto $gs-baseline;
+    text-align: center;
+    width: $gs-gutter*10;
+}
+
+.chart--football-possession {
+    .chart__label-value {
+        @include fs-header(5);
+    }
+}
+
+.match-stats--darken-away {
+    .chart__arc:first-child .chart__label {
+        fill: $c-neutral1;
+    }
+}
+
+.match-stats--darken-away {
+    .chart__arc:last-child .chart__label {
+        fill: $c-neutral1;
+    }
+}
+
+
+/* ==========================================================================
    Legacy
    ========================================================================== */
 .match-aggregate,
