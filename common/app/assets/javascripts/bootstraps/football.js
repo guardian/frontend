@@ -104,7 +104,7 @@ define([
         page.isLiveClockwatch(function() {
             var ml = new MatchList('live', 'premierleague'),
                 $img = $('.media-primary'),
-                $matchListContainer = $.create('<div class="football-match__list" data-link-name="football-matches-clockwatch"></div>')
+                $matchListContainer = $.create('<div class="football-match__container" data-link-name="football-matches-clockwatch"></div>')
                                           .css({ minHeight: $img[0] ? $img[0].offsetHeight : 0 });
 
             $img.addClass('u-h');
@@ -128,7 +128,7 @@ define([
         // Binding
         bean.on(context, 'click', '.table tr[data-link-to]', function(e) {
             if (!e.target.getAttribute('href')) {
-                 window.location = this.getAttribute('data-link-to');
+                window.location = this.getAttribute('data-link-to');
             }
         });
 
