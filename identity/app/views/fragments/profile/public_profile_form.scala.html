@@ -27,6 +27,26 @@
     <fieldset class="fieldset">
 
         <div class="fieldset__heading">
+            <h2 class="form__heading">Profile image</h2>
+            <div class="form__note">This image will appear next to your comments.</div>
+        </div>
+
+        <div class="fieldset__fields">
+            <ul class="u-unstyled">
+
+                @inputField(Upload(publicProfileForm("avatar"), ('_label, "Profile image"))) // Generated input should NOT have text-input class but not sure how to do this...
+
+                <li>
+                    <button type="submit" class="submit-input" data-link-name="Create account">Save changes</button>
+                </li>
+            </ul>
+        </div>
+
+    </fieldset>
+
+    <fieldset class="fieldset">
+
+        <div class="fieldset__heading">
             <h2 class="form__heading">Public profile</h2>
             <div class="form__note">These details will be visible to everyone who sees your profile.</div>
         </div>
