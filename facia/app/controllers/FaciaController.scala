@@ -52,17 +52,16 @@ class FaciaController extends Controller with Logging with ExecutionContexts wit
 
     val newPath = getPathForUkAlpha(path, request)
 
-    FrontJson.get(newPath).map(_.flatMap{ faciaPage =>
-      FrontPage.getFrontPageFromFaciaPage(faciaPage).map { frontPage =>
-        Cached(frontPage) {
-          if (request.isRss)
-            Ok(TrailsToRss(frontPage, faciaPage.collections.map(_._2).flatMap(_.items).toSeq.distinctBy(_.id)))
-              .as("text/xml; charset=utf-8")
-          else if (request.isJson)
-            JsonFront(frontPage, faciaPage)
-          else
-            Ok(views.html.front(frontPage, faciaPage))
-        }
+    FrontJson.get(newPath).map(_.map{ faciaPage =>
+      val frontPage = FrontPage.getFrontPageFromFaciaPage(faciaPage)
+      Cached(frontPage) {
+        if (request.isRss)
+          Ok(TrailsToRss(frontPage, faciaPage.collections.map(_._2).flatMap(_.items).toSeq.distinctBy(_.id)))
+            .as("text/xml; charset=utf-8")
+        else if (request.isJson)
+          JsonFront(frontPage, faciaPage)
+        else
+          Ok(views.html.front(frontPage, faciaPage))
       }
     }.getOrElse(Cached(60)(NotFound)))
   }

@@ -33,7 +33,7 @@ object FrontPage {
   private def getAnalyticsName(keyword: String): String = s"GFE:${keyword.toLowerCase}"
   private def getDescription(keyword: String): String = s"Latest $keyword news, comment and analysis from the Guardian, the world’s leading liberal voice"
 
-  def getFrontPageFromFaciaPage(faciaPage: FaciaPage): Option[FrontPage] = faciaPage.keyword.map { k =>
+  def getFrontPageFromFaciaPage(faciaPage: FaciaPage): FrontPage = faciaPage.keyword.map { k =>
     new FrontPage(isNetworkFront = false) {
       override val id = getId(k)
       override val section = getSection(k)
@@ -49,6 +49,6 @@ object FrontPage {
         "is-front" -> true //Config agent trait logic?
       )
     }
-  }.orElse(Option(defaultFrontPage))
+  }.getOrElse(defaultFrontPage)
 }
 
