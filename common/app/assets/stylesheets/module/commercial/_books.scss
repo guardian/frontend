@@ -3,17 +3,6 @@
    ========================================================================== */
 
 .commercial--books {
-    background-color: $commercial-component-bg;
-    @include rem((
-        padding: $gs-baseline $gs-gutter/2
-    ));
-    @include mq(mobileLandscape) {
-        @include rem((
-            padding-left: $gs-gutter,
-            padding-right: $gs-gutter
-        ));
-    }
-
     .commercial__branding,
     .commercial__header {
         overflow: hidden;
