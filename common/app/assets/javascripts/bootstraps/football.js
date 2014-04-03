@@ -120,6 +120,7 @@ define([
                     $matchListContainer.remove();
                     $img.removeClass('u-h');
                 }
+                $matchListContainer.css({ minHeight: 0 });
                 loaded($matchListContainer[0]);
             });
         });
