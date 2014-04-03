@@ -1,6 +1,6 @@
 package controllers
 
-import model.MetaData
+import model.{FaciaPage, MetaData}
 
 
 abstract class FrontPage(val isNetworkFront: Boolean) extends MetaData {
@@ -28,23 +28,25 @@ object FrontPage {
     )
   }
 
-  private def getId(webTitle: String): String = webTitle.toLowerCase
-  private def getSection(webTitle: String): String = webTitle.toLowerCase
-  private def getAnalyticsName(webTitle: String): String = s"GFE:${webTitle.toLowerCase}"
-  private def getDescription(webTitle: String): String = s"Latest $webTitle news, comment and analysis from the Guardian, the world’s leading liberal voice"
-  private def getFullWebTitle(webTitle: String): String = getDescription(webTitle)
+  private def getId(keyword: String): String = keyword.toLowerCase
+  private def getSection(keyword: String): String = keyword.toLowerCase
+  private def getAnalyticsName(keyword: String): String = s"GFE:${keyword.toLowerCase}"
+  private def getDescription(keyword: String): String = s"Latest $keyword news, comment and analysis from the Guardian, the world’s leading liberal voice"
 
-  def getFrontPageFromWebTitle(webtitle: Option[String]): Option[FrontPage] = webtitle.map { w =>
+  def getFrontPageFromFaciaPage(faciaPage: FaciaPage): Option[FrontPage] = faciaPage.keyword.map { k =>
     new FrontPage(isNetworkFront = false) {
-      override val id = getId(w)
-      override val section = getSection(w)
-      override val webTitle = getFullWebTitle(w)
-      override lazy val analyticsName = getAnalyticsName(w)
-      override lazy val description = Some(getDescription(w))
+      override val id = getId(k)
+      override val section = getSection(k)
+      override val webTitle = faciaPage.webTitle
+        .getOrElse(faciaPage.keyword.map(getDescription)
+          .getOrElse(defaultDescription)
+        )
+      override lazy val analyticsName = getAnalyticsName(k)
+      override lazy val description = Some(getDescription(k))
 
       override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
-        "keywords" -> w.capitalize,
-        "content-type" -> w.capitalize,
+        "keywords" -> k.capitalize,
+        "content-type" -> k.capitalize,
         "is-front" -> true //Config agent trait logic?
       )
     }
