@@ -13,11 +13,11 @@
             width: gs-span(3);
             float: left;
         }
-		@include mq(desktop) {
-			@include rem((
-				margin-right: $gs-gutter
-		    ));
-		}
+        @include mq(desktop) {
+        	@include rem((
+        		margin-right: $gs-gutter
+            ));
+        }
     }
     .commercial__title {
         padding: 0;
@@ -54,7 +54,7 @@
             @include rem((
                 width: gs-span(5)
             ));
-			width: 50%;
+            width: 50%;
         }
         @include mq(desktop) {
             @include rem((
@@ -172,7 +172,7 @@
             @include rem((
                 margin-left: gs-span(6)
             ));
-			margin-left: 50%;
+            margin-left: 50%;
         }
      @include mq(desktop) {
             @include rem((
