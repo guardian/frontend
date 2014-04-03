@@ -16,6 +16,7 @@ trait LinkTo extends Logging {
 
   private val AbsoluteGuardianUrl = "^http://www.theguardian.com/(.*)$".r
   private val AbsolutePath = "^/(.+)".r
+  private val RssPath = "^/(.+)(/rss)".r
 
   def apply(html: Html)(implicit request: RequestHeader): String = this(html.toString(), Edition(request), Region(request))
   def apply(link: String)(implicit request: RequestHeader): String = this(link, Edition(request), Region(request))
@@ -25,6 +26,8 @@ trait LinkTo extends Logging {
     case "/" => homeLink(edition, region)
     case protocolRelative if protocolRelative.startsWith("//") => protocolRelative
     case AbsoluteGuardianUrl(path) =>  urlFor(path, edition)
+    case "/rss" => urlFor("", edition) + "/rss"
+    case RssPath(path, format) => urlFor(path, edition) + "/rss"
     case AbsolutePath(path) => urlFor(path, edition)
     case otherUrl => otherUrl
   }).trim
