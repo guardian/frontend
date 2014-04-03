@@ -19,11 +19,9 @@
     @fragments.header(metaData)
 
     <div id="js-context" class="gs-container">
-        @if(AdvertSwitch.isSwitchedOn) {
-            <div class="top-banner-ad-container">
-                @fragments.adSlot(id="top-banner-ad", baseSlot="Top2", medianSlot="Top", extendedSlot="Top")
-            </div>
-        }
+        <div class="top-banner-ad-container">
+            @fragments.commercial.adSlot(id="top-banner-ad")
+        </div>
 
         @fragments.localNav(metaData)
 

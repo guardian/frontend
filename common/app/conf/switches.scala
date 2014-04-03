@@ -108,29 +108,49 @@ object Switches extends Collections {
 
   // Advertising Switches
 
-  val AdvertSwitch = Switch("Advertising", "adverts",
-    "If this switch is on then adverts will be loaded with JavaScript.",
+//  val AdvertSwitch = Switch("Advertising", "adverts",
+//    "Master switch for all types of adverts (including commercial components).",
+//    safeState = On, sellByDate = never
+//  )
+
+//  val OASAdvertSwitch = Switch("Advertising", "oas-adverts",
+//    "If this switch is on then OAS adverts will be loaded with JavaScript.",
+//    safeState = Off, sellByDate = new DateMidnight(2014, 4, 8)
+//  )
+//
+//  val DFPAdvertSwitch = Switch("Advertising", "dfp-adverts",
+//    "If this switch is on then DFP adverts will be loaded with JavaScript.",
+//    safeState = Off, sellByDate = new DateMidnight(2014, 4, 8)
+//  )
+//
+//  val LoadOnlyCommercialComponents = Switch("Advertising", "load-only-commercial-components",
+//    "If this switch is on then only commercial components will be loaded via DFP.",
+//    safeState = On, sellByDate = new DateMidnight(2014, 4, 8)
+//  )
+
+//  val VideoAdvertSwitch = Switch("Advertising", "video-adverts",
+//    "If this switch is on then OAS video adverts will be loaded with JavaScript.",
+//    safeState = Off, sellByDate = never
+//  )
+
+  val AdvertsSwitch = Switch("Advertising", "adverts",
+    "Master switch for all types of adverts (including commercial components).",
     safeState = On, sellByDate = never
   )
 
-  val OASAdvertSwitch = Switch("Advertising", "oas-adverts",
-    "If this switch is on then OAS adverts will be loaded with JavaScript.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 4, 8)
+  val StandardAdvertsSwitch = Switch("Advertising", "standard-adverts",
+    "Display 'standard' adverts, e.g. top banner ads, inline ads, MPUs, etc.",
+    safeState = On, sellByDate = never
   )
 
-  val DFPAdvertSwitch = Switch("Advertising", "dfp-adverts",
-    "If this switch is on then DFP adverts will be loaded with JavaScript.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 4, 8)
+  val CommercialComponentsSwitch = Switch("Advertising", "commercial-components",
+    "Display commercial components (jobs, soulmates).",
+    safeState = On, sellByDate = never
   )
 
-  val LoadOnlyCommercialComponents = Switch("Advertising", "load-only-commercial-components",
-    "If this switch is on then only commercial components will be loaded via DFP.",
-    safeState = On, sellByDate = new DateMidnight(2014, 4, 8)
-  )
-
-  val VideoAdvertSwitch = Switch("Advertising", "video-adverts",
-    "If this switch is on then OAS video adverts will be loaded with JavaScript.",
-    safeState = Off, sellByDate = never
+  val VideoAdvertsSwitch = Switch("Advertising", "video-adverts",
+    "Show adverts on videos.",
+    safeState = On, sellByDate = never
   )
 
   // Commercial Tags
@@ -368,11 +388,10 @@ object Switches extends Collections {
     AutoRefreshSwitch,
     DoubleCacheTimesSwitch,
     RelatedContentSwitch,
-    AdvertSwitch,
-    OASAdvertSwitch,
-    DFPAdvertSwitch,
-    LoadOnlyCommercialComponents,
-    VideoAdvertSwitch,
+    AdvertsSwitch,
+    StandardAdvertsSwitch,
+    CommercialComponentsSwitch,
+    VideoAdvertsSwitch,
     AudienceScienceSwitch,
     DiscussionSwitch,
     OpenCtaSwitch,

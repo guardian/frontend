@@ -1,0 +1,14 @@
+@(adSlot: AdSlot)
+@import views.support.AdSlot
+@import conf.Switches._
+
+@if(AdvertsSwitch.isSwitchedOn && StandardAdvertsSwitch.isSwitchedOn) {
+    <div
+        class="ad-slot__dfp ad-slot--container-inline"
+        data-link-name="ad slot container inline"
+        data-name="@adSlot.dfpDataName"
+        data-mobile="300,50"
+        data-tabletportrait="300,250">
+         <div id="inline-ad-slot__@{adSlot.dfpDataName}" class="ad-container"></div>
+    </div>
+}
