@@ -175,6 +175,18 @@
     }
 }
 
+.match-stats--darken-away {
+    .chart__arc:first-child .chart__label {
+        fill: $c-neutral1;
+    }
+}
+
+.match-stats--darken-away {
+    .chart__arc:last-child .chart__label {
+        fill: $c-neutral1;
+    }
+}
+
 
 /* ==========================================================================
    Legacy
