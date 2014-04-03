@@ -82,7 +82,7 @@ define([
                         });
                         matchStats.fetch(statsContainer).then(function() {
                             $('.js-chart', statsContainer).each(function(el) {
-                                new Doughnut(el).render(el);
+                                new Doughnut().render(el);
                             });
                         });
                     }
