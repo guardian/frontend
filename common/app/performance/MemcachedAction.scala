@@ -102,7 +102,7 @@ object MemcachedAction extends Results with MemcachedSupport with Logging {
   def apply(block: RequestHeader => Future[SimpleResult]): Action[AnyContent] = Action.async { request =>
 
     // don't cache during tests
-    if (isConfigured && MemcachedSwitch.isSwitchedOn && !Play.isTest) {
+    if (isConfigured && MemcachedSwitch.isSwitchedOn && !Play.isTest && !cacheExempt(request)) {
       val cacheKey = CacheKey(request)
       val promiseOfCachedResult = memcached.get[CachedResponse](cacheKey).recover{
         case e: Exception =>
@@ -124,5 +124,11 @@ object MemcachedAction extends Results with MemcachedSupport with Logging {
     } else {
       block(request)
     }
+  }
+
+  private def cacheExempt(request: RequestHeader) = {
+    // TODO this is just temporary as part of testing so we don't mess with the article healthcheck.
+    // if we decide to go with caching then this needs to be made a bit more sane
+    request.path == "/world/2012/sep/11/barcelona-march-catalan-independence"
   }
 }
