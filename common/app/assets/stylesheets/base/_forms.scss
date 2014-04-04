@@ -124,6 +124,7 @@
             display: inline-block;
         }
     }
+
     .form-fields__heading {
         @include fs-bodyHeading(3, true);
         margin: 0 0 rem($gs-baseline);
