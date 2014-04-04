@@ -20,7 +20,7 @@ GET        /top-stories.json                          controllers.TopStoriesCont
 GET        /top-stories/trails                        controllers.TopStoriesController.renderTrails()
 GET        /top-stories/trails.json                   controllers.TopStoriesController.renderJsonTrails()
 GET        /related/*path.json                        controllers.RelatedController.renderJson(path)
-GET        /related/*path                             controllers.RelatedController.render(path)
+GET        /related/*path.json                        controllers.RelatedController.render(path)
 
 GET        /preference/platform/:platform             controllers.ChangeViewController.render(platform, page)
 GET        /preference/edition/:edition               controllers.ChangeEditionController.render(edition)

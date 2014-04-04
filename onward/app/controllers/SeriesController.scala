@@ -48,8 +48,9 @@ object SeriesController extends Controller with Logging with Paging with Executi
   }
 
   private def renderSeriesTrails(trails: Seq[Trail])(implicit request: RequestHeader) = {
+    val series = request.getQueryString("series").getOrElse("")
     println("We have %d trails".format(trails.length))
-    val response = () => views.html.fragments.relatedTrails(trails, "More from ", 5)
+    val response = () => views.html.fragments.relatedTrails(trails, "More from %s".format(series), visibleTrails = 4)
     renderFormat(response, response, 1)
   }
 }
