@@ -13,8 +13,6 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
       linksToItself(path, destination.location)
   })
 
-  private def isArchived(path: String) = services.S3Archive.getHtml(path)
-
   def isEncoded(path: String): Option[String] = {
     val decodedPath = URLDecoder.decode(path, "UTF-8")
     if (decodedPath != path) Some(decodedPath) else None
@@ -45,7 +43,7 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
   }
 
   def lookup(path: String) = Action.async{ implicit request =>
-  
+
     /*
      * This is a chain of tests that look at the URL path and attempt to figure
      * out what should happen to the request.
