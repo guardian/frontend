@@ -9,7 +9,7 @@ define([
 ) {
     var $blocks,
         visible = 5,
-        $cta = $.create('<div class="truncation-cta truncation-cta--continue js-continue-reading u-fauxlink" data-link-name="continue reading"><i class="i i-arrow-down-double-blue"></i>Continue reading</div>');
+        $cta = $.create('<a class="truncation-cta truncation-cta--continue js-continue-reading u-fauxlink" data-link-name="continue reading"><i class="i i-arrow-down-double-blue"></i>Continue reading</a>');
 
     var FootballLiveblogTruncation= function() {
 
