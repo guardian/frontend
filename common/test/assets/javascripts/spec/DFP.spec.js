@@ -20,13 +20,13 @@ define([
                 id: 'article',
                 fixtures: [
                             '<p>Motorolas Moto X flagship smartphone goes on sale in the UK and Europe in February, part of its attempt to return to profitability since being acquired by Google.</p>\
-                            <div class="ad-slot__dfp">\
-                                <div id="dfp-html-slot" class="ad-container"></div>\
+                            <div class="ad-slot--dfp">\
+                                <div id="dfp-html-slot" class="ad-slot__container"></div>\
                             </div>\
                             <p>Motorola hopes that the launch of the £380 Moto X, which originally went on sale in the US in August 2013, will help move the company back into the black after recording six quarters of losses since it was acquired in May 2012.</p>\
-                            <div class="ad-slot__dfp"><div id="dfp-script-slot" class="ad-container"></div></div>\
-                            <div class="ad-slot__dfp ad-label--showing"><div id="dfp-already-labelled" class="ad-container"></div>\
-                            <div class="ad-slot__dfp" data-label="false"><div id="dfp-dont-label" class="ad-container"></div>\
+                            <div class="ad-slot--dfp"><div id="dfp-script-slot" class="ad-slot__container"></div></div>\
+                            <div class="ad-slot--dfp ad-label--showing"><div id="dfp-already-labelled" class="ad-slot__container"></div>\
+                            <div class="ad-slot--dfp" data-label="false"><div id="dfp-dont-label" class="ad-slot__container"></div>\
                             </div>'
                           ]
         };
@@ -124,14 +124,14 @@ define([
 
             it("has content with the class 'breakout__script'", function() {
                 var id   = 'dfp-script-slot',
-                    str  = 'This came from an iframe',
                     slot = generateSlotFunction(id),
-                    html = '<script class="breakout__script">window.dfpModuleTestVar = "'+ str +'"</script>';
+                    script = "var foo = bar;",
+                    html = '<script class="breakout__script">' + script + '</script>';
 
                 createTestIframe(id, html);
                 dfpAds.checkForBreakout($('#'+ slot.getSlotId().getDomId()));
 
-                expect(window.dfpModuleTestVar).toBe(str);
+                expect($('#dfp-script-slot').first().html()).toBe('<script>' + script + '</script>');
             });
         });
     });
