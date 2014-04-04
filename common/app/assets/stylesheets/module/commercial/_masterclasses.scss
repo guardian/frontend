@@ -3,12 +3,18 @@
    ========================================================================== */
 
 .masterclasses-component {
+    .commercial__head {
+        border-top: 0;
+        background-color: transparent;
+        height: auto;
+    }
     .commercial__title {
         padding: 0;
         margin: 0;
         text-transform: lowercase;
         color: $c-newsDefault;
-        @include fs-headline(3);
+        @include fs-headline(2);
+        float: none;
     }
     .commercial__title__last-word {
         font-style: italic;
@@ -20,11 +26,42 @@
         color: $c-neutral1;
         @include f-headline;
         @include font-size(14.5, 19);
-        @include rem((
-            margin: $gs-baseline 0 0
-        ));
-    }    
+    }
     
+    .commercial--masterclasses__class {
+        float: left;
+        width: 50%;
+        &:nth-child(n+1) {
+            border-left: 1px solid $c-neutral4;
+        }
+        &:nth-child(n+3) {
+            display: none;
+        }
+    }
+    @include mq(tablet) {
+        .commercial--masterclasses__class {
+            width: 33%;
+            &:nth-child(n+3) {
+                display: block;
+            }
+            &:nth-child(n+4) {
+                display: none;
+            }
+        }
+    }
+    @include mq(wide) {
+        .commercial--masterclasses__class {
+            width: 25%;
+            &:nth-child(n+4) {
+                display: block;
+            }
+        }
+    }
+    
+
+  
+  
+  
     
     .lineitem__image {
         margin-right: $gs-gutter/5;
@@ -38,29 +75,5 @@
         margin-top: $gs-baseline/3;
     }
 
-    @include mq($to: tablet) {
-        .commercial__head {
- /*           background-color: $c-featureDefault; */
-            background-color: transparent;
 
-            .commercial__title {
-                .em {
-/*                    color: #ffffff;
-                    color: rgba(#ffffff, .8);
-  */              }
-            }
-        }
-    }
-
-//    &.commercial--w600 {
-//        .lineitem {
-//            @include box-sizing(border-box);
-//            padding-right: $gs-gutter/2;
-//            width: 25%;
-//            float: left;
-//        }
-//        .lineitem__image {
-//            float: none;
-//        }
-//    }
 }
