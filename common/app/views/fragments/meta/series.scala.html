@@ -1,0 +1,10 @@
+@(content: model.Content)
+
+@if(content.isSeries) {
+    <dl class="article__series">
+        <dt class="article__series__label">Series</dt>
+            <dd class="article__series__item">@content.series.zipWithRowInfo.map{ case (series, info) =>
+                <a href="/@series.id" class="article__series__item tone-colour">@series.name</a>@if(!info.isLast){,}
+            }</dd>
+    </dl>
+}

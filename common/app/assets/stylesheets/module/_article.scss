@@ -218,6 +218,30 @@
     }
 }
 
+.article__series {
+    padding: 0;
+    @include mq(leftCol) {
+        border-top: 1px dotted $c-neutral5;
+    }
+}
+
+.article__series__label {
+    color: $c-neutral2;
+    @include fs-data(3);
+    font-weight: bold;
+}
+
+.article__series__item {
+    padding: 0;
+    margin: 0;
+    @include fs-bodyHeading(1);
+
+    @include mq(leftCol) {
+        @include fs-bodyHeading(2, true);
+    }
+}
+
+
 .article__standfirst {
     @include fs-headline(1);
     @include rem((

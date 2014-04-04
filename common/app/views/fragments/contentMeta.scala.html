@@ -14,11 +14,13 @@
         </div>
         <div class="media__body meta__body">
             @byline(content)
+            @fragments.meta.series(content)
             @fragments.meta.dateline(content.webPublicationDate, secondary=true)
             <div class="js-comment-count"></div>
         </div>
     } else {
         @byline(content)
+        @fragments.meta.series(content)
         @fragments.meta.dateline(content.webPublicationDate, secondary=true)
         <div class="js-comment-count"></div>
     }
