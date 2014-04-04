@@ -17,12 +17,11 @@ object SeriesController extends Controller with Logging with Paging with Executi
   //def renderSeriesStoriesJson()
   def renderSeriesStories(seriesId: String) = Action.async { implicit request =>
     val response = lookup(Edition(request), seriesId) map { seriesItems =>
-      seriesItems map { renderSeriesTrails(_) }
+      seriesItems map { trail => renderSeriesTrails(trail, seriesId) }
     }
     response map { _ getOrElse NotFound }
   }
 
-  //TODO pass in the id to dedupde here
   private def lookup( edition: Edition, seriesId: String)(implicit request: RequestHeader): Future[Option[Seq[Content]]] = {
     val currentShortUrl = request.getQueryString("shortUrl").getOrElse("")
     log.info(s"Fetching content in series: ${seriesId} the ShortUrl ${currentShortUrl}" )
@@ -49,9 +48,9 @@ object SeriesController extends Controller with Logging with Paging with Executi
       }
   }
 
-  private def renderSeriesTrails(trails: Seq[Content])(implicit request: RequestHeader) = {
+  private def renderSeriesTrails(trails: Seq[Content], seriesId: String)(implicit request: RequestHeader) = {
     val series = request.getQueryString("series").getOrElse("")
-    val response = () => views.html.fragments.containers.series(Config(id = series, displayName = Some("More from this series") ), Collection(trails.take(7)), SeriesContainer(), 0)
+    val response = () => views.html.fragments.containers.series(Config(id = series, href = Option(seriesId), displayName = Some("More from this series") ), Collection(trails.take(7)), SeriesContainer(), 0)
     renderFormat(response, response, 1)
   }
 }

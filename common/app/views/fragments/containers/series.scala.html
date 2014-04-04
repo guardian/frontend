@@ -26,9 +26,12 @@
                             <span class="container__title__label u-text-hyphenate">@Html(title)</span>
                         }
                     </h2>
-                    <div class="container__meta">
-                        @fragments.meta.series(config.id, title)
-                    </div>
+
+                    @config.href.map { link =>
+                        <div class="container__meta">
+                            @fragments.meta.series(link, config.id)
+                        </div>
+                    }
                 }
                 <div class="container__body container--rolled-up-hide">
                 @fragments.collections.multimedia(items, style, containerIndex)
