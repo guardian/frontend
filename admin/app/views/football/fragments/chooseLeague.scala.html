@@ -1,6 +1,6 @@
 @(fieldName: String, leagues: List[pa.Season])
 <div class="form-group">
-    <select name="@fieldName" id="id-@fieldName" class="form-control">
+    <select name="@fieldName" id="id-@fieldName" class="form-control" data-placeholder="Choose league">
         @for(league <- leagues) {
         <option value="@league.competitionId">@league.name</option>
         }
