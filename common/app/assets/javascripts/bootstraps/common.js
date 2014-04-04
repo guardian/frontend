@@ -241,7 +241,6 @@ define([
 
             var showAds =
                 !userPrefs.isOff('adverts') &&
-                config.switches.adverts &&
                 !config.page.shouldHideAdverts &&
                 !config.page.isSSL &&
                 (
@@ -288,7 +287,7 @@ define([
 
         loadVideoAdverts: function() {
             mediator.on('page:common:ready', function(config, context) {
-                if (config.switches.adverts && config.switches.videoAdverts && !config.page.blockVideoAds) {
+                if (config.switches.videoAdverts && !config.page.blockVideoAds) {
                     Array.prototype.forEach.call(context.querySelectorAll('video'), function(el) {
                         var support = detect.getVideoFormatSupport();
                         new VideoAdvert({

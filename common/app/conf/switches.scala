@@ -108,11 +108,6 @@ object Switches extends Collections {
 
   // Advertising Switches
 
-  val AdvertsSwitch = Switch("Advertising", "adverts",
-    "Master switch for all types of adverts (including commercial components).",
-    safeState = On, sellByDate = never
-  )
-
   val StandardAdvertsSwitch = Switch("Advertising", "standard-adverts",
     "Display 'standard' adverts, e.g. top banner ads, inline ads, MPUs, etc.",
     safeState = On, sellByDate = never
@@ -363,7 +358,6 @@ object Switches extends Collections {
     AutoRefreshSwitch,
     DoubleCacheTimesSwitch,
     RelatedContentSwitch,
-    AdvertsSwitch,
     StandardAdvertsSwitch,
     CommercialComponentsSwitch,
     VideoAdvertsSwitch,

@@ -2,7 +2,7 @@
 @import views.support.AdSlot
 @import conf.Switches._
 
-@if(AdvertsSwitch.isSwitchedOn && StandardAdvertsSwitch.isSwitchedOn) {
+@if(StandardAdvertsSwitch.isSwitchedOn) {
     <div
         class="ad-slot ad-slot--dfp ad-slot--@adType"
         data-link-name="ad slot @name"

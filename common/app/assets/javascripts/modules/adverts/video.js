@@ -7,7 +7,7 @@ define([
     'common/utils/detect',
     'common/utils/cookies',
     'common/modules/adverts/userAdTargeting',
-    'common/modules/adverts/document-write'
+    'common/modules/adverts/query-string'
 ], function(
     $,
     mediator,
@@ -17,7 +17,7 @@ define([
     detect,
     cookies,
     userAdTargeting,
-    documentWrite
+    queryString
 ) {
 
     function Video(config) {
@@ -217,7 +217,7 @@ define([
         var section = this.config.page.section + (this.config.page.isFront ? '/front' : ''),
             adUnit = '/' + config.dfpAccountId + '/' + config.dfpAdUnitRoot + '/' + section;
 
-        var rawCustParams = documentWrite.generateQueryString(config, userAdTargeting.getUserSegments());
+        var rawCustParams = queryString.generateQueryString(config, userAdTargeting.getUserSegments());
         rawCustParams += '&at=' + (cookies.get('adtest') || '');
         rawCustParams += '&bp=' + detect.getBreakpoint();
         rawCustParams += '&p=ng';

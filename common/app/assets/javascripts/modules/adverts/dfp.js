@@ -11,7 +11,7 @@ define([
     'common/utils/mediator',
     'common/modules/analytics/commercial/tags/common/audience-science',
     'common/modules/adverts/userAdTargeting',
-    'common/modules/adverts/document-write',
+    'common/modules/adverts/query-string',
     'lodash/arrays/flatten',
     'lodash/arrays/uniq'
 ], function (
@@ -26,7 +26,7 @@ define([
     mediator,
     AudienceScience,
     UserAdTargeting,
-    documentWrite,
+    queryString,
     _flatten,
     _uniq
 ) {
@@ -108,7 +108,7 @@ define([
             keywords;
         if (conf.keywords) {
             keywords = conf.keywords.split(',').map(function (keyword) {
-                return documentWrite.formatKeyword(keyword).replace('&', 'and');
+                return queryString.formatKeyword(keyword).replace('&', 'and');
             });
         } else {
             keywords = '';
