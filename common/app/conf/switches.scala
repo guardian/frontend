@@ -113,29 +113,19 @@ object Switches extends Collections {
 
   // Advertising Switches
 
-  val AdvertSwitch = Switch("Advertising", "adverts",
-    "If this switch is on then adverts will be loaded with JavaScript.",
+  val StandardAdvertsSwitch = Switch("Advertising", "standard-adverts",
+    "Display 'standard' adverts, e.g. top banner ads, inline ads, MPUs, etc.",
     safeState = On, sellByDate = never
   )
 
-  val OASAdvertSwitch = Switch("Advertising", "oas-adverts",
-    "If this switch is on then OAS adverts will be loaded with JavaScript.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 4, 8)
+  val CommercialComponentsSwitch = Switch("Advertising", "commercial-components",
+    "Display commercial components (jobs, soulmates).",
+    safeState = On, sellByDate = never
   )
 
-  val DFPAdvertSwitch = Switch("Advertising", "dfp-adverts",
-    "If this switch is on then DFP adverts will be loaded with JavaScript.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 4, 8)
-  )
-
-  val LoadOnlyCommercialComponents = Switch("Advertising", "load-only-commercial-components",
-    "If this switch is on then only commercial components will be loaded via DFP.",
-    safeState = On, sellByDate = new DateMidnight(2014, 4, 8)
-  )
-
-  val VideoAdvertSwitch = Switch("Advertising", "video-adverts",
-    "If this switch is on then OAS video adverts will be loaded with JavaScript.",
-    safeState = Off, sellByDate = never
+  val VideoAdvertsSwitch = Switch("Advertising", "video-adverts",
+    "Show adverts on videos.",
+    safeState = On, sellByDate = never
   )
 
   // Commercial Tags
@@ -308,6 +298,11 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 4, 28)
   )
 
+  val FootballLiveblogTruncation = Switch("A/B Tests", "ab-football-liveblog-truncation",
+    "If you swith cthis switch on, an AB test will run to truncate football liveblogs.",
+    safeState = Off, sellByDate = new DateMidnight(2014, 4, 21)
+  )
+
   // Dummy Switches
 
   val IntegrationTestSwitch = Switch("Unwired Test Switch", "integration-test-switch",
@@ -369,11 +364,9 @@ object Switches extends Collections {
     DoubleCacheTimesSwitch,
     RelatedContentSwitch,
     SeriesContentSwitch,
-    AdvertSwitch,
-    OASAdvertSwitch,
-    DFPAdvertSwitch,
-    LoadOnlyCommercialComponents,
-    VideoAdvertSwitch,
+    StandardAdvertsSwitch,
+    CommercialComponentsSwitch,
+    VideoAdvertsSwitch,
     AudienceScienceSwitch,
     DiscussionSwitch,
     OpenCtaSwitch,
@@ -420,6 +413,7 @@ object Switches extends Collections {
     IndiaRegionSwitch,
     ABExternalLinksNewWindow,
     ABAbcd,
+    FootballLiveblogTruncation,
     MemcachedSwitch,
     IncludeBuildNumberInMemcachedKey
   )

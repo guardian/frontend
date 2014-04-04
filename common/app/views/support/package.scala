@@ -108,22 +108,16 @@ case class SeriesContainer(showMore: Boolean = true) extends Container {
 }
 
 sealed trait AdSlot {
-  val baseName: String
-  val medianName: String
-  val dfpDataName: String
+  val dfpName: String
 }
 object AdSlot {
 
   object First extends AdSlot {
-    val baseName = "x49"
-    val medianName = "Middle1"
-    val dfpDataName = "inline1"
+    val dfpName = "inline1"
   }
 
   object Second extends AdSlot {
-    val baseName = "Bottom2"
-    val medianName = "Middle"
-    val dfpDataName = "inline2"
+    val dfpName = "inline2"
   }
 
 }

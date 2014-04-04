@@ -29,7 +29,7 @@
             @style.adSlot.map { adSlot =>
                     </li>
                     <li class="l-row__item l-row__item--mpu">
-                        @fragments.containerInlineAdSlot(adSlot=adSlot)
+                        @fragments.commercial.adSlot(name=adSlot.dfpName, adType="container-inline", sizeMapping=Map("mobile" -> Seq("300,50"), "tabletportrait" -> Seq("300,250")))
                     </li>
                 </ul>
             }

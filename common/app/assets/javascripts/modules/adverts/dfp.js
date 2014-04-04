@@ -2,7 +2,6 @@
 define([
     'common/$',
     'bonzo',
-    'postscribe',
     'common/modules/component',
     'lodash/objects/assign',
     'lodash/functions/debounce',
@@ -11,13 +10,12 @@ define([
     'common/utils/mediator',
     'common/modules/analytics/commercial/tags/common/audience-science',
     'common/modules/adverts/userAdTargeting',
-    'common/modules/adverts/document-write',
+    'common/modules/adverts/query-string',
     'lodash/arrays/flatten',
     'lodash/arrays/uniq'
 ], function (
     $,
     bonzo,
-    postscribe,
     Component,
     extend,
     debounce,
@@ -26,7 +24,7 @@ define([
     mediator,
     AudienceScience,
     UserAdTargeting,
-    documentWrite,
+    queryString,
     _flatten,
     _uniq
 ) {
@@ -71,8 +69,8 @@ define([
 
     DFP.prototype.config = {
         dfpUrl: '//www.googletagservices.com/tag/js/gpt.js',
-        dfpSelector: '.ad-slot__dfp',
-        adContainerClass: '.ad-container',
+        dfpSelector: '.ad-slot--dfp',
+        adContainerClass: '.ad-slot__container',
         // These should match the widths inside _vars.scss
         breakpoints: {
             mobile: 0,
@@ -108,7 +106,7 @@ define([
             keywords;
         if (conf.keywords) {
             keywords = conf.keywords.split(',').map(function (keyword) {
-                return documentWrite.formatKeyword(keyword).replace('&', 'and');
+                return queryString.formatKeyword(keyword).replace('&', 'and');
             });
         } else {
             keywords = '';
@@ -233,7 +231,7 @@ define([
 
             if($el.length > 0) {
                 $slot.html('');
-                postscribe($slot[0], breakoutHash[cls].replace(/%content%/g, $el.html()));
+                $slot.first().append(breakoutHash[cls].replace(/%content%/g, $el.html()));
             }
         }
     };

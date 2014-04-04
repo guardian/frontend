@@ -312,7 +312,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
       Given("the user navigates to a page")
 
-      OASAdvertSwitch.switchOn()
+      StandardAdvertsSwitch.switchOn()
 
       HtmlUnit("/environment/2012/feb/22/capitalise-low-carbon-future") { browser =>
         import browser._
@@ -322,20 +322,22 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         Then("the ad slot placeholder is rendered")
         val adPlaceholder = $(".ad-slot--top-banner-ad").first()
 
-        And("the placeholder has the correct slot names")
-        adPlaceholder.getAttribute("data-base") should be("Top2")
-        adPlaceholder.getAttribute("data-median") should be("Top")
-        adPlaceholder.getAttribute("data-extended") should be("Top")
+        And("the placeholder has the correct data attributes")
+        adPlaceholder.getAttribute("data-name") should be("top")
+        adPlaceholder.getAttribute("data-label") should be("false")
+        adPlaceholder.getAttribute("data-mobile") should be("300,50|320,50")
+        adPlaceholder.getAttribute("data-tabletportrait") should be("728,90")
+        adPlaceholder.getAttribute("data-tabletlandscape") should be("728,90|900,250")
 
         And("the placeholder has the correct class name")
-        adPlaceholder.getAttribute("class") should be("ad-slot__oas ad-slot--top-banner-ad")
+        adPlaceholder.getAttribute("class") should be("ad-slot ad-slot--dfp ad-slot--top-banner-ad")
 
         And("the placeholder has the correct analytics name")
-        adPlaceholder.getAttribute("data-link-name") should be("ad slot top-banner-ad")
+        adPlaceholder.getAttribute("data-link-name") should be("ad slot top")
       }
 
       // put it back in the state we found it
-      OASAdvertSwitch.switchOff()
+      StandardAdvertsSwitch.switchOff()
     }
 
     scenario("Navigate to the classic site (UK edition - www.guardian.co.uk)") {
@@ -544,11 +546,13 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
     scenario("Signify to the user an article is sponsored"){
       Given("I visit a sponsored article entitled 'Young people debt worries'")
-      DFPAdvertSwitch.switchOn()
+      StandardAdvertsSwitch.switchOn()
       HtmlUnit("/carphone-warehouse-mobile-living/melody-makers") { browser =>
         import browser._
         Then("I should see a message")
-        $(".ad-slot__paid-for-badge").getAttribute("data-name") should be ("badge")
+        val adSlot = $(".ad-slot--paid-for-badge")
+        adSlot.getAttribute("data-name") should be ("badge")
+        adSlot.findFirst(".ad-slot__container").getId should be ("dfp-ad--badge")
       }
     }
 
