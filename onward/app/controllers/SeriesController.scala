@@ -8,12 +8,14 @@ import implicits.Requests
 import conf.SwitchingContentApi
 import com.gu.openplatform.contentapi.ApiError
 import com.gu.openplatform.contentapi.model.{Content => ApiContent}
+import views.support.{MultimediaContainer, TemplateDeduping, SeriesContainer}
 
 object SeriesController extends Controller with Logging with Paging with ExecutionContexts with Requests {
 
+  implicit def getTemplateDedupingInstance: TemplateDeduping = TemplateDeduping()
+
   //def renderSeriesStoriesJson()
   def renderSeriesStories(seriesId: String) = Action.async { implicit request =>
-    println("Lets fetch some motherfuckin' series, mo FO! %s".format(seriesId))
     val response = lookup(Edition(request), seriesId) map { seriesItems =>
       seriesItems map { renderSeriesTrails(_) }
     }
@@ -47,10 +49,9 @@ object SeriesController extends Controller with Logging with Paging with Executi
       }
   }
 
-  private def renderSeriesTrails(trails: Seq[Trail])(implicit request: RequestHeader) = {
+  private def renderSeriesTrails(trails: Seq[Content])(implicit request: RequestHeader) = {
     val series = request.getQueryString("series").getOrElse("")
-    println("We have %d trails".format(trails.length))
-    val response = () => views.html.fragments.relatedTrails(trails, "More from %s".format(series), visibleTrails = 4)
+    val response = () => views.html.fragments.containers.series(Config(id = series, displayName = Some("More from this series") ), Collection(trails.take(7)), SeriesContainer(), 0)
     renderFormat(response, response, 1)
   }
 }
