@@ -64,31 +64,46 @@
                     ('_default, "")
                 )
 
-                @if(accountDetailsForm("birthDate").hasErrors) {
-                    <div class="form__error">@accountDetailsForm("birthDate").errors.map(_.message).mkString(", ")</div>
-                }
-                @select(
-                    accountDetailsForm("birthDate.year"),
-                    options((1850 to now.getYear).reverse.toList map {_.toString}),
-                    ('_label, "Year"),
-                    ('_showConstraints, false),
-                    ('_default, "")
-                )
-                @select(
-                    accountDetailsForm("birthDate.month"),
-                    options((1 to 12).toList map {_.toString}),
-                    ('_label, "Month"),
-                    ('_showConstraints, false),
-                    ('_default, "")
-                )
-                @select(
-                    accountDetailsForm("birthDate.day"),
-                    options((1 to 31).toList map {_.toString}),
-                    ('_label, "Day"),
-                    ('_showConstraints, false),
-                    ('_default, "")
-                )
+                <li class="form-field form-fields__inline form-fields--date-of-birth">
+                    <span class="form-fields__heading">Date of birth</span>
+                    <ul class="u-unstyled">
+                        @if(accountDetailsForm("birthDate").hasErrors) {
+                            <div class="form__error">@accountDetailsForm("birthDate").errors.map(_.message).mkString(", ")</div>
+                        }
+                        @select(
+                            accountDetailsForm("birthDate.day"),
+                            options((1 to 31).toList map {_.toString}),
+                            ('_label, "Day"),
+                            ('_showConstraints, false),
+                            ('_default, "")
+                        )
+                        @select(
+                            accountDetailsForm("birthDate.month"),
+                            options((1 to 12).toList map {_.toString}),
+                            ('_label, "Month"),
+                            ('_showConstraints, false),
+                            ('_default, "")
+                        )
+                        @select(
+                            accountDetailsForm("birthDate.year"),
+                            options((1850 to now.getYear).reverse.toList map {_.toString}),
+                            ('_label, "Year"),
+                            ('_showConstraints, false),
+                            ('_default, "")
+                        )
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </fieldset>
 
+    <fieldset class="fieldset">
+        <div class="fieldset__heading">
+            <h2 class="form__heading">Address information</h2>
+        </div>
+
+        <div class="fieldset__fields">
+            <ul class="u-unstyled">
                 @inputField(Input(accountDetailsForm("address.line1"), ('_label, "Address line #1")))
                 @inputField(Input(accountDetailsForm("address.line2"), ('_label, "Address line #2")))
                 @inputField(Input(accountDetailsForm("address.line3"), ('_label, "Town")))
@@ -100,12 +115,11 @@
                     ('_label, "Country"),
                     ('_default, "")
                 )
-
                 <li>
                     <button type="submit" class="submit-input" data-link-name="Create account">Save changes</button>
                 </li>
             </ul>
         </div>
-
     </fieldset>
+
 </form>
