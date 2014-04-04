@@ -4,7 +4,6 @@ import play.api._
 import play.api.mvc._
 import play.api.Play.current
 import pa.{Player, TeamEventMatch}
-import util.FutureZippers
 import common.ExecutionContexts
 import org.joda.time.DateMidnight
 import java.net.URLDecoder
@@ -45,14 +44,13 @@ object TeamController extends Controller with ExecutionContexts with GetPaClient
   }
 
   def teamHead2Head(team1Id: String, team2Id: String) = Authenticated.async { implicit request =>
-
     val premLeagueId = "100"
 
-    FutureZippers.zip(
-      client.teamHead2Head(team1Id, team2Id, new DateMidnight(2013, 7, 1), DateMidnight.now(), premLeagueId),
-      client.teamResults(team1Id, new DateMidnight(2013, 7, 1)),
-      client.teamResults(team2Id, new DateMidnight(2013, 7, 1))
-    ).map { case ((team1H2H, team2H2H), team1Results, team2Results) =>
+    for {
+      (team1H2H, team2H2H) <- client.teamHead2Head(team1Id, team2Id, new DateMidnight(2013, 7, 1), DateMidnight.now(), premLeagueId)
+      team1Results <- client.teamResults(team1Id, new DateMidnight(2013, 7, 1))
+      team2Results <- client.teamResults(team2Id, new DateMidnight(2013, 7, 1))
+    } yield {
       Cached(60)(Ok(views.html.football.team.teamHead2head(
         team1H2H, team2H2H,
         team1Results.map(PrevResult(_, team1Id)),
