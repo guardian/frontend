@@ -5,8 +5,308 @@
 <head>
     <meta charset="utf-8" />
     <title>@Html(metaData.webTitle)</title>
-    @fragments.commonCssSetup(projectName)
-    @fragments.commonJavaScriptSetup(metaData)
+    @* @fragments.commonCssSetup(projectName)
+    @fragments.commonJavaScriptSetup(metaData)*@
+
+    <style>
+/* Base form styles
+   ========================================================================== */
+
+@*if $old-ie {
+    // IE 8 won't display webfonts in password fields…
+    [type=password] {
+        font-family: sans-serif !important;
+    }
+}*@
+
+body {
+    padding: 0;
+    margin: 0;
+}
+
+.is-hidden {
+    display: none;
+}
+
+.form {
+    margin-top: 24px;
+    margin-bottom: 24px;
+}
+
+.form__heading {
+    font-size: 18px;
+    line-height: 28px;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.form__note,
+.form-field__note {
+    font-family: "AgateSans", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    font-size: 13px;
+/*    font-size: 1.3rem;*/
+    margin-bottom: 8px;
+}
+
+.fieldset {
+    border: none;
+    border-top: 1px solid #f1f1f1;
+    display: table;
+    padding: 15px 0 24px;
+    margin: 0;
+}
+
+ @*include mq(desktop) {
+    .fieldset__heading {
+        display: table-cell;
+        padding-right: 100px;
+        vertical-align: top;
+        width: gs-span(3);
+    }
+
+    .fieldset__fields {
+        display: table-cell;
+        vertical-align: top;
+        width: gs-span(6);
+    }
+}*@
+
+.form-fields-group .form-field {
+    margin-bottom: 0;
+}
+
+.form-field {
+    list-style: none;
+    margin: 0 0 24px 0;
+    padding: 0;
+}
+
+
+.form-field__submit {
+    .form-field__note {
+        margin: 0 0 24px 0;
+        @* include mq(desktop) {
+            float: right;
+            width: 60%;
+            margin: 0;
+        }*@
+    }
+}
+
+.form-field--no-margin {
+    margin: 0;
+}
+
+.form-field--error {
+    .label {
+        color: #d61d00;
+    }
+
+    .text-input,
+    .text-input:focus {
+        border-color: #d61d00;
+    }
+}
+
+.form__error {
+    @* include fs-data(4); *@
+    background-color: #fdf4f3;
+    border-bottom: 1px solid lighten(#d61d00, 35%);
+    border-top: 1px solid lighten(#d61d00, 35%);
+    color: #d61d00;
+    margin-top: 6px;
+    padding: 7px 8px;
+}
+
+.form-field__error {
+    color: #d61d00;
+    margin-top: 6px;
+}
+
+.form-field__note--below {
+    margin-bottom: 0;
+    margin-top: 6px;
+}
+
+.form-field__note--left {
+    float: left;
+}
+
+.form-field__note--right {
+    float: right;
+    margin-left: 20px;
+}
+
+.label {
+    font-family: "EgyptianText",georgia,serif;
+    color: #333333;
+    cursor: pointer;
+    display: block;
+    font-size: 16px;
+    line-height: 24px;
+/*    font-size: 1.6rem;*/
+/*    line-height: 2.4rem;*/
+    margin-bottom: 6px;
+}
+
+.text-input,
+.textarea {
+    border: 1px solid #dcdcdc;
+    @* include box-shadow(none); *@
+    -moz-box-sizing: border-box;
+         box-sizing: border-box;
+    color: #545454;
+    display: inline-block;
+    font-family: "AgateSans", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    font-size: 16px;
+/*    font-size: 1.6rem;*/
+    line-height: 19px;
+    outline: none;
+    padding: 8px 8px 7px;
+    margin: 0;
+    @* include rounded-corners(0); *@
+    width: 100%;
+    -webkit-appearance: none;
+
+    &:focus {
+        border-color: #767676;
+    }
+
+    @* include mq(tablet) {
+        font-size: 14px;
+/*        font-size: 1.4rem;*/
+    }*@
+}
+
+.textarea {
+    resize: vertical;
+}
+
+.textarea--no-resize {
+    min-height: ($gs-baseline/3)*20;
+    resize: none;
+}
+
+.textarea--mid {
+    min-height: $gs-baseline*9;
+}
+
+.textarea--long {
+    min-height: ($gs-baseline/3)*40;
+}
+
+.submit-input {
+    background: #005689;
+    border: 0 none;
+    color: #ffffff;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 14px;
+    line-height: 14px;
+/*    font-size: 1.4rem;*/
+    margin: 0 20px 0 0;
+    min-width: 140px;
+    outline: none;
+    padding: 11px 8px;
+    text-align: center;
+
+    &:active {
+        background: #000000;
+    }
+}
+
+.submit-input:hover, .submit-input:focus {
+    background: #004670;
+}
+
+.submit-input[disabled] {
+    background: $c-neutral5;
+}
+
+.check-label,
+.radio-label {
+    display: block;
+    font-family: "AgateSans", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    font-size: 13px;
+/*    font-size: 1.3rem;*/
+    margin-bottom: 4px;
+    padding-left: 20px;
+}
+
+.check-label--helper {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+[type=checkbox],
+[type=radio] {
+    float: left;
+    height: 13px;
+    margin-left: -20px;
+    margin-top: 3px;
+    width: 13px;
+}
+
+/* Formstack
+   ========================================================================== */
+
+.formstack-iframe {
+    border: none;
+    display: block;
+    margin: 0 auto;
+    max-width: gs-span(6);
+    width: 100%;
+}
+
+.formstack-heading {
+    font-size: 20px;
+    line-height: 28px;
+}
+
+.formstack-heading--first {
+    font-size: 24px;
+    font-size: 28px;
+    margin-top: 16px;
+}
+
+.formstack-heading--first + .formstack-section {
+    margin-bottom: 24px;
+}
+
+.formstack-required {
+    margin-left: 2px;
+}
+
+.formstack-fieldset {
+    border: none;
+    margin: 0;
+    padding: 0;
+}
+
+.formstack-count {
+    position: absolute;
+    color: #545454;
+    font-family: "AgateSans", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    font-size: 13px;
+/*    font-size: 1.3rem;*/
+    margin-left: 6px;
+    padding-top: 36px;
+}
+
+.ethical-awards-banner {
+    background-color: #294100;
+    height: 90px;
+    margin-bottom: -36px;
+}
+
+.ethical-awards-banner__image {
+    display: block;
+    margin: 0 auto;
+    width: 480px;
+}
+
+    </style>
+
 </head>
 <body id="top">
 
@@ -16,7 +316,309 @@
         </div>
     </div>
 
-    @fragments.loadCss()
+    @*@fragments.loadCss()*@
+
+    <script type="text/javascript">
+
+        var formstack = function Formstack(el, formstackId, context, config) {
+
+            var self = this,
+                dom = {},
+                formId = formstackId.split('-')[0],
+                common = common || {};
+
+            config = {
+                idClasses: {
+                    form: 'form',
+                    field: 'form-field',
+                    note: 'form-field__note form-field__note--below',
+                    label: 'label',
+                    checkboxLabel: 'check-label',
+                    textInput: 'text-input',
+                    textArea: 'textarea textarea--no-resize',
+                    submit: 'submit-input',
+                    fieldError: 'form-field--error',
+                    formError: 'form__error',
+                    fieldset: 'formstack-fieldset',
+                    required: 'formstack-required',
+                    sectionHeader: 'formstack-heading',
+                    sectionHeaderFirst: 'formstack-heading--first',
+                    sectionText: 'formstack-section',
+                    characterCount: 'formstack-count',
+                    hide: 'is-hidden'
+                },
+                fsSelectors: {
+                    form: '#fsForm' + formId,
+                    field: '.fsRow',
+                    note: '.fsSupporting, .showMobile',
+                    label: '.fsLabel',
+                    checkboxLabel: '.fsOptionLabel',
+                    textInput: '.fsField[type="text"], .fsField[type="email"], .fsField[type="number"], .fsField[type="tel"]',
+                    textArea: 'textarea.fsField',
+                    submit: '.fsSubmitButton',
+                    fieldError: '.fsValidationError',
+                    formError: '.fsError',
+                    fieldset: 'fieldset',
+                    required: '.fsRequiredMarker',
+                    sectionHeader: '.fsSectionHeading',
+                    sectionHeaderFirst: '.fsSection:first-child .fsSectionHeading',
+                    sectionText: '.fsSectionText',
+                    characterCount: '.fsCounter',
+                    hide: '.hidden, .fsHidden, .ui-datepicker-trigger'
+                },
+                hiddenSelectors: {
+                    userId: '[type="number"]',
+                    email: '[type="email"]'
+                }
+            };
+
+            self.init = function () {
+                // User object required to populate fields
+                var user = self.getUserOrSignIn();
+
+                self.dom(user);
+                //$(el).removeClass(config.idClasses.hide);
+                el.className = el.className.replace(config.idClasses.hide, '');
+                //$('html').addClass('iframed--overflow-hidden');
+                document.getElementsByTagName('html')[0].className += ' iframed--overflow-hidden';
+
+                // Update iframe height
+                self.sendHeight();
+            };
+
+            self.getUserOrSignIn = function (returnUrl) {
+                var user = self.getUserFromCookie();
+                if (user) {
+                    return user;
+                } else {
+                    window.location.href = '/signin?returnUrl=' + document.location.href;
+                }
+            };
+
+            self.getUserFromCookie = function() {
+                var userFromCookieCache = self.userFromCookieCache || null;
+
+                function readCookie (name) {
+                    var nameEQ = name + "=";
+                    var ca = document.cookie.split(';');
+                    for(var i=0;i < ca.length;i++) {
+                        var c = ca[i];
+                        while (c.charAt(0)==' ') c = c.substring(1,c.length);
+                        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+                    }
+                    return null;
+                }
+
+                function decodeBase64 (str) {
+                    return decodeURIComponent(escape(AtoB()(str.replace(/-/g, '+').replace(/_/g, '/').replace(/,/g, '='))));
+                };
+
+                function AtoB () {
+                    return window.atob ? function(str) { return window.atob(str); } : (function() {
+                        var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=',
+                            INVALID_CHARACTER_ERR = (function () {
+                                // fabricate a suitable error object
+                                try { document.createElement('$'); }
+                                catch (error) { return error; }
+                            }());
+
+                        return function (input) {
+                            input = input.replace(/[=]+$/, '');
+                            if (input.length % 4 === 1) throw INVALID_CHARACTER_ERR;
+                            for (
+                                // initialize result and counters
+                                    var bc = 0, bs, buffer, idx = 0, output = '';
+                                // get next character
+                                    buffer = input.charAt(idx++);
+                                // character found in table? initialize bit storage and add its ascii value;
+                                    ~buffer && (bs = bc % 4 ? bs * 64 + buffer : buffer,
+                                        // and if not first of each 4 characters,
+                                        // convert the first 8 bits to one ascii character
+                                            bc++ % 4) ? output += String.fromCharCode(255 & bs >> (-2 * bc & 6)) : 0
+                                    ) {
+                                // try to find character in table (0-63, not found => -1)
+                                buffer = chars.indexOf(buffer);
+                            }
+                            return output;
+                        };
+                    })();
+                };
+
+                if (userFromCookieCache === null) {
+                    var cookieData = readCookie('GU_U'),
+                    userData = cookieData ? JSON.parse(decodeBase64(cookieData.split('.')[0])) : null;
+                    if (userData) {
+                        userFromCookieCache = {
+                            id: userData[0],
+                            primaryEmailAddress: userData[1],
+                            displayName: userData[2],
+                            accountCreatedDate: userData[6],
+                            emailVerified: userData[7],
+                            rawResponse: cookieData
+                        };
+                        self.userFromCookieCache = userFromCookieCache;
+                    }
+                }
+
+                return userFromCookieCache;
+            };
+
+            self.dom = function (user) {
+                // Formstack generates some awful HTML, so we'll remove the CSS links,
+                // loop their selectors and add our own classes instead
+
+                //dom.$form = $(config.fsSelectors.form).addClass(config.idClasses.form);
+                dom.$form = document.querySelector(config.fsSelectors.form);
+                dom.$form.className = ' ' + config.idClasses.form;
+
+                //$('link', el).remove(); ???
+                var fsStyleLinks = el.getElementsByTagName('link');
+
+                for (var i = fsStyleLinks.length - 1; i >= 0; i--) {
+                    fsStyleLinks[i].remove();
+                };
+
+                for (var selector in config.fsSelectors) {
+                    self.addClassToNodeList(dom.$form.querySelectorAll(config.fsSelectors[selector]), config.idClasses[selector]);
+                }
+
+                // Formstack also don't have capturable hidden fields,
+                // so we remove ID text inputs and append hidden equivalents
+                //var $userId = $(config.hiddenSelectors.userId, dom.$form).remove(),
+                var $userId = dom.$form.querySelector(config.hiddenSelectors.userId),
+                    //$email = $(config.hiddenSelectors.email, dom.$form).remove(),
+                    $email = dom.$form.querySelector(config.hiddenSelectors.email),
+
+                    // html = '<input type="hidden" name="' + $userId.getAttribute('name') + '" value="' + user.id + '">'
+                    //      + '<input type="hidden" name="' + $email.getAttribute('name') + '" value="' + user.primaryEmailAddress + '">';
+                    html = '<input type="hidden" name="' + $userId.getAttribute('name') + '" value="' + user.id + '">'
+                         + '<input type="hidden" name="' + $email.getAttribute('name') + '" value="' + user.primaryEmailAddress + '">';
+
+                $userId.remove();
+                $email.remove();
+
+                //dom.$form.append(html);
+                dom.$form.insertAdjacentHTML( 'beforeend', html);
+
+                // Events
+                //bean.on(window, 'unload', self.unload);
+                window.addEventListener('unload', self.unload, false)
+                //bean.on(dom.$form[0], 'submit', self.submit);
+                dom.$form.addEventListener('submit', self.submit, false);
+
+                dom.$form.className = dom.$form.className.replace('is-hidden', '');
+
+                // Listen for message from top window,
+                // only message we are listening for is the iframe position..
+                window.addEventListener('message', function (event) {
+                    var message = JSON.parse(event.data);
+                    if (message.iframeTop) { self.scrollToTopOfIframe(message.iframeTop); }
+                }, false);
+            };
+
+            self.removeClassFromNodeList = function (nodeList, classToRemove) {
+                for (var i = 0; i < nodeList.length; i++) {
+                    nodeList[i].className = nodeList[i].className.replace(classToRemove, "")
+                };
+            };
+
+            self.addClassToNodeList = function (nodeList, classToAdd) {
+                for (var i = 0; i < nodeList.length; i++) {
+                    nodeList[i].className += " " + classToAdd;
+                };
+            };
+
+            self.submit = function (event) {
+                event.preventDefault();
+
+                setTimeout(function () {
+                    // Remove any existing errors
+                    //$('.' + config.idClasses.formError).removeClass(config.idClasses.formError);
+                    self.removeClassFromNodeList(el.querySelectorAll('.' + config.idClasses.formError), config.idClasses.formError);
+                    //$('.' + config.idClasses.fieldError).removeClass(config.idClasses.fieldError);
+                    self.removeClassFromNodeList(el.querySelectorAll('.' + config.idClasses.fieldError), config.idClasses.fieldError);
+
+                    // Handle new errors
+                    //$(config.fsSelectors.formError, dom.$form).addClass(config.idClasses.formError);
+                    self.addClassToNodeList(dom.$form.querySelectorAll(config.fsSelectors.formError), config.idClasses.formError);
+                    //$(config.fsSelectors.fieldError, dom.$form).addClass(config.idClasses.fieldError);
+                    self.addClassToNodeList(dom.$form.querySelectorAll(config.fsSelectors.fieldError), config.idClasses.fieldError);
+
+                    // Update character count absolute positions
+                    var textareas = el.querySelector(config.fsSelectors.textArea);
+                    var event; // The custom event that will be created
+
+                    if (document.createEvent) {
+                        event = document.createEvent("HTMLEvents");
+                        event.initEvent("keyup", true, true);
+                    } else {
+                        event = document.createEventObject();
+                        event.eventType = "keyup";
+                    }
+                    event.eventName = "keyup";
+                    for (var i = 0; i < textareas.length; i++) {
+                        if (document.createEvent) {
+                            textareas[i].dispatchEvent(event);
+                        } else {
+                            textareas[i].fireEvent("on" + event.eventType, event);
+                        }
+                    };
+
+                    // $(config.fsSelectors.textArea, el).each(function (textarea) {
+                    //     bean.fire(textarea, 'keyup');
+                    // });
+
+                    self.postMessage('get-position', 'get-position');
+
+                    // if no errors, submit form
+                    if (dom.$form.querySelectorAll(config.fsSelectors.formError).length === 0) {
+                        dom.$form.submit();
+                    }
+
+                }, 100);
+            };
+
+            self.scrollToTopOfIframe = function (top) {
+                self.postMessage('scroll-to', 'scroll-to', 0, top);
+            };
+
+            self.unload = function () {
+                // Listen for navigation to success page
+                self.sendHeight(true);
+            };
+
+            self.sendHeight = function () {
+                var body = document.body,
+                    html = document.documentElement,
+                    height = Math.max(body.scrollHeight, body.offsetHeight,
+                                      html.clientHeight, html.scrollHeight, html.offsetHeight);
+
+                self.postMessage('set-height', height);
+            };
+
+            self.postMessage = function (type, value, x, y) {
+
+                var message = {
+                    type: type,
+                    value: value,
+                    href: window.location.href
+                };
+
+                if (x) { message.x = x; }
+                if (y) { message.y = y; }
+
+                window.top.postMessage(JSON.stringify(message), '*');
+            };
+
+        };
+
+        var FS = new formstack(document.querySelector('.formstack-embed'), "@formstackForm.formReference", {}, {});
+
+        document.addEventListener('DOMContentLoaded', function(){
+            FS.init();
+        });
+
+    </script>
 
 </body>
 </html>
