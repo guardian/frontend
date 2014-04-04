@@ -1,7 +1,7 @@
 @(items: Seq[Trail], style: FeaturesContainer, containerIndex: Int)(implicit request: RequestHeader)
 @import conf.Switches._
 
-    <div class="collection-wrapper collection-wrapper--spacing-thin collection-wrapper--position-1">
+<div class="collection-wrapper collection-wrapper--spacing-thin collection-wrapper--position-1">
     <ul class="u-unstyled l-row l-row--items-3 l-row--layout-m collection l-row--background-features">
         @items.slice(0, 1).zipWithIndex.map{ case (trail, index) =>
             @fragments.collections.items.standard(trail, index, containerIndex, "l-row__item--break-m")
@@ -29,12 +29,14 @@
                                 }
                             }
                         </ul>
-            @style.adSlot.map { adSlot =>
+            @if(StandardAdvertsSwitch.isSwitchedOn) {
+                @style.adSlot.map { adSlot =>
                     </li>
                     <li class="l-row__item l-row__item--mpu">
-                        @fragments.commercial.adSlot(name=adSlot.dfpName, adType="container-inline", sizeMapping=Map("mobile" -> Seq("300,50"), "tabletportrait" -> Seq("300,250")))
+                        @fragments.commercial.standardAd(name=adSlot.dfpName, adType="container-inline", sizeMapping=Map("mobile" -> Seq("300,50"), "tabletportrait" -> Seq("300,250")))
                     </li>
                 </ul>
+                }
             }
         </div>
     }
