@@ -4,10 +4,28 @@
 
 .masterclasses-component {
     .commercial__title {
-        .em {
-            color: $c-featureDefault;
-        }
+        padding: 0;
+        margin: 0;
+        text-transform: lowercase;
+        color: $c-newsDefault;
+        @include fs-headline(3);
     }
+    .commercial__title__last-word {
+        font-style: italic;
+        @include rem((
+            margin-left: -5px
+        ));
+    }
+    .commercial__explainer {
+        color: $c-neutral1;
+        @include f-headline;
+        @include font-size(14.5, 19);
+        @include rem((
+            margin: $gs-baseline 0 0
+        ));
+    }    
+    
+    
     .lineitem__image {
         margin-right: $gs-gutter/5;
         outline: 1px solid $c-neutral7;
@@ -22,13 +40,14 @@
 
     @include mq($to: tablet) {
         .commercial__head {
-            background-color: $c-featureDefault;
+ /*           background-color: $c-featureDefault; */
+            background-color: transparent;
 
             .commercial__title {
                 .em {
-                    color: #ffffff;
+/*                    color: #ffffff;
                     color: rgba(#ffffff, .8);
-                }
+  */              }
             }
         }
     }
