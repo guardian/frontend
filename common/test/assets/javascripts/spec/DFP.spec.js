@@ -124,14 +124,14 @@ define([
 
             it("has content with the class 'breakout__script'", function() {
                 var id   = 'dfp-script-slot',
-                    str  = 'This came from an iframe',
                     slot = generateSlotFunction(id),
-                    html = '<script class="breakout__script">window.dfpModuleTestVar = "'+ str +'"</script>';
+                    script = "var foo = bar;",
+                    html = '<script class="breakout__script">' + script + '</script>';
 
                 createTestIframe(id, html);
                 dfpAds.checkForBreakout($('#'+ slot.getSlotId().getDomId()));
 
-                expect(window.dfpModuleTestVar).toBe(str);
+                expect($('#dfp-script-slot').first().html()).toBe('<script>' + script + '</script>');
             });
         });
     });

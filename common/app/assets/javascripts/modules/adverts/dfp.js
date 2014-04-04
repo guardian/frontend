@@ -2,7 +2,6 @@
 define([
     'common/$',
     'bonzo',
-    'postscribe',
     'common/modules/component',
     'lodash/objects/assign',
     'lodash/functions/debounce',
@@ -17,7 +16,6 @@ define([
 ], function (
     $,
     bonzo,
-    postscribe,
     Component,
     extend,
     debounce,
@@ -233,7 +231,7 @@ define([
 
             if($el.length > 0) {
                 $slot.html('');
-                postscribe($slot[0], breakoutHash[cls].replace(/%content%/g, $el.html()));
+                $slot.first().append(breakoutHash[cls].replace(/%content%/g, $el.html()));
             }
         }
     };
