@@ -2,7 +2,7 @@
 
 @defining((config.displayName.orElse(collection.displayName), config.href.orElse(collection.href))) { case (title, href) =>
 
-    @defining(templateDeduping(0, collection.items)) { items =>
+    @defining(collection.items) { items =>
         @if(items.nonEmpty) {
             <section
                 class="@RenderClasses(Map(
