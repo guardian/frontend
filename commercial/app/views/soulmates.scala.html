@@ -5,36 +5,77 @@
     <link rel="stylesheet" href="@Static("stylesheets/global.css")" />
 }
 
+<style>
+    .i--commercial { background-image: url(@Static("images/commercial/sprite.png")); }
+</style>
 <link rel="stylesheet" href="@Static("stylesheets/commercial.css")" />
 
-<aside class="commercial soulmates-component" role="complementary">
-    <div class="facia-container facia-container--layout-article monocolumn-wrapper monocolumn-wrapper--no-limit">
-        <div class="container container--row-pattern">
-            <div class="container__border hide-on-mobile"></div>
-
-            <h2 class="container__title">
-                <span class="container__logo svg-i-bookshop-logo--guardian"></span>
-                <span class="container__logo svg-i-bookshop-logo--bookshop"></span>
-            </h2>
-
-            <div class="container__body">
-                <div class="commercial__body">
-                    <ul class="lineitems">
-                        @members.take(5).map { member =>
-                            <li class="lineitem">
-                                <a class="lineitem__blocklink" href="%OASToken%http://soulmates.theguardian.com/%OmnitureToken%">
-                                    <img class="lineitem__image" src="@member.profilePhoto" alt="" width="80" height="100" />
-                                    <h4 class="lineitem__title">@member.username</h4>
-                                    <p class="lineitem__meta"><strong>@member.age</strong>, @member.location</p>
-                                </a>
-                            </li>
-                        }
-                    </ul>
-                </div>
-                <div class="commercial__foot">
-                    <a class="commercial__link" href="%OASToken%http://soulmates.theguardian.com/%OmnitureToken%">Join Guardian Soulmates<i class="i i-double-arrow-right-blue"></i></a>
-                </div>
+@defining(("2_2", "2014-03-28")) { case (version, date) =>
+   <aside class="commercial commercial--soulmates" role="complementary">
+        <div class="commercial__inner">
+            <div class="commercial__header">
+                <h3 class="commercial__logo">
+                    <span class="i i--commercial i-soulmates-logo"></span>
+                    <span class="u-h">Soulmates</span>
+                </h3>
+                <p class="commercial__explainer">The Guardian's online dating site with over 200,000 members</p>
+                <a href="@AdLink {https://soulmates.theguardian.com}?INTCMP=mic_232613"
+                    class="commercial__buy-now-button"
+                    data-link-name="merchandising-soulmates-v@{version}_@{date}-low-join-now">
+                    Join now
+                </a>
+            </div>
+            <div class="commercial__body">
+                <ul class="u-unstyled lineitems">
+                    @members.map { member =>
+                        <li class="lineitem">
+                            <a class="lineitem__link"
+                                data-link-name="merchandising-soulmates-v@{version}_@{date}-low-profile-@{member.gender}"
+                                href="@AdLink{@member.profileUrl}?INTCMP=mic_232613">
+                                <img class="lineitem__image" src="@member.profilePhoto" alt="" width="80" height="100" />
+                                <h4 class="lineitem__title">@member.username, @member.age</h4>
+                                <p class="lineitem__meta">@member.location</p>
+                            </a>
+                        </li>
+                    }
+                </ul>
+                <form class="commercial__search" action="https://soulmates.theguardian.com/find" method="get">
+                    <label for="my_gender" class="search__dropdown">I am a
+                        <select id="my_gender" name="my_gender" class="search__dropdown__options">
+                            @Seq("woman", "man").map { myGender =>
+                                <option value="@myGender.capitalize">@myGender</option>
+                            }
+                        </select>
+                    </label>
+                    <label for="match_gender" class="search__dropdown">Seeking
+                        <select id="match_gender" name="match_gender" class="search__dropdown__options">
+                            @Map("Woman" -> "women", "Man" -> "men", "" -> "men & women").map { case (matchGenderValue, matchGenderName) =>
+                                <option value="@matchGenderValue">@matchGenderName</option>
+                            }
+                        </select>
+                    </label>
+                    <label for="age_min" class="search__dropdown">Aged from
+                        <select id="age_min" name="age_min" class="search__dropdown__options">
+                            @for(ageMin <- 18 to 99) {
+                                <option>@ageMin</option>
+                            }
+                        </select>
+                    </label>
+                    <label for="age_max" class="search__dropdown">To
+                        <select id="age_max" name="age_max" class="search__dropdown__options">
+                            @for(ageMax <- 18 to 99) {
+                                <option>@ageMax</option>
+                            }
+                        </select>
+                    </label>
+                    <button type="submit" class="search__submit" data-link-name="merchandising-soulmates-v@{version}_@{date}-low-find-a-soulmate">
+                        Find a soulmate
+                        <span class="search__submit__cta">
+                            <span class="i i-arrow-white-large" />
+                        </span>
+                    </button>
+                </form>
             </div>
         </div>
-    </div>
-</aside>
+    </aside>
+}

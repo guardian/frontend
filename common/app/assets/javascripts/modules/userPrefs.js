@@ -20,23 +20,23 @@ define([
     }
 
     function switchOn(name) {
-        store.set(storagePrefix + "switch." + name, true);
+        store.set(storagePrefix + 'switch.' + name, true);
     }
 
     function switchOff(name) {
-        store.set(storagePrefix + "switch." + name, false);
+        store.set(storagePrefix + 'switch.' + name, false);
     }
 
     function removeSwitch(name) {
-        store.remove(storagePrefix + "switch." + name);
+        store.remove(storagePrefix + 'switch.' + name);
     }
 
     function isOn(name) {
-        return store.get(storagePrefix + "switch." + name) === true;
+        return store.get(storagePrefix + 'switch.' + name) === true;
     }
 
     function isOff(name) {
-        return store.get(storagePrefix + "switch." + name) === false;
+        return store.get(storagePrefix + 'switch.' + name) === false;
     }
 
     function isNumeric(str){
@@ -44,7 +44,7 @@ define([
     }
 
     function isBoolean(str){
-        return (str === "true" || str === "false");
+        return (str === 'true' || str === 'false');
     }
 
     function setPrefs(loc) {
@@ -55,16 +55,16 @@ define([
                 var key = m[1],
                     val = m[2];
                 switch (key) {
-                    case "switchOn":
+                    case 'switchOn':
                         switchOn(val);
                         break;
-                    case "switchOff":
+                    case 'switchOff':
                         switchOff(val);
                         break;
                     default:
                         // 1. +val casts any number (int, float) from a string
                         // 2. String(val) === "true" converts a string to bool
-                        var v = (isNumeric(val) ? +val : isBoolean(val) ? (String(val).toLowerCase() === "true") : val);
+                        var v = (isNumeric(val) ? +val : isBoolean(val) ? (String(val).toLowerCase() === 'true') : val);
                         set(key, v);
                 }
             }

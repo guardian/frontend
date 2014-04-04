@@ -8,9 +8,11 @@
 @import "_mixins";
 @import "_extends-only";
 
+$commercial-component-bg: #edede7;
+
 @import "module/commercial/_bestbuys";
-@import "module/commercial/_books";
 @import "module/commercial/_commercial-component";
+@import "module/commercial/_books";
 @import "module/commercial/_jobs";
 @import "module/commercial/_masterclasses";
 @import "module/commercial/_soulmates";

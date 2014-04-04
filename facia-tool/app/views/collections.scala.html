@@ -218,12 +218,12 @@
             <div data-bind="if: state.open">
                 <div class="image__overrides">
                     <a data-bind="
-                        click: toggleImageAdjustHighlight,
-                        text: meta.imageAdjust() === 'highlight' ? 'Highlighted' : 'Highlight',
-                        css: {selected: meta.imageAdjust() === 'highlight'}"></a>
+                        click: toggleImageAdjustBoost,
+                        text: meta.imageAdjust() === 'boost' ? 'Boosted' : 'Boost image',
+                        css: {selected: meta.imageAdjust() === 'boost'}"></a>
                     <a data-bind="
                         click: toggleImageAdjustHide,
-                        text: meta.imageAdjust() === 'hide' ? 'Hidden' : 'Hide',
+                        text: meta.imageAdjust() === 'hide' ? 'Hidden' : 'Hide image',
                         css: {selected: meta.imageAdjust() === 'hide'}">Hide</a>
                 </div>
 
@@ -286,7 +286,7 @@
                     visible: meta.imageAdjust,
                     click: open">
                     <span class="selected" data-bind="
-                        visible: meta.imageAdjust() === 'highlight'">Highlighted</span>
+                        visible: meta.imageAdjust() === 'boost'">Boosted</span>
                     <span class="selected" data-bind="
                         visible: meta.imageAdjust() === 'hide'">Hidden</span>
                 </div>

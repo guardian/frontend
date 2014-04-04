@@ -5,29 +5,21 @@ define([
     'common/modules/analytics/mvt-cookie',
 
     //Current tests
-    'common/modules/experiments/tests/aa',
-    'common/modules/experiments/tests/fronts-latest-reviews-card',
-    'common/modules/experiments/tests/fronts-cartoon-card',
-    'common/modules/experiments/tests/fronts-missed-card',
-    'common/modules/experiments/tests/fronts-live-card'
+    'common/modules/experiments/tests/external-links-new-window',
+    'common/modules/experiments/tests/abcd'
 ], function (
     common,
     store,
     mediator,
     mvtCookie,
-    Aa,
-    FrontsLatestReviewsCard,
-    FrontsCartoonCard,
-    FrontsMissedCard,
-    FrontsLiveCard
+
+    ExternalLinksNewWindow,
+    Abcd
 ) {
 
     var TESTS = [
-            new Aa(),
-            new FrontsLatestReviewsCard(),
-            new FrontsCartoonCard(),
-            new FrontsMissedCard(),
-            new FrontsLiveCard()
+            new ExternalLinksNewWindow(),
+            new Abcd()
        ],
        participationsKey = 'gu.ab.participations';
 
@@ -157,7 +149,7 @@ define([
             addParticipation(test, variantIds[testVariantId]);
 
         } else {
-            addParticipation(test, "notintest");
+            addParticipation(test, 'notintest');
         }
     }
 
@@ -248,9 +240,9 @@ define([
             try {
                 getActiveTests().forEach(function (test) {
 
-                    if (isParticipating(test)) {
+                    if (isParticipating(test) && testCanBeRun(test, config)) {
                         var variant = getTestVariant(test.id);
-                        if (isTestSwitchedOn(test, config) && variant && variant !== 'notintest') {
+                        if (variant && variant !== 'notintest') {
                             abLogObject['ab' + test.id] = variant;
                         }
                     }

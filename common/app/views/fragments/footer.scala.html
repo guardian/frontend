@@ -1,8 +1,6 @@
 @(page: MetaData)(implicit request: RequestHeader)
 @import conf.Switches._
 
-<div id="dfp-commercial-component" class="ad-slot__dfp ad-slot__commercial-component" data-name="merchandising" data-size="888,88"></div>
-
 <footer class="footer u-cf" data-link-name="footer" data-component="footer">
     <div class="footer__primary">
         <div id="footer-nav">
@@ -32,7 +30,9 @@
                 <li class="colophon__item"><a data-link-name="terms" href="@LinkTo("/help/terms-of-service")">Terms &amp; conditions</a></li>
                 <li class="colophon__item"><a data-link-name="privacy" href="@LinkTo("/help/privacy-policy")">Privacy policy</a></li>
                 <li class="colophon__item"><a data-link-name="cookie" href="@LinkTo("/info/cookies")">Cookie policy</a></li>
-                <li class="colophon__item hide-on-mobile">@fragments.mainSiteLink(page, label = "Current version")</li>
+                @if(ClassicLink.hasClassicVersion()) {
+                    <li class="colophon__item hide-on-mobile">@fragments.mainSiteLink(page, label = "Current version")</li>
+                }
             </ul>
             <div class="footer__misc">
                 <div class="really-serious-copyright">© Guardian News and Media Limited or its affiliated companies. All rights reserved.</div>

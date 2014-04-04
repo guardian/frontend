@@ -5,6 +5,7 @@ define([
     'common/utils/context',
     'common/utils/config',
     'common/utils/page',
+    'common/modules/ui/rhc',
     'common/modules/sport/football/match-list',
     'common/modules/sport/football/match-info',
     'common/modules/sport/football/match-stats',
@@ -17,6 +18,7 @@ define([
     context,
     config,
     page,
+    rhc,
     MatchList,
     MatchInfo,
     MatchStats,
@@ -46,19 +48,33 @@ define([
             }
 
             matchInfo.fetch().then(function(resp) {
-                $('.after-header', context).append(resp.nav);
-                scoreBoard.template = config.page.isLiveBlog ? resp.matchSummary : resp.scoreSummary;
-                scoreContainer.innerHTML = '';
-                scoreBoard.render(scoreContainer);
+                var $nav = $.create(resp.nav).first().each(function(nav) {
+                    if (match.id || $('.tabs__tab', nav).length > 2) {
+                        $('.after-header', context).append(nav);
+                    }
+                });
 
-                // TODO (jamesgorrie): The stats component should travel with this lot. Two calls is a bit crap
                 if (!match.id) {
-                    var statsUrl = $('.tab--stats a', context).attr('href').replace(/^.*\/\/[^\/]+/, ''),
+                    scoreContainer.innerHTML = '';
+                    scoreBoard.template = config.page.isLiveBlog ? resp.matchSummary : resp.scoreSummary;
+
+                    if(!/^\s+$/.test(scoreBoard.template)) {
+                        scoreBoard.render(scoreContainer);
+                    }
+
+                    $('.tab--min-by-min a', $nav).first().each(function(el) {
+                        bonzo(scoreBoard.elem).addClass('u-fauxlink');
+                        bean.on(scoreBoard.elem, 'click', function() {
+                            window.location = el.getAttribute('href');
+                        });
+                    });
+
+                    var statsUrl = $('.tab--stats a', $nav).attr('href').replace(/^.*\/\/[^\/]+/, ''),
                         statsContainer = bonzo.create('<div class="match-stats__container"></div>'),
                         matchStats = new MatchStats(statsUrl);
 
-                    page.rightHandComponentVisible(function(el) {
-                        bonzo(el).append(statsContainer);
+                    page.rightHandComponentVisible(function() {
+                        rhc.addComponent(statsContainer, 3);
                     }, function() {
                         $article.append(statsContainer);
                     });
@@ -71,8 +87,8 @@ define([
             var table = new Table(competition),
                 tableContainer = bonzo.create('<div class="js-football-table" data-link-name="football-table-embed"></div>');
 
-            page.rightHandComponentVisible(function(el) {
-                bonzo(el).append(tableContainer);
+            page.rightHandComponentVisible(function() {
+                rhc.addComponent(tableContainer, 2);
                 table.fetch(tableContainer);
             });
         });
@@ -80,8 +96,8 @@ define([
         page.isLiveClockwatch(function() {
             var ml = new MatchList('live', 'premierleague'),
                 $img = $('.media-primary'),
-                $matchListContainer = bonzo(bonzo.create('<div class="football-match__list" data-link-name="football-matches-clockwatch"></div>'))
-                                          .css({ minHeight: $img[0].offsetHeight });
+                $matchListContainer = $.create('<div class="football-matches__container" data-link-name="football-matches-clockwatch"></div>')
+                                          .css({ minHeight: $img[0] ? $img[0].offsetHeight : 0 });
 
             $img.addClass('u-h');
             loading($matchListContainer[0], 'Fetching today\'s matches…', { text: 'Impatient?', href: '/football/live' });
@@ -97,13 +113,16 @@ define([
                     $matchListContainer.remove();
                     $img.removeClass('u-h');
                 }
+                $matchListContainer.css({ minHeight: 0 });
                 loaded($matchListContainer[0]);
             });
         });
 
         // Binding
-        bean.on(context, 'click', '.table tr[data-link-to]', function() {
-            window.location = this.getAttribute('data-link-to');
+        bean.on(context, 'click', '.table tr[data-link-to]', function(e) {
+            if (!e.target.getAttribute('href')) {
+                window.location = this.getAttribute('data-link-to');
+            }
         });
 
         bean.on(context, 'change', $('form.football-leagues')[0], function() {

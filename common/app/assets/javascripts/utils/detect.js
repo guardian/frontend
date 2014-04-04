@@ -81,9 +81,9 @@ define([
         var loadTime = getPageSpeed(performance);
 
         // Assume high speed for non supporting browsers
-        var speed = "high";
+        var speed = 'high';
         if (reportUnknown) {
-            speed = "unknown";
+            speed = 'unknown';
         }
 
         if (loadTime) {
@@ -151,13 +151,13 @@ define([
         // default to mobile
         var breakpoint = (document.body && window.getComputedStyle(document.body, ':after').getPropertyValue('content')) || 'mobile';
         // firefox seems to wrap the value in quotes
-        return breakpoint.replace(/^"([^"]*)"$/, "$1");
+        return breakpoint.replace(/^"([^"]*)"$/, '$1');
     }
 
     // Page Visibility
     function initPageVisibility() {
         // Taken from http://stackoverflow.com/a/1060034
-        var hidden = "hidden";
+        var hidden = 'hidden';
 
         function onchange(evt) {
             var v = 'visible',
@@ -175,7 +175,7 @@ define([
             if (evt.type in evtMap) {
                 pageVisibility = evtMap[evt.type];
             } else {
-                pageVisibility = this[hidden] ? "hidden" : "visible";
+                pageVisibility = this[hidden] ? 'hidden' : 'visible';
             }
 
             common.mediator.emit('modules:detect:pagevisibility:' + pageVisibility);
@@ -183,13 +183,13 @@ define([
 
         // Standards:
         if (hidden in document) {
-            document.addEventListener("visibilitychange", onchange);
-        } else if ((hidden = "mozHidden") in document) {
-            document.addEventListener("mozvisibilitychange", onchange);
-        } else if ((hidden = "webkitHidden") in document) {
-            document.addEventListener("webkitvisibilitychange", onchange);
-        } else if ((hidden = "msHidden") in document) {
-            document.addEventListener("msvisibilitychange", onchange);
+            document.addEventListener('visibilitychange', onchange);
+        } else if ((hidden = 'mozHidden') in document) {
+            document.addEventListener('mozvisibilitychange', onchange);
+        } else if ((hidden = 'webkitHidden') in document) {
+            document.addEventListener('webkitvisibilitychange', onchange);
+        } else if ((hidden = 'msHidden') in document) {
+            document.addEventListener('msvisibilitychange', onchange);
         }
         // IE 9 and lower:
         else if ('onfocusin' in document) {

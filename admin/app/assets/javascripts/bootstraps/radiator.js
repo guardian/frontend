@@ -82,7 +82,7 @@ define([
                         li.setAttribute('title', d.projectName);
                         target.appendChild(li);
 
-                        if (stage === "PROD") {
+                        if (latestDeployments["CODE"][deployment] && stage === "PROD" && d.status == "Completed") {
                             var codeBuild = (latestDeployments["CODE"][deployment] || {}).build;
                             if (codeBuild !== d.build){
                                 li.innerHTML = nameAbbreviation + " " + codeBuild;

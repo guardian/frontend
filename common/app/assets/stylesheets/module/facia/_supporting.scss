@@ -1,5 +1,12 @@
 .supporting {
     clear: both;
+
+    @include mq(tablet) {
+        @include rem((
+            margin-left: -$gs-gutter/2,
+            margin-right: -$gs-gutter/2
+        ));
+    }
 }
 .supporting-list {
     margin: 0;
@@ -19,13 +26,19 @@
     ));
     @include mq(tablet) {
         display: table-cell;
+        @include rem((
+            padding-right: $gs-gutter/2,
+            padding-left: $gs-gutter/2
+        ));
 
         & + & {
             border-left: 1px solid $c-neutral5;
 
-            @include rem((
-                padding-left: $gs-gutter/4
-            ));
+            .supporting__action {
+                @include rem((
+                    margin-left: -$gs-gutter/4
+                ));
+            }
         }
     }
 }
