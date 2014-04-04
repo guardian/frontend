@@ -3,7 +3,7 @@
     <contextName>frontend-facia-tool</contextName>
 
     <appender name="LOGFILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>logs/frontend-facia-tool.log</file>
+        <file>logs/frontend-admin.log</file>
 
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <fileNamePattern>logs/frontend-facia-tool.log.%d{yyyy-MM-dd}.gz</fileNamePattern>
