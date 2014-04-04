@@ -70,7 +70,7 @@ object TrailsToRss extends implicits.Collections {
           case a: Article => Jsoup.parseBodyFragment(a.body).select("p:lt(2)").toArray.map(_.toString).mkString("")
           case _ => ""
         }
-      val readMore = s""" <a href="${trail.webUrl}">Read more...</a>"""
+      val readMore = s""" <a href="${trail.webUrl}">Continue reading...</a>"""
       description.setValue(cleanInvalidXmlChars(standfirst + intro + readMore))
 
       val images: Seq[ImageAsset] = (trail.bodyImages ++ trail.mainPicture ++ trail.thumbnail).map{ i =>
