@@ -13,7 +13,7 @@
                  itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType" role="main">
 
             @if(article.isSponsored) {
-                @fragments.commercial.adSlot(name="paid-for-badge", adType="sponsored", sizeMapping=Map("mobile" -> Seq("300,80")))
+                @fragments.commercial.adSlot(name="badge", adType="paid-for-badge", sizeMapping=Map("mobile" -> Seq("300,80")))
             }
 
             <div class="article__inner article__inner--head">
