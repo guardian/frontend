@@ -2,10 +2,10 @@ package form
 
 import play.api.data.Forms._
 import scala.Some
-import com.gu.identity.model.{PrivateFields, User}
+import com.gu.identity.model.{UserDates, PrivateFields, User}
 import idapiclient.UserUpdate
 
-object AccountDetailsMapping extends UserFormMapping[AccountFormData] with AddressMapping{
+object AccountDetailsMapping extends UserFormMapping[AccountFormData] with AddressMapping with DateMapping {
 
   private val genders = List("Male", "Female", "Transgender", "unknown", "")
 
@@ -15,6 +15,7 @@ object AccountDetailsMapping extends UserFormMapping[AccountFormData] with Addre
       ("firstName", textField),
       ("secondName", textField),
       ("gender", comboList(genders)),
+      "birthDate" -> dateMapping,
       "address" -> idAddress
     )(AccountFormData.apply)(AccountFormData.unapply)
   }
@@ -25,12 +26,13 @@ object AccountDetailsMapping extends UserFormMapping[AccountFormData] with Addre
     ("privateFields.firstName", "firstName"),
     ("privateFields.secondName", "secondName"),
     ("privateFields.gender", "gender"),
-    ("privateFields.address1", "address1"),
-    ("privateFields.address2", "address2"),
-    ("privateFields.address3", "address3"),
-    ("privateFields.address4", "address4"),
-    ("privateFields.postcode", "postcode"),
-    ("privateFields.country", "country")
+    ("dates.birthDate", "birthDate"),
+    ("privateFields.address1", "address.line1"),
+    ("privateFields.address2", "address.line2"),
+    ("privateFields.address3", "address.line3"),
+    ("privateFields.address4", "address.line4"),
+    ("privateFields.postcode", "address.postcode"),
+    ("privateFields.country", "address.country")
   )
 }
 
@@ -43,11 +45,13 @@ case class AccountFormData(
   firstName: String,
   secondName: String,
   gender: String,
+  birthDate: DateFormData,
   address: AddressFormData
 ) extends UserFormData{
 
   def toUserUpdate(currentUser: User): UserUpdate = UserUpdate(
     primaryEmailAddress = toUpdate(primaryEmailAddress, Some(currentUser.primaryEmailAddress)),
+    dates = Some(UserDates(birthDate = birthDate.dateTime)),
     privateFields = Some(PrivateFields(
       firstName = toUpdate(firstName, currentUser.privateFields.firstName),
       secondName = toUpdate(secondName, currentUser.privateFields.secondName),
@@ -70,6 +74,7 @@ object AccountFormData {
     firstName = user.privateFields.firstName getOrElse "",
     secondName = user.privateFields.secondName getOrElse "",
     gender = user.privateFields.gender getOrElse "unknown",
+    birthDate = DateFormData(user.dates.birthDate),
     address = AddressFormData(
       address1 = user.privateFields.address1 getOrElse "",
       address2 = user.privateFields.address2 getOrElse "",

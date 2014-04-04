@@ -1,6 +1,7 @@
 @(idUrlBuilder: services.IdentityUrlBuilder, idRequest: services.IdentityRequest, user: com.gu.identity.model.User, accountDetailsForm: Form[form.AccountFormData])(implicit request: RequestHeader)
 
 @import views.html.fragments.form.{inputField, textareaField}
+@import org.joda.time.DateTime.now
 @import form.IdFormHelpers._
 @import form.Input
 @import conf.Switches.IdentityEmailVerificationSwitch
@@ -63,6 +64,31 @@
                     accountDetailsForm("gender"),
                     List(("Male", "Male"), ("Female", "Female"), ("Transgender", "Transgender"), ("unknown", "Prefer not to say")),
                     ('_label, "Gender"),
+                    ('_default, "")
+                )
+
+                @if(accountDetailsForm("birthDate").hasErrors) {
+                    <div class="form__error">@accountDetailsForm("birthDate").errors.map(_.message).mkString(", ")</div>
+                }
+                @select(
+                    accountDetailsForm("birthDate.year"),
+                    options((1850 to now.getYear).reverse.toList map {_.toString}),
+                    ('_label, "Year"),
+                    ('_showConstraints, false),
+                    ('_default, "")
+                )
+                @select(
+                    accountDetailsForm("birthDate.month"),
+                    options((1 to 12).toList map {_.toString}),
+                    ('_label, "Month"),
+                    ('_showConstraints, false),
+                    ('_default, "")
+                )
+                @select(
+                    accountDetailsForm("birthDate.day"),
+                    options((1 to 31).toList map {_.toString}),
+                    ('_label, "Day"),
+                    ('_showConstraints, false),
                     ('_default, "")
                 )
 
