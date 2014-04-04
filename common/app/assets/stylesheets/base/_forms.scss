@@ -125,16 +125,14 @@
         }
     }
     .form-fields__heading {
-        font-size: 18px;
-        margin: 0 0 $gs-baseline 0;
+        @include fs-bodyHeading(3, true);
+        margin: 0 0 rem($gs-baseline);
         display: block;
     }
 }
 
-.form-fields--date-of-birth {
-    .form-field {
-        margin: 0 18px 0 0;
-    }
+.form-fields--date-of-birth .form-field {
+    margin: 0 rem(18px) 0 0;
 }
 
 .label {
