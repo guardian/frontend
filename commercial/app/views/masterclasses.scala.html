@@ -13,11 +13,11 @@
     </div>
     <div class="commercial__body">
         <ul class="lineitems">
-            @events.take(1).map { event =>
+            @events.take(3).map { event =>
                 <li class="lineitem">
                     <a class="lineitem__blocklink" href="%OASToken%@event.guardianUrl%OmnitureToken%">
                         <h4 class="lineitem__title">@event.name</h4>
-                        <p class="lineitem__meta">@event.readableDate • @event.venue.description</p>
+                        <p class="lineitem__meta">@event.readableDate | @event.venue.description</p>
                     </a>
                     <p class="lineitem__description">@event.truncatedFirstParagraph <a class="lineitem__link" href="%OASToken%@event.guardianUrl%OmnitureToken%"><i class="i i-single-arrow-right-blue"></i>Learn more and book</a></p>
                 </li>
@@ -25,6 +25,9 @@
         </ul>
     </div>
     <div class="commercial__foot">
-        <a class="commercial__link" href="%OASToken%http://theguardian.com/guardian-masterclasses/masterclasses-calendar%OmnitureToken%">More courses from Guardian Masterclasses<i class="i i-double-arrow-right-blue"></i></a>
+        <a class="commercial__home-link" href="%OASToken%http://theguardian.com/guardian-masterclasses/masterclasses-calendar%OmnitureToken%" data-link-name="merchandising-masterclasses-low-profile-browse-all-masterclasses">More courses from Guardian Masterclasses
+        <span class="commercial__home-link__cta">
+            <span class="i i-filter-arrow-down"></span>
+        </span></a>        
     </div>
 </div>
