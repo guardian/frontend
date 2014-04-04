@@ -242,7 +242,7 @@ define([
         loadAdverts: function (config) {
             // Having to check 3 switches for ads so that DFP and OAS can run in parallel
             // with each other and still have a master switch to turn off all adverts
-            if(!userPrefs.isOff('adverts') && config.switches.adverts && !config.page.shouldHideAdverts && !isSSL) {
+            if(!userPrefs.isOff('adverts') && config.switches.adverts && !config.page.shouldHideAdverts && !config.page.isSSL) {
 
                 var hasAdsToLoad = config.switches.oasAdverts || config.switches.dfpAdverts,
                     onResize = {
@@ -467,7 +467,7 @@ define([
         },
 
         startRegister: function(config) {
-            if (!isSSL) {
+            if (!config.page.isSSL) {
                 register.initialise(config);
             }
         },
