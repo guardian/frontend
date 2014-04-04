@@ -6,14 +6,14 @@
     <div class="commercial__head">
         <h3 class="commercial__title">
             <a href="%OASToken%http://theguardian.com/guardian-masterclasses%OmnitureToken%">
-                <span>Guardian <span class="em">Masterclasses</span></span>
+                <span>Guardian <span class="commercial__title__last-word">Masterclasses</span></span>
             </a>
         </h3>
-        <p class="commercial__subtitle">Courses from the Guardian</p>
+        <p class="commercial__explainer">Courses from the Guardian</p>
     </div>
     <div class="commercial__body">
         <ul class="lineitems">
-            @events.take(3).map { event =>
+            @events.take(4).map { event =>
                 <li class="lineitem">
                     <a class="lineitem__blocklink" href="%OASToken%@event.guardianUrl%OmnitureToken%">
                         <h4 class="lineitem__title">@event.name</h4>
