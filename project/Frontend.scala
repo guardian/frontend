@@ -27,6 +27,8 @@ object Frontend extends Build with Prototypes {
 
       "org.apache.commons" % "commons-math3" % "3.2",
 
+      "com.bionicspirit" %% "shade" % "1.5.0",
+
       "rome" % "rome" % "1.0",
       "org.rometools" % "rome-modules" % "1.0"
     )
@@ -41,7 +43,7 @@ object Frontend extends Build with Prototypes {
   val applications = application("applications").dependsOn(commonWithTests).aggregate(common)
   val archive = application("archive").dependsOn(commonWithTests).aggregate(common)
   val sport = application("sport").dependsOn(commonWithTests).aggregate(common).settings(
-    libraryDependencies += "com.gu" %% "pa-client" % "4.1",
+    libraryDependencies += "com.gu" %% "pa-client" % "4.5",
     templatesImport ++= Seq(
       "pa._",
       "feed._",
@@ -68,7 +70,7 @@ object Frontend extends Build with Prototypes {
     libraryDependencies ++= Seq(
       "com.typesafe.slick" %% "slick" % "1.0.0",
       "postgresql" % "postgresql" % "8.4-703.jdbc4" from "http://jdbc.postgresql.org/download/postgresql-8.4-703.jdbc4.jar",
-      "com.gu" %% "pa-client" % "4.1"
+      "com.gu" %% "pa-client" % "4.5"
     )
   )
   val faciaTool = application("facia-tool").dependsOn(commonWithTests)

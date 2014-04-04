@@ -158,13 +158,15 @@ define([
             });
         },
 
-        showRelativeDates: function () {
-            var dates = RelativeDates;
+        showRelativeDates: function (config) {
+            var dates = RelativeDates,
+                opts = config.switches.hideOldTimestamps && config.page.isFront ? {notAfter: 3600} : undefined; // 1 hour
+
             mediator.on('page:common:ready', function(config, context) {
-                dates.init(context);
+                dates.init(context, opts);
             });
             mediator.on('fragment:ready:dates', function(el) {
-                dates.init(el);
+                dates.init(el, opts);
             });
         },
 
@@ -229,7 +231,7 @@ define([
                 });
             });
 
-            if (config.switches.ophan) {
+            if (config.switches.ophan && !config.page.isSSL) {
                 require('ophan/ng', function (ophan) {
                     ophan.record({'ab': ab.getParticipations()});
 
@@ -247,7 +249,7 @@ define([
         loadAdverts: function (config) {
             // Having to check 3 switches for ads so that DFP and OAS can run in parallel
             // with each other and still have a master switch to turn off all adverts
-            if(!userPrefs.isOff('adverts') && config.switches.adverts && !config.page.shouldHideAdverts) {
+            if(!userPrefs.isOff('adverts') && config.switches.adverts && !config.page.shouldHideAdverts && !config.page.isSSL) {
 
                 var hasAdsToLoad = config.switches.oasAdverts || config.switches.dfpAdverts,
                     onResize = {
@@ -429,7 +431,9 @@ define([
 
         loadTags : function() {
             mediator.on('page:common:ready', function(config) {
-                TagContainer.init(config);
+                if (config.page.contentType !== 'Identity' && config.page.section !== 'identity') {
+                    TagContainer.init(config);
+                }
             });
         },
 
@@ -472,7 +476,9 @@ define([
         },
 
         startRegister: function(config) {
-            register.initialise(config);
+            if (!config.page.isSSL) {
+                register.initialise(config);
+            }
         },
 
         loadCommercialComponent: function(config) {
@@ -515,7 +521,7 @@ define([
             modules.showTabs();
             modules.initialiseNavigation(config);
             modules.showToggles();
-            modules.showRelativeDates();
+            modules.showRelativeDates(config);
             modules.transcludePopular();
             modules.loadVideoAdverts(config);
             modules.initClickstream();

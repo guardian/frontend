@@ -7,7 +7,6 @@ import play.api.mvc.{SimpleResult, Request}
 import idapiclient.ScGuU
 import java.net.URLEncoder
 import play.api.mvc.Results._
-import scala.Some
 import play.api.mvc.SimpleResult
 import actions.AuthRequest
 
@@ -17,15 +16,7 @@ class AuthenticationService @Inject()(cookieDecoder: FrontendIdentityCookieDecod
                                       idRequestParser: IdRequestParser,
                                       identityUrlBuilder: IdentityUrlBuilder) extends Logging {
   def handleAuthenticatedRequest[A](request: Request[A]): Either[SimpleResult, AuthRequest[A]] = {
-    val authRequestOpt = for {
-      scGuU <- request.cookies.get("SC_GU_U")
-      guU <- request.cookies.get("GU_U")
-      minimalSecureUser <- cookieDecoder.getUserDataForScGuU(scGuU.value)
-      guUCookieData <- cookieDecoder.getUserDataForGuU(guU.value)
-      fullUser = guUCookieData.getUser if (fullUser.getId == minimalSecureUser.getId)
-    } yield AuthRequest(request, fullUser, new ScGuU(scGuU.value))
-
-    authRequestOpt match {
+    authenticatedRequestFor(request) match {
       case Some(authRequest) => {
         logger.trace("user is logged in")
         Right(authRequest)
@@ -37,4 +28,15 @@ class AuthenticationService @Inject()(cookieDecoder: FrontendIdentityCookieDecod
       }
     }
   }
+
+  def authenticatedRequestFor[A](request: Request[A]): Option[AuthRequest[A]] = for {
+    scGuU <- request.cookies.get("SC_GU_U")
+    guU <- request.cookies.get("GU_U")
+    minimalSecureUser <- cookieDecoder.getUserDataForScGuU(scGuU.value)
+    guUCookieData <- cookieDecoder.getUserDataForGuU(guU.value)
+    fullUser = guUCookieData.getUser if (fullUser.getId == minimalSecureUser.getId)
+  } yield AuthRequest(request, fullUser, new ScGuU(scGuU.value))
+
+  def requestPresentsAuthenticationCredentials(request: Request[_]) = authenticatedRequestFor(request).isDefined
+
 }

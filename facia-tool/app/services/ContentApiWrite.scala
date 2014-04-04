@@ -73,7 +73,7 @@ trait ContentApiWrite extends ExecutionContexts with Logging {
         config.displayName,
         config.groups,
         generateItems(block.live),
-        config.contentApiQuery.flatMap(_.split('?').headOption.filter(_.nonEmpty)),
+        config.contentApiQuery,
         block.lastUpdated,
         block.updatedEmail
       )

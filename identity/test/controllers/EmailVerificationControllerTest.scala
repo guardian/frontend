@@ -1,16 +1,15 @@
 package controllers
 
 import org.scalatest.{ShouldMatchers, path}
-import services.{IdRequestParser, IdentityUrlBuilder}
+import services.{AuthenticationService, IdRequestParser, IdentityUrlBuilder, IdentityRequest}
 import idapiclient.IdApiClient
 import org.scalatest.mock.MockitoSugar
 import test.{TestRequest, Fake}
-import play.api.mvc.RequestHeader
+import play.api.mvc.{Request, RequestHeader}
 import scala.concurrent.Future
 import org.mockito.Mockito._
 import org.mockito.Matchers
 import play.api.test.Helpers._
-import services.IdentityRequest
 import idapiclient.TrackingData
 import client.Error
 import actions.AuthActionWithUser
@@ -19,6 +18,7 @@ class EmailVerificationControllerTest extends path.FreeSpec with ShouldMatchers 
   val api = mock[IdApiClient]
   val idRequestParser = mock[IdRequestParser]
   val authActionWithUser = mock[AuthActionWithUser]
+  val authenticationService = mock[AuthenticationService]
   val idUrlBuilder = mock[IdentityUrlBuilder]
   val idRequest = mock[IdentityRequest]
   val trackingData = mock[TrackingData]
@@ -27,8 +27,9 @@ class EmailVerificationControllerTest extends path.FreeSpec with ShouldMatchers 
 
   when(idRequestParser.apply(Matchers.any[RequestHeader])) thenReturn idRequest
   when(idRequest.trackingData) thenReturn trackingData
+  when(authenticationService.requestPresentsAuthenticationCredentials(Matchers.any[Request[_]])) thenReturn true
 
-  val controller = new EmailVerificationController(api, authActionWithUser, idRequestParser, idUrlBuilder)
+  val controller = new EmailVerificationController(api, authActionWithUser, authenticationService, idRequestParser, idUrlBuilder)
 
   "Given the verify method is called" - Fake {
     val testRequest = TestRequest()

@@ -37,6 +37,13 @@ trait Prototypes {
       "JBoss Releases" at "http://repository.jboss.org/nexus/content/repositories/releases",
       "Typesafe repository" at "http://repo.typesafe.com/typesafe/releases/",
       "Akka" at "http://repo.akka.io/releases"
+    ),
+
+    resolvers ++= Seq(
+      // where Shade lives
+      "BionicSpirit Releases" at "http://maven.bionicspirit.com/releases/",
+      // for SpyMemcached
+      "Spy" at "http://files.couchbase.com/maven2/"
     )
   )
 
@@ -110,9 +117,6 @@ trait Prototypes {
   )
 
   def root() = Project("root", base = file("."))
-    .settings(
-      scalaVersion := "2.10.3"
-    )
 
   def application(name: String) = play.Project(name, version, path = file(name))
     .settings(frontendDependencyManagementSettings:_*)

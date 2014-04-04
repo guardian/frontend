@@ -17,7 +17,6 @@ import play.api.test.FakeRequest
 import net.liftweb.json.JsonAST.JValue
 import net.liftweb.json.JsonDSL._
 import com.gu.identity.model.Subscriber
-import scala.Some
 import services.IdentityRequest
 import client.Error
 import idapiclient.TrackingData

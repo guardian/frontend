@@ -9,7 +9,7 @@ import model.commercial.money.BestBuysAgent
 import model.commercial.soulmates.SoulmatesAggregatingAgent
 import model.commercial.travel.{Countries, OffersAgent}
 import play.api.mvc.WithFilters
-import play.api.{Application => PlayApp, Mode, GlobalSettings}
+import play.api.{Application => PlayApp, GlobalSettings}
 import scala.util.{Failure, Success, Random}
 
 trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionContexts {
@@ -37,27 +37,24 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
       case (job, i) => job.start(randomStartSchedule(minsLater = i))
     }
 
-    // Don't start up agents in test mode
-    if (app.mode != Mode.Test) {
-      AkkaAsync {
-        SoulmatesAggregatingAgent.refresh()
+    AkkaAsync {
+      SoulmatesAggregatingAgent.refresh()
 
-        MasterClassAgent.refresh()
+      MasterClassAgent.refresh()
 
-        Countries.refresh() andThen {
-          case Success(_) => OffersAgent.refresh()
-          case Failure(e) => log.warn(s"Failed to refresh travel offer countries: ${e.getMessage}")
-        }
-
-        Industries.refresh() andThen {
-          case Success(_) => JobsAgent.refresh()
-          case Failure(e) => log.warn(s"Failed to refresh job industries: ${e.getMessage}")
-        }
-
-        BestBuysAgent.refresh()
-
-        BestsellersAgent.refresh()
+      Countries.refresh() andThen {
+        case Success(_) => OffersAgent.refresh()
+        case Failure(e) => log.warn(s"Failed to refresh travel offer countries: ${e.getMessage}")
       }
+
+      Industries.refresh() andThen {
+        case Success(_) => JobsAgent.refresh()
+        case Failure(e) => log.warn(s"Failed to refresh job industries: ${e.getMessage}")
+      }
+
+      BestBuysAgent.refresh()
+
+      BestsellersAgent.refresh()
     }
   }
 

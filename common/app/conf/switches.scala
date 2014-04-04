@@ -52,6 +52,20 @@ object Switches extends Collections {
 
   // Load Switches
 
+  val MemcachedSwitch = Switch("Performance Switches", "memcached",
+    "If this switch is switched on then the MemcacheAction will be operational",
+    safeState = Off,
+    // giving this a sell by date even though it is a perf switch as it is still a test.
+    sellByDate = new DateMidnight(2014, 4, 30)
+  )
+
+  val IncludeBuildNumberInMemcachedKey = Switch("Performance Switches", "memcached-build-number",
+    "If this switch is switched on then the MemcacheFilter will include the build number in the cache key",
+    safeState = Off,
+    // giving this a sell by date even though it is a perf switch as it is still a test.
+    sellByDate = new DateMidnight(2014, 4, 30)
+  )
+
   val AutoRefreshSwitch = Switch("Performance Switches", "auto-refresh",
     "Enables auto refresh in pages such as live blogs and live scores. Turn off to help handle exceptional load.",
     safeState = Off, sellByDate = never
@@ -267,9 +281,19 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 4, 30)
   )
 
-  val LeadAdTopPageSwitch = Switch("Feature Switches", "lead-ad-top-page",
-    "If this switch is on, the lead ad is placed on top of the page on desktop",
-    safeState = Off, sellByDate = new DateMidnight(2014, 4, 30)
+  val RssLinkSwitch = Switch("Feature Switches", "rss-link",
+    "If this switch is on a link to the RSS is rendered in the HTML",
+    safeState = Off, sellByDate = new DateMidnight(2014, 4, 7)
+  )
+
+  val PopularInTagSwitch = Switch("Feature Switches", "popular-in-tag",
+    "If this switch is turned on then popular-in-tag will override related content for the selected tags.",
+    safeState = Off, sellByDate = new DateMidnight(2014, 5, 14)
+  )
+
+  val HideOldTimeStampsSwitch = Switch("Feature Switches", "hide-old-timestamps",
+    "If this switch is turned on then timestamps older than an hour get hidden on fronts.",
+    safeState = Off, sellByDate = new DateMidnight(2014, 4, 28)
   )
 
   // A/B Test Switches
@@ -389,11 +413,15 @@ object Switches extends Collections {
     FrontPressJobSwitch,
     LayoutHintsSwitch,
     HelveticaEasterEggSwitch,
-    LeadAdTopPageSwitch,
+    RssLinkSwitch,
+    PopularInTagSwitch,
+    HideOldTimeStampsSwitch,
     OmnitureVerificationSwitch,
     IndiaRegionSwitch,
     ABExternalLinksNewWindow,
-    ABAbcd
+    ABAbcd,
+    MemcachedSwitch,
+    IncludeBuildNumberInMemcachedKey
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
@@ -430,7 +458,9 @@ class SwitchBoardAgent(config: GuardianConfiguration) extends Plugin with Execut
       refresh()
     }
 
-    refresh()
+    AkkaAsync {
+      refresh()
+    }
   }
 
   override def onStop() {

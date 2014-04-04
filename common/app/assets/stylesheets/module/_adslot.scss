@@ -1,9 +1,12 @@
-.ad-slot__oas {
+.ad-slot__oas,
+.ad-slot__dfp {
     width: 100%;
     overflow-x: hidden;
-    padding: ($gs-baseline/6)*5 0 ($gs-baseline/3) 0;
     text-align: center;
     min-height: 56px;
+    @include rem((
+        padding: ($gs-baseline/6)*5 0 ($gs-baseline/3) 0
+    ));
 
     // For expandables
     position: relative;
@@ -42,86 +45,80 @@
     width: auto;
     margin: 0 auto !important;
 }
-.top-banner-ad-container {
-    min-height: 70px;
+.ad-slot--container-inline {
+    min-height: 50px;
+    @include box-sizing(border-box);
+    @include rem((
+        margin: $gs-baseline 0 $gs-baseline/2,
+        padding: 0 $gs-gutter/2 0
+    ));
 
-    @include mq(tablet) {
-        @include rem((
-            padding-top: $gs-baseline/2,
-            padding-bottom: $gs-baseline/2
-        ));
+    .ad-slot__label {
+        max-width: 300px;
+        margin: 0 auto;
+
+        @include mq(mobileLandscape, tablet) {
+            position: absolute;
+            width: 50%;
+            height: 100%;
+            text-align: left;
+            z-index: -1;
+            @include rem((
+                padding-left: 2px,
+                font-size: 10px
+            ));
+        }
     }
+    @include mq(tablet) {
+        position: absolute;
+        left: 0;
+        right: 0;
+        @if $browser-supports-flexbox {
+            @include rem((
+                bottom: $mpu-align-offset
+            ));
+        } @else {
+            bottom: 0;
+        }
+        top: 0;
+        padding: 0;
+        width: auto;
+        @include rem((
+            margin: 0 $gs-gutter / 2
+        ));
+        background-color: $c-neutral8;
+
+        .ad-container {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+        }
+    }
+}
+.top-banner-ad-container {
+    margin: 0 auto;
+
     @include mq(faciaLeftCol) {
         @include rem((
             width: gs-span(14)
         ));
-        margin: 0 auto;
-    }
-    @include mq(desktopAd) {
-        min-height: 110px;
-    }
-}
-.ad-slot--mpu-in-row-pattern {
-    position: absolute;
-    left: 0;
-    right: 0;
-    @if $browser-supports-flexbox {
-        @include rem((
-            bottom: $mpu-align-offset
-        ));
-    } @else {
-        bottom: 0;
-    }
-    top: 0;
-    padding-top: 0;
-    padding-bottom: 0;
-    width: auto;
-    @include rem((
-        margin: 0 $gs-gutter/2
-    ));
-    background-color: $c-neutral8;
-
-    .ad-container {
-        position: absolute;
-        bottom: 0;
-        right: 0;
     }
 }
 .ad-slot--top-banner-ad {
     background-color: #f0f0f0;
+    min-height: 50px;
+    @include rem((
+        padding: $gs-baseline 0
+    ));
 
     @include mq(tablet) {
         background-color: transparent;
+        min-height: 90px;
     }
-
     @include mq(faciaLeftCol) {
         width: auto;
         margin-left: gs-span(2) + $gs-gutter;
         text-align: left;
-    }
-
-    .ad-slot__label {
-        display: none;
-    }
-}
-.top-banner-ad-container--above-header {
-    &,
-    .ad-slot {
-        display: none;
-
-        @include mq(desktop) {
-            display: block;
-        }
-    }
-}
-.top-banner-ad-container--below-header {
-    &,
-    .ad-slot {
-        display: block;
-
-        @include mq(desktop) {
-            display: none;
-        }
     }
 }
 .mpu-context {
@@ -167,8 +164,10 @@
 .ad-slot__commercial-component {
     width: 100%;
     min-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
     @include rem((
-        margin-top: $gs-baseline*2
+        margin-top: $gs-baseline
     ));
 }
 

@@ -3,17 +3,6 @@
    ========================================================================== */
 
 .commercial--books {
-    background-color: $commercial-component-bg;
-    @include rem((
-        padding: $gs-baseline $gs-gutter/2
-    ));
-    @include mq(mobileLandscape) {
-        @include rem((
-            padding-left: $gs-gutter,
-            padding-right: $gs-gutter
-        ));
-    }
-
     .commercial__branding,
     .commercial__header {
         overflow: hidden;
@@ -36,25 +25,8 @@
             margin: $gs-baseline 0 0
         ));
     }
-    $cta-diameter: 32px;
-    .commercial__call-to-action {
-        position: relative;
-        padding-left: $cta-diameter+5;
-        line-height: $cta-diameter;
+    .commercial__home-link {
         clear: right;
-        @include font-size(14, 32);
-
-        .i-filter-arrow-down {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: $cta-diameter;
-            height: $cta-diameter;
-            background-position: center;
-            background-color: $c-newsDefault;
-            border-radius: 50%;
-            @include transform(rotate(-90deg));
-        }
     }
 
     .commercial__body {
@@ -126,7 +98,7 @@
                 margin-top: $gs-baseline
             ));
         }
-        .commercial__call-to-action {
+        .commercial__home-link {
             position: absolute;
             @include rem((
                 bottom: $gs-baseline
@@ -171,9 +143,9 @@
     }
     @include mq(desktop) {
         .lineitem {
-            width: 25%;
+            width: 20%;
 
-            &:nth-child(4) {
+            &:nth-child(n+4) {
                 display: block;
             }
         }
@@ -181,13 +153,6 @@
     @include mq(wide) {
         .commercial__header {
             width: gs-span(4);
-        }
-        .lineitem {
-            width: 20%;
-
-            &:nth-child(5) {
-                display: block;
-            }
         }
     }
 }

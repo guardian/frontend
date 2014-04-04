@@ -8,7 +8,6 @@ import play.api.libs.json.Json._
 import play.api.libs.json.{JsObject, JsValue}
 import play.api.libs.ws.Response
 import scala.concurrent.Future
-import scala.Some
 import contentapi.QueryDefaults
 import scala.util.Try
 
@@ -130,7 +129,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
         case _ =>
           log.warn(s"Could not load running order: ${r.status} ${r.statusText} $id")
           // NOTE: better way of handling fallback
-          Future(Nil)
+          Future.successful(Nil)
       }
     }
   }
@@ -239,7 +238,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
 
     newSearch onFailure {case t: Throwable => log.warn("Content API Query failed: %s: %s".format(queryString, t.toString))}
     newSearch
-  } getOrElse Future(Result(Nil, Nil, Nil, Nil))
+  } getOrElse Future.successful(Result(Nil, Nil, Nil, Nil))
 
   private def validateContent(content: Content): Option[Content] = {
     Try {

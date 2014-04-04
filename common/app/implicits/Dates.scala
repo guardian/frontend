@@ -30,4 +30,8 @@ trait Dates {
     lazy val toISODateTimeNoMillisString: String = date.toString(ISODateTimeFormat.dateTimeNoMillis)
     lazy val toHttpDateTimeString: String = date.toString(HTTPDateFormat)
   }
+
+  implicit class String2Date(s: String) {
+    lazy val parseHttpDateTimeString: DateTime = HTTPDateFormat.parseDateTime(s)
+  }
 }

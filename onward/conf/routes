@@ -3,31 +3,31 @@
 # ~~~~
 
 # For dev machines
-GET        /assets/*path                              dev.DevAssetsController.at(path)
+GET        /assets/*path                            dev.DevAssetsController.at(path)
 
 # A websocket for recently published content
-GET        /onward/recently-published                 controllers.LatestContentController.recentlyPublished()
+GET        /onward/recently-published               controllers.LatestContentController.recentlyPublished()
 
-GET        /most-read                                 controllers.MostPopularController.render(path = "")
-GET        /most-read.json                            controllers.MostPopularController.render(path = "")
-GET        /most-read/*path.json                      controllers.MostPopularController.renderJson(path)
-GET        /most-read/*path                           controllers.MostPopularController.render(path)
-GET        /most-read-geo.json                        controllers.MostPopularController.renderPopularGeoJson()
-GET        /most-read-day.json                        controllers.MostPopularController.renderPopularDayJson(countryCode)
+GET        /most-read                               controllers.MostPopularController.render(path = "")
+GET        /most-read.json                          controllers.MostPopularController.render(path = "")
+GET        /most-read/*path.json                    controllers.MostPopularController.renderJson(path)
+GET        /most-read/*path                         controllers.MostPopularController.render(path)
+GET        /most-read-geo.json                      controllers.MostPopularController.renderPopularGeoJson()
+GET        /most-read-day.json                      controllers.MostPopularController.renderPopularDayJson(countryCode)
 
-GET        /top-stories                               controllers.TopStoriesController.renderTopStories()
-GET        /top-stories.json                          controllers.TopStoriesController.renderTopStoriesJson()
-GET        /top-stories/trails                        controllers.TopStoriesController.renderTrails()
-GET        /top-stories/trails.json                   controllers.TopStoriesController.renderJsonTrails()
-GET        /related/*path.json                        controllers.RelatedController.renderJson(path)
-GET        /related/*path.json                        controllers.RelatedController.render(path)
+GET        /top-stories                             controllers.TopStoriesController.renderTopStories()
+GET        /top-stories.json                        controllers.TopStoriesController.renderTopStoriesJson()
+GET        /top-stories/trails                      controllers.TopStoriesController.renderTrails()
+GET        /top-stories/trails.json                 controllers.TopStoriesController.renderJsonTrails()
+GET        /related/*path.json                      controllers.RelatedController.renderJson(path)
+GET        /related/*path                           controllers.RelatedController.render(path)
+GET        /popular-in-tag/*tag.json                controllers.PopularInTag.renderJson(tag)
 
-GET        /preference/platform/:platform             controllers.ChangeViewController.render(platform, page)
-GET        /preference/edition/:edition               controllers.ChangeEditionController.render(edition)
-GET        /preference/front-alphas/:optAction        controllers.ChangeAlphaController.render(optAction, page)
-GET        /in-series/*path                           controllers.SeriesController.renderSeriesStories(path)
+GET        /preference/platform/:platform           controllers.ChangeViewController.render(platform, page)
+GET        /preference/edition/:edition             controllers.ChangeEditionController.render(edition)
+GET        /preference/front-alphas/:optAction      controllers.ChangeAlphaController.render(optAction, page)
 
 # Experimental
-GET        /cards/opengraph/*path.json                controllers.CardController.opengraph(path)
-GET        /tagged.json                               controllers.TaggedContentController.renderJson(tag: String)
-
+GET        /cards/opengraph/*path.json              controllers.CardController.opengraph(path)
+GET        /tagged.json                             controllers.TaggedContentController.renderJson(tag: String)
+GET        /in-series/*path                         controllers.SeriesController.renderSeriesStories(path)

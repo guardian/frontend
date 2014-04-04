@@ -436,11 +436,20 @@ case class InlineSlotGenerator(articleWordCount: Int) extends HtmlCleaner {
       (element.hasClass("img") && !element.hasClass("img--inline")) ||
        element.hasClass("embed-video-wrapper") ||
        element.hasClass("gu-video-wrapper") ||
-       element.tagName == "video"
+       element.tagName == "video" ||
+       element.tagName == "figure"
+  }
+
+  private def getPreviousElement(element: Element): Element = {
+    if (element.previousElementSibling != null && element.previousElementSibling.tagName == "br") {
+      getPreviousElement(element.previousElementSibling)
+    } else {
+      element.previousElementSibling
+    }
   }
 
   private def insertSlot(paragraph: Element, document: Document) {
-    val prev = paragraph.previousElementSibling
+    val prev = getPreviousElement(paragraph)
     val slot = document.createElement("div")
     paragraph.before(slot)
 
@@ -699,9 +708,9 @@ object TableEmbedComplimentaryToP extends HtmlCleaner {
 
 object VisualTone {
 
-  private val Comment = "comment"
-  private val News = "news"
-  private val Feature = "feature"
+  val Comment = "comment"
+  val News = "news"
+  val Feature = "feature"
 
   private val commentMappings = Seq(
     "tone/comment",

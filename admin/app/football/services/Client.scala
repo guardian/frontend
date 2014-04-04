@@ -2,14 +2,11 @@ package football.services
 
 import scala.concurrent.{ExecutionContext, Future}
 import play.api.libs.ws.WS
-import play.api.Play
 import play.api.Play.current
 import org.joda.time.DateMidnight
-import scala.io.Source
-import java.io.{FileReader, File}
+import java.io.File
 import scala.util.{Failure, Success}
 import play.Logger
-import org.joda.time.format.DateTimeFormat
 import common.ExecutionContexts
 import pa.{PaClient, Http, Response}
 import conf.Configuration
@@ -78,8 +75,5 @@ private object TestClient extends Client {
   override def apiKey: String = "KEY"
 }
 trait GetPaClient {
-  lazy val client = {
-    if (play.Play.isTest) TestClient
-    else Client
-  }
+  lazy val client: Client = if (play.Play.isTest) TestClient else Client
 }
