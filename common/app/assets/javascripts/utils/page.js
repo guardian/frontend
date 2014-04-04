@@ -1,19 +1,38 @@
 define([
     'common/$',
-    'common/utils/config'
+    'common/utils/config',
+    'lodash/objects/assign'
 ],
-function($, config) {
+function(
+    $,
+    config,
+    assign
+) {
 
     function isMatch(yes) {
         var teams = config.referencesOfType('paFootballTeam'),
-            footballMatch = config.page.footballMatch;
+            match = config.page.footballMatch || {};
 
-        if (footballMatch ||
-            ((config.hasTone('Match reports') || config.hasSeries('Match previews') || config.page.isLiveBlog) && teams.length === 2)) {
-            return yes(footballMatch || {
-                date: config.webPublicationDateAsUrlPart(),
-                teams: teams
-            });
+        // the order of this is important as, on occasion,
+        // "minbymin" is tagged with "match reports" but should be considered "minbymin".
+        assign(match, {
+            date: config.webPublicationDateAsUrlPart(),
+            teams: teams,
+            pageType: (function() {
+                if (config.page.isLiveBlog) {
+                    return 'minbymin';
+                } else if (config.hasTone('Match reports')) {
+                    return 'report';
+                } else if (config.hasSeries('Match previews')) {
+                    return 'preview';
+                } else if (match.id) {
+                    return 'stats';
+                }
+            }())
+        });
+
+        if (match.id || (match.pageType && match.teams.length === 2)) {
+            return yes(match);
         }
     }
 
