@@ -114,7 +114,7 @@ object Switches extends Collections {
   )
 
   val CommercialComponentsSwitch = Switch("Advertising", "commercial-components",
-    "Display commercial components (jobs, soulmates).",
+    "Display commercial components, e.g. jobs, soulmates.",
     safeState = On, sellByDate = never
   )
 
