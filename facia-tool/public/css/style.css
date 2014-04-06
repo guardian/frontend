@@ -21,7 +21,6 @@ a, a:hover {
 .status {
     position: fixed;
     width: 100%;
-    top: 0px;
     background: #999999;
     color: #FFFFFF;
     padding: 15px 5px;
@@ -50,7 +49,7 @@ a, a:hover {
     position: fixed;
     top: 8px;
     left: 15px;
-    z-index: 2;
+    z-index: 3;
 }
 
 .tool-title {

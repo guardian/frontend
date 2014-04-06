@@ -100,7 +100,7 @@ define([
             }
         }
 
-        var deferredDetectPressFaliure = _.debounce(detectPressFaliure, 2000);
+        var deferredDetectPressFaliure = _.debounce(detectPressFaliure, 10000);
         
         function pressFront() {
             model.hasPressFaliure(false);
@@ -115,7 +115,6 @@ define([
             }
         }
 
-        // TODO: use pub/sub, not calls to vars.model.deferredDetectPressFaliure() etc.
         model.detectPressFaliure = detectPressFaliure;
         model.deferredDetectPressFaliure = deferredDetectPressFaliure;
         model.pressFront = pressFront;
