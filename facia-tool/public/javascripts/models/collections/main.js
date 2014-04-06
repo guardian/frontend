@@ -8,6 +8,7 @@ define([
     'utils/ammended-query-str',
     'utils/update-scrollables',
     'utils/terminate',
+    'utils/is-valid-date',
     'modules/authed-ajax',
     'models/group',
     'models/collections/droppable',
@@ -23,6 +24,7 @@ define([
     ammendedQueryStr,
     updateScrollables,
     terminate,
+    isValidDate,
     authedAjax,
     Group,
     droppable,
@@ -36,6 +38,8 @@ define([
         var model = vars.model = {};
 
         model.alertError = ko.observable();
+        
+        model.hasPressFaliure = ko.observable(false);
 
         model.collections = ko.observableArray();
 
@@ -73,6 +77,49 @@ define([
             return vars.CONST.viewer + '#env=' + config.env + '&url=' + model.front() + encodeURIComponent('?view=mobile');
         });
 
+        function detectPressFaliure() {
+            model.hasPressFaliure(false);
+            if (model.front()) {
+                authedAjax.request({
+                    url: '/front/lastmodified/' + model.front()
+                })
+                .always(function(resp) {
+                    var lastPressed;
+
+                    if (resp.status !== 200) { return; }
+                    lastPressed = new Date(resp.responseText);
+                    if (isValidDate(lastPressed)) {
+                        model.hasPressFaliure(
+                            _.some(model.collections(), function(collection) {
+                               var l = new Date(collection.state.lastUpdated());
+                               return isValidDate(l) ? l > lastPressed : false;
+                            })
+                        );
+                    }
+                });
+            }
+        }
+
+        var deferredDetectPressFaliure = _.debounce(detectPressFaliure, 2000);
+        
+        function pressFront() {
+            model.hasPressFaliure(false);
+            if (model.front()) {
+                authedAjax.request({
+                    url: '/collection/update/' + model.collections()[0].id,
+                    method: 'post'
+                })
+                .always(function() {
+                    deferredDetectPressFaliure();
+                });
+            }
+        }
+
+        // TODO: use pub/sub, not calls to vars.model.deferredDetectPressFaliure() etc.
+        model.detectPressFaliure = detectPressFaliure;
+        model.deferredDetectPressFaliure = deferredDetectPressFaliure;
+        model.pressFront = pressFront;
+        
         function getFront() {
             return queryParams().front;
         }

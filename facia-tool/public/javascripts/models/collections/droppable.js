@@ -93,6 +93,11 @@ define([
                             itemMeta: _.isEmpty(itemMeta) ? undefined : itemMeta
                         },
                         remove: remove
+                    })
+                    .then(function() {
+                        if(vars.state.liveMode()) {
+                            vars.model.deferredDetectPressFaliure();
+                        }
                     });
                     
                     if (sourceList && !sourceList.keepCopy && sourceList !== targetList) {

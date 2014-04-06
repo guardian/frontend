@@ -3,6 +3,13 @@
 @admin_main("Fronts editor", env, isAuthed = true, identity) {
 
 <div style="display: none;" data-bind="visible: true">
+
+    <div class="status status-danger" data-bind="text: alertError, visible: alertError"></div>
+    <div class="status status-warning" data-bind="visible: hasPressFaliure">
+        Failed to go live.
+        <a data-bind="click: pressFront">Retry?</a>
+    </div>
+
     <div class="toolbar" data-bind="visible: true" style="display: none">
 
         <span data-bind="if: fronts().length > 1">
@@ -81,7 +88,6 @@
     </div>
 
     <div class="right-col" data-bind="css: {'live-mode': $root.liveMode}">
-        <div class="status status-danger" data-bind="text: alertError, visible: alertError"></div>
         <div class="collections__inner scrollable" data-bind="template: {name: 'template_collection', foreach: collections}"></div>
     </div>
 

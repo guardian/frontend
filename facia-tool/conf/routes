@@ -22,7 +22,8 @@ GET           /configuration             controllers.FaciaToolController.configE
 POST          /collection/publish/*id    controllers.FaciaToolController.publishCollection(id)
 POST          /collection/discard/*id    controllers.FaciaToolController.discardCollection(id)
 POST          /collection/update/*id     controllers.FaciaToolController.updateCollection(id)
-GET           /collection/lastmodified/*path controllers.FaciaToolController.getLastModified(path)
+
+GET           /front/lastmodified/*path  controllers.FaciaToolController.getLastModified(path)
 
 GET           /collection/*id            controllers.FaciaToolController.readBlock(id)
 POST          /edits                     controllers.FaciaToolController.collectionEdits
