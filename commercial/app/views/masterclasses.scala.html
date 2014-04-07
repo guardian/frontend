@@ -15,7 +15,9 @@
         <ul class="lineitems">
             @events.take(1).map { event =>
                 <li class="lineitem">
-                    <img src="@event.imageElement" />
+                    @event.imageElement.map{ picture =>
+                        @Item300.bestFor(picture).map{ url => <img src="@url"/> }
+                    }
                     <a class="lineitem__blocklink" href="@AdLink{@event.eventBriteEvent.guardianUrl%OmnitureToken%}">
                         <h4 class="lineitem__title">@event.eventBriteEvent.name</h4>
                         <p class="lineitem__meta">@event.eventBriteEvent.readableDate • @event.eventBriteEvent.venue.description</p>

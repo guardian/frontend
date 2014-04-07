@@ -19,30 +19,37 @@ object MasterClassAgent extends Logging with ExecutionContexts {
   private lazy val agent = AkkaAgent[Seq[MasterClass]](Nil)
 
 
-
   def getUpcoming: Seq[MasterClass] = {
     agent.get()
   }
 
   def wrapEventbriteWithContentApi(eventbriteEvents: Seq[EventbriteMasterClass]): Future[Seq[MasterClass]] = {
-
-    val seqThumbs: Seq[Future[MasterClass]] = eventbriteEvents.map {
+    println("Wrapping eventbrite events")
+    val seqThumbs: Seq[Future[MasterClass]] = eventbriteEvents.take(10).map {
       event =>
         val contentId: String = event.guardianUrl.replace("http://www.theguardian.com/", "")
         val thumbnail: Future[Option[ImageElement]] = Lookup.thumbnail(contentId)
+
         thumbnail.map {
           thumb => MasterClass(event, thumb)
+        } recover {
+          case _: Exception => MasterClass(event, None)
         }
     }
 
+
+    println("Done wrapping")
     Future.sequence(seqThumbs)
   }
 
   def refresh() {
     for {
       eventBrite <- EventbriteApi.loadAds()
-      masterclasses <- wrapEventbriteWithContentApi(eventBrite)      
-    } { agent send masterclasses}
+      masterclasses <- wrapEventbriteWithContentApi(eventBrite)
+    } {
+      log.info("Updating Masterclass agent")
+      agent send masterclasses
+    }
   }
 
   def stop() {

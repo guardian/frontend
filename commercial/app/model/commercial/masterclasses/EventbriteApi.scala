@@ -26,6 +26,9 @@ object EventbriteApi extends JsonAdsApi[EventbriteMasterClass] {
   def parse(json: JsValue) = {
     val maybes = extractEventsFromFeed(json) map (EventbriteMasterClass(_))
     println("In parse")
-    maybes.flatten
+    val result: Seq[EventbriteMasterClass] = maybes.flatten
+    println("flattened")
+    result
+
   }
 }

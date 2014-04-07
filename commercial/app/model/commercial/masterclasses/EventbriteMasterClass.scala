@@ -47,7 +47,7 @@ object EventbriteMasterClass {
           tickets.toList,
           capacity,
           element.attr("href"),
-          paragraphs.head.text)
+          paragraphs.headOption.map(_.text).getOrElse(""))
     }
   }
 }
