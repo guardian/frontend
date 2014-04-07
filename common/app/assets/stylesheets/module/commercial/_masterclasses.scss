@@ -27,7 +27,6 @@
         @include f-headline;
         @include font-size(14.5, 19);
     }
-    
     .commercial--masterclasses__class {
         float: left;
         width: 50%;
@@ -59,9 +58,15 @@
     }
     
 
-  
-  
-  
+
+    .commercial__explainer {
+        color: $c-neutral1;
+        @include f-headline;
+        @include font-size(14.5, 19);
+        @include rem((
+            margin: $gs-baseline 0 0
+        ));
+    }
     
     .lineitem__image {
         margin-right: $gs-gutter/5;
@@ -75,5 +80,9 @@
         margin-top: $gs-baseline/3;
     }
 
-
+    @include mq($to: tablet) {
+        .commercial__head {
+            background-color: transparent;
+        }
+    }
 }
