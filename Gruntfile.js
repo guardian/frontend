@@ -56,7 +56,8 @@ module.exports = function (grunt) {
                     omniture:     '../../../../common/app/assets/javascripts/components/omniture/omniture',
                     fence:        '../../../../common/app/assets/javascripts/components/fence/fence',
                     enhancer:     '../../../../common/app/assets/javascripts/components/enhancer/enhancer',
-                    'ophan/ng':   'empty:'
+                    'ophan/ng':   'empty:',
+                    googletag:    'empty:'
                 },
                 optimize: 'uglify2',
                 generateSourceMaps: true,
@@ -74,6 +75,9 @@ module.exports = function (grunt) {
                         },
                         omniture: {
                             exports: 's'
+                        },
+                        googletag: {
+                            exports: 'googletag'
                         }
                     },
                     wrap: {
