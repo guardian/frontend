@@ -13,7 +13,7 @@
                  itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType" role="main">
 
             @if(article.isSponsored) {
-                @fragments.commercial.adSlot(name="badge", adType="paid-for-badge", sizeMapping=Map("mobile" -> Seq("300,80")))
+                @fragments.commercial.standardAd(name="badge", adType="paid-for-badge", sizeMapping=Map("mobile" -> Seq("300,80")))
             }
 
             <div class="article__inner article__inner--head">
@@ -93,7 +93,7 @@
                                                 <h2 class="article__meta-heading">Share this article</h2>
                                                 @fragments.social(article, "next to content")
                                             </div>
-                                            @fragments.commercial.adSlot(name="right", adType="mpu-banner-ad", sizeMapping=Map("tabletlandscape" -> Seq("300,250")))
+                                            @fragments.commercial.standardAd(name="right", adType="mpu-banner-ad", sizeMapping=Map("tabletlandscape" -> Seq("300,250")))
                                         </div>
                                         <div class="js-components"></div>
                                     </div>
@@ -116,5 +116,5 @@
 
     @fragments.mostPopularPlaceholder(article.section, VisualTone(article))
 
-    @fragments.commercial.adSlot(name="merchandising", adType="commercial-component", sizeMapping=Map("mobile" -> Seq("888,88")), showLabel=false, refresh=false)
+    @fragments.commercial.commercialComponent(name="merchandising", adType="commercial-component", sizeMapping=Map("mobile" -> Seq("888,88")))
 }
