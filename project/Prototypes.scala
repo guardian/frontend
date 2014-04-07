@@ -117,9 +117,6 @@ trait Prototypes {
   )
 
   def root() = Project("root", base = file("."))
-    .settings(
-      scalaVersion := "2.10.3"
-    )
 
   def application(name: String) = play.Project(name, version, path = file(name))
     .settings(frontendDependencyManagementSettings:_*)
@@ -130,7 +127,7 @@ trait Prototypes {
     .settings(frontendAssemblySettings:_*)
     .settings(
       libraryDependencies ++= Seq(
-        "com.gu" %% "management-play" % "6.0",
+        "com.gu" %% "management-play" % "6.1",
         "commons-io" % "commons-io" % "2.4"
       )
     )

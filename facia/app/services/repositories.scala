@@ -20,7 +20,7 @@ case class IndexPage(page: MetaData, trails: Seq[Content])
 
 trait Index extends ConciergeRepository with QueryDefaults {
 
-  private val rssFields = s"$trailFields,body,standfirst"
+  private val rssFields = s"$trailFields,byline,body,standfirst"
 
   def normaliseTag(tag: String): String = {
     val conversions: Map[String, String] =

@@ -70,6 +70,11 @@
         ));
     }
 }
+
+
+/* Identity Menu
+   ========================================================================== */
+
 .nav-popup--search {
     @include rem((
         padding-top: 10px
@@ -158,5 +163,18 @@
         @include rem((
             left: $gs-gutter/2
         ));
+    }
+}
+
+
+/* Local navigation
+   ========================================================================== */
+
+.nav-popup--localnav {
+    top: auto;
+    border-color: $c-neutral4;
+
+    .is-active .nav__link {
+        color: $c-brandLightBlue;
     }
 }

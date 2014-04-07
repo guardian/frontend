@@ -97,12 +97,12 @@ private object CacheKey extends implicits.Requests {
   }
 }
 
-object MemcachedAction extends Results with MemcachedSupport with Logging {
+object MemcachedAction extends Results with MemcachedSupport with implicits.Requests with Logging {
 
   def apply(block: RequestHeader => Future[SimpleResult]): Action[AnyContent] = Action.async { request =>
 
     // don't cache during tests
-    if (isConfigured && MemcachedSwitch.isSwitchedOn && !Play.isTest) {
+    if (isConfigured && MemcachedSwitch.isSwitchedOn && !Play.isTest && !cacheExempt(request)) {
       val cacheKey = CacheKey(request)
       val promiseOfCachedResult = memcached.get[CachedResponse](cacheKey).recover{
         case e: Exception =>
@@ -124,5 +124,9 @@ object MemcachedAction extends Results with MemcachedSupport with Logging {
     } else {
       block(request)
     }
+  }
+
+  private def cacheExempt(request: RequestHeader) = {
+    request.isHealthcheck
   }
 }

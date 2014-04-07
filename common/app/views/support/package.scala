@@ -104,22 +104,16 @@ case class MultimediaContainer(showMore: Boolean = true) extends Container {
 }
 
 sealed trait AdSlot {
-  val baseName: String
-  val medianName: String
-  val dfpDataName: String
+  val dfpName: String
 }
 object AdSlot {
 
   object First extends AdSlot {
-    val baseName = "x49"
-    val medianName = "Middle1"
-    val dfpDataName = "inline1"
+    val dfpName = "inline1"
   }
 
   object Second extends AdSlot {
-    val baseName = "Bottom2"
-    val medianName = "Middle"
-    val dfpDataName = "inline2"
+    val dfpName = "inline2"
   }
 
 }
@@ -708,9 +702,9 @@ object TableEmbedComplimentaryToP extends HtmlCleaner {
 
 object VisualTone {
 
-  private val Comment = "comment"
-  private val News = "news"
-  private val Feature = "feature"
+  val Comment = "comment"
+  val News = "news"
+  val Feature = "feature"
 
   private val commentMappings = Seq(
     "tone/comment",

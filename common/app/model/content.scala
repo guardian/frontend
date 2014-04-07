@@ -8,8 +8,7 @@ import common.{LinkCounts, LinkTo, Reference}
 import org.jsoup.Jsoup
 import org.jsoup.safety.Whitelist
 import collection.JavaConversions._
-import views.support.{Naked, ImgSrc}
-import views.support.StripHtmlTagsAndUnescapeEntities
+import views.support.{VisualTone, Naked, ImgSrc, StripHtmlTagsAndUnescapeEntities}
 import play.api.libs.json.JsValue
 import conf.Configuration.facebook
 
@@ -30,6 +29,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   lazy val isExpired = delegate.isExpired.getOrElse(false)
   lazy val blockVideoAds: Boolean = videoAssets.exists(_.blockVideoAds)
   lazy val isLiveBlog: Boolean = delegate.isLiveBlog
+  lazy val isBlog: Boolean = blogs.nonEmpty
   lazy val hasLargeContributorImage: Boolean = tags.filter(_.hasLargeContributorImage).nonEmpty
 
   // read this before modifying
@@ -240,6 +240,21 @@ object Content {
   }
 }
 
+private object ArticleSchemas {
+  def apply(article: Article): String = {
+    // http://schema.org/Article
+    // http://schema.org/Review
+    if (article.isReview)
+      "http://schema.org/Review"
+    else if (article.isBlog)
+      "http://schema.org/BlogPosting"
+    else if (VisualTone(article) == VisualTone.News)
+      "http://schema.org/NewsArticle"
+    else
+      "http://schema.org/Article"
+  }
+}
+
 class Article(content: ApiContentWithMeta) extends Content(content) {
   lazy val body: String = delegate.safeFields.getOrElse("body","")
   lazy val contentType = "Article"
@@ -249,7 +264,7 @@ class Article(content: ApiContentWithMeta) extends Content(content) {
     .exists(e => e.hasClass("gu-video") && e.tagName() == "video")
 
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
-  override def schemaType = if (isReview) Some("http://schema.org/Review") else Some("http://schema.org/Article")
+  override def schemaType = Some(ArticleSchemas(this))
 
   // if you change these rules make sure you update IMAGES.md (in this project)
   override def trailPicture: Option[ImageContainer] = thumbnail.find(_.imageCrops.exists(_.width >= 620))

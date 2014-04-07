@@ -4,11 +4,6 @@
 
 $soulmates-red: #d70851;
 .commercial--soulmates {
-    background-color: $commercial-component-bg;
-    @include rem((
-        padding: $gs-baseline $gs-gutter/2
-    ));
-
     .commercial__inner {
         position: relative;
         margin: 0 auto;
@@ -92,14 +87,8 @@ $soulmates-red: #d70851;
             background-color: #039763;
         }
         @include mq(desktop) {
-            width: 33%;
-            &:nth-child(3) {
-                display: block;
-            }
-        }
-        @include mq(wide) {
             width: 25%;
-            &:nth-child(4) {
+            &:nth-child(n+3) {
                 display: block;
             }
         }

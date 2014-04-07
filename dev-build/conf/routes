@@ -150,15 +150,17 @@ GET         /admin/football/player                                              
 POST        /admin/football/player/head2head                                                                         controllers.admin.PlayerController.redirectToHead2Head
 GET         /admin/football/player/head2head/:player1Id/:player2Id                                                   controllers.admin.PlayerController.head2Head(player1Id: String, player2Id: String)
 POST        /admin/football/player/card                                                                              controllers.admin.PlayerController.redirectToCard
-GET         /admin/football/player/card/:cardType/:playerId                                                          controllers.admin.PlayerController.playerCard(playerId: String, cardType: String)
+GET         /admin/football/player/card/:cardType/:playerId/:teamId/:compId                                          controllers.admin.PlayerController.playerCard(playerId: String, teamId: String, compId: String, cardType: String)
 GET         /admin/football/tables                                                                                   controllers.admin.TablesController.tablesIndex
 POST        /admin/football/tables/league                                                                            controllers.admin.TablesController.redirectToTable
 GET         /admin/football/tables/league/:competitionId                                                             controllers.admin.TablesController.leagueTable(competitionId: String)
 GET         /admin/football/tables/league/:competitionId/:focus                                                      controllers.admin.TablesController.leagueTableFragment(competitionId: String, focus: String)
 GET         /admin/football/tables/league/:competitionId/:team1Id/:team2Id                                           controllers.admin.TablesController.leagueTable2Teams(competitionId: String, team1Id: String, team2Id: String)
+GET         /admin/football/api/squad/:teamId                                                                        controllers.admin.PlayerController.squad(teamId: String)
 
 # Commercial
 GET         /commercial/travel/offers.json                                                                           controllers.commercial.TravelOffers.listOffers
+GET         /commercial/jobs                                                                                         controllers.commercial.JobAds.renderAds
 GET         /commercial/jobs.json                                                                                    controllers.commercial.JobAds.jobs
 GET         /commercial/masterclasses.json                                                                           controllers.commercial.MasterClasses.list
 GET         /commercial/soulmates/mixed                                                                              controllers.commercial.SoulmateAds.renderAds

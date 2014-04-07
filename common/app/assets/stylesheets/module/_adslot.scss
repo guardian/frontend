@@ -1,140 +1,111 @@
-.ad-slot__oas,
-.ad-slot__dfp {
+.ad-slot--dfp {
     width: 100%;
     overflow-x: hidden;
-    padding: ($gs-baseline/6)*5 0 ($gs-baseline/3) 0;
     text-align: center;
     min-height: 56px;
-
     // For expandables
     position: relative;
     z-index: 1000;
-
-    @include mq(desktopAd) {
-        min-height: 96px;
-    }
+    @include rem((
+        padding: ($gs-baseline/6)*5 0 ($gs-baseline/3) 0
+    ));
 
     iframe {
         margin: 0 auto;
     }
-
     .no-js & {
         display: none;
     }
-}
-.ad-slot__label {
-    @include box-sizing(border-box);
-    height: $mpu-ad-label-height;
-    background-color: $c-neutral8;
-    padding: 0 ($gs-baseline/3)*2;
-    border-top: 1px solid $c-neutral5;
-    color: $c-neutral2;
-    font-family: $sans-serif;
-    @include font-size(12, 20);
-    text-align: right;
-    -webkit-font-smoothing: antialiased;
-}
-.ad-slot__inner {
-    max-width: 100%;
-    display: inline-block;
-}
-.ad-container {
-    display: inline-block;
-    width: auto;
-    margin: 0 auto !important;
+    @include mq(desktopAd) {
+        min-height: 96px;
+    }
 }
 .top-banner-ad-container {
-    min-height: 70px;
+    margin: 0 auto;
 
-    @include mq(tablet) {
-        @include rem((
-            padding-top: $gs-baseline/2,
-            padding-bottom: $gs-baseline/2
-        ));
-    }
     @include mq(faciaLeftCol) {
         @include rem((
             width: gs-span(14)
         ));
-        margin: 0 auto;
-    }
-    @include mq(desktopAd) {
-        min-height: 110px;
-    }
-}
-.ad-slot--mpu-in-row-pattern {
-    position: absolute;
-    left: 0;
-    right: 0;
-    @if $browser-supports-flexbox {
-        @include rem((
-            bottom: $mpu-align-offset
-        ));
-    } @else {
-        bottom: 0;
-    }
-    top: 0;
-    padding-top: 0;
-    padding-bottom: 0;
-    width: auto;
-    @include rem((
-        margin: 0 $gs-gutter/2
-    ));
-    background-color: $c-neutral8;
-
-    .ad-container {
-        position: absolute;
-        bottom: 0;
-        right: 0;
     }
 }
 .ad-slot--top-banner-ad {
     background-color: #f0f0f0;
+    min-height: 50px;
+    @include rem((
+        padding: $gs-baseline 0
+    ));
 
     @include mq(tablet) {
         background-color: transparent;
+        min-height: 90px;
     }
-
     @include mq(faciaLeftCol) {
         width: auto;
         margin-left: gs-span(2) + $gs-gutter;
         text-align: left;
-    }
-
-    .ad-slot__label {
-        display: none;
-    }
-}
-.top-banner-ad-container--above-header {
-    &,
-    .ad-slot {
-        display: none;
-
-        @include mq(desktop) {
-            display: block;
-        }
-    }
-}
-.top-banner-ad-container--below-header {
-    &,
-    .ad-slot {
-        display: block;
-
-        @include mq(desktop) {
-            display: none;
-        }
     }
 }
 .mpu-context {
     // Provides context to sticky positioned blocks
     height: 100%;
 }
+.ad-slot--container-inline {
+    min-height: 50px;
+    @include box-sizing(border-box);
+    @include rem((
+        margin: $gs-baseline 0 $gs-baseline/2,
+        padding: 0 $gs-gutter/2 0
+    ));
+
+    .ad-slot__label {
+        max-width: 300px;
+        margin: 0 auto;
+
+        @include mq(mobileLandscape, tablet) {
+            position: absolute;
+            width: 50%;
+            height: 100%;
+            text-align: left;
+            z-index: -1;
+            @include rem((
+                padding-left: 2px,
+                font-size: 10px
+            ));
+        }
+    }
+    @include mq(tablet) {
+        position: absolute;
+        left: 0;
+        right: 0;
+        @if $browser-supports-flexbox {
+            @include rem((
+                bottom: $mpu-align-offset
+            ));
+        } @else {
+            bottom: 0;
+        }
+        top: 0;
+        padding: 0;
+        width: auto;
+        background-color: $c-neutral8;
+        @include rem((
+            margin: 0 $gs-gutter / 2
+        ));
+
+        .ad-slot__container {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+        }
+    }
+}
 .ad-slot--inline {
     min-width: 300px;
     max-width: 100%;
     padding: 0;
 
-    .ad-container {
+    .ad-slot__container {
         line-height: 0;
     }
     .ad-slot__label {
@@ -149,7 +120,6 @@
             text-align: left;
         }
     }
-
     @include mq(tablet) {
         width: auto;
         height: auto;
@@ -165,43 +135,26 @@
     height: 250px;
     overflow: hidden;
 }
-.ad-slot__commercial-component {
+.ad-slot--commercial-component {
     width: 100%;
     min-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
     @include rem((
-        margin-top: $gs-baseline*2
+        margin-top: $gs-baseline
     ));
 }
-
-
-
-.ad-slot__paid-for-badge {
+.ad-slot--paid-for-badge {
     width: 100%;
-    @include rem((
-        padding: ($gs-baseline / 2) 0,
-        margin: $gs-baseline 0
-    ));
     border-top: 1px dotted $c-neutral5;
     z-index: 1;
     color: $c-neutral2;
     text-align: left;
     @include fs-data(2);
-
-    @include mq(tablet) {
-        border: none;
-    }
-
-    @include mq(rightCol) {
-        position: absolute;
-        @include rem((
-            top: $gs-baseline / 2,
-            max-width: 200px
-        ));
-        right: 0;
-        width: auto;
-        height: 100px;
-        margin: 0;
-    }
+    @include rem((
+        padding: ($gs-baseline / 2) 0,
+        margin: $gs-baseline 0
+    ));
 
     img {
         padding-bottom: ($gs-baseline / 2);
@@ -210,9 +163,22 @@
         display: block;
         float: left;
     }
+    @include mq(tablet) {
+        border: none;
+    }
+    @include mq(rightCol) {
+        position: absolute;
+        right: 0;
+        width: auto;
+        height: 100px;
+        margin: 0;
+        @include rem((
+            top: $gs-baseline / 2,
+            max-width: 200px
+        ));
+    }
 }
-
-.ad-slot__paid-for-badge--fronts {
+.ad-slot--paid-for-badge--fronts {
     @include clearfix;
 
     @include mq($from: tablet, $to: faciaLeftCol) {
@@ -220,20 +186,33 @@
         text-align: right;
         float: none;
     }
-
     @include mq(rightCol) {
         position: relative;
         top: 0;
     }
-
     @include mq(faciaLeftCol) {
         float: left;
         clear: left;
     }
-
     @include mq(faciaLeftCol, wide) {
         @include rem((
             margin-top: $gs-baseline
         ));
     }
+}
+.ad-slot__label {
+    height: $mpu-ad-label-height;
+    background-color: $c-neutral8;
+    padding: 0 ($gs-baseline/3)*2;
+    border-top: 1px solid $c-neutral5;
+    color: $c-neutral2;
+    text-align: right;
+    @include box-sizing(border-box);
+    @include f-data;
+    @include font-size(12, 20);
+}
+.ad-slot__container {
+    display: inline-block;
+    width: auto;
+    margin: 0 auto !important;
 }

@@ -151,14 +151,38 @@ jQuery(function($){
         window.location = '/team/images/'+ select.options[select.selectedIndex].value;
     });
 
+    // simple autocompletes
     $('.foot-autocomplete').footAutocomplete();
+
+    // player chooser
+    (function(){
+        $('.player-chooser').each(function(){
+            var el = $(this);
+
+            el.autocomplete({ source: [] });
+            $('#id-team').change(function(e) {
+                var teamId = $(this).val();
+                el.val("").addClass("loading")
+                    .autocomplete({source: []});
+                $.ajax("/admin/football/api/squad/" + teamId, {
+                    success: function(json){
+                        el.removeClass("loading")
+                            .autocomplete({source: json.players});
+                    }
+                });
+            });
+        });
+    })();
+
 });
 
 // autocomplete
 $.widget('custom.footAutocomplete', {
     _create: function() {
-        var self = this;
-        $('<input type="text" class="fautocomplete__input form-control" />').autocomplete({
+        var self = this,
+            placeholder = self.element.data("placeholder");
+
+        $('<input type="text" class="fautocomplete__input form-control" placeholder="' + placeholder + '" />').autocomplete({
             delay: 0,
             _renderItem: function(ul, item) {
                 return $('<li>')
@@ -173,6 +197,7 @@ $.widget('custom.footAutocomplete', {
 
             select: function(event, ui) {
                 self.element.val(ui.item.id);
+                self.element.trigger("change");
                 $('#focus-on-team').attr('checked', 'checked');
             }
         }).insertBefore(this.element.hide());

@@ -6,6 +6,7 @@ define([
     'common/utils/config',
     'common/utils/page',
     'common/modules/ui/rhc',
+    'common/modules/charts/table-doughnut',
     'common/modules/sport/football/match-list',
     'common/modules/sport/football/match-info',
     'common/modules/sport/football/match-stats',
@@ -19,6 +20,7 @@ define([
     config,
     page,
     rhc,
+    Doughnut,
     MatchList,
     MatchInfo,
     MatchStats,
@@ -28,8 +30,6 @@ define([
     context = context();
 
     function init() {
-        var $article = $('.js-article__container', context);
-
         page.isMatch(function(match) {
             var $h = $('.article__headline', context),
                 matchInfo = new MatchInfo(match, config.page.pageId),
@@ -78,9 +78,13 @@ define([
                         page.rightHandComponentVisible(function() {
                             rhc.addComponent(statsContainer, 3);
                         }, function() {
-                            $article.append(statsContainer);
+                            $('.article-body', context).after(statsContainer);
                         });
-                        matchStats.fetch(statsContainer);
+                        matchStats.fetch(statsContainer).then(function() {
+                            $('.js-chart', statsContainer).each(function(el) {
+                                new Doughnut().render(el);
+                            });
+                        });
                     }
                 }
             });

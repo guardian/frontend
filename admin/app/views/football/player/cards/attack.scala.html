@@ -11,10 +11,13 @@
             <img class="player-card__image" itemprop="image" src="@Configuration.staticSport.path/football/player-images/100/@{playerId}.jpg" alt="Photo of @player.fullName" />
         </div>
         <div class="player-card__player">
-            <div class="player-card__position" itemprop="jobTitle">@player.position</div>
+            <div class="player-card__position" itemprop="jobTitle">@player.position.map(_root_.football.formats.PaPlayer.position)</div>
             <div class="player-card__name" itemprop="name">@player.fullName</div>
         </div>
         <dl class="player-card__stats">
+            <dt class="player-card__stat-name">Appearances</dt>
+            <dd class="player-card__stat-value">@playerAppearances.total.appearances</dd>
+
             <dt class="player-card__stat-name">Goals</dt>
             <dd class="player-card__stat-value">@playerStats.offence.goals.total</dd>
 

@@ -2,7 +2,6 @@
 define([
     'common/$',
     'bonzo',
-    'postscribe',
     'common/modules/component',
     'lodash/objects/assign',
     'lodash/functions/debounce',
@@ -11,13 +10,12 @@ define([
     'common/utils/mediator',
     'common/modules/analytics/commercial/tags/common/audience-science',
     'common/modules/adverts/userAdTargeting',
-    'common/modules/adverts/document-write',
+    'common/modules/adverts/query-string',
     'lodash/arrays/flatten',
     'lodash/arrays/uniq'
 ], function (
     $,
     bonzo,
-    postscribe,
     Component,
     extend,
     debounce,
@@ -26,7 +24,7 @@ define([
     mediator,
     AudienceScience,
     UserAdTargeting,
-    documentWrite,
+    queryString,
     _flatten,
     _uniq
 ) {
@@ -71,8 +69,8 @@ define([
 
     DFP.prototype.config = {
         dfpUrl: '//www.googletagservices.com/tag/js/gpt.js',
-        dfpSelector: '.ad-slot__dfp',
-        adContainerClass: '.ad-container',
+        dfpSelector: '.ad-slot--dfp',
+        adContainerClass: '.ad-slot__container',
         // These should match the widths inside _vars.scss
         breakpoints: {
             mobile: 0,
@@ -108,7 +106,7 @@ define([
             keywords;
         if (conf.keywords) {
             keywords = conf.keywords.split(',').map(function (keyword) {
-                return documentWrite.formatKeyword(keyword).replace('&', 'and');
+                return queryString.formatKeyword(keyword).replace('&', 'and');
             });
         } else {
             keywords = '';
@@ -226,14 +224,20 @@ define([
      * can inherit fonts.
      */
     DFP.prototype.checkForBreakout = function($slot) {
+        /* jshint evil: true */
         var frameContents = $slot[0].querySelector('iframe').contentDocument.body;
 
-        for(var cls in breakoutHash) {
-            var $el = bonzo(frameContents.querySelector('.'+ cls));
+        for (var cls in breakoutHash) {
+            var $el = bonzo(frameContents.querySelector('.' + cls));
 
-            if($el.length > 0) {
-                $slot.html('');
-                postscribe($slot[0], breakoutHash[cls].replace(/%content%/g, $el.html()));
+            if ($el.length > 0) {
+                if ($el[0].nodeName.toLowerCase() === 'script') {
+                    // evil, but we own the returning js snippet
+                    eval($el.html());
+                } else {
+                    $slot.html('');
+                    $slot.first().append(breakoutHash[cls].replace(/%content%/g, $el.html()));
+                }
             }
         }
     };
@@ -291,12 +295,6 @@ define([
     };
 
     DFP.prototype.init = function() {
-
-        if (detect.getBreakpoint() === 'mobile') {
-            $('.ad-slot--mpu-in-row-pattern').removeClass('ad-slot__dfp');
-        } else {
-            $('.ad-slot--inline').removeClass('ad-slot__dfp');
-        }
 
         this.$dfpAdSlots = $(this.config.dfpSelector);
 

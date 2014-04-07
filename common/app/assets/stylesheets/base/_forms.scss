@@ -116,6 +116,26 @@
     margin-left: $gs-gutter;
 }
 
+.form-fields__inline {
+    ul {
+        margin: 0;
+        padding: 0;
+        .form-field {
+            display: inline-block;
+        }
+    }
+
+    .form-fields__heading {
+        @include fs-bodyHeading(3, true);
+        margin: 0 0 rem($gs-baseline);
+        display: block;
+    }
+}
+
+.form-fields--date-of-birth .form-field {
+    margin: 0 rem(18px) 0 0;
+}
+
 .label {
     color: $c-neutral1;
     cursor: pointer;
