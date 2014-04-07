@@ -8,13 +8,13 @@ import org.jsoup.nodes.{Element, Document}
 import model.commercial.{Segment, Ad}
 import org.apache.commons.lang.StringUtils
 
-object MasterClass {
+object EventbriteMasterClass {
   private val datePattern: DateTimeFormatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss")
   private val guardianUrlLinkText = "Full course and returns information on the Masterclasses website"
 
 //  private val guardianUrlLinkText = "Click here"
 
-  def apply(block: JsValue): Option[MasterClass] = {
+  def apply(block: JsValue): Option[EventbriteMasterClass] = {
     val id = (block \ "id").as[Long]
     val title = (block \ "title").as[String]
     val literalDate = (block \ "start_date").as[String]
@@ -35,8 +35,9 @@ object MasterClass {
 
     val paragraphs: Array[Element] = doc.select("p").toArray map {_.asInstanceOf[Element]}
 
-    val result: Array[MasterClass] = elements map { element =>
-        new MasterClass(id.toString,
+    elements.headOption.map { element =>
+      println("newing up EventBrite event" + title)
+        new EventbriteMasterClass(id.toString,
           title,
           startDate,
           url,
@@ -48,12 +49,10 @@ object MasterClass {
           element.attr("href"),
           paragraphs.head.text)
     }
-
-    result.headOption
   }
 }
 
-case class MasterClass(id: String,
+case class EventbriteMasterClass(id: String,
                        name: String,
                        startDate: DateTime,
                        url: String,

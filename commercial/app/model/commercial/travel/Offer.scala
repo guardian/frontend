@@ -1,12 +1,14 @@
 package model.commercial.travel
 
 import org.joda.time.DateTime
-import model.commercial.{Ad, Keyword, Segment}
+import model.commercial._
 import common.{Logging, ExecutionContexts, AkkaAgent}
 import scala.concurrent.Future
 import scala.concurrent.duration._
 import akka.util.Timeout
-import model.commercial.intersects
+import model.commercial.Segment
+import model.commercial.Keyword
+import scala.Some
 
 case class Offer(id: Int, title: Option[String], offerUrl: String, imageUrl: String, fromPrice: String,
                  earliestDeparture: DateTime, keywords: List[Keyword], countries: List[String], duration: String)
@@ -107,7 +109,7 @@ object Countries extends ExecutionContexts with Logging {
     }
     Future.sequence {
       countries map {
-        country => Keyword.lookup("\"" + country + "\"", section = Some("travel")) flatMap {
+        country => Lookup.keyword("\"" + country + "\"", section = Some("travel")) flatMap {
           keywords => countryKeywords.alter(_.updated(country, keywords))
         }
       }

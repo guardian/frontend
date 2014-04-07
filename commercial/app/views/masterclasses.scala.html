@@ -1,4 +1,4 @@
-@(events: List[model.commercial.masterclasses.MasterClass])(implicit request: RequestHeader)
+@(events: Seq[model.commercial.MasterClass])(implicit request: RequestHeader)
 
 <link rel="stylesheet" href="@Static("stylesheets/commercial.css")" />
 
@@ -15,16 +15,17 @@
         <ul class="lineitems">
             @events.take(1).map { event =>
                 <li class="lineitem">
-                    <a class="lineitem__blocklink" href="%OASToken%@event.guardianUrl%OmnitureToken%">
-                        <h4 class="lineitem__title">@event.name</h4>
-                        <p class="lineitem__meta">@event.readableDate • @event.venue.description</p>
+                    <img src="@event.imageElement" />
+                    <a class="lineitem__blocklink" href="@AdLink{@event.eventBriteEvent.guardianUrl%OmnitureToken%}">
+                        <h4 class="lineitem__title">@event.eventBriteEvent.name</h4>
+                        <p class="lineitem__meta">@event.eventBriteEvent.readableDate • @event.eventBriteEvent.venue.description</p>
                     </a>
-                    <p class="lineitem__description">@event.truncatedFirstParagraph <a class="lineitem__link" href="%OASToken%@event.guardianUrl%OmnitureToken%"><i class="i i-single-arrow-right-blue"></i>Learn more and book</a></p>
+                    <p class="lineitem__description">@event.eventBriteEvent.truncatedFirstParagraph <a class="lineitem__link" href="%OASToken%@event.eventBriteEvent.guardianUrl%OmnitureToken%"><i class="i i-single-arrow-right-blue"></i>Learn more and book</a></p>
                 </li>
             }
         </ul>
     </div>
     <div class="commercial__foot">
-        <a class="commercial__link" href="%OASToken%http://theguardian.com/guardian-masterclasses/masterclasses-calendar%OmnitureToken%">More courses from Guardian Masterclasses<i class="i i-double-arrow-right-blue"></i></a>
+        <a class="commercial__link" href="@AdLink{http://theguardian.com/guardian-masterclasses/masterclasses-calendar%OmnitureToken%}">More courses from Guardian Masterclasses<i class="i i-double-arrow-right-blue"></i></a>
     </div>
 </div>

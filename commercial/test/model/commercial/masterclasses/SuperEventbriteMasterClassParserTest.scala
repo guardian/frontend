@@ -9,9 +9,9 @@ import scala.language.postfixOps
 import concurrent.duration._
 
 // This is a sanity check test. Run only when applicable.
-class SuperMasterClassParserTest extends FlatSpec with Matchers with ExecutionContexts {
-  ignore  should "Be able to parse everything out of the EventBrite feed" in {
-      val futureChicken: Future[Seq[MasterClass]] = MasterClassesApi.loadAds()
+class SuperEventbriteMasterClassParserTest extends FlatSpec with Matchers with ExecutionContexts {
+  it  should "Be able to parse everything out of the EventBrite feed" in {
+      val futureChicken: Future[Seq[EventbriteMasterClass]] = EventbriteApi.loadAds()
 
       val events = Await.result(futureChicken, 30 seconds)
 
