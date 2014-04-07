@@ -224,14 +224,20 @@ define([
      * can inherit fonts.
      */
     DFP.prototype.checkForBreakout = function($slot) {
+        /* jshint evil: true */
         var frameContents = $slot[0].querySelector('iframe').contentDocument.body;
 
-        for(var cls in breakoutHash) {
-            var $el = bonzo(frameContents.querySelector('.'+ cls));
+        for (var cls in breakoutHash) {
+            var $el = bonzo(frameContents.querySelector('.' + cls));
 
-            if($el.length > 0) {
-                $slot.html('');
-                $slot.first().append(breakoutHash[cls].replace(/%content%/g, $el.html()));
+            if ($el.length > 0) {
+                if ($el[0].nodeName.toLowerCase() === 'script') {
+                    // evil, but we own the returning js snippet
+                    eval($el.html());
+                } else {
+                    $slot.html('');
+                    $slot.first().append(breakoutHash[cls].replace(/%content%/g, $el.html()));
+                }
             }
         }
     };
