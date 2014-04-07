@@ -77,7 +77,12 @@ case class ProfileForms(publicForm: Form[ProfileFormData], accountForm: Form[Acc
 
   def bindFromRequest(implicit request: Request[_]) = update {
     form =>
-      form.bindFromRequest()
+      // Hack to get the postcode error into the correct context.
+      val boundForm = form.bindFromRequest()
+      boundForm.error("address") map {
+        e =>
+          boundForm.withError(e.copy(key = "address.postcode"))
+      } getOrElse boundForm
   }
 
   def bindForms(user: User): ProfileForms = {

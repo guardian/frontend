@@ -6,11 +6,11 @@ import model.Countries
 
 trait AddressMapping extends Mappings{
 
-  private val AddressLinePattern = """[^\d\w\s'#,./-]""".r
+  private val AddressLinePattern = """[^\w\s'#,./-]""".r
   private val idAddressLine = textField verifying (
     Messages("error.address"),
     { value => value.isEmpty || AddressLinePattern.findFirstIn(value).isEmpty }
-    )
+  )
 
   val idAddress = mapping(
     ("line1", idAddressLine),
@@ -19,11 +19,11 @@ trait AddressMapping extends Mappings{
     ("line4", idAddressLine),
     ("postcode", textField),
     ("country", idCountry)
-  )(AddressFormData.apply)(AddressFormData.unapply) //verifying(
-//    "error.postcode",
-//    { address => address.isValidPostcodeOrZipcode
-//    }
-//  )
+  )(AddressFormData.apply)(AddressFormData.unapply) verifying(
+    "error.postcode",
+    { address => address.isValidPostcodeOrZipcode
+    }
+  )
 }
 
 case class AddressFormData(
@@ -34,16 +34,22 @@ case class AddressFormData(
   postcode: String,
   country: String
 ){
+  import Countries.{UK, US}
 
-//  protected val PostcodePattern = """^(GIR 0AA|[A-PR-UWYZ]([0-9]{1,2}|([A-HK-Y][0-9]|[A-HK-Y][0-9]([0-9]|[ABEHMNPRV-Y]))|[0-9][A-HJKPS-UW])[0-9][ABD-HJLNP-UW-Z]{2})$""".r
-//
-//  lazy val isValidPostcodeOrZipcode: Boolean = {
-//    if(country == Countries.UK) isValidUkPostcode
-//    else true
-//  }
-//
-//  private lazy val isValidUkPostcode = postcode match {
-//    case PostcodePattern(_) => true
-//    case _ => false
-//  }
+  lazy val isValidPostcodeOrZipcode: Boolean = country match{
+    case UK =>  isValidUkPostcode
+    case US =>  isValidUsZipcode
+    case _ => true
+  }
+
+  private val ZipcodePattern = """^\d{5}(?:[-\s]\d{4})?$""".r
+  private lazy val isValidUsZipcode = {
+      postcode.isEmpty || ZipcodePattern.findFirstIn(postcode).isDefined
+  }
+
+   private val PostcodePattern = """^(GIR 0AA)|((([A-Z-[QVX]][0-9][0-9]?)|(([A-Z-[QVX]][A-Z-[IJZ]][0-9][0-9]?)|(([A-Z-[QVX]][0-9][A-HJKSTUW])|([A-Z-[QVX]][A-Z-[IJZ]][0-9][ABEHMNPRVWXY])))) [0-9][A-Z-[CIKMOV]]{2})$""".r
+
+  private lazy val isValidUkPostcode = {
+      postcode.isEmpty || PostcodePattern.findFirstIn(postcode).isDefined
+  }
 }
