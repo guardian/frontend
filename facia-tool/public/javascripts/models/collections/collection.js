@@ -118,7 +118,7 @@ define([
             self.load()
             .then(function(){
                 if (goLive) {
-                    vars.model.deferredDetectPressFaliure();
+                    vars.model.deferredDetectPressFailure();
                 }
             });
         });
@@ -137,7 +137,7 @@ define([
         })
         .then(function() {
             if(vars.state.liveMode()) {
-                vars.model.deferredDetectPressFaliure();
+                vars.model.deferredDetectPressFailure();
             }
         });
     };
