@@ -16,7 +16,7 @@ trait CloudWatch extends implicits.Futures {
 
   lazy val cloudwatch = {
     val client = new AmazonCloudWatchAsyncClient(Configuration.aws.credentials)
-    client.setEndpoint("monitoring.eu-west-1.amazonaws.com")
+    client.setEndpoint(AwsEndpoints.monitoring)
     client
   }
 
