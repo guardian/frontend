@@ -119,7 +119,7 @@ object Switches extends Collections {
   )
 
   val CommercialComponentsSwitch = Switch("Advertising", "commercial-components",
-    "Display commercial components (jobs, soulmates).",
+    "Display commercial components, e.g. jobs, soulmates.",
     safeState = On, sellByDate = never
   )
 
@@ -273,7 +273,7 @@ object Switches extends Collections {
 
   val RssLinkSwitch = Switch("Feature Switches", "rss-link",
     "If this switch is on a link to the RSS is rendered in the HTML",
-    safeState = Off, sellByDate = new DateMidnight(2014, 4, 7)
+    safeState = Off, sellByDate = new DateMidnight(2014, 6, 30)
   )
 
   val PopularInTagSwitch = Switch("Feature Switches", "popular-in-tag",

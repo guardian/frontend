@@ -41,3 +41,11 @@ object Collection {
 case class FaciaPage(
                    id: String,
                    collections: List[(Config, Collection)])
+
+object FaciaComponentName {
+  def apply(config: Config, collection: Collection): String = {
+    config.displayName.orElse(collection.displayName).map { title =>
+      title.toLowerCase.replace(" ", "-")
+    }.getOrElse("no-name")
+  }
+}

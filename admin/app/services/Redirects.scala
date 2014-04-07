@@ -13,7 +13,7 @@ object Redirects {
 
   private lazy val client = {
     val client = new AmazonDynamoDBClient(Configuration.aws.credentials)
-    client.setEndpoint("dynamodb.eu-west-1.amazonaws.com")
+    client.setEndpoint(AwsEndpoints.dynamoDb)
     client
   }
 

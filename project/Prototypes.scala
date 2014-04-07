@@ -127,7 +127,7 @@ trait Prototypes {
     .settings(frontendAssemblySettings:_*)
     .settings(
       libraryDependencies ++= Seq(
-        "com.gu" %% "management-play" % "6.0",
+        "com.gu" %% "management-play" % "6.1",
         "commons-io" % "commons-io" % "2.4"
       )
     )
