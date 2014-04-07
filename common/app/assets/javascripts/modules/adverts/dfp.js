@@ -86,23 +86,29 @@ define([
         googletag.pubads().addEventListener('slotRenderEnded', parseAd.bind(this));
     };
 
+    DFP.prototype.buildAdUnit = function () {
+        var isFront      = this.config.page.isFront || this.config.page.contentType === 'Section',
+            adUnitSuffix = this.config.page.section + (isFront ? '/front' : '');
+        return '/' + this.config.page.dfpAccountId + '/' + this.config.page.dfpAdUnitRoot + '/' + adUnitSuffix;
+    };
+
     /**
-     * Sets the approiate page level targetting
+     * Builds the appropriate page level targetting
      *
      * a      = audience science
      * at     = adtest cookie
      * bp     = current breakpoint
      * cat    = section
      * ct     = content type
-     * gdncrm = user ad targetting
      * k      = keywords
      * p      = platform
      * pt     = content type
+     * url    = path
      */
-    DFP.prototype.setPageTargetting = function() {
-        var conf         = this.config.page,
-            section      = conf.section     ? conf.section.toLowerCase()     : '',
-            contentType  = conf.contentType ? conf.contentType.toLowerCase() : '',
+    DFP.prototype.buildPageTargetting = function () {
+        var conf = this.config.page,
+            section = conf.section ? conf.section.toLowerCase() : '',
+            contentType = conf.contentType ? conf.contentType.toLowerCase() : '',
             keywords;
         if (conf.keywords) {
             keywords = conf.keywords.split(',').map(function (keyword) {
@@ -112,17 +118,26 @@ define([
             keywords = '';
         }
 
-        googletag.pubads().setTargeting('a', AudienceScience.getSegments() || [])
-                          .setTargeting('at', Cookies.get('adtest') || '')
-                          .setTargeting('bp', detect.getBreakpoint())
-                          .setTargeting('cat', section)
-                          .setTargeting('ct', contentType)
-                          // leave out CRM data until needed
-                          //.setTargeting('gdncrm', UserAdTargeting.getUserSegments() || [])
-                          .setTargeting('k', keywords)
-                          .setTargeting('p', 'ng')
-                          .setTargeting('pt', contentType)
-                          .setTargeting('url', window.location.pathname);
+        return {
+            'a': AudienceScience.getSegments() || [],
+            'at': Cookies.get('adtest') || '',
+            'bp': detect.getBreakpoint(),
+            'cat': section,
+            'ct': contentType,
+            'k': keywords,
+            'p': 'ng',
+            'pt': contentType,
+            'url': window.location.pathname
+        };
+    };
+
+    DFP.prototype.setPageTargetting = function() {
+        var targets = this.buildPageTargetting();
+        for (var target in targets) {
+            if (targets.hasOwnProperty(target)) {
+                googletag.pubads().setTargeting(target, targets[target]);
+            }
+        }
     };
 
     /**
@@ -130,9 +145,8 @@ define([
      * attributes on the element.
      */
     DFP.prototype.defineSlots = function() {
-        var self    = this,
-            section = this.config.page.isFront ? 'networkfront' : this.config.page.section,
-            account = '/'+ this.config.page.dfpAccountId +'/'+ this.config.page.dfpAdUnitRoot +'/'+ section;
+        var self   = this,
+            adUnit = this.buildAdUnit(this.config);
 
         this.$dfpAdSlots.each(function(adSlot) {
 
@@ -150,7 +164,7 @@ define([
                               ),
                 refresh     = adSlot.getAttribute('data-refresh') !== 'false',
 
-                slot = googletag.defineSlot(account, size, id)
+                slot = googletag.defineSlot(adUnit, size, id)
                                 .addService(googletag.pubads())
                                 .defineSizeMapping(sizeMapping)
                                 .setTargeting('slot', name);
