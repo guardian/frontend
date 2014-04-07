@@ -38,10 +38,10 @@ define([
         var model = vars.model = {};
 
         model.statusCapiErrors = ko.observable(false);
-        model.statusPressFaliure = ko.observable(false);
+        model.statusPressFailure = ko.observable(false);
         model.clearStatuses = function() {
             model.statusCapiErrors(false);
-            model.statusPressFaliure(false);
+            model.statusPressFailure(false);
         };
 
         model.collections = ko.observableArray();
@@ -80,8 +80,8 @@ define([
             return vars.CONST.viewer + '#env=' + config.env + '&url=' + model.front() + encodeURIComponent('?view=mobile');
         });
 
-        function detectPressFaliure() {
-            model.statusPressFaliure(false);
+        function detectPressFailure() {
+            model.statusPressFailure(false);
 
             if (model.front()) {
                 authedAjax.request({
@@ -93,7 +93,7 @@ define([
                     if (resp.status !== 200) { return; }
                     lastPressed = new Date(resp.responseText);
                     if (isValidDate(lastPressed)) {
-                        model.statusPressFaliure(
+                        model.statusPressFailure(
                             _.some(model.collections(), function(collection) {
                                 var l = new Date(collection.state.lastUpdated());
                                 return isValidDate(l) ? l > lastPressed : false;
@@ -104,10 +104,10 @@ define([
             }
         }
 
-        var deferredDetectPressFaliure = _.debounce(detectPressFaliure, 5000);
+        var deferredDetectPressFailure = _.debounce(detectPressFailure, vars.CONST.detectPressFailureMs || 10000);
         
         function pressFront() {
-            model.statusPressFaliure(false);
+            model.statusPressFailure(false);
 
             if (model.front()) {
                 authedAjax.request({
@@ -115,12 +115,12 @@ define([
                     method: 'post'
                 })
                 .always(function() {
-                    deferredDetectPressFaliure();
+                    deferredDetectPressFailure();
                 });
             }
         }
 
-        model.deferredDetectPressFaliure = deferredDetectPressFaliure;
+        model.deferredDetectPressFailure = deferredDetectPressFailure;
         model.pressFront = pressFront;
         
         function getFront() {

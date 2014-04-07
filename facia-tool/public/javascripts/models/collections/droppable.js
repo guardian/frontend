@@ -96,7 +96,7 @@ define([
                     })
                     .then(function() {
                         if(vars.state.liveMode()) {
-                            vars.model.deferredDetectPressFaliure();
+                            vars.model.deferredDetectPressFailure();
                         }
                     });
                     
