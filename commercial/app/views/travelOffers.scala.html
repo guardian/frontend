@@ -2,8 +2,8 @@
 
 <link rel="stylesheet" href="@Static("stylesheets/commercial.css")" />
 
-<div class="commercial travel-component">
-    <div class="commercial__head">
+<div class="commercial facia-container--layout-article travel-component">
+    <div class="container__title commercial__head">
         <h3 class="commercial__title">
             <a href="%OASToken%http://www.guardianholidayoffers.co.uk/%OmnitureToken%">
                 <span class="u-h">Guardian Holiday Offers</span>
@@ -13,9 +13,9 @@
         <p class="commercial__subtitle">Find your perfect holiday</p>
     </div>
 
-    <div class="commercial__body">
+    <div class="container__body commercial__body">
         <ul class="lineitems">
-            @offers.take(1).map { offer =>
+            @offers.take(4).map { offer =>
                 <li class="lineitem">
                     <a class="lineitem__link" href="%OASToken%@offer.offerUrl%OmnitureToken%">
                         <img class="lineitem__image" src="@offer.imageUrl" alt="" />
