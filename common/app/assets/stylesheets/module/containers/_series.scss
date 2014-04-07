@@ -32,7 +32,7 @@
     }
 
     @include mq(rightCol) {
-        .collection__title {
+        .container__title {
             margin-bottom: gs-height(1);
         }
         .collection-wrapper--position-1 {
@@ -41,19 +41,20 @@
                 @if not $browser-supports-flexbox {
                     width: 66%;
                 }
-
                 .item__title {
                     @include fs-headline(3, true);
                 }
             }
-            .collection__item:nth-child(-n+3):nth-child(n+2) {
-                .item__standfirst {
-                    display: block;
-                    @include fs-bodyCopy(1);
-                }
-            }
             .item__link {
                 border-top-width: 0;
+            }
+            @if $browser-supports-flexbox {
+                .collection__item:nth-child(-n+3):nth-child(n+2) {
+                    .item__standfirst {
+                        display: block;
+                        @include fs-bodyCopy(1);
+                    }
+                }
             }
         }
     }
