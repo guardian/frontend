@@ -450,7 +450,9 @@
     }
     
     @include mq(leftCol) {
+        height: gs-height(1);
         position: static;
+        @include box-sizing(border-box);
     }
 }
 

@@ -1,6 +1,6 @@
-@(id: String, name: String)
+@(id: String, name: String, cls: Option[String] = None)
 
-<dl class="series-meta">
+<dl class="series-meta@cls.map{ cls => series-meta--@cls}">
     <dt class="series-meta__label">Series</dt>
         <dd class="series-meta__item">
             <a href="/@id" class="series-meta__item tone-colour" class="tone-colour">@name</a>

@@ -19,6 +19,8 @@
             <div class="article__inner article__inner--head">
                 <header class="article__head">
 
+                    @if(article.isSeries) { @fragments.meta.series(article.series.map(_.id).head, article.series.map(_.name).head, Some("inline")) }
+
                     @if(article.isAdvertisementFeature){
                         <div class="article-hat-label">Advertisement feature</div>
                     }
