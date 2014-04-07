@@ -129,7 +129,10 @@ define([
                 bonzo(parent).append(self.elem);
                 self._ready();
             }
-        });
+        }).fail( function (err, msg) {
+           self.error()
+        })
+
     };
 
     /**
@@ -203,6 +206,14 @@ define([
      * This function is made to be overridden
      */
     Component.prototype.ready = function() {};
+
+    /**
+     * Once the render / decorate methods have been called
+     * This is where you could do your error event binding
+     * This function is made to be overridden
+     */
+    Component.prototype.error = function() {};
+
 
     /**
      * @param {Element} elem new element

@@ -137,8 +137,8 @@ define([
         },
 
         transcludeSeriesContent: function(config, context){
-            var s = new Series();
-            s.renderSeriesComponent(config, context);
+           console.log(config)
+            var s = new Series(config, qwery('.js-series', context));
         },
 
         showTabs: function() {
