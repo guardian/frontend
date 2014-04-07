@@ -37,6 +37,7 @@ define([
         });
 
         this.props  = asObservableProps([
+            'keyword',
             'webTitle']);
 
         populateObservables(this.props,  opts);
