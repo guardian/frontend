@@ -41,9 +41,6 @@
                 @if not $browser-supports-flexbox {
                     width: 66%;
                 }
-                .item__standfirst {
-                    display: block;
-                }
                 .item__title {
                     @include fs-headline(3, true);
                 }
