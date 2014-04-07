@@ -4,8 +4,8 @@
 
 /* remove top margin on the footer to make component sit on top of it as per design */
 
-body .footer {
-    margin-top: 0;
+.footer {
+    margin-top: 0 !important;
 }
 
 .commercial--jobs {
