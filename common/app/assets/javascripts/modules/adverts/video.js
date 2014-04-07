@@ -212,21 +212,7 @@ define([
 
         var adUnit = dfpAds.buildAdUnit.bind(this)();
 
-        var custParams = '';
-        var targets = dfpAds.buildPageTargetting.bind(this)();
-        for (var target in targets) {
-            if (targets.hasOwnProperty(target)) {
-                if (custParams !== '') {
-                    custParams += '&';
-                }
-                var targetValue = targets[target];
-                if (typeof targetValue === 'string') {
-                    custParams += target + '=' + targetValue;
-                } else {
-                    custParams += target + '=' + targetValue.join('&' + target + '=');
-                }
-            }
-        }
+        var custParams = queryString.generateQueryString(dfpAds.buildPageTargetting.bind(this)());
         var encodedCustParams = encodeURIComponent(custParams);
 
         var timestamp = new Date().getTime();
