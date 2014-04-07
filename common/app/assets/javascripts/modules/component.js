@@ -129,10 +129,9 @@ define([
                 bonzo(parent).append(self.elem);
                 self._ready();
             }
-        }).fail( function (err, msg) {
-           self.error()
-        })
-
+        }).fail( function () {
+           self.error();
+        });
     };
 
     /**

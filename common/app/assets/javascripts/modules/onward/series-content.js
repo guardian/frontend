@@ -1,9 +1,11 @@
 define([
+    'common/common',
     'common/modules/analytics/register',
     'common/modules/ui/images',
     'lodash/objects/assign',
     'common/modules/component'
 ], function(
+    common,
     register,
     images,
     extend,
@@ -29,8 +31,9 @@ define([
         register.end('series-content');
     };
 
-    SeriesComponent.prototype.error = function() {
-        common.mediator.emit('module:error', 'Failed to load related: ' + req.statusText, 'common/modules/related.js');
+    SeriesContent.prototype.error = function() {
+        common.mediator.emit('module:error', 'Failed to load series:' + this.config.page.series + 'common/modules/related.js');
+        common.mediator.emit('module:error', 'Failed to load series:' + this.config.page.series + 'common/modules/related.js');
         register.error('series-content');
     };
 
