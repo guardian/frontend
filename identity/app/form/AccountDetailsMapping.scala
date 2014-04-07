@@ -1,7 +1,7 @@
 package form
 
 import play.api.data.Forms._
-import com.gu.identity.model.{PrivateFields, User}
+import com.gu.identity.model.{UserDates, PrivateFields, User}
 import idapiclient.UserUpdate
 
 object AccountDetailsMapping extends UserFormMapping[AccountFormData] with AddressMapping with DateMapping {
