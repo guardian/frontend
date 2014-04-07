@@ -45,14 +45,16 @@
                     @include fs-headline(3, true);
                 }
             }
-            .collection__item:nth-child(-n+3):nth-child(n+2) {
-                .item__standfirst {
-                    display: block;
-                    @include fs-bodyCopy(1);
-                }
-            }
             .item__link {
                 border-top-width: 0;
+            }
+            @if $browser-supports-flexbox {
+                .collection__item:nth-child(-n+3):nth-child(n+2) {
+                    .item__standfirst {
+                        display: block;
+                        @include fs-bodyCopy(1);
+                    }
+                }
             }
         }
     }
