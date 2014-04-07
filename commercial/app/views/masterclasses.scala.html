@@ -9,18 +9,18 @@
                 <span>Guardian <span class="commercial__title__last-word">Masterclasses</span></span>
             </a>
         </h3>
-        <p class="commercial__explainer">Courses from the Guardian</p>
+        <p class="commercial__explainer">courses from the guardian</p>
     </div>
     <div class="commercial__body">
-        <ul class="u-unstyled commercial--masterclasses">
+        <ul class="lineitems commercial--masterclasses">
             @events.take(4).map { event =>
-                <li class="commercial--masterclasses__class">
-                    <a class="commercial--masterclasses__class__link" href="%OASToken%@event.guardianUrl%OmnitureToken%">
+                <li class="lineitem commercial--masterclasses__class">
+                    <a class="lineitem__link commercial--masterclasses__class__link" href="%OASToken%@event.guardianUrl%OmnitureToken%">
                         <h4 class="commercial--masterclasses__class__title">@event.name</h4>
                         <p class="commercial--masterclasses__class__date">@event.readableDate</p>
                         <p class="commercial--masterclasses__class__meta">@event.venue.description | COST</p>
                     </a>
-                    <p class="commercial--masterclasses__class__description">@event.truncatedFirstParagraph <a class="lineitem__link" href="%OASToken%@event.guardianUrl%OmnitureToken%"><i class="i i-single-arrow-right-blue"></i>Book now</a></p>
+                    <p class="lineitem__description commercial--masterclasses__class__description">@event.truncatedFirstParagraph <a class="lineitem__link commercial--masterclasses__class__description__link" href="%OASToken%@event.guardianUrl%OmnitureToken%"><i class="i i-single-arrow-right-blue"></i>Book now</a></p>
                 </li>
             }
         </ul>
