@@ -294,7 +294,7 @@ object Switches extends Collections {
   )
 
   val ABBlendedContainers = Switch("A/B Tests", "ab-blended-containers",
-    "If this switch is on then the bleneded containers test runs on the network front",
+    "If this switch is on then the blended containers test runs on the network front",
     safeState = Off, sellByDate = new DateMidnight(2014, 4, 15)
   )
 
