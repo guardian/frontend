@@ -2,8 +2,8 @@
 
 <link rel="stylesheet" href="@Static("stylesheets/commercial.css")" />
 
-<div class="commercial masterclasses-component">
-    <div class="commercial__head">
+<div class="commercial masterclasses-component facia-container--layout-article">
+    <div class="commercial__head container__title">
         <h3 class="commercial__title">
             <a href="%OASToken%http://theguardian.com/guardian-masterclasses%OmnitureToken%">
                 <span>Guardian <span class="commercial__title__last-word">Masterclasses</span></span>
@@ -11,7 +11,7 @@
         </h3>
         <p class="commercial__explainer">courses from the guardian</p>
     </div>
-    <div class="commercial__body">
+    <div class="commercial__body container__body">
         <ul class="lineitems commercial--masterclasses">
             @events.take(4).map { event =>
                 <li class="lineitem commercial--masterclasses__class">

@@ -2,6 +2,10 @@
    Masterclass component
    ========================================================================== */
 
+body .footer {
+    margin-top: 0;
+}
+
 .masterclasses-component {
     .commercial__head {
         border-top: 0;
@@ -40,9 +44,12 @@
         @include box-sizing(border-box);
         float: left;
         width: 50%;
-        @include rem((
-            padding-left: $gs-gutter/2 - 1
-        ));
+        padding-left: 0;
+        &:nth-child(n+2) {
+            @include rem((
+                padding-left: $gs-gutter/2 - 1
+            ));
+        }
         &:nth-child(n+3) {
             display: none;
         }
@@ -72,17 +79,23 @@
             }
         }
     }
-    @include mq(wide) {
+    @include mq(rightCol) {
         .commercial--masterclasses__class {
+            padding-left: $gs-gutter/2 - 1;
             width: 25%;
             &:nth-child(n+4) {
                 display: block;
             }
         }
     }
-    
-
-  
+    @include mq(leftCol) {
+        .commercial--masterclasses__class {
+            border-left: 1px solid $c-neutral4;
+        }
+        .commercial__title__last-word {
+            margin-left: 0;
+        }
+    }
     .lineitem__image {
         margin-right: $gs-gutter/5;
         outline: 1px solid $c-neutral7;
