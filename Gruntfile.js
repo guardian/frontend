@@ -537,6 +537,9 @@ module.exports = function (grunt) {
             },
             open: {
                 src: ['integration-tests/casper/tests/open/*.spec.js']
+            },
+            commercial: {
+                src: ['integration-tests/casper/tests/commercial/*.spec.js']
             }
         },
 
