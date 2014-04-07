@@ -16,23 +16,33 @@ trait DateMapping {
     "day" -> optional(number(min = 1, max = 31))
   )(DateFormData.apply)(DateFormData.unapply) verifying (
     Messages("error.date"),
-    { _.isValid }
+    { dateData => dateData.isValid }
   )
 
 }
 
 case class DateFormData(year: Option[Int], month: Option[Int], day: Option[Int]){
 
-  lazy val (isValid, dateTime): (Boolean, Option[DateTime] )= (year, month, day) match {
-    case (None, None, None) => (true, None)
+  lazy val dateTime: Option[DateTime] = {
+    val date = for{
+      y <- year
+      m <- month
+      d <- day
+    } yield tryDate(y, m, d)
+    date.flatten
+  }
 
-    case (Some(y), Some(m), Some(d)) => Try{ new LocalDate(y, m, d).toDateTimeAtStartOfDay} match {
-      case Failure(e) => (false, None)
+  lazy val isValid: Boolean = (year, month, day) match {
+    case (None, None, None) => true
 
-      case Success(date: DateTime) => if(date.isAfterNow) (false, Some(date)) else (true, Some(date))
-    }
+    case (Some(y), Some(m), Some(d)) =>
+      dateTime exists {_.isBeforeNow}
 
-    case _ => (false, None)
+    case _ => false
+  }
+
+  private def tryDate(y: Int, m: Int, d: Int): Option[DateTime] = {
+    Try{ new LocalDate(y, m, d).toDateTimeAtStartOfDay}.toOption
   }
 }
 
