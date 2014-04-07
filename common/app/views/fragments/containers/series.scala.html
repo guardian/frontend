@@ -16,10 +16,10 @@
             data-type="@style.containerType"
             data-component="@config.id">
 
-                <div class="container__border tone-@style.tone tone-accent-border"></div>
+                <div class="container__border"></div>
 
                 @title.map { title =>
-                    <h2 class="container__title tone-@style.tone tone-background">
+                    <h2 class="container__title">
                         @href.map { href =>
                         <a class="container__title__label u-text-hyphenate" data-link-name="section heading" href="@LinkTo{/@href}">@Html(title)</a>
                         }.getOrElse{

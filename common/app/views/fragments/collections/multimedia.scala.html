@@ -13,7 +13,7 @@
 @defining(items.slice(3, 7)) { items =>
     @if(items.nonEmpty) {
         <div class="collection-wrapper collection-wrapper--position-2">
-            <ul class="unstyled l-row l-row--items-4 collection">
+            <ul class="unstyled l-row l-row--items-4 l-row--layout-m collection">
                 @items.zipWithIndex.map{ case (trail, index) =>
                     @fragments.collections.items.standard(trail, index + 3, containerIndex)
                 }
