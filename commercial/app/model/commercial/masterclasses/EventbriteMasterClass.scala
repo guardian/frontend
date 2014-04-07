@@ -36,7 +36,6 @@ object EventbriteMasterClass {
     val paragraphs: Array[Element] = doc.select("p").toArray map {_.asInstanceOf[Element]}
 
     elements.headOption.map { element =>
-      println("newing up EventBrite event" + title)
         new EventbriteMasterClass(id.toString,
           title,
           startDate,

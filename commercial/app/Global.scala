@@ -40,7 +40,6 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
     AkkaAsync {
       SoulmatesAggregatingAgent.refresh()
 
-      println("going to run masterclass agent")
       MasterClassAgent.refresh()
 
       Countries.refresh() andThen {

@@ -24,7 +24,6 @@ object MasterClassAgent extends Logging with ExecutionContexts {
   }
 
   def wrapEventbriteWithContentApi(eventbriteEvents: Seq[EventbriteMasterClass]): Future[Seq[MasterClass]] = {
-    println("Wrapping eventbrite events")
     val seqThumbs: Seq[Future[MasterClass]] = eventbriteEvents.take(10).map {
       event =>
         val contentId: String = event.guardianUrl.replace("http://www.theguardian.com/", "")
@@ -33,12 +32,10 @@ object MasterClassAgent extends Logging with ExecutionContexts {
         thumbnail.map {
           thumb => MasterClass(event, thumb)
         } recover {
+          // This shouldn't be necessary. The Option[ImageElement] should have handled all exceptions
           case _: Exception => MasterClass(event, None)
         }
     }
-
-
-    println("Done wrapping")
     Future.sequence(seqThumbs)
   }
 
