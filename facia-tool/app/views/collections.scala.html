@@ -4,10 +4,14 @@
 
 <div style="display: none;" data-bind="visible: true">
 
-    <div class="status status-danger" data-bind="text: alertError, visible: alertError"></div>
-    <div class="status status-warning" data-bind="visible: hasPressFaliure">
-        Failed to go live.
+    <div class="status status-danger" data-bind="visible: statusCapiErrors">
+        Sorry, ContentApi is unhealthy. Fronts may fail to update. If this persists for longer than 10 minutes, <a href="https://sites.google.com/a/guardian.co.uk/digital-incident-management/">contact support</a>.
+        <i class="icon-remove icon-white" data-bind="click: clearStatuses"></i>
+    </div>
+    <div class="status status-warning" data-bind="visible: statusPressFaliure">
+        Sorry, a network delay meant your change couldn't go live.
         <a data-bind="click: pressFront">Retry?</a>
+        <i class="icon-remove icon-white" data-bind="click: clearStatuses"></i>
     </div>
 
     <div class="toolbar" data-bind="visible: true" style="display: none">

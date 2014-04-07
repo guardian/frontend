@@ -19,11 +19,13 @@ a, a:hover {
 }
 
 .status {
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
     position: fixed;
     width: 100%;
     background: #999999;
     color: #FFFFFF;
-    padding: 15px 5px;
+    padding: 15px 40px 15px 40px;
     z-index: 2;
     text-align: center;
 }
@@ -34,6 +36,12 @@ a, a:hover {
 
 .status-danger {
     background: #d61d00;
+}
+
+.status .icon-remove {
+    position: absolute;
+    right: 10px;
+    top: 15px;
 }
 
 .scrollable {

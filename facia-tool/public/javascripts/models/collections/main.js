@@ -37,9 +37,12 @@ define([
 
         var model = vars.model = {};
 
-        model.alertError = ko.observable();
-        
-        model.hasPressFaliure = ko.observable(false);
+        model.statusCapiErrors = ko.observable(false);
+        model.statusPressFaliure = ko.observable(false);
+        model.clearStatuses = function() {
+            model.statusCapiErrors(false);
+            model.statusPressFaliure(false);
+        };
 
         model.collections = ko.observableArray();
 
@@ -78,7 +81,8 @@ define([
         });
 
         function detectPressFaliure() {
-            model.hasPressFaliure(false);
+            model.statusPressFaliure(false);
+
             if (model.front()) {
                 authedAjax.request({
                     url: '/front/lastmodified/' + model.front()
@@ -89,10 +93,10 @@ define([
                     if (resp.status !== 200) { return; }
                     lastPressed = new Date(resp.responseText);
                     if (isValidDate(lastPressed)) {
-                        model.hasPressFaliure(
+                        model.statusPressFaliure(
                             _.some(model.collections(), function(collection) {
-                               var l = new Date(collection.state.lastUpdated());
-                               return isValidDate(l) ? l > lastPressed : false;
+                                var l = new Date(collection.state.lastUpdated());
+                                return isValidDate(l) ? l > lastPressed : false;
                             })
                         );
                     }
@@ -100,10 +104,11 @@ define([
             }
         }
 
-        var deferredDetectPressFaliure = _.debounce(detectPressFaliure, 10000);
+        var deferredDetectPressFaliure = _.debounce(detectPressFaliure, 5000);
         
         function pressFront() {
-            model.hasPressFaliure(false);
+            model.statusPressFaliure(false);
+
             if (model.front()) {
                 authedAjax.request({
                     url: '/collection/update/' + model.collections()[0].id,
@@ -115,7 +120,6 @@ define([
             }
         }
 
-        model.detectPressFaliure = detectPressFaliure;
         model.deferredDetectPressFaliure = deferredDetectPressFaliure;
         model.pressFront = pressFront;
         

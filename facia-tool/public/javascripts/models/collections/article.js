@@ -126,7 +126,7 @@ define([
                  ].filter(function(prop) {return !deepGet(opts, prop);});
 
                 if (missingProps.length) {
-                    vars.model.alertError('ContentApi is misbehaving. This front may fail to update.');
+                    vars.model.statusCapiErrors(true);
                     window.console.error('ContentApi missing: "' + missingProps.join('", "') + '" for ' + this.id);
                 } else {
                     this.state.isLoaded(true);
