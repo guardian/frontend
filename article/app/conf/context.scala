@@ -11,18 +11,17 @@ import com.gu.management.PlainTextResponse
 import scala.concurrent.duration._
 import java.util.concurrent.atomic.AtomicBoolean
 
-class HealthcheckPage(val urls: String*) extends ManagementPage {
+class HealthcheckPage(urls: String*) extends UrlPagesHealthcheckManagementPage(urls:_*) {
 
   import ExecutionContext.Implicits.global
 
   private lazy val status = new AtomicBoolean(false)
 
-  override val path = "/management/healthcheck"
-
-  val base = "http://localhost:9000"
 
   override def get(req: HttpRequest) = {
-    val checks = urls map { base + _ } map { url => WS.url(url).get().map{ response => url -> response } }
+    def fetch(url: String) = WS.url(url).withHeaders("X-Gu-Management-Healthcheck" -> "true").get()
+
+    val checks = urls map { base + _ } map { url => fetch(url).map{ response => url -> response } }
     val sequenced = Future.sequence(checks)
     val failed = sequenced map { _ filter { _._2.status / 100 != 2 } }
 

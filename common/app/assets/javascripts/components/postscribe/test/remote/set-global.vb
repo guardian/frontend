@@ -1,1 +1,0 @@
-remoteVbscriptGlobal = true

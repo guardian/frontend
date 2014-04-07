@@ -51,7 +51,6 @@ module.exports = function (grunt) {
                     EventEmitter: '../../../../common/app/assets/javascripts/components/eventEmitter/EventEmitter',
                     qwery:        '../../../../common/app/assets/javascripts/components/qwery/mobile/qwery-mobile',
                     reqwest:      '../../../../common/app/assets/javascripts/components/reqwest/src/reqwest',
-                    postscribe:   '../../../../common/app/assets/javascripts/components/postscribe/dist/postscribe',
                     lodash:       '../../../../common/app/assets/javascripts/components/lodash-amd/modern',
                     imager:       '../../../../common/app/assets/javascripts/components/imager.js/src/strategies/container',
                     omniture:     '../../../../common/app/assets/javascripts/components/omniture/omniture',
@@ -69,9 +68,6 @@ module.exports = function (grunt) {
                     name: 'common/bootstraps/app',
                     out: staticTargetDir + 'javascripts/bootstraps/app.js',
                     shim: {
-                        postscribe: {
-                            exports: 'postscribe'
-                        },
                         imager: {
                             deps: ['components/imager.js/src/imager'],
                             exports: 'Imager'
@@ -92,9 +88,6 @@ module.exports = function (grunt) {
                     name: 'bootstraps/admin',
                     out: staticTargetDir + 'javascripts/bootstraps/admin.js',
                     shim: {
-                        postscribe: {
-                            exports: 'postscribe'
-                        },
                         imager: {
                             deps: ['common/components/imager.js/src/imager'],
                             exports: 'Imager'

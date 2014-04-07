@@ -4,7 +4,7 @@ import common._
 import play.api.mvc._
 import services.{Archive, DynamoDB, Googlebot404Count}
 import java.net.URLDecoder
-import model.Cached
+import model.{NoCache, Cached}
 import scala.concurrent.Future.successful
 
 object ArchiveController extends Controller with Logging with ExecutionContexts {
@@ -12,8 +12,6 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
   private def destinationFor(path: String) = DynamoDB.destinationFor(path).map(_.filterNot { destination =>
       linksToItself(path, destination.location)
   })
-
-  private def isArchived(path: String) = services.S3Archive.getHtml(path)
 
   def isEncoded(path: String): Option[String] = {
     val decodedPath = URLDecoder.decode(path, "UTF-8")
@@ -45,7 +43,7 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
   }
 
   def lookup(path: String) = Action.async{ implicit request =>
-  
+
     /*
      * This is a chain of tests that look at the URL path and attempt to figure
      * out what should happen to the request.
@@ -68,7 +66,8 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
         .getOrElse{
           log.info(s"Not Found (404): $path")
           logGoogleBot(request)
-          NotFound
+          // TODO do some analysis on the results of this and then set a more appropriate cache header
+          NoCache(NotFound(views.html.notFound()))
         }
       }
     )
@@ -100,6 +99,6 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
   // are still served under the URL 'gallery'
   private def redirectGallery(path: String) = isGallery(path).map { url =>
     logDestination(path, "gallery", url)
-    Redirect(s"http://$url", 301)
+    Cached(300)(Redirect(s"http://$url", 301))
   }
 }

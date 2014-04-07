@@ -13,7 +13,6 @@
     "qwery": "~4.0.0",
     "reqwest": "~1.1.0",
     "domready": "~1.0.4",
-    "enhancer": "0.1.1",
-    "postscribe": "~1.2.0"
+    "enhancer": "0.1.1"
   }
 }

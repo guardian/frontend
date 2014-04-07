@@ -5,7 +5,6 @@ import play.api.GlobalSettings
 import model.CoreNavigationLifecycle
 import conf.FootballStatsPlugin
 import play.api.test.Helpers._
-import scala.Some
 import play.api.test.{FakeApplication, TestServer}
 import scala.sys.process.Process
 

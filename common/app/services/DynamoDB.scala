@@ -2,7 +2,6 @@ package services
 
 import conf.Configuration
 import common.{ExecutionContexts, Logging}
-import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient
 import scala.collection.JavaConversions._
 import com.amazonaws.auth.AWS4Signer
 import com.amazonaws.{AmazonWebServiceRequest, DefaultRequest}
@@ -22,12 +21,6 @@ trait DynamoDB extends Logging with ExecutionContexts {
   private val tableName = "redirects"
   private val DynamoDbGet = "DynamoDB_20120810.GetItem"
 
-  lazy val client = {
-    val client = new AmazonDynamoDBClient(Configuration.aws.credentials)
-    client.setEndpoint("dynamodb.eu-west-1.amazonaws.com")
-    client
-  }
-
   def destinationFor(source: String): Future[Option[Destination]] = {
 
     val bodyContent = s"""
@@ -41,7 +34,7 @@ trait DynamoDB extends Logging with ExecutionContexts {
 
     val headers = signedHeaders(DynamoDbGet, bodyContent)
 
-    val asyncRequest = WS.url("http://dynamodb.eu-west-1.amazonaws.com")
+    val asyncRequest = WS.url(s"http://${AwsEndpoints.dynamoDb}")
       .withHeaders(headers:_*)
 
     asyncRequest.post(bodyContent).map(_.json).map{ json =>
@@ -56,7 +49,7 @@ trait DynamoDB extends Logging with ExecutionContexts {
   private val credentialsProvider = Configuration.aws.credentials
   private def signedHeaders(xAmzTarget: String, bodyContent: String) = {
     val request = new DefaultRequest[Nothing](new AmazonWebServiceRequest {}, "DynamoDB")
-    request.setEndpoint(new URI("http://dynamodb.eu-west-1.amazonaws.com"))
+    request.setEndpoint(new URI(s"http://${AwsEndpoints.dynamoDb}"))
     request.addHeader("Content-Type", "application/x-amz-json-1.0")
     request.addHeader("x-amz-target", xAmzTarget)
     request.setContent(new StringInputStream(bodyContent))

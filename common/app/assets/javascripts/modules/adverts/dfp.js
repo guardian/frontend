@@ -2,7 +2,6 @@
 define([
     'common/$',
     'bonzo',
-    'postscribe',
     'common/modules/component',
     'lodash/objects/assign',
     'lodash/functions/debounce',
@@ -10,11 +9,13 @@ define([
     'common/utils/detect',
     'common/utils/mediator',
     'common/modules/analytics/commercial/tags/common/audience-science',
-    'common/modules/adverts/userAdTargeting'
+    'common/modules/adverts/userAdTargeting',
+    'common/modules/adverts/query-string',
+    'lodash/arrays/flatten',
+    'lodash/arrays/uniq'
 ], function (
     $,
     bonzo,
-    postscribe,
     Component,
     extend,
     debounce,
@@ -22,7 +23,10 @@ define([
     detect,
     mediator,
     AudienceScience,
-    UserAdTargeting
+    UserAdTargeting,
+    queryString,
+    _flatten,
+    _uniq
 ) {
 
     /**
@@ -65,8 +69,8 @@ define([
 
     DFP.prototype.config = {
         dfpUrl: '//www.googletagservices.com/tag/js/gpt.js',
-        dfpSelector: '.ad-slot__dfp',
-        adContainerClass: '.ad-container',
+        dfpSelector: '.ad-slot--dfp',
+        adContainerClass: '.ad-slot__container',
         // These should match the widths inside _vars.scss
         breakpoints: {
             mobile: 0,
@@ -97,19 +101,28 @@ define([
      */
     DFP.prototype.setPageTargetting = function() {
         var conf         = this.config.page,
-            keywords     = conf.keywords    ? conf.keywords.split(',')       : '',
             section      = conf.section     ? conf.section.toLowerCase()     : '',
-            contentType  = conf.contentType ? conf.contentType.toLowerCase() : '';
+            contentType  = conf.contentType ? conf.contentType.toLowerCase() : '',
+            keywords;
+        if (conf.keywords) {
+            keywords = conf.keywords.split(',').map(function (keyword) {
+                return queryString.formatKeyword(keyword).replace('&', 'and');
+            });
+        } else {
+            keywords = '';
+        }
 
         googletag.pubads().setTargeting('a', AudienceScience.getSegments() || [])
                           .setTargeting('at', Cookies.get('adtest') || '')
                           .setTargeting('bp', detect.getBreakpoint())
                           .setTargeting('cat', section)
                           .setTargeting('ct', contentType)
-                          .setTargeting('gdncrm', UserAdTargeting.getUserSegments() || [])
+                          // leave out CRM data until needed
+                          //.setTargeting('gdncrm', UserAdTargeting.getUserSegments() || [])
                           .setTargeting('k', keywords)
                           .setTargeting('p', 'ng')
-                          .setTargeting('pt', contentType);
+                          .setTargeting('pt', contentType)
+                          .setTargeting('url', window.location.pathname);
     };
 
     /**
@@ -126,7 +139,15 @@ define([
             var id          = adSlot.querySelector(self.config.adContainerClass).id,
                 name        = adSlot.getAttribute('data-name'),
                 sizeMapping = self.defineSlotSizes(adSlot),
-                size        = [sizeMapping[0][1][0], sizeMapping[0][1][1]],
+                // as we're using sizeMapping, pull out all the ad sizes, as an array of arrays
+                size        = _uniq(
+                                  _flatten(sizeMapping, true, function(map) {
+                                      return map[1];
+                                  }),
+                                  function(size) {
+                                      return size[0] + '-' + size[1];
+                                  }
+                              ),
                 refresh     = adSlot.getAttribute('data-refresh') !== 'false',
 
                 slot = googletag.defineSlot(account, size, id)
@@ -203,14 +224,20 @@ define([
      * can inherit fonts.
      */
     DFP.prototype.checkForBreakout = function($slot) {
+        /* jshint evil: true */
         var frameContents = $slot[0].querySelector('iframe').contentDocument.body;
 
-        for(var cls in breakoutHash) {
-            var $el = bonzo(frameContents.querySelector('.'+ cls));
+        for (var cls in breakoutHash) {
+            var $el = bonzo(frameContents.querySelector('.' + cls));
 
-            if($el.length > 0) {
-                $slot.html('');
-                postscribe($slot[0], breakoutHash[cls].replace(/%content%/g, $el.html()));
+            if ($el.length > 0) {
+                if ($el[0].nodeName.toLowerCase() === 'script') {
+                    // evil, but we own the returning js snippet
+                    eval($el.html());
+                } else {
+                    $slot.html('');
+                    $slot.first().append(breakoutHash[cls].replace(/%content%/g, $el.html()));
+                }
             }
         }
     };
@@ -268,6 +295,7 @@ define([
     };
 
     DFP.prototype.init = function() {
+
         this.$dfpAdSlots = $(this.config.dfpSelector);
 
         // If there's no ads on the page, then don't load anything

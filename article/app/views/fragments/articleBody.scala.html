@@ -13,7 +13,7 @@
                  itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType" role="main">
 
             @if(article.isSponsored) {
-                @fragments.sponsored()
+                @fragments.commercial.standardAd(name="badge", adType="paid-for-badge", sizeMapping=Map("mobile" -> Seq("300,80")))
             }
 
             <div class="article__inner article__inner--head">
@@ -93,15 +93,7 @@
                                                 <h2 class="article__meta-heading">Share this article</h2>
                                                 @fragments.social(article, "next to content")
                                             </div>
-                                            @if(OASAdvertSwitch.isSwitchedOn) {
-                                                <div class="ad-slot__oas ad-slot--mpu-banner-ad" data-link-name="ad slot mpu-banner-ad" data-base="" data-median="Middle"><div class="ad-slot__label">
-                                                    Advertisement</div><div class="ad-container"></div></div>
-                                            }
-                                            @if(DFPAdvertSwitch.isSwitchedOn && !LoadOnlyCommercialComponents.isSwitchedOn) {
-                                                <div class="ad-slot__dfp ad-slot--mpu-banner-ad" data-name="right" data-tabletlandscape="300,250">
-                                                    <div id="mpu-ad-slot" class="ad-container"></div>
-                                                </div>
-                                            }
+                                            @fragments.commercial.standardAd(name="right", adType="mpu-banner-ad", sizeMapping=Map("tabletlandscape" -> Seq("300,250")))
                                         </div>
                                         <div class="js-components"></div>
                                     </div>
@@ -124,9 +116,5 @@
 
     @fragments.mostPopularPlaceholder(article.section, VisualTone(article))
 
-    @if(DFPAdvertSwitch.isSwitchedOn) {
-        <div class="ad-slot__dfp ad-slot__commercial-component" data-name="merchandising" data-mobile="888,88" data-label="false" data-refresh="false">
-            <div id="dfp-commercial-component" class="ad-container"></div>
-        </div>
-    }
+    @fragments.commercial.commercialComponent(name="merchandising", adType="commercial-component", sizeMapping=Map("mobile" -> Seq("888,88")))
 }

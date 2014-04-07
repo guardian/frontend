@@ -1,19 +1,15 @@
 @(image: Option[model.ImageContainer])
-@import views.support.{ImgSrc, Item220, Item620}
+@import views.support.{ImgSrc, Item940, Item620}
 
 @image.map{ picture =>
-    <figure itemprop="associatedMedia primaryImageOfPage" itemscope itemtype="http://schema.org/ImageObject" class="media-primary media-content" data-component="image">
-        <div class="js-image-upgrade" data-src="@ImgSrc.imager(picture, Item620).map(Html(_))">
-            <img src="@Item220.bestFor(picture).map(Html(_))"
-                 class="maxed responsive-img"
-                 itemprop="contentURL"
-                 title="@Item620.altTextFor(picture).getOrElse("")"
-                 alt="@Item620.altTextFor(picture).getOrElse("")" />
-        </div>
-
-        @Item220.captionFor(picture).map{ caption =>
+    <figure itemprop="associatedMedia image" itemscope itemtype="http://schema.org/ImageObject" class="media-primary media-content" data-component="image">
+        <img src="@Item620.bestFor(picture).map(Html(_))"
+             class="maxed responsive-img"
+             itemprop="contentURL representativeOfPage"
+             title="@Item620.altTextFor(picture).getOrElse("")"
+             alt="@Item620.altTextFor(picture).getOrElse("")" />
+        @Item620.captionFor(picture).map{ caption =>
             <figcaption class="main-caption" itemprop="description">@Html(caption)</figcaption>
         }
-
     </figure>
 }

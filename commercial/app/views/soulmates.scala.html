@@ -3,12 +3,15 @@
 @if(play.Play.isDev()) {
     <link rel="stylesheet" href="@Static("stylesheets/head.default.css")" />
     <link rel="stylesheet" href="@Static("stylesheets/global.css")" />
+    <style>
+        .i { background-image: url(@Static("images/global/sprite.png")); }
+    </style>
 }
 
+<link rel="stylesheet" href="@Static("stylesheets/commercial.css")" />
 <style>
     .i--commercial { background-image: url(@Static("images/commercial/sprite.png")); }
 </style>
-<link rel="stylesheet" href="@Static("stylesheets/commercial.css")" />
 
 @defining(("2_2", "2014-03-28")) { case (version, date) =>
    <aside class="commercial commercial--soulmates" role="complementary">
@@ -19,7 +22,7 @@
                     <span class="u-h">Soulmates</span>
                 </h3>
                 <p class="commercial__explainer">The Guardian's online dating site with over 200,000 members</p>
-                <a href="@AdLink {https://soulmates.theguardian.com}?INTCMP=mic_232613"
+                <a href="@AdLink{https://soulmates.theguardian.com}?INTCMP=mic_232613"
                     class="commercial__buy-now-button"
                     data-link-name="merchandising-soulmates-v@{version}_@{date}-low-join-now">
                     Join now
@@ -43,7 +46,7 @@
                     <label for="my_gender" class="search__dropdown">I am a
                         <select id="my_gender" name="my_gender" class="search__dropdown__options">
                             @Seq("woman", "man").map { myGender =>
-                                <option value="@myGender.capitalize">@myGender</option>
+                                <option value="@myGender.capitalize"@if(myGender == "man"){ selected="selected"}>@myGender</option>
                             }
                         </select>
                     </label>
@@ -57,14 +60,14 @@
                     <label for="age_min" class="search__dropdown">Aged from
                         <select id="age_min" name="age_min" class="search__dropdown__options">
                             @for(ageMin <- 18 to 99) {
-                                <option>@ageMin</option>
+                                <option@if(ageMin == 25){ selected="selected"}>@ageMin</option>
                             }
                         </select>
                     </label>
                     <label for="age_max" class="search__dropdown">To
                         <select id="age_max" name="age_max" class="search__dropdown__options">
                             @for(ageMax <- 18 to 99) {
-                                <option>@ageMax</option>
+                                <option@if(ageMax == 45){ selected="selected"}>@ageMax</option>
                             }
                         </select>
                     </label>

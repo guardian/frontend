@@ -52,3 +52,5 @@ GET        /football/match/:year/:month/:day/$home<[\w\d-\.]+>-v-$away<[\w\d-\.]
 GET        /football/match/:matchId.json                                                       football.controllers.MatchController.renderMatchIdJson(matchId)
 GET        /football/match/:matchId                                                            football.controllers.MatchController.renderMatchId(matchId)
 
+GET        /football/match-redirect/:year/:month/:day/:homeTeamId/:awayTeamId                  football.controllers.MoreOnMatchController.redirectToMatch(year,month,day,homeTeamId,awayTeamId)
+GET        /football/match-redirect/:matchId                                                   football.controllers.MoreOnMatchController.redirectToMatchId(matchId)

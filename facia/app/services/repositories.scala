@@ -20,6 +20,8 @@ case class IndexPage(page: MetaData, trails: Seq[Content])
 
 trait Index extends ConciergeRepository with QueryDefaults {
 
+  private val rssFields = s"$trailFields,byline,body,standfirst"
+
   def normaliseTag(tag: String): String = {
     val conversions: Map[String, String] =
       Map("content" -> "type")
@@ -33,7 +35,7 @@ trait Index extends ConciergeRepository with QueryDefaults {
     }
   }
 
-  def index(edition: Edition, leftSide: String, rightSide: String, page: Int): Future[Either[IndexPage, SimpleResult]] = {
+  def index(edition: Edition, leftSide: String, rightSide: String, page: Int, isRss: Boolean): Future[Either[IndexPage, SimpleResult]] = {
 
     val section = leftSide.split('/').head
 
@@ -58,7 +60,7 @@ trait Index extends ConciergeRepository with QueryDefaults {
       .tag(s"$firstTag,$secondTag")
       .page(page)
       .pageSize(IndexPagePagination.pageSize)
-      .showFields(trailFields + ",body,standfirst") // need for rss
+      .showFields(if (isRss) rssFields else trailFields)
       .response.map {response =>
         val trails = response.results map { Content(_) }
         trails match {
@@ -92,12 +94,13 @@ trait Index extends ConciergeRepository with QueryDefaults {
     response.total
   ))
 
-  def index(edition: Edition, path: String, pageNum: Int)(implicit request: RequestHeader): Future[Either[IndexPage, SimpleResult]] = {
+  def index(edition: Edition, path: String, pageNum: Int, isRss: Boolean)(implicit request: RequestHeader): Future[Either[IndexPage, SimpleResult]] = {
+
     val promiseOfResponse = SwitchingContentApi().item(path, edition)
       .page(pageNum)
       .pageSize(IndexPagePagination.pageSize)
       .showEditorsPicks(pageNum == 1) //only show ed pics on first page
-      .showFields(trailFields + ",body,standfirst") // need for rss
+      .showFields(if (isRss) rssFields else trailFields)
       .response.map {
       response =>
         val page = response.tag.flatMap(t => tag(response, pageNum))

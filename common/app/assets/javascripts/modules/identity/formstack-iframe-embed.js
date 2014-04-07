@@ -111,10 +111,18 @@ define([
             // Events
             bean.on(window, 'unload', self.unload);
             bean.on(dom.$form[0], 'submit', self.submit);
+
+            // Listen for message from top window,
+            // only message we are listening for is the iframe position..
+            window.addEventListener('message', function(event) {
+                var message = JSON.parse(event.data);
+                if (message.iframeTop) { self.scrollToTopOfIframe(message.iframeTop); }
+            }, false);
         };
 
-        self.submit = function() {
-            // TODO: FML
+        self.submit = function(event) {
+            event.preventDefault();
+
             setTimeout(function() {
                 // Remove any existing errors
                 $('.' + config.idClasses.formError).removeClass(config.idClasses.formError);
@@ -129,8 +137,18 @@ define([
                     bean.fire(textarea, 'keyup');
                 });
 
-                self.sendHeight();
+                self.postMessage('get-position', 'get-position');
+
+                // if no errors, submit form
+                if ($(config.fsSelectors.formError, dom.$form).length === 0) {
+                    dom.$form[0].submit();
+                }
+
             }, 100);
+        };
+
+        self.scrollToTopOfIframe = function (top) {
+            self.postMessage('scroll-to', 'scroll-to', 0, top);
         };
 
         self.unload = function() {
@@ -147,13 +165,16 @@ define([
             self.postMessage('set-height', height);
         };
 
-        self.postMessage = function(type, value) {
+        self.postMessage = function(type, value, x, y) {
 
             var message = {
                 type: type,
                 value: value,
                 href: window.location.href
             };
+
+            if (x) { message.x = x; }
+            if (y) { message.y = y; }
 
             window.top.postMessage(JSON.stringify(message), '*');
         };

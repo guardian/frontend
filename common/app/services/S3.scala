@@ -22,7 +22,7 @@ trait S3 extends Logging {
 
   lazy val client = {
     val client = new AmazonS3Client(Configuration.aws.credentials)
-    client.setEndpoint("s3-eu-west-1.amazonaws.com")
+    client.setEndpoint(AwsEndpoints.s3)
     client
   }
 

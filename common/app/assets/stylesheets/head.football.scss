@@ -16,10 +16,7 @@
 @import "module/football/_global";
 @import "module/football/_league-list";
 
-
-/* ==========================================================================
-   Duplication
-   ========================================================================== */
-
+// These are duplicated from global to stop FOUC
+@import "base/_tables";
 @import "module/football/_tables";
 @import "module/football/_matches";

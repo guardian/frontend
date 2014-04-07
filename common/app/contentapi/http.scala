@@ -6,7 +6,7 @@ import conf.Configuration
 import common.{SimpleCountMetric, FrontendTimingMetric, ExecutionContexts}
 import java.util.concurrent.TimeoutException
 import play.api.libs.ws.WS
-import com.gu.management.{CountMetric, TimingMetric}
+import com.gu.management.TimingMetric
 import common.ContentApiMetrics.ContentApi404Metric
 import java.net.InetAddress
 import scala.util.Try

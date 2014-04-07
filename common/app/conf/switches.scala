@@ -52,6 +52,20 @@ object Switches extends Collections {
 
   // Load Switches
 
+  val MemcachedSwitch = Switch("Performance Switches", "memcached",
+    "If this switch is switched on then the MemcacheAction will be operational",
+    safeState = Off,
+    // giving this a sell by date even though it is a perf switch as it is still a test.
+    sellByDate = new DateMidnight(2014, 4, 30)
+  )
+
+  val IncludeBuildNumberInMemcachedKey = Switch("Performance Switches", "memcached-build-number",
+    "If this switch is switched on then the MemcacheFilter will include the build number in the cache key",
+    safeState = Off,
+    // giving this a sell by date even though it is a perf switch as it is still a test.
+    sellByDate = new DateMidnight(2014, 4, 30)
+  )
+
   val AutoRefreshSwitch = Switch("Performance Switches", "auto-refresh",
     "Enables auto refresh in pages such as live blogs and live scores. Turn off to help handle exceptional load.",
     safeState = Off, sellByDate = never
@@ -94,32 +108,26 @@ object Switches extends Collections {
 
   // Advertising Switches
 
-  val AdvertSwitch = Switch("Advertising", "adverts",
-    "If this switch is on then adverts will be loaded with JavaScript.",
+  val StandardAdvertsSwitch = Switch("Advertising", "standard-adverts",
+    "Display 'standard' adverts, e.g. top banner ads, inline ads, MPUs, etc.",
     safeState = On, sellByDate = never
   )
 
-  val OASAdvertSwitch = Switch("Advertising", "oas-adverts",
-    "If this switch is on then OAS adverts will be loaded with JavaScript.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 4, 8)
+  val CommercialComponentsSwitch = Switch("Advertising", "commercial-components",
+    "Display commercial components, e.g. jobs, soulmates.",
+    safeState = On, sellByDate = never
   )
 
-  val DFPAdvertSwitch = Switch("Advertising", "dfp-adverts",
-    "If this switch is on then DFP adverts will be loaded with JavaScript.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 4, 8)
-  )
-
-  val LoadOnlyCommercialComponents = Switch("Advertising", "load-only-commercial-components",
-    "If this switch is on then only commercial components will be loaded via DFP.",
-    safeState = On, sellByDate = new DateMidnight(2014, 4, 8)
-  )
-
-  val VideoAdvertSwitch = Switch("Advertising", "video-adverts",
-    "If this switch is on then OAS video adverts will be loaded with JavaScript.",
-    safeState = Off, sellByDate = never
+  val VideoAdvertsSwitch = Switch("Advertising", "video-adverts",
+    "Show adverts on videos.",
+    safeState = On, sellByDate = never
   )
 
   // Commercial Tags
+
+  val AudienceScienceSwitch = Switch("Commercial Tags", "audience-science",
+    "If this switch is on Audience Science segments will be used to target ads.",
+    safeState = Off, sellByDate = never)
 
   val ImrWorldwideSwitch = Switch("Commercial Tags", "imr-worldwide",
     "Enable the IMR Worldwide audience segment tracking.",
@@ -258,9 +266,19 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 4, 30)
   )
 
-  val LeadAdTopPageSwitch = Switch("Feature Switches", "lead-ad-top-page",
-    "If this switch is on, the lead ad is placed on top of the page on desktop",
-    safeState = Off, sellByDate = new DateMidnight(2014, 4, 30)
+  val RssLinkSwitch = Switch("Feature Switches", "rss-link",
+    "If this switch is on a link to the RSS is rendered in the HTML",
+    safeState = Off, sellByDate = new DateMidnight(2014, 6, 30)
+  )
+
+  val PopularInTagSwitch = Switch("Feature Switches", "popular-in-tag",
+    "If this switch is turned on then popular-in-tag will override related content for the selected tags.",
+    safeState = Off, sellByDate = new DateMidnight(2014, 5, 14)
+  )
+
+  val HideOldTimeStampsSwitch = Switch("Feature Switches", "hide-old-timestamps",
+    "If this switch is turned on then timestamps older than an hour get hidden on fronts.",
+    safeState = Off, sellByDate = new DateMidnight(2014, 4, 28)
   )
 
   // A/B Test Switches
@@ -273,6 +291,11 @@ object Switches extends Collections {
   val ABAbcd = Switch("A/B Tests", "ab-abcd",
     "If this switch is on, an AB test runs to validate the collection ab test data",
     safeState = Off, sellByDate = new DateMidnight(2014, 4, 28)
+  )
+
+  val FootballLiveblogTruncation = Switch("A/B Tests", "ab-football-liveblog-truncation",
+    "If you swith cthis switch on, an AB test will run to truncate football liveblogs.",
+    safeState = Off, sellByDate = new DateMidnight(2014, 4, 21)
   )
 
   // Dummy Switches
@@ -335,11 +358,10 @@ object Switches extends Collections {
     AutoRefreshSwitch,
     DoubleCacheTimesSwitch,
     RelatedContentSwitch,
-    AdvertSwitch,
-    OASAdvertSwitch,
-    DFPAdvertSwitch,
-    LoadOnlyCommercialComponents,
-    VideoAdvertSwitch,
+    StandardAdvertsSwitch,
+    CommercialComponentsSwitch,
+    VideoAdvertsSwitch,
+    AudienceScienceSwitch,
     DiscussionSwitch,
     OpenCtaSwitch,
     FontSwitch,
@@ -378,11 +400,16 @@ object Switches extends Collections {
     FrontPressJobSwitch,
     LayoutHintsSwitch,
     HelveticaEasterEggSwitch,
-    LeadAdTopPageSwitch,
+    RssLinkSwitch,
+    PopularInTagSwitch,
+    HideOldTimeStampsSwitch,
     OmnitureVerificationSwitch,
     IndiaRegionSwitch,
     ABExternalLinksNewWindow,
-    ABAbcd
+    ABAbcd,
+    FootballLiveblogTruncation,
+    MemcachedSwitch,
+    IncludeBuildNumberInMemcachedKey
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
@@ -419,7 +446,9 @@ class SwitchBoardAgent(config: GuardianConfiguration) extends Plugin with Execut
       refresh()
     }
 
-    refresh()
+    AkkaAsync {
+      refresh()
+    }
   }
 
   override def onStop() {

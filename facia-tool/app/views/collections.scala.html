@@ -81,6 +81,7 @@
     </div>
 
     <div class="right-col" data-bind="css: {'live-mode': $root.liveMode}">
+        <div class="status status-danger" data-bind="text: alertError, visible: alertError"></div>
         <div class="collections__inner scrollable" data-bind="template: {name: 'template_collection', foreach: collections}"></div>
     </div>
 
@@ -301,10 +302,10 @@
                 </a>
 
                 <div class="article_content is-empty" data-bind="if: state.isEmpty">
-                    This content is unavailable, deleted, or has a new URL
                     <a target="article" class="is-empty__url" data-bind="
-                        attr: {href: id},
+                        attr: {href: 'http://www.theguardian.com/' + id},
                         text: id"></a>
+                    This content is unavailable, deleted, or has a new URL
                 </div>
 
                 <div class="article_content" data-bind="if: !state.isEmpty()">

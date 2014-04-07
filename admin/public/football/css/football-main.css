@@ -127,3 +127,7 @@ label[for] {
     padding-left: 90%;
     text-align: right;
 }
+
+.loading {
+    background: url("/assets/internal/images/ajax-loader.gif") right center no-repeat;
+}
