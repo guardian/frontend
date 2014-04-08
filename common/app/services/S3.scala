@@ -27,9 +27,13 @@ trait S3 extends Logging {
   }
 
   private def withS3Result[T](key: String)(action: S3Object => T): Option[T] = try {
+
     val request = new GetObjectRequest(bucket, key)
     val result = client.getObject(request)
-    Some(action(result))
+
+    // http://stackoverflow.com/questions/17782937/connectionpooltimeoutexception-when-iterating-objects-in-s3
+    try { Some(action(result)) } finally { result.close() }
+
   } catch {
     case e: AmazonS3Exception if e.getStatusCode == 404 =>
       log.warn("not found at %s - %s" format(bucket, key))
