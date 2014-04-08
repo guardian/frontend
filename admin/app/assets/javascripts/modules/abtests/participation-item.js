@@ -27,7 +27,7 @@ define([
     ParticipationItem.prototype.useBem = true;
 
     ParticipationItem.prototype.prerender = function() {
-        var origin = /gutools.co.uk$/.test(document.location.origin) ? "www.theguardian.com" : document.location.origin;
+        var origin = /gutools.co.uk$/.test(document.location.origin) ? "http://www.theguardian.com" : document.location.origin;
         this.elem.textContent = this.config.variant;
         this.elem.href = origin + "/uk#ab-" + this.config.test + "=" + this.config.variant;
     };
