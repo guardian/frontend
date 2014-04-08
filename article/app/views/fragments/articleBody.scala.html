@@ -120,5 +120,7 @@
 
     @fragments.mostPopularPlaceholder(article.section, VisualTone(article))
 
-    @fragments.commercial.commercialComponent(name="merchandising", adType="commercial-component", sizeMapping=Map("mobile" -> Seq("888,88")))
+    <div class="facia-container facia-container--layout-article monocolumn-wrapper monocolumn-wrapper--no-limit">
+        @fragments.commercial.commercialComponent(name="merchandising", adType="commercial-component", sizeMapping=Map("mobile" -> Seq("888,88")))
+    </div>
 }
