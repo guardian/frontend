@@ -5,12 +5,12 @@ import org.scalatest.FlatSpec
 import play.api.libs.json._
 
 
-class SingleMasterClassParsingTest extends FlatSpec with Matchers {
+class SingleEventbriteMasterClassParsingTest extends FlatSpec with Matchers {
   "MasterClass companion object" should
     "not create a masterclass object if there isn't at link to the Guardian with the words 'Click here'" in {
     val event: JsValue = Json.parse(jsonWithNoLink)
 
-    val resultMaybe = MasterClass(event)
+    val resultMaybe = EventbriteMasterClass(event)
 
     resultMaybe.isDefined should be (false)
   }
@@ -18,7 +18,7 @@ class SingleMasterClassParsingTest extends FlatSpec with Matchers {
   "MasterClass companion object" should "return an appropriate MasterClass" in {
     val event: JsValue = Json.parse(json)
 
-    val resultOption = MasterClass(event)
+    val resultOption = EventbriteMasterClass(event)
 
     resultOption.isDefined should be (true)
     val result = resultOption.get
@@ -42,7 +42,7 @@ class SingleMasterClassParsingTest extends FlatSpec with Matchers {
   "MasterClass companion object" should "handle classes with 2 tickets as a range" in {
     val event: JsValue = Json.parse(jsonWith2Tickets)
 
-    val resultMaybe = MasterClass(event)
+    val resultMaybe = EventbriteMasterClass(event)
 
     resultMaybe.isDefined should be (true)
     val result = resultMaybe.get
@@ -55,7 +55,7 @@ class SingleMasterClassParsingTest extends FlatSpec with Matchers {
   "Generated masterclass object" should "have a desription text that is truncated to 250 chars" in {
     val event: JsValue = Json.parse(json)
 
-    val resultMaybe = MasterClass(event)
+    val resultMaybe = EventbriteMasterClass(event)
 
     resultMaybe.isDefined should be (true)
     val result = resultMaybe.get

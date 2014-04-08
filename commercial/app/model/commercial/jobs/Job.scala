@@ -1,10 +1,11 @@
 package model.commercial.jobs
 
-import model.commercial.{Keyword, Ad, Segment}
+import model.commercial._
 import common.{AkkaAgent, ExecutionContexts}
 import scala.concurrent.duration._
 import scala.concurrent.Future
-import model.commercial.intersects
+import model.commercial.Segment
+import model.commercial.Keyword
 
 case class Job(id: Int,
                title: String,
@@ -62,7 +63,7 @@ object Industries extends ExecutionContexts {
   def refresh() = Future.sequence {
     sectorIdIndustryMap map {
       case (id, name) =>
-        Keyword.lookup(name) flatMap {
+        Lookup.keyword(name) flatMap {
           keywords => industryKeywords.alter(_.updated(id, keywords))(5.seconds)
         }
     }
