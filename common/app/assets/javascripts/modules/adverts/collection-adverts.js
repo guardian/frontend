@@ -8,8 +8,7 @@ define([
     _assign
 ) {
 
-    var $slots,
-        adNames = ['inline1', 'inline2'],
+    var adNames = ['inline1', 'inline2'],
         adSlotTemplate =
             '<div class="ad-slot ad-slot--dfp ad-slot--container-inline" data-link-name="ad slot {{name}}" data-name="{{name}}" data-mobile="300,50" data-tabletportrait="300,250">' +
                 '<div id="dfp-ad--{{name}}" class="ad-slot__container">' +
@@ -32,8 +31,8 @@ define([
         if (!this.config.switches.standardAdverts) {
             return false;
         }
-        // get the potential ad slots
-        $slots = $(this.config.selector)
+        // create the ad slots
+        $(this.config.selector)
             .map(function(slot) {
                 return bonzo(slot);
             })
