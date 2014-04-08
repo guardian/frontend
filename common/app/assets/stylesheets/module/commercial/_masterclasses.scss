@@ -70,7 +70,9 @@
     }
     @include mq(tablet) {
         .commercial--masterclasses__class {
-            width: 33%;
+            @include rem((
+                width: 33%
+            ));
             
             &:nth-child(3) {
                 display: block;
