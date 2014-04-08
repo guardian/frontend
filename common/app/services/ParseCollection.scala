@@ -25,7 +25,7 @@ object Seg {
 
 trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging {
 
-  case class InvalidContent(id: String) extends Throwable(s"Invalid Content: $id")
+  case class InvalidContent(id: String) extends Exception(s"Invalid Content: $id")
   val showFieldsQuery: String = FaciaDefaults.showFields
   val showFieldsWithBodyQuery: String = FaciaDefaults.showFieldsWithBody
 
