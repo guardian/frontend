@@ -81,11 +81,6 @@ object Switches extends Collections {
     safeState = On, sellByDate = never
   )
 
-  val SeriesContentSwitch = Switch("Performance Switches", "series-content",
-    "If this switch is turned on then other content will be shown where present. Turn off to help handle exceptional load.",
-    safeState = On, sellByDate = never
-  )
-
   val CssFromStorageSwitch = Switch("Performance Switches", "css-from-storage",
     "If this switch is on CSS will be cached in users localStorage and read from there on subsequent requests.",
     safeState = Off, sellByDate = never
@@ -119,7 +114,7 @@ object Switches extends Collections {
   )
 
   val CommercialComponentsSwitch = Switch("Advertising", "commercial-components",
-    "Display commercial components (jobs, soulmates).",
+    "Display commercial components, e.g. jobs, soulmates.",
     safeState = On, sellByDate = never
   )
 
@@ -273,7 +268,7 @@ object Switches extends Collections {
 
   val RssLinkSwitch = Switch("Feature Switches", "rss-link",
     "If this switch is on a link to the RSS is rendered in the HTML",
-    safeState = Off, sellByDate = new DateMidnight(2014, 4, 7)
+    safeState = Off, sellByDate = new DateMidnight(2014, 6, 30)
   )
 
   val PopularInTagSwitch = Switch("Feature Switches", "popular-in-tag",
@@ -363,7 +358,6 @@ object Switches extends Collections {
     AutoRefreshSwitch,
     DoubleCacheTimesSwitch,
     RelatedContentSwitch,
-    SeriesContentSwitch,
     StandardAdvertsSwitch,
     CommercialComponentsSwitch,
     VideoAdvertsSwitch,

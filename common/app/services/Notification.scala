@@ -11,8 +11,7 @@ trait Notification extends Logging {
 
   def sns = {
     val client = new AmazonSNSAsyncClient(Configuration.aws.credentials)
-    client.setEndpoint("http://sns.%s.amazonaws.com" format Configuration.aws.region)
-
+    client.setEndpoint(AwsEndpoints.sns)
     client
   }
 

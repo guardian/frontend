@@ -25,7 +25,7 @@
                 <div>
                     <label for="bookshop" class="u-h">Search bookshop:</label>
                     <input id="bookshop" name="keyword" class="commercial__search__input" type="text" placeholder="Search books" />
-                    <button type="submit" class="u-button-reset commercial__search__submit">
+                    <button type="submit" class="u-button-reset commercial__search__submit" data-link-name="merchandising-bookshop-v@{version}_@{date}-low-search">
                         <i class="i i-search"></i>
                     </button>
                     <input value="%JustOmnitureToken%" name="INTCMP" type="hidden" />
@@ -62,7 +62,7 @@
                         }
                         </p>
                     </a>
-                    <a href="@book.buyUrl" class="commercial--books__buy-now-button" data-link-name="merchandising-bookshop-v@{version}_@{date}-low-@{book.isbn}-@{book.author}-@{book.title}-button">Buy now</a>
+                    <a href="@AdLink{@book.buyUrl}" class="commercial--books__buy-now-button" data-link-name="merchandising-bookshop-v@{version}_@{date}-low-@{book.isbn}-@{book.author}-@{book.title}-button">Buy now</a>
                 </li>
             }
             </ul>
@@ -73,7 +73,7 @@
                 <div>
                     <label for="bookshop" class="u-h">Search bookshop:</label>
                     <input id="bookshop" name="keyword" class="commercial__search__input" type="text" placeholder="Search bookshop" />
-                    <button type="submit" class="u-button-reset commercial__search__submit">
+                    <button type="submit" class="u-button-reset commercial__search__submit" data-link-name="merchandising-bookshop-v@{version}_@{date}-low-search">
                         <i class="i i-search"></i>
                     </button>
                     <input value="%JustOmnitureToken%" name="INTCMP" type="hidden" />

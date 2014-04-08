@@ -137,8 +137,9 @@ define([
         },
 
         transcludeSeriesContent: function(config, context){
-            var s = new Series();
-            s.renderSeriesComponent(config, context);
+            if ('seriesId' in config.page) {
+                new Series(config, qwery('.js-series', context));
+            }
         },
 
         showTabs: function() {
@@ -270,7 +271,7 @@ define([
                     options = {};
 
                 // if it's an article, excluding live blogs, create our inline adverts
-                if (config.page.contentType === 'Article' && !config.page.isLiveBlog) {
+                if (config.switches.standardAdverts && config.page.contentType === 'Article' && !config.page.isLiveBlog) {
                     new ArticleBodyAdverts().init();
                 }
 
@@ -470,7 +471,7 @@ define([
 
         loadCommercialComponent: function(config) {
             var commercialComponent = /^#commercial-component=(.*)$/.exec(window.location.hash),
-                slot = qwery('.ad-slot--commercial-component').shift();
+                slot = qwery('[data-name="merchandising"]').shift();
             if (commercialComponent && slot) {
                 new CommercialLoader({ config: config })
                     .init(commercialComponent[1], slot);

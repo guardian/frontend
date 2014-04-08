@@ -62,7 +62,7 @@
                         </div>
                     </div>
 
-                    <div class="social-wrapper">
+                    <div class="social-wrapper" data-component="share">
                         @fragments.social(article)
                     </div>
 
@@ -78,7 +78,7 @@
                                                 <h2 class="article__meta-heading">Share this live blog</h2>
                                                 @fragments.social(article, "next to content")
                                             </div>
-                                            @fragments.commercial.adSlot(name="right", adType="mpu-banner-ad", sizeMapping=Map("tabletlandscape" -> Seq("300,250")))
+                                            @fragments.commercial.standardAd(name="right", adType="mpu-banner-ad", sizeMapping=Map("tabletlandscape" -> Seq("300,250")))
                                         </div>
                                         <div class="js-components"></div>
                                     </div>

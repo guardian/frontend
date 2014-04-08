@@ -63,6 +63,12 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   lazy val cricketMatch: Option[String] = delegate.references.find(_.`type` == "esa-cricket-match")
     .map(_.id).map(Reference(_)).map(_._2)
 
+  lazy val seriesMeta = {
+    series.headOption.map( series =>
+      Seq(("series", series.name), ("series-id", series.id))
+    )getOrElse(Nil)
+  }
+
   private lazy val fields: Map[String, String] = delegate.safeFields
 
   // Inherited from Trail
@@ -109,7 +115,9 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   override lazy val analyticsName = s"GFE:$section:${id.substring(id.lastIndexOf("/") + 1)}"
   // Meta Data used by plugins on the page
   // people (including 3rd parties) rely on the names of these things, think carefully before changing them
-  override def metaData: Map[String, Any] = { super.metaData ++ Map(
+  override def metaData: Map[String, Any] = {
+
+    super.metaData ++ Map(
     ("keywords", keywords.map { _.name }.mkString(",")),
     ("keywordIds", keywords.map { _.id }.mkString(",")),
     ("publication", publication),
@@ -117,8 +125,6 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
     ("web-publication-date", webPublicationDate),
     ("author", contributors.map(_.name).mkString(",")),
     ("tones", tones.map(_.name).mkString(",")),
-    ("series", series.map { _.name }.head),
-    ("series-id", series.map{_.id}.head),
     ("blogs", blogs.map { _.name }.mkString(",")),
     ("commentable", isCommentable),
     ("has-story-package", fields.get("hasStoryPackage").exists(_.toBoolean)),
@@ -126,8 +132,9 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
     ("isLive", isLive),
     ("wordCount", wordCount),
     ("shortUrl", shortUrl),
-    ("thumbnail", thumbnailPath.getOrElse(false))
-    ) ++ Map(("references", delegate.references.map(r => Reference(r.id))))
+    ("thumbnail", thumbnailPath.getOrElse(false)),
+    ("references", delegate.references.map(r => Reference(r.id)))
+    ) ++ Map(seriesMeta : _*)
   }
   override lazy val cacheSeconds = {
     if (isLive) 30 // live blogs can expect imminent updates
