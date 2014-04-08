@@ -5,23 +5,59 @@
 <head>
     <meta charset="utf-8" />
     <title>@Html(metaData.webTitle)</title>
-    @* @fragments.commonCssSetup(projectName)
-    @fragments.commonJavaScriptSetup(metaData)*@
 
     <style>
+/* Fonts
+   ========================================================================== */
+
+@@font-face {
+    font-family: "EgyptianText";
+    src: url('https://pasteup.guim.co.uk/fonts/WebEgyptianHinted-Regular.eot');
+    src: url('https://pasteup.guim.co.uk/fonts/WebEgyptianHinted-Regular.eot?#iefix') format('embedded-opentype'),
+         url('https://pasteup.guim.co.uk/fonts/WebEgyptianHinted-Regular.woff') format('woff'),
+         url('https://pasteup.guim.co.uk/fonts/WebEgyptianHinted-Regular.ttf') format('truetype'),
+         url('https://pasteup.guim.co.uk/fonts/WebEgyptianHinted-Regular.svg#Guardian Text Egyptian Web') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+}
+
+@@font-face {
+    font-family: "AgateSans";
+    src: url('https://pasteup.guim.co.uk/fonts/latin1/Guardian-Ag-Sans-1-Web-Reg.eot');
+    src: url('https://pasteup.guim.co.uk/fonts/latin1/Guardian-Ag-Sans-1-Web-Reg.eot?#iefix') format('embedded-opentype'),
+         url('https://pasteup.guim.co.uk/fonts/latin1/Guardian-Ag-Sans-1-Web-Reg.woff') format('woff'),
+         url('https://pasteup.guim.co.uk/fonts/latin1/Guardian-Ag-Sans-1-Web-Reg.ttf') format('truetype'),
+         url('https://pasteup.guim.co.uk/fonts/latin1/Guardian-Ag-Sans-1-Web-Reg.svg#Guardian-Text-Egyp-Web-Reg') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+}
+
 /* Base form styles
    ========================================================================== */
 
-@*if $old-ie {
-    // IE 8 won't display webfonts in password fields…
-    [type=password] {
-        font-family: sans-serif !important;
-    }
-}*@
+html {
+    font-family: "EgyptianText",georgia,serif;
+    font-size: 62.5%;
+    font-size: calc(1em * .625);
+}
+
+body {
+    color: #545454;
+    font-size: 1.6em;
+    line-height: 1.4;
+}
 
 body {
     padding: 0;
     margin: 0;
+}
+
+.a {
+    color: #005689;
+    cursor: pointer;
+    text-decoration: none;
 }
 
 .is-hidden {
@@ -29,8 +65,12 @@ body {
 }
 
 .form {
-    margin-top: 24px;
-    margin-bottom: 24px;
+    overflow: hidden;
+}
+
+.form p {
+    margin-top: 0;
+    margin-bottom: 8px;
 }
 
 .form__heading {
@@ -43,8 +83,7 @@ body {
 .form__note,
 .form-field__note {
     font-family: "AgateSans", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-    font-size: 13px;
-/*    font-size: 1.3rem;*/
+    font-size: 1.3rem;
     margin-bottom: 8px;
 }
 
@@ -55,21 +94,6 @@ body {
     padding: 15px 0 24px;
     margin: 0;
 }
-
- @*include mq(desktop) {
-    .fieldset__heading {
-        display: table-cell;
-        padding-right: 100px;
-        vertical-align: top;
-        width: gs-span(3);
-    }
-
-    .fieldset__fields {
-        display: table-cell;
-        vertical-align: top;
-        width: gs-span(6);
-    }
-}*@
 
 .form-fields-group .form-field {
     margin-bottom: 0;
@@ -82,40 +106,35 @@ body {
 }
 
 
-.form-field__submit {
-    .form-field__note {
-        margin: 0 0 24px 0;
-        @* include mq(desktop) {
-            float: right;
-            width: 60%;
-            margin: 0;
-        }*@
-    }
+.form-field__submit .form-field__note {
+    margin: 0 0 24px 0;
 }
 
 .form-field--no-margin {
     margin: 0;
 }
 
-.form-field--error {
-    .label {
-        color: #d61d00;
-    }
+.form-field--error .label {
+    color: #d61d00;
+}
 
-    .text-input,
-    .text-input:focus {
-        border-color: #d61d00;
-    }
+.form-field--error .text-input,
+.form-field--error .text-input:focus {
+    border-color: #d61d00;
 }
 
 .form__error {
-    @* include fs-data(4); *@
-    background-color: #fdf4f3;
-    border-bottom: 1px solid lighten(#d61d00, 35%);
-    border-top: 1px solid lighten(#d61d00, 35%);
-    color: #d61d00;
+    font-size: 1.4rem;
+    line-height: 1.8rem;
+    font-family: "AgateSans","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
+    background-color: #FDF4F3;
+    border-bottom: 1px solid #FF998A;
+    border-top: 1px solid #FF998A;
+    color: #D61D00;
     margin-top: 6px;
     padding: 7px 8px;
+    -moz-box-sizing: border-box;
+         box-sizing: border-box;
 }
 
 .form-field__error {
@@ -142,40 +161,31 @@ body {
     color: #333333;
     cursor: pointer;
     display: block;
-    font-size: 16px;
-    line-height: 24px;
-/*    font-size: 1.6rem;*/
-/*    line-height: 2.4rem;*/
+    font-size: 1.6rem;
+    line-height: 2.4rem;
     margin-bottom: 6px;
 }
 
 .text-input,
 .textarea {
     border: 1px solid #dcdcdc;
-    @* include box-shadow(none); *@
     -moz-box-sizing: border-box;
          box-sizing: border-box;
     color: #545454;
     display: inline-block;
     font-family: "AgateSans", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-    font-size: 16px;
-/*    font-size: 1.6rem;*/
+    font-size: 1.6rem;
     line-height: 19px;
     outline: none;
     padding: 8px 8px 7px;
     margin: 0;
-    @* include rounded-corners(0); *@
     width: 100%;
     -webkit-appearance: none;
+}
 
-    &:focus {
-        border-color: #767676;
-    }
-
-    @* include mq(tablet) {
-        font-size: 14px;
-/*        font-size: 1.4rem;*/
-    }*@
+.text-input:focus,
+.textarea:focus {
+    border-color: #767676;
 }
 
 .textarea {
@@ -183,16 +193,16 @@ body {
 }
 
 .textarea--no-resize {
-    min-height: ($gs-baseline/3)*20;
+    min-height: 80px;
     resize: none;
 }
 
 .textarea--mid {
-    min-height: $gs-baseline*9;
+    min-height: 108px;
 }
 
 .textarea--long {
-    min-height: ($gs-baseline/3)*40;
+    min-height: 160px;
 }
 
 .submit-input {
@@ -201,18 +211,17 @@ body {
     color: #ffffff;
     cursor: pointer;
     display: inline-block;
-    font-size: 14px;
     line-height: 14px;
-/*    font-size: 1.4rem;*/
+    font-size: 1.4rem;
     margin: 0 20px 0 0;
     min-width: 140px;
     outline: none;
     padding: 11px 8px;
     text-align: center;
+}
 
-    &:active {
-        background: #000000;
-    }
+.submit-input:active {
+    background: #000000;
 }
 
 .submit-input:hover, .submit-input:focus {
@@ -220,15 +229,14 @@ body {
 }
 
 .submit-input[disabled] {
-    background: $c-neutral5;
+    background: #dfdfdf;
 }
 
 .check-label,
 .radio-label {
     display: block;
     font-family: "AgateSans", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-    font-size: 13px;
-/*    font-size: 1.3rem;*/
+    font-size: 1.3rem;
     margin-bottom: 4px;
     padding-left: 20px;
 }
@@ -254,7 +262,7 @@ body {
     border: none;
     display: block;
     margin: 0 auto;
-    max-width: gs-span(6);
+    max-width: 460px;
     width: 100%;
 }
 
@@ -264,7 +272,6 @@ body {
 }
 
 .formstack-heading--first {
-    font-size: 24px;
     font-size: 28px;
     margin-top: 16px;
 }
@@ -287,22 +294,9 @@ body {
     position: absolute;
     color: #545454;
     font-family: "AgateSans", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-    font-size: 13px;
-/*    font-size: 1.3rem;*/
+    font-size: 1.3rem;
     margin-left: 6px;
     padding-top: 36px;
-}
-
-.ethical-awards-banner {
-    background-color: #294100;
-    height: 90px;
-    margin-bottom: -36px;
-}
-
-.ethical-awards-banner__image {
-    display: block;
-    margin: 0 auto;
-    width: 480px;
 }
 
     </style>
@@ -315,8 +309,6 @@ body {
             <script src="https://www.formstack.com/forms/js.php?@formstackForm.formReference"></script>
         </div>
     </div>
-
-    @*@fragments.loadCss()*@
 
     <script type="text/javascript">
 
@@ -377,9 +369,7 @@ body {
                 var user = self.getUserOrSignIn();
 
                 self.dom(user);
-                //$(el).removeClass(config.idClasses.hide);
                 el.className = el.className.replace(config.idClasses.hide, '');
-                //$('html').addClass('iframed--overflow-hidden');
                 document.getElementsByTagName('html')[0].className += ' iframed--overflow-hidden';
 
                 // Update iframe height
@@ -426,17 +416,11 @@ body {
                             input = input.replace(/[=]+$/, '');
                             if (input.length % 4 === 1) throw INVALID_CHARACTER_ERR;
                             for (
-                                // initialize result and counters
                                     var bc = 0, bs, buffer, idx = 0, output = '';
-                                // get next character
                                     buffer = input.charAt(idx++);
-                                // character found in table? initialize bit storage and add its ascii value;
                                     ~buffer && (bs = bc % 4 ? bs * 64 + buffer : buffer,
-                                        // and if not first of each 4 characters,
-                                        // convert the first 8 bits to one ascii character
                                             bc++ % 4) ? output += String.fromCharCode(255 & bs >> (-2 * bc & 6)) : 0
                                     ) {
-                                // try to find character in table (0-63, not found => -1)
                                 buffer = chars.indexOf(buffer);
                             }
                             return output;
@@ -467,13 +451,11 @@ body {
                 // Formstack generates some awful HTML, so we'll remove the CSS links,
                 // loop their selectors and add our own classes instead
 
-                //dom.$form = $(config.fsSelectors.form).addClass(config.idClasses.form);
                 dom.$form = document.querySelector(config.fsSelectors.form);
                 dom.$form.className = ' ' + config.idClasses.form;
 
-                //$('link', el).remove(); ???
+                // Remove formstack stylesheets
                 var fsStyleLinks = el.getElementsByTagName('link');
-
                 for (var i = fsStyleLinks.length - 1; i >= 0; i--) {
                     fsStyleLinks[i].remove();
                 };
@@ -484,13 +466,8 @@ body {
 
                 // Formstack also don't have capturable hidden fields,
                 // so we remove ID text inputs and append hidden equivalents
-                //var $userId = $(config.hiddenSelectors.userId, dom.$form).remove(),
                 var $userId = dom.$form.querySelector(config.hiddenSelectors.userId),
-                    //$email = $(config.hiddenSelectors.email, dom.$form).remove(),
                     $email = dom.$form.querySelector(config.hiddenSelectors.email),
-
-                    // html = '<input type="hidden" name="' + $userId.getAttribute('name') + '" value="' + user.id + '">'
-                    //      + '<input type="hidden" name="' + $email.getAttribute('name') + '" value="' + user.primaryEmailAddress + '">';
                     html = '<input type="hidden" name="' + $userId.getAttribute('name') + '" value="' + user.id + '">'
                          + '<input type="hidden" name="' + $email.getAttribute('name') + '" value="' + user.primaryEmailAddress + '">';
 
@@ -501,9 +478,7 @@ body {
                 dom.$form.insertAdjacentHTML( 'beforeend', html);
 
                 // Events
-                //bean.on(window, 'unload', self.unload);
                 window.addEventListener('unload', self.unload, false)
-                //bean.on(dom.$form[0], 'submit', self.submit);
                 dom.$form.addEventListener('submit', self.submit, false);
 
                 dom.$form.className = dom.$form.className.replace('is-hidden', '');
@@ -533,40 +508,33 @@ body {
 
                 setTimeout(function () {
                     // Remove any existing errors
-                    //$('.' + config.idClasses.formError).removeClass(config.idClasses.formError);
                     self.removeClassFromNodeList(el.querySelectorAll('.' + config.idClasses.formError), config.idClasses.formError);
-                    //$('.' + config.idClasses.fieldError).removeClass(config.idClasses.fieldError);
                     self.removeClassFromNodeList(el.querySelectorAll('.' + config.idClasses.fieldError), config.idClasses.fieldError);
 
                     // Handle new errors
-                    //$(config.fsSelectors.formError, dom.$form).addClass(config.idClasses.formError);
                     self.addClassToNodeList(dom.$form.querySelectorAll(config.fsSelectors.formError), config.idClasses.formError);
-                    //$(config.fsSelectors.fieldError, dom.$form).addClass(config.idClasses.fieldError);
                     self.addClassToNodeList(dom.$form.querySelectorAll(config.fsSelectors.fieldError), config.idClasses.fieldError);
 
                     // Update character count absolute positions
                     var textareas = el.querySelector(config.fsSelectors.textArea);
-                    var event; // The custom event that will be created
-
-                    if (document.createEvent) {
-                        event = document.createEvent("HTMLEvents");
-                        event.initEvent("keyup", true, true);
-                    } else {
-                        event = document.createEventObject();
-                        event.eventType = "keyup";
-                    }
-                    event.eventName = "keyup";
-                    for (var i = 0; i < textareas.length; i++) {
+                    if (textareas !== null) {
+                        var event; // The custom event that will be created
                         if (document.createEvent) {
-                            textareas[i].dispatchEvent(event);
+                            event = document.createEvent("HTMLEvents");
+                            event.initEvent("keyup", true, true);
                         } else {
-                            textareas[i].fireEvent("on" + event.eventType, event);
+                            event = document.createEventObject();
+                            event.eventType = "keyup";
                         }
-                    };
-
-                    // $(config.fsSelectors.textArea, el).each(function (textarea) {
-                    //     bean.fire(textarea, 'keyup');
-                    // });
+                        event.eventName = "keyup";
+                        for (var i = 0; i < textareas.length; i++) {
+                            if (document.createEvent) {
+                                textareas[i].dispatchEvent(event);
+                            } else {
+                                textareas[i].fireEvent("on" + event.eventType, event);
+                            }
+                        };
+                    }
 
                     self.postMessage('get-position', 'get-position');
 
