@@ -10,8 +10,9 @@ object MasterClassAgent extends Logging with ExecutionContexts {
 
   private val masterClass2 = masterClass1.copy(name = "MasterClass B", description = "MasterClass with multiple tickets", tickets = List(Ticket(1.0), Ticket(5.0)))
   private val masterClass3 = masterClass1.copy(name = "Guardian MasterClass C", description = "Description of MasterClass C")
+  private val masterClass4 = masterClass1.copy(name = "Guardian MasterClass D", description = "Description of MasterClass D")
 
-  private val placeholder: List[MasterClass] = List(masterClass1, masterClass2, masterClass3)
+  private val placeholder: List[MasterClass] = List(masterClass1, masterClass2, masterClass3, masterClass4)
 
   private lazy val agent = AkkaAgent[List[MasterClass]](Nil)
 
