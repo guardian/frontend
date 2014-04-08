@@ -10,14 +10,6 @@ import play.api.Play.current
 
 
 object MasterClassAgent extends Logging with ExecutionContexts {
-  private val masterClass1 = EventbriteMasterClass("1", "MasterClass A", new DateTime(),
-    "http://www.theguardian.com", "Description of MasterClass A", "Live", Venue(), Ticket(1.0) :: Nil, 1,
-    "http://www.theguardian.com")
-
-  private val masterClass2 = masterClass1.copy(name = "MasterClass B", description = "MasterClass with multiple tickets", tickets = List(Ticket(1.0), Ticket(5.0)))
-  private val masterClass3 = masterClass1.copy(name = "Guardian MasterClass C", description = "Description of MasterClass C")
-  private val masterClass4 = masterClass1.copy(name = "Guardian MasterClass D", description = "Description of MasterClass D")
-
   private lazy val agent = AkkaAgent[Seq[MasterClass]](Nil)
 
 
@@ -39,7 +31,7 @@ object MasterClassAgent extends Logging with ExecutionContexts {
         thumbnail.map {
           thumb => MasterClass(event, thumb)
         } recover {
-          // This shouldn't be necessary. The Option[ImageElement] should have handled all exceptions
+          // This is just in case the Future doesn't pan out.
           case _: Exception => MasterClass(event, None)
         }
     }

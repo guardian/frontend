@@ -19,7 +19,7 @@ object EventbriteApi extends JsonAdsApi[EventbriteMasterClass] {
 
   override protected val characterEncoding = "utf-8"
 
-  override protected val loadTimeout = 300000
+  override protected val loadTimeout = 60000
 
   def extractEventsFromFeed(jsValue: JsValue): Seq[JsValue] = jsValue \\ "event"
 
