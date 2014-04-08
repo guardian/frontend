@@ -4,7 +4,7 @@ define([
 
     // TODO switch
     function addSegments(targeting) {
-        var criteoSegmentString = Cookies.get("cto2_guardian");
+        var criteoSegmentString = Cookies.get('cto2_guardian');
         if (criteoSegmentString !== null) {
             var criteoSegments = decodeURIComponent(criteoSegmentString).split('&');
             for (var i = 0; i < criteoSegments.length; i++) {
