@@ -41,7 +41,7 @@ object MasterClassAgent extends Logging with ExecutionContexts {
   def refresh() {
     for {
       eventBrite <- EventbriteApi.loadAds()
-      masterclasses <- wrapEventbriteWithContentApi(eventBrite)
+      masterclasses <- wrapEventbriteWithContentApi(eventBrite.filter(_.isOpen))
     } {
       log.info("Updating Masterclass agent")
       agent send masterclasses
