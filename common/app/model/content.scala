@@ -30,6 +30,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   lazy val blockVideoAds: Boolean = videoAssets.exists(_.blockVideoAds)
   lazy val isLiveBlog: Boolean = delegate.isLiveBlog
   lazy val isBlog: Boolean = blogs.nonEmpty
+  lazy val isSeries: Boolean = series.nonEmpty
   lazy val hasLargeContributorImage: Boolean = tags.filter(_.hasLargeContributorImage).nonEmpty
 
   // read this before modifying
@@ -116,7 +117,8 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
     ("web-publication-date", webPublicationDate),
     ("author", contributors.map(_.name).mkString(",")),
     ("tones", tones.map(_.name).mkString(",")),
-    ("series", series.map { _.name }.mkString(",")),
+    ("series", series.map { _.name }.head),
+    ("series-id", series.map{_.id}.head),
     ("blogs", blogs.map { _.name }.mkString(",")),
     ("commentable", isCommentable),
     ("has-story-package", fields.get("hasStoryPackage").exists(_.toBoolean)),

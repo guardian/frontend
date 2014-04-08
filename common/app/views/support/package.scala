@@ -102,6 +102,10 @@ case class MultimediaContainer(showMore: Boolean = true) extends Container {
   val containerType = "multimedia"
   val tone = "comment"
 }
+case class SeriesContainer(showMore: Boolean = true) extends Container {
+  val containerType = "series"
+  val tone = "news"
+}
 
 sealed trait AdSlot {
   val dfpName: String

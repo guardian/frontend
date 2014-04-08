@@ -19,6 +19,7 @@ define([
     'common/utils/detect',
     'common/modules/onward/popular',
     'common/modules/onward/related',
+    'common/modules/onward/series-content',
     'common/modules/ui/images',
     'common/modules/navigation/profile',
     'common/modules/navigation/sections',
@@ -65,6 +66,7 @@ define([
     detect,
     popular,
     Related,
+    Series,
     images,
     Profile,
     Sections,
@@ -132,6 +134,10 @@ define([
             mediator.on('page:common:ready', function(config, context) {
                 popular(config, context);
             });
+        },
+
+        transcludeSeriesContent: function(config, context){
+            new Series(config, qwery('.js-series', context));
         },
 
         showTabs: function() {
@@ -483,6 +489,7 @@ define([
                 modules.cleanupCookies(context);
                 modules.runAbTests(config, context);
                 modules.transcludeRelated(config, context);
+                modules.transcludeSeriesContent(config, context);
                 modules.initRightHandComponent(config, context);
                 modules.loadCommercialComponent(config, context);
             }
