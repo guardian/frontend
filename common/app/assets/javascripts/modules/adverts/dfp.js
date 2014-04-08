@@ -9,6 +9,7 @@ define([
     'common/utils/detect',
     'common/utils/mediator',
     'common/modules/analytics/commercial/tags/common/audience-science',
+    'common/modules/analytics/commercial/tags/common/criteo',
     'common/modules/adverts/userAdTargeting',
     'common/modules/adverts/query-string',
     'lodash/arrays/flatten',
@@ -23,6 +24,7 @@ define([
     detect,
     mediator,
     AudienceScience,
+    Criteo,
     UserAdTargeting,
     queryString,
     _flatten,
@@ -131,15 +133,7 @@ define([
             'a'       : AudienceScience.getSegments().slice(0, 40) || [],
             'at'      : Cookies.get('adtest') || ''
         };
-
-        var criteoSegmentString = Cookies.get("cto2_guardian");
-        if (criteoSegmentString !== null) {
-            var criteoSegments = decodeURIComponent(criteoSegmentString).split('&');
-            for (var i = 0; i < criteoSegments.length; i++) {
-                var segmentKv = criteoSegments[i].split('=');
-                targets[segmentKv[0]] = segmentKv[1];
-            }
-        }
+        Criteo.addSegments(targets);
 
         return targets;
     };
