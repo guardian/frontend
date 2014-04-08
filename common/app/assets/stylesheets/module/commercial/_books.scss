@@ -2,24 +2,39 @@
    Books component
    ========================================================================== */
 
-.books-component {
+.commercial--books {
+    .commercial__branding,
+    .commercial__header {
+        overflow: hidden;
+    }
+    .commercial__branding {
+        float: left;
+    }
+    .commercial__logo {
+        margin: 0;
+        @include rem((
+            height: 24px
+        ));
 
-    .container__logo {
-        width: 98px;
-        height: 24px;
-        display: inline-block;
-        @include background-size(contain);
-        @include fs-headline(4);
-        color: transparent;
-
-        &.svg-i-bookshop-logo--bookshop {
-            @include rem((
-                margin-left: -14px
-            ));
+        .i:nth-child(2) {
+            margin-left: -4px
         }
     }
+    .commercial__title {
+        @include rem((
+            margin: $gs-baseline 0 0
+        ));
+    }
+    .commercial__home-link {
+        clear: right;
+    }
 
-
+    .commercial__body {
+        padding: 0;
+        @include rem((
+            margin-top: $gs-baseline*2
+        ));
+    }
     .lineitem:first-child .lineitem__img {
         display: block;
     }
@@ -27,142 +42,117 @@
         width: 68%;
     }
 
-    .books-component__price {
-        display: block;
+    .lineitem__meta {
+        color: $c-neutral1;
+        @include fs-textsans(1);
+    }
+    .commercial--books__price {
         @include rem((
-            margin-top: $gs-baseline/2
-        ));
-        @include rem((
+            margin-top: $gs-baseline/2,
             margin-bottom: 0
         ));
-        float: left;
     }
-    .books-component__price__rrp,
-    .books-component__price__our {
+    .commercial--books__price__rrp,
+    .commercial--books__price__our {
         display: block;
         color: $c-neutral1;
         @include fs-data(3);
     }
-    .books-component__price__our {
+    .commercial--books__price__our {
         font-weight: bold;
     }
-
-    .books-component__buy-now-button {
-        display: inline-block;
-        background-color: #e657ad;
-        @include rem((
-            padding: $gs-baseline/3 12px
-        ));
+    .commercial--books__buy-now-button {
+        background-color: #e657af;
         border: none;
         float: right;
         color: #ffffff;
-        font-weight: bold;
-        font-size: 13px;
-        line-height: 19px;
-        font-family: $serifheadline;
-
-        &:focus {
-            outline: none;
-        }
-    }
-
-    .commercial__call-to-action {
-
-        .commercial__call-to-action__label {
-            vertical-align: top;
-            line-height: 28px;
-        }
-
-        .i-filter-arrow-down {
-            width: 20px;
-            height: 20px;
-            background-color: $c-newsDefault;
-            background-position: center center;
-            @include rem((
-                padding: 4px
-            ));
-            border-radius: 50%;
-            @include transform(rotate(-90deg));
-        }
-    }
-
-    .commercial__body {
+        text-align: center;
+        @include f-header;
+        @include font-size(12, 20);
         @include rem((
-            padding: 12px 0
+            padding: 0 $gs-gutter/2,
+            min-width: 60px
         ));
     }
 
-    @include mq(tablet) {
-        .books-component__price {
-            width: 100%;
-            @include rem((
-                margin-top: $gs-baseline/2
-            ));
-            text-align: left;
-        }
-
-        .books-component__price__label {
-            display: inline;
-        }
-
-        .commercial__call-to-action {
-            @include rem((
-                margin-top: ($gs-baseline/3)*2
-            ));
-
-            .commercial__call-to-action__label {
-                line-height: 32px;
-            }
-
-            .i-filter-arrow-down {
-                @include rem((
-                    padding: 6px
-                ));
-            }
-        }
-
-        .books-component__buy-now-button {
-            @include rem((
-                margin-top: ($gs-baseline/3)*2
-            ));
-            float: none;
-        }
-
-        .commercial__search {
-            position: absolute;
-            top: 8px;
-            right: 0;
-        }
-
-        .commercial__foot {
-            display: none;
-        }
-
-        .lineitem__link {
-            width: 100%;
-        }
+    .commercial__foot {
+        padding: 0;
     }
 
-    @include mq($from: leftCol) {
-        .commercial__call-to-action {
-            position: absolute;
-            left: 0;
-            bottom: $gs-baseline*2;
+    @include mq(tablet) {
+        .commercial__branding {
+            float: none;
+        }
+        .commercial__header {
+            float: left;
+            width: gs-span(3);
+            @include rem((
+                margin-right: $gs-gutter
+            ));
         }
         .commercial__search {
             position: relative;
+            float: none;
+            width: 100%;
+            @include rem((
+                margin-top: $gs-baseline
+            ));
+        }
+        .commercial__home-link {
+            position: absolute;
+            @include rem((
+                bottom: $gs-baseline
+            ));
+        }
+        .commercial__body {
+            margin-top: 0;
+        }
+        .lineitem {
+            position: relative;
+            width: 33%;
+            @include rem((
+                min-height: 250px,
+                padding-bottom: 30px
+            ));
+
+            &:nth-child(n+4) {
+                display: none;
+            }
+        }
+        .lineitem__link,
+        .commercial--books__price {
             width: 100%;
         }
+        .commercial--books__price {
+            text-align: left;
+            @include rem((
+                margin-top: $gs-baseline/2
+            ));
+        }
+        .commercial--books__price__label {
+            display: inline;
+        }
+        .commercial--books__buy-now-button {
+            position: absolute;
+            bottom: 0;
+            left: 8px;
+        }
+        .commercial__foot {
+            display: none;
+        }
     }
+    @include mq(desktop) {
+        .lineitem {
+            width: 20%;
 
-    @include mq($from: leftCol, $to: wide) {
-        .container__title {
-            .svg-i-bookshop-logo--bookshop {
-                @include rem((
-                    margin-left: 0
-                ));
+            &:nth-child(n+4) {
                 display: block;
             }
+        }
+    }
+    @include mq(wide) {
+        .commercial__header {
+            width: gs-span(4);
         }
     }
 }

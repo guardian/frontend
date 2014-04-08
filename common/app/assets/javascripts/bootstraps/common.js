@@ -10,6 +10,7 @@ define([
     //Vendor libraries
     'bonzo',
     'bean',
+    'qwery',
     'enhancer',
     'lodash/objects/assign',
     'lodash/functions/debounce',
@@ -28,7 +29,6 @@ define([
     'common/modules/analytics/clickstream',
     'common/modules/analytics/omniture',
     'common/modules/analytics/scrollDepth',
-    'common/modules/adverts/adverts',
     'common/utils/cookies',
     'common/modules/analytics/omnitureMedia',
     'common/modules/analytics/livestats',
@@ -45,7 +45,8 @@ define([
     'common/modules/analytics/commercial/tags/container',
     'common/modules/analytics/foresee-survey',
     'common/modules/onward/right-most-popular',
-    'common/modules/analytics/register'
+    'common/modules/analytics/register',
+    'common/modules/commercial/loader'
 ], function (
     $,
     mediator,
@@ -55,6 +56,7 @@ define([
 
     bonzo,
     bean,
+    qwery,
     enhancer,
     extend,
     debounce,
@@ -74,7 +76,6 @@ define([
     Clickstream,
     Omniture,
     ScrollDepth,
-    Adverts,
     Cookies,
     OmnitureMedia,
     liveStats,
@@ -91,7 +92,8 @@ define([
     TagContainer,
     Foresee,
     RightMostPopular,
-    register
+    register,
+    CommercialLoader
 ) {
 
     var hasBreakpointChanged = detect.hasCrossedBreakpoint();
@@ -147,13 +149,15 @@ define([
             });
         },
 
-        showRelativeDates: function () {
-            var dates = RelativeDates;
+        showRelativeDates: function (config) {
+            var dates = RelativeDates,
+                opts = config.switches.hideOldTimestamps && config.page.isFront ? {notAfter: 3600} : undefined; // 1 hour
+
             mediator.on('page:common:ready', function(config, context) {
-                dates.init(context);
+                dates.init(context, opts);
             });
             mediator.on('fragment:ready:dates', function(el) {
-                dates.init(el);
+                dates.init(el, opts);
             });
         },
 
@@ -218,7 +222,7 @@ define([
                 });
             });
 
-            if (config.switches.ophan) {
+            if (config.switches.ophan && !config.page.isSSL) {
                 require('ophan/ng', function (ophan) {
                     ophan.record({'ab': ab.getParticipations()});
 
@@ -234,67 +238,56 @@ define([
         },
 
         loadAdverts: function (config) {
-            // Having to check 3 switches for ads so that DFP and OAS can run in parallel
-            // with each other and still have a master switch to turn off all adverts
-            if(!userPrefs.isOff('adverts') && config.switches.adverts && !config.page.shouldHideAdverts) {
 
-                var hasAdsToLoad = config.switches.oasAdverts || config.switches.dfpAdverts,
-                    onResize = {
+            var showAds =
+                !userPrefs.isOff('adverts') &&
+                !config.page.shouldHideAdverts &&
+                !config.page.isSSL &&
+                (
+                    config.switches.standardAdverts || config.switches.commercialComponents
+                );
+
+            if (showAds) {
+
+                var onResize = {
                         cmd: [],
-                        execute: function() {
-                            hasBreakpointChanged(function() {
-                                onResize.cmd.forEach(function(func) {
+                        execute: function () {
+                            hasBreakpointChanged(function () {
+                                onResize.cmd.forEach(function (func) {
                                     func();
                                 });
                             });
                         }
-                    };
+                    },
+                    dfpAds,
+                    options = {};
 
-                // If either OAS or DFP is switched on, and it's an article
-                // excluding live blogs, then create our inline adverts
-                if(hasAdsToLoad && config.page.contentType === 'Article' && !config.page.isLiveBlog) {
+                // if it's an article, excluding live blogs, create our inline adverts
+                if (config.switches.standardAdverts && config.page.contentType === 'Article' && !config.page.isLiveBlog) {
                     new ArticleBodyAdverts().init();
                 }
 
-                if(config.switches.oasAdverts) {
-                    onResize.cmd.push(Adverts.reload);
-
-                    mediator.on('page:common:deferred:loaded', function(config, context) {
-                        Adverts.init(config, context);
-                    });
-                    mediator.on('modules:adverts:docwrite:loaded', Adverts.load);
-                } else {
-                    Adverts.hideAds();
+                if (!config.switches.standardAdverts) {
+                    options.dfpSelector = '.ad-slot--commercial-component';
+                } else if (!config.switches.commercialComponents) {
+                    options.dfpSelector = '.ad-slot--dfp:not(.ad-slot--commercial-component)';
                 }
 
-                if(config.switches.dfpAdverts) {
-                    var dfpAds,
-                        options = {};
+                dfpAds = new DFP(extend(config, options));
+                dfpAds.init();
+                onResize.cmd.push(dfpAds.reload);
 
-                    if(config.switches.loadOnlyCommercialComponents) {
-                        options.dfpSelector = '.ad-slot__commercial-component';
-                    }
-
-                    dfpAds = new DFP(extend(config, options));
-                    dfpAds.init();
-                    onResize.cmd.push(dfpAds.reload);
-                }
-
-                if(hasAdsToLoad) {
-                    // Push the reloaded command once
-                    onResize.cmd.push(function() {
-                        mediator.emit('modules:adverts:reloaded');
-                    });
-                    mediator.on('window:resize', debounce(onResize.execute.bind(this), 2000));
-                }
-            } else {
-                Adverts.hideAds();
+                // Push the reloaded command once
+                onResize.cmd.push(function () {
+                    mediator.emit('modules:adverts:reloaded');
+                });
+                mediator.on('window:resize', debounce(onResize.execute.bind(this), 2000));
             }
         },
 
         loadVideoAdverts: function() {
             mediator.on('page:common:ready', function(config, context) {
-                if(config.switches.adverts && config.switches.videoAdverts && !config.page.blockVideoAds) {
+                if (config.switches.videoAdverts && !config.page.blockVideoAds) {
                     Array.prototype.forEach.call(context.querySelectorAll('video'), function(el) {
                         var support = detect.getVideoFormatSupport();
                         new VideoAdvert({
@@ -418,7 +411,9 @@ define([
 
         loadTags : function() {
             mediator.on('page:common:ready', function(config) {
-                TagContainer.init(config);
+                if (config.page.contentType !== 'Identity' && config.page.section !== 'identity') {
+                    TagContainer.init(config);
+                }
             });
         },
 
@@ -461,7 +456,18 @@ define([
         },
 
         startRegister: function(config) {
-            register.initialise(config);
+            if (!config.page.isSSL) {
+                register.initialise(config);
+            }
+        },
+
+        loadCommercialComponent: function(config) {
+            var commercialComponent = /^#commercial-component=(.*)$/.exec(window.location.hash),
+                slot = qwery('[data-name="merchandising"]').shift();
+            if (commercialComponent && slot) {
+                new CommercialLoader({ config: config })
+                    .init(commercialComponent[1], slot);
+            }
         }
     };
 
@@ -478,6 +484,7 @@ define([
                 modules.runAbTests(config, context);
                 modules.transcludeRelated(config, context);
                 modules.initRightHandComponent(config, context);
+                modules.loadCommercialComponent(config, context);
             }
             mediator.emit('page:common:deferred:loaded', config, context);
         });
@@ -493,7 +500,7 @@ define([
             modules.showTabs();
             modules.initialiseNavigation(config);
             modules.showToggles();
-            modules.showRelativeDates();
+            modules.showRelativeDates(config);
             modules.transcludePopular();
             modules.loadVideoAdverts(config);
             modules.initClickstream();

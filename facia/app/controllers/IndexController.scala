@@ -10,19 +10,18 @@ import services.IndexPage
 
 trait IndexController extends Controller with Index with Logging with Paging with ExecutionContexts {
 
-  implicit def getTemplateDedupingInstance: TemplateDeduping = TemplateDeduping()
+  private implicit def getTemplateDedupingInstance: TemplateDeduping = TemplateDeduping()
 
   // Needed as aliases for reverse routing
   def renderCombinerRss(leftSide: String, rightSide: String) = renderCombiner(leftSide, rightSide)
 
   def renderCombiner(leftSide: String, rightSide: String) = Action.async { implicit request =>
     logGoogleBot(request)
-    index(Edition(request), leftSide, rightSide, extractPage(request)).map {
+    index(Edition(request), leftSide, rightSide, extractPage(request), request.isRss).map {
       case Left(page) => renderFaciaFront(page)
       case Right(other) => other
     }
   }
-
 
   private def logGoogleBot(request: Request[AnyContent]) = {
     request.headers.get("User-Agent").filter(_.contains("Googlebot")).foreach { bot =>
@@ -34,7 +33,7 @@ trait IndexController extends Controller with Index with Logging with Paging wit
 
   def render(path: String) = Action.async { implicit request =>
     logGoogleBot(request)
-    index(Edition(request), path, extractPage(request)) map {
+    index(Edition(request), path, extractPage(request), request.isRss) map {
       case Left(model) => renderFaciaFront(model)
       case Right(other) => other
     }
@@ -42,7 +41,7 @@ trait IndexController extends Controller with Index with Logging with Paging wit
 
   def renderTrailsJson(path: String) = renderTrails(path)
   def renderTrails(path: String) = Action.async { implicit request =>
-    index(Edition(request), path, extractPage(request)) map {
+    index(Edition(request), path, extractPage(request), request.isRss) map {
       case Left(model) => renderTrailsFragment(model)
       case Right(notFound) => notFound
     }

@@ -55,8 +55,7 @@ class IndexControllerTest extends FlatSpec with Matchers {
     header("Location", result).get should be ("/video")
   }
 
-  // ignore while content api fixes a field in elastic search...
-  ignore should "correctly redirect short urls to other servers" in Fake {
+  it should "correctly redirect short urls to other servers" in Fake {
 
     val result = controllers.IndexController.render("p/3jdag")(TestRequest("/p/3jdag"))
 

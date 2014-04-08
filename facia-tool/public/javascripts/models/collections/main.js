@@ -8,6 +8,7 @@ define([
     'utils/ammended-query-str',
     'utils/update-scrollables',
     'utils/terminate',
+    'utils/is-valid-date',
     'modules/authed-ajax',
     'models/group',
     'models/collections/droppable',
@@ -23,6 +24,7 @@ define([
     ammendedQueryStr,
     updateScrollables,
     terminate,
+    isValidDate,
     authedAjax,
     Group,
     droppable,
@@ -34,6 +36,13 @@ define([
     return function() {
 
         var model = vars.model = {};
+
+        model.statusCapiErrors = ko.observable(false);
+        model.statusPressFailure = ko.observable(false);
+        model.clearStatuses = function() {
+            model.statusCapiErrors(false);
+            model.statusPressFailure(false);
+        };
 
         model.collections = ko.observableArray();
 
@@ -71,6 +80,49 @@ define([
             return vars.CONST.viewer + '#env=' + config.env + '&url=' + model.front() + encodeURIComponent('?view=mobile');
         });
 
+        function detectPressFailure() {
+            model.statusPressFailure(false);
+
+            if (model.front()) {
+                authedAjax.request({
+                    url: '/front/lastmodified/' + model.front()
+                })
+                .always(function(resp) {
+                    var lastPressed;
+
+                    if (resp.status !== 200) { return; }
+                    lastPressed = new Date(resp.responseText);
+                    if (isValidDate(lastPressed)) {
+                        model.statusPressFailure(
+                            _.some(model.collections(), function(collection) {
+                                var l = new Date(collection.state.lastUpdated());
+                                return isValidDate(l) ? l > lastPressed : false;
+                            })
+                        );
+                    }
+                });
+            }
+        }
+
+        var deferredDetectPressFailure = _.debounce(detectPressFailure, vars.CONST.detectPressFailureMs || 10000);
+        
+        function pressFront() {
+            model.statusPressFailure(false);
+
+            if (model.front()) {
+                authedAjax.request({
+                    url: '/collection/update/' + model.collections()[0].id,
+                    method: 'post'
+                })
+                .always(function() {
+                    deferredDetectPressFailure();
+                });
+            }
+        }
+
+        model.deferredDetectPressFailure = deferredDetectPressFailure;
+        model.pressFront = pressFront;
+        
         function getFront() {
             return queryParams().front;
         }

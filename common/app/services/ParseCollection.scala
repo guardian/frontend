@@ -8,7 +8,6 @@ import play.api.libs.json.Json._
 import play.api.libs.json.{JsObject, JsValue}
 import play.api.libs.ws.Response
 import scala.concurrent.Future
-import scala.Some
 import contentapi.QueryDefaults
 import scala.util.Try
 
@@ -29,7 +28,6 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
   case class InvalidContent(id: String) extends Exception(s"Invalid Content: $id")
   val showFieldsQuery: String = FaciaDefaults.showFields
   val showFieldsWithBodyQuery: String = FaciaDefaults.showFieldsWithBody
-  val queryMessage: Option[String] = Option("facia")
 
   case class CollectionMeta(lastUpdated: Option[String], updatedBy: Option[String], updatedEmail: Option[String])
   object CollectionMeta {
@@ -131,7 +129,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
         case _ =>
           log.warn(s"Could not load running order: ${r.status} ${r.statusText} $id")
           // NOTE: better way of handling fallback
-          Future(Nil)
+          Future.successful(Nil)
       }
     }
   }
@@ -150,7 +148,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
           lazy val supportingLinks: List[CollectionItem] = retrieveSupportingLinks(collectionItem)
           if (!hasParent) getArticles(supportingLinks, edition, hasParent=true) else Future.successful(Nil)
         }
-        val response = ContentApi().item(collectionItem.id, edition, queryMessage).showFields(showFieldsWithBodyQuery).response
+        val response = ContentApi().item(collectionItem.id, edition).showFields(showFieldsWithBodyQuery).response
 
         val content = response.map(_.content).recover {
           case apiError: com.gu.openplatform.contentapi.ApiError if apiError.httpStatus == 404 => {
@@ -204,7 +202,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
 
     val newSearch = queryString match {
       case Path(Seg("search" ::  Nil)) => {
-        val search = ContentApi().search(edition, queryMessage)
+        val search = ContentApi().search(edition)
           .showElements("all")
           .pageSize(20)
         val newSearch = queryParamsWithEdition.foldLeft(search){
@@ -220,7 +218,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
         }
       }
       case Path(id)  => {
-        val search = ContentApi().item(id, edition, queryMessage)
+        val search = ContentApi().item(id, edition)
           .showElements("all")
           .showEditorsPicks(true)
           .pageSize(20)
@@ -240,7 +238,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
 
     newSearch onFailure {case t: Throwable => log.warn("Content API Query failed: %s: %s".format(queryString, t.toString))}
     newSearch
-  } getOrElse Future(Result(Nil, Nil, Nil, Nil))
+  } getOrElse Future.successful(Result(Nil, Nil, Nil, Nil))
 
   private def validateContent(content: Content): Option[Content] = {
     Try {

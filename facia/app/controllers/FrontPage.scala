@@ -3,7 +3,9 @@ package controllers
 import model.MetaData
 
 
-abstract class FrontPage(val isNetworkFront: Boolean) extends MetaData
+abstract class FrontPage(val isNetworkFront: Boolean) extends MetaData {
+  override lazy val rssPath = Some(s"/$id/rss")
+}
 
 object FrontPage {
 
@@ -85,6 +87,7 @@ object FrontPage {
       override val webTitle = "Latest news, sport and comment from the Guardian"
       override lazy val analyticsName = "GFE:Network Front Alpha"
       override lazy val description = Some("Latest news, comment and analysis from the Guardian, the world’s leading liberal voice")
+      override lazy val rssPath = Some(s"/rss")
 
       override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
         "content-type" -> "Network Front",
@@ -98,6 +101,7 @@ object FrontPage {
       override val webTitle = "Latest news, sport and comment from the Guardian"
       override lazy val analyticsName = "GFE:Network Front Alpha"
       override lazy val description = Some("Latest news, comment and analysis from the Guardian, the world’s leading liberal voice")
+      override lazy val rssPath = Some(s"/rss")
 
       override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
         "content-type" -> "Network Front",
@@ -111,7 +115,8 @@ object FrontPage {
       override val webTitle = "Latest news, sport and comment from the Guardian"
       override lazy val analyticsName = "GFE:Network Front Alpha"
       override lazy val description = Some("Latest news, comment and analysis from the Guardian, the world’s leading liberal voice")
-
+      override lazy val rssPath = Some(s"/rss")
+      
       override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
         "content-type" -> "Network Front",
         "is-front" -> true
@@ -236,6 +241,7 @@ object FrontPage {
       override val webTitle = "Latest news, sport and comment from the Guardian"
       override lazy val analyticsName = "GFE:Network Front"
       override lazy val description = Some("Latest news, comment and analysis from the Guardian, the world’s leading liberal voice")
+      override lazy val rssPath = Some(s"/rss")
 
       override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
         "content-type" -> "Network Front",

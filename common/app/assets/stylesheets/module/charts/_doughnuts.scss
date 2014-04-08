@@ -1,0 +1,18 @@
+// Here be SVGs - use appropriate styling properties
+// http://www.w3.org/TR/SVG11/styling.html
+.chart--doughnut {
+    position: relative;
+
+    .chart__label {
+        @include fs-data(6);
+        fill: white;
+        text-anchor: middle;
+    }
+
+    .chart__unit {
+        @include fs-headline(3);
+        fill: $c-neutral2;
+        font-weight: 900;
+        text-anchor: middle;
+    }
+}

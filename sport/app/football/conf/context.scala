@@ -44,15 +44,12 @@ class FootballStatsPlugin(app: PlayApp) extends Plugin {
     }
 
     // Have all these run once at load, then on the scheduled times
-    // Do not kick off initial refresh in test, because the agents will be dead before it happens
-    if (!play.api.Play.isTest(app)) {
-      AkkaAsync.after(5.seconds){
-        Competitions.refreshCompetitionData()
-        Competitions.refreshMatchDay()
-        LiveBlogAgent.refresh()
-        Competitions.competitionIds.foreach(Competitions.refreshCompetitionAgent)
-        TeamMap.refresh()
-      }
+    AkkaAsync.after(5.seconds){
+      Competitions.refreshCompetitionData()
+      Competitions.refreshMatchDay()
+      LiveBlogAgent.refresh()
+      Competitions.competitionIds.foreach(Competitions.refreshCompetitionAgent)
+      TeamMap.refresh()
     }
   }
 

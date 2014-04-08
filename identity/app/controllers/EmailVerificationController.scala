@@ -3,13 +3,16 @@ package controllers
 import play.api.mvc.{Controller, Action}
 import com.google.inject.{Inject, Singleton}
 import idapiclient.IdApiClient
-import services.{IdentityUrlBuilder, IdRequestParser}
+import services.{AuthenticationService, IdentityUrlBuilder, IdRequestParser}
 import common.ExecutionContexts
 import utils.SafeLogging
 import model.IdentityPage
+import actions.AuthActionWithUser
 
 @Singleton
 class EmailVerificationController @Inject()( api: IdApiClient,
+                                             authActionWithUser: AuthActionWithUser,
+                                             authenticationService: AuthenticationService,
                                              idRequestParser: IdRequestParser,
                                              idUrlBuilder: IdentityUrlBuilder)
   extends Controller with ExecutionContexts with SafeLogging {
@@ -33,7 +36,16 @@ class EmailVerificationController @Inject()( api: IdApiClient,
 
             case Right(ok) => validated
           }
-          Ok(views.html.email_verified(validationState, page, idRequest, idUrlBuilder))
+          val userIsLoggedIn = authenticationService.requestPresentsAuthenticationCredentials(request)
+          Ok(views.html.email_verified(validationState, page, idRequest, idUrlBuilder, userIsLoggedIn))
+      }
+  }
+
+  def resendEmailValidationEmail() = authActionWithUser.async {
+    implicit request =>
+      val idRequest = idRequestParser(request)
+      api.resendEmailValidationEmail(request.auth, idRequest.trackingData).map { _ =>
+        Ok(views.html.verificationEmailResent(request.user, page, idRequest, idUrlBuilder))
       }
   }
 }

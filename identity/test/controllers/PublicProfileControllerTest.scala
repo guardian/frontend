@@ -2,84 +2,127 @@ package controllers
 
 import org.scalatest._
 import org.scalatest.mock.MockitoSugar
-import services.{AuthenticationService, IdRequestParser, IdentityUrlBuilder}
-import actions.AuthActionWithUser
+import services.{IdRequestParser, IdentityUrlBuilder}
 import idapiclient._
 import org.mockito.Mockito._
-import org.mockito.{ArgumentCaptor, Matchers}
-import play.api.mvc.{RequestHeader, Request}
-import scala.concurrent.Future
-import com.gu.identity.model.{StatusFields, User}
+import org.mockito.Matchers
+import play.api.mvc.RequestHeader
 import play.api.test.Helpers._
-import actions.AuthRequest
-import scala.Some
-import play.api.mvc.SimpleResult
+import com.gu.identity.model.{UserDates, PublicFields, User}
 import services.IdentityRequest
-import idapiclient.TrackingData
-import test.{FakeCSRFRequest, Fake}
-import play.api.test.FakeRequest
+import test.{TestRequest, Fake}
+import org.joda.time.DateTime
+import scala.concurrent.Future
+import scala.util.Left
 import client.Auth
 
-
-class PublicProfileControllerTest extends path.FreeSpec with ShouldMatchers with MockitoSugar with OptionValues {
+class PublicProfileControllerTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
   val idUrlBuilder = mock[IdentityUrlBuilder]
   val api = mock[IdApiClient]
   val idRequestParser = mock[IdRequestParser]
-  val authService = mock[AuthenticationService]
   val idRequest = mock[IdentityRequest]
-  val trackingData = mock[TrackingData]
 
-  val userId = "123"
-  val user = User("test@example.com", userId, statusFields = StatusFields(receive3rdPartyMarketing = Some(true), receiveGnmMarketing = Some(true)))
-  val testAuth = new ScGuU("abc")
+  val userId: String = "123"
+  val vanityUrl: String = "bobski"
+  val user = User("test@example.com", userId,
+    publicFields = PublicFields(
+      displayName = Some("John Smith"),
+      aboutMe = Some("I read the Guardian"),
+      location = Some("London"),
+      interests = Some("I like stuff"),
+      webPage = Some("http://www.mypage.com"),
+      vanityUrl = Some(vanityUrl)
+    ),
+    dates = UserDates(
+      accountCreatedDate = Some(new DateTime().minusDays(7))
+    )
+  )
 
-  val authActionWithUser  = new AuthActionWithUser(authService, api, idRequestParser) {
-    override protected def invokeBlock[A](request: Request[A], block: (AuthRequest[A]) => Future[SimpleResult]): Future[SimpleResult] = {
-      block(AuthRequest(request, user, testAuth))
-    }
-  }
   when(idRequestParser.apply(Matchers.any[RequestHeader])) thenReturn idRequest
-  when(idRequest.trackingData) thenReturn trackingData
 
-  val controller = new PublicProfileController(idUrlBuilder, authActionWithUser, api, idRequestParser)
+  val controller = new PublicProfileController(idUrlBuilder, api, idRequestParser)
+  val request = TestRequest()
 
-  "the submit form method" - {
-    val location = "Test location"
-    val aboutMe = "Interesting"
-    val interests = "Other interesting things"
-    val webPage = "http://example.com/test"
+  "Given renderProfileFromId is called" - Fake {
+    when(api.user(Matchers.anyString, Matchers.any[Auth])) thenReturn Future.successful(Left(Nil))
+    when(api.user(userId)) thenReturn Future.successful(Right(user))
 
-    "should call api save user with the form info" in Fake {
-      val fakeRequest = FakeCSRFRequest(POST, "/email-prefs")
-        .withFormUrlEncodedBody(
-        "location" -> location,
-        "aboutMe" -> aboutMe,
-        "interests" -> interests,
-        "webPage" -> webPage
-      )
-      when(api.saveUser(Matchers.any[String], Matchers.any[UserUpdate], Matchers.any[Auth]))
-        .thenReturn(Future.successful(Right(user)))
+    "with valid user Id" - {
+      val result = controller.renderProfileFromId(userId)(request)
 
-      controller.submitForm(true)(fakeRequest)
+      "then should return status 200" in {
+        status(result) should be(200)
+      }
 
-      var userUpdateCapture = ArgumentCaptor.forClass(classOf[UserUpdate])
-      verify(api).saveUser(Matchers.eq(userId), userUpdateCapture.capture(), Matchers.eq(testAuth))
-      val userUpdate = userUpdateCapture.getValue
-      userUpdate.publicFields.value.location.value should equal(location)
-      userUpdate.publicFields.value.aboutMe.value should equal(aboutMe)
-      userUpdate.publicFields.value.interests.value should equal(interests)
-      userUpdate.publicFields.value.webPage.value should equal(webPage)
+      val content = contentAsString(result)
+      "then rendered profile should include display name" in {
+        content should include(user.publicFields.displayName.get)
+      }
+      "then rendered profile should include account creation date" in {
+        content should include("Joined: " + user.dates.accountCreatedDate.get.toString("d MMM yyyy"))
+      }
+      "then rendered profile should include location" in {
+        content should include(user.publicFields.location.get)
+      }
+      "then rendered profile should include about me" in {
+        content should include(user.publicFields.aboutMe.get)
+      }
+      "then rendered profile should include interests" in {
+        content should include(user.publicFields.interests.get)
+      }
+      "then rendered profile should include web page" in {
+        content should include(user.publicFields.webPage.get)
+      }
     }
 
-    "when the form submission does not pass its CSRF check" - {
-      val fakeRequest = FakeRequest(POST, "/email-prefs")
-      val authRequest = AuthRequest(fakeRequest, user, testAuth)
+    "with invalid user Id" - {
+      val result = controller.renderProfileFromId("notAUser")(request)
 
-      "should throw a CSRF error" in {
-        intercept[RuntimeException]{
-          controller.submitForm(true)(authRequest)
-        }
+      "then the status should be 404" in {
+        status(result) should be(404)
       }
     }
   }
+
+  "Given renderProfileFromVanityUrl is called" - Fake {
+    when(api.userFromVanityUrl(Matchers.anyString, Matchers.any[Auth])) thenReturn Future.successful(Left(Nil))
+    when(api.userFromVanityUrl(vanityUrl)) thenReturn Future.successful(Right(user))
+
+    "with valid user Id" - {
+      val result = controller.renderProfileFromVanityUrl(vanityUrl)(request)
+
+      "then should return status 200" in {
+        status(result) should be(200)
+      }
+
+      val content = contentAsString(result)
+      "then rendered profile should include display name" in {
+        content should include(user.publicFields.displayName.get)
+      }
+      "then rendered profile should include account creation date" in {
+        content should include("Joined: " + user.dates.accountCreatedDate.get.toString("d MMM yyyy"))
+      }
+      "then rendered profile should include location" in {
+        content should include(user.publicFields.location.get)
+      }
+      "then rendered profile should include about me" in {
+        content should include(user.publicFields.aboutMe.get)
+      }
+      "then rendered profile should include interests" in {
+        content should include(user.publicFields.interests.get)
+      }
+      "then rendered profile should include web page" in {
+        content should include(user.publicFields.webPage.get)
+      }
+    }
+
+    "with invalid user Id" - {
+      val result = controller.renderProfileFromVanityUrl("notAUser")(request)
+
+      "then the status should be 404" in {
+        status(result) should be(404)
+      }
+    }
+  }
+
 }

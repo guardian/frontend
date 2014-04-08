@@ -2,48 +2,233 @@
    Jobs component
    ========================================================================== */
 
-.jobs-component {
-    .lineitem__image-logo {
-        margin-left: $gs-gutter/5;
-        @include rem((
-            width: 100px,
-            height: 40px
-        ));
-        float: right;
-    }
-    .lineitem__description {
-        margin-top: $gutter;
-    }
-    .lineitem__list {
-        @include font-size(14, 16);
-        margin: ($gs-baseline/3)*4 0;
-    }
-    @include mq($to: tablet) {
-        .commercial__head {
-            background-color: #08417b;
+/* remove top margin on the footer to make component sit on top of it as per design */
 
-            .commercial__title {
-                .em {
-                    color: #ffffff;
-                    color: rgba(#ffffff, .8);
+.footer {
+    margin-top: 0 !important;
+}
+
+.commercial--jobs {
+    .commercial__head {
+        background-color: transparent;
+        padding: 0;
+        height: auto;
+        border: 0;
+
+        @include mq(tablet) {
+            width: gs-span(3);
+            float: left;
+        }
+        @include mq(desktop) {
+            @include rem((
+                margin-right: $gs-gutter
+            ));
+        }
+    }
+    .commercial__title {
+        padding: 0;
+        margin: 0;
+        text-transform: lowercase;
+        color: $c-newsDefault;
+        @include fs-headline(3);
+    }
+    .commercial__title__last-word {
+        font-style: italic;
+        @include rem((
+            margin-left: -5px
+        ));
+    }
+    .commercial__home-link {
+        float: right;
+
+        @include mq(tablet) {
+            position: absolute;
+            @include rem((
+                left: $gs-gutter,
+                bottom: $gs-baseline
+            ));
+        }
+    }
+    .commercial__body {
+        padding: 0;
+    }
+    .commercial--jobs__sectors {
+        overflow: hidden;
+
+        @include mq(tablet) {
+            float: left;
+            @include rem((
+                width: gs-span(5)
+            ));
+            width: 50%;
+        }
+        @include mq(desktop) {
+            @include rem((
+                width: gs-span(6)
+            ));
+        }
+    }
+    .commercial--jobs__sector {
+        width: 50%;
+        min-width: gs-span(1.5);
+        float: left;
+        @include box-sizing(border-box);
+        @include rem((
+            margin-top: $gs-baseline
+        ));
+
+        &:last-child .commercial--jobs__sector__link {
+            font-weight: bold;
+            color: $c-newsDefault;
+
+            .i {
+                background-color: $c-newsDefault;
+            }
+        }
+        @include mq($to: desktop) {
+            &:nth-child(2n+1) .commercial--jobs__sector__link {
+                @include rem((
+                    margin-right: $gs-gutter/2
+                ));
+            }
+            &:nth-child(2n) .commercial--jobs__sector__link {
+                @include rem((
+                    margin-left: $gs-gutter/2
+                ));
+            }
+        }
+        @include mq(tablet) {
+            &:nth-child(1),
+            &:nth-child(2) {
+                margin-top: 0;
+
+                .commercial--jobs__sector__link {
+                    padding-top: 0;
+                    border-top: 0;
+
+                    .i {
+                        top: 0;
+                    }
                 }
             }
         }
-    }
+        @include mq(desktop) {
+            width: 33%;
 
-//    &.commercial--w600 {
-//        .commercial__item {
-//            @include box-sizing(border-box);
-//            padding-right: $gs-gutter/2;
-//            width: 40%;
-//            float: left;
-//            &.commercial__item:nth-child(3) {
-//                width: 20%;
-//                .lineitem__title {
-//                    @include f-headline;
-//                    @include font-size(14,16);
-//                }
-//            }
-//        }
-//    }
+            &:nth-child(-n+3) {
+                margin-top: 0;
+
+                .commercial--jobs__sector__link {
+                    border-top: 0;
+                    padding-top: 0;
+
+                    .i {
+                        top: 0;
+                    }
+                }
+            }
+            &:nth-child(3n+1) .commercial--jobs__sector__link {
+                @include rem((
+                    margin-right: $gs-gutter/2
+                ));
+            }
+            &:nth-child(3n+2) .commercial--jobs__sector__link {
+                @include rem((
+                    margin-left: $gs-gutter/2,
+                    margin-right: $gs-gutter/2
+                ));
+            }
+            &:nth-child(3n) .commercial--jobs__sector__link {
+                @include rem((
+                    margin-left: $gs-gutter/2
+                ));
+            }
+        }
+    }
+    .commercial--jobs__sector__link {
+        position: relative;
+        color: $c-neutral1;
+        display: block;
+        border-top: 1px solid $c-neutral4;
+        @include fs-headline(1);
+        @include rem((
+            padding-top: $gs-baseline/3,
+        ));
+
+        .i {
+            position: absolute;
+            right: 0;
+            background-color: $c-neutral4;
+            @include rem((
+                top: $gs-baseline/3
+            ));
+        }
+    }
+    .commercial--jobs__jobs {
+        border-top: 1px solid $c-neutral4;
+        @include rem((
+            margin-top: $gs-baseline*2,
+            padding-top: $gs-baseline/3
+        ));
+
+        @include mq(tablet) {
+            border-top: 0;
+            margin-top: 0;
+            padding-top: 0;
+            @include rem((
+                margin-left: gs-span(6)
+            ));
+            margin-left: 50%;
+        }
+     @include mq(desktop) {
+            @include rem((
+                margin-left: gs-span(6)
+            ));
+        }
+
+    }
+    .commercial--jobs__job {
+        float: left;
+        @include box-sizing(border-box);
+
+        &:nth-child(n+2) {
+            display: none;
+        }
+        @include mq(tablet) {
+            border-left: 2px solid $c-neutral4;
+            @include rem((
+                margin-left: $gs-gutter/2,
+                padding-left: $gs-gutter/2 - 1
+            ));
+        }
+        @include mq(wide) {
+            @include rem((
+                width: gs-span(3.25)
+            ));
+
+            &:nth-child(2) {
+                display: block;
+            }
+        }
+    }
+    .commercial--jobs__job__title,
+    .commercial--jobs__job__recruiter {
+        color: $c-newsDefault;
+    }
+    .commercial--jobs__job__title {
+        margin: 0;
+    }
+    .commercial--jobs__job__logo {
+        border: 1px solid $c-neutral1;
+    }
+    .commercial--jobs__job__logo,
+    .commercial--jobs__job__description,
+    .commercial--jobs__job__recruiter {
+        @include rem((
+            margin: $gs-baseline/2 0 0
+        ));
+    }
+    .commercial--jobs__job__recruiter {
+        @include fs-textsans(1);
+    }
 }

@@ -6,17 +6,17 @@
         @if(showMeta){<caption><a href="@competition.url">@competition.fullName</a></caption>}
         <thead>
             <tr>
-                <th class="football-stat--postition table-column--priority table-column--sub"><abbr title="Position">Pos</abbr></th>
-                <th class="football-stat--team table-column--priority table-column--main">Team</th>
-                <th class="football-stat--played table-column--priority"><abbr title="Played">P</abbr></th>
-                <th class="football-stat--won"><abbr title="Won">W</abbr></th>
-                <th class="football-stat--drawn"><abbr title="Drawn">D</abbr></th>
-                <th class="football-stat--lost"><abbr title="Lost">L</abbr></th>
-                <th class="football-stat--for"><abbr title="Goals for">F</abbr></th>
-                <th class="football-stat--against"><abbr title="Goals against">A</abbr></th>
-                <th class="football-stat--difference table-column--priority"><abbr title="Goal difference">GD</abbr></th>
-                <th class="football-stat--points table-column--priority"><abbr title="Points">Pts</abbr></th>
-                <th class="football-stat--form table-column--priority"><abbr title="Results of previous games">Form</abbr></th>
+                <th class="football-stat--postition table-column--sub"><abbr title="Position">Pos</abbr></th>
+                <th class="football-stat--team table-column--main">Team</th>
+                <th class="football-stat--played"><abbr title="Played">P</abbr></th>
+                <th class="football-stat--won table-column--inferior"><abbr title="Won">W</abbr></th>
+                <th class="football-stat--drawn table-column--inferior"><abbr title="Drawn">D</abbr></th>
+                <th class="football-stat--lost table-column--inferior"><abbr title="Lost">L</abbr></th>
+                <th class="football-stat--for table-column--inferior"><abbr title="Goals for">F</abbr></th>
+                <th class="football-stat--against table-column--inferior"><abbr title="Goals against">A</abbr></th>
+                <th class="football-stat--difference"><abbr title="Goal difference">GD</abbr></th>
+                <th class="football-stat--points"><abbr title="Points">Pts</abbr></th>
+                <th class="football-stat--form"><abbr title="Results of previous games">Form</abbr></th>
             </tr>
         </thead>
 
@@ -35,15 +35,15 @@
                             <span>@entry.team.name</span>
                         }
                     </td>
-                    <td class="football-stat--played table-column--priority">@entry.team.total.played</td>
-                    <td class="football-stat--won">@entry.team.total.won</td>
-                    <td class="football-stat--drawn">@entry.team.total.drawn</td>
-                    <td class="football-stat--lost">@entry.team.total.lost</td>
-                    <td class="football-stat--for">@entry.team.total.goalsFor</td>
-                    <td class="football-stat--against">@entry.team.total.goalsAgainst</td>
-                    <td class="football-stat--difference table-column--priority">@entry.team.goalDifference</td>
-                    <td class="football-stat--points table-column--priority">@entry.team.points</td>
-                    <td class="football-stat--form table-column--priority team__results--thin">
+                    <td class="football-stat--played">@entry.team.total.played</td>
+                    <td class="football-stat--won table-column--inferior">@entry.team.total.won</td>
+                    <td class="football-stat--drawn table-column--inferior">@entry.team.total.drawn</td>
+                    <td class="football-stat--lost table-column--inferior">@entry.team.total.lost</td>
+                    <td class="football-stat--for table-column--inferior">@entry.team.total.goalsFor</td>
+                    <td class="football-stat--against table-column--inferior">@entry.team.total.goalsAgainst</td>
+                    <td class="football-stat--difference">@entry.team.goalDifference</td>
+                    <td class="football-stat--points">@entry.team.points</td>
+                    <td class="football-stat--form team__results--thin">
                         @football.views.html.fragments.teamForm(entry.team.id, competition)
                     </td>
                 </tr>

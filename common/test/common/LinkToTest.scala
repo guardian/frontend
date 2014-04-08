@@ -39,5 +39,13 @@ class LinkToTest extends FlatSpec with Matchers {
   it should "strip leading and trailing whitespace" in {
     TestLinkTo("  http://www.foo.com/uk   ", edition) should be ("http://www.foo.com/uk")
   }
+  
+  it should "general a editionalised RSS path" in {
+    // editionalised
+    TestLinkTo("/commentisfree/rss", edition) should be ("http://www.foo.com/uk/commentisfree/rss")
+    TestLinkTo("/rss", edition) should be ("http://www.foo.com/uk/rss")
+    // not editionalised
+    TestLinkTo("/football/rss", edition) should be ("http://www.foo.com/football/rss")
+  }
 
 }

@@ -32,9 +32,9 @@
 @import "module/_stars";
 @import "module/_debug";
 @import "module/_gallerythumbs";
+@import "module/charts/_doughnuts";
 
 @import "module/nav/_pop-up";
-@import "module/nav/_localnav";
 @import "module/nav/_aside";
 @import "module/_search";
 
@@ -95,6 +95,8 @@
 @import "module/football/_matches";
 @import "module/football/_live-summary";
 @import "module/football/_stats";
+@import "module/football/_player-card";
+@import "module/football/_article-embeds";
 
 
 /* ==========================================================================
@@ -102,7 +104,7 @@
    ========================================================================== */
 
 @import "module/experiments/_layout-hints";
-@import "module/experiments/_follow-btn";
+@import "module/experiments/_football-liveblog-truncation";
 
 
 /* ==========================================================================

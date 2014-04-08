@@ -3,6 +3,8 @@ package common
 import org.quartz.impl.StdSchedulerFactory
 import org.quartz._
 import scala.collection.mutable
+import play.api.Play
+import Play.current
 
 object Jobs extends Logging {
   private val scheduler = StdSchedulerFactory.getDefaultScheduler()
@@ -18,15 +20,20 @@ object Jobs extends Logging {
   scheduler.start()
 
   def schedule(name: String, cron: String)(block: => Unit) {
-    log.info(s"Scheduling $name")
-    jobs.put(name, () => block)
+    // running cron scheduled jobs in tests is useless
+    // it just results in unexpected data files when you
+    // want to check in
+    if (!Play.isTest) {
+      log.info(s"Scheduling $name")
+      jobs.put(name, () => block)
 
-    val schedule = CronScheduleBuilder.cronSchedule(new CronExpression(cron))
+      val schedule = CronScheduleBuilder.cronSchedule(new CronExpression(cron))
 
-    scheduler.scheduleJob(
-      JobBuilder.newJob(classOf[FunctionJob]).withIdentity(name).build(),
-      TriggerBuilder.newTrigger().withSchedule(schedule).build()
-    )
+      scheduler.scheduleJob(
+        JobBuilder.newJob(classOf[FunctionJob]).withIdentity(name).build(),
+        TriggerBuilder.newTrigger().withSchedule(schedule).build()
+      )
+    }
   }
 
   def deschedule(name: String) {
