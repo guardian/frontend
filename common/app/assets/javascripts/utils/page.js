@@ -1,12 +1,14 @@
 define([
     'common/$',
     'common/utils/config',
-    'lodash/objects/assign'
+    'lodash/objects/assign',
+    'lodash/collections/find'
 ],
 function(
     $,
     config,
-    assign
+    assign,
+    find
 ) {
 
     function isMatch(yes) {
@@ -18,17 +20,15 @@ function(
         assign(match, {
             date: config.webPublicationDateAsUrlPart(),
             teams: teams,
-            pageType: (function() {
-                if (config.page.isLiveBlog) {
-                    return 'minbymin';
-                } else if (config.hasTone('Match reports')) {
-                    return 'report';
-                } else if (config.hasSeries('Match previews')) {
-                    return 'preview';
-                } else if (match.id) {
-                    return 'stats';
-                }
-            }())
+            pageType: find([
+                ['minbymin', config.page.isLiveBlog],
+                ['report', config.hasTone('Match reports')],
+                ['preview', config.hasSeries('Match previews')],
+                ['stats', match.id],
+                [null, true] // We need a default
+            ], function(type) {
+                return type[1] === true;
+            })[0]
         });
 
         if (match.id || (match.pageType && match.teams.length === 2)) {
