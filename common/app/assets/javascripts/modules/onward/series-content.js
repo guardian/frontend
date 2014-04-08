@@ -33,7 +33,6 @@ define([
 
     SeriesContent.prototype.error = function() {
         common.mediator.emit('module:error', 'Failed to load series:' + this.config.page.series + 'common/modules/related.js');
-        common.mediator.emit('module:error', 'Failed to load series:' + this.config.page.series + 'common/modules/related.js');
         register.error('series-content');
     };
 

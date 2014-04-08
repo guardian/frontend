@@ -31,8 +31,6 @@ define([
         register.end('geo-most-popular');
     };
 
-
-
     return GeoMostPopular;
 
 });
