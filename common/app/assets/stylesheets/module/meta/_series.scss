@@ -2,8 +2,11 @@
     padding: 0;
     margin: 0;
     border-top: 1px dotted $c-neutral5;
-    @include fs-data(3);
+    @include fs-textsans(3);
     font-weight: bold;
+    @include rem((
+        line-height: 16px
+    ));
 }
 
 .series-meta__label {
