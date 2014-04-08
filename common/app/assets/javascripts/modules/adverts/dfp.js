@@ -106,9 +106,10 @@ define([
      * url    = path
      */
     DFP.prototype.buildPageTargetting = function () {
-        var conf = this.config.page,
-            section = conf.section ? conf.section.toLowerCase() : '',
+        var conf        = this.config.page,
+            section     = conf.section ? conf.section.toLowerCase() : '',
             contentType = conf.contentType ? conf.contentType.toLowerCase() : '',
+            edition     = conf.edition ? conf.edition.toLowerCase() : '',
             keywords;
         if (conf.keywords) {
             keywords = conf.keywords.split(',').map(function (keyword) {
@@ -119,15 +120,16 @@ define([
         }
 
         return {
-            'a': AudienceScience.getSegments() || [],
-            'at': Cookies.get('adtest') || '',
-            'bp': detect.getBreakpoint(),
-            'cat': section,
-            'ct': contentType,
-            'k': keywords,
-            'p': 'ng',
-            'pt': contentType,
-            'url': window.location.pathname
+            'url'     : window.location.pathname,
+            'edition' : edition,
+            'cat'     : section,
+            'k'       : keywords,
+            'ct'      : contentType,
+            'pt'      : contentType,
+            'p'       : 'ng',
+            'bp'      : detect.getBreakpoint(),
+            'a'       : AudienceScience.getSegments().slice(0, 40) || [],
+            'at'      : Cookies.get('adtest') || ''
         };
     };
 
