@@ -83,7 +83,8 @@ define([
         function detectPressFailure() {
             model.statusPressFailure(false);
 
-            if (model.front()) {
+            // TEMPORARY DISABLE
+            if (false && model.front()) {
                 authedAjax.request({
                     url: '/front/lastmodified/' + model.front()
                 })
