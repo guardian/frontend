@@ -137,7 +137,9 @@ define([
         },
 
         transcludeSeriesContent: function(config, context){
-            new Series(config, qwery('.js-series', context));
+            if ('seriesId' in config.page) {
+                new Series(config, qwery('.js-series', context));
+            }
         },
 
         showTabs: function() {
