@@ -80,18 +80,19 @@
     @include mq(tablet) {
         .lineitem {
             width: 33%;
-            &:nth-child(n+3) {
+            
+            &:nth-child(3) {
                 display: block;
-            }
-            &:nth-child(n+4) {
-                display: none;
             }
         }
     }
     @include mq(rightCol) {
         .lineitem {
-            padding-left: $gs-gutter/2 - 1;
+            @include rem((
+                padding-left: $gs-gutter/2 - 1
+            ));
             width: 25%;
+
             &:nth-child(n+4) {
                 display: block;
             }
