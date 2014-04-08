@@ -16,6 +16,8 @@ define(['knockout'], function(ko) {
             'comment/section'
         ],
 
+        detectPressFailureMs: 10000,
+
         maxFronts: 100,
 
         groups: ['standard,big,very big,huge'],

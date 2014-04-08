@@ -154,4 +154,9 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
     if (Switches.FaciaToolPressSwitch.isSwitchedOn) {
       FrontPressJob.pressByCollectionIds(ids)
     }
+
+  def getLastModified(path: String) = AjaxExpiringAuthentication { request =>
+    val now: Option[String] = S3FrontsApi.getPressedLastModified(path)
+    now.map(Ok(_)).getOrElse(NotFound)
+  }
 }

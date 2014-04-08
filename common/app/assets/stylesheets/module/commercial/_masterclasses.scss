@@ -2,10 +2,103 @@
    Masterclass component
    ========================================================================== */
 
-.masterclasses-component {
+.footer {
+    margin-top: 0 !important;
+}
+
+.commercial--masterclasses {
+    .commercial__head {
+        border-top: 0;
+        background-color: transparent;
+        height: auto;
+    }
     .commercial__title {
-        .em {
-            color: $c-featureDefault;
+        padding: 0;
+        margin: 0;
+        text-transform: lowercase;
+        color: $c-newsDefault;
+        @include fs-headline(2);
+        float: none;
+    }
+    .commercial__title__last-word {
+        font-style: italic;
+        @include rem((
+            margin-left: -5px
+        ));
+    }
+    .commercial__explainer {
+        color: $c-neutral1;
+        @include f-headline;
+        @include font-size(14.5, 19);
+        margin: 0;
+    }
+    .commercial__body {
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .commercial--masterclasses__class {
+        list-style-type: none;
+        border-top: 0;
+        @include box-sizing(border-box);
+        float: left;
+        width: 50%;
+        padding-left: 0;
+        
+        &:nth-child(n+2) {
+            @include rem((
+                padding-left: $gs-gutter/2 - 1
+            ));
+        }
+        
+        &:nth-child(n+3) {
+            display: none;
+        }
+        .commercial--masterclasses__class__date,
+        .commercial--masterclasses__class__meta {
+            @include fs-data(3);
+            color: $c-neutral2;
+        }
+        .commercial--masterclasses__class__date {
+            color: $c-neutral1;
+            font-weight: bold;
+        }
+        .commercial--masterclasses__class__description__link {
+            @include f-bodyHeading;
+            @include font-size(14, 22);
+            color: $c-newsDefault;
+        }
+    }
+    @include mq(tablet) {
+        .commercial--masterclasses__class {
+            @include rem((
+                width: 33%
+            ));
+            
+            &:nth-child(3) {
+                display: block;
+            }
+        }
+    }
+    @include mq(rightCol) {
+        .commercial--masterclasses__class {
+            @include rem((
+                padding-left: $gs-gutter/2 - 1
+            ));
+            @include rem((
+                width: 25%
+            ));
+            
+            &:nth-child(n+4) {
+                display: block;
+            }
+        }
+    }
+    @include mq(leftCol) {
+        .commercial--masterclasses__class {
+            border-left: 1px solid $c-neutral4;
+        }
+        .commercial__title__last-word {
+            margin-left: 0;
         }
     }
     .lineitem__image {
@@ -15,33 +108,9 @@
     }
     .lineitem__link {
         display: block;
+        float: none;
     }
     .lineitem__description {
         margin-top: $gs-baseline/3;
     }
-
-    @include mq($to: tablet) {
-        .commercial__head {
-            background-color: $c-featureDefault;
-
-            .commercial__title {
-                .em {
-                    color: #ffffff;
-                    color: rgba(#ffffff, .8);
-                }
-            }
-        }
-    }
-
-//    &.commercial--w600 {
-//        .lineitem {
-//            @include box-sizing(border-box);
-//            padding-right: $gs-gutter/2;
-//            width: 25%;
-//            float: left;
-//        }
-//        .lineitem__image {
-//            float: none;
-//        }
-//    }
 }
