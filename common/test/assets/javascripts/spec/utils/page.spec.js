@@ -14,9 +14,9 @@ define([
             config.page.series = '';
             config.isLiveBlog = false;
         }
+        beforeEach(reset);
 
         describe ('isMatch', function() {
-            beforeEach(reset);
 
             it('should callback on match reports', function() {
                 // Report
@@ -66,8 +66,6 @@ define([
 
 
         describe('isClockwatch', function() {
-            beforeEach(reset);
-
             it ('should not callback on non-clockwatch series', function() {
                 config.page.series = 'Blogger of the week (Cities)';
                 page.isClockwatch(cb);
@@ -82,8 +80,6 @@ define([
         });
 
         describe('isLiveClockwatch', function() {
-            beforeEach(reset);
-
             it ('should not callback on non-live clockwatches', function() {
                 config.page.series = 'Clockwatch';
                 config.page.isLive = false;
