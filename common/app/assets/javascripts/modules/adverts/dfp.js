@@ -119,7 +119,7 @@ define([
             keywords = '';
         }
 
-        return {
+        var targets = {
             'url'     : window.location.pathname,
             'edition' : edition,
             'cat'     : section,
@@ -131,6 +131,17 @@ define([
             'a'       : AudienceScience.getSegments().slice(0, 40) || [],
             'at'      : Cookies.get('adtest') || ''
         };
+
+        var criteoSegmentString = Cookies.get("cto2_guardian");
+        if (criteoSegmentString !== null) {
+            var criteoSegments = decodeURIComponent(criteoSegmentString).split('&');
+            for (var i = 0; i < criteoSegments.length; i++) {
+                var segmentKv = criteoSegments[i].split('=');
+                targets[segmentKv[0]] = segmentKv[1];
+            }
+        }
+
+        return targets;
     };
 
     DFP.prototype.setPageTargetting = function() {
