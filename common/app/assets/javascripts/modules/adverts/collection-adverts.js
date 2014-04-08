@@ -1,14 +1,10 @@
 define([
     'common/$',
-    'common/common',
     'bonzo',
-    'bean',
     'lodash/objects/assign'
 ], function (
     $,
-    common,
     bonzo,
-    bean,
     _assign
 ) {
 
@@ -34,7 +30,7 @@ define([
 
     CollectionAdverts.prototype.init = function() {
         if (!this.config.switches.standardAdverts) {
-            return;
+            return false;
         }
         // get the potential ad slots
         $slots = $(this.config.selector)
