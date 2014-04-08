@@ -15,14 +15,7 @@
 .from-content-api,
 .from-content-api .block-elements {
 
-    @include fs-bodyCopy(3);
     color: $c-neutral1;
-
-    @include mq(desktop) {
-        @include rem((
-            line-height: 28px
-        ));
-    }
 
     > p,
     ul,
