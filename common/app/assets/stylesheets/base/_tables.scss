@@ -14,7 +14,7 @@ td {
     th,
     td,
     thead td {
-        @include fs-data(4, true);
+        @include fs-textsans(1, true);
         @include rem((
             padding: $table-baseline*2
         ));
@@ -42,7 +42,7 @@ td {
 
     th,
     td {
-        @include fs-data(5);
+        @include fs-textsans(3);
         vertical-align: top;
     }
 
@@ -71,7 +71,7 @@ td {
         th,
         td,
         thead td {
-            @include fs-data(4, true);
+            @include fs-textsans(1, true);
         }
     }
 }

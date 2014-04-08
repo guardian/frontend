@@ -7,7 +7,9 @@
     }
 
     .football-stat--form {
-        min-width: 0;
+        @include rem((
+            min-width: $gs-gutter*3
+        ));
     }
 }
 
