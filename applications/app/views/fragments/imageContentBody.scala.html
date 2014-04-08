@@ -12,6 +12,7 @@
                  itemprop="mainContentOfPage" itemscope itemtype="@image.schemaType" role="main">
             <div class="article__inner article__inner--head">
                 <header class="article__head">
+                    @fragments.meta.seriesInline(image)
                     @fragments.headline(image.headline)
 
                     @fragments.standfirst(image)

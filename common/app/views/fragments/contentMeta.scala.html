@@ -7,19 +7,21 @@
     }
 }
 
+@metaBody() = {
+    @byline(content)
+    @fragments.meta.dateline(content.webPublicationDate, secondary=true)
+    <div class="js-comment-count"></div>
+}
+
 <div class="article__meta-container u-cf@if(content.byline.isEmpty){ article__meta-container--no-byline}">
     @if(content.hasLargeContributorImage) {
         <div class="media__img meta__image">
             @fragments.meta.bylineImage(content)
         </div>
         <div class="media__body meta__body">
-            @byline(content)
-            @fragments.meta.dateline(content.webPublicationDate, secondary=true)
-            <div class="js-comment-count"></div>
+            @metaBody()
         </div>
     } else {
-        @byline(content)
-        @fragments.meta.dateline(content.webPublicationDate, secondary=true)
-        <div class="js-comment-count"></div>
+        @metaBody()
     }
 </div>
