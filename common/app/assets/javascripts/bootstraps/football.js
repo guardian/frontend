@@ -29,65 +29,80 @@ define([
 ) {
     context = context();
 
-    function init() {
-        page.isMatch(function(match) {
-            var $h = $('.article__headline', context),
-                matchInfo = new MatchInfo(match, config.page.pageId),
-                scoreBoard = new ScoreBoard(),
-                scoreContainer = bonzo.create(
-                    '<div class="score__container">'+
-                        '<div class="score__loading'+ (config.page.isLiveBlog ? ' score__loading--live':'') +'">'+
-                            '<div class="loading__text">Fetching the scores…</div>'+
-                            '<div class="is-updating"></div>'+
-                        '</div>'+
-                    '</div>')[0];
-
-            $h.before(scoreContainer);
-            if (config.page.isLiveBlog){
-                $h.addClass('u-h');
-            }
-
-            matchInfo.fetch().then(function(resp) {
-                var $nav = $.create(resp.nav).first().each(function(nav) {
-                    if (match.id || $('.tabs__tab', nav).length > 2) {
-                        $('.after-header', context).append(nav);
-                    }
-                });
-
-                if (!match.id) { // match.id only exists on match stat pages
-                    scoreContainer.innerHTML = '';
-                    scoreBoard.template = config.page.isLiveBlog ? resp.matchSummary : resp.scoreSummary;
-
-                    // only show scores on liveblogs or started matches
-                    if(!/^\s+$/.test(scoreBoard.template) && (config.page.isLiveBlog || resp.hasStarted)) {
-                        scoreBoard.render(scoreContainer);
-
-                        $('.tab--min-by-min a', $nav).first().each(function(el) {
-                            bonzo(scoreBoard.elem).addClass('u-fauxlink');
-                            bean.on(scoreBoard.elem, 'click', function() {
-                                window.location = el.getAttribute('href');
-                            });
-                        });
-                    }
-
-                    if (resp.hasStarted) {
-                        var statsUrl = $('.tab--stats a', $nav).attr('href').replace(/^.*\/\/[^\/]+/, ''),
-                            statsContainer = bonzo.create('<div class="match-stats__container"></div>'),
-                            matchStats = new MatchStats(statsUrl);
-
-                        page.rightHandComponentVisible(function() {
-                            rhc.addComponent(statsContainer, 3);
-                        }, function() {
-                            $('.article-body', context).after(statsContainer);
-                        });
-                        matchStats.fetch(statsContainer).then(function() {
-                            $('.js-chart', statsContainer).each(function(el) {
-                                new Doughnut().render(el);
-                            });
-                        });
-                    }
+    function renderNav(match, callback) {
+        var matchInfo = new MatchInfo(match, config.page.pageId);
+        return matchInfo.fetch().then(function(resp) {
+            var $nav = $.create(resp.nav).first().each(function(nav) {
+                if (match.id || $('.tabs__tab', nav).length > 2) {
+                    $('.after-header', context).append(nav);
                 }
             });
+
+            if (callback) {
+                callback(resp, $nav);
+            } // The promise chain is broken as Reqwest doesn't allow for creating more than 1 argument.
+        });
+    }
+
+    function init() {
+        page.isMatch(function(match) {
+            if (match.pageType === 'stats') {
+                renderNav(match);
+            } else {
+                var $h = $('.article__headline', context),
+                    scoreBoard = new ScoreBoard(),
+                    scoreContainer = bonzo.create(
+                        '<div class="score__container">'+
+                            '<div class="score__loading'+ (match.pageType !== 'report' ? ' score__loading--live':'') +'">'+
+                                '<div class="loading__text">Fetching the scores…</div>'+
+                                '<div class="is-updating"></div>'+
+                            '</div>'+
+                        '</div>'
+                    )[0];
+
+                $h.before(scoreContainer);
+                if (match.pageType !== 'report') {
+                    $h.addClass('u-h');
+                }
+
+                renderNav(match, function(resp, $nav) {
+                    if (match.pageType !== 'stats') {
+                        scoreContainer.innerHTML = '';
+                        scoreBoard.template = match.pageType === 'report' ? resp.scoreSummary : resp.matchSummary;
+
+                        // only show scores on liveblogs or started matches
+                        if(!/^\s+$/.test(scoreBoard.template) && (config.page.isLiveBlog || resp.hasStarted)) {
+                            scoreBoard.render(scoreContainer);
+
+                            if (match.pageType === 'report') {
+                                $('.tab--min-by-min a', $nav).first().each(function(el) {
+                                    bonzo(scoreBoard.elem).addClass('u-fauxlink');
+                                    bean.on(scoreBoard.elem, 'click', function() {
+                                        window.location = el.getAttribute('href');
+                                    });
+                                });
+                            }
+                        }
+
+                        if (resp.hasStarted) {
+                            var statsUrl = $('.tab--stats a', $nav).attr('href').replace(/^.*\/\/[^\/]+/, ''),
+                                statsContainer = bonzo.create('<div class="match-stats__container"></div>'),
+                                matchStats = new MatchStats(statsUrl);
+
+                            page.rightHandComponentVisible(function() {
+                                rhc.addComponent(statsContainer, 3);
+                            }, function() {
+                                $('.article-body', context).after(statsContainer);
+                            });
+                            matchStats.fetch(statsContainer).then(function() {
+                                $('.js-chart', statsContainer).each(function(el) {
+                                    new Doughnut().render(el);
+                                });
+                            });
+                        }
+                    }
+                });
+            }
         });
 
         page.isCompetition(function(competition) {
