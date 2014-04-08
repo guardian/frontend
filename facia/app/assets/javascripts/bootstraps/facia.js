@@ -10,8 +10,7 @@ define([
     'common/utils/to-array',
     'common/modules/ui/collection-show-more',
     'modules/ui/container-show-more',
-    'modules/ui/container-toggle',
-    'common/modules/adverts/collection-adverts'
+    'modules/ui/container-toggle'
 ], function (
     $,
     mediator,
@@ -22,8 +21,7 @@ define([
     toArray,
     CollectionShowMore,
     ContainerShowMore,
-    ContainerToggle,
-    CollectionAdverts
+    ContainerToggle
 ) {
 
     var modules = {
@@ -62,11 +60,8 @@ define([
                     new ContainerToggle(container).addToggle();
                 });
             });
-        },
-
-        renderAdvertSlots: function(config) {
-            new CollectionAdverts(config).init();
         }
+
     };
 
     var ready = function (config, context) {
@@ -74,7 +69,6 @@ define([
             this.initialised = true;
             modules.showCollectionShowMore();
             modules.showContainerToggle();
-            modules.renderAdvertSlots(config);
         }
         mediator.emit('page:front:ready', config, context);
     };

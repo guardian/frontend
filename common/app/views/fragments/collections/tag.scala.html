@@ -43,7 +43,7 @@
             }
             @defining(items.slice(baguetteCount + 6, baguetteCount + 14)) { items =>
                 @if(items.nonEmpty) {
-                    <div class="collection-wrapper collection-wrapper--position-2 tone-@{style.tone}" data-tone="@style.tone">
+                    <div class="collection-wrapper collection-wrapper--position-2 collection-wrapper--ad">
                         <ul class="l-columns linkslist linkslist--with-images">
                             @items.zipWithIndex.map{ case (trail, index) =>
                                 @trail match {
