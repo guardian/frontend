@@ -60,6 +60,10 @@ define([
                     new ContainerToggle(container).addToggle();
                 });
             });
+        },
+
+        renderAdvertSlots: function() {
+
         }
     };
 
@@ -68,6 +72,7 @@ define([
             this.initialised = true;
             modules.showCollectionShowMore();
             modules.showContainerToggle();
+            modules.renderAdvertSlots(config);
         }
         mediator.emit('page:front:ready', config, context);
     };

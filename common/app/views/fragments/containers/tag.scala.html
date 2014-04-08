@@ -1,4 +1,4 @@
-@(page: MetaData, config: Config, collection: Collection, style: Container, containerIndex: Int, pagination: Option[Pagination] = None)(implicit request: RequestHeader, templateDeduping: TemplateDeduping)
+@(page: MetaData, config: Config, collection: Collection, style: NewsContainer, containerIndex: Int, pagination: Option[Pagination] = None)(implicit request: RequestHeader, templateDeduping: TemplateDeduping)
 
 @if(collection.items.nonEmpty) {
     <section
@@ -28,7 +28,7 @@
         </div>
         <div class="container__body">
             @fragments.contributor(page)
-            @fragments.collections.news(collection.items, style, containerIndex)
+            @fragments.collections.tag(collection.items, style, containerIndex)
         </div>
         @pagination.map{ paginate => @fragments.pagination(page, paginate)}
     </section>
