@@ -42,6 +42,9 @@
                     width: 66%;
                 }
                 .item__title {
+                    @include rem((
+                        min-height: $gs-baseline*4
+                    ));
                     @include fs-headline(3, true);
                 }
             }
