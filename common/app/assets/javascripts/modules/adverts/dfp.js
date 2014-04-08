@@ -9,6 +9,7 @@ define([
     'common/utils/detect',
     'common/utils/mediator',
     'common/modules/analytics/commercial/tags/common/audience-science',
+    'common/modules/analytics/commercial/tags/common/audience-science-gateway',
     'common/modules/analytics/commercial/tags/common/criteo',
     'common/modules/adverts/userAdTargeting',
     'common/modules/adverts/query-string',
@@ -24,6 +25,7 @@ define([
     detect,
     mediator,
     AudienceScience,
+    AudienceScienceGateway,
     Criteo,
     UserAdTargeting,
     queryString,
@@ -130,9 +132,10 @@ define([
             'pt'      : contentType,
             'p'       : 'ng',
             'bp'      : detect.getBreakpoint(),
-            'a'       : AudienceScience.getSegments().slice(0, 40) || [],
+            'a'       : AudienceScience.getSegments(),
             'at'      : Cookies.get('adtest') || ''
         };
+        AudienceScienceGateway.addSegments(this.config, targets);
         Criteo.addSegments(targets);
 
         return targets;
