@@ -69,8 +69,8 @@ case class EventbriteMasterClass(id: String,
     val priceList = tickets.map(_.price).sorted.distinct
     if (priceList.size > 1) {
       val (low, high) = (priceList.head, priceList.last)
-      f"$low%,.2f to $high%,.2f"
-    } else f"${priceList.head}%,.2f"
+      f"£$low%,.2f to £$high%,.2f"
+    } else f"£${priceList.head}%,.2f"
   }
 
   def isTargetedAt(segment: Segment) = segment.context.isInSection("music")
