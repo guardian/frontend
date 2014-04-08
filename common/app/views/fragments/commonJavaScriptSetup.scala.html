@@ -40,7 +40,7 @@
             'ophan/ng': '@{Configuration.javascript.config("ophanJsUrl")}',
             outbrain: '@Static("javascripts/vendor/outbrain.js")',
             foresee: '@Static("javascripts/vendor/foresee/foresee-trigger.js")',
-            googletag: 'http://www.googletagservices.com/tag/js/gpt.js'
+            googletag: '@{Configuration.javascript.config("googletagJsUrl")}'
         }
     };
 

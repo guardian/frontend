@@ -75,9 +75,6 @@ module.exports = function (grunt) {
                         },
                         omniture: {
                             exports: 's'
-                        },
-                        googletag: {
-                            exports: 'googletag'
                         }
                     },
                     wrap: {

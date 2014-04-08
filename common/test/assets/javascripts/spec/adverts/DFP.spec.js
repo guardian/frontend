@@ -45,16 +45,14 @@ define([
 
         beforeEach(function() {
             fixtures.render(conf);
-
-            dfp = new DFP();
-
             style = $.create('<style type="text/css"></style>')
                 .html('body:after{ content: "wide"}')
                 .appendTo('head');
+            dfp = new DFP();
         });
 
         afterEach(function() {
-            fixtures.clean();
+            fixtures.clean(conf.id);
             style.remove();
             dfp.destroy();
             window.googletag = null;
