@@ -14,7 +14,6 @@ define([
             config.page.series = '';
             config.isLiveBlog = false;
         }
-        beforeEach(reset);
 
         describe ('isMatch', function() {
             beforeEach(reset);
@@ -100,7 +99,6 @@ define([
             });
         });
 
-        xdescribe('isCompetition'); // this isn't implemented properly, so left out for now
     });
 
 });

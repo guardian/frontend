@@ -30,8 +30,7 @@ define([
     context = context();
 
     function renderNav(match, callback) {
-        var matchInfo = new MatchInfo(match, config.page.pageId);
-        return matchInfo.fetch().then(function(resp) {
+        return (new MatchInfo(match, config.page.pageId)).fetch().then(function(resp) {
             var $nav = $.create(resp.nav).first().each(function(nav) {
                 if (match.id || $('.tabs__tab', nav).length > 2) {
                     $('.after-header', context).append(nav);
