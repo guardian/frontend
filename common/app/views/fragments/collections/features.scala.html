@@ -13,7 +13,7 @@
 </div>
 @defining(items.slice(3, 11)) { items =>
     @if(items.nonEmpty) {
-        <div class="collection-wrapper collection-wrapper--position-2" collection-wrapper--ad">
+        <div class="collection-wrapper collection-wrapper--position-2 collection-wrapper--ad">
                 <ul class="l-columns linkslist features__columns">
                     @items.zipWithIndex.map{ case (trail, index) =>
                         @trail match {

@@ -10,7 +10,8 @@ define([
     'common/utils/to-array',
     'common/modules/ui/collection-show-more',
     'modules/ui/container-show-more',
-    'modules/ui/container-toggle'
+    'modules/ui/container-toggle',
+    'common/modules/adverts/collection-adverts'
 ], function (
     $,
     mediator,
@@ -21,7 +22,8 @@ define([
     toArray,
     CollectionShowMore,
     ContainerShowMore,
-    ContainerToggle
+    ContainerToggle,
+    CollectionAdverts
 ) {
 
     var modules = {
@@ -62,8 +64,8 @@ define([
             });
         },
 
-        renderAdvertSlots: function() {
-
+        renderAdvertSlots: function(config) {
+            new CollectionAdverts(config).init();
         }
     };
 
