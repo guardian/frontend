@@ -61,7 +61,9 @@
 
     @include mq(leftCol) {
         .container__title {
-            margin-bottom: gs-height(1);
+            @include rem((
+                margin-bottom: gs-height(1)
+            ));
         }
     }
 }

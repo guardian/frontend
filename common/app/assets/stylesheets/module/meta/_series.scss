@@ -21,15 +21,21 @@
     .series-meta__label,
     .series-meta__item {
         display: inline-block;
-        margin-right: $gs-gutter/10;
+        @include rem((
+            margin-right: $gs-gutter/10
+        ));
     }
 
     @include mq(tablet){
-        margin: 0 0 $gs-baseline/2 0;
+        @include rem((
+            margin: 0 0 $gs-baseline/2
+        ));
     }
 
     @include mq($from: tablet, $to: leftCol) {
-        padding-top: $gs-baseline/2;
+        @include  rem((
+            padding-top: $gs-baseline/2
+        ));
         border-top: 1px dotted $c-neutral5;
     }
 }
