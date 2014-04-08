@@ -5,21 +5,18 @@ define([
     'common/modules/analytics/mvt-cookie',
 
     //Current tests
-    'common/modules/experiments/tests/external-links-new-window',
-    'common/modules/experiments/tests/abcd'
+    'common/modules/experiments/tests/external-links-new-window'
 ], function (
     common,
     store,
     mediator,
     mvtCookie,
 
-    ExternalLinksNewWindow,
-    Abcd
+    ExternalLinksNewWindow
     ) {
 
     var TESTS = [
-            new ExternalLinksNewWindow(),
-            new Abcd()
+            new ExternalLinksNewWindow()
        ],
        participationsKey = 'gu.ab.participations';
 

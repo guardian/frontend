@@ -308,11 +308,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 4, 28)
   )
 
-  val ABAbcd = Switch("A/B Tests", "ab-abcd",
-    "If this switch is on, an AB test runs to validate the collection ab test data",
-    safeState = Off, sellByDate = new DateMidnight(2014, 4, 28)
-  )
-
   // Dummy Switches
 
   val IntegrationTestSwitch = Switch("Unwired Test Switch", "integration-test-switch",
@@ -431,7 +426,6 @@ object Switches extends Collections {
     EnhanceTweetsSwitch,
     IndiaRegionSwitch,
     ABExternalLinksNewWindow,
-    ABAbcd,
     MemcachedSwitch,
     IncludeBuildNumberInMemcachedKey
   )
