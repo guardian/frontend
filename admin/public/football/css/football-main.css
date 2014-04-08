@@ -131,3 +131,8 @@ label[for] {
 .loading {
     background: url("/assets/internal/images/ajax-loader.gif") right center no-repeat;
 }
+
+.front-embed-container {
+    margin: 20px auto 0 auto;
+    width: 313px;
+}
