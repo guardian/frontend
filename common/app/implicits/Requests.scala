@@ -28,5 +28,7 @@ trait Requests {
     }
 
     lazy val hasParameters: Boolean = !r.queryString.isEmpty
+
+    lazy val isHealthcheck: Boolean = r.headers.keys.exists(_ equalsIgnoreCase  "X-Gu-Management-Healthcheck")
   }
 }

@@ -22,7 +22,7 @@ trait S3 extends Logging {
 
   lazy val client = {
     val client = new AmazonS3Client(Configuration.aws.credentials)
-    client.setEndpoint("s3-eu-west-1.amazonaws.com")
+    client.setEndpoint(AwsEndpoints.s3)
     client
   }
 
@@ -86,6 +86,9 @@ object S3FrontsApi extends S3 {
   val namespace = "frontsapi"
   lazy val location = s"$stage/$namespace"
 
+  def getPressedKeyForPath(path: String): String =
+    s"$location/pressed/$path/pressed.json"
+
   def getSchema = get(s"$location/schema.json")
   def getConfig(id: String) = get(s"$location/config/$id/config.json")
   def getMasterConfig: Option[String] = get(s"$location/config/config.json")
@@ -122,8 +125,11 @@ object S3FrontsApi extends S3 {
   def getConfigIds(prefix: String): List[String] = getListing(prefix, "/config.json")
   def getCollectionIds(prefix: String): List[String] = getListing(prefix, "/collection.json")
 
-  def putPressedJson(id: String, json: String) =
-    putPrivate(s"$location/pressed/$id/pressed.json", json, "application/json")
+  def putPressedJson(path: String, json: String) =
+    putPrivate(getPressedKeyForPath(path), json, "application/json")
+
+  def getPressedLastModified(path: String): Option[String] =
+    getLastModified(getPressedKeyForPath(path)).map(_.toString)
 }
 
 trait SecureS3Request extends implicits.Dates with Logging {

@@ -1,4 +1,5 @@
 @(items: Seq[Trail], style: PeopleContainer, containerIndex: Int)(implicit request: RequestHeader)
+@import conf.Switches._
 
 <div class="collection-wrapper collection-wrapper--position-1">
     <ul class="u-unstyled l-row l-row--items-3 collection">
@@ -26,12 +27,14 @@
                                 }
                             }
                         </ul>
-            @style.adSlot.map { adSlot =>
+            @if(StandardAdvertsSwitch.isSwitchedOn) {
+                @style.adSlot.map { adSlot =>
                     </li>
                     <li class="l-row__item l-row__item--mpu">
-                        @fragments.containerInlineAdSlot(adSlot=adSlot)
+                        @fragments.commercial.standardAd(name=adSlot.dfpName, adType="container-inline", sizeMapping=Map("mobile" -> Seq("300,50"), "tabletportrait" -> Seq("300,250")))
                     </li>
                 </ul>
+                }
             }
         </div>
     }

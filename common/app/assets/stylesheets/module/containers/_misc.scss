@@ -60,15 +60,14 @@
 
     @if $browser-supports-flexbox {
         @include mq(tablet, desktop) {
-            .ad-slot__oas,
-            .ad-slot__dfp {
+            .ad-slot--dfp {
                 margin-left: 0;
             }
 
             // Shrink ad to fit a row item (3 grid columns on tablet)
             // 1. scale ad down to $mpu-target-width
             // 2. scale origin is the bottom right corner
-            .ad-container {
+            .ad-slot__container {
                 -webkit-transform: scale($mpu-scale-ratio); // 1
                 -moz-transform: scale($mpu-scale-ratio); // 1
                 transform: scale($mpu-scale-ratio); // 1

@@ -16,7 +16,7 @@
             <h2 class="commercial__title">Guardian <span class="commercial__title__last-word">jobs</span></h2>
             <a href="@AdLink{@jobsHost/jobs}"
                 class="commercial__home-link"
-                data-link-name="merchandising-jobs-v@{version}_@{date}-low-profile-browse-all-jobs">
+                data-link-name="merchandising-jobs-v@{version}_@{date}-low-browse-all-jobs">
                 Browse all jobs
                 <span class="commercial__home-link__cta">
                     <span class="i i-filter-arrow-down"></span>
@@ -31,7 +31,7 @@
                     Seq("social-care", "Social care"),
                     Seq("charity", "Charity"),
                     Seq("health", "Health"),
-                    Seq("higher-education", "Higher ed"),
+                    Seq("higher-education", "Higher education"),
                     Seq("environment", "Environment"),
                     Seq("housing", "Housing"),
                     Seq("schools", "Schools"),
@@ -42,7 +42,7 @@
                     <li class="commercial--jobs__sector">
                         <a href="@AdLink{@jobsHost/@sector(0)}"
                            class="commercial--jobs__sector__link"
-                           data-link-name="merchandising-jobs-v@{version}_@{date}-low-profile-sector-@if(sector(0).nonEmpty){sector(0)}else{all}">
+                           data-link-name="merchandising-jobs-v@{version}_@{date}-low-sector-@if(sector(0).nonEmpty){sector(0)}else{all}">
                             @sector(1) <span class="i i-double-chevron"></span>
                         </a>
                     </li>
@@ -54,7 +54,7 @@
                         <li class="commercial--jobs__job">
                             <a href="@AdLink{@job.listingUrl}"
                                class="commercial--jobs__job__link"
-                               data-link-name="merchandising-jobs-v@{version}_@{date}-low-profile-job-@{job.id}">
+                               data-link-name="merchandising-jobs-v@{version}_@{date}-low-job-@{job.id}">
                                 <h3 class="commercial--jobs__job__title">@job.title</h3>
                                 <img src="@job.recruiterLogoUrl" class="commercial--jobs__job__logo" />
                             </a>

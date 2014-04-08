@@ -19,6 +19,7 @@ define([
     'common/utils/detect',
     'common/modules/onward/popular',
     'common/modules/onward/related',
+    'common/modules/onward/series-content',
     'common/modules/ui/images',
     'common/modules/navigation/profile',
     'common/modules/navigation/sections',
@@ -29,7 +30,6 @@ define([
     'common/modules/analytics/clickstream',
     'common/modules/analytics/omniture',
     'common/modules/analytics/scrollDepth',
-    'common/modules/adverts/adverts',
     'common/utils/cookies',
     'common/modules/analytics/omnitureMedia',
     'common/modules/analytics/livestats',
@@ -66,6 +66,7 @@ define([
     detect,
     popular,
     Related,
+    Series,
     images,
     Profile,
     Sections,
@@ -77,7 +78,6 @@ define([
     Clickstream,
     Omniture,
     ScrollDepth,
-    Adverts,
     Cookies,
     OmnitureMedia,
     liveStats,
@@ -134,6 +134,10 @@ define([
             mediator.on('page:common:ready', function(config, context) {
                 popular(config, context);
             });
+        },
+
+        transcludeSeriesContent: function(config, context){
+            new Series(config, qwery('.js-series', context));
         },
 
         showTabs: function() {
@@ -240,67 +244,56 @@ define([
         },
 
         loadAdverts: function (config) {
-            // Having to check 3 switches for ads so that DFP and OAS can run in parallel
-            // with each other and still have a master switch to turn off all adverts
-            if(!userPrefs.isOff('adverts') && config.switches.adverts && !config.page.shouldHideAdverts && !config.page.isSSL) {
 
-                var hasAdsToLoad = config.switches.oasAdverts || config.switches.dfpAdverts,
-                    onResize = {
+            var showAds =
+                !userPrefs.isOff('adverts') &&
+                !config.page.shouldHideAdverts &&
+                !config.page.isSSL &&
+                (
+                    config.switches.standardAdverts || config.switches.commercialComponents
+                );
+
+            if (showAds) {
+
+                var onResize = {
                         cmd: [],
-                        execute: function() {
-                            hasBreakpointChanged(function() {
-                                onResize.cmd.forEach(function(func) {
+                        execute: function () {
+                            hasBreakpointChanged(function () {
+                                onResize.cmd.forEach(function (func) {
                                     func();
                                 });
                             });
                         }
-                    };
+                    },
+                    dfpAds,
+                    options = {};
 
-                // If either OAS or DFP is switched on, and it's an article
-                // excluding live blogs, then create our inline adverts
-                if(hasAdsToLoad && config.page.contentType === 'Article' && !config.page.isLiveBlog) {
+                // if it's an article, excluding live blogs, create our inline adverts
+                if (config.switches.standardAdverts && config.page.contentType === 'Article' && !config.page.isLiveBlog) {
                     new ArticleBodyAdverts().init();
                 }
 
-                if(config.switches.oasAdverts) {
-                    onResize.cmd.push(Adverts.reload);
-
-                    mediator.on('page:common:deferred:loaded', function(config, context) {
-                        Adverts.init(config, context);
-                    });
-                    mediator.on('modules:adverts:docwrite:loaded', Adverts.load);
-                } else {
-                    Adverts.hideAds();
+                if (!config.switches.standardAdverts) {
+                    options.dfpSelector = '.ad-slot--commercial-component';
+                } else if (!config.switches.commercialComponents) {
+                    options.dfpSelector = '.ad-slot--dfp:not(.ad-slot--commercial-component)';
                 }
 
-                if(config.switches.dfpAdverts) {
-                    var dfpAds,
-                        options = {};
+                dfpAds = new DFP(extend(config, options));
+                dfpAds.init();
+                onResize.cmd.push(dfpAds.reload);
 
-                    if(config.switches.loadOnlyCommercialComponents) {
-                        options.dfpSelector = '.ad-slot__commercial-component';
-                    }
-
-                    dfpAds = new DFP(extend(config, options));
-                    dfpAds.init();
-                    onResize.cmd.push(dfpAds.reload);
-                }
-
-                if(hasAdsToLoad) {
-                    // Push the reloaded command once
-                    onResize.cmd.push(function() {
-                        mediator.emit('modules:adverts:reloaded');
-                    });
-                    mediator.on('window:resize', debounce(onResize.execute.bind(this), 2000));
-                }
-            } else {
-                Adverts.hideAds();
+                // Push the reloaded command once
+                onResize.cmd.push(function () {
+                    mediator.emit('modules:adverts:reloaded');
+                });
+                mediator.on('window:resize', debounce(onResize.execute.bind(this), 2000));
             }
         },
 
         loadVideoAdverts: function() {
             mediator.on('page:common:ready', function(config, context) {
-                if(config.switches.adverts && config.switches.videoAdverts && !config.page.blockVideoAds) {
+                if (config.switches.videoAdverts && !config.page.blockVideoAds) {
                     Array.prototype.forEach.call(context.querySelectorAll('video'), function(el) {
                         var support = detect.getVideoFormatSupport();
                         new VideoAdvert({
@@ -476,7 +469,7 @@ define([
 
         loadCommercialComponent: function(config) {
             var commercialComponent = /^#commercial-component=(.*)$/.exec(window.location.hash),
-                slot = qwery('.ad-slot__commercial-component').shift();
+                slot = qwery('[data-name="merchandising"]').shift();
             if (commercialComponent && slot) {
                 new CommercialLoader({ config: config })
                     .init(commercialComponent[1], slot);
@@ -496,6 +489,7 @@ define([
                 modules.cleanupCookies(context);
                 modules.runAbTests(config, context);
                 modules.transcludeRelated(config, context);
+                modules.transcludeSeriesContent(config, context);
                 modules.initRightHandComponent(config, context);
                 modules.loadCommercialComponent(config, context);
             }

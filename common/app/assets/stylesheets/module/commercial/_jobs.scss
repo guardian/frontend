@@ -2,6 +2,12 @@
    Jobs component
    ========================================================================== */
 
+/* remove top margin on the footer to make component sit on top of it as per design */
+
+.footer {
+    margin-top: 0 !important;
+}
+
 .commercial--jobs {
     .commercial__head {
         background-color: transparent;

@@ -115,7 +115,12 @@ define([
             url: vars.CONST.apiBase + '/collection/'+ (goLive ? 'publish' : 'discard') + '/' + this.id
         })
         .then(function() {
-            self.load();
+            self.load()
+            .then(function(){
+                if (goLive) {
+                    vars.model.deferredDetectPressFailure();
+                }
+            });
         });
     };
 
@@ -128,6 +133,11 @@ define([
                 item:       item.id,
                 live:       vars.state.liveMode(),
                 draft:     !vars.state.liveMode()
+            }
+        })
+        .then(function() {
+            if(vars.state.liveMode()) {
+                vars.model.deferredDetectPressFailure();
             }
         });
     };

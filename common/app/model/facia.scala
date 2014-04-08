@@ -16,6 +16,8 @@ object Config {
     = Config(id, contentApiQuery, displayName, `type`, Nil, None)
   def apply (id: String, displayName: Option[String]): Config
     = Config(id, None, displayName, None, Nil, None)
+  def apply (id: String, displayName: Option[String], href: Option[String]): Config
+    = Config(id, None, displayName, href, Nil, None)
 }
 
 case class Collection(curated: Seq[Content],
@@ -39,3 +41,11 @@ object Collection {
 case class FaciaPage(
                    id: String,
                    collections: List[(Config, Collection)])
+
+object FaciaComponentName {
+  def apply(config: Config, collection: Collection): String = {
+    config.displayName.orElse(collection.displayName).map { title =>
+      title.toLowerCase.replace(" ", "-")
+    }.getOrElse("no-name")
+  }
+}
