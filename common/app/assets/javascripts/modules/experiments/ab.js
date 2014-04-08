@@ -19,18 +19,18 @@ define([
 
     ExternalLinksNewWindow,
     Abcd,
-    BlendedContainersUK,
-    BlendedContainersUS,
-    BlendedContainersAU,
+    BlendedContainersUk,
+    BlendedContainersUs,
+    BlendedContainersAu,
     FootballLiveblogTruncation
 ) {
 
     var TESTS = [
             new ExternalLinksNewWindow(),
             new Abcd(),
-            new BlendedContainersUK(),
-            new BlendedContainersUS(),
-            new BlendedContainersAU(),
+            new BlendedContainersUk(),
+            new BlendedContainersUs(),
+            new BlendedContainersAu(),
             new FootballLiveblogTruncation()
        ],
        participationsKey = 'gu.ab.participations';

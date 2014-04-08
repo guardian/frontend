@@ -27,7 +27,7 @@ define([
     var hideNew = hide.bind(null, newContainers);
     
     return function() {
-        this.id = 'BlendedContainersUK';
+        this.id = 'BlendedContainersUk';
         this.expiry = '2014-04-18';
         this.audience = 1;
         this.audienceOffset = 0.0;
