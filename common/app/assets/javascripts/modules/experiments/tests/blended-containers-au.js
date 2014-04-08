@@ -5,18 +5,18 @@ define([
 ) {
 
     var oldContainers = [
-           'uk/commentisfree/regular-stories',
-           'uk/culture/regular-stories',
-           'uk/business/regular-stories',
-           'uk/lifeandstyle/regular-stories',
-           'uk/technology/regular-stories',
-           'uk/money/regular-stories',
-           'uk/travel/regular-stories'
+           'au/commentisfree/regular-stories',
+           'au/culture/regular-stories',
+           'au/business/regular-stories',
+           'au/lifeandstyle/regular-stories',
+           'au/technology/regular-stories',
+           'au/money/regular-stories',
+           'au/travel/regular-stories'
         ],
 
         newContainers = [
-            'uk-alpha/contributors/feature-stories',
-            'uk-alpha/people-in-the-news/feature-stories'
+            'au-alpha/contributors/feature-stories',
+            'au-alpha/people-in-the-news/feature-stories'
         ];
 
     function hide(ids) {
@@ -27,13 +27,13 @@ define([
     var hideNew = hide.bind(null, newContainers);
     
     return function() {
-        this.id = 'BlendedContainers';
-        this.expiry = '2014-04-15';
+        this.id = 'BlendedContainersAU';
+        this.expiry = '2014-04-18';
         this.audience = 1;
         this.audienceOffset = 0.0;
-        this.description = 'Testing new blended containers on the UK network front';
+        this.description = 'Testing new blended containers on the AU network front';
         this.canRun = function() {
-            return ['/uk', '/uk-alpha'].indexOf(window.location.pathname) === 0;
+            return ['/au', '/au-alpha'].indexOf(window.location.pathname) === 0;
         };
         this.variants = [
             {

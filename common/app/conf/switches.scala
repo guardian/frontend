@@ -293,9 +293,19 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 4, 28)
   )
 
-  val ABBlendedContainers = Switch("A/B Tests", "ab-blended-containers",
-    "If this switch is on then the blended containers test runs on the network front",
-    safeState = Off, sellByDate = new DateMidnight(2014, 4, 15)
+  val ABBlendedContainersUK = Switch("A/B Tests", "ab-blended-containers-uk",
+    "If this switch is on then the blended containers test runs on the UK network front",
+    safeState = Off, sellByDate = new DateMidnight(2014, 4, 18)
+  )
+
+  val ABBlendedContainersUS = Switch("A/B Tests", "ab-blended-containers-us",
+    "If this switch is on then the blended containers test runs on the US network front",
+    safeState = Off, sellByDate = new DateMidnight(2014, 4, 18)
+  )
+
+  val ABBlendedContainersAU = Switch("A/B Tests", "ab-blended-containers-au",
+    "If this switch is on then the blended containers test runs on the AU network front",
+    safeState = Off, sellByDate = new DateMidnight(2014, 4, 18)
   )
 
   val FootballLiveblogTruncation = Switch("A/B Tests", "ab-football-liveblog-truncation",
@@ -380,7 +390,9 @@ object Switches extends Collections {
     FacebookAutoSigninSwitch,
     IdentityFormstackSwitch,
     IdentityEthicalAwardsSwitch,
-    ABBlendedContainers,
+    ABBlendedContainersUK,
+    ABBlendedContainersUS,
+    ABBlendedContainersAU,
     ToolDisable,
     ToolConfigurationDisable,
     ToolSparklines,
