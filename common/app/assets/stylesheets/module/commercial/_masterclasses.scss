@@ -81,7 +81,9 @@
     }
     @include mq(rightCol) {
         .commercial--masterclasses__class {
-            padding-left: $gs-gutter/2 - 1;
+            @include rem((
+                padding-left: $gs-gutter/2 - 1
+            ));
             @include rem((
                 width: 25%
             ));
