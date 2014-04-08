@@ -28,7 +28,7 @@ define([
 
     Participation.prototype.prerender = function() {
         var test = this.config.test;
-        this.getElem('opt-out').href = "http://www.theguardian.com/uk#ab-" + test.id + "=notintest";
+        this.getElem('opt-out').href = document.location.origin + "/uk#ab-" + test.id + "=notintest";
 
         var linksContainer = this.getElem('links');
 

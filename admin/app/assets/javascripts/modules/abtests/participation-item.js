@@ -28,7 +28,7 @@ define([
 
     ParticipationItem.prototype.prerender = function() {
         this.elem.textContent = this.config.variant;
-        this.elem.href = "http://www.theguardian.com/uk#ab-" + this.config.test + "=" + this.config.variant;
+        this.elem.href = document.location.origin + "/uk#ab-" + this.config.test + "=" + this.config.variant;
     };
 
     return ParticipationItem;
