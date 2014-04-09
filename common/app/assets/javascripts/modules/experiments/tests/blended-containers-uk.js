@@ -19,7 +19,6 @@ define([
             'uk-alpha/special-other/special-story'
         ];
 
-
     function hide(ids) {
         $([].concat(ids).map(function(id) {return '.container[data-id="' + id + '"]';}).join(',')).addClass('js-hidden');
     }
