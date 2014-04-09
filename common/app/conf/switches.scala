@@ -122,25 +122,31 @@ object Switches extends Collections {
     safeState = On, sellByDate = never
   )
 
+  // Ad Targeting
+
+  val AudienceScienceSwitch = Switch("Ad Targeting", "audience-science",
+    "If this switch is on, Audience Science segments will be used to target ads.",
+    safeState = Off, sellByDate = never)
+
+  val AudienceScienceGatewaySwitch = Switch("Ad Targeting", "audience-science-gateway",
+    "If this switch is on, Audience Science Gateway segments will be used to target ads.",
+    safeState = Off, sellByDate = never)
+
+  val CriteoSwitch = Switch("Ad Targeting", "criteo",
+    "If this switch is on, Criteo segments will be used to target ads.",
+    safeState = Off, sellByDate = never)
+
   // Commercial Tags
 
-  val AudienceScienceSwitch = Switch("Commercial Targeting", "audience-science",
-    "If this switch is on Audience Science segments will be used to target ads.",
-    safeState = Off, sellByDate = never)
-
-  val AudienceScienceGatewaySwitch = Switch("Commercial Targeting", "audience-science-gateway",
-    "If this switch is on Audience Science Gateway segments will be used to target ads.",
-    safeState = Off, sellByDate = never)
-
-  val ImrWorldwideSwitch = Switch("Commercial Targeting", "imr-worldwide",
+  val ImrWorldwideSwitch = Switch("Commercial Tags", "imr-worldwide",
     "Enable the IMR Worldwide audience segment tracking.",
     safeState = Off, sellByDate = profilingEvalDeadline)
 
-  val EffectiveMeasureSwitch = Switch("Commercial Targeting", "effective-measure",
+  val EffectiveMeasureSwitch = Switch("Commercial Tags", "effective-measure",
     "Enable the Effective Measure audience segment tracking.",
     safeState = Off, sellByDate = profilingEvalDeadline)
 
-  val ForeseeSwitch = Switch("Commercial Targeting", "foresee",
+  val ForeseeSwitch = Switch("Commercial Tags", "foresee",
     "Enable Forsee surveys for a sample of our audience",
     safeState = Off, sellByDate = new DateMidnight(2014,5,1)) // 3 month trial
 
@@ -366,6 +372,7 @@ object Switches extends Collections {
     VideoAdvertsSwitch,
     AudienceScienceSwitch,
     AudienceScienceGatewaySwitch,
+    CriteoSwitch,
     DiscussionSwitch,
     OpenCtaSwitch,
     FontSwitch,
