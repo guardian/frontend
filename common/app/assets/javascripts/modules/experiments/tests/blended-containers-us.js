@@ -16,7 +16,8 @@ define([
 
         newContainers = [
             'us-alpha/contributors/feature-stories',
-            'us-alpha/people-in-the-news/feature-stories'
+            'us-alpha/people-in-the-news/feature-stories',
+            'us-alpha/special-other/special-story'
         ];
 
     function hide(ids) {
