@@ -7,6 +7,9 @@ define([
     //Current tests
     'common/modules/experiments/tests/external-links-new-window',
     'common/modules/experiments/tests/abcd',
+    'common/modules/experiments/tests/blended-containers-uk',
+    'common/modules/experiments/tests/blended-containers-us',
+    'common/modules/experiments/tests/blended-containers-au',
     'common/modules/experiments/tests/football-liveblog-truncation'
 ], function (
     common,
@@ -16,12 +19,18 @@ define([
 
     ExternalLinksNewWindow,
     Abcd,
+    BlendedContainersUk,
+    BlendedContainersUs,
+    BlendedContainersAu,
     FootballLiveblogTruncation
 ) {
 
     var TESTS = [
             new ExternalLinksNewWindow(),
             new Abcd(),
+            new BlendedContainersUk(),
+            new BlendedContainersUs(),
+            new BlendedContainersAu(),
             new FootballLiveblogTruncation()
        ],
        participationsKey = 'gu.ab.participations';
