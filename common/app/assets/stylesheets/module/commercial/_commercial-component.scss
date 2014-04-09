@@ -178,15 +178,17 @@
     float: left;
     overflow: hidden;
 
-    .i.i-single-arrow-right-blue {
-        background-position: 6px 4px;
-        border: 1px solid $c-newsDefault;
+    .i.i-arrow-white-down {
+        background-position: 3px 6px;
+        background-color: $c-newsDefault;
         border-radius: 100%;
         margin-right: $gs-gutter/5;
         padding: $gs-baseline/3 $gs-gutter/5;
         width: 8px;
         height: 8px;
         float: left;
+        @include transform(rotate(-90deg));
+        background-size: 10px 5px;
     }
 }
 .lineitem__blocklink:hover {
