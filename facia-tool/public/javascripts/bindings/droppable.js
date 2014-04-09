@@ -72,6 +72,8 @@ define([
                     var targetList = ko.dataFor(element),
                         targetItem = ko.dataFor(event.target),
                         id = event.testData ? event.testData : event.dataTransfer.getData('Text'),
+                        namespace,
+                        queryParams = parseQueryParams(id),
                         sourceItem,
                         position,
                         newItems,
@@ -109,13 +111,21 @@ define([
 
                     position = targetItem && targetItem.id ? targetItem.id : undefined;
 
-                    _.each(parseQueryParams(id), function(url){
-                        if (url && url.match(/^http:\/\/www.theguardian.com/)) {
-                            id = url;
+                    // Parse url from links such as http://www.google.co.uk/?param-name=http://www.theguardian.com/foobar
+                    _.each(queryParams, function(val){
+                        // Grab the last query param val that looks like a Guardian url
+                        if (val && val.match(/^http:\/\/www.theguardian.com/)) {
+                            id = val;
                         }
                     });
 
-                    id = urlAbsPath(id);
+                    if (queryParams['gu-snap-namespace'] && queryParams['gu-snap-id']) {
+                        // Override with snap metadata
+                        namespace = queryParams['gu-snap-namespace'];
+                        id = queryParams['gu-snap-id'];
+                    } else {
+                        id = urlAbsPath(id);
+                    }
 
                     if (!id) {
                         alertBadContent();
@@ -138,7 +148,7 @@ define([
                     insertAt = targetList.items().indexOf(targetItem) + isAfter;
                     insertAt = insertAt === -1 ? targetList.items().length : insertAt;
 
-                    newItems = opts.newItemsConstructor(id, sourceItem, targetList);
+                    newItems = opts.newItemsConstructor(id, sourceItem, targetList, namespace);
 
                     if (!newItems[0]) {
                         alertBadContent(id);

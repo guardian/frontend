@@ -21,7 +21,7 @@ define([
     function init() {
         droppable({
 
-            newItemsConstructor: function (id, sourceItem, targetList) {
+            newItemsConstructor: function (id, sourceItem, targetList, namespace) {
                 var items = [sourceItem || { id: id }];
 
                 if(sourceItem && sourceItem.meta && sourceItem.meta.supporting) {
@@ -33,7 +33,8 @@ define([
                         id: item.id,
                         meta: cleanClone(item.meta),
                         parent: targetList.parent,
-                        parentType: targetList.parentType
+                        parentType: targetList.parentType,
+                        namespace: namespace
                     });
                 });
             },

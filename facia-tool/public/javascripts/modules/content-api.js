@@ -13,7 +13,9 @@ function (
         var data = cache.get('contentApi', item.id),
             defer = $.Deferred();
 
-        if(data) {
+        if(item.namespace) {
+            defer.resolve();
+        } else if(data) {
             populate(data, item);
             defer.resolve();
         } else {

@@ -30,6 +30,7 @@ define([
             this.id = opts.id;
             this.parent = opts.parent;
             this.parentType = opts.parentType;
+            this.namespace = opts.namespace;
 
             this.uneditable = opts.uneditable;
 
