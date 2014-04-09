@@ -1,4 +1,4 @@
-@(events: List[model.commercial.masterclasses.MasterClass])(implicit request: RequestHeader)
+@(events: Seq[model.commercial.MasterClass])(implicit request: RequestHeader)
 
 <link rel="stylesheet" href="@Static("stylesheets/commercial.css")" />
 
@@ -15,18 +15,21 @@
         <ul class="lineitems">
             @events.take(4).map { event =>
                 <li class="lineitem commercial--masterclasses__class">
-                    <a class="lineitem__link commercial--masterclasses__class__link" href="@AdLink{@event.guardianUrl}" data-link-name="merchandising-masterclasses-low-profile-@event.name">
-                        <h4 class="commercial--masterclasses__class__title">@event.name</h4>
-                        <p class="commercial--masterclasses__class__date">@event.readableDate</p>
-                        <p class="commercial--masterclasses__class__meta">@event.venue.description | COST</p>
+                    @event.imageElement.map{ picture =>
+                        @Item300.bestFor(picture).map{ url => <img src="@url"/> }
+                    }
+                    <a class="lineitem__link commercial--masterclasses__class__link" href="@AdLink{@event.eventBriteEvent.guardianUrl}%OmnitureToken%" data-link-name="merchandising-masterclasses-low-profile-@event.eventBriteEvent.name">
+                        <h4 class="commercial--masterclasses__class__title">@event.eventBriteEvent.name</h4>
+                        <p class="commercial--masterclasses__class__date">@event.eventBriteEvent.readableDate</p>
+                        <p class="commercial--masterclasses__class__meta">@event.eventBriteEvent.venue.description | @event.eventBriteEvent.displayPrice</p>
                     </a>
-                    <p class="lineitem__description commercial--masterclasses__class__description">@event.truncatedFirstParagraph <a class="lineitem__link commercial--masterclasses__class__description__link" href="@AdLink{@event.guardianUrl}" data-link-name="merchandising-masterclasses-low-profile-@event.name"><i class="i i-single-arrow-right-blue"></i>Book now</a></p>
+                    <p class="lineitem__description commercial--masterclasses__class__description"><a class="lineitem__link commercial--masterclasses__class__description__link" href="@AdLink{@event.eventBriteEvent.guardianUrl}" data-link-name="merchandising-masterclasses-low-profile-@event.eventBriteEvent.name"><i class="i i-single-arrow-right-blue"></i>Book now</a></p>
                 </li>
             }
         </ul>
     </div>
     <div class="commercial__foot">
-        <a class="commercial__home-link" href="@AdLink{http://theguardian.com/guardian-masterclasses/masterclasses-calendar}" data-link-name="merchandising-masterclasses-low-profile-browse-all-masterclasses">View all Masterclasses
+        <a class="commercial__home-link" href="@AdLink{http://theguardian.com/guardian-masterclasses/masterclasses-calendar%OmnitureToken%}" data-link-name="merchandising-masterclasses-low-profile-browse-all-masterclasses">View all Masterclasses
         <span class="commercial__home-link__cta">
             <span class="i i-filter-arrow-down"></span>
         </span></a>        

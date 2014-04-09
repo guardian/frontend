@@ -32,6 +32,10 @@
                 margin-bottom: ($gs-baseline/3)*2
             ));
         }
+
+        .collection-wrapper--position-2 .collection__item:nth-child(n+3) {
+            display: none;
+        }
     }
 
     @include mq(rightCol) {
@@ -42,6 +46,9 @@
                     width: 66%;
                 }
                 .item__title {
+                    @include rem((
+                        min-height: $gs-baseline*4
+                    ));
                     @include fs-headline(3, true);
                 }
             }

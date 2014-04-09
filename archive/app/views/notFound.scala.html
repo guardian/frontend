@@ -107,15 +107,16 @@
         <script src="http://pasteup.guim.co.uk/js/lib/requirejs/2.1.5/require.min.js"></script>
 
         <script>
-        require(['http://s.ophan.co.uk/js/ophan.min.js'], function(ophan) {
-        ophan.additionalViewData(function() { return {"httpStatus" : "404"}; });
+        require.config({
+          paths: {
+            'ophan/http-status' : 'http://j.ophan.co.uk/ophan.http-status',
+          }
+        });
+        </script>
 
-        if(document.readyState === 'complete') {
-        ophan.startLog();
-        return;
-        }
-
-        window.addEventListener('load', ophan.startLog, false);
+        <script>
+        require(['ophan/http-status'], function(reporter) {
+          reporter.reportStatus('next-gen', 404);
         });
         </script>
 

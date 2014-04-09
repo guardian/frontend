@@ -8,13 +8,13 @@ import org.jsoup.nodes.{Element, Document}
 import model.commercial.{Segment, Ad}
 import org.apache.commons.lang.StringUtils
 
-object MasterClass {
+object EventbriteMasterClass {
   private val datePattern: DateTimeFormatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss")
   private val guardianUrlLinkText = "Full course and returns information on the Masterclasses website"
 
 //  private val guardianUrlLinkText = "Click here"
 
-  def apply(block: JsValue): Option[MasterClass] = {
+  def apply(block: JsValue): Option[EventbriteMasterClass] = {
     val id = (block \ "id").as[Long]
     val title = (block \ "title").as[String]
     val literalDate = (block \ "start_date").as[String]
@@ -35,8 +35,8 @@ object MasterClass {
 
     val paragraphs: Array[Element] = doc.select("p").toArray map {_.asInstanceOf[Element]}
 
-    val result: Array[MasterClass] = elements map { element =>
-        new MasterClass(id.toString,
+    elements.headOption.map { element =>
+        new EventbriteMasterClass(id.toString,
           title,
           startDate,
           url,
@@ -46,14 +46,12 @@ object MasterClass {
           tickets.toList,
           capacity,
           element.attr("href"),
-          paragraphs.head.text)
+          paragraphs.headOption.map(_.text).getOrElse(""))
     }
-
-    result.headOption
   }
 }
 
-case class MasterClass(id: String,
+case class EventbriteMasterClass(id: String,
                        name: String,
                        startDate: DateTime,
                        url: String,
@@ -71,8 +69,8 @@ case class MasterClass(id: String,
     val priceList = tickets.map(_.price).sorted.distinct
     if (priceList.size > 1) {
       val (low, high) = (priceList.head, priceList.last)
-      f"$low%,.2f to $high%,.2f"
-    } else f"${priceList.head}%,.2f"
+      f"£$low%,.2f to £$high%,.2f"
+    } else f"£${priceList.head}%,.2f"
   }
 
   def isTargetedAt(segment: Segment) = segment.context.isInSection("music")

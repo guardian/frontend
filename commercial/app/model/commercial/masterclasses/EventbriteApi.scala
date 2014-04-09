@@ -4,7 +4,7 @@ import play.api.libs.json.JsValue
 import conf.{Switches, CommercialConfiguration}
 import model.commercial.JsonAdsApi
 
-object MasterClassesApi extends JsonAdsApi[MasterClass] {
+object EventbriteApi extends JsonAdsApi[EventbriteMasterClass] {
 
   protected val switch = Switches.MasterclassFeedSwitch
 
@@ -19,12 +19,12 @@ object MasterClassesApi extends JsonAdsApi[MasterClass] {
 
   override protected val characterEncoding = "utf-8"
 
-  override protected val loadTimeout = 30000
+  override protected val loadTimeout = 60000
 
-  def extractEventsFromFeed(jsValue: JsValue) = jsValue \\ "event"
+  def extractEventsFromFeed(jsValue: JsValue): Seq[JsValue] = jsValue \\ "event"
 
   def parse(json: JsValue) = {
-    val maybes = extractEventsFromFeed(json) map (MasterClass(_))
+    val maybes = extractEventsFromFeed(json) map (EventbriteMasterClass(_))
     maybes.flatten
   }
 }
