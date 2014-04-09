@@ -8,9 +8,13 @@
 
 .commercial--masterclasses {
     .commercial__head {
+        @include box-sizing(border-box);
         border-top: 0;
         background-color: transparent;
         height: auto;
+        @include rem((
+            padding-left: $gs-gutter/2 - 1
+        ));
     }
     .commercial__title {
         padding: 0;
@@ -42,16 +46,17 @@
         @include box-sizing(border-box);
         float: left;
         width: 50%;
-        padding-left: 0;
-        
-        &:nth-child(n+2) {
-            @include rem((
-                padding-left: $gs-gutter/2 - 1
-            ));
-        }
+        @include rem((
+/*            padding-left: $gs-gutter/2 - 1*/
+            padding-left: 10px
+        ));
         
         &:nth-child(n+3) {
             display: none;
+        }
+        .commercial--masterclasses__class__title {
+            @include f-bodyHeading;
+            @include font-size(14, 17);
         }
         .commercial--masterclasses__class__date,
         .commercial--masterclasses__class__meta {
@@ -61,12 +66,23 @@
         .commercial--masterclasses__class__date {
             color: $c-neutral1;
             font-weight: bold;
+            @include rem((
+                margin-bottom: 2px
+            ));
         }
         .commercial--masterclasses__class__description__link {
             @include f-bodyHeading;
             @include font-size(14, 22);
             color: $c-newsDefault;
         }
+        .commercial--masterclasses__class__link__sub {
+            color: $c-neutral2;
+        }
+    }
+    .commercial__foot {
+        @include rem((
+            padding-left: $gs-gutter/2 - 1
+        ));
     }
     @include mq(tablet) {
         .commercial--masterclasses__class {
@@ -113,7 +129,7 @@
     @include mq(desktop) {
         .commercial--masterclasses__class {
             @include rem((
-                padding-left: $gs-gutter/2 - 1
+                padding-left: 10px
             ));
             @include rem((
                 width: 25%
@@ -131,7 +147,7 @@
         @include mq(rightCol) {
             .commercial--masterclasses__class {
                 @include rem((
-                    padding-left: $gs-gutter/2 - 1
+                    padding-left: 10px
                 ));
                 @include rem((
                     width: 25%
