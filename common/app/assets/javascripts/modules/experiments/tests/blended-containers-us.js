@@ -28,6 +28,7 @@ define([
     
     return function() {
         this.id = 'BlendedContainersUs';
+        this.start = '2014-04-09';
         this.expiry = '2014-04-18';
         this.author = 'Stephan';
         this.description = 'Final step of testing new blended containers on the US network front';
