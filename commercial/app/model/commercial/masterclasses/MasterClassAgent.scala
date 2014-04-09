@@ -30,7 +30,7 @@ object MasterClassAgent extends Logging with ExecutionContexts {
 
   def wrapEventbriteWithContentApi(eventbriteEvents: Seq[EventbriteMasterClass]): Future[Seq[MasterClass]] = {
     var results = eventbriteEvents
-    if (Play.isDev || Play.isTest) {
+    if (Play.isDev) {
       results = eventbriteEvents.takeRight(10)
     }
 
