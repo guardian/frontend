@@ -1,10 +1,10 @@
 .series-meta {
     padding: 0;
-    margin: 0;
     border-top: 1px dotted $c-neutral5;
     @include fs-textsans(3);
     font-weight: bold;
     @include rem((
+        margin: 0 0 $gs-baseline/2,
         line-height: 16px
     ));
 }
@@ -20,6 +20,7 @@
 
 .series-meta--inline {
     border-top: none;
+    margin: 0;
 
     .series-meta__label,
     .series-meta__item {
@@ -40,11 +41,5 @@
             padding-top: $gs-baseline/2
         ));
         border-top: 1px dotted $c-neutral5;
-    }
-}
-
-.series-meta--desktop-only {
-    @include mq($to: leftCol) {
-        display: none;
     }
 }
