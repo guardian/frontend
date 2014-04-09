@@ -15,7 +15,7 @@ define([
         this.audienceOffset = 0.2;
 
         this.canRun = function(config) {
-            return config.page.contentType === 'Article';
+            return config.page.contentType === 'Article' || config.page.contentType === 'Video' || config.page.contentType === 'Gallery';
         };
 
         this.variants = [

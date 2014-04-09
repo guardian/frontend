@@ -12,7 +12,6 @@ define([
     'common/modules/experiments/tests/blended-containers-au',
     'common/modules/experiments/tests/football-liveblog-truncation',
     'common/modules/experiments/tests/onward-above-discussion'
-
 ], function (
     common,
     store,
