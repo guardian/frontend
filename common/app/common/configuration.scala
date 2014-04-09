@@ -269,6 +269,11 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val url = configuration.getMandatoryStringProperty("formstack.url")
     lazy val oAuthToken = configuration.getMandatoryStringProperty("formstack.oauthToken")
   }
+
+  object avatars {
+    lazy val imageHost = configuration.getMandatoryStringProperty("avatars.image.host")
+    lazy val signingKey = configuration.getMandatoryStringProperty("avatars.signing.key")
+  }
 }
 
 object ManifestData {

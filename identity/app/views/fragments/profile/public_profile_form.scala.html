@@ -1,9 +1,33 @@
-@(idUrlBuilder: services.IdentityUrlBuilder, idRequest: services.IdentityRequest, user: com.gu.identity.model.User, publicProfileForm: Form[form.ProfileFormData])(implicit request: RequestHeader)
+@(idUrlBuilder: services.IdentityUrlBuilder, idRequest: services.IdentityRequest, user: com.gu.identity.model.User, publicProfileForm: Form[form.ProfileFormData], avatarUploadDataOpt: Option[model.AvatarUploadData])(implicit request: RequestHeader)
 
 @import views.html.fragments.form.{inputField, textareaField}
 @import form.IdFormHelpers._
 @import form.Input
 @import helper._
+
+@for(avatarUploadData <- avatarUploadDataOpt) {
+<form class="form js-avatar-upload-form" novalidate action="@avatarUploadData.uploadUrl" role="main" method="post" enctype="multipart/form-data">
+    <fieldset class="fieldset">
+
+        <div class="fieldset__heading">
+            <h2 class="form__heading">Profile image</h2>
+            <div class="form__note">This image will appear next to your comments.</div>
+        </div>
+
+        <div class="fieldset__fields">
+            <ul class="u-unstyled">
+                <input type="file" name="file"  />
+                <input type="hidden" name="signed_data" value="@avatarUploadData.signedData" />
+                <input type="hidden" name="redirect_url" value="@idUrlBuilder.buildUrl("/public/edit", idRequest)">
+                <li>
+                    <button type="submit" class="submit-input js-avatar-upload-button" data-link-name="Upload Avatar">Upload</button>
+                </li>
+            </ul>
+        </div>
+
+    </fieldset>
+</form>
+}
 
 <form class="form js-public-profile-form" novalidate action="@idUrlBuilder.buildUrl("/public/edit", idRequest)" role="main" method="post">
     @views.html.helper.CSRF.formField
@@ -23,26 +47,6 @@
     @if(publicProfileForm.globalError.isDefined) {
         <div class="form__error">@publicProfileForm.globalErrors.map(_.message).mkString(", ")</div>
     }
-
-    <fieldset class="fieldset">
-
-        <div class="fieldset__heading">
-            <h2 class="form__heading">Profile image</h2>
-            <div class="form__note">This image will appear next to your comments.</div>
-        </div>
-
-        <div class="fieldset__fields">
-            <ul class="u-unstyled">
-
-                @inputField(Upload(publicProfileForm("avatar"), ('_label, "Profile image"))) // Generated input should NOT have text-input class but not sure how to do this...
-
-                <li>
-                    <button type="submit" class="submit-input" data-link-name="Create account">Save changes</button>
-                </li>
-            </ul>
-        </div>
-
-    </fieldset>
 
     <fieldset class="fieldset">
 
