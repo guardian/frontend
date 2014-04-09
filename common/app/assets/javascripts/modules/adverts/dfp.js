@@ -197,7 +197,8 @@ define([
                               ),
                 refresh     = adSlot.getAttribute('data-refresh') !== 'false',
 
-                slot = googletag.defineSlot(adUnit, size, id)
+                slot        = googletag
+                                .defineSlot(adUnit, size, id)
                                 .addService(googletag.pubads())
                                 .defineSizeMapping(sizeMapping)
                                 .setTargeting('slot', name);

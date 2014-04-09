@@ -29,19 +29,34 @@ define([
                     <div class="ad-slot--dfp ad-label--showing"><div id="dfp-already-labelled" class="ad-slot__container"></div>\
                     <div class="ad-slot--dfp" data-label="false"><div id="dfp-dont-label" class="ad-slot__container"></div></div>'
                 ]
+            },
+            createTestIframe = function(id, html) {
+                var $frame = $.create('<iframe></iframe>')
+                   .attr({
+                        id: 'mock_frame',
+                        src: 'javascript:"<html><body style="background:transparent"></body></html>"'
+                    });
+                $frame[0].onload = function() {
+                    this.contentDocument.body.innerHTML = html;
+                };
+                $frame.appendTo(qwery('#' + id)[0]);
+            },
+            createGoogletag = function() {
+                return googletag = {
+                    cmd: [],
+                    sizeMapping: function() {
+                        return {
+                            build: function() { },
+                            addSize: function() { }
+                        }
+                    },
+                    defineSlot: function() { return this; },
+                    addService: function() { return this; },
+                    defineSizeMapping: function() { return this; },
+                    setTargeting: function() { return this; },
+                    pubads: function() { }
+                };
             };
-
-        var createTestIframe = function(id, html) {
-            var $frame = $.create('<iframe></iframe>')
-               .attr({
-                    id: 'mock_frame',
-                    src: 'javascript:"<html><body style="background:transparent"></body></html>"'
-                });
-            $frame[0].onload = function() {
-                this.contentDocument.body.innerHTML = html;
-            };
-            $frame.appendTo(qwery('#' + id)[0]);
-        };
 
         beforeEach(function() {
             fixtures.render(conf);
@@ -135,16 +150,30 @@ define([
             });
         });
 
-        xit('should be able to define slots', function() {
-            var dfp = new DFP({
-                page: {
-                    isFront: true,
-                    dfpAccountId: 'foo',
-                    dfpAdUnitRoot: 'bar'
-                }
+        it('should be able to define slots', function() {
+            // just render a single ad slot
+            fixtures.render({
+                id: 'article',
+                fixtures: [
+                    '<div class="ad-slot--dfp" data-name="inline1" data-mobile="300,50|320,50" data-tabletportrait="300,250">' +
+                        '<div id="dfp-html-slot" class="ad-slot__container"></div>' +
+                    '</div>'
+                ]
             });
+
+            window.googletag = createGoogletag();
+            var setTargetingSpy = sinon.spy(window.googletag, 'setTargeting'),
+                dfp = new DFP({
+                    page: {
+                        isFront: true,
+                        dfpAccountId: 'foo',
+                        dfpAdUnitRoot: 'bar'
+                    }
+                });
             dfp.init();
             dfp.defineSlots();
+//            expect(defineSizeMappingSpy).toHaveBeenCalledWith([[300, 50], [320]]);
+            expect(setTargetingSpy).toHaveBeenCalledWith('slot', 'inline1');
         });
 
     });
