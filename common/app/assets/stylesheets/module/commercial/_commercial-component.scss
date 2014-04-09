@@ -1,3 +1,12 @@
+.facia-container--commercial {
+    &.facia-container--layout-article {
+        padding: 0;
+        @include rem((
+            max-width: gs-span(15.5)
+        ));
+    }
+}
+
 .commercial {
     @include box-sizing(border-box);
     width: 100%;
@@ -8,13 +17,6 @@
     @include rem((
         padding: $gs-baseline $gs-gutter/2
     ));
-    @include mq(mobileLandscape) {
-        @include rem((
-            padding-left: $gs-gutter,
-            padding-right: $gs-gutter
-        ));
-    }
-
     .container__border {
         border-top: none;
     }
