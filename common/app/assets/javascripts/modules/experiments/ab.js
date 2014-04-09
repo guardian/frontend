@@ -26,7 +26,6 @@ define([
     BlendedContainersAu,
     FootballLiveblogTruncation,
     OnwardAboveDiscussion
-
     ) {
 
     var TESTS = [
