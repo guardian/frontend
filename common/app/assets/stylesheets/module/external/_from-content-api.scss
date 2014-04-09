@@ -110,7 +110,7 @@
         color: $c-neutral2;
 
         @include rem((
-            margin-left: 30px
+            margin-left: $gs-gutter * 1.5
         ));
 
 
