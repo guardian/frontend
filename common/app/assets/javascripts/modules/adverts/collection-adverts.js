@@ -1,10 +1,12 @@
 define([
     'common/$',
     'bonzo',
+    'qwery',
     'lodash/objects/assign'
 ], function (
     $,
     bonzo,
+    qwery,
     _assign
 ) {
 
@@ -36,10 +38,10 @@ define([
         $(this.config.containerSelector)
             .map(function(container) { return $(container); })
             .filter(function($container) {
-                return $container.css('display') !== 'none';
-            })
+                return qwery(this.config.selector, $container[0]).length && $container.css('display') !== 'none';
+            }, this)
             .map(function($container) {
-                return $(this.config.selector, $container[0]);
+                return $(this.config.selector, $container[0]).first();
             }, this)
             .slice(0, adNames.length)
             .forEach(function($slot, index) {

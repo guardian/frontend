@@ -20,6 +20,7 @@ define([
                 id: 'collection-adverts',
                 fixtures: [
                     '<div class="container"><div class="collection-wrapper--ad"><div class="collection-one"></div></div></div>',
+                    '<div class="container"></div>',
                     '<div class="container"><div class="collection-wrapper--ad"><div class="collection-two"></div></div></div>',
                     '<div class="container"><div class="collection-wrapper--ad"><div class="collection-three"></div></div></div>',
                     '<div class="container"><div class="collection-wrapper--ad"><div class="collection-one"></div></div></div>'
