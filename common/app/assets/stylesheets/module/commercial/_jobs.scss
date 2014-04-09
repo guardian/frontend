@@ -17,9 +17,14 @@
 
         @include mq(tablet) {
             @include rem((
-                width: gs-span(3)
+                width: gs-span(2.25)
             ));
             float: left;
+        }
+        @include mq(desktop) {
+            @include rem((
+                width: gs-span(3)
+            ));
         }
         @include mq(desktop) {
             @include rem((
