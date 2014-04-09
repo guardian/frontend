@@ -3,7 +3,6 @@ define([
 ], function(
     $
 ) {
-
     var oldContainers = [
            'au/commentisfree/regular-stories',
            'au/culture/regular-stories',
@@ -18,6 +17,7 @@ define([
             'au-alpha/contributors/feature-stories',
             'au-alpha/people-in-the-news/feature-stories'
         ];
+
 
     function hide(ids) {
         $([].concat(ids).map(function(id) {return '.container[data-id="' + id + '"]';}).join(',')).addClass('js-hidden');
@@ -36,7 +36,6 @@ define([
         this.audienceCriteria = 'All';
         this.audience = 1;
         this.audienceOffset = 0.0;
-
         this.canRun = function() {
             return ['/au', '/au-alpha'].indexOf(window.location.pathname) === 0;
         };

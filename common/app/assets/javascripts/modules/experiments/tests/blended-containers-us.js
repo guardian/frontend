@@ -3,7 +3,6 @@ define([
 ], function(
     $
 ) {
-
     var oldContainers = [
            'us/commentisfree/regular-stories',
            'us/culture/regular-stories',
@@ -34,7 +33,7 @@ define([
         this.description = 'Final step of testing new blended containers on the US network front';
         this.successMeasure = 'Ensuring CTR of US network front is within 2% of control. Ensuring page views per visit are within 2% tolerance.';
         this.idealOutcome = 'CTRs and PVPV are improved with blended version.';
-        this.audienceCriteria = 'All';        
+        this.audienceCriteria = 'All';
         this.audience = 1;
         this.audienceOffset = 0.0;
         this.canRun = function() {

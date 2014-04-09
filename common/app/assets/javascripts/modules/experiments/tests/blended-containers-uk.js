@@ -3,7 +3,6 @@ define([
 ], function(
     $
 ) {
-
     var oldContainers = [
            'uk/commentisfree/regular-stories',
            'uk/culture/regular-stories',
@@ -18,6 +17,7 @@ define([
             'uk-alpha/contributors/feature-stories',
             'uk-alpha/people-in-the-news/feature-stories'
         ];
+
 
     function hide(ids) {
         $([].concat(ids).map(function(id) {return '.container[data-id="' + id + '"]';}).join(',')).addClass('js-hidden');
