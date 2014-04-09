@@ -16,7 +16,9 @@
         border: 0;
 
         @include mq(tablet) {
-            width: gs-span(3);
+            @include rem((
+                width: gs-span(3)
+            ));
             float: left;
         }
         @include mq(desktop) {
@@ -203,7 +205,7 @@
         }
         @include mq(wide) {
             @include rem((
-                width: gs-span(3.25)
+                width: gs-span(2.75)
             ));
 
             &:nth-child(2) {
