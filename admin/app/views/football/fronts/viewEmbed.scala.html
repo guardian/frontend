@@ -1,14 +1,48 @@
 @(identifier: String, title: String, content: Html)
 
 @views.html.football.main(title) {
-    <hgroup class="page-header">
-        <a href="@identifier" class="btn btn-success pull-right">Drag me to Facia</a>
-        <h1>@title</h1>
-    </hgroup>
+    <div class="row">
+        <div class="col-sm-12">
+            <hgroup class="page-header">
+                <a href="@identifier" class="btn btn-success pull-right">Drag me to Facia</a>
+                <h1>@title</h1>
+            </hgroup>
+            <p>
+                Preview at multiple sizes:
+            </p>
+        </div>
+    </div>
 
-    <div class="front-embed-container">
-        <div data-embed-type="table" class="match-list match-list--football">
-            @content
+    <div class="row">
+        <div class="col-md-6">
+            <div class="front-embed-preview half">
+                @content
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="front-embed-preview half-sm">
+                @content
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="front-embed-preview third">
+                @content
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="front-embed-preview third-sm">
+                @content
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="front-embed-preview quarter">
+                @content
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="front-embed-preview quarter-sm">
+                @content
+            </div>
         </div>
     </div>
 }

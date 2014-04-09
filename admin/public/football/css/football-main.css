@@ -132,7 +132,25 @@ label[for] {
     background: url("/assets/internal/images/ajax-loader.gif") right center no-repeat;
 }
 
-.front-embed-container {
+.front-embed-preview {
     margin: 20px auto 0 auto;
+    border: solid 1px #ccc;
+}
+.half {
+    width: 460px;
+}
+.half-sm {
+    width: 360px;
+}
+.third {
     width: 313px;
+}
+.third-sm {
+    width: 233px;
+}
+.quarter {
+    width: 220px;
+}
+.quarter-sm {
+    width: 160px;
 }
