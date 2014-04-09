@@ -15,7 +15,8 @@ define([
 
         newContainers = [
             'uk-alpha/contributors/feature-stories',
-            'uk-alpha/people-in-the-news/feature-stories'
+            'uk-alpha/people-in-the-news/feature-stories',
+            'uk-alpha/special-other/special-story'
         ];
 
 
