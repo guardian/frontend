@@ -15,7 +15,9 @@ define([
 ) {
 
     describe('DFP', function() {
-        var style,
+        var addSizeSpy = sinon.spy(),
+            buildSpy = sinon.spy(),
+            style,
             dfp,
             conf = {
                 id: 'article',
@@ -46,8 +48,8 @@ define([
                     cmd: [],
                     sizeMapping: function() {
                         return {
-                            build: function() { },
-                            addSize: function() { }
+                            build: buildSpy,
+                            addSize: addSizeSpy
                         }
                     },
                     defineSlot: function() { return this; },
@@ -104,16 +106,7 @@ define([
         });
 
         it('should build the size mappings', function() {
-            var addSizeSpy = sinon.spy(),
-                buildSpy = sinon.spy();
-            window.googletag = {
-                sizeMapping: function() {
-                    return {
-                        addSize: addSizeSpy,
-                        build: buildSpy
-                    }
-                }
-            };
+            window.googletag = createGoogletag();
             var $slot = $.create('<div></div>')
                 .attr({
                     'data-mobile': '300,50|320,50',
@@ -160,7 +153,6 @@ define([
                     '</div>'
                 ]
             });
-
             window.googletag = createGoogletag();
             var setTargetingSpy = sinon.spy(window.googletag, 'setTargeting'),
                 dfp = new DFP({
@@ -172,7 +164,8 @@ define([
                 });
             dfp.init();
             dfp.defineSlots();
-//            expect(defineSizeMappingSpy).toHaveBeenCalledWith([[300, 50], [320]]);
+            expect(addSizeSpy).toHaveBeenCalledWith([0, 0], [[300, 50], [320, 50]]);
+            expect(addSizeSpy).toHaveBeenCalledWith([740, 0], [[300, 250]]);
             expect(setTargetingSpy).toHaveBeenCalledWith('slot', 'inline1');
         });
 
