@@ -132,7 +132,7 @@ define([
             'pt'      : contentType,
             'p'       : 'ng',
             'bp'      : detect.getBreakpoint(),
-            'a'       : AudienceScience.getSegments(),
+            'a'       : AudienceScience.getSegments(this.config),
             'at'      : Cookies.get('adtest') || ''
         };
         AudienceScienceGateway.addSegments(this.config, targets);
