@@ -315,11 +315,10 @@
 }
 
 @mixin faux-bullet-point($color: $c-neutral3, $offset-y: 6px) {
-
     &:before {
         display: inline-block;
         content: "";
-        @include rounded-corners(50%);
+        @include rounded-corners(6px);
         @include rem((
             height: 12px,
             width: 12px,
