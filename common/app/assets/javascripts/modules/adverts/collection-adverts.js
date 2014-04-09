@@ -24,6 +24,7 @@ define([
     }
 
     CollectionAdverts.prototype.defaultConfig = {
+        containerSelector: '.container',
         selector: '.collection-wrapper--ad'
     };
 
@@ -31,11 +32,15 @@ define([
         if (!this.config.switches.standardAdverts) {
             return false;
         }
-        // create the ad slots
-        $(this.config.selector)
-            .map(function(slot) {
-                return bonzo(slot);
+        // filter out hidden containers
+        $(this.config.containerSelector)
+            .map(function(container) { return $(container); })
+            .filter(function($container) {
+                return $container.css('display') !== 'none';
             })
+            .map(function($container) {
+                return $(this.config.selector, $container[0]);
+            }, this)
             .slice(0, adNames.length)
             .forEach(function($slot, index) {
                 $slot.html(

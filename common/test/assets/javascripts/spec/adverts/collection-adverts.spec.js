@@ -19,9 +19,10 @@ define([
         var fixturesConfig = {
                 id: 'collection-adverts',
                 fixtures: [
-                    '<div class="collection-wrapper--ad"><div class="collection-one"></div></div>',
-                    '<div class="collection-wrapper--ad"><div class="collection-two"></div></div>',
-                    '<div class="collection-wrapper--ad"><div class="collection-three"></div></div>'
+                    '<div class="container"><div class="collection-wrapper--ad"><div class="collection-one"></div></div></div>',
+                    '<div class="container"><div class="collection-wrapper--ad"><div class="collection-two"></div></div></div>',
+                    '<div class="container"><div class="collection-wrapper--ad"><div class="collection-three"></div></div></div>',
+                    '<div class="container"><div class="collection-wrapper--ad"><div class="collection-one"></div></div></div>'
                 ]
             },
             createSwitch = function(isOn){
@@ -81,6 +82,17 @@ define([
             var $collectionItem = $('.collection-wrapper--ad .collection__item').map(function(slot) { return $(slot); });
             expect($collectionItem[0].html()).toEqual('<div class="collection-one"></div>');
             expect($collectionItem[1].html()).toEqual('<div class="collection-two"></div>');
+        });
+
+        it('should not ad slot to hidden container', function() {
+            $('.container')
+                .first()
+                .css('display', 'none');
+            var collectionAdverts = new CollectionAdverts(createSwitch(true));
+            collectionAdverts.init();
+            var $collectionItem = $('.collection-wrapper--ad .collection__item').map(function(slot) { return $(slot); });
+            expect($collectionItem[0].html()).toEqual('<div class="collection-two"></div>');
+            expect($collectionItem[1].html()).toEqual('<div class="collection-three"></div>');
         });
 
     });
