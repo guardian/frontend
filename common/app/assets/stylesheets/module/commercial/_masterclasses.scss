@@ -79,20 +79,6 @@
             }
         }
     }
-    @include mq(rightCol) {
-        .commercial--masterclasses__class {
-            @include rem((
-                padding-left: $gs-gutter/2 - 1
-            ));
-            @include rem((
-                width: 25%
-            ));
-            
-            &:nth-child(n+4) {
-                display: block;
-            }
-        }
-    }
     @include mq(leftCol) {
         .commercial--masterclasses__class {
             border-left: 1px solid $c-neutral4;
@@ -112,5 +98,49 @@
     }
     .lineitem__description {
         margin-top: $gs-baseline/3;
+    }
+}
+
+/* fronts */
+.facia-container--layout-front .commercial {
+    @include mq(faciaLeftCol) {
+        .commercial__head {
+            @include rem((
+                width: gs-span(2) + $gs-gutter
+            ));
+        }        
+    }
+    @include mq(desktop) {
+        .commercial--masterclasses__class {
+            @include rem((
+                padding-left: $gs-gutter/2 - 1
+            ));
+            @include rem((
+                width: 25%
+            ));
+        
+            &:nth-child(n+4) {
+                display: block;
+            }
+        }
+    }
+}
+/* article */
+.facia-container--commercial {
+    &.facia-container--layout-article {
+        @include mq(rightCol) {
+            .commercial--masterclasses__class {
+                @include rem((
+                    padding-left: $gs-gutter/2 - 1
+                ));
+                @include rem((
+                    width: 25%
+                ));
+        
+                &:nth-child(n+4) {
+                    display: block;
+                }
+            }
+        }
     }
 }
