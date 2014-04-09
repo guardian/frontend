@@ -43,7 +43,6 @@ object Switches extends Collections {
   // Switch names can be letters numbers and hyphens only
 
   private lazy val never = new DateMidnight(2100, 1, 1)
-  private lazy val endOfQ4 = new DateMidnight(2014, 4, 1)
 
   // this is 3 months - at the end of this a decision is expected
   // and one (or both) of the 2 needs to go.
@@ -125,19 +124,23 @@ object Switches extends Collections {
 
   // Commercial Tags
 
-  val AudienceScienceSwitch = Switch("Commercial Tags", "audience-science",
+  val AudienceScienceSwitch = Switch("Commercial Targeting", "audience-science",
     "If this switch is on Audience Science segments will be used to target ads.",
     safeState = Off, sellByDate = never)
 
-  val ImrWorldwideSwitch = Switch("Commercial Tags", "imr-worldwide",
+  val AudienceScienceGatewaySwitch = Switch("Commercial Targeting", "audience-science-gateway",
+    "If this switch is on Audience Science Gateway segments will be used to target ads.",
+    safeState = Off, sellByDate = never)
+
+  val ImrWorldwideSwitch = Switch("Commercial Targeting", "imr-worldwide",
     "Enable the IMR Worldwide audience segment tracking.",
     safeState = Off, sellByDate = profilingEvalDeadline)
 
-  val EffectiveMeasureSwitch = Switch("Commercial Tags", "effective-measure",
+  val EffectiveMeasureSwitch = Switch("Commercial Targeting", "effective-measure",
     "Enable the Effective Measure audience segment tracking.",
     safeState = Off, sellByDate = profilingEvalDeadline)
 
-  val ForeseeSwitch = Switch("Commercial Tags", "foresee",
+  val ForeseeSwitch = Switch("Commercial Targeting", "foresee",
     "Enable Forsee surveys for a sample of our audience",
     safeState = Off, sellByDate = new DateMidnight(2014,5,1)) // 3 month trial
 
@@ -362,6 +365,7 @@ object Switches extends Collections {
     CommercialComponentsSwitch,
     VideoAdvertsSwitch,
     AudienceScienceSwitch,
+    AudienceScienceGatewaySwitch,
     DiscussionSwitch,
     OpenCtaSwitch,
     FontSwitch,
