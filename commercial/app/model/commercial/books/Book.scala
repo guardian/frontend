@@ -3,7 +3,7 @@ package model.commercial.books
 import model.commercial.{AdAgent, Segment, Ad}
 import common.ExecutionContexts
 import scala.concurrent.Future
-import model.commercial.intersects
+import model.commercial.{intersects, normalize}
 
 case class Book(title: String,
                 author: Option[String],
@@ -18,7 +18,7 @@ case class Book(title: String,
                 keywords: Seq[String] = Nil)
   extends Ad {
 
-  def isTargetedAt(segment: Segment): Boolean = intersects(keywords, segment.context.keywords)
+  def isTargetedAt(segment: Segment): Boolean = intersects(normalize(keywords), segment.context.keywords)
 }
 
 

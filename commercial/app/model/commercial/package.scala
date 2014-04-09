@@ -8,4 +8,5 @@ package object commercial {
     def apply(s: String): Option[String] = Option(s) filter (_.trim.nonEmpty)
   }
 
+  def normalize(keywords: Seq[String]) = keywords map (_.toLowerCase.replace(" ", "-"))
 }
