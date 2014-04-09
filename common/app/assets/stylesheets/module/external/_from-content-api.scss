@@ -51,19 +51,6 @@
             @include fs-header(2, true);
         }
     }
-    > ul > li,
-    > blockquote > ul > li {
-        @include rem((
-            text-indent: map-get($bullet-offset, default)
-        ));
-
-        @include mq(tablet) {
-            @include rem((
-                text-indent: map-get($bullet-offset, tablet)
-            ));
-        }
-        @include faux-bullet-point;
-    }
     > ol > li,
     > ul > li {
         position: relative;
@@ -135,21 +122,6 @@
                 margin-left: map-get($quoted-offset, tablet);
             }
         }
-        .bullet-container:first-child {
-            text-indent: map-get($quoted-offset, default) + map-get($bullet-offset, default);
-
-            @include mq(tablet) {
-                text-indent: map-get($quoted-offset, tablet) + map-get($bullet-offset, tablet);
-            }
-
-            &:before {
-                left: map-get($quoted-offset, default);
-
-                @include mq(tablet) {
-                    left: map-get($quoted-offset, tablet);
-                }
-            }
-        }
     }
 }
 
@@ -166,47 +138,15 @@
 /* Bullet points
    ========================================================================== */
 
-.bullet-container {
-    display: list-item;
-    list-style-position: outside;
-    list-style-type: none;
-    @include rem((
-        text-indent: map-get($bullet-offset, default)
-    ));
 
-    @include mq(tablet) {
-        @include rem((
-            text-indent: map-get($bullet-offset, tablet)
-        ));
-    }
-
-    + * {
-        margin-top: .6em;
-    }
-
-    @include faux-bullet-point;
-
-    .bullet {
-        display: none;
-    }
+.bullet,
+.from-content-api ul > li,
+.article__standfirst ul > li {
+    @include faux-bullet-point($offset-y: 3px)
 }
+
 .bullet {
-    speak: none;
-    display: inline-block;
-    vertical-align: bottom;
-    margin-top: .6em;
-    @include rem((
-        width: 14px
-    ));
-    @include mq(tablet) {
-        @include rem((
-            width: 16px
-        ));
-    }
-    // IE8 does not support `color: transparent`. In this case the bullet
-    // should be the same colour as the fake bullet point
-    color: if($old-ie, $c-neutral3, transparent);
-    @include faux-bullet-point;
+    font-size: 0;
 }
 
 
