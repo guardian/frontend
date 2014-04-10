@@ -8,6 +8,7 @@ import play.api.libs.json.Json
 import views.support.{TemplateDeduping, NewsContainer}
 import scala.concurrent.Future
 import play.api.templates.Html
+import performance.MemcachedAction
 
 
 class FaciaController extends Controller with Logging with ExecutionContexts with implicits.Collections {
@@ -15,11 +16,6 @@ class FaciaController extends Controller with Logging with ExecutionContexts wit
   val EditionalisedKey = """^\w\w(/.*)?$""".r
 
   implicit def getTemplateDedupingInstance: TemplateDeduping = TemplateDeduping()
-
-  private def editionPath(path: String, edition: Edition) = path match {
-    case EditionalisedKey(_) => path
-    case _ => Editionalise(path, edition)
-  }
 
   def editionRedirect(path: String) = Action{ implicit request =>
 
@@ -48,7 +44,7 @@ class FaciaController extends Controller with Logging with ExecutionContexts wit
       renderFrontPress(path)
   }
 
-  def renderFrontPress(path: String) = Action.async { implicit request =>
+  def renderFrontPress(path: String) = MemcachedAction{ implicit request =>
 
     val newPath = getPathForUkAlpha(path, request)
 
@@ -68,7 +64,7 @@ class FaciaController extends Controller with Logging with ExecutionContexts wit
 
   }
 
-  def renderCollection(id: String) = Action.async { implicit request =>
+  def renderCollection(id: String) = MemcachedAction{ implicit request =>
     log.info(s"Serving collection ID: $id")
     getPressedCollection(id).map { collectionOption =>
       collectionOption.map { collection =>
