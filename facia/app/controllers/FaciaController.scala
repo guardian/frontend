@@ -5,7 +5,7 @@ import front._
 import model._
 import play.api.mvc._
 import play.api.libs.json.Json
-import views.support.{TemplateDeduping, NewsContainer}
+import views.support.{CommentAndDebateContainer, FeaturesContainer, TemplateDeduping, NewsContainer}
 import scala.concurrent.Future
 import play.api.templates.Html
 
@@ -73,12 +73,15 @@ class FaciaController extends Controller with Logging with ExecutionContexts wit
     getPressedCollection(id).map { collectionOption =>
       collectionOption.map { collection =>
         Cached(60) {
+          val config: Config = ConfigAgent.getConfig(id).getOrElse(Config(""))
           if (request.isRss) {
-            val config: Config = ConfigAgent.getConfig(id).getOrElse(Config(""))
-            Ok(TrailsToRss(config.displayName, collection.items))
-              .as("text/xml; charset=utf-8")
+            Ok(TrailsToRss(config.displayName, collection.items)).as("text/xml; charset=utf-8")
           } else {
-            val html = views.html.fragments.collections.standard(Config(id), collection.items, NewsContainer(showMore = false), 1)
+            val html = config.displayName.getOrElse("") match {
+              case "Comment and debate" => views.html.fragments.containers.commentanddebate(config, collection, CommentAndDebateContainer(false), 0)
+              case "Features"           => views.html.fragments.containers.features(config, collection, FeaturesContainer(false), 0)
+              case _                    => views.html.fragments.containers.news(config, collection, NewsContainer(false), 0)
+            }
             if (request.isJson)
               JsonCollection(html, collection)
             else
