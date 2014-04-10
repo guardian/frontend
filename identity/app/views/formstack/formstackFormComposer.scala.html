@@ -473,17 +473,7 @@ a {
                     self.addClassToNodeList(dom.$form.querySelectorAll(config.fsSelectors[selector]), config.idClasses[selector]);
                 }
 
-                // Formstack also don't have capturable hidden fields,
-                // so we remove ID text inputs and append hidden equivalents
-                var $userId = dom.$form.querySelector(config.hiddenSelectors.userId),
-                    $email = dom.$form.querySelector(config.hiddenSelectors.email),
-                    html = '<input type="hidden" name="' + $userId.getAttribute('name') + '" value="' + user.id + '">'
-                         + '<input type="hidden" name="' + $email.getAttribute('name') + '" value="' + user.primaryEmailAddress + '">';
-
-                $userId.remove();
-                $email.remove();
-
-                dom.$form.insertAdjacentHTML( 'beforeend', html);
+                self.populateHiddenFields(user);
 
                 // Events
                 window.addEventListener('unload', self.unload, false)
@@ -504,6 +494,46 @@ a {
                     var message = JSON.parse(event.data);
                     if (message.iframeTop) { self.scrollToTopOfIframe(message.iframeTop); }
                 }, false);
+            };
+
+            self.populateHiddenFields = function (user) {
+
+                var hiddenFields = dom.$form.querySelectorAll(".fsHiddenByFieldSetting");
+                var fieldsMap = {};
+                var newFieldsHtml = "";
+
+                function populateHiddenField (label, field) {
+                    var value;
+                    switch (label.toLowerCase()) {
+                        case "email":
+                            value = user.primaryEmailAddress;
+                            break;
+
+                        case "id":
+                            value = user.id
+                            break;
+
+                        case "displayname":
+                            value = user.displayName;
+                            break;
+                    }
+                    newFieldsHtml += '<input type="hidden" name="' + field.getAttribute('name') + '" value="' + value + '">';
+                    field.remove();
+                }
+
+                for (var i = 0; i < hiddenFields.length; i++) {
+                    var field = hiddenFields[i];
+                    var label = field.querySelector("label").innerHTML;
+                    fieldsMap[label] = field.querySelector("input");
+                }
+
+                for (var label in fieldsMap) {
+                    if (fieldsMap.hasOwnProperty(label)) {
+                        populateHiddenField(label, fieldsMap[label]);
+                    }
+                }
+
+                dom.$form.insertAdjacentHTML( 'beforeend', newFieldsHtml);
             };
 
             self.removeClassFromNodeList = function (nodeList, classToRemove) {
