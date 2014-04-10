@@ -4,6 +4,19 @@
 
 $soulmates-red: #d70851;
 .commercial--soulmates {
+    .commercial__head {
+        height: auto;
+        overflow: auto;
+    }
+    .commercial__title {
+        float: none;
+    }
+    
+    
+    
+    
+    
+    
     .commercial__inner {
         position: relative;
         margin: 0 auto;
@@ -31,8 +44,7 @@ $soulmates-red: #d70851;
     }
     .commercial__explainer {
         color: $c-neutral1;
-        @include f-headline;
-        @include font-size(14.5, 19);
+        @include fs-headline(1);
         @include rem((
             margin: $gs-baseline 0 0
         ));
