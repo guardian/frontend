@@ -142,7 +142,12 @@
 .bullet,
 .from-content-api ul > li,
 .article__standfirst ul > li {
-    @include faux-bullet-point($offset-y: 3px)
+    @include faux-bullet-point($offset-y: 3px);
+
+    > p:first-child { // this stops line breaking for the following bullet point format: <ul><li><p>text</p></li></ul>
+        display: inline;
+    }
+
 }
 
 .bullet {
