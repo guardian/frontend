@@ -57,10 +57,6 @@ figcaption:before {
     @include transform(scale(0.65));
     @include transform-origin(0);
 
-    @include mq(desktop) {
-        margin-top: 1px;
-    }
-
     @if ($svg-support) {
         .svg & {
             @extend %svg-i-quote-marks;
