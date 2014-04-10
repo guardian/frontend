@@ -176,7 +176,6 @@ GET         /commercial/books/book/*pageId                                      
 # Onward journeys
 GET         /onward/recently-published                                                          controllers.LatestContentController.recentlyPublished()
 GET         /series/*path.json                                                                  controllers.SeriesController.renderSeriesStories(path)
-GET         /tone/:tone.json                                                                    controllers.ToneController.render(tone)
 
 # Facia
 GET         /                                                                                   controllers.FaciaController.editionRedirect(path = "")

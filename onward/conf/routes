@@ -31,4 +31,3 @@ GET        /preference/front-alphas/:optAction        controllers.ChangeAlphaCon
 GET        /cards/opengraph/*path.json                controllers.CardController.opengraph(path)
 GET        /tagged.json                               controllers.TaggedContentController.renderJson(tag: String)
 GET        /series/*path.json                         controllers.SeriesController.renderSeriesStories(path)
-GET        /tone/:tone.json                           controllers.ToneController.render(tone)
