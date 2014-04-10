@@ -54,7 +54,7 @@ body {
     margin: 0;
 }
 
-.a {
+a {
     color: #005689;
     cursor: pointer;
     text-decoration: none;
@@ -177,7 +177,7 @@ body {
     font-size: 1.6rem;
     line-height: 19px;
     outline: none;
-    padding: 8px 8px 7px;
+    padding: 8px 8px 7px !important; // stop FS script mucking around with padding
     margin: 0;
     width: 100%;
     -webkit-appearance: none;
@@ -365,15 +365,27 @@ body {
             };
 
             self.init = function () {
+
+                // Prepare IE if needed
+                if (!Element.prototype.remove) {
+                    Element.prototype.remove = function() {
+                        this.parentElement.removeChild(this);
+                    }
+                }
+                if (!NodeList.prototype.remove) {
+                    NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+                        for (var i = this.length - 1; i >= 0; i--) {
+                            if(this[i] && this[i].parentElement) {
+                                this[i].parentElement.removeChild(this[i]);
+                            }
+                        }
+                    }
+                }
+
                 // User object required to populate fields
                 var user = self.getUserOrSignIn();
 
                 self.dom(user);
-                el.className = el.className.replace(config.idClasses.hide, '');
-                document.getElementsByTagName('html')[0].className += ' iframed--overflow-hidden';
-
-                // Update iframe height
-                self.sendHeight();
             };
 
             self.getUserOrSignIn = function (returnUrl) {
@@ -455,10 +467,7 @@ body {
                 dom.$form.className = ' ' + config.idClasses.form;
 
                 // Remove formstack stylesheets
-                var fsStyleLinks = el.getElementsByTagName('link');
-                for (var i = fsStyleLinks.length - 1; i >= 0; i--) {
-                    fsStyleLinks[i].remove();
-                };
+                el.getElementsByTagName('link').remove();
 
                 for (var selector in config.fsSelectors) {
                     self.addClassToNodeList(dom.$form.querySelectorAll(config.fsSelectors[selector]), config.idClasses[selector]);
@@ -474,12 +483,18 @@ body {
                 $userId.remove();
                 $email.remove();
 
-                //dom.$form.append(html);
                 dom.$form.insertAdjacentHTML( 'beforeend', html);
 
                 // Events
                 window.addEventListener('unload', self.unload, false)
                 dom.$form.addEventListener('submit', self.submit, false);
+
+                // Display
+                el.className = el.className.replace(config.idClasses.hide, '');
+                document.getElementsByTagName('html')[0].className += ' iframed--overflow-hidden';
+
+                // Update iframe height
+                self.sendHeight();
 
                 dom.$form.className = dom.$form.className.replace('is-hidden', '');
 
