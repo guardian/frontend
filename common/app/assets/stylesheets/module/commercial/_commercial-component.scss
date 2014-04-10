@@ -43,6 +43,7 @@
     }
 }
 .commercial__head {
+    @include box-sizing(border-box);
     background-color: #ffffff;
     border-top: 1px solid $c-neutral4;
     overflow: hidden;

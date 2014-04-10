@@ -8,7 +8,6 @@
 
 .commercial--masterclasses {
     .commercial__head {
-        @include box-sizing(border-box);
         border-top: 0;
         background-color: transparent;
         height: auto;
