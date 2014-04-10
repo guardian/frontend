@@ -280,12 +280,6 @@ $soulmates-red: #d70851;
 /* article */
 .facia-container--commercial {
     &.facia-container--layout-article {
-        @include mq(faciaLeftCol) {
-            .commercial__head {
-                padding-left: 0;
-                padding-right: 0;
-            }
-        }
         @include mq(leftCol) {
             .commercial__buy-now-button {
                 left: auto;
@@ -294,6 +288,18 @@ $soulmates-red: #d70851;
                 @include rem((
                     bottom: $gs-gutter/2
                 ));
+            }
+            .commercial__explainer {
+                margin-top: 0;
+            }
+        }
+        @include mq(faciaLeftCol) {
+            .commercial__head {
+                padding-left: 0;
+                padding-right: 0;
+            }
+            .commercial__explainer {
+                margin-top: 12px;
             }
         }
         @include mq(rightCol) {
