@@ -395,6 +395,7 @@ object Switches extends Collections {
     FacebookAutoSigninSwitch,
     IdentityFormstackSwitch,
     IdentityEthicalAwardsSwitch,
+    IdentityAvatarUploadSwitch,
     ABBlendedContainersUk,
     ABBlendedContainersUs,
     ABBlendedContainersAu,
