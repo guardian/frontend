@@ -13,7 +13,8 @@
 @defining("http://jobs.theguardian.com", "0_1", "2014-04-02") { case (jobsHost, version, date) =>
     <div class="commercial commercial--jobs">
         <div class="commercial__head">
-            <h2 class="commercial__title">Guardian <span class="commercial__title__last-word">jobs</span></h2>
+            <h2 class="commercial__title"><a href="@AdLink{@jobsHost/jobs}"
+                data-link-name="merchandising-jobs-v@{version}_@{date}-low-browse-all-jobs">Guardian <span class="commercial__title__last-word">jobs</span></a></h2>
             <a href="@AdLink{@jobsHost/jobs}"
                 class="commercial__home-link"
                 data-link-name="merchandising-jobs-v@{version}_@{date}-low-browse-all-jobs">
