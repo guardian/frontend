@@ -4,17 +4,20 @@
  * prior to each test case being executed.
  *
  */
+define([
+    'common/$'
+], function(
+    $
+) {
 
-define(['common/common'], function(common) {
-    
     function clean(id) {
-        common.$g('#' + id).remove();
-        };
+        $('#' + id).remove();
+    };
 
      function add(id, fixtures) {
-        common.$g('body').append('<div id="' + id + '"></div>');
+        $('body').append('<div id="' + id + '"></div>');
         fixtures.forEach(function(fixture) {
-            common.$g('#' + id).append(fixture);
+            $('#' + id).append(fixture);
         });
      };
 

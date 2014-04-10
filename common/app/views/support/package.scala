@@ -79,7 +79,7 @@ case class CommentAndDebateContainer(showMore: Boolean = true) extends Container
   val containerType = "commentanddebate"
   val tone = "comment"
 }
-case class FeaturesContainer(showMore: Boolean = true, adSlot: Option[AdSlot] = None) extends Container {
+case class FeaturesContainer(showMore: Boolean = true) extends Container {
   val containerType = "features"
   val tone = "feature"
 }
@@ -87,7 +87,7 @@ case class PopularContainer(showMore: Boolean = true) extends Container {
   val containerType = "popular"
   val tone = "news"
 }
-case class PeopleContainer(showMore: Boolean = true, adSlot: Option[AdSlot] = None) extends Container {
+case class PeopleContainer(showMore: Boolean = true) extends Container {
   val containerType = "people"
   val tone = "feature"
 }
@@ -106,22 +106,6 @@ case class SeriesContainer(showMore: Boolean = true) extends Container {
   val containerType = "series"
   val tone = "news"
 }
-
-sealed trait AdSlot {
-  val dfpName: String
-}
-object AdSlot {
-
-  object First extends AdSlot {
-    val dfpName = "inline1"
-  }
-
-  object Second extends AdSlot {
-    val dfpName = "inline2"
-  }
-
-}
-
 
 object MetadataJson {
 
@@ -309,14 +293,6 @@ case class PictureCleaner(contentImages: Seq[ImageElement]) extends HtmlCleaner 
 
 object BulletCleaner {
   def apply(body: String): String = body.replace("•", """<span class="bullet">•</span>""")
-}
-
-object UnindentBulletParents extends HtmlCleaner with implicits.JSoup {
-  def clean(body: Document): Document = {
-    val bullets = body.getElementsByClass("bullet")
-    bullets flatMap { _.parentTag("p") } foreach { _.addClass("bullet-container") }
-    body
-  }
 }
 
 case class InBodyLinkCleaner(dataLinkName: String)(implicit val edition: Edition) extends HtmlCleaner {
