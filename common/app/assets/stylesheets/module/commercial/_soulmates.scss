@@ -16,7 +16,7 @@ $soulmates-red: #d70851;
     
     
     
-    
+    /*
     .commercial__inner {
         position: relative;
         margin: 0 auto;
@@ -24,6 +24,7 @@ $soulmates-red: #d70851;
             max-width: gs-span(16)
         ));
     }
+    */
     @include mq(mobileLandscape) {
         @include rem((
             padding-left: $gs-gutter,
@@ -67,6 +68,7 @@ $soulmates-red: #d70851;
     }
     .commercial__body {
         padding: 0;
+        position: relative;
     }
     .lineitems {
         @include rem((
@@ -98,10 +100,25 @@ $soulmates-red: #d70851;
         &:nth-child(3n) .lineitem__link:before {
             background-color: #039763;
         }
-        @include mq(desktop) {
+        @include mq(mobileLandscape) {
             width: 25%;
-            &:nth-child(n+3) {
+            &:nth-child(-n+4) {
                 display: block;
+            }
+        }
+        @include mq(tablet) {
+            width: 25%;
+            &:nth-child(-n+4) {
+                display: block;
+            }
+        }
+        @include mq(desktop) {
+            width: 16.66%;
+             &:nth-child(5) {
+                 display: block;
+            }
+             &:nth-child(6) {
+                 display: block;
             }
         }
     }
@@ -223,6 +240,50 @@ $soulmates-red: #d70851;
                 margin-top: -(map-get($arrow-size, width)/2);
                 margin-left: -(map-get($arrow-size, height)/2 - 2);
                 @include transform(rotate(-90deg));
+            }
+        }
+    }
+}
+
+/* fronts */
+.facia-container--layout-front .commercial {
+    @include mq(faciaLeftCol) {
+        .commercial__head {
+            @include rem((
+                width: gs-span(2) + $gs-gutter
+            ));
+        }        
+    }
+    @include mq(desktop) {
+        .commercial--masterclasses__class {
+            @include rem((
+                padding-left: $gs-gutter/2
+            ));
+            @include rem((
+                width: 25%
+            ));
+        
+            &:nth-child(n+4) {
+                display: block;
+            }
+        }
+    }
+}
+/* article */
+.facia-container--commercial {
+    &.facia-container--layout-article {
+        @include mq(rightCol) {
+            .commercial--masterclasses__class {
+                @include rem((
+                    padding-left: $gs-gutter/2
+                ));
+                @include rem((
+                    width: 25%
+                ));
+        
+                &:nth-child(n+4) {
+                    display: block;
+                }
             }
         }
     }
