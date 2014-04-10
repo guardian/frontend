@@ -1,0 +1,16 @@
+@(name: String = "")(content: Html)
+
+<div class="dropdown dropdown-styled">
+    <button class="dropdown__button u-button-reset js-dropdown-button" data-link-name="Show dropdown: @name">
+        <span class="dropdown__label">@name</span>
+        <span class="control js-visible">
+            <i class="i i-local-nav-arrow tone-background"></i>
+        </span>
+    </button>
+
+    <label class="dropdown__toggle-label js-hidden">Show</label>
+    <input class="dropdown__toggle js-hidden" type="checkbox" />
+    <div class="dropdown__content js-dropdown-content">
+        @content
+    </div>
+</div>
