@@ -54,8 +54,7 @@
             display: none;
         }
         .commercial--masterclasses__class__title {
-            @include f-bodyHeading;
-            @include font-size(14, 17);
+            @include fs-bodyHeading(1);
         }
         .commercial--masterclasses__class__date,
         .commercial--masterclasses__class__meta {
@@ -145,7 +144,7 @@
         @include mq(rightCol) {
             .commercial--masterclasses__class {
                 @include rem((
-                    padding-left: 10px
+                    padding-left: $gs-gutter/2
                 ));
                 @include rem((
                     width: 25%
