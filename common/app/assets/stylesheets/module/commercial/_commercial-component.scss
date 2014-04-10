@@ -1,6 +1,7 @@
 .facia-container--commercial {
     &.facia-container--layout-article {
         padding: 0;
+        margin: 0;
         @include rem((
             max-width: gs-span(15.5)
         ));
