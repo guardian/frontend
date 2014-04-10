@@ -12,7 +12,7 @@ define([
         this.end = '2014-04-17';
         this.description = 'Moves onwards components above discussion';
         this.audience = 0.75;
-        this.audienceOffset = 0.2;
+        this.audienceOffset = 0.25;
 
         this.canRun = function(config) {
             return config.page.contentType === 'Article' || config.page.contentType === 'Video' || config.page.contentType === 'Gallery';
