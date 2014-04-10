@@ -195,17 +195,8 @@ figure {
         display: block;
     }
     &.img {
-        @include rem((
-            margin-top: ($gs-baseline/3)*4,
-            margin-bottom: ($gs-baseline/3)*5
-        ));
-
-        @include mq(leftCol) {
-            @include rem((
-                margin-top: ($gs-baseline/3)*5,
-                margin-bottom: $gs-baseline*2
-            ));
-        }
+        margin-top: 5px;
+        margin-bottom: 6px;
     }
     &.img--landscape,
     &.img--portrait {
