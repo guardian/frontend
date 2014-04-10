@@ -87,7 +87,13 @@ trait S3 extends Logging {
 
     val request = new PutObjectRequest(bucket, key, new StringInputStream(value), metadata).withCannedAcl(accessControlList)
 
-    client.putObject(request)
+    try {
+      client.putObject(request)
+    } catch {
+      case e: Exception =>
+        S3ClientExceptionsMetric.increment()
+        throw e
+    }
   }
 }
 
