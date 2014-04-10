@@ -9,7 +9,7 @@ define([
     var OnwardPackages = function() {
         this.id = 'OnwardsAboveDiscussion';
         this.start = '2014-04-10';
-        this.end = '2014-04-17';
+        this.expiry = '2014-04-17';
         this.description = 'Moves onwards components above discussion';
         this.audience = 0.75;
         this.audienceOffset = 0.25;
