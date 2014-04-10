@@ -34,9 +34,9 @@ trait S3 extends Logging {
 
     // http://stackoverflow.com/questions/17782937/connectionpooltimeoutexception-when-iterating-objects-in-s3
     try { Some(action(result)) }
-    catch { case _: Exception =>
+    catch { case e: Exception =>
       S3ClientExceptionsMetric.increment()
-      None
+      throw e
     }
     finally { result.close() }
   } catch {
@@ -46,7 +46,7 @@ trait S3 extends Logging {
     }
     case e: Exception => {
       S3ClientExceptionsMetric.increment()
-      None
+      throw e
     }
   }
 
