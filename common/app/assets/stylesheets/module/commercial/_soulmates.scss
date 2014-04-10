@@ -18,6 +18,11 @@ $soulmates-red: #d70851;
         float: none;
         margin-bottom: 0;
     }
+    .i-soulmates-logo {
+        width: auto;
+        display: block;
+        background-size: contain;
+    }
     @include mq(mobileLandscape) {
         @include rem((
             padding-left: $gs-gutter,
@@ -31,10 +36,6 @@ $soulmates-red: #d70851;
                 width: gs-span(3)
             ));
         }
-    }
-    .commercial__logo {
-        float: none;
-        margin-bottom: 0;
     }
     .commercial__explainer {
         color: $c-neutral1;
@@ -54,14 +55,15 @@ $soulmates-red: #d70851;
             color: #ffffff;
             @include fs-headline(1, $size-only: true);
             @include rem((
-                padding: $gs-baseline/3 $gs-baseline*2,
-                bottom: $gs-gutter/2
+                top: $gs-gutter/2,
+                right: $gs-gutter/2,
+                padding: $gs-baseline/3 $gs-baseline*2
             ));
         }
     }
     .commercial__body {
         @include rem((
-            padding: $gs-gutter/2 0
+            padding: $gs-gutter/2 0 $gs-gutter
         ));
         position: relative;
     }
@@ -250,7 +252,15 @@ $soulmates-red: #d70851;
             @include rem((
                 width: gs-span(2) + $gs-gutter
             ));
-        }        
+        }
+        .commercial__buy-now-button {
+            left: auto;
+            right: auto;
+            top: auto;
+            @include rem((
+                bottom: $gs-gutter/2
+            ));
+        }  
     }
     @include mq(desktop) {
         .commercial--masterclasses__class {
@@ -274,7 +284,17 @@ $soulmates-red: #d70851;
             .commercial__head {
                 padding-left: 0;
                 padding-right: 0;
-            }        
+            }
+        }
+        @include mq(leftCol) {
+            .commercial__buy-now-button {
+                left: auto;
+                right: auto;
+                top: auto;
+                @include rem((
+                    bottom: $gs-gutter/2
+                ));
+            }
         }
         @include mq(rightCol) {
             .commercial--masterclasses__class {
