@@ -47,7 +47,6 @@
         float: left;
         width: 50%;
         @include rem((
-/*            padding-left: $gs-gutter/2 - 1*/
             padding-left: 10px
         ));
         
