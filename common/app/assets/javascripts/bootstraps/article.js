@@ -109,8 +109,9 @@ define([
 
         initTonal: function(config, context) {
             if (config.page.tones !== '') {
-                var c = $('.js-series', context)[0];
-                new TonalComponent(config, c).fetch(c, 'html');
+                $('.js-series', context).each(function(c) {
+                    new TonalComponent(config, c).fetch(c, 'html');
+                });
             }
         }
     };
