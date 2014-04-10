@@ -129,6 +129,6 @@ object MemcachedAction extends Results with MemcachedSupport with implicits.Requ
   private def cacheExempt(request: RequestHeader) = {
 
     // TODO fronts team give preview a proper name
-    request.isHealthcheck || request.host.contains("FaciaLoa")
+    request.isHealthcheck || request.host.toLowerCase.contains("facialoa")
   }
 }
