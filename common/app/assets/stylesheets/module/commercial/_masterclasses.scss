@@ -149,16 +149,11 @@
                 width: gs-span(2) + $gs-gutter
             ));
         }
+    }
+    @include mq(faciaLeftCol, $to: wide) {
         .commercial__title__last-word {
             margin-left: 0;
-        }  
-    }
-    @include mq(wide) {
-        .commercial__title__last-word {
-            @include rem((
-                margin-left: -5px
-            ));
-        }
+        }        
     }
 }
 /* article */
