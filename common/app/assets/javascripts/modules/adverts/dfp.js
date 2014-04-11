@@ -92,7 +92,14 @@ define([
 
     DFP.prototype.buildAdUnit = function () {
         var isFront      = this.config.page.isFront || this.config.page.contentType === 'Section',
-            adUnitSuffix = this.config.page.section + (isFront ? '/front' : '');
+            section      = this.config.page.section,
+            adUnitSuffix = section;
+        if (isFront) {
+            if (section !== '') {
+                adUnitSuffix += '/';
+            }
+            adUnitSuffix += 'front';
+        }
         return '/' + this.config.page.dfpAccountId + '/' + this.config.page.dfpAdUnitRoot + '/' + adUnitSuffix;
     };
 
