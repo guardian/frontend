@@ -11,6 +11,8 @@
         border-top: 0;
         background-color: transparent;
         height: auto;
+        margin-bottom: 0;
+        padding-bottom: 0;
         @include rem((
             padding-left: $gs-gutter/2 - 1
         ));
@@ -99,6 +101,13 @@
             margin-left: 0;
         }
     }
+    @include mq(wide) {
+        .commercial__title__last-word {
+            @include rem((
+                margin-left: -5px
+            ));
+        }
+    }
     .lineitem__image {
         margin-right: $gs-gutter/5;
         outline: 1px solid $c-neutral7;
@@ -115,13 +124,6 @@
 
 /* fronts */
 .facia-container--layout-front .commercial--masterclasses {
-    @include mq(faciaLeftCol) {
-        .commercial__head {
-            @include rem((
-                width: gs-span(2) + $gs-gutter
-            ));
-        }        
-    }
     @include mq(desktop) {
         .commercial--masterclasses__class {
             @include rem((
@@ -133,6 +135,25 @@
                 display: block;
             }
         }
+    }
+    @include mq(leftCol) {
+        .commercial__title__last-word {
+            @include rem((
+                margin-left: -5px
+            ));
+        }
+    }
+    @include mq(faciaLeftCol) {
+        .commercial__head {
+            @include rem((
+                width: gs-span(2) + $gs-gutter
+            ));
+        }
+    }
+    @include mq(faciaLeftCol, $to: wide) {
+        .commercial__title__last-word {
+            margin-left: 0;
+        }        
     }
 }
 /* article */

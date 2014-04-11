@@ -15,10 +15,12 @@
         <ul class="lineitems">
             @events.take(4).map { event =>
                 <li class="lineitem commercial--masterclasses__class">
+                    <a class="lineitem__link commercial--masterclasses__class__link" href="@AdLink{@event.eventBriteEvent.guardianUrl}" data-link-name="merchandising-masterclasses-low-profile-@event.eventBriteEvent.name">
                     @event.imageElement.map{ picture =>
                         @Item300.bestFor(picture).map{ url => <img src="@url"/> }
                     }
-                    <a class="lineitem__link commercial--masterclasses__class__link" href="@AdLink{@event.eventBriteEvent.guardianUrl}" data-link-name="merchandising-masterclasses-low-profile-@event.eventBriteEvent.name">
+                    <!--</a>
+                    <a class="lineitem__link commercial--masterclasses__class__link" href="@AdLink{@event.eventBriteEvent.guardianUrl}" data-link-name="merchandising-masterclasses-low-profile-@event.eventBriteEvent.name">-->
                         <h4 class="commercial--masterclasses__class__title">@event.eventBriteEvent.name</h4>
                         <p class="commercial--masterclasses__class__date">@event.eventBriteEvent.readableDate</p>
                     </a>
