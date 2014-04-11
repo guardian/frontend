@@ -49,8 +49,9 @@
                         <div class="matches-nav" data-link-name="@matchesList.pageType nav">
                             @matchesList.previousPage.map{url =>
                                 <a href="@url" class="collection__show-more tone-background tone-news"
-                                   data-insert-into="football-matches__container"
-                                   data-replace-with="show-more-football-matches--old"
+                                   data-shows-more=".football-matches__day"
+                                   data-puts-more-into="football-matches"
+                                   data-new-url="previous"
                                    data-link-name="previous"
                                    title="Previous page">
                                     <span class="collection__show-more__icon">
