@@ -83,8 +83,7 @@ define([
         function detectPressFailure() {
             model.statusPressFailure(false);
 
-            // TEMPORARY DISABLE
-            if (false && model.front()) {
+            if (vars.state.switches['facia-tool-check-press-lastmodified'] && model.front()) {
                 authedAjax.request({
                     url: '/front/lastmodified/' + model.front()
                 })
