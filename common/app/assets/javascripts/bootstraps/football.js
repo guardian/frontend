@@ -56,19 +56,28 @@ define([
                     rhc.addComponent(extra.content, extra.importance);
                 });
             }, function() {
+                var b;
                 $.create('<div class="football-extras"></div>').each(function(extrasContainer) {
                     extras.forEach(function(extra, i) {
                         if (dropdownTemplate) {
                             $.create(dropdownTemplate).each(function (dropdown) {
                                 $('.dropdown__label', dropdown).append(extra.name);
                                 $('.dropdown__content', dropdown).append(extra.content);
-                                $('.dropdown__button', dropdown).attr('data-link-name', 'Show dropdown: '+ extra.name);
-                            }).appendTo(extrasContainer).addClass(i === 0 ? 'dropdown--active' : '');
+                                $('.dropdown__button', dropdown)
+                                    .attr('data-link-name', 'Show dropdown: '+ extra.name)
+                                    .each(function(el) {
+                                        if (i === 0) { b = el; }
+                                    });
+                            }).appendTo(extrasContainer);
                         } else {
                             extrasContainer.appendChild(extra.content);
                         }
                     });
                 }).insertAfter($('.article-body', context));
+
+                // unfortunately this is here as the buttons event is delegated
+                // so it needs to be in the dom
+                if (b) { bean.fire(b, 'click'); }
             });
         }
     }

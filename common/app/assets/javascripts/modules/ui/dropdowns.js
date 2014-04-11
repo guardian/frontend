@@ -12,7 +12,8 @@ define([
     context = context();
     var s = {
         container: '.dropdown',
-        button: '.dropdown__button'
+        button: '.dropdown__button',
+        content: '.dropdown__content'
     };
     function init() {
         function ancestor(el, c) {
@@ -23,7 +24,13 @@ define([
             }
         }
         bean.on(context, 'click', s.button, function(e) {
-            bonzo(ancestor(e.currentTarget, s.container)).toggleClass('dropdown--active');
+            bonzo(ancestor(e.currentTarget, s.container))
+                .toggleClass('dropdown--active')
+                .each(function(d) {
+                    var v = bonzo(d).hasClass('dropdown--active');
+                    $(s.content, d).attr('aria-hidden', !v);
+                    $(s.content, d).attr('aria-expanded', v);
+                });
         });
     }
 
