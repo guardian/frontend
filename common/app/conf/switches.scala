@@ -43,7 +43,6 @@ object Switches extends Collections {
   // Switch names can be letters numbers and hyphens only
 
   private lazy val never = new DateMidnight(2100, 1, 1)
-  private lazy val endOfQ4 = new DateMidnight(2014, 4, 1)
 
   // this is 3 months - at the end of this a decision is expected
   // and one (or both) of the 2 needs to go.
