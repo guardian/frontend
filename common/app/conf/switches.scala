@@ -239,6 +239,11 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
+  val IdentityAvatarUploadSwitch = Switch("Feature Switches", "id-avatar-upload",
+    "If this switch is on, users can upload avatars on their profile page",
+    safeState = Off, sellByDate = never
+  )
+
   val IdentityEthicalAwardsSwitch = Switch("Feature Switches", "id-ethical-awards",
     "If this switch is on, Ethical awards forms will be available",
     safeState = Off, sellByDate = new DateMidnight(2014, 5, 15))
@@ -407,6 +412,7 @@ object Switches extends Collections {
     FacebookAutoSigninSwitch,
     IdentityFormstackSwitch,
     IdentityEthicalAwardsSwitch,
+    IdentityAvatarUploadSwitch,
     ABBlendedContainersUk,
     ABBlendedContainersUs,
     ABBlendedContainersAu,

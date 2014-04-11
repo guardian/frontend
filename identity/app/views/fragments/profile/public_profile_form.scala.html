@@ -1,24 +1,50 @@
-@(idUrlBuilder: services.IdentityUrlBuilder, idRequest: services.IdentityRequest, user: com.gu.identity.model.User, publicProfileForm: Form[form.ProfileFormData])(implicit request: RequestHeader)
+@(idUrlBuilder: services.IdentityUrlBuilder, idRequest: services.IdentityRequest, user: com.gu.identity.model.User, publicProfileForm: Form[form.ProfileFormData], avatarUploadDataOpt: Option[model.AvatarUploadData])(implicit request: RequestHeader)
 
 @import views.html.fragments.form.{inputField, textareaField}
 @import form.IdFormHelpers._
 @import form.Input
 @import helper._
 
+<fieldset class="fieldset">
+    <div class="fieldset__heading">
+        <div class="user-avatar" data-userid="@user.id"></div>
+        <h2 class="form__heading">
+            @user.publicFields.displayName
+        </h2>
+        @user.dates.accountCreatedDate.map { joinDate =>
+            <p class="form-field__note">Joined: @joinDate.toString("d MMM yyyy")</p>
+        }
+    </div>
+</fieldset>
+
+@for(avatarUploadData <- avatarUploadDataOpt) {
+<form class="form js-avatar-upload-form" novalidate action="@avatarUploadData.uploadUrl" role="main" method="post" enctype="multipart/form-data">
+    <fieldset class="fieldset">
+
+        <div class="fieldset__heading">
+            <h2 class="form__heading">Profile image</h2>
+            <div class="form__note">This image will appear next to your comments. Only .jpg, .png or .gif files are accepted.</div>
+        </div>
+
+        <div class="fieldset__fields">
+            <ul class="u-unstyled">
+                <li class="form-field">
+                    <input type="file" name="file" accept="image/gif, image/jpeg, image/png" />
+                    <input type="hidden" name="signed_data" value="@avatarUploadData.signedData" />
+                    <input type="hidden" name="redirect_url" value="@idUrlBuilder.buildUrl("/public/edit", idRequest)">
+                </li>
+                <li>
+                    <button type="submit" class="submit-input js-avatar-upload-button" data-link-name="Upload Avatar">Upload</button>
+                </li>
+            </ul>
+        </div>
+
+    </fieldset>
+</form>
+}
+
 <form class="form js-public-profile-form" novalidate action="@idUrlBuilder.buildUrl("/public/edit", idRequest)" role="main" method="post">
     @views.html.helper.CSRF.formField
-
-    <fieldset class="fieldset">
-        <div class="fieldset__heading">
-            <div class="user-avatar" data-userid="@user.id"></div>
-            <h2 class="form__heading">
-                @user.publicFields.displayName
-            </h2>
-            @user.dates.accountCreatedDate.map { joinDate =>
-                <p class="form-field__note">Joined: @joinDate.toString("d MMM yyyy")</p>
-            }
-        </div>
-    </fieldset>
 
     @if(publicProfileForm.globalError.isDefined) {
         <div class="form__error">@publicProfileForm.globalErrors.map(_.message).mkString(", ")</div>
