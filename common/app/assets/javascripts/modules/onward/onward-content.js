@@ -13,7 +13,7 @@ define([
 ){
 
 
-    function SeriesContent(config, context){
+    function OnwardContent(config, context){
         register.begin('series-content');
         this.config = config;
         this.context = context;
@@ -23,19 +23,19 @@ define([
 
     }
 
-    Component.define(SeriesContent);
+    Component.define(OnwardContent);
 
 
-    SeriesContent.prototype.ready = function() {
+    OnwardContent.prototype.ready = function() {
         images.upgrade(this.context);
         register.end('series-content');
     };
 
-    SeriesContent.prototype.error = function() {
+    OnwardContent.prototype.error = function() {
         common.mediator.emit('module:error', 'Failed to load series:' + this.config.page.series + 'common/modules/related.js');
         register.error('series-content');
     };
 
 
-    return SeriesContent;
+    return OnwardContent;
 });
