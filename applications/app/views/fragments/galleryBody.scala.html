@@ -11,6 +11,7 @@
          itemscope itemtype="@gallery.schemaType" role="main">
         <div class="article__inner article__inner--head">
             <header class="article__head">
+                @fragments.meta.seriesInline(gallery)
                 @fragments.headline(gallery.headline)
 
                 @if(gallery.isCommentable) {
@@ -78,6 +79,8 @@
         </div>
     </article>
 </div>
+
+@fragments.seriesPlaceholder(VisualTone(gallery))
 
 @fragments.storyPackagePlaceholder(storyPackage)
 

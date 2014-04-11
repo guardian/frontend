@@ -2,7 +2,7 @@ package services
 
 import common.{SimpleCountMetric, Jobs}
 import model.diagnostics.CloudWatch
-import play.api.{Play, Application => PlayApp, GlobalSettings}
+import play.api.{Application => PlayApp, GlobalSettings}
 
 trait ArchiveMetrics extends GlobalSettings {
 
@@ -16,11 +16,8 @@ trait ArchiveMetrics extends GlobalSettings {
     Jobs.deschedule("ArchiveSystemMetricsJob")
     super.onStart(app)
 
-    // don't fire off metrics during test runs
-    if (!Play.isTest(app)) {
-      Jobs.schedule("ArchiveSystemMetricsJob", "0 * * * * ?"){
-        report()
-      }
+    Jobs.schedule("ArchiveSystemMetricsJob", "0 * * * * ?"){
+      report()
     }
   }
 

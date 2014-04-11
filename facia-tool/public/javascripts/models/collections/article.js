@@ -4,6 +4,7 @@ define([
     'utils/as-observable-props',
     'utils/populate-observables',
     'utils/full-trim',
+    'utils/deep-get',
     'models/group',
     'modules/authed-ajax',
     'modules/content-api',
@@ -15,6 +16,7 @@ define([
         asObservableProps,
         populateObservables,
         fullTrim,
+        deepGet,
         Group,
         authedAjax,
         contentApi,
@@ -37,8 +39,7 @@ define([
             this.fields = asObservableProps([
                 'headline',
                 'trailText',
-                'thumbnail',
-                'shortId']);
+                'thumbnail']);
 
             this.meta = asObservableProps([
                 'updatedAt',
@@ -110,11 +111,27 @@ define([
         };
 
         Article.prototype.populate = function(opts, withContent) {
+            var missingProps;
+
             populateObservables(this.props,  opts);
             populateObservables(this.meta,   opts.meta);
             populateObservables(this.fields, opts.fields);
             populateObservables(this.state,  opts.state);
-            this.state.isLoaded(!!withContent);
+
+            if (withContent) {
+                 missingProps = [
+                    'webPublicationDate',
+                    'fields',
+                    'fields.headline'
+                 ].filter(function(prop) {return !deepGet(opts, prop);});
+
+                if (missingProps.length) {
+                    vars.model.statusCapiErrors(true);
+                    window.console.error('ContentApi missing: "' + missingProps.join('", "') + '" for ' + this.id);
+                } else {
+                    this.state.isLoaded(true);
+                }
+            }
         };
 
         Article.prototype.toggleIsBreaking = function() {

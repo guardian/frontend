@@ -1,6 +1,6 @@
 package common
 
-import play.api.{Application => PlayApp, Play, GlobalSettings}
+import play.api.{Application => PlayApp, GlobalSettings}
 import com.gu.management._
 import conf.RequestMeasurementMetrics
 import java.lang.management.ManagementFactory
@@ -32,6 +32,13 @@ trait TimingMetricLogging extends Logging { self: TimingMetric =>
 
     result.get
   }
+}
+
+object MemcachedMetrics {
+
+  object FilterCacheHit extends SimpleCountMetric("memcache", "memcached-filter-hit", "Memcached filter hits", "Memcached filter hits")
+  object FilterCacheMiss extends SimpleCountMetric("memcache", "memcached-filter-miss", "Memcached filter misses", "Memcached filter misses")
+
 }
 
 object SystemMetrics extends implicits.Numbers {
@@ -100,6 +107,17 @@ object SystemMetrics extends implicits.Numbers {
     MaxNonHeapMemoryMetric, UsedNonHeapMemoryMetric, BuildNumberMetric, LoadAverageMetric, AvailableProcessorsMetric,
     TotalPhysicalMemoryMetric, FreePhysicalMemoryMetric, FreeDiskSpaceMetric, TotalDiskSpaceMetric
   )
+}
+
+object S3Metrics {
+  object S3ClientExceptionsMetric extends SimpleCountMetric(
+    "exception",
+    "s3-client-exception",
+    "S3 Client Exceptions",
+    "Number of times the AWS S3 client has thrown an Exception"
+  )
+
+  val all: Seq[Metric] = Seq(S3ClientExceptionsMetric)
 }
 
 object ContentApiMetrics {
@@ -318,7 +336,7 @@ object FaciaToolMetrics {
     DraftPublishCount, ContentApiPutSuccess, ContentApiPutFailure,
     FrontPressSuccess, FrontPressFailure, FrontPressCronSuccess,
     FrontPressCronFailure, InvalidContentExceptionMetric
-  ) ++ ContentApiMetrics.all
+  ) ++ ContentApiMetrics.all ++ S3Metrics.all
 }
 
 object CommercialMetrics {
@@ -443,10 +461,14 @@ object PerformanceMetrics {
 }
 
 trait CloudWatchApplicationMetrics extends GlobalSettings {
+  import MemcachedMetrics._
   val applicationMetricsNamespace: String = "Application"
   val applicationDimension: Dimension = new Dimension().withName("ApplicationName").withValue(applicationName)
   def applicationName: String
-  def applicationMetrics: Map[String, Double] = Map.empty
+  def applicationMetrics: Map[String, Double] = Map(
+    (s"$applicationName-${FilterCacheHit.name}", FilterCacheHit.getAndReset),
+    (s"$applicationName-${FilterCacheMiss.name}", FilterCacheMiss.getAndReset)
+  )
 
   def systemMetrics: Map[String, Double] = Map(
     (s"$applicationName-max-heap-memory", SystemMetrics.MaxHeapMemoryMetric.getValue().toDouble),
@@ -469,8 +491,8 @@ trait CloudWatchApplicationMetrics extends GlobalSettings {
   )
 
   private def report() {
-    val systemMetrics: Map[String, Double] = this.systemMetrics
-    val applicationMetrics: Map[String, Double] = this.applicationMetrics
+    val systemMetrics  = this.systemMetrics
+    val applicationMetrics  = this.applicationMetrics
     CloudWatch.put("ApplicationSystemMetrics", systemMetrics)
     if (applicationMetrics.nonEmpty) {
       CloudWatch.putWithDimensions(applicationMetricsNamespace, applicationMetrics, Seq(applicationDimension))
@@ -481,11 +503,8 @@ trait CloudWatchApplicationMetrics extends GlobalSettings {
     Jobs.deschedule("ApplicationSystemMetricsJob")
     super.onStart(app)
 
-    // don't fire off metrics during test runs
-    if (!Play.isTest(app)) {
-      Jobs.schedule("ApplicationSystemMetricsJob", "0 * * * * ?"){
-        report()
-      }
+    Jobs.schedule("ApplicationSystemMetricsJob", "0 * * * * ?"){
+      report()
     }
   }
 

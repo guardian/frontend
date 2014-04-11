@@ -32,9 +32,9 @@
 @import "module/_stars";
 @import "module/_debug";
 @import "module/_gallerythumbs";
+@import "module/charts/_doughnuts";
 
 @import "module/nav/_pop-up";
-@import "module/nav/_localnav";
 @import "module/nav/_aside";
 @import "module/_search";
 
@@ -53,6 +53,7 @@
 @import "module/onward/_popular";
 @import "module/_clamp";
 
+@import "module/meta/series";
 
 /* ==========================================================================
    External modules
@@ -82,6 +83,7 @@
 @import "module/containers/_popular";
 @import "module/containers/_related";
 @import "module/containers/_multimedia";
+@import "module/containers/_series";
 @import "module/facia/_pagination";
 
 
@@ -104,6 +106,7 @@
    ========================================================================== */
 
 @import "module/experiments/_layout-hints";
+@import "module/experiments/_football-liveblog-truncation";
 
 
 /* ==========================================================================

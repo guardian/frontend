@@ -25,15 +25,19 @@
                 <div>
                     <label for="bookshop" class="u-h">Search bookshop:</label>
                     <input id="bookshop" name="keyword" class="commercial__search__input" type="text" placeholder="Search books" />
-                    <button type="submit" class="u-button-reset commercial__search__submit">
+                    <button type="submit" class="u-button-reset commercial__search__submit" data-link-name="merchandising-bookshop-v@{version}_@{date}-low-search">
                         <i class="i i-search"></i>
                     </button>
                     <input value="%JustOmnitureToken%" name="INTCMP" type="hidden" />
                 </div>
             </form>
-            <a href="http://www.guardianbookshop.co.uk/" class="commercial__call-to-action">
-                <span class="commercial__call-to-action__label">Visit shop</span>
-                <span class="i i-filter-arrow-down"></span>
+            <a href="@AdLink{http://www.guardianbookshop.co.uk/}"
+                class="commercial__home-link"
+                data-link-name="merchandising-bookshop-v@{version}_@{date}-low-visit-shop">
+                Visit shop
+                <span class="commercial__home-link__cta">
+                    <span class="i i-filter-arrow-down"></span>
+                </span>
             </a>
         </div>
 
@@ -41,7 +45,7 @@
             <ul class="u-unstyled lineitems">
             @books.map { book =>
                 <li class="lineitem u-cf">
-                    <a href="@book.buyUrl" class="lineitem__link" data-link-name="merchandising-bookshop-v@{version}_@{date}-low-@{book.isbn}-@{book.author}-@{book.title}">
+                    <a href="@AdLink{@book.buyUrl}" class="lineitem__link" data-link-name="merchandising-bookshop-v@{version}_@{date}-low-@{book.isbn}-@{book.author}-@{book.title}">
                     @book.jacketUrl.map { url =>
                         <div class="lineitem__img js-image-upgrade" data-src="@url"></div>
                     }
@@ -58,7 +62,7 @@
                         }
                         </p>
                     </a>
-                    <a href="@book.buyUrl" class="commercial--books__buy-now-button" data-link-name="merchandising-bookshop-v@{version}_@{date}-low-@{book.isbn}-@{book.author}-@{book.title}-button">Buy now</a>
+                    <a href="@AdLink{@book.buyUrl}" class="commercial--books__buy-now-button" data-link-name="merchandising-bookshop-v@{version}_@{date}-low-@{book.isbn}-@{book.author}-@{book.title}-button">Buy now</a>
                 </li>
             }
             </ul>
@@ -69,7 +73,7 @@
                 <div>
                     <label for="bookshop" class="u-h">Search bookshop:</label>
                     <input id="bookshop" name="keyword" class="commercial__search__input" type="text" placeholder="Search bookshop" />
-                    <button type="submit" class="u-button-reset commercial__search__submit">
+                    <button type="submit" class="u-button-reset commercial__search__submit" data-link-name="merchandising-bookshop-v@{version}_@{date}-low-search">
                         <i class="i i-search"></i>
                     </button>
                     <input value="%JustOmnitureToken%" name="INTCMP" type="hidden" />

@@ -8,8 +8,7 @@ import common.{LinkCounts, LinkTo, Reference}
 import org.jsoup.Jsoup
 import org.jsoup.safety.Whitelist
 import collection.JavaConversions._
-import views.support.{Naked, ImgSrc}
-import views.support.StripHtmlTagsAndUnescapeEntities
+import views.support.{VisualTone, Naked, ImgSrc, StripHtmlTagsAndUnescapeEntities}
 import play.api.libs.json.JsValue
 import conf.Configuration.facebook
 
@@ -30,6 +29,8 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   lazy val isExpired = delegate.isExpired.getOrElse(false)
   lazy val blockVideoAds: Boolean = videoAssets.exists(_.blockVideoAds)
   lazy val isLiveBlog: Boolean = delegate.isLiveBlog
+  lazy val isBlog: Boolean = blogs.nonEmpty
+  lazy val isSeries: Boolean = series.nonEmpty
   lazy val hasLargeContributorImage: Boolean = tags.filter(_.hasLargeContributorImage).nonEmpty
 
   // read this before modifying
@@ -61,6 +62,12 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
 
   lazy val cricketMatch: Option[String] = delegate.references.find(_.`type` == "esa-cricket-match")
     .map(_.id).map(Reference(_)).map(_._2)
+
+  lazy val seriesMeta = {
+    series.headOption.map( series =>
+      Seq(("series", series.name), ("series-id", series.id))
+    )getOrElse(Nil)
+  }
 
   private lazy val fields: Map[String, String] = delegate.safeFields
 
@@ -108,7 +115,9 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   override lazy val analyticsName = s"GFE:$section:${id.substring(id.lastIndexOf("/") + 1)}"
   // Meta Data used by plugins on the page
   // people (including 3rd parties) rely on the names of these things, think carefully before changing them
-  override def metaData: Map[String, Any] = { super.metaData ++ Map(
+  override def metaData: Map[String, Any] = {
+
+    super.metaData ++ Map(
     ("keywords", keywords.map { _.name }.mkString(",")),
     ("keywordIds", keywords.map { _.id }.mkString(",")),
     ("publication", publication),
@@ -116,7 +125,6 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
     ("web-publication-date", webPublicationDate),
     ("author", contributors.map(_.name).mkString(",")),
     ("tones", tones.map(_.name).mkString(",")),
-    ("series", series.map { _.name }.mkString(",")),
     ("blogs", blogs.map { _.name }.mkString(",")),
     ("commentable", isCommentable),
     ("has-story-package", fields.get("hasStoryPackage").exists(_.toBoolean)),
@@ -124,15 +132,16 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
     ("isLive", isLive),
     ("wordCount", wordCount),
     ("shortUrl", shortUrl),
-    ("thumbnail", thumbnailPath.getOrElse(false))
-    ) ++ Map(("references", delegate.references.map(r => Reference(r.id))))
+    ("thumbnail", thumbnailPath.getOrElse(false)),
+    ("references", delegate.references.map(r => Reference(r.id)))
+    ) ++ Map(seriesMeta : _*)
   }
   override lazy val cacheSeconds = {
     if (isLive) 30 // live blogs can expect imminent updates
     else if (lastModified > DateTime.now - 1.hour) 60 // an hour gives you time to fix obvious typos and stuff
     else 900
   }
-  override def openGraph: List[(String, Any)] = super.openGraph ++ List(
+  override def openGraph: Map[String, Any] = super.openGraph ++ Map(
     "og:title" -> webTitle,
     "og:description" -> trailText.map(StripHtmlTagsAndUnescapeEntities(_)).getOrElse("")
   )
@@ -240,6 +249,21 @@ object Content {
   }
 }
 
+private object ArticleSchemas {
+  def apply(article: Article): String = {
+    // http://schema.org/Article
+    // http://schema.org/Review
+    if (article.isReview)
+      "http://schema.org/Review"
+    else if (article.isBlog)
+      "http://schema.org/BlogPosting"
+    else if (VisualTone(article) == VisualTone.News)
+      "http://schema.org/NewsArticle"
+    else
+      "http://schema.org/Article"
+  }
+}
+
 class Article(content: ApiContentWithMeta) extends Content(content) {
   lazy val body: String = delegate.safeFields.getOrElse("body","")
   lazy val contentType = "Article"
@@ -249,7 +273,7 @@ class Article(content: ApiContentWithMeta) extends Content(content) {
     .exists(e => e.hasClass("gu-video") && e.tagName() == "video")
 
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
-  override def schemaType = if (isReview) Some("http://schema.org/Review") else Some("http://schema.org/Article")
+  override def schemaType = Some(ArticleSchemas(this))
 
   // if you change these rules make sure you update IMAGES.md (in this project)
   override def trailPicture: Option[ImageContainer] = thumbnail.find(_.imageCrops.exists(_.width >= 620))
@@ -265,7 +289,7 @@ class Article(content: ApiContentWithMeta) extends Content(content) {
     ("shouldHideAdverts", shouldHideAdverts)
   )
 
-  override def openGraph: List[(String, Any)] = super.openGraph ++ List(
+  override def openGraph: Map[String, Any] = super.openGraph ++ Map(
     "og:type" -> "article",
     "article:published_time" -> webPublicationDate,
     "article:modified_time" -> lastModified,
@@ -322,7 +346,7 @@ class Video(content: ApiContentWithMeta) extends Content(content) {
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
   override lazy val metaData: Map[String, Any] = super.metaData +("content-type" -> contentType, "blockVideoAds" -> blockVideoAds, "source" -> source.getOrElse(""))
 
-  override def openGraph: List[(String, Any)] = super.openGraph ++ List(
+  override def openGraph: Map[String, Any] = super.openGraph ++ Map(
     "og:type" -> "video",
     "og:video:type" -> "text/html",
     "og:video:url" -> webUrl,
@@ -351,7 +375,7 @@ class Gallery(content: ApiContentWithMeta) extends Content(content) {
   // if you change these rules make sure you update IMAGES.md (in this project)
   override def trailPicture: Option[ImageContainer] = thumbnail
 
-  override def openGraph: List[(String, Any)] = super.openGraph ++ List(
+  override def openGraph: Map[String, Any] = super.openGraph ++ Map(
     "og:type" -> "article",
     "article:published_time" -> webPublicationDate,
     "article:modified_time" -> lastModified,

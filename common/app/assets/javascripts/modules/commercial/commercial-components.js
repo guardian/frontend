@@ -6,7 +6,7 @@ define([
     'qwery',
     'bonzo',
     'bean',
-    'common/modules/adverts/document-write',
+    'common/modules/adverts/query-string',
     'common/utils/storage'
 ], function (
     $,
@@ -16,14 +16,14 @@ define([
     qwery,
     bonzo,
     bean,
-    documentWrite,
+    queryString,
     storage
 ) {
 
     var Commercial = function(options) {
         this.options        = extend(this.DEFAULTS, options);
         this.keywords       = this.options.config.page.keywords.split(',');
-        this.keywordsParams = documentWrite.getKeywords(this.options.config.page);
+        this.keywordsParams = queryString.getKeywords(this.options.config.page);
         this.userSegments   = 'seg=' + (storage.local.get('gu.history').length <= 1 ? 'new' : 'repeat');
     };
 

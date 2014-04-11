@@ -17,7 +17,7 @@ class KeywordTest extends FlatSpec with Matchers {
   "lookup" should "find expected results using elastic search content API client" in Fake {
     MasterClassAgent.stop()
 
-    val keywords = Await.result(Keyword.lookup("Leisure"), atMost = 1.seconds)
+    val keywords = Await.result(Lookup.keyword("Leisure"), atMost = 1.seconds)
 
     keywords.map(_.id) should contain allOf(
       "books/sportandleisure",
@@ -31,7 +31,7 @@ class KeywordTest extends FlatSpec with Matchers {
   "lookup" should "ignore section filter when using elastic search content API client" in Fake {
     MasterClassAgent.stop()
 
-    val keywords = Await.result(Keyword.lookup("France", section = Some("travel")), atMost = 10.seconds)
+    val keywords = Await.result(Lookup.keyword("France", section = Some("travel")), atMost = 10.seconds)
 
     keywords.size should be >= 2
   }

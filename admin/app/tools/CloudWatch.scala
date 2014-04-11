@@ -7,6 +7,7 @@ import org.joda.time.DateTime
 import com.amazonaws.handlers.AsyncHandler
 import common.Logging
 import Configuration._
+import services.AwsEndpoints
 
 object CloudWatch extends implicits.Futures{
 
@@ -20,7 +21,7 @@ object CloudWatch extends implicits.Futures{
 
   lazy val euWestClient = {
     val client = new AmazonCloudWatchAsyncClient(Configuration.aws.credentials)
-    client.setEndpoint("monitoring.eu-west-1.amazonaws.com")
+    client.setEndpoint(AwsEndpoints.monitoring)
     client
   }
 

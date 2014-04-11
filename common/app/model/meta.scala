@@ -12,6 +12,7 @@ trait MetaData extends Tags {
   def linkText: String = webTitle
   def pagination: Option[Pagination] = None
   def description: Option[String] = None
+  def rssPath: Option[String] = None
 
   // this is here so it can be included in analytics.
   // Basically it helps us understand the impact of changes and needs
@@ -30,7 +31,7 @@ trait MetaData extends Tags {
     "blockVideoAds" -> false
   )
 
-  def openGraph: List[(String, Any)] = List(
+  def openGraph: Map[String, Any] = Map(
     "og:site_name" -> "the Guardian",
     "fb:app_id"    -> Configuration.facebook.appId,
     "og:type"      -> "website",

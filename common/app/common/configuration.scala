@@ -230,6 +230,10 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val host = configuration.getStringProperty("football.api.host").getOrElse("http://pads6.pa-sport.com")
   }
 
+  object memcached {
+    lazy val host = configuration.getStringProperty("memcached.host")
+  }
+
   object aws {
     private lazy val accessKey = configuration.getStringProperty("aws.access.key")
     private lazy val secretKey = configuration.getStringProperty("aws.access.secret.key")

@@ -16,6 +16,8 @@ case class Section(private val delegate: ApiSection, override val pagination: Op
 
   override lazy val analyticsName = s"GFE:$section"
 
+  override lazy val rssPath = Some(s"/$id/rss")
+
   override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
     "keywords" -> webTitle,
     "content-type" -> "Section"

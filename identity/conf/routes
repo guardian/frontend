@@ -15,13 +15,12 @@ GET     /email-prefs                                    @controllers.EmailContro
 POST    /email-prefs                                    @controllers.EmailController.savePreferences
 GET     /user/id/:id                                    @controllers.PublicProfileController.renderProfileFromId(id: String)
 GET     /user/:vanityUrl                                @controllers.PublicProfileController.renderProfileFromVanityUrl(vanityUrl: String)
-GET     /public/edit                                    @controllers.PublicProfileController.displayPublicProfileForm
-GET     /account/edit                                   @controllers.PublicProfileController.displayAccountForm
-POST    /public/edit                                    @controllers.PublicProfileController.submitPublicProfileForm
-POST    /account/edit                                   @controllers.PublicProfileController.submitAccountForm
-GET     /password/change                                @controllers.ChangePasswordController.renderChangePasswordPage
+GET     /public/edit                                    @controllers.EditProfileController.displayPublicProfileForm
+GET     /account/edit                                   @controllers.EditProfileController.displayAccountForm
+POST    /public/edit                                    @controllers.EditProfileController.submitPublicProfileForm
+POST    /account/edit                                   @controllers.EditProfileController.submitAccountForm
 GET     /verify-email/:token                            @controllers.EmailVerificationController.verify(token: String)
-GET     /verify-email                                   @controllers.EmailVerificationController.resendEmailValidationEmail()
+GET         /verify-email        @controllers.EmailVerificationController.resendEmailValidationEmail()
 
 GET     /ethical-awards/complete                        @controllers.EthicalAwardsController.complete
 GET     /ethical-awards/:formReference                  @controllers.EthicalAwardsController.ethicalAwardsForm(formReference: String)

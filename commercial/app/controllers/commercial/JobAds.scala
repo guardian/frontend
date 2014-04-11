@@ -14,7 +14,7 @@ object JobAds extends Controller {
       JobsAgent.adsTargetedAt(segment) match {
         case Nil => NotFound
         case jobs => {
-          Cached(60)(Ok(views.html.jobs(jobs take 5)))
+          Cached(60)(Ok(views.html.jobs(jobs take 2)))
         }
       }
   }
@@ -24,7 +24,7 @@ object JobAds extends Controller {
       JobsAgent.adsTargetedAt(segment) match {
         case Nil => JsonNotFound.apply()
         case jobs => {
-          Cached(60)(JsonComponent(views.html.jobs(jobs take 5)))
+          Cached(60)(JsonComponent(views.html.jobs(jobs take 2)))
         }
       }
   }

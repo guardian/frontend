@@ -3,6 +3,20 @@
 @admin_main("Fronts editor", env, isAuthed = true, identity) {
 
 <div style="display: none;" data-bind="visible: true">
+
+    <div class="status status-danger" data-bind="visible: statusCapiErrors">
+        Sorry, ContentApi is unhealthy. Fronts may fail to update.
+        <a data-bind="click: pressFront">Retry it?</a>
+        If this persists beyond ten minutes, <a href="https://sites.google.com/a/guardian.co.uk/digital-incident-management/">contact support</a>.
+        <i class="icon-remove icon-white" data-bind="click: clearStatuses"></i>
+    </div>
+    <div class="status status-warning" data-bind="visible: statusPressFailure">
+        Sorry, a network delay meant your change couldn't go live.
+        <a data-bind="click: pressFront">Retry it?</a>
+        If this persists beyond ten minutes, <a href="https://sites.google.com/a/guardian.co.uk/digital-incident-management/">contact support</a>.
+        <i class="icon-remove icon-white" data-bind="click: clearStatuses"></i>
+    </div>
+
     <div class="toolbar" data-bind="visible: true" style="display: none">
 
         <span data-bind="if: fronts().length > 1">
@@ -301,10 +315,10 @@
                 </a>
 
                 <div class="article_content is-empty" data-bind="if: state.isEmpty">
-                    This content is unavailable, deleted, or has a new URL
                     <a target="article" class="is-empty__url" data-bind="
-                        attr: {href: id},
+                        attr: {href: 'http://www.theguardian.com/' + id},
                         text: id"></a>
+                    This content is unavailable, deleted, or has a new URL
                 </div>
 
                 <div class="article_content" data-bind="if: !state.isEmpty()">

@@ -18,6 +18,32 @@ a, a:hover {
     cursor: pointer;
 }
 
+.status {
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    position: fixed;
+    width: 100%;
+    background: #999999;
+    color: #FFFFFF;
+    padding: 15px 40px 15px 40px;
+    z-index: 2;
+    text-align: center;
+}
+
+.status-warning {
+    background: #FF9900;
+}
+
+.status-danger {
+    background: #d61d00;
+}
+
+.status .icon-remove {
+    position: absolute;
+    right: 10px;
+    top: 15px;
+}
+
 .scrollable {
     overflow-y: scroll;
 }
@@ -31,7 +57,7 @@ a, a:hover {
     position: fixed;
     top: 8px;
     left: 15px;
-    z-index: 2;
+    z-index: 3;
 }
 
 .tool-title {

@@ -1,0 +1,49 @@
+@(form: play.api.data.Form[controllers.admin.PageRedirect])
+
+@admin_main("Redirector", "PROD", isAuthed = true) {
+    <ul>
+        <li>
+            This will <strong>only</strong> add the redirect to Next Gen Web. It will <strong>not</strong> add it to
+            R2 (classic/desktop site) or mobile apps.
+        </li>
+        <li>
+            This tool can only insert redirects for URLs that do not already exist. (i.e. the current url must 404).
+            Redirects for things that exist will not work (this also means you cannot accidentally redirect the /sport page).
+        </li>
+        <li>
+            Use full URLs like <strong>http://www.theguardian.com/somewhere/something</strong>
+        </li>
+        <li>
+            To delete a redirect fill in the <strong>From</strong> field and leave the <strong>To</strong> field empty.
+        </li>
+        <li>
+            You can only redirect a single page. (you cannot redirect everything under /water)
+        </li>
+        <li>
+            If your redirect does not work immediately give it a few minutes to work its way through the cache.
+        </li>
+    </ul>
+
+    <form action="/redirect-post" method="POST" class="form-horizontal redirect-form">
+        <fieldset>
+            <legend>Redirect:</legend>
+            <div class="control-group">
+                <label for="from" class="control-label">From:</label>
+                <div class="controls">
+                    <input type="text" id="from" name="from" value="" placeholder="http://www.theguardian.com/from-here" />
+                </div>
+            </div>
+            <div class="control-group">
+                <label for="to" class="control-label">To:</label>
+                <div class="controls">
+                    <input type="text" id="to" name="to" value="" placeholder="http://www.theguardian.com/to-here" />
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="controls">
+                    <input type="submit" value="Submit" />
+                </div>
+            </div>
+        </fieldset>
+    </form>
+}
