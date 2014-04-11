@@ -15,7 +15,8 @@ define([
     'common/modules/adverts/userAdTargeting',
     'common/modules/adverts/query-string',
     'lodash/arrays/flatten',
-    'lodash/arrays/uniq'
+    'lodash/arrays/uniq',
+    'lodash/objects/defaults'
 ], function (
     $,
     bonzo,
@@ -32,7 +33,8 @@ define([
     UserAdTargeting,
     queryString,
     _flatten,
-    _uniq
+    _uniq,
+    _defaults
 ) {
 
     /**
@@ -81,7 +83,7 @@ define([
     }
 
     function DFP(config) {
-        this.config       = extend(this.config, config);
+        this.config       = _defaults(this.config, config);
         this.context      = document;
         this.$dfpAdSlots  = [];
         this.adsToRefresh = [];
