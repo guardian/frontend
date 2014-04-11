@@ -490,10 +490,10 @@ define([
                 self.initialisedDeferred = true;
                 modules.initAbTests(config);
                 modules.logLiveStats(config);
-                modules.loadAdverts(config);
                 modules.loadAnalytics(config, context);
                 modules.cleanupCookies(context);
                 modules.runAbTests(config, context);
+                modules.loadAdverts(config);
                 modules.transcludeRelated(config, context);
                 modules.transcludeSeriesContent(config, context);
                 modules.initRightHandComponent(config, context);
