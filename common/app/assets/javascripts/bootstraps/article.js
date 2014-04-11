@@ -10,8 +10,7 @@ define([
     'common/modules/discussion/loader',
     'common/modules/ui/notification-counter',
     'common/modules/open/cta',
-    'common/modules/experiments/layoutHints',
-    'common/modules/onward/tonal'
+    'common/modules/experiments/layoutHints'
 ], function (
     common,
     mediator,
@@ -24,8 +23,7 @@ define([
     DiscussionLoader,
     NotificationCounter,
     OpenCta,
-    Layout,
-    TonalComponent
+    Layout
 ) {
 
     var modules = {
@@ -105,14 +103,6 @@ define([
                 articleHeadline.style.fontWeight = 'bold';
                 articleHeadline.style.letterSpacing = '-1px';
             }
-        },
-
-        initTonal: function(config, context) {
-            if (config.page.tones !== '') {
-                $('.js-series', context).each(function(c) {
-                    new TonalComponent(config, c).fetch(c, 'html');
-                });
-            }
         }
     };
 
@@ -125,7 +115,6 @@ define([
             modules.initFence();
             modules.initLayoutHints(config);
             modules.initHelvetica(config);
-            modules.initTonal(config, context);
         }
         common.mediator.emit('page:article:ready', config, context);
     };
