@@ -7,10 +7,10 @@ define([
             var criteoSegmentString = Cookies.get('cto2_guardian');
             if (criteoSegmentString !== null) {
                 var criteoSegments = decodeURIComponent(criteoSegmentString).split('&');
-                for (var i = 0; i < criteoSegments.length; i++) {
-                    var segmentKv = criteoSegments[i].split('=');
+                criteoSegments.foreach(function (segment) {
+                    var segmentKv = segment.split('=');
                     targeting[segmentKv[0]] = segmentKv[1];
-                }
+                });
             }
         }
     }
