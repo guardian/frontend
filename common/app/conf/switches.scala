@@ -168,14 +168,6 @@ object Switches extends Collections {
     "If this switch is on, commercial components will be fed by masterclass feed.",
     safeState = Off, sellByDate = never)
 
-  val OmnitureVerificationSwitch = Switch("Analytics", "omniture-verification",
-    "Enables the new Ophan tracking javascript which support multiple events per page",
-    safeState = Off,
-    // extending this till mid April. We are going to use it to see what effect moving Omniture higher up the
-    // call stack makes.
-    new DateMidnight(2014, 4, 15)
-  )
-
   val SoulmatesFeedSwitch = Switch("Performance Switches", "gu-soulmates",
     "If this switch is on, commercial components will be fed by soulmates feed.",
     safeState = Off, sellByDate = never)
@@ -447,7 +439,6 @@ object Switches extends Collections {
     RssLinkSwitch,
     PopularInTagSwitch,
     HideOldTimeStampsSwitch,
-    OmnitureVerificationSwitch,
     IndiaRegionSwitch,
     ABExternalLinksNewWindow,
     ABAbcd,
