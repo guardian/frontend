@@ -26,6 +26,7 @@ define([
     'common/modules/navigation/search',
     'common/modules/ui/tabs',
     'common/modules/ui/toggles',
+    'common/modules/ui/dropdowns',
     'common/modules/ui/relativedates',
     'common/modules/analytics/clickstream',
     'common/modules/analytics/omniture',
@@ -75,6 +76,7 @@ define([
 
     Tabs,
     Toggles,
+    Dropdowns,
     RelativeDates,
     Clickstream,
     Omniture,
@@ -157,6 +159,8 @@ define([
             mediator.on('page:common:ready', function() {
                 toggles.reset();
             });
+
+            Dropdowns.init();
         },
 
         showRelativeDates: function (config) {
