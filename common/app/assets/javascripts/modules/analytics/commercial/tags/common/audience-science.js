@@ -11,7 +11,7 @@ define([
     var revenueScienceUrl = 'js!http://js.revsci.net/gateway/gw.js?csid=E05516';
 
     function getSegments() {
-        if (config.switches.audienceScience) {
+        if (typeof config.switches.audienceScience !== 'undefined' && config.switches.audienceScience) {
             var segments = storage.local.get('gu.ads.audsci');
             return (segments) ? segments.slice(0, 40) : [];
         } else {
