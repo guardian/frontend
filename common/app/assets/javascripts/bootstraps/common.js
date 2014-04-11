@@ -43,6 +43,7 @@ define([
     'common/modules/ui/message',
     'common/modules/identity/autosignin',
     'common/modules/adverts/article-body-adverts',
+    'common/modules/adverts/collection-adverts',
     'common/modules/adverts/dfp',
     'common/modules/analytics/commercial/tags/container',
     'common/modules/analytics/foresee-survey',
@@ -92,6 +93,7 @@ define([
     Message,
     AutoSignin,
     ArticleBodyAdverts,
+    CollectionAdverts,
     DFP,
     TagContainer,
     Foresee,
@@ -278,6 +280,8 @@ define([
                 if (config.switches.standardAdverts && config.page.contentType === 'Article' && !config.page.isLiveBlog) {
                     new ArticleBodyAdverts().init();
                 }
+
+                new CollectionAdverts(config).init();
 
                 if (!config.switches.standardAdverts) {
                     options.dfpSelector = '.ad-slot--commercial-component';
@@ -490,10 +494,10 @@ define([
                 self.initialisedDeferred = true;
                 modules.initAbTests(config);
                 modules.logLiveStats(config);
-                modules.loadAdverts(config);
                 modules.loadAnalytics(config, context);
                 modules.cleanupCookies(context);
                 modules.runAbTests(config, context);
+                modules.loadAdverts(config);
                 modules.transcludeRelated(config, context);
                 modules.transcludeSeriesContent(config, context);
                 modules.initRightHandComponent(config, context);

@@ -109,6 +109,17 @@ object SystemMetrics extends implicits.Numbers {
   )
 }
 
+object S3Metrics {
+  object S3ClientExceptionsMetric extends SimpleCountMetric(
+    "exception",
+    "s3-client-exception",
+    "S3 Client Exceptions",
+    "Number of times the AWS S3 client has thrown an Exception"
+  )
+
+  val all: Seq[Metric] = Seq(S3ClientExceptionsMetric)
+}
+
 object ContentApiMetrics {
   object HttpTimingMetric extends FrontendTimingMetric(
     "performance",
@@ -325,7 +336,7 @@ object FaciaToolMetrics {
     DraftPublishCount, ContentApiPutSuccess, ContentApiPutFailure,
     FrontPressSuccess, FrontPressFailure, FrontPressCronSuccess,
     FrontPressCronFailure, InvalidContentExceptionMetric
-  ) ++ ContentApiMetrics.all
+  ) ++ ContentApiMetrics.all ++ S3Metrics.all
 }
 
 object CommercialMetrics {

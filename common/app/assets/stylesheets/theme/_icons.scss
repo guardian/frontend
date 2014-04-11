@@ -52,7 +52,10 @@ figcaption:before {
     @extend %i-quote-marks;
     content: '';
     position: absolute;
-    margin-top: -3px;
+    left: 0;
+    margin-top: -2px;
+    @include transform(scale(0.65));
+    @include transform-origin(0);
 
     @if ($svg-support) {
         .svg & {
@@ -60,9 +63,6 @@ figcaption:before {
         }
     }
 
-    @include mq($to: tablet) {
-        @include transform(scale(0.8));
-    }
 }
 
 

@@ -11,12 +11,7 @@ object Management extends GuManagement {
 
   lazy val pages = List(
     new ManifestPage,
-    new AnyOfTheGivenUrlsHealthCheckManagementPage(
-      "/commercial/soulmates/mixed.json?seg=repeat&s=lifeandstyle",
-      "/commercial/masterclasses.json?seg=repeat&s=music",
-      "/commercial/travel/offers.json?seg=repeat&s=travel&k=france",
-      "/commercial/jobs.json?seg=repeat&s=business&k=arts"
-    ),
+    new UrlPagesHealthcheckManagementPage("/commercial/masterclasses.json"),
     StatusPage(applicationName, metrics),
     new PropertiesPage(Configuration.toString()),
     new LogbackLevelPage(applicationName)

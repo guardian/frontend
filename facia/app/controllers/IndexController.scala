@@ -6,6 +6,7 @@ import play.api.mvc._
 import services.Index
 import views.support.TemplateDeduping
 import services.IndexPage
+import performance.MemcachedAction
 
 
 trait IndexController extends Controller with Index with Logging with Paging with ExecutionContexts {
@@ -15,7 +16,7 @@ trait IndexController extends Controller with Index with Logging with Paging wit
   // Needed as aliases for reverse routing
   def renderCombinerRss(leftSide: String, rightSide: String) = renderCombiner(leftSide, rightSide)
 
-  def renderCombiner(leftSide: String, rightSide: String) = Action.async { implicit request =>
+  def renderCombiner(leftSide: String, rightSide: String) = MemcachedAction{ implicit request =>
     logGoogleBot(request)
     index(Edition(request), leftSide, rightSide, extractPage(request), request.isRss).map {
       case Left(page) => renderFaciaFront(page)
@@ -23,7 +24,7 @@ trait IndexController extends Controller with Index with Logging with Paging wit
     }
   }
 
-  private def logGoogleBot(request: Request[AnyContent]) = {
+  private def logGoogleBot(request: RequestHeader) = {
     request.headers.get("User-Agent").filter(_.contains("Googlebot")).foreach { bot =>
       log.info(s"GoogleBot => ${request.uri}")
     }
@@ -31,7 +32,7 @@ trait IndexController extends Controller with Index with Logging with Paging wit
 
   def renderJson(path: String) = render(path)
 
-  def render(path: String) = Action.async { implicit request =>
+  def render(path: String) = MemcachedAction{ implicit request =>
     logGoogleBot(request)
     index(Edition(request), path, extractPage(request), request.isRss) map {
       case Left(model) => renderFaciaFront(model)
@@ -40,7 +41,7 @@ trait IndexController extends Controller with Index with Logging with Paging wit
   }
 
   def renderTrailsJson(path: String) = renderTrails(path)
-  def renderTrails(path: String) = Action.async { implicit request =>
+  def renderTrails(path: String) = MemcachedAction{ implicit request =>
     index(Edition(request), path, extractPage(request), request.isRss) map {
       case Left(model) => renderTrailsFragment(model)
       case Right(notFound) => notFound

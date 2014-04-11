@@ -3,6 +3,7 @@
     @include rem((
         margin-bottom: $gs-baseline*3.5
     ));
+    @include fs-bodyCopy(3);
 }
 
 .article__zone {
@@ -241,18 +242,9 @@
 
         > li {
             position: relative;
-            @include rem((
-                text-indent: 18px
-            ));
 
             + li {
                 margin-top: .6em;
-            }
-
-            @include mq(tablet) {
-                @include rem((
-                    text-indent: 20px
-                ));
             }
         }
 
@@ -263,6 +255,18 @@
 
     > ol {
         counter-reset: li;
+
+        >li {
+            @include rem((
+                text-indent: 18px
+            ));
+
+            @include mq(tablet) {
+                @include rem((
+                    text-indent: 20px
+                ));
+            }
+        }
 
         > li:before {
             position: absolute;
@@ -282,11 +286,6 @@
                 ));
             }
         }
-    }
-
-    > ul > li,
-    .bullet {
-        @include faux-bullet-point($offset-y: (default: 4px, tablet: 5px));
     }
 }
 
