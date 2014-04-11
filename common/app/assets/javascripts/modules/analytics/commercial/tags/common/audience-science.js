@@ -1,14 +1,16 @@
 define([
     'common/utils/cookies',
-    'common/utils/storage'
+    'common/utils/storage',
+    'common/utils/config'
 ], function(
     Cookies,
-    storage
+    storage,
+    config
 ) {
 
     var revenueScienceUrl = 'js!http://js.revsci.net/gateway/gw.js?csid=E05516';
 
-    function getSegments(config) {
+    function getSegments() {
         if (config.switches.audienceScience) {
             var segments = storage.local.get('gu.ads.audsci');
             return (segments) ? segments.slice(0, 40) : [];

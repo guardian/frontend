@@ -1,8 +1,9 @@
 define([
-    'common/utils/cookies'
-], function (Cookies) {
+    'common/utils/cookies',
+    'common/utils/config'
+], function (Cookies, config) {
 
-    function addSegments(config, targeting) {
+    function addSegments(targeting) {
         if (config.switches.criteo) {
             var criteoSegmentString = Cookies.get('cto2_guardian');
             if (criteoSegmentString !== null) {

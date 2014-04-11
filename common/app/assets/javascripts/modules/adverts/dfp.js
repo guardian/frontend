@@ -132,11 +132,11 @@ define([
             'pt'      : contentType,
             'p'       : 'ng',
             'bp'      : detect.getBreakpoint(),
-            'a'       : AudienceScience.getSegments(this.config),
+            'a'       : AudienceScience.getSegments(),
             'at'      : Cookies.get('adtest') || ''
         };
-        AudienceScienceGateway.addSegments(this.config, targets);
-        Criteo.addSegments(this.config, targets);
+        AudienceScienceGateway.addSegments(targets);
+        Criteo.addSegments(targets);
 
         return targets;
     };

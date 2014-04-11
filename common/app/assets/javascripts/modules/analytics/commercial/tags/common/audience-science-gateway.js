@@ -1,6 +1,8 @@
-define([], function () {
+define([
+    'common/utils/config'
+], function (config) {
 
-    function addSegments(config, targeting) {
+    function addSegments(targeting) {
         if (config.switches.audienceScienceGateway) {
 
             var segments;
