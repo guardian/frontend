@@ -123,18 +123,22 @@ object Switches extends Collections {
   )
 
   // Ad Targeting
+  /*
+    These switches are to control length of request to DFP
+    while there's a problem with the maximum length constraint
+  */
 
   val AudienceScienceSwitch = Switch("Ad Targeting", "audience-science",
     "If this switch is on, Audience Science segments will be used to target ads.",
-    safeState = Off, sellByDate = never)
+    safeState = Off, sellByDate = new DateMidnight(2014, 11, 1))
 
   val AudienceScienceGatewaySwitch = Switch("Ad Targeting", "audience-science-gateway",
     "If this switch is on, Audience Science Gateway segments will be used to target ads.",
-    safeState = Off, sellByDate = never)
+    safeState = Off, sellByDate = new DateMidnight(2014, 11, 1))
 
   val CriteoSwitch = Switch("Ad Targeting", "criteo",
     "If this switch is on, Criteo segments will be used to target ads.",
-    safeState = Off, sellByDate = never)
+    safeState = Off, sellByDate = new DateMidnight(2014, 11, 1))
 
   // Commercial Tags
 
