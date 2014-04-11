@@ -172,12 +172,12 @@ define([
                 tableContainer = $.create('<div class="js-football-table" data-link-name="football-table-embed"></div>')[0];
 
             table.fetch(tableContainer).then(function() {
-                extras[1] = {
+                extras[1] = $('.table__container', tableContainer).length > 0 ? {
                     name: 'Table',
                     importance: 2,
                     content: tableContainer,
                     ready: true
-                };
+                } : undefined;
                 renderExtras(extras, dropdownTemplate);
             });
         });
