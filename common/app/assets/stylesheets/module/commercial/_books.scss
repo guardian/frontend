@@ -3,6 +3,9 @@
    ========================================================================== */
 
 .commercial--books {
+    @include rem((
+        padding: $gs-gutter/2
+    ));
     .commercial__branding,
     .commercial__header {
         overflow: hidden;
@@ -155,4 +158,10 @@
             width: gs-span(4);
         }
     }
+}
+
+.facia-container--layout-front .commercial {
+    @include rem((
+        padding: $gs-gutter/2
+    ));
 }
