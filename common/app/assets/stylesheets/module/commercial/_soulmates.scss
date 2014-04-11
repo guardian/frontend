@@ -2,7 +2,7 @@
    Soulmates component
    ========================================================================== */
 
-$soulmates-red: #d70851;
+$c-soulmates-red: #d70851;
 .commercial--soulmates {
     .commercial__head {
         position: static;
@@ -50,7 +50,7 @@ $soulmates-red: #d70851;
         @include mq(tablet) {
             position: absolute;
             display: inline-block;
-            background-color: $soulmates-red;
+            background-color: $c-soulmates-red;
             border: none;
             color: #ffffff;
             @include fs-headline(1, $size-only: true);
@@ -195,7 +195,7 @@ $soulmates-red: #d70851;
     .search__submit {
         border: 0;
         background: transparent;
-        color: $soulmates-red;
+        color: $c-soulmates-red;
         float: right;
         position: relative;
         padding: 0;
@@ -212,7 +212,7 @@ $soulmates-red: #d70851;
         width: $search-submit-cta-diameter;
         height: $search-submit-cta-diameter;
         margin-top: -($search-submit-cta-diameter/2);
-        background-color: $soulmates-red;
+        background-color: $c-soulmates-red;
         @include rounded-corners(50%);
 
         .i {
