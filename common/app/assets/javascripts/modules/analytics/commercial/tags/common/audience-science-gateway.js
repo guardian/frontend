@@ -13,22 +13,26 @@ define([
         'default': ['c7Zrhu', 'Y1C40a']
     };
 
-    function addSegments(targeting) {
+    function getSegments() {
+        var result = {};
+
         if (config.switches.audienceScienceGateway) {
 
             var targetedSegments = segments[config.page.section];
-            if (targetedSegments === null) {
+            if (typeof targetedSegments === 'undefined') {
                 targetedSegments = segments['default'];
             }
 
-            targetedSegments.foreach(function (segment) {
-                targeting['pq_' + segment] = '';
+            targetedSegments.forEach(function (segment) {
+                result['pq_' + segment] = '';
             });
         }
+
+        return result;
     }
 
     return {
-        addSegments: addSegments
+        getSegments: getSegments
     };
 
 });

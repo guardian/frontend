@@ -135,8 +135,8 @@ define([
             'a'       : AudienceScience.getSegments(),
             'at'      : Cookies.get('adtest') || ''
         };
-        AudienceScienceGateway.addSegments(targets);
-        Criteo.addSegments(targets);
+        extend(targets, AudienceScienceGateway.getSegments());
+        extend(targets, Criteo.getSegments());
 
         return targets;
     };

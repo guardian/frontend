@@ -3,21 +3,25 @@ define([
     'common/utils/config'
 ], function (Cookies, config) {
 
-    function addSegments(targeting) {
+    function getSegments() {
+        var result = {};
+
         if (config.switches.criteo) {
             var criteoSegmentString = Cookies.get('cto2_guardian');
             if (criteoSegmentString !== null) {
                 var criteoSegments = decodeURIComponent(criteoSegmentString).split('&');
-                criteoSegments.foreach(function (segment) {
+                criteoSegments.forEach(function (segment) {
                     var segmentKv = segment.split('=');
-                    targeting[segmentKv[0]] = segmentKv[1];
+                    result[segmentKv[0]] = segmentKv[1];
                 });
             }
         }
+
+        return result;
     }
 
     return {
-        addSegments: addSegments
+        getSegments: getSegments
     };
 
 });
