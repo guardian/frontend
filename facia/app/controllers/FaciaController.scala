@@ -77,11 +77,7 @@ class FaciaController extends Controller with Logging with ExecutionContexts wit
           if (request.isRss) {
             Ok(TrailsToRss(config.displayName, collection.items)).as("text/xml; charset=utf-8")
           } else {
-            val html = config.displayName.getOrElse("") match {
-              case "Comment and debate" => views.html.fragments.containers.commentanddebate(config, collection, CommentAndDebateContainer(false), 0)
-              case "Features"           => views.html.fragments.containers.features(config, collection, FeaturesContainer(false), 0)
-              case _                    => views.html.fragments.containers.news(config, collection, NewsContainer(false), 0)
-            }
+            val html = views.html.fragments.frontCollection(FrontPage("").get, (config, collection), 1, 1)
             if (request.isJson)
               JsonCollection(html, collection)
             else
