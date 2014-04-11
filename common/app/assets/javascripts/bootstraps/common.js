@@ -19,13 +19,14 @@ define([
     'common/utils/detect',
     'common/modules/onward/popular',
     'common/modules/onward/related',
-    'common/modules/onward/series-content',
+    'common/modules/onward/onward-content',
     'common/modules/ui/images',
     'common/modules/navigation/profile',
     'common/modules/navigation/sections',
     'common/modules/navigation/search',
     'common/modules/ui/tabs',
     'common/modules/ui/toggles',
+    'common/modules/ui/dropdowns',
     'common/modules/ui/relativedates',
     'common/modules/analytics/clickstream',
     'common/modules/analytics/omniture',
@@ -67,7 +68,7 @@ define([
     detect,
     popular,
     Related,
-    Series,
+    Onward,
     images,
     Profile,
     Sections,
@@ -75,6 +76,7 @@ define([
 
     Tabs,
     Toggles,
+    Dropdowns,
     RelativeDates,
     Clickstream,
     Omniture,
@@ -138,9 +140,9 @@ define([
             });
         },
 
-        transcludeSeriesContent: function(config, context){
+        transcludeOnwardContent: function(config, context){
             if ('seriesId' in config.page) {
-                new Series(config, qwery('.js-series', context));
+                new Onward(config, qwery('.js-onward', context));
             }
         },
 
@@ -157,6 +159,8 @@ define([
             mediator.on('page:common:ready', function() {
                 toggles.reset();
             });
+
+            Dropdowns.init();
         },
 
         showRelativeDates: function (config) {
@@ -490,12 +494,12 @@ define([
                 self.initialisedDeferred = true;
                 modules.initAbTests(config);
                 modules.logLiveStats(config);
-                modules.loadAdverts(config);
                 modules.loadAnalytics(config, context);
                 modules.cleanupCookies(context);
                 modules.runAbTests(config, context);
+                modules.loadAdverts(config);
                 modules.transcludeRelated(config, context);
-                modules.transcludeSeriesContent(config, context);
+                modules.transcludeOnwardContent(config, context);
                 modules.initRightHandComponent(config, context);
                 modules.loadCommercialComponent(config, context);
             }
