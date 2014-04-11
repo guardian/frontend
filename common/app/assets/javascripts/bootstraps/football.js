@@ -158,8 +158,9 @@ define([
                     $('[data-show-more-contains="'+ el.getAttribute('data-puts-more-into') +'"]', context)
                         .append($(el.getAttribute('data-shows-more'), html));
 
-                    if (resp[el.getAttribute('data-new-url')]) {
-                        bonzo(el).attr('href', resp[el.getAttribute('data-new-url')]);
+                    var nurl = resp[el.getAttribute('data-new-url')];
+                    if (nurl) {
+                        bonzo(el).attr('href', nurl);
                     } else {
                         bonzo(el).remove();
                     }
