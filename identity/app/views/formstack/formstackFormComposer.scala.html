@@ -567,6 +567,7 @@ a {
                     }
 
                     self.postMessage('get-position', 'get-position');
+                    self.sendHeight();
 
                     // if no errors, submit form
                     if (dom.$form.querySelectorAll(config.fsSelectors.formError).length === 0) {

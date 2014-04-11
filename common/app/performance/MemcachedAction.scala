@@ -16,6 +16,9 @@ import org.joda.time.{Seconds, DateTime}
 import play.api.Play
 import Play.current
 import conf.Configuration
+import java.io.{ByteArrayInputStream, ByteArrayOutputStream}
+import java.util.zip.{GZIPInputStream, GZIPOutputStream}
+import org.apache.commons.io.IOUtils
 
 
 case class CachedResponse(result: SimpleResult, body: String)
@@ -32,7 +35,7 @@ private[performance] trait MemcachedSupport extends ExecutionContexts with impli
   implicit object ResultCodec extends Codec[CachedResponse] {
 
     override def deserialize(data: Array[Byte]): CachedResponse = {
-      val json = Json.parse(data)
+      val json = Json.parse(Unzip(data))
       val headerJson = (json \ "header" \ "headers").as[JsObject]
       val status = (json \ "header" \ "status").as[Int]
       val headers = headerJson.keys.map(key => key -> (headerJson \ key).as[String]).toMap
@@ -66,7 +69,7 @@ private[performance] trait MemcachedSupport extends ExecutionContexts with impli
         "body" -> JsString(response.body),
         "cachedAt" -> JsString(DateTime.now.toHttpDateTimeString)
       ))
-      Json.stringify(s).getBytes("utf-8")
+      Zip(Json.stringify(s).getBytes("utf-8"))
     }
   }
 
@@ -89,11 +92,16 @@ private[performance] trait MemcachedSupport extends ExecutionContexts with impli
 }
 
 private object CacheKey extends implicits.Requests {
+
+  // if you have incompatible changes you can invalidate the cache
+  // simply by changing the version
+  private val version = "1"
+
   def apply(r: RequestHeader): String = {
     val build = if (IncludeBuildNumberInMemcachedKey.isSwitchedOn) ManifestData.build else ""
     val upstreamCacheKey = r.headers.get("X-Gu-Cache-Key").getOrElse("")
     val edition = Edition(r).id
-    sha256Hex(s"${r.host}${r.uri} $edition $upstreamCacheKey $build")
+    sha256Hex(s"${r.host}${r.uri} $edition $upstreamCacheKey $build $version")
   }
 }
 
@@ -127,8 +135,21 @@ object MemcachedAction extends Results with MemcachedSupport with implicits.Requ
   }
 
   private def cacheExempt(request: RequestHeader) = {
-
     // TODO fronts team give preview a proper name
-    request.isHealthcheck || request.host.contains("FaciaLoa")
+    request.isHealthcheck || request.host.toLowerCase.contains("facialoa")
   }
+}
+
+private object Zip {
+  def apply(b: Array[Byte]): Array[Byte] = {
+    val bites = new ByteArrayOutputStream(b.length)
+    val o = new GZIPOutputStream(bites)
+    o.write(b)
+    o.finish()
+    bites.toByteArray
+  }
+}
+
+private object Unzip {
+  def apply(b: Array[Byte]): Array[Byte] = IOUtils.toByteArray(new GZIPInputStream(new ByteArrayInputStream(b)))
 }

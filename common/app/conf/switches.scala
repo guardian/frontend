@@ -43,7 +43,6 @@ object Switches extends Collections {
   // Switch names can be letters numbers and hyphens only
 
   private lazy val never = new DateMidnight(2100, 1, 1)
-  private lazy val endOfQ4 = new DateMidnight(2014, 4, 1)
 
   // this is 3 months - at the end of this a decision is expected
   // and one (or both) of the 2 needs to go.
@@ -123,11 +122,25 @@ object Switches extends Collections {
     safeState = On, sellByDate = never
   )
 
-  // Commercial Tags
+  // Ad Targeting
+  /*
+    These switches are to control length of request to DFP
+    while there's a problem with the maximum length constraint
+  */
 
-  val AudienceScienceSwitch = Switch("Commercial Tags", "audience-science",
-    "If this switch is on Audience Science segments will be used to target ads.",
-    safeState = Off, sellByDate = never)
+  val AudienceScienceSwitch = Switch("Ad Targeting", "audience-science",
+    "If this switch is on, Audience Science segments will be used to target ads.",
+    safeState = Off, sellByDate = new DateMidnight(2014, 11, 1))
+
+  val AudienceScienceGatewaySwitch = Switch("Ad Targeting", "audience-science-gateway",
+    "If this switch is on, Audience Science Gateway segments will be used to target ads.",
+    safeState = Off, sellByDate = new DateMidnight(2014, 11, 1))
+
+  val CriteoSwitch = Switch("Ad Targeting", "criteo",
+    "If this switch is on, Criteo segments will be used to target ads.",
+    safeState = Off, sellByDate = new DateMidnight(2014, 11, 1))
+
+  // Commercial Tags
 
   val ImrWorldwideSwitch = Switch("Commercial Tags", "imr-worldwide",
     "Enable the IMR Worldwide audience segment tracking.",
@@ -346,6 +359,11 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
+  val ToolCheckPressLastmodified = Switch("Facia Tool", "facia-tool-check-press-lastmodified",
+    "If this switch is on facia tool will alert the user if a front is not pressed withing 10 secs of an edit/publish",
+    safeState = Off, sellByDate = never
+  )
+
   val ToolSparklines = Switch("Facia Tool", "facia-tool-sparklines",
     "If this is switched on then the fronts tool renders images from sparklines.ophan.co.uk",
     safeState = Off, sellByDate = never
@@ -382,6 +400,8 @@ object Switches extends Collections {
     CommercialComponentsSwitch,
     VideoAdvertsSwitch,
     AudienceScienceSwitch,
+    AudienceScienceGatewaySwitch,
+    CriteoSwitch,
     DiscussionSwitch,
     OpenCtaSwitch,
     FontSwitch,
@@ -400,6 +420,7 @@ object Switches extends Collections {
     ABBlendedContainersAu,
     ToolDisable,
     ToolConfigurationDisable,
+    ToolCheckPressLastmodified,
     ToolSparklines,
     OphanSwitch,
     ScrollDepthSwitch,
