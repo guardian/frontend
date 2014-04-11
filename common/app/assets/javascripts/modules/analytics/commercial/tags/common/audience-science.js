@@ -1,22 +1,16 @@
 define([
     'common/utils/cookies',
-    'common/utils/storage',
-    'common/utils/config'
+    'common/utils/storage'
 ], function(
     Cookies,
-    storage,
-    config
+    storage
 ) {
 
     var revenueScienceUrl = 'js!http://js.revsci.net/gateway/gw.js?csid=E05516';
 
     function getSegments() {
-        if (typeof config.switches.audienceScience !== 'undefined' && config.switches.audienceScience) {
-            var segments = storage.local.get('gu.ads.audsci');
-            return (segments) ? segments.slice(0, 40) : [];
-        } else {
-            return [];
-        }
+        var segments = storage.local.get('gu.ads.audsci');
+        return (segments) ? segments.slice(0, 40) : [];
     }
 
     function load(config) {
