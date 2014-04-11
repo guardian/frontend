@@ -110,10 +110,8 @@ $soulmates-red: #d70851;
         }
         @include mq(desktop) {
             width: 16.66%;
-             &:nth-child(5) {
-                 display: block;
-            }
-             &:nth-child(6) {
+            &:nth-child(5),
+            &:nth-child(6) {
                  display: block;
             }
         }
@@ -241,7 +239,7 @@ $soulmates-red: #d70851;
 }
 
 /* fronts */
-.facia-container--layout-front .commercial {
+.facia-container--layout-front .commercial--soulmates {
     .commercial__search {
         @include rem((
             padding: 0 $gs-gutter/2
@@ -262,57 +260,46 @@ $soulmates-red: #d70851;
             ));
         }  
     }
-    @include mq(desktop) {
-        .commercial--masterclasses__class {
-            @include rem((
-                padding-left: $gs-gutter/2
-            ));
-            @include rem((
-                width: 25%
-            ));
-        
-            &:nth-child(n+4) {
-                display: block;
-            }
-        }
-    }
 }
 /* article */
 .facia-container--commercial {
     &.facia-container--layout-article {
-        @include mq(leftCol) {
-            .commercial__buy-now-button {
-                left: auto;
-                right: auto;
-                top: auto;
-                @include rem((
-                    bottom: $gs-gutter/2
-                ));
+        .commercial--soulmates {
+            @include mq(leftCol) {
+                .commercial__buy-now-button {
+                    left: auto;
+                    right: auto;
+                    top: auto;
+                    @include rem((
+                        bottom: $gs-gutter/2
+                    ));
+                }
+                .commercial__explainer {
+                    margin-top: 0;
+                }
             }
-            .commercial__explainer {
-                margin-top: 0;
+            @include mq(faciaLeftCol) {
+                .commercial__head {
+                    padding-left: 0;
+                    padding-right: 0;
+                }
+                .commercial__explainer {
+                    @include rem((
+                        margin-top: $gs-baseline
+                    ));
+                }
             }
-        }
-        @include mq(faciaLeftCol) {
-            .commercial__head {
-                padding-left: 0;
-                padding-right: 0;
-            }
-            .commercial__explainer {
-                margin-top: 12px;
-            }
-        }
-        @include mq(rightCol) {
-            .commercial--masterclasses__class {
-                @include rem((
-                    padding-left: $gs-gutter/2
-                ));
-                @include rem((
-                    width: 25%
-                ));
+            @include mq(rightCol) {
+                .commercial--masterclasses__class {
+                    @include rem((
+                        padding-left: $gs-gutter/2
+                    ));
+                    width: 25%;
+                    background: red;
         
-                &:nth-child(n+4) {
-                    display: block;
+                    &:nth-child(n+4) {
+                        display: block;
+                    }
                 }
             }
         }

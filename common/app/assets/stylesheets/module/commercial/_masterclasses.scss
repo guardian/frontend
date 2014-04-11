@@ -114,7 +114,7 @@
 }
 
 /* fronts */
-.facia-container--layout-front .commercial {
+.facia-container--layout-front .commercial--masterclasses {
     @include mq(faciaLeftCol) {
         .commercial__head {
             @include rem((
@@ -127,9 +127,7 @@
             @include rem((
                 padding-left: $gs-gutter/2
             ));
-            @include rem((
-                width: 25%
-            ));
+            width: 25%;
         
             &:nth-child(n+4) {
                 display: block;
@@ -140,17 +138,17 @@
 /* article */
 .facia-container--commercial {
     &.facia-container--layout-article {
-        @include mq(rightCol) {
-            .commercial--masterclasses__class {
-                @include rem((
-                    padding-left: $gs-gutter/2
-                ));
-                @include rem((
-                    width: 25%
-                ));
+        .commercial--masterclasses {
+            @include mq(rightCol) {
+                .commercial--masterclasses__class {
+                    @include rem((
+                        padding-left: $gs-gutter/2
+                    ));
+                    width: 25%;
         
-                &:nth-child(n+4) {
-                    display: block;
+                    &:nth-child(n+4) {
+                        display: block;
+                    }
                 }
             }
         }
