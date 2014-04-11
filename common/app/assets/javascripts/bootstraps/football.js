@@ -2,6 +2,7 @@ define([
     'common/$',
     'bonzo',
     'bean',
+    'common/utils/ajax',
     'common/utils/context',
     'common/utils/config',
     'common/utils/page',
@@ -16,6 +17,7 @@ define([
     $,
     bonzo,
     bean,
+    ajax,
     context,
     config,
     page,
@@ -144,6 +146,25 @@ define([
             if (!e.target.getAttribute('href')) {
                 window.location = this.getAttribute('data-link-to');
             }
+        });
+
+        bean.on(context, 'click', '.js-show-more', function(e) {
+            e.preventDefault();
+            var el = e.currentTarget;
+            ajax({
+                url: el.getAttribute('href') +'.json'
+            }).then(function(resp) {
+                $.create(resp.html).each(function(html) {
+                    $('[data-show-more-contains="'+ el.getAttribute('data-puts-more-into') +'"]', context)
+                        .append($(el.getAttribute('data-shows-more'), html));
+
+                    if (resp[el.getAttribute('data-new-url')]) {
+                        bonzo(el).attr('href', resp[el.getAttribute('data-new-url')]);
+                    } else {
+                        bonzo(el).remove();
+                    }
+                });
+            });
         });
 
         bean.on(context, 'change', $('form.football-leagues')[0], function() {
