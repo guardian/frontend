@@ -1,6 +1,5 @@
 @(page: model.MetaData)( implicit request:RequestHeader)
 @import conf.Configuration
-@import conf.Switches.OmnitureVerificationSwitch
 
 @*<!-- TODO temporary till after dotcom switch -->*@
 @defining(
@@ -50,27 +49,6 @@
                         }
                     }
                 </script>
-        }
-
-        @if(OmnitureVerificationSwitch.isSwitchedOn) {
-            @defining(
-                s"$analyticsHost/b/ss/guardiangu-mobileverify/1/H.25.3/?${OmnitureAnalyticsData(page, "Partial Javascript", path)}"
-            ){ omnitureCall =>
-                <script>
-                    var verificationImage = new Image(1, 1);
-                    verificationImage.src = '@Html(omnitureCall)';
-                </script>
-            }
-            @defining(
-                s"$analyticsHost/b/ss/guardiangu-mobileverify/1/H.25.3/?${OmnitureAnalyticsData(page, "No Javascript", path)}"
-            ){ omnitureCall =>
-                <noscript id="omnitureVerificationNoScript">
-                    <div>
-                        <img id="omnitureVerificationNoScriptImage" alt=""
-                        src="@Html(omnitureCall)" width="1" height="1" class="u-h" />
-                    </div>
-                </noscript>
-            }
         }
     }
 }
