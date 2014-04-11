@@ -251,3 +251,57 @@
         padding: $gs-gutter/2
     ));
 }
+
+/* fronts */
+.facia-container--layout-front .commercial--jobs {
+    @include mq(desktop) {
+        .commercial--masterclasses__class {
+            @include rem((
+                padding-left: $gs-gutter/2
+            ));
+            width: 25%;
+        
+            &:nth-child(n+4) {
+                display: block;
+            }
+        }
+    }
+    @include mq(leftCol) {
+        .commercial__title__last-word {
+            @include rem((
+                margin-left: -5px
+            ));
+        }
+    }
+    @include mq(faciaLeftCol) {
+        .commercial__head {
+            @include rem((
+                width: gs-span(2) + $gs-gutter
+            ));
+        }
+    }
+    @include mq(faciaLeftCol, $to: wide) {
+        .commercial__title__last-word {
+            margin-left: 0;
+        }        
+    }
+}
+/* article */
+.facia-container--commercial {
+    &.facia-container--layout-article {
+        .commercial--jobs {
+            @include mq(rightCol) {
+                .commercial--masterclasses__class {
+                    @include rem((
+                        padding-left: $gs-gutter/2
+                    ));
+                    width: 25%;
+        
+                    &:nth-child(n+4) {
+                        display: block;
+                    }
+                }
+            }
+        }
+    }
+}
