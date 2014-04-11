@@ -314,8 +314,8 @@ define([
         // if we don't already have googletag, load it and create command queue
         if (!window.googletag) {
             // load the library asynchronously
-            require(['googletag']);
             window.googletag = { cmd: [] };
+            require(['googletag']);
         }
 
         window.googletag.cmd.push(this.setListeners.bind(this));
