@@ -446,8 +446,8 @@ a {
                     if (userData) {
                         userFromCookieCache = {
                             id: userData[0],
-                            primaryEmailAddress: userData[1],
-                            displayName: userData[2],
+                            primaryemailaddress: userData[1], // this and siplayname are non camelcase to match with formstack
+                            displayname: userData[2],
                             accountCreatedDate: userData[6],
                             emailVerified: userData[7],
                             rawResponse: cookieData
@@ -497,39 +497,24 @@ a {
             };
 
             self.populateHiddenFields = function (user) {
-
                 var hiddenFields = dom.$form.querySelectorAll(".fsHiddenByFieldSetting");
                 var fieldsMap = {};
                 var newFieldsHtml = "";
 
-                function populateHiddenField (label, field) {
-                    var value;
-                    switch (label.toLowerCase()) {
-                        case "email":
-                            value = user.primaryEmailAddress;
-                            break;
-
-                        case "id":
-                            value = user.id
-                            break;
-
-                        case "displayname":
-                            value = user.displayName;
-                            break;
-                    }
-                    newFieldsHtml += '<input type="hidden" name="' + field.getAttribute('name') + '" value="' + value + '">';
-                    field.remove();
-                }
-
                 for (var i = 0; i < hiddenFields.length; i++) {
                     var field = hiddenFields[i];
-                    var label = field.querySelector("label").innerHTML;
+                    var label = field.querySelector("label").innerHTML.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
                     fieldsMap[label] = field.querySelector("input");
+                }
+
+                function populateHiddenField (user, label, field) {
+                    newFieldsHtml += '<input type="hidden" name="' + field.getAttribute('name') + '" value="' + user[label.toLowerCase()] + '">';
+                    field.remove();
                 }
 
                 for (var label in fieldsMap) {
                     if (fieldsMap.hasOwnProperty(label)) {
-                        populateHiddenField(label, fieldsMap[label]);
+                        populateHiddenField(user, label, fieldsMap[label]);
                     }
                 }
 
