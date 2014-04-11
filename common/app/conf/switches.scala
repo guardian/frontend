@@ -346,6 +346,11 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
+  val ToolCheckPressLastmodified = Switch("Facia Tool", "facia-tool-check-press-lastmodified",
+    "If this switch is on facia tool will alert the user if a front is not pressed withing 10 secs of an edit/publish",
+    safeState = Off, sellByDate = never
+  )
+
   val ToolSparklines = Switch("Facia Tool", "facia-tool-sparklines",
     "If this is switched on then the fronts tool renders images from sparklines.ophan.co.uk",
     safeState = Off, sellByDate = never
@@ -400,6 +405,7 @@ object Switches extends Collections {
     ABBlendedContainersAu,
     ToolDisable,
     ToolConfigurationDisable,
+    ToolCheckPressLastmodified,
     ToolSparklines,
     OphanSwitch,
     ScrollDepthSwitch,
