@@ -142,7 +142,7 @@ define([
 
         transcludeSeriesContent: function(config, context){
             if ('seriesId' in config.page) {
-                new Series(config, qwery('.js-series', context));
+                new Series(config, qwery('.js-onwards', context));
             }
         },
 
