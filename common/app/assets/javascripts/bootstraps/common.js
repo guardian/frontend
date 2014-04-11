@@ -19,7 +19,7 @@ define([
     'common/utils/detect',
     'common/modules/onward/popular',
     'common/modules/onward/related',
-    'common/modules/onward/series-content',
+    'common/modules/onward/onward-content',
     'common/modules/ui/images',
     'common/modules/navigation/profile',
     'common/modules/navigation/sections',
@@ -68,7 +68,7 @@ define([
     detect,
     popular,
     Related,
-    Series,
+    Onward,
     images,
     Profile,
     Sections,
@@ -140,9 +140,9 @@ define([
             });
         },
 
-        transcludeSeriesContent: function(config, context){
+        transcludeOnwardContent: function(config, context){
             if ('seriesId' in config.page) {
-                new Series(config, qwery('.js-onwards', context));
+                new Onward(config, qwery('.js-onward', context));
             }
         },
 
@@ -499,7 +499,7 @@ define([
                 modules.runAbTests(config, context);
                 modules.loadAdverts(config);
                 modules.transcludeRelated(config, context);
-                modules.transcludeSeriesContent(config, context);
+                modules.transcludeOnwardContent(config, context);
                 modules.initRightHandComponent(config, context);
                 modules.loadCommercialComponent(config, context);
             }
