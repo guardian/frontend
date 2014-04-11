@@ -133,8 +133,9 @@ label[for] {
 }
 
 .front-embed-preview {
-    margin: 20px auto 0 auto;
+    margin: 10px;
     border: solid 1px #ccc;
+    float: left;
 }
 .half {
     width: 460px;
