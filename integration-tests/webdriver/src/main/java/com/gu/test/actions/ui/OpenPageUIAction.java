@@ -1,7 +1,6 @@
 package com.gu.test.actions.ui;
 
 import com.gu.test.actions.UIAction;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 public class OpenPageUIAction extends UIAction {
