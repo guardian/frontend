@@ -1,6 +1,6 @@
-@(name: String, adType: String, sizeMapping: Map[String, Seq[String]], showLabel: Boolean = true, refresh: Boolean = true)
+@(name: String, adType: String, sizeMapping: Map[String, Seq[String]], showLabel: Boolean = true)
 @import conf.Switches._
 
 @if(StandardAdvertsSwitch.isSwitchedOn) {
-    @fragments.commercial.adSlot(name=name, adType=adType, sizeMapping=sizeMapping, showLabel=showLabel, refresh=refresh)
+    @fragments.commercial.adSlot(name=name, adType=adType, sizeMapping=sizeMapping, showLabel=showLabel)
 }

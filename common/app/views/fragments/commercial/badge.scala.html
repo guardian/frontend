@@ -1,3 +1,6 @@
-@(sizeMapping: Map[String, Seq[String]])
+@(name: String, adType: String, sizeMapping: Map[String, Seq[String]])
+@import conf.Switches._
 
-@fragments.commercial.adSlot(name="badge", adType="paid-for-badge", sizeMapping=sizeMapping, showLabel=false, refresh=false)
+@if(SponsoredSwitch.isSwitchedOn) {
+    @fragments.commercial.adSlot(name=name, adType=adType, sizeMapping=sizeMapping, showLabel=false, refresh=false)
+}

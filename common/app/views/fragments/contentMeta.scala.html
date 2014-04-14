@@ -1,4 +1,5 @@
 @(content: model.Content)(implicit request: RequestHeader)
+@import conf.Switches._
 
 @byline(content: model.Content) = {
     @content match {
@@ -14,7 +15,7 @@
 }
 
 <div class="article__meta-container u-cf@if(content.byline.isEmpty){ article__meta-container--no-byline}">
-    @if(content.isSponsored || content.isAdvertisementFeature) {
+    @if(SponsoredSwitch.isSwitchedOn && (content.isSponsored || content.isAdvertisementFeature)) {
         <div class="article__sponsors-badge">
             @if(content.isSponsored) {
                 <p class="article__sponsors-badge__label">Sponsored by:</p>
@@ -22,7 +23,7 @@
                 <h3 class="article__sponsors-badge__header">Advertisement feature</h3>
                 <p class="article__sponsors-badge__label">In association with</p>
             }
-            @fragments.commercial.badge(sizeMapping=Map("mobile" -> Seq("140,80")))
+            @fragments.commercial.badge(name="badge", adType="paid-for-badge", sizeMapping=Map("mobile" -> Seq("140,80")))
             <a href="#" class="article__sponsors-badge__help">What is this?</a>
         </div>
     }
