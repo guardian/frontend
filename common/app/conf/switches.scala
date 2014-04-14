@@ -438,7 +438,6 @@ object Switches extends Collections {
     ABExternalLinksNewWindow,
     ABAbcd,
     ABOnwardsAboveDiscussion,
-    FootballLiveblogTruncation,
     MemcachedSwitch,
     IncludeBuildNumberInMemcachedKey
   )
