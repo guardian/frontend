@@ -3,7 +3,7 @@ package controllers
 import play.api.mvc.{RequestHeader, Action, Controller}
 import scala.concurrent.Future
 import conf.SwitchingContentApi
-import common.{LinkTo, Logging, ExecutionContexts, Edition}
+import common.{Logging, ExecutionContexts, Edition}
 import model.{Cached, Tag, Content, Section}
 import services.IndexPage
 import views.support.{PreviousAndNext, TemplateDeduping}
@@ -37,7 +37,7 @@ object AllIndexController extends Controller with ExecutionContexts with ItemRes
 
   def allOn(path: String, day: String, month: String, year: String) = Action.async{ implicit request =>
 
-    val requestedDate = dateFormat.parseDateTime(s"$year/$month/$day").withHourOfDay(23).withMinuteOfHour(59)
+    val requestedDate = dateFormat.parseDateTime(s"$year/$month/$day").toDateMidnight.plusDays(1).toDateTime.minusSeconds(1)
 
     implicit val dedupe = TemplateDeduping()
 
