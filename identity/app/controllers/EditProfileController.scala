@@ -76,8 +76,18 @@ class EditProfileController @Inject()(idUrlBuilder: IdentityUrlBuilder,
     val idRequest = idRequestParser(request)
     val user = request.user
 
+    val avatarUploadStatus = for {
+      responseData <- request.queryString get "signed_data"
+      signedString <- responseData.headOption
+    } yield AvatarSigningService wasUploadSuccessful signedString
+
+
     for { avatarUploadData <- Future.sequence(IdentityAvatarUploadSwitch.opt(avatarUploadDataFor(user)).toSeq) } yield {
-      NoCache(Ok(views.html.profileForms(pageWithTrackingParamsFor(idRequest), user, forms, idRequest, idUrlBuilder, avatarUploadData.headOption)))
+      NoCache(Ok(views.html.profileForms(
+        pageWithTrackingParamsFor(idRequest),
+        user, forms, idRequest, idUrlBuilder,
+        avatarUploadData.headOption,
+        avatarUploadStatus)))
     }
   }
 

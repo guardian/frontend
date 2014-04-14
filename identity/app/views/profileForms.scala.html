@@ -4,7 +4,8 @@
         forms: controllers.ProfileForms,
         idRequest: services.IdentityRequest,
         idUrlBuilder: services.IdentityUrlBuilder,
-        avatarUploadData: Option[model.AvatarUploadData]
+        avatarUploadData: Option[model.AvatarUploadData],
+        avatarUploadStatus: Option[Either[String, Boolean]]
 )(implicit request: RequestHeader)
 
 @import tracking.TrackingParams
