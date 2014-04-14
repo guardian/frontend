@@ -313,11 +313,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 4, 18)
   )
 
-  val FootballLiveblogTruncation = Switch("A/B Tests", "ab-football-liveblog-truncation",
-    "If you swith cthis switch on, an AB test will run to truncate football liveblogs.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 4, 21)
-  )
-
   val ABOnwardsAboveDiscussion = Switch("A/B Tests", "ab-onwards-above-discussion",
     "If this switch is on, an AB test runs to move the onwards packages aboce discussion on the aricle page",
     safeState = Off, sellByDate = new DateMidnight(2014, 4, 28)

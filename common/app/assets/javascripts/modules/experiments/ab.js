@@ -10,7 +10,6 @@ define([
     'common/modules/experiments/tests/blended-containers-uk',
     'common/modules/experiments/tests/blended-containers-us',
     'common/modules/experiments/tests/blended-containers-au',
-    'common/modules/experiments/tests/football-liveblog-truncation',
     'common/modules/experiments/tests/onward-above-discussion'
 ], function (
     common,
@@ -23,7 +22,6 @@ define([
     BlendedContainersUk,
     BlendedContainersUs,
     BlendedContainersAu,
-    FootballLiveblogTruncation,
     OnwardAboveDiscussion
     ) {
 
@@ -33,7 +31,6 @@ define([
             new BlendedContainersUk(),
             new BlendedContainersUs(),
             new BlendedContainersAu(),
-            new FootballLiveblogTruncation(),
             new OnwardAboveDiscussion()
        ],
        participationsKey = 'gu.ab.participations';
