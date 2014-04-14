@@ -42,6 +42,9 @@ define([
             if (callback) {
                 callback(resp, $nav);
             } // The promise chain is broken as Reqwest doesn't allow for creating more than 1 argument.
+        }, function() {
+            $('.score__container', context).remove();
+            $('.article__headline', context).removeClass('u-h');
         });
     }
 
@@ -180,6 +183,9 @@ define([
                     content: tableContainer,
                     ready: true
                 } : undefined;
+                renderExtras(extras, dropdownTemplate);
+            }, function() {
+                delete extras[1];
                 renderExtras(extras, dropdownTemplate);
             });
         });

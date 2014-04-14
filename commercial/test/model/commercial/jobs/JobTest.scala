@@ -4,7 +4,7 @@ import org.scalatest.{Matchers, FlatSpec}
 
 class JobTest extends FlatSpec with Matchers {
 
-  "mainIndustry" should "give a value for non-general jobs" in {
+  "mainIndustry" should "give a value for jobs" in {
     val job = Job(1, "title", "desc", "recruiter", None, Seq(218))
 
     job.mainIndustry should be(Some("Legal"))
@@ -16,9 +16,10 @@ class JobTest extends FlatSpec with Matchers {
     job.mainIndustry should be(None)
   }
 
-  "mainIndustry" should "not give a value for general jobs" in {
-    val job = Job(1, "title", "desc", "recruiter", None, Seq(158))
+  "mainIndustry" should "respect the industry order" in {
+    val job = Job(1, "title", "desc", "recruiter", None, Seq(124, 111, 101))
 
-    job.mainIndustry should be(None)
+    job.mainIndustry should be(Some("Arts & heritage"))
   }
+
 }

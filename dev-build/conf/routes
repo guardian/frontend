@@ -134,8 +134,6 @@ GET         /radiator/commit/*hash                                              
 GET         /troubleshoot/football                                                                                   controllers.admin.FootballTroubleshooterController.renderFootballTroubleshooter()
 GET         /troubleshoot/pages                                                                                      controllers.admin.TroubleshooterController.index()
 GET         /troubleshoot/test                                                                                       controllers.admin.TroubleshooterController.test(id, testPath)
-GET         /redirects                                                                                               controllers.admin.RedirectController.redirect()
-POST        /redirect-post                                                                                           controllers.admin.RedirectController.redirectPost()
 
 # Football admin
 
@@ -175,7 +173,13 @@ GET         /commercial/books/book/*pageId                                      
 
 # Onward journeys
 GET         /onward/recently-published                                                                               controllers.LatestContentController.recentlyPublished()
-GET         /series/*path.json                                                                                         controllers.SeriesController.renderSeriesStories(path)
+GET         /series/*path.json                                                                                       controllers.SeriesController.renderSeriesStories(path)
+
+GET        /$path<.+/\d\d\d\d/\w\w\w/\d\d>                                                                           controllers.AllIndexController.on(path)
+GET        /$path<.+>/latest                                                                                         controllers.LatestIndexController.latest(path)
+GET        /$path<.+>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/newer                                                controllers.AllIndexController.newer(path, day, month, year)
+GET        /$path<.+>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/all                                                  controllers.AllIndexController.allOn(path, day, month, year)
+GET        /$path<.+>/all                                                                                            controllers.AllIndexController.all(path)
 
 # Facia
 GET         /                                                                                                        controllers.FaciaController.editionRedirect(path = "")
@@ -192,7 +196,6 @@ GET         /collection/*id                                                     
 GET         /$path<[^/]+(/[^/]+)?>/rss                                                                               controllers.FaciaController.renderFrontRss(path)
 GET         /$path<[^/]+(/[^/]+)?>.json                                                                              controllers.FaciaController.renderFrontJson(path)
 GET         /$path<[^/]+(/[^/]+)?>                                                                                   controllers.FaciaController.renderFront(path)
-
 
 # Applications
 GET         /sections                                                                                                controllers.SectionsController.renderSections()

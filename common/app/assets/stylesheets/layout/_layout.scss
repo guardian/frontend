@@ -213,8 +213,7 @@ a.edition {
     float: left;
     clear: left;
     @include rem((
-        width: $inArticleInlineImgWidth,
-        margin: 3px $gs-gutter 0 0
+        width: $inArticleInlineImgWidth
     ));
 
     @include mq(mobileLandscape) {
