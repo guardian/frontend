@@ -134,3 +134,12 @@
         text-decoration: none;
     }
 }
+
+.facia-container--layout-article {
+    .container--features {
+        .collection-wrapper--position-2,
+        .linkslist-container {
+            display: none;
+        }
+    }
+}

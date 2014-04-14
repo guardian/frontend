@@ -2,6 +2,7 @@ define([
     'common/$',
     'bonzo',
     'bean',
+    'common/utils/ajax',
     'common/utils/context',
     'common/utils/config',
     'common/utils/page',
@@ -16,6 +17,7 @@ define([
     $,
     bonzo,
     bean,
+    ajax,
     context,
     config,
     page,
@@ -43,8 +45,66 @@ define([
         });
     }
 
+    function renderExtras(extras, dropdownTemplate) {
+        // clean
+        extras = extras.filter(function(extra) { return extra; });
+        var ready = extras.filter(function(extra) {
+            return extra.ready === false;
+        }).length === 0;
+
+        if (ready) {
+            page.rightHandComponentVisible(function() {
+                extras.forEach(function(extra) {
+                    rhc.addComponent(extra.content, extra.importance);
+                });
+            }, function() {
+                var b;
+                $.create('<div class="football-extras"></div>').each(function(extrasContainer) {
+                    extras.forEach(function(extra, i) {
+                        if (dropdownTemplate) {
+                            $.create(dropdownTemplate).each(function (dropdown) {
+                                $('.dropdown__label', dropdown).append(extra.name);
+                                $('.dropdown__content', dropdown).append(extra.content);
+                                $('.dropdown__button', dropdown)
+                                    .attr('data-link-name', 'Show dropdown: '+ extra.name)
+                                    .each(function(el) {
+                                        if (i === 0) { b = el; }
+                                    });
+                            }).appendTo(extrasContainer);
+                        } else {
+                            extrasContainer.appendChild(extra.content);
+                        }
+                    });
+                }).insertAfter($('.article-body', context));
+
+                // unfortunately this is here as the buttons event is delegated
+                // so it needs to be in the dom
+                if (b) { bean.fire(b, 'click'); }
+            });
+        }
+    }
+
+    function loading(elem, message, link) {
+        bonzo(elem).append(bonzo.create(
+            '<div class="loading">'+
+                '<div class="loading__message">'+ (message||'Loading…') +'</div>'+
+                (link ? '<a href="'+ link.href +'" class="loading__link">'+ link.text +'</a>' : '') +
+                '<div class="loading__animation"></div>'+
+            '</div>'
+        ));
+    }
+
+    function loaded(elem) {
+        $('.loading', elem).remove();
+    }
+
     function init() {
+        // We're doing this as to have one redraw
+        var extras = [],
+            dropdownTemplate;
+
         page.isMatch(function(match) {
+            extras[0] = { ready: false };
             if (match.pageType === 'stats') {
                 renderNav(match);
             } else {
@@ -65,52 +125,65 @@ define([
                 }
 
                 renderNav(match, function(resp, $nav) {
-                    if (match.pageType !== 'stats') {
-                        scoreContainer.innerHTML = '';
-                        scoreBoard.template = match.pageType === 'report' ? resp.scoreSummary : resp.matchSummary;
+                    dropdownTemplate = resp.dropdown;
+                    scoreContainer.innerHTML = '';
+                    scoreBoard.template = match.pageType === 'report' ? resp.scoreSummary : resp.matchSummary;
 
-                        // only show scores on liveblogs or started matches
-                        if(!/^\s+$/.test(scoreBoard.template) && (config.page.isLiveBlog || resp.hasStarted)) {
-                            scoreBoard.render(scoreContainer);
+                    // only show scores on liveblogs or started matches
+                    if(!/^\s+$/.test(scoreBoard.template) && (config.page.isLiveBlog || resp.hasStarted)) {
+                        scoreBoard.render(scoreContainer);
 
-                            if (match.pageType === 'report') {
-                                $('.tab--min-by-min a', $nav).first().each(function(el) {
-                                    bonzo(scoreBoard.elem).addClass('u-fauxlink');
-                                    bean.on(scoreBoard.elem, 'click', function() {
-                                        window.location = el.getAttribute('href');
-                                    });
-                                });
-                            }
-                        }
-
-                        if (resp.hasStarted) {
-                            var statsUrl = $('.tab--stats a', $nav).attr('href').replace(/^.*\/\/[^\/]+/, ''),
-                                statsContainer = bonzo.create('<div class="match-stats__container"></div>'),
-                                matchStats = new MatchStats(statsUrl);
-
-                            page.rightHandComponentVisible(function() {
-                                rhc.addComponent(statsContainer, 3);
-                            }, function() {
-                                $('.article-body', context).after(statsContainer);
-                            });
-                            matchStats.fetch(statsContainer).then(function() {
-                                $('.js-chart', statsContainer).each(function(el) {
-                                    new Doughnut().render(el);
+                        if (match.pageType === 'report') {
+                            $('.tab--min-by-min a', $nav).first().each(function(el) {
+                                bonzo(scoreBoard.elem).addClass('u-fauxlink');
+                                bean.on(scoreBoard.elem, 'click', function() {
+                                    window.location = el.getAttribute('href');
                                 });
                             });
                         }
+                    }
+
+                    if (resp.hasStarted) {
+                        var statsUrl = $('.tab--stats a', $nav).attr('href').replace(/^.*\/\/[^\/]+/, ''),
+                            statsContainer = $.create('<div class="match-stats__container"></div>')[0],
+                            matchStats = new MatchStats(statsUrl);
+
+                        matchStats.fetch(statsContainer).then(function() {
+                            $('.js-chart', statsContainer).each(function(el) {
+                                new Doughnut().render(el);
+                            });
+                            extras[0] = {
+                                name: 'Match stats',
+                                importance: 3,
+                                content: statsContainer,
+                                ready: true
+                            };
+                            renderExtras(extras, dropdownTemplate);
+                        });
+                    } else {
+                        delete extras[0];
+                        renderExtras(extras, dropdownTemplate);
                     }
                 });
             }
         });
 
         page.isCompetition(function(competition) {
+            extras[1] = { ready: false };
             var table = new Table(competition),
-                tableContainer = bonzo.create('<div class="js-football-table" data-link-name="football-table-embed"></div>');
+                tableContainer = $.create('<div class="js-football-table" data-link-name="football-table-embed"></div>')[0];
 
-            page.rightHandComponentVisible(function() {
-                rhc.addComponent(tableContainer, 2);
-                table.fetch(tableContainer);
+            table.fetch(tableContainer).then(function() {
+                extras[1] = $('.table__container', tableContainer).length > 0 ? {
+                    name: 'Table',
+                    importance: 2,
+                    content: tableContainer,
+                    ready: true
+                } : undefined;
+                renderExtras(extras, dropdownTemplate);
+            }, function() {
+                delete extras[1];
+                renderExtras(extras, dropdownTemplate);
             });
         });
 
@@ -146,23 +219,29 @@ define([
             }
         });
 
+        bean.on(context, 'click', '.js-show-more', function(e) {
+            e.preventDefault();
+            var el = e.currentTarget;
+            ajax({
+                url: el.getAttribute('href') +'.json'
+            }).then(function(resp) {
+                $.create(resp.html).each(function(html) {
+                    $('[data-show-more-contains="'+ el.getAttribute('data-puts-more-into') +'"]', context)
+                        .append($(el.getAttribute('data-shows-more'), html));
+
+                    var nurl = resp[el.getAttribute('data-new-url')];
+                    if (nurl) {
+                        bonzo(el).attr('href', nurl);
+                    } else {
+                        bonzo(el).remove();
+                    }
+                });
+            });
+        });
+
         bean.on(context, 'change', $('form.football-leagues')[0], function() {
             window.location = this.value;
         });
-    }
-
-    function loading(elem, message, link) {
-        bonzo(elem).append(bonzo.create(
-            '<div class="loading">'+
-                '<div class="loading__message">'+ (message||'Loading…') +'</div>'+
-                (link ? '<a href="'+ link.href +'" class="loading__link">'+ link.text +'</a>' : '') +
-                '<div class="loading__animation"></div>'+
-            '</div>'
-        ));
-    }
-
-    function loaded(elem) {
-        $('.loading', elem).remove();
     }
 
     return {

@@ -1,10 +1,12 @@
 define([
     'common/$',
     'bonzo',
+    'qwery',
     'lodash/objects/assign'
 ], function (
     $,
     bonzo,
+    qwery,
     _assign
 ) {
 
@@ -24,6 +26,7 @@ define([
     }
 
     CollectionAdverts.prototype.defaultConfig = {
+        containerSelector: '.container',
         selector: '.collection-wrapper--ad'
     };
 
@@ -31,11 +34,15 @@ define([
         if (!this.config.switches.standardAdverts) {
             return false;
         }
-        // create the ad slots
-        $(this.config.selector)
-            .map(function(slot) {
-                return bonzo(slot);
-            })
+        // filter out hidden containers
+        $(this.config.containerSelector)
+            .map(function(container) { return $(container); })
+            .filter(function($container) {
+                return qwery(this.config.selector, $container[0]).length && $container.css('display') !== 'none';
+            }, this)
+            .map(function($container) {
+                return $(this.config.selector, $container[0]).first();
+            }, this)
             .slice(0, adNames.length)
             .forEach(function($slot, index) {
                 $slot.html(

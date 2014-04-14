@@ -1,20 +1,4 @@
 .related {
-    @include rem((
-        margin-bottom: $gs-baseline*2
-    ));
-
-    .container__border {
-        border-top: 1px solid $c-neutral4;
-    }
-    .container__title {
-        color: $c-neutral1;
-        background: transparent;
-
-        @include mq($to: tablet) {
-            @include fs-header(3, true);
-            padding-left: 0;
-        }
-    }
     .container__body {
         @include rem((
             padding-top: $gs-baseline/3
