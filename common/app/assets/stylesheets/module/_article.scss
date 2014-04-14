@@ -6,6 +6,16 @@
     @include fs-bodyCopy(3);
 }
 
+.article--truncated {
+    // Remember to update this number in module/article/truncate.js
+    .live-blog__blocks {
+        display: none;
+    }
+    .live-blog__blocks:first-child {
+        display: block;
+    }
+}
+
 .article__zone {
     @include fs-header(3);
     @include box-sizing(border-box);
@@ -758,4 +768,18 @@
             margin-bottom: $gs-baseline/2
         ));
     }
+}
+
+.article-elongator {
+    @include fs-bodyCopy(3, true);
+    @include rem((
+        margin-bottom: $gs-baseline,
+        padding: $gs-baseline,
+        top: -$gs-baseline*2
+    ));
+    background: $c-neutral6;
+    border-bottom: 1px dotted $c-neutral3;
+    border-top: 1px dotted $c-neutral3;
+    position: relative;
+    text-align: center;
 }
