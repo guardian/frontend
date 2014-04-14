@@ -40,7 +40,7 @@ define([
     };
 
     TonalComponent.prototype.isSupported = function() {
-        return this.getTone() in  this.tones;
+        return this.getTone() in this.tones;
     };
 
     TonalComponent.prototype.getTone = function() {
