@@ -49,8 +49,7 @@ define([
     'common/modules/analytics/foresee-survey',
     'common/modules/onward/right-most-popular',
     'common/modules/analytics/register',
-    'common/modules/commercial/loader',
-    'common/modules/onward/tonal'
+    'common/modules/commercial/loader'
 ], function (
     $,
     mediator,
@@ -100,8 +99,7 @@ define([
     Foresee,
     RightMostPopular,
     register,
-    CommercialLoader,
-    TonalComponent
+    CommercialLoader
 ) {
 
     var hasBreakpointChanged = detect.hasCrossedBreakpoint();
@@ -145,10 +143,6 @@ define([
         transcludeOnwardContent: function(config, context){
             if ('seriesId' in config.page) {
                 new Onward(config, qwery('.js-onward', context));
-            } else if (config.page.tones !== '') {
-                $('.js-onward', context).each(function(c) {
-                    new TonalComponent(config, c).fetch(c, 'html');
-                });
             }
         },
 
