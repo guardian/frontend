@@ -138,22 +138,20 @@
 /* Bullet points
    ========================================================================== */
 
-
-.bullet,
-.from-content-api ul > li,
-.article__standfirst ul > li {
-    @include faux-bullet-point($offset-y: 3px);
-
-    > p:first-child { // this stops line breaking for the following bullet point format: <ul><li><p>text</p></li></ul>
-        display: inline;
-    }
-
-}
-
 .bullet {
     font-size: 0.1px; // hides bullet character. 0.1 more consistent than 0 cross browser
     line-height: 0.1px; // fix for line spacing issue (bullet was increasing spacing)
     color: transparent;
+    @include faux-bullet-point;
+}
+
+.from-content-api ul > li,
+.article__standfirst ul > li {
+    @include faux-bullet-point($right-space: 4px);
+
+    > p:first-child { // this stops line breaking for the following bullet point format: <ul><li><p>text</p></li></ul>
+        display: inline;
+    }
 }
 
 
@@ -196,8 +194,8 @@ figure {
     }
     &.img {
         @include rem((
-            margin-top: 5px,
-            margin-bottom: 6px
+            margin-top: ($gs-baseline/3)*4,
+            margin-bottom: ($gs-baseline/3)*5
         ));
     }
     &.img--landscape,
@@ -214,6 +212,11 @@ figure {
                 ));
             }
         }
+    }
+    &.img--inline {
+        @include rem((
+            margin: 5px $gs-gutter 6px 0
+        ));
     }
 }
 

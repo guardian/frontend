@@ -10,6 +10,8 @@ define([
     Component
 ){
 
+    var noop = function(){};
+
     function TonalComponent(config, context){
 
         register.begin('tonal-content');
@@ -17,16 +19,28 @@ define([
         this.config = config;
         this.context = context;
         this.edition = this.config.page.edition.toLowerCase();
-        this.endpoint = this.getEndpoint();
+
+        //Ensures we only fetch supported tones.
+        if(this.isSupported()) {
+            this.endpoint = this.getEndpoint();
+        } else {
+            this.fetch = noop;
+        }
     }
 
     Component.define(TonalComponent);
 
+    TonalComponent.prototype.tones = {
+        features: '-alpha/features/feature-stories.json',
+        comment: '-alpha/contributors/feature-stories.json'
+    };
+
     TonalComponent.prototype.getEndpoint = function() {
-        return '/collection/' + this.edition + {
-            features: '-alpha/features/feature-stories.json',
-            comment: '-alpha/contributors/feature-stories.json'
-        }[this.getTone()];
+        return '/collection/' + this.edition + this.tones[this.getTone()];
+    };
+
+    TonalComponent.prototype.isSupported = function() {
+        return this.getTone() in this.tones;
     };
 
     TonalComponent.prototype.getTone = function() {
