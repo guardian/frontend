@@ -1,4 +1,4 @@
-
+@common
 Feature: As Vicky I want to change which edition I am in
 
   Scenario: changing from UK to US from fronts

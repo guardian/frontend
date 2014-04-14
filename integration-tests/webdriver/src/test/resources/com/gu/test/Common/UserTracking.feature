@@ -1,4 +1,5 @@
 @httpMock
+@common
 Feature: As a Guardian Product owner I want to track user actions
 
   Scenario: tracking sent
