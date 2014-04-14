@@ -146,11 +146,12 @@
 }
 .ad-slot--paid-for-badge {
     min-height: 0;
-    padding-bottom: 0;
+    padding: 0;
     text-align: left;
 
     .ad-slot__container {
         width: 100%;
+        display: block;
     }
     .ad-slot--paid-for-badge__inner {
         overflow: hidden;
