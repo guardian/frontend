@@ -38,7 +38,7 @@ jvm_mem="-Xmx$((physical_mem / 2 / 1024))m"
 perm_size="-XX:MaxPermSize=$((physical_mem / 3 / 1024))m"
 
 if [ -z $FRONTEND_JVM_ARGS ]; then
-    FRONTEND_JVM_ARGS="$jvm_mem $perm_size -XX:ReservedCodeCacheSize=128m -XX:+UseConcMarkSweepGC -XX:+CMSIncrementalMode -Djava.awt.headless=true"
+    FRONTEND_JVM_ARGS="$jvm_mem $perm_size -XX:ReservedCodeCacheSize=128m -XX:+UseConcMarkSweepGC -XX:+CMSIncrementalMode -Djava.awt.headless=true -XX:NewRatio=4"
 fi
 
 echo ''
