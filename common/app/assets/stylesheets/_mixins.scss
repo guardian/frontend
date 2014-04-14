@@ -314,7 +314,7 @@
     }
 }
 
-@mixin faux-bullet-point($color: $c-neutral3, $offset-y: 6px) {
+@mixin faux-bullet-point($color: $c-neutral3, $right-space: 2px) {
     &:before {
         display: inline-block;
         content: "";
@@ -322,9 +322,7 @@
         @include rem((
             height: 12px,
             width: 12px,
-            left: 0,
-            top: $offset-y,
-            margin-right: 2px
+            margin-right: $right-space
         ));
         background-color: $color;
     }

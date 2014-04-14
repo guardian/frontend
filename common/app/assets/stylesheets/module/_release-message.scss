@@ -57,10 +57,11 @@
     }
 
     .site-message__list__item {
-        @include faux-bullet-point(#ffffff, $offset-y: 3px);
         @include fs-headline(1);
         font-weight: 200;
         margin-top: .6em;
+
+        @include faux-bullet-point(#ffffff, $right-space: 4px);
     }
 
     .site-message__actions {
