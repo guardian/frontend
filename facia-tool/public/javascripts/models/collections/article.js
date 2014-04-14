@@ -30,7 +30,6 @@ define([
             this.id = opts.id;
             this.parent = opts.parent;
             this.parentType = opts.parentType;
-            this.namespace = opts.namespace;
 
             this.uneditable = opts.uneditable;
 
@@ -43,12 +42,15 @@ define([
                 'thumbnail']);
 
             this.meta = asObservableProps([
+                'href',
                 'updatedAt',
                 'headline',
                 'trailText',
                 'imageAdjust',
                 'isBreaking',
-                'group']);
+                'group',
+                'snapType',
+                'snapId']);
 
             this.state = asObservableProps([
                 'underDrag',

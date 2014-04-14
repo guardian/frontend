@@ -2,36 +2,45 @@
 define([
     'modules/authed-ajax',
     'modules/vars',
-    'modules/cache'
+    'modules/cache',
+    'utils/url-abs-path'
 ],
 function (
     authedAjax,
     vars,
-    cache
+    cache,
+    urlAbsPath
 ){
     function validateItem (item) {
-        var data = cache.get('contentApi', item.id),
-            defer = $.Deferred();
+        var defer = $.Deferred(),
+            capiId,
+            data;
 
-        if(item.namespace) {
-            defer.resolve();
-        } else if(data) {
-            populate(data, item);
+        if (isSnapId(item.id)) {
             defer.resolve();
         } else {
-            fetchData([item.id])
-            .done(function(result){
-                if (result.length === 1) {
-                    result = result[0];
-                    cache.put('contentApi', result.id, result);
-                    populate(result, item);
+            capiId = urlAbsPath(item.id);
+            data = cache.get('contentApi', capiId);
+
+            if (data) {
+                item.id = capiId;
+                populate(data, item);
+                defer.resolve();
+            } else {
+                fetchData([capiId])
+                .always(function(result) {
+                    if (_.isArray(result) && result.length === 1) {
+                        item.id = capiId;
+                        cache.put('contentApi', capiId, result[0]);
+                        populate(result[0], item);
+                    } else {
+                        // TODO remove recognised meta queryparams from id
+                        item.meta.href(item.id);
+                        item.id = 'snap/' + new Date().getTime();
+                    }
                     defer.resolve();
-                } else {
-                    defer.reject();
-                }
-            }).fail(function(){
-                defer.reject();
-            });
+                });
+            }
         }
         return defer.promise();
     }
@@ -59,10 +68,16 @@ function (
                 });
             });
 
-            _.each(articles, function(article){
+           _.chain(articles)
+            .filter(function(article) { return !isSnapId(article.id); })
+            .each(function(article) {
                 article.state.isEmpty(!article.state.isLoaded());
             });
         });
+    }
+
+    function isSnapId(id) {
+        return id.match(/^snap\//);
     }
 
     function populate(opts, article) {
@@ -70,23 +85,23 @@ function (
     }
 
     function fetchData(ids) {
-        var apiUrl,
-            defer = $.Deferred();
+        var defer = $.Deferred(),
+            capiIds = _.chain(ids)
+                .filter(function(id) { return !isSnapId(id); })
+                .map(function(id) { return encodeURIComponent(id); })
+                .value();
 
-        if (ids.length) {
-            apiUrl = vars.CONST.apiSearchBase + '/search?page-size=50&format=json&show-fields=all';
-            apiUrl += '&ids=' + ids.map(function(id){
-                return encodeURIComponent(id);
-            }).join(',');
-
+        if (capiIds.length) {
             authedAjax.request({
-                url: apiUrl
-            }).always(function(resp) {
+                url: vars.CONST.apiSearchBase + '/search?ids=' + capiIds.join(',') + '&page-size=50&format=json&show-fields=all'
+            }).done(function(resp) {
                 if (resp.response && _.isArray(resp.response.results)) {
                     defer.resolve(resp.response.results);
                 } else {
-                    defer.reject();
+                    defer.resolve([]);
                 }
+            }).fail(function() {
+                defer.resolve([]);
             });
         }
         return defer;

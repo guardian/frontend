@@ -72,7 +72,6 @@ define([
                     var targetList = ko.dataFor(element),
                         targetItem = ko.dataFor(event.target),
                         id = event.testData ? event.testData : event.dataTransfer.getData('Text'),
-                        namespace,
                         queryParams = parseQueryParams(id),
                         sourceItem,
                         position,
@@ -111,22 +110,6 @@ define([
 
                     position = targetItem && targetItem.id ? targetItem.id : undefined;
 
-                    // Parse url from links such as http://www.google.co.uk/?param-name=http://www.theguardian.com/foobar
-                    _.each(queryParams, function(val){
-                        // Grab the last query param val that looks like a Guardian url
-                        if (val && val.match(/^http:\/\/www.theguardian.com/)) {
-                            id = val;
-                        }
-                    });
-
-                    if (queryParams['gu-snap-namespace'] && queryParams['gu-snap-id']) {
-                        // Override with snap metadata
-                        namespace = queryParams['gu-snap-namespace'];
-                        id = queryParams['gu-snap-id'];
-                    } else {
-                        id = urlAbsPath(id);
-                    }
-
                     if (!id) {
                         alertBadContent();
                         return;
@@ -135,20 +118,27 @@ define([
                     try {
                         sourceItem = JSON.parse(storage.getItem(storageKey));
                     } catch(e) {}
-
                     storage.removeItem(storageKey);
 
-                    if (!sourceItem || sourceItem.id !== id) {
-                        sourceItem = undefined;
+                    if (!sourceItem || sourceItem.id !== urlAbsPath(id)) {
+                        sourceItem = {meta: queryParams};
                         sourceList = undefined;
                     }
+
+                    // Parse url from links such as http://www.google.co.uk/?param-name=http://www.theguardian.com/foobar
+                    _.each(queryParams, function(val, key) {
+                        // Grab the last query param val that looks like a Guardian url
+                        if (key === 'url' && (val + '').match(/^http:\/\/www.theguardian.com/)) {
+                            id = val;
+                        }
+                    });
 
                     removeById(targetList.items, id);
 
                     insertAt = targetList.items().indexOf(targetItem) + isAfter;
                     insertAt = insertAt === -1 ? targetList.items().length : insertAt;
 
-                    newItems = opts.newItemsConstructor(id, sourceItem, targetList, namespace);
+                    newItems = opts.newItemsConstructor(id, sourceItem, targetList);
 
                     if (!newItems[0]) {
                         alertBadContent(id);
@@ -171,7 +161,7 @@ define([
                             return;
                         }
 
-                        opts.newItemsPersister(newItems, sourceItem, sourceList, targetList, id, position, isAfter);
+                        opts.newItemsPersister(newItems, sourceList, targetList, position, isAfter);
                     });
                 }, false);
             }

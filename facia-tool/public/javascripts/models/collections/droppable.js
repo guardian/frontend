@@ -21,8 +21,8 @@ define([
     function init() {
         droppable({
 
-            newItemsConstructor: function (id, sourceItem, targetList, namespace) {
-                var items = [sourceItem || { id: id }];
+            newItemsConstructor: function (id, sourceItem, targetList) {
+                var items = [_.extend(_.isObject(sourceItem) ? sourceItem : {}, { id: id })];
 
                 if(sourceItem && sourceItem.meta && sourceItem.meta.supporting) {
                     items = items.concat(sourceItem.meta.supporting);
@@ -33,8 +33,7 @@ define([
                         id: item.id,
                         meta: cleanClone(item.meta),
                         parent: targetList.parent,
-                        parentType: targetList.parentType,
-                        namespace: namespace
+                        parentType: targetList.parentType
                     });
                 });
             },
@@ -43,8 +42,9 @@ define([
                 return contentApi.validateItem(newItems[0]);
             },
 
-            newItemsPersister: function(newItems, sourceItem, sourceList, targetList, id, position, isAfter) {
-                var itemMeta,
+            newItemsPersister: function(newItems, sourceList, targetList, position, isAfter) {
+                var id = newItems[0].id,
+                    itemMeta,
                     timestamp,
                     supporting,
                     remove;
@@ -69,7 +69,7 @@ define([
 
                 if (targetList.parentType === 'Collection') {
                     targetList.parent.closeAllArticles();
-                    itemMeta = deepGet(sourceItem, '.meta') || {};
+                    itemMeta = newItems[0].getMeta();
 
                     if (deepGet(targetList, '.parent.groups.length') > 1) {
                         itemMeta.group = targetList.group + '';
