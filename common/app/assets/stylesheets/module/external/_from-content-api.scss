@@ -195,8 +195,10 @@ figure {
         display: block;
     }
     &.img {
-        margin-top: 5px;
-        margin-bottom: 6px;
+        @include rem((
+            margin-top: 5px,
+            margin-bottom: 6px
+        ));
     }
     &.img--landscape,
     &.img--portrait {
