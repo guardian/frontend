@@ -10,7 +10,6 @@ define([
     'common/modules/charts/table-doughnut',
     'common/modules/sport/football/match-list',
     'common/modules/sport/football/match-info',
-    'common/modules/sport/football/match-stats',
     'common/modules/sport/football/score-board',
     'common/modules/sport/football/football'
 ], function (
@@ -25,7 +24,6 @@ define([
     Doughnut,
     MatchList,
     MatchInfo,
-    MatchStats,
     ScoreBoard,
     football
 ) {
