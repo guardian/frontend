@@ -5,7 +5,7 @@ import front._
 import model._
 import play.api.mvc._
 import play.api.libs.json.Json
-import views.support.{CommentAndDebateContainer, FeaturesContainer, TemplateDeduping, NewsContainer}
+import views.support.{TemplateDeduping, NewsContainer}
 import scala.concurrent.Future
 import play.api.templates.Html
 import performance.MemcachedAction
