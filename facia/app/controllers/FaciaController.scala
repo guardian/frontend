@@ -67,12 +67,11 @@ class FaciaController extends Controller with Logging with ExecutionContexts wit
     getPressedCollection(id).map { collectionOption =>
       collectionOption.map { collection =>
         Cached(60) {
+          val config: Config = ConfigAgent.getConfig(id).getOrElse(Config(""))
           if (request.isRss) {
-            val config: Config = ConfigAgent.getConfig(id).getOrElse(Config(""))
-            Ok(TrailsToRss(config.displayName, collection.items))
-              .as("text/xml; charset=utf-8")
+            Ok(TrailsToRss(config.displayName, collection.items)).as("text/xml; charset=utf-8")
           } else {
-            val html = views.html.fragments.collections.standard(Config(id), collection.items, NewsContainer(showMore = false), 1)
+            val html = views.html.fragments.frontCollection(FrontPage("").get, (config, collection), 1, 1)
             if (request.isJson)
               JsonCollection(html, collection)
             else

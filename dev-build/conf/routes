@@ -134,8 +134,6 @@ GET         /radiator/commit/*hash                                              
 GET         /troubleshoot/football                                                                                   controllers.admin.FootballTroubleshooterController.renderFootballTroubleshooter()
 GET         /troubleshoot/pages                                                                                      controllers.admin.TroubleshooterController.index()
 GET         /troubleshoot/test                                                                                       controllers.admin.TroubleshooterController.test(id, testPath)
-GET         /redirects                                                                                               controllers.admin.RedirectController.redirect()
-POST        /redirect-post                                                                                           controllers.admin.RedirectController.redirectPost()
 
 # Football admin
 
@@ -175,7 +173,7 @@ GET         /commercial/books/book/*pageId                                      
 
 # Onward journeys
 GET         /onward/recently-published                                                                               controllers.LatestContentController.recentlyPublished()
-GET         /series/*path.json                                                                                         controllers.SeriesController.renderSeriesStories(path)
+
 
 # Facia
 GET         /                                                                                                        controllers.FaciaController.editionRedirect(path = "")
