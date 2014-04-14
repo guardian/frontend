@@ -1,11 +1,12 @@
 @(
-        page: model.MetaData with tracking.TrackingParams,
-        user: com.gu.identity.model.User,
-        forms: controllers.ProfileForms,
-        idRequest: services.IdentityRequest,
-        idUrlBuilder: services.IdentityUrlBuilder,
-        avatarUploadData: Option[model.AvatarUploadData]
-)(implicit request: RequestHeader)
+    page: model.MetaData with tracking.TrackingParams,
+    user: com.gu.identity.model.User,
+    forms: controllers.ProfileForms,
+    idRequest: services.IdentityRequest,
+    idUrlBuilder: services.IdentityUrlBuilder,
+    avatarUploadData: Option[model.AvatarUploadData],
+    avatarUploadResponse: Option[Either[String, Boolean]]
+    )(implicit request: RequestHeader)
 
 @import tracking.TrackingParams
 @import views.html.fragments.form.{inputField, textareaField}
@@ -32,18 +33,18 @@
         <div class="tabs__content">
             <div id="tabs-account-profile-1" class="tabs__pane u-cf" role="tabpanel" aria-labelledby="tabs-account-profile-1-tab" data-link-name="Public Profile" data-link-context="Identity/profile"@if(!forms.isPublicFormActive){ style="display: none;"}>
 
-                @public_profile_form(idUrlBuilder, idRequest, user, forms.publicForm, avatarUploadData)
+            @public_profile_form(idUrlBuilder, idRequest, user, forms.publicForm, avatarUploadData, avatarUploadResponse)
 
-            </div>
-
-            <div id="tabs-account-profile-2" class="tabs__pane u-cf" role="tabpanel" aria-labelledby="tabs-account-profile-2-tab" data-link-name="Account" data-link-context="Identity/profile"@if(forms.isPublicFormActive){ style="display: none;"}>
-
-                @account_details_form(idUrlBuilder, idRequest, user, forms.accountForm)
-
-            </div>
         </div>
-    </div>
 
-    @registrationFooter(page, idRequest, idUrlBuilder)
+        <div id="tabs-account-profile-2" class="tabs__pane u-cf" role="tabpanel" aria-labelledby="tabs-account-profile-2-tab" data-link-name="Account" data-link-context="Identity/profile"@if(forms.isPublicFormActive){ style="display: none;"}>
+
+        @account_details_form(idUrlBuilder, idRequest, user, forms.accountForm)
+
+    </div>
+</div>
+</div>
+
+@registrationFooter(page, idRequest, idUrlBuilder)
 </div>
 }

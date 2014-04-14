@@ -76,8 +76,13 @@ class EditProfileController @Inject()(idUrlBuilder: IdentityUrlBuilder,
     val idRequest = idRequestParser(request)
     val user = request.user
 
+    val avatarUploadStatus = for {
+      responseData <- request.queryString get "signed_data"
+      signedString <- responseData.headOption
+    } yield AvatarSigningService wasUploadSuccessful signedString
+
     for { avatarUploadData <- Future.sequence(IdentityAvatarUploadSwitch.opt(avatarUploadDataFor(user)).toSeq) } yield {
-      NoCache(Ok(views.html.profileForms(pageWithTrackingParamsFor(idRequest), user, forms, idRequest, idUrlBuilder, avatarUploadData.headOption)))
+      NoCache(Ok(views.html.profileForms(pageWithTrackingParamsFor(idRequest), user, forms, idRequest, idUrlBuilder, avatarUploadData.headOption, avatarUploadStatus)))
     }
   }
 
@@ -94,7 +99,7 @@ case class ProfileForms(publicForm: Form[ProfileFormData], accountForm: Form[Acc
 
   def bindFromRequest(implicit request: Request[_]) = update {
     form =>
-      // Hack to get the postcode error into the correct context.
+    // Hack to get the postcode error into the correct context.
       val boundForm = form.bindFromRequest()
       boundForm.error("address") map {
         e =>
