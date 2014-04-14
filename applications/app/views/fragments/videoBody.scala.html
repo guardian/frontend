@@ -13,7 +13,7 @@
                  itemscope itemtype="@video.schemaType" role="main">
             <div class="article__inner article__inner--head">
                 <header class="article__head">
-                    @fragments.meta.seriesInline(video)
+                    @fragments.meta.metaInline(video)
                     @fragments.headline(video.headline)
                     @if(video.isCommentable) {
                         <div class="article__head__comment-count js-comment-count"></div>

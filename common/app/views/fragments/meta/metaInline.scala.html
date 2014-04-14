@@ -1,0 +1,20 @@
+@(content: model.Content)
+
+@if(content.isSeries) {
+    @content.series.headOption.map { series =>
+        @fragments.meta.series(series.id, series.name, Some("inline"))
+    }
+} else {
+    @if(content.publication == "The Observer") {
+
+        <dl class="content-meta content-meta--inline">
+            <dt class="content-meta__label"></dt>
+            <dd class="content-meta__item">
+                <a href="observer.theguardian.com" class="content-meta__item tone-colour" class="tone-colour">The Observer</a>
+            </dd>
+        </dl>
+    }
+}
+
+
+
