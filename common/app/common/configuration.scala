@@ -84,6 +84,10 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val jsLocation = configuration.getStringProperty("ophan.js.location").getOrElse("http://j.ophan.co.uk/ophan.ng")
   }
 
+  object googletag {
+    lazy val jsLocation = configuration.getStringProperty("googletag.js.location").getOrElse("//www.googletagservices.com/tag/js/gpt.js")
+  }
+
   object frontend {
     lazy val store = configuration.getMandatoryStringProperty("frontend.store")
   }
@@ -198,7 +202,8 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
       "discussionApiRoot" -> discussion.apiRoot,
       ("secureDiscussionApiRoot", discussion.secureApiRoot),
       "discussionApiClientHeader" -> discussion.apiClientHeader,
-      ("ophanJsUrl", ophan.jsLocation)
+      ("ophanJsUrl", ophan.jsLocation),
+      ("googletagJsUrl", googletag.jsLocation)
     )
 
     lazy val pageData: Map[String, String] = {
