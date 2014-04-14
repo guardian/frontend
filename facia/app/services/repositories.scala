@@ -16,7 +16,9 @@ object IndexPagePagination {
   def pageSize: Int = 20 //have a good think before changing this
 }
 
-case class IndexPage(page: MetaData, trails: Seq[Content])
+case class IndexPage(page: MetaData, trails: Seq[Content],
+                     date: DateTime = DateTime.now, prev: Option[String] = None,
+                     next: Option[String] = None)
 
 trait Index extends ConciergeRepository with QueryDefaults {
 
