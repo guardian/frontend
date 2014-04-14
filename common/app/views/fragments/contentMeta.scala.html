@@ -14,6 +14,18 @@
 }
 
 <div class="article__meta-container u-cf@if(content.byline.isEmpty){ article__meta-container--no-byline}">
+    @if(content.isSponsored || content.isAdvertisementFeature) {
+        <div class="article__sponsors-badge">
+            @if(content.isSponsored) {
+                <p class="article__sponsors-badge__label">Sponsored by:</p>
+            } else {
+                <h3 class="article__sponsors-badge__header">Advertisement feature</h3>
+                <p class="article__sponsors-badge__label">In association with</p>
+            }
+            @fragments.commercial.badge(sizeMapping=Map("mobile" -> Seq("140,80")))
+            <a href="#" class="article__sponsors-badge__help">What is this?</a>
+        </div>
+    }
     @if(content.hasLargeContributorImage) {
         <div class="media__img meta__image">
             @fragments.meta.bylineImage(content)

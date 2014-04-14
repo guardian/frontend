@@ -145,38 +145,9 @@
     ));
 }
 .ad-slot--paid-for-badge {
-    width: 100%;
-    border-top: 1px dotted $c-neutral5;
-    z-index: 1;
-    color: $c-neutral2;
+    min-height: 80px;
+    padding-bottom: 0;
     text-align: left;
-    @include fs-data(2);
-    @include rem((
-        padding: ($gs-baseline / 2) 0,
-        margin: $gs-baseline 0
-    ));
-
-    img {
-        padding-bottom: ($gs-baseline / 2);
-    }
-    a {
-        display: block;
-        float: left;
-    }
-    @include mq(tablet) {
-        border: none;
-    }
-    @include mq(rightCol) {
-        position: absolute;
-        right: 0;
-        width: auto;
-        height: 100px;
-        margin: 0;
-        @include rem((
-            top: $gs-baseline / 2,
-            max-width: 200px
-        ));
-    }
 }
 .ad-slot--paid-for-badge--fronts {
     @include clearfix;
