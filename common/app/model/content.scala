@@ -32,6 +32,8 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   lazy val isBlog: Boolean = blogs.nonEmpty
   lazy val isSeries: Boolean = series.nonEmpty
   lazy val hasLargeContributorImage: Boolean = tags.filter(_.hasLargeContributorImage).nonEmpty
+  lazy val isFromTheObserver: Boolean = publication == "The Observer"
+
 
   // read this before modifying
   // https://developers.facebook.com/docs/opengraph/howtos/maximizing-distribution-media-content#images
