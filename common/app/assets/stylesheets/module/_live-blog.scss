@@ -317,3 +317,18 @@
 .blog .ad-slot--mpu-banner-ad {
     padding-top: $gs-baseline;
 }
+
+
+/* Quotes
+   ========================================================================== */
+.blog .from-content-api blockquote {
+    margin-left: 0;
+    color: $c-neutral2;
+}
+.blog .from-content-api blockquote.quoted {
+    margin-left: 0;
+    &:before {
+        margin-left: -30px;
+        left: auto;
+    }
+}
