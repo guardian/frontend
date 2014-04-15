@@ -19,7 +19,7 @@ define([
         var fixturesConfig = {
                 id: 'collection-adverts',
                 fixtures: [
-                    '<div class="container"><div class="collection-wrapper--ad"><div class="collection-one"></div></div></div>',
+                    '<div class="container"><div class="linklist-container collection-wrapper--ad"><div class="collection-one"></div></div></div>',
                     '<div class="container"></div>',
                     '<div class="container"><div class="collection-wrapper--ad"><div class="collection-two"></div></div></div>',
                     '<div class="container"><div class="collection-wrapper--ad"><div class="collection-three"></div></div></div>',
@@ -94,6 +94,14 @@ define([
             var $collectionItem = $('.collection-wrapper--ad .collection__item').map(function(slot) { return $(slot); });
             expect($collectionItem[0].html()).toEqual('<div class="collection-two"></div>');
             expect($collectionItem[1].html()).toEqual('<div class="collection-three"></div>');
+        });
+
+        it('should change collection classes', function() {
+            var collectionAdverts = new CollectionAdverts(createSwitch(true));
+            collectionAdverts.init().forEach(function($adCollection) {
+                expect($adCollection.hasClass('linklist-container')).toEqual(false);
+                expect($adCollection.hasClass('collection-wrapper collection-wrapper--position-2')).toEqual(true);
+            });
         });
 
     });

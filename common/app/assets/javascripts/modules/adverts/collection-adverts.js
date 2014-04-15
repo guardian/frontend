@@ -35,7 +35,7 @@ define([
             return false;
         }
         // filter out hidden containers
-        $(this.config.containerSelector)
+        var adCollections = $(this.config.containerSelector)
             .map(function(container) { return $(container); })
             .filter(function($container) {
                 return qwery(this.config.selector, $container[0]).length && $container.css('display') !== 'none';
@@ -43,14 +43,20 @@ define([
             .map(function($container) {
                 return $(this.config.selector, $container[0]).first();
             }, this)
-            .slice(0, adNames.length)
-            .forEach(function($slot, index) {
-                $slot.html(
+            .slice(0, adNames.length);
+
+        adCollections.forEach(function($collection, index) {
+            $collection
+                .removeClass('linklist-container')
+                .addClass('collection-wrapper collection-wrapper--position-2')
+                .html(
                     collectionTemplate
-                        .replace('{{collection}}', $slot.html())
+                        .replace('{{collection}}', $collection.html())
                         .replace('{{adSlot}}', adSlotTemplate.replace(/{{name}}/g, adNames[index]))
                 );
-            });
+        });
+
+        return adCollections;
     };
 
     return CollectionAdverts;
