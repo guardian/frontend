@@ -9,7 +9,7 @@ var config = {
  */
 casper.test.begin('Two adverts are displayed in containers on fronts', function(test) {
 
-    casper.start(host + 'uk');
+    casper.start(host + 'uk#ab-BlendedContainersUk=control  ');
 
     casper.waitForSelector(config.selector, function() {
         test.assertElementCount(config.selector, 2);

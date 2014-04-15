@@ -8,12 +8,13 @@ import model.{Cached, Tag, Content, Section}
 import services.IndexPage
 import views.support.{PreviousAndNext, TemplateDeduping}
 import org.joda.time.format.DateTimeFormat
-import org.joda.time.DateTime
+import org.joda.time.{DateTimeZone, DateTime}
 import implicits.{ItemResponses, Dates}
 
 object AllIndexController extends Controller with ExecutionContexts with ItemResponses with Dates with Logging {
 
-  private val dateFormat = DateTimeFormat.forPattern("yyyy/MMM/dd")
+  // make sure we are talking the same as the content api
+  private val dateFormat = DateTimeFormat.forPattern("yyyy/MMM/dd").withZone(DateTimeZone.forID("Europe/London"))
 
   def newer(path: String, day: String, month: String, year: String) = Action.async{ implicit request =>
     findNewer(path, dateFormat.parseDateTime(s"$year/$month/$day")).map{ _.map{ date =>
