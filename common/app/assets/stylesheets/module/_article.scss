@@ -771,15 +771,8 @@
 }
 
 .article-elongator {
-    @include fs-bodyCopy(3, true);
     @include rem((
-        margin-bottom: $gs-baseline,
-        padding: $gs-baseline,
         top: -$gs-baseline*2
     ));
-    background: $c-neutral6;
-    border-bottom: 1px dotted $c-neutral3;
-    border-top: 1px dotted $c-neutral3;
     position: relative;
-    text-align: center;
 }

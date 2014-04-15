@@ -1,0 +1,20 @@
+.button--show-more {
+    @include fs-textsans(3);
+    @include rem((
+        margin-bottom: $gs-baseline,
+        padding: ($gs-baseline/3)*2 0
+    ));
+    border-top: 1px dotted $c-neutral3;
+    text-align: center;
+
+    .i.i-plus-white-med {
+        @include rounded-corners(50%);
+        @include rem((
+            height: $gs-baseline*2,
+            margin-right: $gs-gutter/2,
+            width: $gs-baseline*2
+        ));
+        background-position: center;
+        vertical-align: middle;
+    }
+}
