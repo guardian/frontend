@@ -255,10 +255,10 @@
 
 // Set the properties of placeholder text
 @mixin placeholder {
-    ::-webkit-input-placeholder {@content}
-    :-moz-placeholder           {@content}
-    ::-moz-placeholder          {@content}
-    :-ms-input-placeholder      {@content}
+    ::-webkit-input-placeholder { @content; }
+    :-moz-placeholder           { @content; }
+    ::-moz-placeholder          { @content; }
+    :-ms-input-placeholder      { @content; }
 }
 
 // Vertical linear gradient with a plain fallback for older browsers
@@ -373,8 +373,6 @@
         clear: both;
     }
     @if $old-ie {
-        & {
-            zoom: 1;
-        }
+        zoom: 1;
     }
 }
