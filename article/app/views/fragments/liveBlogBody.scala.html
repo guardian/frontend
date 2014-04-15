@@ -8,31 +8,31 @@
         </span>
     </h2>
     <div class="article-wrapper monocolumn-wrapper tone-@VisualTone(article)">
-        <article id="article" class="article @if(article.isLive){is-live}"
+        <article id="article" class="article @if(article.isLive){is-live} blog"
             itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType" role="main">
-            <div class="article__inner article__inner--head">
+            <div class="blog__inner blog__inner--head blog__head-background">
                 <header class="article__head">
                     @fragments.meta.seriesInline(article)
                     @fragments.headline(article.headline)
 
-                    @fragments.standfirst(article)
-                    @if(article.isCommentable) {
-                        <div class="article__head__comment-count js-comment-count"></div>
-                    }
+                    <div class="blog__meta-container">
+                        @fragments.meta.byline(article.byline, article)
+                        @fragments.meta.dateline(article.webPublicationDate)
+                        <div class="js-comment-count"></div>
+                    </div>
                 </header>
 
                 @fragments.witnessCallToAction(article)
                 <div class="after-header">
                 </div>
             </div>
-            <div class="article__columning-wrapper">
-                <div class="article__main-column">
+            <div class="blog__columning-wrapper">
+                <div class="blog__main-column  blog__main-background">
+                    @fragments.standfirst(article)
 
                     @if(!article.isLive && !article.hasVideoAtTop) {
                         @fragments.img(article.mainPicture)
                     }
-
-                    @fragments.contentMeta(article)
 
                     <div class="js-article__container article__container u-cf" data-component="body">
                         <div class="live-toolbar">
@@ -68,8 +68,8 @@
                     </div>
 
                 </div>
-                <div class="article__secondary-column" aria-hidden="true">
-                    <div class="article__secondary-column__inner">
+                <div class="blog__secondary-column" aria-hidden="true">
+                    <div class="blog__secondary-column__inner">
                         <div class="u-table">
                             <div class="u-table__row">
                                 <div class="u-table__cell u-table__cell--top">
@@ -92,7 +92,7 @@
         </article>
 
         @if(DiscussionSwitch.isSwitchedOn && article.isCommentable) {
-            <div class="article__inner" data-component="discussion">
+            <div class="blog__inner" data-component="discussion">
                 @fragments.discussion(article.isClosedForComments, article.shortUrlId)
             </div>
         }

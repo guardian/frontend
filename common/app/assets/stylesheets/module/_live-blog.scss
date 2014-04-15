@@ -1,3 +1,88 @@
+/* Layout
+   ========================================================================== */
+.blog__inner,
+.blog__main-column {
+    position: relative;
+}
+
+.blog__meta-container,
+.blog__inner {
+    @include rem((
+        max-width: gs-span(7)
+    ));
+
+    @include mq(rightCol) {
+        max-width: none;
+    }
+}
+
+@include mq(rightCol) {
+    .blog__meta-container {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        max-width: $a-rightCol-width;
+    }
+    .blog__inner {
+        @include rem((
+            max-width: gs-span(8),
+            padding-left: $a-rightCol-width + $gs-gutter
+        ));
+    }
+    .blog__columning-wrapper {
+        width: 100%;
+        display: table;
+        table-layout: fixed;
+        padding-right: 0;
+        position: relative;
+    }
+    .blog__head,
+    .blog__columning-wrapper .media-primary {
+        margin-right: 0 !important;
+    }
+    .blog__main-column {
+        display: table-cell;
+        vertical-align: top;
+        @include rem((
+            max-width: gs-span(8),
+            padding-left: $a-rightCol-width + $gs-gutter
+        ));
+    }
+    .blog__secondary-column {
+        display: none;
+    }
+}
+
+@include mq(wide) {
+    .blog__inner {
+        @include rem((
+            padding-right: $a-rightCol-width + $gs-gutter
+        ));
+    }
+    .blog__main-column {
+        @include rem((
+            padding-right: $gs-gutter
+        ));
+    }
+    .blog__secondary-column {
+        position: relative;
+        display: table-cell;
+        @include rem((
+            width: $a-rightCol-width
+        ));
+    }
+}
+
+/* Design
+   ========================================================================== */
+.blog__head-background {
+    @include full-bleed(#D13D54);
+}
+
+.blog__main-background {
+    @include full-bleed($c-neutral8);
+}
+
 /* Timestamps
    ========================================================================== */
 

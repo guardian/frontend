@@ -394,3 +394,25 @@
         }
     }
 }
+
+@mixin full-bleed($color) {
+    $bgWidth: 800px;
+    background-color: $color;
+
+    &:before,
+    &:after {
+        @include box-sizing(border-box);
+        content: " ";
+        background-color: $color;
+        position: absolute;
+        top: 0;
+        height: 100%;
+        width: $bgWidth;
+    }
+    &:before {
+        margin-left: -$bgWidth;
+    }
+    &:after {
+        left: 100%;
+    }
+}

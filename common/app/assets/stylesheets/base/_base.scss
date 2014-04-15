@@ -1,5 +1,6 @@
 html {
     overflow-y: scroll;
+    overflow-x: hidden;
 
     &.iframed {
         overflow-y: auto;
