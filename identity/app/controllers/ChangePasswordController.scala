@@ -20,6 +20,7 @@ import idapiclient.requests.PasswordUpdate
 @Singleton
 class ChangePasswordController @Inject()( api: IdApiClient,
                                           authAction: AuthenticatedAction,
+                                          authenticationService: AuthenticationService,
                                           idRequestParser: IdRequestParser,
                                           idUrlBuilder: IdentityUrlBuilder)
   extends Controller with ExecutionContexts with SafeLogging with Mappings {
@@ -44,7 +45,7 @@ class ChangePasswordController @Inject()( api: IdApiClient,
         api.passwordExists(request.auth) map {
           result =>
             val pwdExists = result.right.toOption exists {_ == true}
-            NoCache(Ok(views.html.changePassword(page.tracking(idRequest), idRequest, idUrlBuilder,  passwordForm, pwdExists )))
+            NoCache(Ok(views.html.password.changePassword(page.tracking(idRequest), idRequest, idUrlBuilder,  passwordForm, pwdExists )))
         }
     }
   }
@@ -70,9 +71,12 @@ class ChangePasswordController @Inject()( api: IdApiClient,
           form =>
             if(form.hasErrors){
               val pwdExists = request.getQueryString("passwordExists") exists { _.toBoolean }
-              NoCache(Ok(views.html.changePassword(page.tracking(idRequest), idRequest, idUrlBuilder, form, pwdExists)))
+              NoCache(Ok(views.html.password.changePassword(page.tracking(idRequest), idRequest, idUrlBuilder, form, pwdExists)))
             }
-            else NoCache(Ok(views.html.password.password_reset_confirmation(page, idRequest, idUrlBuilder)))
+            else {
+              val userIsLoggedIn = authenticationService.requestPresentsAuthenticationCredentials(request)
+              NoCache(Ok(views.html.password.password_reset_confirmation(page, idRequest, idUrlBuilder, userIsLoggedIn)))
+            }
         }
     }
   }
