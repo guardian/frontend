@@ -6,6 +6,15 @@
     @include fs-bodyCopy(3);
 }
 
+.article--truncated {
+    .live-blog__blocks {
+        display: none;
+    }
+    .live-blog__blocks:first-child {
+        display: block;
+    }
+}
+
 .article__zone {
     @include fs-header(3);
     @include box-sizing(border-box);
@@ -189,6 +198,7 @@
     }
 
     .article__meta-container--no-byline & {
+        border-top: 1px dotted $c-neutral5;
         @include rem((
             padding-top: $gs-baseline/3
         ));
@@ -206,10 +216,6 @@
             padding-bottom: $gs-baseline
         ));
         border-top: 1px dotted $c-neutral5;
-
-        .article__meta-container--no-byline & {
-            border-top: none;
-        }
     }
 
     @include mq(wide) {
@@ -310,28 +316,29 @@
 
 .byline {
     margin-bottom: 0;
+    @include fs-bodyHeading(1);
+    border-top: 1px dotted $c-neutral5;
     @include rem((
         padding-top: $gs-baseline/3,
         line-height: 20px
     ));
     color: $c-neutral2;
-    @include fs-bodyHeading(1);
 
     @include mq(tablet) {
-        @include rem((
-            margin-right: gs-span(2)
-        ));
         @include fs-bodyHeading(2, true);
+        @include rem((
+            margin-right: gs-span(2),
+            line-height: 22px
+        ));
     }
 
     @include mq(leftCol) {
-        min-height: gs-height(1);
         margin-bottom: 0;
         margin-right: 0;
         @include rem((
+            min-height: gs-height(1),
             padding-top: $gs-baseline/6,
-            padding-bottom: $gs-baseline,
-            line-height: 22px
+            padding-bottom: $gs-baseline
         ));
         border-bottom: none;
     }
@@ -377,7 +384,6 @@
     @include rem((
         margin-bottom: $gs-baseline
     ));
-    border-top: 1px dotted $c-neutral5;
     border-bottom: 1px dotted $c-neutral5;
 
     @include mq(leftCol) {
@@ -447,7 +453,7 @@
             display: none;
         }
     }
-    
+
     @include mq(leftCol) {
         @include rem((
             height : gs-height(1)
@@ -480,6 +486,7 @@
         margin-bottom: $gs-baseline
     ));
 }
+
 
 /* Layout changes across devices
    ========================================================================== */
@@ -758,4 +765,11 @@
             margin-bottom: $gs-baseline/2
         ));
     }
+}
+
+.article-elongator {
+    @include rem((
+        top: -$gs-baseline*2
+    ));
+    position: relative;
 }

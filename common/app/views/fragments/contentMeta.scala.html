@@ -1,4 +1,5 @@
 @(content: model.Content)(implicit request: RequestHeader)
+@import conf.Switches._
 
 @byline(content: model.Content) = {
     @content match {
@@ -14,6 +15,9 @@
 }
 
 <div class="article__meta-container u-cf@if(content.byline.isEmpty){ article__meta-container--no-byline}">
+    @if(content.isSponsored || content.isAdvertisementFeature) {
+        @fragments.commercial.badge(name="badge", adType="paid-for-badge", sizeMapping=Map("mobile" -> Seq("140,80")))
+    }
     @if(content.hasLargeContributorImage) {
         <div class="media__img meta__image">
             @fragments.meta.bylineImage(content)

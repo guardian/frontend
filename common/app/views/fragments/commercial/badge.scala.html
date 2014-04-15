@@ -1,6 +1,6 @@
 @(name: String, adType: String, sizeMapping: Map[String, Seq[String]])
 @import conf.Switches._
 
-@if(CommercialComponentsSwitch.isSwitchedOn) {
+@if(SponsoredSwitch.isSwitchedOn) {
     @fragments.commercial.adSlot(name, adType, sizeMapping, showLabel=false, refresh=false)
 }
