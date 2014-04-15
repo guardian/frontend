@@ -23,39 +23,37 @@
 </fieldset>
 
 @for(avatarUploadData <- avatarUploadDataOpt) {
-<form class="form js-avatar-upload-form" novalidate action="@avatarUploadData.uploadUrl" role="main" method="post" enctype="multipart/form-data">
+
+    @for(status <- avatarUploadStatus; ok <- status.right.filter(identity)) {
+        <div class="form__success">Thank you for uploading your avatar. <br /><br />Your avatar will be checked by moderators shortly.</div>
+    }
+
+    @for(status <- avatarUploadStatus; msg <- status.left.filter(x => true)) {
+        <div class="form__error">@msg.left.get</div>
+    }
+
     <fieldset class="fieldset">
+        <form class="js-avatar-upload-form" novalidate action="@avatarUploadData.uploadUrl" role="main" method="post" enctype="multipart/form-data">
+            <div class="fieldset__heading">
+                <h2 class="form__heading">Profile image</h2>
+                <div class="form__note">This image will appear next to your comments. Only .jpg, .png or .gif files are accepted.</div>
+            </div>
 
-        <div class="fieldset__heading">
-            <h2 class="form__heading">Profile image</h2>
-            <div class="form__note">This image will appear next to your comments. Only .jpg, .png or .gif files are accepted.</div>
-        </div>
-
-        <div class="fieldset__fields">
-            <ul class="u-unstyled">
-                <li class="form-field">
-                    <input type="file" name="file" accept="image/gif, image/jpeg, image/png" />
-                    <input type="hidden" name="signed_data" value="@avatarUploadData.signedData" />
-                    <input type="hidden" name="redirect_url" value="@idUrlBuilder.buildUrl("/public/edit", idRequest)">
-                </li>
-                <li>
-                    <button type="submit" class="submit-input js-avatar-upload-button" data-link-name="Upload Avatar">Upload</button>
-                </li>
-            </ul>
-        </div>
-
+            <div class="fieldset__fields">
+                <ul class="u-unstyled">
+                    <li class="form-field">
+                        <input type="file" name="file" accept="image/gif, image/jpeg, image/png" />
+                        <input type="hidden" name="signed_data" value="@avatarUploadData.signedData" />
+                        <input type="hidden" name="redirect_url" value="@idUrlBuilder.buildUrl("/public/edit", idRequest)">
+                    </li>
+                    <li>
+                        <button type="submit" class="submit-input js-avatar-upload-button" data-link-name="Upload Avatar">Upload</button>
+                    </li>
+                </ul>
+            </div>
+        </form>
     </fieldset>
-</form>
 }
-
-@for(status <- avatarUploadStatus; ok <- status.right.filter(identity)) {
-    <h2>Successful avatar upload</h2>
-}
-
-@for(status <- avatarUploadStatus; msg <- status.left.filter(x => true)) {
-    <h2>Avatar upload failed: @msg.left.get</h2>
-}
-
 
 <form class="form js-public-profile-form" novalidate action="@idUrlBuilder.buildUrl("/public/edit", idRequest)" role="main" method="post">
     @views.html.helper.CSRF.formField
