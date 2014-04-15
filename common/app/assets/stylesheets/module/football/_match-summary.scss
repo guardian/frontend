@@ -87,9 +87,6 @@ $football-crest-large: 60px;
 }
 
 .team__crest {
-    @include rem((
-        margin-bottom: $gs-baseline
-    ));
     display: table;
     height: $football-crest-small;
     float: left;
@@ -103,11 +100,11 @@ $football-crest-large: 60px;
 }
 
 .team__crest__img {
-    max-height: $football-crest-small;
+    height: $football-crest-small;
     max-width: $football-crest-small;
 
     @include mq($from: tablet) {
-        max-height: $football-crest-large;
+        height: $football-crest-large;
         max-width: $football-crest-large;
     }
 }
