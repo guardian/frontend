@@ -253,14 +253,6 @@
     position: sticky;
 }
 
-// Prevent user from selecting text
-@mixin user-select {
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-}
-
 // Set the properties of placeholder text
 @mixin placeholder {
     ::-webkit-input-placeholder {@content}
