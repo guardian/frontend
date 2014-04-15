@@ -53,6 +53,10 @@
                         </div>
 
                         <div class="football-teams__battleline"></div>
+
+                        @theMatch.comments.map { comments =>
+                            <div class="football-match__comments">@comments</div>
+                        }
                     </a>
                 </td>
             </tr>
