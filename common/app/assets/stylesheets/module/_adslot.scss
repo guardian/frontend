@@ -174,9 +174,13 @@
         }
     }
     .ad-slot--paid-for-badge__header,
+    .ad-slot--paid-for-badge__label,
+    .ad-slot--paid-for-badge__help {
+        @include fs-textsans(2);
+    }
+    .ad-slot--paid-for-badge__header,
     .ad-slot--paid-for-badge__label {
         color: $c-neutral2;
-        @include fs-data(3);
         margin: 0;
     }
     .ad-slot--paid-for-badge__header {
@@ -188,7 +192,7 @@
         clear: left;
     }
     .ad-slot--paid-for-badge__help {
-        @include fs-data(2);
+        @include fs-textsans(1, $size-only: true);
         @include rem((
             margin-top: $gs-baseline/3
         ));
