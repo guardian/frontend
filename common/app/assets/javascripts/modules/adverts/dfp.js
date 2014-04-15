@@ -97,6 +97,7 @@ define([
         // These should match the widths inside _vars.scss
         breakpoints: {
             mobile: 0,
+            mobilelandscape: 480,
             tabletportrait: 740,
             tabletlandscape: 900,
             desktop: 980,
