@@ -4,10 +4,9 @@
 
 <div class="c-football-matches">
     @matchesList.matchesGroupedByDateAndCompetition.map { case (date, competitionMatches) =>
-        <div class="football-matches__day">
-            <div class="date-divider">@date.toString("EEEE d MMMM yyyy")</div>
+        <div class="football-matches__day table--small">
             @competitionMatches.map { case (competition, matches) =>
-                    @football.views.html.matchList.matchesList(matches, competition)
+                @football.views.html.matchList.matchesList(matches, competition, showCaption=true)
             }
         </div>
     }
