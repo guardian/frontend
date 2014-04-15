@@ -294,12 +294,6 @@
     overflow: hidden;
 }
 
-@mixin old-ie {
-    @if $old-ie { // Only use this content if we're dealing with old IE
-        @content;
-    }
-}
-
 @mixin faux-bullet-point($color: $c-neutral3, $right-space: 2px) {
     &:before {
         display: inline-block;
