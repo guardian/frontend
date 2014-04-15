@@ -36,7 +36,7 @@ define([
     };
 
     TonalComponent.prototype.getEndpoint = function() {
-        return '/collection/' + this.edition + this.tones[this.getTone()];
+        return '/container/' + this.edition + this.tones[this.getTone()];
     };
 
     TonalComponent.prototype.isSupported = function() {
