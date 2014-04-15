@@ -328,7 +328,8 @@
                         click: open">Breaking News</span>
 
                     <a class="headline" target="article" data-bind="
-                        text: meta.headline() || fields.headline(),
+                        text: meta.headline() || fields.headline() || 'Requires a headline / linktext!',
+                        css: {'is-empty': !meta.headline() && !fields.headline()},
                         attr: {href: id},
                         click: open"></a>
 

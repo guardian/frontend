@@ -133,7 +133,7 @@ define([
                         }
                     });
 
-                    removeById(targetList.items, id);
+                    removeById(targetList.items, urlAbsPath(id));
 
                     insertAt = targetList.items().indexOf(targetItem) + isAfter;
                     insertAt = insertAt === -1 ? targetList.items().length : insertAt;

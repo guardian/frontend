@@ -16,7 +16,8 @@ function (
             capiId,
             data;
 
-        if (isSnapId(item.id)) {
+        if (validateSnapId(item.id)) {
+            item.id = validateSnapId(item.id);
             defer.resolve();
         } else {
             capiId = urlAbsPath(item.id);
@@ -69,15 +70,15 @@ function (
             });
 
            _.chain(articles)
-            .filter(function(article) { return !isSnapId(article.id); })
+            .filter(function(article) { return !validateSnapId(article.id); })
             .each(function(article) {
                 article.state.isEmpty(!article.state.isLoaded());
             });
         });
     }
 
-    function isSnapId(id) {
-        return id.match(/^snap\//);
+    function validateSnapId(id) {
+        return [].concat(urlAbsPath(id).match(/^snap\/\d+$/))[0];
     }
 
     function populate(opts, article) {
@@ -87,7 +88,7 @@ function (
     function fetchData(ids) {
         var defer = $.Deferred(),
             capiIds = _.chain(ids)
-                .filter(function(id) { return !isSnapId(id); })
+                .filter(function(id) { return !validateSnapId(id); })
                 .map(function(id) { return encodeURIComponent(id); })
                 .value();
 
