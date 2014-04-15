@@ -305,6 +305,9 @@
     padding-bottom: $gs-baseline;
 }
 
-.dropdown .c-match-stats .component__heading {
-    display: none;
+.dropdown {
+    .c-football-matches .date-divider,
+    .c-match-stats .component__heading {
+        display: none;
+    }
 }

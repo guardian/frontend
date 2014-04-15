@@ -1,7 +1,10 @@
-@(matchesList: List[FootballMatch], competition: model.Competition)(implicit request: RequestHeader)
+@(matchesList: List[FootballMatch], competition: model.Competition, showCaption: Boolean = false)(implicit request: RequestHeader)
 @import implicits.Football._
 
 <table class="table football-matches">
+    @if(showCaption){
+        <caption><a href="@competition.url">@competition.fullName</a></caption>
+    }
     <thead hidden>
         <tr>
             <th class="match__status">Match status / kick off time</th>

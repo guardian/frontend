@@ -10,9 +10,8 @@ define([
     'common/modules/charts/table-doughnut',
     'common/modules/sport/football/match-list',
     'common/modules/sport/football/match-info',
-    'common/modules/sport/football/match-stats',
     'common/modules/sport/football/score-board',
-    'common/modules/sport/football/table'
+    'common/modules/sport/football/football'
 ], function (
     $,
     bonzo,
@@ -25,9 +24,8 @@ define([
     Doughnut,
     MatchList,
     MatchInfo,
-    MatchStats,
     ScoreBoard,
-    Table
+    football
 ) {
     context = context();
 
@@ -108,6 +106,7 @@ define([
 
         page.isMatch(function(match) {
             extras[0] = { ready: false };
+            extras[1] = { ready: false };
             if (match.pageType === 'stats') {
                 renderNav(match);
             } else {
@@ -146,47 +145,66 @@ define([
                         }
                     }
 
+                    // match stats
                     if (resp.hasStarted) {
-                        var statsUrl = $('.tab--stats a', $nav).attr('href').replace(/^.*\/\/[^\/]+/, ''),
-                            statsContainer = $.create('<div class="match-stats__container"></div>')[0],
-                            matchStats = new MatchStats(statsUrl);
+                        var statsUrl = $('.tab--stats a', $nav).attr('href').replace(/^.*\/\/[^\/]+/, '');
 
-                        matchStats.fetch(statsContainer).then(function() {
-                            $('.js-chart', statsContainer).each(function(el) {
-                                new Doughnut().render(el);
+                        $.create('<div class="match-stats__container"></div>').each(function(container) {
+                            football.statsFor(statsUrl).fetch(container).then(function() {
+                                $('.js-chart', container).each(function(el) {
+                                    new Doughnut().render(el);
+                                });
+                                extras[0] = {
+                                    name: 'Match stats',
+                                    importance: 3,
+                                    content: container,
+                                    ready: true
+                                };
+                                renderExtras(extras, dropdownTemplate);
                             });
-                            extras[0] = {
-                                name: 'Match stats',
-                                importance: 3,
-                                content: statsContainer,
-                                ready: true
-                            };
-                            renderExtras(extras, dropdownTemplate);
                         });
                     } else {
                         delete extras[0];
                         renderExtras(extras, dropdownTemplate);
                     }
+
+                    // match day
+                    page.isCompetition(function(competition) {
+                        $.create('<div class="js-football-match-day" data-link-name="football-match-day-embed"></div>').each(function (container) {
+                            football.matchDayFor(competition, resp.matchDate).fetch(container).then(function() {
+                                extras[1] = {
+                                    name: 'Match day',
+                                    importance: 2,
+                                    content: container,
+                                    ready: true
+                                };
+                                renderExtras(extras, dropdownTemplate);
+                            }, function() {
+                                delete extras[1];
+                                renderExtras(extras, dropdownTemplate);
+                            });
+                        });
+                    });
                 });
             }
         });
 
         page.isCompetition(function(competition) {
-            extras[1] = { ready: false };
-            var table = new Table(competition),
-                tableContainer = $.create('<div class="js-football-table" data-link-name="football-table-embed"></div>')[0];
+            extras[2] = { ready: false };
 
-            table.fetch(tableContainer).then(function() {
-                extras[1] = $('.table__container', tableContainer).length > 0 ? {
-                    name: 'Table',
-                    importance: 2,
-                    content: tableContainer,
-                    ready: true
-                } : undefined;
-                renderExtras(extras, dropdownTemplate);
-            }, function() {
-                delete extras[1];
-                renderExtras(extras, dropdownTemplate);
+            $.create('<div class="js-football-table" data-link-name="football-table-embed"></div>').each(function(container) {
+                football.tableFor(competition).fetch(container).then(function() {
+                    extras[2] = $('.table__container', container).length > 0 ? {
+                        name: 'Table',
+                        importance: 3,
+                        content: container,
+                        ready: true
+                    } : undefined;
+                    renderExtras(extras, dropdownTemplate);
+                }, function() {
+                    delete extras[2];
+                    renderExtras(extras, dropdownTemplate);
+                });
             });
         });
 

@@ -37,7 +37,7 @@ function(
     }
 
     function isCompetition(yes) {
-        var competition = ($('.js-football-competition').attr('data-link-name') || '').replace('keyword: ', '');
+        var competition = ($('.js-football-competition').attr('data-link-name') || '').replace('keyword: football/', '');
         if (competition) {
             return yes(competition);
         }
