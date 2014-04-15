@@ -92,18 +92,13 @@ $c-replyText: $c-body;
     display: inline-block;
 }
 .d-discussion__show-all-comments {
-    height: 40px;
-    @include fs-textsans(3);
-    line-height: 40px;
-    font-weight: bold;
-    padding-left: 55px;
     display: inline-block;
     padding-left: 55px;
+    @include fs-textsans(4);
     @include rem((
         height: 40px,
         line-height: 40px
     ));
-    @include fs-textsans(4);
     font-weight: bold;
 
     .i-show-all-comments {
@@ -119,7 +114,7 @@ $c-replyText: $c-body;
 }
 .d-discussion__order-control {
     @include rem((
-        font-size: 1.6rem,
+        font-size: 16px,
         margin: 2px $gs-gutter/4 0
     ));
 }
@@ -137,7 +132,9 @@ $c-replyText: $c-body;
 }
 .d-comment__inner {
     position: relative;
-    padding-top: $gs-baseline;
+    @include rem((
+        padding-top: $gs-baseline
+    ));
     overflow: hidden;
 }
 .d-comment--top-level {
@@ -291,8 +288,10 @@ $c-replyText: $c-body;
         margin-bottom: $gs-baseline/6
     ));
     .i-gupickasterisk {
-        margin-bottom: -4px;
-        margin-right: $gs-gutter/4;
+        @include rem((
+            margin-bottom: -4px,
+            margin-right: $gs-gutter/4
+        ));
     }
 }
 
