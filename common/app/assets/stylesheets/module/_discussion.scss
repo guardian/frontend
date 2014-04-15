@@ -807,12 +807,12 @@ $c-replyText: $c-body;
    ===========================================================================*/
 
 .comment {
-    @include fs-data(5);
+    @include fs-textsans(3);
     display: block;
     position: relative;
 }
 .comment__datecreated {
-    @include fs-data(2);
+    @include fs-textsans(1, true);
     display: block;
 }
 .comment--speechy {
@@ -866,11 +866,11 @@ $c-replyText: $c-body;
 }
 
 .comments-link {
-    @include fs-data(3);
+    @include fs-textsans(1, true);
     display: block;
     float: right;
     @include rem((
-        margin-top: -($gs-baseline/3)*4+2
+        margin-top: -(1 + ($gs-baseline/3)*4)
     ));
 
     .i {
@@ -893,7 +893,7 @@ $c-replyText: $c-body;
    ========================================================================== */
 
 .person {
-    @include fs-data(4);
+    @include fs-textsans(2, true);
 }
 .person__avatar {
     @include rounded-corners(50%);
@@ -932,35 +932,6 @@ $c-replyText: $c-body;
     position: absolute;
     width: 1px;
 }
-.speech-bubble {
-    @include fs-data(4);
-    @include rounded-corners(4px);
-    position: relative;
-    display: inline-block;
-    min-height: 14px;
-    min-width: 17px;
-    padding: .275em .6em .375em;
-    border: 0;
-    text-align: center;
-    color: #ffffff;
-
-    &,
-    &:hover,
-    &:focus {
-        text-decoration: none;
-    }
-    &:after {
-        content: "";
-        position: absolute;
-        bottom: -7px;
-        left: 6px;
-        border-width: 0 0 8px 8px;
-        border-style: solid;
-        border-color: transparent;
-        border-left-color: inherit;
-    }
-}
-
 
 /* CTAs
    ========================================================================== */

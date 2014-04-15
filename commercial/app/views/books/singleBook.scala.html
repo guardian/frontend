@@ -6,7 +6,7 @@
     <p>@book.title @book.author.map { author => <span>by @author</span>}</p>
     <p>
         <a href="@url(book)">
-            @book.jacketUrl.map { url => <img src="http://static.guim.co.uk@url" />}
+            @book.jacketUrl.map { url => <img src="http://static.guim.co.uk@url" alt="" />}
         </a>
     </p>
     <p>
