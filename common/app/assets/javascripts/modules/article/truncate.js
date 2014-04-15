@@ -25,9 +25,10 @@ define([
     function truncate() {
         var articleElongateClass = 'article-elongator',
             truncatedClass = 'article--truncated',
-            $article = $('#article', context).addClass(truncatedClass);
+            $article = $('#article', context);
 
         if (shouldTruncate()) {
+            $article.addClass(truncatedClass);
             $.create(
                 '<button class="u-fauxlink u-button-reset button button--show-more '+ articleElongateClass +'" data-link-name="continue reading">'+
                     '<span class="tone-background i-center"><i class="i i-plus-white-med"></i></span>'+
