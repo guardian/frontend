@@ -287,9 +287,9 @@ define([
     };
 
     DFP.prototype.removeLabel = function($slot) {
-        $slot.parent()
-            .removeClass('ad-label--showing')
-            .previous().remove();
+        var $slotParent = $slot.parent()
+            .removeClass('ad-label--showing');
+        $('.ad-slot__label', $slotParent[0]).remove();
     };
 
     DFP.prototype.fireAdRequest = function() {
