@@ -83,8 +83,7 @@ class FaciaController extends Controller with Logging with ExecutionContexts wit
     }
   }
 
-  def renderContainer(id: String) = MemcachedAction {
-    implicit request =>
+  def renderContainer(id: String) = MemcachedAction { implicit request =>
       log.info(s"Serving collection ID: $id")
       getPressedCollection(id).map { collectionOption =>
         collectionOption.map { collection =>
