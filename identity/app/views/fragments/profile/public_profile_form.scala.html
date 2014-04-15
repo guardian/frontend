@@ -1,4 +1,9 @@
-@(idUrlBuilder: services.IdentityUrlBuilder, idRequest: services.IdentityRequest, user: com.gu.identity.model.User, publicProfileForm: Form[form.ProfileFormData], avatarUploadDataOpt: Option[model.AvatarUploadData])(implicit request: RequestHeader)
+@(idUrlBuilder: services.IdentityUrlBuilder,
+  idRequest: services.IdentityRequest,
+  user: com.gu.identity.model.User,
+  publicProfileForm: Form[form.ProfileFormData],
+  avatarUploadDataOpt: Option[model.AvatarUploadData],
+  avatarUploadStatus: Option[Either[String, Boolean]])(implicit request: RequestHeader)
 
 @import views.html.fragments.form.{inputField, textareaField}
 @import form.IdFormHelpers._
@@ -42,6 +47,15 @@
     </fieldset>
 </form>
 }
+
+@for(status <- avatarUploadStatus; ok <- status.right.filter(identity)) {
+    <h2>Successful avatar upload</h2>
+}
+
+@for(status <- avatarUploadStatus; msg <- status.left.filter(x => true)) {
+    <h2>Avatar upload failed: @msg</h2>
+}
+
 
 <form class="form js-public-profile-form" novalidate action="@idUrlBuilder.buildUrl("/public/edit", idRequest)" role="main" method="post">
     @views.html.helper.CSRF.formField

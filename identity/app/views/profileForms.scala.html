@@ -33,7 +33,7 @@
         <div class="tabs__content">
             <div id="tabs-account-profile-1" class="tabs__pane u-cf" role="tabpanel" aria-labelledby="tabs-account-profile-1-tab" data-link-name="Public Profile" data-link-context="Identity/profile"@if(!forms.isPublicFormActive){ style="display: none;"}>
 
-                @public_profile_form(idUrlBuilder, idRequest, user, forms.publicForm, avatarUploadData)
+                @public_profile_form(idUrlBuilder, idRequest, user, forms.publicForm, avatarUploadData, avatarUploadStatus)
 
             </div>
 
