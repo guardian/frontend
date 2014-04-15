@@ -12,10 +12,6 @@
         <article id="article" class="article @if(article.isLive){is-live}"
                  itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType" role="main">
 
-            @if(article.isSponsored) {
-                @fragments.commercial.standardAd(name="badge", adType="paid-for-badge", sizeMapping=Map("mobile" -> Seq("300,80")))
-            }
-
             <div class="article__inner article__inner--head">
                 <header class="article__head">
 
