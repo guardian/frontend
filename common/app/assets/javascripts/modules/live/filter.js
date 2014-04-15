@@ -4,10 +4,12 @@
 */
 define([
     '$',
-    'common/component'
+    'common/component',
+    'lodash/collections/toArray'
 ], function (
     $,
-    component
+    component,
+    toArray
 ) {
     'use strict';
 
@@ -30,27 +32,11 @@ define([
     component.define(Filter);
 
     Filter.prototype.ready = function() {
-        this,on('click', '.js-live-toggler', this.toggle);
+        this.on('click', '.js-live-toggler', this.toggle);
     };
 
     Filter.prototype.toggle = function() {
-        $('.blocks', this,context).detach();
-    };
-
-    Filter.prototype.init = function() {
-        var self = this;
-        bonzo(this.context.getElementsByClassName('js-live-filter')[0]).replaceWith(this.template);
-
-        this.findKeyEvents();
-
-        common.mediator.on('modules:autoupdate:loaded', function() {
-            self.findKeyEvents.call(self);
-        });
-
-        bean.on(this.context, 'click', '.js-live-toggler', function(e) {
-            e.preventDefault();
-            self.showKeyEvents.call(self);
-        });
+        $('.aticle-body', this.context).append(toArray($('.block', this.context).detach()).reverse());
     };
 
     return Filter;

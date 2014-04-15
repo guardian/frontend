@@ -49,7 +49,7 @@ define([
                     }).init();
                 }
                 if (config.page.isLiveBlog) {
-                    new LiveFilter(context).init();
+                    new LiveFilter(context).render();
                     new NotificationCounter().init();
                 }
             });
