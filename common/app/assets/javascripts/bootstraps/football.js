@@ -179,6 +179,9 @@ define([
                                     ready: true
                                 };
                                 renderExtras(extras, dropdownTemplate);
+                            }, function() {
+                                delete extras[1];
+                                renderExtras(extras, dropdownTemplate);
                             });
                         });
                     });
