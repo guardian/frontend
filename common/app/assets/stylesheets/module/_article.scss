@@ -327,7 +327,7 @@
     @include mq(tablet) {
         @include fs-bodyHeading(2, true);
         @include rem((
-            margin-right: gs-span(2),
+            padding-right: gs-span(2),
             line-height: 22px
         ));
     }
