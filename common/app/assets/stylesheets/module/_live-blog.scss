@@ -301,6 +301,9 @@
 /* Blocks container
    ========================================================================== */
 
+$block-padding-left: gs-span(1) + $gs-gutter;
+$block-padding-right: $gs-gutter;
+
 .live-blog__blocks {
     opacity: 1;
     height: auto;
@@ -310,8 +313,8 @@
 
 .blog .block-elements,
 .blog .block-title {
-    margin-left: gs-span(1) + $gs-gutter;
-    margin-right: $gs-gutter;
+    margin-left: $block-padding-left;
+    margin-right: $block-padding-right;
 }
 
 .blog .ad-slot--mpu-banner-ad {
@@ -331,4 +334,9 @@
         margin-left: -30px;
         left: auto;
     }
+}
+
+.blog figure.img {
+    margin-left: -$block-padding-left;
+    margin-right: -$block-padding-right;
 }
