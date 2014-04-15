@@ -423,8 +423,7 @@ $c-replyText: $c-body;
     .d-comment__recommend-count--old,
     .d-comment__recommend-count--new {
         top: -1.6rem;
-        @include transition(top 0.15s ease-in-out);
-        @include transition-delay(0.15s);
+        @include transition(top 0.15s 0.15s ease-in-out);
     }
 }
 
