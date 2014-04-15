@@ -2,5 +2,5 @@
 @import conf.Switches._
 
 @if(SponsoredSwitch.isSwitchedOn) {
-    @fragments.commercial.adSlot(name=name, adType=adType, sizeMapping=sizeMapping, showLabel=false, refresh=false)
+    @fragments.commercial.adSlot(name, adType, sizeMapping, showLabel=false, refresh=false)
 }
