@@ -390,7 +390,7 @@
     ));
     background-color: rgba($c-neutral2, 0.7);
     z-index: 2;
-    @include rounded-corners(50%);
+    @include border-radius(50%);
 
     i {
         position: absolute;
@@ -513,7 +513,7 @@ $show-more-icon: (
     border: none;
     width: map-get($show-more-icon, width);
     height: map-get($show-more-icon, height);
-    @include rounded-corners(50%);
+    @include border-radius(50%);
     position: relative;
     left: 50%;
     margin-top: $gs-baseline;

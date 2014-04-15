@@ -193,7 +193,7 @@ $c-replyText: $c-body;
         width: $avatarSize,
         height: $avatarSize
     ));
-    @include rounded-corners(50%);
+    @include border-radius(50%);
     overflow: hidden;
 }
 .d-comment__meta-text,
@@ -354,7 +354,7 @@ $c-replyText: $c-body;
 .d-comment__recommend-pulse {
     width: 18px;
     height: 18px;
-    @include rounded-corners(18px);
+    @include border-radius(18px);
     position: absolute;
     top: 0;
     left: 0;
@@ -895,7 +895,7 @@ $c-replyText: $c-body;
     @include fs-textsans(2, true);
 }
 .person__avatar {
-    @include rounded-corners(50%);
+    @include border-radius(50%);
     overflow: hidden;
     float: left;
     @include rem((

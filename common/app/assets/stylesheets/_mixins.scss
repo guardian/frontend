@@ -202,7 +202,7 @@
     @keyframes $name { @content; }
 }
 
-@mixin rounded-corners($radius: 5px) {
+@mixin border-radius($radius: 5px) {
     -webkit-border-radius: $radius;
     -moz-border-radius: $radius;
     border-radius: $radius;
@@ -298,7 +298,7 @@
     &:before {
         display: inline-block;
         content: "";
-        @include rounded-corners(6px);
+        @include border-radius(6px);
         @include rem((
             height: 12px,
             width: 12px,
@@ -342,7 +342,7 @@
 @mixin icon-button($buttonSize, $iconOffsetX, $iconOffsetY: null) {
     width: $buttonSize;
     height: $buttonSize;
-    @include rounded-corners($buttonSize);
+    @include border-radius($buttonSize);
     position: relative;
     display: inline-block;
 
