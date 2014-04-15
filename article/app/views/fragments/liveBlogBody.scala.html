@@ -2,24 +2,32 @@
 @import conf.Switches._
 
 @defining((model.article, model.storyPackage)) {  case (article, storyPackage) =>
-    <h2 class="article__zone left-col-deport tone-@VisualTone(article) tone-accent-border hide-on-mobile-if-localnav">
-        <span class="left-col-deport__body" data-component="meta">
-            <a class="tone-colour" data-link-name="article section" href="@LinkTo{/@article.section}">@Html(article.sectionName.toLowerCase)</a>
-        </span>
-    </h2>
+
     <div class="article-wrapper monocolumn-wrapper tone-@VisualTone(article)">
         <article id="article" class="article @if(article.isLive){is-live} blog"
             itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType" role="main">
             <div class="blog__inner blog__inner--head blog__head-background">
                 <header class="article__head">
-                    @fragments.meta.seriesInline(article)
-                    @fragments.headline(article.headline)
+
+                    @* @fragments.meta.seriesInline(article) *@
+
+                    <span class="blog__section" data-component="meta">
+                        <a data-link-name="article section" href="@LinkTo{/@article.section}">@Html(article.sectionName.toLowerCase)</a>
+                    </span>
+
+                    <h1 itemprop="headline" class="blog__headline">@Html(article.headline)</h1>
 
                     <div class="blog__meta-container">
                         @fragments.meta.byline(article.byline, article)
                         @fragments.meta.dateline(article.webPublicationDate)
                         <div class="js-comment-count"></div>
                     </div>
+
+                    <div class="blog__last-updated-container">
+                        <span class="blog__live">LIVE</span> updated 2 mins ago
+                    </div>
+
+
                 </header>
 
                 @fragments.witnessCallToAction(article)

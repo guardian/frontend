@@ -16,13 +16,30 @@
     }
 }
 
+.blog__inner--head {
+    @include rem((
+        padding-top: $gs-baseline/3
+    ));
+
+}
+.blog__inner--head .article__head {
+    padding-top: 0;
+}
+
 @include mq(rightCol) {
-    .blog__meta-container {
+    .blog__section {
+        position: absolute;
+        left: 0;
+    }
+    .blog__last-updated-container {
         position: absolute;
         left: 0;
         bottom: 0;
-        max-width: $a-rightCol-width;
+        max-width: $a-leftColWide-width;
     }
+}
+
+@include mq(rightCol) {
     .blog__inner {
         @include rem((
             max-width: gs-span(8),
@@ -72,6 +89,10 @@
         ));
     }
 }
+.blog__meta-container,
+.blog__last-updated-container {
+    padding-bottom: $gs-baseline;
+}
 
 /* Design
    ========================================================================== */
@@ -81,6 +102,78 @@
 
 .blog__main-background {
     @include full-bleed($c-neutral8);
+}
+
+/* Header
+   ========================================================================== */
+
+.blog__inner--head {
+    color: white;
+}
+
+.blog__section {
+    @include fs-header(3);
+    a { color: inherit; }
+}
+
+.blog__headline {
+    color: inherit;
+    @include fs-headline(5);
+    margin-bottom: $gs-row-height + ($gs-baseline * 2);
+}
+
+.blog__meta-container {
+    color: inherit;
+    border-top: 1px solid #E6A1AB;
+}
+.blog__meta-container .article__dateline {
+    @include fs-data(3);
+    color: inherit;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    height: auto;
+}
+
+.blog__meta-container .byline {
+    @include fs-bodyHeading(1);
+    @include rem((
+        line-height: 24px
+    ));
+    color: inherit;
+    font-weight: normal;
+    padding: 0;
+    margin: 0;
+    margin-top: 4px;
+    min-height: initial;
+
+    .tone-colour {
+        color: inherit;
+    }
+    a {
+        font-weight: bold;
+    }
+}
+
+.blog__last-updated-container {
+    @include fs-data(3);
+}
+
+.blog__live {
+    color: inherit;
+    @include fs-data(3);
+    font-weight: bold;
+    &:before {
+        $size: 13px;
+        content: "";
+        background-color: white;
+        width: $size;
+        height: $size;
+        @include rounded-corners($size/2);
+        display: inline-block;
+        margin-bottom: -1px;
+        margin-right: 3px;
+    }
 }
 
 /* Timestamps
