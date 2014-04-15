@@ -3,35 +3,39 @@
     Description: Filter displayed events depending on their type
 */
 define([
-    'common/common',
-    'bonzo',
-    'bean'
+    '$',
+    'common/component'
 ], function (
-    common,
-    bonzo,
-    bean
+    $,
+    component
 ) {
     'use strict';
 
     function Filter(context) {
         this.context = context || document;
-        this.articleContainer = this.context.getElementsByClassName('js-article__container')[0];
-        this.template =
-            '<div class="live-toggler-wrapper">' +
-            '  <button class="u-button-reset live-toggler live-toggler--all js-live-toggler"' +
-            '          data-link-name="filter show key-events" title="Show key events only">' +
-            '    <span class="u-h">Showing key events instead of</span>' +
-            '    <span class="lt__value">All posts</span>' +
-            '    <i class="i i-arrow-grey-down"></i>' +
-            '  </button>' +
-            '  <button class="u-button-reset live-toggler live-toggler--key-events js-live-toggler"' +
-            '          data-link-name="filter show all posts" title="Show all posts">' +
-            '    <span class="u-h">Showing all posts instead of</span>' +
-            '    <span class="lt__value">Key events</span>' +
-            '    <i class="i i-arrow-grey-down"></i>' +
-            '  </button>' +
-            '</div>';
     }
+
+    Filter.prototype.template = '<div class="live-toggler-wrapper" data-component="live-toggle">' +
+        '   <span class="live-toggle__label">Sort by:</span>' +
+        '  <button class="u-button-reset live-toggler live-toggler--latest js-live-toggler" title="Sort by latest first">' +
+        '    <span class="live-toggler__value">Latest</span>' +
+        '    <i class="i i-arrow-grey-down"></i>' +
+        '  </button>' +
+        '  <button class="u-button-reset live-toggler live-toggler--oldest js-live-toggler" title="Sort by oldest first">' +
+        '    <span class="live-toggler__value">Oldest</span>' +
+        '    <i class="i i-arrow-grey-down"></i>' +
+        '  </button>' +
+        '</div>';
+
+    component.define(Filter);
+
+    Filter.prototype.ready = function() {
+        this,on('click', '.js-live-toggler', this.toggle);
+    };
+
+    Filter.prototype.toggle = function() {
+        $('.blocks', this,context).detach();
+    };
 
     Filter.prototype.init = function() {
         var self = this;
@@ -47,32 +51,6 @@ define([
             e.preventDefault();
             self.showKeyEvents.call(self);
         });
-
-        bean.on(window, 'hashchange', function() {
-            // Disable the filter on url hash changes
-            // Prevents linking to blocks which may otherwise be hidden
-            var hash = window.location.hash;
-
-            if (hash.indexOf('#block-') === 0) {
-                self.disable();
-                var blockEl = document.getElementById(hash.replace('#', ''));
-                window.scrollTo(0, bonzo(blockEl).offset().top);
-            }
-        });
-    };
-
-    Filter.prototype.findKeyEvents = function() {
-        if (this.articleContainer.getElementsByClassName('is-key-event').length) {
-            bonzo(this.articleContainer).addClass('has-key-events');
-        }
-    };
-
-    Filter.prototype.showKeyEvents = function() {
-        bonzo(this.articleContainer).toggleClass('show-only-key-events');
-    };
-
-    Filter.prototype.disable = function() {
-        bonzo(this.articleContainer).removeClass('show-only-key-events');
     };
 
     return Filter;
