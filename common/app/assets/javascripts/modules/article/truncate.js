@@ -29,7 +29,7 @@ define([
 
         if (shouldTruncate()) {
             $.create(
-                '<button class="u-fauxlink u-button-reset button--show-more '+ articleElongateClass +'">'+
+                '<button class="u-fauxlink u-button-reset button button--show-more '+ articleElongateClass +'">'+
                     '<i class="i i-plus-white-med tone-background"></i>'+
                     'View all updates'+
                 '</button>'

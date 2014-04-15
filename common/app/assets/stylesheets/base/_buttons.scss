@@ -1,3 +1,4 @@
+.button {}
 .button--show-more {
     @include fs-textsans(3);
     @include rem((
@@ -7,7 +8,7 @@
     border-top: 1px dotted $c-neutral3;
     text-align: center;
 
-    .i.i-plus-white-med {
+    .svg .i-plus-white-med {
         @include rounded-corners(50%);
         @include rem((
             height: $gs-baseline*2,
