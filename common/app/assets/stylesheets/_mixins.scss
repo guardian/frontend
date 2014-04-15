@@ -64,7 +64,7 @@
 
 // Prefixes:
 // f- stands for Font: use to set a font-family only
-// fs- for Font Scale: see documentation in docs/design/font-scale.jpg
+// fs- for Font Scale: see documentation in https://github.com/guardian/guss-typography
 
 @mixin f-header {
     font-family: $serifheadline;
