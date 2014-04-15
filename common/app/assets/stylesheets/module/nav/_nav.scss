@@ -261,12 +261,17 @@
 }
 
 .localnav__title {
-    @extend %section-head;
-    border: 0 !important;
+    @include box-sizing(border-box);
+    @include fs-header(4);
+    line-height: 1;
     @include rem((
-        height: $gs-row-height + ($gs-baseline/3) - 3 !important
+        padding: $gs-baseline/3 $gs-gutter/2 0 0,
+        height: $gs-row-height + ($gs-baseline/3) - 3
     ));
-    padding-left: 0 !important;
+
+    @include mq(mobileLandscape) {
+        padding-right: $gs-gutter;
+    }
 }
 
 
