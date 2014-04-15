@@ -47,7 +47,7 @@ define([
 
         adCollections.forEach(function($collection, index) {
             $collection
-                .removeClass('linklist-container')
+                .removeClass('linkslist-container')
                 .addClass('collection-wrapper collection-wrapper--position-2')
                 .html(
                     collectionTemplate
