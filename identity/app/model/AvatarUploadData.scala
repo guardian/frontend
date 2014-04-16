@@ -1,3 +1,3 @@
 package model
 
-case class AvatarUploadData(uploadUrl: String, signedData: String)
+case class AvatarUploadData(signedData: String)

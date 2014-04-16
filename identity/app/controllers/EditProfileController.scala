@@ -82,18 +82,23 @@ class EditProfileController @Inject()(idUrlBuilder: IdentityUrlBuilder,
     } yield AvatarSigningService wasUploadSuccessful signedString
 
 
-    for { avatarUploadData <- Future.sequence(IdentityAvatarUploadSwitch.opt(avatarUploadDataFor(user)).toSeq) } yield {
-      NoCache(Ok(views.html.profileForms(
+//    for { avatarUploadData <- Future.sequence(IdentityAvatarUploadSwitch.opt(avatarUploadDataFor(user)).toSeq) } yield {
+//      NoCache(Ok(views.html.profileForms(
+//        pageWithTrackingParamsFor(idRequest),
+//        user, forms, idRequest, idUrlBuilder,
+//        avatarUploadData,
+//        avatarUploadStatus)))
+
+Future(      NoCache(Ok(views.html.profileForms(
         pageWithTrackingParamsFor(idRequest),
         user, forms, idRequest, idUrlBuilder,
-        avatarUploadData.headOption,
-        avatarUploadStatus)))
-    }
-  }
+        Some(avatarUploadDataFor(user)),
+        avatarUploadStatus
+      )))
+)    }
 
-  private def avatarUploadDataFor(user: User) = for { uploadToken <- WS.url("https://gu-image-upload.appspot.com/upload-endpoint-generator").get.map(_.body) } yield {
-    AvatarUploadData(uploadToken, AvatarSigningService.sign(AvatarData(user)))
-  }
+
+  private def avatarUploadDataFor(user: User) = AvatarUploadData(AvatarSigningService.sign(AvatarData(user)))
 }
 
 case class ProfileForms(publicForm: Form[ProfileFormData], accountForm: Form[AccountFormData], isPublicFormActive: Boolean)
