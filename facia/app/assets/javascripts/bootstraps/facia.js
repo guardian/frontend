@@ -30,15 +30,15 @@ define([
 
         makeEverythingSnaps: function() {
             var testTypes = {
-                table: 'football/premierleague/table.json',
-                matches: 'football/match-day/premierleague/2014/apr/19.json'
+                table: '/football/premierleague/table.json',
+                matches: '/football/match-day/premierleague/2014/apr/19.json'
             }
 
             $('.fromage, .item, .linkslist__item').each(function(el) {
                 el.classList.add('facia-snap');
                 el.classList.add('facia-snap--football');
                 el.setAttribute('data-snap-type', 'football');
-                el.setAttribute('data-snap-uri', testTypes['table']);
+                el.setAttribute('data-snap-uri', testTypes['matches']);
                 el.setAttribute('data-snap-content-key', 'html');
             });
             modules.fetchSnaps();
