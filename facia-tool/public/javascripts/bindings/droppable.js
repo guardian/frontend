@@ -109,7 +109,7 @@ define([
                         }
                     }
 
-                    position = targetItem && targetItem.id ? targetItem.id : undefined;
+                    position = targetItem && _.isFunction(targetItem.id) ? targetItem.id() : undefined;
 
                     if (!id) {
                         alertBadContent();

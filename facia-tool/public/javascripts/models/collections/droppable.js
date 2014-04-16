@@ -43,7 +43,7 @@ define([
             },
 
             newItemsPersister: function(newItems, sourceList, targetList, position, isAfter) {
-                var id = newItems[0].id,
+                var id = newItems[0].id(),
                     itemMeta,
                     timestamp,
                     supporting,
@@ -54,7 +54,7 @@ define([
                 if (targetList.parentType === 'Article') {
                     supporting = targetList.parent.meta.supporting.items;
                     _.each(newItems.slice(1), function(item) {
-                        supporting.remove(function (supp) { return supp.id === item.id; });
+                        supporting.remove(function (supp) { return supp.id() === item.id(); });
                         supporting.push(item);
                     });
                     contentApi.decorateItems(supporting());

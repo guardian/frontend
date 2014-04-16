@@ -29,7 +29,8 @@ define([
 
             opts = opts || {};
 
-            this.id = opts.id;
+            this.id = ko.observable(opts.id);
+
             this.parent = opts.parent;
             this.parentType = opts.parentType;
             this.uneditable = opts.uneditable;
@@ -61,7 +62,9 @@ define([
                 'isSnap',
                 'sparkUrl']);
 
-            this.state.isSnap(!!snap.validateId(opts.id));
+            this.isSnap = ko.computed(function() {
+                return !!snap.validateId(this.id());
+            }, this);
 
             // Computeds
             this.humanDate = ko.computed(function(){
@@ -134,7 +137,7 @@ define([
 
                 if (missingProps.length) {
                     vars.model.statusCapiErrors(true);
-                    window.console.error('ContentApi missing: "' + missingProps.join('", "') + '" for ' + this.id);
+                    window.console.error('ContentApi missing: "' + missingProps.join('", "') + '" for ' + this.id());
                 } else {
                     this.state.isLoaded(true);
                 }
@@ -149,7 +152,7 @@ define([
         Article.prototype.sparkline = function() {
             this.state.sparkUrl(undefined);
             if (vars.state.switches['facia-tool-sparklines']) {
-                this.state.sparkUrl(vars.sparksBase + this.id + (this.meta.updatedAt() ? '&markers=' + this.meta.updatedAt() : ''));
+                this.state.sparkUrl(vars.sparksBase + this.id() + (this.meta.updatedAt() ? '&markers=' + this.meta.updatedAt() : ''));
             }
         };
 
@@ -182,7 +185,7 @@ define([
 
         Article.prototype.get = function() {
             return {
-                id:   this.id,
+                id:   this.id(),
                 meta: this.getMeta()
             };
         };
@@ -247,8 +250,8 @@ define([
                 authedAjax.updateCollections({
                     update: {
                         collection: this.parent,
-                        item:       this.id,
-                        position:   this.id,
+                        item:       this.id(),
+                        position:   this.id(),
                         itemMeta:   itemMeta,
                         live:       vars.state.liveMode(),
                         draft:     !vars.state.liveMode()

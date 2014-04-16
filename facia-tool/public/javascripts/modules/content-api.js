@@ -15,30 +15,30 @@ function (
 ){
     function validateItem (item) {
         var defer = $.Deferred(),
-            snapId = snap.validateId(item.id),
-            capiId = urlAbsPath(item.id),
+            snapId = snap.validateId(item.id()),
+            capiId = urlAbsPath(item.id()),
             data;
 
         if (snapId) {
-            item.id = snapId;
+            item.id(snapId);
             item.state.isSnap(true);
             defer.resolve();
         } else {
             data = cache.get('contentApi', capiId);
             if (data) {
-                item.id = capiId;
+                item.id(capiId);
                 populate(data, item);
                 defer.resolve();
             } else {
                 fetchData([capiId])
                 .always(function(result) {
                     if (_.isArray(result) && result.length === 1) {
-                        item.id = capiId;
+                        item.id(capiId);
                         cache.put('contentApi', capiId, result[0]);
                         populate(result[0], item);
                     } else {
-                        item.meta.href(item.id);
-                        item.id = snap.generateId();
+                        item.meta.href(item.id());
+                        item.id(snap.generateId());
                         item.state.isSnap(true);
                     }
                     defer.resolve();
@@ -52,11 +52,11 @@ function (
         var ids = [];
 
         articles.forEach(function(article){
-            var data = cache.get('contentApi', article.id);
+            var data = cache.get('contentApi', article.id());
             if(data) {
                 populate(data, article);
             } else {
-                ids.push(article.id);
+                ids.push(article.id());
             }
         });
 
@@ -65,14 +65,14 @@ function (
             results.forEach(function(result) {
                 cache.put('contentApi', result.id, result);
                 _.filter(articles, function(article){
-                    return article.id === result.id;
+                    return article.id() === result.id;
                 }).forEach(function(article){
                     populate(result, article);
                 });
             });
 
            _.chain(articles)
-            .filter(function(article) { return !snap.validateId(article.id); })
+            .filter(function(article) { return !article.state.isSnap(); })
             .each(function(article) {
                 article.state.isEmpty(!article.state.isLoaded());
             });

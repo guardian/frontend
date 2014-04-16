@@ -294,7 +294,7 @@
             <div class="closed" data-bind="if: !state.open()">
                 <a class="spark" target="ophan" title="Dark blue: Guardian. Green: Google. Light blue: Other." data-bind="
                     visible: state.sparkUrl,
-                    attr: {href: 'http://dashboard.ophan.co.uk/graph/breakdown?path=/' + id}">
+                    attr: {href: 'http://dashboard.ophan.co.uk/graph/breakdown?path=/' + id()}">
                     <img data-bind="attr: {src: state.sparkUrl}" />
                 </a>
 
@@ -312,13 +312,13 @@
                 </a>
 
                 <a class="tool tool--small tool--small--href" target="_blank" data-bind="
-                    attr: {href: 'http://www.theguardian.com/' + id}">
+                    attr: {href: 'http://www.theguardian.com/' + id()}">
                     <i class="icon-share-alt"></i>
                 </a>
 
                 <div class="article_content is-empty" data-bind="if: state.isEmpty">
                     <a target="article" class="is-empty__url" data-bind="
-                        attr: {href: 'http://www.theguardian.com/' + id},
+                        attr: {href: 'http://www.theguardian.com/' + id()},
                         text: id"></a>
                     This content is unavailable, deleted, or has a new URL
                 </div>
@@ -330,8 +330,8 @@
                         click: open">Breaking News</span>
 
                     <a class="headline" target="article" data-bind="
-                        text: meta.headline() || fields.headline() || (state.isSnap() ? 'Requires a headline!' : ''),
-                        css: {'is-empty': state.isSnap() && !meta.headline()},
+                        text: meta.headline() || fields.headline() || (isSnap() ? 'Requires a headline!' : ''),
+                        css: {'is-empty': isSnap() && !meta.headline()},
                         attr: {href: id},
                         click: open"></a>
 
