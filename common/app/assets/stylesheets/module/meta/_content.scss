@@ -30,7 +30,7 @@
         ));
     }
 
-    @include mq(tablet){
+    @include mq(tablet) {
         @include rem((
             margin: 0 0 $gs-baseline/2
         ));

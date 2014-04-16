@@ -122,6 +122,11 @@ object Switches extends Collections {
     safeState = On, sellByDate = never
   )
 
+  val SponsoredSwitch = Switch("Advertising", "sponsored",
+    "Show sponsored badges, logos, etc.",
+    safeState = On, sellByDate = never
+  )
+
   // Ad Targeting
   /*
     These switches are to control length of request to DFP
@@ -386,6 +391,7 @@ object Switches extends Collections {
     StandardAdvertsSwitch,
     CommercialComponentsSwitch,
     VideoAdvertsSwitch,
+    SponsoredSwitch,
     AudienceScienceSwitch,
     AudienceScienceGatewaySwitch,
     CriteoSwitch,

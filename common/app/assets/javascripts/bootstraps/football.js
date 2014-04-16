@@ -173,7 +173,7 @@ define([
                         $.create('<div class="js-football-match-day" data-link-name="football-match-day-embed"></div>').each(function (container) {
                             football.matchDayFor(competition, resp.matchDate).fetch(container).then(function() {
                                 extras[1] = {
-                                    name: 'Match day',
+                                    name: 'Today\'s matches',
                                     importance: 2,
                                     content: container,
                                     ready: true

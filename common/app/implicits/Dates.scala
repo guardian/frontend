@@ -3,7 +3,6 @@ package implicits
 import org.joda.time.{DateTime, DateMidnight, Days}
 import org.scala_tools.time.Imports._
 import org.joda.time.format.ISODateTimeFormat
-import org.apache.commons.lang.time.DateUtils
 
 trait Dates {
   object Epoch {
@@ -14,8 +13,10 @@ trait Dates {
   def today(): DateMidnight = DateMidnight.now()
 
   implicit class DateTime2SameDay(date: DateTime) {
-    lazy val isToday: Boolean = sameDay(DateTime.now)
-    def sameDay(other: DateTime): Boolean =  DateUtils.isSameDay(new DateTime(date).toDate, new DateTime(other).toDate)
+    def sameDay(other: DateTime): Boolean =  {
+      val thatDateSameZone = other.withZone(date.zone)
+      date.getYear == thatDateSameZone.getYear && date.getDayOfYear == thatDateSameZone.getDayOfYear
+    }
   }
 
   implicit class DateMidnight2DayOfEpoch(datetime: DateMidnight) {

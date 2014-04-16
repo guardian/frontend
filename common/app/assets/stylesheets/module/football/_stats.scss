@@ -19,6 +19,8 @@
 .goal-attempts {
     @include fs-data(5);
     color: #ffffff;
+    margin: 0 auto;
+    max-width: $gs-column-width*5;
     overflow: hidden;
     position: relative;
 }

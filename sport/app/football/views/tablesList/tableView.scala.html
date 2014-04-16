@@ -24,7 +24,7 @@
             @group.entries.zipWithRowInfo.map{ case (entry, row) =>
                 <tr class="@RenderClasses(Map(
                         "table-row--highlight" -> highlightTeamId.map(_ == entry.team.id).getOrElse(false),
-                        "table-row--divider" -> competition.tableDividers.contains(entry.team.rank)))">
+                        "table-row--divider" -> competition.tableDividers.contains(entry.team.rank-1)))">
                     <td class="football-stat--postition table-column--priority table-column--sub">@entry.team.rank</td>
                     <td class="football-stat--team table-column--priority table-column--main">
                         @TeamUrl(entry.team).map{ url =>

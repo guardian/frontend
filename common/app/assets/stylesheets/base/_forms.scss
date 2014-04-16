@@ -159,7 +159,7 @@
     line-height: 1.4;
     outline: none;
     padding: 8px 8px 7px;
-    @include rounded-corners(0);
+    @include border-radius(0);
     width: 100%;
     -webkit-appearance: none;
 
