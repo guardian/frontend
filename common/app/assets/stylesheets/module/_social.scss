@@ -14,17 +14,17 @@
 }
 
 .social {
-  height: 32px;
-  overflow-y: hidden;
-  @include rem((
-    margin-left: -$gs-gutter/4
-  ));
+    height: 32px;
+    overflow-y: hidden;
+    @include rem((
+        margin-left: -$gs-gutter/4
+    ));
 }
 
 .social__head {
-  @include fs-textsans(1);
-  color: $c-neutral2;
-  padding: $gs-baseline/3 0 $gs-baseline 0
+    @include fs-textsans(1);
+    color: $c-neutral2;
+    padding: $gs-baseline/3 0 $gs-baseline 0
 }
 
 .social__item {
