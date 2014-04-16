@@ -98,9 +98,7 @@ object LeagueTableController extends Controller with Logging with CompetitionTab
     val response = for {
       table <- loadTables.find(_.competition.url.endsWith(s"/$competition"))
       group <- table.groups.find { group =>
-        group.round.flatMap { round =>
-          round.name.find(name => name == groupReference)
-        }.isDefined
+        group.round.name.exists(name => name.toLowerCase == groupReference.toLowerCase.replace("-", " "))
       }
     } yield {
       val page = new Page(
@@ -109,7 +107,7 @@ object LeagueTableController extends Controller with Logging with CompetitionTab
         s"${table.competition.fullName} table",
         "GFE:Football:automatic:competition tables"
       )
-      val groupTable = Table(table.competition, Seq(group))
+      val groupTable = Table(table.competition, Seq(group), hasGroups = true)
       val htmlResponse = () => football.views.html.tablesList.tablesPage(TablesPage(page, Seq(groupTable), table.competition.url, filters, Some(table.competition)))
       val jsonResponse = () => football.views.html.tablesList.tableView(table.competition, group, showMeta = true, isSmall = true, multiGroup = false)
       renderFormat(htmlResponse, jsonResponse, page)

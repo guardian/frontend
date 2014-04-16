@@ -40,10 +40,10 @@ case class Competition(
   }
 }
 
-case class Group(round: Option[Round], entries: Seq[LeagueTableEntry])
+case class Group(round: Round, entries: Seq[LeagueTableEntry])
 
-case class Table(competition: Competition, groups: Seq[Group]) {
-  lazy val multiGroup = groups.size > 1
+case class Table(competition: Competition, groups: Seq[Group], hasGroups: Boolean = false) {
+  lazy val multiGroup = hasGroups || groups.size > 1
 
   def topOfTableSnippet = {
     val snippet = groups.map(g => g.copy(entries = g.entries.take(4)))
@@ -75,7 +75,7 @@ object Table {
     val groups = competition.leagueTable
       .groupBy(_.round)
       .map { case (round, table) => Group(round, table) }
-      .toSeq.sortBy(_.round.map(_.roundNumber).map {
+      .toSeq.sortBy(_.round.roundNumber match {
         case IsNumber(num) => num.toInt
         case other => 0
       })
@@ -87,7 +87,7 @@ case class TeamFixture(competition: Competition, fixture: pa.FootballMatch)
 
 case class StatusSummary(description: String, status: String, homeScore: Option[Int], awayScore: Option[Int])
 
-case class LeagueTableEntryWithForm(stageNumber: String, round: Option[Round], team: LeagueTeam, prevResults: List[PrevResult])
+case class LeagueTableEntryWithForm(stageNumber: String, round: Round, team: LeagueTeam, prevResults: List[PrevResult])
 object LeagueTableEntryWithForm {
   def apply(competition: Competition, leagueTableEntry: LeagueTableEntry): LeagueTableEntryWithForm = {
     LeagueTableEntryWithForm(
