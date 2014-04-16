@@ -92,7 +92,7 @@
     overflow: hidden;
 }
 .commercial__search__input {
-    @include rounded-corners(0);
+    @include border-radius(0);
     @include box-sizing(border-box);
     width: 100%;
     height: $gs-row-height;
@@ -183,7 +183,7 @@
     .i.i-arrow-white-down {
         background-position: 3px 6px;
         background-color: $c-newsDefault;
-        border-radius: 100%;
+        @include border-radius(50%);
         margin-right: $gs-gutter/5;
         padding: $gs-baseline/3 $gs-gutter/5;
         width: 8px;
@@ -309,7 +309,7 @@
         margin-top: -(map-get($cta-diameter, mobile)/2);
         background-position: center;
         background-color: $c-newsDefault;
-        border-radius: 50%;
+        @include border-radius(50%);
 
         @include mq(tablet) {
             width: map-get($cta-diameter, tablet);
