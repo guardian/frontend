@@ -24,7 +24,7 @@ define([
             formError: '.form__error',
             changed: 'js-form-changed',
             textInput: '.text-input',
-            avataruploadForm: '.js-avatar-upload-form'
+            avatarUploadForm: '.js-avatar-upload-form'
         };
 
         self.messages = {
@@ -104,6 +104,7 @@ define([
 
             xhr.onload = function() {
                 avatarForm.setAttribute('action', xhr.responseText);
+                avatarForm.submit();
             };
 
             xhr.send();
@@ -116,7 +117,7 @@ define([
     accountProfile.prototype.prependErrorMessage = function (message, location) {
         var errorHtml = document.createElement('div');
         errorHtml.innerHTML = message;
-        errorHtml.className = this.classes.formError;
+        errorHtml.className = this.classes.formError.replace('.', '');
         location.insertBefore(errorHtml, location.firstChild);
     };
 
