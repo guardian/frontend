@@ -1,7 +1,7 @@
 @(metaData: model.MetaData)(implicit request: RequestHeader)
 @import common._
 
-@Navigation.topLevelItem(Edition(request).navigation(metaData), metaData).filter(_.links.nonEmpty).map{ localNav =>
+@Navigation.topLevelItem(Edition(request).navigation, metaData).filter(_.links.nonEmpty).map{ localNav =>
     @defining(localNav.links.find(_.currentFor(metaData))){ currentSublink =>
 
 
