@@ -208,6 +208,14 @@
     }
 }
 
+.block-time__absolute {
+    display: block;
+    @include fs-data(2);
+    font-style: italic;
+    font-weight: normal;
+    color: $c-neutral2;
+}
+
 .updated-time {
     margin: $gs-baseline/3 0 ($gs-baseline/3)*4;
     @include fs-data(1);
@@ -216,6 +224,7 @@
 
 /* Blocks
    ========================================================================== */
+
 .block {
     @include clearfix;
     margin-bottom: $gs-baseline;
@@ -229,77 +238,6 @@
     .block-title {
         color: black;
     }
-}
-
-
-/* Tweets
-   ========================================================================== */
-
-.tweet {
-    display: table-cell;
-    width: 10000px;
-    max-width: 100%;
-    background-color: #f4f4f4;
-    background-position: ($gs-baseline/3)*2 $gutter/2 !important;
-    background-repeat: no-repeat;
-    border-top: $gs-baseline/6 solid #3299d0;
-}
-    .element-tweet {
-        margin: $gs-baseline 0 ($gs-baseline/3)*4;
-    }
-    .tweet,
-    .from-content-api blockquote.tweet {
-        border-left-width: 0;
-        padding: $gs-baseline/2 ($gs-baseline/3)*2;
-        font-style: normal;
-        @include fs-textsans(3);
-
-    }
-    // Temporary fix to issue #1674
-    .from-content-api blockquote.tweet {
-       display: block;
-       margin-left: 0;
-       width: auto;
-    }
-    // End temporary fix
-    .tweet:before,
-    .tweet:after,
-    .live-blog .tweet:before,
-    .live-blog .tweet:after {
-        display: none !important;
-    }
-
-    .tweet-user {
-        display: inline-block;
-        font-weight: bold;
-        padding-left: 40px;
-        margin-bottom: 0;
-    }
-
-    .tweet-date {
-        display: block;
-        color: $c-neutral2;
-        padding-left: 40px;
-        margin-bottom: ($gs-baseline/3)*4;
-    }
-
-
-
-
-.autoupdate--has-animation {
-
-    .autoupdate--highlight {
-        @include animation(new-block-animation 5s ease-out);
-    }
-
-}
-
-
-@include keyframes(new-block-animation) {
-    0%   { opacity: 0; background: $c-neutral7; }
-    20%  { opacity: 1; }
-    70%  { background: $c-neutral7; }
-    100% { background: transparent; }
 }
 
 /* Blocks container
@@ -318,71 +256,149 @@ $block-padding-right: $gs-gutter;
     padding-top: $gs-baseline;
 }
 
-
-/* Quotes
+/* Animations
    ========================================================================== */
-.blog .from-content-api blockquote {
-    margin-left: 0 !important; // override inline styles
-    color: $c-neutral2;
-}
-.blog .from-content-api blockquote.quoted {
-    margin-left: 0 !important; // override inline styles
-    &:before {
-        margin-left: -30px;
-        left: auto;
+
+.autoupdate--has-animation {
+
+    .autoupdate--highlight {
+        @include animation(new-block-animation 5s ease-out);
     }
-}
 
-.blog .block-elements,
-.blog .block-title {
-    margin-left: $block-padding-left;
-    margin-right: $block-padding-right;
 }
 
 
-.blog .element-image,
-.blog .element-video,
-.blog .element-witness {
-    margin-left: -$block-padding-left;
-    margin-right: -$block-padding-right;
+@include keyframes(new-block-animation) {
+    0%   { opacity: 0; background: $c-neutral7; }
+    20%  { opacity: 1; }
+    70%  { background: $c-neutral7; }
+    100% { background: transparent; }
 }
-.blog .embed-video-wrapper  {
-    position: relative;
-    width: 100%;
-    padding-top: 56.25%; // 16:9 aspect ratio
 
-    iframe {
-        position: absolute;
-        top: 0;
+/* Content styling
+   ========================================================================== */
+
+.blog {
+
+    .article__standfirst {
+        @include fs-headline(1);
+    }
+
+    .block-elements,
+    .block-title {
+        margin-left: $block-padding-left;
+        margin-right: $block-padding-right;
+    }
+
+    /* Quotes
+       ========================================================= */
+
+    .from-content-api blockquote {
+        margin-left: 0 !important; // override inline styles
+        color: $c-neutral2;
+    }
+
+    .from-content-api blockquote.quoted {
+        margin-left: 0 !important; // override inline styles
+        &:before {
+            margin-left: -30px;
+            left: auto;
+        }
+    }
+
+    /* Media
+       ========================================================= */
+
+    .element-image,
+    .element-video,
+    .element-witness {
+        margin-left: -$block-padding-left;
+        margin-right: -$block-padding-right;
+    }
+    .embed-video-wrapper  {
+        position: relative;
         width: 100%;
-        height: 100%;
+        padding-top: 56.25%; // 16:9 aspect ratio
+
+        iframe {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            height: 100%;
+        }
     }
+
+    .element figcaption {
+        background-color: white;
+        margin-left: $block-padding-left;
+        margin-right: $block-padding-right;
+    }
+
+    /* Below content
+       ========================================================= */
+
+    .article__keywords {
+        border-top: 1px dotted $c-neutral3;
+        @include rem((
+            line-height: 20px
+        ));
+    }
+
+    .social-wrapper {
+        margin-bottom: $gs-baseline*2;
+    }
+
 }
 
-.blog .element figcaption {
-    background-color: white;
-    margin-left: $block-padding-left;
-    margin-right: $block-padding-right;
-}
 
-.blog .article__standfirst {
-    @include fs-headline(1);
-}
-.blog .article__keywords {
-    border-top: 1px dotted $c-neutral3;
-    @include rem((
-        line-height: 20px
-    ));
-}
 
-.blog .social-wrapper {
-    margin-bottom: $gs-baseline*2;
-}
+/* Tweets (removing this??)
+   ========================================================================== */
 
-.blog__hhmm {
+.tweet {
+    display: table-cell;
+    width: 10000px;
+    max-width: 100%;
+    background-color: #f4f4f4;
+    background-position: ($gs-baseline/3)*2 $gutter/2 !important;
+    background-repeat: no-repeat;
+    border-top: $gs-baseline/6 solid #3299d0;
+}
+.element-tweet {
+    margin: $gs-baseline 0 ($gs-baseline/3)*4;
+}
+.tweet,
+.from-content-api blockquote.tweet {
+    border-left-width: 0;
+    padding: $gs-baseline/2 ($gs-baseline/3)*2;
+    font-style: normal;
+    @include fs-textsans(3);
+
+}
+// Temporary fix to issue #1674
+.from-content-api blockquote.tweet {
     display: block;
-    @include fs-data(2);
-    font-style: italic;
-    font-weight: normal;
+    margin-left: 0;
+    width: auto;
+}
+// End temporary fix
+.tweet:before,
+.tweet:after,
+.live-blog .tweet:before,
+.live-blog .tweet:after {
+    display: none !important;
+}
+
+.tweet-user {
+    display: inline-block;
+    font-weight: bold;
+    padding-left: 40px;
+    margin-bottom: 0;
+}
+
+.tweet-date {
+    display: block;
     color: $c-neutral2;
+    padding-left: 40px;
+    margin-bottom: ($gs-baseline/3)*4;
 }

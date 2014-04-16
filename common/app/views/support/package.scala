@@ -302,11 +302,11 @@ case class LiveBlogDateFormatter(isLiveBlog: Boolean)(implicit val request: Requ
 
   def clean(body: Document): Document = {
     if (isLiveBlog) {
-        body.select(".block-time time").foreach { el =>
+        body.select(".block-time.published-time time").foreach { el =>
         el.attr("data-relativeformat", "med")
         val datetime = DateTime.parse(el.attr("datetime"))
         val hhmm = Format(datetime, "HH:mm")
-        el.after(s"""<span class="blog__hhmm">$hhmm</span>""")
+        el.after(s"""<span class="block-time__absolute">$hhmm</span>""")
       }
     }
     body
