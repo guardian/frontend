@@ -59,7 +59,7 @@ define([
                     });
                     contentApi.decorateItems(supporting());
                     targetList.parent.save();
-                    
+
                     remove = remover(sourceList, id);
                     if (remove) {
                         authedAjax.updateCollections({remove: remove});
@@ -69,7 +69,7 @@ define([
 
                 if (targetList.parentType === 'Collection') {
                     targetList.parent.closeAllArticles();
-                    itemMeta = newItems[0].getMeta();
+                    itemMeta = newItems[0].getMeta() || {};
 
                     if (deepGet(targetList, '.parent.groups.length') > 1) {
                         itemMeta.group = targetList.group + '';
@@ -100,7 +100,7 @@ define([
                             vars.model.deferredDetectPressFailure();
                         }
                     });
-                    
+
                     if (sourceList && !sourceList.keepCopy && sourceList !== targetList) {
                         removeById(sourceList.items, id); // for immediate UI effect
                     }
@@ -108,12 +108,12 @@ define([
             }
         });
     }
-     
+
     function remover(sourceList, id) {
         if (sourceList &&
             sourceList.parentType === 'Collection' &&
            !sourceList.keepCopy) {
-            
+
             return {
                 collection: sourceList.parent,
                 id:     sourceList.parent.id,

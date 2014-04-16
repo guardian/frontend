@@ -5,6 +5,7 @@ define([
     'utils/populate-observables',
     'utils/full-trim',
     'utils/deep-get',
+    'utils/snap',
     'models/group',
     'modules/authed-ajax',
     'modules/content-api',
@@ -17,6 +18,7 @@ define([
         populateObservables,
         fullTrim,
         deepGet,
+        snap,
         Group,
         authedAjax,
         contentApi,
@@ -30,7 +32,6 @@ define([
             this.id = opts.id;
             this.parent = opts.parent;
             this.parentType = opts.parentType;
-
             this.uneditable = opts.uneditable;
 
             this.props = asObservableProps([
@@ -57,7 +58,10 @@ define([
                 'open',
                 'isLoaded',
                 'isEmpty',
+                'isSnap',
                 'sparkUrl']);
+
+            this.state.isSnap(!!snap.validateId(opts.id));
 
             // Computeds
             this.humanDate = ko.computed(function(){

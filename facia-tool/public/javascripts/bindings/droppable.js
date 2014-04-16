@@ -71,7 +71,7 @@ define([
                 element.addEventListener('drop', function(event) {
                     var targetList = ko.dataFor(element),
                         targetItem = ko.dataFor(event.target),
-                        id = event.testData ? event.testData : event.dataTransfer.getData('Text'),
+                        id = event.dataTransfer.getData('Text'),
                         ourQueryParams   = parseQueryParams(id, 'gu-', false, true),
                         theirQueryParams = parseQueryParams(id, 'gu-', true),
                         sourceItem,

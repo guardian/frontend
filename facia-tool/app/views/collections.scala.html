@@ -227,7 +227,9 @@
                     attr: {src: fields.thumbnail, title: id}"/>
             </a>
 
-            <div class="article__date" data-bind="text: humanDate"></div>
+            <div class="article__date" data-bind="
+                visible: humanDate,
+                text: humanDate"></div>
 
             <div data-bind="if: state.open">
                 <div class="image__overrides">
@@ -328,8 +330,8 @@
                         click: open">Breaking News</span>
 
                     <a class="headline" target="article" data-bind="
-                        text: meta.headline() || fields.headline() || 'Requires a headline / linktext!',
-                        css: {'is-empty': !meta.headline() && !fields.headline()},
+                        text: meta.headline() || fields.headline() || (state.isSnap() ? 'Requires a headline!' : ''),
+                        css: {'is-empty': state.isSnap() && !meta.headline()},
                         attr: {href: id},
                         click: open"></a>
 

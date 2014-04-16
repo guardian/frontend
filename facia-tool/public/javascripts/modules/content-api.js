@@ -3,22 +3,25 @@ define([
     'modules/authed-ajax',
     'modules/vars',
     'modules/cache',
-    'utils/url-abs-path'
+    'utils/url-abs-path',
+    'utils/snap'
 ],
 function (
     authedAjax,
     vars,
     cache,
-    urlAbsPath
+    urlAbsPath,
+    snap
 ){
     function validateItem (item) {
         var defer = $.Deferred(),
-            snapId = asSnapId(item.id),
+            snapId = snap.validateId(item.id),
             capiId = urlAbsPath(item.id),
             data;
 
         if (snapId) {
             item.id = snapId;
+            item.state.isSnap(true);
             defer.resolve();
         } else {
             data = cache.get('contentApi', capiId);
@@ -35,7 +38,8 @@ function (
                         populate(result[0], item);
                     } else {
                         item.meta.href(item.id);
-                        item.id = generateSnapId();
+                        item.id = snap.generateId();
+                        item.state.isSnap(true);
                     }
                     defer.resolve();
                 });
@@ -68,19 +72,11 @@ function (
             });
 
            _.chain(articles)
-            .filter(function(article) { return !asSnapId(article.id); })
+            .filter(function(article) { return !snap.validateId(article.id); })
             .each(function(article) {
                 article.state.isEmpty(!article.state.isLoaded());
             });
         });
-    }
-
-    function generateSnapId() {
-        return 'snap/' + new Date().getTime();
-    }
-
-    function asSnapId(id) {
-        return [].concat(urlAbsPath(id).match(/^snap\/\d+$/))[0] || undefined;
     }
 
     function populate(opts, article) {
@@ -90,7 +86,7 @@ function (
     function fetchData(ids) {
         var defer = $.Deferred(),
             capiIds = _.chain(ids)
-                .filter(function(id) { return !asSnapId(id); })
+                .filter(function(id) { return !snap.validateId(id); })
                 .map(function(id) { return encodeURIComponent(id); })
                 .value();
 
