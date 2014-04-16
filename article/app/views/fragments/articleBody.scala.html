@@ -35,6 +35,7 @@
 
                 @fragments.witnessCallToAction(article)
 
+
                 <div class="after-header"></div>
             </div>
             <div class="article__columning-wrapper">
@@ -68,7 +69,8 @@
 
                     @fragments.contentMeta(article)
 
-                    <div class="js-article__container article__container u-cf" data-component="body">
+
+                <div class="js-article__container article__container u-cf" data-component="body">
                         <div class="article-body u-cf from-content-api js-article__body"
                         itemprop="@if(article.isReview){reviewBody} else {articleBody}">
                             @BodyCleaner(article, article.body)
@@ -90,10 +92,12 @@
                                 <div class="u-table__cell u-table__cell--top">
                                     <div class="mpu-context js-right-hand-component">
                                         <div class="mpu-container js-mpu-ad-slot">
+                                            <!--
                                             <div class="social-wrapper social-wrapper--aside" data-component="share">
                                                 <h2 class="article__meta-heading">Share this article</h2>
-                                                @fragments.social(article, "next to content")
+                                                //
                                             </div>
+                                            -->
                                             @fragments.commercial.standardAd(name="right", adType="mpu-banner-ad", sizeMapping=Map("tabletlandscape" -> Seq("300,250")))
                                         </div>
                                         <div class="js-components"></div>
