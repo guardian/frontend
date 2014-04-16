@@ -25,7 +25,7 @@
 @for(avatarUploadData <- avatarUploadDataOpt) {
 
     @for(status <- avatarUploadStatus; ok <- status.right.filter(identity)) {
-        <div class="form__success">Thank you for uploading your avatar. <br /><br />Your avatar will be checked by moderators shortly.</div>
+        <div class="form__success">Thank you for uploading your avatar. It will be checked by Guardian moderators shortly.</div>
     }
 
     @for(status <- avatarUploadStatus; msg <- status.left.filter(x => true)) {
