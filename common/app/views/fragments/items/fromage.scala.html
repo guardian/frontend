@@ -3,8 +3,10 @@
 @defining((VisualTone(trail), imageAdjustOverride.getOrElse(trail.imageAdjust))) { case (tone, imageAdjust) =>
     <div
         class="@GetClasses.forFromage(trail, imageAdjust)"
-        @trail.discussionId.map{ id => data-discussion-id="@id" }
-        data-discussion-closed="@trail.isClosedForComments"
+        @trail.discussionId.map{ id =>
+            data-discussion-id="@id"
+            data-discussion-closed="@trail.isClosedForComments"
+        }
         data-link-name="trail | @{index + 1}">
 
         <div class="fromage__container">
@@ -47,11 +49,19 @@
             @trail.trailText.map { text =>
                 <div class="fromage__standfirst">@Html(text)</div>
             }
+            @fragments.items.elements.supporting(trail.supporting, style = "fit")
 
-            @fragments.items.elements.meta(trail)
+            @* Display meta only if there is a discussion *@
+            @* @trail.discussionId.map{ id =>
+                @fragments.items.elements.meta(trail)
+            } *@
+            <div class="item__meta">
+            <time class="item__timestamp js-item__timestamp js-hidden" itemprop="datePublished" datetime="2014-04-16T12:13:00+0000" data-timestamp="1397650380000" data-relativeformat="short">
+            <i class="i i-clock-light-grey"></i>
+            <span class="timestamp__text"><span class="u-h">Published: </span>16 Apr 2014</span>
+            </time>
+            <span class="trail__count trail__count--commentcount"><a href="/world/2014/apr/16/pro-russian-separatists-seize-ukrainian-armoured-vehicles#comments" data-link-name="Comment count"><i class="i i-comment-light-grey"></i>1784<span class="u-h"> comments</span></a></span></div>
         </div>
-
-        @fragments.items.elements.supporting(trail.supporting)
 
     </div>
 }

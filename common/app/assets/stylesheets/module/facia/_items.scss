@@ -298,7 +298,10 @@
 .item__standfirst {
     display: none;
     margin: 20px 0 0;
-    @include fs-headline(1, $size-only: true);
+    @include rem((
+        font-size: 14px,
+        line-height: 18px
+    ));
 
     p {
         margin-bottom: 0; // Some trail texts are wrapped in a paragraph
