@@ -12,6 +12,14 @@
         <article id="article" class="article @if(article.isLive){is-live}"
                  itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType" role="main">
 
+            @if(ABHomeComponent.isSwitchedOn) {
+                <div class="home-container">
+                    <div class="home js-home u-h" data-component="home" data-link-name="home">
+                        <a href="/uk">Home</a>
+                    </div>
+                </div>
+            }
+
             <div class="article__inner article__inner--head">
                 <header class="article__head">
 
@@ -78,6 +86,10 @@
                     <div class="social-wrapper" data-component="share">
                         @fragments.social(article)
                     </div>
+
+                    @if(ABHomeComponent.isSwitchedOn) {
+                        <div class="bottom-marker"></div>
+                    }
                 </div>
                 <div class="article__secondary-column" aria-hidden="true">
                     <div class="article__secondary-column__inner@if(storyPackage.nonEmpty) { article__secondary-column__inner--fill-vertically}">
