@@ -1,6 +1,7 @@
 define([
     // Common libraries
     'common/$',
+    'common/utils/ajax',
     'common/utils/mediator',
     'bonzo',
     'qwery',
@@ -13,6 +14,7 @@ define([
     'modules/ui/container-toggle'
 ], function (
     $,
+    ajax,
     mediator,
     bonzo,
     qwery,
@@ -28,20 +30,29 @@ define([
 
         makeEverythingSnaps: function() {
             var testTypes = {
-                table: 'football/premierleague/table',
-                matches: 'football/match-day/premierleague/2014/apr/19'
+                table: 'football/premierleague/table.json',
+                matches: 'football/match-day/premierleague/2014/apr/19.json'
             }
+
             $('.fromage, .item, .linkslist__item').each(function(el) {
                 el.classList.add('facia-snap');
-                el.addAttribute('data-snap-type', 'football');
-                el.addAttribute('data-snap-uri', testTypes['table']);
+                el.classList.add('facia-snap--football');
+                el.setAttribute('data-snap-type', 'football');
+                el.setAttribute('data-snap-uri', testTypes['table']);
+                el.setAttribute('data-snap-content-key', 'html');
             });
             modules.fetchSnaps();
         },
 
         fetchSnaps: function() {
             $('.facia-snap').each(function(el) {
-                console.log(el);
+                ajax({
+                    url: el.getAttribute('data-snap-uri')
+                }).then(function(resp) {
+                    $.create(resp[el.getAttribute('data-snap-content-key')]).each(function(html) {
+                        bonzo(el).empty().append(html);
+                    });
+                });
             });
         },
 
