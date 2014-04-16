@@ -9,7 +9,7 @@
     text-align: center;
 
     .i-center {
-        @include rounded-corners($gs-baseline*3);
+        @include border-radius($gs-baseline*3);
         @include rem((
             height: $gs-baseline*2,
             margin-right: $gs-gutter/2,
