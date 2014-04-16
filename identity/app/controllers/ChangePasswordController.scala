@@ -37,7 +37,7 @@ class ChangePasswordController @Inject()( api: IdApiClient,
       {_.passwordsMatch}
       ) verifying(
       Messages("error.passwordMustChange"),
-      {_.passwordChanged}
+      {!_.passwordChanged}
       )
   )
 
@@ -87,6 +87,6 @@ class ChangePasswordController @Inject()( api: IdApiClient,
 }
 
 case class PasswordFormData(oldPassword: Option[String], newPassword1: String, newPassword2: String){
-  def passwordsMatch = newPassword1 == newPassword2
-  def passwordChanged = oldPassword exists {_ != newPassword1}
+  lazy val passwordsMatch = newPassword1 == newPassword2
+  lazy val passwordChanged = oldPassword exists {_ != newPassword1}
 }
