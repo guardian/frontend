@@ -59,7 +59,6 @@ define([
                 'open',
                 'isLoaded',
                 'isEmpty',
-                'isSnap',
                 'sparkUrl']);
 
             this.isSnap = ko.computed(function() {

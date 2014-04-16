@@ -21,7 +21,6 @@ function (
 
         if (snapId) {
             item.id(snapId);
-            item.state.isSnap(true);
             defer.resolve();
         } else {
             data = cache.get('contentApi', capiId);
@@ -39,7 +38,6 @@ function (
                     } else {
                         item.meta.href(item.id());
                         item.id(snap.generateId());
-                        item.state.isSnap(true);
                     }
                     defer.resolve();
                 });
@@ -72,7 +70,7 @@ function (
             });
 
            _.chain(articles)
-            .filter(function(article) { return !article.state.isSnap(); })
+            .filter(function(article) { return !article.isSnap(); })
             .each(function(article) {
                 article.state.isEmpty(!article.state.isLoaded());
             });
