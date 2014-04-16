@@ -24,7 +24,7 @@
                     </div>
 
                     <div class="blog__last-updated-container">
-                        <span class="blog__live">LIVE</span> updated 2 mins ago
+                        <span class="blog__live">LIVE</span> [update time here]
                     </div>
 
 
@@ -36,6 +36,8 @@
             <div class="blog__columning-wrapper">
                 <div class="blog__main-column  blog__main-background">
                     @fragments.standfirst(article)
+                    @fragments.witnessCallToAction(article)
+
                     @fragments.witnessCallToAction(article)
 
                     @if(!article.hasVideoAtTop) {

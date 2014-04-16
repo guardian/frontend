@@ -190,6 +190,10 @@
     display: block;
     padding: $gs-baseline/3 0;
     margin-top: ($gs-baseline/3)*2;
+    time {
+        margin-bottom: $gs-baseline/2;
+        display: inline-block;
+    }
 }
 
 
@@ -301,19 +305,84 @@
 /* Blocks container
    ========================================================================== */
 
+$block-padding-left: gs-span(1) + $gs-gutter;
+$block-padding-right: $gs-gutter;
+
 .live-blog__blocks {
     opacity: 1;
     height: auto;
     background-color: transparent;
     @include transition(opacity 2s ease-out, background-color 4s ease-out);
 }
+.blog .ad-slot--mpu-banner-ad {
+    padding-top: $gs-baseline;
+}
+
+
+/* Quotes
+   ========================================================================== */
+.blog .from-content-api blockquote {
+    margin-left: 0 !important; // override inline styles
+    color: $c-neutral2;
+}
+.blog .from-content-api blockquote.quoted {
+    margin-left: 0 !important; // override inline styles
+    &:before {
+        margin-left: -30px;
+        left: auto;
+    }
+}
 
 .blog .block-elements,
 .blog .block-title {
-    margin-left: gs-span(1) + $gs-gutter;
-    margin-right: $gs-gutter;
+    margin-left: $block-padding-left;
+    margin-right: $block-padding-right;
 }
 
-.blog .ad-slot--mpu-banner-ad {
-    padding-top: $gs-baseline;
+
+.blog .element-image,
+.blog .element-video,
+.blog .element-witness {
+    margin-left: -$block-padding-left;
+    margin-right: -$block-padding-right;
+}
+.blog .embed-video-wrapper  {
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%; // 16:9 aspect ratio
+
+    iframe {
+        position: absolute;
+        top: 0;
+        width: 100%;
+        height: 100%;
+    }
+}
+
+.blog .element figcaption {
+    background-color: white;
+    margin-left: $block-padding-left;
+    margin-right: $block-padding-right;
+}
+
+.blog .article__standfirst {
+    @include fs-headline(1);
+}
+.blog .article__keywords {
+    border-top: 1px dotted $c-neutral3;
+    @include rem((
+        line-height: 20px
+    ));
+}
+
+.blog .social-wrapper {
+    margin-bottom: $gs-baseline*2;
+}
+
+.blog__hhmm {
+    display: block;
+    @include fs-data(2);
+    font-style: italic;
+    font-weight: normal;
+    color: $c-neutral2;
 }
