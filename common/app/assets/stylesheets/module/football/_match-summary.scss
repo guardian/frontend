@@ -170,7 +170,7 @@ $football-crest-large: 60px;
 
 .status__time {
     @include fs-data(2);
-    @include rounded-corners(24px);
+    @include border-radius(24px);
     @include rem((
         height: $football-crest-small,
         line-height: $football-crest-small,

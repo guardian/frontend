@@ -24,7 +24,7 @@ object Uk extends Edition(
     travelZone
   )
 
-  def navigation(metadata: MetaData): Seq[NavItem] = Seq(
+  def navigation: Seq[NavItem] = Seq(
     NavItem(home),
     NavItem(uk),
     NavItem(world, Seq(europeNews, us, americas, asia, australia, africa, middleEast)),
