@@ -58,31 +58,32 @@ define([
     function getSuffix(type, format, value) {
         var units = {
             s: {
-                'short': 's',
-                'long':  ' second ago',
-                plural:  ' seconds ago'
+                'short': ['s'],
+                'med': ['s ago'],
+                'long':  [' second ago', ' seconds ago']
             },
             m: {
-                'short': 'm',
-                'long':  ' minute ago',
-                plural: ' minutes ago'
+                'short': ['m'],
+                'med': ['m ago'],
+                'long':  [' minute ago', ' minutes ago']
             },
             h: {
-                'short': 'h',
-                'long':  ' hour ago',
-                plural:  ' hours ago'
+                'short': ['h'],
+                'med': ['h ago'],
+                'long':  [' hour ago', ' hours ago']
             },
             d: {
-                'short': 'd',
-                'long':  ' day ago',
-                plural:  ' days ago'
+                'short': ['d'],
+                'med': ['d ago'],
+                'long':  [' day ago', ' days ago']
             }
         };
         if (units[type]) {
-            if (value === 1 || format === 'short') {
-                return units[type][format];
+            var strs = units[type][format];
+            if (value === 1) {
+                return strs[0];
             } else {
-                return units[type].plural;
+                return strs[strs.length-1];
             }
         } else {
             return '';
@@ -90,11 +91,13 @@ define([
     }
 
     function makeRelativeDate(epoch, opts) {
+        opts = opts || {};
+
         var then = new Date(Number(epoch)),
             now = new Date(),
-            delta;
-
-        opts = opts || {};
+            delta,
+            format = opts.format || 'short',
+            extendedFormatting = (opts.format === 'short' || opts.format === 'med');
 
         if (!isValidDate(then)) {
             return false;
@@ -109,19 +112,19 @@ define([
             return false;
 
         } else if (delta < 55) {
-            return delta + getSuffix('s', opts.format || 'short', delta);
+            return delta + getSuffix('s', format, delta);
 
         } else if (delta < (55 * 60)) {
             var minutes = Math.round(delta / 60, 10);
-            return minutes + getSuffix('m', opts.format || 'short', minutes);
+            return minutes + getSuffix('m', format, minutes);
 
-        } else if (isToday(then) || (isWithin24Hours(then) && opts.format === 'short')) {
+        } else if (isToday(then) || (extendedFormatting && isWithin24Hours(then))) {
             var hours = Math.round(delta / 3600);
-            return hours + getSuffix('h', opts.format || 'short', hours);
+            return hours + getSuffix('h', format, hours);
 
-        } else if (isWithinPastWeek(then) && opts.format === 'short') {
+        } else if (extendedFormatting && isWithinPastWeek(then)) {
             var days = Math.round(delta / 3600 / 24);
-            return days + getSuffix('d', opts.format || 'short', days);
+            return days + getSuffix('d', format, days);
 
         } else if (isYesterday(then)) { // yesterday
             return 'Yesterday' + withTime(then);
