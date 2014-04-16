@@ -13,16 +13,15 @@ function (
 ){
     function validateItem (item) {
         var defer = $.Deferred(),
-            capiId,
+            snapId = asSnapId(item.id),
+            capiId = urlAbsPath(item.id),
             data;
 
-        if (validateSnapId(item.id)) {
-            item.id = validateSnapId(item.id);
+        if (snapId) {
+            item.id = snapId;
             defer.resolve();
         } else {
-            capiId = urlAbsPath(item.id);
             data = cache.get('contentApi', capiId);
-
             if (data) {
                 item.id = capiId;
                 populate(data, item);
@@ -37,7 +36,7 @@ function (
                     } else {
                         // TODO remove recognised meta queryparams from id
                         item.meta.href(item.id);
-                        item.id = 'snap/' + new Date().getTime();
+                        item.id = generateSnapId();
                     }
                     defer.resolve();
                 });
@@ -70,15 +69,19 @@ function (
             });
 
            _.chain(articles)
-            .filter(function(article) { return !validateSnapId(article.id); })
+            .filter(function(article) { return !asSnapId(article.id); })
             .each(function(article) {
                 article.state.isEmpty(!article.state.isLoaded());
             });
         });
     }
 
-    function validateSnapId(id) {
-        return [].concat(urlAbsPath(id).match(/^snap\/\d+$/))[0];
+    function generateSnapId() {
+        return 'snap/' + new Date().getTime();
+    }
+
+    function asSnapId(id) {
+        return [].concat(urlAbsPath(id).match(/^snap\/\d+$/))[0] || undefined;
     }
 
     function populate(opts, article) {
@@ -88,7 +91,7 @@ function (
     function fetchData(ids) {
         var defer = $.Deferred(),
             capiIds = _.chain(ids)
-                .filter(function(id) { return !validateSnapId(id); })
+                .filter(function(id) { return !asSnapId(id); })
                 .map(function(id) { return encodeURIComponent(id); })
                 .value();
 
