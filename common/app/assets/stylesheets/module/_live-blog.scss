@@ -190,6 +190,10 @@
     display: block;
     padding: $gs-baseline/3 0;
     margin-top: ($gs-baseline/3)*2;
+    time {
+        margin-bottom: $gs-baseline/2;
+        display: inline-block;
+    }
 }
 
 
@@ -318,11 +322,11 @@ $block-padding-right: $gs-gutter;
 /* Quotes
    ========================================================================== */
 .blog .from-content-api blockquote {
-    margin-left: 0;
+    margin-left: 0 !important; // override inline styles
     color: $c-neutral2;
 }
 .blog .from-content-api blockquote.quoted {
-    margin-left: 0;
+    margin-left: 0 !important; // override inline styles
     &:before {
         margin-left: -30px;
         left: auto;
@@ -337,7 +341,8 @@ $block-padding-right: $gs-gutter;
 
 
 .blog .element-image,
-.blog .element-video {
+.blog .element-video,
+.blog .element-witness {
     margin-left: -$block-padding-left;
     margin-right: -$block-padding-right;
 }
@@ -372,4 +377,12 @@ $block-padding-right: $gs-gutter;
 
 .blog .social-wrapper {
     margin-bottom: $gs-baseline*2;
+}
+
+.blog__hhmm {
+    display: block;
+    @include fs-data(2);
+    font-style: italic;
+    font-weight: normal;
+    color: $c-neutral2;
 }
