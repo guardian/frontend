@@ -81,22 +81,12 @@ class EditProfileController @Inject()(idUrlBuilder: IdentityUrlBuilder,
       signedString <- responseData.headOption
     } yield AvatarSigningService wasUploadSuccessful signedString
 
-
-//    for { avatarUploadData <- Future.sequence(IdentityAvatarUploadSwitch.opt(avatarUploadDataFor(user)).toSeq) } yield {
-//      NoCache(Ok(views.html.profileForms(
-//        pageWithTrackingParamsFor(idRequest),
-//        user, forms, idRequest, idUrlBuilder,
-//        avatarUploadData,
-//        avatarUploadStatus)))
-
-Future(      NoCache(Ok(views.html.profileForms(
-        pageWithTrackingParamsFor(idRequest),
-        user, forms, idRequest, idUrlBuilder,
-        Some(avatarUploadDataFor(user)),
-        avatarUploadStatus
-      )))
-)    }
-
+    Future(NoCache(Ok(views.html.profileForms(
+           pageWithTrackingParamsFor(idRequest),
+           user, forms, idRequest, idUrlBuilder,
+           Some(avatarUploadDataFor(user)),
+           avatarUploadStatus))))    
+  }
 
   private def avatarUploadDataFor(user: User) = AvatarUploadData(AvatarSigningService.sign(AvatarData(user)))
 }
