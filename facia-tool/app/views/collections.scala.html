@@ -221,7 +221,7 @@
             }">
 
             <a target="article" data-bind="
-                attr: {href: 'http://www.theguardian.com/' + id},
+                attr: {href: 'http://www.theguardian.com/' + id()},
                 click: open">
                 <img class="thumb" draggable="false" data-bind="
                     attr: {src: fields.thumbnail, title: id}"/>
@@ -246,18 +246,25 @@
                 <div class="article__overrides u-cf">
                     <div class="article__overrides__fields">
                         <input type="text" data-bind="
+                            hasFocus: true,
                             value: headlineInput,
                             event: {blur: save},
-                            attr: {placeholder: fields.headline}"/>
+                            attr: {placeholder: fields.headline() || 'Link text'}"/>
                         <a class="revert revert--headline" data-bind="
                             click: headlineRevert,
                             attr: {title: 'Revert to: ' + fields.headline()},
                             visible: meta.headline"><i class="icon-fast-backward"></i></a>
 
+                        <input type="text" data-bind="
+                            visible: isSnap,
+                            value: meta.href,
+                            event: {blur: save},
+                            attr: {placeholder: 'Url, eg. uk/money or http://www.bbc.co.uk/'}"/>
+
                         <textarea class="trailtext" type="text" data-bind="
                             value: trailTextInput,
                             event: {blur: save},
-                            attr: {placeholder: fields.trailText}"/></textarea>
+                            attr: {placeholder: fields.trailText() || 'Trail text'}"/></textarea>
                         <a class="revert revert--trailtext" data-bind="
                             click: trailTextRevert,
                             attr: {title: 'Revert to: ' + fields.trailText()},
@@ -312,7 +319,7 @@
                 </a>
 
                 <a class="tool tool--small tool--small--href" target="_blank" data-bind="
-                    attr: {href: 'http://www.theguardian.com/' + id()}">
+                    attr: {href: isSnap() ? meta.href() : 'http://www.theguardian.com/' + id()}">
                     <i class="icon-share-alt"></i>
                 </a>
 
@@ -330,7 +337,7 @@
                         click: open">Breaking News</span>
 
                     <a class="headline" target="article" data-bind="
-                        text: meta.headline() || fields.headline() || (isSnap() ? 'Requires a headline!' : ''),
+                        text: meta.headline() || fields.headline() || (isSnap() ? 'No link text' : '...'),
                         css: {'is-empty': isSnap() && !meta.headline()},
                         attr: {href: id},
                         click: open"></a>

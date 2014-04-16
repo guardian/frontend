@@ -153,10 +153,16 @@ define([
 
                     opts.newItemsValidator(newItems)
                     .fail(function() {
-                        removeById(targetList.items, id);
+                        _.each(newItems, function(item) { targetList.items.remove(item); });
                         alertBadContent(id);
                     })
-                    .done(function() {
+                    .done(function(reject, msg) {
+                        if (reject) {
+                            _.each(newItems, function(item) { targetList.items.remove(item); });
+                            alertBadContent(id, msg);
+                            return;
+                        }
+
                         if (_.isFunction(targetList.reflow)) {
                             targetList.reflow();
                         }
@@ -172,8 +178,8 @@ define([
         };
     }
 
-    function alertBadContent(id) {
-        window.alert('Sorry, but you can\'t add' + (id ? ': ' + id : ' that'));
+    function alertBadContent(id, msg) {
+        window.alert(msg || 'Sorry, but you can\'t add' + (id ? ': ' + id : ' that'));
     }
 
     return droppable;

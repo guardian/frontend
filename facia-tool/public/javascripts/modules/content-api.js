@@ -32,14 +32,26 @@ function (
                 fetchData([capiId])
                 .always(function(result) {
                     if (_.isArray(result) && result.length === 1) {
+                        // It's a ContentApi item
                         item.id(capiId);
                         cache.put('contentApi', capiId, result[0]);
                         populate(result[0], item);
+                        defer.resolve();
                     } else {
-                        item.meta.href(item.id());
-                        item.id(snap.generateId());
+                        // It's a snap. If in live mode, reject it if it has no headline
+                        if (vars.model.liveMode() &&
+                            item.parentType !== 'Clipboard' &&
+                            !item.fields.headline() &&
+                            !item.meta.headline())
+                        {
+                            defer.resolve(true, 'Sorry, snaps without headlines can\'t be added in live mode.');
+                        } else {
+                            item.meta.href(item.id());
+                            item.id(snap.generateId());
+                            item.state.open(true);
+                            defer.resolve();
+                        }
                     }
-                    defer.resolve();
                 });
             }
         }
