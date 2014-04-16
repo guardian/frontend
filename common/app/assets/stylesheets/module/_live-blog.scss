@@ -344,7 +344,7 @@ $block-padding-right: $gs-gutter;
 .blog .embed-video-wrapper  {
     position: relative;
     width: 100%;
-padding-top: 56.25%; // 16:9 aspect ratio
+    padding-top: 56.25%; // 16:9 aspect ratio
 
     iframe {
         position: absolute;
@@ -362,4 +362,14 @@ padding-top: 56.25%; // 16:9 aspect ratio
 
 .blog .article__standfirst {
     @include fs-headline(1);
+}
+.blog .article__keywords {
+    border-top: 1px dotted $c-neutral3;
+    @include rem((
+        line-height: 20px
+    ));
+}
+
+.blog .social-wrapper {
+    margin-bottom: $gs-baseline*2;
 }

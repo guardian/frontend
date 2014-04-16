@@ -16,6 +16,7 @@ object BodyCleaner {
     VideoEmbedCleaner(article.bodyVideos),
     new TagLinker(article),
     InlineSlotGenerator(article.wordCount),
-    TableEmbedComplimentaryToP
+    TableEmbedComplimentaryToP,
+    LiveBlogRelativeDateFormat(article.isLiveBlog)
   )
 }

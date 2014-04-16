@@ -298,6 +298,18 @@ case class PictureCleaner(contentImages: Seq[ImageElement]) extends HtmlCleaner 
   }
 }
 
+case class LiveBlogRelativeDateFormat(isLiveBlog: Boolean) extends HtmlCleaner  {
+
+  def clean(body: Document): Document = {
+    if (isLiveBlog) {
+      body.select(".block-time time").foreach { el =>
+        el.attr("data-relativeformat", "med")
+      }
+    }
+    body
+  }
+}
+
 object BulletCleaner {
   def apply(body: String): String = body.replace("•", """<span class="bullet">•</span>""")
 }
