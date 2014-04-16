@@ -98,6 +98,7 @@
 }
 
 .football-team__score {
+    color: $c-neutral2-contrasted;
     position: absolute;
     top: 0;
 }
@@ -121,6 +122,12 @@
     &:after {
         content: "\2013";
     }
+}
+
+.football-match__comments {
+    @include fs-data(4, true);
+    color: $c-neutral2-contrasted;
+    text-align: center;
 }
 
 .football-match--fixture {
