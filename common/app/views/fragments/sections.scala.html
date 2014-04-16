@@ -8,7 +8,7 @@
         data-link-name="global navigation: header : sections"}>
     <ul class="nav nav--columns u-cf nav--additional-sections nav--top-border-off @if(isFooter){nav--footer}">
         @* <!-- TODO delete site after switch to single domain --> *@
-            @Edition(request).navigation(page).map{ section =>
+            @Edition(request).navigation.map{ section =>
                 <li class="nav__item@if(section.name.newWindow && !isFooter){ mobile-only}">
                     <a href="@LinkTo{@section.name.href}"
                         data-link-name="@section.name.title"
