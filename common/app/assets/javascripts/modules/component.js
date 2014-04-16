@@ -297,6 +297,15 @@ define([
     };
 
     /**
+     * @param {string} state
+     * @param {string|null} elemName
+     */
+    Component.prototype.toggleState = function(state, elemName) {
+        var elem = elemName ? this.getElem(elemName) : this.elem;
+        bonzo(elem).toggleClass(this.componentClass + (elemName ? '__'+ elemName : '') +'--'+ state);
+    };
+
+    /**
      * @param {string|null} state
      * @param {string|null} elemName
      * return {Boolean}
