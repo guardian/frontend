@@ -334,7 +334,7 @@
 
     @include mq(leftCol) {
         margin-bottom: 0;
-        margin-right: 0;
+        padding-right: 0;
         @include rem((
             min-height: gs-height(1),
             padding-top: $gs-baseline/6,
@@ -352,7 +352,7 @@
         margin: $gs-baseline/2 0
     ));
     overflow: hidden;
-    @include rounded-corners(50%);
+    @include border-radius(50%);
     background-color: $c-neutral7;
 
     @include mq(leftCol) {

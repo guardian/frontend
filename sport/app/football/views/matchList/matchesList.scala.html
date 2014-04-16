@@ -1,9 +1,9 @@
-@(matchesList: List[FootballMatch], competition: model.Competition, showCaption: Boolean = false)(implicit request: RequestHeader)
+@(matchesList: List[FootballMatch], competition: model.Competition, date: Option[org.joda.time.DateMidnight] = null, showCaption: Boolean = false)(implicit request: RequestHeader)
 @import implicits.Football._
 
 <table class="table football-matches">
     @if(showCaption){
-        <caption><a href="@competition.url">@competition.fullName</a></caption>
+        <caption><a href="@competition.url">@competition.fullName</a>@date.map{ date => <span class="football-matches__date">@date.toString("d MMMM yyyy")</span>}</caption>
     }
     <thead hidden>
         <tr>
@@ -56,6 +56,10 @@
                         </div>
 
                         <div class="football-teams__battleline"></div>
+
+                        @theMatch.comments.map { comments =>
+                            <div class="football-match__comments">@comments.reverse.dropWhile(_ == '.').reverse</div>
+                        }
                     </a>
                 </td>
             </tr>

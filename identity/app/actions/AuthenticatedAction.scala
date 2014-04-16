@@ -9,7 +9,7 @@ import utils.SafeLogging
 
 
 @Singleton
-class AuthAction @Inject()(authService: AuthenticationService)
+class AuthenticatedAction @Inject()(authService: AuthenticationService)
   extends ActionBuilder[AuthRequest] with SafeLogging {
 
   protected def invokeBlock[A](request: Request[A], block: (AuthRequest[A]) => Future[SimpleResult]) = {

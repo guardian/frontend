@@ -8,7 +8,7 @@ import play.api.mvc.RequestHeader
 object Title {
 
   def apply(page: MetaData)(implicit request: RequestHeader): Html = Html{
-    val section = Navigation.topLevelItem(Edition(request).navigation(page), page).map(_.name.title)
+    val section = Navigation.topLevelItem(Edition(request).navigation, page).map(_.name.title)
     val title = page match {
       case c: Content => s"${c.webTitle}${pagination(page)} | ${section.getOrElse(c.sectionName).capitalize}"
       case t: Tag     => s"${t.webTitle}${pagination(page)}${section.map(s => s" | ${s.capitalize}").getOrElse("")}"
