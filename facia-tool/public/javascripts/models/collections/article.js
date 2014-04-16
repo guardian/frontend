@@ -261,6 +261,12 @@ define([
             }
         };
 
+        Article.prototype.convertToSnap = function() {
+            this.meta.href(this.id());
+            this.id(snap.generateId());
+            this.state.open(!this.meta.headline());
+        };
+
         Article.prototype.save = function() {
             var self = this;
 

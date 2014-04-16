@@ -46,9 +46,7 @@ function (
                         {
                             defer.resolve(true, 'Sorry, snaps without headlines can\'t be added in live mode.');
                         } else {
-                            item.meta.href(item.id());
-                            item.id(snap.generateId());
-                            item.state.open(true);
+                            item.convertToSnap();
                             defer.resolve();
                         }
                     }

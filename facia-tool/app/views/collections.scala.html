@@ -43,7 +43,9 @@
     </div>
 
     <div class="left-col">
-        <div class="title">Clipboard</div>
+        <div class="title">
+            Clipboard <span class="linky" data-bind="click: createSnap">+</span>
+        </div>
         <div class="clipboard__wrapper" data-bind="with: clipboard">
             <div class="clipboard droppable" data-bind="
                 makeDropabble: true,
@@ -332,12 +334,16 @@
 
                 <div class="article_content" data-bind="if: !state.isEmpty()">
 
-                    <span class="is-breaking" data-bind="
+                    <span class="is" data-bind="
+                        visible: isSnap,
+                        click: open">Snap</span>
+
+                    <span class="is is--breaking" data-bind="
                         visible: meta.isBreaking,
                         click: open">Breaking News</span>
 
                     <a class="headline" target="article" data-bind="
-                        text: meta.headline() || fields.headline() || (isSnap() ? 'No link text' : '...'),
+                        text: meta.headline() || fields.headline() || (isSnap() ? 'Add link text!' : '...'),
                         css: {'is-empty': isSnap() && !meta.headline()},
                         attr: {href: id},
                         click: open"></a>

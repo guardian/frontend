@@ -64,6 +64,14 @@ define([
             keepCopy:  true
         });
 
+        model.createSnap = function() {
+            var blank = new Article();
+
+            blank.convertToSnap();
+            model.clipboard.items.unshift(blank);
+            _.defer(updateScrollables);
+        };
+
         model.setFront = function(id) {
             model.front(id);
         };
@@ -105,7 +113,7 @@ define([
         }
 
         var deferredDetectPressFailure = _.debounce(detectPressFailure, vars.CONST.detectPressFailureMs || 10000);
-        
+
         function pressFront() {
             model.statusPressFailure(false);
 
@@ -122,7 +130,7 @@ define([
 
         model.deferredDetectPressFailure = deferredDetectPressFailure;
         model.pressFront = pressFront;
-        
+
         function getFront() {
             return queryParams().front;
         }

@@ -242,7 +242,7 @@ a, a:hover {
 
 .live-mode .article {
     border-color: #EEFFEE;
-    background: #EEFFEE;        
+    background: #EEFFEE;
 }
 
 .article:hover,
@@ -260,11 +260,11 @@ a, a:hover {
 }
 
 .article.underDrag {
-    border-top-color: #f89406; 
+    border-top-color: #f89406;
 }
 
 .open .article.underDrag {
-    border-top-color: #999999; 
+    border-top-color: #999999;
 }
 
 .article:last-child {
@@ -303,13 +303,17 @@ a, a:hover {
     color: #000000;
 }
 
-.is-breaking {
-    background: #d61d00;
+.is {
+    background: #b2974f;
     color: #ffffff;
     font-size: 11px;
     line-height: 11px;
-    padding: 0 2px;
+    padding: 0 4px;
     border-radius: 2px;
+}
+
+.is--breaking {
+    background: #d61d00;
 }
 
 .is-empty {

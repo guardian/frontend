@@ -5,7 +5,7 @@ define(['utils/url-abs-path'], function(urlAbsPath) {
         },
 
         validateId: function (id) {
-            return [].concat(urlAbsPath(id).match(/^snap\/\d+$/))[0] || undefined;
+            return [].concat(urlAbsPath(id || '').match(/^snap\/\d+$/))[0] || undefined;
         }
     };
 });
