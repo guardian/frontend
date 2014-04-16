@@ -39,6 +39,12 @@
     }
 }
 
+.football-matches__date {
+    color: $c-neutral2-contrasted;
+    float: right;
+    font-weight: normal;
+}
+
 .football-match__report {
     position: absolute;
     right: 0;
