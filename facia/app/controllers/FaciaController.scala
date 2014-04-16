@@ -80,8 +80,7 @@ class FaciaController extends Controller with Logging with ExecutionContexts wit
           } else {
             val html = views.html.fragments.collections.standard(Config(id), collection.items, NewsContainer(showMore = false), 1)
             if (request.isJson)
-              JsonCollection(
-              html, collection)
+              JsonCollection(html, collection)
             else
               Ok(html)
           }

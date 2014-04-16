@@ -34,7 +34,6 @@ function (
                         cache.put('contentApi', capiId, result[0]);
                         populate(result[0], item);
                     } else {
-                        // TODO remove recognised meta queryparams from id
                         item.meta.href(item.id);
                         item.id = generateSnapId();
                     }
