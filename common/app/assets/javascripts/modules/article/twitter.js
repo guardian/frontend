@@ -8,7 +8,7 @@ define([
 ], function(
     qwery,
     $,
-    context,
+    getContext,
     detect
 ) {
     function enhanceTweets() {
@@ -17,8 +17,9 @@ define([
             return;
         }
 
-        var tweetElements = qwery('blockquote.tweet', context()),
-            widgetScript  = qwery('#twitter-widget', context());
+        var context = getContext(),
+            tweetElements = qwery('blockquote.tweet', context),
+            widgetScript  = qwery('#twitter-widget', context);
 
         tweetElements.forEach( function(element) {
             // Reformat the tweet element to match twitter's native element structure.
@@ -27,16 +28,15 @@ define([
             $(element).removeClass('tweet').addClass('twitter-tweet');
         });
 
-        var nativeTweetElements = qwery('blockquote.twitter-tweet', context());
+        var nativeTweetElements = qwery('blockquote.twitter-tweet', context);
 
         if (nativeTweetElements.length > 0) {
             if (widgetScript.length === 0) {
                 var scriptElement = document.createElement('script');
                 scriptElement.id = 'twitter-widget';
                 scriptElement.async = true;
-                scriptElement.charset = 'utf-8';
                 scriptElement.src = '//platform.twitter.com/widgets.js';
-                $(context()).append(scriptElement);
+                $(context).append(scriptElement);
             } else {
                 if (twttr && 'widgets' in twttr && 'load' in twttr.widgets) {
                     twttr.widgets.load();
