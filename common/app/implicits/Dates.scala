@@ -13,8 +13,10 @@ trait Dates {
   def today(): DateMidnight = DateMidnight.now()
 
   implicit class DateTime2SameDay(date: DateTime) {
-    lazy val isToday: Boolean = sameDay(DateTime.now)
-    def sameDay(other: DateTime): Boolean = date.getDayOfYear == other.getDayOfYear && date.getYear == other.getYear
+    def sameDay(other: DateTime): Boolean =  {
+      val thatDateSameZone = other.withZone(date.zone)
+      date.getYear == thatDateSameZone.getYear && date.getDayOfYear == thatDateSameZone.getDayOfYear
+    }
   }
 
   implicit class DateMidnight2DayOfEpoch(datetime: DateMidnight) {

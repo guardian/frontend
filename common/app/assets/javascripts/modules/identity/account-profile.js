@@ -1,3 +1,5 @@
+/* global XDomainRequest */
+
 /*
  *  Handle History updates and monitor for unsaved changes on account profile
  *  forms.
@@ -23,7 +25,17 @@ define([
             tabs: '.js-tabs',
             formError: '.form__error',
             changed: 'js-form-changed',
-            textInput: '.text-input'
+            textInput: '.text-input',
+            avatarUploadForm: '.js-avatar-upload-form'
+        };
+
+        self.messages = {
+            noCorsError: 'Cross-origin resource sharing is not supported by this browser. Please upgrade your browser to use this feature.',
+            noServerError: 'The image upload server could not be reached.'
+        };
+
+        self.urls = {
+            avatarTokenUrl: 'https://gu-image-upload.appspot.com/upload-endpoint-generator'
         };
 
         self.unsavedFields = [];
@@ -34,6 +46,9 @@ define([
                 self.accountProfileForms = context.querySelector(self.classes.forms);
 
                 if (self.accountProfileForms) {
+
+                    self.bindAvatarUpload();
+
                     self.bindInputs(self.accountProfileForms.querySelector(self.classes.accountForm));
                     self.bindInputs(self.accountProfileForms.querySelector(self.classes.publicForm));
 
@@ -46,9 +61,9 @@ define([
     };
 
     /*
-     *  Handle click on form tabs, change history if necessary and render error
-     *  message if form contains unsaved changes.
-     */
+    *   Handle click on form tabs, change history if necessary and render error
+    *   message if form contains unsaved changes.
+    */
     accountProfile.prototype.handleTabsClick = function(event) {
         var self = this;
         if (event.target.nodeName.toLowerCase() === 'a') {
@@ -71,9 +86,64 @@ define([
     };
 
     /*
-     *  Generate a descriptive error message for when a user attempts to leave
-     *  a form with unsaved changes.
-     */
+    *   Request a new image upload token on submit of the image upload form.
+    *   TO DO: Use html5 file api to validate file size prior to upload @chrisfinch
+    */
+    accountProfile.prototype.bindAvatarUpload = function () {
+        var self = this;
+        var avatarForm = self.accountProfileForms.querySelector(self.classes.avatarUploadForm);
+
+        bean.on(avatarForm, 'submit', function (event) {
+            event.preventDefault();
+
+            var xhr = self.createCORSRequest('GET', self.urls.avatarTokenUrl);
+            if (!xhr) {
+                self.prependErrorMessage(self.messages.noCorsError, avatarForm);
+            }
+
+            xhr.onerror = function() {
+                self.prependErrorMessage(self.messages.noServerError, avatarForm);
+            };
+
+            xhr.onload = function() {
+                avatarForm.setAttribute('action', xhr.responseText);
+                avatarForm.submit();
+            };
+
+            xhr.send();
+        });
+    };
+
+    /*
+    *   Prepend an error message in to an element
+    */
+    accountProfile.prototype.prependErrorMessage = function (message, location) {
+        var errorHtml = document.createElement('div');
+        errorHtml.innerHTML = message;
+        errorHtml.className = this.classes.formError.replace('.', '');
+        location.insertBefore(errorHtml, location.firstChild);
+    };
+
+    /*
+    *   Create a cross-origin resource sharing XHR request
+    */
+    accountProfile.prototype.createCORSRequest = function (method, url) {
+        var xhr = new XMLHttpRequest();
+        if ('withCredentials' in xhr) {
+            xhr.open(method, url, true);
+        } else if (typeof XDomainRequest !== 'undefined') {
+            xhr = new XDomainRequest();
+            xhr.open(method, url);
+        } else {
+            xhr = null; // CORS not supported
+        }
+        return xhr;
+    };
+
+    /*
+    *   Generate a descriptive error message for when a user attempts to leave
+    *   a form with unsaved changes.
+    */
     accountProfile.prototype.genUnsavedError = function () {
         var errorDivStart = '<div class="form__error">',
             errorDivEnd = '</div>',
@@ -97,8 +167,8 @@ define([
     };
 
     /*
-     *  Register a form and form field as containing unsaved changes
-     */
+    *   Register a form and form field as containing unsaved changes
+    */
     accountProfile.prototype.onInputChange = function (event) {
         bonzo(event.target.form).addClass(this.classes.changed);
         this.unsavedChangesForm = event.target.form;
@@ -108,8 +178,8 @@ define([
     };
 
     /*
-     *  Bind keyup events on input fields and register parent form on element
-     */
+    *   Bind keyup events on input fields and register parent form on element
+    */
     accountProfile.prototype.bindInputs = function (form) {
         var inputs = Array.prototype.slice.call(form.querySelectorAll(this.classes.textInput));
         inputs = inputs.concat(Array.prototype.slice.call(form.querySelectorAll('select')));

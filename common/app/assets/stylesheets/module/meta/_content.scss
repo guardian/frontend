@@ -1,4 +1,4 @@
-.series-meta {
+.content-meta {
     padding: 0;
     border-top: 1px dotted $c-neutral5;
     @include fs-textsans(3);
@@ -9,28 +9,28 @@
     ));
 }
 
-.series-meta__label {
+.content-meta__label {
     color: $c-neutral2;
 }
 
-.series-meta__item {
+.content-meta__item {
     padding: 0;
     margin: 0;
 }
 
-.series-meta--inline {
+.content-meta--inline {
     border-top: none;
     margin: 0;
 
-    .series-meta__label,
-    .series-meta__item {
+    .content-meta__label,
+    .content-meta__item {
         display: inline-block;
         @include rem((
             margin-right: $gs-gutter/10
         ));
     }
 
-    @include mq(tablet){
+    @include mq(tablet) {
         @include rem((
             margin: 0 0 $gs-baseline/2
         ));

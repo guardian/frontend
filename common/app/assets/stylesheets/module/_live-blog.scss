@@ -167,6 +167,7 @@
     margin: 0;
     margin-top: 4px;
     min-height: initial;
+    border-top: 0;
 
     .tone-colour {
         color: inherit;
@@ -194,7 +195,7 @@
         background-color: white;
         width: $size;
         height: $size;
-        @include rounded-corners($size/2);
+        @include border-radius($size/2);
         display: inline-block;
         margin-bottom: -1px;
         margin-right: 3px;

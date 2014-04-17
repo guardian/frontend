@@ -87,15 +87,12 @@ $football-crest-large: 60px;
 }
 
 .team__crest {
-    @include rem((
-        margin-bottom: $gs-baseline
-    ));
-    display: table;
     height: $football-crest-small;
     float: left;
     overflow: hidden;
 
     @include mq($from: tablet) {
+        display: table;
         height: $football-crest-large;
         float: none;
         width: 100%;
@@ -103,11 +100,11 @@ $football-crest-large: 60px;
 }
 
 .team__crest__img {
-    max-height: $football-crest-small;
+    height: $football-crest-small;
     max-width: $football-crest-small;
 
     @include mq($from: tablet) {
-        max-height: $football-crest-large;
+        height: $football-crest-large;
         max-width: $football-crest-large;
     }
 }
@@ -173,7 +170,7 @@ $football-crest-large: 60px;
 
 .status__time {
     @include fs-data(2);
-    @include rounded-corners(24px);
+    @include border-radius(24px);
     @include rem((
         height: $football-crest-small,
         line-height: $football-crest-small,
