@@ -19,22 +19,25 @@
 
             <div class="blog__last-updated-container">
                 <span class="blog__live">LIVE</span> updated <time class="js-timestamp" datetime="@article.webPublicationDate" data-relativeformat="med"></time>
-                <div class="js-comment-count blog__comment-count"></div>
             </div>
 
             <div class="blog__meta-container">
                 @fragments.meta.byline(article.byline, article)
                 @fragments.meta.dateline(article.webPublicationDate, secondary = true)
+                <div class="js-comment-count blog__comment-count"></div>
             </div>
 
 
             </header>
 
-            <div class="after-header">
-                </div>
+            <div class="after-header"></div>
         </div>
         <div class="blog__columning-wrapper">
             <div class="blog__main-column  blog__main-background">
+
+
+                <div class="js-live-blog__timeline blog__timeline"></div>
+
                 @fragments.standfirst(article)
 
                 @fragments.witnessCallToAction(article)
