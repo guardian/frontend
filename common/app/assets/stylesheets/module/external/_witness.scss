@@ -1,128 +1,104 @@
-//Module: witness
-//Desc: This file contains all styles for Guardian Witness
+// Module: witness
+// Desc: This file contains all styles for Guardian Witness
+// Note: the naming convention is a mix between BEM and SMACSS
+// block--element instead of block__element
+//
+// Testing:
+// - images: /music/musicblog/2013/jun/27/glastonbury-2013-festival-liveblog-thursday1
+// - text: /technology/guardianwitness-blog/2014/apr/14/the-10-tech-commandments-to-avoid-digital-shame
+// - "Contribute with…" cta: /lifeandstyle/the-running-blog/2013/aug/05/competition-win-gps-running-watch
 
-.from-content-api {
+.element-witness {
+    border: 1px solid $c-neutral5;
+    @include rem((
+        margin-bottom: ($gs-baseline/3)*5
+    ));
+}
+.element-witness--title {
+    @include rem((
+        margin-bottom: ($gs-baseline/3)*2
+    ));
+}
+.element-witness--main {
+    @include rem((
+        padding: $gs-baseline $gs-gutter/2 ($gs-baseline/3)*4
+    ));
+}
+.element-witness figcaption {
+    @include rem((
+        margin: ($gs-baseline/3)*4 0 0 0
+    ));
+    // Make it look like the body copy
+    @include fs-bodyCopy(3);
+    color: $c-neutral1;
 
-    .element-witness {
-        border: 1px solid $c-neutral5;
-        margin-bottom: ($gs-baseline/3)*5;
+    &:before {
+        display: none; // Hide the "camera" icon
     }
+}
+.element-witness-video iframe {
+    max-width: 100%;
+}
+.element-witness--main img {
+    width: 100%;
+    max-width: 100%;
+}
+.element-witness--metadata {
+    border-top: 1px solid $c-neutral5;
+    @include rem((
+        padding: $gs-baseline $gs-gutter/2
+    ));
+    background: $c-neutral7;
+    @include fs-textsans(3);
+    color: $c-neutral2-contrasted !important;
 
-    .element-witness {
-        a {
-            color: $c-newsDefault;
-            text-decoration: none;
-
-            &:focus,
-            &:hover {
-                color: $c-neutral1;
-            }
-        }
-    }
-
-    .element-witness p {
-        @extend %type-7;
-    }
-
-    .element-witness--title {
-        margin-bottom: ($gs-baseline/3)*2;
-    }
-
-    .element-witness--main {
-        padding: $gs-baseline $gutter/2 ($gs-baseline/3)*4;
-    }
-
-    .element-witness--brand {
-        line-height: 14px;
-    }
-
-    .element-witness figcaption:before {
-        display: none;
-    }
-
-    .element-witness figcaption {
-        margin: ($gs-baseline/3)*4 0 0 0;
-    }
-
-    .element-witness-video iframe {
-        max-width: 100%;
-    }
-
-    .element-witness--main img {
-        width: 100%;
-        max-width: 100%;
-        margin-bottom: 0;
-    }
-
-    .element-witness--metadata {
-        p {
-            @include fs-data(3);
-        }
-        border-top: 1px solid $c-neutral5;
-        background: $c-neutral7;
-        padding: $gs-baseline $gutter/2;
-        line-height: 1;
-        color: $c-neutral2 !important;
-    }
-
-    .element-witness--metadata img {
-        margin-bottom: 0;
-    }
-
-    p.element-witness--source {
-        @include fs-data(3);
-
-        padding-left: $gutter/2;
-        color: $c-neutral2;
-    }
-
-    .element-witness--author {
-        @include fs-data(3);
-        display: inline-block;
-        margin-bottom: 0;
-        width: 100%;
-    }
-
-    .element-witness--author a {
-        padding-left: $gutter/4;
-    }
-
-    .element-witness--author-name {
-        @include fs-data(3);
-        display: inline-block;
-        font-weight: bold;
-    }
-
-    .element-witness--author time {
-        display: block;
-    }
-
-    .witness-avatar {
-        float: left;
-        padding: 0 $gutter/2 0 0;
-    }
-
-    .element-witness--date {
+    img {
         margin-bottom: 0;
     }
 }
-
-.element-witness-text .element-witness--main {
-    @extend %svg-i-quote-marks !optional;
-    background-position: ($gs-baseline/3)*2 0 !important;
+.element-witness--source {
+    @include rem((
+        padding-left: $gs-gutter/2
+    ));
+    @include fs-textsans(3);
+    color: $c-neutral2;
+}
+.element-witness--author-name {
+    font-weight: bold;
+}
+.element-witness--date {
+    @include fs-textsans(1, true);
+}
+.element-witness--author time {
+    display: block;
+}
+.witness-avatar {
+    float: left;
+    @include rem((
+        padding: 0 $gs-gutter/2 0 0
+    ));
+}
+.element-witness--author,
+.element-witness--date {
+    margin-bottom: 0;
 }
 
 .witness-cta-wrapper {
     position: relative;
     overflow: hidden;
     height: 47px;
-    margin-bottom: ($gs-baseline/3)*4;
+    @include rem((
+        margin-bottom: ($gs-baseline/3)*4
+    ));
 }
 .witness-cta__body {
-    @include fs-data(3);
+    @include fs-textsans(3);
     float: left;
-    padding: 5px $gutter/2 0;
-    margin-left: 50px;
+    @include rem((
+        line-height: 15px,
+        padding: $gs-baseline/2 $gs-gutter/2 0,
+        margin-left: 50px
+    ));
 
     .witness-cta__logo {
         display: block;
@@ -139,7 +115,6 @@
     color: $c-neutral2;
     margin-left: -3px;
 }
-
 .witness-cta {
     border: 1px solid $c-neutral5;
     overflow: hidden;
@@ -147,18 +122,18 @@
     margin: 1px 0 0 0;
     position: relative;
 }
-
 .witness-cta__sponsor {
     float: right;
     border-left: 1px solid $c-neutral5;
-    padding-left: 6px;
-    margin: 6px $gutter/2;
+    @include rem((
+        padding-left: $gs-gutter/2,
+        margin: $gs-baseline/2 $gs-gutter/2
+    ));
 
     .i {
         display: block;
     }
 }
-
 .witness-cta__icon {
     position: absolute;
     top: 0;

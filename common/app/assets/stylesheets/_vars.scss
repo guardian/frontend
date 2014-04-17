@@ -99,9 +99,7 @@ $fs-headlines: (
     32 36, // 5
     36 40, // 6
     40 44, // 7
-    44 48, // 8
-    48 52, // 9
-    18 22  // 10
+    44 48  // 8
 );
 
 $fs-bodyHeadings: (
@@ -130,7 +128,8 @@ $fs-data: (
 $fs-textsans: (
     12 16, // 1
     13 18, // 2
-    14 22, // 3
+    14 20, // 3
+    14 22  // 4
 );
 
 // Colours
@@ -202,7 +201,7 @@ $c-sportAway: $c-sportDark;
 // =============================================================================
 
 $c-statusPositive: #6ca843;
-$c-statusNeutral: #999999;
+$c-statusNeutral: $c-neutral2;
 $c-statusNegative: #da1d1d;
 
 

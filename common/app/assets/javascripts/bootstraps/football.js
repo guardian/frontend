@@ -2,6 +2,7 @@ define([
     'common/$',
     'bonzo',
     'bean',
+    'common/utils/ajax',
     'common/utils/context',
     'common/utils/config',
     'common/utils/page',
@@ -9,13 +10,13 @@ define([
     'common/modules/charts/table-doughnut',
     'common/modules/sport/football/match-list',
     'common/modules/sport/football/match-info',
-    'common/modules/sport/football/match-stats',
     'common/modules/sport/football/score-board',
-    'common/modules/sport/football/table'
+    'common/modules/sport/football/football'
 ], function (
     $,
     bonzo,
     bean,
+    ajax,
     context,
     config,
     page,
@@ -23,9 +24,8 @@ define([
     Doughnut,
     MatchList,
     MatchInfo,
-    MatchStats,
     ScoreBoard,
-    Table
+    football
 ) {
     context = context();
 
@@ -40,6 +40,9 @@ define([
             if (callback) {
                 callback(resp, $nav);
             } // The promise chain is broken as Reqwest doesn't allow for creating more than 1 argument.
+        }, function() {
+            $('.score__container', context).remove();
+            $('.article__headline', context).removeClass('u-h');
         });
     }
 
@@ -103,6 +106,7 @@ define([
 
         page.isMatch(function(match) {
             extras[0] = { ready: false };
+            extras[1] = { ready: false };
             if (match.pageType === 'stats') {
                 renderNav(match);
             } else {
@@ -141,44 +145,66 @@ define([
                         }
                     }
 
+                    // match stats
                     if (resp.hasStarted) {
-                        var statsUrl = $('.tab--stats a', $nav).attr('href').replace(/^.*\/\/[^\/]+/, ''),
-                            statsContainer = $.create('<div class="match-stats__container"></div>')[0],
-                            matchStats = new MatchStats(statsUrl);
+                        var statsUrl = $('.tab--stats a', $nav).attr('href').replace(/^.*\/\/[^\/]+/, '');
 
-                        matchStats.fetch(statsContainer).then(function() {
-                            $('.js-chart', statsContainer).each(function(el) {
-                                new Doughnut().render(el);
+                        $.create('<div class="match-stats__container"></div>').each(function(container) {
+                            football.statsFor(statsUrl).fetch(container).then(function() {
+                                $('.js-chart', container).each(function(el) {
+                                    new Doughnut().render(el);
+                                });
+                                extras[0] = {
+                                    name: 'Match stats',
+                                    importance: 3,
+                                    content: container,
+                                    ready: true
+                                };
+                                renderExtras(extras, dropdownTemplate);
                             });
-                            extras[0] = {
-                                name: 'Match stats',
-                                importance: 3,
-                                content: statsContainer,
-                                ready: true
-                            };
-                            renderExtras(extras, dropdownTemplate);
                         });
                     } else {
                         delete extras[0];
                         renderExtras(extras, dropdownTemplate);
                     }
+
+                    // match day
+                    page.isCompetition(function(competition) {
+                        $.create('<div class="js-football-match-day" data-link-name="football-match-day-embed"></div>').each(function (container) {
+                            football.matchDayFor(competition, resp.matchDate).fetch(container).then(function() {
+                                extras[1] = {
+                                    name: 'Today\'s matches',
+                                    importance: 2,
+                                    content: container,
+                                    ready: true
+                                };
+                                renderExtras(extras, dropdownTemplate);
+                            }, function() {
+                                delete extras[1];
+                                renderExtras(extras, dropdownTemplate);
+                            });
+                        });
+                    });
                 });
             }
         });
 
         page.isCompetition(function(competition) {
-            extras[1] = { ready: false };
-            var table = new Table(competition),
-                tableContainer = $.create('<div class="js-football-table" data-link-name="football-table-embed"></div>')[0];
+            extras[2] = { ready: false };
 
-            table.fetch(tableContainer).then(function() {
-                extras[1] = $('.table__container', tableContainer).length > 0 ? {
-                    name: 'Table',
-                    importance: 2,
-                    content: tableContainer,
-                    ready: true
-                } : undefined;
-                renderExtras(extras, dropdownTemplate);
+            $.create('<div class="js-football-table" data-link-name="football-table-embed"></div>').each(function(container) {
+                football.tableFor(competition).fetch(container).then(function() {
+                    extras[2] = $('.table__container', container).length > 0 ? {
+                        name: 'Table',
+                        importance: 3,
+                        content: container,
+                        ready: true
+                    } : undefined;
+                    renderExtras(extras, dropdownTemplate);
+                }, function() {
+                    delete extras[2];
+                    renderExtras(extras, dropdownTemplate);
+                });
             });
         });
 
@@ -212,6 +238,26 @@ define([
             if (!e.target.getAttribute('href')) {
                 window.location = this.getAttribute('data-link-to');
             }
+        });
+
+        bean.on(context, 'click', '.js-show-more', function(e) {
+            e.preventDefault();
+            var el = e.currentTarget;
+            ajax({
+                url: el.getAttribute('href') +'.json'
+            }).then(function(resp) {
+                $.create(resp.html).each(function(html) {
+                    $('[data-show-more-contains="'+ el.getAttribute('data-puts-more-into') +'"]', context)
+                        .append($(el.getAttribute('data-shows-more'), html));
+
+                    var nurl = resp[el.getAttribute('data-new-url')];
+                    if (nurl) {
+                        bonzo(el).attr('href', nurl);
+                    } else {
+                        bonzo(el).remove();
+                    }
+                });
+            });
         });
 
         bean.on(context, 'change', $('form.football-leagues')[0], function() {

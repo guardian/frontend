@@ -47,7 +47,7 @@ td.gsc-search-button {
     padding: 5px 0 0 0 !important;
 }
 .gsc-search-button-v2 {
-    @include rounded-corners(0 !important);
+    @include border-radius(0 !important);
     margin: 0 !important;
     padding: 7px 9px 8px !important;
 }

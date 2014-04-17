@@ -107,6 +107,13 @@ case class SeriesContainer(showMore: Boolean = true) extends Container {
   val tone = "news"
 }
 
+/**
+ * Encapsulates previous and next urls
+ */
+case class PreviousAndNext(prev: Option[String], next: Option[String]) {
+  val isDefined: Boolean = prev.isDefined || next.isDefined
+}
+
 object MetadataJson {
 
   def apply(data: (String, Any)): String = data match {

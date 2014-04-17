@@ -55,6 +55,7 @@ object MoreOnMatchController extends Controller with Football with Requests with
             "scoreSummary" -> football.views.html.fragments.scoreSummary(theMatch),
             "hasStarted" -> theMatch.hasStarted,
             "group" -> group,
+            "matchDate" ->  DateTimeFormat.forPattern("yyyy/MMM/dd").print(theMatch.date).toLowerCase(),
             "dropdown" -> views.html.fragments.dropdown("")(Html(""))
           )
         }

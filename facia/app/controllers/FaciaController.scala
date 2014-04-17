@@ -35,6 +35,7 @@ class FaciaController extends Controller with Logging with ExecutionContexts wit
   def renderFrontJson(id: String) = renderFront(id)
   def renderCollectionRss(id: String) = renderCollection(id)
   def renderCollectionJson(id: String) = renderCollection(id)
+  def renderContainerJson(id: String) = renderContainer(id)
 
   def renderFront(path: String) = {
     log.info(s"Serving Path: $path")
@@ -67,10 +68,9 @@ class FaciaController extends Controller with Logging with ExecutionContexts wit
     getPressedCollection(id).map { collectionOption =>
       collectionOption.map { collection =>
         Cached(60) {
+          val config: Config = ConfigAgent.getConfig(id).getOrElse(Config(""))
           if (request.isRss) {
-            val config: Config = ConfigAgent.getConfig(id).getOrElse(Config(""))
-            Ok(TrailsToRss(config.displayName, collection.items))
-              .as("text/xml; charset=utf-8")
+            Ok(TrailsToRss(config.displayName, collection.items)).as("text/xml; charset=utf-8")
           } else {
             val html = views.html.fragments.collections.standard(Config(id), collection.items, NewsContainer(showMore = false), 1)
             if (request.isJson)
@@ -83,6 +83,21 @@ class FaciaController extends Controller with Logging with ExecutionContexts wit
     }
   }
 
+  def renderContainer(id: String) = MemcachedAction { implicit request =>
+      log.info(s"Serving collection ID: $id")
+      getPressedCollection(id).map { collectionOption =>
+        collectionOption.map { collection =>
+          Cached(60) {
+            val config: Config = ConfigAgent.getConfig(id).getOrElse(Config(""))
+            val html = views.html.fragments.frontCollection(FrontPage("").get, (config, collection), 1, 1)
+            if (request.isJson)
+              JsonCollection(html, collection)
+            else
+              NotFound
+          }
+        }.getOrElse(ServiceUnavailable)
+      }
+  }
 
   private object JsonCollection{
     def apply(html: Html, collection: Collection)(implicit request: RequestHeader) = JsonComponent(

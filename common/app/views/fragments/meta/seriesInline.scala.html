@@ -1,7 +1,0 @@
-@(content: model.Content)
-
-@if(content.isSeries) {
-    @content.series.headOption.map { series =>
-        @fragments.meta.series(series.id, series.name, Some("inline"))
-    }
-}
