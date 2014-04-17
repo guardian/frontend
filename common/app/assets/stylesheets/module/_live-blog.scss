@@ -98,6 +98,16 @@
     padding-bottom: $gs-baseline;
 }
 
+.blog__comment-count {
+    display: inline-block;
+    .commentcount {
+        color: inherit;
+        display: block;
+        position: static;
+        margin-bottom: 0;
+    }
+}
+
 /* Design
    ========================================================================== */
 .blog__head-background {
@@ -118,12 +128,18 @@
 .blog__section {
     @include fs-header(3);
     a { color: inherit; }
+    @include mq($to: tablet) {
+        display: none;
+    }
 }
 
 .blog__headline {
     color: inherit;
     @include fs-headline(5);
-    margin-bottom: $gs-row-height + ($gs-baseline * 2);
+    margin-bottom: $gs-row-height;
+    @include mq(rightCol) {
+        margin-bottom: $gs-row-height + ($gs-baseline * 2);
+    }
 }
 
 .blog__meta-container {
@@ -162,6 +178,10 @@
 
 .blog__last-updated-container {
     @include fs-data(3);
+    @include mq($to: rightCol) {
+        border-top: 1px solid #E6A1AB;
+        padding-top: $gs-baseline;
+    }
 }
 
 .blog__live {
@@ -199,23 +219,41 @@
 
 .block-time {
     line-height: 15px;
-    float: left;
-    padding: 4px 0 0 $gs-gutter/2;
+    padding: 4px 0 $gs-baseline/3 $gs-gutter/2;
 
     &.published-time {
         margin: 0;
         font-family: $sans-serif;
     }
+
+    .block-time__absolute {
+        display: inline-block;
+        margin-left: $gs-gutter/4;
+        @include fs-data(2);
+        font-style: italic;
+        font-weight: normal;
+        color: $c-neutral2;
+    }
+
+    @include mq(mobileLandscape) {
+        float: left;
+        .block-time__absolute {
+            display: block;
+            margin-left: 0;
+        }
+    }
 }
 
 .updated-time {
-    margin: $gs-baseline/3 0 ($gs-baseline/3)*4;
+    //padding: $gs-baseline/3 0 ($gs-baseline/3)*4;
+    padding: $gs-baseline/2 $gs-gutter/2;
     @include fs-data(1);
     color: $c-neutral2;
 }
 
 /* Blocks
    ========================================================================== */
+
 .block {
     @include clearfix;
     margin-bottom: $gs-baseline;
@@ -231,61 +269,21 @@
     }
 }
 
-
-/* Tweets
+/* Blocks container
    ========================================================================== */
 
-.tweet {
-    display: table-cell;
-    width: 10000px;
-    max-width: 100%;
-    background-color: #f4f4f4;
-    background-position: ($gs-baseline/3)*2 $gutter/2 !important;
-    background-repeat: no-repeat;
-    border-top: $gs-baseline/6 solid #3299d0;
+.live-blog__blocks {
+    opacity: 1;
+    height: auto;
+    background-color: transparent;
+    @include transition(opacity 2s ease-out, background-color 4s ease-out);
 }
-    .element-tweet {
-        margin: $gs-baseline 0 ($gs-baseline/3)*4;
-    }
-    .tweet,
-    .from-content-api blockquote.tweet {
-        border-left-width: 0;
-        @include rem((
-            padding: $gs-baseline/2 ($gs-baseline/3)*2
-        ));
-        font-style: normal;
-        @include fs-textsans(4);
-    }
-    // Temporary fix to issue #1674
-    .from-content-api blockquote.tweet {
-       display: block;
-       margin-left: 0;
-       width: auto;
-    }
-    // End temporary fix
-    .tweet:before,
-    .tweet:after,
-    .live-blog .tweet:before,
-    .live-blog .tweet:after {
-        display: none !important;
-    }
+.blog .ad-slot--mpu-banner-ad {
+    padding-top: $gs-baseline;
+}
 
-    .tweet-user {
-        display: inline-block;
-        font-weight: bold;
-        padding-left: 40px;
-        margin-bottom: 0;
-    }
-
-    .tweet-date {
-        display: block;
-        color: $c-neutral2;
-        padding-left: 40px;
-        margin-bottom: ($gs-baseline/3)*4;
-    }
-
-
-
+/* Animations
+   ========================================================================== */
 
 .autoupdate--has-animation {
 
@@ -303,87 +301,152 @@
     100% { background: transparent; }
 }
 
-/* Blocks container
+/* Above/Below content
+   ========================================================= */
+
+.blog {
+
+    .article__standfirst {
+        @include fs-headline(1);
+    }
+
+
+    .article__keywords {
+        border-top: 1px dotted $c-neutral3;
+        @include rem((
+    line-height: 20px
+    ));
+    }
+
+    .social-wrapper {
+        padding-bottom: $gs-baseline*2;
+    }
+
+}
+
+/* Content styling
    ========================================================================== */
 
 $block-padding-left: gs-span(1) + $gs-gutter;
 $block-padding-right: $gs-gutter;
 
-.live-blog__blocks {
-    opacity: 1;
-    height: auto;
-    background-color: transparent;
-    @include transition(opacity 2s ease-out, background-color 4s ease-out);
-}
-.blog .ad-slot--mpu-banner-ad {
-    padding-top: $gs-baseline;
+.blog .from-content-api {
+
+    .block-title,
+    .block-elements > *
+    {
+        margin-left: $block-padding-left;
+        margin-right: $block-padding-right;
+        @include mq($to: mobileLandscape) {
+            margin-left: $gs-gutter/2;
+            margin-right: $gs-gutter/2;
+        }
+    }
+
+    .block-elements {
+
+        /* Quotes
+           ========================================================= */
+
+        > blockquote,
+        > blockquote.quoted { // using !important to override inline styles from content api
+            margin-left: $block-padding-left !important;
+            margin-right: $block-padding-right !important;
+            @include mq($to: mobileLandscape) {
+                margin-left: $gs-gutter/2 !important;
+                margin-right: $gs-gutter/2 !important;
+                &:before { // remove pseudo quote at mobile
+                    display: none;
+                }
+            }
+        }
+        > blockquote{
+            color: $c-neutral2;
+        }
+
+        > blockquote.quoted:before {
+            margin-left: -30px;
+            left: auto;
+        }
+
+        /* Media
+           ========================================================= */
+
+        > .element-image,
+        > .element-video,
+        > .element-witness,
+        > .element-embed {
+            margin-left: 0;
+            margin-right: 0;
+        }
+        > .embed-video-wrapper {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%; // 16:9 aspect ratio
+
+            iframe {
+                position: absolute;
+                top: 0;
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+        > .element figcaption {
+            background-color: white;
+            margin-left: $block-padding-left;
+            margin-right: $block-padding-right;
+        }
+    }
 }
 
-
-/* Quotes
+/* Tweets
    ========================================================================== */
-.blog .from-content-api blockquote {
-    margin-left: 0 !important; // override inline styles
-    color: $c-neutral2;
-}
-.blog .from-content-api blockquote.quoted {
-    margin-left: 0 !important; // override inline styles
-    &:before {
-        margin-left: -30px;
-        left: auto;
-    }
-}
 
-.blog .block-elements,
-.blog .block-title {
-    margin-left: $block-padding-left;
-    margin-right: $block-padding-right;
+.tweet {
+    display: table-cell;
+    width: 10000px;
+    max-width: 100%;
+    background-color: #f4f4f4;
+    background-position: ($gs-baseline/3)*2 $gutter/2 !important;
+    background-repeat: no-repeat;
+    border-top: $gs-baseline/6 solid #3299d0;
 }
-
-
-.blog .element-image,
-.blog .element-video,
-.blog .element-witness {
-    margin-left: -$block-padding-left;
-    margin-right: -$block-padding-right;
+.element-tweet {
+    margin: $gs-baseline 0 ($gs-baseline/3)*4;
 }
-.blog .embed-video-wrapper  {
-    position: relative;
-    width: 100%;
-    padding-top: 56.25%; // 16:9 aspect ratio
+.tweet,
+.from-content-api blockquote.tweet {
+    border-left-width: 0;
+    padding: $gs-baseline/2 ($gs-baseline/3)*2;
+    font-style: normal;
+    @include fs-textsans(3);
 
-    iframe {
-        position: absolute;
-        top: 0;
-        width: 100%;
-        height: 100%;
-    }
 }
-
-.blog .element figcaption {
-    background-color: white;
-    margin-left: $block-padding-left;
-    margin-right: $block-padding-right;
-}
-
-.blog .article__standfirst {
-    @include fs-headline(1);
-}
-.blog .article__keywords {
-    border-top: 1px dotted $c-neutral3;
-    @include rem((
-        line-height: 20px
-    ));
-}
-
-.blog .social-wrapper {
-    margin-bottom: $gs-baseline*2;
-}
-
-.blog__hhmm {
+// Temporary fix to issue #1674
+.from-content-api blockquote.tweet {
     display: block;
-    @include fs-data(2);
-    font-style: italic;
-    font-weight: normal;
+    margin-left: 0;
+    width: auto;
+}
+// End temporary fix
+.tweet:before,
+.tweet:after,
+.live-blog .tweet:before,
+.live-blog .tweet:after {
+    display: none !important;
+}
+
+.tweet-user {
+    display: inline-block;
+    font-weight: bold;
+    padding-left: 40px;
+    margin-bottom: 0;
+}
+
+.tweet-date {
+    display: block;
     color: $c-neutral2;
+    padding-left: 40px;
+    margin-bottom: ($gs-baseline/3)*4;
 }
