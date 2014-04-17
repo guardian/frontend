@@ -5,6 +5,7 @@ define([
     'common/$',
     'fence',
     'common/modules/ui/rhc',
+    'common/modules/article/truncate',
     'common/modules/ui/autoupdate',
     'common/modules/live/filter',
     'common/modules/discussion/loader',
@@ -18,6 +19,7 @@ define([
     $,
     fence,
     rhc,
+    truncate,
     AutoUpdate,
     LiveFilter,
     DiscussionLoader,
@@ -53,7 +55,6 @@ define([
         },
 
         initDiscussion: function() {
-
             common.mediator.on('page:article:ready', function(config, context) {
                 if (config.page.commentable && config.switches.discussion) {
                     var discussionLoader = new DiscussionLoader(context, common.mediator, { 'switches': config.switches });
@@ -100,6 +101,12 @@ define([
                 articleHeadline.style.fontWeight = 'bold';
                 articleHeadline.style.letterSpacing = '-1px';
             }
+        },
+
+        initTruncate: function() {
+            mediator.on('page:article:ready', function() {
+                truncate();
+            });
         }
     };
 
@@ -112,6 +119,7 @@ define([
             modules.initFence();
             modules.initLayoutHints(config);
             modules.initHelvetica(config);
+            modules.initTruncate();
         }
         common.mediator.emit('page:article:ready', config, context);
     };

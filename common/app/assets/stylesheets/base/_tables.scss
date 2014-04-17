@@ -13,7 +13,9 @@ td {
 @mixin table--small {
     th,
     td,
-    thead td {
+    thead td,
+    caption,
+    .table__caption {
         @include fs-data(4, true);
         @include rem((
             padding: $table-baseline*2
@@ -26,22 +28,25 @@ td {
     border-top: 2px solid $c-newsAccent;
     color: $c-neutral1;
 
+    // We replicate the table style
+    // then move the caption over the top border
+    // This is because the caption is outside the flow of the table/
     caption,
     .table__caption {
-        @include fs-header(2);
-        @include rem((
-            padding-top: $gs-baseline/4,
-            padding-bottom: $gs-baseline
-        ));
-        
-        border-top: 1px dotted $c-neutral5;
-        color: $c-neutral1;
-        font-weight: normal;
+        background: $c-neutral8;
+        border-bottom: 1px solid darken($c-neutral8, 4%);
+        border-top: 2px solid $c-newsAccent;
+        font-weight: bold;
+        margin-bottom: -2px;
+        position: relative;
         text-align: left;
+        z-index: 2;
     }
 
     th,
-    td {
+    td,
+    caption,
+    .table__caption {
         @include fs-data(5);
         vertical-align: top;
     }
@@ -103,7 +108,7 @@ td {
 }
 
 .table-row--divider td {
-    border-bottom: 1px dashed $c-neutral1;
+    border-top: 1px dashed $c-neutral1;
 }
 
 .table-row--break td {

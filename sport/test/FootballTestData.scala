@@ -58,7 +58,7 @@ trait FootballTestData {
     Competition("500", "/football/championsleague", "Champions League", "Champions League", "European",
       startDate = Some((today - 2.months).toDateMidnight),
       matches = Seq(
-        result("Bolton", "Derby", 1, 1, today - 1.day),
+        result("Bolton", "Derby", 1, 1, today - 1.day, Some("Bolton win 4-2 on penalties.")),
         liveMatch("Cardiff", "Brighton", 2, 0, today.withTime(15, 0, 0, 0)),
         fixture("Wolves", "Burnley", today + 2.days)
       ),
@@ -85,11 +85,12 @@ trait FootballTestData {
     awayTeam = team.copy(id = awayName, name = awayName, score = None)
   )
 
-  private def result(homeName: String, awayName: String, homeScore: Int, awayScore: Int, date: DateTime) = _result.copy(
+  private def result(homeName: String, awayName: String, homeScore: Int, awayScore: Int, date: DateTime, comments: Option[String] = None) = _result.copy(
     id = s"result $homeName $awayName $date",
     date = date,
     homeTeam = team.copy(id = homeName, name = homeName, score = Some(homeScore)),
-    awayTeam = team.copy(id = awayName, name = awayName, score = Some(awayScore))
+    awayTeam = team.copy(id = awayName, name = awayName, score = Some(awayScore)),
+    comments = comments
   )
 
   private def leagueEntry(team: String, rank: Int) = LeagueTableEntry("1", None,

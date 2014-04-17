@@ -73,10 +73,15 @@ GET         /football/:tag/results/:year/:month/:day                            
 GET         /football/:tag/results                                                                                   football.controllers.ResultsController.tagResults(tag)
 GET         /football/:tag/results.json                                                                              football.controllers.ResultsController.tagResultsJson(tag)
 
-GET         /football/live                                                                                           football.controllers.LiveMatchesController.liveMatches()
-GET         /football/live.json                                                                                      football.controllers.LiveMatchesController.liveMatchesJson()
-GET         /football/:competition/live                                                                              football.controllers.LiveMatchesController.competitionMatches(competition)
-GET         /football/:competition/live.json                                                                         football.controllers.LiveMatchesController.competitionMatchesJson(competition)
+GET         /football/live                                                                                           football.controllers.MatchDayController.liveMatches()
+GET         /football/live.json                                                                                      football.controllers.MatchDayController.liveMatchesJson()
+GET         /football/:competition/live                                                                              football.controllers.MatchDayController.competitionMatches(competition)
+GET         /football/:competition/live.json                                                                         football.controllers.MatchDayController.competitionMatchesJson(competition)
+
+GET         /football/match-day/:year/:month/:day.json                                                               football.controllers.MatchDayController.matchesForJson(year, month, day)
+GET         /football/match-day/:year/:month/:day                                                                    football.controllers.MatchDayController.matchesFor(year, month, day)
+GET         /football/match-day/:competition/:year/:month/:day.json                                                  football.controllers.MatchDayController.competitionMatchesForJson(competition, year, month, day)
+GET         /football/match-day/:competition/:year/:month/:day                                                       football.controllers.MatchDayController.competitionMatchesFor(competition, year, month, day)
 
 GET         /football/tables                                                                                         football.controllers.LeagueTableController.renderLeagueTable()
 GET         /football/tables.json                                                                                    football.controllers.LeagueTableController.renderLeagueTableJson()
@@ -191,6 +196,8 @@ GET         /pressed/*path                                                      
 GET         /collection/*id/rss                                                                                      controllers.FaciaController.renderCollectionRss(id)
 GET         /collection/*id.json                                                                                     controllers.FaciaController.renderCollectionJson(id)
 GET         /collection/*id                                                                                          controllers.FaciaController.renderCollection(id)
+
+GET         /container/*id.json                                                                                      controllers.FaciaController.renderContainerJson(id)
 
 # Editionalised pages
 GET         /$path<[^/]+(/[^/]+)?>/rss                                                                               controllers.FaciaController.renderFrontRss(path)

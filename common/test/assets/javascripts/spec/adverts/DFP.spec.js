@@ -94,6 +94,7 @@ define([
 
             it('should not be rendered twice', function() {
                 var $slot = $('#dfp-already-labelled');
+                dfp.addLabel($slot);
                 expect($slot.previous().hasClass('ad-slot__label')).toBe(false);
             });
 
@@ -101,6 +102,25 @@ define([
                 var $slot = $('#dfp-dont-label');
                 dfp.addLabel($slot);
                 expect($slot.previous().hasClass('ad-slot__label')).toBe(false);
+            });
+
+            it('should remove advert is ad event is empty', function() {
+                var id = 'dfp-html-slot',
+                    $slot = $('#' + id);
+                dfp.addLabel($slot);
+                dfp.parseAd({
+                    isEmpty: true,
+                    slot: {
+                        getSlotId: function() {
+                            return {
+                                getDomId: function() {
+                                    return id;
+                                }
+                            };
+                        }
+                    }
+                });
+                expect($('.ad-slot__label', $slot.parent()[0]).length).toBe(0);
             });
 
         });

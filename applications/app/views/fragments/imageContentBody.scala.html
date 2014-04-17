@@ -12,7 +12,7 @@
                  itemprop="mainContentOfPage" itemscope itemtype="@image.schemaType" role="main">
             <div class="article__inner article__inner--head">
                 <header class="article__head">
-                    @fragments.meta.seriesInline(image)
+                    @fragments.meta.metaInline(image)
                     @fragments.headline(image.headline)
 
                     @fragments.standfirst(image)
@@ -39,10 +39,6 @@
                     <div class="article__secondary-column__inner">
                         <div class="u-table">
                             <div class="u-table__row">
-                                <div class="u-table__cell u-table__cell--top">
-                                    <h2 class="article__meta-heading">Share this article</h2>
-                                    @fragments.social(image, "next to content")
-                                </div>
                             </div>
                         </div>
                     </div>

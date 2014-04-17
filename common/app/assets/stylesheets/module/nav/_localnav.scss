@@ -12,8 +12,7 @@
         }
     }
     h2.article__zone:only-child,
-    .hide-on-mobile-if-localnav,
-    .section-head {
+    .hide-on-mobile-if-localnav {
         display: none;
 
         @include mq(tablet) {
