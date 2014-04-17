@@ -9,6 +9,7 @@
 @import form.IdFormHelpers._
 @import form.Input
 @import helper._
+@import conf.Switches
 
 <fieldset class="fieldset">
     <div class="fieldset__heading">
@@ -21,6 +22,8 @@
         }
     </div>
 </fieldset>
+
+@if(Switches.IdentityAvatarUploadSwitch.isSwitchedOn) {
 
 @for(avatarUploadData <- avatarUploadDataOpt) {
 
@@ -53,6 +56,8 @@
             </div>
         </form>
     </fieldset>
+}
+
 }
 
 <form class="form js-public-profile-form" novalidate action="@idUrlBuilder.buildUrl("/public/edit", idRequest)" role="main" method="post">
