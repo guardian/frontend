@@ -16,7 +16,7 @@ public class SelectEditionAction extends UIAction {
     @Override
     public void execute() {
        WebDriver driver = driver();
-        driver.findElement(By.cssSelector("[data-edition= \"" + edition + "\"]")).click();
+        driver.findElement(By.cssSelector("[data-link-name=\"switch to " + edition + " edition\"]")).click();
 
     }
 
