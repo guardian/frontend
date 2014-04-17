@@ -56,25 +56,6 @@ public class NavigationSteps {
 		Assert.assertTrue(driver.getCurrentUrl().contentEquals(config.baseUrl() + "/au"));
 	}
 
-	@When("^(.*) switches to the UK edition$")
-	public void readerSwitchesToTheUKEdition(String actorLabel) throws Throwable {
-		Reader aReader = readers.getReader(actorLabel);
-		SelectEditionAction action = new SelectEditionAction("UK");
-		aReader.execute(action);
-	}
-
-    @When("^(.*) switches back to the UK edition$")
-    public void readerSwitchesBackToTheUKEdition(String actorLabel) throws Throwable {
-        readerSwitchesToTheUKEdition(actorLabel);
-    }
-
-	@Then("^the UK edition fronts should load$")
-	public void theUKEditionFrontsShouldLoad() throws Throwable {
-		WebDriver driver = ((Reader) readers.lastActor()).driver();
-		Assert.assertTrue(driver.getCurrentUrl().contentEquals(config.baseUrl() + "/uk"));
-	}
-
-
 	@When("^(.*) moves on to the first article$")
 	public void readerMovesOnToTheFirstArticle(String actorLabel) throws Throwable {
 		Reader aReader = readers.getReader(actorLabel);
