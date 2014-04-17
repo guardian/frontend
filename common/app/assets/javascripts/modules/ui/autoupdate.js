@@ -41,6 +41,8 @@ define([
 
         var unreadBlocks = 0;
 
+        this.notification = '<';
+
         this.template =
             '  <button class="u-button-reset live-toggler live-toggler--autoupdate live-toggler--on js-auto-update js-auto-update--on"' +
             '          data-action="off" data-link-name="autoupdate off" title="Turn auto update off">' +
@@ -79,7 +81,7 @@ define([
                 // add a timestamp to the attacher
                 $attachTo.attr('data-last-updated', date);
 
-                if (manipulation === 'prepend') {
+                if(this.isUpdating) {
                     var newElements = $('.autoupdate--new', attachTo);
 
                     unreadBlocks = newElements.length;
@@ -89,9 +91,9 @@ define([
                         this.revealNewElements();
                     }
 
-                    mediator.emit('modules:autoupdate:unread', unreadBlocks);
                 }
 
+                mediator.emit('modules:autoupdate:unread', unreadBlocks);
                 mediator.emit('modules:autoupdate:render');
             },
 
@@ -146,10 +148,12 @@ define([
         };
 
         this.on = function () {
-            this.off();
-            this.nextReload = new Date().getTime() + options.delay;
             var that = this;
 
+            this.nextReload = new Date().getTime() + options.delay;
+            this.isUpdating = true;
+
+            if(this.interval) { window.clearInterval(this.interval); }
             this.interval = window.setInterval(function() {
                 that.load.call(that);
                 that.nextReload = new Date().getTime() + options.delay;
@@ -157,7 +161,7 @@ define([
         };
 
         this.off = function () {
-            if(this.interval) { window.clearInterval(this.interval); }
+            this.isUpdating = false;
         };
 
         this.getPref = function () {
