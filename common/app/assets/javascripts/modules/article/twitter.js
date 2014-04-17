@@ -4,16 +4,18 @@ define([
     'qwery',
     'common/$',
     'common/utils/context',
-    'common/utils/detect'
+    'common/utils/detect',
+    'common/utils/config'
 ], function(
     qwery,
     $,
     getContext,
-    detect
+    detect,
+    config
 ) {
     function enhanceTweets() {
 
-        if (detect.getBreakpoint() === 'mobile') {
+        if (detect.getBreakpoint() === 'mobile' || !config.switches.enhanceTweets) {
             return;
         }
 
