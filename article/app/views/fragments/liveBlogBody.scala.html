@@ -17,14 +17,14 @@
 
                     <h1 itemprop="headline" class="blog__headline">@Html(article.headline)</h1>
 
+                    <div class="blog__last-updated-container">
+                        <span class="blog__live">LIVE</span> updated <time class="js-timestamp" datetime="@article.webPublicationDate" data-relativeformat="med"></time>
+                    </div>
+
                     <div class="blog__meta-container">
                         @fragments.meta.byline(article.byline, article)
                         @fragments.meta.dateline(article.webPublicationDate)
                         <div class="js-comment-count"></div>
-                    </div>
-
-                    <div class="blog__last-updated-container">
-                        <span class="blog__live">LIVE</span> updated <time class="js-timestamp" datetime="@article.webPublicationDate" data-relativeformat="med"></time>
                     </div>
 
 
@@ -59,7 +59,10 @@
                                         </video>
                                     </div>
                                 </div>
-                            }
+                          r
+r
+t
+n  }
                         } else {
                             @fragments.img(article.mainPicture)
                         }
