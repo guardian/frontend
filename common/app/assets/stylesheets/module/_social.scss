@@ -39,7 +39,7 @@
     width: 30px;
 
     @include mq($to: desktop) {
-        margin-right: 10px;
+        margin-right: $gs-gutter/2;
     }
 }
 .social__action {
