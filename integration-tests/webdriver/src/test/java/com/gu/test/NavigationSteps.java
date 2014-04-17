@@ -63,10 +63,10 @@ public class NavigationSteps {
 		aReader.execute(action);
 	}
 
-    @When("^(.*) switches back to the UK edition$")
-    public void readerSwitchesBackToTheUKEdition(String actorLabel) throws Throwable {
-        readerSwitchesToTheUKEdition(actorLabel);
-    }
+	@When("^(.*) switches back to the UK edition$")
+	public void readerSwitchesBackToTheUKEdition(String actorLabel) throws Throwable {
+		readerSwitchesToTheUKEdition(actorLabel);
+	}
 
 	@Then("^the UK edition fronts should load$")
 	public void theUKEditionFrontsShouldLoad() throws Throwable {
@@ -80,6 +80,7 @@ public class NavigationSteps {
 		Reader aReader = readers.getReader(actorLabel);
 		SelectArticleAction action = new SelectArticleAction();
 		aReader.execute(action);
+		context.setSubject(action.dataComponent());
 	}
 
 
@@ -87,13 +88,13 @@ public class NavigationSteps {
 	public void readerExpandsASection(String actorLabel) throws Throwable {
 		Reader aReader = readers.getReader(actorLabel);
 		ExpandSectionAction action = new ExpandSectionAction();
-	    aReader.execute(action);
+		aReader.execute(action);
 		context.setSubject(action.parent());
 	}
 
 	@Then("^more headlines in the section should appear$")
 	public void moreHeadlinesInSectionShouldAppear() throws Throwable {
-        WebDriver driver = ((Reader) readers.lastActor()).driver();
+		WebDriver driver = ((Reader) readers.lastActor()).driver();
 
 		AssertSectionIsExpanded action = new AssertSectionIsExpanded((WebElement) context.getSubject());
 		readers.lastActor().execute(action);
@@ -101,26 +102,26 @@ public class NavigationSteps {
 
 	@When("^^(.*) hides a section$")
 	public void readerHidesASection(String actorLabel) throws Throwable {
-        Reader aReader = readers.getReader(actorLabel);
-        HideSectionAction action = new HideSectionAction();
-        aReader.execute(action);
+		Reader aReader = readers.getReader(actorLabel);
+		HideSectionAction action = new HideSectionAction();
+		aReader.execute(action);
 
 		context.setSubject(action.parent());
 
 	}
 
-    @Then("^the section should be hidden$")
-    public void theSectionShouldBeHidden() throws Throwable {
+	@Then("^the section should be hidden$")
+	public void theSectionShouldBeHidden() throws Throwable {
 		Reader reader = ((Reader) readers.lastActor());
 		AssertSectionIsHidden action = new AssertSectionIsHidden((WebElement) context.getSubject());
 
 		reader.execute(action);
 	}
 
-    @And("^hide should be replaced by show$")
-    public void hideShouldBeReplacedByShow() throws Throwable {
-        WebDriver driver = ((Reader) readers.lastActor()).driver();
-        Assert.assertTrue(driver.findElement(By.xpath("//*[@data-link-name='Hide'][1]")).isDisplayed());
+	@And("^hide should be replaced by show$")
+	public void hideShouldBeReplacedByShow() throws Throwable {
+		WebDriver driver = ((Reader) readers.lastActor()).driver();
+		Assert.assertTrue(driver.findElement(By.xpath("//*[@data-link-name='Hide'][1]")).isDisplayed());
 
-    }
+	}
 }

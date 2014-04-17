@@ -1,6 +1,7 @@
 package com.gu.test;
 
 import com.github.tomakehurst.wiremock.verification.LoggedRequest;
+import com.gu.test.actions.asserts.AssertComponentTracking;
 import com.gu.test.actors.Readers;
 import cucumber.api.java.en.Then;
 import hu.meza.aao.DefaultScenarioContext;
@@ -22,9 +23,12 @@ public class UserTracking {
 	@Then("^the correct tracking information should be sent out$")
 	public void theCorrectTrackingInformationShouldBeSent() throws Throwable {
 
-		String beacon = "http://beacon.www.theguardian.com/count/pv.gif";
+		List<LoggedRequest> requests = httpMock.findAllRequestsTo("ophan.theguardian.com");
+		String dataComponent = context.getSubject();
 
-		List<LoggedRequest> requests = httpMock.findAllRequestsTo("hits.theguardian.com");
+		AssertComponentTracking assertComponentTracking = new AssertComponentTracking();
+		assertComponentTracking.existsForComponent(dataComponent, requests);
 
 	}
 }
+
