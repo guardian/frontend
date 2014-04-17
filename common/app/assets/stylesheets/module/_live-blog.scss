@@ -98,6 +98,16 @@
     padding-bottom: $gs-baseline;
 }
 
+.blog__comment-count {
+    display: inline-block;
+    .commentcount {
+        color: inherit;
+        display: block;
+        position: static;
+        margin-bottom: 0;
+    }
+}
+
 /* Design
    ========================================================================== */
 .blog__head-background {
@@ -168,7 +178,7 @@
 
 .blog__last-updated-container {
     @include fs-data(3);
-    @include mq($to: desktop) {
+    @include mq($to: rightCol) {
         border-top: 1px solid #E6A1AB;
         padding-top: $gs-baseline;
     }
@@ -309,7 +319,7 @@
     }
 
     .social-wrapper {
-        margin-bottom: $gs-baseline*2;
+        padding-bottom: $gs-baseline*2;
     }
 
 }
