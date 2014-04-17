@@ -9,14 +9,17 @@ import com.github.tomakehurst.wiremock.verification.LoggedRequest;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
-import static com.github.tomakehurst.wiremock.client.WireMock.*;
+import static com.github.tomakehurst.wiremock.client.WireMock.getRequestedFor;
+import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
+import static com.github.tomakehurst.wiremock.client.WireMock.verify;
 
 public class HttpMock {
 
 	private final WireMockServer wireMockServer;
 	private final Configuration config;
-	private List<LoggedRequest> requests = new ArrayList<LoggedRequest>();
+	private ConcurrentLinkedQueue<LoggedRequest> requests = new ConcurrentLinkedQueue<LoggedRequest>();
 
 	public HttpMock(Configuration config) {
 		this.config = config;
