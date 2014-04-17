@@ -477,7 +477,10 @@ $block-padding-right: $gs-gutter;
     margin-bottom: ($gs-baseline/3)*4;
 }
 
-
 .timeline__filler {
     display: none;
+}
+
+.twitter-tweet {
+    width: 100%;
 }
