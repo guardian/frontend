@@ -3,131 +3,133 @@
 
 @defining((model.article, model.storyPackage)) {  case (article, storyPackage) =>
 
-    <div class="article-wrapper monocolumn-wrapper tone-@VisualTone(article)">
-        <article id="article" class="article @if(article.isLive){is-live} blog"
-            itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType" role="main">
-            <div class="blog__inner blog__inner--head blog__head-background">
-                <header class="article__head">
+<div class="article-wrapper monocolumn-wrapper tone-@VisualTone(article)">
+    <article id="article" class="article @if(article.isLive){is-live} blog"
+    itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType" role="main">
+        <div class="blog__inner blog__inner--head blog__head-background">
+            <header class="article__head">
 
-                    <span class="blog__section" data-component="meta">
-                        <a data-link-name="article section" href="@LinkTo{/@article.section}">@Html(article.sectionName.toLowerCase)</a>
-                    </span>
-                                                                             
-                    <h1 itemprop="headline" class="blog__headline">@Html(article.headline)</h1>
+                @* @fragments.meta.seriesInline(article) *@
 
-                    <div class="blog__last-updated-container">
-                        <span class="blog__live">LIVE</span> updated <time class="js-timestamp" datetime="@article.webPublicationDate" data-relativeformat="med"></time>
-                        <div class="js-comment-count blog__comment-count"></div>
-                    </div>
+            <span class="blog__section" data-component="meta">
+                <a data-link-name="article section" href="@LinkTo{/@article.section}">@Html(article.sectionName.toLowerCase)</a>
+            </span>
 
-                    <div class="blog__meta-container">
-                        @fragments.meta.byline(article.byline, article)
-                        @fragments.meta.dateline(article.webPublicationDate, secondary = true)
-                    </div>
+            <h1 itemprop="headline" class="blog__headline">@Html(article.headline)</h1>
+
+            <div class="blog__last-updated-container">
+                <span class="blog__live">LIVE</span> updated <time class="js-timestamp" datetime="@article.webPublicationDate" data-relativeformat="med"></time>
+                <div class="js-comment-count blog__comment-count"></div>
+            </div>
+
+            <div class="blog__meta-container">
+                @fragments.meta.byline(article.byline, article)
+                @fragments.meta.dateline(article.webPublicationDate, secondary = true)
+            </div>
 
 
-                </header>
+            </header>
 
-                <div class="after-header">
+            <div class="after-header">
+                </div>
+        </div>
+        <div class="blog__columning-wrapper">
+            <div class="blog__main-column  blog__main-background">
+                @fragments.standfirst(article)
+
+                @fragments.witnessCallToAction(article)
+
+                @if(!article.hasVideoAtTop) {
+                    @if(article.hasMainVideo) {
+                        @article.mainVideo.map{ mainVideo =>
+                            <div class="gu-video-wrapper">
+                                <div class="u-responsive-ratio u-responsive-ratio--hd">
+                                    <video data-media-id="@mainVideo.id" class="gu-video" controls="controls">
+                                        @for(url <- mainVideo.videoAssets.flatMap(_.url)) {
+                                            <source src="@url" />
+                                        }
+                                        @mainVideo.videoAssets.find(_.mimeType == "video/mp4").map{ encoding =>
+                                            <object type="application/x-shockwave-flash" data="@Static("flash/flashmediaelement.swf")" width="620" height="350">
+                                                <param name="allowFullScreen" value="true" />
+                                                <param name="movie" value="@Static("flash/flashmediaelement.swf")" />
+                                                <param name="flashvars" value="file=@encoding.url&amp;controls=true" />
+                                                Sorry, your browser is unable to play this video.
+                                            </object>
+                                        }
+                                    </video>
+                                </div>
+                            </div>
+                            r
+                            r
+                            t
+                            n  }
+                    } else {
+                        @fragments.img(article.mainPicture)
+                    }
+                }
+
+
+            <div class="js-article__container article__container u-cf" data-component="body">
+                <div class="live-toolbar">
+                    @fragments.liveFilter()
+
+                    @if(article.isLive) {
+                        @fragments.autoUpdate()
+                    }
+                </div>
+
+                <div class="article-body u-cf from-content-api js-blog-blocks @if(article.isLive) {live-blog}"
+                itemprop="@if(article.isReview){reviewBody} else {articleBody}">
+
+                @if(article.groupedBlocks.nonEmpty) {
+                    @article.groupedBlocks.map{ blockGroup =>
+                        <div class="live-blog__blocks">
+                            @BodyCleaner(article, blockGroup)
+                        </div>
+                    }
+                }  else {
+                    @BodyCleaner(article, article.body)
+                }
+
+                </div>
+
+                <div class="article__keywords" data-link-name="live blog keywords">
+                @fragments.keywordList(article.keywords)
                 </div>
             </div>
-            <div class="blog__columning-wrapper">
-                <div class="blog__main-column  blog__main-background">
-                    @fragments.standfirst(article)
 
-                    @fragments.witnessCallToAction(article)
+            <div class="social-wrapper" data-component="share">
+            @fragments.social(article)
+            </div>
 
-                    @if(!article.hasVideoAtTop) {
-                        @if(article.hasMainVideo) {
-                            @article.mainVideo.map{ mainVideo =>
-                                <div class="gu-video-wrapper">
-                                    <div class="u-responsive-ratio u-responsive-ratio--hd">
-                                        <video data-media-id="@mainVideo.id" class="gu-video" controls="controls">
-                                            @for(url <- mainVideo.videoAssets.flatMap(_.url)) {
-                                                <source src="@url" />
-                                            }
-                                            @mainVideo.videoAssets.find(_.mimeType == "video/mp4").map{ encoding =>
-                                                <object type="application/x-shockwave-flash" data="@Static("flash/flashmediaelement.swf")" width="620" height="350">
-                                                    <param name="allowFullScreen" value="true" />
-                                                    <param name="movie" value="@Static("flash/flashmediaelement.swf")" />
-                                                    <param name="flashvars" value="file=@encoding.url&amp;controls=true" />
-                                                    Sorry, your browser is unable to play this video.
-                                                </object>
-                                            }
-                                        </video>
+            </div>
+            <div class="blog__secondary-column" aria-hidden="true">
+                <div class="blog__secondary-column__inner">
+                    <div class="u-table">
+                        <div class="u-table__row">
+                            <div class="u-table__cell u-table__cell--top">
+                                <div class="mpu-context js-right-hand-component">
+                                    <div class="mpu-container js-mpu-ad-slot">
+                                    @fragments.commercial.standardAd(name="right", adType="mpu-banner-ad", sizeMapping=Map("tabletlandscape" -> Seq("300,250")))
                                     </div>
-                                </div>
-                          r
-r
-t
-n  }
-                        } else {
-                            @fragments.img(article.mainPicture)
-                        }
-                    }
-
-
-                    <div class="js-article__container article__container u-cf" data-component="body">
-                        <div class="live-toolbar">
-                            @fragments.liveFilter()
-
-                            @if(article.isLive) {
-                                @fragments.autoUpdate()
-                            }
-                        </div>
-
-                        <div class="article-body u-cf from-content-api js-blog-blocks @if(article.isLive) {live-blog}"
-                        itemprop="@if(article.isReview){reviewBody} else {articleBody}">
-
-                            @if(article.groupedBlocks.nonEmpty) {
-                                @article.groupedBlocks.map{ blockGroup =>
-                                    <div class="live-blog__blocks">
-                                        @BodyCleaner(article, blockGroup)
-                                    </div>
-                                }
-                            }  else {
-                                @BodyCleaner(article, article.body)
-                            }
-
-                        </div>
-
-                        <div class="article__keywords" data-link-name="live blog keywords">
-                            @fragments.keywordList(article.keywords)
-                        </div>
-                    </div>
-
-                    <div class="social-wrapper" data-component="share">
-                        @fragments.social(article)
-                    </div>
-
-                </div>
-                <div class="blog__secondary-column" aria-hidden="true">
-                    <div class="blog__secondary-column__inner">
-                        <div class="u-table">
-                            <div class="u-table__row">
-                                <div class="u-table__cell u-table__cell--top">
-                                    <div class="mpu-context js-right-hand-component">
-                                        <div class="mpu-container js-mpu-ad-slot">
-                                            @fragments.commercial.standardAd(name="right", adType="mpu-banner-ad", sizeMapping=Map("tabletlandscape" -> Seq("300,250")))
-                                        </div>
-                                        <div class="js-components"></div>
-                                    </div>
+                                    <div class="js-components"></div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </article>
+        </div>
+    </article>
 
-        @if(DiscussionSwitch.isSwitchedOn && article.isCommentable) {
-            <div class="blog__inner" data-component="discussion">
-                @fragments.discussion(article.isClosedForComments, article.shortUrlId)
-            </div>
-        }
+    @if(DiscussionSwitch.isSwitchedOn && article.isCommentable) {
+        <div class="blog__inner" data-component="discussion">
+        @fragments.discussion(article.isClosedForComments, article.shortUrlId)
+        </div>
+    }
 
 
-    </div>
+</div>
 
 
     @fragments.storyPackagePlaceholder(storyPackage)

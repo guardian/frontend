@@ -1,3 +1,5 @@
+/* global XDomainRequest */
+
 /*
  *  Handle History updates and monitor for unsaved changes on account profile
  *  forms.
