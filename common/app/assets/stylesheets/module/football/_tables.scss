@@ -58,3 +58,12 @@
 .football-table__container {
     position: relative;
 }
+
+.table__caption {
+    .item__live-indicator {
+        @include rem((
+            top: 2px
+        ));
+        float: right;
+    }
+}

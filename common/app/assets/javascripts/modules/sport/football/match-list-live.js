@@ -23,7 +23,7 @@ MatchList.prototype.prerender = function() {
     $('.date-divider', elem).remove();
     $(this.elem).addClass('table--small');
 
-    $('.table__caption', this.elem).text('Live scores');
+    $('.football-matches__date', this.elem).replaceWith('<span class="item__live-indicator">Live</span>');
 };
 
 MatchList.prototype.autoupdate = function(elem) {
