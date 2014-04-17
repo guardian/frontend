@@ -5,6 +5,7 @@ define([
     'fence',
     'common/modules/ui/rhc',
     'common/modules/article/truncate',
+    'common/modules/article/twitter',
     'common/modules/discussion/loader',
     'common/modules/open/cta',
     'common/modules/experiments/layoutHints',
@@ -17,6 +18,7 @@ define([
     fence,
     rhc,
     truncate,
+    twitter,
     DiscussionLoader,
     OpenCta,
     Layout,
@@ -83,6 +85,12 @@ define([
             mediator.on('page:article:ready', function() {
                 truncate();
             });
+        },
+
+        initTwitter: function() {
+            mediator.on('page:article:ready', function() {
+                twitter.enhanceTweets();
+            });
         }
     };
 
@@ -96,6 +104,7 @@ define([
             modules.initLayoutHints(config);
             modules.initHelvetica(config);
             modules.initTruncate();
+            modules.initTwitter();
         }
         common.mediator.emit('page:article:ready', config, context);
     };
