@@ -2,18 +2,20 @@
 define([
     'bindings/droppable',
     'modules/vars',
+    'utils/url-abs-path',
     'utils/remove-by-id',
     'utils/find-first-by-id'
 ], function(
     droppable,
     vars,
+    urlAbsPath,
     removeById,
     findFirstById
 ) {
     function init() {
         droppable({
             newItemsConstructor: function(id) {
-                return [findFirstById(vars.model.collections, id)];
+                return [findFirstById(vars.model.collections, urlAbsPath(id))];
             },
 
             newItemsValidator: function(newItems) {

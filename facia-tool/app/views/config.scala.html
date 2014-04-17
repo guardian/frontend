@@ -76,39 +76,29 @@
                     options: $root.types,
                     value: meta.type"></select>
 
-                <!-- ko if: state.openAdvanced -->
-                    <label>Groups</label>
-                    <select data-bind="
-                        options: $root.groups,
-                        value: meta.groups"></select>
+                <label>Groups</label>
+                <select data-bind="
+                    options: $root.groups,
+                    value: meta.groups"></select>
 
-                    <label>ContentApi</label>
-                    <input type="text" data-bind="
-                        value: meta.apiQuery"/>
+                <label>ContentApi</label>
+                <input type="text" data-bind="
+                    value: meta.apiQuery"/>
 
-                    <label>No curation</label>
-                    <input type="checkbox" data-bind="
-                        checked: meta.uneditable" />
-                <!-- /ko -->
+                <label>No curation</label>
+                <input type="checkbox" data-bind="
+                    checked: meta.uneditable" />
 
                 <div class="tools">
                     <button class="tool" data-bind="
                         click: save">Save</button>
-                </div>
 
-                <div class="tools tools-advanced">
-                    <span class="linky" data-bind="
-                        click: toggleOpenAdvanced">Advanced settings</span> |
-
-                    <!-- ko if: !state.enableDiscard() -->
-                        <span class="linky" type="checkbox" data-bind="
-                            click: enableDiscard">Start removal</span>
-                   <!-- /ko -->
-                    <!-- ko if: state.enableDiscard() && $parents[1] -->
+                    <!-- ko if: $parents[1] -->
                         <button class="tool" data-bind="
                             click: $parents[1].depopulateCollection">Remove</button>
                     <!-- /ko -->
-                    <!-- ko if: state.enableDiscard() && parents().length === 0 -->
+
+                    <!-- ko if: parents().length === 0 -->
                         <button class="tool" data-bind="
                             click: discard">Remove completely</button>
                     <!-- /ko -->

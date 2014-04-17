@@ -891,14 +891,6 @@ button {
     clear: left;
 }
 
-.cnf-form .tools-advanced {
-    position: absolute;
-    bottom: 5px;
-    right: 5px;
-    font-size: 12px;
-    color: #CCCCCC;
-}
-
 /*****************************************/
 /* MEDIA QUERIES */
 /*****************************************/

@@ -34,23 +34,12 @@ define([
         }
 
         this.state = asObservableProps([
-            'enableDiscard',
             'open',
-            'openAdvanced',
             'underDrag']);
     }
 
     Collection.prototype.toggleOpen = function() {
         this.state.open(!this.state.open());
-        this.state.openAdvanced(this.state.open() && this.state.openAdvanced());
-    };
-
-    Collection.prototype.enableDiscard = function() {
-        this.state.enableDiscard(true);
-    };
-
-    Collection.prototype.toggleOpenAdvanced = function() {
-        this.state.openAdvanced(!this.state.openAdvanced());
     };
 
     Collection.prototype.save = function() {
@@ -58,15 +47,12 @@ define([
             vars.model.collections.unshift(this);
         }
         this.state.open(false);
-        this.state.openAdvanced(false);
         vars.model.save(this);
     };
 
     Collection.prototype.discard = function() {
-        if (this.state.enableDiscard()) {
-            vars.model.collections.remove(this);
-            vars.model.save(this);
-        }
+        vars.model.collections.remove(this);
+        vars.model.save(this);
     };
 
     return Collection;
