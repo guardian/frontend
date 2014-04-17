@@ -84,16 +84,8 @@
 }
 
 
-/* Circle progress bar live toggler
+/* Auto update toggle
    ========================================================================== */
-.live-toggler--circle {
-    padding: 8px 0 8px 18px;
-    width: auto;
+.live-toggler--autoupdate {
     float: right;
-}
-
-.lt__circle-wrapper {
-    width: 30px;
-    height: 30px;
-    display: block;
 }

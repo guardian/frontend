@@ -61,10 +61,6 @@
 .update {
     display: table-cell;
     overflow: hidden;
-
-    &.hidden {
-        display: none;
-    }
 }
 
 .is-updating {
