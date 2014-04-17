@@ -366,8 +366,8 @@ class Gallery(content: ApiContentWithMeta) extends Content(content) {
 
   lazy val size = galleryImages.size
   lazy val contentType = "Gallery"
-  lazy val landscapes = largestCrops.sortBy(_.index).filter(i => i.width > i.height)
-  lazy val portraits = largestCrops.sortBy(_.index).filter(i => i.width < i.height)
+  lazy val landscapes = largestCrops.filter(i => i.width > i.height).sortBy(_.index)
+  lazy val portraits = largestCrops.filter(i => i.width < i.height).sortBy(_.index)
   lazy val isInPicturesSeries = tags.exists(_.id == "lifeandstyle/series/in-pictures")
 
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
