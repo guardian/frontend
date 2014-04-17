@@ -8,10 +8,7 @@
         ));
 
         p {
-            @include fs-data(5);
-            @include rem((
-                line-height: 24px
-            ));
+            @include fs-textsans(4);
         }
     }
 

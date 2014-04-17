@@ -61,13 +61,11 @@
     .tweet,
     .from-content-api blockquote.tweet {
         border-left-width: 0;
-        padding: $gs-baseline/2 ($gs-baseline/3)*2;
+        @include rem((
+            padding: $gs-baseline/2 ($gs-baseline/3)*2
+        ));
         font-style: normal;
-        @include fs-data(4);
-
-        @include mq(tablet) {
-            @include fs-data(5, true);
-        }
+        @include fs-textsans(4);
     }
     // Temporary fix to issue #1674
     .from-content-api blockquote.tweet {

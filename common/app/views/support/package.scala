@@ -107,6 +107,13 @@ case class SeriesContainer(showMore: Boolean = true) extends Container {
   val tone = "news"
 }
 
+/**
+ * Encapsulates previous and next urls
+ */
+case class PreviousAndNext(prev: Option[String], next: Option[String]) {
+  val isDefined: Boolean = prev.isDefined || next.isDefined
+}
+
 object MetadataJson {
 
   def apply(data: (String, Any)): String = data match {
@@ -293,14 +300,6 @@ case class PictureCleaner(contentImages: Seq[ImageElement]) extends HtmlCleaner 
 
 object BulletCleaner {
   def apply(body: String): String = body.replace("•", """<span class="bullet">•</span>""")
-}
-
-object UnindentBulletParents extends HtmlCleaner with implicits.JSoup {
-  def clean(body: Document): Document = {
-    val bullets = body.getElementsByClass("bullet")
-    bullets flatMap { _.parentTag("p") } foreach { _.addClass("bullet-container") }
-    body
-  }
 }
 
 case class InBodyLinkCleaner(dataLinkName: String)(implicit val edition: Edition) extends HtmlCleaner {

@@ -1,0 +1,19 @@
+@(content: model.Content)
+
+@if(content.isSeries) {
+    @content.series.headOption.map { series =>
+        @fragments.meta.series(series.id, series.name, Some("inline"))
+    }
+} else {
+    @if(content.isFromTheObserver ) {
+
+        <dl class="content-meta content-meta--inline">
+            <dd class="content-meta__item">
+                <a href="http://observer.theguardian.com" class="content-meta__item tone-colour">The Observer</a>
+            </dd>
+        </dl>
+    }
+}
+
+
+

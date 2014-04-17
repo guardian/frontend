@@ -79,7 +79,7 @@
     &:before {
         content: '';
         display: inline-block;
-        @include rounded-corners(50%);
+        @include border-radius(50%);
         background: $c-brandLightBlue;
         @include rem((
             margin-left: -15px,

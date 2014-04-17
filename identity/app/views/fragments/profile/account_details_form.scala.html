@@ -15,7 +15,7 @@
     }
 
     <fieldset class="fieldset">
-        <div class="form__note">These details will only be visible to yourself and the Guardian.</div>
+        <div class="form__note">These details will only be visible to you and the Guardian.</div>
     </fieldset>
 
     <fieldset class="fieldset">
@@ -104,8 +104,8 @@
 
         <div class="fieldset__fields">
             <ul class="u-unstyled">
-                @inputField(Input(accountDetailsForm("address.line1"), ('_label, "Address line #1")))
-                @inputField(Input(accountDetailsForm("address.line2"), ('_label, "Address line #2")))
+                @inputField(Input(accountDetailsForm("address.line1"), ('_label, "Address line 1")))
+                @inputField(Input(accountDetailsForm("address.line2"), ('_label, "Address line 2")))
                 @inputField(Input(accountDetailsForm("address.line3"), ('_label, "Town")))
                 @inputField(Input(accountDetailsForm("address.line4"), ('_label, "County or State")))
                 @inputField(Input(accountDetailsForm("address.postcode"), ('_label, "Postcode/Zipcode")))

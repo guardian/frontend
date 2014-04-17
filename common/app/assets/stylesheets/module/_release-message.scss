@@ -57,19 +57,11 @@
     }
 
     .site-message__list__item {
-        @include faux-bullet-point(#ffffff, $offset-y: (default: 3px, tablet: 3px));
         @include fs-headline(1);
         font-weight: 200;
         margin-top: .6em;
-        @include rem((
-            text-indent: map-get($bullet-offset, default)
-        ));
 
-        @include mq(tablet) {
-            @include rem((
-                text-indent: map-get($bullet-offset, tablet)
-            ));
-        }
+        @include faux-bullet-point(#ffffff, $right-space: 4px);
     }
 
     .site-message__actions {

@@ -54,7 +54,7 @@
     .item__avatar {
         display: none;
         overflow: hidden;
-        @include rounded-corners(50%);
+        @include border-radius(50%);
         @include rem((
             margin-bottom: $gs-baseline/2
         ));
@@ -95,6 +95,15 @@
         .item--has-no-image .item__standfirst,
         .item__media-wrapper,
         .item__image-container {
+            display: none;
+        }
+    }
+}
+
+.facia-container--layout-article {
+    .container--commentanddebate {
+        .collection-wrapper--position-2,
+        .linkslist-container {
             display: none;
         }
     }

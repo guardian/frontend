@@ -12,7 +12,7 @@
                  itemprop="mainContentOfPage" itemscope itemtype="@image.schemaType" role="main">
             <div class="article__inner article__inner--head">
                 <header class="article__head">
-                    @fragments.meta.seriesInline(image)
+                    @fragments.meta.metaInline(image)
                     @fragments.headline(image.headline)
 
                     @fragments.standfirst(image)
@@ -57,9 +57,10 @@
         }
     </div>
 
-    @fragments.seriesPlaceholder(VisualTone(image))
 
     @fragments.storyPackagePlaceholder(storyPackage)
+
+    @fragments.onwardPlaceholder(VisualTone(image))
 
     @fragments.mostPopularPlaceholder(image.section, VisualTone(image))
 }

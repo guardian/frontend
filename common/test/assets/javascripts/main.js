@@ -24,7 +24,8 @@ requirejs.config({
         reqwest:      '/base/common/app/assets/javascripts/components/reqwest/src/reqwest',
         lodash:       '/base/common/app/assets/javascripts/components/lodash-amd/modern',
         imager:       '/base/common/app/assets/javascripts/components/imager.js/src/strategies/container',
-        enhancer:     '/base/common/app/assets/javascripts/components/enhancer/enhancer'
+        enhancer:     '/base/common/app/assets/javascripts/components/enhancer/enhancer',
+        googletag:    'empty:'
     },
     map: {
         '*': {
@@ -37,6 +38,9 @@ requirejs.config({
         imager: {
             deps: ['/base/common/app/assets/javascripts/components/imager.js/src/imager.js'],
             exports: 'Imager'
+        },
+        googletag: {
+            exports: 'googletag'
         }
     }
 });

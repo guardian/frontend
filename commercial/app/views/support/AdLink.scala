@@ -8,7 +8,7 @@ object AdLink {
 
   def apply(html: Html): String = {
     val url: String = html.body.trim
-    if (Play.isDev) url else s"%OASToken%$url"
+    if (Play.isDev) url else s"%OASToken%$url%OmnitureToken%"
   }
 
 }

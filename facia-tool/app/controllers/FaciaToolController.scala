@@ -126,6 +126,7 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
           }.flatten.toMap
 
           pressCollectionIds(updatedCollections.keySet)
+          updatedCollections.keys.foreach(notifyContentApi)
 
           if (updatedCollections.nonEmpty)
             Ok(Json.toJson(updatedCollections)).as("application/json")

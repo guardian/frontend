@@ -27,7 +27,7 @@ object SoulmatesAggregatingAgent {
       // woman/man/woman/man/woman
       // man/woman/man/woman/man or
       val people = Random.shuffle(Seq(Random.shuffle(men), Random.shuffle(women)))
-      people(0).zip(people(1)).flatMap{ case (p1, p2) => Seq(p1, p2) }.take(4)
+      people(0).zip(people(1)).flatMap{ case (p1, p2) => Seq(p1, p2) }.take(6)
     }
   }
 }
