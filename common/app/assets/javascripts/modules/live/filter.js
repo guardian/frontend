@@ -21,8 +21,7 @@ define([
 
     component.define(Filter);
 
-    Filter.prototype.template = '<div class="live-toggler-wrapper" data-component="live-toggle">' +
-        '   <span class="live-toggler__label">Order by:</span>' +
+    Filter.prototype.template = '<div><span class="live-toggler__label">Order by:</span>' +
         '  <button class="u-button-reset live-toggler live-toggler--latest js-live-toggler" title="Sort by latest first">' +
         '    <span class="live-toggler__value">Latest</span>' +
         '    <i class="i i-arrow-grey-down"></i>' +
@@ -30,8 +29,7 @@ define([
         '  <button class="u-button-reset live-toggler live-toggler--oldest js-live-toggler" title="Sort by oldest first">' +
         '    <span class="live-toggler__value">Oldest</span>' +
         '    <i class="i i-arrow-grey-down"></i>' +
-        '  </button>' +
-        '</div>';
+        '  </button></div>';
 
     Filter.prototype.ready = function() {
         this.on('click', '.js-live-toggler', this.toggle);
