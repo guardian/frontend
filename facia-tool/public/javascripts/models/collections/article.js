@@ -52,7 +52,7 @@ define([
                 'isBreaking',
                 'group',
                 'snapType',
-                'snapId']);
+                'snapData']);
 
             this.state = asObservableProps([
                 'underDrag',
