@@ -85,6 +85,7 @@ define([
 
     /*
     *   Request a new image upload token on submit of the image upload form.
+    *   TO DO: Use html5 file api to validate file size prior to upload @chrisfinch
     */
     accountProfile.prototype.bindAvatarUpload = function () {
         var self = this;
