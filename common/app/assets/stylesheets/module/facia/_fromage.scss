@@ -226,8 +226,8 @@
                 padding-right: $gs-gutter/4
             ));
         }
-        &[data-discussion-id] .fromage__standfirst,
-        &[data-discussion-id] .fromage__byline {
+        .js-on &[data-discussion-id] .fromage__standfirst,
+        .js-on &[data-discussion-id] .fromage__byline {
             // If the story has a discussion, make room for the comment count
             // in the top right of the component
             @include rem((
@@ -238,7 +238,7 @@
 }
 .fromage--has-image {
     @include mq(tablet) {
-        &[data-discussion-id] .fromage__link {
+        .js-on &[data-discussion-id] .fromage__link {
             // If the story has a discussion, make room for the comment count
             // in the top right of the component
             @include rem((
@@ -340,7 +340,6 @@
 
 .fromage--volume-1,
 .fromage--volume-2 {
-
     @include mq($to: tablet) {
         .supporting__item {
             border-color: #ffffff;
