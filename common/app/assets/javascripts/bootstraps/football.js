@@ -8,7 +8,7 @@ define([
     'common/utils/page',
     'common/modules/ui/rhc',
     'common/modules/charts/table-doughnut',
-    'common/modules/sport/football/match-list',
+    'common/modules/sport/football/live-match-list',
     'common/modules/sport/football/match-info',
     'common/modules/sport/football/score-board',
     'common/modules/sport/football/football'
@@ -22,7 +22,7 @@ define([
     page,
     rhc,
     Doughnut,
-    MatchList,
+    LiveMatchList,
     MatchInfo,
     ScoreBoard,
     football
@@ -209,7 +209,7 @@ define([
         });
 
         page.isLiveClockwatch(function() {
-            var ml = new MatchList('live', 'premierleague'),
+            var ml = new LiveMatchList('match-day', page.isCompetition() || 'premierleague', config.dateFromSlug()),
                 $img = $('.media-primary'),
                 $matchListContainer = $.create('<div class="football-matches__container" data-link-name="football-matches-clockwatch"></div>')
                                           .css({ minHeight: $img[0] ? $img[0].offsetHeight : 0 });
