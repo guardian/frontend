@@ -36,7 +36,9 @@
                 <td class="football-match__teams table-column--main">
                     <a href="@LinkTo{@theMatch.smartUrl}" class="u-unstyled football-teams u-cf" data-link-name="match-redirect">
                         <div class="football-match__team football-match__team--home football-team">
-                            <div class="football-team__name">@theMatch.homeTeam.name</div>
+                            <div class="football-team__name team-name" data-team-abbr="@pa.TeamCodes.codeFor(theMatch.homeTeam)">
+                                <span class="team-name--long">@theMatch.homeTeam.name</span>
+                            </div>
                             <div class="football-team__score">@theMatch.homeTeam.score</div>
                             @if(theMatch.isFixture){
                                 <div class="football-team__form team__results--shrink">
@@ -46,7 +48,9 @@
                         </div>
 
                         <div class="football-match__team football-match__team--away football-team">
-                            <div class="football-team__name">@theMatch.awayTeam.name</div>
+                            <div class="football-team__name team-name" data-team-abbr="@pa.TeamCodes.codeFor(theMatch.awayTeam)">
+                                <span class="team-name--long">@theMatch.awayTeam.name</span>
+                            </div>
                             <div class="football-team__score">@theMatch.awayTeam.score</div>
                             @if(theMatch.isFixture){
                                 <div class="football-team__form team__results--shrink">

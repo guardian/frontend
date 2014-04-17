@@ -1,5 +1,6 @@
 .facia-snap--football {
     .table,
+    .table__caption,
     caption {
         border-top: 0 none;
     }
@@ -9,5 +10,11 @@
 .facia-snap--football {
     .football-team__form {
         display: none;
+    }
+}
+
+.l-row--items-4 {
+    .football-matches {
+        @include football-match--tiny;
     }
 }

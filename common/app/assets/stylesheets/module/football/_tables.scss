@@ -1,16 +1,3 @@
-@mixin table-football--small() {
-    .table-column--inferior { display: none; }
-
-    th,
-    td {
-        min-width: 0;
-    }
-
-    .football-stat--form {
-        min-width: 0;
-    }
-}
-
 /** League table **/
 .table--football {
     .table-column--main {
