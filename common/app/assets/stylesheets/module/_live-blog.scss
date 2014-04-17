@@ -95,9 +95,6 @@
         margin-bottom: ($gs-baseline/3)*4;
     }
 
-
-
-
 .autoupdate--has-animation {
 
     .autoupdate--highlight {
@@ -106,6 +103,9 @@
 
 }
 
+.twitter-tweet {
+    width: 100%;
+}
 
 @include keyframes(new-block-animation) {
     0%   { opacity: 0; background: $c-neutral7; }
