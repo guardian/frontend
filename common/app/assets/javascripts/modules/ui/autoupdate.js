@@ -3,23 +3,23 @@
     Description: Used to load update fragments of the DOM from specfied endpoint
 */
 define([
-    'common/common',
+    'common/utils/mediator',
     'common/utils/ajax',
+    'common/$',
     'bonzo',
     'bean',
-    'qwery',
     'common/modules/userPrefs',
     'common/utils/detect',
-    'common/modules/ui/circular-progress'
+    'lodash/objects/assign'
 ], function (
-    common,
+    mediator,
     ajax,
+    $,
     bonzo,
     bean,
-    qwery,
     userPrefs,
     detect,
-    CircularProgress
+    extend
 ) {
     /*
         @param {Object} options hash of configuration options:
@@ -32,7 +32,7 @@ define([
     */
     function Autoupdate(config) {
 
-        var options = common.extend({
+        var options = extend({
             'activeClass': 'is-active',
             'btnClass' : '.js-auto-update',
             'prefName': 'auto-update',
@@ -44,20 +44,17 @@ define([
         this.template =
             '  <button class="u-button-reset live-toggler live-toggler--autoupdate js-auto-update js-auto-update--on"' +
             '          data-action="off" data-link-name="autoupdate off" title="Turn auto update off">' +
-            '    <span class="lt__label">Auto update</span>' +
+            '    <span class="live-toggler__label">Auto update:</span>' +
             '    <span class="u-h">is</span>' +
-            '    <span class="lt__value">On</span>' +
+            '    <span class="live-toggle__value">On</span>' +
             '    <span class="u-h">(turn off)</span>' +
             '  </button>' +
             '  <button class="u-button-reset live-toggler live-toggler--autoupdate js-auto-update js-auto-update--off"' +
             '          data-action="on" data-link-name="autoupdate on" title="Turn auto update on">' +
-            '    <span class="lt__label">Auto update</span>' +
+            '    <span class="live-toggle__label">Auto update:</span>' +
             '    <span class="u-h">is</span>' +
-            '    <span class="lt__value">Off</span>' +
+            '    <span class="live-toggle__value">Off</span>' +
             '    <span class="u-h">(turn on)</span>' +
-            '  </button>' +
-            '  <button class="u-button-reset live-toggler live-toggler--circle js-auto-update">' +
-                '<span class="lt__circle-wrapper"></span>' +
             '  </button>';
 
         // View
@@ -65,38 +62,25 @@ define([
             render: function (res) {
                 var attachTo = options.attachTo,
                     manipulation = options.manipulationType,
-                    date = new Date().toString();
+                    date = new Date().toString(),
+                    $attachTo = bonzo(attachTo);
 
-                //Check if we are handling single fragment
-                if(attachTo.nodeType) {
-                    var $attachTo = bonzo(attachTo);
-                    // in case we don't want to show the full response
-                    if (options.responseSelector) {
-                        $attachTo[manipulation](common.$g(options.responseSelector, bonzo.create('<div>' + res.html + '<div>')[0]));
-                    } else {
-                        var elementsToAdd = bonzo.create('<div>' + res.html + '</div>')[0];
-                        if (manipulation === 'prepend') {
-                            bonzo(elementsToAdd.children).addClass('autoupdate--new');
-                        }
-
-                        $attachTo[manipulation](elementsToAdd.innerHTML);
-                    }
-                    // add a timestamp to the attacher
-                    $attachTo.attr('data-last-updated', date);
-                //Multiple fragments to update
+                // in case we don't want to show the full response
+                if (options.responseSelector) {
+                    $attachTo[manipulation]($(options.responseSelector, $.create('<div>' + res.html + '<div>')[0]));
                 } else {
-                    var response = bonzo.create('<div>' + res.html + '<div>');
-                    for (var view in attachTo) {
-                        if(attachTo.hasOwnProperty(view)) {
-                            var html = common.$g(options.responseSelector[view], response[0]);
-                            bonzo(attachTo[view])[manipulation](html)
-                                .attr('data-last-updated', date);
-                        }
+                    var elementsToAdd = $.create('<div>' + res.html + '</div>')[0];
+                    if (manipulation === 'prepend') {
+                        bonzo(elementsToAdd.children).addClass('autoupdate--new');
                     }
+
+                    $attachTo[manipulation](elementsToAdd.innerHTML);
                 }
+                // add a timestamp to the attacher
+                $attachTo.attr('data-last-updated', date);
 
                 if (manipulation === 'prepend') {
-                    var newElements = attachTo.querySelectorAll('.autoupdate--new');
+                    var newElements = $('.autoupdate--new', attachTo);
 
                     unreadBlocks = newElements.length;
 
@@ -105,48 +89,36 @@ define([
                         this.revealNewElements();
                     }
 
-                    common.mediator.emit('modules:autoupdate:unread', unreadBlocks);
+                    mediator.emit('modules:autoupdate:unread', unreadBlocks);
                 }
 
-
-                common.mediator.emit('modules:autoupdate:render');
+                mediator.emit('modules:autoupdate:render');
             },
 
             toggle: function (btn) {
                 var action = btn.getAttribute('data-action');
 
-                bonzo(this.btns).removeClass(options.activeClass);
+                $(options.btnClass).removeClass(options.activeClass);
+                $('.js-auto-update--' + action, btn.parentNode).addClass(options.activeClass);
 
-                if(action === 'on') {
-                    this.on();
-                } else {
-                    this.off();
-                }
-
-                if (!options.progressToggle) {
-                    btn.parentNode.getElementsByClassName('js-auto-update--' + action)[0].className += ' ' + options.activeClass;
-                }
-
+                this[action]();
                 this.setPref(action);
             },
 
             destroy: function () {
-                bonzo('.update').remove();
-                common.mediator.emit('modules:autoupdate:destroyed');
+                $('.update').remove();
+                mediator.emit('modules:autoupdate:destroyed');
             },
 
             revealNewElements: function() {
-                var newElements = options.attachTo.querySelectorAll('.autoupdate--new');
-                bonzo(newElements).addClass('autoupdate--highlight');
+                var $newElements = $('.autoupdate--new', options.attachTo);
+                $newElements.addClass('autoupdate--highlight');
 
                 setTimeout(function() {
-                    bonzo(newElements).removeClass('autoupdate--new')
-                                      .removeClass('autoupdate--highlight');
+                    $newElements.removeClass('autoupdate--new').removeClass('autoupdate--highlight');
                 }, 5000);
             }
         };
-
-
 
         // Model
         this.load = function () {
@@ -164,11 +136,11 @@ define([
                         that.view.destroy();
                     } else {
                         that.view.render(response);
-                        common.mediator.emit('modules:autoupdate:loaded', response);
+                        mediator.emit('modules:autoupdate:loaded', response);
                     }
                 },
                 function(req) {
-                    common.mediator.emit('module:error', 'Failed to load auto-update: ' + req.statusText, 'common/modules/autoupdate.js');
+                    mediator.emit('module:error', 'Failed to load auto-update: ' + req.statusText, 'common/modules/autoupdate.js');
                 }
             );
         };
@@ -182,50 +154,10 @@ define([
                 that.load.call(that);
                 that.nextReload = new Date().getTime() + options.delay;
             }, options.delay);
-
-
-            // If the circle progress bar is on, kick it off
-            if (options.progressToggle) {
-                this.timerProgress.enable()
-                                  .render(options.delay/1000, 100);
-
-                this.timerProgressInterval = window.setInterval(function() {
-                    var now = new Date().getTime(),
-                        msTillReload = that.nextReload - now,
-                        countdown = Math.round(msTillReload/1000),
-                        percent = (msTillReload / options.delay) * 100;
-
-                    if (msTillReload < 0) {
-                        that.nextReload = new Date().getTime() + options.delay;
-                    }
-
-                    that.timerProgress.render(countdown, percent);
-                }, 1000);
-
-                bonzo(this.liveCircleTogglerEl).attr({
-                    'data-action': 'off',
-                    'data-link-name': 'autoupdate off',
-                    'title': 'Turn auto update off'
-                });
-            }
         };
 
         this.off = function () {
             if(this.interval) { window.clearInterval(this.interval); }
-
-            if (options.progressToggle) {
-                if (this.timerProgressInterval) {
-                    window.clearInterval(this.timerProgressInterval);
-                }
-
-                this.timerProgress.disable();
-
-                bonzo(this.liveCircleTogglerEl).attr({
-                    'data-action': 'on',
-                    'data-link-name' : 'autoupdate on',
-                    'title': 'Turn auto update on'
-                });
-            }
         };
 
         this.getPref = function () {
@@ -243,39 +175,21 @@ define([
             }
 
             var that = this,
-                loadOnInitialise = options.loadOnInitialise || false,
                 pref = this.getPref();
 
-
-            if (options.animateInserts) {
-                bonzo(options.attachTo).addClass('autoupdate--has-animation');
-            }
+            $(options.attachTo).addClass('autoupdate--has-animation');
 
             detect.initPageVisibility();
 
-            common.mediator.on('modules:detect:pagevisibility:visible', function() {
-                common.mediator.emit('modules:autoupdate:unread', 0);
+            mediator.on('modules:detect:pagevisibility:visible', function() {
+                mediator.emit('modules:autoupdate:unread', 0);
                 that.view.revealNewElements();
             });
 
             // add the component to the page, and show it
-            common.$g('.update').html(this.template).removeClass('hidden');
+            $('.update').html(this.template).removeClass('u-h');
 
-            // Optionally use circular progress
-            if (options.progressToggle) {
-                this.liveCircleTogglerEl = document.querySelector('.live-toggler--circle');
-                this.liveCircleTogglerEl.style.display = 'block';
-
-                this.timerProgress = new CircularProgress({
-                    el: this.liveCircleTogglerEl.querySelector('.lt__circle-wrapper'),
-                    activeColour: options.progressColour,
-                    size: 30
-                });
-            }
-
-
-
-            this.btns = common.$g(options.btnClass);
+            this.btns = $(options.btnClass);
 
             this.btns.each(function (btn) {
                 bean.add(btn, 'click', function (e) {
@@ -288,10 +202,6 @@ define([
                 this.view.toggle.call(this, this.btns[0]);
             } else {
                 this.view.toggle.call(this, this.btns[1]);
-            }
-
-            if (loadOnInitialise) {
-                that.load.call(that);
             }
         };
 

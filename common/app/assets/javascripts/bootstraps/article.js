@@ -40,12 +40,9 @@ define([
                            return path + '.json' + '?lastUpdate=' + id;
                         },
                         delay: timerDelay,
-                        attachTo: context.querySelector('.article-body'),
+                        attachTo: $('.article-body', context)[0],
                         switches: config.switches,
-                        manipulationType: 'prepend',
-                        animateInserts: true,
-                        progressToggle: true,
-                        progressColour: '#ec1c1c'
+                        manipulationType: 'prepend'
                     }).init();
                 }
                 if (config.page.isLiveBlog) {
