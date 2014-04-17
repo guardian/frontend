@@ -37,7 +37,6 @@ public class HttpMock {
 			}
 		});
 
-		//		stubFor(any(urlMatching(".*")).willReturn(aResponse().proxiedFrom(config.baseUrl())));
 	}
 
 	public void stop() {
