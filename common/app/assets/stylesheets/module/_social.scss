@@ -6,11 +6,16 @@
     overflow: hidden;
 }
 .social-wrapper--aside {
+    display: none;
     padding-top: 0;
     border-top: 1px dotted $c-neutral4;
     @include rem((
         margin-bottom: ($gs-baseline/3)*4
-  ));
+    ));
+
+    @include mq(leftCol) {
+        display: block;
+    }
 }
 
 .social {
@@ -32,7 +37,10 @@
 .social__item {
     float: left;
     width: 30px;
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+
+    @include mq($to: desktop) {
+        margin-right: 10px;
+    }
 }
 .social__action {
     display: block;
@@ -47,7 +55,7 @@
  *     </span>
  * </element>
  */
-@include mq( desktop ){
+@include mq(desktop) {
     .social-icon-wrapper {
         opacity: .6;
 
