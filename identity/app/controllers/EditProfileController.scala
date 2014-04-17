@@ -1,19 +1,25 @@
 package controllers
 
 import com.google.inject.{Singleton, Inject}
-import services.{IdRequestParser, IdentityUrlBuilder}
+import services._
 import actions.AuthActionWithUser
 import idapiclient.IdApiClient
-import play.api.mvc.{Request, Controller}
+import play.api.mvc.{AnyContent, Request, Controller}
 import common.ExecutionContexts
 import utils.SafeLogging
-import model.{NoCache, IdentityPage}
+import model.{AvatarData, NoCache, IdentityPage}
 import play.filters.csrf.{CSRFCheck, CSRFAddToken}
 import form._
 import scala.concurrent.Future
 import play.api.data.Form
 import com.gu.identity.model.User
-import tracking.Omniture
+import tracking.{TrackingParams, Omniture}
+import conf.Switches._
+import play.api.libs.ws.WS
+import actions.AuthRequest
+import services.IdentityRequest
+import model.AvatarUploadData
+import conf.Configuration
 
 @Singleton
 class EditProfileController @Inject()(idUrlBuilder: IdentityUrlBuilder,
@@ -29,15 +35,14 @@ class EditProfileController @Inject()(idUrlBuilder: IdentityUrlBuilder,
   protected val accountPage =IdentityPage("/account/edit", "Edit Account Details", "edit account details")
   protected val publicPage =IdentityPage("/public/edit", "Edit Public Profile", "edit public profile")
 
+  lazy val AvatarSigningService = new AvatarSigningService(Configuration.avatars.signingKey)
+
   def displayPublicProfileForm = displayForm(publicPage, isPublicFormActive = true)
   def displayAccountForm = displayForm(accountPage, isPublicFormActive = false)
 
   protected def displayForm(page: OmniPage, isPublicFormActive: Boolean) = CSRFAddToken {
-    authActionWithUser.apply {
-      implicit request =>
-        val idRequest = idRequestParser(request)
-        val forms = ProfileForms(request.user, isPublicFormActive)
-        NoCache(Ok(views.html.profileForms(page.tracking(idRequest), request.user, forms, idRequest, idUrlBuilder)))
+    authActionWithUser.async { implicit request =>
+      profileFormsView(page.tracking, ProfileForms(request.user, isPublicFormActive))
     }
   }
 
@@ -60,13 +65,30 @@ class EditProfileController @Inject()(idUrlBuilder: IdentityUrlBuilder,
         }
 
         val futureForms = futureFormOpt getOrElse Future.successful(forms)
-        futureForms map {
+        futureForms flatMap {
           forms =>
-            NoCache(Ok(views.html.profileForms(page.accountEdited(idRequest), request.user, forms, idRequest,idUrlBuilder)))
+            profileFormsView(page.accountEdited, forms)
         }
     }
   }
 
+  def profileFormsView(pageWithTrackingParamsFor: IdentityRequest => IdentityPage with TrackingParams, forms: ProfileForms)(implicit request: AuthRequest[AnyContent]) = {
+    val idRequest = idRequestParser(request)
+    val user = request.user
+
+    val avatarUploadStatus = for {
+      responseData <- request.queryString get "signed_data"
+      signedString <- responseData.headOption
+    } yield AvatarSigningService wasUploadSuccessful signedString
+
+    Future(NoCache(Ok(views.html.profileForms(
+           pageWithTrackingParamsFor(idRequest),
+           user, forms, idRequest, idUrlBuilder,
+           Some(avatarUploadDataFor(user)),
+           avatarUploadStatus))))    
+  }
+
+  private def avatarUploadDataFor(user: User) = AvatarUploadData(AvatarSigningService.sign(AvatarData(user)))
 }
 
 case class ProfileForms(publicForm: Form[ProfileFormData], accountForm: Form[AccountFormData], isPublicFormActive: Boolean)
