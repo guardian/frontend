@@ -86,6 +86,36 @@
 
 /* Auto update toggle
    ========================================================================== */
+@include keyframes(live-pulse) {
+    0% {background-color: $c-live}
+    10% {background-color: #df7787;}
+    40% {background-color: $c-live;}
+    100% {background-color: $c-live;}
+}
+
 .live-toggler--autoupdate {
     float: right;
+    padding-right: 0;
+
+    .live-toggle__value {
+        display: inline-block;
+        text-align: center;
+        @include rem((
+            padding: 8px 0 0 0,
+            width: 32px,
+            height: 24px,
+            line-height: 13px
+        ));
+        background-color: $c-neutral2;
+        color: #ffffff;
+        font-weight: bold;
+        @include border-radius(50%);
+    }
+}
+
+.live-toggler--on {
+    .live-toggle__value {
+        background-color: $c-live;
+        @include animation(live-pulse 2s infinite);
+    }
 }
