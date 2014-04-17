@@ -296,6 +296,11 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 4, 28)
   )
 
+  val EnhanceTweetsSwitch = Switch("Feature Switches", "enhance-tweets",
+    "If this switch is turned on then embedded tweets will be enhanced using Twitter's widgets.",
+    safeState = Off, sellByDate = never
+  )
+
   // A/B Test Switches
 
   val ABExternalLinksNewWindow = Switch("A/B Tests", "ab-external-links-new-window",
@@ -428,6 +433,7 @@ object Switches extends Collections {
     RssLinkSwitch,
     PopularInTagSwitch,
     HideOldTimeStampsSwitch,
+    EnhanceTweetsSwitch,
     IndiaRegionSwitch,
     ABExternalLinksNewWindow,
     ABAbcd,

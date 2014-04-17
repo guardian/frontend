@@ -42,16 +42,16 @@ define([
         var unreadBlocks = 0;
 
         this.template =
-            '  <button class="u-button-reset live-toggler live-toggler--autoupdate js-auto-update js-auto-update--on"' +
+            '  <button class="u-button-reset live-toggler live-toggler--autoupdate live-toggler--on js-auto-update js-auto-update--on"' +
             '          data-action="off" data-link-name="autoupdate off" title="Turn auto update off">' +
             '    <span class="live-toggler__label">Auto update:</span>' +
             '    <span class="u-h">is</span>' +
             '    <span class="live-toggle__value">On</span>' +
             '    <span class="u-h">(turn off)</span>' +
             '  </button>' +
-            '  <button class="u-button-reset live-toggler live-toggler--autoupdate js-auto-update js-auto-update--off"' +
+            '  <button class="u-button-reset live-toggler live-toggler--autoupdate live-toggler--off js-auto-update js-auto-update--off"' +
             '          data-action="on" data-link-name="autoupdate on" title="Turn auto update on">' +
-            '    <span class="live-toggle__label">Auto update:</span>' +
+            '    <span class="live-toggler__label">Auto update:</span>' +
             '    <span class="u-h">is</span>' +
             '    <span class="live-toggle__value">Off</span>' +
             '    <span class="u-h">(turn on)</span>' +

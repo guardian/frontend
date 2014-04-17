@@ -3,8 +3,10 @@
 @defining((VisualTone(trail), imageAdjustOverride.getOrElse(trail.imageAdjust))) { case (tone, imageAdjust) =>
     <div
         class="@GetClasses.forFromage(trail, imageAdjust)"
-        @trail.discussionId.map{ id => data-discussion-id="@id" }
-        data-discussion-closed="@trail.isClosedForComments"
+        @trail.discussionId.map{ id =>
+            data-discussion-id="@id"
+            data-discussion-closed="@trail.isClosedForComments"
+        }
         data-link-name="trail | @{index + 1}">
 
         <div class="fromage__container">
@@ -47,11 +49,13 @@
             @trail.trailText.map { text =>
                 <div class="fromage__standfirst">@Html(text)</div>
             }
+            @fragments.items.elements.supporting(trail.supporting, style = "fit")
 
-            @fragments.items.elements.meta(trail)
+            @* Display meta only if there is a discussion *@
+            @trail.discussionId.map{ id =>
+                @fragments.items.elements.meta(trail)
+            }
         </div>
-
-        @fragments.items.elements.supporting(trail.supporting)
 
     </div>
 }

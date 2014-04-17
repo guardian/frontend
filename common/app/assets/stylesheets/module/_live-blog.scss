@@ -504,6 +504,10 @@ $block-padding-right: $gs-gutter;
     margin-bottom: ($gs-baseline/3)*4;
 }
 
+.twitter-tweet {
+    width: 100%;
+}
+
 /* Timeline
    ========================================================================== */
 
@@ -539,4 +543,4 @@ $block-padding-right: $gs-gutter;
 .timeline__title {
     @include fs-textsans(3);
     color: black;
-}
+}}
