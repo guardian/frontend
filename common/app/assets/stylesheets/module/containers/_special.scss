@@ -1,16 +1,36 @@
 .container--special {
-    .collection-wrapper:first-child .collection__item {
-        &:nth-child(-n+2) .item__link {
-            border-top-width: 0;
-        }
-        @include mq(tablet) {
-            margin-top: 4px;
-
-            .item__link {
+    .collection-wrapper:first-child {
+        .collection__item {
+            &:nth-child(-n+2) .item__link {
                 border-top-width: 0;
             }
-            .item__image-container {
-                margin-top: 0;
+            @include mq(tablet) {
+                margin-top: 4px;
+
+                .item__link {
+                    border-top-width: 0;
+                }
+                .item__image-container {
+                    margin-top: 0;
+                }
+            }
+        }
+        @include mq($to: tablet) {
+            .collection {
+                position: relative;
+
+                // Hide top of border between items
+                &:after {
+                    content: '';
+                    display: block;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    height: 4px;
+                    background: white;
+                    z-index: 1;
+                }
             }
         }
     }
