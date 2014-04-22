@@ -4,6 +4,11 @@
 
 .home {
     top: 50px;
+    display: none !important;
+
+    @include mq(leftCol) {
+        display: block !important;
+    }
 }
 
 .home-container {
