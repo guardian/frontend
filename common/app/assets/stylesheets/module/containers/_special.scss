@@ -1,6 +1,6 @@
 .container--special {
     .collection-wrapper:first-child .collection__item {
-        &:first-child .item__link {
+        &:nth-child(-n+2) .item__link {
             border-top-width: 0;
         }
         @include mq(tablet) {
@@ -14,6 +14,13 @@
             }
         }
     }
+    @include mq($to: tablet) {
+        // Force the image to be displayed
+        .item--has-image .item__media-wrapper,
+        .item--has-image .item__image-container {
+            display: block;
+        }
+    }
 
     /**
      * Applies to the video container only:
@@ -23,10 +30,6 @@
         .l-row--items-4 {
             .item--gallery,
             .item--video {
-                .item__media-wrapper,
-                .item__image-container {
-                    display: block;
-                }
                 .item__title--has-icon-mobile {
                     padding-left: 0;
 
