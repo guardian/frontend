@@ -213,7 +213,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
             mostViewed        = Nil,
             contentApiResults = r.results.map(Content(_)).map(validateContent)
           )
-        }
+        } recover executeContentApiQueryRecovery
       }
       case Path(id)  => {
         val search = ContentApi().item(id, edition)
@@ -230,7 +230,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
             mostViewed        = r.mostViewed.map(Content(_)).map(validateContent),
             contentApiResults = r.results.map(Content(_)).map(validateContent)
           )
-        }
+        } recover executeContentApiQueryRecovery
       }
     }
 
@@ -248,6 +248,28 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
       FaciaToolMetrics.InvalidContentExceptionMetric.increment()
       throw new InvalidContent(content.id)
     }
+  }
+
+  val executeContentApiQueryRecovery: PartialFunction[Throwable, Result] = {
+    case apiError: com.gu.openplatform.contentapi.ApiError if apiError.httpStatus == 404 => {
+      log.warn(s"Content API Error: 404 for ${apiError.httpMessage}")
+      Result(
+        curated           = Nil,
+        editorsPicks      = Nil,
+        mostViewed        = Nil,
+        contentApiResults = Nil
+      )
+    }
+    case apiError: com.gu.openplatform.contentapi.ApiError if apiError.httpStatus == 410 => {
+      log.warn(s"Content API Error: 410 for ${apiError.httpMessage}")
+      Result(
+        curated           = Nil,
+        editorsPicks      = Nil,
+        mostViewed        = Nil,
+        contentApiResults = Nil
+      )
+    }
+    case e: Exception => throw e
   }
 
 }
