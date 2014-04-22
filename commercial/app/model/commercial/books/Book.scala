@@ -3,7 +3,7 @@ package model.commercial.books
 import model.commercial.{AdAgent, Segment, Ad}
 import common.ExecutionContexts
 import scala.concurrent.Future
-import model.commercial.intersects
+import model.commercial.{intersects, encode}
 
 case class Book(title: String,
                 author: Option[String],
@@ -18,7 +18,7 @@ case class Book(title: String,
                 keywords: Seq[String] = Nil)
   extends Ad {
 
-  def isTargetedAt(segment: Segment): Boolean = intersects(keywords, segment.context.keywords)
+  def isTargetedAt(segment: Segment): Boolean = intersects(encode(keywords), segment.context.keywords)
 }
 
 
@@ -38,7 +38,7 @@ object BestsellersAgent extends AdAgent[Book] with ExecutionContexts {
     FoodDrinkBestsellersFeed
   )
 
-  override def adsTargetedAt(segment: Segment): Seq[Book] = super.adsTargetedAt(segment).sortBy(_.position)
+  override def adsTargetedAt(segment: Segment): Seq[Book] = super.adsTargetedAt(segment).sortBy(_.position).take(5)
 
   override def defaultAds: Seq[Book] = currentAds filter (_.category.exists(_ == "General"))
 
