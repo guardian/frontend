@@ -20,7 +20,7 @@ define([
     var TESTS = [
             new ExternalLinksNewWindow(),
             new Abcd()
-        ],
+       ],
        participationsKey = 'gu.ab.participations';
 
     function getParticipations() {
