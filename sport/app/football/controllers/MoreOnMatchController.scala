@@ -56,7 +56,7 @@ object MoreOnMatchController extends Controller with Football with Requests with
       }
     }
 
-    maybeResponse.getOrElse(Future.successful(Cached(300){ JsonNotFound() }))
+    maybeResponse.getOrElse(Future.successful(Cached(30){ JsonNotFound() }))
   }
 
   def moreOnJson(matchId: String) = moreOn(matchId)
@@ -76,7 +76,7 @@ object MoreOnMatchController extends Controller with Football with Requests with
     }
 
     val response: Future[SimpleResult] = maybeResponse.getOrElse(Future { JsonNotFound() })
-    response map { Cached(300) }
+    response map { Cached(60) }
   }
 
   def loadMoreOn(request: RequestHeader, theMatch: FootballMatch): Future[Seq[Content]] = {
