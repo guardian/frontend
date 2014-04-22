@@ -29,14 +29,22 @@
         ));
     }
     .commercial__home-link {
+        float: right;
         clear: right;
     }
-
     .commercial__body {
         padding: 0;
         @include rem((
             margin-top: $gs-baseline*2
         ));
+    }
+    .lineitem {
+        @include rem((
+            padding: $gs-baseline/2 0
+        ));
+    }
+    .lineitem:first-child {
+        padding-top: 0;
     }
     .lineitem:first-child .lineitem__img {
         display: block;
@@ -44,7 +52,6 @@
     .lineitem__link {
         width: 68%;
     }
-
     .lineitem__meta {
         color: $c-neutral1;
         @include fs-textsans(1);
