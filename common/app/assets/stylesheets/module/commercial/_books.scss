@@ -7,8 +7,12 @@
         padding: $gs-gutter/2
     ));
     .commercial__branding,
-    .commercial__header {
+    .commercial__head {
         overflow: hidden;
+        position: static;
+        border: none;
+        height: auto;
+        padding: 0;
     }
     .commercial__branding {
         float: left;
@@ -24,9 +28,7 @@
         }
     }
     .commercial__title {
-        @include rem((
-            margin: $gs-baseline 0 0
-        ));
+        margin: 0;
     }
     .commercial__home-link {
         float: right;
@@ -35,10 +37,11 @@
     .commercial__body {
         padding: 0;
         @include rem((
-            margin-top: $gs-baseline*2
+            margin-top: $gs-baseline
         ));
     }
     .lineitem {
+        @include box-sizing(border-box);
         @include rem((
             padding: $gs-baseline/2 0
         ));
@@ -93,12 +96,9 @@
         .commercial__branding {
             float: none;
         }
-        .commercial__header {
+        .commercial__head {
             float: left;
             width: gs-span(3);
-            @include rem((
-                margin-right: $gs-gutter
-            ));
         }
         .commercial__search {
             position: relative;
@@ -122,7 +122,7 @@
             width: 33%;
             @include rem((
                 min-height: 250px,
-                padding-bottom: 30px
+                padding: 0 $gs-gutter/2 30px
             ));
 
             &:nth-child(n+4) {
@@ -161,14 +161,52 @@
         }
     }
     @include mq(wide) {
-        .commercial__header {
+        .commercial__head {
             width: gs-span(4);
         }
     }
 }
 
+/* fronts */
 .facia-container--layout-front .commercial--books {
     @include rem((
         padding: $gs-gutter/2
     ));
+    @include mq(leftCol) {
+        .commercial__head {
+            float: left;
+        }
+    }
+    @include mq(faciaLeftCol) {
+        .commercial__head {
+            @include rem((
+                width: gs-span(2)
+            ));
+            background: red;
+        }
+    }
+    @include mq(wide) {
+        .commercial__head {
+            @include rem((
+                width: gs-span(2) + $gs-gutter
+            ));
+            margin-right: 0;
+        }
+    }
+}
+
+/* article */
+.facia-container--commercial {
+    &.facia-container--layout-article {
+        .commercial--books {
+            .commercial__head {
+                @include mq(rightCol) {
+                    width: 25%;
+                    @include rem((
+                        padding-right: 8px
+                    ));
+                }
+            }
+        }
+    }
 }
