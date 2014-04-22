@@ -11,7 +11,15 @@ function(
     find
 ) {
 
-    function isMatch(yes) {
+    function isit(isTrue, yes, no, arg) {
+        if (isTrue) {
+            return yes ? yes((arg||isTrue)) : (arg||isTrue);
+        } else {
+            return no ? no() : false;
+        }
+    }
+
+    function isMatch(yes, no) {
         var teams = config.referencesOfType('paFootballTeam'),
             match = config.page.footballMatch || {};
 
@@ -31,41 +39,29 @@ function(
             })[0]
         });
 
-        if (match.id || (match.pageType && match.teams.length === 2)) {
-            return yes(match);
-        }
+        return isit((match.id || (match.pageType && match.teams.length === 2)), yes, no, match);
     }
 
-    function isCompetition(yes) {
+    function isCompetition(yes, no) {
         var competition = ($('.js-football-competition').attr('data-link-name') || '').replace('keyword: football/', '');
-        if (competition) {
-            return yes(competition);
-        }
+        return isit(competition, yes, no);
     }
 
-    function isClockwatch(yes) {
-        if (config.hasSeries('Clockwatch')) {
-            return yes();
-        }
+    function isClockwatch(yes, no) {
+        return isit(config.hasSeries('Clockwatch'), yes, no);
     }
 
-    function isLiveClockwatch(yes) {
-        isClockwatch(function() {
-            if (config.page.isLive) {
-                return yes();
-            }
-        });
+    function isLiveClockwatch(yes, no) {
+        return isClockwatch(function() {
+            return isit(config.page.isLive, yes, no);
+        }, no);
     }
 
     function rightHandComponentVisible(yes, no) {
         var el = $('.js-right-hand-component')[0],
             vis = el.offsetWidth > 0 && el.offsetHeight > 0;
 
-        if (vis) {
-            return yes ? yes(el) : el;
-        } else {
-            return no ? no() : null;
-        }
+        return isit(vis, yes, no, el);
     }
 
     return {

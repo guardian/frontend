@@ -9,6 +9,7 @@
 @import form.IdFormHelpers._
 @import form.Input
 @import helper._
+@import conf.Switches
 
 <fieldset class="fieldset">
     <div class="fieldset__heading">
@@ -21,6 +22,8 @@
         }
     </div>
 </fieldset>
+
+@if(Switches.IdentityAvatarUploadSwitch.isSwitchedOn) {
 
 @for(avatarUploadData <- avatarUploadDataOpt) {
 
@@ -44,7 +47,7 @@
                     <li class="form-field">
                         <input type="file" name="file" accept="image/gif, image/jpeg, image/png" />
                         <input type="hidden" name="signed_data" value="@avatarUploadData.signedData" />
-                        <input type="hidden" name="redirect_url" value="@idUrlBuilder.buildUrl("/public/edit", idRequest)">
+                        <input type="hidden" name="redirect_url" value="@idUrlBuilder.buildUrl("/public/edit")">
                     </li>
                     <li>
                         <button type="submit" class="submit-input js-avatar-upload-button" data-link-name="Upload Avatar">Upload</button>
@@ -53,6 +56,8 @@
             </div>
         </form>
     </fieldset>
+}
+
 }
 
 <form class="form js-public-profile-form" novalidate action="@idUrlBuilder.buildUrl("/public/edit", idRequest)" role="main" method="post">

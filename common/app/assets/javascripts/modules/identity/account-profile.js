@@ -93,25 +93,28 @@ define([
         var self = this;
         var avatarForm = self.accountProfileForms.querySelector(self.classes.avatarUploadForm);
 
-        bean.on(avatarForm, 'submit', function (event) {
-            event.preventDefault();
+        if (avatarForm) {
+            bean.on(avatarForm, 'submit', function (event) {
+                event.preventDefault();
 
-            var xhr = self.createCORSRequest('GET', self.urls.avatarTokenUrl);
-            if (!xhr) {
-                self.prependErrorMessage(self.messages.noCorsError, avatarForm);
-            }
+                var xhr = self.createCORSRequest('GET', self.urls.avatarTokenUrl);
+                if (!xhr) {
+                    self.prependErrorMessage(self.messages.noCorsError, avatarForm);
+                }
 
-            xhr.onerror = function() {
-                self.prependErrorMessage(self.messages.noServerError, avatarForm);
-            };
+                xhr.onerror = function() {
+                    self.prependErrorMessage(self.messages.noServerError, avatarForm);
+                };
 
-            xhr.onload = function() {
-                avatarForm.setAttribute('action', xhr.responseText);
-                avatarForm.submit();
-            };
+                xhr.onload = function() {
+                    avatarForm.setAttribute('action', xhr.responseText);
+                    avatarForm.submit();
+                };
 
-            xhr.send();
-        });
+                xhr.send();
+            });
+        }
+
     };
 
     /*

@@ -117,7 +117,9 @@
                     border-top: 0;
 
                     .i {
-                        top: 0;
+                        @include rem((
+                            top: $gs-baseline/6
+                        ));
                     }
                 }
             }
@@ -133,7 +135,9 @@
                     padding-top: 0;
 
                     .i {
-                        top: 0;
+                        @include rem((
+                            top: $gs-baseline/6
+                        ));
                     }
                 }
             }
@@ -170,7 +174,7 @@
             right: 0;
             background-color: $c-neutral4;
             @include rem((
-                top: $gs-baseline/3
+                top: $gs-baseline/2
             ));
         }
     }

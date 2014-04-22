@@ -53,14 +53,14 @@ object GeneralBestsellersFeed extends BestsellersApi {
 
 object TravelBestsellersFeed extends BestsellersApi {
   protected lazy val category = "Travel"
-  protected val keywords = Seq("Travel guides", "Travel writing")
+  protected val keywords = Seq("Travel", "Travel guides", "Travel writing")
   protected val path = "/Feed1.jsp"
 }
 
 
 object ScienceBestsellersFeed extends BestsellersApi {
   protected lazy val category = "Science"
-  protected val keywords = Seq("Science and nature")
+  protected val keywords = Seq("Science", "Science and nature")
   protected val path = "/Feed2.jsp"
 }
 
@@ -102,7 +102,7 @@ object MusicFilmBestsellersFeed extends BestsellersApi {
 
 object SportBestsellersFeed extends BestsellersApi {
   protected lazy val category = "Sport"
-  protected val keywords = Seq("Sport and leisure")
+  protected val keywords = Seq("Sport", "Sport and leisure", "Football")
   protected val path = "/Feed9.jsp"
 }
 
@@ -116,6 +116,6 @@ object HomeGardenBestsellersFeed extends BestsellersApi {
 
 object FoodDrinkBestsellersFeed extends BestsellersApi {
   protected lazy val category = "Food & Drink"
-  protected val keywords = Seq("Food and drink")
+  protected val keywords = Seq("Food and drink", "Restaurants", "Chefs")
   protected val path = "/Feed11.jsp"
 }

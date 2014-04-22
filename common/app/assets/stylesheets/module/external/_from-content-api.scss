@@ -112,16 +112,6 @@
         @include rem((
             margin-left: $gs-gutter * 1.5
         ));
-
-
-        > ul:first-child {
-            // Fix list and quote icon overlap - #2026
-            margin-left: map-get($quoted-offset, default);
-
-            @include mq(tablet) {
-                margin-left: map-get($quoted-offset, tablet);
-            }
-        }
     }
 }
 
