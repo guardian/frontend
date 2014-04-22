@@ -8,13 +8,14 @@ import play.api.libs.json._
 import common.{FaciaToolMetrics, ExecutionContexts, Logging}
 import conf.{Switches, Configuration}
 import tools.FaciaApi
-import services.{ConfigAgent, ContentApiWrite}
+import services.{ContentApiRefresh, ConfigAgent, ContentApiWrite, S3FrontsApi}
 import play.api.libs.ws.Response
 import scala.concurrent.Future
 import conf.Switches.ContentApiPutSwitch
-import services.S3FrontsApi
 import model.{NoCache, Cached}
-
+import play.api.libs.iteratee.Enumerator
+import _root_.util.Enumerators._
+import scala.util.{Failure, Success}
 
 object FaciaToolController extends Controller with Logging with ExecutionContexts {
   implicit val collectionRead = Json.reads[Collection]
@@ -74,6 +75,17 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
         Ok(json).as("application/json")
       } getOrElse NotFound
     }
+  }
+
+  def updateAll() = ExpiringAuthentication { request =>
+    Ok(views.html.config(Configuration.environment.stage, Identity(request)))
+  }
+
+  def updates = ExpiringAuthentication { request =>
+    Ok.chunked(Enumerator.fromObservable(ContentApiRefresh.refresh() map {
+      case (collectionId, Success(_)) => s"Successfully published $collectionId"
+      case (collectionId, Failure(error)) => s"Failed to publish $collectionId: ${error.getMessage}"
+    }).toJavaScriptCallback("collectionUpdateMessage"))
   }
 
   def publishCollection(id: String) = AjaxExpiringAuthentication { request =>
