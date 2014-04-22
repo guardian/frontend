@@ -70,6 +70,9 @@ define([
     /** @type {Number} id of autoupdate timer */
     Component.prototype.t = null;
 
+    /** @type {String} */
+    Component.prototype.manipulationType = 'append';
+
 
     /**
      * Uses the this.componentClass
@@ -126,7 +129,7 @@ define([
             self._prerender();
 
             if (!self.destroyed) {
-                bonzo(parent).append(self.elem);
+                bonzo(parent)[self.manipulationType](self.elem);
                 self._ready();
             }
         }).fail( function () {

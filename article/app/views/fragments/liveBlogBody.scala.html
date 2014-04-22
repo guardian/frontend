@@ -65,10 +65,7 @@
                                     </video>
                                 </div>
                             </div>
-                            r
-                            r
-                            t
-                            n  }
+                        }
                     } else {
                         @fragments.img(article.mainPicture)
                     }
@@ -76,13 +73,7 @@
 
 
             <div class="js-article__container article__container u-cf" data-component="body">
-                <div class="live-toolbar">
-                    @fragments.liveFilter()
-
-                    @if(article.isLive) {
-                        @fragments.autoUpdate()
-                    }
-                </div>
+                @fragments.liveFilter(article)
 
                 <div class="article-body u-cf from-content-api js-blog-blocks @if(article.isLive) {live-blog}"
                 itemprop="@if(article.isReview){reviewBody} else {articleBody}">

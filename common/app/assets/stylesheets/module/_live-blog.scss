@@ -234,7 +234,6 @@
 
 /* Timestamps
    ========================================================================== */
-
 .timestamp,
 .published-time {
     @include font($sans-serif, bold, 13, 20);
@@ -276,7 +275,6 @@
 }
 
 .updated-time {
-    //padding: $gs-baseline/3 0 ($gs-baseline/3)*4;
     padding: $gs-baseline/2 $gs-gutter/2;
     @include fs-data(1);
     color: $c-neutral2;
@@ -318,8 +316,27 @@
     padding-top: $gs-baseline;
 }
 
-/* Animations
+/* Autoupdate
    ========================================================================== */
+.autoupdate--hidden,
+.notify--hidden {
+    display: none;
+}
+
+.block--notification {
+    border-top-color: $c-live;
+}
+
+.notify {
+    padding-left: $gs-gutter/2;
+}
+
+.notify__btn {
+    text-align: left;
+    @include fs-textsans(3);
+    font-weight: bold;
+    color: $c-live;
+}
 
 .autoupdate--has-animation {
 

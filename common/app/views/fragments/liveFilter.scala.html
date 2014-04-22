@@ -1,1 +1,10 @@
-<div class="js-live-filter live-toggler-wrapper" data-component="live-toggle"></div>
+@(article: Article)
+<div class="live-toolbar js-live-toolbar">
+    <div class="js-live-filter live-toggler-wrapper" data-component="live-toggle"></div>
+    @if(article.isLive) {
+        <div class="update u-h" data-link-name="autoupdate"></div>
+    }
+</div>
+@if(article.isLive) {
+    <div class="js-update-notification notify-wrapper" data-component="live-notification"></div>
+}

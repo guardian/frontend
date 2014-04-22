@@ -40,8 +40,7 @@ define([
             'manipulationType' : 'html'
         }, config);
 
-        var unreadBlocks = 0;
-
+        this.unreadBlocks = 0;
         this.notification = '<';
 
         this.template =
@@ -66,34 +65,26 @@ define([
                 var attachTo = options.attachTo,
                     manipulation = options.manipulationType,
                     date = new Date().toString(),
-                    $attachTo = bonzo(attachTo);
+                    $attachTo = bonzo(attachTo),
+                    elementsToAdd = $.create('<div>' + res.html + '</div>')[0];
 
-                // in case we don't want to show the full response
-                if (options.responseSelector) {
-                    $attachTo[manipulation]($(options.responseSelector, $.create('<div>' + res.html + '<div>')[0]));
-                } else {
-                    var elementsToAdd = $.create('<div>' + res.html + '</div>')[0];
-                    if (manipulation === 'prepend') {
-                        bonzo(elementsToAdd.children).addClass('autoupdate--new');
-                    }
+                this.unreadBlocks += elementsToAdd.children.length;
 
-                    $attachTo[manipulation](elementsToAdd.innerHTML);
+                if (manipulation === 'prepend') {
+                    bonzo(elementsToAdd.children).addClass('autoupdate--hidden');
                 }
+
+                $attachTo[manipulation](elementsToAdd.innerHTML);
                 // add a timestamp to the attacher
                 $attachTo.attr('data-last-updated', date);
 
-                var newElements = $('.autoupdate--new', attachTo);
-                unreadBlocks = newElements.length;
-
                 if(this.isUpdating && detect.pageVisible()) {
-                    unreadBlocks = 0;
-                    this.notificationBar.destroy();
-                    this.revealNewElements();
-                } else {
-                    this.notificationBar.notify(unreadBlocks);
+                    this.notificationBar.setState('hidden');
+                    this.view.revealNewElements();
+                } else if(this.unreadBlocks > 0) {
+                    this.notificationBar.notify(this.unreadBlocks);
                 }
-
-                mediator.emit('modules:autoupdate:unread', unreadBlocks);
+                mediator.emit('modules:autoupdate:unread', this.unreadBlocks);
                 mediator.emit('modules:autoupdate:render');
             },
 
@@ -112,11 +103,14 @@ define([
             },
 
             revealNewElements: function() {
-                var $newElements = $('.autoupdate--new', options.attachTo);
-                $newElements.addClass('autoupdate--highlight');
+                var $newElements = $('.autoupdate--hidden', options.attachTo);
+                $newElements.addClass('autoupdate--highlight').removeClass('autoupdate--hidden');
+                this.unreadBlocks = 0;
+
+                mediator.emit('modules:autoupdate:unread', this.unreadBlocks);
 
                 setTimeout(function() {
-                    $newElements.removeClass('autoupdate--new').removeClass('autoupdate--highlight');
+                    $newElements.removeClass('autoupdate--highlight');
                 }, 5000);
             }
         };
@@ -136,7 +130,7 @@ define([
                         that.off();
                         that.view.destroy();
                     } else {
-                        that.view.render(response);
+                        that.view.render.call(that, response);
                         mediator.emit('modules:autoupdate:loaded', response);
                     }
                 },
@@ -171,14 +165,17 @@ define([
 
             var that = this;
 
+            this.notificationBar = new NotificationBar({attachTo: $('.js-update-notification')[0] });
+
             $(options.attachTo).addClass('autoupdate--has-animation');
 
             detect.initPageVisibility();
 
             mediator.on('modules:detect:pagevisibility:visible', function() {
-                mediator.emit('modules:autoupdate:unread', 0);
-                that.view.revealNewElements();
+                if(this.isUpdating) { that.view.revealNewElements(); }
             });
+
+            mediator.on('modules:notificationbar:show', this.view.revealNewElements.bind(this));
 
             // add the component to the page, and show it
             $('.update').html(this.template).removeClass('u-h');
@@ -192,7 +189,6 @@ define([
                 });
             });
 
-            this.notificationBar = new NotificationBar({attachTo: options.attachTo});
             this.view.toggle.call(this, this.btns[1]);
         };
 
