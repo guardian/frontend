@@ -15,7 +15,7 @@ define([
 
     ExternalLinksNewWindow,
     Abcd
-) {
+    ) {
 
     var TESTS = [
             new ExternalLinksNewWindow(),
