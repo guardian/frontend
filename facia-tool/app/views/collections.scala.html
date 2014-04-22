@@ -227,11 +227,10 @@
                 click: open">
                 <img class="thumb" draggable="false" data-bind="
                     attr: {src: fields.thumbnail, title: id}"/>
+                <div class="article__date" data-bind="
+                    visible: humanDate,
+                    text: humanDate"></div>
             </a>
-
-            <div class="article__date" data-bind="
-                visible: humanDate,
-                text: humanDate"></div>
 
             <div data-bind="if: state.open">
                 <div class="article__overrides u-cf">

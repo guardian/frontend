@@ -312,9 +312,11 @@ a:hover {
     background: #FBCC43;
     color: #ffffff;
     font-size: 11px;
-    line-height: 11px;
+    line-height: 15px;
     padding: 0 4px;
     border-radius: 2px;
+    height: 14px;
+    display: inline-block;
 }
 
 .is--breaking {
@@ -333,7 +335,7 @@ a:hover {
 }
 
 div.trailtext {
-    padding-right: 50px;
+    -moz-box-sizing: border-box;
     box-sizing: border-box;
     width: 100%;
     display: inline-block;
@@ -344,6 +346,7 @@ div.trailtext {
     word-wrap: break-word;
     height: 15px;
     line-height: 16px;
+    padding-right: 50px;
     font-size: 12px;
     color: #999999;
 }
@@ -361,7 +364,7 @@ div.trailtext {
     width: 75px;
     height: 14px;
     overflow: hidden;
-    padding: 1px 0 0 4px;
+    padding: 0 0 0 4px;
     color: #FFFFFF;
     font-size: 10px;
     line-height: 14px;
@@ -411,6 +414,7 @@ div.trailtext {
 }
 
 .image__overrides {
+    -moz-box-sizing: border-box;
     box-sizing: border-box;
     position: absolute;
     bottom: 0px;
@@ -536,9 +540,9 @@ button {
 }
 
 .search-term {
-    position: absolute;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
+    position: absolute;
     display: inline-block;
     width: 35%;
     padding: 0 15px 0 0;
