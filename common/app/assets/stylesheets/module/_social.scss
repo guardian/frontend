@@ -36,11 +36,18 @@
 
 .social__item {
     float: left;
-    width: 30px;
+    width: 36px;
+
+    padding: 0 $gs-baseline / 4;
 
     @include mq($to: desktop) {
         margin-right: $gs-gutter/2;
     }
+
+    @include mq(desktop) {
+        padding: 0;
+    }
+
 }
 .social__action {
     display: block;
