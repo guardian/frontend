@@ -151,6 +151,7 @@ object Frontend extends Build with Prototypes {
   val main = root().aggregate(
     common,
     facia,
+    faciaTool,
     article,
     applications,
     sport,
