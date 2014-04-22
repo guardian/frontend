@@ -3,12 +3,45 @@
 }
 
 .home {
-    top: 50px;
+    top: 30px;
     display: none !important;
 
     @include mq(leftCol) {
         display: block !important;
     }
+}
+
+.home__link,
+.home__link:active,
+.home__link:visited {
+
+    color: $c-neutral2;
+    opacity: 0.7;
+    @include fs-header(1);
+
+    &:hover,
+    &:focus {
+        color: $c-newsDefault;
+        opacity: 1;
+        text-decoration: none;
+
+        .i-home {
+            background-color: $c-newsDefault;
+            opacity: 1;
+        }
+    }
+}
+
+.i-home {
+    background-color: $c-neutral2;
+    opacity: 0.7;
+}
+
+.home__label {
+    position: absolute;
+    top: 6px;
+    left: 0;
+    padding-left: 36px;
 }
 
 .home-container {
