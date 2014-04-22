@@ -8,6 +8,11 @@
     .team-name--long {
         display: none;
     }
+
+    .football-matches__date {
+        float: none;
+        display: block;
+    }
 }
 
 @mixin table-football--small {
