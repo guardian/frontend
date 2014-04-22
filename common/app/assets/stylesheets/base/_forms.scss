@@ -97,6 +97,16 @@
     padding: 7px ($gs-baseline/3)*2;
 }
 
+.form__success {
+    @include fs-data(4);
+    background-color: lighten($environmentGreen, 70%);
+    border-bottom: 1px solid lighten($environmentGreen, 35%);
+    border-top: 1px solid lighten($environmentGreen, 35%);
+    color: $environmentGreen;
+    margin-top: 6px;
+    padding: 7px ($gs-baseline/3)*2;
+}
+
 .form-field__error {
     color: $newsRed;
     margin-top: 6px;

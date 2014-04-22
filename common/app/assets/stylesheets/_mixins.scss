@@ -257,14 +257,6 @@
     position: sticky;
 }
 
-// Set the properties of placeholder text
-@mixin placeholder {
-    ::-webkit-input-placeholder { @content; }
-    :-moz-placeholder           { @content; }
-    ::-moz-placeholder          { @content; }
-    :-ms-input-placeholder      { @content; }
-}
-
 // Vertical linear gradient with a plain fallback for older browsers
 @mixin simple-gradient($from, $to) {
     // Fix for browsers not understanding transparent

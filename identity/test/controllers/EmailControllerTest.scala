@@ -39,7 +39,7 @@ class EmailControllerTest extends path.FreeSpec with ShouldMatchers with Mockito
   val testAuth = new ScGuU("abc")
   val error = Error("Test message", "Test description", 500)
 
-  val authAction  = new actions.AuthAction(authService) {
+  val authAction  = new actions.AuthenticatedAction(authService) {
     override protected def invokeBlock[A](request: Request[A], block: (AuthRequest[A]) => Future[SimpleResult]): Future[SimpleResult] = {
       block(AuthRequest(request, user, testAuth))
     }

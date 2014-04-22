@@ -8,8 +8,8 @@ define([
     bonzo
 ) {
 
-var MatchList = function(type, filter) {
-    this.endpoint += ['football', filter, type].filter(function(e) { return e; }).join('/') +'.json';
+var MatchList = function(type, competition, date) {
+    this.endpoint += ['football', type, competition, date].filter(function(e) { return e; }).join('/') +'.json';
 };
 component.define(MatchList);
 
@@ -23,11 +23,7 @@ MatchList.prototype.prerender = function() {
     $('.date-divider', elem).remove();
     $(this.elem).addClass('table--small');
 
-    if ($('.table__caption', this.elem).length === 0) {
-        bonzo(bonzo.create('<caption class="table__caption">Live scores</caption>')).each(function(el) {
-            $('.football-matches', elem).prepend(el);
-        });
-    }
+    $('.football-matches__date', this.elem).replaceWith('<span class="item__live-indicator">Live</span>');
 };
 
 MatchList.prototype.autoupdate = function(elem) {
