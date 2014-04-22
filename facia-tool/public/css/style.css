@@ -14,8 +14,13 @@ p {
 }
 
 a, a:hover {
+    color: #3279F1;
     text-decoration: none;
     cursor: pointer;
+}
+
+a:hover {
+    color: #376ABF;
 }
 
 .status {
@@ -360,12 +365,14 @@ div.trailtext {
     color: #FFFFFF;
     font-size: 10px;
     line-height: 14px;
-    background: rgba(0,0,0,0.2);
+    text-shadow: 0px 0px 2px #666666;
     border-radius: 2px;
 }
 
 .open .article__date {
     top: 52px;
+    text-shadow: none;
+    background: rgba(0,0,0,0.1);
 }
 
 .article__overrides {
@@ -407,7 +414,7 @@ div.trailtext {
     box-sizing: border-box;
     position: absolute;
     bottom: 0px;
-    height: 36px;
+    height: 34px;
     font-size: 12px;
     line-height: 14px;
     color: #666666;
