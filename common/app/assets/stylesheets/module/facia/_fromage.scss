@@ -230,8 +230,8 @@
                 padding-right: $gs-gutter/4
             ));
         }
-        .js-on &/*.fromage--has-discussion*/ .fromage__standfirst,
-        .js-on &/*.fromage--has-discussion*/ .fromage__byline {
+        .js-on &.fromage--has-discussion .fromage__standfirst,
+        .js-on &.fromage--has-discussion .fromage__byline {
             // If the story has a discussion, make room for the comment count
             // in the top right of the component
             @include rem((
@@ -242,7 +242,7 @@
 }
 .fromage--has-image {
     @include mq(tablet) {
-        .js-on &/*.fromage--has-discussion*/ .fromage__link {
+        .js-on &.fromage--has-discussion .fromage__link {
             // If the story has a discussion, make room for the comment count
             // in the top right of the component
             @include rem((

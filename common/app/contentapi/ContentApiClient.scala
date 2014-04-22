@@ -12,7 +12,7 @@ import com.gu.openplatform.contentapi.model.ItemResponse
 trait QueryDefaults extends implicits.Collections with ExecutionContexts {
 
   //NOTE - do NOT add body to this list
-  val trailFields = "headline,trail-text,liveBloggingNow,thumbnail,hasStoryPackage,wordcount,shortUrl,commentCloseDate,starRating"
+  val trailFields = "headline,trail-text,liveBloggingNow,thumbnail,hasStoryPackage,wordcount,shortUrl,commentable,commentCloseDate,starRating"
 
   val references = "pa-football-competition,pa-football-team,witness-assignment,esa-cricket-match"
 
@@ -43,7 +43,7 @@ trait QueryDefaults extends implicits.Collections with ExecutionContexts {
     val tag = "tag=type/gallery|type/article|type/video|type/sudoku"
     val editorsPicks = "show-editors-picks=true"
     val showInlineFields = s"show-fields=$trailFields"
-    val showFields = "trailText,headline,shortUrl,liveBloggingNow,commentCloseDate,shouldHideAdverts,lastModified,byline,standfirst"
+    val showFields = "trailText,headline,shortUrl,liveBloggingNow,commentable,commentCloseDate,shouldHideAdverts,lastModified,byline,standfirst"
     val showFieldsWithBody = showFields + ",body"
 
     val all = Seq(tag, editorsPicks, showInlineFields, showFields)
