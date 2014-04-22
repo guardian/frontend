@@ -78,7 +78,7 @@ define([
                     }
 
                     timestamp = Math.floor(new Date().getTime()/1000);
-                    itemMeta.updatedAt = itemMeta.updatedAt ? itemMeta.updatedAt + ',' + timestamp : timestamp + ':f90'; // orange for the initial flag
+                    itemMeta.updatedAt = itemMeta.updatedAt ? itemMeta.updatedAt + ',' + timestamp : timestamp + ':fbcc43'; // yellow for the initial flag
 
                     remove = (deepGet(sourceList, '.parent.id') && deepGet(sourceList, '.parent.id') !== targetList.parent.id);
                     remove = remove ? remover(sourceList, id) : undefined;

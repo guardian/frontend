@@ -244,7 +244,7 @@ define([
                 itemMeta = this.getMeta();
                 timestamp = Math.floor(new Date().getTime()/1000);
 
-                itemMeta.updatedAt = (itemMeta.updatedAt ? itemMeta.updatedAt + ',' : '') + timestamp + ':0C0'; // green for overrides etc.
+                itemMeta.updatedAt = (itemMeta.updatedAt ? itemMeta.updatedAt + ',' : '') + timestamp + ':65b045'; // green for overrides etc.
 
                 authedAjax.updateCollections({
                     update: {

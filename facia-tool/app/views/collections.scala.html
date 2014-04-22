@@ -234,17 +234,6 @@
                 text: humanDate"></div>
 
             <div data-bind="if: state.open">
-                <div class="image__overrides">
-                    <a data-bind="
-                        click: toggleImageAdjustBoost,
-                        text: meta.imageAdjust() === 'boost' ? 'Boosted' : 'Boost image',
-                        css: {selected: meta.imageAdjust() === 'boost'}"></a>
-                    <a data-bind="
-                        click: toggleImageAdjustHide,
-                        text: meta.imageAdjust() === 'hide' ? 'Hidden' : 'Hide image',
-                        css: {selected: meta.imageAdjust() === 'hide'}">Hide</a>
-                </div>
-
                 <div class="article__overrides u-cf">
                     <div class="article__overrides__fields">
                         <input type="text" data-bind="
@@ -261,7 +250,7 @@
                             visible: isSnap,
                             value: meta.href,
                             event: {blur: save},
-                            attr: {placeholder: 'Url, eg. uk/money or http://www.bbc.co.uk/'}"/>
+                            attr: {placeholder: 'Link URL, eg. uk/money or http://www.bbc.co.uk/'}"/>
 
                         <textarea class="trailtext" type="text" data-bind="
                             value: trailTextInput,
@@ -281,7 +270,18 @@
                     </div>
 
                     <div class="misc__overrides">
-                        Mark as: <a data-bind="
+                        Image:
+                        <a data-bind="
+                            click: toggleImageAdjustBoost,
+                            text: meta.imageAdjust() === 'boost' ? 'boosted' : 'boost',
+                            css: {selected: meta.imageAdjust() === 'boost'}"></a>,
+                        <a data-bind="
+                            click: toggleImageAdjustHide,
+                            text: meta.imageAdjust() === 'hide' ? 'hidden' : 'hide',
+                            css: {selected: meta.imageAdjust() === 'hide'}"></a>.
+
+                        Mark as:
+                        <a data-bind="
                             click: toggleIsBreaking,
                             css: {selected: meta.isBreaking}">breaking news</a>
                     </div>

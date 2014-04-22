@@ -40,14 +40,14 @@ define(['knockout'], function(ko) {
 
         sparksServer:          'http://sparklines.ophan.co.uk',
         sparksParams: {
-            graphs: 'other:09f,google:090,guardian:009',
+            graphs: 'other:3279F1,google:65b045,guardian:376ABF',
             showStats: 1,
             showHours: 1,
             width: 100,
             height: 40
         },
         sparksFrontParams: {
-            graphs: 'other:09f,google:090,guardian:009',
+            graphs: 'other:3279F1,google:65b045,guardian:376ABF',
             hotLevel: 250,
             showStats: 1,
             width: 100,
