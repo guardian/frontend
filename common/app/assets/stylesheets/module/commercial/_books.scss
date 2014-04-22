@@ -30,6 +30,14 @@
     .commercial__title {
         margin: 0;
     }
+    .i-bookshop-logo--bookshop {
+        @include rem((
+            margin-left: -5px
+        ));
+    }
+    .commercial__explainer {
+        clear: both;
+    }
     .commercial__home-link {
         float: right;
         clear: right;
@@ -105,7 +113,7 @@
             float: none;
             width: 100%;
             @include rem((
-                margin-top: $gs-baseline
+                margin-top: $gs-baseline*4
             ));
         }
         .commercial__home-link {
@@ -193,6 +201,22 @@
             margin-right: 0;
         }
     }
+    @include mq(faciaLeftCol, $to: wide) {
+        .commercial__title {
+            line-height: 0;
+            @include rem((
+                margin-bottom: 10px
+            ));
+        }
+        .i-bookshop-logo--bookshop {
+            margin-left: 0;
+        }
+        .commercial__search {
+            @include rem((
+                margin-top: $gs-gutter*2
+            ));            
+        }
+    }
 }
 
 /* article */
@@ -206,6 +230,23 @@
                         padding-right: 8px
                     ));
                 }
+            }
+        }
+        @include mq(leftCol, $to: wide) {
+            .commercial__title {
+                line-height: 0;
+                @include rem((
+                    margin-bottom: 10px
+                ));
+            }
+            .i-bookshop-logo--bookshop {
+                margin-left: 0;
+            }
+            .commercial__search {
+                background: red;
+                @include rem((
+                    margin-top: $gs-gutter*2
+                ));
             }
         }
     }
