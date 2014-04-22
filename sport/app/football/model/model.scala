@@ -3,6 +3,7 @@ import pa._
 import org.joda.time.DateMidnight
 import pa.LeagueTableEntry
 import pa.{Result, MatchDayTeam}
+import java.awt.image.BandCombineOp
 
 
 case class Competition(
@@ -112,5 +113,25 @@ object PrevResult {
   def apply(result: FootballMatch, thisTeamId: String): PrevResult = {
     if (thisTeamId == result.homeTeam.id) PrevResult(result.date, result.homeTeam, result.awayTeam, wasHome = true)
     else PrevResult(result.date, result.awayTeam, result.homeTeam, wasHome = false)
+  }
+}
+
+case class TeamColours(homeTeam: LineUpTeam, awayTeam: LineUpTeam) {
+  val home = if(homeTeam.teamColour == "#FFFFFF") "#EEEEEE" else homeTeam.teamColour
+  val away = if(awayTeam.teamColour == "#FFFFFF") "#EEEEEE" else if (awayTeam.teamColour == homeTeam.teamColour) darken(awayTeam.teamColour) else awayTeam.teamColour
+  val homeTeamIsLight = isLight(home)
+  val awayTeamIsLight = isLight(away)
+
+  def isLight(colour: String): Boolean = {
+    val hex = colour.dropWhile('#' == _)
+    val r = Integer.parseInt(hex.take(2), 16)
+    val g = Integer.parseInt(hex.drop(2).take(2), 16)
+    val b = Integer.parseInt(hex.drop(4).take(2), 16)
+    val yiq = ((r*299) + (g*587) + (b*114)) / 1000
+    yiq > 128
+  }
+
+  def darken(colour: String): String = {
+    colour
   }
 }
