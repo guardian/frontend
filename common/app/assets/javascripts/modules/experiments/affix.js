@@ -2,13 +2,17 @@ define([
     'bean',
     'bonzo',
     'lodash/functions/debounce',
-    'common/utils/request-animation-frame'
-], function(bean, bonzo, debounce, raf) {
+    'common/utils/request-animation-frame',
+    'common/utils/mediator'
+], function(bean, bonzo, debounce, raf, mediator) {
 
     var Affix = function (options) {
 
         bean.on(window, 'scroll', debounce(this.checkPositionWithEventLoop.bind(this), 10));
         bean.on(window, 'click', this.checkPositionWithEventLoop.bind(this));
+
+        // Use mediator here, because the standard debounce time interval is adequate, unlike scroll.
+        mediator.addListener('window:resize', this.calculateContainerPositioning.bind(this));
 
         this.affixed  = null;
         this.$markerTop = bonzo(options.topMarker);
@@ -21,12 +25,18 @@ define([
         var styleTop = this.$element.css('top');
         this.styleTop = styleTop !== 'auto' ? parseInt(styleTop, 10) : 0;
 
-        // The absolute-positioned container defines the static positioning of the affix element.
-        var containerTop = this.$markerTop.offset().top - this.$container.offset().top;
-        this.$container.css('top', containerTop + 'px');
+        this.calculateContainerPositioning();
     };
 
     Affix.CLASS = 'affix';
+
+    Affix.prototype.calculateContainerPositioning = function() {
+
+        // The absolute-positioned container defines the static positioning of the affix element.
+        this.$container.css('top', '0');
+        var containerTop = this.$markerTop.offset().top - this.$container.offset().top;
+        this.$container.css('top', containerTop + 'px');
+    };
 
     Affix.prototype.checkPositionWithEventLoop = function() {
         raf(this.checkPosition.bind(this));
