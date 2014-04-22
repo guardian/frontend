@@ -47,7 +47,7 @@
                     <li class="form-field">
                         <input type="file" name="file" accept="image/gif, image/jpeg, image/png" />
                         <input type="hidden" name="signed_data" value="@avatarUploadData.signedData" />
-                        <input type="hidden" name="redirect_url" value="@idUrlBuilder.buildUrl("/public/edit", idRequest)">
+                        <input type="hidden" name="redirect_url" value="@idUrlBuilder.buildUrl("/public/edit")">
                     </li>
                     <li>
                         <button type="submit" class="submit-input js-avatar-upload-button" data-link-name="Upload Avatar">Upload</button>
