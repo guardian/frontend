@@ -12,7 +12,7 @@
         <article id="article" class="article @if(article.isLive){is-live}"
                  itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType" role="main">
 
-            @if(ABHomeComponent.isSwitchedOn) {
+            @if(ABHomeComponent.isSwitchedOn && article.hasMainPicture) {
                 <div class="home-container">
                     <div class="home js-home u-h" data-component="home" data-link-name="home">
                         <a href="/uk">Home</a>
@@ -73,6 +73,11 @@
                     @fragments.contentMeta(article)
 
                     <div class="js-article__container article__container u-cf" data-component="body">
+
+                        @if(ABHomeComponent.isSwitchedOn && article.hasMainPicture) {
+                            <div class="top-marker"></div>
+                        }
+
                         <div class="article-body u-cf from-content-api js-article__body"
                         itemprop="@if(article.isReview){reviewBody} else {articleBody}">
                             @BodyCleaner(article, article.body)
@@ -87,7 +92,7 @@
                         @fragments.social(article)
                     </div>
 
-                    @if(ABHomeComponent.isSwitchedOn) {
+                    @if(ABHomeComponent.isSwitchedOn && article.hasMainPicture) {
                         <div class="bottom-marker"></div>
                     }
                 </div>
