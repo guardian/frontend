@@ -16,6 +16,8 @@ body {
 
 body:after {
     content: "mobile";
+    breakpoint: "mobile";
+
     @include u-h;
 
     @include mq(tablet) {

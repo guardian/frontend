@@ -11,10 +11,37 @@
     .football-team__form {
         display: none;
     }
+
+    &.facia-snap--tiny {
+        padding-left: 0 !important;
+    }
 }
 
-.l-row--items-4 {
+.facia-snap--tiny {
     .football-matches {
         @include football-match--tiny;
+    }
+}
+
+.facia-snap--small {
+    .football-matches {
+//        @include football-match--small;
+    }
+}
+
+.facia-snap--medium {
+    .football-matches {
+//        @include football-match--medium;
+    }
+}
+
+.facia-snap--large {
+    .football-matches {
+//        @include football-match--large;
+    }
+}
+.facia-snap--full {
+    .football-matches {
+//        @include football-match--full;
     }
 }

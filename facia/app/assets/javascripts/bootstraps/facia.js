@@ -5,6 +5,7 @@ define([
     'common/utils/mediator',
     'bonzo',
     'qwery',
+    'lodash/collections/find',
     // Modules
     'common/utils/detect',
     'common/utils/storage',
@@ -18,6 +19,7 @@ define([
     mediator,
     bonzo,
     qwery,
+    find,
     detect,
     storage,
     toArray,
@@ -25,6 +27,50 @@ define([
     ContainerShowMore,
     ContainerToggle
 ) {
+    function setSnapPoint(el, prefix) {
+        prefix = prefix || '';
+        var breakpoints = [
+            { width: 0, name: 'tiny' },
+            { width: 240, name: 'small' },
+            { width: 300, name: 'medium' },
+            { width: 480, name: 'large' },
+            { width: 940, name: 'full' }
+        ];
+
+        breakpoints.forEach(function(breakpoint) {
+            el.classList.remove(prefix + breakpoint.name);
+        });
+
+        el.classList.add(prefix + find(breakpoints, function(breakpoint, i, arr) {
+            return !arr[i+1] || (el.offsetWidth >= breakpoint.width && el.offsetWidth < arr[i+1].width);
+        }).name);
+    }
+
+    function getSnaps() {
+        return $('.fromage, .item, .linkslist__item, .headline-column__item');
+    }
+
+    function resizeSnaps() {
+        getSnaps().each(function(el) {
+            setSnapPoint(el, 'facia-snap--');
+        });
+    }
+
+    function fetchSnaps() {
+        $('.facia-snap').each(function(el) {
+            ajax({
+                url: el.getAttribute('data-snap-uri')
+            }).then(function(resp) {
+                $.create(resp[el.getAttribute('data-snap-content-key')]).each(function(html) {
+                    bonzo(el)
+                        .empty()
+                        .append(html);
+
+                    setSnapPoint(el, 'facia-snap--');
+                });
+            });
+        });
+    }
 
     var modules = {
 
@@ -32,28 +78,17 @@ define([
             var testTypes = {
                 table: '/football/premierleague/table.json',
                 matches: '/football/match-day/premierleague/2014/apr/19.json'
-            }
+            };
 
-            $('.fromage, .item, .linkslist__item').each(function(el) {
+            getSnaps().each(function(el) {
                 el.classList.add('facia-snap');
                 el.classList.add('facia-snap--football');
                 el.setAttribute('data-snap-type', 'football');
-                el.setAttribute('data-snap-uri', testTypes['matches']);
+                el.setAttribute('data-snap-uri', testTypes.matches);
                 el.setAttribute('data-snap-content-key', 'html');
             });
-            modules.fetchSnaps();
-        },
-
-        fetchSnaps: function() {
-            $('.facia-snap').each(function(el) {
-                ajax({
-                    url: el.getAttribute('data-snap-uri')
-                }).then(function(resp) {
-                    $.create(resp[el.getAttribute('data-snap-content-key')]).each(function(html) {
-                        bonzo(el).empty().append(html);
-                    });
-                });
-            });
+            fetchSnaps();
+            mediator.on('window:resize', resizeSnaps);
         },
 
         showCollectionShowMore: function () {
