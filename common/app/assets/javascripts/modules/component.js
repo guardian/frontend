@@ -348,6 +348,7 @@ define([
 
         this.detach();
         this.destroyed = true;
+        this.rendered = false;
     };
 
     /**

@@ -10,6 +10,7 @@ define([
     'bean',
     'common/modules/userPrefs',
     'common/utils/detect',
+    'common/modules/live/notification-bar',
     'lodash/objects/assign'
 ], function (
     mediator,
@@ -19,6 +20,7 @@ define([
     bean,
     userPrefs,
     detect,
+    NotificationBar,
     extend
 ) {
     /*
@@ -35,7 +37,6 @@ define([
         var options = extend({
             'activeClass': 'is-active',
             'btnClass' : '.js-auto-update',
-            'prefName': 'auto-update',
             'manipulationType' : 'html'
         }, config);
 
@@ -81,16 +82,15 @@ define([
                 // add a timestamp to the attacher
                 $attachTo.attr('data-last-updated', date);
 
-                if(this.isUpdating) {
-                    var newElements = $('.autoupdate--new', attachTo);
+                var newElements = $('.autoupdate--new', attachTo);
+                unreadBlocks = newElements.length;
 
-                    unreadBlocks = newElements.length;
-
-                    if (detect.pageVisible()) {
-                        unreadBlocks = 0;
-                        this.revealNewElements();
-                    }
-
+                if(this.isUpdating && detect.pageVisible()) {
+                    unreadBlocks = 0;
+                    this.notificationBar.destroy();
+                    this.revealNewElements();
+                } else {
+                    this.notificationBar.notify(unreadBlocks);
                 }
 
                 mediator.emit('modules:autoupdate:unread', unreadBlocks);
@@ -104,7 +104,6 @@ define([
                 $('.js-auto-update--' + action, btn.parentNode).addClass(options.activeClass);
 
                 this[action]();
-                this.setPref(action);
             },
 
             destroy: function () {
@@ -164,22 +163,13 @@ define([
             this.isUpdating = false;
         };
 
-        this.getPref = function () {
-            return userPrefs.get(options.prefName);
-        };
-
-        this.setPref = function(pref) {
-            userPrefs.set(options.prefName, pref);
-        };
-
         // Initialise
         this.init = function () {
             if (options.switches && options.switches.autoRefresh !== true) {
                 return;
             }
 
-            var that = this,
-                pref = this.getPref();
+            var that = this;
 
             $(options.attachTo).addClass('autoupdate--has-animation');
 
@@ -202,11 +192,8 @@ define([
                 });
             });
 
-            if(pref === 'off') {
-                this.view.toggle.call(this, this.btns[0]);
-            } else {
-                this.view.toggle.call(this, this.btns[1]);
-            }
+            this.notificationBar = new NotificationBar({attachTo: options.attachTo});
+            this.view.toggle.call(this, this.btns[1]);
         };
 
     }
