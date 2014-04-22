@@ -148,7 +148,7 @@ a, a:hover {
 }
 
 .droppable.underDrag {
-    background-color: #f89406;
+    background-color: #FBCC43;
 }
 
 .open .droppable.underDrag {
@@ -260,7 +260,7 @@ a, a:hover {
 }
 
 .article.underDrag {
-    border-top-color: #f89406;
+    border-top-color: #FBCC43;
 }
 
 .open .article.underDrag {
@@ -304,7 +304,7 @@ a, a:hover {
 }
 
 .is {
-    background: #fbcc43;
+    background: #FBCC43;
     color: #ffffff;
     font-size: 11px;
     line-height: 11px;
@@ -805,7 +805,7 @@ button {
 }
 
 .cnf-collection.underDrag {
-    border-top-color: #f89406;
+    border-top-color: #FBCC43;
 }
 
 .cnf-collection__index {
