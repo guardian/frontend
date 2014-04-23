@@ -3,7 +3,7 @@
 }
 
 .home {
-    top: 30px;
+    top: $gs-row-height;
     display: none !important;
 
     @include mq(leftCol) {
