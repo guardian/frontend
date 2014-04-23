@@ -82,7 +82,7 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
   }
 
   def updates = ExpiringAuthentication { request =>
-    Ok.chunked(Enumerator.fromObservable(ContentApiRefresh.refresh() map {
+    Ok.chunked((ContentApiRefresh.refresh() map {
       case (collectionId, Success(_)) => s"Successfully published $collectionId"
       case (collectionId, Failure(error)) => s"Failed to publish $collectionId: ${error.getMessage}"
     }).toJavaScriptCallback("collectionUpdateMessage"))

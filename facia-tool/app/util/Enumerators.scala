@@ -1,26 +1,13 @@
 package util
 
-import play.api.libs.iteratee.{Concurrent, Enumerator}
-import play.api.libs.iteratee.Concurrent.Channel
-import rx.lang.scala.{Observer, Observable}
+import play.api.libs.iteratee.Enumerator
 import play.api.templates.Html
 import org.apache.commons.lang.StringEscapeUtils
 import play.api.libs.json.{Json, Writes}
+import scala.concurrent.Future
+import common.ExecutionContexts
 
-object Enumerators {
-  private class ChannelObserver[A](chan: Channel[A]) extends Observer[A] {
-    override def onNext(a: A): Unit = chan.push(a)
-    override def onError(error: Throwable): Unit = chan.end(error)
-    override def onCompleted(): Unit = chan.end()
-  }
-
-  implicit class RichEnumeratorCompanion(companion: Enumerator.type) {
-    def fromObservable[A](observable: Observable[A]) =
-      Concurrent.unicast[A](onStart = { chan =>
-        observable.subscribe(new ChannelObserver[A](chan))
-      })
-  }
-
+object Enumerators extends ExecutionContexts {
   implicit class RichEnumeratorWithWrites[A: Writes](enumerator: Enumerator[A]) {
     /** Writes each value into JSON */
     def toJValue = enumerator.map(implicitly[Writes[A]].writes)
@@ -35,8 +22,14 @@ object Enumerators {
       */
     def toJavaScriptCallback(functionName: String) = {
       enumerator map { data =>
-        Html(s"<script>$functionName(\"${StringEscapeUtils.escapeJavaScript(data)}\")</script>")
+        Html(s"""<script>$functionName("${StringEscapeUtils.escapeJavaScript(data)}");</script>""")
       }
     }
+  }
+
+  /** Sequentially enumerate the results of applying f to each element of as */
+  def enumerate[A, B](as: Seq[A])(f: A => Future[B]) = Enumerator.unfoldM(as) {
+    case first :: rest => f(first) map { b => Some(rest -> b) }
+    case Nil => Future.successful(None)
   }
 }
