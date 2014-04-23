@@ -4,6 +4,7 @@ import org.joda.time.DateMidnight
 import pa.LeagueTableEntry
 import pa.{Result, MatchDayTeam}
 import java.awt.image.BandCombineOp
+import java.awt.Color
 
 
 case class Competition(
@@ -117,21 +118,35 @@ object PrevResult {
 }
 
 case class TeamColours(homeTeam: LineUpTeam, awayTeam: LineUpTeam) {
-  val home = if(homeTeam.teamColour == "#FFFFFF") "#EEEEEE" else homeTeam.teamColour
-  val away = if(awayTeam.teamColour == "#FFFFFF") "#EEEEEE" else if (awayTeam.teamColour == homeTeam.teamColour) darken(awayTeam.teamColour) else awayTeam.teamColour
-  val homeTeamIsLight = isLight(home)
-  val awayTeamIsLight = isLight(away)
+  private val darkenFactor = 0.3
+  private val homeColour = homeTeam.teamColour.toLowerCase
+  private val awayColour = awayTeam.teamColour.toLowerCase
 
-  def isLight(colour: String): Boolean = {
-    val hex = colour.dropWhile('#' == _)
-    val r = Integer.parseInt(hex.take(2), 16)
-    val g = Integer.parseInt(hex.drop(2).take(2), 16)
-    val b = Integer.parseInt(hex.drop(4).take(2), 16)
-    val yiq = ((r*299) + (g*587) + (b*114)) / 1000
+  lazy val home =
+    if (homeColour == "#ffffff") "#eeeeee"
+    else if (homeColour == "#eeeeee" && awayColour == "#ffffff") "#dddddd"
+    else homeColour
+  lazy val away =
+    if (awayColour == "#ffffff" && homeColour == "#ffffff") darken(awayColour)
+    else if (awayColour == "#ffffff") "#eeeeee"
+    else if (awayColour == homeColour) darken(awayColour)
+    else awayColour
+  lazy val homeTeamIsLight = isLight(home)
+  lazy val awayTeamIsLight = isLight(away)
+
+  private def isLight(colourHex: String): Boolean = {
+    val colour = Color.decode(colourHex)
+    val yiq = ((colour.getRed*299) + (colour.getGreen*587) + (colour.getBlue*114)) / 1000
     yiq > 128
   }
 
-  def darken(colour: String): String = {
-    colour
+  private def darken(colour: String): String = {
+    val original = Color.decode(colour)
+    val darker = new Color(
+      Math.max(original.getRed * (1 - darkenFactor), 0).round.toInt,
+      Math.max(original.getGreen * (1 - darkenFactor), 0).round.toInt,
+      Math.max(original.getBlue * (1 - darkenFactor), 0).round.toInt
+    )
+    "#%02x%02x%02x".format(darker.getRed, darker.getGreen, darker.getBlue)
   }
 }
