@@ -13,6 +13,8 @@ object Fixtures {
       new DateTime(2014, 6, 8, 0, 0),
       Nil,
       List("United Kingdom"),
+      "Tours",
+      List("Special interest holidays"),
       "4",
       1),
     Offer(1,
@@ -23,6 +25,8 @@ object Fixtures {
       new DateTime(2014, 5, 2, 0, 0),
       Nil,
       List("Italy"),
+      "Tours",
+      List("Rail holidays", "Tours"),
       "7",
       2),
     Offer(2,
@@ -33,6 +37,8 @@ object Fixtures {
       new DateTime(2014, 10, 8, 0, 0),
       Nil,
       List("France"),
+      "Tours",
+      List("Tours", "Rail holidays"),
       "5",
       3)
   )

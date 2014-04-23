@@ -32,6 +32,8 @@ object OffersApi extends XmlAdsApi[Offer] {
       dateFormat.parseDateTime(textValue("@earliestdeparture")),
       Nil,
       textValues("location"),
+      textValue("category"),
+      textValues("tag"),
       textValue("@duration"),
       textValue("position").toInt
     )

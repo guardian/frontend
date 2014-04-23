@@ -11,8 +11,8 @@ import model.commercial.Keyword
 import scala.Some
 
 case class Offer(id: Int, title: String, offerUrl: String, imageUrl: String, fromPrice: String,
-                 earliestDeparture: DateTime, keywords: List[Keyword], countries: List[String], duration: String,
-                 position: Int)
+                 earliestDeparture: DateTime, keywords: List[Keyword], countries: List[String], category: String,
+                 tags: List[String], duration: String, position: Int)
   extends Ad {
 
   def isTargetedAt(segment: Segment): Boolean = {
