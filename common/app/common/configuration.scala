@@ -182,6 +182,10 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val apiClientHeader = configuration.getMandatoryStringProperty("discussion.apiClientHeader")
     lazy val url = configuration.getMandatoryStringProperty("discussion.url")
   }
+  
+  object commercial {
+    lazy val books_url = configuration.getMandatoryStringProperty("commercial.books_url")
+  }
 
   object open {
     lazy val ctaApiRoot = configuration.getMandatoryStringProperty("open.cta.apiRoot")
