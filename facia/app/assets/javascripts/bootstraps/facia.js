@@ -39,7 +39,7 @@ define([
                 el.classList.add('facia-snap');
                 el.classList.add('facia-snap--football');
                 el.setAttribute('data-snap-type', 'football');
-                el.setAttribute('data-snap-uri', testTypes.matches);
+                el.setAttribute('data-snap-uri', testTypes.table);
                 el.setAttribute('data-snap-content-key', 'html');
             });
             snaps.init('.facia-snap');

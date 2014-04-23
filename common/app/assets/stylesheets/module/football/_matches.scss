@@ -3,7 +3,7 @@
     position: relative;
 
     @include mq($to: mobile) {
-        @include football-match--tiny;
+        @include football-match--mini;
     }
 }
 

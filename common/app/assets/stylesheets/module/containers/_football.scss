@@ -6,7 +6,7 @@
     }
 }
 
-/* Matches */
+// Matches
 .facia-snap--football {
     .football-team__form {
         display: none;
@@ -17,23 +17,27 @@
     }
 }
 
-.facia-snap--tiny {
+.facia-snap--mini {
+    .table--football {
+        @include table-football--mini;
+    }
+
     .football-matches {
-        @include football-match--tiny;
+        @include football-match--mini;
     }
 }
 
 .facia-snap--small {
-    .football-matches {}
+    .table--football {
+        @include table-football--small;
+    }
 }
 
 .facia-snap--medium {
-    .football-matches {}
+    .table--football {
+        @include table-football--medium;
+    }
 }
 
-.facia-snap--large {
-    .football-matches {}
-}
-.facia-snap--full {
-    .football-matches {}
-}
+.facia-snap--large {}
+.facia-snap--full {}

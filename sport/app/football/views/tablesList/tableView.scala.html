@@ -1,21 +1,20 @@
-@(competition: model.Competition, group: Group, highlightTeamId: Option[String] = None, showMeta: Boolean = false, isSmall: Boolean = false, multiGroup: Boolean = false)(implicit request: RequestHeader)
-@* TODO (jamesgorrie): Support multigroups, remove hack of empty div *@
+@(competition: model.Competition, group: Group, highlightTeamId: Option[String] = None, showMeta: Boolean = false, size: String = "full", multiGroup: Boolean = false)(implicit request: RequestHeader)
 @if(!multiGroup) {
 <div class="table__container">
-    <table class="table table--football@if(isSmall){ table--small}else{ table--striped}">
-        @if(showMeta){<caption><a href="@competition.url">@competition.fullName</a></caption>}
+    <table class="table table--football table--@size@if(size == "full"){ table--striped}">
+        @if(showMeta){<caption class="table__caption"><a href="@competition.url">@competition.fullName</a></caption>}
         <thead>
             <tr>
-                <th class="football-stat--postition table-column--sub"><abbr title="Position">Pos</abbr></th>
+                <th class="table-column--sub"><abbr title="Position">Pos</abbr></th>
                 <th class="football-stat--team table-column--main">Team</th>
-                <th class="football-stat--played"><abbr title="Played">P</abbr></th>
-                <th class="football-stat--won table-column--inferior"><abbr title="Won">W</abbr></th>
-                <th class="football-stat--drawn table-column--inferior"><abbr title="Drawn">D</abbr></th>
-                <th class="football-stat--lost table-column--inferior"><abbr title="Lost">L</abbr></th>
-                <th class="football-stat--for table-column--inferior"><abbr title="Goals for">F</abbr></th>
-                <th class="football-stat--against table-column--inferior"><abbr title="Goals against">A</abbr></th>
-                <th class="football-stat--difference"><abbr title="Goal difference">GD</abbr></th>
-                <th class="football-stat--points"><abbr title="Points">Pts</abbr></th>
+                <th><abbr title="Played">P</abbr></th>
+                <th class="table-column--from-large"><abbr title="Won">W</abbr></th>
+                <th class="table-column--from-large"><abbr title="Drawn">D</abbr></th>
+                <th class="table-column--from-large"><abbr title="Lost">L</abbr></th>
+                <th class="table-column--from-large"><abbr title="Goals for">F</abbr></th>
+                <th class="table-column--from-large"><abbr title="Goals against">A</abbr></th>
+                <th class="table-column--from-small"><abbr title="Goal difference">GD</abbr></th>
+                <th><abbr title="Points">Pts</abbr></th>
                 <th class="football-stat--form"><abbr title="Results of previous games">Form</abbr></th>
             </tr>
         </thead>
@@ -25,32 +24,34 @@
                 <tr class="@RenderClasses(Map(
                         "table-row--highlight" -> highlightTeamId.map(_ == entry.team.id).getOrElse(false),
                         "table-row--divider" -> competition.tableDividers.contains(entry.team.rank-1)))">
-                    <td class="football-stat--postition table-column--priority table-column--sub">@entry.team.rank</td>
-                    <td class="football-stat--team table-column--priority table-column--main">
-                        @TeamUrl(entry.team).map{ url =>
-                            <a href="@TeamUrl(entry.team)" data-link-name="View team">
-                                @entry.team.name
-                            </a>
-                        }.getOrElse{
-                            <span>@entry.team.name</span>
-                        }
+                    <td class="table-column--sub">@entry.team.rank</td>
+                    <td class="table-column--main">
+                        <span class="team-name" data-team-abbr="@pa.TeamCodes.codeFor(entry.team)">
+                            @TeamUrl(entry.team).map{ url =>
+                                <a href="@TeamUrl(entry.team)" class="team-name--long" data-link-name="View team">
+                                    @entry.team.name
+                                </a>
+                            }.getOrElse{
+                                <span class="team-name--long">@entry.team.name</span>
+                            }
+                        </span>
                     </td>
-                    <td class="football-stat--played">@entry.team.total.played</td>
-                    <td class="football-stat--won table-column--inferior">@entry.team.total.won</td>
-                    <td class="football-stat--drawn table-column--inferior">@entry.team.total.drawn</td>
-                    <td class="football-stat--lost table-column--inferior">@entry.team.total.lost</td>
-                    <td class="football-stat--for table-column--inferior">@entry.team.total.goalsFor</td>
-                    <td class="football-stat--against table-column--inferior">@entry.team.total.goalsAgainst</td>
-                    <td class="football-stat--difference">@entry.team.goalDifference</td>
-                    <td class="football-stat--points">@entry.team.points</td>
+                    <td>@entry.team.total.played</td>
+                    <td class="table-column--from-large">@entry.team.total.won</td>
+                    <td class="table-column--from-large">@entry.team.total.drawn</td>
+                    <td class="table-column--from-large">@entry.team.total.lost</td>
+                    <td class="table-column--from-large">@entry.team.total.goalsFor</td>
+                    <td class="table-column--from-large">@entry.team.total.goalsAgainst</td>
+                    <td class="table-column--from-small">@entry.team.goalDifference</td>
+                    <td><b>@entry.team.points</b></td>
                     <td class="football-stat--form team__results--thin">
                         @football.views.html.fragments.teamForm(entry.team.id, competition)
                     </td>
                 </tr>
             }
         </tbody>
+        @if(showMeta){<caption class="table__caption table__caption--bottom"><a href='@{competition.url + "/table"}' data-link-name="full table">View full table</a></caption>}
     </table>
-    @if(showMeta){<a href='@{competition.url + "/table"}' data-link-name="full table" class="cta-small">View full @competition.fullName table<i class="i i-sport-arrow i-sport-arrow--small"></i></a>}
 </div>
 }else{
 <div></div>

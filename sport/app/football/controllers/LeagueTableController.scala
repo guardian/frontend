@@ -81,7 +81,7 @@ object LeagueTableController extends Controller with Logging with CompetitionTab
 
       val smallTableGroup = table.copy(groups = table.groups.map { group => group.copy(entries = group.entries.take(10)) }).groups(0)
       val htmlResponse = () => football.views.html.tablesList.tablesPage(TablesPage(page, Seq(table), table.competition.url, filters, Some(table.competition)))
-      val jsonResponse = () => football.views.html.tablesList.tableView(table.competition, smallTableGroup, showMeta = true, isSmall = true, multiGroup = table.multiGroup)
+      val jsonResponse = () => football.views.html.tablesList.tableView(table.competition, smallTableGroup, showMeta = true, size = "medium", multiGroup = table.multiGroup)
 
       renderFormat(htmlResponse, jsonResponse, page)
 

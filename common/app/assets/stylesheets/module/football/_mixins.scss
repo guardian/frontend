@@ -1,4 +1,4 @@
-@mixin football-match--tiny {
+@mixin team-name--abbreviated {
     .team-name {
         &:after {
             content: attr(data-team-abbr);
@@ -8,16 +8,17 @@
     .team-name--long {
         display: none;
     }
+}
 
+@mixin football-match--mini {
+    @include team-name--abbreviated;
     .football-matches__date {
         float: none;
         display: block;
     }
 }
 
-@mixin table-football--small {
-    .table-column--inferior { display: none; }
-
+@mixin table-football--medium {
     th,
     td {
         min-width: 0;
@@ -26,4 +27,17 @@
     .football-stat--form {
         min-width: 0;
     }
+}
+
+@mixin table-football--small {
+    @include table-football--medium;
+    .football-stat--form {
+        display: none;
+    }
+}
+
+@mixin table-football--mini {
+    @include table-football--small;
+    @include table--mini;
+    @include team-name--abbreviated;
 }

@@ -10,16 +10,12 @@
         }
     }
 
-    .football-stat--points {
-        font-weight: bold;
-    }
-
-    .football-stat--team a {
-        color: inherit;
-    }
-
     .table-column--main {
         max-width: 50px;
+
+        a {
+            color: inherit;
+        }
     }
 
     // This makes sure that all table columns are equally spaced
@@ -38,8 +34,8 @@
     }
 
     // This is as we don't have element media queries (no-one does)
-    @include mq($to: tablet) { @include table-football--small; }
-    &.table--small { @include table-football--small; }
+    @include mq($to: tablet) { @include table-football--medium; }
+    &.table--medium { @include table-football--medium; }
 }
 
 .football-table__container {

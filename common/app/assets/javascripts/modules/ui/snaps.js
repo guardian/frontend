@@ -23,10 +23,10 @@ define([
         prefix = prefix || '';
         var breakpoints = [
             { width: 0, name: 'tiny' },
-            { width: 240, name: 'small' },
+            { width: 180, name: 'mini' },
+            { width: 220, name: 'small' },
             { width: 300, name: 'medium' },
-            { width: 480, name: 'large' },
-            { width: 940, name: 'full' }
+            { width: 940, name: 'large' }
         ];
 
         breakpoints.forEach(function(breakpoint) {
