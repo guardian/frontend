@@ -130,7 +130,7 @@
             width: 33%;
             @include rem((
                 min-height: 250px,
-                padding: 0 $gs-gutter/2 $gs-gutter*1.5
+                padding: 0 $gs-gutter/2 $gs-baseline*2.5
             ));
 
             &:nth-child(n+4) {
@@ -170,7 +170,9 @@
     }
     @include mq(wide) {
         .commercial__head {
-            width: gs-span(4);
+            @include rem((
+                width: gs-span(4)
+            ));
         }
     }
 }
@@ -213,41 +215,37 @@
         }
         .commercial__search {
             @include rem((
-                margin-top: $gs-gutter*2
+                margin-top: 40px
             ));            
         }
     }
 }
 
 /* article */
-.facia-container--commercial {
-    &.facia-container--layout-article {
-        .commercial--books {
-            .commercial__head {
-                @include mq(rightCol) {
-                    width: 25%;
-                    @include rem((
-                        padding-right: 8px
-                    ));
-                }
-            }
+.facia-container--layout-article .commercial--books {
+    .commercial__head {
+        @include mq(rightCol) {
+            width: 25%;
+            @include rem((
+                padding-right: 8px
+            ));
         }
-        @include mq(leftCol, $to: wide) {
-            .commercial__title {
-                line-height: 0;
-                @include rem((
-                    margin-bottom: 10px
-                ));
-            }
-            .i-bookshop-logo--bookshop {
-                margin-left: 0;
-            }
-            .commercial__search {
-                background: red;
-                @include rem((
-                    margin-top: $gs-gutter*2
-                ));
-            }
+    }
+    @include mq(leftCol, $to: wide) {
+        .commercial__title {
+            line-height: 0;
+            @include rem((
+                margin-bottom: 10px
+            ));
+        }
+        .i-bookshop-logo--bookshop {
+            margin-left: 0;
+        }
+        .commercial__search {
+            background: red;
+            @include rem((
+                margin-top: 40px
+            ));
         }
     }
 }
