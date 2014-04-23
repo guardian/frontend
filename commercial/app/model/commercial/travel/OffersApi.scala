@@ -18,16 +18,21 @@ trait OffersApi extends XmlAdsApi[Offer] {
   private val dateFormat = DateTimeFormat.forPattern("dd-MMM-yyyy")
 
   private def buildOffer(id: Int, node: Node): Offer = {
+
+    def textValue(nodeName: String): String = (node \ nodeName).text.trim()
+
+    def textValues(nodeName: String): List[String] = (node \ nodeName).map(_.text.trim()).toList
+
     Offer(
       id,
-      Some((node \\ "title").text),
-      (node \\ "offerurl").text,
-      (node \\ "imageurl").text,
-      (node \ "@fromprice").text.replace(".00", ""),
-      dateFormat.parseDateTime((node \ "@earliestdeparture").text),
+      textValue("prodName"),
+      textValue("prodUrl"),
+      textValue("prodImage"),
+      textValue("@fromprice").replace(".00", ""),
+      dateFormat.parseDateTime(textValue("@earliestdeparture")),
       Nil,
-      (node \\ "country").map(_.text).toList,
-      (node \ "@duration").text
+      textValues("location"),
+      textValue("@duration")
     )
   }
 
@@ -38,13 +43,14 @@ trait OffersApi extends XmlAdsApi[Offer] {
   }
 }
 
-
+// TODO remove
 object AllOffersApi extends OffersApi {
   protected val adTypeName = "All Travel Offers"
-  protected lazy val path = "xmloffers"
+  protected lazy val path = "consumerfeed"
 }
 
 
+// TODO remove
 object MostPopularOffersApi extends OffersApi {
   protected val adTypeName = "Most Popular Travel Offers"
   protected lazy val path = "xmlmostpopular"

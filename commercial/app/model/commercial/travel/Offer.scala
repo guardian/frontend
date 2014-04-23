@@ -10,7 +10,7 @@ import model.commercial.Segment
 import model.commercial.Keyword
 import scala.Some
 
-case class Offer(id: Int, title: Option[String], offerUrl: String, imageUrl: String, fromPrice: String,
+case class Offer(id: Int, title: String, offerUrl: String, imageUrl: String, fromPrice: String,
                  earliestDeparture: DateTime, keywords: List[Keyword], countries: List[String], duration: String)
   extends Ad {
 
