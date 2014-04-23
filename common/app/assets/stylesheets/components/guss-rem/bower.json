@@ -1,0 +1,8 @@
+{
+  "name": "guss-rem",
+  "version": "1.0.0",
+  "main": "_rem.scss",
+  "ignore": [
+    "CHANGELOG.md"
+  ]
+}
