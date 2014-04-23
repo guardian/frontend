@@ -895,6 +895,21 @@ button {
     color: #CCCCCC;
 }
 
+.cnf-form .api-query-status {
+    float: left;
+    display: inline-block;
+    margin: 2px 0 0 5px;
+    color: #999999;
+}
+
+.cnf-form .api-query-status--valid {
+    color: #46c430;
+}
+
+.cnf-form .api-query-status--invalid {
+    color: #d61d00;
+}
+
 /*****************************************/
 /* MEDIA QUERIES */
 /*****************************************/
