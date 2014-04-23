@@ -41,7 +41,12 @@ object MoreOnMatchController extends Controller with Football with Requests with
       val related: Future[Seq[Content]] = loadMoreOn(request, theMatch)
       // We are only interested in content with exactly 2 team tags
 
-    related map { _ filter hasExactlyTwoTeams } map {
+      val group = theMatch.round.name.flatMap {
+        case roundName if roundName.toLowerCase.startsWith("group") => Some(roundName.toLowerCase.replace(' ', '-'))
+        case _ => None
+      }.getOrElse("")
+
+      related map { _ filter hasExactlyTwoTeams } map {
         case Nil => Cached(300){JsonNotFound()}
         case filtered => Cached(if(theMatch.isLive) 10 else 300) {
           JsonComponent(
@@ -49,6 +54,7 @@ object MoreOnMatchController extends Controller with Football with Requests with
             "matchSummary" -> football.views.html.fragments.matchSummary(theMatch),
             "scoreSummary" -> football.views.html.fragments.scoreSummary(theMatch),
             "hasStarted" -> theMatch.hasStarted,
+            "group" -> group,
             "matchDate" ->  DateTimeFormat.forPattern("yyyy/MMM/dd").print(theMatch.date).toLowerCase(),
             "dropdown" -> views.html.fragments.dropdown("")(Html(""))
           )
