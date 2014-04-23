@@ -37,7 +37,6 @@
 .social__item {
     float: left;
     width: 36px;
-
     padding: 0 $gs-baseline / 4;
 
     @include mq($to: desktop) {
