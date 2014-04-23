@@ -1,24 +1,15 @@
 package model.commercial.travel
 
 import common.{ExecutionContexts, Logging}
-import model.commercial.{Segment, AdAgent}
+import model.commercial.AdAgent
 
-object OffersAgent extends AdAgent[Offer] {
+object OffersAgent extends AdAgent[Offer] with Logging with ExecutionContexts {
 
-  def refresh() {
-    AllOffersAgent.refresh()
-    MostPopularOffersAgent.refresh()
-  }
-
-  override def adsTargetedAt(segment: Segment): Seq[Offer] = AllOffersAgent.adsTargetedAt(segment)
-}
-
-object AllOffersAgent extends AdAgent[Offer] with Logging with ExecutionContexts {
-
-  override def defaultAds = MostPopularOffersAgent.currentAds
+  // most popular Travel Offers
+  override def defaultAds = currentAds.sortBy(_.position).take(4)
 
   def refresh() = {
-    for {offers <- AllOffersApi.loadAds()}
+    for {offers <- OffersApi.loadAds()}
     yield updateCurrentAds(populateKeywords(offers))
   }
 
@@ -35,12 +26,5 @@ object AllOffersAgent extends AdAgent[Offer] with Logging with ExecutionContexts
     log.info(s"No keywords for these offers: $unpopulated")
 
     populated
-  }
-}
-
-object MostPopularOffersAgent extends AdAgent[Offer] with ExecutionContexts {
-
-  def refresh() {
-    MostPopularOffersApi.loadAds() map updateCurrentAds
   }
 }

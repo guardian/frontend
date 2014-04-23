@@ -1,7 +1,6 @@
 package model.commercial.travel
 
 import org.joda.time.DateTime
-import model.commercial.Keyword
 
 object Fixtures {
 
@@ -14,7 +13,8 @@ object Fixtures {
       new DateTime(2014, 6, 8, 0, 0),
       Nil,
       List("United Kingdom"),
-      "4"),
+      "4",
+      1),
     Offer(1,
       "Italian Riviera by rail",
       "http://www.guardianholidayoffers.co.uk/holiday/3421/italian-riviera",
@@ -23,7 +23,8 @@ object Fixtures {
       new DateTime(2014, 5, 2, 0, 0),
       Nil,
       List("Italy"),
-      "7"),
+      "7",
+      2),
     Offer(2,
       "Lake Annecy by rail",
       "http://www.guardianholidayoffers.co.uk/holiday/3381/lake-annecy-les-grillons-hotel-half-board-",
@@ -32,35 +33,7 @@ object Fixtures {
       new DateTime(2014, 10, 8, 0, 0),
       Nil,
       List("France"),
-      "5")
+      "5",
+      3)
   )
-
-  val offers = List(
-    Offer(0,
-      "Southern Tanzania",
-      "http://www.guardianholidayoffers.co.uk/holiday/4980/southern-tanzania",
-      "http://www.guardianholidayoffers.co.uk/Image.aspx?id=33679&type=ThreeColumn",
-      "5595"
-      , new DateTime(2014, 1, 12, 0, 0),
-      List(Keyword("travel/tanzania", "Tanzania")),
-      List("Tanzania"), "12"),
-    Offer(1,
-      "Lake Maggiore, Orta & the Matterhorn",
-      "http://www.guardianholidayoffers.co.uk/holiday/3552/lake-maggiore-orta-and-the-matterhorn",
-      "http://www.guardianholidayoffers.co.uk/Image.aspx?id=26842&type=ThreeColumn",
-      "979",
-      new DateTime(2014, 4, 29, 0, 0),
-      List(Keyword("travel/italy", "Italy"), Keyword("travel/switzerland", "Switzerland")),
-      List("Italy", "Switzerland"), "7"),
-    Offer(2,
-      "Horse riding holiday for intermediate and experienced riders",
-      "http://www.guardianholidayoffers.co.uk/holiday/5037/horse-riding-holiday-for-intermediate-and-experienced-riders",
-      "http://www.guardianholidayoffers.co.uk/Image.aspx?id=33819&type=ThreeColumn",
-      "1284",
-      new DateTime(2013, 11, 2, 0, 0),
-      List(Keyword("travel/france", "France")),
-      List("France"), "1")
-  )
-
-
 }

@@ -5,13 +5,13 @@ import scala.xml.{Elem, Node}
 import model.commercial.XmlAdsApi
 import conf.{Switches, CommercialConfiguration}
 
-trait OffersApi extends XmlAdsApi[Offer] {
+object OffersApi extends XmlAdsApi[Offer] {
+
+  protected val adTypeName = "Travel Offers"
 
   protected val switch = Switches.TravelOffersFeedSwitch
 
-  protected val path: String
-
-  protected val url = CommercialConfiguration.getProperty("traveloffers.api.url") map (u => s"$u/$path")
+  protected val url = CommercialConfiguration.getProperty("traveloffers.api.url") map (u => s"$u/consumerfeed")
 
   override protected val loadTimeout = 30000
 
@@ -32,7 +32,8 @@ trait OffersApi extends XmlAdsApi[Offer] {
       dateFormat.parseDateTime(textValue("@earliestdeparture")),
       Nil,
       textValues("location"),
-      textValue("@duration")
+      textValue("@duration"),
+      textValue("position").toInt
     )
   }
 
@@ -41,17 +42,4 @@ trait OffersApi extends XmlAdsApi[Offer] {
       case (offerXml, idx) => buildOffer(idx, offerXml)
     }
   }
-}
-
-// TODO remove
-object AllOffersApi extends OffersApi {
-  protected val adTypeName = "All Travel Offers"
-  protected lazy val path = "consumerfeed"
-}
-
-
-// TODO remove
-object MostPopularOffersApi extends OffersApi {
-  protected val adTypeName = "Most Popular Travel Offers"
-  protected lazy val path = "xmlmostpopular"
 }

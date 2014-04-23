@@ -11,7 +11,8 @@ import model.commercial.Keyword
 import scala.Some
 
 case class Offer(id: Int, title: String, offerUrl: String, imageUrl: String, fromPrice: String,
-                 earliestDeparture: DateTime, keywords: List[Keyword], countries: List[String], duration: String)
+                 earliestDeparture: DateTime, keywords: List[Keyword], countries: List[String], duration: String,
+                 position: Int)
   extends Ad {
 
   def isTargetedAt(segment: Segment): Boolean = {
@@ -103,15 +104,16 @@ object Countries extends ExecutionContexts with Logging {
 
   def refresh() = {
     val countries = {
-      val currentAds = AllOffersAgent.currentAds
+      val currentAds = OffersAgent.currentAds
       if (currentAds.isEmpty) defaultCountries
       else currentAds.flatMap(_.countries).distinct
     }
     Future.sequence {
       countries map {
-        country => Lookup.keyword("\"" + country + "\"", section = Some("travel")) flatMap {
-          keywords => countryKeywords.alter(_.updated(country, keywords))
-        }
+        country =>
+          Lookup.keyword("\"" + country + "\"", section = Some("travel")) flatMap {
+            keywords => countryKeywords.alter(_.updated(country, keywords))
+          }
       }
     }
   }
