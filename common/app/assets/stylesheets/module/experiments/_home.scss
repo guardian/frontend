@@ -14,27 +14,19 @@
 .home__link,
 .home__link:active,
 .home__link:visited {
-
-    color: $c-neutral2;
-    opacity: 0.7;
+    color: $c-newsDefault;
     @include fs-header(1);
 
     &:hover,
     &:focus {
-        color: $c-newsDefault;
-        opacity: 1;
-        text-decoration: none;
-
-        .i-home {
-            background-color: $c-newsDefault;
-            opacity: 1;
+        .home__label {
+            text-decoration: underline;
         }
     }
 }
 
 .i-home {
-    background-color: $c-neutral2;
-    opacity: 0.7;
+    background-color: $c-newsDefault;
 }
 
 .home__label {
