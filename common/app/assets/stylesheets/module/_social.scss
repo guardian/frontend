@@ -17,7 +17,6 @@
         display: block;
     }
 }
-
 .social {
     height: 32px;
     overflow-y: hidden;
@@ -25,7 +24,6 @@
         margin-left: -$gs-gutter/5
     ));
 }
-
 .social__head {
     @include fs-textsans(1);
     color: $c-neutral2;
@@ -33,7 +31,6 @@
         padding: $gs-baseline/3 0 $gs-baseline 0
     ));
 }
-
 .social__item {
     float: left;
     width: 36px;
@@ -49,6 +46,7 @@
     display: block;
 }
 
+
 /**
  * Social icons
  * Usage:
@@ -58,6 +56,7 @@
  *     </span>
  * </element>
  */
+
 @include mq(desktop) {
     .social-icon-wrapper {
         opacity: .6;
@@ -87,7 +86,3 @@ $social-icon: (
         margin-left: -1px;
     }
 }
-
-
-
-
