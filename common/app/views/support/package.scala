@@ -707,6 +707,11 @@ object VisualTone {
   val Comment = "comment"
   val News = "news"
   val Feature = "feature"
+  val Live = "live"
+
+  private val liveMappings = Seq(
+    "tone/minutebyminute"
+  )
 
   private val commentMappings = Seq(
     "tone/comment",
@@ -729,8 +734,9 @@ object VisualTone {
 
 
   // tones are all considered to be 'News' it is the default so we do not list news tones explicitly
-  def apply(tags: Tags) = if(isComment(tags.tones)) Comment else if(isFeature(tags.tones)) Feature else News
+  def apply(tags: Tags) = if(isLive(tags.tones)) Live else if(isComment(tags.tones)) Comment else if(isFeature(tags.tones)) Feature else News
 
+  private def isLive(tones: Seq[Tag]) = tones.exists(t => liveMappings.contains(t.id))
   private def isComment(tones: Seq[Tag]) = tones.exists(t => commentMappings.contains(t.id))
   private def isFeature(tones: Seq[Tag]) = tones.exists(t => featureMappings.contains(t.id))
 }
