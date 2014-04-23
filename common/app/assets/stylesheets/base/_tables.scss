@@ -118,10 +118,6 @@ td {
     border-top: 1px dashed $c-neutral1;
 }
 
-.table-row--break td {
-    border-top: 1px solid $c-neutral1;
-}
-
 .table__headline {
     @include fs-bodyHeading(2);
     border-top: 1px dotted $c-neutral5;

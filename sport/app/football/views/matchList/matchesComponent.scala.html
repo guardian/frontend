@@ -4,7 +4,7 @@
 
 <div class="c-football-matches">
     @matchesList.matchesGroupedByDateAndCompetition.map { case (date, competitionMatches) =>
-        <div class="football-matches__day table--small">
+        <div class="football-matches__day table--medium">
             @competitionMatches.map { case (competition, matches) =>
                 @football.views.html.matchList.matchesList(matches, competition, Option(date), showCaption=true)
             }
