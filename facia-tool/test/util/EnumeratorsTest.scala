@@ -8,7 +8,7 @@ import play.api.libs.iteratee.{Enumerator, Iteratee}
 
 class EnumeratorsTest extends FlatSpec with ShouldMatchers with ScalaFutures {
   "enumerate" should "simply enumerate the list if the function applied lifts the value into a Future" in {
-    enumerate(List(1, 2, 3))(Future.successful).run(Iteratee.getChunks).futureValue should be(List(
+    enumerate(List(1, 2, 3))(Future.successful).run(Iteratee.getChunks).futureValue should equal(List(
       1, 2, 3
     ))
   }
@@ -18,15 +18,6 @@ class EnumeratorsTest extends FlatSpec with ShouldMatchers with ScalaFutures {
       Future {
         n * n
       }
-    }.run(Iteratee.getChunks).futureValue should be(List(1, 4, 9))
-  }
-
-  "RichStringEnumerator.toJavaScriptCallback" should "return script strings, invoking the callback" in {
-    Enumerator("Hello", "World").toJavaScriptCallback("console.print").run(Iteratee.getChunks).futureValue should be(
-      List(
-        """<script>console.print("Hello");</script>""",
-        """<script>console.print("World");</script>"""
-      )
-    )
+    }.run(Iteratee.getChunks).futureValue should equal(List(1, 4, 9))
   }
 }

@@ -16,6 +16,8 @@ import model.{NoCache, Cached}
 import play.api.libs.iteratee.Enumerator
 import _root_.util.Enumerators._
 import scala.util.{Failure, Success}
+import play.api.templates.Html
+import play.api.libs.Comet
 
 object FaciaToolController extends Controller with Logging with ExecutionContexts {
   implicit val collectionRead = Json.reads[Collection]
@@ -77,15 +79,15 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
     }
   }
 
-  def updateAll() = ExpiringAuthentication { request =>
-    Ok(views.html.config(Configuration.environment.stage, Identity(request)))
+  def publishAll() = ExpiringAuthentication { request =>
+    Ok(views.html.publish_all(Configuration.environment.stage, Identity(request)))
   }
 
-  def updates = ExpiringAuthentication { request =>
+  def publishAllStream() = ExpiringAuthentication { request =>
     Ok.chunked((ContentApiRefresh.refresh() map {
       case (collectionId, Success(_)) => s"Successfully published $collectionId"
       case (collectionId, Failure(error)) => s"Failed to publish $collectionId: ${error.getMessage}"
-    }).toJavaScriptCallback("collectionUpdateMessage"))
+    }) through Comet(callback = "parent.cometMessage"))
   }
 
   def publishCollection(id: String) = AjaxExpiringAuthentication { request =>
