@@ -40,5 +40,13 @@
         .item--has-image .item__image-container {
             display: block;
         }
+        .item--gallery .item__title--has-icon-mobile,
+        .item--video .item__title--has-icon-mobile {
+            padding-left: 0;
+    
+            .i {
+                display: none;
+            }
+        }
     }
 }
