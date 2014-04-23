@@ -5,12 +5,14 @@ import dev.DevParametersLifecycle
 import implicits.Requests
 import model.AdminLifecycle
 import feed.{OnwardJourneyLifecycle, MostReadLifecycle}
+import conf.Filters
 
 import play.api.mvc.{RequestHeader, EssentialAction, EssentialFilter, WithFilters}
 
 // obviously this is only for devbuild and should never end up in one of our
 // prod projects
-object DevCacheWarningFilter extends EssentialFilter with ExecutionContexts {
+object
+DevCacheWarningFilter extends EssentialFilter with ExecutionContexts {
   def apply(next: EssentialAction) = new EssentialAction {
     def apply(rh: RequestHeader) = {
       next(rh).map{ result =>
@@ -51,7 +53,7 @@ object DevJsonExtensionFilter extends EssentialFilter with ExecutionContexts wit
 
 
 object Global extends WithFilters(
-  DevJsonExtensionFilter :: DevCacheWarningFilter :: RequestMeasurementMetrics.asFilters: _*
+  DevJsonExtensionFilter :: DevCacheWarningFilter :: Filters.common: _*
 )
 with FrontLifecycle
 with DevParametersLifecycle

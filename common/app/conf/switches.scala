@@ -70,6 +70,11 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
+  val GzipSwitch = Switch("Performance Switches", "gzip",
+    "If switched on then http responses will be gzipped",
+    safeState = Off, sellByDate = new DateMidnight(2014, 5, 5)
+  )
+
   val DoubleCacheTimesSwitch = Switch("Performance Switches", "double-cache-times",
     "Doubles the cache time of every endpoint. Turn on to help handle exceptional load.",
     safeState = On, sellByDate = never
@@ -433,7 +438,8 @@ object Switches extends Collections {
     ABExternalLinksNewWindow,
     ABAbcd,
     MemcachedSwitch,
-    IncludeBuildNumberInMemcachedKey
+    IncludeBuildNumberInMemcachedKey,
+    GzipSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }

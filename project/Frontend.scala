@@ -30,7 +30,9 @@ object Frontend extends Build with Prototypes {
       "com.bionicspirit" %% "shade" % "1.5.0",
 
       "rome" % "rome" % "1.0",
-      "org.rometools" % "rome-modules" % "1.0"
+      "org.rometools" % "rome-modules" % "1.0",
+
+      filters
     )
   )
   val paVersion = "4.6"
