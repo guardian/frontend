@@ -130,7 +130,7 @@
             width: 33%;
             @include rem((
                 min-height: 250px,
-                padding: 0 $gs-gutter/2 30px
+                padding: 0 $gs-gutter/2 $gs-gutter*1.5
             ));
 
             &:nth-child(n+4) {
