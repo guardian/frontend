@@ -128,7 +128,7 @@ td {
 
 // We replicate the table style
 // then move the caption over the top border
-// This is because the caption is outside the flow of the table/
+// This is because the caption is outside the flow of the table
 .table__caption {
     background: $c-neutral8;
     border-bottom: 1px solid darken($c-neutral8, 4%);
