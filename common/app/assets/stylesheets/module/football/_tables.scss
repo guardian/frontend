@@ -51,7 +51,7 @@
                 content: attr(data-abbr);
             }
             .team-name__long {
-                display: none;
+                @include u-h;
             }
         }
     }
