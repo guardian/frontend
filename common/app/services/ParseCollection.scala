@@ -269,7 +269,10 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
         contentApiResults = Nil
       )
     }
-    case e: Exception => throw e
+    case e: Exception => {
+      log.warn(s"ExecuteContentApiQueryRecovery: $e")
+      throw e
+    }
   }
 
 }
