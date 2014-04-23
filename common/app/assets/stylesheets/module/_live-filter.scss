@@ -101,7 +101,7 @@
         display: inline-block;
         text-align: center;
         @include rem((
-            padding: 8px 0 0 0,
+            padding: $gs-baseline/1.5 0 0,
             width: 32px,
             height: 24px,
             line-height: 13px
@@ -110,6 +110,12 @@
         color: #ffffff;
         font-weight: bold;
         @include border-radius(50%);
+
+        @include mq(tablet) {
+            @include rem((
+                line-height: 17px
+            ))
+        }
     }
 }
 

@@ -1,3 +1,6 @@
+$block-padding-left: gs-span(1) + $gs-gutter;
+$block-padding-right: $gs-gutter;
+
 /* Layout
    ========================================================================== */
 .blog__inner,
@@ -38,7 +41,7 @@
     }
     .blog__last-updated-container {
         position: absolute;
-        left: 0;
+        left: ($a-rightCol-width + $gs-gutter) * -1;
         bottom: 0;
         max-width: $a-leftColWide-width;
     }
@@ -134,9 +137,15 @@
 
 /* Design
    ========================================================================== */
-.blog__head-background {
-    @include full-bleed(#D13D54);
+.blog__head-background--default {
+    @include full-bleed($c-liveDefault);
 }
+.blog__head-background--accent {
+    position: relative;
+    z-index: 100;
+    @include full-bleed($c-liveAccent);
+}
+
 
 .blog__main-background {
     @include full-bleed($c-neutral8);
@@ -164,7 +173,7 @@
     @include mq(tablet) {
         @include fs-headline(5, true);
     }
-    margin-bottom: $gs-baseline*2;
+    margin-bottom: $gs-baseline*3;
     @include mq(rightCol) {
         margin-bottom: $gs-row-height + ($gs-baseline * 2);
     }
@@ -209,9 +218,12 @@
 
 .blog__last-updated-container {
     @include fs-data(3);
+    @include box-sizing(border-box);
     @include mq($to: rightCol) {
-        border-top: 1px dotted #E6A1AB;
-        padding-top: 7px;
+        @include rem((
+            height: $gs-row-height,
+            padding-top: $gs-baseline/2
+        ))
     }
 }
 
@@ -247,8 +259,10 @@
 }
 
 .block-time {
-    line-height: 15px;
-    padding: 4px 0 $gs-baseline/3 $gs-gutter/2;
+    @include rem((
+        line-height: 15px,
+        padding: $gs-baseline/3 0 $gs-baseline $gs-gutter/2
+    ));
 
     &.published-time {
         margin: 0;
@@ -265,7 +279,7 @@
         font-weight: normal;
     }
 
-    @include mq(mobileLandscape) {
+    @include mq(tablet) {
         float: left;
         .block-time__absolute {
             display: block;
@@ -275,12 +289,19 @@
 }
 
 .updated-time {
-    padding: $gs-baseline/2 $gs-gutter/2;
     @include fs-data(1);
     color: $c-neutral2;
-    padding-bottom: 0;
-    margin-bottom: 4px;
     font-style: italic;
+    @include rem((
+        margin: 0 $gs-gutter/2 $gs-baseline/3 $gs-gutter/2,
+        padding: $gs-baseline/2 0 0
+    ));
+    @include mq(tablet) {
+        @include rem((
+            margin-right:$block-padding-right,
+            margin-left: $block-padding-left
+        ));
+    }
 }
 
 /* Blocks
@@ -379,23 +400,27 @@
 /* Content styling
    ========================================================================== */
 
-$block-padding-left: gs-span(1) + $gs-gutter;
-$block-padding-right: $gs-gutter;
-
 .blog .from-content-api {
 
     .block-title {
-        margin-bottom: $gs-baseline;
+        @include rem((
+            line-height: 21px,
+            margin-bottom: $gs-baseline
+        ));
     }
 
     .block-title,
     .block-elements > *
     {
-        margin-left: $block-padding-left;
-        margin-right: $block-padding-right;
-        @include mq($to: mobileLandscape) {
-            margin-left: $gs-gutter/2;
-            margin-right: $gs-gutter/2;
+        @include rem((
+            margin-left: $gs-gutter/2,
+            margin-right: $gs-gutter/2
+        ));
+        @include mq(tablet) {
+            @include rem((
+                margin-right:$block-padding-right,
+                margin-left:$block-padding-left
+            ));
         }
     }
     .block-elements > *:last-child {
@@ -434,7 +459,7 @@ $block-padding-right: $gs-gutter;
         > .element {
             margin: 0 0 12px 0;
         }
-        > .element + .element {
+        > .element-image + .element {
             margin-top: -12px;
         }
 
@@ -453,18 +478,25 @@ $block-padding-right: $gs-gutter;
 
         > .element-image {
             border-bottom: 2px solid $c-neutral8;
+
+            &:last-child {
+                border-bottom: none;
+            }
         }
 
         > .element figcaption {
             background-color: white;
-            padding-left: 0;
-            padding-right: 0;
-            margin-left: $gs-gutter/2;
-            margin-right: $gs-gutter/2;
+            @include rem((
+                margin-left: $gs-gutter/2,
+                margin-right: $gs-gutter/2,
+                padding: $gs-baseline/3 0 $gs-baseline*2 0
+            ));
 
             @include mq(mobileLandscape) {
-                margin-left: $block-padding-left;
-                margin-right: $block-padding-right;
+                @include rem((
+                    margin-left: $block-padding-left,
+                    margin-right: $block-padding-right
+                ))
             }
         }
     }
@@ -477,10 +509,9 @@ $block-padding-right: $gs-gutter;
     display: table-cell;
     width: 10000px;
     max-width: 100%;
-    background-color: #f4f4f4;
+    background-color: $c-neutral7;
     background-position: ($gs-baseline/3)*2 $gutter/2 !important;
     background-repeat: no-repeat;
-    border-top: $gs-baseline/6 solid #3299d0;
 }
 .element-tweet {
     margin: $gs-baseline 0 ($gs-baseline/3)*4;
@@ -488,15 +519,31 @@ $block-padding-right: $gs-gutter;
 .tweet,
 .from-content-api blockquote.tweet {
     border-left-width: 0;
-    padding: $gs-baseline/2 ($gs-baseline/3)*2;
+    @include rem((
+        padding: $gs-baseline/2 ($gs-baseline/3)*2,
+        margin-bottom: $gs-baseline,
+        margin-left: $gs-gutter/2,
+        margin-right: $gs-gutter/2
+    ));
     font-style: normal;
     @include fs-textsans(3);
 
+    &:first-child {
+        @include rem((
+            margin-top: $gs-baseline/2
+        ))
+    }
+
+    @include mq(tablet) {
+        @include rem((
+            margin-left: $block-padding-left,
+            margin-right: $block-padding-right,
+        ))
+    }
 }
 // Temporary fix to issue #1674
 .from-content-api blockquote.tweet {
     display: block;
-    margin-left: 0;
     width: auto;
 }
 // End temporary fix
