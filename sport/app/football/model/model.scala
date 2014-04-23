@@ -3,6 +3,8 @@ import pa._
 import org.joda.time.DateMidnight
 import pa.LeagueTableEntry
 import pa.{Result, MatchDayTeam}
+import java.awt.image.BandCombineOp
+import java.awt.Color
 
 
 case class Competition(
@@ -112,5 +114,39 @@ object PrevResult {
   def apply(result: FootballMatch, thisTeamId: String): PrevResult = {
     if (thisTeamId == result.homeTeam.id) PrevResult(result.date, result.homeTeam, result.awayTeam, wasHome = true)
     else PrevResult(result.date, result.awayTeam, result.homeTeam, wasHome = false)
+  }
+}
+
+case class TeamColours(homeTeam: LineUpTeam, awayTeam: LineUpTeam) {
+  private val darkenFactor = 0.3
+  private val homeColour = homeTeam.teamColour.toLowerCase
+  private val awayColour = awayTeam.teamColour.toLowerCase
+
+  lazy val home =
+    if (homeColour == "#ffffff") "#eeeeee"
+    else if (homeColour == "#eeeeee" && awayColour == "#ffffff") "#dddddd"
+    else homeColour
+  lazy val away =
+    if (awayColour == "#ffffff" && homeColour == "#ffffff") darken(awayColour)
+    else if (awayColour == "#ffffff") "#eeeeee"
+    else if (awayColour == homeColour) darken(awayColour)
+    else awayColour
+  lazy val homeTeamIsLight = isLight(home)
+  lazy val awayTeamIsLight = isLight(away)
+
+  private def isLight(colourHex: String): Boolean = {
+    val colour = Color.decode(colourHex)
+    val yiq = ((colour.getRed*299) + (colour.getGreen*587) + (colour.getBlue*114)) / 1000
+    yiq > 128
+  }
+
+  private def darken(colour: String): String = {
+    val original = Color.decode(colour)
+    val darker = new Color(
+      Math.max(original.getRed * (1 - darkenFactor), 0).round.toInt,
+      Math.max(original.getGreen * (1 - darkenFactor), 0).round.toInt,
+      Math.max(original.getBlue * (1 - darkenFactor), 0).round.toInt
+    )
+    "#%02x%02x%02x".format(darker.getRed, darker.getGreen, darker.getBlue)
   }
 }
