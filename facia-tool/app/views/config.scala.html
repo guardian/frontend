@@ -75,9 +75,13 @@
                 <input type="text" data-bind="
                     value: meta.apiQuery,
                     valueUpdate: 'afterkeydown'"/>
+                <span class="linky api-query-status" data-bind="
+                    click: checkApiQueryStatus,
+                    visible: meta.apiQuery() && !state.apiQueryStatus()">check</span>
                 <span data-bind="
-                    attr: {class: 'api-query-status api-query-status--' + state.apiQueryStatus()},
+                    click: checkApiQueryStatus,
                     visible: state.apiQueryStatus,
+                    attr: {class: 'api-query-status api-query-status--' + state.apiQueryStatus()},
                     text: state.apiQueryStatus"></span>
 
                 <label>Type</label>
