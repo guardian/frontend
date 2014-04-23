@@ -33,11 +33,13 @@
 
     <div class="commercial__foot">
         <form action="@Configuration.commercial.soulmates_url/Search" class="commercial__search">
-            <i class="i i-search-grey"></i>
-            <label for="traveloffer" class="u-h">Find hand picked holidays for hundreds of destinations</label>
-            <input id="traveloffer" name="search" class="text-input" type="text" placeholder="Find your perfect holiday" />
-            <input value="Search" name="go" class="submit-input" type="submit" />
-            <input value="%JustOmnitureToken%" name="INTCMP" type="hidden" />
+            <div class="commercial__search__travel">
+                <i class="i i-search-grey"></i>
+                <label for="traveloffer" class="u-h">Find hand picked holidays for hundreds of destinations</label>
+                <input id="traveloffer" name="search" class="text-input" type="text" placeholder="Find your perfect holiday" />
+                <input value="Search" name="go" class="submit-input" type="submit" />
+                <input value="%JustOmnitureToken%" name="INTCMP" type="hidden" />
+            </div>
         </form>
         <a class="commercial__link" href="@AdLink{@Configuration.commercial.soulmates_url}">More from Guardian Holiday Offers<i class="i i-double-arrow-right-white"></i></a>
     </div>
