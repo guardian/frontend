@@ -77,7 +77,7 @@ trait ContentApiWrite extends ExecutionContexts with Logging {
       maybeBlock map { block => generateItems(block.live) } getOrElse Nil,
       config.contentApiQuery,
       maybeBlock map { _.lastUpdated } getOrElse { DateTime.now.toString },
-      maybeBlock map { _.updatedEmail } getOrElse { "francis.carr@theguardian.com" }
+      maybeBlock map { _.updatedEmail } getOrElse { "guardian.frontend.fronts@theguardian.com" }
     )
   }
 
