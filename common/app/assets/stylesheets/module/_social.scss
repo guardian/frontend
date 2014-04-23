@@ -22,7 +22,7 @@
     height: 32px;
     overflow-y: hidden;
     @include rem((
-        margin-left: -$gs-gutter/4
+        margin-left: -$gs-gutter/5
     ));
 }
 
@@ -37,14 +37,12 @@
 .social__item {
     float: left;
     width: 36px;
-    padding: 0 $gs-gutter/ 4;
+    padding: 0 $gs-gutter/5;
 
-    @include mq($to: desktop) {
-        margin-right: $gs-gutter/2;
-    }
 
-    @include mq(desktop) {
-        padding: 0;
+    @include mq(leftCol, wide) {
+        width: 32px;
+        padding-right: 0;
     }
 }
 .social__action {
@@ -70,4 +68,26 @@
         }
     }
 }
+
+$social-icon: (
+    width: 36px,
+    height: 36px,
+    color: $c-neutral2,
+    space-in-between: 2px
+);
+
+.social-icon {
+    @extend %icon-holder-circle;
+    border-color: map-get($social-icon, color);
+
+    i {
+        display: block;
+        margin-bottom: 2px;
+        margin-top: -1px;
+        margin-left: -1px;
+    }
+}
+
+
+
 
