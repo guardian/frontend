@@ -1,0 +1,38 @@
+// =============================================================================
+// Font Helpers
+// =============================================================================
+
+// Tests: http://sassmeister.com/gist/7990898
+
+// Accessible font-size and line-height with a pixel fallback
+// Usage:
+// @include font-size(18, 24);
+@mixin font-size($size, $line-height: $size) {
+    @include rem((
+        font-size: $size,
+        line-height: $line-height
+    ));
+}
+
+// Font styling shorthand
+// Usage:
+// @include font(sans-serif, bold, 18, 24);
+//
+// Note: prefer the usage of the font-scale mixins
+@mixin font($family, $weight, $size, $line-height: $size) {
+    font-family: $family;
+    font-weight: $weight;
+    @include font-size($size, $line-height);
+}
+
+// Get a font-size from the font-scale matrix
+// Usage: font-size: get-font-size($fs-header, 3);
+@function get-font-size($font-scale, $level) {
+    @return nth(nth($font-scale, $level), 1) * 1px;
+}
+
+// Get a line-height from the font-scale matrix
+// Usage: line-height: get-line-height($fs-header, 3);
+@function get-line-height($font-scale, $level) {
+    @return nth(nth($font-scale, $level), 2) * 1px;
+}

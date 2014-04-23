@@ -262,45 +262,41 @@ $c-soulmates-red: #d70851;
     }
 }
 /* article */
-.facia-container--commercial {
-    &.facia-container--layout-article {
-        .commercial--soulmates {
-            @include mq(leftCol) {
-                .commercial__buy-now-button {
-                    left: auto;
-                    right: auto;
-                    top: auto;
-                    @include rem((
-                        bottom: $gs-gutter/2
-                    ));
-                }
-                .commercial__explainer {
-                    margin-top: 0;
-                }
-            }
-            @include mq(faciaLeftCol) {
-                .commercial__head {
-                    padding-left: 0;
-                    padding-right: 0;
-                }
-                .commercial__explainer {
-                    @include rem((
-                        margin-top: $gs-baseline
-                    ));
-                }
-            }
-            @include mq(rightCol) {
-                .commercial--masterclasses__class {
-                    @include rem((
-                        padding-left: $gs-gutter/2
-                    ));
-                    width: 25%;
-                    background: red;
-        
-                    &:nth-child(n+4) {
-                        display: block;
-                    }
-                }
+.facia-container--layout-article .commercial--soulmates {
+    @include mq(leftCol) {
+        .commercial__buy-now-button {
+            left: auto;
+            right: auto;
+            top: auto;
+            @include rem((
+                bottom: $gs-gutter/2
+            ));
+        }
+        .commercial__explainer {
+            margin-top: 0;
+        }
+    }
+    @include mq(faciaLeftCol) {
+        .commercial__head {
+            padding-left: 0;
+            padding-right: 0;
+        }
+        .commercial__explainer {
+            @include rem((
+                margin-top: $gs-baseline
+            ));
+        }
+    }
+    @include mq(rightCol) {
+        .commercial--masterclasses__class {
+            @include rem((
+                padding-left: $gs-gutter/2
+            ));
+            width: 25%;
+            background: red;
+
+            &:nth-child(n+4) {
+                display: block;
             }
         }
     }

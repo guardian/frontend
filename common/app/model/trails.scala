@@ -19,6 +19,7 @@ trait Trail extends Elements with Tags with FaciaFields {
   def thumbnailPath: Option[String] = None
   def isLive: Boolean
   def discussionId: Option[String] = None
+  def isCommentable: Boolean = false
   def isClosedForComments: Boolean = false
   def leadingParagraphs: List[org.jsoup.nodes.Element] = Nil
   def byline: Option[String] = None
