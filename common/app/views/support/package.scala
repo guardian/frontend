@@ -783,7 +783,9 @@ object GetClasses {
           "item--has-image"
         },
       (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean) =>
-        if (forceHasImage || !trail.trailPicture(5,3).isEmpty) s"item--imageadjust-${trail.imageAdjust}" else ""
+        if (forceHasImage || !trail.trailPicture(5,3).isEmpty) s"item--imageadjust-${trail.imageAdjust}" else "",
+      (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean) =>
+        if (trail.isCommentable) "item--has-discussion" else "item--has-no-discussion"
     )
     val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail, firstContainer, forceHasImage)}
     RenderClasses(classes:_*)
@@ -806,7 +808,9 @@ object GetClasses {
           "fromage--has-image"
         },
       (trail: Trail, imageAdjust: String) =>
-        if (!trail.trailPicture(5,3).isEmpty) s"fromage--imageadjust-$imageAdjust" else ""
+        if (!trail.trailPicture(5,3).isEmpty) s"fromage--imageadjust-$imageAdjust" else "",
+      (trail: Trail, imageAdjust: String) =>
+        if (trail.isCommentable) "fromage--has-discussion" else "fromage--has-no-discussion"
     )
     val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail, imageAdjust)}
     RenderClasses(classes:_*)
