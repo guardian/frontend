@@ -185,6 +185,9 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
   
   object commercial {
     lazy val books_url = configuration.getMandatoryStringProperty("commercial.books_url")
+    lazy val masterclasses_url = configuration.getMandatoryStringProperty("commercial.masterclasses_url")
+    lazy val soulmates_url = configuration.getMandatoryStringProperty("commercial.soulmates_url")
+    lazy val travel_url = configuration.getMandatoryStringProperty("commercial.travel_url")
   }
 
   object open {
