@@ -108,6 +108,15 @@ define([
             }
         },
 
+        initComicSans: function(config) {
+            if(config.switches.comicsans && /\/comic-sans-neue-look-dare-use-it/g.test(config.page.pageId)) {
+                var articleHeadline = document.querySelector('.article__headline');
+                articleHeadline.style.fontFamily = '"Comic Sans Neue", "Comic Sans MS", "EgyptianHeadline", georgia, serif';
+                articleHeadline.style.fontWeight = 'bold';
+                articleHeadline.style.letterSpacing = '-1px';
+            }
+        },
+
         initTruncate: function() {
             mediator.on('page:article:ready', function() {
                 truncate();
@@ -130,6 +139,7 @@ define([
             modules.initFence();
             modules.initLayoutHints(config);
             modules.initHelvetica(config);
+            modules.initComicSans(config);
             modules.initTruncate();
             modules.initTwitter();
         }
