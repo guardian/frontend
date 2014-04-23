@@ -122,6 +122,11 @@ object Switches extends Collections {
     safeState = On, sellByDate = never
   )
 
+  val SponsoredSwitch = Switch("Advertising", "sponsored",
+    "Show sponsored badges, logos, etc.",
+    safeState = On, sellByDate = never
+  )
+
   // Ad Targeting
   /*
     These switches are to control length of request to DFP
@@ -239,6 +244,11 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
+  val IdentityAvatarUploadSwitch = Switch("Feature Switches", "id-avatar-upload",
+    "If this switch is on, users can upload avatars on their profile page",
+    safeState = Off, sellByDate = never
+  )
+
   val IdentityEthicalAwardsSwitch = Switch("Feature Switches", "id-ethical-awards",
     "If this switch is on, Ethical awards forms will be available",
     safeState = Off, sellByDate = new DateMidnight(2014, 5, 15))
@@ -286,6 +296,11 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 4, 28)
   )
 
+  val EnhanceTweetsSwitch = Switch("Feature Switches", "enhance-tweets",
+    "If this switch is turned on then embedded tweets will be enhanced using Twitter's widgets.",
+    safeState = Off, sellByDate = never
+  )
+
   // A/B Test Switches
 
   val ABExternalLinksNewWindow = Switch("A/B Tests", "ab-external-links-new-window",
@@ -295,26 +310,6 @@ object Switches extends Collections {
 
   val ABAbcd = Switch("A/B Tests", "ab-abcd",
     "If this switch is on, an AB test runs to validate the collection ab test data",
-    safeState = Off, sellByDate = new DateMidnight(2014, 4, 28)
-  )
-
-  val ABBlendedContainersUk = Switch("A/B Tests", "ab-blended-containers-uk",
-    "If this switch is on then the blended containers test runs on the UK network front",
-    safeState = Off, sellByDate = new DateMidnight(2014, 4, 18)
-  )
-
-  val ABBlendedContainersUs = Switch("A/B Tests", "ab-blended-containers-us",
-    "If this switch is on then the blended containers test runs on the US network front",
-    safeState = Off, sellByDate = new DateMidnight(2014, 4, 18)
-  )
-
-  val ABBlendedContainersAu = Switch("A/B Tests", "ab-blended-containers-au",
-    "If this switch is on then the blended containers test runs on the AU network front",
-    safeState = Off, sellByDate = new DateMidnight(2014, 4, 18)
-  )
-
-  val ABOnwardsAboveDiscussion = Switch("A/B Tests", "ab-onwards-above-discussion",
-    "If this switch is on, an AB test runs to move the onwards packages aboce discussion on the aricle page",
     safeState = Off, sellByDate = new DateMidnight(2014, 4, 28)
   )
 
@@ -386,6 +381,7 @@ object Switches extends Collections {
     StandardAdvertsSwitch,
     CommercialComponentsSwitch,
     VideoAdvertsSwitch,
+    SponsoredSwitch,
     AudienceScienceSwitch,
     AudienceScienceGatewaySwitch,
     CriteoSwitch,
@@ -402,9 +398,7 @@ object Switches extends Collections {
     FacebookAutoSigninSwitch,
     IdentityFormstackSwitch,
     IdentityEthicalAwardsSwitch,
-    ABBlendedContainersUk,
-    ABBlendedContainersUs,
-    ABBlendedContainersAu,
+    IdentityAvatarUploadSwitch,
     ToolDisable,
     ToolConfigurationDisable,
     ToolCheckPressLastmodified,
@@ -434,10 +428,10 @@ object Switches extends Collections {
     RssLinkSwitch,
     PopularInTagSwitch,
     HideOldTimeStampsSwitch,
+    EnhanceTweetsSwitch,
     IndiaRegionSwitch,
     ABExternalLinksNewWindow,
     ABAbcd,
-    ABOnwardsAboveDiscussion,
     MemcachedSwitch,
     IncludeBuildNumberInMemcachedKey
   )

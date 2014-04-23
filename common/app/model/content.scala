@@ -25,13 +25,14 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   lazy val starRating: Option[String] = fields.get("starRating")
   lazy val shortUrlPath: String = shortUrl.replace("http://gu.com", "")
   lazy val allowUserGeneratedContent: Boolean = fields.get("allowUgc").exists(_.toBoolean)
-  lazy val isCommentable: Boolean = fields.get("commentable").exists(_ == "true")
   lazy val isExpired = delegate.isExpired.getOrElse(false)
   lazy val blockVideoAds: Boolean = videoAssets.exists(_.blockVideoAds)
   lazy val isLiveBlog: Boolean = delegate.isLiveBlog
   lazy val isBlog: Boolean = blogs.nonEmpty
   lazy val isSeries: Boolean = series.nonEmpty
   lazy val hasLargeContributorImage: Boolean = tags.filter(_.hasLargeContributorImage).nonEmpty
+  lazy val isFromTheObserver: Boolean = publication == "The Observer"
+
 
   // read this before modifying
   // https://developers.facebook.com/docs/opengraph/howtos/maximizing-distribution-media-content#images
@@ -80,6 +81,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   override lazy val thumbnailPath: Option[String] = fields.get("thumbnail").map(ImgSrc(_, Naked))
   override lazy val isLive: Boolean = fields.get("liveBloggingNow").exists(_.toBoolean)
   override lazy val discussionId = Some(shortUrlPath)
+  override lazy val isCommentable: Boolean = fields.get("commentable").exists(_.toBoolean)
   override lazy val isClosedForComments: Boolean = !fields.get("commentCloseDate").exists(_.parseISODateTime.isAfterNow)
   override lazy val leadingParagraphs: List[org.jsoup.nodes.Element] = {
     val body = delegate.safeFields.get("body")
@@ -308,7 +310,7 @@ class LiveBlog(content: ApiContentWithMeta) extends Article(content) {
   private lazy val soupedBody = Jsoup.parseBodyFragment(body).body()
   lazy val blockCount: Int = soupedBody.select(".block").size()
   lazy val summary: Option[String] = soupedBody.select(".is-summary").headOption.map(_.toString)
-  lazy val groupedBlocks: List[String]= soupedBody.select(".block").toList.grouped(10).map { group =>
+  lazy val groupedBlocks: List[String]= soupedBody.select(".block").toList.grouped(5).map { group =>
     group.map(_.toString).mkString
   }.toList
   override def cards: List[(String, Any)] = super.cards ++ List(
@@ -364,8 +366,8 @@ class Gallery(content: ApiContentWithMeta) extends Content(content) {
 
   lazy val size = galleryImages.size
   lazy val contentType = "Gallery"
-  lazy val landscapes = largestCrops.sortBy(_.index).filter(i => i.width > i.height)
-  lazy val portraits = largestCrops.sortBy(_.index).filter(i => i.width < i.height)
+  lazy val landscapes = largestCrops.filter(i => i.width > i.height).sortBy(_.index)
+  lazy val portraits = largestCrops.filter(i => i.width < i.height).sortBy(_.index)
   lazy val isInPicturesSeries = tags.exists(_.id == "lifeandstyle/series/in-pictures")
 
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"

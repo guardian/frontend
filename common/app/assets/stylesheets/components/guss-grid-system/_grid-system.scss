@@ -1,0 +1,61 @@
+// =============================================================================
+// Guss grid system
+// =============================================================================
+
+// gs- prefix stand for Grid System
+
+// Default configuration
+$gs-gutter:       20px !default;
+$gs-baseline:     12px !default;
+$gs-column-width: 60px !default;
+$gs-row-height:   36px !default;
+$gs-max-columns:  16 !default;
+
+
+// Helpers
+// =============================================================================
+
+@function gs-span($n-columns) {
+    @return $n-columns * $gs-column-width + $gs-gutter * ($n-columns - 1);
+}
+@function gs-height($n-rows) {
+    @return $n-rows * $gs-row-height + $gs-baseline * ($n-rows - 1);
+}
+
+// Grid container
+@mixin gs-container {
+    position: relative;
+    margin: 0 auto;
+    @include rem((
+        max-width: gs-span(14) + $gs-gutter*2
+    ));
+
+    // Snap up to 16 columns on wider viewports
+    @include mq(wide) {
+        @include rem((
+            max-width: gs-span(16) + $gs-gutter*2
+        ));
+    }
+}
+
+@mixin gs-helpers {
+    // Classes usable if an object has the same width across all viewports
+    // example: `<div class="gs-span-3"></div>`
+    @for $n from 1 through $gs-max-columns {
+        .gs-span-#{$n} {
+            @include rem((
+                width: gs-span($n)
+            ));
+        }
+    }
+}
+
+
+// Output grid system helper classes
+// =============================================================================
+
+@mixin grid-system {
+    .gs-container {
+        @include gs-container;
+    }
+}

@@ -11,7 +11,7 @@
          itemscope itemtype="@gallery.schemaType" role="main">
         <div class="article__inner article__inner--head">
             <header class="article__head">
-                @fragments.meta.seriesInline(gallery)
+                @fragments.meta.metaInline(gallery)
                 @fragments.headline(gallery.headline)
 
                 @if(gallery.isCommentable) {
@@ -71,10 +71,6 @@
                 <div class="social-wrapper" data-component="share">
                     @fragments.social(gallery)
                 </div>
-            </div>
-            <div class="article__secondary-column" aria-hidden="true">
-                <h2 class="article__meta-heading">Share this gallery</h2>
-                @fragments.social(gallery, "next to content")
             </div>
         </div>
     </article>

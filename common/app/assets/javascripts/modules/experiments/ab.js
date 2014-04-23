@@ -6,11 +6,7 @@ define([
 
     //Current tests
     'common/modules/experiments/tests/external-links-new-window',
-    'common/modules/experiments/tests/abcd',
-    'common/modules/experiments/tests/blended-containers-uk',
-    'common/modules/experiments/tests/blended-containers-us',
-    'common/modules/experiments/tests/blended-containers-au',
-    'common/modules/experiments/tests/onward-above-discussion'
+    'common/modules/experiments/tests/abcd'
 ], function (
     common,
     store,
@@ -18,20 +14,12 @@ define([
     mvtCookie,
 
     ExternalLinksNewWindow,
-    Abcd,
-    BlendedContainersUk,
-    BlendedContainersUs,
-    BlendedContainersAu,
-    OnwardAboveDiscussion
+    Abcd
     ) {
 
     var TESTS = [
             new ExternalLinksNewWindow(),
-            new Abcd(),
-            new BlendedContainersUk(),
-            new BlendedContainersUs(),
-            new BlendedContainersAu(),
-            new OnwardAboveDiscussion()
+            new Abcd()
        ],
        participationsKey = 'gu.ab.participations';
 

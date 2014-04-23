@@ -298,7 +298,10 @@
 .item__standfirst {
     display: none;
     margin: 20px 0 0;
-    @include fs-headline(1, $size-only: true);
+    @include rem((
+        font-size: 14px,
+        line-height: 18px
+    ));
 
     p {
         margin-bottom: 0; // Some trail texts are wrapped in a paragraph
@@ -390,7 +393,7 @@
     ));
     background-color: rgba($c-neutral2, 0.7);
     z-index: 2;
-    @include rounded-corners(50%);
+    @include border-radius(50%);
 
     i {
         position: absolute;
@@ -513,7 +516,7 @@ $show-more-icon: (
     border: none;
     width: map-get($show-more-icon, width);
     height: map-get($show-more-icon, height);
-    @include rounded-corners(50%);
+    @include border-radius(50%);
     position: relative;
     left: 50%;
     margin-top: $gs-baseline;

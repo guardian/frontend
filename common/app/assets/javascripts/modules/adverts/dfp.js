@@ -97,6 +97,7 @@ define([
         // These should match the widths inside _vars.scss
         breakpoints: {
             mobile: 0,
+            mobilelandscape: 480,
             tabletportrait: 740,
             tabletlandscape: 900,
             desktop: 980,
@@ -287,9 +288,9 @@ define([
     };
 
     DFP.prototype.removeLabel = function($slot) {
-        $slot.parent()
-            .removeClass('ad-label--showing')
-            .previous().remove();
+        var $slotParent = $slot.parent()
+            .removeClass('ad-label--showing');
+        $('.ad-slot__label', $slotParent[0]).remove();
     };
 
     DFP.prototype.fireAdRequest = function() {

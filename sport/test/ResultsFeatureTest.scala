@@ -34,6 +34,9 @@ class ResultsFeatureTest extends FeatureSpec with GivenWhenThen with Matchers wi
 
         And("Matches should not contain form")
         $(".football-team__form").size() should be(0)
+
+        Then("I should see match comments")
+        $(".football-match__comments").getTexts.exists(_.contains("Bolton win 4-2 on penalties")) should equal(true)
       }
     }
 
