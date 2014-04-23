@@ -5,29 +5,37 @@ import scala.xml.{Elem, Node}
 import model.commercial.XmlAdsApi
 import conf.{Switches, CommercialConfiguration}
 
-trait OffersApi extends XmlAdsApi[Offer] {
+object OffersApi extends XmlAdsApi[Offer] {
+
+  protected val adTypeName = "Travel Offers"
 
   protected val switch = Switches.TravelOffersFeedSwitch
 
-  protected val path: String
-
-  protected val url = CommercialConfiguration.getProperty("traveloffers.api.url") map (u => s"$u/$path")
+  protected val url = CommercialConfiguration.getProperty("traveloffers.api.url") map (u => s"$u/consumerfeed")
 
   override protected val loadTimeout = 30000
 
   private val dateFormat = DateTimeFormat.forPattern("dd-MMM-yyyy")
 
   private def buildOffer(id: Int, node: Node): Offer = {
+
+    def textValue(nodeName: String): String = (node \ nodeName).text.trim()
+
+    def textValues(nodeName: String): List[String] = (node \ nodeName).map(_.text.trim()).toList
+
     Offer(
       id,
-      Some((node \\ "title").text),
-      (node \\ "offerurl").text,
-      (node \\ "imageurl").text,
-      (node \ "@fromprice").text.replace(".00", ""),
-      dateFormat.parseDateTime((node \ "@earliestdeparture").text),
+      textValue("prodName"),
+      textValue("prodUrl"),
+      textValue("prodImage"),
+      textValue("@fromprice").replace(".00", ""),
+      dateFormat.parseDateTime(textValue("@earliestdeparture")),
       Nil,
-      (node \\ "country").map(_.text).toList,
-      (node \ "@duration").text
+      textValues("location"),
+      textValue("category"),
+      textValues("tag"),
+      textValue("@duration"),
+      textValue("position").toInt
     )
   }
 
@@ -36,16 +44,4 @@ trait OffersApi extends XmlAdsApi[Offer] {
       case (offerXml, idx) => buildOffer(idx, offerXml)
     }
   }
-}
-
-
-object AllOffersApi extends OffersApi {
-  protected val adTypeName = "All Travel Offers"
-  protected lazy val path = "xmloffers"
-}
-
-
-object MostPopularOffersApi extends OffersApi {
-  protected val adTypeName = "Most Popular Travel Offers"
-  protected lazy val path = "xmlmostpopular"
 }
