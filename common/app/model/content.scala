@@ -299,6 +299,9 @@ class Snap(snapId: String,
            snapMeta: Map[String, JsValue]
 ) extends Content(new ApiContentWithMeta(SnapApiContent, metaData = snapMeta)) {
 
+  val snapType: Option[String] = snapMeta.get("snapType").flatMap(_.asOpt[String])
+  val snapUri: Option[String] = snapMeta.get("snapUri").flatMap(_.asOpt[String])
+
   lazy val snapUrl: Option[String] = snapMeta.get("href").flatMap(_.asOpt[String])
 
   //We set this to snapId as TemplateDeduping uses this ID to dedupe
