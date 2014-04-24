@@ -1,5 +1,7 @@
 @(members: Seq[model.commercial.soulmates.Member])(implicit request: RequestHeader)
 
+@import conf.Configuration
+
 @if(play.Play.isDev()) {
     <link rel="stylesheet" href="@Static("stylesheets/head.default.css")" />
     <link rel="stylesheet" href="@Static("stylesheets/global.css")" />
@@ -21,7 +23,7 @@
                 <span class="u-h">Soulmates</span>
             </h3>
             <p class="commercial__explainer">The Guardian's online dating site with over 200,000 members</p>
-            <a href="@AdLink{https://soulmates.theguardian.com}?INTCMP=mic_232613"
+            <a href="@AdLink{@Configuration.commercial.soulmates_url}?INTCMP=mic_232613"
                 class="commercial__buy-now-button"
                 data-link-name="merchandising-soulmates-v@{version}_@{date}-low-join-now">
                 Join now
@@ -41,7 +43,7 @@
                     </li>
                 }
             </ul>
-            <form class="commercial__search" action="https://soulmates.theguardian.com/find" method="get">
+            <form class="commercial__search" action="@Configuration.commercial.soulmates_url/find" method="get">
                 <label for="my_gender" class="search__dropdown">I am a
                     <select id="my_gender" name="my_gender" class="search__dropdown__options">
                         @Seq("woman", "man").map { myGender =>
