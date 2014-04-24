@@ -33,10 +33,7 @@ module.exports = function (grunt) {
                     style: 'compressed',
                     sourcemap: true,
                     noCache: true,
-                    quiet: (isDev) ? false : true,
-                    loadPath: [
-                        'common/app/assets/stylesheets/components/sass-mq'
-                    ]
+                    quiet: (isDev) ? false : true
                 }
             }
         },
