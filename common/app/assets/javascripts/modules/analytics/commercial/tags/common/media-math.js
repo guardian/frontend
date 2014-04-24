@@ -25,9 +25,8 @@ define([
 
     return {
         load: function(config, opts) {
-
-            _defaults(
-                config,
+            config = _defaults(
+                config || {},
                 defaultConfig,
                 {
                     switches: {},
@@ -43,7 +42,7 @@ define([
             var page = config.page,
                 referrer = opts.documentReferrer || document.referrer,
                 tags = _pairs({
-                    v1: page.host + '/' + page.pageId,
+                    v1: (page.host ? page.host : '') + '/' + page.pageId,
                     v2: page.section,
                     v3: extractSearchTerm(referrer),
                     v4: referrer,
