@@ -7,22 +7,16 @@
 }
 
 .commercial--travel {
-    @include rem((
-        padding: $gs-gutter/2
-    ));
     .lineitem {
         list-style-type: none;
         border-top: 0;
         @include box-sizing(border-box);
         float: left;
         width: 50%;
-        
-        &:nth-child(n+2) {
-            @include rem((
-                padding-left: $gs-gutter/2 - 1
-            ));
-        }
-        
+        @include rem ((
+            padding-left: $gs-gutter/2
+        ));
+
         &:nth-child(n+3) {
             display: none;
         }
@@ -37,21 +31,30 @@
     .lineitem__title {
         font-weight: bold;
     }
-    .lineitem__meta {
-    }
     .commercial__head {
+        position: static;
         border-top: none;
         height: auto;
         overflow: auto;
+        @include rem ((
+            padding: $gs-gutter/2
+        ));
+    }
+    .commercial__title {
+        padding: 0;
+        margin-bottom: 0;
     }
     .commercial__home-link {
         float: right;
     }
     .commercial__body {
-        padding: 0;
+        padding: 0 $gs-gutter/2 0 0;
     }
     
     @include mq(tablet) {
+        .commercial__body {
+            padding: 0;
+        }
         .lineitem {
             width: 33%;
             
@@ -68,16 +71,12 @@
             ));
         }
         .commercial__home-link {
-            float: none;
+            position: absolute;
+            right: 10px;
+            top: 10px;
         }
-    }
-    @include mq(rightCol) {
-
     }
     @include mq(leftCol) {
-        .lineitem {
-            border-left: 1px solid $c-neutral4;
-        }
         .commercial__title__last-word {
             margin-left: 0;
         }
@@ -86,13 +85,21 @@
 
 /* fronts */
 .facia-container--layout-front .commercial--travel {
-    @include rem((
-        padding: $gs-gutter/2
-    ));
     @include mq(desktop) {
         .commercial__head {
             float: left;
             width: 25%;
+        }
+        .commercial__home-link {
+            bottom: 10px;
+            left: 10px;
+            top: auto;
+            right: auto;
+        }
+        .commercial__body {
+            @include rem((
+                padding-top: 10px
+            ));            
         }
         .lineitem {
            width: 33%;
@@ -147,6 +154,17 @@
             ));
             float: left;
         }
+        .commercial__home-link {
+            bottom: 10px;
+            left: 20px;
+            top: auto;
+            right: auto;
+        }
+        .commercial__body {
+            @include rem ((
+                padding-top: 10px
+            ));
+        }
     }
     @include mq(leftCol) {
         .lineitem {
@@ -165,7 +183,6 @@
             ));
         }
         .commercial__search {
-            background: red;
             @include rem((
                 margin-top: 40px
             ));
