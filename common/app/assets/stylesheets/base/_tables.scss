@@ -1,5 +1,5 @@
-$table-baseline: 4px;
-$table-gutter: 4px;
+$table-baseline: 8px;
+$table-gutter: 8px;
 $table-breakpoint-importance-1: tablet;
 $table-breakpoint-importance-2: mobile;
 $table-breakpoint-importance-3: 220px;
@@ -54,13 +54,13 @@ td {
         color: $c-neutral1;
         font-weight: 800;
         @include rem((
-            padding: $table-baseline*2
+            padding: $table-baseline $table-gutter
         ));
     }
 
     td {
         @include rem((
-            padding: $table-baseline*2
+            padding: $table-baseline $table-gutter
         ));
         border-top: 1px solid darken($c-neutral8, 4%);
     }
@@ -82,7 +82,7 @@ td {
         thead td {
             @include fs-data(5, true);
             @include rem((
-                padding: $gs-baseline $table-gutter*3
+                padding: $table-baseline*1.5 $table-gutter*1.5
             ));
         }
     }
