@@ -829,6 +829,11 @@ object GetClasses {
     RenderClasses(classes:_*)
   }
 
+  def makeSnapClasses(trail: Trail): Seq[String] = trail match {
+    case snap: Snap => snap.snapType.map(t => Seq(s"facia-snap--$t")).getOrElse(Seq("facia-snap"))
+    case _  => Nil
+  }
+
 }
 
 object LatestUpdate {
