@@ -1,6 +1,46 @@
 $table-baseline: 4px;
 $table-gutter: 4px;
 
+@mixin table--medium {
+    th,
+    td,
+    thead td,
+    .table__caption {
+        @include fs-data(4, true);
+        @include rem((
+    padding: $table-baseline*2
+    ));
+    }
+
+    .table-column--from-large {
+        display: none;
+    }
+}
+
+@mixin table--small {
+    .table-column--from-large,
+    .table-column--from-medium {
+        display: none;
+    }
+}
+
+@mixin table--mini {
+    .table-column--from-large,
+    .table-column--from-medium,
+    .table-column--from-small {
+        display: none;
+    }
+}
+
+@mixin table--tiny {
+    .table-column--from-large,
+    .table-column--from-medium,
+    .table-column--from-small,
+    .table-column--from-mini {
+        display: none;
+    }
+}
+
 table {
     width: 100%;
 }
@@ -10,38 +50,14 @@ td {
     text-align: left;
 }
 
-@mixin table--small {
-    th,
-    td,
-    thead td {
-        @include fs-data(4, true);
-        @include rem((
-            padding: $table-baseline*2
-        ));
-    }
-}
-
 .table {
     background: $c-neutral8;
     border-top: 2px solid $c-newsAccent;
     color: $c-neutral1;
 
-    caption,
-    .table__caption {
-        @include fs-header(2);
-        @include rem((
-            padding-top: $gs-baseline/4,
-            padding-bottom: $gs-baseline
-        ));
-        
-        border-top: 1px dotted $c-neutral5;
-        color: $c-neutral1;
-        font-weight: normal;
-        text-align: left;
-    }
-
     th,
-    td {
+    td,
+    .table__caption {
         @include fs-data(5);
         vertical-align: top;
     }
@@ -66,7 +82,7 @@ td {
         border-bottom: 1px dotted $c-neutral8;
     }
 
-    @include mq($to: tablet) { @include table--small; }
+    @include mq($to: tablet) { @include table--medium; }
     @include mq($to: desktop) {
         th,
         td,
@@ -76,8 +92,8 @@ td {
     }
 }
 
-.table--small {
-    @include table--small;
+.table--medium {
+    @include table--medium;
 }
 
 .table--striped {
@@ -103,11 +119,34 @@ td {
 }
 
 .table-row--divider td {
-    border-bottom: 1px dashed $c-neutral1;
+    border-top: 1px dashed $c-neutral1;
 }
 
 .table-row--break td {
     border-top: 1px solid $c-neutral1;
+}
+
+// We replicate the table style
+// then move the caption over the top border
+// This is because the caption is outside the flow of the table
+.table__caption,
+.table__caption--bottom {
+    background: $c-neutral8;
+    border-bottom: 1px solid darken($c-neutral8, 4%);
+    border-top: 2px solid $c-newsAccent;
+    font-weight: bold;
+    margin-bottom: -2px;
+    position: relative;
+    text-align: left;
+    z-index: 2;
+}
+
+.table__caption--bottom {
+    caption-side: bottom;
+    font-weight: normal;
+    text-align: center;
+    border-bottom: 0 none;
+    border-top: 1px solid darken($c-neutral8, 4%);
 }
 
 .table__headline {

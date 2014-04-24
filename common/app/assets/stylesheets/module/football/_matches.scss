@@ -1,6 +1,10 @@
 .football-matches {
     margin-bottom: $gs-baseline*2;
     position: relative;
+
+    @include mq($to: mobile) {
+        @include football-match--mini;
+    }
 }
 
 .football-match {
@@ -37,6 +41,12 @@
     .football-teams__battleline {
         color: $c-newsAccent;
     }
+}
+
+.football-matches__date {
+    color: $c-neutral2-contrasted;
+    float: right;
+    font-weight: normal;
 }
 
 .football-match__report {
@@ -98,6 +108,7 @@
 }
 
 .football-team__score {
+    color: $c-neutral2-contrasted;
     position: absolute;
     top: 0;
 }
@@ -121,6 +132,12 @@
     &:after {
         content: "\2013";
     }
+}
+
+.football-match__comments {
+    @include fs-data(4, true);
+    color: $c-neutral2-contrasted;
+    text-align: center;
 }
 
 .football-match--fixture {

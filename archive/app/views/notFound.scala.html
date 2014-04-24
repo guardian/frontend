@@ -20,9 +20,9 @@
     <link rel="stylesheet" type="text/css" href="/css/layout.pasteup.min.css" />
     <![endif]-->
         <style>
-        .unstyled { list-style: none;}
+        .u-unstyled { list-style: none;}
 
-        .unstyled  li {
+        .u-unstyled  li {
         display: block;
         float:left;
         width: 40%;
@@ -57,7 +57,7 @@
                     <p>You may have followed a broken or outdated link, or there may be an error on our site.</p>
                     <p>Please follow one of the links below to continue exploring.</p>
                     <nav>
-                        <ul role="navigation" class="unstyled">
+                        <ul role="navigation" class="u-unstyled">
                             <li><a href="/">Home</a></li>
                             <li class="zone-news"><a href="/uk" class="zone-color zone-background-hover">UK news</a></li>
                             <li class="zone-news"><a href="/world" class="zone-color zone-background-hover">World news</a></li>
@@ -107,15 +107,16 @@
         <script src="http://pasteup.guim.co.uk/js/lib/requirejs/2.1.5/require.min.js"></script>
 
         <script>
-        require(['http://s.ophan.co.uk/js/ophan.min.js'], function(ophan) {
-        ophan.additionalViewData(function() { return {"httpStatus" : "404"}; });
+        require.config({
+          paths: {
+            'ophan/http-status' : 'http://j.ophan.co.uk/ophan.http-status',
+          }
+        });
+        </script>
 
-        if(document.readyState === 'complete') {
-        ophan.startLog();
-        return;
-        }
-
-        window.addEventListener('load', ophan.startLog, false);
+        <script>
+        require(['ophan/http-status'], function(reporter) {
+          reporter.reportStatus('next-gen', 404);
         });
         </script>
 

@@ -15,12 +15,7 @@
 .from-content-api,
 .from-content-api .block-elements {
 
-    @include fs-bodyCopy(3);
     color: $c-neutral1;
-
-    @include mq(tablet) {
-        @include fs-bodyCopy(4, true);
-    }
 
     > p,
     ul,
@@ -55,19 +50,6 @@
         @include mq(tablet) {
             @include fs-header(2, true);
         }
-    }
-    > ul > li,
-    > blockquote > ul > li {
-        @include rem((
-            text-indent: map-get($bullet-offset, default)
-        ));
-
-        @include mq(tablet) {
-            @include rem((
-                text-indent: map-get($bullet-offset, tablet)
-            ));
-        }
-        @include faux-bullet-point;
     }
     > ol > li,
     > ul > li {
@@ -115,7 +97,7 @@
 .from-content-api blockquote {
     font-style: italic;
     @include rem((
-        margin: 28px 0 28px 24px
+        margin: 16px 0 28px 24px
     ));
 
     @include mq(tablet) {
@@ -125,52 +107,11 @@
     }
 
     &.quoted {
-        margin-left: 0;
-        font-style: normal;
         color: $c-neutral2;
 
-        p {
-            @include fs-headline(1);
-            line-height: inherit;
-
-            @include mq(tablet) {
-                @include fs-headline(2, true);
-                line-height: inherit;
-            }
-        }
-        p,
-        h2 {
-            &:first-child {
-                text-indent: map-get($quoted-offset, default);
-
-                @include mq(tablet) {
-                    text-indent: map-get($quoted-offset, tablet);
-                }
-            }
-        }
-        > ul:first-child {
-            // Fix list and quote icon overlap - #2026
-            margin-left: map-get($quoted-offset, default);
-
-            @include mq(tablet) {
-                margin-left: map-get($quoted-offset, tablet);
-            }
-        }
-        .bullet-container:first-child {
-            text-indent: map-get($quoted-offset, default) + map-get($bullet-offset, default);
-
-            @include mq(tablet) {
-                text-indent: map-get($quoted-offset, tablet) + map-get($bullet-offset, tablet);
-            }
-
-            &:before {
-                left: map-get($quoted-offset, default);
-
-                @include mq(tablet) {
-                    left: map-get($quoted-offset, tablet);
-                }
-            }
-        }
+        @include rem((
+            margin-left: $gs-gutter * 1.5
+        ));
     }
 }
 
@@ -187,47 +128,20 @@
 /* Bullet points
    ========================================================================== */
 
-.bullet-container {
-    display: list-item;
-    list-style-position: outside;
-    list-style-type: none;
-    @include rem((
-        text-indent: map-get($bullet-offset, default)
-    ));
-
-    @include mq(tablet) {
-        @include rem((
-            text-indent: map-get($bullet-offset, tablet)
-        ));
-    }
-
-    + * {
-        margin-top: .6em;
-    }
-
-    @include faux-bullet-point;
-
-    .bullet {
-        display: none;
-    }
-}
 .bullet {
-    speak: none;
-    display: inline-block;
-    vertical-align: bottom;
-    margin-top: .6em;
-    @include rem((
-        width: 14px
-    ));
-    @include mq(tablet) {
-        @include rem((
-            width: 16px
-        ));
-    }
-    // IE8 does not support `color: transparent`. In this case the bullet
-    // should be the same colour as the fake bullet point
-    color: if($old-ie, $c-neutral3, transparent);
+    font-size: 0.1px; // hides bullet character. 0.1 more consistent than 0 cross browser
+    line-height: 0.1px; // fix for line spacing issue (bullet was increasing spacing)
+    color: transparent;
     @include faux-bullet-point;
+}
+
+.from-content-api ul > li,
+.article__standfirst ul > li {
+    @include faux-bullet-point($right-space: 4px);
+
+    > p:first-child { // this stops line breaking for the following bullet point format: <ul><li><p>text</p></li></ul>
+        display: inline;
+    }
 }
 
 
@@ -273,13 +187,6 @@ figure {
             margin-top: ($gs-baseline/3)*4,
             margin-bottom: ($gs-baseline/3)*5
         ));
-
-        @include mq(leftCol) {
-            @include rem((
-                margin-top: ($gs-baseline/3)*5,
-                margin-bottom: $gs-baseline*2
-            ));
-        }
     }
     &.img--landscape,
     &.img--portrait {
@@ -295,6 +202,11 @@ figure {
                 ));
             }
         }
+    }
+    &.img--inline {
+        @include rem((
+            margin: 5px $gs-gutter 6px 0
+        ));
     }
 }
 

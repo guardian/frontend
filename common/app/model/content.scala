@@ -32,6 +32,8 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   lazy val isBlog: Boolean = blogs.nonEmpty
   lazy val isSeries: Boolean = series.nonEmpty
   lazy val hasLargeContributorImage: Boolean = tags.filter(_.hasLargeContributorImage).nonEmpty
+  lazy val isFromTheObserver: Boolean = publication == "The Observer"
+
 
   // read this before modifying
   // https://developers.facebook.com/docs/opengraph/howtos/maximizing-distribution-media-content#images
@@ -363,7 +365,7 @@ class LiveBlog(content: ApiContentWithMeta) extends Article(content) {
   private lazy val soupedBody = Jsoup.parseBodyFragment(body).body()
   lazy val blockCount: Int = soupedBody.select(".block").size()
   lazy val summary: Option[String] = soupedBody.select(".is-summary").headOption.map(_.toString)
-  lazy val groupedBlocks: List[String]= soupedBody.select(".block").toList.grouped(10).map { group =>
+  lazy val groupedBlocks: List[String]= soupedBody.select(".block").toList.grouped(5).map { group =>
     group.map(_.toString).mkString
   }.toList
   override def cards: List[(String, Any)] = super.cards ++ List(
@@ -419,8 +421,8 @@ class Gallery(content: ApiContentWithMeta) extends Content(content) {
 
   lazy val size = galleryImages.size
   lazy val contentType = "Gallery"
-  lazy val landscapes = largestCrops.sortBy(_.index).filter(i => i.width > i.height)
-  lazy val portraits = largestCrops.sortBy(_.index).filter(i => i.width < i.height)
+  lazy val landscapes = largestCrops.filter(i => i.width > i.height).sortBy(_.index)
+  lazy val portraits = largestCrops.filter(i => i.width < i.height).sortBy(_.index)
   lazy val isInPicturesSeries = tags.exists(_.id == "lifeandstyle/series/in-pictures")
 
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"

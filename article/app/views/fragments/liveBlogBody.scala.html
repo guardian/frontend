@@ -12,7 +12,7 @@
             itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType" role="main">
             <div class="article__inner article__inner--head">
                 <header class="article__head">
-                    @fragments.meta.seriesInline(article)
+                    @fragments.meta.metaInline(article)
                     @fragments.headline(article.headline)
 
                     @fragments.standfirst(article)
@@ -75,10 +75,6 @@
                                 <div class="u-table__cell u-table__cell--top">
                                     <div class="mpu-context js-right-hand-component">
                                         <div class="mpu-container js-mpu-ad-slot">
-                                            <div class="social-wrapper social-wrapper--aside" data-component="share">
-                                                <h2 class="article__meta-heading">Share this live blog</h2>
-                                                @fragments.social(article, "next to content")
-                                            </div>
                                             @fragments.commercial.standardAd(name="right", adType="mpu-banner-ad", sizeMapping=Map("tabletlandscape" -> Seq("300,250")))
                                         </div>
                                         <div class="js-components"></div>
@@ -100,9 +96,10 @@
 
     </div>
 
-    @fragments.seriesPlaceholder(VisualTone(article))
 
     @fragments.storyPackagePlaceholder(storyPackage)
+
+    @fragments.onwardPlaceholder(VisualTone(article))
 
     @fragments.mostPopularPlaceholder(article.section)
 }

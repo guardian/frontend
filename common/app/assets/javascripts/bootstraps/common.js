@@ -19,13 +19,14 @@ define([
     'common/utils/detect',
     'common/modules/onward/popular',
     'common/modules/onward/related',
-    'common/modules/onward/series-content',
+    'common/modules/onward/onward-content',
     'common/modules/ui/images',
     'common/modules/navigation/profile',
     'common/modules/navigation/sections',
     'common/modules/navigation/search',
     'common/modules/ui/tabs',
     'common/modules/ui/toggles',
+    'common/modules/ui/dropdowns',
     'common/modules/ui/relativedates',
     'common/modules/analytics/clickstream',
     'common/modules/analytics/omniture',
@@ -42,12 +43,14 @@ define([
     'common/modules/ui/message',
     'common/modules/identity/autosignin',
     'common/modules/adverts/article-body-adverts',
+    'common/modules/adverts/collection-adverts',
     'common/modules/adverts/dfp',
     'common/modules/analytics/commercial/tags/container',
     'common/modules/analytics/foresee-survey',
     'common/modules/onward/right-most-popular',
     'common/modules/analytics/register',
-    'common/modules/commercial/loader'
+    'common/modules/commercial/loader',
+    'common/modules/onward/tonal'
 ], function (
     $,
     mediator,
@@ -66,7 +69,7 @@ define([
     detect,
     popular,
     Related,
-    Series,
+    Onward,
     images,
     Profile,
     Sections,
@@ -74,6 +77,7 @@ define([
 
     Tabs,
     Toggles,
+    Dropdowns,
     RelativeDates,
     Clickstream,
     Omniture,
@@ -90,12 +94,14 @@ define([
     Message,
     AutoSignin,
     ArticleBodyAdverts,
+    CollectionAdverts,
     DFP,
     TagContainer,
     Foresee,
     RightMostPopular,
     register,
-    CommercialLoader
+    CommercialLoader,
+    TonalComponent
 ) {
 
     var hasBreakpointChanged = detect.hasCrossedBreakpoint();
@@ -136,9 +142,13 @@ define([
             });
         },
 
-        transcludeSeriesContent: function(config, context){
+        transcludeOnwardContent: function(config, context){
             if ('seriesId' in config.page) {
-                new Series(config, qwery('.js-series', context));
+                new Onward(config, qwery('.js-onward', context));
+            } else if (config.page.tones !== '') {
+                $('.js-onward', context).each(function(c) {
+                    new TonalComponent(config, c).fetch(c, 'html');
+                });
             }
         },
 
@@ -155,6 +165,8 @@ define([
             mediator.on('page:common:ready', function() {
                 toggles.reset();
             });
+
+            Dropdowns.init();
         },
 
         showRelativeDates: function (config) {
@@ -274,6 +286,8 @@ define([
                 if (config.switches.standardAdverts && config.page.contentType === 'Article' && !config.page.isLiveBlog) {
                     new ArticleBodyAdverts().init();
                 }
+
+                new CollectionAdverts(config).init();
 
                 if (!config.switches.standardAdverts) {
                     options.dfpSelector = '.ad-slot--commercial-component';
@@ -486,12 +500,12 @@ define([
                 self.initialisedDeferred = true;
                 modules.initAbTests(config);
                 modules.logLiveStats(config);
-                modules.loadAdverts(config);
                 modules.loadAnalytics(config, context);
                 modules.cleanupCookies(context);
                 modules.runAbTests(config, context);
+                modules.loadAdverts(config);
                 modules.transcludeRelated(config, context);
-                modules.transcludeSeriesContent(config, context);
+                modules.transcludeOnwardContent(config, context);
                 modules.initRightHandComponent(config, context);
                 modules.loadCommercialComponent(config, context);
             }

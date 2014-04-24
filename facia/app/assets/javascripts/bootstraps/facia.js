@@ -1,6 +1,7 @@
 define([
     // Common libraries
     'common/$',
+    'common/utils/ajax',
     'common/utils/mediator',
     'bonzo',
     'qwery',
@@ -8,23 +9,41 @@ define([
     'common/utils/detect',
     'common/utils/storage',
     'common/utils/to-array',
+    'common/modules/ui/snaps',
     'common/modules/ui/collection-show-more',
     'modules/ui/container-show-more',
     'modules/ui/container-toggle'
 ], function (
     $,
+    ajax,
     mediator,
     bonzo,
     qwery,
     detect,
     storage,
     toArray,
+    snaps,
     CollectionShowMore,
     ContainerShowMore,
     ContainerToggle
 ) {
-
     var modules = {
+
+        makeEverythingSnaps: function() {
+            var testTypes = {
+                table: '/football/premierleague/table.json',
+                matches: '/football/match-day/premierleague/2014/apr/19.json'
+            };
+
+            $('.fromage, .item, .linkslist__item, .headline-column__item').each(function(el) {
+                el.classList.add('facia-snap');
+                el.classList.add('facia-snap--football');
+                el.setAttribute('data-snap-type', 'football');
+                el.setAttribute('data-snap-uri', testTypes.table);
+                el.setAttribute('data-snap-content-key', 'html');
+            });
+            snaps.init('.facia-snap');
+        },
 
         showCollectionShowMore: function () {
             var collectionShowMoreAdd = function(config, context) {
@@ -66,6 +85,7 @@ define([
     var ready = function (config, context) {
         if (!this.initialised) {
             this.initialised = true;
+            modules.makeEverythingSnaps();
             modules.showCollectionShowMore();
             modules.showContainerToggle();
         }

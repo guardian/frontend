@@ -91,7 +91,7 @@ define([
         function detectPressFailure() {
             model.statusPressFailure(false);
 
-            if (model.front()) {
+            if (vars.state.switches['facia-tool-check-press-lastmodified'] && model.front()) {
                 authedAjax.request({
                     url: '/front/lastmodified/' + model.front()
                 })

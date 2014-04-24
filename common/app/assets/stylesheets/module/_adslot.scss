@@ -129,7 +129,6 @@
     }
 }
 .ad-slot--mpu-banner-ad {
-    padding-top: 29px; // Align with bottom of image
     padding-bottom: 37px;
     width: 300px;
     height: 250px;
@@ -145,36 +144,56 @@
     ));
 }
 .ad-slot--paid-for-badge {
-    width: 100%;
-    border-top: 1px dotted $c-neutral5;
-    z-index: 1;
-    color: $c-neutral2;
+    min-height: 0;
+    padding: 0;
     text-align: left;
-    @include fs-data(2);
-    @include rem((
-        padding: ($gs-baseline / 2) 0,
-        margin: $gs-baseline 0
-    ));
 
-    img {
-        padding-bottom: ($gs-baseline / 2);
-    }
-    a {
+    .ad-slot__container {
+        width: 100%;
         display: block;
-        float: left;
     }
-    @include mq(tablet) {
-        border: none;
-    }
-    @include mq(rightCol) {
-        position: absolute;
-        right: 0;
-        width: auto;
-        height: 100px;
-        margin: 0;
+    .ad-slot--paid-for-badge__inner {
+        overflow: hidden;
+        border-top: 1px dotted $c-neutral5;
         @include rem((
-            top: $gs-baseline / 2,
-            max-width: 200px
+            padding-top: $gs-baseline / 3,
+            padding-bottom: ($gs-baseline / 3) * 2
+        ));
+
+        @include mq(leftCol) {
+            @include rem((
+                padding-top: 2px,
+                padding-bottom: $gs-baseline
+            ));
+            .article__meta-container--no-byline & {
+                @include rem((
+                    padding-top: $gs-baseline / 3
+                ));
+            }
+        }
+    }
+    .ad-slot--paid-for-badge__header,
+    .ad-slot--paid-for-badge__label,
+    .ad-slot--paid-for-badge__help {
+        @include fs-textsans(2);
+    }
+    .ad-slot--paid-for-badge__header,
+    .ad-slot--paid-for-badge__label {
+        color: $c-neutral2;
+        margin: 0;
+    }
+    .ad-slot--paid-for-badge__header {
+        font-weight: bold;
+    }
+    .ad-slot--paid-for-badge__link,
+    .ad-slot--paid-for-badge__help {
+        float: left;
+        clear: left;
+    }
+    .ad-slot--paid-for-badge__help {
+        @include fs-textsans(1, $size-only: true);
+        @include rem((
+            margin-top: $gs-baseline/3
         ));
     }
 }

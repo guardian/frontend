@@ -13,7 +13,7 @@
                  itemscope itemtype="@video.schemaType" role="main">
             <div class="article__inner article__inner--head">
                 <header class="article__head">
-                    @fragments.meta.seriesInline(video)
+                    @fragments.meta.metaInline(video)
                     @fragments.headline(video.headline)
                     @if(video.isCommentable) {
                         <div class="article__head__comment-count js-comment-count"></div>
@@ -63,18 +63,15 @@
                         @fragments.social(video)
                     </div>
                 </div>
-                <div class="article__secondary-column" aria-hidden="true">
-                    <h2 class="article__meta-heading">Share this video</h2>
-                    @fragments.social(video, "next to content")
-                </div>
             </div>
         </article>
 
     </div>
 
-    @fragments.seriesPlaceholder(VisualTone(video))
 
     @fragments.storyPackagePlaceholder(page.storyPackage)
+
+    @fragments.onwardPlaceholder(VisualTone(video))
 
     @fragments.mostPopularPlaceholder(video.section, VisualTone(video))
 

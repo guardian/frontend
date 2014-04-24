@@ -43,7 +43,7 @@
             }
             @defining(items.slice(baguetteCount + 6, baguetteCount + 15)) { items =>
                 @if(items.nonEmpty) {
-                    <div class="linkslist-container tone-@{style.tone}" data-tone="@style.tone">
+                    <div class="linkslist-container tone-@{style.tone}">
                         <ul class="l-columns linkslist linkslist--with-images">
                             @items.zipWithIndex.map{ case (trail, index) =>
                                 @trail match {

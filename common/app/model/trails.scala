@@ -1,10 +1,14 @@
 package model
 
-import org.joda.time.DateTime
+import org.joda.time.{DateTimeZone, DateTime}
+import common.Edition
 
 
 trait Trail extends Elements with Tags with FaciaFields {
   def webPublicationDate: DateTime
+  def webPublicationDate(edition: Edition): DateTime = webPublicationDate(edition.timezone)
+  def webPublicationDate(zone: DateTimeZone): DateTime = webPublicationDate.withZone(zone)
+
   def linkText: String
   def headline: String
   def url: String

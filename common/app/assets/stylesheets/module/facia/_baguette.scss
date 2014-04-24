@@ -1,40 +1,35 @@
 .baguette {
     @include clearfix;
-    background-color: $c-brandBlue;
 
     @include mq(tablet) {
         @include rem((
             margin-bottom: $gs-baseline*2 !important,
         ));
     }
-
-    .item__container {
-        border-top: 4px solid #ffffff;
-    }
     .item__link {
         border-top-style: none !important;
     }
-    .supporting__action,
-    .item__link {
-        color: #ffffff;
-    }
-    .item__link:visited,
-    .item__link:visited .item__title,
-    .supporting__action:visited {
-        color: mix(#ffffff, $c-brandBlue, 80%);
-    }
     .item__title {
-        @include rem((
-            margin: 0 $gs-gutter/4
-        ));
-        color: #ffffff;
         @include fs-headline(4, $size-only: true);
+
         @include mq(tablet) {
             @include fs-headline(6, $size-only: true);
+            @include rem((
+                max-width: gs-span(11)
+            ));
         }
     }
     .item__media-wrapper {
-        margin-top: 22px; // Align with the date block in left column
+        @include mq(faciaLeftCol) {
+            @include rem((
+                margin-top: 19px // Align with the date block in left column
+            ));
+        }
+        @include mq(wide) {
+            @include rem((
+                margin-top: 22px
+            ));
+        }
         overflow: hidden;
         position: relative;
     }
@@ -44,28 +39,6 @@
         .responsive-img {
             top: -25%;
             height: auto;
-        }
-    }
-    .supporting__item {
-        border-color: #ffffff;
-    }
-    @include mq($to: tablet) {
-        .supporting__action {
-            @include rem((
-                margin-left: $gs-gutter/5
-            ));
-        }
-    }
-    @include mq(tablet) {
-        .supporting__item:first-child .supporting__action {
-            @include rem((
-                margin-left: $gs-gutter/5
-            ));
-        }
-        .supporting__item:last-child .supporting__action {
-            @include rem((
-                margin-right: $gs-gutter/5
-            ));
         }
     }
 }

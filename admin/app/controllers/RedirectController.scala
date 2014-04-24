@@ -1,10 +1,9 @@
-package controllers
+package controllers.admin
 
 import play.api.mvc.Controller
 import common.Logging
 import play.api.data._
 import play.api.data.Forms._
-import controllers.admin.Authenticated
 import services.Redirects
 
 

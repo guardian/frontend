@@ -15,6 +15,7 @@ import javax.crypto.spec.SecretKeySpec
 import sun.misc.BASE64Encoder
 import com.amazonaws.auth.AWSSessionCredentials
 import controllers.Identity
+import common.S3Metrics.S3ClientExceptionsMetric
 
 trait S3 extends Logging {
 
@@ -27,13 +28,26 @@ trait S3 extends Logging {
   }
 
   private def withS3Result[T](key: String)(action: S3Object => T): Option[T] = try {
+
     val request = new GetObjectRequest(bucket, key)
     val result = client.getObject(request)
-    Some(action(result))
+
+    // http://stackoverflow.com/questions/17782937/connectionpooltimeoutexception-when-iterating-objects-in-s3
+    try { Some(action(result)) }
+    catch { case e: Exception =>
+      S3ClientExceptionsMetric.increment()
+      throw e
+    }
+    finally { result.close() }
   } catch {
-    case e: AmazonS3Exception if e.getStatusCode == 404 =>
+    case e: AmazonS3Exception if e.getStatusCode == 404 => {
       log.warn("not found at %s - %s" format(bucket, key))
       None
+    }
+    case e: Exception => {
+      S3ClientExceptionsMetric.increment()
+      throw e
+    }
   }
 
   def get(key: String): Option[String] = try {
@@ -73,7 +87,13 @@ trait S3 extends Logging {
 
     val request = new PutObjectRequest(bucket, key, new StringInputStream(value), metadata).withCannedAcl(accessControlList)
 
-    client.putObject(request)
+    try {
+      client.putObject(request)
+    } catch {
+      case e: Exception =>
+        S3ClientExceptionsMetric.increment()
+        throw e
+    }
   }
 }
 

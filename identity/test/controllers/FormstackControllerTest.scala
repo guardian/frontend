@@ -35,7 +35,7 @@ class FormstackControllerTest extends path.FreeSpec with ShouldMatchers with Moc
   val user = User("test@example.com", userId, statusFields = StatusFields(receive3rdPartyMarketing = Some(true), receiveGnmMarketing = Some(true)))
   val testAuth = new ScGuU("abc")
 
-  val authAction  = new actions.AuthAction(authService) {
+  val authAction  = new actions.AuthenticatedAction(authService) {
     override protected def invokeBlock[A](request: Request[A], block: (AuthRequest[A]) => Future[SimpleResult]): Future[SimpleResult] = {
       block(AuthRequest(request, user, testAuth))
     }

@@ -108,7 +108,7 @@ to apply any necessary changes to non-shared code there too.
             </div>
         </div>
     </div>
-    @defining(Edition(request).navigation(page)) { navigation =>
+    @defining(Edition(request).navigation) { navigation =>
         @defining(Navigation.topLevelItem(navigation, page)) { topLevelSelected =>
             @*
             * See here for more info on Breadcrumbs

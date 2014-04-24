@@ -11,7 +11,7 @@ abstract class Edition(
     val timezone: DateTimeZone
   ) extends Navigation {
   def zones: Seq[Zone]
-  def navigation(metadata: MetaData): Seq[NavItem]
+  def navigation: Seq[NavItem]
 }
 
 object Edition {

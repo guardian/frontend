@@ -1,50 +1,23 @@
-define([
-    'common/modules/analytics/commercial/tags/common/audience-science'
-], function (
-    audienceScience
-) {
+define([], function () {
 
-    function generateQueryString(config, userSegments) {
+    function generateQueryString(queryParams) {
         var query = '';
 
-        if (config.keywords) {
-            query += getKeywords(config);
-        }
-
-        if (config.contentType) {
-            query += '&pt=' + getPageType(config);
-            query += '&ct=' + getPageType(config);
-        }
-        if (config.section) {
-            query += '&cat=' + encodeURIComponent(config.section.toLowerCase());
-        }
-
-        var segments = audienceScience.getSegments().slice(0, 70);
-        if (segments) {
-            query += getSegments(segments);
-        }
-
-        if (userSegments) {
-            query += getUserSegments(userSegments);
+        for (var param in queryParams) {
+            if (queryParams.hasOwnProperty(param)) {
+                if (query !== '') {
+                    query += '&';
+                }
+                var targetValue = queryParams[param];
+                if (typeof targetValue === 'string') {
+                    query += param + '=' + targetValue;
+                } else {
+                    query += param + '=' + targetValue.join('&' + param + '=');
+                }
+            }
         }
 
         return query;
-    }
-
-    function getUserSegments(userSegments) {
-        return userSegments.map(function(segment) {
-            return '&gdncrm=' + encodeURIComponent(segment);
-        }).join('');
-    }
-
-    function getSegments(segments) {
-        return segments.map(function(segment) {
-            return '&a=' + segment;
-        }).join('');
-    }
-
-    function getPageType(config) {
-        return encodeURIComponent(config.contentType.toLowerCase());
     }
 
     function formatKeyword(keyword) {

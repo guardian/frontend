@@ -43,7 +43,6 @@ object Switches extends Collections {
   // Switch names can be letters numbers and hyphens only
 
   private lazy val never = new DateMidnight(2100, 1, 1)
-  private lazy val endOfQ4 = new DateMidnight(2014, 4, 1)
 
   // this is 3 months - at the end of this a decision is expected
   // and one (or both) of the 2 needs to go.
@@ -123,11 +122,30 @@ object Switches extends Collections {
     safeState = On, sellByDate = never
   )
 
-  // Commercial Tags
+  val SponsoredSwitch = Switch("Advertising", "sponsored",
+    "Show sponsored badges, logos, etc.",
+    safeState = On, sellByDate = never
+  )
 
-  val AudienceScienceSwitch = Switch("Commercial Tags", "audience-science",
-    "If this switch is on Audience Science segments will be used to target ads.",
-    safeState = Off, sellByDate = never)
+  // Ad Targeting
+  /*
+    These switches are to control length of request to DFP
+    while there's a problem with the maximum length constraint
+  */
+
+  val AudienceScienceSwitch = Switch("Ad Targeting", "audience-science",
+    "If this switch is on, Audience Science segments will be used to target ads.",
+    safeState = Off, sellByDate = new DateMidnight(2014, 11, 1))
+
+  val AudienceScienceGatewaySwitch = Switch("Ad Targeting", "audience-science-gateway",
+    "If this switch is on, Audience Science Gateway segments will be used to target ads.",
+    safeState = Off, sellByDate = new DateMidnight(2014, 11, 1))
+
+  val CriteoSwitch = Switch("Ad Targeting", "criteo",
+    "If this switch is on, Criteo segments will be used to target ads.",
+    safeState = Off, sellByDate = new DateMidnight(2014, 11, 1))
+
+  // Commercial Tags
 
   val ImrWorldwideSwitch = Switch("Commercial Tags", "imr-worldwide",
     "Enable the IMR Worldwide audience segment tracking.",
@@ -154,14 +172,6 @@ object Switches extends Collections {
   val MasterclassFeedSwitch = Switch("Performance Switches", "gu-masterclasses",
     "If this switch is on, commercial components will be fed by masterclass feed.",
     safeState = Off, sellByDate = never)
-
-  val OmnitureVerificationSwitch = Switch("Analytics", "omniture-verification",
-    "Enables the new Ophan tracking javascript which support multiple events per page",
-    safeState = Off,
-    // extending this till mid April. We are going to use it to see what effect moving Omniture higher up the
-    // call stack makes.
-    new DateMidnight(2014, 4, 15)
-  )
 
   val SoulmatesFeedSwitch = Switch("Performance Switches", "gu-soulmates",
     "If this switch is on, commercial components will be fed by soulmates feed.",
@@ -234,6 +244,11 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
+  val IdentityAvatarUploadSwitch = Switch("Feature Switches", "id-avatar-upload",
+    "If this switch is on, users can upload avatars on their profile page",
+    safeState = Off, sellByDate = never
+  )
+
   val IdentityEthicalAwardsSwitch = Switch("Feature Switches", "id-ethical-awards",
     "If this switch is on, Ethical awards forms will be available",
     safeState = Off, sellByDate = new DateMidnight(2014, 5, 15))
@@ -281,6 +296,11 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 4, 28)
   )
 
+  val EnhanceTweetsSwitch = Switch("Feature Switches", "enhance-tweets",
+    "If this switch is turned on then embedded tweets will be enhanced using Twitter's widgets.",
+    safeState = Off, sellByDate = never
+  )
+
   // A/B Test Switches
 
   val ABExternalLinksNewWindow = Switch("A/B Tests", "ab-external-links-new-window",
@@ -293,9 +313,9 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 4, 28)
   )
 
-  val FootballLiveblogTruncation = Switch("A/B Tests", "ab-football-liveblog-truncation",
-    "If you swith cthis switch on, an AB test will run to truncate football liveblogs.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 4, 21)
+  val ABOnwardsAboveDiscussion = Switch("A/B Tests", "ab-onwards-above-discussion",
+    "If this switch is on, an AB test runs to move the onwards packages aboce discussion on the aricle page",
+    safeState = Off, sellByDate = new DateMidnight(2014, 4, 28)
   )
 
   // Dummy Switches
@@ -323,6 +343,11 @@ object Switches extends Collections {
 
   val ToolConfigurationDisable = Switch("Facia Tool", "facia-tool-configuration-disable",
     "If this is switched on then the fronts configuration tool is disabled",
+    safeState = Off, sellByDate = never
+  )
+
+  val ToolCheckPressLastmodified = Switch("Facia Tool", "facia-tool-check-press-lastmodified",
+    "If this switch is on facia tool will alert the user if a front is not pressed withing 10 secs of an edit/publish",
     safeState = Off, sellByDate = never
   )
 
@@ -361,7 +386,10 @@ object Switches extends Collections {
     StandardAdvertsSwitch,
     CommercialComponentsSwitch,
     VideoAdvertsSwitch,
+    SponsoredSwitch,
     AudienceScienceSwitch,
+    AudienceScienceGatewaySwitch,
+    CriteoSwitch,
     DiscussionSwitch,
     OpenCtaSwitch,
     FontSwitch,
@@ -375,8 +403,10 @@ object Switches extends Collections {
     FacebookAutoSigninSwitch,
     IdentityFormstackSwitch,
     IdentityEthicalAwardsSwitch,
+    IdentityAvatarUploadSwitch,
     ToolDisable,
     ToolConfigurationDisable,
+    ToolCheckPressLastmodified,
     ToolSparklines,
     OphanSwitch,
     ScrollDepthSwitch,
@@ -403,11 +433,11 @@ object Switches extends Collections {
     RssLinkSwitch,
     PopularInTagSwitch,
     HideOldTimeStampsSwitch,
-    OmnitureVerificationSwitch,
+    EnhanceTweetsSwitch,
     IndiaRegionSwitch,
     ABExternalLinksNewWindow,
     ABAbcd,
-    FootballLiveblogTruncation,
+    ABOnwardsAboveDiscussion,
     MemcachedSwitch,
     IncludeBuildNumberInMemcachedKey
   )

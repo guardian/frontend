@@ -3,9 +3,9 @@
 <link rel="stylesheet" href="@Static("stylesheets/commercial.css")" />
 
 <div class="commercial travel-component">
-    <div class="commercial__head">
+    <div class="container__title commercial__head">
         <h3 class="commercial__title">
-            <a href="%OASToken%http://www.guardianholidayoffers.co.uk/%OmnitureToken%">
+            <a href="@AdLink{http://www.guardianholidayoffers.co.uk/}">
                 <span class="u-h">Guardian Holiday Offers</span>
                 <i class="i i-guardian-holidayoffers-logo"></i>
             </a>
@@ -13,11 +13,11 @@
         <p class="commercial__subtitle">Find your perfect holiday</p>
     </div>
 
-    <div class="commercial__body">
+    <div class="container__body commercial__body">
         <ul class="lineitems">
-            @offers.take(1).map { offer =>
+            @offers.take(4).map { offer =>
                 <li class="lineitem">
-                    <a class="lineitem__link" href="%OASToken%@offer.offerUrl%OmnitureToken%">
+                    <a class="lineitem__link" href="@AdLink{@offer.offerUrl}">
                         <img class="lineitem__image" src="@offer.imageUrl" alt="" />
                         <div class="lineitem__offer">
                             <h4 class="lineitem__title">@offer.title</h4>
@@ -37,6 +37,6 @@
             <input value="Search" name="go" class="submit-input" type="submit" />
             <input value="%JustOmnitureToken%" name="INTCMP" type="hidden" />
         </form>
-        <a class="commercial__link" href="%OASToken%http://www.guardianholidayoffers.co.uk/%OmnitureToken%">More from Guardian Holiday Offers<i class="i i-double-arrow-right-white"></i></a>
+        <a class="commercial__link" href="@AdLink{http://www.guardianholidayoffers.co.uk/}">More from Guardian Holiday Offers<i class="i i-double-arrow-right-white"></i></a>
     </div>
 </div>

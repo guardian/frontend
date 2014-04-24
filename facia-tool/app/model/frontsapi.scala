@@ -96,11 +96,25 @@ trait UpdateActions extends Logging {
   def updateCollectionMeta(block: Block, update: CollectionMetaUpdate, identity: Identity): Block =
     block.copy(displayName=update.displayName, href=update.href)
 
-  def putBlock(id: String, block: Block, identity: Identity, updateJson: JsValue): Block =
+  def putBlock(id: String, block: Block, identity: Identity): Block =
     FaciaApi.putBlock(id, block, identity)
 
-  def archiveBlock(id: String, block: Block, update: JsValue, identity: Identity): Block =
-    Try(FaciaApi.archive(id, block, update, identity)) match {
+  //Archiving
+  def archivePublishBlock(id: String, block: Block, identity: Identity): Block =
+    archiveBlock(id, block, "publish", identity)
+  def archiveDiscardBlock(id: String, block: Block, identity: Identity): Block =
+    archiveBlock(id, block, "discard", identity)
+
+  private def archiveBlock(id: String, block: Block, action: String, identity: Identity): Block =
+    archiveBlock(id, block, Json.obj("action" -> action), identity)
+
+  def archiveUpdateBlock(id: String, block: Block, updateJson: JsValue, identity: Identity): Block =
+    archiveBlock(id, block, Json.obj("action" -> "update", "update" -> updateJson), identity)
+  def archiveDeleteBlock(id: String, block: Block, updateJson: JsValue, identity: Identity): Block =
+    archiveBlock(id, block, Json.obj("action" -> "delete", "update" -> updateJson), identity)
+
+  private def archiveBlock(id: String, block: Block, updateJson: JsValue, identity: Identity): Block =
+    Try(FaciaApi.archive(id, block, updateJson, identity)) match {
       case Failure(t: Throwable) => {
         log.warn(t.toString)
         block
@@ -110,7 +124,7 @@ trait UpdateActions extends Logging {
 
   def putMasterConfig(config: Config, identity: Identity): Option[Config] = {
     FaciaApi.archiveMasterConfig(config, identity)
-    FaciaApi.putMasterConfig(config, identity)
+    FaciaApi.putMasterConfig(config)
   }
 
   def updateCollectionList(id: String, update: UpdateList, identity: Identity): Option[Block] = {
@@ -119,8 +133,8 @@ trait UpdateActions extends Logging {
     .map(insertIntoLive(update, _))
     .map(insertIntoDraft(update, _))
     .map(capCollection)
-    .map(putBlock(id, _, identity, updateJson))
-    .map(archiveBlock(id, _, updateJson, identity))
+    .map(putBlock(id, _, identity))
+    .map(archiveUpdateBlock(id, _, updateJson, identity))
     .orElse(createBlock(id, identity, update))
   }
 
@@ -129,14 +143,14 @@ trait UpdateActions extends Logging {
     getBlock(id)
       .map(deleteFromLive(update, _))
       .map(deleteFromDraft(update, _))
-      .map(putBlock(id, _, identity, updateJson))
-      .map(archiveBlock(id, _, updateJson, identity))
+      .map(archiveDeleteBlock(id, _, updateJson, identity))
+      .map(putBlock(id, _, identity))
   }
 
   def updateCollectionMeta(id: String, update: CollectionMetaUpdate, identity: Identity): Option[Block] =
     getBlock(id)
       .map(updateCollectionMeta(_, update, identity))
-      .map(putBlock(id, _, identity, Json.toJson(update)))
+      .map(putBlock(id, _, identity))
 
   private def updateList(update: UpdateList, blocks: List[Trail]): List[Trail] = {
     val trail: Trail = blocks
