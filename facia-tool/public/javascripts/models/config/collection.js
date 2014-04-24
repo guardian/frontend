@@ -22,6 +22,7 @@ define([
         this.id = opts.id || collectionGuid();
 
         this.parents = ko.observableArray();
+        this.capiResults = ko.observableArray();
 
         this.meta   = asObservableProps([
             'displayName',
@@ -59,6 +60,7 @@ define([
             vars.model.collections.unshift(this);
         }
         this.state.open(false);
+        this.state.apiQueryStatus(undefined);
         vars.model.save(this);
     };
 
@@ -66,6 +68,8 @@ define([
         var self = this,
             apiQuery = this.meta.apiQuery(),
             cc;
+
+        this.capiResults.removeAll();
 
         if (!apiQuery) {
             this.state.apiQueryStatus(undefined);
@@ -78,14 +82,20 @@ define([
         cc = checkCount;
 
         apiQuery += apiQuery.indexOf('?') < 0 ? '?' : '&';
-        apiQuery += 'show-editors-picks=true';
+        apiQuery += 'show-editors-picks=true&show-fields=headline';
 
         contentApi.fetchContent(apiQuery)
-        .done(function() {
-            if (cc === checkCount) { self.state.apiQueryStatus('valid'); }
+        .done(function(results) {
+            if (cc === checkCount) {
+                self.capiResults(results);
+                self.state.apiQueryStatus('valid');
+            }
         })
         .fail(function() {
-            if (cc === checkCount) { self.state.apiQueryStatus('invalid'); }
+            if (cc === checkCount) {
+                self.capiResults.removeAll();
+                self.state.apiQueryStatus('invalid');
+            }
         });
     };
 
