@@ -2,35 +2,36 @@ define([
     'common/$',
     'bean',
     'bonzo',
+    'qwery',
     'common/utils/config',
     'common/utils/context',
-    'common/utils/detect'
+    'common/utils/detect',
+    'common/modules/article/twitter'
 ], function(
     $,
     bean,
     bonzo,
+    qwery,
     config,
     context,
-    detect
+    detect,
+    twitter
 ) {
-
     context = context();
     function shouldTruncate() {
-        return config.page.isLiveBlog &&
-            detect.getBreakpoint() === 'mobile' &&
-            config.page.section === 'football' &&
-            $('.live-blog__blocks').length > 1;
+        var truncatableLiveBlogs = config.page.section !== 'football' || detect.getBreakpoint() === 'mobile';
+        return config.page.isLiveBlog && $('.live-blog__blocks').length > 1 && truncatableLiveBlogs;
     }
 
     function truncate() {
-        var articleElongateClass = 'article-elongator',
-            truncatedClass = 'article--truncated',
-            $article = $('#article', context);
+        var truncatedClass = 'truncated-block',
+            numBlocks = config.page.section === 'football' ? 1 : 2,
+            $truncatedBlocks = bonzo(qwery('.live-blog__blocks', context).slice(numBlocks));
 
         if (shouldTruncate()) {
-            $article.addClass(truncatedClass);
+
             $.create(
-                '<button class="u-fauxlink u-button-reset button button--show-more '+ articleElongateClass +'" data-link-name="continue reading">'+
+                '<button class="u-fauxlink u-button-reset button button--show-more article-elongator" data-link-name="continue reading">'+
                     '<span class="tone-background i-center"><i class="i i-plus-white-med"></i></span>'+
                     'View all updates'+
                 '</button>'
@@ -38,11 +39,20 @@ define([
                 $('.article-body', context).append(el);
             });
 
-            bean.on(context, 'click', '.'+articleElongateClass, function(e) {
+            bean.on(context, 'click', '.article-elongator', function(e) {
                 e.preventDefault();
-                $article.removeClass(truncatedClass);
+
+                // Reinstate tweets and enhance them.
+                $('.truncated-block blockquote.tweet-truncated', context).removeClass('tweet-truncated').addClass('tweet');
+                twitter.enhanceTweets();
+
+                $truncatedBlocks.removeClass(truncatedClass);
                 bonzo(e.currentTarget).addClass('u-h');
             });
+
+            $truncatedBlocks.addClass(truncatedClass);
+            // Avoid running the twitter widget on truncated tweets.
+            $('.truncated-block blockquote.tweet', context).removeClass('tweet').addClass('tweet-truncated');
         }
     }
 
