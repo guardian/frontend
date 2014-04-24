@@ -264,6 +264,45 @@ private object ArticleSchemas {
   }
 }
 
+object SnapApiContent extends ApiContent(
+    id                  = "",
+    sectionId           = None,
+    sectionName         = None,
+    webPublicationDate  = DateTime.now,
+    webTitle            = "",
+    webUrl              = "http://www.theguardian.com/",
+    apiUrl              = "",
+    fields              = None,
+    tags                = Nil,
+    factboxes           = Nil,
+    mediaAssets         = Nil,
+    elements            = None,
+    references          = Nil,
+    isExpired           = None
+    )
+
+class Snap(snapId: String,
+           snapWebPublicationDate: DateTime,
+           snapMeta: Map[String, JsValue]
+) extends Content(new ApiContentWithMeta(SnapApiContent, metaData = snapMeta)) {
+
+  lazy val snapUrl: Option[String] = snapMeta.get("href").flatMap(_.asOpt[String])
+
+  //We set this to snapId as TemplateDeduping uses this ID to dedupe
+  override lazy val url: String = snapId
+
+  //Sorting is done via id
+  override lazy val id: String = snapId
+
+  //Trail implementations
+  override lazy val shortUrl: String = ""
+
+  //Meta implementations
+  override lazy val webPublicationDate = snapWebPublicationDate
+}
+
+
+
 class Article(content: ApiContentWithMeta) extends Content(content) {
   lazy val body: String = delegate.safeFields.getOrElse("body","")
   lazy val contentType = "Article"
