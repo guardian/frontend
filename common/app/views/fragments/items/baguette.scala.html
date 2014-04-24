@@ -5,7 +5,7 @@
     data-link-name="trail | @{index + 1}">
 
     <div class="item__container">
-        <a href="@LinkTo{@trail.url}" class="item__link" data-link-name="article">
+        <a @LinkTo(trail).map{url=>href=@url} class="item__link" data-link-name="article">
             @fragments.items.elements.title(trail, index, 0)
             @fragments.items.elements.image(trail, inlineImage = true, maxWidth = 940)
         </a>
