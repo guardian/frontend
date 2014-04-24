@@ -89,7 +89,7 @@ function (
             url: vars.CONST.apiSearchBase + '/' + apiUrl
         }).always(function(resp) {
             var items = resp.response ?
-                        _.chain(['results', 'editorsPicks', 'mostViewed'])
+                        _.chain(['editorsPicks', 'results'])
                          .filter(function(key) { return _.isArray(resp.response[key]); })
                          .map(function(key) { return resp.response[key]; })
                          .flatten()

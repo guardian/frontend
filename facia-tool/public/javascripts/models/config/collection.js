@@ -78,7 +78,7 @@ define([
         cc = checkCount;
 
         apiQuery += apiQuery.indexOf('?') < 0 ? '?' : '&';
-        apiQuery += 'show-editors-picks=true&show-most-viewed=true';
+        apiQuery += 'show-editors-picks=true';
 
         contentApi.fetchContent(apiQuery)
         .done(function() {
