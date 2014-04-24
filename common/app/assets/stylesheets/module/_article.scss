@@ -198,6 +198,7 @@
     }
 
     .article__meta-container--no-byline & {
+        border-top: 1px dotted $c-neutral5;
         @include rem((
             padding-top: $gs-baseline/3
         ));
