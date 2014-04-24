@@ -3,6 +3,8 @@ import pa._
 import org.joda.time.DateMidnight
 import pa.LeagueTableEntry
 import pa.{Result, MatchDayTeam}
+import java.awt.image.BandCombineOp
+import java.awt.Color
 
 
 case class Competition(
@@ -40,10 +42,10 @@ case class Competition(
   }
 }
 
-case class Group(round: Option[Round], entries: Seq[LeagueTableEntry])
+case class Group(round: Round, entries: Seq[LeagueTableEntry])
 
-case class Table(competition: Competition, groups: Seq[Group]) {
-  lazy val multiGroup = groups.size > 1
+case class Table(competition: Competition, groups: Seq[Group], hasGroups: Boolean = false) {
+  lazy val multiGroup = hasGroups || groups.size > 1
 
   def topOfTableSnippet = {
     val snippet = groups.map(g => g.copy(entries = g.entries.take(4)))
@@ -75,7 +77,7 @@ object Table {
     val groups = competition.leagueTable
       .groupBy(_.round)
       .map { case (round, table) => Group(round, table) }
-      .toSeq.sortBy(_.round.map(_.roundNumber).map {
+      .toSeq.sortBy(_.round.roundNumber match {
         case IsNumber(num) => num.toInt
         case other => 0
       })
@@ -87,7 +89,7 @@ case class TeamFixture(competition: Competition, fixture: pa.FootballMatch)
 
 case class StatusSummary(description: String, status: String, homeScore: Option[Int], awayScore: Option[Int])
 
-case class LeagueTableEntryWithForm(stageNumber: String, round: Option[Round], team: LeagueTeam, prevResults: List[PrevResult])
+case class LeagueTableEntryWithForm(stageNumber: String, round: Round, team: LeagueTeam, prevResults: List[PrevResult])
 object LeagueTableEntryWithForm {
   def apply(competition: Competition, leagueTableEntry: LeagueTableEntry): LeagueTableEntryWithForm = {
     LeagueTableEntryWithForm(
@@ -112,5 +114,39 @@ object PrevResult {
   def apply(result: FootballMatch, thisTeamId: String): PrevResult = {
     if (thisTeamId == result.homeTeam.id) PrevResult(result.date, result.homeTeam, result.awayTeam, wasHome = true)
     else PrevResult(result.date, result.awayTeam, result.homeTeam, wasHome = false)
+  }
+}
+
+case class TeamColours(homeTeam: LineUpTeam, awayTeam: LineUpTeam) {
+  private val darkenFactor = 0.3
+  private val homeColour = homeTeam.teamColour.toLowerCase
+  private val awayColour = awayTeam.teamColour.toLowerCase
+
+  lazy val home =
+    if (homeColour == "#ffffff") "#eeeeee"
+    else if (homeColour == "#eeeeee" && awayColour == "#ffffff") "#dddddd"
+    else homeColour
+  lazy val away =
+    if (awayColour == "#ffffff" && homeColour == "#ffffff") darken(awayColour)
+    else if (awayColour == "#ffffff") "#eeeeee"
+    else if (awayColour == homeColour) darken(awayColour)
+    else awayColour
+  lazy val homeTeamIsLight = isLight(home)
+  lazy val awayTeamIsLight = isLight(away)
+
+  private def isLight(colourHex: String): Boolean = {
+    val colour = Color.decode(colourHex)
+    val yiq = ((colour.getRed*299) + (colour.getGreen*587) + (colour.getBlue*114)) / 1000
+    yiq > 128
+  }
+
+  private def darken(colour: String): String = {
+    val original = Color.decode(colour)
+    val darker = new Color(
+      Math.max(original.getRed * (1 - darkenFactor), 0).round.toInt,
+      Math.max(original.getGreen * (1 - darkenFactor), 0).round.toInt,
+      Math.max(original.getBlue * (1 - darkenFactor), 0).round.toInt
+    )
+    "#%02x%02x%02x".format(darker.getRed, darker.getGreen, darker.getBlue)
   }
 }

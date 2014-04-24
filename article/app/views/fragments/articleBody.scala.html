@@ -12,6 +12,17 @@
         <article id="article" class="article @if(article.isLive){is-live}"
                  itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType" role="main">
 
+            @if(ABHomeComponent.isSwitchedOn && article.hasMainPicture) {
+                <div class="home-container">
+                    <div class="home js-home u-h" data-component="home" data-link-name="home">
+                        <a href="@LinkTo{/}" class="home__link">
+                            <span class="i i-home"></span>
+                            <span class="home__label">home</span>
+                        </a>
+                    </div>
+                </div>
+            }
+
             <div class="article__inner article__inner--head">
                 <header class="article__head">
 
@@ -65,6 +76,11 @@
                     @fragments.contentMeta(article)
 
                     <div class="js-article__container article__container u-cf" data-component="body">
+
+                        @if(ABHomeComponent.isSwitchedOn && article.hasMainPicture) {
+                            <div class="top-marker"></div>
+                        }
+
                         <div class="article-body u-cf from-content-api js-article__body"
                         itemprop="@if(article.isReview){reviewBody} else {articleBody}">
                             @BodyCleaner(article, article.body)
@@ -78,6 +94,10 @@
                     <div class="social-wrapper" data-component="share">
                         @fragments.social(article)
                     </div>
+
+                    @if(ABHomeComponent.isSwitchedOn && article.hasMainPicture) {
+                        <div class="bottom-marker"></div>
+                    }
                 </div>
                 <div class="article__secondary-column" aria-hidden="true">
                     <div class="article__secondary-column__inner@if(storyPackage.nonEmpty) { article__secondary-column__inner--fill-vertically}">

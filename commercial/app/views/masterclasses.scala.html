@@ -1,11 +1,13 @@
 @(events: Seq[model.commercial.MasterClass])(implicit request: RequestHeader)
 
+@import conf.Configuration
+
 <link rel="stylesheet" href="@Static("stylesheets/commercial.css")" />
 
 <div class="commercial commercial--masterclasses">
     <div class="commercial__head container__title">
         <h3 class="commercial__title">
-            <a href="@AdLink{http://theguardian.com/guardian-masterclasses}">
+            <a href="@AdLink{@Configuration.commercial.masterclasses_url}">
                 <span>Guardian <span class="commercial__title__last-word">Masterclasses</span></span>
             </a>
         </h3>
@@ -31,7 +33,7 @@
         </ul>
     </div>
     <div class="commercial__foot">
-        <a class="commercial__home-link" href="@AdLink{http://theguardian.com/guardian-masterclasses/masterclasses-calendar}" data-link-name="merchandising-masterclasses-low-profile-browse-all-masterclasses">View all Masterclasses
+        <a class="commercial__home-link" href="@AdLink{@Configuration.commercial.masterclasses_url/masterclasses-calendar}" data-link-name="merchandising-masterclasses-low-profile-browse-all-masterclasses">View all Masterclasses
         <span class="commercial__home-link__cta">
             <span class="i i-filter-arrow-down"></span>
         </span></a>
