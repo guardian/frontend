@@ -29,19 +29,7 @@ define([
 ) {
     var modules = {
 
-        makeEverythingSnaps: function() {
-            var testTypes = {
-                table: '/football/premierleague/table.json',
-                matches: '/football/match-day/premierleague/2014/apr/19.json'
-            };
-
-            $('.fromage, .item, .linkslist__item, .headline-column__item').each(function(el) {
-                el.classList.add('facia-snap');
-                el.classList.add('facia-snap--football');
-                el.setAttribute('data-snap-type', 'football');
-                el.setAttribute('data-snap-uri', testTypes.table);
-                el.setAttribute('data-snap-content-key', 'html');
-            });
+        showSnaps: function() {
             snaps.init('.facia-snap');
         },
 
@@ -85,7 +73,7 @@ define([
     var ready = function (config, context) {
         if (!this.initialised) {
             this.initialised = true;
-            modules.makeEverythingSnaps();
+            modules.showSnaps();
             modules.showCollectionShowMore();
             modules.showContainerToggle();
         }
