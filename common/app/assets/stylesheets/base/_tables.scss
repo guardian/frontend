@@ -46,6 +46,9 @@ td {
     td,
     .table__caption {
         @include fs-data(4);
+        @include rem((
+            padding: $table-baseline $table-gutter
+        ));
         vertical-align: top;
     }
 
@@ -53,15 +56,9 @@ td {
     thead td {
         color: $c-neutral1;
         font-weight: 800;
-        @include rem((
-            padding: $table-baseline $table-gutter
-        ));
     }
 
     td {
-        @include rem((
-            padding: $table-baseline $table-gutter
-        ));
         border-top: 1px solid darken($c-neutral8, 4%);
     }
 
