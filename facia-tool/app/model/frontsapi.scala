@@ -41,6 +41,7 @@ case class Block(
 
 case class Trail(
                   id: String,
+                  frontPublicationDate: DateTime,
                   meta: Option[Map[String, JsValue]]
                   )
 
