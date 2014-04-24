@@ -31,10 +31,10 @@ as illustrated in this article posted on the Guardian's developer blog:
     // across team members. It will improve communication between
     // stakeholders, designers, developers, and testers.
     $mq-breakpoints: (
-        mobile:  300px,
-        tablet:  600px,
-        desktop: 900px,
-        wide:    1260px,
+        mobile:  320px,
+        tablet:  740px,
+        desktop: 980px,
+        wide:    1300px,
 
         // Tweakpoints
         desktopAd: 810px,

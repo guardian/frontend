@@ -3,11 +3,14 @@
 @defining((VisualTone(trail), containerIndex == 0)) { case (tone, isFirstContainer) =>
     <@element
         class="@GetClasses.forItem(trail, isFirstContainer)"
+        @if(trail.isCommentable) {
+            @trail.discussionId.map{ id =>
+                data-discussion-id="@id"
+            }
+            data-discussion-closed="@trail.isClosedForComments"
+        }
         data-link-name="trail | @{index + 1}"
-        @trail.discussionId.map{ id => data-discussion-id="@id" }
-        data-discussion-closed="@trail.isClosedForComments"
-        @SnapData(trail)
-    >
+        @SnapData(trail)>
 
         <div class="item__container">
 

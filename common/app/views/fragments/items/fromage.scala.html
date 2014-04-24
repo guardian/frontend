@@ -3,9 +3,10 @@
 @defining((VisualTone(trail), imageAdjustOverride.getOrElse(trail.imageAdjust))) { case (tone, imageAdjust) =>
     <div
         class="@GetClasses.forFromage(trail, imageAdjust)"
-
-        @trail.discussionId.map{ id =>
-            data-discussion-id="@id"
+        @if(trail.isCommentable) {
+            @trail.discussionId.map{ id =>
+                data-discussion-id="@id"
+            }
             data-discussion-closed="@trail.isClosedForComments"
         }
         data-link-name="trail | @{index + 1}"
@@ -54,7 +55,7 @@
             @fragments.items.elements.supporting(trail.supporting, style = "fit")
 
             @* Display meta only if there is a discussion *@
-            @trail.discussionId.map{ id =>
+            @if(trail.isCommentable) {
                 @fragments.items.elements.meta(trail)
             }
         </div>

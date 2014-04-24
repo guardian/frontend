@@ -17,7 +17,7 @@ class LatestIndexControllerTest extends FlatSpec with Matchers {
   it should "redirect to latest for a blog" in Fake {
     val result = controllers.LatestIndexController.latest("fashion/fashion-blog")(TestRequest())
     status(result) should be(TemporaryRedirect)
-    header("Location", result).head should include ("/fashion/fashion-blog/20")
+    header("Location", result).head should include ("/fashion/fashion-blog/")
   }
 
   it should "redirect to the all page for keywords" in Fake {

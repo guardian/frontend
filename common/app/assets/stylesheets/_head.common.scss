@@ -27,12 +27,9 @@
    Layout
    ========================================================================== */
 
-@import "layout/_grid-system";
-    @include grid-system;
+@include grid-system;
 @import "layout/_layout";
-@import "components/guss-layout/_row";
 @include guss-row-utility;
-@import "components/guss-layout/_columns";
 @include guss-columns-utility;
 
 
