@@ -25,20 +25,16 @@ $block-padding-right: $gs-gutter;
         padding-top: $gs-baseline/3
     ));
 
-}
-.blog__inner--head .article__head {
-    padding-top: 0;
-    @include rem((
-        margin-right: 0 !important
-    ))
-
+    .article__head {
+        padding-top: 0;
+        border-top: none;
+        @include rem((
+            margin-right:0 !important
+        ))
+    }
 }
 
 @include mq(rightCol) {
-    .blog__section {
-        position: absolute;
-        left: 0;
-    }
     .blog__last-updated-container {
         position: absolute;
         left: ($a-rightCol-width + $gs-gutter) * -1;
@@ -135,6 +131,34 @@ $block-padding-right: $gs-gutter;
     max-width: none;
 }
 
+.right-col-deport {
+    @include mq(rightCol) {
+        @include rem((
+            padding: 0 0 $gs-baseline/3
+        ));
+    }
+}
+.right-col-deport__body {
+    @include mq(rightCol) {
+        float: left;
+        @include rem((
+            padding-top: $gs-baseline,
+            width: $a-leftCol-width
+        ));
+        margin-left: 0;
+
+        // Makes the block actionable
+        // when out of the flow
+        position: relative;
+        z-index: 1;
+    }
+    @include mq(wide) {
+        @include rem((
+            width: $a-leftColWide-width
+        ));
+    }
+}
+
 /* Design
    ========================================================================== */
 .blog__head-background--default {
@@ -158,13 +182,31 @@ $block-padding-right: $gs-gutter;
     color: white;
 }
 
-.blog__section {
-    @include fs-header(3);
-    a { color: inherit; }
-    @include mq($to: tablet) {
-        display: none;
+.blog__zone {
+    position: relative;
+
+    @include mq(tablet, rightCol) {
+        background-color: $c-liveDefault;
+    }
+
+    @include mq(tablet) {
+        border-top: none !important;
     }
 }
+
+.blog__zone__inner {
+    @include mq(tablet, rightCol) {
+        @include full-bleed($c-liveDefault);
+    }
+}
+
+.blog__zone__link {
+    color: #000000;
+    @include mq(tablet) {
+        color: #ffffff;
+    }
+}
+
 
 .blog__headline {
     color: inherit;
@@ -184,7 +226,7 @@ $block-padding-right: $gs-gutter;
     border-top: 1px dotted #E6A1AB;
     position: relative;
     padding-bottom: $gs-baseline;
-    @include mq(leftCol) {
+    @include mq(rightCol) {
         border-top: none;
     }
 }
