@@ -772,7 +772,7 @@ object GetClasses {
       "collection__item",
       s"collection__item--volume-${trail.group.getOrElse("0")}"
     )
-    val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail)}
+    val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail)} ++ makeSnapClasses(trail)
     RenderClasses(classes:_*)
   }
 
@@ -802,7 +802,7 @@ object GetClasses {
       (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean) =>
         if (forceHasImage || !trail.trailPicture(5,3).isEmpty) s"item--imageadjust-${trail.imageAdjust}" else ""
     )
-    val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail, firstContainer, forceHasImage)}
+    val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail, firstContainer, forceHasImage)} ++ makeSnapClasses(trail)
     RenderClasses(classes:_*)
   }
 
@@ -825,7 +825,7 @@ object GetClasses {
       (trail: Trail, imageAdjust: String) =>
         if (!trail.trailPicture(5,3).isEmpty) s"fromage--imageadjust-$imageAdjust" else ""
     )
-    val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail, imageAdjust)}
+    val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail, imageAdjust)} ++ makeSnapClasses(trail)
     RenderClasses(classes:_*)
   }
 
