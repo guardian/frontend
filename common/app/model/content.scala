@@ -187,26 +187,39 @@ object Content {
 
   def fromPressedJson(json: JsValue): Option[Content] = {
     val contentFields: Option[Map[String, String]] = (json \ "safeFields").asOpt[Map[String, String]]
-    Option(
-      Content(ApiContentWithMeta(
-        ApiContent(
-          id = (json \ "id").as[String],
-          sectionId = (json \ "sectionId").asOpt[String],
-          sectionName = (json \ "sectionName").asOpt[String],
-          webPublicationDate = (json \ "webPublicationDate").asOpt[Long].map(new DateTime(_)).get,
-          webTitle = (json \ "safeFields" \ "headline").as[String],
-          webUrl = (json \ "webUrl").as[String],
-          apiUrl = "",
-          elements = Option(parseElements(json)),
-          fields = contentFields,
-          tags = (json \ "tags").asOpt[List[JsValue]].map(parseTags).getOrElse(Nil)
-        ),
-        supporting = (json \ "meta" \ "supporting").asOpt[List[JsValue]].getOrElse(Nil)
-          .flatMap(Content.fromPressedJson),
-        metaData = (json \ "meta").asOpt[Map[String, JsValue]].getOrElse(Map.empty)
+    val itemId: String = (json \ "id").as[String]
+    if (itemId.startsWith("snap/")) {
+      val snapMeta: Map[String, JsValue] = (json \ "meta").asOpt[Map[String, JsValue]].getOrElse(Map.empty)
+      Option(
+        new Snap(
+          snapId = itemId,
+          (json \ "webPublicationDate").asOpt[DateTime].getOrElse(DateTime.now),
+          snapMeta = snapMeta
+        )
       )
+    }
+    else {
+      Option(
+        Content(ApiContentWithMeta(
+          ApiContent(
+            itemId,
+            sectionId = (json \ "sectionId").asOpt[String],
+            sectionName = (json \ "sectionName").asOpt[String],
+            webPublicationDate = (json \ "webPublicationDate").asOpt[Long].map(new DateTime(_)).get,
+            webTitle = (json \ "safeFields" \ "headline").as[String],
+            webUrl = (json \ "webUrl").as[String],
+            apiUrl = "",
+            elements = Option(parseElements(json)),
+            fields = contentFields,
+            tags = (json \ "tags").asOpt[List[JsValue]].map(parseTags).getOrElse(Nil)
+          ),
+          supporting = (json \ "meta" \ "supporting").asOpt[List[JsValue]].getOrElse(Nil)
+            .flatMap(Content.fromPressedJson),
+          metaData = (json \ "meta").asOpt[Map[String, JsValue]].getOrElse(Map.empty)
+        )
+        )
       )
-    )
+    }
   }
 
   private def parseElements(json: JsValue): List[ApiElement] = {
