@@ -1,39 +1,32 @@
 $table-baseline: 4px;
 $table-gutter: 4px;
-$table-breakpoint-medium: tablet;
-$table-breakpoint-small: mobile;
-$table-breakpoint-tiny: 220px;
+$table-breakpoint-importance-1: tablet;
+$table-breakpoint-importance-2: mobile;
+$table-breakpoint-importance-3: 220px;
 
-@mixin table--medium {
-    th,
-    td,
-    thead td,
-    .table__caption {
-        @include fs-data(4, true);
-        @include rem((
-            padding: $table-baseline*2
-        ));
-    }
-
-    .table-column--from-large {
+@mixin table--hide-from-importance-1 {
+    .table-column--importance-1 {
         display: none;
     }
 }
 
-@mixin table--small {
-    .table-column--from-large,
-    .table-column--from-medium {
+@mixin table--hide-from-importance-2 {
+    .table-column--importance-1,
+    .table-column--importance-2 {
         display: none;
     }
 }
 
-@mixin table--tiny {
-    .table-column--from-large,
-    .table-column--from-medium,
-    .table-column--from-small {
+@mixin table--hide-from-importance-3 {
+    .table-column--importance-1,
+    .table-column--importance-2,
+    .table-column--importance-3 {
         display: none;
     }
 }
+.table--hide-from-importance-1 { @include table--hide-from-importance-1; }
+.table--hide-from-importance-2 { @include table--hide-from-importance-2; }
+.table--hide-from-importance-3 { @include table--hide-from-importance-3; }
 
 table {
     width: 100%;
@@ -52,7 +45,7 @@ td {
     th,
     td,
     .table__caption {
-        @include fs-data(5);
+        @include fs-data(4);
         vertical-align: top;
     }
 
@@ -61,35 +54,36 @@ td {
         color: $c-neutral1;
         font-weight: 800;
         @include rem((
-            padding: $table-baseline*2 $table-gutter*3
+            padding: $table-baseline*2
         ));
     }
 
     td {
-        border-top: 1px solid darken($c-neutral8, 4%);
         @include rem((
-            padding: $gs-baseline $table-gutter*3
+            padding: $table-baseline*2
         ));
+        border-top: 1px solid darken($c-neutral8, 4%);
     }
 
     abbr {
         border-bottom: 1px dotted $c-neutral8;
     }
 
-    @include mq($to: $table-breakpoint-medium) { @include table--medium; }
-    @include mq($to: $table-breakpoint-small) { @include table--small; }
-    @include mq($to: $table-breakpoint-tiny) { @include table--tiny; }
-    @include mq($to: desktop) {
+    @include mq($from: desktop) {
         th,
         td,
         thead td {
-            @include fs-data(4, true);
+            @include fs-data(5, true);
+            @include rem((
+                padding: $gs-baseline $table-gutter*3
+            ));
         }
     }
-}
 
-.table--medium {
-    @include table--medium;
+    // Show / hide functionality
+    @include mq($to: $table-breakpoint-importance-1) { @include table--hide-from-importance-1; }
+    @include mq($to: $table-breakpoint-importance-2) { @include table--hide-from-importance-2; }
+    @include mq($to: $table-breakpoint-importance-3) { @include table--hide-from-importance-3; }
 }
 
 .table--striped {
@@ -99,6 +93,13 @@ td {
 
     tr:nth-child(odd) > td {
         background-color: darken($c-neutral8, 4%);
+    }
+}
+
+.table--small-font {
+    th,
+    td {
+        @include fs-data(4, true);
     }
 }
 
@@ -130,6 +131,9 @@ td {
 // then move the caption over the top border
 // This is because the caption is outside the flow of the table
 .table__caption {
+    @include rem((
+        padding: $table-baseline*2
+    ));
     background: $c-neutral8;
     border-bottom: 1px solid darken($c-neutral8, 4%);
     border-top: 2px solid $c-newsAccent;

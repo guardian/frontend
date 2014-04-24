@@ -44,8 +44,8 @@
         min-width: 75px; // 15(width of status)*5
     }
 
-    @include mq($to: $table-breakpoint-medium) { @include table-football--medium; }
-    @include mq($to: $table-breakpoint-tiny) {
+    @include mq($to: $table-breakpoint-importance-1) { @include table-football--medium; }
+    @include mq($to: $table-breakpoint-importance-2) {
         .table-column--main {
             .team-name:after {
                 content: attr(data-abbr);
@@ -55,7 +55,10 @@
             }
         }
     }
-    &.table--medium { @include table-football--medium; }
+}
+
+.c-football-table {
+    @include table-football--medium;
 }
 
 .football-table__container {
