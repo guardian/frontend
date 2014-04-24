@@ -35,14 +35,7 @@
             <div class="after-header"></div>
         </div>
         <div class="blog__columning-wrapper">
-            <div class="blog__main-column  blog__main-background">
-
-
-                <div class="blog__timeline">
-                    <h2 class="blog__timeline-header">Key events</h2>
-                    <ul class="js-live-blog__timeline timeline"></ul>
-                </div>
-
+            <div class="blog__main-column">
                 @fragments.standfirst(article)
 
                 @fragments.witnessCallToAction(article)
@@ -73,34 +66,41 @@
                     }
                 }
 
-
-            <div class="js-article__container article__container u-cf" data-component="body">
-                @fragments.liveFilter(article)
-
-                <div class="article-body u-cf from-content-api js-blog-blocks @if(article.isLive) {live-blog}"
-                itemprop="@if(article.isReview){reviewBody} else {articleBody}">
-
-                @if(article.groupedBlocks.nonEmpty) {
-                    @article.groupedBlocks.map{ blockGroup =>
-                        <div class="live-blog__blocks">
-                            @BodyCleaner(article, blockGroup)
-                        </div>
+                <div class="blog__timeline blog__dropdown">
+                    @fragments.dropdown("Key events", "live") {
+                        <ul class="js-live-blog__timeline timeline u-unstyled"></ul>
                     }
-                }  else {
-                    @BodyCleaner(article, article.body)
+                </div>
+            </div>
+            <div class="blog__main-column  blog__main-background blog__dropdown@if(article.hasKeyEvents){ blog__main-coloumn--has-key-events}">
+                @fragments.dropdown("Live feed", "live", true) {
+                    <div class="js-article__container article__container u-cf" data-component="body">
+                        @fragments.liveFilter(article)
+
+                        <div class="article-body u-cf from-content-api js-blog-blocks @if(article.isLive) {live-blog}"
+                        itemprop="@if(article.isReview) {reviewBody} else {articleBody}">
+
+                        @if(article.groupedBlocks.nonEmpty) {
+                            @article.groupedBlocks.map { blockGroup =>
+                                <div class="live-blog__blocks">
+                                    @BodyCleaner(article, blockGroup)
+                                </div>
+                            }
+                        } else {
+                            @BodyCleaner(article, article.body)
+                        }
+
+                        </div>
+
+                        <div class="article__keywords" data-link-name="live blog keywords">
+                        @fragments.keywordList(article.keywords)
+                        </div>
+                    </div>
+
+                    <div class="social-wrapper" data-component="share">
+                    @fragments.social(article)
+                    </div>
                 }
-
-                </div>
-
-                <div class="article__keywords" data-link-name="live blog keywords">
-                @fragments.keywordList(article.keywords)
-                </div>
-            </div>
-
-            <div class="social-wrapper" data-component="share">
-            @fragments.social(article)
-            </div>
-
             </div>
             <div class="blog__secondary-column" aria-hidden="true">
                 <div class="blog__secondary-column__inner">

@@ -9,7 +9,11 @@ $block-padding-right: $gs-gutter;
 }
 
 .blog__main-column {
-    padding-top: $gs-baseline;
+    @include mq(rightCol) {
+        @include rem((
+            padding-top:$gs-baseline
+        ));
+    }
 }
 
 .blog__meta-container,
@@ -161,6 +165,9 @@ $block-padding-right: $gs-gutter;
 
 /* Design
    ========================================================================== */
+.blog__main-background {
+    @include full-bleed($c-neutral8);
+}
 .blog__head-background--default {
     @include full-bleed($c-liveDefault);
 }
@@ -168,11 +175,6 @@ $block-padding-right: $gs-gutter;
     position: relative;
     z-index: 100;
     @include full-bleed($c-liveAccent);
-}
-
-
-.blog__main-background {
-    @include full-bleed($c-neutral8);
 }
 
 /* Header
@@ -206,7 +208,6 @@ $block-padding-right: $gs-gutter;
         color: #ffffff;
     }
 }
-
 
 .blog__headline {
     color: inherit;
@@ -617,20 +618,56 @@ $block-padding-right: $gs-gutter;
     width: 100%;
 }
 
-/* Timeline
+/* Dropdowns
    ========================================================================== */
+.dropdown--live {
+    padding-top: 0;
+    border-top: none;
 
-.blog__timeline {
-    @include mq($to: rightCol) {
-        display: none;
+    .dropdown__button {
+        position: relative;
+        border-top: 1px solid $c-neutral4;
+        @include full-bleed(#ffffff);
+        @include rem((
+            padding-top: $gs-baseline/1.5
+        ));
+
+        &:before,
+        &:after {
+            top: -1px;
+            border-top: 1px solid $c-neutral4;
+        }
     }
-    position: absolute;
-    margin-left: - ($a-rightCol-width + $gs-gutter);
-    width: $a-rightCol-width;
+
+    .dropdown__label {
+        @include fs-header(2);
+        @include rem((
+            line-height: 30px
+        ))
+    }
 }
 
-.blog__timeline-header {
-    @include fs-header(2);
+/* Timeline
+   ========================================================================== */
+.blog__timeline {
+
+    @include mq(rightCol) {
+        position: absolute;
+        @include rem((
+            margin-left: - ($a-rightCol-width + $gs-gutter),
+            width: $a-rightCol-width
+        ));
+
+        &:before,
+        &:after,
+        .control {
+            display: none;
+        }
+
+        .dropdown {
+            border-top: none;
+        }
+    }
 }
 
 .timeline__filler {
@@ -643,7 +680,7 @@ $block-padding-right: $gs-gutter;
 }
 
 .timeline {
-    list-style: none;
+    @include full-bleed($c-neutral8);
 }
 
 .timeline__date {
