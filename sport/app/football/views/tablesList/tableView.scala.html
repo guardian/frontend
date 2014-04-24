@@ -1,6 +1,11 @@
-@(competition: model.Competition, group: Group, highlightTeamId: Option[String] = None, showMeta: Boolean = false, size: String = "full", multiGroup: Boolean = false)(implicit request: RequestHeader)
+@(competition: model.Competition, group: Group, highlightTeamId: Option[String] = None, showMeta: Boolean = false, striped: Boolean = false, responsiveFont: Boolean = false, multiGroup: Boolean = false)(implicit request: RequestHeader)
 <div class="table__container">
-    <table class="table table--football@if(size == "full"){ table--striped}">
+    <table class="@RenderClasses(Map(
+            "table" -> true,
+            "table--football" -> true,
+            "table--striped" -> striped,
+            "table--responsive-font" -> responsiveFont
+        ))">
         @if(showMeta){<caption class="table__caption"><a href="@competition.url">@competition.fullName</a></caption>}
         <thead>
             <tr>

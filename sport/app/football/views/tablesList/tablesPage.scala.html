@@ -37,12 +37,12 @@
                                         @round.name.map { name =>
                                             <div class="football__group">
                                                 <h4 class="table__headline">@name</h4>
-                                                @tableView(table.competition, group)
+                                                @tableView(table.competition, group, striped = true, responsiveFont = true)
                                             </div>
                                         }
                                     }
                                 }else{
-                                    @tableView(table.competition, group)
+                                    @tableView(table.competition, group, striped = true, responsiveFont = true)
                                 }
                             }
                             @if(!page.singleCompetition){

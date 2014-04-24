@@ -69,6 +69,13 @@ td {
         border-bottom: 1px dotted $c-neutral8;
     }
 
+    // Show / hide functionality
+    @include mq($to: $table-breakpoint-importance-1) { @include table--hide-from-importance-1; }
+    @include mq($to: $table-breakpoint-importance-2) { @include table--hide-from-importance-2; }
+    @include mq($to: $table-breakpoint-importance-3) { @include table--hide-from-importance-3; }
+}
+
+.table--responsive-font {
     @include mq($from: desktop) {
         th,
         td,
@@ -79,11 +86,6 @@ td {
             ));
         }
     }
-
-    // Show / hide functionality
-    @include mq($to: $table-breakpoint-importance-1) { @include table--hide-from-importance-1; }
-    @include mq($to: $table-breakpoint-importance-2) { @include table--hide-from-importance-2; }
-    @include mq($to: $table-breakpoint-importance-3) { @include table--hide-from-importance-3; }
 }
 
 .table--striped {
@@ -93,22 +95,6 @@ td {
 
     tr:nth-child(odd) > td {
         background-color: darken($c-neutral8, 4%);
-    }
-}
-
-.table--small-font {
-    th,
-    td {
-        @include fs-data(4, true);
-    }
-}
-
-.table--small-pad {
-    th,
-    td {
-        @include rem((
-            padding: $table-baseline*2
-        ));
     }
 }
 
