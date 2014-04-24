@@ -281,6 +281,11 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 4, 30)
   )
 
+  val ComicSansEasterEggSwitch = Switch("Feature Switches", "comicsans",
+    "If this switch is on, the article about Comic Sans Neue will have its title Comic Sans'd",
+    safeState = Off, sellByDate = new DateMidnight(2014, 5, 30)
+  )
+
   val RssLinkSwitch = Switch("Feature Switches", "rss-link",
     "If this switch is on a link to the RSS is rendered in the HTML",
     safeState = Off, sellByDate = new DateMidnight(2014, 6, 30)
@@ -425,6 +430,7 @@ object Switches extends Collections {
     FrontPressJobSwitch,
     LayoutHintsSwitch,
     HelveticaEasterEggSwitch,
+    ComicSansEasterEggSwitch,
     RssLinkSwitch,
     PopularInTagSwitch,
     HideOldTimeStampsSwitch,
