@@ -78,10 +78,18 @@
                 <span class="linky api-query-status" data-bind="
                     click: checkApiQueryStatus,
                     visible: meta.apiQuery() && !state.apiQueryStatus()">check</span>
-                <span data-bind="
-                    visible: state.apiQueryStatus,
-                    attr: {class: 'api-query-status api-query-status--' + state.apiQueryStatus()},
-                    text: state.apiQueryStatus"></span>
+                <!-- ko if: state.apiQueryStatus -->
+                    <div class="api-query-results">
+                        <div data-bind="
+                            attr: {class: 'api-query-status--' + state.apiQueryStatus()},
+                            text: state.apiQueryStatus"></div>
+                        <div data-bind="foreach: capiResults">
+                            <a target="_article" class="api-query-result" data-bind="
+                                    attr: {href: 'http://www.theguardian.com/' + id},
+                                    text: fields.headline"></a>
+                        </div>
+                    </div>
+                <!-- /ko -->
 
                 <label>Type</label>
                 <select data-bind="

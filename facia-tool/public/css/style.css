@@ -910,6 +910,22 @@ button {
     color: #d61d00;
 }
 
+.cnf-form .api-query-results {
+    clear: both;
+    margin: 0 10px 0 71px;
+    font-size: 12px;
+    line-height: 16px;
+    color: #666666;
+    height: 64px;
+    overflow-y: auto;
+}
+
+.cnf-form .api-query-result {
+    height: 15px;
+    overflow: hidden;
+    display: block;
+}
+
 /*****************************************/
 /* MEDIA QUERIES */
 /*****************************************/
