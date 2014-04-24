@@ -12,7 +12,22 @@
                 <i class="i i-guardian-holidayoffers-logo"></i>
             </a>
         </h3>
-        <p class="commercial__subtitle">Find your perfect holiday</p>
+        <form action="@Configuration.commercial.soulmates_url/Search" class="commercial__search hide-on-mobile">
+            <div class="commercial__search__travel">
+                <i class="i i-search-grey"></i>
+                <label for="traveloffer" class="u-h">Find hand picked holidays for hundreds of destinations</label>
+                <input id="traveloffer" name="search" class="commercial__search__input" type="text" placeholder="Find your perfect holiday" />
+                <button type="submit" class="u-button-reset commercial__search__submit" data-link-name="merchandising-travel-low-search">
+                    <i class="i i-search"></i>
+                </button>
+                <input value="%JustOmnitureToken%" name="INTCMP" type="hidden" />
+            </div>
+        </form>
+        <a class="commercial__home-link" href="@AdLink{@Configuration.commercial.soulmates_url}" data-link-name="merchandising-travel-low-visit-shop">View more great deals
+            <span class="commercial__home-link__cta">
+                <span class="i i-filter-arrow-down"></span>
+            </span>
+        </a>
     </div>
 
     <div class="container__body commercial__body">
@@ -31,16 +46,5 @@
         </ul>
     </div>
 
-    <div class="commercial__foot">
-        <form action="@Configuration.commercial.soulmates_url/Search" class="commercial__search">
-            <div class="commercial__search__travel">
-                <i class="i i-search-grey"></i>
-                <label for="traveloffer" class="u-h">Find hand picked holidays for hundreds of destinations</label>
-                <input id="traveloffer" name="search" class="text-input" type="text" placeholder="Find your perfect holiday" />
-                <input value="Search" name="go" class="submit-input" type="submit" />
-                <input value="%JustOmnitureToken%" name="INTCMP" type="hidden" />
-            </div>
-        </form>
-        <a class="commercial__link" href="@AdLink{@Configuration.commercial.soulmates_url}">More from Guardian Holiday Offers<i class="i i-double-arrow-right-white"></i></a>
-    </div>
 </div>
+

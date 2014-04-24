@@ -36,14 +36,14 @@
     }
     .commercial__head {
         border-top: none;
+        height: auto;
+        overflow: auto;
     }
     .commercial__body {
         padding: 0;
     }
-    .commercial__foot {
-        margin: 0;
-        border: 0 none;
-    }
+
+/*
 
     .commercial__search {
         margin-bottom: $gs-baseline/3;
@@ -76,6 +76,7 @@
             background-color: #37b0eb;
         }
     }
+*/
 
     @include mq(tablet) {
         .lineitem {
