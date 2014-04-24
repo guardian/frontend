@@ -17,7 +17,7 @@ function (
             populate(data, item);
             defer.resolve();
         } else {
-            fetchData([item.id])
+            fetchContentByIds([item.id])
             .done(function(result){
                 if (result.length === 1) {
                     result = result[0];
@@ -46,7 +46,7 @@ function (
             }
         });
 
-        fetchData(ids)
+        fetchContentByIds(ids)
         .done(function(results){
             results.forEach(function(result) {
                 cache.put('contentApi', result.id, result);
@@ -67,30 +67,46 @@ function (
         article.populate(opts, true);
     }
 
-    function fetchData(ids) {
-        var apiUrl,
-            defer = $.Deferred();
+    function fetchContentByIds(ids) {
+        var apiUrl;
 
         if (ids.length) {
-            apiUrl = vars.CONST.apiSearchBase + '/search?page-size=50&format=json&show-fields=all';
+            apiUrl = 'search?page-size=50&format=json&show-fields=all';
             apiUrl += '&ids=' + ids.map(function(id){
                 return encodeURIComponent(id);
             }).join(',');
+            return fetchContent(apiUrl);
 
-            authedAjax.request({
-                url: apiUrl
-            }).always(function(resp) {
-                if (resp.response && _.isArray(resp.response.results)) {
-                    defer.resolve(resp.response.results);
-                } else {
-                    defer.reject();
-                }
-            });
+        } else {
+            return $.Deferred().reject();
         }
+    }
+
+    function fetchContent(apiUrl) {
+        var defer = $.Deferred();
+
+        authedAjax.request({
+            url: vars.CONST.apiSearchBase + '/' + apiUrl
+        }).always(function(resp) {
+            var items = resp.response ?
+                        _.chain(['editorsPicks', 'results'])
+                         .filter(function(key) { return _.isArray(resp.response[key]); })
+                         .map(function(key) { return resp.response[key]; })
+                         .flatten()
+                         .value() : [];
+
+            if (items.length > 0) {
+                defer.resolve(items);
+            } else {
+                defer.reject();
+            }
+        });
+
         return defer;
     }
 
     return {
+        fetchContent: fetchContent,
         decorateItems: decorateItems,
         validateItem:  validateItem
     };
