@@ -3,29 +3,32 @@
 
 @defining((model.article, model.storyPackage)) {  case (article, storyPackage) =>
 
+<h2 class="article__zone blog__zone right-col-deport tone-@VisualTone(article) tone-accent-border hide-on-mobile-if-localnav">
+    <span class="blog__zone__inner right-col-deport__body" data-component="meta">
+        <a class="blog__zone__link" data-link-name="article section" href="@LinkTo{/@article.section}">@Html(article.sectionName.toLowerCase)</a>
+    </span>
+</h2>
+
 <div class="article-wrapper monocolumn-wrapper tone-@VisualTone(article)">
     <article id="article" class="article @if(article.isLive){is-live} blog"
     itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType" role="main">
+
         <div class="blog__inner blog__inner--head blog__head-background--default">
             <header class="article__head">
 
-            <span class="blog__section" data-component="meta">
-                <a data-link-name="article section" href="@LinkTo{/@article.section}">@Html(article.sectionName.toLowerCase)</a>
-            </span>
+                <h1 itemprop="headline" class="blog__headline">@Html(article.headline)</h1>
 
-            <h1 itemprop="headline" class="blog__headline">@Html(article.headline)</h1>
+                <div class="blog__head-background--accent">
+                    <div class="blog__last-updated-container">
+                        <span class="blog__live">LIVE</span> updated <time class="js-timestamp" datetime="@article.webPublicationDate" data-relativeformat="med"></time>
+                    </div>
 
-            <div class="blog__head-background--accent">
-                <div class="blog__last-updated-container">
-                    <span class="blog__live">LIVE</span> updated <time class="js-timestamp" datetime="@article.webPublicationDate" data-relativeformat="med"></time>
+                    <div class="blog__meta-container">
+                        @fragments.meta.byline(article.byline, article)
+                        @fragments.meta.dateline(article.webPublicationDate, secondary = true)
+                        <div class="js-comment-count blog__comment-count"></div>
+                    </div>
                 </div>
-
-                <div class="blog__meta-container">
-                    @fragments.meta.byline(article.byline, article)
-                    @fragments.meta.dateline(article.webPublicationDate, secondary = true)
-                    <div class="js-comment-count blog__comment-count"></div>
-                </div>
-            </div>
 
             </header>
 
