@@ -38,7 +38,9 @@ trait FrontPress extends Logging {
     imageAdjust:  Option[JsValue],
     isBreaking:   Option[Boolean],
     supporting:   Option[Seq[JsValue]],
-    href:         Option[JsValue]
+    href:         Option[JsValue],
+    snapType:     Option[JsValue],
+    snapUri:      Option[JsValue]
   )
 
   implicit val collectionJsonWrites = Json.writes[CollectionJson]
@@ -164,7 +166,9 @@ trait FrontPress extends Logging {
         imageAdjust = content.apiContent.metaData.get("imageAdjust"),
         isBreaking =  content.apiContent.metaData.get("isBreaking").flatMap(_.asOpt[Boolean]),
         supporting =  Option(content.supporting.map(generateInnerTrailJson)).filter(_.nonEmpty),
-        href =        content.apiContent.metaData.get("href")
+        href =        content.apiContent.metaData.get("href"),
+        snapType = content.apiContent.metaData.get("snapType"),
+        snapUri = content.apiContent.metaData.get("snapUri")
       )
     )
 
