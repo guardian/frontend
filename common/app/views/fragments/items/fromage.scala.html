@@ -5,8 +5,9 @@
         class="@GetClasses.forFromage(trail, imageAdjust)"
         @trail.discussionId.map{ id => data-discussion-id="@id" }
         data-discussion-closed="@trail.isClosedForComments"
-        data-link-name="trail | @{index + 1}">
-
+        data-link-name="trail | @{index + 1}"
+        @SnapData(trail)
+    >
         <div class="fromage__container">
             <a @LinkTo(trail).map{url=>href=@url} class="fromage__link" data-link-name="article">
                 @if(imageAdjust != Some("hide")) {

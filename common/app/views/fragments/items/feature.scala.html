@@ -5,7 +5,9 @@
         class="@GetClasses.forItem(trail, isFirstContainer)"
         data-link-name="trail | @{index + 1}"
         @trail.discussionId.map{ id => data-discussion-id="@id" }
-        data-discussion-closed="@trail.isClosedForComments">
+        data-discussion-closed="@trail.isClosedForComments"
+        @SnapData(trail)
+    >
 
         <div class="item__container">
 
