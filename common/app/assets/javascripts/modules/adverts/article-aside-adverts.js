@@ -9,7 +9,7 @@ define([
 ) {
 
     var adSlotTemplate =
-        '<div class="ad-slot ad-slot--dfp ad-slot--mpu-banner-ad" data-link-name="ad slot right" data-name="right" data-mobile="300,50" data-tabletlandscape="300,250">' +
+        '<div class="ad-slot ad-slot--dfp ad-slot--mpu-banner-ad" data-link-name="ad slot right" data-name="right" data-tabletlandscape="300,250">' +
             '<div id="dfp-ad--right" class="ad-slot__container">' +
         '</div>';
 
@@ -19,7 +19,8 @@ define([
 
     ArticleAsideAdverts.prototype.defaultConfig = {
         columnSelector: '.article__secondary-column',
-        adSlotContainerSelector: '.js-mpu-ad-slot'
+        adSlotContainerSelector: '.js-mpu-ad-slot',
+        switches: {}
     };
 
     ArticleAsideAdverts.prototype.init = function() {

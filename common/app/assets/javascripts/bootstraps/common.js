@@ -286,7 +286,7 @@ define([
 
                 // if it's an article, excluding live blogs, create our inline adverts
                 if (config.switches.standardAdverts && config.page.contentType === 'Article') {
-                    new ArticleAsideAdverts().init();
+                    new ArticleAsideAdverts(config).init();
                     // no inline adverts on live
                     if (!config.page.isLiveBlog) {
                         new ArticleBodyAdverts().init();
