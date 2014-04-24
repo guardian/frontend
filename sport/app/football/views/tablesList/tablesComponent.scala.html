@@ -1,6 +1,6 @@
 @(competition: model.Competition, group: Group, highlightTeamId: Option[String] = None, multiGroup: Boolean = false)(implicit request: RequestHeader)
 @if(!multiGroup) {
-<div class="c-football-table table--hide-from-importance-1 table--small-font">
+<div class="c-football-table table--hide-from-importance-1 table--small-font table--small-pad">
     @tableView(competition, group, highlightTeamId, showMeta = true)
 </div>
 }else{

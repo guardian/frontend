@@ -103,6 +103,15 @@ td {
     }
 }
 
+.table--small-pad {
+    th,
+    td {
+        @include rem((
+            padding: $table-baseline*2
+        ));
+    }
+}
+
 .table-column--sub {
     color: $c-statusNeutral;
 }
