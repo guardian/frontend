@@ -837,3 +837,14 @@ object LatestUpdate {
     (trails.map(_.webPublicationDate) ++ collection.lastUpdated.map(DateTime.parse(_))).sortBy(-_.getMillis).headOption
 
 }
+
+object SnapData {
+  def apply(trail: Trail): String = generateDataArrtibutes(trail).mkString(" ")
+
+  private def generateDataArrtibutes(trail: Trail): Iterable[String] = trail match {
+    case snap: Snap =>
+      snap.snapType.filter(_.nonEmpty).map(t => s"data-snap-type=$t") ++
+      snap.snapUri.filter(_.nonEmpty).map(t => s"data-snap-uri=$t")
+    case _  => Nil
+  }
+}
