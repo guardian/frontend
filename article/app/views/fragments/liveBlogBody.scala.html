@@ -35,7 +35,7 @@
             <div class="after-header"></div>
         </div>
         <div class="blog__columning-wrapper">
-            <div class="blog__main-column">
+            <div class="blog__main-column blog__main-column--head">
                 @fragments.standfirst(article)
 
                 @fragments.witnessCallToAction(article)
@@ -72,7 +72,9 @@
                     }
                 </div>
             </div>
-            <div class="blog__main-column  blog__main-background blog__dropdown@if(article.hasKeyEvents){ blog__main-coloumn--has-key-events}">
+        </div>
+        <div class="blog__columning-wrapper">
+            <div class="blog__main-column blog__main-background u-cf blog__dropdown">
                 @fragments.dropdown("Live feed", "live", true) {
                     <div class="js-article__container article__container u-cf" data-component="body">
                         @fragments.liveFilter(article)

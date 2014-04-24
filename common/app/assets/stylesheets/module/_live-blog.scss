@@ -176,6 +176,11 @@ $block-padding-right: $gs-gutter;
     z-index: 100;
     @include full-bleed($c-liveAccent);
 }
+.blog__main-column--head {
+    @include mq(rightCol) {
+        @include full-bleed($c-neutral8);
+    }
+}
 
 /* Header
    ========================================================================== */
@@ -621,7 +626,8 @@ $block-padding-right: $gs-gutter;
 /* Dropdowns
    ========================================================================== */
 .dropdown--live {
-    padding-top: 0;
+    padding: 0;
+    z-index: 100;
     border-top: none;
 
     .dropdown__button {
@@ -629,7 +635,7 @@ $block-padding-right: $gs-gutter;
         border-top: 1px solid $c-neutral4;
         @include full-bleed(#ffffff);
         @include rem((
-            padding-top: $gs-baseline/1.5
+            padding: $gs-baseline/1.5 0
         ));
 
         &:before,
@@ -680,6 +686,7 @@ $block-padding-right: $gs-gutter;
 }
 
 .timeline {
+    position: relative;
     @include full-bleed($c-neutral8);
 }
 
