@@ -6,15 +6,6 @@
     @include fs-bodyCopy(3);
 }
 
-.article--truncated {
-    .live-blog__blocks {
-        display: none;
-    }
-    .live-blog__blocks:first-child {
-        display: block;
-    }
-}
-
 .article__zone {
     @include fs-header(3);
     @include box-sizing(border-box);
