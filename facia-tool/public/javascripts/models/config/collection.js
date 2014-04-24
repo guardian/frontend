@@ -2,22 +2,27 @@
 define([
     'knockout',
     'modules/vars',
+    'modules/content-api',
     'utils/as-observable-props',
     'utils/populate-observables',
     'utils/collection-guid'
 ], function(
     ko,
     vars,
+    contentApi,
     asObservableProps,
     populateObservables,
     collectionGuid
 ) {
+    var checkCount = 0;
+
     function Collection(opts) {
         opts = opts || {};
 
         this.id = opts.id || collectionGuid();
 
         this.parents = ko.observableArray();
+        this.capiResults = ko.observableArray();
 
         this.meta   = asObservableProps([
             'displayName',
@@ -35,7 +40,15 @@ define([
 
         this.state = asObservableProps([
             'open',
-            'underDrag']);
+            'underDrag',
+            'apiQueryStatus']);
+
+        this.meta.apiQuery.subscribe(function(val) {
+            if (this.state.open()) {
+                this.meta.apiQuery(val.replace(/\s+/g, ''));
+                this.checkApiQueryStatus();
+            }
+        }, this);
     }
 
     Collection.prototype.toggleOpen = function() {
@@ -47,7 +60,43 @@ define([
             vars.model.collections.unshift(this);
         }
         this.state.open(false);
+        this.state.apiQueryStatus(undefined);
         vars.model.save(this);
+    };
+
+    Collection.prototype.checkApiQueryStatus = function() {
+        var self = this,
+            apiQuery = this.meta.apiQuery(),
+            cc;
+
+        this.capiResults.removeAll();
+
+        if (!apiQuery) {
+            this.state.apiQueryStatus(undefined);
+            return;
+        }
+
+        this.state.apiQueryStatus('checking');
+
+        checkCount += 1;
+        cc = checkCount;
+
+        apiQuery += apiQuery.indexOf('?') < 0 ? '?' : '&';
+        apiQuery += 'show-editors-picks=true&show-fields=headline';
+
+        contentApi.fetchContent(apiQuery)
+        .done(function(results) {
+            if (cc === checkCount) {
+                self.capiResults(results);
+                self.state.apiQueryStatus('valid');
+            }
+        })
+        .fail(function() {
+            if (cc === checkCount) {
+                self.capiResults.removeAll();
+                self.state.apiQueryStatus('invalid');
+            }
+        });
     };
 
     Collection.prototype.discard = function() {

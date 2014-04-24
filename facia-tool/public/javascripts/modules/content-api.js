@@ -29,9 +29,9 @@ function (
                 populate(data, item);
                 defer.resolve();
             } else {
-                fetchData([capiId])
-                .always(function(result) {
-                    if (_.isArray(result) && result.length === 1) {
+                fetchContentByIds([capiId])
+                .done(function(result) {
+                    if (result.length === 1) {
                         // It's a ContentApi item
                         item.id(capiId);
                         cache.put('contentApi', capiId, result[0]);
@@ -68,7 +68,7 @@ function (
             }
         });
 
-        fetchData(ids)
+        fetchContentByIds(ids)
         .done(function(results){
             results.forEach(function(result) {
                 cache.put('contentApi', result.id, result);
@@ -91,30 +91,38 @@ function (
         article.populate(opts, true);
     }
 
-    function fetchData(ids) {
-        var defer = $.Deferred(),
-            capiIds = _.chain(ids)
-                .filter(function(id) { return !snap.validateId(id); })
-                .map(function(id) { return encodeURIComponent(id); })
-                .value();
+    function fetchContentByIds(ids) {
+        var capiIds = _.chain(ids)
+            .filter(function(id) { return !snap.validateId(id); })
+            .map(function(id) { return encodeURIComponent(id); })
+            .value();
 
         if (capiIds.length) {
-            authedAjax.request({
-                url: vars.CONST.apiSearchBase + '/search?ids=' + capiIds.join(',') + '&page-size=50&format=json&show-fields=all'
-            }).done(function(resp) {
-                if (resp.response && _.isArray(resp.response.results)) {
-                    defer.resolve(resp.response.results);
-                } else {
-                    defer.resolve([]);
-                }
-            }).fail(function() {
-                defer.resolve([]);
-            });
+            return fetchContent('search?ids=' + capiIds.join(',') + '&page-size=50&format=json&show-fields=all');
+        } else {
+            return $.Deferred().resolve([]);
         }
-        return defer;
+    }
+
+    function fetchContent(apiUrl) {
+        var defer = $.Deferred();
+
+        authedAjax.request({
+            url: vars.CONST.apiSearchBase + '/' + apiUrl
+        }).always(function(resp) {
+            defer.resolve(resp.response ?
+               _.chain(['editorsPicks', 'results'])
+                .filter(function(key) { return _.isArray(resp.response[key]); })
+                .map(function(key) { return resp.response[key]; })
+                .flatten()
+                .value() : []);
+        });
+
+        return defer.promise();
     }
 
     return {
+        fetchContent: fetchContent,
         decorateItems: decorateItems,
         validateItem:  validateItem
     };

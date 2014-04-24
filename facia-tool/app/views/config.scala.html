@@ -71,6 +71,26 @@
                 <input type="text" data-bind="
                     value: meta.href"/>
 
+                <label>ContentApi</label>
+                <input type="text" data-bind="
+                    value: meta.apiQuery,
+                    valueUpdate: 'afterkeydown'"/>
+                <span class="linky api-query-status" data-bind="
+                    click: checkApiQueryStatus,
+                    visible: meta.apiQuery() && !state.apiQueryStatus()">check</span>
+                <!-- ko if: state.apiQueryStatus -->
+                    <div class="api-query-results">
+                        <div data-bind="
+                            attr: {class: 'api-query-status--' + state.apiQueryStatus()},
+                            text: state.apiQueryStatus"></div>
+                        <div data-bind="foreach: capiResults">
+                            <a target="_article" class="api-query-result" data-bind="
+                                    attr: {href: 'http://www.theguardian.com/' + id},
+                                    text: fields.headline"></a>
+                        </div>
+                    </div>
+                <!-- /ko -->
+
                 <label>Type</label>
                 <select data-bind="
                     options: $root.types,
@@ -80,10 +100,6 @@
                 <select data-bind="
                     options: $root.groups,
                     value: meta.groups"></select>
-
-                <label>ContentApi</label>
-                <input type="text" data-bind="
-                    value: meta.apiQuery"/>
 
                 <label>No curation</label>
                 <input type="checkbox" data-bind="

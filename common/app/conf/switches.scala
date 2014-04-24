@@ -281,6 +281,11 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 4, 30)
   )
 
+  val ComicSansEasterEggSwitch = Switch("Feature Switches", "comicsans",
+    "If this switch is on, the article about Comic Sans Neue will have its title Comic Sans'd",
+    safeState = Off, sellByDate = new DateMidnight(2014, 5, 30)
+  )
+
   val RssLinkSwitch = Switch("Feature Switches", "rss-link",
     "If this switch is on a link to the RSS is rendered in the HTML",
     safeState = Off, sellByDate = new DateMidnight(2014, 6, 30)
@@ -308,9 +313,9 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 4, 28)
   )
 
-  val ABAbcd = Switch("A/B Tests", "ab-abcd",
-    "If this switch is on, an AB test runs to validate the collection ab test data",
-    safeState = Off, sellByDate = new DateMidnight(2014, 4, 28)
+  val ABHomeComponent = Switch("A/B Tests", "ab-home-component",
+    "This switch runs an AB test which adds a sticky-like home button.",
+    safeState = Off, sellByDate = new DateMidnight(2014, 5, 4)
   )
 
   // Dummy Switches
@@ -425,13 +430,14 @@ object Switches extends Collections {
     FrontPressJobSwitch,
     LayoutHintsSwitch,
     HelveticaEasterEggSwitch,
+    ComicSansEasterEggSwitch,
     RssLinkSwitch,
     PopularInTagSwitch,
     HideOldTimeStampsSwitch,
     EnhanceTweetsSwitch,
     IndiaRegionSwitch,
+    ABHomeComponent,
     ABExternalLinksNewWindow,
-    ABAbcd,
     MemcachedSwitch,
     IncludeBuildNumberInMemcachedKey
   )

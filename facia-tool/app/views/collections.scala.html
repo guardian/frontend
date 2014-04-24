@@ -342,7 +342,7 @@
                         click: open">Breaking News</span>
 
                     <a class="headline" target="article" data-bind="
-                        text: meta.headline() || fields.headline() || (isSnap() ? 'Add link text!' : '...'),
+                        text: meta.headline() || fields.headline() || (isSnap() ? 'Add link text!' : id),
                         css: {'is-empty': isSnap() && !meta.headline()},
                         attr: {href: id},
                         click: open"></a>

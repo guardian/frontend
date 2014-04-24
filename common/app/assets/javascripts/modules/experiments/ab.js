@@ -6,7 +6,7 @@ define([
 
     //Current tests
     'common/modules/experiments/tests/external-links-new-window',
-    'common/modules/experiments/tests/abcd'
+    'common/modules/experiments/tests/home-component'
 ], function (
     common,
     store,
@@ -14,12 +14,12 @@ define([
     mvtCookie,
 
     ExternalLinksNewWindow,
-    Abcd
+    HomeComponent
     ) {
 
     var TESTS = [
             new ExternalLinksNewWindow(),
-            new Abcd()
+            new HomeComponent()
        ],
        participationsKey = 'gu.ab.participations';
 
