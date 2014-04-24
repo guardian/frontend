@@ -4,7 +4,7 @@
 
 <link rel="stylesheet" href="@Static("stylesheets/commercial.css")" />
 
-<div class="commercial travel-component">
+<div class="commercial commercial--travel">
     <div class="container__title commercial__head">
         <h3 class="commercial__title">
             <a href="@AdLink{@Configuration.commercial.travel_url/}">
@@ -12,7 +12,7 @@
                 <i class="i i-guardian-holidayoffers-logo"></i>
             </a>
         </h3>
-        <form action="@Configuration.commercial.soulmates_url/Search" class="commercial__search hide-on-mobile">
+        <form action="@Configuration.commercial.travel_url/Search" class="commercial__search hide-on-mobile">
             <div>
                 <label for="traveloffer" class="u-h">Find hand picked holidays for hundreds of destinations</label>
                 <input id="traveloffer" name="search" class="commercial__search__input" type="text" placeholder="Find your perfect holiday" />
@@ -22,7 +22,7 @@
                 <input value="%JustOmnitureToken%" name="INTCMP" type="hidden" />
             </div>
         </form>
-        <a class="commercial__home-link" href="@AdLink{@Configuration.commercial.soulmates_url}" data-link-name="merchandising-travel-low-visit-shop">View more great deals
+        <a class="commercial__home-link" href="@AdLink{@Configuration.commercial.travel_url}" data-link-name="merchandising-travel-low-visit-shop">View more great deals
             <span class="commercial__home-link__cta">
                 <span class="i i-filter-arrow-down"></span>
             </span>
@@ -41,11 +41,10 @@
                                 <p class="lineitem__meta">@offer.durationInWords from <span class="lineitem__price">£@offer.fromPrice</span></p>
                             </div>
                         </a>
+                        <p class="lineitem__description commercial--travel__item__description"><a class="lineitem__link commercial--travel__description__link" href="@AdLink{@offer.offerUrl}"><i class="i i-arrow-white-down"></i>Book now</a></p>
                     </div>
                 </li>
             }
         </ul>
     </div>
-
 </div>
-

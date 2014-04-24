@@ -6,7 +6,7 @@
     margin-top: 0 !important;
 }
 
-.travel-component {
+.commercial--travel {
     @include rem((
         padding: $gs-gutter/2
     ));
@@ -16,7 +16,6 @@
         @include box-sizing(border-box);
         float: left;
         width: 50%;
-
         
         &:nth-child(n+2) {
             @include rem((
@@ -27,6 +26,9 @@
         &:nth-child(n+3) {
             display: none;
         }
+    }
+    .lineitem__link {
+        float: none;
     }
     .lineitem__image {
         width: 100%;
@@ -42,55 +44,13 @@
         height: auto;
         overflow: auto;
     }
+    .commercial__home-link {
+        float: right;
+    }
     .commercial__body {
         padding: 0;
     }
     
-    @include mq(tablet) {
-        .commercial__search {
-            position: relative;
-            float: none;
-            width: 100%;
-            @include rem((
-                margin-top: $gs-baseline*4
-            ));
-        }
-    }
-/*
-
-    .commercial__search {
-        margin-bottom: $gs-baseline/3;
-        overflow: hidden;
-        position: relative;
-
-        .i.i-search-grey {
-            background-position: 6px 6px;
-            position: absolute;
-            top: 0;
-            left: 0;
-            padding: 8px;
-        }
-        .text-input {
-            padding: $gs-baseline/3 $gs-gutter/5;
-            padding-left: 2em;
-            width: 70%;
-            height: 32px;
-            float: left;
-            overflow: hidden;
-        }
-        .submit-input {
-            width: 30%;
-            float: left;
-            margin: 0;
-            min-width: 0;
-            @include rem((
-                padding: 9px 0
-            ));
-            background-color: #37b0eb;
-        }
-    }
-*/
-
     @include mq(tablet) {
         .lineitem {
             width: 33%;
@@ -99,18 +59,20 @@
                 display: block;
             }
         }
+        .commercial__search {
+            position: relative;
+            float: none;
+            width: 100%;
+            @include rem((
+                margin-top: $gs-baseline*4
+            ));
+        }
+        .commercial__home-link {
+            float: none;
+        }
     }
     @include mq(rightCol) {
-        .lineitem {
-            @include rem((
-                padding-left: $gs-gutter/2 - 1
-            ));
-            width: 25%;
 
-            &:nth-child(n+4) {
-                display: block;
-            }
-        }
     }
     @include mq(leftCol) {
         .lineitem {
@@ -118,6 +80,95 @@
         }
         .commercial__title__last-word {
             margin-left: 0;
+        }
+    }
+}
+
+/* fronts */
+.facia-container--layout-front .commercial--travel {
+    @include rem((
+        padding: $gs-gutter/2
+    ));
+    @include mq(desktop) {
+        .commercial__head {
+            float: left;
+            width: 25%;
+        }
+        .lineitem {
+           width: 33%;
+           @include rem((
+               padding-left: $gs-gutter/2
+           ));
+       }
+   }
+   @include mq(leftCol) {
+       .commercial__title__last-word {
+           @include rem((
+               margin-left: -5px
+           ));
+       }
+   }
+   @include mq(faciaLeftCol) {
+       .commercial__head {
+           @include rem((
+               width: gs-span(2) + $gs-gutter
+           ));
+       }
+       .lineitem {
+           width: 25%;
+           
+           &:nth-child(n+4) {
+               display: block;
+           }
+       }
+   }
+   @include mq(faciaLeftCol, $to: wide) {
+       .commercial__title__last-word {
+           margin-left: 0;
+       }
+   }
+   @include mq(wide) {
+       .commercial__head {
+           margin-right: 0;
+           @include rem((
+               width: gs-span(2) + $gs-gutter
+           ));
+       }
+   }
+}
+
+/* article */
+.facia-container--layout-article .commercial--travel {
+    @include mq(rightCol) {
+        .commercial__head {
+            width: 25%;
+            @include rem((
+                padding-right: 8px
+            ));
+            float: left;
+        }
+    }
+    @include mq(leftCol) {
+        .lineitem {
+            width: 25%;
+
+            &:nth-child(n+4) {
+                display: block;
+            }
+        }
+    }
+    @include mq(leftCol, $to: wide) {
+        .commercial__title {
+            line-height: 0;
+            @include rem((
+                margin-bottom: 10px
+            ));
+        }
+        .commercial__search {
+            background: red;
+            @include rem((
+                margin-top: 40px
+            ));
         }
     }
 }
