@@ -13,8 +13,7 @@
             </a>
         </h3>
         <form action="@Configuration.commercial.soulmates_url/Search" class="commercial__search hide-on-mobile">
-            <div class="commercial__search__travel">
-                <i class="i i-search-grey"></i>
+            <div>
                 <label for="traveloffer" class="u-h">Find hand picked holidays for hundreds of destinations</label>
                 <input id="traveloffer" name="search" class="commercial__search__input" type="text" placeholder="Find your perfect holiday" />
                 <button type="submit" class="u-button-reset commercial__search__submit" data-link-name="merchandising-travel-low-search">
@@ -34,13 +33,15 @@
         <ul class="lineitems">
             @offers.take(4).map { offer =>
                 <li class="lineitem">
-                    <a class="lineitem__link" href="@AdLink{@offer.offerUrl}">
-                        <img class="lineitem__image" src="@offer.imageUrl" alt="" />
-                        <div class="lineitem__offer">
-                            <h4 class="lineitem__title">@offer.title</h4>
-                            <p class="lineitem__meta">@offer.durationInWords from <span class="lineitem__price">£@offer.fromPrice</span></p>
-                        </div>
-                    </a>
+                    <div>
+                        <a class="lineitem__link" href="@AdLink{@offer.offerUrl}">
+                            <img class="lineitem__image" src="@offer.imageUrl" alt="" />
+                            <div class="lineitem__offer">
+                                <h4 class="lineitem__title">@offer.title</h4>
+                                <p class="lineitem__meta">@offer.durationInWords from <span class="lineitem__price">£@offer.fromPrice</span></p>
+                            </div>
+                        </a>
+                    </div>
                 </li>
             }
         </ul>

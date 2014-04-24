@@ -7,13 +7,16 @@
 }
 
 .travel-component {
+    @include rem((
+        padding: $gs-gutter/2
+    ));
     .lineitem {
         list-style-type: none;
         border-top: 0;
         @include box-sizing(border-box);
         float: left;
         width: 50%;
-        padding-left: 0;
+
         
         &:nth-child(n+2) {
             @include rem((
@@ -42,7 +45,17 @@
     .commercial__body {
         padding: 0;
     }
-
+    
+    @include mq(tablet) {
+        .commercial__search {
+            position: relative;
+            float: none;
+            width: 100%;
+            @include rem((
+                margin-top: $gs-baseline*4
+            ));
+        }
+    }
 /*
 
     .commercial__search {
