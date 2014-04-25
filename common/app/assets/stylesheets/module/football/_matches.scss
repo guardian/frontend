@@ -1,10 +1,6 @@
 .football-matches {
     margin-bottom: $gs-baseline*2;
     position: relative;
-
-    @include mq($to: mobile) {
-        @include football-match--mini;
-    }
 }
 
 .football-match {
@@ -121,7 +117,7 @@
 
 .football-teams__battleline {
     @include rem((
-        top: 0
+        top: 0 
     ));
     color: $c-neutral2;
     left: 0;

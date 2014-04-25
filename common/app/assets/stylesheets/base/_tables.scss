@@ -1,45 +1,32 @@
-$table-baseline: 4px;
-$table-gutter: 4px;
+$table-baseline: 8px;
+$table-gutter: 8px;
+$table-breakpoint-importance-1: tablet;
+$table-breakpoint-importance-2: mobile;
+$table-breakpoint-importance-3: 220px;
 
-@mixin table--medium {
-    th,
-    td,
-    thead td,
-    .table__caption {
-        @include fs-data(4, true);
-        @include rem((
-    padding: $table-baseline*2
-    ));
-    }
-
-    .table-column--from-large {
+@mixin table--hide-from-importance-1 {
+    .table-column--importance-1 {
         display: none;
     }
 }
 
-@mixin table--small {
-    .table-column--from-large,
-    .table-column--from-medium {
+@mixin table--hide-from-importance-2 {
+    .table-column--importance-1,common/app/assets/stylesheets/module/containers/_football.scss
+    .table-column--importance-2 {
         display: none;
     }
 }
 
-@mixin table--mini {
-    .table-column--from-large,
-    .table-column--from-medium,
-    .table-column--from-small {
+@mixin table--hide-from-importance-3 {
+    .table-column--importance-1,
+    .table-column--importance-2,
+    .table-column--importance-3 {
         display: none;
     }
 }
-
-@mixin table--tiny {
-    .table-column--from-large,
-    .table-column--from-medium,
-    .table-column--from-small,
-    .table-column--from-mini {
-        display: none;
-    }
-}
+.table--hide-from-importance-1 { @include table--hide-from-importance-1; }
+.table--hide-from-importance-2 { @include table--hide-from-importance-2; }
+.table--hide-from-importance-3 { @include table--hide-from-importance-3; }
 
 table {
     width: 100%;
@@ -58,7 +45,10 @@ td {
     th,
     td,
     .table__caption {
-        @include fs-data(5);
+        @include fs-data(4);
+        @include rem((
+            padding: $table-baseline $table-gutter
+        ));
         vertical-align: top;
     }
 
@@ -66,34 +56,33 @@ td {
     thead td {
         color: $c-neutral1;
         font-weight: 800;
-        @include rem((
-            padding: $table-baseline*2 $table-gutter*3
-        ));
     }
 
     td {
         border-top: 1px solid darken($c-neutral8, 4%);
-        @include rem((
-            padding: $gs-baseline $table-gutter*3
-        ));
     }
 
     abbr {
         border-bottom: 1px dotted $c-neutral8;
     }
 
-    @include mq($to: tablet) { @include table--medium; }
-    @include mq($to: desktop) {
+    // Show / hide functionality
+    @include mq($to: $table-breakpoint-importance-1) { @include table--hide-from-importance-1; }
+    @include mq($to: $table-breakpoint-importance-2) { @include table--hide-from-importance-2; }
+    @include mq($to: $table-breakpoint-importance-3) { @include table--hide-from-importance-3; }
+}
+
+.table--responsive-font {
+    @include mq($from: desktop) {
         th,
         td,
         thead td {
-            @include fs-data(4, true);
+            @include fs-data(5, true);
+            @include rem((
+                padding: $table-baseline*1.5 $table-gutter*1.5
+            ));
         }
     }
-}
-
-.table--medium {
-    @include table--medium;
 }
 
 .table--striped {
@@ -122,15 +111,21 @@ td {
     border-top: 1px dashed $c-neutral1;
 }
 
-.table-row--break td {
-    border-top: 1px solid $c-neutral1;
+.table__headline {
+    @include fs-bodyHeading(2);
+    border-top: 1px dotted $c-neutral5;
+    @include rem((
+        padding: $gs-baseline/2 0 $gs-baseline
+    ));
 }
 
 // We replicate the table style
 // then move the caption over the top border
 // This is because the caption is outside the flow of the table
-.table__caption,
-.table__caption--bottom {
+.table__caption {
+    @include rem((
+        padding: $table-baseline*2
+    ));
     background: $c-neutral8;
     border-bottom: 1px solid darken($c-neutral8, 4%);
     border-top: 2px solid $c-newsAccent;
@@ -140,19 +135,10 @@ td {
     text-align: left;
     z-index: 2;
 }
-
 .table__caption--bottom {
-    caption-side: bottom;
     font-weight: normal;
-    text-align: center;
     border-bottom: 0 none;
     border-top: 1px solid darken($c-neutral8, 4%);
-}
-
-.table__headline {
-    @include fs-bodyHeading(2);
-    border-top: 1px dotted $c-neutral5;
-    @include rem((
-        padding: $gs-baseline/2 0 $gs-baseline
-    ));
+    caption-side: bottom;
+    text-align: center;
 }

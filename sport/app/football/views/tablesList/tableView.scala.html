@@ -1,21 +1,25 @@
-@(competition: model.Competition, group: Group, highlightTeamId: Option[String] = None, showMeta: Boolean = false, size: String = "full", multiGroup: Boolean = false)(implicit request: RequestHeader)
-@if(!multiGroup) {
+@(competition: model.Competition, group: Group, highlightTeamId: Option[String] = None, showMeta: Boolean = false, striped: Boolean = false, responsiveFont: Boolean = false, multiGroup: Boolean = false)(implicit request: RequestHeader)
 <div class="table__container">
-    <table class="table table--football table--@size@if(size == "full"){ table--striped}">
+    <table class="@RenderClasses(Map(
+            "table" -> true,
+            "table--football" -> true,
+            "table--striped" -> striped,
+            "table--responsive-font" -> responsiveFont
+        ))">
         @if(showMeta){<caption class="table__caption"><a href="@competition.url">@competition.fullName</a></caption>}
         <thead>
             <tr>
                 <th class="table-column--sub"><abbr title="Position">Pos</abbr></th>
-                <th class="football-stat--team table-column--main">Team</th>
+                <th class="table-column--main">Team</th>
                 <th><abbr title="Played">P</abbr></th>
-                <th class="table-column--from-large"><abbr title="Won">W</abbr></th>
-                <th class="table-column--from-large"><abbr title="Drawn">D</abbr></th>
-                <th class="table-column--from-large"><abbr title="Lost">L</abbr></th>
-                <th class="table-column--from-large"><abbr title="Goals for">F</abbr></th>
-                <th class="table-column--from-large"><abbr title="Goals against">A</abbr></th>
-                <th class="table-column--from-small"><abbr title="Goal difference">GD</abbr></th>
+                <th class="table-column--importance-1"><abbr title="Won">W</abbr></th>
+                <th class="table-column--importance-1"><abbr title="Drawn">D</abbr></th>
+                <th class="table-column--importance-1"><abbr title="Lost">L</abbr></th>
+                <th class="table-column--importance-1"><abbr title="Goals for">F</abbr></th>
+                <th class="table-column--importance-1"><abbr title="Goals against">A</abbr></th>
+                <th class="table-column--importance-3"><abbr title="Goal difference">GD</abbr></th>
                 <th><abbr title="Points">Pts</abbr></th>
-                <th class="football-stat--form"><abbr title="Results of previous games">Form</abbr></th>
+                <th class="table-column--importance-2 football-stat--form"><abbr title="Results of previous games">Form</abbr></th>
             </tr>
         </thead>
 
@@ -26,33 +30,30 @@
                         "table-row--divider" -> competition.tableDividers.contains(entry.team.rank-1)))">
                     <td class="table-column--sub">@entry.team.rank</td>
                     <td class="table-column--main">
-                        <span class="team-name" data-team-abbr="@pa.TeamCodes.codeFor(entry.team)">
+                        <span class="team-name" data-abbr="@pa.TeamCodes.codeFor(entry.team)">
                             @TeamUrl(entry.team).map{ url =>
-                                <a href="@TeamUrl(entry.team)" class="team-name--long" data-link-name="View team">
+                                <a href="@TeamUrl(entry.team)" data-link-name="View team" class="team-name__long">
                                     @entry.team.name
                                 </a>
                             }.getOrElse{
-                                <span class="team-name--long">@entry.team.name</span>
+                                <span class="team-name__long">@entry.team.name</span>
                             }
                         </span>
                     </td>
                     <td>@entry.team.total.played</td>
-                    <td class="table-column--from-large">@entry.team.total.won</td>
-                    <td class="table-column--from-large">@entry.team.total.drawn</td>
-                    <td class="table-column--from-large">@entry.team.total.lost</td>
-                    <td class="table-column--from-large">@entry.team.total.goalsFor</td>
-                    <td class="table-column--from-large">@entry.team.total.goalsAgainst</td>
-                    <td class="table-column--from-small">@entry.team.goalDifference</td>
+                    <td class="table-column--importance-1">@entry.team.total.won</td>
+                    <td class="table-column--importance-1">@entry.team.total.drawn</td>
+                    <td class="table-column--importance-1">@entry.team.total.lost</td>
+                    <td class="table-column--importance-1">@entry.team.total.goalsFor</td>
+                    <td class="table-column--importance-1">@entry.team.total.goalsAgainst</td>
+                    <td class="table-column--importance-3">@entry.team.goalDifference</td>
                     <td><b>@entry.team.points</b></td>
-                    <td class="football-stat--form team__results--thin">
+                    <td class="table-column--importance-2 football-stat--form team__results--thin">
                         @football.views.html.fragments.teamForm(entry.team.id, competition)
                     </td>
                 </tr>
             }
         </tbody>
-        @if(showMeta){<caption class="table__caption table__caption--bottom"><a href='@{competition.url + "/table"}' data-link-name="full table">View full table</a></caption>}
+        @if(showMeta){<caption class="table__caption table__caption--bottom"><a href='@{competition.url + "/table"}' data-link-name="full table">View full @competition.fullName table</a></caption>}
     </table>
 </div>
-}else{
-<div></div>
-}

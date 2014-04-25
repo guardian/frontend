@@ -1,3 +1,14 @@
+@mixin table-football--medium {
+    th,
+    td {
+        min-width: 0;
+    }
+
+    .football-stat--form {
+        min-width: 0;
+    }
+}
+
 /** League table **/
 .table--football {
     .table-column--main {
@@ -33,9 +44,21 @@
         min-width: 75px; // 15(width of status)*5
     }
 
-    // This is as we don't have element media queries (no-one does)
-    @include mq($to: tablet) { @include table-football--medium; }
-    &.table--medium { @include table-football--medium; }
+    @include mq($to: $table-breakpoint-importance-1) { @include table-football--medium; }
+    @include mq($to: $table-breakpoint-importance-2) {
+        .table-column--main {
+            .team-name:after {
+                content: attr(data-abbr);
+            }
+            .team-name__long {
+                @include u-h;
+            }
+        }
+    }
+}
+
+.c-football-table {
+    @include table-football--medium;
 }
 
 .football-table__container {
