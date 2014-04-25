@@ -5,6 +5,7 @@ import model.{Section, Tag, MetaData}
 case class SectionLink(zone: String, title: String, href: String,newWindow: Boolean = false) {
   def currentFor(page: MetaData): Boolean = page.url == href ||
     s"/${page.section}" == href ||
+    page.url == href ||
     page.tags.exists(t => s"/${t.id}" == href)
 }
 
