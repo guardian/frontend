@@ -578,6 +578,7 @@
     .article__secondary-column {
         position: relative;
         display: table-cell;
+        z-index: 1;
         @include rem((
             width: $a-rightCol-width
         ));
