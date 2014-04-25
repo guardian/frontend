@@ -32,16 +32,18 @@ object Au extends Edition(
 
   def navigation: Seq[NavItem] = Seq(
     NavItem(home),
-    NavItem(uk),
-    NavItem(world),
+    NavItem(australia),
+    NavItem(world, Seq(uk, us, asia, europeNews, americas, africa, middleEast)),
     NavItem(cif),
-    NavItem(sport, Seq(football, cricket, tennis, rugbyunion, cycling, usSport)),
-    NavItem(football, footballNav),
-    NavItem(lifeandstyle),
-    NavItem(culture),
-    NavItem(economy),
-    NavItem(travel),
-    NavItem(technology),
-    NavItem(environment)
+    NavItem(sport, Seq(australiaSport, football, cricket, rugbyunion, rugbyLeague , tennis, cycling, boxing, afl, nrl)),
+    NavItem(football, aLeague :: footballNav.toList),
+    NavItem(technology, Seq(games)),
+    NavItem(culture, Seq(film, music, books, televisionAndRadio , artanddesign, stage)),
+    NavItem(lifeandstyle, Seq(foodanddrink, healthandwellbeing, loveAndSex, family, women, fashion)),
+    NavItem(economy, Seq(markets, companies, money, media)),
+    NavItem(travel, Seq(australasiaTravel, asiaTravel, uktravel, europetravel, usTravel)),
+    NavItem(science),
+    NavItem(environment, Seq(cities, globalDevelopment)),
+    NavItem(education, Seq(students))
   )
 }
