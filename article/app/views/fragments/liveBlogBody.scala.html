@@ -68,11 +68,13 @@
                     }
                 </div>
 
-                <div class="blog__timeline blog__dropdown">
+                @if(article.hasKeyEvents) {
+                    <div class="blog__timeline blog__dropdown">
                     @fragments.dropdown("Key events", "live") {
                         <ul class="js-live-blog__timeline timeline u-unstyled"></ul>
                     }
-                </div>
+                    </div>
+                }
 
                 @fragments.dropdown("Live feed", "live", true) {
                     <div class="js-article__container article__container" data-component="body">
