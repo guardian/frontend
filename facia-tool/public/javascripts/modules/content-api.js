@@ -35,6 +35,14 @@ function (
     }
 
     function decorateItems (articles) {
+        var num = vars.CONST.capiBatchSize || 10;
+
+        _.each(_.range(0, articles.length, num), function(index) {
+            decorateBatch(articles.slice(index, index + num));
+        });
+    }
+
+    function decorateBatch (articles) {
         var ids = [];
 
         articles.forEach(function(article){
