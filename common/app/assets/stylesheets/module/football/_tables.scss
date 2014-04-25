@@ -73,3 +73,58 @@
         float: right;
     }
 }
+
+.facia-snap {
+    // Apply this to football only
+    background: #ffffff;
+
+
+    .table,
+    .table__caption {
+        border-top: 0 none;
+    }
+
+    .table__caption--bottom {
+        background: $c-neutral8;
+        background: transparent;
+        border-top: 0 none;
+        bottom: 0;
+        display: none;
+        left: 0;
+        padding-left: 0;
+        padding-right: 0;
+        position: absolute;
+        text-align: right;
+        width: 100%;
+        z-index: 0;
+
+        a {
+            margin-right: 1.6rem;
+        }
+    }
+}
+
+.facia-snap--default {
+    .table--football {
+        tbody tr { display: none; }
+        tbody tr:nth-of-type(-n+6) { display: table-row; }
+    }
+}
+
+.facia-snap--large {
+    @include table--hide-none;
+
+    .table--football {
+        tbody tr { display: none; }
+        tbody tr:nth-of-type(-n+4) { display: table-row; }
+    }
+}
+
+.facia-snap--small {
+    @include table--hide-from-importance-2;
+
+    .table--football {
+        tbody tr { display: none; }
+        tbody tr:nth-of-type(-n+4) { display: table-row; }
+    }
+}
