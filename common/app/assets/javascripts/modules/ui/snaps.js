@@ -3,12 +3,14 @@ define([
     'bonzo',
     'common/utils/ajax',
     'common/utils/mediator',
+    'common/utils/to-array',
     'lodash/collections/find'
 ], function(
     $,
     bonzo,
     ajax,
     mediator,
+    toArray,
     find
 ) {
 
@@ -45,19 +47,21 @@ define([
     }
 
     function fetchSnaps(selector) {
-        $(selector).each(function(el) {
-            ajax({
-                url: el.getAttribute('data-snap-uri')
-            }).then(function(resp) {
-                $.create(resp.html).each(function(html) {
-                    bonzo(el)
-                        .empty()
-                        .append(html);
+        toArray($(selector))
+            .filter(function(el) { return el.getAttribute('data-snap-uri'); })
+            .forEach(function(el) {
+                ajax({
+                    url: el.getAttribute('data-snap-uri')
+                }).then(function(resp) {
+                    $.create(resp.html).each(function(html) {
+                        bonzo(el)
+                            .empty()
+                            .append(html);
 
-                    setSnapPoint(el, 'facia-snap--');
+                        setSnapPoint(el, 'facia-snap--');
+                    });
                 });
             });
-        });
     }
 
     return {
