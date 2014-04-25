@@ -61,11 +61,11 @@ define(['knockout'], function(ko) {
 
     return {
         CONST: CONST,
+        model: undefined,
         sparksBase:      sparksBaseUrl(CONST.sparksParams),
         sparksBaseFront: sparksBaseUrl(CONST.sparksFrontParams),
         state: {
             config: {},
-            switches: {},
             liveMode: ko.observable(false),
             pending: ko.observable(false),
             openFronts: {}

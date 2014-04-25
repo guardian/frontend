@@ -168,7 +168,7 @@ define([
                     terminate('The configuration tool has been switched off.', '/');
                     return;
                 }
-                vars.state.switches = switches;
+                model.switches(switches);
 
                 if (opts.force || !_.isEqual(config, vars.state.config)) {
                     vars.state.config = config;

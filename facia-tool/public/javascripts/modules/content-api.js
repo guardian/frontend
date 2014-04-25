@@ -37,14 +37,19 @@ function (
                         cache.put('contentApi', capiId, result[0]);
                         populate(result[0], item);
                         defer.resolve();
+
                     } else {
-                        // It's a snap. If in live mode, reject it if it has no headline
-                        if (vars.model.liveMode() &&
+                        // It's a snap
+                        if (!vars.model.switches()['facia-tool-snaps']) {
+                            defer.resolve(true, 'Sorry, that link wasn\'t recognised. It cannot be added to a front.');
+
+                        // A snap cannot be added in live mode if it has no headline
+                        } else if (vars.model.liveMode() &&
                             item.parentType !== 'Clipboard' &&
                             !item.fields.headline() &&
-                            !item.meta.headline())
-                        {
+                            !item.meta.headline()) {
                             defer.resolve(true, 'Sorry, snaps without headlines can\'t be added in live mode.');
+
                         } else {
                             item.convertToSnap();
                             defer.resolve();

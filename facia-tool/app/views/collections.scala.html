@@ -44,7 +44,10 @@
 
     <div class="left-col">
         <div class="title">
-            Clipboard <span class="linky" data-bind="click: createSnap">+</span>
+            Clipboard
+            <span class="linky" data-bind="
+                visible: switches()['facia-tool-snaps'],
+                click: createSnap">+</span>
         </div>
         <div class="clipboard__wrapper" data-bind="with: clipboard">
             <div class="clipboard droppable" data-bind="
