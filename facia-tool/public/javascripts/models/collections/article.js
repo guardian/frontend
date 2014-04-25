@@ -204,8 +204,6 @@ define([
                 .map(function(p){ return [p[0], _.isString(p[1]) ? fullTrim(p[1]) : p[1]]; })
                 // reject whitespace-only strings:
                 .filter(function(p){ return _.isString(p[1]) ? p[1] : true; })
-                // for sublinks reject anything that isn't a headline
-                .filter(function(p){ return p[0] === 'headline' || self.parentType !== 'Article'; })
                 // reject vals that are equivalent to the fields (if any) that they're overwriting:
                 .filter(function(p){ return _.isUndefined(self.fields[p[0]]) || p[1] !== fullTrim(self.fields[p[0]]()); })
                 // recurse into supporting links
@@ -216,7 +214,7 @@ define([
                 })
                 // drop empty arrays:
                 .filter(function(p){ return _.isArray(p[1]) ? p[1].length : true; })
-                // return as obj, or as undefined if empty (this ommits it from any subsequent JSON.stringify result)
+                // return as obj, or as undefined if empty (this omits it from any subsequent JSON.stringify result)
                 .reduce(function(obj, p) {
                     obj = obj || {};
                     obj[p[0]] = p[1];
