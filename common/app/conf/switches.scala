@@ -312,7 +312,7 @@ object Switches extends Collections {
 
   val ABExternalLinksNewWindow = Switch("A/B Tests", "ab-external-links-new-window",
     "If this switch is on, AB test opening external links in a new tab/window.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 4, 28)
+    safeState = Off, sellByDate = new DateMidnight(2014, 4, 30)
   )
 
   val ABHomeComponent = Switch("A/B Tests", "ab-home-component",
