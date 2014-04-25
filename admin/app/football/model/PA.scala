@@ -1,45 +1,41 @@
 package football.model
 
 import pa.{Team, Season}
-import org.joda.time.DateMidnight
 import implicits.Collections
 
 
 object PA extends Collections {
-
-  val competitions: List[Season] = List(
-    Season("100", "785", "Barclays Premier League 13/14", new DateMidnight(2013, 6, 1), new DateMidnight(2014, 5, 31)),
-    Season("101", "786", "Sky Bet Championship 13/14", new DateMidnight(2013, 6, 1), new DateMidnight(2014, 5, 31)),
-    Season("102", "787", "Sky Bet League 1 13/14", new DateMidnight(2013, 6, 1), new DateMidnight(2014, 5, 31)),
-    Season("103", "788", "Sky Bet League 2 13/14", new DateMidnight(2013, 6, 1), new DateMidnight(2014, 5, 31)),
-    Season("104", "789", "The Skrill Premier 13/14", new DateMidnight(2013, 6, 30), new DateMidnight(2014, 6, 29)),
-    Season("120", "790", "Scottish Premiership 13/14", new DateMidnight(2013, 6, 1), new DateMidnight(2014, 5, 31)),
-    Season("121", "791", "Scottish Championship 13/14", new DateMidnight(2013, 6, 1), new DateMidnight(2014, 5, 31)),
-    Season("122", "792", "Scottish League One 13/14", new DateMidnight(2013, 6, 1), new DateMidnight(2014, 5, 31)),
-    Season("123", "793", "Scottish League Two 13/14", new DateMidnight(2013, 6, 1), new DateMidnight(2014, 5, 31)),
-    Season("300", "904", "The FA Cup with Budweiser 13/14", new DateMidnight(2013, 7, 1), new DateMidnight(2014, 6, 30)),
-    Season("301", "905", "Capital One Cup 13/14", new DateMidnight(2013, 6, 1), new DateMidnight(2014, 6, 30)),
-    Season("400", "955", "FA Community Shield 13/14", new DateMidnight(2013, 7, 1), new DateMidnight(2014, 6, 30)),
-    Season("500", "974", "UEFA Champions League 13/14", new DateMidnight(2013, 7, 1), new DateMidnight(2014, 6, 30)),
-    Season("501", "975", "UEFA Champions League Qualifying 13/14", new DateMidnight(2013, 7, 1), new DateMidnight(2014, 6, 30)),
-    Season("510", "976", "UEFA Europa League 13/14", new DateMidnight(2013, 7, 1), new DateMidnight(2014, 6, 30)),
-    Season("511", "977", "UEFA Europa League Qualifying 13/14", new DateMidnight(2013, 7, 1), new DateMidnight(2014, 6, 30)),
-    Season("530", "979", "UEFA Super Cup 13/14", new DateMidnight(2013, 7, 1), new DateMidnight(2014, 6, 30)),
-    Season("620", "992", "French Ligue 1 13/14", new DateMidnight(2013, 7, 1), new DateMidnight(2014, 6, 30)),
-    Season("625", "994", "German Bundesliga 13/14", new DateMidnight(2013, 7, 1), new DateMidnight(2014, 6, 30)),
-    Season("635", "1003", "Italy Serie A 13/14", new DateMidnight(2013, 7, 1), new DateMidnight(2014, 6, 30)),
-    Season("650", "1015", "Spanish Liga BBVA 13/14", new DateMidnight(2013, 7, 1), new DateMidnight(2014, 6, 30)),
-    Season("650", "216", "Spanish Primera Liga BBVA", new DateMidnight(2012, 8, 1), new DateMidnight(2013, 6, 30)),
-    Season("700", "524", "2014 FIFA World Cup", new DateMidnight(2014, 6, 1), new DateMidnight(2014, 7, 31)),
-    Season("701", "220", "2014 FIFA World Cup qualification (UEFA)", new DateMidnight(2012, 9, 1), new DateMidnight(2014, 1, 1)),
-    Season("721", "783", "International Friendly 2013/2014", new DateMidnight(2013, 5, 25), new DateMidnight(2014, 5, 25)),
-    Season("762", "1191", "American MLS League 13", new DateMidnight(2013, 3, 1), new DateMidnight(2013, 11, 30))
+  
+  val competitionNames = Map[String, String](
+    ("100", "Premier League"),
+    ("101", "Championship"),
+    ("102", "League One"),
+    ("103", "League Two"),
+    ("120", "Scottish Premier League"),
+    ("121", "Scottish Championship"),
+    ("122", "Scottish League One"),
+    ("123", "Scottish League Two"),
+    ("300", "FA Cup"),
+    ("320", "Scottish Cup"),
+    ("301", "Capital One Cup"),
+    ("400", "Community Shield"),
+    ("500", "Champions League"),
+    ("510", "Europa League"),
+    ("620", "Ligue 1"),
+    ("625", "Bundesliga"),
+    ("635", "Serie A"),
+    ("650", "La Liga"),
+    ("700", "World Cup 2014"),
+    ("721", "International friendlies")
   )
+  def competitionName(season: Season): String = {
+    competitionNames.get(season.id).getOrElse(season.name)
+  }
 
   val approvedCompetitions = List(
     "100", "500", "510", "300", "301", "101", "102",
     "103", "400", "120", "121", "122", "123", "320",
-    "321", "701", "721", "650", "620", "625", "635"
+    "321", "700", "721", "650", "620", "625", "635"
   )
 
   def filterCompetitions(competitions: List[Season]): List[Season] = {

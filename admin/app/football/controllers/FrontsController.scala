@@ -65,6 +65,9 @@ object FrontsController extends Controller with ExecutionContexts with GetPaClie
   }
 
   def tables(competition: String) = Action.async { implicit request =>
+    for {
+      competition <- None
+    } yield 1
     val url = s"${Configuration.sport.apiUrl}/football/$competition/table.json"
     WS.url(url).get().map { response =>
       val embedContent = (response.json \ "html").as[String]
