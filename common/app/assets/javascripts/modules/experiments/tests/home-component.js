@@ -14,7 +14,7 @@ define([
     var homeComponent = function() {
 
         this.id = 'HomeComponent';
-        this.start = '2014-04-22';
+        this.start = '2014-04-24';
         this.expiry = '2014-05-04';
         this.author = 'Richard Nguyen';
         this.description = 'Add a fixed button for users to go back home.';
