@@ -29,9 +29,9 @@ define([
 ) {
     'use strict';
 
-//    function getKeyEvents() {
-//        return qwery('.live-blog__blocks .is-key-event');
-//    }
+    function getKeyEvents() {
+        return qwery('.live-blog__blocks .is-key-event').slice(0, 9);
+    }
 
 //    function createScrollTransitions(){
 //
@@ -61,15 +61,11 @@ define([
 //        });
 //    }
 
-    function getAllEvents() {
-        return qwery('.live-blog__blocks .block');
-    }
-
     function createKeyEventHTML(el) {
         var keyEventTemplate =
-            '<li class="timeline__key-event" data-event-id="${ id }">' +
-            '<span class="timeline__date">${ time }</span>' +
-            '<a href="#${id}" data-event-id="${id}"><span class="timeline__title">${ title }</span></a>' +
+            '<li class="timeline__item" data-event-id="${ id }">' +
+            '<a href="#${id}" data-event-id="${id}"><span class="timeline__date">${ time }</span>' +
+            '<span class="timeline__title">${ title }</span></a>' +
             '</li>';
         var vals = {
             id: el.getAttribute('id'),
@@ -79,21 +75,10 @@ define([
         return _template(keyEventTemplate, vals);
     }
 
-    function createFillerHTML(postCount) {
-        var fillerTemplate =
-            '<li class="timeline__filler"><span class="timeline__filler-text">${ postCount } more posts</span></li>';
-        return _template(fillerTemplate, {postCount: postCount});
-    }
-
     function getTimelineHTML(events) {
-
+        var remaining;
         function recursiveRender(events, html) {
-            var fillers = _.take(events, function(el) { return !bonzo(el).hasClass('is-key-event'); }),
-                remaining;
-            if (fillers.length) { // we have filler posts
-                html += createFillerHTML(fillers.length);
-                remaining = events.slice(fillers.length);
-            } else if (events.length) { // key event at 0 index
+            if (events.length) { // key event at 0 index
                 html += createKeyEventHTML(events[0]);
                 remaining = events.slice(1);
             } else { // no events left
@@ -106,9 +91,10 @@ define([
     }
 
     function createTimeline() {
-        var allEvents = getAllEvents();
+        var allEvents = getKeyEvents();
         var timelineHTML = getTimelineHTML(allEvents);
-        $('.js-live-blog__timeline').append(timelineHTML);
+        var context = qwery('.js-live-blog__timeline');
+        bonzo(context).append(timelineHTML);
     }
 
     function createAutoRefresh(){

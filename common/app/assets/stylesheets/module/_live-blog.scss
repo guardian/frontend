@@ -53,6 +53,12 @@ $block-padding-right: $gs-gutter;
             max-width: gs-span(8),
             padding-left: $a-rightCol-width + $gs-gutter
         ));
+
+        .discussion {
+            @include rem((
+                margin-left: - ($a-rightCol-width + $gs-gutter)
+            ));
+        }
     }
     .blog__columning-wrapper {
         width: 100%;
@@ -179,6 +185,19 @@ $block-padding-right: $gs-gutter;
 .blog__main-column--head {
     @include mq(rightCol) {
         @include full-bleed($c-neutral8);
+    }
+}
+.blog__standfirst-container {
+    @include mq($to: rightCol) {
+        @include rem((
+            padding-top: $gs-baseline
+        ));
+        @include full-bleed(#ffffff);
+
+        &:before,
+        &:after {
+            z-index: 100;
+        }
     }
 }
 
@@ -418,17 +437,15 @@ $block-padding-right: $gs-gutter;
 
 }
 
-
 @include keyframes(new-block-animation) {
-    0%   { opacity: 0; background: $c-neutral7; }
+    0%   { opacity: 0; background: $c-neutral7; border-top-color: $c-liveAccent; }
     20%  { opacity: 1; }
     70%  { background: $c-neutral7; }
-    100% { background: transparent; }
+    100% { background: transparent; border-top-color: $c-neutral3; }
 }
 
 /* Above/Below content
    ========================================================= */
-
 .blog {
 
     .article__standfirst {
@@ -450,12 +467,11 @@ $block-padding-right: $gs-gutter;
 
 /* Content styling
    ========================================================================== */
-
 .blog .from-content-api {
 
     .block-title {
         @include rem((
-            line-height: 21px,
+            margin-top: ($gs-baseline/4)*-1,
             margin-bottom: $gs-baseline
         ));
     }
@@ -485,8 +501,9 @@ $block-padding-right: $gs-gutter;
 
         > blockquote,
         > blockquote.quoted { // using !important to override inline styles from content api
-            margin-left: $block-padding-left !important;
-            margin-right: $block-padding-right !important;
+            @include rem((
+                margin: 16px $block-padding-right $gs-baseline*1.5 $block-padding-left !important
+            ));
             @include mq($to: mobileLandscape) {
                 margin-left: $gs-gutter/2 !important;
                 margin-right: $gs-gutter/2 !important;
@@ -527,7 +544,8 @@ $block-padding-right: $gs-gutter;
             }
         }
 
-        > .element-image {
+        > .element-image,
+        > .element-video {
             border-bottom: 2px solid $c-neutral8;
 
             &:last-child {
@@ -633,10 +651,23 @@ $block-padding-right: $gs-gutter;
     .dropdown__button {
         position: relative;
         border-top: 1px solid $c-neutral4;
-        @include full-bleed(#ffffff);
         @include rem((
             padding: $gs-baseline/1.5 0
         ));
+
+        @include mq($to: rightCol) {
+            @include full-bleed(#ffffff);
+        }
+
+        @include mq(rightCol) {
+            display: none;
+        }
+
+        .blog__timeline & {
+            @include mq(rightCol) {
+                display: block;
+            }
+        }
 
         &:before,
         &:after {
@@ -649,7 +680,24 @@ $block-padding-right: $gs-gutter;
         @include fs-header(2);
         @include rem((
             line-height: 30px
-        ))
+        ));
+    }
+
+    .dropdown__content {
+        position: relative;
+        margin: 0;
+        @include rem((
+            padding: $gs-baseline 0
+        ));
+
+        @include mq($to: rightCol) {
+            background-color: $c-neutral8;
+            @include full-bleed($c-neutral8);
+        }
+
+        @include mq(rightCol) {
+            display: block !important; //Overrides JS active state
+        }
     }
 }
 
@@ -659,6 +707,8 @@ $block-padding-right: $gs-gutter;
 
     @include mq(rightCol) {
         position: absolute;
+        top: 0;
+        z-index: 200;
         @include rem((
             margin-left: - ($a-rightCol-width + $gs-gutter),
             width: $a-rightCol-width
@@ -676,22 +726,16 @@ $block-padding-right: $gs-gutter;
     }
 }
 
+.timeline {
+    position: relative;
+}
 .timeline__filler {
     display: none;
 }
-
-.timeline__date {
-    @include fs-data(3);
-    font-weight: bold;
-}
-
-.timeline {
-    position: relative;
-    @include full-bleed($c-neutral8);
-}
-
 .timeline__date {
     display: block;
+    @include fs-data(3);
+    font-weight: bold;
 }
 .timeline__title {
     @include fs-textsans(3);

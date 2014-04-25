@@ -35,48 +35,47 @@
             <div class="after-header"></div>
         </div>
         <div class="blog__columning-wrapper">
-            <div class="blog__main-column blog__main-column--head">
-                @fragments.standfirst(article)
+            <div class="blog__main-column blog__main-background">
+                <div class="blog__standfirst-container">
+                    @fragments.standfirst(article)
 
-                @fragments.witnessCallToAction(article)
+                    @fragments.witnessCallToAction(article)
 
-                @if(!article.hasVideoAtTop) {
-                    @if(article.hasMainVideo) {
-                        @article.mainVideo.map{ mainVideo =>
-                            <div class="gu-video-wrapper">
-                                <div class="u-responsive-ratio u-responsive-ratio--hd">
-                                    <video data-media-id="@mainVideo.id" class="gu-video" controls="controls">
-                                        @for(url <- mainVideo.videoAssets.flatMap(_.url)) {
-                                            <source src="@url" />
-                                        }
-                                        @mainVideo.videoAssets.find(_.mimeType == "video/mp4").map{ encoding =>
-                                            <object type="application/x-shockwave-flash" data="@Static("flash/flashmediaelement.swf")" width="620" height="350">
-                                                <param name="allowFullScreen" value="true" />
-                                                <param name="movie" value="@Static("flash/flashmediaelement.swf")" />
-                                                <param name="flashvars" value="file=@encoding.url&amp;controls=true" />
-                                                Sorry, your browser is unable to play this video.
-                                            </object>
-                                        }
-                                    </video>
+                    @if(!article.hasVideoAtTop) {
+                        @if(article.hasMainVideo) {
+                            @article.mainVideo.map{ mainVideo =>
+                                <div class="gu-video-wrapper">
+                                    <div class="u-responsive-ratio u-responsive-ratio--hd">
+                                        <video data-media-id="@mainVideo.id" class="gu-video" controls="controls">
+                                            @for(url <- mainVideo.videoAssets.flatMap(_.url)) {
+                                                <source src="@url" />
+                                            }
+                                            @mainVideo.videoAssets.find(_.mimeType == "video/mp4").map{ encoding =>
+                                                <object type="application/x-shockwave-flash" data="@Static("flash/flashmediaelement.swf")" width="620" height="350">
+                                                    <param name="allowFullScreen" value="true" />
+                                                    <param name="movie" value="@Static("flash/flashmediaelement.swf")" />
+                                                    <param name="flashvars" value="file=@encoding.url&amp;controls=true" />
+                                                    Sorry, your browser is unable to play this video.
+                                                </object>
+                                            }
+                                        </video>
+                                    </div>
                                 </div>
-                            </div>
+                            }
+                        } else {
+                            @fragments.img(article.mainPicture)
                         }
-                    } else {
-                        @fragments.img(article.mainPicture)
                     }
-                }
+                </div>
 
                 <div class="blog__timeline blog__dropdown">
                     @fragments.dropdown("Key events", "live") {
                         <ul class="js-live-blog__timeline timeline u-unstyled"></ul>
                     }
                 </div>
-            </div>
-        </div>
-        <div class="blog__columning-wrapper">
-            <div class="blog__main-column blog__main-background u-cf blog__dropdown">
+
                 @fragments.dropdown("Live feed", "live", true) {
-                    <div class="js-article__container article__container u-cf" data-component="body">
+                    <div class="js-article__container article__container" data-component="body">
                         @fragments.liveFilter(article)
 
                         <div class="article-body u-cf from-content-api js-blog-blocks @if(article.isLive) {live-blog}"
