@@ -307,6 +307,9 @@ case class LiveBlogDateFormatter(isLiveBlog: Boolean)(implicit val request: Requ
         val datetime = DateTime.parse(el.attr("datetime"))
         val hhmm = Format(datetime, "HH:mm")
         el.after(s"""<span class="block-time__absolute">$hhmm</span>""")
+        if(datetime.isAfter(DateTime.now().minusDays(5))) {
+          el.addClass("js-timestamp")
+        }
       }
     }
     body
