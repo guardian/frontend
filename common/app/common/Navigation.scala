@@ -52,6 +52,7 @@ trait Navigation  {
   val usSport = SectionLink("sport", "US sports", "/sport/us-sport")
   val australiaSport = SectionLink("australia sport", "australia sport", "/sport/australia-sport")
   val afl = SectionLink("afl", "afl", "/sport/afl")
+  val nrl = SectionLink("nrl", "nrl", "/sport/nrl")
   val aLeague = SectionLink("a-league", "a-league", "/football/a-league")
   val football = SectionLink("football", "football", "/football")
   val soccer = football.copy(title = "soccer")

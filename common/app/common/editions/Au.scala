@@ -35,7 +35,7 @@ object Au extends Edition(
     NavItem(australia),
     NavItem(world, Seq(uk, us, asia, europeNews, americas, africa, middleEast)),
     NavItem(cif),
-    NavItem(sport, Seq(australiaSport, football, cricket, rugbyunion, rugbyLeague , tennis, cycling, boxing, usSport, formulaOne)),
+    NavItem(sport, Seq(australiaSport, football, cricket, rugbyunion, rugbyLeague , tennis, cycling, boxing, afl, nrl)),
     NavItem(football, aLeague :: footballNav.toList),
     NavItem(technology, Seq(games)),
     NavItem(culture, Seq(film, music, books, televisionAndRadio , artanddesign, stage)),
