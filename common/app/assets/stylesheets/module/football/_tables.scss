@@ -12,8 +12,7 @@
 /** League table **/
 .table--football {
     .table-column--main {
-        a,
-        span {
+        .team-name {
             display: block;
             overflow: hidden;
             white-space: nowrap;
