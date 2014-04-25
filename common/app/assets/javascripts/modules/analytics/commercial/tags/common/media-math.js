@@ -24,28 +24,27 @@ define([
         };
 
     return {
-        load: function(config, opts) {
+        load: function(config) {
             config = _defaults(
                 config || {},
                 defaultConfig,
                 {
+                    referrer: document.referrer,
                     switches: {},
                     page: {}
                 }
             );
-            opts = opts || {};
 
             if (!config.switches.mediaMath) {
                 return false;
             }
 
             var page = config.page,
-                referrer = opts.documentReferrer || document.referrer,
                 tags = _pairs({
                     v1: (page.host ? page.host : '') + '/' + page.pageId,
                     v2: page.section,
-                    v3: extractSearchTerm(referrer),
-                    v4: referrer,
+                    v3: extractSearchTerm(config.referrer),
+                    v4: config.referrer,
                     v5: page.keywords ? page.keywords.replace(/,/g, '|') : '',
                     v6: page.contentType ? page.contentType.toLowerCase() : ''
                 })

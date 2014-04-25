@@ -4,12 +4,13 @@ define([
     mediaMath
 ){
 
-    function createConfig(switchValue, page) {
+    function createConfig(switchValue, page, referrer) {
         return {
             switches: {
                 mediaMath: switchValue
             },
-            page: page
+            page: page,
+            referrer: referrer
         };
     };
     function extractParam(img, paramName) {
@@ -47,13 +48,13 @@ define([
         });
 
         it('should send the correct "v3" param', function() {
-            var img = mediaMath.load(createConfig(true), { documentReferrer: "http://www.google.com?foo=bar&q=a search\\\\another one" });
+            var img = mediaMath.load(createConfig(true, {}, "http://www.google.com?foo=bar&q=a search\\\\another one"));
             expect(extractParam(img, 'v3')).toBe('a%20search%20another%20one');
         });
 
         it('should send the correct "v4" param', function() {
             var referrer = 'http://www.google.com',
-                img = mediaMath.load(createConfig(true), { documentReferrer: referrer });
+                img = mediaMath.load(createConfig(true, {}, referrer));
             expect(extractParam(img, 'v4')).toBe(referrer);
         });
 
