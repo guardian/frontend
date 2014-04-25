@@ -146,7 +146,7 @@ define([
 
     function findValidTimestamps(context) {
         // `.blocktime time` used in blog html
-        return common.$g('.js-timestamp, .block-time time, .js-item__timestamp', context);
+        return common.$g('.js-timestamp, .js-item__timestamp', context);
     }
 
     function replaceValidTimestamps(context, opts) {
