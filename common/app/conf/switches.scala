@@ -300,7 +300,7 @@ object Switches extends Collections {
 
   val HideOldTimeStampsSwitch = Switch("Feature Switches", "hide-old-timestamps",
     "If this switch is turned on then timestamps older than an hour get hidden on fronts.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 4, 28)
+    safeState = Off, sellByDate = new DateMidnight(2014, 4, 30)
   )
 
   val EnhanceTweetsSwitch = Switch("Feature Switches", "enhance-tweets",
