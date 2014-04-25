@@ -76,7 +76,14 @@
 
 .facia-snap {
     // Apply this to football only
+    // ----
     background: #ffffff;
+
+    .table--football {
+        tbody tr { display: none; }
+        tbody tr:nth-of-type(-n+5) { display: table-row; }
+    }
+    // ----
 
 
     .table,
@@ -104,13 +111,6 @@
     }
 }
 
-.facia-snap--default {
-    .table--football {
-        tbody tr { display: none; }
-        tbody tr:nth-of-type(-n+6) { display: table-row; }
-    }
-}
-
 .facia-snap--large {
     @include table--hide-none;
 
@@ -124,7 +124,7 @@
     @include table--hide-from-importance-2;
 
     .table--football {
-        tbody tr { display: none; }
-        tbody tr:nth-of-type(-n+4) { display: table-row; }
+        tbody tr { display: none !important; }
+        tbody tr:nth-of-type(-n+4) { display: table-row !important; }
     }
 }
