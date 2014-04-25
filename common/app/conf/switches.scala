@@ -157,6 +157,10 @@ object Switches extends Collections {
     "Enable Forsee surveys for a sample of our audience",
     safeState = Off, sellByDate = new DateMidnight(2014,5,1)) // 3 month trial
 
+  val MediaMathSwitch = Switch("Commercial Tags", "media-math",
+    "Enable Media Math audience segment tracking",
+    safeState = Off, sellByDate = never)
+
   // Commercial Feeds
 
   val TravelOffersFeedSwitch = Switch("Performance Switches", "gu-travel-offers",
@@ -418,6 +422,7 @@ object Switches extends Collections {
     EffectiveMeasureSwitch,
     ImrWorldwideSwitch,
     ForeseeSwitch,
+    MediaMathSwitch,
     DiagnosticsLogging,
     TravelOffersFeedSwitch,
     JobFeedSwitch,
