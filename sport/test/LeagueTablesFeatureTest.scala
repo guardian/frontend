@@ -17,7 +17,7 @@ class LeagueTablesFeatureTest extends FeatureSpec with GivenWhenThen with Matche
 
         Then("I should see the 4 few entries of each table")
 
-        val teams = $(".football-stat--team").getTexts
+        val teams = $(".team-name__long").getTexts
         teams should contain("Arsenal")
         teams should contain("Man U")
         teams should contain("Man C")
@@ -42,7 +42,7 @@ class LeagueTablesFeatureTest extends FeatureSpec with GivenWhenThen with Matche
         import browser._
 
         Then("I should see all the teams in this league")
-        val teams = $(".football-stat--team").getTexts
+        val teams = $(".team-name__long").getTexts
         teams should contain("Arsenal")
         teams should contain ("Wigan") // I can now see all items
 
