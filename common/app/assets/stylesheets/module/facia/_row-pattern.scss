@@ -100,7 +100,7 @@
                 display: block;
             }
         }
-        @include mq(mobile, tablet) {
+        @include mq($to: tablet) {
             .item__link {
                 display: -webkit-flex;
                 display: flex;
@@ -115,6 +115,7 @@
         }
         .item__media-wrapper {
             @include mq(tablet) {
+                float: left;
                 @include rem((
                     width: 122px,
                     margin-right: $gs-gutter/2

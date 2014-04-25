@@ -1,0 +1,11 @@
+@(trail: Trail, index: Int, containerIndex: Int, additionalClasses: String = "")(implicit request: RequestHeader)
+
+<li class="@GetClasses.forCollectionItem(trail, additionalClasses)">
+
+    @trail match {
+        case g: Gallery => { @fragments.items.standardGallery(g, index, containerIndex, "div") }
+        case v: Video   => { @fragments.items.standardVideo(v, index, containerIndex, "div") }
+        case t          => { @fragments.items.standard(t, index, containerIndex, "div") }
+    }
+
+</li>
