@@ -117,14 +117,10 @@ define([
             }
         },
 
-        initTruncate: function() {
+        initTruncateAndTwitter: function() {
             mediator.on('page:article:ready', function() {
+                // Ensure that truncation occurs before the tweet upgrading.
                 truncate();
-            });
-        },
-
-        initTwitter: function() {
-            mediator.on('page:article:ready', function() {
                 twitter.enhanceTweets();
             });
         }
@@ -140,8 +136,7 @@ define([
             modules.initLayoutHints(config);
             modules.initHelvetica(config);
             modules.initComicSans(config);
-            modules.initTruncate();
-            modules.initTwitter();
+            modules.initTruncateAndTwitter();
         }
         common.mediator.emit('page:article:ready', config, context);
     };
