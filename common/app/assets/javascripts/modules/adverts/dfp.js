@@ -136,14 +136,19 @@ define([
      * url    = path
      */
     DFP.prototype.buildPageTargetting = function () {
+
+        function encodeTargetValue(value) {
+            return value ? queryString.formatKeyword(value).replace(/&/g, 'and').replace(/'/g, '') : '';
+        }
+
         var conf        = this.config.page,
-            section     = conf.section ? conf.section.toLowerCase() : '',
-            contentType = conf.contentType ? conf.contentType.toLowerCase() : '',
-            edition     = conf.edition ? conf.edition.toLowerCase() : '',
+            section     = encodeTargetValue(conf.section),
+            contentType = encodeTargetValue(conf.contentType),
+            edition     = encodeTargetValue(conf.edition),
             keywords;
         if (conf.keywords) {
             keywords = conf.keywords.split(',').map(function (keyword) {
-                return queryString.formatKeyword(keyword).replace('&', 'and');
+                return encodeTargetValue(keyword);
             });
         } else {
             keywords = '';
