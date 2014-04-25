@@ -143,6 +143,7 @@ define([
 
         var conf        = this.config.page,
             section     = encodeTargetValue(conf.section),
+            series      = encodeTargetValue(conf.series),
             contentType = encodeTargetValue(conf.contentType),
             edition     = encodeTargetValue(conf.edition),
             keywords;
@@ -158,6 +159,7 @@ define([
             'url'     : window.location.pathname,
             'edition' : edition,
             'cat'     : section,
+            'se'      : series,
             'k'       : keywords,
             'ct'      : contentType,
             'pt'      : contentType,
