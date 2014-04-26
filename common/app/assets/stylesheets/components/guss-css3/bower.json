@@ -1,0 +1,8 @@
+{
+  "name": "guss-css3",
+  "version": "2.0.0",
+  "main": "_css3.scss",
+  "ignore": [
+    "CHANGELOG.md"
+  ]
+}

@@ -54,15 +54,13 @@ object Switches extends Collections {
   val MemcachedSwitch = Switch("Performance Switches", "memcached",
     "If this switch is switched on then the MemcacheAction will be operational",
     safeState = Off,
-    // giving this a sell by date even though it is a perf switch as it is still a test.
-    sellByDate = new DateMidnight(2014, 4, 30)
+    sellByDate = never
   )
 
   val IncludeBuildNumberInMemcachedKey = Switch("Performance Switches", "memcached-build-number",
     "If this switch is switched on then the MemcacheFilter will include the build number in the cache key",
     safeState = Off,
-    // giving this a sell by date even though it is a perf switch as it is still a test.
-    sellByDate = new DateMidnight(2014, 4, 30)
+    sellByDate = never
   )
 
   val AutoRefreshSwitch = Switch("Performance Switches", "auto-refresh",
@@ -158,6 +156,10 @@ object Switches extends Collections {
   val ForeseeSwitch = Switch("Commercial Tags", "foresee",
     "Enable Forsee surveys for a sample of our audience",
     safeState = Off, sellByDate = new DateMidnight(2014,5,1)) // 3 month trial
+
+  val MediaMathSwitch = Switch("Commercial Tags", "media-math",
+    "Enable Media Math audience segment tracking",
+    safeState = Off, sellByDate = never)
 
   // Commercial Feeds
 
@@ -281,6 +283,11 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 4, 30)
   )
 
+  val ComicSansEasterEggSwitch = Switch("Feature Switches", "comicsans",
+    "If this switch is on, the article about Comic Sans Neue will have its title Comic Sans'd",
+    safeState = Off, sellByDate = new DateMidnight(2014, 5, 30)
+  )
+
   val RssLinkSwitch = Switch("Feature Switches", "rss-link",
     "If this switch is on a link to the RSS is rendered in the HTML",
     safeState = Off, sellByDate = new DateMidnight(2014, 6, 30)
@@ -293,7 +300,7 @@ object Switches extends Collections {
 
   val HideOldTimeStampsSwitch = Switch("Feature Switches", "hide-old-timestamps",
     "If this switch is turned on then timestamps older than an hour get hidden on fronts.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 4, 28)
+    safeState = Off, sellByDate = new DateMidnight(2014, 4, 30)
   )
 
   val EnhanceTweetsSwitch = Switch("Feature Switches", "enhance-tweets",
@@ -305,12 +312,12 @@ object Switches extends Collections {
 
   val ABExternalLinksNewWindow = Switch("A/B Tests", "ab-external-links-new-window",
     "If this switch is on, AB test opening external links in a new tab/window.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 4, 28)
+    safeState = Off, sellByDate = new DateMidnight(2014, 4, 30)
   )
 
-  val ABAbcd = Switch("A/B Tests", "ab-abcd",
-    "If this switch is on, an AB test runs to validate the collection ab test data",
-    safeState = Off, sellByDate = new DateMidnight(2014, 4, 28)
+  val ABHomeComponent = Switch("A/B Tests", "ab-home-component",
+    "This switch runs an AB test which adds a sticky-like home button.",
+    safeState = Off, sellByDate = new DateMidnight(2014, 5, 4)
   )
 
   // Dummy Switches
@@ -409,6 +416,7 @@ object Switches extends Collections {
     EffectiveMeasureSwitch,
     ImrWorldwideSwitch,
     ForeseeSwitch,
+    MediaMathSwitch,
     DiagnosticsLogging,
     TravelOffersFeedSwitch,
     JobFeedSwitch,
@@ -425,13 +433,14 @@ object Switches extends Collections {
     FrontPressJobSwitch,
     LayoutHintsSwitch,
     HelveticaEasterEggSwitch,
+    ComicSansEasterEggSwitch,
     RssLinkSwitch,
     PopularInTagSwitch,
     HideOldTimeStampsSwitch,
     EnhanceTweetsSwitch,
     IndiaRegionSwitch,
+    ABHomeComponent,
     ABExternalLinksNewWindow,
-    ABAbcd,
     MemcachedSwitch,
     IncludeBuildNumberInMemcachedKey
   )

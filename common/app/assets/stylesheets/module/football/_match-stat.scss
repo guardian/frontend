@@ -73,8 +73,10 @@
     }
 }
 
-.table--small {
-    .team-result { @include team-result--thin; }
+.c-football-table .table--football {
+    .team-result {
+        @include team-result--thin;
+    }
 }
 
 .team-result--won {

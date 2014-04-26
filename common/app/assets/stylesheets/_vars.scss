@@ -27,10 +27,12 @@ $trailblockImgWidthLarge: 140px;
 $headerHeight: 46px;
 
 
-// Guss defaults
+// Guss defaults overrides
 // =============================================================================
 
 $guss-column-rule: none;
+
+@import "components/guss-grid-system/_grid-system";
 
 
 // Breakpoints
@@ -41,14 +43,12 @@ $guss-column-rule: none;
 // stakeholders, designers, developers, and testers.
 // NB. If these change, please update dfp.js to match
 
-@import 'layout/_grid-system';
-
 // Article breakpoints
 $a-rightCol-width:    gs-span(4);
 $a-rightCol-trigger:  gs-span(11) + $gs-gutter*2; // 900px
 $a-leftCol-width:     gs-span(2); // Grows to 3 columns on wide viewports
 $a-leftCol-trigger:   gs-span(13) + $gs-gutter*2; // 1060px
-$a-leftColWide-width: gs-span(3); // Grows to 3 columns on wide viewports
+$a-leftColWide-width: gs-span(3);
 
 // Facia breakpoints
 $facia-leftCol-trigger: gs-span(14) + $gs-gutter*2; // 1140px

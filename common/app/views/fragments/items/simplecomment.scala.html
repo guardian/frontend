@@ -2,9 +2,13 @@
 
 <@element
     class="@GetClasses.forItem(trail, containerIndex == 0)"
-    data-link-name="trail | @{index + 1}"
-    @trail.discussionId.map{ id => data-discussion-id="@id" }
-    data-discussion-closed="@trail.isClosedForComments">
+    @if(trail.isCommentable) {
+        @trail.discussionId.map{ id =>
+            data-discussion-id="@id"
+        }
+        data-discussion-closed="@trail.isClosedForComments"
+    }
+    data-link-name="trail | @{index + 1}">
 
     <div class="item__container">
         <a href="@LinkTo{@trail.url}" class="item__link" data-link-name="article">

@@ -9,7 +9,6 @@
 @import "module/facia/_mixins";
 @import "module/_discussion-mixins";
 @import "_extends-only";
-@import "components/guss-layout/_columns";
 
 
 /* ==========================================================================
@@ -108,7 +107,7 @@
    ========================================================================== */
 
 @import "module/experiments/_layout-hints";
-
+@import "module/experiments/_home";
 
 /* ==========================================================================
    Icons

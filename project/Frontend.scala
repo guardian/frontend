@@ -33,7 +33,7 @@ object Frontend extends Build with Prototypes {
       "org.rometools" % "rome-modules" % "1.0"
     )
   )
-  val paVersion = "4.6"
+  val paVersion = "4.8"
 
   def withTests(project: Project) = project % "test->test;compile->compile"
 

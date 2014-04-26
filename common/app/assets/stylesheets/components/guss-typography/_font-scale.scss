@@ -1,0 +1,155 @@
+// =============================================================================
+// Font Scale
+// =============================================================================
+
+// Fonts
+// =============================================================================
+
+$sans-serif: "AgateSans", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif !default;
+$serif: "EgyptianText", georgia, serif !default;
+$serifheadline: "EgyptianHeadline", georgia, serif !default;
+$text-sans: "TextSans", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif !default;
+
+// Font scale
+// font-size (px) line-height (px) // level
+// See font-scale.jpg for a correspondance matrix
+$fs-headers: (
+    16 20, // 1
+    18 24, // 2
+    20 28, // 3
+    22 28, // 4
+    24 28  // 5
+) !default;
+
+$fs-headlines: (
+    16 20, // 1
+    20 24, // 2
+    24 28, // 3
+    28 32, // 4
+    32 36, // 5
+    36 40, // 6
+    40 44, // 7
+    44 48  // 8
+) !default;
+
+$fs-bodyHeadings: (
+    14 22, // 1
+    16 24, // 2
+    18 28, // 3
+    20 28  // 4
+) !default;
+
+$fs-bodyCopy: (
+    14 20, // 1
+    14 22, // 2
+    16 24, // 3
+    18 28  // 4
+) !default;
+
+$fs-data: (
+    11 14, // 1
+    12 14, // 2
+    13 16, // 3
+    14 18, // 4
+    16 20, // 5
+    18 22  // 6
+) !default;
+
+$fs-textsans: (
+    12 16, // 1
+    13 18, // 2
+    14 20, // 3
+    14 22  // 4
+) !default;
+
+
+// Prefixes:
+// f- stands for Font: use to set a font-family only
+// fs- for Font Scale: documented in font-scale.png
+
+@mixin f-header {
+    font-family: $serifheadline;
+    font-weight: 900;
+    -webkit-font-smoothing: antialiased;
+}
+@mixin fs-header($level, $size-only: false) {
+    $header: nth($fs-headers, $level);
+
+    @include font-size(nth($header, 1), nth($header, 2));
+
+    @if $size-only == false {
+        @include f-header;
+    }
+}
+
+@mixin f-headline {
+    font-family: $serifheadline;
+    font-weight: normal;
+    -webkit-font-smoothing: antialiased;
+}
+@mixin fs-headline($level, $size-only: false) {
+    $headline: nth($fs-headlines, $level);
+
+    @include font-size(nth($headline, 1), nth($headline, 2));
+
+    @if $size-only == false {
+        @include f-headline;
+    }
+}
+
+@mixin f-bodyHeading {
+    font-family: $serif;
+    font-weight: bold;
+    -webkit-font-smoothing: subpixel-antialiased;
+}
+@mixin fs-bodyHeading($level, $size-only: false) {
+    $heading: nth($fs-bodyHeadings, $level);
+
+    @include font-size(nth($heading, 1), nth($heading, 2));
+
+    @if $size-only == false {
+        @include f-bodyHeading;
+    }
+}
+
+@mixin f-bodyCopy {
+    font-family: $serif;
+    -webkit-font-smoothing: antialiased;
+}
+@mixin fs-bodyCopy($level, $size-only: false) {
+    $bodycopy: nth($fs-bodyCopy, $level);
+
+    @include font-size(nth($bodycopy, 1), nth($bodycopy, 2));
+
+    @if $size-only == false {
+        @include f-bodyCopy;
+    }
+}
+
+@mixin f-data {
+    font-family: $sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+@mixin fs-data($level, $size-only: false) {
+    $data: nth($fs-data, $level);
+
+    @include font-size(nth($data, 1), nth($data, 2));
+
+    @if $size-only == false {
+        @include f-data;
+    }
+}
+
+@mixin f-textsans {
+    font-family: $text-sans;
+    -webkit-font-smoothing: antialiased;
+}
+@mixin fs-textsans($level, $size-only: false) {
+    $textsans: nth($fs-textsans, $level);
+
+    @include font-size(nth($textsans, 1), nth($textsans, 2));
+
+    @if $size-only == false {
+        @include f-textsans;
+    }
+}

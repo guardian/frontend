@@ -157,20 +157,16 @@
     }
 }
 /* article */
-.facia-container--commercial {
-    &.facia-container--layout-article {
-        .commercial--masterclasses {
-            @include mq(rightCol) {
-                .commercial--masterclasses__class {
-                    @include rem((
-                        padding-left: $gs-gutter/2
-                    ));
-                    width: 25%;
-        
-                    &:nth-child(n+4) {
-                        display: block;
-                    }
-                }
+.facia-container--layout-article .commercial--masterclasses {
+    @include mq(rightCol) {
+        .commercial--masterclasses__class {
+            @include rem((
+                padding-left: $gs-gutter/2
+            ));
+            width: 25%;
+
+            &:nth-child(n+4) {
+                display: block;
             }
         }
     }

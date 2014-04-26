@@ -1,7 +1,7 @@
 {
-    "name": "frontend-common-css",
-    "version": "0.3.0 ",
-    "dependencies": {
-        "sass-mq": "2.0.0-rc.3"
-    }
+  "name": "frontend-common-css",
+  "version": "0.4.0 ",
+  "dependencies": {
+    "guss": "~1.1.0"
+  }
 }

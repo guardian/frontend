@@ -405,6 +405,10 @@ $block-padding-right: $gs-gutter;
     height: auto;
     background-color: transparent;
     @include transition(opacity 2s ease-out, background-color 4s ease-out);
+
+    & .truncated-block {
+        display: none;
+    }
 }
 .blog .ad-slot--mpu-banner-ad {
     padding-top: $gs-baseline;
@@ -804,6 +808,7 @@ $block-padding-right: $gs-gutter;
         display: block;
     }
 }
+
 .timeline__title {
     display: table-cell;
     @include fs-textsans(3);
