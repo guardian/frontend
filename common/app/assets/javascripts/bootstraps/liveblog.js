@@ -4,7 +4,6 @@ define([
     'qwery',
     'bonzo',
     'bean',
-    'lodash/utilities/template',
     'lodash/functions/throttle',
     'common/_',
     'common/utils/scroller',
@@ -19,7 +18,6 @@ define([
     qwery,
     bonzo,
     bean,
-    _template,
     _throttle,
     _,
     scroller,
@@ -37,45 +35,44 @@ define([
         return qwery('.live-blog__blocks .is-key-event').slice(0, 9);
     }
 
-//    function createScrollTransitions(){
-//
-//        var selectedClass = 'live-blog__key-event--selected';
-//
-//        function unselect() {
-//            bonzo(qwery('.'+selectedClass)).removeClass(selectedClass);
-//        }
-//
-//        var curBinding;
-//        function unselectOnScroll() {
-//            bean.off(curBinding);
-//            curBinding = bean.one(document, 'scroll', function() { unselect(); });
-//        }
-//
-//        bean.on(qwery('.timeline')[0], 'click', '.timeline__key-event a', function(e){
-//            var el = e.currentTarget,
-//                eventId = bonzo(el).attr('data-event-id'),
-//                targetEl = qwery('#'+eventId),
-//                dim = bonzo(targetEl).offset();
-//            scroller.scrollTo(dim.top, 500, 'easeOutQuint');
-//            window.setTimeout(unselectOnScroll, 550);
-//            bean.off(curBinding);
-//            unselect();
-//            bonzo(el).addClass(selectedClass);
-//            e.stop();
-//        });
-//    }
+    function createScrollTransitions(){
+
+        var selectedClass = 'live-blog__key-event--selected';
+
+        function unselect() {
+            bonzo(qwery('.'+selectedClass)).removeClass(selectedClass);
+        }
+
+        var curBinding;
+        function unselectOnScroll() {
+            bean.off(curBinding);
+            curBinding = bean.one(document, 'scroll', function() { unselect(); });
+        }
+
+        bean.on(qwery('.timeline')[0], 'click', '.timeline__link', function(e){
+            var el = e.currentTarget,
+                eventId = bonzo(el).attr('data-event-id'),
+                targetEl = qwery('#'+eventId),
+                dim = bonzo(targetEl).offset();
+            scroller.scrollTo(dim.top, 500, 'easeOutQuint');
+            window.setTimeout(unselectOnScroll, 550);
+            bean.off(curBinding);
+            unselect();
+            bonzo(el).addClass(selectedClass);
+            e.stop();
+        });
+    }
 
     function createKeyEventHTML(el) {
         var keyEventTemplate =
-            '<li class="timeline__item" data-event-id="${ id }">' +
-            '<a class="timeline__link" href="#${id}" data-event-id="${id}">' +
-            '<span class="timeline__date">${ time }</span><span class="timeline__title">${ title }</span></a></li>';
-        var vals = {
-            id: el.getAttribute('id'),
-            title: $('.block-title', el).text(),
-            time: $('.block-time', el).html()
-        };
-        return _template(keyEventTemplate, vals);
+            '<li class="timeline__item" data-event-id="{id}">' +
+            '<a class="timeline__link" href="#{id}" data-event-id="{id}">' +
+            '<span class="timeline__date">{time}</span><span class="timeline__title">{title}</span></a></li>';
+        keyEventTemplate = keyEventTemplate.replace(/{id}/g, el.getAttribute('id'));
+        keyEventTemplate = keyEventTemplate.replace(/{title}/g, $('.block-title', el).text());
+        keyEventTemplate = keyEventTemplate.replace(/{time}/g, $('.block-time', el).html());
+
+        return keyEventTemplate;
     }
 
     function getTimelineHTML(events) {
@@ -95,8 +92,6 @@ define([
 
     function createTimeline() {
         mediator.on('page:article:ready', function(config, context) {
-            if(config.page.keywordIds.indexOf('football/football') > -1) { return; }
-
             var allEvents = getKeyEvents();
             var timelineHTML = getTimelineHTML(allEvents);
             context = qwery('.js-live-blog__timeline', context);
@@ -140,11 +135,13 @@ define([
     }
 
     return {
-        init: function () {
+        init: function (config) {
             createAutoRefresh();
             createFilter();
-            createTimeline();
-            //createScrollTransitions();
+            if(config.page.keywordIds.indexOf('football/football') < 0) {
+                createTimeline();
+                createScrollTransitions();
+            }
         }
     };
 });
