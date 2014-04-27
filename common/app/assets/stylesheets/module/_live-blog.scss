@@ -38,6 +38,10 @@ $block-padding-right: $gs-gutter;
     }
 }
 
+.blog__head-lower {
+    position: relative;
+}
+
 @include mq(rightCol) {
     .blog__last-updated-container {
         position: absolute;
@@ -175,6 +179,11 @@ $block-padding-right: $gs-gutter;
 
 /* Design
    ========================================================================== */
+.blog__zone--default {
+    @include mq(tablet, rightCol) {
+        @include full-bleed($c-liveDefault);
+    }
+}
 .blog__main-background {
     @include full-bleed($c-neutral8);
 }
@@ -182,7 +191,6 @@ $block-padding-right: $gs-gutter;
     @include full-bleed($c-liveDefault);
 }
 .blog__head-background--accent {
-    position: relative;
     z-index: 100;
     @include full-bleed($c-liveAccent);
 }
@@ -208,32 +216,15 @@ $block-padding-right: $gs-gutter;
 /* Header
    ========================================================================== */
 
-.blog__inner--head {
-    color: #ffffff;
-}
-
 .blog__zone {
     position: relative;
-
-    @include mq(tablet, rightCol) {
-        background-color: $c-liveDefault;
-    }
-
-    @include mq(tablet) {
-        border-top: none !important;
-    }
-}
-
-.blog__zone__inner {
-    @include mq(tablet, rightCol) {
-        @include full-bleed($c-liveDefault);
-    }
 }
 
 .blog__zone__link {
     color: #000000;
+
     @include mq(tablet) {
-        color: #ffffff;
+        color:  $c-liveDefault;
     }
 }
 
@@ -252,42 +243,42 @@ $block-padding-right: $gs-gutter;
 
 .blog__meta-container {
     color: inherit;
-    border-top: 1px dotted #E6A1AB;
+    border-top: 1px dotted $c-neutral4;
     position: relative;
     padding-bottom: $gs-baseline;
-    @include mq(rightCol) {
-        border-top: none;
+
+    @include mq($to: rightCol) {
+        border-bottom: 1px dotted $c-neutral4;
     }
-}
-.blog__meta-container .article__dateline {
-    @include fs-data(3);
-    color: inherit;
-    border: 0;
-    margin: 0;
-    padding: 0;
-    height: auto;
-}
 
-.blog__meta-container .byline {
-    @include fs-bodyHeading(1);
-    color: inherit;
-    font-weight: normal;
-    padding: 0;
-    @include rem((
-        margin: $gs-baseline/3 0 $gs-baseline/2
-    ));
-    min-height: initial;
-    border-top: 0;
-
-    .tone-colour {
+    .article__dateline {
+        @include fs-data(3);
         color: inherit;
+        border: 0;
+        margin: 0;
+        padding: 0;
+        height: auto;
     }
-    a {
-        font-weight: bold;
+
+    .byline {
+        @include fs-bodyHeading(1);
+        font-weight: normal;
+        padding: 0;
+        @include rem((
+            margin: $gs-baseline/3 0 $gs-baseline/2
+        ));
+        min-height: initial;
+        border-top: 0;
+
+        .tone-colour {
+            color: $c-liveDefault;
+            font-weight: bold;
+        }
     }
 }
 
 .blog__last-updated-container {
+    color: $c-liveDefault;
     @include fs-data(3);
     @include box-sizing(border-box);
     @include mq($to: rightCol) {
@@ -305,7 +296,7 @@ $block-padding-right: $gs-gutter;
     &:before {
         $size: 12px;
         content: "";
-        background-color: #ffffff;
+        background-color: $c-liveDefault;
         width: $size;
         height: $size;
         @include border-radius($size/2);
@@ -314,6 +305,59 @@ $block-padding-right: $gs-gutter;
         margin-right: 3px;
     }
 }
+
+/* Header colour overrides
+   ========================================================================== */
+.blog__zone--default {
+
+    @include mq(tablet, rightCol) {
+        background-color: $c-liveDefault;
+    }
+
+    @include mq(tablet) {
+        border-top: none !important;
+
+        .blog__zone__link {
+            color: #ffffff;
+        }
+    }
+}
+
+.blog__head-background--default {
+    color: #ffffff;
+
+    .blog__zone__inner {
+        @include mq(tablet, rightCol) {
+            @include full-bleed($c-liveDefault);
+        }
+    }
+
+    .blog__meta-container {
+        border-top: 1px dotted #E6A1AB;
+        border-bottom: none;
+
+        .byline,
+        .tone-colour,
+        .article__dateline {
+            color: inherit;
+        }
+
+        @include mq(rightCol) {
+            border-top: none;
+        }
+    }
+
+    .blog__last-updated-container {
+        color: #ffffff;
+    }
+
+    .blog__live {
+        &:before {
+            background-color: #ffffff;
+        }
+    }
+}
+
 
 /* Timestamps
    ========================================================================== */
@@ -896,6 +940,20 @@ $timeline-width: 14px;
 
         .timeline__link:hover & {
             font-weight: bold;
+        }
+    }
+}
+
+/* Football components
+   ========================================================================== */
+.blog {
+    .tabs__container--multiple {
+        margin-bottom: 0;
+    }
+
+    @include mq(rightCol) {
+        .tabs__tab--selected .tab__link {
+            background-color: $c-neutral8;
         }
     }
 }

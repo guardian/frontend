@@ -30,7 +30,7 @@ define([
     Affix
 ) {
     'use strict';
-    
+
     var affix = null;
 
     function getKeyEvents() {
@@ -94,16 +94,20 @@ define([
     }
 
     function createTimeline() {
-        var allEvents = getKeyEvents();
-        var timelineHTML = getTimelineHTML(allEvents);
-        var context = qwery('.js-live-blog__timeline');
-        bonzo(context).append(timelineHTML);
-        
-        affix = new Affix({
-            element: qwery('.js-live-blog__timeline-container')[0],
-            topMarker: qwery('.js-top-marker')[0],
-            bottomMarker: qwery('.js-bottom-marker')[0],
-            containerElement: qwery('.js-live-blog__key-events')[0]
+        mediator.on('page:article:ready', function(config, context) {
+            if(config.page.keywordIds.indexOf('football/football') > -1) { return; }
+
+            var allEvents = getKeyEvents();
+            var timelineHTML = getTimelineHTML(allEvents);
+            context = qwery('.js-live-blog__timeline', context);
+            bonzo(context).append(timelineHTML);
+
+            affix = new Affix({
+                element: qwery('.js-live-blog__timeline-container')[0],
+                topMarker: qwery('.js-top-marker')[0],
+                bottomMarker: qwery('.js-bottom-marker')[0],
+                containerElement: qwery('.js-live-blog__key-events')[0]
+            });
         });
     }
 
