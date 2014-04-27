@@ -37,6 +37,7 @@
         <div class="blog__columning-wrapper">
             <div class="blog__main-column blog__main-background">
                 <div class="blog__standfirst-container">
+                    <div class="js-top-marker"></div>
                     @fragments.standfirst(article)
 
                     @fragments.witnessCallToAction(article)
@@ -69,10 +70,12 @@
                 </div>
 
                 @if(article.hasKeyEvents) {
-                    <div class="blog__timeline blog__dropdown">
-                    @fragments.dropdown("Key events", "live") {
-                        <ul class="js-live-blog__timeline timeline u-unstyled"></ul>
-                    }
+                    <div class="blog__timeline blog__dropdown js-live-blog__key-events" data-component="timeline">
+                        <div class="blog__timeline-container js-live-blog__timeline-container">
+                            @fragments.dropdown("Key events", "live") {
+                                <ul class="timeline js-live-blog__timeline u-unstyled"></ul>
+                            }
+                        </div>
                     </div>
                 }
 
@@ -103,6 +106,7 @@
                     <div class="social-wrapper" data-component="share">
                     @fragments.social(article)
                     </div>
+                    <div class="js-bottom-marker"></div>
                 }
             </div>
             <div class="blog__secondary-column" aria-hidden="true">

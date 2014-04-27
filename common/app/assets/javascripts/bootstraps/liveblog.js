@@ -1,5 +1,5 @@
 define([
-    'common/common',
+    'common/utils/mediator',
     'common/$',
     'qwery',
     'bonzo',
@@ -11,9 +11,10 @@ define([
     'common/utils/detect',
     'common/modules/ui/autoupdate',
     'common/modules/live/filter',
-    'common/modules/ui/notification-counter'
+    'common/modules/ui/notification-counter',
+    'common/modules/experiments/affix'
 ], function (
-    common,
+    mediator,
     $,
     qwery,
     bonzo,
@@ -25,9 +26,12 @@ define([
     detect,
     AutoUpdate,
     LiveFilter,
-    NotificationCounter
+    NotificationCounter,
+    Affix
 ) {
     'use strict';
+    
+    var affix = null;
 
     function getKeyEvents() {
         return qwery('.live-blog__blocks .is-key-event').slice(0, 9);
@@ -64,9 +68,8 @@ define([
     function createKeyEventHTML(el) {
         var keyEventTemplate =
             '<li class="timeline__item" data-event-id="${ id }">' +
-            '<a href="#${id}" data-event-id="${id}"><span class="timeline__date">${ time }</span>' +
-            '<span class="timeline__title">${ title }</span></a>' +
-            '</li>';
+            '<a class="timeline__link" href="#${id}" data-event-id="${id}">' +
+            '<span class="timeline__date">${ time }</span><span class="timeline__title">${ title }</span></a></li>';
         var vals = {
             id: el.getAttribute('id'),
             title: $('.block-title', el).text(),
@@ -95,10 +98,17 @@ define([
         var timelineHTML = getTimelineHTML(allEvents);
         var context = qwery('.js-live-blog__timeline');
         bonzo(context).append(timelineHTML);
+        
+        affix = new Affix({
+            element: qwery('.js-live-blog__timeline-container')[0],
+            topMarker: qwery('.js-top-marker')[0],
+            bottomMarker: qwery('.js-bottom-marker')[0],
+            containerElement: qwery('.js-live-blog__key-events')[0]
+        });
     }
 
     function createAutoRefresh(){
-        common.mediator.on('page:article:ready', function(config, context) {
+        mediator.on('page:article:ready', function(config, context) {
             if (config.page.isLive) {
 
                 var timerDelay = /desktop|wide/.test(detect.getBreakpoint()) ? 30000 : 60000;
@@ -119,7 +129,7 @@ define([
     }
 
     function createFilter() {
-        common.mediator.on('page:article:ready', function(config, context) {
+        mediator.on('page:article:ready', function(config, context) {
             new LiveFilter($('.js-blog-blocks', context)[0]).render($('.js-live-filter')[0]);
             new NotificationCounter().init();
         });
