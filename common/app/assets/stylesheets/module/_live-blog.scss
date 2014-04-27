@@ -11,14 +11,13 @@ $block-padding-right: $gs-gutter;
 .blog__main-column {
     @include mq(rightCol) {
         @include rem((
-            padding-top:$gs-baseline
+            padding-top: $gs-baseline
         ));
     }
 }
 
 .blog__meta-container,
 .blog__inner {
-
     @include mq(rightCol) {
         max-width: none;
     }
@@ -33,7 +32,7 @@ $block-padding-right: $gs-gutter;
         padding-top: 0;
         border-top: none;
         @include rem((
-            margin-right:0 !important
+            margin-right: 0 !important
         ))
     }
 }
@@ -45,9 +44,11 @@ $block-padding-right: $gs-gutter;
 @include mq(rightCol) {
     .blog__last-updated-container {
         position: absolute;
-        left: ($a-rightCol-width + $gs-gutter) * -1;
-        top: 5px;
-        max-width: $a-leftColWide-width;
+        @include rem((
+            left: ($a-rightCol-width + $gs-gutter) * -1,
+            top: $gs-baseline/2.4,
+            max-width: $a-leftColWide-width
+        ));
     }
 }
 
@@ -60,13 +61,13 @@ $block-padding-right: $gs-gutter;
 
         .discussion {
             @include rem((
-                margin-left: - ($a-rightCol-width + $gs-gutter)
+                margin-left: ($a-rightCol-width + $gs-gutter)*-1
             ));
         }
     }
     .blog__columning-wrapper {
-        width: 100%;
         display: table;
+        width: 100%;
         table-layout: fixed;
         padding-right: 0;
         position: relative;
@@ -105,27 +106,31 @@ $block-padding-right: $gs-gutter;
         display: table-cell;
         @include rem((
             width: $a-rightCol-width,
-            padding-top: 14px //MPU has 10px top therefor === 24px
+            padding-top: 14px //MPU has 10px top therefore === 24px
         ));
     }
 }
 
 .blog__last-updated-container {
-    padding-bottom: 9px;
+    @include rem((
+        padding-bottom: 9px
+    ));
 }
 
 .blog__comment-count {
     display: block;
-    margin-top: $gs-baseline/2;
+    @include rem((
+        margin-top: $gs-baseline/2
+    ));
     @include mq(mobileLandscape) {
         position: absolute;
         right: 0;
         top: 0;
     }
     .commentcount {
-        color: inherit;
         display: block;
         position: static;
+        color: inherit;
         margin-bottom: 0;
 
         &:hover,
@@ -215,7 +220,6 @@ $block-padding-right: $gs-gutter;
 
 /* Header
    ========================================================================== */
-
 .blog__zone {
     position: relative;
 }
@@ -229,35 +233,41 @@ $block-padding-right: $gs-gutter;
 }
 
 .blog__headline {
+    @include rem((
+        margin-bottom: $gs-baseline*3
+    ));
     color: inherit;
     @include fs-headline(4);
 
     @include mq(tablet) {
         @include fs-headline(5, true);
     }
-    margin-bottom: $gs-baseline*3;
     @include mq(rightCol) {
-        margin-bottom: $gs-row-height + ($gs-baseline * 2);
+        @include rem((
+            margin-bottom: $gs-row-height + ($gs-baseline * 2)
+        ));
     }
 }
 
 .blog__meta-container {
+    position: relative;
     color: inherit;
     border-top: 1px dotted $c-neutral4;
-    position: relative;
-    padding-bottom: $gs-baseline;
+    @include rem((
+        padding-bottom: $gs-baseline
+    ));
 
     @include mq($to: rightCol) {
         border-bottom: 1px dotted $c-neutral4;
     }
 
     .article__dateline {
-        @include fs-data(3);
-        color: inherit;
-        border: 0;
         margin: 0;
         padding: 0;
         height: auto;
+        @include fs-data(3);
+        color: inherit;
+        border: 0;
     }
 
     .byline {
@@ -295,21 +305,22 @@ $block-padding-right: $gs-gutter;
     font-weight: bold;
     &:before {
         $size: 12px;
+        display: inline-block;
         content: "";
         background-color: $c-liveDefault;
-        width: $size;
-        height: $size;
+        @include rem((
+            width: $size,
+            height: $size,
+            margin-bottom: -1px,
+            margin-right: 3px
+        ));
         @include border-radius($size/2);
-        display: inline-block;
-        margin-bottom: -1px;
-        margin-right: 3px;
     }
 }
 
 /* Header colour overrides
    ========================================================================== */
 .blog__zone--default {
-
     @include mq(tablet, rightCol) {
         background-color: $c-liveDefault;
     }
@@ -351,25 +362,27 @@ $block-padding-right: $gs-gutter;
         color: #ffffff;
     }
 
-    .blog__live {
-        &:before {
-            background-color: #ffffff;
-        }
+    .blog__live:before {
+        background-color: #ffffff;
     }
 }
-
 
 /* Timestamps
    ========================================================================== */
 .timestamp,
 .published-time {
-    @include font($sans-serif, bold, 13, 20);
     display: block;
-    padding: $gs-baseline/3 0;
-    margin-top: ($gs-baseline/3)*2;
+    @include rem((
+        padding: $gs-baseline/3 0,
+        margin-top: ($gs-baseline/3)*2
+    ));
+    @include font($sans-serif, bold, 13, 20);
+
     time {
-        margin-bottom: $gs-baseline/2;
         display: inline-block;
+        @include rem((
+            margin-bottom: $gs-baseline/2
+        ));
     }
 }
 
@@ -387,7 +400,9 @@ $block-padding-right: $gs-gutter;
 
     .block-time__absolute {
         display: inline-block;
-        margin-left: $gs-gutter/4;
+        @include rem((
+            margin-left: $gs-gutter/4
+        ));
         color: $c-neutral2;
         @include fs-data(2);
         font-style: italic;
@@ -417,7 +432,7 @@ $block-padding-right: $gs-gutter;
     ));
     @include mq(tablet) {
         @include rem((
-            margin-right:$block-padding-right,
+            margin-right: $block-padding-right,
             margin-left: $block-padding-left
         ));
     }
@@ -425,27 +440,27 @@ $block-padding-right: $gs-gutter;
 
 /* Blocks
    ========================================================================== */
-
 .block {
     @include clearfix;
-    margin-bottom: $gs-baseline;
+    @include rem((
+        margin-bottom: $gs-baseline,
+        padding-top: $gs-baseline/2,
+        padding-bottom: $gs-baseline*2
+    ));
     background-color: white;
     border-top: 1px solid $c-neutral3;
-    padding-top: $gs-baseline/2;
-    padding-bottom: $gs-baseline*2;
     border-bottom: 1px solid $c-neutral6;
 }
 
 .block.is-key-event {
-    border-top: 2px solid black;
+    border-top: 2px solid #000000;
     .block-title {
-        color: black;
+        color: #000000;
     }
 }
 
 /* Blocks container
    ========================================================================== */
-
 .live-blog__blocks {
     opacity: 1;
     height: auto;
@@ -457,7 +472,9 @@ $block-padding-right: $gs-gutter;
     }
 }
 .blog .ad-slot--mpu-banner-ad {
-    padding-top: $gs-baseline;
+    @include rem((
+        padding-top: $gs-baseline
+    ));
 }
 
 /* Autoupdate
@@ -483,11 +500,9 @@ $block-padding-right: $gs-gutter;
 }
 
 .autoupdate--has-animation {
-
     .autoupdate--highlight {
         @include animation(new-block-animation 5s ease-out);
     }
-
 }
 
 @include keyframes(new-block-animation) {
@@ -506,7 +521,6 @@ $block-padding-right: $gs-gutter;
         color: $c-neutral2-contrasted;
     }
 
-
     .article__keywords {
         border-top: 1px dotted $c-neutral3;
         @include rem((
@@ -515,7 +529,9 @@ $block-padding-right: $gs-gutter;
     }
 
     .social-wrapper {
-        padding-bottom: $gs-baseline*2;
+        @include rem((
+            padding-bottom: $gs-baseline*2
+        ));
     }
 }
 
@@ -531,16 +547,15 @@ $block-padding-right: $gs-gutter;
     }
 
     .block-title,
-    .block-elements > *
-    {
+    .block-elements > * {
         @include rem((
             margin-left: $gs-gutter/2,
             margin-right: $gs-gutter/2
         ));
         @include mq(tablet) {
             @include rem((
-                margin-right:$block-padding-right,
-                margin-left:$block-padding-left
+                margin-right: $block-padding-right,
+                margin-left: $block-padding-left
             ));
         }
     }
@@ -552,15 +567,16 @@ $block-padding-right: $gs-gutter;
 
         /* Quotes
            ========================================================= */
-
         > blockquote,
         > blockquote.quoted { // using !important to override inline styles from content api
             @include rem((
                 margin: 16px $block-padding-right $gs-baseline*1.5 $block-padding-left !important
             ));
             @include mq($to: mobileLandscape) {
-                margin-left: $gs-gutter/2 !important;
-                margin-right: $gs-gutter/2 !important;
+                @include rem((
+                    margin-left: $gs-gutter/2 !important,
+                    margin-right: $gs-gutter/2 !important
+                ));
                 &:before { // remove pseudo quote at mobile
                     display: none;
                 }
@@ -571,18 +587,23 @@ $block-padding-right: $gs-gutter;
         }
 
         > blockquote.quoted:before {
-            margin-left: -30px;
+            @include rem((
+                margin-left: -30px
+            ));
             left: auto;
         }
 
         /* Media
            ========================================================= */
-
         > .element {
-            margin: 0 0 12px 0;
+            @include rem((
+                margin: 0 0 $gs-baseline
+            ));
         }
         > .element-image + .element {
-            margin-top: -12px;
+            @include rem((
+                margin-top: $gs-baseline*-1
+            ));
         }
 
         > .embed-video-wrapper {
@@ -608,7 +629,7 @@ $block-padding-right: $gs-gutter;
         }
 
         > .element figcaption {
-            background-color: white;
+            background-color: #ffffff;
             @include rem((
                 margin-left: $gs-gutter/2,
                 margin-right: $gs-gutter/2,
@@ -619,7 +640,7 @@ $block-padding-right: $gs-gutter;
                 @include rem((
                     margin-left: $block-padding-left,
                     margin-right: $block-padding-right
-                ))
+                ));
             }
         }
     }
@@ -627,7 +648,6 @@ $block-padding-right: $gs-gutter;
 
 /* Tweets
    ========================================================================== */
-
 .tweet {
     display: table-cell;
     width: 10000px;
@@ -637,7 +657,9 @@ $block-padding-right: $gs-gutter;
     background-repeat: no-repeat;
 }
 .element-tweet {
-    margin: $gs-baseline 0 ($gs-baseline/3)*4;
+    @include rem((
+        margin: $gs-baseline 0 ($gs-baseline/3)*4
+    ));
 }
 .tweet,
 .from-content-api blockquote.tweet {
@@ -654,14 +676,14 @@ $block-padding-right: $gs-gutter;
     &:first-child {
         @include rem((
             margin-top: $gs-baseline/2
-        ))
+        ));
     }
 
     @include mq(tablet) {
         @include rem((
             margin-left: $block-padding-left,
-            margin-right: $block-padding-right,
-        ))
+            margin-right: $block-padding-right
+        ));
     }
 }
 // Temporary fix to issue #1674
@@ -680,15 +702,19 @@ $block-padding-right: $gs-gutter;
 .tweet-user {
     display: inline-block;
     font-weight: bold;
-    padding-left: 40px;
+    @include rem((
+        padding-left: 40px
+    ));
     margin-bottom: 0;
 }
 
 .tweet-date {
     display: block;
     color: $c-neutral2;
-    padding-left: 40px;
-    margin-bottom: ($gs-baseline/3)*4;
+    @include rem((
+        padding-left: 40px,
+        margin-bottom: ($gs-baseline/3)*4
+    ));
 }
 
 .twitter-tweet {
@@ -698,9 +724,9 @@ $block-padding-right: $gs-gutter;
 /* Dropdowns
    ========================================================================== */
 .dropdown--live {
+    position: relative;
     padding: 0;
     z-index: 100;
-    position: relative;
     border-top: none;
     border-bottom: 1px solid $c-neutral4;
 
@@ -799,7 +825,7 @@ $timeline-width: 14px;
         top: 0;
         z-index: 200;
         @include rem((
-            margin-left: - ($a-rightCol-width + $gs-gutter),
+            margin-left: ($a-rightCol-width + $gs-gutter)*-1,
             width: $a-rightCol-width
         ));
 
@@ -841,7 +867,7 @@ $timeline-width: 14px;
     width: 100%;
     overflow: hidden;
     @include rem((
-        min-height: gs-height(1) + $gs-baseline/3,
+        min-height: gs-height(1) + $gs-baseline/3
     ));
     border-bottom: 1px solid $c-neutral4;
 
@@ -856,7 +882,6 @@ $timeline-width: 14px;
     }
 }
 .timeline__link {
-
     @include rem((
         padding: $gs-baseline/6 0 $gs-baseline/2
     ));
