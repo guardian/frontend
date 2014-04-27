@@ -123,7 +123,7 @@
 }
 
 @mixin full-bleed($color) {
-    $bgWidth: 800px;
+    $bgWidth: 10000px;
     background-color: $color;
 
     &:before,
