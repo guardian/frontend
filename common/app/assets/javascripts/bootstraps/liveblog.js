@@ -32,7 +32,19 @@ define([
     var affix = null;
 
     function getKeyEvents() {
-        return qwery('.live-blog__blocks .is-key-event').slice(0, 9);
+        return qwery('.live-blog__blocks .is-key-event').slice(0, 7);
+    }
+
+    function getBlocks() {
+        return qwery('.block');
+    }
+
+    function getFirstBlock() {
+        return getBlocks().shift();
+    }
+
+    function getLastBlock() {
+        return getBlocks().pop();
     }
 
     function createScrollTransitions(){
@@ -91,12 +103,18 @@ define([
         return recursiveRender(events, '');
     }
 
+    function wrapWithFirstAndLast(html) {
+        return createKeyEventHTML(getFirstBlock()) + html + createKeyEventHTML(getLastBlock());
+    }
+
     function createTimeline() {
         mediator.on('page:article:ready', function(config, context) {
             var allEvents = getKeyEvents();
-            var timelineHTML = getTimelineHTML(allEvents);
+            var timelineHTML = wrapWithFirstAndLast(getTimelineHTML(allEvents));
 
             $('.js-live-blog__timeline', context).append(timelineHTML);
+            $('.js-live-blog__timeline li:first-child .timeline__title').text('Latest post');
+            $('.js-live-blog__timeline li:last-child .timeline__title').text('Openeing post');
 
             if(/desktop|wide/.test(detect.getBreakpoint())) {
                 affix = new Affix({
