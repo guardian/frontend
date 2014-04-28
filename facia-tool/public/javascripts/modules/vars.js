@@ -23,11 +23,15 @@ define(['knockout'], function(ko) {
         groups: ['standard,big,very big,huge'],
 
         viewer: 'http://s3-eu-west-1.amazonaws.com/facia/responsive-viewer.html',
+
         filterTypes: {
             section: { display: 'in section:', param: 'section', path: 'sections', placeholder: 'e.g. news' },
             tag:     { display: 'with tag:',   param: 'tag',     path: 'tags',     placeholder: 'e.g. sport/triathlon' }
         },
+
         searchPageSize:        50,
+
+        capiBatchSize:         10,
 
         collectionsPollMs:     10000,
         latestArticlesPollMs:  20000,
@@ -61,11 +65,11 @@ define(['knockout'], function(ko) {
 
     return {
         CONST: CONST,
+        model: undefined,
         sparksBase:      sparksBaseUrl(CONST.sparksParams),
         sparksBaseFront: sparksBaseUrl(CONST.sparksFrontParams),
         state: {
             config: {},
-            switches: {},
             liveMode: ko.observable(false),
             pending: ko.observable(false),
             openFronts: {}

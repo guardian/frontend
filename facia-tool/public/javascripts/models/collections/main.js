@@ -44,6 +44,8 @@ define([
             model.statusPressFailure(false);
         };
 
+        model.switches = ko.observable();
+
         model.collections = ko.observableArray();
 
         model.fronts = ko.observableArray();
@@ -91,7 +93,7 @@ define([
         function detectPressFailure() {
             model.statusPressFailure(false);
 
-            if (vars.state.switches['facia-tool-check-press-lastmodified'] && model.front()) {
+            if (model.switches()['facia-tool-check-press-lastmodified'] && model.front()) {
                 authedAjax.request({
                     url: '/front/lastmodified/' + model.front()
                 })
@@ -161,7 +163,7 @@ define([
 
         function showFrontSpark() {
             model.frontSparkUrl(undefined);
-            if (vars.state.switches['facia-tool-sparklines']) {
+            if (model.switches()['facia-tool-sparklines']) {
                 model.frontSparkUrl(vars.sparksBaseFront + getFront());
             }
         }
@@ -199,8 +201,10 @@ define([
                     terminate();
                     return;
                 }
-                vars.state.switches = switches;
+                model.switches(switches);
+
                 vars.state.config = config;
+
                 model.fronts(
                     getFront() === 'testcard' ? ['testcard'] :
                        _.chain(_.keys(config.fronts))
