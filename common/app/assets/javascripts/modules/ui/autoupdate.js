@@ -80,7 +80,7 @@ define([
 
                 if(this.isUpdating && detect.pageVisible()) {
                     this.notificationBar.setState('hidden');
-                    this.view.revealNewElements();
+                    this.view.revealNewElements.call(this);
                 } else if(this.unreadBlocks > 0) {
                     this.notificationBar.notify(this.unreadBlocks);
                 }
