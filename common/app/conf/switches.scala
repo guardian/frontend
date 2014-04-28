@@ -305,12 +305,6 @@ object Switches extends Collections {
   )
 
   // A/B Test Switches
-
-  val ABExternalLinksNewWindow = Switch("A/B Tests", "ab-external-links-new-window",
-    "If this switch is on, AB test opening external links in a new tab/window.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 4, 30)
-  )
-
   val ABHomeComponent = Switch("A/B Tests", "ab-home-component",
     "This switch runs an AB test which adds a sticky-like home button.",
     safeState = Off, sellByDate = new DateMidnight(2014, 5, 4)
@@ -434,7 +428,6 @@ object Switches extends Collections {
     EnhanceTweetsSwitch,
     IndiaRegionSwitch,
     ABHomeComponent,
-    ABExternalLinksNewWindow,
     MemcachedSwitch,
     IncludeBuildNumberInMemcachedKey,
     GzipSwitch
