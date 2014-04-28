@@ -314,7 +314,7 @@ class LiveBlog(content: ApiContentWithMeta) extends Article(content) {
     group.map(_.toString).mkString
   }.toList
   lazy val hasKeyEvents: Boolean = soupedBody.select(".is-key-event").nonEmpty
-  lazy val isFootball: Boolean = tags.exists(_.id == "football/football")
+  lazy val isSport: Boolean = tags.exists(_.id == "sport/sport")
   override def cards: List[(String, Any)] = super.cards ++ List(
     "twitter:card" -> "summary"
   )

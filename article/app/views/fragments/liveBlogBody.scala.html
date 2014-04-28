@@ -1,7 +1,7 @@
 @(model: LiveBlogPage)(implicit request: RequestHeader)
 @import conf.Switches._
 
-@defining((model.article, model.storyPackage, !model.article.isFootball)) {  case (article, storyPackage, isDefault) =>
+@defining((model.article, model.storyPackage, !model.article.isSport)) {  case (article, storyPackage, isDefault) =>
 
 <h2 class="article__zone blog__zone @if(isDefault){blog__zone--default} right-col-deport tone-@VisualTone(article) tone-accent-border hide-on-mobile-if-localnav">
     <span class="blog__zone__inner right-col-deport__body" data-component="meta">
