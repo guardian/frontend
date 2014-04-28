@@ -15,7 +15,7 @@ define([
         var fixturesConfig = {
                 id: 'article-aside-adverts',
                 fixtures: [
-                    '<div class="js-right-hand-component" style="height: 1px">' +
+                    '<div class="article__secondary-column">' +
                         '<div class="js-mpu-ad-slot"></div>' +
                     '</div>'
                 ]
