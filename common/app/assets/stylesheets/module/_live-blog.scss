@@ -265,7 +265,7 @@ $block-padding-right: $gs-gutter;
     @include mq(rightCol) {
         @include rem((
             min-height: gs-height(1)*1.5,
-            padding-top: $gs-baseline/3
+            padding-top: $gs-baseline/6
         ));
     }
 
@@ -290,6 +290,7 @@ $block-padding-right: $gs-gutter;
 
         @include mq(rightCol) {
             margin-top: 0;
+            margin-bottom: $gs-baseline/3
         }
 
         .tone-colour {
