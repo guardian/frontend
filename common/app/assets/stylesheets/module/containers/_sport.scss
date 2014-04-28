@@ -21,7 +21,7 @@
         .item:nth-child(n+2):nth-child(-n+3) {
             @include card-half-width-image;
         }
-        .item:nth-child(4){
+        .item:nth-child(4) {
             clear: left;
         }
         .item:nth-child(n+6) {

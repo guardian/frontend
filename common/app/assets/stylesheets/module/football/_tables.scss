@@ -36,7 +36,7 @@
     // remove battle line from last row
     // (only happens in truncated tables)
     tr:last-child td {
-        border-bottom: none;
+        border-bottom: 0;
     }
 
     .football-stat--form {

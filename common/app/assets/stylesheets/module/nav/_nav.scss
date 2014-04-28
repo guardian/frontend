@@ -101,7 +101,7 @@
 }
 
 .nav--top-border-off > .nav__item:nth-child(-n+2) .nav__link {
-    border-top: none;
+    border-top: 0;
     padding-top: 0;
 }
 
@@ -294,7 +294,7 @@
         color: #ffffff;
         border-right: 1px solid $c-brandLightBlue;
 
-        &:last-child { border-right: none; }
+        &:last-child { border-right: 0; }
         &.is-active { text-decoration: underline; }
     }
     .nav__link,
@@ -351,10 +351,10 @@
         }
     }
     .nav--guardian-services {
-         .nav__link {
-             position: relative;
-             top: -1px;
-         }
+        .nav__link {
+            position: relative;
+            top: -1px;
+        }
     }
 }
 

@@ -77,7 +77,7 @@
     color: $c-brandLightBlue;
 
     &:before {
-        content: '';
+        content: "";
         display: inline-block;
         @include border-radius(50%);
         background: $c-brandLightBlue;

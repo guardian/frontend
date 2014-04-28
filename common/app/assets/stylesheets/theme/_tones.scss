@@ -10,14 +10,21 @@
                 color: $colour;
             }
         }
+
         .tone-border,
-        &.tone-border { border-color: $colour; }
+        &.tone-border {
+            border-color: $colour;
+        }
 
         .tone-accent-border,
-        &.tone-accent-border { border-color: $accentColour; }
+        &.tone-accent-border {
+            border-color: $accentColour;
+        }
 
         .tone-background,
-        &.tone-background { background-color: $colour; }
+        &.tone-background {
+            background-color: $colour;
+        }
 
         .is-summary > .block-title {
             color: $colour;

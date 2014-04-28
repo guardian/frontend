@@ -71,7 +71,7 @@
         }
         .commercial--masterclasses__class__description__link {
             @include fs-bodyHeading(1);
-             color: $c-newsDefault;
+            color: $c-newsDefault;
         }
         .commercial--masterclasses__class__link__sub {
             color: $c-neutral2;
@@ -153,7 +153,7 @@
     @include mq(faciaLeftCol, $to: wide) {
         .commercial__title__last-word {
             margin-left: 0;
-        }        
+        }
     }
 }
 /* article */

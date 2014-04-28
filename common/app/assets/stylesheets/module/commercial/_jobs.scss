@@ -194,12 +194,11 @@
             ));
             margin-left: 50%;
         }
-     @include mq(desktop) {
+        @include mq(desktop) {
             @include rem((
                 margin-left: gs-span(6)
             ));
         }
-
     }
     .commercial--jobs__job {
         float: left;
