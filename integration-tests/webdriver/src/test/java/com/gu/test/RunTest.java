@@ -6,7 +6,6 @@ import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-        features = {"src/test/resources/com/gu/test/"},
-        tags = {"@common"}
-)public class RunCommonTest {
+        features = {"src/test/resources/com/gu/test/"}
+)public class RunTest {
 }
