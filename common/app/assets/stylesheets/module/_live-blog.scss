@@ -41,6 +41,10 @@ $block-padding-right: $gs-gutter;
     position: relative;
 }
 
+.blog__secondary-column {
+    display: none;
+}
+
 @include mq(rightCol) {
     .blog__last-updated-container {
         position: absolute;
@@ -84,9 +88,6 @@ $block-padding-right: $gs-gutter;
             padding-top: $gs-baseline*2,
             padding-left: $a-rightCol-width + $gs-gutter
         ));
-    }
-    .blog__secondary-column {
-        display: none;
     }
 }
 
