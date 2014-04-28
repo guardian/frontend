@@ -35,23 +35,30 @@
     @include fs-bodyCopy(1, true);
     float: left;
     color: $c-neutral2;
-    width: 14px;
-    width: 1.4rem;
+    @include rem((
+        width: 14px
+    ));
 
     @include mq(tablet) {
         @include fs-bodyCopy(3, true);
-        width: 20px;
-        width: 2rem;
+        @include rem((
+            width: 20px
+        ))
     }
 }
 .headline-list__title {
-    margin: 0 $gs-gutter/2;
-    @include mq(mobileLandscape) {
-        margin-left: $gs-gutter;
-        margin-right: $gs-gutter;
-    }
     border-bottom: 1px solid $c-neutral6;
-    padding: $gs-baseline/3 $gutter/4 $gs-baseline 0;
+    @include rem((
+        padding: $gs-baseline/3 $gutter/4 $gs-baseline 0,
+        margin: 0 $gs-gutter/2
+    ));
+
+    @include mq(mobileLandscape) {
+        @include rem((
+            margin-left: $gs-gutter,
+            margin-right: $gs-gutter
+        ));
+    }
 
     @include mq(544px) {
         display: none;
@@ -105,26 +112,32 @@
 
     .headline-list__item {
         position: relative;
-        min-height: gs-height(1);
-        padding-left: gs-span(1) - $gs-gutter/2;
-        padding-bottom: ($gs-baseline/3)*7;
+        @include box-sizing(border-box);
+        @include rem((
+            min-height: gs-height(1),
+            padding-left: gs-span(1) - $gs-gutter/2,
+            padding-bottom: ($gs-baseline/3)*7
+        ));
         border-top-color: $c-neutral4;
         color: $c-neutral1;
         @include fs-headline(1);
-        @include box-sizing(border-box);
 
         @include mq(rightCol) {
-            border: none;
-            padding-left: gs-span(1);
+            border: 0;
             padding-bottom: 0;
-            min-height: gs-height(2);
+            @include rem((
+                padding-left: gs-span(1),
+                min-height: gs-height(2)
+            ));
 
             &:before {
                 position: absolute;
                 top: 0;
-                right: $gs-gutter/2;
+                @include rem((
+                    right: $gs-gutter/2
+                ));
                 left: 0;
-                content: '';
+                content: "";
                 display: block;
                 height: 1px;
                 background-color: $c-neutral4;
@@ -133,10 +146,14 @@
 
         @include mq(wide) {
             padding-bottom: 0;
-            min-height: gs-height(3);
+            @include rem((
+                min-height: gs-height(3)
+            ));
 
             &:first-child {
-                min-height: gs-height(6);
+                @include rem((
+                    min-height: gs-height(6)
+                ));
 
                 &:before {
                     left: 0;
@@ -156,7 +173,9 @@
 
             &:before {
                 right: 0;
-                left: $gs-gutter;
+                @include rem((
+                    left: $gs-gutter
+                ));
             }
 
             &:nth-child(-n+4) {

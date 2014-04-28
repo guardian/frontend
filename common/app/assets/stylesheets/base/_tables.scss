@@ -87,7 +87,7 @@ td {
 
 .table--striped {
     td {
-        border-top: none;
+        border-top: 0;
     }
 
     tr:nth-child(odd) > td {
