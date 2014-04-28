@@ -262,6 +262,13 @@ $block-padding-right: $gs-gutter;
         border-bottom: 1px dotted $c-neutral4;
     }
 
+    @include mq(rightCol) {
+        @include rem((
+            min-height: gs-height(1)*1.5,
+            padding-top: $gs-baseline/3
+        ));
+    }
+
     .article__dateline {
         margin: 0;
         padding: 0;
