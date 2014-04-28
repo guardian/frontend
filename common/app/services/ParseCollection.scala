@@ -2,7 +2,7 @@ package services
 
 import common.FaciaMetrics.S3AuthorizationError
 import common._
-import conf.{SwitchingContentApi => ContentApi, Configuration}
+import conf.{ContentApi => ContentApi, Configuration}
 import model.{Collection, Config, Content}
 import play.api.libs.json.Json._
 import play.api.libs.json.{JsObject, JsValue}
@@ -146,7 +146,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
           lazy val supportingLinks: List[CollectionItem] = retrieveSupportingLinks(collectionItem)
           if (!hasParent) getArticles(supportingLinks, edition, hasParent=true) else Future.successful(Nil)
         }
-        val response = ContentApi().item(collectionItem.id, edition).showFields(showFieldsWithBodyQuery).response
+        val response = ContentApi.item(collectionItem.id, edition).showFields(showFieldsWithBodyQuery).response
 
         val content = response.map(_.content).recover {
           case apiError: com.gu.openplatform.contentapi.ApiError if apiError.httpStatus == 404 => {
@@ -200,7 +200,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
 
     val newSearch = queryString match {
       case Path(Seg("search" ::  Nil)) => {
-        val search = ContentApi().search(edition)
+        val search = ContentApi.search(edition)
           .showElements("all")
           .pageSize(20)
         val newSearch = queryParamsWithEdition.foldLeft(search){
@@ -216,7 +216,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
         } recover executeContentApiQueryRecovery
       }
       case Path(id)  => {
-        val search = ContentApi().item(id, edition)
+        val search = ContentApi.item(id, edition)
           .showElements("all")
           .showEditorsPicks(true)
           .pageSize(20)

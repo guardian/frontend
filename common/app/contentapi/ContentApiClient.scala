@@ -102,12 +102,6 @@ with Logging {
   private def isTagQuery(url: String) = url.endsWith("/tags")
 }
 
-class SolrContentApiClient extends ContentApiClient {
-  lazy val httpTimingMetric = ContentApiMetrics.HttpTimingMetric
-  lazy val httpTimeoutMetric= ContentApiMetrics.HttpTimeoutCountMetric
-  override val targetUrl = contentApi.host
-}
-
 class ElasticSearchContentApiClient extends ContentApiClient {
   lazy val httpTimingMetric = ContentApiMetrics.ElasticHttpTimingMetric
   lazy val httpTimeoutMetric = ContentApiMetrics.ElasticHttpTimeoutCountMetric

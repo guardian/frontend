@@ -88,11 +88,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
-  val ElasticSearchSwitch = Switch("Performance Switches", "elastic-search-content-api",
-    "If this switch is on then (parts of) the application will use the Elastic Search content api",
-    safeState = On, sellByDate = never
-  )
-
   val ShowAllArticleEmbedsSwitch = Switch("Performance Switches", "show-all-embeds",
     "If switched on then all embeds will be shown inside article bodies",
     safeState = On, sellByDate = never
@@ -386,7 +381,6 @@ object Switches extends Collections {
     ClientSideErrorSwitch,
     IdentityProfileNavigationSwitch,
     CssFromStorageSwitch,
-    ElasticSearchSwitch,
     FacebookAutoSigninSwitch,
     IdentityFormstackSwitch,
     IdentityEthicalAwardsSwitch,
