@@ -264,7 +264,7 @@
 }
 .l-row--items-4 {
     @include mq($to: tablet) {
-         .item__title--has-icon-mobile {
+        .item__title--has-icon-mobile {
             @include rem((
                 padding-left: 30px
             ));
@@ -391,7 +391,7 @@
         top: ($gs-baseline/3)*2,
         left: $gs-gutter/2.5
     ));
-    background-color: rgba($c-neutral2, 0.7);
+    background-color: rgba($c-neutral2, .7);
     z-index: 2;
     @include border-radius(50%);
 
@@ -504,16 +504,16 @@ $show-more-icon: (
 );
 
 @-webkit-keyframes spin {
-    0%   { -webkit-transform: rotate(0deg); }
-    25%  { -webkit-transform: rotate(90deg); }
-    50%  { -webkit-transform: rotate(180deg); }
-    75%  { -webkit-transform: rotate(270deg); }
+    0% { -webkit-transform: rotate(0deg); }
+    25% { -webkit-transform: rotate(90deg); }
+    50% { -webkit-transform: rotate(180deg); }
+    75% { -webkit-transform: rotate(270deg); }
     100% { -webkit-transform: rotate(360deg); }
 }
 
 .collection__show-more {
     display: block;
-    border: none;
+    border: 0;
     width: map-get($show-more-icon, width);
     height: map-get($show-more-icon, height);
     @include border-radius(50%);
@@ -537,7 +537,7 @@ $show-more-icon: (
         margin-bottom: map-get($show-more-icon, space-between); // a bit of space between icons to avoid
     }
     &[disabled] {
-        -webkit-animation: spin 3s cubic-bezier(0.680, -0.550, 0.265, 1.550) forwards infinite;
+        -webkit-animation: spin 3s cubic-bezier(.680, -.550, .265, 1.550) forwards infinite;
     }
 }
 .collection__show-more__icon {

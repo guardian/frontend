@@ -284,16 +284,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 4, 30)
   )
 
-  val HelveticaEasterEggSwitch = Switch("Feature Switches", "helvetica",
-    "If this switch is on, the article about Helvetica will have its title Helvetica'd",
-    safeState = Off, sellByDate = new DateMidnight(2014, 4, 30)
-  )
-
-  val ComicSansEasterEggSwitch = Switch("Feature Switches", "comicsans",
-    "If this switch is on, the article about Comic Sans Neue will have its title Comic Sans'd",
-    safeState = Off, sellByDate = new DateMidnight(2014, 5, 30)
-  )
-
   val RssLinkSwitch = Switch("Feature Switches", "rss-link",
     "If this switch is on a link to the RSS is rendered in the HTML",
     safeState = Off, sellByDate = new DateMidnight(2014, 6, 30)
@@ -302,11 +292,6 @@ object Switches extends Collections {
   val PopularInTagSwitch = Switch("Feature Switches", "popular-in-tag",
     "If this switch is turned on then popular-in-tag will override related content for the selected tags.",
     safeState = Off, sellByDate = new DateMidnight(2014, 5, 14)
-  )
-
-  val HideOldTimeStampsSwitch = Switch("Feature Switches", "hide-old-timestamps",
-    "If this switch is turned on then timestamps older than an hour get hidden on fronts.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 4, 30)
   )
 
   val EnhanceTweetsSwitch = Switch("Feature Switches", "enhance-tweets",
@@ -438,11 +423,8 @@ object Switches extends Collections {
     ShowAllArticleEmbedsSwitch,
     FrontPressJobSwitch,
     LayoutHintsSwitch,
-    HelveticaEasterEggSwitch,
-    ComicSansEasterEggSwitch,
     RssLinkSwitch,
     PopularInTagSwitch,
-    HideOldTimeStampsSwitch,
     EnhanceTweetsSwitch,
     IndiaRegionSwitch,
     ABHomeComponent,

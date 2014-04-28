@@ -9,8 +9,7 @@ import feed.MostReadAgent
 trait Related extends ConciergeRepository {
   def related(edition: Edition, path: String): Future[Seq[Trail]] = {
 
-    //TODO sticking with old content api for performance reasons
-    val response = ContentApiDoNotUseForNewQueries.item(path, edition)
+    val response = SwitchingContentApi().item(path, edition)
       .showRelated(true)
       .response
 

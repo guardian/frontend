@@ -58,7 +58,7 @@ class RelatedFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         import browser._
         Then("I see each trail block displays the published date of the corresponding article")
 
-        $(".item__timestamp") should have length 3
+        $(".item__timestamp").size should be > 0
 
       }
     }
