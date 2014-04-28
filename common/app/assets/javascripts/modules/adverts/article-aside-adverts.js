@@ -32,10 +32,10 @@ define([
         }
 
         return page.rightHandComponentVisible(
-            (function(rightHandComponent) {
+            function(rightHandComponent) {
                 return $(this.config.adSlotContainerSelector, rightHandComponent)
                     .append(adSlotTemplate);
-            }).bind(this)
+            }.bind(this)
         );
     };
 
