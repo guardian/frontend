@@ -212,7 +212,7 @@ case class VideoEmbedCleaner(contentVideos: Seq[VideoElement]) extends HtmlClean
 
   override def clean(document: Document): Document = {
     document.getElementsByClass("element-video").foreach { element: Element =>
-      element.child(0).wrap("<div class=\"embed-video-wrapper u-responsive-ratio\"></div>")
+      element.child(0).wrap("<div class=\"embed-video-wrapper\"></div>")
     }
 
     document.getElementsByClass("gu-video").foreach { element: Element =>
