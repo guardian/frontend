@@ -1,10 +1,12 @@
 define([
     'common/$',
     'common/utils/detect',
+    'common/utils/page',
     'lodash/objects/assign'
 ], function (
     $,
     detect,
+    page,
     _assign
 ) {
 
@@ -25,12 +27,16 @@ define([
 
     ArticleAsideAdverts.prototype.init = function() {
         // is the switch off, or is the secondary column hidden
-        if (!this.config.switches.standardAdverts || $(this.config.columnSelector).css('display') === 'none') {
+        if (!this.config.switches.standardAdverts) {
             return false;
         }
 
-        return $(this.config.adSlotContainerSelector)
-            .append(adSlotTemplate);
+        return page.rightHandComponentVisible(
+            (function(rightHandComponent) {
+                return $(this.config.adSlotContainerSelector, rightHandComponent)
+                    .append(adSlotTemplate);
+            }).bind(this)
+        );
     };
 
     return ArticleAsideAdverts;
