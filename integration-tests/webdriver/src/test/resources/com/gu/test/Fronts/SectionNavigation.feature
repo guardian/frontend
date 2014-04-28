@@ -1,4 +1,4 @@
-@ignore
+@fronts
 Feature: As Pete I want to expand, show or hide a section
 
   Scenario: clicking the expand button of a section
@@ -24,4 +24,5 @@ Feature: As Pete I want to expand, show or hide a section
     And A section has been hidden
     When he refreshes the page
     Then the section should be hidden
+
 
