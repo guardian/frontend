@@ -42,7 +42,7 @@ define([
 
     function resizeSnaps(selector) {
         $(selector).each(function(el) {
-            setSnapPoint(el, 'facia-snap--');
+            setSnapPoint(el, 'facia-snap-point--');
         });
     }
 
@@ -58,7 +58,7 @@ define([
                             .empty()
                             .append(html);
 
-                        setSnapPoint(el, 'facia-snap--');
+                        setSnapPoint(el, 'facia-snap-point--');
                     });
                 });
             });

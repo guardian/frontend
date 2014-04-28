@@ -103,14 +103,14 @@
     }
 }
 
-.facia-snap--default {
+.facia-snap-point--default {
     .table--football {
         tbody tr { display: none; }
         tbody tr:nth-of-type(-n+6) { display: table-row; }
     }
 }
 
-.facia-snap--large {
+.facia-snap-point--large {
     @include table--hide-none;
 
     .table--football {
@@ -119,7 +119,7 @@
     }
 }
 
-.facia-snap--small {
+.facia-snap-point--small {
     @include table--hide-from-importance-2;
 
     .table--football {
