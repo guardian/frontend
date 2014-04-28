@@ -11,8 +11,7 @@ import play.api.mvc.{RequestHeader, EssentialAction, EssentialFilter, WithFilter
 
 // obviously this is only for devbuild and should never end up in one of our
 // prod projects
-object
-DevCacheWarningFilter extends EssentialFilter with ExecutionContexts {
+object DevCacheWarningFilter extends EssentialFilter with ExecutionContexts {
   def apply(next: EssentialAction) = new EssentialAction {
     def apply(rh: RequestHeader) = {
       next(rh).map{ result =>
