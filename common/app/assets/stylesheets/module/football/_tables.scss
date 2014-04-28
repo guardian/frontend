@@ -82,31 +82,38 @@
         tbody tr { display: none; }
         tbody tr:nth-of-type(-n+5) { display: table-row; }
     }
+    @extend .table--striped;
     // ----
 
 
     .table,
     .table__caption {
         border-top: 0 none;
+
+        tr,
+        td {
+            background: inherit;
+            position: relative;
+            z-index: 2;
+        }
     }
 
     .table__caption--bottom {
+        @include box-sizing(border-box);
+        @include rem((
+            border-left-width: $gs-gutter/2,
+            border-right-width: $gs-gutter/2,
+            bottom: 2px,
+            padding-top: 100px
+        ));
         background: $c-neutral8;
-        background: transparent;
+        border-color: #ffffff;
+        border-style: solid;
         border-top: 0 none;
-        bottom: 0;
-        display: none;
         left: 0;
-        padding-left: 0;
-        padding-right: 0;
         position: absolute;
-        text-align: right;
         width: 100%;
-        z-index: 0;
-
-        a {
-            margin-right: 1.6rem;
-        }
+        z-index: 1;
     }
 }
 
@@ -116,6 +123,19 @@
     .table--football {
         tbody tr { display: none; }
         tbody tr:nth-of-type(-n+4) { display: table-row; }
+    }
+
+    .table__caption--bottom {
+        display: none;
+    }
+}
+
+.l-row--background-features .facia-snap--medium {
+    .table__caption--bottom {
+        @include rem((
+            border-left-width: 7px,
+            border-right-width: 7px
+        ));
     }
 }
 
