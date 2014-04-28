@@ -108,15 +108,6 @@ define([
             }
         },
 
-        initComicSans: function(config) {
-            if(config.switches.comicsans && /\/comic-sans-neue-look-dare-use-it/g.test(config.page.pageId)) {
-                var articleHeadline = document.querySelector('.article__headline');
-                articleHeadline.style.fontFamily = '"Comic Sans Neue", "Comic Sans MS", "EgyptianHeadline", georgia, serif';
-                articleHeadline.style.fontWeight = 'bold';
-                articleHeadline.style.letterSpacing = '-1px';
-            }
-        },
-
         initTruncateAndTwitter: function() {
             mediator.on('page:article:ready', function() {
                 // Ensure that truncation occurs before the tweet upgrading.
@@ -135,7 +126,6 @@ define([
             modules.initFence();
             modules.initLayoutHints(config);
             modules.initHelvetica(config);
-            modules.initComicSans(config);
             modules.initTruncateAndTwitter();
         }
         common.mediator.emit('page:article:ready', config, context);
