@@ -294,11 +294,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 5, 14)
   )
 
-  val HideOldTimeStampsSwitch = Switch("Feature Switches", "hide-old-timestamps",
-    "If this switch is turned on then timestamps older than an hour get hidden on fronts.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 4, 30)
-  )
-
   val EnhanceTweetsSwitch = Switch("Feature Switches", "enhance-tweets",
     "If this switch is turned on then embedded tweets will be enhanced using Twitter's widgets.",
     safeState = Off, sellByDate = never
@@ -424,7 +419,6 @@ object Switches extends Collections {
     LayoutHintsSwitch,
     RssLinkSwitch,
     PopularInTagSwitch,
-    HideOldTimeStampsSwitch,
     EnhanceTweetsSwitch,
     IndiaRegionSwitch,
     ABHomeComponent,
