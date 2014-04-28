@@ -154,4 +154,8 @@
         tbody tr { display: none !important; }
         tbody tr:nth-of-type(-n+3) { display: table-row !important; }
     }
+
+    .competition-name {
+        display: none;
+    }
 }
