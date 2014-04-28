@@ -81,7 +81,7 @@
 
                 @fragments.dropdown("Live feed", "live", true) {
                     <div class="js-article__container article__container" data-component="body">
-                        @fragments.liveFilter(article)
+                        @fragments.liveFilter(article.isLive)
 
                         <div class="article-body u-cf from-content-api js-blog-blocks @if(article.isLive) {live-blog}"
                         itemprop="@if(article.isReview) {reviewBody} else {articleBody}">

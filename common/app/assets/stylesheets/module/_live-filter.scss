@@ -71,8 +71,9 @@
 
 .live-toggler--oldest {
     display: none;
+
     i {
-        @include rotate(180deg)
+        @include rotate(180deg);
     }
 }
 .live-toggler--latest { display: inline; }
@@ -117,7 +118,7 @@
         @include mq(tablet) {
             @include rem((
                 line-height: 17px
-            ))
+            ));
         }
     }
 }

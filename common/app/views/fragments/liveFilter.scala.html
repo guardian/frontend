@@ -1,10 +1,10 @@
-@(article: Article)
+@(isLive: Boolean)
 <div class="live-toolbar js-live-toolbar">
     <div class="js-live-filter live-toggler-wrapper" data-component="live-toggle"></div>
-    @if(article.isLive) {
+    @if(isLive) {
         <div class="update u-h" data-link-name="autoupdate"></div>
     }
 </div>
-@if(article.isLive) {
+@if(isLive) {
     <div class="js-update-notification notify-wrapper" data-component="live-notification"></div>
 }
