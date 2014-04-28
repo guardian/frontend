@@ -78,13 +78,13 @@ define([
                 // add a timestamp to the attacher
                 $attachTo.attr('data-last-updated', date);
 
-                if(this.isUpdating && detect.pageVisible()) {
+                if(this.isUpdating) {
                     this.notificationBar.setState('hidden');
-                    this.view.revealNewElements();
+                    this.view.revealNewElements.call(this);
                 } else if(this.unreadBlocks > 0) {
                     this.notificationBar.notify(this.unreadBlocks);
+                    mediator.emit('modules:autoupdate:unread', this.unreadBlocks);
                 }
-                mediator.emit('modules:autoupdate:unread', this.unreadBlocks);
                 mediator.emit('modules:autoupdate:render');
             },
 
@@ -105,8 +105,12 @@ define([
             revealNewElements: function() {
                 var $newElements = $('.autoupdate--hidden', options.attachTo);
                 $newElements.addClass('autoupdate--highlight').removeClass('autoupdate--hidden');
-                this.unreadBlocks = 0;
 
+                // Do not reset the unread count when page isn't visible. The notification count will then show the
+                // number of blocks loaded since the last reader view.
+                if (detect.pageVisible()) {
+                    this.unreadBlocks = 0;
+                }
                 mediator.emit('modules:autoupdate:unread', this.unreadBlocks);
 
                 setTimeout(function() {
