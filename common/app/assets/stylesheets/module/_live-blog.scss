@@ -652,9 +652,13 @@ $block-padding-right: $gs-gutter;
     display: table-cell;
     width: 10000px;
     max-width: 100%;
-    background-color: $c-neutral7;
     background-position: ($gs-baseline/3)*2 $gutter/2 !important;
     background-repeat: no-repeat;
+    border-top: 1px solid $c-neutral3;
+
+    .element-tweet:first-child & {
+        border-top: none;
+    }
 }
 .element-tweet {
     @include rem((
