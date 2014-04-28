@@ -48,10 +48,13 @@ $block-padding-right: $gs-gutter;
 @include mq(rightCol) {
     .blog__last-updated-container {
         position: absolute;
+        width: 100%;
+        top: 0;
+        border-top: 1px dotted $c-neutral4;
         @include rem((
             left: ($a-rightCol-width + $gs-gutter) * -1,
-            top: $gs-baseline/2.4,
-            max-width: $a-leftColWide-width
+            max-width: $a-rightCol-width,
+            padding-top: $gs-baseline/3
         ));
     }
 }
@@ -373,6 +376,7 @@ $block-padding-right: $gs-gutter;
 
     .blog__last-updated-container {
         color: #ffffff;
+        border-top: 0 none;
     }
 
     .blog__live:before {
