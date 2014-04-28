@@ -225,7 +225,7 @@ $block-padding-right: $gs-gutter;
 }
 
 .blog__zone__link {
-    color: #000000;
+    color: $c-neutral1;
 
     @include mq(tablet) {
         color:  $c-liveDefault;
@@ -471,9 +471,9 @@ $block-padding-right: $gs-gutter;
 }
 
 .block.is-key-event {
-    border-top: 2px solid #000000;
+    border-top: 2px solid $c-neutral1;
     .block-title {
-        color: #000000;
+        color: $c-neutral1;
     }
 }
 
