@@ -1,4 +1,7 @@
 source "https://rubygems.org"
 
 gem "sass", "~> 3.3.6"
-gem "scss-lint"
+
+# group :development do
+#   gem "scss-lint"
+# end

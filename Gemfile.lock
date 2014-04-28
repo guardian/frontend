@@ -1,11 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    rainbow (2.0.0)
     sass (3.3.6)
-    scss-lint (0.23.1)
-      rainbow (~> 2.0)
-      sass (~> 3.3.0)
 
 PLATFORMS
   java
@@ -13,4 +9,3 @@ PLATFORMS
 
 DEPENDENCIES
   sass (~> 3.3.6)
-  scss-lint
