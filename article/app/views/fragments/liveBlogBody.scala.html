@@ -18,7 +18,7 @@
 
                 <h1 itemprop="headline" class="blog__headline">@Html(article.headline)</h1>
 
-                <div class="blog__head-lower@if(isDefault){ blog__head-background--accent}">
+                <div class="blog__head-lower blog__head-background--accent">
                     <div class="blog__last-updated-container">
                         @if(article.isLive) {<span class="blog__live">LIVE</span> }updated <time class="js-timestamp" datetime="@article.webPublicationDate" data-relativeformat="med"></time>
                     </div>
