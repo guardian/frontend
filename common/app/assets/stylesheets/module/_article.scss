@@ -5,6 +5,10 @@
     ));
     @include fs-bodyCopy(3);
 }
+.article--advertisement-feature {
+    @include f-textsans;
+    @include font-size(16, 24);
+}
 
 .article__zone {
     @include fs-header(3);
