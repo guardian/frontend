@@ -76,6 +76,7 @@
 
 .facia-snap--football {
     background: #ffffff;
+    position: relative;
 
     .table--football {
         @extend .table--striped;
@@ -115,13 +116,6 @@
     }
 }
 
-.facia-snap-point--default {
-    .table--football {
-        tbody tr { display: none; }
-        tbody tr:nth-of-type(-n+6) { display: table-row; }
-    }
-}
-
 .facia-snap-point--large {
     @include table--hide-none;
 
@@ -150,5 +144,14 @@
     .table--football {
         tbody tr { display: none !important; }
         tbody tr:nth-of-type(-n+4) { display: table-row !important; }
+    }
+}
+
+.facia-snap-point--mini {
+    @include table--hide-from-importance-3;
+
+    .table--football {
+        tbody tr { display: none !important; }
+        tbody tr:nth-of-type(-n+3) { display: table-row !important; }
     }
 }
