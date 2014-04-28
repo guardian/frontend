@@ -171,15 +171,13 @@ define([
             Dropdowns.init();
         },
 
-        showRelativeDates: function (config) {
-            var dates = RelativeDates,
-                opts = config.switches.hideOldTimestamps && config.page.isFront ? {notAfter: 3600} : undefined; // 1 hour
-
+        showRelativeDates: function () {
+            var dates = RelativeDates;
             mediator.on('page:common:ready', function(config, context) {
-                dates.init(context, opts);
+                dates.init(context);
             });
             mediator.on('fragment:ready:dates', function(el) {
-                dates.init(el, opts);
+                dates.init(el);
             });
         },
 
@@ -529,7 +527,7 @@ define([
             modules.showTabs();
             modules.initialiseNavigation(config);
             modules.showToggles();
-            modules.showRelativeDates(config);
+            modules.showRelativeDates();
             modules.transcludePopular();
             modules.loadVideoAdverts(config);
             modules.initClickstream();
