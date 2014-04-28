@@ -652,6 +652,7 @@ $block-padding-right: $gs-gutter;
 
         > .element-image,
         > .element-video {
+            clear: left;
             border-bottom: 2px solid $c-neutral8;
 
             &:last-child {
