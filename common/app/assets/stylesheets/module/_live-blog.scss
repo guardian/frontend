@@ -619,7 +619,7 @@ $block-padding-right: $gs-gutter;
         > .element-table {
             width: auto;
             @include rem((
-                margin:$gs-baseline 0 ($gs-baseline / 3) * 4
+                margin:$gs-baseline $gs-gutter/2 ($gs-baseline / 3) * 4 $gs-gutter/2
             ));
             @include mq(tablet) {
                 @include rem((
