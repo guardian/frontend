@@ -103,6 +103,8 @@ define([
                 bottomMarker: qwery('.js-bottom-marker')[0],
                 containerElement: qwery('.js-live-blog__key-events')[0]
             });
+
+            createScrollTransitions();
         });
     }
 
@@ -138,9 +140,8 @@ define([
         init: function (config) {
             createAutoRefresh();
             createFilter();
-            if(config.page.keywordIds.indexOf('football/football') < 0) {
+            if(config.page.keywordIds.indexOf('football/football') < 0 && getKeyEvents().length > 0) {
                 createTimeline();
-                createScrollTransitions();
             }
         }
     };
