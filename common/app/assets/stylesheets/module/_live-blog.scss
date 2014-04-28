@@ -240,7 +240,7 @@ $block-padding-right: $gs-gutter;
     @include rem((
         margin-bottom: $gs-baseline*3
     ));
-    color: inherit;
+    color: $c-neutral1;
     @include fs-headline(4);
 
     @include mq(tablet) {
@@ -352,6 +352,10 @@ $block-padding-right: $gs-gutter;
 
 .blog__head-background--default {
     color: #ffffff;
+
+    .blog__headline {
+        color: inherit;
+    }
 
     .blog__zone__inner {
         @include mq(tablet, rightCol) {
