@@ -61,7 +61,7 @@ class RelatedFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         $(".item__timestamp").size should be > 0
 
       }
-    }ª
+    }
 
   }
 }
