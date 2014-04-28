@@ -1,11 +1,11 @@
-@(identifier: String, title: String, content: Html)
+@(content: Html, snapFields: _root_.football.model.SnapFields)
 
-@views.html.football.main(title) {
+@views.html.football.main(snapFields.fallbackHeadline) {
     <div class="row">
         <div class="col-sm-12">
             <hgroup class="page-header">
-                <a href="@identifier" class="btn btn-success pull-right">Drag me to Facia</a>
-                <h1>@title</h1>
+                <a href="@snapFields.snapUrl" class="btn btn-success pull-right">Drag me to Facia</a>
+                <h1>@snapFields.fallbackHeadline</h1>
             </hgroup>
             <p>
                 Preview at multiple sizes:
