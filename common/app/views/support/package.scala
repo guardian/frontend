@@ -1,7 +1,7 @@
 package views.support
 
 import common._
-import conf.Switches.{ ShowAllArticleEmbedsSwitch, ArticleSlotsSwitch, ABExternalLinksNewWindow }
+import conf.Switches.{ ShowAllArticleEmbedsSwitch, ArticleSlotsSwitch }
 import model._
 
 import java.net.URLEncoder._
@@ -343,22 +343,6 @@ case class InBodyLinkCleaner(dataLinkName: String)(implicit val edition: Edition
       }
     }
 
-    // Force external links to open in a new window
-    if (ABExternalLinksNewWindow.isSwitchedOn) {
-      links.filter{
-        link => link.tagName == "a"
-      }.filterNot{
-        link => link.attr("href") startsWith "/"
-      }.filterNot{
-        link => link.attr("href") startsWith "#"
-      }.filterNot{
-        link => link.attr("href") startsWith "http://www.theguardian.com"
-      }.filterNot{
-        link => link.attr("href") startsWith "http://www.guardian.co.uk"
-      }.foreach { link =>
-        link.attr("target", "_blank")
-      }
-    }
     body
   }
 }

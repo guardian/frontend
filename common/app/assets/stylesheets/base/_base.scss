@@ -18,6 +18,13 @@ body {
     background-color: #ffffff;
 }
 
+@if $old-ie == false {
+    html,
+    body {
+        overflow-x: hidden;
+    }
+}
+
 body:after {
     content: "mobile";
     @include u-h;

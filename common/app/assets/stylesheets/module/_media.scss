@@ -1,10 +1,13 @@
-/* ====== media (nicole sullivan's OOCSS) ====== */
+/* media (nicole sullivan's OOCSS) */
 
 .media,
 .media__body {
-    overflow: hidden;
-    _overflow: visible;
-    zoom: 1;
+    @if $old-ie {
+        overflow: visible;
+        zoom: 1;
+    } @else {
+        overflow: hidden;
+    }
 }
 
 .media__img {

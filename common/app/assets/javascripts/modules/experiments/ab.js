@@ -5,7 +5,6 @@ define([
     'common/modules/analytics/mvt-cookie',
 
     //Current tests
-    'common/modules/experiments/tests/external-links-new-window',
     'common/modules/experiments/tests/home-component'
 ], function (
     common,
@@ -13,12 +12,10 @@ define([
     mediator,
     mvtCookie,
 
-    ExternalLinksNewWindow,
     HomeComponent
     ) {
 
     var TESTS = [
-            new ExternalLinksNewWindow(),
             new HomeComponent()
        ],
        participationsKey = 'gu.ab.participations';
