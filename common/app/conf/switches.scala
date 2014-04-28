@@ -54,20 +54,23 @@ object Switches extends Collections {
   val MemcachedSwitch = Switch("Performance Switches", "memcached",
     "If this switch is switched on then the MemcacheAction will be operational",
     safeState = Off,
-    // giving this a sell by date even though it is a perf switch as it is still a test.
-    sellByDate = new DateMidnight(2014, 4, 30)
+    sellByDate = never
   )
 
   val IncludeBuildNumberInMemcachedKey = Switch("Performance Switches", "memcached-build-number",
     "If this switch is switched on then the MemcacheFilter will include the build number in the cache key",
     safeState = Off,
-    // giving this a sell by date even though it is a perf switch as it is still a test.
-    sellByDate = new DateMidnight(2014, 4, 30)
+    sellByDate = never
   )
 
   val AutoRefreshSwitch = Switch("Performance Switches", "auto-refresh",
     "Enables auto refresh in pages such as live blogs and live scores. Turn off to help handle exceptional load.",
     safeState = Off, sellByDate = never
+  )
+
+  val GzipSwitch = Switch("Performance Switches", "gzip",
+    "If switched on then http responses will be gzipped",
+    safeState = Off, sellByDate = new DateMidnight(2014, 5, 5)
   )
 
   val DoubleCacheTimesSwitch = Switch("Performance Switches", "double-cache-times",
@@ -155,9 +158,14 @@ object Switches extends Collections {
     "Enable the Effective Measure audience segment tracking.",
     safeState = Off, sellByDate = profilingEvalDeadline)
 
-  val ForeseeSwitch = Switch("Commercial Tags", "foresee",
-    "Enable Forsee surveys for a sample of our audience",
-    safeState = Off, sellByDate = new DateMidnight(2014,5,1)) // 3 month trial
+  // We don't foresee this service being switched off
+  val ForeseeSwitch = Switch("Performance Switches", "foresee",
+    "Enable Foresee surveys for a sample of our audience",
+    safeState = Off, sellByDate = never)
+
+  val MediaMathSwitch = Switch("Commercial Tags", "media-math",
+    "Enable Media Math audience segment tracking",
+    safeState = Off, sellByDate = never)
 
   // Commercial Feeds
 
@@ -276,16 +284,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 4, 30)
   )
 
-  val HelveticaEasterEggSwitch = Switch("Feature Switches", "helvetica",
-    "If this switch is on, the article about Helvetica will have its title Helvetica'd",
-    safeState = Off, sellByDate = new DateMidnight(2014, 4, 30)
-  )
-
-  val ComicSansEasterEggSwitch = Switch("Feature Switches", "comicsans",
-    "If this switch is on, the article about Comic Sans Neue will have its title Comic Sans'd",
-    safeState = Off, sellByDate = new DateMidnight(2014, 5, 30)
-  )
-
   val RssLinkSwitch = Switch("Feature Switches", "rss-link",
     "If this switch is on a link to the RSS is rendered in the HTML",
     safeState = Off, sellByDate = new DateMidnight(2014, 6, 30)
@@ -294,11 +292,6 @@ object Switches extends Collections {
   val PopularInTagSwitch = Switch("Feature Switches", "popular-in-tag",
     "If this switch is turned on then popular-in-tag will override related content for the selected tags.",
     safeState = Off, sellByDate = new DateMidnight(2014, 5, 14)
-  )
-
-  val HideOldTimeStampsSwitch = Switch("Feature Switches", "hide-old-timestamps",
-    "If this switch is turned on then timestamps older than an hour get hidden on fronts.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 4, 28)
   )
 
   val EnhanceTweetsSwitch = Switch("Feature Switches", "enhance-tweets",
@@ -310,7 +303,7 @@ object Switches extends Collections {
 
   val ABExternalLinksNewWindow = Switch("A/B Tests", "ab-external-links-new-window",
     "If this switch is on, AB test opening external links in a new tab/window.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 4, 28)
+    safeState = Off, sellByDate = new DateMidnight(2014, 4, 30)
   )
 
   val ABHomeComponent = Switch("A/B Tests", "ab-home-component",
@@ -414,6 +407,7 @@ object Switches extends Collections {
     EffectiveMeasureSwitch,
     ImrWorldwideSwitch,
     ForeseeSwitch,
+    MediaMathSwitch,
     DiagnosticsLogging,
     TravelOffersFeedSwitch,
     JobFeedSwitch,
@@ -429,17 +423,15 @@ object Switches extends Collections {
     ShowAllArticleEmbedsSwitch,
     FrontPressJobSwitch,
     LayoutHintsSwitch,
-    HelveticaEasterEggSwitch,
-    ComicSansEasterEggSwitch,
     RssLinkSwitch,
     PopularInTagSwitch,
-    HideOldTimeStampsSwitch,
     EnhanceTweetsSwitch,
     IndiaRegionSwitch,
     ABHomeComponent,
     ABExternalLinksNewWindow,
     MemcachedSwitch,
-    IncludeBuildNumberInMemcachedKey
+    IncludeBuildNumberInMemcachedKey,
+    GzipSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }

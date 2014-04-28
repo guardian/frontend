@@ -33,7 +33,9 @@ object Frontend extends Build with Prototypes {
       "org.rometools" % "rome-modules" % "1.0",
 
       "com.google.api-ads" % "ads-lib" % "1.26.0",
-      "com.google.api-ads" % "dfp-axis" % "1.26.0"
+      "com.google.api-ads" % "dfp-axis" % "1.26.0",
+
+      filters
     )
   )
   val paVersion = "4.8"

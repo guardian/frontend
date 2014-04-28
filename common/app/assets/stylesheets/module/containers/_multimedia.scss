@@ -38,14 +38,14 @@
     }
     .item__link:visited .item__title,
     .linkslist__action:visited {
-       color: mix(#ffffff, lighten($c-neutral1, 7%), 80%);
+        color: mix(#ffffff, lighten($c-neutral1, 7%), 80%);
     }
     .item__link {
         border-top-color: $c-commentAccent;
     }
     .item__standfirst,
     .item__byline,
-    .item__meta{
+    .item__meta {
         display: none;
     }
     .collection-wrapper--position-1 .collection__item:first-child .item__link {
@@ -69,7 +69,7 @@
     }
     @include mq(tablet) {
         .collection__item:before {
-           border-left-color: #6c6c6c;
+            border-left-color: #6c6c6c;
         }
         .collection-wrapper--position-1 {
             .collection__item:first-child {

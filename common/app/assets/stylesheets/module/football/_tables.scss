@@ -1,6 +1,4 @@
-@mixin table-football--small() {
-    .table-column--inferior { display: none; }
-
+@mixin table-football--medium {
     th,
     td {
         min-width: 0;
@@ -14,8 +12,7 @@
 /** League table **/
 .table--football {
     .table-column--main {
-        a,
-        span {
+        .team-name {
             display: block;
             overflow: hidden;
             white-space: nowrap;
@@ -23,16 +20,12 @@
         }
     }
 
-    .football-stat--points {
-        font-weight: bold;
-    }
-
-    .football-stat--team a {
-        color: inherit;
-    }
-
     .table-column--main {
         max-width: 50px;
+
+        a {
+            color: inherit;
+        }
     }
 
     // This makes sure that all table columns are equally spaced
@@ -43,16 +36,28 @@
     // remove battle line from last row
     // (only happens in truncated tables)
     tr:last-child td {
-        border-bottom: none;
+        border-bottom: 0;
     }
 
     .football-stat--form {
         min-width: 75px; // 15(width of status)*5
     }
 
-    // This is as we don't have element media queries (no-one does)
-    @include mq($to: tablet) { @include table-football--small; }
-    &.table--small { @include table-football--small; }
+    @include mq($to: $table-breakpoint-importance-1) { @include table-football--medium; }
+    @include mq($to: $table-breakpoint-importance-2) {
+        .table-column--main {
+            .team-name:after {
+                content: attr(data-abbr);
+            }
+            .team-name__long {
+                @include u-h;
+            }
+        }
+    }
+}
+
+.c-football-table {
+    @include table-football--medium;
 }
 
 .football-table__container {

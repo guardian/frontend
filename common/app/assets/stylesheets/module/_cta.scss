@@ -5,9 +5,11 @@
     color: $c-body;
     text-align: center;
     display: block;
-    padding: $gs-baseline 0 $gs-baseline 0;
-    margin: $gs-baseline 0;
-    border: none;
+    @include rem((
+        padding: $gs-baseline 0,
+        margin: $gs-baseline 0
+    ));
+    border: 0;
     background-color: $c-neutral7;
     text-shadow: none;
     cursor: pointer;
@@ -32,13 +34,17 @@ button.cta {
     @include box-sizing(border-box);
     @include font($serif, normal, 16, 16);
     text-align: left;
-    padding: ($gs-baseline/3)*4 $gutter/2;
+    @include rem((
+        padding: ($gs-baseline/3)*4 $gutter/2
+    ));
 }
 
 .cta--read-more__icon {
     @include rotate(90deg);
     float: right;
-    margin-right: $gutter/2;
+    @include rem((
+        margin-right: ($gs-gutter / 5) * 2
+    ));
 }
 
 .top {
@@ -47,25 +53,31 @@ button.cta {
     width: 100%;
     @include box-sizing(border-box);
     text-align: left;
-    border: none; //To normalise <button> styles
+    border: 0; //To normalise <button> styles
 
     &,
     &:active {
         color: #ffffff;
     }
 
-    padding: 11px $gs-gutter/2;
+    @include rem((
+        padding: 11px $gs-gutter/2
+    ));
 
     @include mq(mobileLandscape) {
-        padding-left: $gs-gutter;
-        padding-right: $gs-gutter;
+        @include rem((
+            padding-left: $gs-gutter,
+            padding-right: $gs-gutter
+        ));
     }
 }
 
 .cta-small {
     @include fs-data(4);
     display: block;
-    padding: ($gs-baseline - 3) 0 $gs-baseline 0;
+    @include rem((
+        padding: ($gs-baseline - 3) 0 $gs-baseline
+    ));
 }
 .cta-small--border {
     border-bottom: 1px solid $c-neutral6;
