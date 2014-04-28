@@ -22,11 +22,11 @@ define([
     component.define(Filter);
 
     Filter.prototype.template = '<div><span class="live-toggler__label">Order by:</span>' +
-        '  <button class="u-button-reset live-toggler live-toggler--latest js-live-toggler" title="Sort by latest first">' +
+        '  <button class="u-button-reset live-toggler live-toggler--latest js-live-toggler" title="Sort by oldest first">' +
         '    <span class="live-toggler__value">Latest</span>' +
         '    <i class="i i-arrow-grey-down"></i>' +
         '  </button>' +
-        '  <button class="u-button-reset live-toggler live-toggler--oldest js-live-toggler" title="Sort by oldest first">' +
+        '  <button class="u-button-reset live-toggler live-toggler--oldest js-live-toggler" title="Sort by latest first">' +
         '    <span class="live-toggler__value">Oldest</span>' +
         '    <i class="i i-arrow-grey-down"></i>' +
         '  </button></div>';
