@@ -88,8 +88,7 @@ object MoreOnMatchController extends Controller with Football with Requests with
   def loadMoreOn(request: RequestHeader, theMatch: FootballMatch): Future[Seq[Content]] = {
     val matchDate = theMatch.date.toDateMidnight
 
-    // TODO search by reference does not work in new content api
-    ContentApiDoNotUseForNewQueries.search(Edition(request))
+    SwitchingContentApi().search(Edition(request))
       .section("football")
       .tag("tone/matchreports|football/series/squad-sheets|football/series/match-previews|football/series/saturday-clockwatch")
       .fromDate(matchDate.minusDays(2))
