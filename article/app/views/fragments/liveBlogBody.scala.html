@@ -99,12 +99,12 @@
                         </div>
 
                         <div class="article__keywords" data-link-name="live blog keywords">
-                        @fragments.keywordList(article.keywords)
+                            @fragments.keywordList(article.keywords)
                         </div>
                     </div>
 
                     <div class="social-wrapper" data-component="share">
-                    @fragments.social(article)
+                        @fragments.social(article)
                     </div>
                     <div class="js-bottom-marker"></div>
                 }
@@ -128,7 +128,7 @@
 
     @if(DiscussionSwitch.isSwitchedOn && article.isCommentable) {
         <div class="blog__inner" data-component="discussion">
-        @fragments.discussion(article.isClosedForComments, article.shortUrlId)
+            @fragments.discussion(article.isClosedForComments, article.shortUrlId)
         </div>
     }
 
