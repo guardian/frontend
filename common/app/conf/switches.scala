@@ -68,6 +68,11 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
+  val GzipSwitch = Switch("Performance Switches", "gzip",
+    "If switched on then http responses will be gzipped",
+    safeState = Off, sellByDate = new DateMidnight(2014, 5, 5)
+  )
+
   val DoubleCacheTimesSwitch = Switch("Performance Switches", "double-cache-times",
     "Doubles the cache time of every endpoint. Turn on to help handle exceptional load.",
     safeState = On, sellByDate = never
@@ -153,9 +158,10 @@ object Switches extends Collections {
     "Enable the Effective Measure audience segment tracking.",
     safeState = Off, sellByDate = profilingEvalDeadline)
 
-  val ForeseeSwitch = Switch("Commercial Tags", "foresee",
-    "Enable Forsee surveys for a sample of our audience",
-    safeState = Off, sellByDate = new DateMidnight(2014,5,1)) // 3 month trial
+  // We don't foresee this service being switched off
+  val ForeseeSwitch = Switch("Performance Switches", "foresee",
+    "Enable Foresee surveys for a sample of our audience",
+    safeState = Off, sellByDate = never)
 
   val MediaMathSwitch = Switch("Commercial Tags", "media-math",
     "Enable Media Math audience segment tracking",
@@ -300,7 +306,7 @@ object Switches extends Collections {
 
   val HideOldTimeStampsSwitch = Switch("Feature Switches", "hide-old-timestamps",
     "If this switch is turned on then timestamps older than an hour get hidden on fronts.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 4, 28)
+    safeState = Off, sellByDate = new DateMidnight(2014, 4, 30)
   )
 
   val EnhanceTweetsSwitch = Switch("Feature Switches", "enhance-tweets",
@@ -312,7 +318,7 @@ object Switches extends Collections {
 
   val ABExternalLinksNewWindow = Switch("A/B Tests", "ab-external-links-new-window",
     "If this switch is on, AB test opening external links in a new tab/window.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 4, 28)
+    safeState = Off, sellByDate = new DateMidnight(2014, 4, 30)
   )
 
   val ABHomeComponent = Switch("A/B Tests", "ab-home-component",
@@ -442,7 +448,8 @@ object Switches extends Collections {
     ABHomeComponent,
     ABExternalLinksNewWindow,
     MemcachedSwitch,
-    IncludeBuildNumberInMemcachedKey
+    IncludeBuildNumberInMemcachedKey,
+    GzipSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }

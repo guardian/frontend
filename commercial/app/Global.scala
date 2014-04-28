@@ -1,6 +1,6 @@
 import common._
 import conf.Management
-import conf.RequestMeasurementMetrics
+import conf.Filters
 import dev.DevParametersLifecycle
 import model.commercial.books.BestsellersAgent
 import model.commercial.masterclasses.MasterClassAgent
@@ -65,9 +65,8 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
   }
 }
 
-object Global
-  extends WithFilters(RequestMeasurementMetrics.asFilters: _*) with CommercialLifecycle with DevParametersLifecycle
-  with CloudWatchApplicationMetrics {
+object Global extends WithFilters(Filters.common: _*) with CommercialLifecycle with DevParametersLifecycle
+                                                                                    with CloudWatchApplicationMetrics {
   override lazy val applicationName = Management.applicationName
 }
 

@@ -43,6 +43,7 @@ define([
     'common/modules/ui/message',
     'common/modules/identity/autosignin',
     'common/modules/adverts/article-body-adverts',
+    'common/modules/adverts/article-aside-adverts',
     'common/modules/adverts/collection-adverts',
     'common/modules/adverts/dfp',
     'common/modules/analytics/commercial/tags/container',
@@ -94,6 +95,7 @@ define([
     Message,
     AutoSignin,
     ArticleBodyAdverts,
+    ArticleAsideAdverts,
     CollectionAdverts,
     DFP,
     TagContainer,
@@ -283,8 +285,12 @@ define([
                     options = {};
 
                 // if it's an article, excluding live blogs, create our inline adverts
-                if (config.switches.standardAdverts && config.page.contentType === 'Article' && !config.page.isLiveBlog) {
-                    new ArticleBodyAdverts().init();
+                if (config.switches.standardAdverts && config.page.contentType === 'Article') {
+                    new ArticleAsideAdverts(config).init();
+                    // no inline adverts on live
+                    if (!config.page.isLiveBlog) {
+                        new ArticleBodyAdverts().init();
+                    }
                 }
 
                 new CollectionAdverts(config).init();
