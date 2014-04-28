@@ -87,8 +87,6 @@
 
     .table,
     .table__caption {
-        border-top: 0 none;
-
         tr,
         td {
             background: inherit;
@@ -118,6 +116,11 @@
 
 .facia-snap-point--large {
     @include table--hide-none;
+
+    .table,
+    .table__caption {
+        border-top: 0 none;
+    }
 
     .table--football {
         tbody tr { display: none; }
