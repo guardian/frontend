@@ -625,7 +625,8 @@ $block-padding-right: $gs-gutter;
             ));
         }
 
-        > .element-table {
+        > .element-table,
+        > .element-comment {
             width: auto;
             @include rem((
                 margin:$gs-baseline $gs-gutter/2 ($gs-baseline / 3) * 4 $gs-gutter/2
@@ -684,11 +685,11 @@ $block-padding-right: $gs-gutter;
     display: table-cell;
     width: 10000px;
     max-width: 100%;
-    background-position: ($gs-baseline/3)*2 $gutter/2 !important;
+    background-position: 0 ($gs-baseline/3)*2 !important;
     background-repeat: no-repeat;
     border-top: 1px dotted $c-neutral3;
 
-    .element-tweet:first-child & {
+    .block-time + .block-elements .element-tweet:first-child & {
         border-top: none;
     }
 }
@@ -701,7 +702,7 @@ $block-padding-right: $gs-gutter;
 .from-content-api blockquote.tweet {
     border-left-width: 0;
     @include rem((
-        padding: $gs-baseline/2 ($gs-baseline/3)*2,
+        padding: $gs-baseline/2 0 0,
         margin-bottom: $gs-baseline,
         margin-left: $gs-gutter/2,
         margin-right: $gs-gutter/2
