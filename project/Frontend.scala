@@ -30,7 +30,10 @@ object Frontend extends Build with Prototypes {
       "com.bionicspirit" %% "shade" % "1.5.0",
 
       "rome" % "rome" % "1.0",
-      "org.rometools" % "rome-modules" % "1.0"
+      "org.rometools" % "rome-modules" % "1.0",
+
+      "com.google.api-ads" % "ads-lib" % "1.26.0",
+      "com.google.api-ads" % "dfp-axis" % "1.26.0"
     )
   )
   val paVersion = "4.8"
