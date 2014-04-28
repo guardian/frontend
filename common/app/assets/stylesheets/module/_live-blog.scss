@@ -780,10 +780,14 @@ $block-padding-right: $gs-gutter;
         bottom: -1px;
         border-bottom: 1px solid $c-neutral4;
 
-        .blog__timeline &,
-        &.dropdown--active {
+        .blog__timeline & {
             border-bottom: none;
         }
+    }
+
+    &.dropdown--active:before,
+    &.dropdown--active:after {
+        border-bottom: none;
     }
 
     .dropdown__button {
