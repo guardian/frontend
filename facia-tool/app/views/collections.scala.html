@@ -335,15 +335,6 @@
                 </div>
 
                 <div class="article_content" data-bind="if: !state.isEmpty()">
-
-                    <span class="is" data-bind="
-                        visible: isSnap,
-                        click: open">Snap</span>
-
-                    <span class="is is--breaking" data-bind="
-                        visible: meta.isBreaking,
-                        click: open">Breaking News</span>
-
                     <a class="headline" target="article" data-bind="
                         text: meta.headline() || fields.headline() || (isSnap() ? 'Add link text!' : id),
                         css: {'is-empty': isSnap() && !meta.headline()},
@@ -358,10 +349,21 @@
                         <i class="icon-pencil"></i>
                     <!-- /ko -->
 
-                    <div class="trailtext" data-bind="
-                        attr: {href: id},
-                        html: meta.trailText() || fields.trailText()"></div>
+                    <div class="secondary">
+                        <span data-bind="
+                            visible: isSnap,
+                            attr: {class: 'is' + (meta.snapType() ? ' is--' + meta.snapType() : '')},
+                            click: open,
+                            text: meta.snapType() || 'snap'"></span>
 
+                        <span class="is is--breaking" data-bind="
+                            visible: meta.isBreaking,
+                            click: open">Breaking News</span>
+
+                        <span data-bind="
+                            attr: {href: id},
+                            html: meta.trailText() || fields.trailText()"></span>
+                    </div>
                 </div>
             </div>
         </div>
