@@ -1,12 +1,13 @@
 import common._
-import conf.Management
+import conf.{Gzipper, Management}
 import frontpress.FaciaToolConfigAgent
 import java.io.File
 import jobs.FrontPressJob
 import play.api._
+import play.api.mvc.WithFilters
 import services.FaciaToolLifecycle
 
-object Global extends FaciaToolLifecycle with GlobalSettings with CloudWatchApplicationMetrics {
+object Global extends WithFilters(Gzipper) with FaciaToolLifecycle with GlobalSettings with CloudWatchApplicationMetrics {
 
   lazy val devConfig = Configuration.from(Map("session.secure" -> "false"))
 
