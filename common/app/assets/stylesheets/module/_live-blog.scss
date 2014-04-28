@@ -10,6 +10,7 @@
     margin-top: ($gs-baseline/3)*2;
 }
 
+
 .block-time {
     line-height: 15px;
 
@@ -29,15 +30,13 @@
 .live-blog__blocks:first-child .timestamp:first-child,
 .live-blog__blocks:first-child .is-hidden:first-child + .block .published-time,
 .live-blog__blocks:first-child .block:first-child .published-time {
-    border-top: 0;
+    border-top: none;
     margin-top: 0;
     padding-top: 0;
 }
 
-
 /* Blocks
    ========================================================================== */
-
 .block {
     @include clearfix;
     margin-bottom: $gs-baseline*2;
@@ -56,50 +55,52 @@
     background-repeat: no-repeat;
     border-top: $gs-baseline/6 solid #3299d0;
 }
-.element-tweet {
-    margin: $gs-baseline 0 ($gs-baseline/3)*4;
-}
-.tweet,
-.from-content-api blockquote.tweet {
-    border-left-width: 0;
-    @include rem((
-        padding: $gs-baseline/2 ($gs-baseline/3)*2
-    ));
-    font-style: normal;
-    @include fs-textsans(4);
-}
-// Temporary fix to issue #1674
-.from-content-api blockquote.tweet {
-    display: block;
-    margin-left: 0;
-    width: auto;
-}
-// End temporary fix
-.tweet:before,
-.tweet:after,
-.live-blog .tweet:before,
-.live-blog .tweet:after {
-    display: none !important;
-}
+    .element-tweet {
+        margin: $gs-baseline 0 ($gs-baseline/3)*4;
+    }
+    .tweet,
+    .from-content-api blockquote.tweet {
+        border-left-width: 0;
+        @include rem((
+            padding: $gs-baseline/2 ($gs-baseline/3)*2
+        ));
+        font-style: normal;
+        @include fs-textsans(4);
+    }
+    // Temporary fix to issue #1674
+    .from-content-api blockquote.tweet {
+       display: block;
+       margin-left: 0;
+       width: auto;
+    }
+    // End temporary fix
+    .tweet:before,
+    .tweet:after,
+    .live-blog .tweet:before,
+    .live-blog .tweet:after {
+        display: none !important;
+    }
 
-.tweet-user {
-    display: inline-block;
-    font-weight: bold;
-    padding-left: 40px;
-    margin-bottom: 0;
-}
+    .tweet-user {
+        display: inline-block;
+        font-weight: bold;
+        padding-left: 40px;
+        margin-bottom: 0;
+    }
 
-.tweet-date {
-    display: block;
-    color: $c-neutral2;
-    padding-left: 40px;
-    margin-bottom: ($gs-baseline/3)*4;
-}
+    .tweet-date {
+        display: block;
+        color: $c-neutral2;
+        padding-left: 40px;
+        margin-bottom: ($gs-baseline/3)*4;
+    }
 
 .autoupdate--has-animation {
+
     .autoupdate--highlight {
         @include animation(new-block-animation 5s ease-out);
     }
+
 }
 
 .twitter-tweet {
@@ -107,21 +108,11 @@
 }
 
 @include keyframes(new-block-animation) {
-    0% {
-        opacity: 0;
-        background: $c-neutral7;
-    }
-    20% {
-        opacity: 1;
-    }
-    70% {
-        background: $c-neutral7;
-    }
-    100% {
-        background: transparent;
-    }
+    0%   { opacity: 0; background: $c-neutral7; }
+    20%  { opacity: 1; }
+    70%  { background: $c-neutral7; }
+    100% { background: transparent; }
 }
-
 
 /* Blocks container
    ========================================================================== */
