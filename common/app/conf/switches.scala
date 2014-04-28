@@ -425,7 +425,6 @@ object Switches extends Collections {
     LayoutHintsSwitch,
     RssLinkSwitch,
     PopularInTagSwitch,
-    HideOldTimeStampsSwitch,
     EnhanceTweetsSwitch,
     IndiaRegionSwitch,
     ABHomeComponent,
