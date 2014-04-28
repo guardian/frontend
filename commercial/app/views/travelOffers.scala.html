@@ -1,11 +1,13 @@
 @(offers: Seq[model.commercial.travel.Offer])(implicit request: RequestHeader)
 
+@import conf.Configuration
+
 <link rel="stylesheet" href="@Static("stylesheets/commercial.css")" />
 
 <div class="commercial travel-component">
     <div class="container__title commercial__head">
         <h3 class="commercial__title">
-            <a href="@AdLink{http://www.guardianholidayoffers.co.uk/}">
+            <a href="@AdLink{@Configuration.commercial.travel_url/}">
                 <span class="u-h">Guardian Holiday Offers</span>
                 <i class="i i-guardian-holidayoffers-logo"></i>
             </a>
@@ -30,13 +32,15 @@
     </div>
 
     <div class="commercial__foot">
-        <form action="http://www.guardianholidayoffers.co.uk/Search" class="commercial__search">
-            <i class="i i-search-grey"></i>
-            <label for="traveloffer" class="u-h">Find hand picked holidays for hundreds of destinations</label>
-            <input id="traveloffer" name="search" class="text-input" type="text" placeholder="Find your perfect holiday" />
-            <input value="Search" name="go" class="submit-input" type="submit" />
-            <input value="%JustOmnitureToken%" name="INTCMP" type="hidden" />
+        <form action="@Configuration.commercial.soulmates_url/Search" class="commercial__search">
+            <div class="commercial__search__travel">
+                <i class="i i-search-grey"></i>
+                <label for="traveloffer" class="u-h">Find hand picked holidays for hundreds of destinations</label>
+                <input id="traveloffer" name="search" class="text-input" type="text" placeholder="Find your perfect holiday" />
+                <input value="Search" name="go" class="submit-input" type="submit" />
+                <input value="%JustOmnitureToken%" name="INTCMP" type="hidden" />
+            </div>
         </form>
-        <a class="commercial__link" href="@AdLink{http://www.guardianholidayoffers.co.uk/}">More from Guardian Holiday Offers<i class="i i-double-arrow-right-white"></i></a>
+        <a class="commercial__link" href="@AdLink{@Configuration.commercial.soulmates_url}">More from Guardian Holiday Offers<i class="i i-double-arrow-right-white"></i></a>
     </div>
 </div>

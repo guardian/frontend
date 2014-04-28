@@ -1,5 +1,7 @@
 @(books: Seq[model.commercial.books.Book])(implicit request: RequestHeader)
 
+@import conf.Configuration
+
 @if(play.Play.isDev()) {
     <link rel="stylesheet" href="@Static("stylesheets/head.default.css")" />
     <link rel="stylesheet" href="@Static("stylesheets/global.css")" />
@@ -12,16 +14,15 @@
 
 @defining(("1_1", "2014-03-28")) { case (version, date) =>
     <div class="commercial commercial--books" role="complementary">
-
-        <div class="commercial__header">
-            <div class="commercial__branding">
-                <h3 class="commercial__logo">
+        <div class="commercial__head  container__title">
+            <a href="@AdLink{http://www.guardianbookshop.co.uk/}" data-link-name="merchandising-bookshop-v@{version}_@{date}-low-visit-shop">
+                <h3 class="commercial__title">
                     <span class="i i--commercial i-bookshop-logo--guardian"></span><span class="i i--commercial i-bookshop-logo--bookshop"></span>
                     <span class="u-h">Guardian bookshop</span>
                 </h3>
-                <h4 class="commercial__title hide-on-mobile">This week's bestsellers</h4>
-            </div>
-            <form action="http://www.guardianbookshop.co.uk/BerteShopWeb/search.do" method="POST" class="commercial__search hide-on-mobile" name="QuickSearchForm">
+            </a>
+            <h4 class="commercial__title hide-on-mobile">This week's bestsellers</h4>
+            <form action="@Configuration.commercial.books_url/BerteShopWeb/search.do" method="POST" class="commercial__search hide-on-mobile" name="QuickSearchForm">
                 <div>
                     <label for="bookshop" class="u-h">Search bookshop:</label>
                     <input id="bookshop" name="keyword" class="commercial__search__input" type="text" placeholder="Search books" />
@@ -31,7 +32,7 @@
                     <input value="%JustOmnitureToken%" name="INTCMP" type="hidden" />
                 </div>
             </form>
-            <a href="@AdLink{http://www.guardianbookshop.co.uk/}"
+            <a href="@AdLink{@Configuration.commercial.books_url}"
                 class="commercial__home-link"
                 data-link-name="merchandising-bookshop-v@{version}_@{date}-low-visit-shop">
                 Visit shop
@@ -40,7 +41,7 @@
                 </span>
             </a>
         </div>
-
+        
         <div class="commercial__body">
             <ul class="u-unstyled lineitems">
             @books.map { book =>
@@ -69,7 +70,7 @@
         </div>
 
         <div class="commercial__foot">
-            <form action="http://www.guardianbookshop.co.uk/BerteShopWeb/search.do" method="POST" class="commercial__search" name="QuickSearchForm">
+            <form action="@Configuration.commercial.books_url/BerteShopWeb/search.do" method="POST" class="commercial__search" name="QuickSearchForm">
                 <div>
                     <label for="bookshop" class="u-h">Search bookshop:</label>
                     <input id="bookshop" name="keyword" class="commercial__search__input" type="text" placeholder="Search bookshop" />

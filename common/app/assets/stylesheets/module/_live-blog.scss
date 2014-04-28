@@ -123,3 +123,7 @@
     background-color: transparent;
     @include transition(opacity 2s ease-out, background-color 4s ease-out);
 }
+
+.live-blog__blocks.truncated-block {
+    display: none;
+}
