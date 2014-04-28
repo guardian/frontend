@@ -50,6 +50,7 @@ define([
         }
 
         bean.on(qwery('.timeline')[0], 'click', '.timeline__link', function(e){
+            mediator.emit('module:liveblog:showkeyevents', true);
             var el = e.currentTarget,
                 eventId = bonzo(el).attr('data-event-id'),
                 targetEl = qwery('#'+eventId),
