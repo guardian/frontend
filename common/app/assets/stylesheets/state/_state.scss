@@ -1,4 +1,4 @@
-@charset 'utf-8';
+@charset "utf-8";
 
 .js-on .js-hidden,
 .js-off .js-visible {
@@ -85,7 +85,7 @@
 }
 
 .is-live-icon {
-    padding: 1px 4px 2px 4px;
+    padding: 1px 4px 2px;
     margin: 1px 3px 0 0;
     font-size: 10px;
     font-style: normal;

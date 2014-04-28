@@ -5,43 +5,48 @@
 }
 
 h2.open__head { // element selector here in order to override .from-content-api style
-    margin-bottom: $gs-baseline !important;
     color: $c-neutral2;
-    margin-top: 2px;
-
     @include fs-header(2);
     @include rem((
-        line-height: 2.2rem
+        margin-top: 2px,
+        margin-bottom: $gs-baseline !important,
+        line-height: 22px
     ));
 
     @include mq(tablet) {
         @include fs-header(3);
         @include rem((
-            line-height: 2.4rem
+            line-height: 24px
         ));
     }
 }
 
 .open__head__accent {
     display: block;
+
     @include mq(desktop) {
         display: inline;
     }
 }
 
 .open__body {
-    margin-bottom: $gs-baseline*1.5;
+    @include rem((
+        margin-bottom: $gs-baseline*1.5
+    ));
     @include fs-bodyCopy(1);
 }
 
 .open__cta {
     @include fs-bodyHeading(1);
+
     @include mq(tablet) {
         @include fs-bodyHeading(2);
     }
 }
 
 .open__cta-icon {
-    margin-bottom: -5px;
-    margin-right: $gs-baseline / 3;
+    @include rem((
+        margin-bottom: -5px,
+        margin-right: $gs-baseline / 3
+    ));
 }

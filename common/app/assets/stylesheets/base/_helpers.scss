@@ -44,14 +44,6 @@
     }
 }
 
-.hide-on-mobile-inline {
-    display: none !important;
-
-    @include mq(tablet) {
-        display: inline !important;
-    }
-}
-
 .is-invisible {
     visibility: hidden !important;
 }
@@ -98,11 +90,11 @@
  */
 
 .u-text-hyphenate {
-  word-wrap: break-word;
-  -webkit-hyphens: auto;
-     -moz-hyphens: auto;
-      -ms-hyphens: auto;
-          hyphens: auto;
+    word-wrap: break-word;
+    -webkit-hyphens: auto;
+    -moz-hyphens: auto;
+    -ms-hyphens: auto;
+    hyphens: auto;
 }
 
 

@@ -50,7 +50,7 @@ td {
     th,
     td,
     .table__caption {
-        @include fs-data(4);
+        @include fs-data(3);
         @include rem((
             padding: $table-baseline $table-gutter
         ));
@@ -92,7 +92,7 @@ td {
 
 .table--striped {
     td {
-        border-top: none;
+        border-top: 0;
     }
 
     tr:nth-child(odd) > td {

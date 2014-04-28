@@ -136,14 +136,20 @@ define([
      * url    = path
      */
     DFP.prototype.buildPageTargetting = function () {
+
+        function encodeTargetValue(value) {
+            return value ? queryString.formatKeyword(value).replace(/&/g, 'and').replace(/'/g, '') : '';
+        }
+
         var conf        = this.config.page,
-            section     = conf.section ? conf.section.toLowerCase() : '',
-            contentType = conf.contentType ? conf.contentType.toLowerCase() : '',
-            edition     = conf.edition ? conf.edition.toLowerCase() : '',
+            section     = encodeTargetValue(conf.section),
+            series      = encodeTargetValue(conf.series),
+            contentType = encodeTargetValue(conf.contentType),
+            edition     = encodeTargetValue(conf.edition),
             keywords;
         if (conf.keywords) {
             keywords = conf.keywords.split(',').map(function (keyword) {
-                return queryString.formatKeyword(keyword).replace('&', 'and');
+                return encodeTargetValue(keyword);
             });
         } else {
             keywords = '';
@@ -153,6 +159,7 @@ define([
             'url'     : window.location.pathname,
             'edition' : edition,
             'cat'     : section,
+            'se'      : series,
             'k'       : keywords,
             'ct'      : contentType,
             'pt'      : contentType,

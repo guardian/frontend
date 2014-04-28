@@ -8,9 +8,9 @@ import play.api.mvc._
 import play.api.mvc.Results._
 import scala.concurrent.Future
 import utils.SafeLogging
-import conf.Configuration
+import conf.{Configuration, Filters}
 
-object Global extends WithFilters(HeaderLoggingFilter :: RequestMeasurementMetrics.asFilters: _*) with SafeLogging
+object Global extends WithFilters(HeaderLoggingFilter :: Filters.common: _*) with SafeLogging
                                                                                     with CloudWatchApplicationMetrics {
 
   override lazy val applicationName = Management.applicationName

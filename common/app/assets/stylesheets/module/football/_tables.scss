@@ -36,7 +36,7 @@
     // remove battle line from last row
     // (only happens in truncated tables)
     tr:last-child td {
-        border-bottom: none;
+        border-bottom: 0;
     }
 
     .football-stat--form {
@@ -73,17 +73,15 @@
     }
 }
 
-.facia-snap {
-    // Apply this to football only
-    // ----
+
+.facia-snap--football {
     background: #ffffff;
 
     .table--football {
+        @extend .table--striped;
         tbody tr { display: none; }
         tbody tr:nth-of-type(-n+5) { display: table-row; }
     }
-    @extend .table--striped;
-    // ----
 
 
     .table,
@@ -114,9 +112,6 @@
         position: absolute;
         width: 100%;
         z-index: 1;
-        a {
-            margin-right: 1.6rem;
-        }
     }
 }
 
