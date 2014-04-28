@@ -507,10 +507,8 @@ $block-padding-right: $gs-gutter;
 }
 
 @include keyframes(new-block-animation) {
-    0%   { opacity: 0; background: $c-neutral7; border-top-color: $c-liveAccent; }
-    20%  { opacity: 1; }
-    70%  { background: $c-neutral7; }
-    100% { background: transparent; border-top-color: $c-neutral3; }
+    0%   { opacity: 0; border-top-color: $c-liveAccent; }
+    100% { opacity: 1; border-top-color: $c-neutral3; }
 }
 
 /* Above/Below content
