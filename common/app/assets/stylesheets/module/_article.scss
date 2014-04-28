@@ -762,8 +762,5 @@
 }
 
 .article-elongator {
-    @include rem((
-        top: -$gs-baseline*2
-    ));
     position: relative;
 }
