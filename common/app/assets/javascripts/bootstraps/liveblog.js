@@ -97,14 +97,15 @@ define([
             context = qwery('.js-live-blog__timeline', context);
             bonzo(context).append(timelineHTML);
 
-            affix = new Affix({
-                element: qwery('.js-live-blog__timeline-container')[0],
-                topMarker: qwery('.js-top-marker')[0],
-                bottomMarker: qwery('.js-bottom-marker')[0],
-                containerElement: qwery('.js-live-blog__key-events')[0]
-            });
-
-            createScrollTransitions();
+            if(/desktop|wide/.test(detect.getBreakpoint())) {
+                affix = new Affix({
+                    element: qwery('.js-live-blog__timeline-container')[0],
+                    topMarker: qwery('.js-top-marker')[0],
+                    bottomMarker: qwery('.js-bottom-marker')[0],
+                    containerElement: qwery('.js-live-blog__key-events')[0]
+                });
+                createScrollTransitions();
+            }
         });
     }
 
