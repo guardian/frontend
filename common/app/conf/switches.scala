@@ -153,9 +153,10 @@ object Switches extends Collections {
     "Enable the Effective Measure audience segment tracking.",
     safeState = Off, sellByDate = profilingEvalDeadline)
 
-  val ForeseeSwitch = Switch("Commercial Tags", "foresee",
-    "Enable Forsee surveys for a sample of our audience",
-    safeState = Off, sellByDate = new DateMidnight(2014,5,1)) // 3 month trial
+  // We don't foresee this service being switched off
+  val ForeseeSwitch = Switch("Performance Switches", "foresee",
+    "Enable Foresee surveys for a sample of our audience",
+    safeState = Off, sellByDate = never)
 
   val MediaMathSwitch = Switch("Commercial Tags", "media-math",
     "Enable Media Math audience segment tracking",
