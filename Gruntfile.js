@@ -786,7 +786,6 @@ module.exports = function (grunt) {
 
     // Analyse tasks
     grunt.registerTask('analyse:css', ['compile:css', 'cssmetrics:common']);
-    grunt.registerTask('analyse:sass', ['scsslint']);
     grunt.registerTask('analyse:monitor', ['monitor:common']);
     grunt.registerTask('analyse', ['analyse:css']);
 
