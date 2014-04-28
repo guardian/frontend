@@ -1,6 +1,6 @@
 @(items: Seq[Trail], style: Container, containerIndex: Int)(implicit request: RequestHeader)
 
-@defining(items.filter(_.group == Option("3")), items.filter(_.group == Option("2")), items.filter(_.group == Option("1")), items.filter(_.group == Option("0"))) { case (hugeItems, veryBigItems, bigItems, standardItems) =>
+@defining(items.filter(_.group == Option("3")), items.filter(_.group == Option("2")), items.filter(_.group == Option("1")), items.filter(items => items.group == Option("0") || items.group == None)) { case (hugeItems, veryBigItems, bigItems, standardItems) =>
 
     @defining(hugeItems.size, veryBigItems.size, bigItems.size, standardItems.size) { case (hugeItemsCount, veryBigItemsCount, bigItemsCount, standardItemsCount) =>
 
