@@ -114,7 +114,7 @@ define([
 
             $('.js-live-blog__timeline', context).append(timelineHTML);
             $('.js-live-blog__timeline li:first-child .timeline__title').text('Latest post');
-            $('.js-live-blog__timeline li:last-child .timeline__title').text('Openeing post');
+            $('.js-live-blog__timeline li:last-child .timeline__title').text('Opening post');
 
             if(/desktop|wide/.test(detect.getBreakpoint())) {
                 affix = new Affix({

@@ -265,6 +265,7 @@ $block-padding-right: $gs-gutter;
     }
 
     @include mq(rightCol) {
+        padding-bottom: 0;
         @include rem((
             min-height: gs-height(1)*1.5,
             padding-top: $gs-baseline/6
@@ -402,7 +403,7 @@ $block-padding-right: $gs-gutter;
 .block-time {
     @include rem((
         line-height: 15px,
-        padding: $gs-baseline/3 0 $gs-baseline $gs-gutter/2
+        padding: $gs-baseline/4 0 $gs-baseline $gs-gutter/2
     ));
 
     &.published-time {
@@ -418,7 +419,6 @@ $block-padding-right: $gs-gutter;
         ));
         color: $c-neutral2;
         @include fs-data(2);
-        font-style: italic;
         font-weight: normal;
     }
 
@@ -438,7 +438,6 @@ $block-padding-right: $gs-gutter;
 .updated-time {
     @include fs-data(1);
     color: $c-neutral2;
-    font-style: italic;
     @include rem((
         margin: 0 $gs-gutter/2 $gs-baseline/3 $gs-gutter/2,
         padding: $gs-baseline/2 0 0
@@ -1025,6 +1024,11 @@ $timeline-width: 14px;
         @include rem((
             padding-top: $gs-baseline
         ));
+        background-color: $c-neutral8;
+    }
+
+    .tabs__tab--selected {
+        border-bottom-color: $c-neutral8 !important;
     }
 
     @include mq(rightCol) {
