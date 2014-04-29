@@ -13,9 +13,11 @@
     width: 100%;
 }
 
+
 /* ==========================================================================
    Goal attempts
    ========================================================================== */
+
 .goal-attempts {
     @include fs-data(5);
     color: #ffffff;
@@ -69,7 +71,7 @@
         height: $gs-baseline*10
     ));
     /* taken from https://github.com/guardian/mobile-apps-article-templates/blob/master/ArticleTemplates/css/img/hor_bg.png */
-    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyRpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoTWFjaW50b3NoKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozQUMzMDYzOTVCNkYxMUUzOEEwODgwNEJDQ0EzMjVCQiIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozQUMzMDYzQTVCNkYxMUUzOEEwODgwNEJDQ0EzMjVCQiI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjk5RjZENjA0NUI2RDExRTM4QTA4ODA0QkNDQTMyNUJCIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjNBQzMwNjM4NUI2RjExRTM4QTA4ODA0QkNDQTMyNUJCIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+XheURAAAAExJREFUeNpi/P//PwMZwJgBpJFEbAy2jBxNpGo0RuaTpYlYjcbYxMnSREijMT5DydKES6MxMQFGliZ0jcakJAayNME0GpORXhkAAgwAA0clxfmXgX4AAAAASUVORK5CYII=);
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyRpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoTWFjaW50b3NoKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozQUMzMDYzOTVCNkYxMUUzOEEwODgwNEJDQ0EzMjVCQiIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozQUMzMDYzQTVCNkYxMUUzOEEwODgwNEJDQ0EzMjVCQiI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjk5RjZENjA0NUI2RDExRTM4QTA4ODA0QkNDQTMyNUJCIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjNBQzMwNjM4NUI2RjExRTM4QTA4ODA0QkNDQTMyNUJCIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+XheURAAAAExJREFUeNpi/P//PwMZwJgBpJFEbAy2jBxNpGo0RuaTpYlYjcbYxMnSREijMT5DydKES6MxMQFGliZ0jcakJAayNME0GpORXhkAAgwAA0clxfmXgX4AAAAASUVORK5CYII=");
     background-size: 8px;
 }
 .goal-attempts__on-target {
@@ -108,6 +110,7 @@
 /* ==========================================================================
    Bar fights
    ========================================================================== */
+
 .bar-fight {
     .match-stats__caption {
         float: left;
@@ -165,6 +168,7 @@
 /* ==========================================================================
     Possession doughnut
    ========================================================================== */
+
 .football-possession {
     margin: 0 auto $gs-baseline;
     text-align: center;
@@ -193,6 +197,7 @@
 /* ==========================================================================
    Legacy
    ========================================================================== */
+
 .match-aggregate,
 .match-comment {
     text-align: center;
@@ -291,7 +296,7 @@
     background-color: $c-sportBright;
 
     abbr {
-        border-bottom: none !important;
+        border-bottom: 0 !important;
     }
 }
 

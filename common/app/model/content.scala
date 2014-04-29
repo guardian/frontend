@@ -189,26 +189,39 @@ object Content {
 
   def fromPressedJson(json: JsValue): Option[Content] = {
     val contentFields: Option[Map[String, String]] = (json \ "safeFields").asOpt[Map[String, String]]
-    Option(
-      Content(ApiContentWithMeta(
-        ApiContent(
-          id = (json \ "id").as[String],
-          sectionId = (json \ "sectionId").asOpt[String],
-          sectionName = (json \ "sectionName").asOpt[String],
-          webPublicationDate = (json \ "webPublicationDate").asOpt[Long].map(new DateTime(_)).get,
-          webTitle = (json \ "safeFields" \ "headline").as[String],
-          webUrl = (json \ "webUrl").as[String],
-          apiUrl = "",
-          elements = Option(parseElements(json)),
-          fields = contentFields,
-          tags = (json \ "tags").asOpt[List[JsValue]].map(parseTags).getOrElse(Nil)
-        ),
-        supporting = (json \ "meta" \ "supporting").asOpt[List[JsValue]].getOrElse(Nil)
-          .flatMap(Content.fromPressedJson),
-        metaData = (json \ "meta").asOpt[Map[String, JsValue]].getOrElse(Map.empty)
+    val itemId: String = (json \ "id").as[String]
+    if (itemId.startsWith("snap/")) {
+      val snapMeta: Map[String, JsValue] = (json \ "meta").asOpt[Map[String, JsValue]].getOrElse(Map.empty)
+      Option(
+        new Snap(
+          snapId = itemId,
+          (json \ "webPublicationDate").asOpt[DateTime].getOrElse(DateTime.now),
+          snapMeta = snapMeta
+        )
       )
+    }
+    else {
+      Option(
+        Content(ApiContentWithMeta(
+          ApiContent(
+            itemId,
+            sectionId = (json \ "sectionId").asOpt[String],
+            sectionName = (json \ "sectionName").asOpt[String],
+            webPublicationDate = (json \ "webPublicationDate").asOpt[Long].map(new DateTime(_)).get,
+            webTitle = (json \ "safeFields" \ "headline").as[String],
+            webUrl = (json \ "webUrl").as[String],
+            apiUrl = "",
+            elements = Option(parseElements(json)),
+            fields = contentFields,
+            tags = (json \ "tags").asOpt[List[JsValue]].map(parseTags).getOrElse(Nil)
+          ),
+          supporting = (json \ "meta" \ "supporting").asOpt[List[JsValue]].getOrElse(Nil)
+            .flatMap(Content.fromPressedJson),
+          metaData = (json \ "meta").asOpt[Map[String, JsValue]].getOrElse(Map.empty)
+        )
+        )
       )
-    )
+    }
   }
 
   private def parseElements(json: JsValue): List[ApiElement] = {
@@ -265,6 +278,49 @@ private object ArticleSchemas {
       "http://schema.org/Article"
   }
 }
+
+object SnapApiContent extends ApiContent(
+    id                  = "",
+    sectionId           = None,
+    sectionName         = None,
+    webPublicationDate  = DateTime.now,
+    webTitle            = "",
+    webUrl              = "http://www.theguardian.com/",
+    apiUrl              = "",
+    fields              = None,
+    tags                = Nil,
+    factboxes           = Nil,
+    mediaAssets         = Nil,
+    elements            = None,
+    references          = Nil,
+    isExpired           = None
+    )
+
+class Snap(snapId: String,
+           snapWebPublicationDate: DateTime,
+           snapMeta: Map[String, JsValue]
+) extends Content(new ApiContentWithMeta(SnapApiContent, metaData = snapMeta)) {
+
+  val snapType: Option[String] = snapMeta.get("snapType").flatMap(_.asOpt[String])
+  val snapUri: Option[String] = snapMeta.get("snapUri").flatMap(_.asOpt[String])
+
+  lazy val snapUrl: Option[String] = snapMeta.get("href").flatMap(_.asOpt[String])
+
+  //We set this to snapId as TemplateDeduping uses this ID to dedupe
+  override lazy val url: String = snapId
+
+  //Sorting is done via id
+  override lazy val id: String = snapId
+
+  //Trail implementations
+  override lazy val shortUrl: String = ""
+  override lazy val headline: String = snapMeta.get("headline").flatMap(_.asOpt[String]).getOrElse("Link")
+
+  //Meta implementations
+  override lazy val webPublicationDate = snapWebPublicationDate
+}
+
+
 
 class Article(content: ApiContentWithMeta) extends Content(content) {
   lazy val body: String = delegate.safeFields.getOrElse("body","")

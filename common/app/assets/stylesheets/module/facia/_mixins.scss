@@ -3,7 +3,7 @@ $item-top-border-height: 2px;
 @mixin image-meta {
     @include mq(desktop) {
         &.item--force-image-upgrade .item__standfirst {
-            display: none
+            display: none;
         }
         &.item--force-image-upgrade .item__image-container {
             display: block !important;
@@ -156,7 +156,7 @@ $item-top-border-height: 2px;
 }
 @mixin vertical-item-separator {
     &:before {
-        content: '';
+        content: "";
         display: block;
         position: absolute;
         top: 0;

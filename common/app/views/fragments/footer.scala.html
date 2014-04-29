@@ -1,5 +1,6 @@
 @(page: MetaData)(implicit request: RequestHeader)
 @import conf.Switches._
+@import org.joda.time.DateTime
 
 <footer class="footer u-cf" data-link-name="footer" data-component="footer">
     <div class="footer__primary">
@@ -35,7 +36,7 @@
                 }
             </ul>
             <div class="footer__misc">
-                <div class="really-serious-copyright">© Guardian News and Media Limited or its affiliated companies. All rights reserved.</div>
+                <div class="really-serious-copyright">© @{new DateTime().year.getAsText} Guardian News and Media Limited or its affiliated companies. All rights reserved.</div>
             </div>
         </div>
     </div>

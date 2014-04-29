@@ -34,12 +34,18 @@ define([
 
         var model = vars.model = {};
 
+        model.switches = ko.observable();
+
         model.collections = ko.observableArray();
+
         model.fronts = ko.observableArray();
+
         model.pinnedFront = ko.observable();
+
         model.pending = ko.observable();
 
         model.types =  [''].concat(vars.CONST.types);
+
         model.groups = [''].concat(vars.CONST.groups);
 
         model.clipboard = new Group({
@@ -168,7 +174,7 @@ define([
                     terminate('The configuration tool has been switched off.', '/');
                     return;
                 }
-                vars.state.switches = switches;
+                model.switches(switches);
 
                 if (opts.force || !_.isEqual(config, vars.state.config)) {
                     vars.state.config = config;
