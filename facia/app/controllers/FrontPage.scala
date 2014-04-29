@@ -111,7 +111,7 @@ object FrontPage {
 
     new FrontPage(isNetworkFront = false) {
       override val id = "lifeandstyle/love-and-sex"
-      override val section = "lifeandstyle"
+      override val section = "Life and style"
       override val webTitle = "Love and sex"
       override lazy val analyticsName = "GFE:Love and sex"
       override lazy val description = Some("Sex and relationship advice from the Guardian. Sexual health matters, sexuality, information and sex tips all discussed")
@@ -125,7 +125,7 @@ object FrontPage {
 
     new FrontPage(isNetworkFront = false) {
       override val id = "lifeandstyle/home-and-garden"
-      override val section = "lifeandstyle"
+      override val section = "Life and style"
       override val webTitle = "Home and garden"
       override lazy val analyticsName = "GFE:Home and garden"
       override lazy val description = Some("Latest home and garden news, comment and analysis from the Guardian, the world’s leading liberal voice")
@@ -270,6 +270,19 @@ object FrontPage {
 
       override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
         "keywords" -> "Environment",
+        "content-type" -> "Section",
+        "is-front" -> true
+      )
+    },
+    new FrontPage(isNetworkFront = false) {
+      override val id = "technology"
+      override val section = "technology"
+      override val webTitle = " Technology news, comment and analysis"
+      override lazy val analyticsName = "GFE:Technology"
+      override lazy val description = Some("Latest technology news, comment and analysis from the Guardian, the world's leading liberal voice")
+
+      override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
+        "keywords" -> "Technology",
         "content-type" -> "Section",
         "is-front" -> true
       )
