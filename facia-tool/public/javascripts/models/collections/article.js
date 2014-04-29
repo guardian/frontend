@@ -233,7 +233,6 @@ define([
 
             if (this.parentType === 'Article') {
                 this.parent._save();
-                this.close();
                 return;
             }
 
