@@ -16,14 +16,14 @@
         <div class="blog__inner blog__inner--head@if(isDefault){ blog__head-background--default}">
             <header class="article__head">
 
-                <h1 itemprop="headline" class="blog__headline">@Html(article.headline)</h1>
+                <h1 itemprop="headline" class="blog__headline js-score">@Html(article.headline)</h1>
 
                 <div class="blog__head-lower blog__head-background--accent">
                     <div class="blog__last-updated-container">
                         @if(article.isLive) {<span class="blog__live">LIVE</span> }updated <time class="js-timestamp" datetime="@article.webPublicationDate" data-relativeformat="med"></time>
                     </div>
 
-                    <div class="blog__meta-container">
+                    <div class="blog__meta-container js-football-meta">
                         @fragments.meta.byline(article.byline, article)
                         @fragments.meta.dateline(article.webPublicationDate, secondary = true)
                         <div class="js-comment-count blog__comment-count"></div>
@@ -69,7 +69,7 @@
                     }
                 </div>
 
-                @if(article.hasKeyEvents && isDefault) {
+                @if(article.hasKeyEvents) {
                     <div class="blog__timeline blog__dropdown js-live-blog__key-events" data-component="timeline">
                         <div class="blog__timeline-container js-live-blog__timeline-container">
                             @fragments.dropdown("Key events", "live") {

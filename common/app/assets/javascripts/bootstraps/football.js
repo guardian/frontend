@@ -110,7 +110,7 @@ define([
             if (match.pageType === 'stats') {
                 renderNav(match);
             } else {
-                var $h = $('.article__headline', context),
+                var $h = $('.js-score', context),
                     scoreBoard = new ScoreBoard(),
                     scoreContainer = bonzo.create(
                         '<div class="score__container">'+
@@ -217,7 +217,7 @@ define([
             $img.addClass('u-h');
             loading($matchListContainer[0], 'Fetching today\'s matches…', { text: 'Impatient?', href: '/football/live' });
 
-            $('.article__meta-container').before($matchListContainer);
+            $('.js-football-meta').before($matchListContainer);
             ml.fetch($matchListContainer[0]).fail(function() {
                 ml.destroy();
                 $matchListContainer.remove();

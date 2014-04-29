@@ -156,10 +156,10 @@ define([
     }
 
     return {
-        init: function (config) {
+        init: function () {
             createAutoRefresh();
             createFilter();
-            if(config.page.keywordIds.indexOf('football/football') < 0 && getKeyEvents().length > 0) {
+            if(getKeyEvents().length > 0) {
                 createTimeline();
             }
         }
