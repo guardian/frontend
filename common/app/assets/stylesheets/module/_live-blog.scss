@@ -617,7 +617,32 @@ $block-padding-right: $gs-gutter;
             ));
         }
 
-        > .element-table,
+        > .element-table {
+            .table {
+                border: none;
+                background: none;
+            }
+            td {
+                background: none;
+            }
+            tr {
+                border-bottom: 1px solid darken($c-neutral8, 4%);
+
+                th:first-child,
+                td:first-child {
+                  padding-left: 0;
+                }
+                th:last-child,
+                td:last-child {
+                  padding-right: 0;
+                }
+            }
+            thead {
+                border-top: 1px solid darken($c-neutral8, 4%);
+            }
+        }
+
+        > .element-table .table--football,
         > .element-comment {
             width: auto;
             @include rem((
