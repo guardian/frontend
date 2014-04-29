@@ -261,6 +261,19 @@ object FrontPage {
         "is-front" -> true
       )
     },
+    new FrontPage(isNetworkFront = false) {
+      override val id = "environment"
+      override val section = "environment"
+      override val webTitle = " Environment news, comment and analysis from the Guardian"
+      override lazy val analyticsName = "GFE:Environment"
+      override lazy val description = Some("Environment news, comment and discussion on key green, environmental and climate change issues from the Guardian")
+
+      override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
+        "keywords" -> "Environment",
+        "content-type" -> "Section",
+        "is-front" -> true
+      )
+    },
 
     //TODO important this one is last for matching purposes
     new FrontPage(isNetworkFront = true) {
