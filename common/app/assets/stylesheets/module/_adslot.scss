@@ -199,24 +199,39 @@
 }
 .ad-slot--paid-for-badge--fronts {
     @include clearfix;
+    position: relative;
 
-    @include mq($from: tablet, $to: faciaLeftCol) {
-        margin-top: -$gs-row-height;
-        text-align: right;
-        float: none;
+    .ad-slot--paid-for-badge__inner {
+        border-top: 0;
+        min-height: 80px;
     }
-    @include mq(rightCol) {
-        position: relative;
+    .ad-slot--paid-for-badge__link {
+        position: absolute;
         top: 0;
+        right: 0;
     }
-    @include mq(faciaLeftCol) {
-        float: left;
-        clear: left;
-    }
-    @include mq(faciaLeftCol, wide) {
+    @include mq(tablet) {
+        padding-left: 50%;
         @include rem((
-            margin-top: $gs-baseline
+            margin-top: -$gs-row-height,
+            margin-right: gs-span(1)
         ));
+    }
+    @include mq(tablet) {
+        padding-left: 50%;
+        @include rem((
+            margin-top: -$gs-row-height,
+            padding-right: gs-span(1)
+        ));
+    }
+    @include mq($facia-leftCol-trigger) {
+        padding: 0;
+        margin: 0;
+        float: left;
+
+        .ad-slot--paid-for-badge__link {
+            position: relative;
+        }
     }
 }
 .ad-slot__label {
