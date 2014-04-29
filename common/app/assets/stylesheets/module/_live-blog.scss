@@ -618,9 +618,11 @@ $block-padding-right: $gs-gutter;
         }
 
         > .element-table {
+            margin: 0;
+
             .table {
-                border: none;
                 background: none;
+                border: 0;
             }
             td {
                 background: none;
@@ -639,6 +641,18 @@ $block-padding-right: $gs-gutter;
             }
             thead {
                 border-top: 1px solid darken($c-neutral8, 4%);
+            }
+            .player-card {
+                background: none;
+                border: 0;
+                border-left: 1px solid darken($c-neutral8, 4%);
+                margin: $gs-baseline/2 $gs-gutter 0;
+                padding: 0 0 0 $gs-gutter;
+            }
+            .player-card__position {
+                @include fs-data(4);
+                color: $c-neutral1;
+                font-weight: 700;
             }
         }
 
