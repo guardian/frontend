@@ -216,7 +216,10 @@ define([
         },
 
         initRightHandComponent: function(config) {
-            if(config.page.contentType === 'Article' && detect.getBreakpoint() !== 'mobile' && parseInt(config.page.wordCount, 10) > 500  ) {
+            if(config.page.contentType === 'Article' &&
+                detect.getBreakpoint() !== 'mobile' &&
+                parseInt(config.page.wordCount, 10) > 500 &&
+                !config.page.isLiveBlog) {
                 new RightMostPopular(mediator, {type: 'image', maxTrails: 5});
             }
         },
