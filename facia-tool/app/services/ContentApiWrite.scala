@@ -15,6 +15,9 @@ import org.joda.time.DateTime
 
 trait ContentApiWrite extends ExecutionContexts with Logging {
 
+  //Intentionally blank
+  val defaultTitle: String = ""
+
   case class Item(
                    id: String,
                    metadata: Option[Map[String, JsValue]]
@@ -72,7 +75,7 @@ trait ContentApiWrite extends ExecutionContexts with Logging {
 
     ContentApiPut(
       config.collectionType.getOrElse("news"),
-      config.displayName,
+      config.displayName.getOrElse(defaultTitle),
       config.groups,
       maybeBlock map { block => generateItems(block.live) } getOrElse Nil,
       config.contentApiQuery,
