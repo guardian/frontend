@@ -766,9 +766,8 @@
 }
 
 .article-elongator {
+    @include rem((
+        top: -$gs-baseline*2
+    ));
     position: relative;
-
-    .i-center {
-        background-color: $c-brandBlue;
-    }
 }

@@ -71,7 +71,6 @@
 @include tone-head(news, $c-newsDefault, $c-newsAccent);
 @include tone-head(comment, $c-commentDefault, $c-commentAccent);
 @include tone-head(feature, $c-featureDefault, $c-featureAccent);
-@include tone-head(live, $c-neutral1, $c-liveAccent);
 @import "theme/_colours";
 
 

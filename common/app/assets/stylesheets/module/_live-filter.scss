@@ -1,38 +1,40 @@
 .live-toolbar {
     display: none;
     width: 100%;
-    @include rem((
-        margin-bottom: $gs-baseline,
-        height: $gs-row-height + $gs-baseline
-    ));
+    margin-bottom: ($gs-baseline/3)*4;
+    background: $c-neutral7;
+    height: 42px;
 
-    .is-live & {
+    .is-live &,
+    .has-key-events & {
         display: table;
     }
 
     @include mq($to: tablet) {
         font-size: .875em;
     }
-
-    @include mq(rightCol) {
-        border-top: 1px solid $c-neutral3;
-    }
 }
 
 .live-toggler-wrapper {
-    display: table-cell;
-    vertical-align: middle;
+    display: none;
     width: 54%;
+    text-align: center;
+
+    .has-key-events & {
+        display: table-cell;
+        vertical-align: middle;
+    }
+
+    .live-toggler {
+        border-right: 1px solid $c-neutral5;
+        max-width: gs-span(2);
+    }
 }
 .live-toggler {
     display: none;
-    position: relative;
-    width: auto;
+    padding: ($gs-baseline/3)*2 8px $gs-baseline*2 6px;
     text-align: left;
-    @include rem((
-        padding: ($gs-baseline/3)*2 8px $gs-baseline*2 0
-    ));
-    @include fs-textsans(2);
+    position: relative;
 
     &.is-active {
         display: block;
@@ -40,92 +42,66 @@
     
     i {
         position: absolute;
-        @include rem((
-            top: 14px,
-            right: ($gs-gutter*0.75)*-1
-        ));
+        bottom: 6px;
+        right: 6px;
     }
 }
-.live-toggler__label {
-    @include rem((
-        padding-left: 0,
-        padding-right: $gutter/4
-    ));
-    color: $c-neutral2;
-    @include fs-textsans(2);
+.lt__label {
+    color: #000000;
+    padding-left: $gutter/2;
+    padding-right: $gutter/2;
 }
-.live-toggler__value {
-    display: block;
-    min-width: $gs-gutter*2.5;
-    @include rem((
-        padding-bottom: 2px
-    ));
-    border-right: 1px solid $c-neutral5;
-    color: $c-neutral2;
-    font-weight: bold;
+.lt__value {
+    color: $c-neutral1;
+    padding-right: $gutter/2;
     white-space: nowrap;
 }
 
-/*  Ordered results
+@include mq(tablet) {
+    .lt__label {
+        padding-left: $gutter;
+        padding-right: $gutter*2;
+    }
+    .lt__value {
+        padding-right: $gutter;
+    }
+}
+
+
+/* Filtered results
    ========================================================================== */
 
-.live-toggler--oldest {
-    display: none;
-
-    i {
-        @include rotate(180deg);
-    }
+.live-toggler--all {
+    display: block;
 }
-.live-toggler--latest { display: inline; }
-
-.live-filter--order-by-oldest {
-    .live-toggler--oldest {
-        display: inline;
-    }
-    .live-toggler--latest {
-        display: none;
-    }
-}
-
-
-/* Auto update toggle
-   ========================================================================== */
-@include keyframes(live-pulse) {
-    0% {background-color: $c-live}
-    10% {background-color: #df7787;}
-    40% {background-color: $c-live;}
-    100% {background-color: $c-live;}
-}
-
-.live-toggler--autoupdate {
-    float: right;
-    padding-right: 0;
-
-    .live-toggle__value {
-        display: inline-block;
-        text-align: center;
-        @include rem((
-            padding: $gs-baseline/1.5 0 0,
-            width: 32px,
-            height: 24px,
-            line-height: 13px
-        ));
-        background-color: $c-neutral2;
-        color: #ffffff;
-        font-weight: bold;
-        @include border-radius(50%);
-
-        @include mq(tablet) {
-            @include rem((
-                line-height: 17px
-            ));
+.show-only-key-events {
+    .article-body {
+        .block {
+            display: none;
+        }
+        .is-key-event {
+            display: block;
         }
     }
+    .live-toggler--all {
+        display: none;
+    }
+    .live-toggler--key-events {
+        display: block;
+    }
 }
 
-.live-toggler--on {
-    .live-toggle__value {
-        background-color: $c-live;
-        @include animation(live-pulse 2s infinite);
-    }
+
+/* Circle progress bar live toggler
+   ========================================================================== */
+.live-toggler--circle {
+    padding: 8px 18px;
+    width: auto;
+    float: right;
+}
+
+.lt__circle-wrapper {
+    width: 30px;
+    height: 30px;
+    display: block;
 }
