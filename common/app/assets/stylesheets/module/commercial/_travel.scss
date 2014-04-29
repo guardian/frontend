@@ -49,20 +49,25 @@
         
         .commercial__title__middle-word {
            color: #52aee9;
-           margin-left: -5px;
+            @include rem((
+               margin-left: -5px
+            ));
         }
         
         .commercial__title__last-word {
            color: #006ec9;
-           margin-left: -5px;
+           @include rem((
+               margin-left: -5px
+           ));
         }
-        
     }
     .commercial__home-link {
         float: right;
     }
     .commercial__body {
-        padding: 0 $gs-gutter/2 0 0;
+        @include rem ((
+            padding: 0 $gs-gutter/2 0 0
+        ));
     }
     
     @include mq(tablet) {
@@ -86,8 +91,10 @@
         }
         .commercial__home-link {
             position: absolute;
-            right: 10px;
-            top: 10px;
+            @include rem((
+                right: 10px,
+                top: 10px
+            ));
         }
     }
     @include mq(leftCol) {
@@ -117,8 +124,10 @@
             width: 25%;
         }
         .commercial__home-link {
-            bottom: 10px;
-            left: 10px;
+            @include rem((
+                bottom: 10px,
+                left: 10px
+            ));
             top: auto;
             right: auto;
         }
@@ -196,8 +205,10 @@
             float: left;
         }
         .commercial__home-link {
-            bottom: 10px;
-            left: 20px;
+            @include rem((
+                bottom: 10px,
+                left: 20px
+            ));
             top: auto;
             right: auto;
         }
