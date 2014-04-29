@@ -1,7 +1,7 @@
 @(supporting: Trail, index: Int)(implicit request: RequestHeader)
 
 <li class="linkslist__item supporting__item">
-    <a href="@LinkTo{@supporting.url}" class="supporting__action linkslist__action action--has-icon action--tone-comment" data-link-name="supporting | @{index + 1}">
+    <a @LinkTo(supporting).map{url=>href="@url"} class="supporting__action linkslist__action action--has-icon action--tone-comment" data-link-name="supporting | @{index + 1}">
         <span class="i i-quote-orange"></span>
         @Html(supporting.headline)
     </a>
