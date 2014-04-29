@@ -46,8 +46,8 @@ class ArchiveControllerTest extends FlatSpec with Matchers {
 
   it should "lowercase the section of the url" in Fake {
 
-    val location = controllers.ArchiveController.lowercase("/Football/News_Story/0,1563,1655638,00.html").head.header.headers("Location")
-    location should be ("/football/News_Story/0,1563,1655638,00.html")
+    val location = controllers.ArchiveController.lowercase("www.theguardian.com/Football/News_Story/0,1563,1655638,00.html").head.header.headers("Location")
+    location should be ("http://www.theguardian.com/football/News_Story/0,1563,1655638,00.html")
   }
 
 }
