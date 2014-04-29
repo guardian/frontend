@@ -156,10 +156,7 @@ trait UpdateActions extends Logging {
     val trail: Trail = blocks
       .find(_.id == update.item)
       .map { currentTrail =>
-        val newMeta = for {
-          updateMeta <- update.itemMeta.map(itemMetaWhiteList)
-          currentTrailMeta <- currentTrail.meta
-        } yield currentTrailMeta ++ updateMeta
+        val newMeta = for (updateMeta <- update.itemMeta.map(itemMetaWhiteList)) yield updateMeta
         currentTrail.copy(meta = newMeta)
       }
       .getOrElse(Trail(update.item, Option(DateTime.now), update.itemMeta.map(itemMetaWhiteList)))
