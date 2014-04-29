@@ -1,13 +1,13 @@
 define([
     'modules/ui/container-toggle',
-    'common/common',
+    'common/$',
     'bonzo',
     'bean',
     'common/modules/userPrefs',
     'qwery'
 ], function(
     ContainerDisplayToggle,
-    common,
+    $,
     bonzo,
     bean,
     userPrefs,
@@ -22,7 +22,7 @@ define([
             storageId = 'container-states',
             // helper assertion method
             assertState = function($container, state) {
-                var $button = common.$g('button', $container[0]);
+                var $button = $('button', $container[0]);
                 expect($container.hasClass('container--rolled-up'))[state === 'open' ? 'toBeFalsy' : 'toBeTruthy']();
                 expect($button.text()).toBe(state === 'open' ? 'Hide' : 'Show');
                 expect($button.attr('data-link-name')).toBe(state === 'open' ? 'Show' : 'Hide');
@@ -33,7 +33,8 @@ define([
                 '<section class="container js-container--toggle" data-id="' + containerId + '">' +
                     '<div class="container__header">' +
                         '<h2>A container</h2>' +
-                    '<div>' +
+                    '</div>' +
+                    '<div class="ad-slot--paid-for-badge"></div>' +
                 '</section>'
             )[0];
             $container = bonzo(container);
@@ -41,6 +42,7 @@ define([
 
         afterEach(function(){
             window.localStorage.clear();
+            $container.remove();
         });
 
         it('should be able to initialise', function() {
@@ -73,13 +75,13 @@ define([
         it('should be able to close container', function() {
             new ContainerDisplayToggle(container).addToggle();
             // click button
-            bean.fire(common.$g('button', container)[0], 'click');
+            bean.fire($('button', container)[0], 'click');
             assertState($container, 'closed');
         });
 
         it('should store state as user preference', function() {
             new ContainerDisplayToggle(container).addToggle();
-            var button = common.$g('button', container)[0];
+            var button = $('button', container)[0];
             // click button
             bean.fire(button, 'click');
             var expectedValue = {};
@@ -96,6 +98,25 @@ define([
             userPrefs.set(storageId, prefs);
             new ContainerDisplayToggle(container).addToggle();
             assertState($container, 'closed');
+        });
+
+        describe('Commercial Badge', function(){
+
+            it('should hide badge on close', function() {
+                new ContainerDisplayToggle(container).addToggle();
+                // click button
+                bean.fire($('button', container)[0], 'click');
+                expect($('.ad-slot--paid-for-badge', container).css('display')).toBe('none');
+            });
+
+            it('should show badge on open', function() {
+                new ContainerDisplayToggle(container).addToggle();
+                // click button
+                bean.fire($('button', container)[0], 'click');
+                bean.fire($('button', container)[0], 'click');
+                expect($('.ad-slot--paid-for-badge', container).css('display')).toBe('block');
+            });
+
         });
 
     });
