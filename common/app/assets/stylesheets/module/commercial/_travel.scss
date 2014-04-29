@@ -13,7 +13,7 @@
         @include box-sizing(border-box);
         float: left;
         width: 50%;
-        @include rem ((
+        @include rem((
             padding-left: 8px
         ));
 
@@ -36,7 +36,7 @@
         border-top: none;
         height: auto;
         overflow: auto;
-        @include rem ((
+        @include rem((
             padding: $gs-gutter/2
         ));
     }
@@ -64,7 +64,7 @@
         float: right;
     }
     .commercial__body {
-        @include rem ((
+        @include rem((
             padding: 0 $gs-gutter/2 0 0
         ));
     }
@@ -104,14 +104,14 @@
 
 /* fronts */
 .facia-container--layout-front .commercial--travel {
-    @include mq(tablet, $to: desktop) {
+    @include mq($from: tablet, $to: desktop) {
         .commercial__head {
-            @include rem ((
+            @include rem((
                 padding-right: 14px
             ));
         }
         .commercial__home-link {
-            @include rem ((
+            @include rem((
                 right: 14px
             ));
         }
@@ -135,34 +135,34 @@
             ));            
         }
         .lineitem {
-           width: 33%;
-       }
-   }
-   @include mq(leftCol) {
+            width: 33%;
+        }
+    }
+    @include mq(leftCol) {
        .commercial__title__last-word {
-           @include rem((
+            @include rem((
                margin-left: -5px
-           ));
+            ));
        }
-   }
-   @include mq(faciaLeftCol) {
-       .commercial__head {
-           @include rem((
+    }
+    @include mq(faciaLeftCol) {
+        .commercial__head {
+            @include rem((
                width: gs-span(2) + $gs-gutter
-           ));
-       }
-       .lineitem {
-           width: 25%;
-           
-           &:nth-child(n+4) {
+            ));
+        }
+        .lineitem {
+            width: 25%;
+
+            &:nth-child(n+4) {
                display: block;
-           }
-       }
-   }
-   @include mq(faciaLeftCol, $to: wide) {
+            }
+        }
+    }
+    @include mq($from: faciaLeftCol, $to: wide) {
        .commercial__home-link {
            @include box-sizing(border-box);
-           @include rem ((
+           @include rem((
                width: gs-span(2),
                line-height: 18px
            ));
@@ -170,26 +170,26 @@
        .commercial__title__last-word {
            margin-left: 0;
         }
-   }
-   @include mq(wide) {
-       .commercial__head {
-           @include rem((
-               width: gs-span(2) + $gs-gutter
-           ));
-       }
-   }
+    }
+    @include mq(wide) {
+        .commercial__head {
+            @include rem((
+                width: gs-span(2) + $gs-gutter
+            ));
+        }
+    }
 }
 
 /* article */
 .facia-container--layout-article .commercial--travel {
     @include mq(tablet, $to: rightCol) {
         .commercial__head {
-            @include rem ((
+            @include rem((
                 padding-right: 14px
             ));
         }
         .commercial__home-link {
-            @include rem ((
+            @include rem((
                 right: 24px
             ));
         }
@@ -211,7 +211,7 @@
             right: auto;
         }
         .commercial__body {
-            @include rem ((
+            @include rem((
                 padding-top: 10px
             ));
         }
@@ -228,7 +228,7 @@
     @include mq(leftCol, $to: wide) {
         .commercial__home-link {
             @include box-sizing(border-box);
-            @include rem ((
+            @include rem((
                 width: gs-span(2),
                 line-height: 18px
             ));
