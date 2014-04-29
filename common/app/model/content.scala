@@ -314,6 +314,7 @@ class Snap(snapId: String,
 
   //Trail implementations
   override lazy val shortUrl: String = ""
+  override lazy val headline: String = snapMeta.get("headline").flatMap(_.asOpt[String]).getOrElse("Link")
 
   //Meta implementations
   override lazy val webPublicationDate = snapWebPublicationDate
