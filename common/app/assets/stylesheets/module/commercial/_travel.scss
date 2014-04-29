@@ -14,7 +14,7 @@
         float: left;
         width: 50%;
         @include rem ((
-            padding-left: $gs-gutter/2
+            padding-left: 8px
         ));
 
         &:nth-child(n+3) {
@@ -43,6 +43,20 @@
     .commercial__title {
         padding: 0;
         margin-bottom: 0;
+        @include fs-bodyHeading(3);
+        text-transform: lowercase;
+        color: $c-brandBlue;
+        
+        .commercial__title__middle-word {
+           color: #52aee9;
+           margin-left: -5px;
+        }
+        
+        .commercial__title__last-word {
+           color: #006ec9;
+           margin-left: -5px;
+        }
+        
     }
     .commercial__home-link {
         float: right;
@@ -85,6 +99,18 @@
 
 /* fronts */
 .facia-container--layout-front .commercial--travel {
+    @include mq(tablet, $to: desktop) {
+        .commercial__head {
+            @include rem ((
+                padding-right: 14px
+            ));
+        }
+        .commercial__home-link {
+            @include rem ((
+                right: 14px
+            ));
+        }
+    }
     @include mq(desktop) {
         .commercial__head {
             float: left;
@@ -104,7 +130,7 @@
         .lineitem {
            width: 33%;
            @include rem((
-               padding-left: $gs-gutter/2
+
            ));
        }
    }
@@ -130,13 +156,16 @@
        }
    }
    @include mq(faciaLeftCol, $to: wide) {
+       .commercial__home-link {
+           width: 140px;
+           line-height: 1.3;
+       }
        .commercial__title__last-word {
            margin-left: 0;
-       }
+        }
    }
    @include mq(wide) {
        .commercial__head {
-           margin-right: 0;
            @include rem((
                width: gs-span(2) + $gs-gutter
            ));
@@ -146,6 +175,18 @@
 
 /* article */
 .facia-container--layout-article .commercial--travel {
+    @include mq(tablet, $to: rightCol) {
+        .commercial__head {
+            @include rem ((
+                padding-right: 14px
+            ));
+        }
+        .commercial__home-link {
+            @include rem ((
+                right: 24px
+            ));
+        }
+    }
     @include mq(rightCol) {
         .commercial__head {
             width: 25%;
@@ -176,11 +217,18 @@
         }
     }
     @include mq(leftCol, $to: wide) {
+        .commercial__home-link {
+            width: 140px;
+            line-height: 1.3;
+        }
         .commercial__title {
-            line-height: 0;
             @include rem((
                 margin-bottom: 10px
             ));
+            
+            .commercial__title__middle-word {
+                margin-left: 0;
+            }
         }
         .commercial__search {
             @include rem((
