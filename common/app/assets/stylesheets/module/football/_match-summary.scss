@@ -108,6 +108,7 @@ $football-crest-large: 60px;
         height: $football-crest-small,
         max-width: $football-crest-small
     ));
+    background-size: contain;
     display: inline-block;
 
     @include mq($from: tablet) {
