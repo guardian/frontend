@@ -6,31 +6,42 @@ import com.google.api.ads.dfp.axis.factory.DfpServices
 import com.google.api.ads.dfp.axis.utils.v201403.StatementBuilder
 import com.google.api.ads.dfp.axis.v201403._
 import com.google.api.ads.dfp.lib.client.DfpSession
+import com.google.api.client.auth.oauth2.Credential
 import common.Logging
 import conf.{Configuration => GuConf}
 
 object DfpApi extends Logging {
 
-  private lazy val oAuth2Credential = new OfflineCredentials.Builder()
-    .forApi(Api.DFP)
-    .from(GuConf.dfpApi.configObject.get)
-    .build()
-    .generateCredential()
+  private lazy val oAuth2Credential: Option[Credential] = GuConf.dfpApi.configObject map {
+    new OfflineCredentials.Builder()
+      .forApi(Api.DFP)
+      .from(_)
+      .build()
+      .generateCredential()
+  }
 
-  private lazy val session = new DfpSession.Builder()
-    .from(GuConf.dfpApi.configObject.get)
-    .withOAuth2Credential(oAuth2Credential)
-    .build()
+  private lazy val session: Option[DfpSession] = for {
+    conf <- GuConf.dfpApi.configObject
+    auth <- oAuth2Credential
+  } yield {
+    new DfpSession.Builder()
+      .from(conf)
+      .withOAuth2Credential(auth)
+      .build()
+  }
 
   private lazy val dfpServices = new DfpServices()
 
-  private lazy val lineItemService = dfpServices.get(session, classOf[LineItemServiceInterface])
+  private lazy val lineItemServiceOption: Option[LineItemServiceInterface] =
+    session.map(dfpServices.get(_, classOf[LineItemServiceInterface]))
 
-  private lazy val customTargetingService = dfpServices.get(session, classOf[CustomTargetingServiceInterface])
+  private lazy val customTargetingServiceOption: Option[CustomTargetingServiceInterface] =
+    session.map(dfpServices.get(_, classOf[CustomTargetingServiceInterface]))
 
+  // TODO don't store this
   private lazy val allKeywordValues = DfpApi.fetchKeywordTargetingValues()
 
-  def fetchCurrentLineItems(): Seq[LineItem] = {
+  def fetchCurrentLineItems(): Seq[LineItem] = lineItemServiceOption map { lineItemService =>
     val statementBuilder = new StatementBuilder()
       .where("status = :readyStatus OR status = :deliveringStatus")
       .orderBy("id ASC")
@@ -56,9 +67,9 @@ object DfpApi extends Logging {
     }
 
     totalResults
-  }
+  } getOrElse Nil
 
-  def fetchKeywordTargetingValues(): Map[Long, String] = {
+  def fetchKeywordTargetingValues(): Map[Long, String] = customTargetingServiceOption map {customTargetingService =>
 
 
     def getAllCustomTargetingKeyIds = {
@@ -140,7 +151,7 @@ object DfpApi extends Logging {
     }
 
     targetingValues
-  }
+  }  getOrElse Map()
 
   def fetchCurrentKeywordTargetingValues(): Seq[String] = {
     val currentLineItems = DfpApi.fetchCurrentLineItems()

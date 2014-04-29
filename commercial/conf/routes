@@ -30,3 +30,7 @@ GET        /commercial/books/bestsellers           controllers.commercial.BookOf
 GET        /commercial/books/bestsellers.json      controllers.commercial.BookOffers.bestsellers(format="json")
 GET        /commercial/books/book/*pageId.json     controllers.commercial.BookOffers.singleBook(pageId, format="json")
 GET        /commercial/books/book/*pageId          controllers.commercial.BookOffers.singleBook(pageId, format="html")
+
+
+# DFP
+GET        /commercial/dfp/keywords                controllers.commercial.DfpKeywordViewer.viewKeywords
