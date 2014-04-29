@@ -251,17 +251,12 @@ $block-padding-right: $gs-gutter;
     position: relative;
     color: #ffffff;
     border-top: 1px dotted #E6A1AB;
-    border-bottom: none;
     @include rem((
         padding-bottom: $gs-baseline
     ));
 
     @include mq(rightCol) {
         border-top: none;
-    }
-
-    @include mq($to: rightCol) {
-        border-bottom: 1px dotted $c-neutral4;
     }
 
     @include mq(rightCol) {
