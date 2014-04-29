@@ -51,7 +51,8 @@ define([
             .filter(function(el) { return el.getAttribute('data-snap-uri'); })
             .forEach(function(el) {
                 ajax({
-                    url: el.getAttribute('data-snap-uri')
+                    url: el.getAttribute('data-snap-uri'),
+                    crossOrigin: true
                 }).then(function(resp) {
                     $.create(resp.html).each(function(html) {
                         bonzo(el)
