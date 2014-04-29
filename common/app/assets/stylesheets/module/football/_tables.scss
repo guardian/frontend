@@ -36,7 +36,7 @@
     // remove battle line from last row
     // (only happens in truncated tables)
     tr:last-child td {
-        border-bottom: none;
+        border-bottom: 0;
     }
 
     .football-stat--form {
@@ -73,23 +73,20 @@
     }
 }
 
-.facia-snap {
-    // Apply this to football only
-    // ----
+
+.facia-snap--football {
     background: #ffffff;
+    position: relative;
 
     .table--football {
+        @extend .table--striped;
         tbody tr { display: none; }
         tbody tr:nth-of-type(-n+5) { display: table-row; }
     }
-    @extend .table--striped;
-    // ----
 
 
     .table,
     .table__caption {
-        border-top: 0 none;
-
         tr,
         td {
             background: inherit;
@@ -114,21 +111,16 @@
         position: absolute;
         width: 100%;
         z-index: 1;
-        a {
-            margin-right: 1.6rem;
-        }
-    }
-}
-
-.facia-snap-point--default {
-    .table--football {
-        tbody tr { display: none; }
-        tbody tr:nth-of-type(-n+6) { display: table-row; }
     }
 }
 
 .facia-snap-point--large {
     @include table--hide-none;
+
+    .table,
+    .table__caption {
+        border-top: 0 none;
+    }
 
     .table--football {
         tbody tr { display: none; }
@@ -155,5 +147,18 @@
     .table--football {
         tbody tr { display: none !important; }
         tbody tr:nth-of-type(-n+4) { display: table-row !important; }
+    }
+}
+
+.facia-snap-point--mini {
+    @include table--hide-from-importance-3;
+
+    .table--football {
+        tbody tr { display: none !important; }
+        tbody tr:nth-of-type(-n+3) { display: table-row !important; }
+    }
+
+    .competition-name {
+        display: none;
     }
 }

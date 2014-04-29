@@ -16,6 +16,12 @@
 // CSS helpers
 // =============================================================================
 
+// Transparent background with fallback for older browsers
+@mixin transparent-background($color, $opacity) {
+    background-color: $color;
+    background-color: rgba($color, $opacity);
+}
+
 // Vertical linear gradient with a plain fallback for older browsers
 @mixin simple-gradient($from, $to) {
     // Fix for browsers not understanding transparent

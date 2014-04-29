@@ -8,7 +8,7 @@ $c-soulmates-red: #d70851;
         position: static;
         height: auto;
         overflow: auto;
-        border: none;
+        border: 0;
         @include rem((
             padding-left: $gs-gutter/2,
             padding-right: $gs-gutter/2
@@ -51,7 +51,7 @@ $c-soulmates-red: #d70851;
             position: absolute;
             display: inline-block;
             background-color: $c-soulmates-red;
-            border: none;
+            border: 0;
             color: #ffffff;
             @include fs-headline(1, $size-only: true);
             @include rem((
@@ -98,21 +98,24 @@ $c-soulmates-red: #d70851;
         }
         @include mq(mobileLandscape) {
             width: 25%;
+
             &:nth-child(-n+4) {
                 display: block;
             }
         }
         @include mq(tablet) {
             width: 25%;
+
             &:nth-child(-n+4) {
                 display: block;
             }
         }
         @include mq(desktop) {
             width: 16.66%;
+
             &:nth-child(5),
             &:nth-child(6) {
-                 display: block;
+                display: block;
             }
         }
     }
@@ -293,7 +296,7 @@ $c-soulmates-red: #d70851;
                 padding-left: $gs-gutter/2
             ));
             width: 25%;
-            background: red;
+            background: #ff0000;
 
             &:nth-child(n+4) {
                 display: block;

@@ -13,7 +13,7 @@
 
     &:first-child {
         padding-top: 0;
-        border-top: none;
+        border-top: 0;
     }
 }
 
@@ -69,7 +69,7 @@
 
 .right-most-popular--list {
     .right-most-popular-item {
-        border-top: none;
+        border-top: 0;
     }
 
     .right-most-popular-item__headline {
