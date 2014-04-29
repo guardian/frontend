@@ -99,7 +99,6 @@ object FrontsController extends Controller with ExecutionContexts with GetPaClie
   }
 
   private def previewFrontsComponent(snapFields: SnapFields): Future[SimpleResult] = {
-    print(snapFields)
     val result = (for {
       previewResponse <- WS.url(snapFields.uri).get()
     } yield {
