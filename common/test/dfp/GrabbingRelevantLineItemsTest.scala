@@ -1,10 +1,9 @@
 package dfp
 
 import com.google.api.ads.dfp.axis.v201403._
-import org.scalatest._
-
-import scala.language.reflectiveCalls
 import conf.{Configuration => GuConf}
+import org.scalatest._
+import scala.language.reflectiveCalls
 import services.DfpApi
 
 
@@ -26,8 +25,7 @@ class GrabbingRelevantLineItemsTest extends FlatSpec with Matchers {
 
     stuffWithTargeting.size should (be > 1000 and be < results.size)
 
-    // TODO: test
-    val lineItem: LineItem = stuffWithTargeting(0)
-    lineItem.getTargeting.getCustomTargeting
+    val customTargeting = DfpApi.getCustomTargeting(stuffWithTargeting(0))
+    customTargeting.get("Keywords").get should (contain("drink") and contain("food"))
   }
 }
