@@ -210,18 +210,14 @@
         top: 0;
         right: 0;
     }
-    @include mq(tablet) {
-        padding-left: 50%;
-        @include rem((
-            margin-top: -$gs-row-height,
-            margin-right: gs-span(1)
-        ));
+    + .container__body .collection-wrapper:first-child .fromage {
+        border-top-width: 2px;
     }
     @include mq(tablet) {
         padding-left: 50%;
         @include rem((
             margin-top: -$gs-row-height,
-            padding-right: gs-span(1)
+            margin-right: gs-span(1)
         ));
     }
     @include mq($facia-leftCol-trigger) {
@@ -231,6 +227,9 @@
 
         .ad-slot--paid-for-badge__link {
             position: relative;
+        }
+        + .container__body .collection-wrapper:first-child .fromage {
+            border-top-width: 0;
         }
     }
 }
