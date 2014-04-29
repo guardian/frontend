@@ -58,32 +58,31 @@ define([
     function getSuffix(type, format, value) {
         var units = {
             s: {
-                'short': ['s'],
-                'med': ['s ago'],
-                'long':  [' second ago', ' seconds ago']
+                'short': 's',
+                'long':  ' second ago',
+                plural:  ' seconds ago'
             },
             m: {
-                'short': ['m'],
-                'med': ['m ago'],
-                'long':  [' minute ago', ' minutes ago']
+                'short': 'm',
+                'long':  ' minute ago',
+                plural: ' minutes ago'
             },
             h: {
-                'short': ['h'],
-                'med': ['h ago'],
-                'long':  [' hour ago', ' hours ago']
+                'short': 'h',
+                'long':  ' hour ago',
+                plural:  ' hours ago'
             },
             d: {
-                'short': ['d'],
-                'med': ['d ago'],
-                'long':  [' day ago', ' days ago']
+                'short': 'd',
+                'long':  ' day ago',
+                plural:  ' days ago'
             }
         };
         if (units[type]) {
-            var strs = units[type][format];
-            if (value === 1) {
-                return strs[0];
+            if (value === 1 || format === 'short') {
+                return units[type][format];
             } else {
-                return strs[strs.length-1];
+                return units[type].plural;
             }
         } else {
             return '';
@@ -91,13 +90,11 @@ define([
     }
 
     function makeRelativeDate(epoch, opts) {
-        opts = opts || {};
-
         var then = new Date(Number(epoch)),
             now = new Date(),
-            delta,
-            format = opts.format || 'short',
-            extendedFormatting = (opts.format === 'short' || opts.format === 'med');
+            delta;
+
+        opts = opts || {};
 
         if (!isValidDate(then)) {
             return false;
@@ -112,19 +109,19 @@ define([
             return false;
 
         } else if (delta < 55) {
-            return delta + getSuffix('s', format, delta);
+            return delta + getSuffix('s', opts.format || 'short', delta);
 
         } else if (delta < (55 * 60)) {
             var minutes = Math.round(delta / 60, 10);
-            return minutes + getSuffix('m', format, minutes);
+            return minutes + getSuffix('m', opts.format || 'short', minutes);
 
-        } else if (isToday(then) || (extendedFormatting && isWithin24Hours(then))) {
+        } else if (isToday(then) || (isWithin24Hours(then) && opts.format === 'short')) {
             var hours = Math.round(delta / 3600);
-            return hours + getSuffix('h', format, hours);
+            return hours + getSuffix('h', opts.format || 'short', hours);
 
-        } else if (extendedFormatting && isWithinPastWeek(then)) {
+        } else if (isWithinPastWeek(then) && opts.format === 'short') {
             var days = Math.round(delta / 3600 / 24);
-            return days + getSuffix('d', format, days);
+            return days + getSuffix('d', opts.format || 'short', days);
 
         } else if (isYesterday(then)) { // yesterday
             return 'Yesterday' + withTime(then);
@@ -146,7 +143,7 @@ define([
 
     function findValidTimestamps(context) {
         // `.blocktime time` used in blog html
-        return common.$g('.js-timestamp, .js-item__timestamp', context);
+        return common.$g('.js-timestamp, .block-time time, .js-item__timestamp', context);
     }
 
     function replaceValidTimestamps(context, opts) {

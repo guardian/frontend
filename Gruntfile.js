@@ -121,12 +121,6 @@ module.exports = function (grunt) {
                             'font-family': 'AgateSans',
                             file: 'resources/fonts/AgateSans-Regular.woff',
                             format: 'woff'
-                        },
-                        {
-                            'font-family': 'AgateSans',
-                            'font-weight': '700',
-                            file: 'resources/fonts/AgateSans-Bold.woff',
-                            format: 'woff'
                         }
                     ]
                 }
@@ -140,11 +134,6 @@ module.exports = function (grunt) {
                             'font-family': 'AgateSans',
                             file: 'resources/fonts/AgateSans-Regular.ttf',
                             format: 'ttf'
-                        },
-                        {
-                            'font-family': 'AgateSans',
-                            'font-weight': '700',
-                            file: 'resources/fonts/AgateSans-Bold.ttf'
                         }
                     ]
                 }
