@@ -7,7 +7,7 @@ define(['utils/url-query'], function(urlQuery) {
           .filter(function(kv) { return !namespace || kv[0].indexOf(namespace) === (excludeNamespace ? -1 : 0); })
           .map(function(kv) { return [
               namespace && stripNamespace && !excludeNamespace ? kv[0].slice(namespace.length) : kv[0],
-              kv[1] === undefined ? undefined : decodeURIComponent(kv[1])
+              kv[1] === undefined ? undefined : decodeURIComponent(kv[1].replace(/\+/g, ' '))
           ]; })
           .object()
           .value();
