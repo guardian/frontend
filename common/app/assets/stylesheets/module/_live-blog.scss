@@ -1015,9 +1015,15 @@ $timeline-width: 14px;
 /* Football components
    ========================================================================== */
 .blog {
+    .after-header {
+        position: relative;
+        @include full-bleed($c-neutral8);
+    }
+
     .tabs__container--multiple {
+        margin-bottom: 0;
         @include rem((
-            margin-bottom: -1px
+            padding-top: $gs-baseline
         ));
     }
 
