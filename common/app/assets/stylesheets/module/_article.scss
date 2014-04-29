@@ -5,6 +5,9 @@
     ));
     @include fs-bodyCopy(3);
 }
+.article--advertisement-feature {
+    @include f-textsans;
+}
 
 .article__zone {
     @include fs-header(3);
