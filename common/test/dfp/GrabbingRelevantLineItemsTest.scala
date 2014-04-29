@@ -28,4 +28,10 @@ class GrabbingRelevantLineItemsTest extends FlatSpec with Matchers {
     val customTargeting = DfpApi.getCustomTargeting(stuffWithTargeting(0))
     customTargeting.get("Keywords").get should (contain("drink") and contain("food"))
   }
+
+  "DFP Api" should "give all line items that have keyword targeting" in {
+    val keywordValues = DfpApi.fetchCurrentKeywordTargetingValues()
+
+    keywordValues should (contain("live-better") and contain("obituary"))
+  }
 }

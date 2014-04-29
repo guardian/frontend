@@ -24,9 +24,13 @@ object DfpApi extends Logging {
 
   private lazy val dfpServices = new DfpServices()
 
-  def fetchCurrentLineItems(): Seq[LineItem] = {
-    val lineItemService = dfpServices.get(session, classOf[LineItemServiceInterface])
+  private lazy val lineItemService = dfpServices.get(session, classOf[LineItemServiceInterface])
 
+  private lazy val customTargetingService = dfpServices.get(session, classOf[CustomTargetingServiceInterface])
+
+  private lazy val allKeywordValues = DfpApi.fetchKeywordTargetingValues()
+
+  def fetchCurrentLineItems(): Seq[LineItem] = {
     val statementBuilder = new StatementBuilder()
       .where("status = :readyStatus OR status = :deliveringStatus")
       .orderBy("id ASC")
@@ -60,8 +64,6 @@ object DfpApi extends Logging {
     def getAllCustomTargetingKeyIds = {
       var customTargetingKeyIds: Seq[Long] = Nil
 
-      val customTargetingService = dfpServices.get(session, classOf[CustomTargetingServiceInterface])
-
       val statementBuilder = new StatementBuilder()
         .orderBy("id ASC")
         .limit(StatementBuilder.SUGGESTED_PAGE_LIMIT)
@@ -87,8 +89,6 @@ object DfpApi extends Logging {
     }
 
     def getKeywordTargetingKeyId: Option[Long] = {
-      val customTargetingService = dfpServices.get(session, classOf[CustomTargetingServiceInterface])
-
       val statementBuilder = new StatementBuilder()
         .where("displayName = :displayName")
         .withBindVariableValue("displayName", "Keywords")
@@ -108,9 +108,6 @@ object DfpApi extends Logging {
           None
       }
     }
-
-
-    val customTargetingService = dfpServices.get(session, classOf[CustomTargetingServiceInterface])
 
     val keywordTargetingKeyId = getKeywordTargetingKeyId
 
@@ -145,17 +142,30 @@ object DfpApi extends Logging {
     targetingValues
   }
 
+  def fetchCurrentKeywordTargetingValues(): Seq[String] = {
+    val currentLineItems = DfpApi.fetchCurrentLineItems()
+
+    val keywordValues = currentLineItems.foldLeft(Seq[String]()) { (soFar, lineItem) =>
+      val customTargeting = DfpApi.getCustomTargeting(lineItem)
+      if (!customTargeting.get("Keywords").get.isEmpty) {
+        soFar ++ customTargeting.flatMap(_._2.map(_.toString)).toSeq
+      } else {
+        soFar
+      }
+    }
+
+    keywordValues.distinct.sorted
+  }
+
   def getCustomTargeting(lineItem: LineItem): Map[String, Seq[AnyRef]] = {
 
     def customCriteriaExtractor(c: CustomCriteriaNode): List[Long] = c match {
       case c: CustomCriteria if c.getOperator == CustomCriteriaComparisonOperator.IS => c.getValueIds.toList
-      case c: CustomCriteria => Nil
       case s: CustomCriteriaSet => s.getChildren.map(customCriteriaExtractor).flatten.toList
+      case other => Nil
     }
 
     val customTargeting = customCriteriaExtractor(lineItem.getTargeting.getCustomTargeting)
-
-    val allKeywordValues = DfpApi.fetchKeywordTargetingValues()
 
     val keywordValues = customTargeting.flatMap(allKeywordValues.get)
 
