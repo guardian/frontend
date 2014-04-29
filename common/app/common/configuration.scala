@@ -161,7 +161,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
   }
 
   object sport {
-    lazy val apiUrl = configuration.getStringProperty("sport.apiUrl").getOrElse("http://api.nextgen.guardianapps.co.uk")
+    lazy val apiUrl = configuration.getStringProperty("sport.apiUrl").getOrElse(ajax.url)
   }
 
   object oas {
