@@ -25,8 +25,8 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
     None
 
   def lowercase(path: String): Option[SimpleResult] = path.split("/").toList match {
-    case "" :: section :: other if section.exists(_.isUpper) => Some(Cached(300){
-      Redirect(s"/${section.toLowerCase}/${other.mkString("/")}")
+    case "www.theguardian.com" :: section :: other if section.exists(_.isUpper) => Some(Cached(300){
+      Redirect(s"http://www.theguardian.com/${section.toLowerCase}/${other.mkString("/")}")
     })
     case _ => None
   }
