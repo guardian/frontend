@@ -113,8 +113,7 @@ define([
 
                     self.flush(rawArticles.length === 0 ? '...sorry, no articles were found.' : '');
 
-                    ([].concat(rawArticles)).forEach(function(article, index){
-                        article.index = index;
+                    ([].concat(rawArticles)).forEach(function(article){
                         article.uneditable = true;
                         self.articles.push(new Article(article));
                         cache.put('contentApi', article.id, article);

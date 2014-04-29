@@ -11,7 +11,7 @@
             <tr>
                 <th class="table-column--sub"><abbr title="Position">Pos</abbr></th>
                 <th class="table-column--main">Team</th>
-                <th><abbr title="Played">P</abbr></th>
+                <th class="table-column--importance-3"><abbr title="Played">P</abbr></th>
                 <th class="table-column--importance-1"><abbr title="Won">W</abbr></th>
                 <th class="table-column--importance-1"><abbr title="Drawn">D</abbr></th>
                 <th class="table-column--importance-1"><abbr title="Lost">L</abbr></th>
@@ -40,7 +40,7 @@
                             }
                         </span>
                     </td>
-                    <td>@entry.team.total.played</td>
+                    <td class="table-column--importance-3">@entry.team.total.played</td>
                     <td class="table-column--importance-1">@entry.team.total.won</td>
                     <td class="table-column--importance-1">@entry.team.total.drawn</td>
                     <td class="table-column--importance-1">@entry.team.total.lost</td>
@@ -54,6 +54,7 @@
                 </tr>
             }
         </tbody>
-        <caption class="table__caption table__caption--bottom"><a href='@{competition.url + "/table"}' data-link-name="full table">View full @competition.fullName table</a></caption>
+
+        <caption class="table__caption table__caption--bottom"><a href='@{competition.url + "/table"}' data-link-name="full table">View full <span class="competition-name">@competition.fullName</span> table</a></caption>
     </table>
 </div>

@@ -71,7 +71,9 @@ define([
                 element.addEventListener('drop', function(event) {
                     var targetList = ko.dataFor(element),
                         targetItem = ko.dataFor(event.target),
-                        id = event.testData ? event.testData : event.dataTransfer.getData('Text'),
+                        id = event.dataTransfer.getData('Text'),
+                        ourQueryParams   = parseQueryParams(id, 'gu-', false, true),
+                        theirQueryParams = parseQueryParams(id, 'gu-', true),
                         sourceItem,
                         position,
                         newItems,
@@ -107,15 +109,7 @@ define([
                         }
                     }
 
-                    position = targetItem && targetItem.id ? targetItem.id : undefined;
-
-                    _.each(parseQueryParams(id), function(url){
-                        if (url && url.match(/^http:\/\/www.theguardian.com/)) {
-                            id = url;
-                        }
-                    });
-
-                    id = urlAbsPath(id);
+                    position = targetItem && _.isFunction(targetItem.id) ? targetItem.id() : undefined;
 
                     if (!id) {
                         alertBadContent();
@@ -125,15 +119,25 @@ define([
                     try {
                         sourceItem = JSON.parse(storage.getItem(storageKey));
                     } catch(e) {}
-
                     storage.removeItem(storageKey);
 
-                    if (!sourceItem || sourceItem.id !== id) {
-                        sourceItem = undefined;
+                    if (!sourceItem || sourceItem.id !== urlAbsPath(id)) {
+                        sourceItem = {meta: ourQueryParams};
                         sourceList = undefined;
+                        id = id.split('?')[0] + (_.isEmpty(theirQueryParams) ? '' : '?' + _.map(theirQueryParams, function(val, key) {
+                            return key + (val ? '=' + val : '');
+                        }).join('&'));
                     }
 
-                    removeById(targetList.items, id);
+                    // Parse url from links such as http://www.google.co.uk/?param-name=http://www.theguardian.com/foobar
+                    _.each(theirQueryParams, function(val, key) {
+                        // Grab the last query param val that looks like a Guardian url
+                        if (key === 'url' && (val + '').match(/^http:\/\/www.theguardian.com/)) {
+                            id = val;
+                        }
+                    });
+
+                    removeById(targetList.items, urlAbsPath(id));
 
                     insertAt = targetList.items().indexOf(targetItem) + isAfter;
                     insertAt = insertAt === -1 ? targetList.items().length : insertAt;
@@ -149,10 +153,16 @@ define([
 
                     opts.newItemsValidator(newItems)
                     .fail(function() {
-                        removeById(targetList.items, id);
+                        _.each(newItems, function(item) { targetList.items.remove(item); });
                         alertBadContent(id);
                     })
-                    .done(function() {
+                    .done(function(reject, msg) {
+                        if (reject) {
+                            _.each(newItems, function(item) { targetList.items.remove(item); });
+                            alertBadContent(id, msg);
+                            return;
+                        }
+
                         if (_.isFunction(targetList.reflow)) {
                             targetList.reflow();
                         }
@@ -161,15 +171,15 @@ define([
                             return;
                         }
 
-                        opts.newItemsPersister(newItems, sourceItem, sourceList, targetList, id, position, isAfter);
+                        opts.newItemsPersister(newItems, sourceList, targetList, position, isAfter);
                     });
                 }, false);
             }
         };
     }
 
-    function alertBadContent(id) {
-        window.alert('Sorry, but you can\'t add' + (id ? ': ' + id : ' that'));
+    function alertBadContent(id, msg) {
+        window.alert(msg || 'Sorry, but you can\'t add' + (id ? ': ' + id : ' that'));
     }
 
     return droppable;
