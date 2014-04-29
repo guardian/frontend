@@ -48,12 +48,11 @@
         color: $c-brandBlue;
         
         .commercial__title__middle-word {
-           color: #52aee9;
+            color: #52aee9;
             @include rem((
                margin-left: -5px
             ));
         }
-        
         .commercial__title__last-word {
            color: #006ec9;
            @include rem((
@@ -69,7 +68,6 @@
             padding: 0 $gs-gutter/2 0 0
         ));
     }
-    
     @include mq(tablet) {
         .commercial__body {
             padding: 0;
