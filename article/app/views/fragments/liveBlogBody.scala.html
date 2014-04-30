@@ -23,7 +23,7 @@
                         @if(article.isLive) {<span class="blog__live">LIVE</span> }updated <time class="js-timestamp" datetime="@article.webPublicationDate" data-relativeformat="med"></time>
                     </div>
 
-                    <div class="blog__meta-container js-football-meta">
+                    <div class="blog__meta-container">
                         @fragments.meta.byline(article.byline, article)
                         @fragments.meta.dateline(article.webPublicationDate, secondary = true)
                         <div class="js-comment-count blog__comment-count"></div>
@@ -32,7 +32,7 @@
 
             </header>
 
-            <div class="after-header js-after-head"></div>
+            <div class="after-header js-after-head js-football-meta"></div>
         </div>
         <div class="blog__columning-wrapper">
             <div class="blog__main-column blog__main-background">
