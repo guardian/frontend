@@ -19,7 +19,7 @@
                 template: {name: 'template_collection', foreach: items}"></div>
         </div>
 
-        <div class="title">Orphaned collections</div>
+        <div class="title">Orphaned containers</div>
         <div class="scrollable cnf-collections" data-bind="
             template: {name: 'template_collection', foreach: orphans}"></div>
     </div>
@@ -44,7 +44,7 @@
             <a class="cnf-collection__name" data-bind="
                 click: toggleOpen,
                 attr: {href: id},
-                text: meta.displayName() || 'Untitled collection'"></a>
+                text: meta.displayName() || '(no title)'"></a>
 
             <span class="cnf-collection__id" data-bind="text: id"></span>
 
@@ -173,7 +173,7 @@
                             template: {name: 'template_collection', foreach: items}"></div>
                     </div>
                     <div class="instructions">
-                        Drop a collection above, or <span data-bind="click: createCollection" class="linky">create</span> one.
+                        Drop a container above, or <span data-bind="click: createCollection" class="linky">create</span> one.
                         <div data-bind="if: !collections.items().length">Note: empty fronts will be discarded</div>
                     </div>
                 </div>
