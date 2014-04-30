@@ -1,6 +1,7 @@
 define([
     // Common libraries
     'common/$',
+    'common/utils/ajax',
     'common/utils/mediator',
     'bonzo',
     'qwery',
@@ -8,23 +9,29 @@ define([
     'common/utils/detect',
     'common/utils/storage',
     'common/utils/to-array',
+    'common/modules/ui/snaps',
     'common/modules/ui/collection-show-more',
     'modules/ui/container-show-more',
     'modules/ui/container-toggle'
 ], function (
     $,
+    ajax,
     mediator,
     bonzo,
     qwery,
     detect,
     storage,
     toArray,
+    snaps,
     CollectionShowMore,
     ContainerShowMore,
     ContainerToggle
 ) {
-
     var modules = {
+
+        showSnaps: function() {
+            snaps.init('.facia-snap');
+        },
 
         showCollectionShowMore: function () {
             var collectionShowMoreAdd = function(config, context) {
@@ -66,6 +73,7 @@ define([
     var ready = function (config, context) {
         if (!this.initialised) {
             this.initialised = true;
+            modules.showSnaps();
             modules.showCollectionShowMore();
             modules.showContainerToggle();
         }

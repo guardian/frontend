@@ -1,11 +1,9 @@
 package model.commercial.jobs
 
-import model.commercial._
 import common.{AkkaAgent, ExecutionContexts}
-import scala.concurrent.duration._
+import model.commercial._
 import scala.concurrent.Future
-import model.commercial.Segment
-import model.commercial.Keyword
+import scala.concurrent.duration._
 
 case class Job(id: Int,
                title: String,
@@ -19,11 +17,12 @@ case class Job(id: Int,
   def listingUrl = s"http://jobs.theguardian.com/job/$id"
 
   def isTargetedAt(segment: Segment): Boolean = {
-    val someKeywordsMatch = intersects(segment.context.keywords, keywords.map(_.name))
-    segment.context.isInSection("business") && someKeywordsMatch
+    val adKeywords = keywords.map(_.name)
+    intersects(segment.context.keywords, adKeywords)
   }
 
-  val industries: Seq[String] = Industries.sectorIdIndustryMap.filter{ case(id, name) => sectorIds.contains(id) }.values.toSeq
+  val industries: Seq[String] =
+    Industries.sectorIdIndustryMap.filter { case (id, name) => sectorIds.contains(id)}.values.toSeq
 
   val mainIndustry: Option[String] = industries.headOption
 }

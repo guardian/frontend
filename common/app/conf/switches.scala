@@ -219,7 +219,7 @@ object Switches extends Collections {
 
   val ReleaseMessageSwitch = Switch("Feature Switches", "release-message",
     "If this is switched on users will be messaged that they are inside the beta release",
-    safeState = Off, sellByDate = new DateMidnight(2014, 5, 1)
+    safeState = Off, sellByDate = new DateMidnight(2014, 6, 1)
   )
 
   val FontSwitch = Switch("Feature Switches", "web-fonts",
@@ -263,12 +263,12 @@ object Switches extends Collections {
 
   val NetworkFrontOptIn = Switch("Feature Switches", "network-front-opt-in",
     "If this is switched on then an opt-in message will be displayed to users coming from the R2 network front",
-    safeState = Off, sellByDate = new DateMidnight(2014, 4, 30)
+    safeState = Off, sellByDate = new DateMidnight(2014, 5, 31)
   )
 
   val ArticleSlotsSwitch = Switch("Feature Switches", "article-slots",
     "If this switch is on, inline content slots (for stories, ads, etc) will be generated in article bodies",
-    safeState = Off, sellByDate = new DateMidnight(2014, 4, 30)
+    safeState = Off, sellByDate = new DateMidnight(2014, 5, 31)
   )
 
   val IndiaRegionSwitch = Switch("Feature Switches", "india-region",
@@ -281,7 +281,7 @@ object Switches extends Collections {
 
   val LayoutHintsSwitch = Switch("Feature Switches", "layout-hints",
     "If this switch is on, JavaScript will enable the inline-hinting css experiments",
-    safeState = Off, sellByDate = new DateMidnight(2014, 4, 30)
+    safeState = Off, sellByDate = new DateMidnight(2014, 6, 1)
   )
 
   val RssLinkSwitch = Switch("Feature Switches", "rss-link",
@@ -300,12 +300,6 @@ object Switches extends Collections {
   )
 
   // A/B Test Switches
-
-  val ABExternalLinksNewWindow = Switch("A/B Tests", "ab-external-links-new-window",
-    "If this switch is on, AB test opening external links in a new tab/window.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 4, 30)
-  )
-
   val ABHomeComponent = Switch("A/B Tests", "ab-home-component",
     "This switch runs an AB test which adds a sticky-like home button.",
     safeState = Off, sellByDate = new DateMidnight(2014, 5, 4)
@@ -341,6 +335,11 @@ object Switches extends Collections {
 
   val ToolCheckPressLastmodified = Switch("Facia Tool", "facia-tool-check-press-lastmodified",
     "If this switch is on facia tool will alert the user if a front is not pressed withing 10 secs of an edit/publish",
+    safeState = Off, sellByDate = never
+  )
+
+  val ToolSnaps = Switch("Facia Tool", "facia-tool-snaps",
+    "If this is switched on then snaps can be created by dragging arbitrary links into the tool",
     safeState = Off, sellByDate = never
   )
 
@@ -400,6 +399,7 @@ object Switches extends Collections {
     ToolDisable,
     ToolConfigurationDisable,
     ToolCheckPressLastmodified,
+    ToolSnaps,
     ToolSparklines,
     OphanSwitch,
     ScrollDepthSwitch,
@@ -428,7 +428,6 @@ object Switches extends Collections {
     EnhanceTweetsSwitch,
     IndiaRegionSwitch,
     ABHomeComponent,
-    ABExternalLinksNewWindow,
     MemcachedSwitch,
     IncludeBuildNumberInMemcachedKey,
     GzipSwitch

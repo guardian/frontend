@@ -88,7 +88,7 @@ define([
         .done(function(results) {
             if (cc === checkCount) {
                 self.capiResults(results);
-                self.state.apiQueryStatus('valid');
+                self.state.apiQueryStatus(results.length ? 'valid' : 'invalid');
             }
         })
         .fail(function() {

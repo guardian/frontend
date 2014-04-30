@@ -18,6 +18,8 @@ GET           /assets/*file              controllers.Assets.at(path="/public", f
 # Fronts
 GET           /                          controllers.FaciaToolController.collectionsEditor()
 GET           /configuration             controllers.FaciaToolController.configEditor()
+GET           /publish-all               controllers.FaciaToolController.publishAll()
+GET           /publish-all/comet         controllers.FaciaToolController.publishAllStream()
 
 POST          /collection/publish/*id    controllers.FaciaToolController.publishCollection(id)
 POST          /collection/discard/*id    controllers.FaciaToolController.discardCollection(id)
