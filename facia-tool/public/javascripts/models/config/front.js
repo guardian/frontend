@@ -41,13 +41,13 @@ define([
             'section',
             'webTitle',
             'description',
-            'analyticsName']);
+            'type'], 'front');
 
         populateObservables(this.props,  opts);
 
         this.state = asObservableProps([
-            'open',
-            'openProps']);
+            'isOpen',
+            'isOpenProps']);
 
         this.collections = new Group({
             parent: self,
@@ -66,16 +66,27 @@ define([
         this.depopulateCollection = this._depopulateCollection.bind(this);
     }
 
-    Front.prototype.setOpen = function(isOpen) {
-        this.state.open(isOpen);
+    Front.prototype.setOpen = function(isOpen, withOpenProps) {
+        this.state.isOpen(isOpen);
+        this.state.isOpenProps(withOpenProps);
     };
 
     Front.prototype.toggleOpen = function() {
-        this.state.open(!this.state.open());
+        this.state.isOpen(!this.state.isOpen());
     };
 
     Front.prototype.openProps = function() {
-        this.state.openProps(true);
+        this.state.isOpenProps(true);
+        this.collections.items().map(function(collection) {
+            collection.close();
+        });
+    };
+
+    Front.prototype.saveProps = function() {
+        if(this.id()) {
+            vars.model.save();
+            this.state.isOpenProps(false);
+        }
     };
 
     Front.prototype.createCollection = function() {
@@ -88,15 +99,10 @@ define([
     };
 
     Front.prototype._depopulateCollection = function(collection) {
-        collection.state.open(false);
+        collection.state.isOpen(false);
         collection.parents.remove(this);
         this.collections.items.remove(collection);
         vars.model.save(collection);
-    };
-
-    Front.prototype.save = function() {
-        vars.model.save();
-        this.state.openProps(false);
     };
 
     return Front;

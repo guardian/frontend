@@ -64,18 +64,18 @@ define([
             var front;
 
             if (vars.model.fronts().length <= vars.CONST.maxFronts) {
-                front =  new Front();
+                front = new Front();
                 model.pinnedFront(front);
                 model.fronts.unshift(front);
-                model.openFront(front);
+                model.openFront(front, true);
             } else {
                 window.alert('The maximum number of fronts (' + vars.CONST.maxFronts + ') has been exceeded. Please delete one first, by removing all its collections.');
             }
         };
 
-        model.openFront = function(front) {
+        model.openFront = function(front, withOpenProps) {
             _.each(model.fronts(), function(f){
-                f.setOpen(f === front);
+                f.setOpen(f === front, withOpenProps);
             });
         };
 
@@ -100,7 +100,7 @@ define([
                     bootstrap({
                         force: true,
                         openFronts: _.reduce(model.fronts(), function(openFronts, front) {
-                            openFronts[front.id()] = front.state.open();
+                            openFronts[front.id()] = front.state.isOpen();
                             return openFronts;
                         }, {})
                     })
@@ -194,7 +194,7 @@ define([
                         .map(function(id) {
                             var front = new Front(cloneWithKey(config.fronts[id], id));
 
-                            front.state.open(opts.openFronts[id]);
+                            front.state.isOpen(opts.openFronts[id]);
                             return front;
                         })
                        .value()

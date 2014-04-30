@@ -39,12 +39,12 @@ define([
         }
 
         this.state = asObservableProps([
-            'open',
+            'isOpen',
             'underDrag',
             'apiQueryStatus']);
 
         this.meta.apiQuery.subscribe(function(val) {
-            if (this.state.open()) {
+            if (this.state.isOpen()) {
                 this.meta.apiQuery(val.replace(/\s+/g, ''));
                 this.checkApiQueryStatus();
             }
@@ -52,14 +52,18 @@ define([
     }
 
     Collection.prototype.toggleOpen = function() {
-        this.state.open(!this.state.open());
+        this.state.isOpen(!this.state.isOpen());
+    };
+
+    Collection.prototype.close = function() {
+        this.state.isOpen(false);
     };
 
     Collection.prototype.save = function() {
         if (vars.model.collections.indexOf(this) < 0) {
             vars.model.collections.unshift(this);
         }
-        this.state.open(false);
+        this.state.isOpen(false);
         this.state.apiQueryStatus(undefined);
         vars.model.save(this);
     };

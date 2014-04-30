@@ -166,7 +166,7 @@ a:hover {
 
 .updating {
     display: none;
-    color: #009900;
+    color: #46c430;
     position: absolute;
     top: 13px;
     right: 15px;
@@ -483,6 +483,13 @@ input[type="text"] {
     border-radius: 2px;
 }
 
+.radio-label {
+    color: #666666;
+    float: left;
+    font-size: 12px;
+    padding: 0 10px 0 2px;
+}
+
 textarea.trailtext {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
@@ -767,7 +774,6 @@ button {
 .instructions {
     font-size: 12px;
     color: #999999;
-    padding: 0 0 10px 4px;
 }
 
 /*****************************************/
@@ -775,16 +781,28 @@ button {
 /*****************************************/
 
 .cnf-fronts {
-    border-top: 1px solid #dbd8c9;
+    margin-top: 10px;
+    padding: 0 15px 0 0;
 }
 
 .cnf-front {
-    padding: 4px 0 4px 4px;
-    border-bottom: 1px solid #dbd8c9;
+    padding-top: 2px;
+}
+
+.cnf-front.open {
+    background: #f4f3e8;
+    padding-bottom: 5px;
+    margin: 0 0 10px 0;
 }
 
 .cnf-front .title {
     cursor: pointer;
+    height: 24px;
+    font-weight: normal;
+}
+
+.cnf-front.open .title {
+    font-weight: bold;
 }
 
 .cnf-front.isProvisional {
@@ -801,17 +819,15 @@ button {
 
 .cnf-collection {
     position: relative;
-    background: #ffffff;
     padding: 4px 0 4px 5px;
-    border-top: 3px solid #ffffff;
+    border-top: 3px solid #f4f3e8;
 }
 
 .cnf-collection:nth-child(odd) {
-    background: #f4f3e8;
+    background: #ffffff;
 }
 
 .cnf-collection.open {
-    background: #f4f3e8;
     padding-bottom: 5px;
 }
 
@@ -878,9 +894,13 @@ button {
     margin: 0 0 10px 0;
 }
 
+.cnf-collection .cnf-form {
+    margin-left: 20px;
+}
+
 .cnf-form label {
     font-size: 12px;
-    color: #999999;
+    color: #666666;
     width: 65px;
     float: left;
     clear: left;
