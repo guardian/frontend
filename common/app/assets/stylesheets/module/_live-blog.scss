@@ -627,7 +627,46 @@ $block-padding-right: $gs-gutter;
             ));
         }
 
-        > .element-table,
+        > .element-table {
+            margin: 0;
+
+            .table {
+                background: none;
+                border: 0;
+            }
+            td {
+                background: none;
+            }
+            tr {
+                border-bottom: 1px solid darken($c-neutral8, 4%);
+
+                th:first-child,
+                td:first-child {
+                  padding-left: 0;
+                }
+                th:last-child,
+                td:last-child {
+                  padding-right: 0;
+                }
+            }
+            thead {
+                border-top: 1px solid darken($c-neutral8, 4%);
+            }
+            .player-card {
+                background: none;
+                border: 0;
+                border-left: 1px solid darken($c-neutral8, 4%);
+                margin: $gs-baseline/2 $gs-gutter 0;
+                padding: 0 0 0 $gs-gutter;
+            }
+            .player-card__position {
+                @include fs-data(4);
+                color: $c-neutral1;
+                font-weight: 700;
+            }
+        }
+
+        > .element-table .table--football,
         > .element-comment {
             width: auto;
             @include rem((
