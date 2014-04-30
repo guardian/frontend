@@ -1,7 +1,7 @@
 import common.{Jobs, AkkaAsync, CloudWatchApplicationMetrics}
 import conf.{Management, Filters}
 import dev.DevParametersLifecycle
-import dfp.DfpKeywordsAgent
+import dfp.DfpAgent
 import play.api.Application
 import play.api.mvc.WithFilters
 
@@ -13,18 +13,18 @@ with CloudWatchApplicationMetrics {
     super.onStart(app)
 
     Jobs.deschedule("DfpKeywordsRefreshJob")
-    Jobs.schedule("DfpKeywordsRefreshJob", "0 1/15 * * * ?") {
-      DfpKeywordsAgent.refresh()
+    Jobs.schedule("DfpKeywordsRefreshJob", "0 1/30 * * * ?") {
+      DfpAgent.refresh()
     }
 
     AkkaAsync {
-      DfpKeywordsAgent.refresh()
+      DfpAgent.refresh()
     }
   }
 
   override def onStop(app: Application) {
     Jobs.deschedule("DfpKeywordsRefreshJob")
-    DfpKeywordsAgent.stop()
+    DfpAgent.stop()
 
     super.onStop(app)
   }
