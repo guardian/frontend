@@ -444,23 +444,22 @@ object OldFrontPage {
         "content-type" -> "Section",
         "is-front" -> true
       )
-    },
-
-    //TODO important this one is last for matching purposes
-    new FrontPage(isNetworkFront = true) {
-      override val id = ""
-      override val section = ""
-      override val webTitle = "Latest news, sport and comment from the Guardian"
-      override lazy val analyticsName = "GFE:Network Front"
-      override lazy val description = Some("Latest news, comment and analysis from the Guardian, the world’s leading liberal voice")
-      override lazy val rssPath = Some(s"/rss")
-
-      override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
-        "content-type" -> "Network Front",
-        "is-front" -> true
-      )
     }
   )
 
-  def apply(faciaPage: FaciaPage): FrontPage = fronts.find(f => faciaPage.id.endsWith(f.id)).get
+  val defaultFrontPage: FrontPage = new FrontPage(isNetworkFront = true) {
+    override val id = ""
+    override val section = ""
+    override val webTitle = "Latest news, sport and comment from the Guardian"
+    override lazy val analyticsName = "GFE:Network Front"
+    override lazy val description = Some("Latest news, comment and analysis from the Guardian, the world’s leading liberal voice")
+    override lazy val rssPath = Some(s"/rss")
+
+    override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
+      "content-type" -> "Network Front",
+      "is-front" -> true
+    )
+  }
+
+  def apply(faciaPage: FaciaPage): FrontPage = fronts.find(f => faciaPage.id.endsWith(f.id)).getOrElse(defaultFrontPage)
 }
