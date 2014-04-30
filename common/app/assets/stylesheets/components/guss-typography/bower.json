@@ -1,0 +1,14 @@
+{
+  "name": "guss-typography",
+  "version": "1.2.0",
+  "main": [
+   "_helpers.scss",
+   "_font-scale.scss"
+  ],
+  "ignore": [
+    "CHANGELOG.md"
+  ],
+  "dependencies": {
+    "guss-rem": "~1.0.0"
+  }
+}

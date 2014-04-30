@@ -7,6 +7,7 @@ import com.amazonaws.services.cloudwatch.model._
 import scala.collection.JavaConversions._
 import common.Logging
 import Configuration._
+import services.AwsEndpoints
 
 trait CloudWatch extends Logging {
 
@@ -14,7 +15,7 @@ trait CloudWatch extends Logging {
 
   lazy val cloudwatch = {
     val client = new AmazonCloudWatchAsyncClient(Configuration.aws.credentials)
-    client.setEndpoint("monitoring.eu-west-1.amazonaws.com")
+    client.setEndpoint(AwsEndpoints.monitoring)
     client
   }
 

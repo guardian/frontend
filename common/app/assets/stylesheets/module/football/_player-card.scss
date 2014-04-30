@@ -23,7 +23,7 @@ $player-card-avatar: (
     float: right;
 }
 .player-card__image {
-    @include rounded-corners(50%);
+    @include border-radius(50%);
     @include rem((
         height: map-get($player-card-avatar, default),
         width: map-get($player-card-avatar, default)

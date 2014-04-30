@@ -37,7 +37,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         Then("I should see the headline of the article")
 
         And("The article is marked up with the correct schema")
-        val article = findFirst("article[itemtype='http://schema.org/Article']")
+        val article = findFirst("article[itemtype='http://schema.org/NewsArticle']")
 
         article.findFirst("[itemprop=headline]").getText should
           be("Liu Xiang pulls up in opening race at second consecutive Olympics")
@@ -121,11 +121,11 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         ImageServerSwitch.switchOn()
 
         Then("I should see the article's image")
-        findFirst("[itemprop='associatedMedia primaryImageOfPage'] img[itemprop=contentURL]").getAttribute("src") should
-          endWith("Pix/pictures/2012/8/6/1344274679326/Gunnerside-village-Swaled-005.jpg?width=220&height=-&quality=95")
+        findFirst("[itemprop='contentURL representativeOfPage']").getAttribute("src") should
+          endWith("Gunnerside-village-Swaled-009.jpg?width=620&height=-&quality=95")
 
         And("I should see the image caption")
-        findFirst("[itemprop='associatedMedia primaryImageOfPage'] [itemprop=description]").getText should
+        findFirst("[itemprop='associatedMedia image'] [itemprop=description]").getText should
           be("Our rivers and natural resources are to be valued and commodified, a move that will benefit only the rich, argues Goegr Monbiot. Photograph: Alamy")
       }
     }
@@ -312,7 +312,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
       Given("the user navigates to a page")
 
-      OASAdvertSwitch.switchOn()
+      StandardAdvertsSwitch.switchOn()
 
       HtmlUnit("/environment/2012/feb/22/capitalise-low-carbon-future") { browser =>
         import browser._
@@ -322,20 +322,22 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         Then("the ad slot placeholder is rendered")
         val adPlaceholder = $(".ad-slot--top-banner-ad").first()
 
-        And("the placeholder has the correct slot names")
-        adPlaceholder.getAttribute("data-base") should be("Top2")
-        adPlaceholder.getAttribute("data-median") should be("Top")
-        adPlaceholder.getAttribute("data-extended") should be("Top")
+        And("the placeholder has the correct data attributes")
+        adPlaceholder.getAttribute("data-name") should be("top")
+        adPlaceholder.getAttribute("data-label") should be("false")
+        adPlaceholder.getAttribute("data-mobile") should be("300,50|320,50")
+        adPlaceholder.getAttribute("data-tabletportrait") should be("728,90")
+        adPlaceholder.getAttribute("data-tabletlandscape") should be("728,90|900,250")
 
         And("the placeholder has the correct class name")
-        adPlaceholder.getAttribute("class") should be("ad-slot__oas ad-slot--top-banner-ad")
+        adPlaceholder.getAttribute("class") should be("ad-slot ad-slot--dfp ad-slot--top-banner-ad")
 
         And("the placeholder has the correct analytics name")
-        adPlaceholder.getAttribute("data-link-name") should be("ad slot top-banner-ad")
+        adPlaceholder.getAttribute("data-link-name") should be("ad slot top")
       }
 
       // put it back in the state we found it
-      OASAdvertSwitch.switchOff()
+      StandardAdvertsSwitch.switchOff()
     }
 
     scenario("Navigate to the classic site (UK edition - www.guardian.co.uk)") {
@@ -390,7 +392,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         import browser._
 
         Then("the main picture should be shown")
-        $("[itemprop='associatedMedia primaryImageOfPage']") should have size 1
+        $("[itemprop='contentURL representativeOfPage']") should have size 1
 
         And("the embedded video should not have a poster when there are no images in the video element")
         findFirst("video").getAttribute("poster") should be("")
@@ -421,7 +423,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
       HtmlUnit("/artanddesign/2013/apr/15/buildings-tall-architecture-guardianwitness") { broswer =>
         import broswer._
         Then("The main picture should be show")
-        $("[itemprop='associatedMedia primaryImageOfPage']") should have size 1
+        $("[itemprop='contentURL representativeOfPage']") should have size 1
       }
     }
 
@@ -544,11 +546,13 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
     scenario("Signify to the user an article is sponsored"){
       Given("I visit a sponsored article entitled 'Young people debt worries'")
-      DFPAdvertSwitch.switchOn()
+      StandardAdvertsSwitch.switchOn()
       HtmlUnit("/carphone-warehouse-mobile-living/melody-makers") { browser =>
         import browser._
         Then("I should see a message")
-        $(".ad-slot__paid-for-badge").getAttribute("data-name") should be ("badge")
+        val adSlot = $(".ad-slot--paid-for-badge")
+        adSlot.getAttribute("data-name") should be ("badge")
+        adSlot.findFirst(".ad-slot__container").getId should be ("dfp-ad--badge")
       }
     }
 

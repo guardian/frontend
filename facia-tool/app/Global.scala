@@ -1,12 +1,13 @@
 import common._
-import conf.Management
+import conf.{Gzipper, Management}
 import frontpress.FaciaToolConfigAgent
 import java.io.File
 import jobs.FrontPressJob
 import play.api._
+import play.api.mvc.WithFilters
 import services.FaciaToolLifecycle
 
-object Global extends FaciaToolLifecycle with GlobalSettings with CloudWatchApplicationMetrics {
+object Global extends WithFilters(Gzipper) with FaciaToolLifecycle with GlobalSettings with CloudWatchApplicationMetrics {
 
   lazy val devConfig = Configuration.from(Map("session.secure" -> "false"))
 
@@ -29,7 +30,8 @@ object Global extends FaciaToolLifecycle with GlobalSettings with CloudWatchAppl
     ("content-api-404", ContentApiMetrics.ContentApi404Metric.getAndReset.toDouble),
     ("content-api-client-parse-exceptions", ContentApiMetrics.ContentApiJsonParseExceptionMetric.getAndReset.toDouble),
     ("content-api-client-mapping-exceptions", ContentApiMetrics.ContentApiJsonMappingExceptionMetric.getAndReset.toDouble),
-    ("content-api-invalid-content-exceptions", FaciaToolMetrics.InvalidContentExceptionMetric.getAndReset.toDouble)
+    ("content-api-invalid-content-exceptions", FaciaToolMetrics.InvalidContentExceptionMetric.getAndReset.toDouble),
+    ("s3-client-exceptions", S3Metrics.S3ClientExceptionsMetric.getAndReset.toDouble)
   )
 
   override def onLoadConfig(config: Configuration, path: File, classloader: ClassLoader, mode: Mode.Mode): Configuration = {

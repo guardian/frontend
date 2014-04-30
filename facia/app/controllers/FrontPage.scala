@@ -246,6 +246,102 @@ object OldFrontPage {
         "is-front" -> true
       )
     },
+      
+    new FrontPage(isNetworkFront = false) {
+      override val id = "education"
+      override val section = "Education"
+      override val webTitle = "Education news, comment and analysis"
+      override lazy val analyticsName = "GFE:Education"
+      override lazy val description = Some("Latest education news, comment and analysis on schools, colleges, universities, further and higher education and teaching from the Guardian, the world's leading liberal voice")
+
+      override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
+        "keywords" -> "Education",
+        "content-type" -> "Section",
+        "is-front" -> true
+      )
+    },
+    
+    new FrontPage(isNetworkFront = false) {
+      override val id = "fashion"
+      override val section = "fashion"
+      override val webTitle = "Fashion news, advice and pictures"
+      override lazy val analyticsName = "GFE:Fashion"
+      override lazy val description = Some("The latest fashion news, advice and comment  from the Guardian")
+
+      override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
+        "keywords" -> "Fashion",
+        "content-type" -> "Section",
+        "is-front" -> true
+      )
+    },
+    
+    new FrontPage(isNetworkFront = false) {
+      override val id = "science"
+      override val section = "science"
+      override val webTitle = "Science"
+      override lazy val analyticsName = "GFE:Science"
+      override lazy val description = Some("Latest news and comment on Science from the Guardian")
+
+      override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
+        "keywords" -> "Science",
+        "content-type" -> "Section",
+        "is-front" -> true
+      )
+    },
+
+    new FrontPage(isNetworkFront = false) {
+      override val id = "travel"
+      override val section = "travel"
+      override val webTitle = "Travel news, travel guides and reviews"
+      override lazy val analyticsName = "GFE:Travel"
+      override lazy val description = Some("Latest travel news and reviews on UK and world holidays, travel guides to global destinations, city breaks, hotels and restaurant information from the Guardian, the world's leading liberal voice")
+
+      override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
+        "keywords" -> "Travel",
+        "content-type" -> "Section",
+        "is-front" -> true
+      )
+    },
+    
+    new FrontPage(isNetworkFront = false) {
+      override val id = "world/usa"
+      override val section = "world"
+      override val webTitle = "United States"
+      override lazy val analyticsName = "GFE:US News"
+      override lazy val description = Some("Latest news and comment on United States from the Guardian")
+
+      override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
+        "keywords" -> "US News",
+        "content-type" -> "Section",
+        "is-front" -> true
+      )
+    },
+    new FrontPage(isNetworkFront = false) {
+      override val id = "environment"
+      override val section = "environment"
+      override val webTitle = " Environment news, comment and analysis from the Guardian"
+      override lazy val analyticsName = "GFE:Environment"
+      override lazy val description = Some("Environment news, comment and discussion on key green, environmental and climate change issues from the Guardian")
+
+      override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
+        "keywords" -> "Environment",
+        "content-type" -> "Section",
+        "is-front" -> true
+      )
+    },
+    new FrontPage(isNetworkFront = false) {
+      override val id = "technology"
+      override val section = "technology"
+      override val webTitle = " Technology news, comment and analysis"
+      override lazy val analyticsName = "GFE:Technology"
+      override lazy val description = Some("Latest technology news, comment and analysis from the Guardian, the world's leading liberal voice")
+
+      override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
+        "keywords" -> "Technology",
+        "content-type" -> "Section",
+        "is-front" -> true
+      )
+    },
 
     new FrontPage(isNetworkFront = false) {
       override val id = "education"

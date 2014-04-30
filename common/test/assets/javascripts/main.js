@@ -22,10 +22,10 @@ requirejs.config({
         EventEmitter: '/base/common/app/assets/javascripts/components/eventEmitter/EventEmitter',
         qwery:        '/base/common/app/assets/javascripts/components/qwery/mobile/qwery-mobile',
         reqwest:      '/base/common/app/assets/javascripts/components/reqwest/src/reqwest',
-        postscribe:   '/base/common/app/assets/javascripts/components/postscribe/dist/postscribe',
         lodash:       '/base/common/app/assets/javascripts/components/lodash-amd/modern',
         imager:       '/base/common/app/assets/javascripts/components/imager.js/src/strategies/container',
-        enhancer:     '/base/common/app/assets/javascripts/components/enhancer/enhancer'
+        enhancer:     '/base/common/app/assets/javascripts/components/enhancer/enhancer',
+        googletag:    'empty:'
     },
     map: {
         '*': {
@@ -35,12 +35,12 @@ requirejs.config({
         }
     },
     shim: {
-        postscribe: {
-            exports: 'postscribe'
-        },
         imager: {
             deps: ['/base/common/app/assets/javascripts/components/imager.js/src/imager.js'],
             exports: 'Imager'
+        },
+        googletag: {
+            exports: 'googletag'
         }
     }
 });

@@ -1,30 +1,41 @@
-@(events: List[model.commercial.masterclasses.MasterClass])(implicit request: RequestHeader)
+@(events: Seq[model.commercial.MasterClass])(implicit request: RequestHeader)
+
+@import conf.Configuration
 
 <link rel="stylesheet" href="@Static("stylesheets/commercial.css")" />
 
-<div class="commercial masterclasses-component">
-    <div class="commercial__head">
+<div class="commercial commercial--masterclasses">
+    <div class="commercial__head container__title">
         <h3 class="commercial__title">
-            <a href="%OASToken%http://theguardian.com/guardian-masterclasses%OmnitureToken%">
-                <span>Guardian <span class="em">Masterclasses</span></span>
+            <a href="@AdLink{@Configuration.commercial.masterclasses_url}">
+                <span>Guardian <span class="commercial__title__last-word">Masterclasses</span></span>
             </a>
         </h3>
-        <p class="commercial__subtitle">Courses from the Guardian</p>
+        <p class="commercial__explainer">courses from the guardian</p>
     </div>
-    <div class="commercial__body">
+    <div class="commercial__body container__body">
         <ul class="lineitems">
-            @events.take(1).map { event =>
-                <li class="lineitem">
-                    <a class="lineitem__blocklink" href="%OASToken%@event.guardianUrl%OmnitureToken%">
-                        <h4 class="lineitem__title">@event.name</h4>
-                        <p class="lineitem__meta">@event.readableDate • @event.venue.description</p>
+            @events.take(4).map { event =>
+                <li class="lineitem commercial--masterclasses__class">
+                    <a class="lineitem__link commercial--masterclasses__class__link" href="@AdLink{@event.eventBriteEvent.guardianUrl}" data-link-name="merchandising-masterclasses-low-profile-@event.eventBriteEvent.name">
+                    @event.imageElement.map{ picture =>
+                        @Item300.bestFor(picture).map{ url => <img src="@url" alt="" /> }
+                    }
+                        <h4 class="commercial--masterclasses__class__title">@event.eventBriteEvent.name</h4>
+                        <p class="commercial--masterclasses__class__date">@event.eventBriteEvent.readableDate</p>
                     </a>
-                    <p class="lineitem__description">@event.truncatedFirstParagraph <a class="lineitem__link" href="%OASToken%@event.guardianUrl%OmnitureToken%"><i class="i i-single-arrow-right-blue"></i>Learn more and book</a></p>
+                    <a class="lineitem__link commercial--masterclasses__class__link__sub" href="@AdLink{@event.eventBriteEvent.guardianUrl}" data-link-name="merchandising-masterclasses-low-profile-@event.eventBriteEvent.name">
+                        <p class="commercial--masterclasses__class__meta">@event.eventBriteEvent.venue.description | @event.eventBriteEvent.displayPrice</p>
+                    </a>
+                    <p class="lineitem__description commercial--masterclasses__class__description"><a class="lineitem__link commercial--masterclasses__class__description__link" href="@AdLink{@event.eventBriteEvent.guardianUrl}" data-link-name="merchandising-masterclasses-low-profile-@event.eventBriteEvent.name"><i class="i i-arrow-white-down"></i>Book now</a></p>
                 </li>
             }
         </ul>
     </div>
     <div class="commercial__foot">
-        <a class="commercial__link" href="%OASToken%http://theguardian.com/guardian-masterclasses/masterclasses-calendar%OmnitureToken%">More courses from Guardian Masterclasses<i class="i i-double-arrow-right-blue"></i></a>
+        <a class="commercial__home-link" href="@AdLink{@Configuration.commercial.masterclasses_url/masterclasses-calendar}" data-link-name="merchandising-masterclasses-low-profile-browse-all-masterclasses">View all Masterclasses
+        <span class="commercial__home-link__cta">
+            <span class="i i-filter-arrow-down"></span>
+        </span></a>
     </div>
 </div>

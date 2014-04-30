@@ -8,6 +8,7 @@ define([
     'utils/ammended-query-str',
     'utils/update-scrollables',
     'utils/terminate',
+    'utils/is-valid-date',
     'modules/authed-ajax',
     'models/group',
     'models/collections/droppable',
@@ -23,6 +24,7 @@ define([
     ammendedQueryStr,
     updateScrollables,
     terminate,
+    isValidDate,
     authedAjax,
     Group,
     droppable,
@@ -35,7 +37,14 @@ define([
 
         var model = vars.model = {};
 
-        model.alertError = ko.observable();
+        model.statusCapiErrors = ko.observable(false);
+        model.statusPressFailure = ko.observable(false);
+        model.clearStatuses = function() {
+            model.statusCapiErrors(false);
+            model.statusPressFailure(false);
+        };
+
+        model.switches = ko.observable();
 
         model.collections = ko.observableArray();
 
@@ -57,6 +66,14 @@ define([
             keepCopy:  true
         });
 
+        model.createSnap = function() {
+            var blank = new Article();
+
+            blank.convertToSnap();
+            model.clipboard.items.unshift(blank);
+            _.defer(updateScrollables);
+        };
+
         model.setFront = function(id) {
             model.front(id);
         };
@@ -72,6 +89,49 @@ define([
         model.previewUrl = ko.computed(function() {
             return vars.CONST.viewer + '#env=' + config.env + '&url=' + model.front() + encodeURIComponent('?view=mobile');
         });
+
+        function detectPressFailure() {
+            model.statusPressFailure(false);
+
+            if (model.switches()['facia-tool-check-press-lastmodified'] && model.front()) {
+                authedAjax.request({
+                    url: '/front/lastmodified/' + model.front()
+                })
+                .always(function(resp) {
+                    var lastPressed;
+
+                    if (resp.status !== 200) { return; }
+                    lastPressed = new Date(resp.responseText);
+                    if (isValidDate(lastPressed)) {
+                        model.statusPressFailure(
+                            _.some(model.collections(), function(collection) {
+                                var l = new Date(collection.state.lastUpdated());
+                                return isValidDate(l) ? l > lastPressed : false;
+                            })
+                        );
+                    }
+                });
+            }
+        }
+
+        var deferredDetectPressFailure = _.debounce(detectPressFailure, vars.CONST.detectPressFailureMs || 10000);
+
+        function pressFront() {
+            model.statusPressFailure(false);
+
+            if (model.front()) {
+                authedAjax.request({
+                    url: '/collection/update/' + model.collections()[0].id,
+                    method: 'post'
+                })
+                .always(function() {
+                    deferredDetectPressFailure();
+                });
+            }
+        }
+
+        model.deferredDetectPressFailure = deferredDetectPressFailure;
+        model.pressFront = pressFront;
 
         function getFront() {
             return queryParams().front;
@@ -103,7 +163,7 @@ define([
 
         function showFrontSpark() {
             model.frontSparkUrl(undefined);
-            if (vars.state.switches['facia-tool-sparklines']) {
+            if (model.switches()['facia-tool-sparklines']) {
                 model.frontSparkUrl(vars.sparksBaseFront + getFront());
             }
         }
@@ -141,8 +201,10 @@ define([
                     terminate();
                     return;
                 }
-                vars.state.switches = switches;
+                model.switches(switches);
+
                 vars.state.config = config;
+
                 model.fronts(
                     getFront() === 'testcard' ? ['testcard'] :
                        _.chain(_.keys(config.fronts))

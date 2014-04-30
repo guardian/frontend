@@ -16,11 +16,12 @@ object IndexPagePagination {
   def pageSize: Int = 20 //have a good think before changing this
 }
 
-case class IndexPage(page: MetaData, trails: Seq[Content])
+case class IndexPage(page: MetaData, trails: Seq[Content],
+                     date: DateTime = DateTime.now)
 
 trait Index extends ConciergeRepository with QueryDefaults {
 
-  private val rssFields = s"$trailFields,body,standfirst"
+  private val rssFields = s"$trailFields,byline,body,standfirst"
 
   def normaliseTag(tag: String): String = {
     val conversions: Map[String, String] =

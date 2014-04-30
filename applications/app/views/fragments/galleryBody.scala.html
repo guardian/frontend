@@ -11,6 +11,7 @@
          itemscope itemtype="@gallery.schemaType" role="main">
         <div class="article__inner article__inner--head">
             <header class="article__head">
+                @fragments.meta.metaInline(gallery)
                 @fragments.headline(gallery.headline)
 
                 @if(gallery.isCommentable) {
@@ -71,15 +72,14 @@
                     @fragments.social(gallery)
                 </div>
             </div>
-            <div class="article__secondary-column" aria-hidden="true">
-                <h2 class="article__meta-heading">Share this gallery</h2>
-                @fragments.social(gallery, "next to content")
-            </div>
         </div>
     </article>
 </div>
 
+
 @fragments.storyPackagePlaceholder(storyPackage)
+
+@fragments.onwardPlaceholder(VisualTone(gallery))
 
 @fragments.mostPopularPlaceholder(gallery.section, VisualTone(gallery))
 

@@ -16,7 +16,7 @@ class ExactTargetController @Inject()(
                                        conf: IdentityConfiguration,
                                        returnUrlVerifier: ReturnUrlVerifier,
                                        idRequestParser: IdRequestParser,
-                                       authAction: actions.AuthAction)
+                                       authAction: actions.AuthenticatedAction)
   extends Controller with ExecutionContexts with SafeLogging {
 
   def cloudWatchCount(id: String) { CloudWatch.put("ExactTarget", Map(id -> 1d)) }

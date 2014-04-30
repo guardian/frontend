@@ -6,19 +6,46 @@
     overflow: hidden;
 }
 .social-wrapper--aside {
+    display: none;
     padding-top: 0;
+    border-top: 1px dotted $c-neutral4;
     @include rem((
         margin-bottom: ($gs-baseline/3)*4
+    ));
+
+    @include mq(leftCol) {
+        display: block;
+    }
+}
+.social {
+    height: 32px;
+    overflow-y: hidden;
+    @include rem((
+        margin-left: -$gs-gutter/5
+    ));
+}
+.social__head {
+    @include fs-textsans(1);
+    color: $c-neutral2;
+    @include rem((
+        padding: $gs-baseline/3 0 $gs-baseline 0
     ));
 }
 .social__item {
     float: left;
-    width: 60px;
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    width: 36px;
+    padding: 0 $gs-gutter/5;
+
+
+    @include mq(leftCol, wide) {
+        width: 32px;
+        padding-right: 0;
+    }
 }
 .social__action {
     display: block;
 }
+
 
 /**
  * Social icons
@@ -26,32 +53,28 @@
  * <element class="social-icon-wrapper">
  *     <span class="social-icon">
  *         <i class="i share-icon-xxx"></i>
- *         <i class="i share-icon-xxx-hover"></i>
  *     </span>
  * </element>
  */
 
+@include mq(desktop) {
+    .social-icon-wrapper {
+        opacity: .6;
+
+        &:hover,
+        &:focus {
+            opacity: 1;
+        }
+    }
+}
+
 $social-icon: (
-    width: 32px,
-    height: 32px,
+    width: 36px,
+    height: 36px,
     color: $c-neutral2,
     space-in-between: 2px
 );
 
-.social-icon-wrapper {
-    &:hover,
-    &:focus {
-        .social-icon {
-            background: map-get($social-icon, color);
-
-            i:first-child {
-                // Swap pictograms in the icon holder
-                // Space in between + height
-                margin-top: (map-get($social-icon, height) + map-get($social-icon, space-in-between)) * -1;
-            }
-        }
-    }
-}
 .social-icon {
     @extend %icon-holder-circle;
     border-color: map-get($social-icon, color);

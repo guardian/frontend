@@ -19,17 +19,18 @@ define([
     'common/utils/detect',
     'common/modules/onward/popular',
     'common/modules/onward/related',
+    'common/modules/onward/onward-content',
     'common/modules/ui/images',
     'common/modules/navigation/profile',
     'common/modules/navigation/sections',
     'common/modules/navigation/search',
     'common/modules/ui/tabs',
     'common/modules/ui/toggles',
+    'common/modules/ui/dropdowns',
     'common/modules/ui/relativedates',
     'common/modules/analytics/clickstream',
     'common/modules/analytics/omniture',
     'common/modules/analytics/scrollDepth',
-    'common/modules/adverts/adverts',
     'common/utils/cookies',
     'common/modules/analytics/omnitureMedia',
     'common/modules/analytics/livestats',
@@ -42,12 +43,15 @@ define([
     'common/modules/ui/message',
     'common/modules/identity/autosignin',
     'common/modules/adverts/article-body-adverts',
+    'common/modules/adverts/article-aside-adverts',
+    'common/modules/adverts/collection-adverts',
     'common/modules/adverts/dfp',
     'common/modules/analytics/commercial/tags/container',
     'common/modules/analytics/foresee-survey',
     'common/modules/onward/right-most-popular',
     'common/modules/analytics/register',
-    'common/modules/commercial/loader'
+    'common/modules/commercial/loader',
+    'common/modules/onward/tonal'
 ], function (
     $,
     mediator,
@@ -66,6 +70,7 @@ define([
     detect,
     popular,
     Related,
+    Onward,
     images,
     Profile,
     Sections,
@@ -73,11 +78,11 @@ define([
 
     Tabs,
     Toggles,
+    Dropdowns,
     RelativeDates,
     Clickstream,
     Omniture,
     ScrollDepth,
-    Adverts,
     Cookies,
     OmnitureMedia,
     liveStats,
@@ -90,12 +95,15 @@ define([
     Message,
     AutoSignin,
     ArticleBodyAdverts,
+    ArticleAsideAdverts,
+    CollectionAdverts,
     DFP,
     TagContainer,
     Foresee,
     RightMostPopular,
     register,
-    CommercialLoader
+    CommercialLoader,
+    TonalComponent
 ) {
 
     var hasBreakpointChanged = detect.hasCrossedBreakpoint();
@@ -136,6 +144,16 @@ define([
             });
         },
 
+        transcludeOnwardContent: function(config, context){
+            if ('seriesId' in config.page) {
+                new Onward(config, qwery('.js-onward', context));
+            } else if (config.page.tones !== '') {
+                $('.js-onward', context).each(function(c) {
+                    new TonalComponent(config, c).fetch(c, 'html');
+                });
+            }
+        },
+
         showTabs: function() {
             var tabs = new Tabs();
             mediator.on('modules:popular:loaded', function(el) {
@@ -149,6 +167,8 @@ define([
             mediator.on('page:common:ready', function() {
                 toggles.reset();
             });
+
+            Dropdowns.init();
         },
 
         showRelativeDates: function () {
@@ -222,7 +242,7 @@ define([
                 });
             });
 
-            if (config.switches.ophan) {
+            if (config.switches.ophan && !config.page.isSSL) {
                 require('ophan/ng', function (ophan) {
                     ophan.record({'ab': ab.getParticipations()});
 
@@ -238,67 +258,62 @@ define([
         },
 
         loadAdverts: function (config) {
-            // Having to check 3 switches for ads so that DFP and OAS can run in parallel
-            // with each other and still have a master switch to turn off all adverts
-            if(!userPrefs.isOff('adverts') && config.switches.adverts && !config.page.shouldHideAdverts) {
 
-                var hasAdsToLoad = config.switches.oasAdverts || config.switches.dfpAdverts,
-                    onResize = {
+            var showAds =
+                !userPrefs.isOff('adverts') &&
+                !config.page.shouldHideAdverts &&
+                !config.page.isSSL &&
+                (
+                    config.switches.standardAdverts || config.switches.commercialComponents
+                );
+
+            if (showAds) {
+
+                var onResize = {
                         cmd: [],
-                        execute: function() {
-                            hasBreakpointChanged(function() {
-                                onResize.cmd.forEach(function(func) {
+                        execute: function () {
+                            hasBreakpointChanged(function () {
+                                onResize.cmd.forEach(function (func) {
                                     func();
                                 });
                             });
                         }
-                    };
+                    },
+                    dfpAds,
+                    options = {};
 
-                // If either OAS or DFP is switched on, and it's an article
-                // excluding live blogs, then create our inline adverts
-                if(hasAdsToLoad && config.page.contentType === 'Article' && !config.page.isLiveBlog) {
-                    new ArticleBodyAdverts().init();
-                }
-
-                if(config.switches.oasAdverts) {
-                    onResize.cmd.push(Adverts.reload);
-
-                    mediator.on('page:common:deferred:loaded', function(config, context) {
-                        Adverts.init(config, context);
-                    });
-                    mediator.on('modules:adverts:docwrite:loaded', Adverts.load);
-                } else {
-                    Adverts.hideAds();
-                }
-
-                if(config.switches.dfpAdverts) {
-                    var dfpAds,
-                        options = {};
-
-                    if(config.switches.loadOnlyCommercialComponents) {
-                        options.dfpSelector = '.ad-slot__commercial-component';
+                // if it's an article, excluding live blogs, create our inline adverts
+                if (config.switches.standardAdverts && config.page.contentType === 'Article') {
+                    new ArticleAsideAdverts(config).init();
+                    // no inline adverts on live
+                    if (!config.page.isLiveBlog) {
+                        new ArticleBodyAdverts().init();
                     }
-
-                    dfpAds = new DFP(extend(config, options));
-                    dfpAds.init();
-                    onResize.cmd.push(dfpAds.reload);
                 }
 
-                if(hasAdsToLoad) {
-                    // Push the reloaded command once
-                    onResize.cmd.push(function() {
-                        mediator.emit('modules:adverts:reloaded');
-                    });
-                    mediator.on('window:resize', debounce(onResize.execute.bind(this), 2000));
+                new CollectionAdverts(config).init();
+
+                if (!config.switches.standardAdverts) {
+                    options.dfpSelector = '.ad-slot--commercial-component';
+                } else if (!config.switches.commercialComponents) {
+                    options.dfpSelector = '.ad-slot--dfp:not(.ad-slot--commercial-component)';
                 }
-            } else {
-                Adverts.hideAds();
+
+                dfpAds = new DFP(extend(config, options));
+                dfpAds.init();
+                onResize.cmd.push(dfpAds.reload);
+
+                // Push the reloaded command once
+                onResize.cmd.push(function () {
+                    mediator.emit('modules:adverts:reloaded');
+                });
+                mediator.on('window:resize', debounce(onResize.execute.bind(this), 2000));
             }
         },
 
         loadVideoAdverts: function() {
             mediator.on('page:common:ready', function(config, context) {
-                if(config.switches.adverts && config.switches.videoAdverts && !config.page.blockVideoAds) {
+                if (config.switches.videoAdverts && !config.page.blockVideoAds) {
                     Array.prototype.forEach.call(context.querySelectorAll('video'), function(el) {
                         var support = detect.getVideoFormatSupport();
                         new VideoAdvert({
@@ -422,7 +437,9 @@ define([
 
         loadTags : function() {
             mediator.on('page:common:ready', function(config) {
-                TagContainer.init(config);
+                if (config.page.contentType !== 'Identity' && config.page.section !== 'identity') {
+                    TagContainer.init(config);
+                }
             });
         },
 
@@ -465,12 +482,14 @@ define([
         },
 
         startRegister: function(config) {
-            register.initialise(config);
+            if (!config.page.isSSL) {
+                register.initialise(config);
+            }
         },
 
         loadCommercialComponent: function(config) {
             var commercialComponent = /^#commercial-component=(.*)$/.exec(window.location.hash),
-                slot = qwery('.ad-slot__commercial-component').shift();
+                slot = qwery('[data-name="merchandising"]').shift();
             if (commercialComponent && slot) {
                 new CommercialLoader({ config: config })
                     .init(commercialComponent[1], slot);
@@ -485,11 +504,12 @@ define([
                 self.initialisedDeferred = true;
                 modules.initAbTests(config);
                 modules.logLiveStats(config);
-                modules.loadAdverts(config);
                 modules.loadAnalytics(config, context);
                 modules.cleanupCookies(context);
                 modules.runAbTests(config, context);
+                modules.loadAdverts(config);
                 modules.transcludeRelated(config, context);
+                modules.transcludeOnwardContent(config, context);
                 modules.initRightHandComponent(config, context);
                 modules.loadCommercialComponent(config, context);
             }

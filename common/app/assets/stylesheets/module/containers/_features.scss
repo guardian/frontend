@@ -61,7 +61,7 @@
         padding-bottom: 0;
 
         &:after {
-            content: '';
+            content: "";
             position: absolute;
             right: 100%;
             top: 0;
@@ -132,5 +132,14 @@
     }
     .item__link:active .item__title {
         text-decoration: none;
+    }
+}
+
+.facia-container--layout-article {
+    .container--features {
+        .collection-wrapper--position-2,
+        .linkslist-container {
+            display: none;
+        }
     }
 }

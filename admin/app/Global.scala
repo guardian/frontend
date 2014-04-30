@@ -1,11 +1,11 @@
 import common.{Jobs, CloudWatchApplicationMetrics}
-import conf.Management
+import conf.{Gzipper, Management}
 import jobs.RefreshFrontsJob
 import model.AdminLifecycle
-import play.api.mvc.{Results, RequestHeader}
+import play.api.mvc.{WithFilters, Results, RequestHeader}
 import scala.concurrent.Future
 
-object Global extends AdminLifecycle with CloudWatchApplicationMetrics with Results {
+object Global extends WithFilters(Gzipper) with AdminLifecycle with CloudWatchApplicationMetrics with Results {
   override lazy val applicationName = Management.applicationName
 
   override def onError(request: RequestHeader, ex: Throwable) = Future.successful(InternalServerError(

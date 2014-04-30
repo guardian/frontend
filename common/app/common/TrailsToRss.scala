@@ -6,6 +6,7 @@ import org.joda.time.DateTime
 import java.io.StringWriter
 import org.jsoup.Jsoup
 import com.sun.syndication.feed.synd._
+import com.sun.syndication.feed.module.{DCModuleImpl}
 import com.sun.syndication.feed.module.mediarss._
 import com.sun.syndication.feed.module.mediarss.types.{Credit, Metadata, UrlReference, MediaContent}
 import com.sun.syndication.io.SyndFeedOutput
@@ -69,7 +70,8 @@ object TrailsToRss extends implicits.Collections {
           case a: Article => Jsoup.parseBodyFragment(a.body).select("p:lt(2)").toArray.map(_.toString).mkString("")
           case _ => ""
         }
-      description.setValue(cleanInvalidXmlChars(standfirst + intro))
+      val readMore = s""" <a href="${trail.webUrl}">Continue reading...</a>"""
+      description.setValue(cleanInvalidXmlChars(standfirst + intro + readMore))
 
       val images: Seq[ImageAsset] = (trail.bodyImages ++ trail.mainPicture ++ trail.thumbnail).map{ i =>
         i.imageCrops.filter(c => (c.width == 140 && c.height == 84) || (c.width == 460 && c.height == 276))
@@ -95,15 +97,18 @@ object TrailsToRss extends implicits.Collections {
         module
       }
 
+      // Entry: DublinCore 
+      val dc = new DCModuleImpl
+      dc.setDate(trail.webPublicationDate.toDate);
+      dc.setCreator(trail.byline.getOrElse("Guardian Staff"));
+  
       // Entry
       val entry = new SyndEntryImpl
-      entry.setTitle(cleanInvalidXmlChars(trail.headline))
+      entry.setTitle(cleanInvalidXmlChars(trail.linkText))
       entry.setLink(trail.webUrl)
       entry.setDescription(description)
-      entry.setAuthor(trail.byline.getOrElse(""))
-      entry.setPublishedDate(trail.webPublicationDate.toDate)
       entry.setCategories(categories)
-      entry.setModules(new java.util.ArrayList(modules))
+      entry.setModules(new java.util.ArrayList(modules ++ Seq(dc)))
       entry
 
     }.asJava

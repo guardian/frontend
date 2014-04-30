@@ -9,16 +9,24 @@
         </span>
     </h2>
     <div class="article-wrapper monocolumn-wrapper tone-@VisualTone(article)">
-        <article id="article" class="article @if(article.isLive){is-live}"
+        <article id="article" class="article @if(article.isLive){is-live} @if(article.isAdvertisementFeature){article--advertisement-feature}"
                  itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType" role="main">
 
-            @if(article.isSponsored) {
-                @fragments.sponsored()
+            @if(ABHomeComponent.isSwitchedOn && article.hasMainPicture) {
+                <div class="home-container">
+                    <div class="home js-home u-h" data-component="home" data-link-name="article-home">
+                        <a href="@LinkTo{/}" class="home__link">
+                            <span class="i i-home"></span>
+                            <span class="home__label">home</span>
+                        </a>
+                    </div>
+                </div>
             }
 
             <div class="article__inner article__inner--head">
                 <header class="article__head">
 
+                    @fragments.meta.metaInline(article)
                     @if(article.isAdvertisementFeature){
                         <div class="article-hat-label">Advertisement feature</div>
                     }
@@ -68,6 +76,11 @@
                     @fragments.contentMeta(article)
 
                     <div class="js-article__container article__container u-cf" data-component="body">
+
+                        @if(ABHomeComponent.isSwitchedOn && article.hasMainPicture) {
+                            <div class="top-marker"></div>
+                        }
+
                         <div class="article-body u-cf from-content-api js-article__body"
                         itemprop="@if(article.isReview){reviewBody} else {articleBody}">
                             @BodyCleaner(article, article.body)
@@ -78,9 +91,13 @@
                         </div>
                     </div>
 
-                    <div class="social-wrapper">
+                    <div class="social-wrapper" data-component="share">
                         @fragments.social(article)
                     </div>
+
+                    @if(ABHomeComponent.isSwitchedOn && article.hasMainPicture) {
+                        <div class="bottom-marker"></div>
+                    }
                 </div>
                 <div class="article__secondary-column" aria-hidden="true">
                     <div class="article__secondary-column__inner@if(storyPackage.nonEmpty) { article__secondary-column__inner--fill-vertically}">
@@ -88,21 +105,7 @@
                             <div class="u-table__row">
                                 <div class="u-table__cell u-table__cell--top">
                                     <div class="mpu-context js-right-hand-component">
-                                        <div class="mpu-container js-mpu-ad-slot">
-                                            <div class="social-wrapper social-wrapper--aside" data-component="share">
-                                                <h2 class="article__meta-heading">Share this article</h2>
-                                                @fragments.social(article, "next to content")
-                                            </div>
-                                            @if(OASAdvertSwitch.isSwitchedOn) {
-                                                <div class="ad-slot__oas ad-slot--mpu-banner-ad" data-link-name="ad slot mpu-banner-ad" data-base="" data-median="Middle"><div class="ad-slot__label">
-                                                    Advertisement</div><div class="ad-container"></div></div>
-                                            }
-                                            @if(DFPAdvertSwitch.isSwitchedOn && !LoadOnlyCommercialComponents.isSwitchedOn) {
-                                                <div class="ad-slot__dfp ad-slot--mpu-banner-ad" data-name="right" data-tabletlandscape="300,250">
-                                                    <div id="mpu-ad-slot" class="ad-container"></div>
-                                                </div>
-                                            }
-                                        </div>
+                                        <div class="mpu-container js-mpu-ad-slot"></div>
                                         <div class="js-components"></div>
                                     </div>
                                 </div>
@@ -120,13 +123,15 @@
         }
     </div>
 
+
+
     @fragments.storyPackagePlaceholder(storyPackage)
+
+    @fragments.onwardPlaceholder(VisualTone(article))
 
     @fragments.mostPopularPlaceholder(article.section, VisualTone(article))
 
-    @if(DFPAdvertSwitch.isSwitchedOn) {
-        <div class="ad-slot__dfp ad-slot__commercial-component" data-name="merchandising" data-mobile="888,88" data-label="false" data-refresh="false">
-            <div id="dfp-commercial-component" class="ad-container"></div>
-        </div>
-    }
+    <div class="facia-container facia-container--layout-article monocolumn-wrapper monocolumn-wrapper--no-limit facia-container--commercial">
+        @fragments.commercial.commercialComponent(name="merchandising", adType="commercial-component", sizeMapping=Map("mobile" -> Seq("888,88")))
+    </div>
 }

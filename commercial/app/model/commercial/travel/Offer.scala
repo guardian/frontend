@@ -1,15 +1,18 @@
 package model.commercial.travel
 
 import org.joda.time.DateTime
-import model.commercial.{Ad, Keyword, Segment}
+import model.commercial._
 import common.{Logging, ExecutionContexts, AkkaAgent}
 import scala.concurrent.Future
 import scala.concurrent.duration._
 import akka.util.Timeout
-import model.commercial.intersects
+import model.commercial.Segment
+import model.commercial.Keyword
+import scala.Some
 
-case class Offer(id: Int, title: Option[String], offerUrl: String, imageUrl: String, fromPrice: String,
-                 earliestDeparture: DateTime, keywords: List[Keyword], countries: List[String], duration: String)
+case class Offer(id: Int, title: String, offerUrl: String, imageUrl: String, fromPrice: String,
+                 earliestDeparture: DateTime, keywords: List[Keyword], countries: List[String], category: String,
+                 tags: List[String], duration: String, position: Int)
   extends Ad {
 
   def isTargetedAt(segment: Segment): Boolean = {
@@ -101,15 +104,16 @@ object Countries extends ExecutionContexts with Logging {
 
   def refresh() = {
     val countries = {
-      val currentAds = AllOffersAgent.currentAds
+      val currentAds = OffersAgent.currentAds
       if (currentAds.isEmpty) defaultCountries
       else currentAds.flatMap(_.countries).distinct
     }
     Future.sequence {
       countries map {
-        country => Keyword.lookup("\"" + country + "\"", section = Some("travel")) flatMap {
-          keywords => countryKeywords.alter(_.updated(country, keywords))
-        }
+        country =>
+          Lookup.keyword("\"" + country + "\"", section = Some("travel")) flatMap {
+            keywords => countryKeywords.alter(_.updated(country, keywords))
+          }
       }
     }
   }

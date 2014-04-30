@@ -2,19 +2,26 @@
    Soulmates component
    ========================================================================== */
 
-$soulmates-red: #d70851;
+$c-soulmates-red: #d70851;
 .commercial--soulmates {
-    background-color: $commercial-component-bg;
-    @include rem((
-        padding: $gs-baseline $gs-gutter/2
-    ));
-
-    .commercial__inner {
-        position: relative;
-        margin: 0 auto;
+    .commercial__head {
+        position: static;
+        height: auto;
+        overflow: auto;
+        border: 0;
         @include rem((
-            max-width: gs-span(16)
+            padding-left: $gs-gutter/2,
+            padding-right: $gs-gutter/2
         ));
+    }
+    .commercial__title {
+        float: none;
+        margin-bottom: 0;
+    }
+    .i-soulmates-logo {
+        width: auto;
+        display: block;
+        background-size: contain;
     }
     @include mq(mobileLandscape) {
         @include rem((
@@ -30,14 +37,9 @@ $soulmates-red: #d70851;
             ));
         }
     }
-    .commercial__logo {
-        float: none;
-        margin-bottom: 0;
-    }
     .commercial__explainer {
         color: $c-neutral1;
-        @include f-headline;
-        @include font-size(14.5, 19);
+        @include fs-headline(1);
         @include rem((
             margin: $gs-baseline 0 0
         ));
@@ -46,20 +48,24 @@ $soulmates-red: #d70851;
         display: none;
 
         @include mq(tablet) {
-            display: block;
-            background-color: $soulmates-red;
             position: absolute;
-            border: none;
+            display: inline-block;
+            background-color: $c-soulmates-red;
+            border: 0;
             color: #ffffff;
-            bottom: 0;
             @include fs-headline(1, $size-only: true);
             @include rem((
+                top: $gs-gutter/2,
+                right: $gs-gutter/2,
                 padding: $gs-baseline/3 $gs-baseline*2
             ));
         }
     }
     .commercial__body {
-        padding: 0;
+        @include rem((
+            padding: $gs-gutter/2 0 $gs-gutter
+        ));
+        position: relative;
     }
     .lineitems {
         @include rem((
@@ -70,7 +76,6 @@ $soulmates-red: #d70851;
             margin-top: 0;
             @include rem((
                 margin-right: gs-span(3),
-                padding: 0 $gs-gutter
             ));
         }
     }
@@ -91,22 +96,30 @@ $soulmates-red: #d70851;
         &:nth-child(3n) .lineitem__link:before {
             background-color: #039763;
         }
-        @include mq(desktop) {
-            width: 33%;
-            &:nth-child(3) {
+        @include mq(mobileLandscape) {
+            width: 25%;
+
+            &:nth-child(-n+4) {
                 display: block;
             }
         }
-        @include mq(wide) {
+        @include mq(tablet) {
             width: 25%;
-            &:nth-child(4) {
+
+            &:nth-child(-n+4) {
+                display: block;
+            }
+        }
+        @include mq(desktop) {
+            width: 16.66%;
+
+            &:nth-child(5),
+            &:nth-child(6) {
                 display: block;
             }
         }
     }
     .lineitem__link {
-        padding: 4px;
-        width: 110px;
         margin: 0 auto;
         position: relative;
         float: none;
@@ -148,6 +161,8 @@ $soulmates-red: #d70851;
         @include font-size(11);
     }
     .commercial__search {
+        width: auto;
+        float: none;
         @include rem((
             margin-top: $gs-baseline
         ));
@@ -156,9 +171,8 @@ $soulmates-red: #d70851;
             position: absolute;
             top: 0;
             right: 0;
-            margin-top: 0;
             @include rem((
-                width: gs-span(3)
+                width: gs-span(3) - $gs-gutter/2
             ));
         }
     }
@@ -184,11 +198,11 @@ $soulmates-red: #d70851;
     .search__submit {
         border: 0;
         background: transparent;
-        color: $soulmates-red;
+        color: $c-soulmates-red;
         float: right;
         position: relative;
         padding: 0;
-        padding-left: ($search-submit-cta-diameter/4)*5;
+        padding-right: ($search-submit-cta-diameter/4)*5;
         @include fs-header(1);
         @include rem((
             margin-top: $gs-baseline
@@ -197,12 +211,12 @@ $soulmates-red: #d70851;
     .search__submit__cta {
         position: absolute;
         top: 50%;
-        left: 0;
+        right: 0;
         width: $search-submit-cta-diameter;
         height: $search-submit-cta-diameter;
         margin-top: -($search-submit-cta-diameter/2);
-        background-color: $soulmates-red;
-        @include rounded-corners(50%);
+        background-color: $c-soulmates-red;
+        @include border-radius(50%);
 
         .i {
             display: none;
@@ -222,6 +236,70 @@ $soulmates-red: #d70851;
                 margin-top: -(map-get($arrow-size, width)/2);
                 margin-left: -(map-get($arrow-size, height)/2 - 2);
                 @include transform(rotate(-90deg));
+            }
+        }
+    }
+}
+
+/* fronts */
+.facia-container--layout-front .commercial--soulmates {
+    .commercial__search {
+        @include rem((
+            padding: 0 $gs-gutter/2
+        ));
+    }
+    @include mq(faciaLeftCol) {
+        .commercial__head {
+            @include rem((
+                width: gs-span(2) + $gs-gutter
+            ));
+        }
+        .commercial__buy-now-button {
+            left: auto;
+            right: auto;
+            top: auto;
+            @include rem((
+                bottom: $gs-gutter/2
+            ));
+        }  
+    }
+}
+/* article */
+.facia-container--layout-article .commercial--soulmates {
+    @include mq(leftCol) {
+        .commercial__buy-now-button {
+            left: auto;
+            right: auto;
+            top: auto;
+            @include rem((
+                bottom: $gs-gutter/2
+            ));
+        }
+        .commercial__explainer {
+            margin-top: 0;
+        }
+    }
+    @include mq(faciaLeftCol) {
+        .commercial__head {
+            padding-left: 0;
+            padding-right: 0;
+        }
+        .commercial__explainer {
+            @include rem((
+                margin-top: $gs-baseline
+            ));
+        }
+    }
+    @include mq(rightCol) {
+        .commercial--masterclasses__class {
+            @include rem((
+                padding-left: $gs-gutter/2
+            ));
+            width: 25%;
+            background: #ff0000;
+
+            &:nth-child(n+4) {
+                display: block;
             }
         }
     }

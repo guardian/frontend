@@ -4,21 +4,17 @@ define([
     'common/utils/to-array',
     'bean',
     'common/utils/ajax',
-    'common/utils/detect',
-    'common/utils/cookies',
-    'common/modules/adverts/userAdTargeting',
-    'common/modules/adverts/document-write'
+    'common/modules/adverts/query-string',
+    'common/modules/adverts/dfp'
 ], function(
     $,
     mediator,
     toArray,
     bean,
     ajax,
-    detect,
-    cookies,
-    userAdTargeting,
-    documentWrite
-) {
+    queryString,
+    DFP
+    ) {
 
     function Video(config) {
         this.config = config.config;
@@ -206,41 +202,22 @@ define([
 
     Video.prototype.init = function(config) {
 
-        var url;
+        this.xmlSelectors = {
+            'adUrl': 'VASTAdTagURI',
+            'impressionUrl': 'Impression',
+            'clickTrackUrl': 'ClickTracking'
+        };
 
-        if (this.config.switches.dfpAdverts && !this.config.switches.loadOnlyCommercialComponents) {
+        var dfpAds = new DFP(config);
 
-            this.xmlSelectors = {
-                'adUrl': 'VASTAdTagURI',
-                'impressionUrl': 'Impression',
-                'clickTrackUrl': 'ClickTracking'
-            };
+        var adUnit = dfpAds.buildAdUnit.bind(this)();
 
-            var section = this.config.page.section + (this.config.page.isFront ? '/front' : ''),
-                adUnit = '/' + config.dfpAccountId + '/' + config.dfpAdUnitRoot + '/' + section;
+        var custParams = queryString.generateQueryString(dfpAds.buildPageTargetting.bind(this)());
+        var encodedCustParams = encodeURIComponent(custParams);
 
-            var rawCustParams = documentWrite.generateQueryString(config, userAdTargeting.getUserSegments());
-            rawCustParams += '&at=' + (cookies.get('adtest') || '');
-            rawCustParams += '&bp=' + detect.getBreakpoint();
-            rawCustParams += '&p=ng';
-            var custParams = encodeURIComponent(rawCustParams);
+        var timestamp = new Date().getTime();
 
-            var timestamp = new Date().getTime();
-
-            url = 'http://' + config.dfpHost + '/gampad/ads?correlator=' + timestamp + '&gdfp_req=1&env=vp&impl=s&output=xml_vast2&unviewed_position_start=1&iu=' + adUnit + '&sz=400x300&scp=slot%3Dvideo&cust_params=' + custParams;
-
-        } else if (this.config.switches.oasAdverts) {
-
-            this.xmlSelectors = {
-                'adUrl': 'VASTAdTagURL URL',
-                'impressionUrl': 'Impression URL',
-                'clickTrackUrl': 'ClickTracking URL'
-            };
-
-            var id = (config.pageId === '') ? '' : config.pageId + '/',
-                host = (window.location.hostname === 'localhost') ? 'm.code.dev-theguardian.com' : window.location.hostname;
-            url = 'http://' + config.oasHost + '//2/' + host + '/' + id + 'oas.html/' + (new Date().getTime()) + '@x50';
-        }
+        var url = 'http://' + config.dfpHost + '/gampad/ads?correlator=' + timestamp + '&gdfp_req=1&env=vp&impl=s&output=xml_vast2&unviewed_position_start=1&iu=' + adUnit + '&sz=400x300&scp=slot%3Dvideo&cust_params=' + encodedCustParams;
 
         this.getVastData(url);
 

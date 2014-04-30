@@ -12,6 +12,7 @@
             itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType" role="main">
             <div class="article__inner article__inner--head">
                 <header class="article__head">
+                    @fragments.meta.metaInline(article)
                     @fragments.headline(article.headline)
 
                     @fragments.standfirst(article)
@@ -62,7 +63,7 @@
                         </div>
                     </div>
 
-                    <div class="social-wrapper">
+                    <div class="social-wrapper" data-component="share">
                         @fragments.social(article)
                     </div>
 
@@ -73,21 +74,7 @@
                             <div class="u-table__row">
                                 <div class="u-table__cell u-table__cell--top">
                                     <div class="mpu-context js-right-hand-component">
-                                        <div class="mpu-container js-mpu-ad-slot">
-                                            <div class="social-wrapper social-wrapper--aside" data-component="share">
-                                                <h2 class="article__meta-heading">Share this live blog</h2>
-                                                @fragments.social(article, "next to content")
-                                            </div>
-                                            @if(OASAdvertSwitch.isSwitchedOn) {
-                                                <div class="ad-slot__oas ad-slot--mpu-banner-ad" data-link-name="ad slot mpu-banner-ad" data-base="" data-median="Middle"><div class="ad-slot__label">
-                                                    Advertisement</div><div class="ad-container"></div></div>
-                                            }
-                                            @if(DFPAdvertSwitch.isSwitchedOn && !LoadOnlyCommercialComponents.isSwitchedOn) {
-                                                <div class="ad-slot__dfp ad-slot--mpu-banner-ad" data-name="right" data-tabletlandscape="300,250">
-                                                    <div id="mpu-ad-slot" class="ad-container"></div>
-                                                </div>
-                                            }
-                                        </div>
+                                        <div class="mpu-container js-mpu-ad-slot"></div>
                                         <div class="js-components"></div>
                                     </div>
                                 </div>
@@ -107,7 +94,10 @@
 
     </div>
 
+
     @fragments.storyPackagePlaceholder(storyPackage)
+
+    @fragments.onwardPlaceholder(VisualTone(article))
 
     @fragments.mostPopularPlaceholder(article.section)
 }

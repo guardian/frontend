@@ -15,9 +15,9 @@ class CombinerFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
       HtmlUnit("/world/iraq+tone/comment") { browser =>
         import browser._
-        val trails = $(".fromage, .collection__item, .linkslist__item")
+        val trails = $(".collection__item")
         Then("I should see content tagged with both tags")
-        trails.length should be(20)
+        trails.length should be > 1
       }
     }
 

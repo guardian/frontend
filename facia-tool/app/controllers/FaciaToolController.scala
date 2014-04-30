@@ -8,13 +8,16 @@ import play.api.libs.json._
 import common.{FaciaToolMetrics, ExecutionContexts, Logging}
 import conf.{Switches, Configuration}
 import tools.FaciaApi
-import services.{ConfigAgent, ContentApiWrite}
+import services.{ContentApiRefresh, ConfigAgent, ContentApiWrite, S3FrontsApi}
 import play.api.libs.ws.Response
 import scala.concurrent.Future
 import conf.Switches.ContentApiPutSwitch
-import services.S3FrontsApi
 import model.{NoCache, Cached}
-
+import play.api.libs.iteratee.Enumerator
+import _root_.util.Enumerators._
+import scala.util.{Failure, Success}
+import play.api.templates.Html
+import play.api.libs.Comet
 
 object FaciaToolController extends Controller with Logging with ExecutionContexts {
   implicit val collectionRead = Json.reads[Collection]
@@ -76,12 +79,23 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
     }
   }
 
+  def publishAll() = ExpiringAuthentication { request =>
+    Ok(views.html.publish_all(Configuration.environment.stage, Identity(request)))
+  }
+
+  def publishAllStream() = ExpiringAuthentication { request =>
+    Ok.chunked((ContentApiRefresh.refresh() map {
+      case (collectionId, Success(_)) => s"Successfully published $collectionId"
+      case (collectionId, Failure(error)) => s"Failed to publish $collectionId: ${error.getMessage}"
+    }) through Comet(callback = "parent.cometMessage"))
+  }
+
   def publishCollection(id: String) = AjaxExpiringAuthentication { request =>
     val identity = Identity(request).get
     FaciaToolMetrics.DraftPublishCount.increment()
     val block = FaciaApi.publishBlock(id, identity)
     block.foreach{ b =>
-      FaciaApi.archive(id, b, JsString("publish"), identity)
+      UpdateActions.archivePublishBlock(id, b, identity)
       pressCollectionId(id)
     }
     notifyContentApi(id)
@@ -92,7 +106,7 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
     val identity = Identity(request).get
     val block = FaciaApi.discardBlock(id, identity)
     block.foreach { b =>
-      FaciaApi.archive(id, b, JsString("discard"), identity)
+      UpdateActions.archiveDiscardBlock(id, b, identity)
     }
     NoCache(Ok)
   }
@@ -126,6 +140,7 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
           }.flatten.toMap
 
           pressCollectionIds(updatedCollections.keySet)
+          updatedCollections.keys.foreach(notifyContentApi)
 
           if (updatedCollections.nonEmpty)
             Ok(Json.toJson(updatedCollections)).as("application/json")
@@ -152,4 +167,9 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
     if (Switches.FaciaToolPressSwitch.isSwitchedOn) {
       FrontPressJob.pressByCollectionIds(ids)
     }
+
+  def getLastModified(path: String) = AjaxExpiringAuthentication { request =>
+    val now: Option[String] = S3FrontsApi.getPressedLastModified(path)
+    now.map(Ok(_)).getOrElse(NotFound)
+  }
 }

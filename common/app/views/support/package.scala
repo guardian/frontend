@@ -1,7 +1,7 @@
 package views.support
 
 import common._
-import conf.Switches.{ ShowAllArticleEmbedsSwitch, ArticleSlotsSwitch, ABExternalLinksNewWindow }
+import conf.Switches.{ ShowAllArticleEmbedsSwitch, ArticleSlotsSwitch }
 import model._
 
 import java.net.URLEncoder._
@@ -79,7 +79,7 @@ case class CommentAndDebateContainer(showMore: Boolean = true) extends Container
   val containerType = "commentanddebate"
   val tone = "comment"
 }
-case class FeaturesContainer(showMore: Boolean = true, adSlot: Option[AdSlot] = None) extends Container {
+case class FeaturesContainer(showMore: Boolean = true) extends Container {
   val containerType = "features"
   val tone = "feature"
 }
@@ -87,7 +87,7 @@ case class PopularContainer(showMore: Boolean = true) extends Container {
   val containerType = "popular"
   val tone = "news"
 }
-case class PeopleContainer(showMore: Boolean = true, adSlot: Option[AdSlot] = None) extends Container {
+case class PeopleContainer(showMore: Boolean = true) extends Container {
   val containerType = "people"
   val tone = "feature"
 }
@@ -102,28 +102,17 @@ case class MultimediaContainer(showMore: Boolean = true) extends Container {
   val containerType = "multimedia"
   val tone = "comment"
 }
-
-sealed trait AdSlot {
-  val baseName: String
-  val medianName: String
-  val dfpDataName: String
-}
-object AdSlot {
-
-  object First extends AdSlot {
-    val baseName = "x49"
-    val medianName = "Middle1"
-    val dfpDataName = "inline1"
-  }
-
-  object Second extends AdSlot {
-    val baseName = "Bottom2"
-    val medianName = "Middle"
-    val dfpDataName = "inline2"
-  }
-
+case class SeriesContainer(showMore: Boolean = true) extends Container {
+  val containerType = "series"
+  val tone = "news"
 }
 
+/**
+ * Encapsulates previous and next urls
+ */
+case class PreviousAndNext(prev: Option[String], next: Option[String]) {
+  val isDefined: Boolean = prev.isDefined || next.isDefined
+}
 
 object MetadataJson {
 
@@ -313,14 +302,6 @@ object BulletCleaner {
   def apply(body: String): String = body.replace("•", """<span class="bullet">•</span>""")
 }
 
-object UnindentBulletParents extends HtmlCleaner with implicits.JSoup {
-  def clean(body: Document): Document = {
-    val bullets = body.getElementsByClass("bullet")
-    bullets flatMap { _.parentTag("p") } foreach { _.addClass("bullet-container") }
-    body
-  }
-}
-
 case class InBodyLinkCleaner(dataLinkName: String)(implicit val edition: Edition) extends HtmlCleaner {
   def clean(body: Document): Document = {
     val links = body.getElementsByAttribute("href")
@@ -344,22 +325,6 @@ case class InBodyLinkCleaner(dataLinkName: String)(implicit val edition: Edition
       }
     }
 
-    // Force external links to open in a new window
-    if (ABExternalLinksNewWindow.isSwitchedOn) {
-      links.filter{
-        link => link.tagName == "a"
-      }.filterNot{
-        link => link.attr("href") startsWith "/"
-      }.filterNot{
-        link => link.attr("href") startsWith "#"
-      }.filterNot{
-        link => link.attr("href") startsWith "http://www.theguardian.com"
-      }.filterNot{
-        link => link.attr("href") startsWith "http://www.guardian.co.uk"
-      }.foreach { link =>
-        link.attr("target", "_blank")
-      }
-    }
     body
   }
 }
@@ -708,9 +673,9 @@ object TableEmbedComplimentaryToP extends HtmlCleaner {
 
 object VisualTone {
 
-  private val Comment = "comment"
-  private val News = "news"
-  private val Feature = "feature"
+  val Comment = "comment"
+  val News = "news"
+  val Feature = "feature"
 
   private val commentMappings = Seq(
     "tone/comment",
@@ -774,7 +739,7 @@ object GetClasses {
       "collection__item",
       s"collection__item--volume-${trail.group.getOrElse("0")}"
     )
-    val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail)}
+    val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail)} ++ makeSnapClasses(trail)
     RenderClasses(classes:_*)
   }
 
@@ -802,9 +767,11 @@ object GetClasses {
           "item--has-image"
         },
       (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean) =>
-        if (forceHasImage || !trail.trailPicture(5,3).isEmpty) s"item--imageadjust-${trail.imageAdjust}" else ""
+        if (forceHasImage || !trail.trailPicture(5,3).isEmpty) s"item--imageadjust-${trail.imageAdjust}" else "",
+      (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean) =>
+        if (trail.isCommentable) "item--has-discussion" else "item--has-no-discussion"
     )
-    val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail, firstContainer, forceHasImage)}
+    val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail, firstContainer, forceHasImage)} ++ makeSnapClasses(trail)
     RenderClasses(classes:_*)
   }
 
@@ -825,10 +792,17 @@ object GetClasses {
           "fromage--has-image"
         },
       (trail: Trail, imageAdjust: String) =>
-        if (!trail.trailPicture(5,3).isEmpty) s"fromage--imageadjust-$imageAdjust" else ""
+        if (!trail.trailPicture(5,3).isEmpty) s"fromage--imageadjust-$imageAdjust" else "",
+      (trail: Trail, imageAdjust: String) =>
+        if (trail.isCommentable) "fromage--has-discussion" else "fromage--has-no-discussion"
     )
-    val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail, imageAdjust)}
+    val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail, imageAdjust)} ++ makeSnapClasses(trail)
     RenderClasses(classes:_*)
+  }
+
+  def makeSnapClasses(trail: Trail): Seq[String] = trail match {
+    case snap: Snap => snap.snapType.map(t => Seq(s"facia-snap facia-snap--$t")).getOrElse(Seq("facia-snap facia-snap--default"))
+    case _  => Nil
   }
 
 }
@@ -838,4 +812,15 @@ object LatestUpdate {
   def apply(collection: Collection, trails: Seq[Trail]): Option[DateTime] =
     (trails.map(_.webPublicationDate) ++ collection.lastUpdated.map(DateTime.parse(_))).sortBy(-_.getMillis).headOption
 
+}
+
+object SnapData {
+  def apply(trail: Trail): String = generateDataArrtibutes(trail).mkString(" ")
+
+  private def generateDataArrtibutes(trail: Trail): Iterable[String] = trail match {
+    case snap: Snap =>
+      snap.snapType.filter(_.nonEmpty).map(t => s"data-snap-type=$t") ++
+      snap.snapUri.filter(_.nonEmpty).map(t => s"data-snap-uri=$t")
+    case _  => Nil
+  }
 }

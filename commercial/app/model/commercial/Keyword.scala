@@ -2,8 +2,10 @@ package model.commercial
 
 import scala.concurrent.Future
 import conf.SwitchingContentApi
-import common.{Logging, ExecutionContexts}
-import contentapi.ContentApiClient
+import common.{Edition, Logging, ExecutionContexts}
+import model.{ImageElement, Content}
+import com.gu.openplatform.contentapi
+import model.commercial.masterclasses.EventbriteMasterClass
 
 case class Keyword(id: String, webTitle: String) {
 
@@ -15,9 +17,18 @@ case class Keyword(id: String, webTitle: String) {
 
 }
 
-object Keyword extends ExecutionContexts with Logging {
+case class MasterClass(eventBriteEvent: EventbriteMasterClass, imageElement: Option[model.ImageElement])
 
-  def lookup(term: String, section: Option[String] = None): Future[Seq[Keyword]] = {
+object Lookup extends ExecutionContexts with Logging {
+  def thumbnail(contentId: String): Future[Option[ImageElement]] = {
+    SwitchingContentApi().item(contentId, Edition.defaultEdition).response.map{response =>
+      val option: Option[contentapi.model.Content] = response.content
+      option.flatMap(Content(_).thumbnail)
+    }
+  }
+
+
+  def keyword(term: String, section: Option[String] = None): Future[Seq[Keyword]] = {
     val baseQuery = SwitchingContentApi().tags.q(term).tagType("keyword").pageSize(50)
     val query = section.foldLeft(baseQuery)((acc, sectionName) => acc section sectionName)
 

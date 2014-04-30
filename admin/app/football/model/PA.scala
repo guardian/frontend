@@ -2,9 +2,10 @@ package football.model
 
 import pa.{Team, Season}
 import org.joda.time.DateMidnight
+import implicits.Collections
 
 
-object PA {
+object PA extends Collections {
 
   val competitions: List[Season] = List(
     Season("100", "785", "Barclays Premier League 13/14", new DateMidnight(2013, 6, 1), new DateMidnight(2014, 5, 31)),
@@ -29,10 +30,25 @@ object PA {
     Season("635", "1003", "Italy Serie A 13/14", new DateMidnight(2013, 7, 1), new DateMidnight(2014, 6, 30)),
     Season("650", "1015", "Spanish Liga BBVA 13/14", new DateMidnight(2013, 7, 1), new DateMidnight(2014, 6, 30)),
     Season("650", "216", "Spanish Primera Liga BBVA", new DateMidnight(2012, 8, 1), new DateMidnight(2013, 6, 30)),
+    Season("700", "524", "2014 FIFA World Cup", new DateMidnight(2014, 6, 1), new DateMidnight(2014, 7, 31)),
     Season("701", "220", "2014 FIFA World Cup qualification (UEFA)", new DateMidnight(2012, 9, 1), new DateMidnight(2014, 1, 1)),
     Season("721", "783", "International Friendly 2013/2014", new DateMidnight(2013, 5, 25), new DateMidnight(2014, 5, 25)),
     Season("762", "1191", "American MLS League 13", new DateMidnight(2013, 3, 1), new DateMidnight(2013, 11, 30))
   )
+
+  val approvedCompetitions = List(
+    "100", "500", "510", "300", "301", "101", "102",
+    "103", "400", "120", "121", "122", "123", "320",
+    "321", "701", "721", "650", "620", "625", "635"
+  )
+
+  def filterCompetitions(competitions: List[Season]): List[Season] = {
+    competitions
+      .filter(comp => approvedCompetitions.contains(comp.competitionId))
+      .sortBy(_.startDate.getMillis).reverse
+      .distinctBy(_.competitionId)
+      .sortBy(_.competitionId)
+  }
 
   object teams {
     val prem = List(

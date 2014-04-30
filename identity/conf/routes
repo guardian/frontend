@@ -1,31 +1,33 @@
 # For dev machines
-GET     /assets/*path                                   dev.DevAssetsController.at(path)
+GET         /assets/*path                          dev.DevAssetsController.at(path)
 
-GET     /signin                                         @controllers.SigninController.renderForm
-POST    /signin                                         @controllers.SigninController.processForm
-GET     /signout                                        @controllers.SignoutController.signout
-GET     /reset                                          @controllers.ResetPasswordController.renderPasswordResetRequestForm
-POST    /reset                                          @controllers.ResetPasswordController.processPasswordResetRequestForm
-GET     /c/:resetToken                                  @controllers.ResetPasswordController.processUpdatePasswordToken( resetToken : String)
-POST    /reset-password/:resetToken                     @controllers.ResetPasswordController.resetPassword( resetToken : String )
-GET     /requestnewtoken                                @controllers.ResetPasswordController.requestNewToken
-GET     /register                                       @controllers.RegistrationController.renderForm
-POST    /register                                       @controllers.RegistrationController.processForm
-GET     /email-prefs                                    @controllers.EmailController.preferences
-POST    /email-prefs                                    @controllers.EmailController.savePreferences
-GET     /user/id/:id                                    @controllers.PublicProfileController.renderProfileFromId(id: String)
-GET     /user/:vanityUrl                                @controllers.PublicProfileController.renderProfileFromVanityUrl(vanityUrl: String)
-GET     /public/edit                                    @controllers.PublicProfileController.displayPublicProfileForm
-GET     /account/edit                                   @controllers.PublicProfileController.displayAccountForm
-POST    /public/edit                                    @controllers.PublicProfileController.submitPublicProfileForm
-POST    /account/edit                                   @controllers.PublicProfileController.submitAccountForm
-GET     /verify-email/:token                            @controllers.EmailVerificationController.verify(token: String)
-GET         /verify-email        @controllers.EmailVerificationController.resendEmailValidationEmail()
+GET         /signin                                 @controllers.SigninController.renderForm
+POST        /signin                                 @controllers.SigninController.processForm
+GET         /signout                                @controllers.SignoutController.signout
+GET         /reset                                  @controllers.ResetPasswordController.renderPasswordResetRequestForm
+POST        /reset                                  @controllers.ResetPasswordController.processPasswordResetRequestForm
+GET         /c/:resetToken                          @controllers.ResetPasswordController.processUpdatePasswordToken( resetToken : String)
+POST        /reset-password/:resetToken             @controllers.ResetPasswordController.resetPassword( resetToken : String )
+GET         /password/change                        @controllers.ChangePasswordController.displayForm
+POST        /password/change                        @controllers.ChangePasswordController.submitForm
+GET         /requestnewtoken                        @controllers.ResetPasswordController.requestNewToken
+GET         /register                               @controllers.RegistrationController.renderForm
+POST        /register                               @controllers.RegistrationController.processForm
+GET         /email-prefs                            @controllers.EmailController.preferences
+POST        /email-prefs                            @controllers.EmailController.savePreferences
+GET         /user/id/:id                            @controllers.PublicProfileController.renderProfileFromId(id: String)
+GET         /user/:vanityUrl                        @controllers.PublicProfileController.renderProfileFromVanityUrl(vanityUrl: String)
+GET         /public/edit                            @controllers.EditProfileController.displayPublicProfileForm
+GET         /account/edit                           @controllers.EditProfileController.displayAccountForm
+POST        /public/edit                            @controllers.EditProfileController.submitPublicProfileForm
+POST        /account/edit                           @controllers.EditProfileController.submitAccountForm
+GET         /verify-email/:token                    @controllers.EmailVerificationController.verify(token: String)
+GET         /verify-email                           @controllers.EmailVerificationController.resendEmailValidationEmail()
 
-GET     /ethical-awards/complete                        @controllers.EthicalAwardsController.complete
-GET     /ethical-awards/:formReference                  @controllers.EthicalAwardsController.ethicalAwardsForm(formReference: String)
-GET     /form/complete                                  @controllers.FormstackController.complete
-GET     /form/:formReference                            @controllers.FormstackController.formstackForm(formReference: String, composer: Boolean = false)
-GET     /form/embed/:formReference                      @controllers.FormstackController.formstackForm(formReference: String, composer: Boolean = true)
+GET         /ethical-awards/complete                @controllers.EthicalAwardsController.complete
+GET         /ethical-awards/:formReference          @controllers.EthicalAwardsController.ethicalAwardsForm(formReference: String)
+GET         /form/complete                          @controllers.FormstackController.complete
+GET         /form/:formReference                    @controllers.FormstackController.formstackForm(formReference: String, composer: Boolean = false)
+GET         /form/embed/:formReference              @controllers.FormstackController.formstackForm(formReference: String, composer: Boolean = true)
 
-GET     /et/subscribe/:subDefId                         @controllers.ExactTargetController.subscribe(subDefId: String, returnUrl: String)
+GET         /et/subscribe/:subDefId                 @controllers.ExactTargetController.subscribe(subDefId: String, returnUrl: String)

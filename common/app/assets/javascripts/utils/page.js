@@ -1,52 +1,67 @@
 define([
     'common/$',
-    'common/utils/config'
+    'common/utils/config',
+    'lodash/objects/assign',
+    'lodash/collections/find'
 ],
-function($, config) {
+function(
+    $,
+    config,
+    assign,
+    find
+) {
 
-    function isMatch(yes) {
+    function isit(isTrue, yes, no, arg) {
+        if (isTrue) {
+            return yes ? yes((arg||isTrue)) : (arg||isTrue);
+        } else {
+            return no ? no() : false;
+        }
+    }
+
+    function isMatch(yes, no) {
         var teams = config.referencesOfType('paFootballTeam'),
-            footballMatch = config.page.footballMatch;
+            match = config.page.footballMatch || {};
 
-        if (footballMatch ||
-            ((config.hasTone('Match reports') || config.hasSeries('Match previews') || config.page.isLiveBlog) && teams.length === 2)) {
-            return yes(footballMatch || {
-                date: config.webPublicationDateAsUrlPart(),
-                teams: teams
-            });
-        }
-    }
-
-    function isCompetition(yes) {
-        var competition = ($('.js-football-competition').attr('data-link-name') || '').replace('keyword: ', '');
-        if (competition) {
-            return yes(competition);
-        }
-    }
-
-    function isClockwatch(yes) {
-        if (config.hasSeries('Clockwatch')) {
-            return yes();
-        }
-    }
-
-    function isLiveClockwatch(yes) {
-        isClockwatch(function() {
-            if (config.page.isLive) {
-                return yes();
-            }
+        // the order of this is important as, on occasion,
+        // "minbymin" is tagged with "match reports" but should be considered "minbymin".
+        assign(match, {
+            date: config.webPublicationDateAsUrlPart(),
+            teams: teams,
+            pageType: find([
+                ['minbymin', config.page.isLiveBlog],
+                ['report', config.hasTone('Match reports')],
+                ['preview', config.hasSeries('Match previews')],
+                ['stats', match.id],
+                [null, true] // We need a default
+            ], function(type) {
+                return type[1] === true;
+            })[0]
         });
+
+        return isit((match.id || (match.pageType && match.teams.length === 2)), yes, no, match);
+    }
+
+    function isCompetition(yes, no) {
+        var competition = ($('.js-football-competition').attr('data-link-name') || '').replace('keyword: football/', '');
+        return isit(competition, yes, no);
+    }
+
+    function isClockwatch(yes, no) {
+        return isit(config.hasSeries('Clockwatch'), yes, no);
+    }
+
+    function isLiveClockwatch(yes, no) {
+        return isClockwatch(function() {
+            return isit(config.page.isLive, yes, no);
+        }, no);
     }
 
     function rightHandComponentVisible(yes, no) {
         var el = $('.js-right-hand-component')[0],
             vis = el.offsetWidth > 0 && el.offsetHeight > 0;
 
-        if (vis) {
-            return yes ? yes(el) : el;
-        } else {
-            return no ? no() : null;
-        }
+        return isit(vis, yes, no, el);
     }
 
     return {

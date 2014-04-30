@@ -5,6 +5,8 @@ define([
     'common/$',
     'fence',
     'common/modules/ui/rhc',
+    'common/modules/article/truncate',
+    'common/modules/article/twitter',
     'common/modules/ui/autoupdate',
     'common/modules/live/filter',
     'common/modules/discussion/loader',
@@ -18,6 +20,8 @@ define([
     $,
     fence,
     rhc,
+    truncate,
+    twitter,
     AutoUpdate,
     LiveFilter,
     DiscussionLoader,
@@ -56,7 +60,6 @@ define([
         },
 
         initDiscussion: function() {
-
             common.mediator.on('page:article:ready', function(config, context) {
                 if (config.page.commentable && config.switches.discussion) {
                     var discussionLoader = new DiscussionLoader(context, common.mediator, { 'switches': config.switches });
@@ -96,13 +99,13 @@ define([
             }
         },
 
-        initHelvetica: function(config) {
-            if(config.switches.helvetica && /\/helvetica-one-font-to-rule-them-all/g.test(config.page.pageId)) {
-                var articleHeadline = document.querySelector('.article__headline');
-                articleHeadline.style.fontFamily = 'Helvetica, "EgyptianHeadline", georgia, serif';
-                articleHeadline.style.fontWeight = 'bold';
-                articleHeadline.style.letterSpacing = '-1px';
-            }
+
+        initTruncateAndTwitter: function() {
+            mediator.on('page:article:ready', function() {
+                // Ensure that truncation occurs before the tweet upgrading.
+                truncate();
+                twitter.enhanceTweets();
+            });
         }
     };
 
@@ -114,7 +117,7 @@ define([
             modules.initOpen(config);
             modules.initFence();
             modules.initLayoutHints(config);
-            modules.initHelvetica(config);
+            modules.initTruncateAndTwitter();
         }
         common.mediator.emit('page:article:ready', config, context);
     };

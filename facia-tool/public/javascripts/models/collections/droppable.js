@@ -22,7 +22,7 @@ define([
         droppable({
 
             newItemsConstructor: function (id, sourceItem, targetList) {
-                var items = [sourceItem || { id: id }];
+                var items = [_.extend(_.isObject(sourceItem) ? sourceItem : {}, { id: id })];
 
                 if(sourceItem && sourceItem.meta && sourceItem.meta.supporting) {
                     items = items.concat(sourceItem.meta.supporting);
@@ -42,8 +42,9 @@ define([
                 return contentApi.validateItem(newItems[0]);
             },
 
-            newItemsPersister: function(newItems, sourceItem, sourceList, targetList, id, position, isAfter) {
-                var itemMeta,
+            newItemsPersister: function(newItems, sourceList, targetList, position, isAfter) {
+                var id = newItems[0].id(),
+                    itemMeta,
                     timestamp,
                     supporting,
                     remove;
@@ -53,12 +54,12 @@ define([
                 if (targetList.parentType === 'Article') {
                     supporting = targetList.parent.meta.supporting.items;
                     _.each(newItems.slice(1), function(item) {
-                        supporting.remove(function (supp) { return supp.id === item.id; });
+                        supporting.remove(function (supp) { return supp.id() === item.id(); });
                         supporting.push(item);
                     });
                     contentApi.decorateItems(supporting());
                     targetList.parent.save();
-                    
+
                     remove = remover(sourceList, id);
                     if (remove) {
                         authedAjax.updateCollections({remove: remove});
@@ -68,7 +69,7 @@ define([
 
                 if (targetList.parentType === 'Collection') {
                     targetList.parent.closeAllArticles();
-                    itemMeta = deepGet(sourceItem, '.meta') || {};
+                    itemMeta = newItems[0].getMeta() || {};
 
                     if (deepGet(targetList, '.parent.groups.length') > 1) {
                         itemMeta.group = targetList.group + '';
@@ -77,7 +78,7 @@ define([
                     }
 
                     timestamp = Math.floor(new Date().getTime()/1000);
-                    itemMeta.updatedAt = itemMeta.updatedAt ? itemMeta.updatedAt + ',' + timestamp : timestamp + ':f90'; // orange for the initial flag
+                    itemMeta.updatedAt = itemMeta.updatedAt ? itemMeta.updatedAt + ',' + timestamp : timestamp + ':fbcc43'; // yellow for the initial flag
 
                     remove = (deepGet(sourceList, '.parent.id') && deepGet(sourceList, '.parent.id') !== targetList.parent.id);
                     remove = remove ? remover(sourceList, id) : undefined;
@@ -93,8 +94,13 @@ define([
                             itemMeta: _.isEmpty(itemMeta) ? undefined : itemMeta
                         },
                         remove: remove
+                    })
+                    .then(function() {
+                        if(vars.state.liveMode()) {
+                            vars.model.deferredDetectPressFailure();
+                        }
                     });
-                    
+
                     if (sourceList && !sourceList.keepCopy && sourceList !== targetList) {
                         removeById(sourceList.items, id); // for immediate UI effect
                     }
@@ -102,12 +108,12 @@ define([
             }
         });
     }
-     
+
     function remover(sourceList, id) {
         if (sourceList &&
             sourceList.parentType === 'Collection' &&
            !sourceList.keepCopy) {
-            
+
             return {
                 collection: sourceList.parent,
                 id:     sourceList.parent.id,

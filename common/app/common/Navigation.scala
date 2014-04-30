@@ -5,6 +5,7 @@ import model.{Section, Tag, MetaData}
 case class SectionLink(zone: String, title: String, href: String,newWindow: Boolean = false) {
   def currentFor(page: MetaData): Boolean = page.url == href ||
     s"/${page.section}" == href ||
+    page.url == href ||
     page.tags.exists(t => s"/${t.id}" == href)
 }
 
@@ -50,7 +51,10 @@ trait Navigation  {
   val sport = SectionLink("sport", "sport", "/sport")
   val sports = sport.copy(title = "sports")
   val usSport = SectionLink("sport", "US sports", "/sport/us-sport")
-
+  val australiaSport = SectionLink("australia sport", "australia sport", "/sport/australia-sport")
+  val afl = SectionLink("afl", "afl", "/sport/afl")
+  val nrl = SectionLink("nrl", "nrl", "/sport/nrl")
+  val aLeague = SectionLink("a-league", "a-league", "/football/a-league")
   val football = SectionLink("football", "football", "/football")
   val soccer = football.copy(title = "soccer")
   val cricket = SectionLink("sport", "cricket", "/sport/cricket")
@@ -143,6 +147,8 @@ trait Navigation  {
   val hotels = SectionLink("travel", "hotels", "/travel/hotels")
   val resturants = SectionLink("travel", "restaurants", "/travel/restaurants")
   val budget = SectionLink("travel", "budget travel", "/travel/budget")
+  val australasiaTravel = SectionLink("australasia", "australasia", "/travel/australasia")
+  val asiaTravel = SectionLink("asia", "asia", "/travel/asia")
 
   //Environment
   val climatechange = SectionLink("environment", "climate change", "/environment/climate-change")

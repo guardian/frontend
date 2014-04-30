@@ -1,29 +1,69 @@
 @(jobs: Seq[model.commercial.jobs.Job])(implicit request: RequestHeader)
 
+@if(play.Play.isDev()) {
+    <link rel="stylesheet" href="@Static("stylesheets/head.default.css")" />
+    <link rel="stylesheet" href="@Static("stylesheets/global.css")" />
+    <style>
+        .i { background-image: url(@Static("images/global/sprite.png")); }
+    </style>
+}
+
 <link rel="stylesheet" href="@Static("stylesheets/commercial.css")" />
 
-<div class="commercial jobs-component">
-    @jobs.take(1).map { job =>
+@defining("http://jobs.theguardian.com", "0_1", "2014-04-02") { case (jobsHost, version, date) =>
+    <div class="commercial commercial--jobs">
         <div class="commercial__head">
-            <h3 class="commercial__title">
-                <a href="%OASToken%http://jobs.theguardian.com/%OmnitureToken%">
-                    <span>Guardian <span class="em">Jobs</span></span>
-                </a>
-            </h3>
-            <p class="commercial__subtitle">Find your next @job.mainIndustry job on Guardian Jobs</p>
+            <h2 class="commercial__title"><a href="@AdLink{@jobsHost/jobs}"
+                data-link-name="merchandising-jobs-v@{version}_@{date}-low-browse-all-jobs">Guardian <span class="commercial__title__last-word">jobs</span></a></h2>
+            <a href="@AdLink{@jobsHost/jobs}"
+                class="commercial__home-link"
+                data-link-name="merchandising-jobs-v@{version}_@{date}-low-browse-all-jobs">
+                Browse all jobs
+                <span class="commercial__home-link__cta">
+                    <span class="i i-filter-arrow-down"></span>
+                </span>
+            </a>
         </div>
         <div class="commercial__body">
-            <ul class="lineitems">
-                <li class="lineitem">
-                    <h4 class="lineitem__title"><a href="%OASToken%@job.listingUrl%OmnitureToken%">@job.title</a></h4>
-                    <p class="lineitem__description">@job.recruiterLogoUrl.map{ url => <img class="lineitem__image lineitem__image-logo" src="@url" alt="" />} @job.shortDescription</p>
-                </li>
+            <ul class="u-unstyled commercial--jobs__sectors">
+                @Seq(
+                    Seq("arts", "Arts"),
+                    Seq("graduate", "Graduate"),
+                    Seq("social-care", "Social care"),
+                    Seq("charity", "Charity"),
+                    Seq("health", "Health"),
+                    Seq("higher-education", "Higher education"),
+                    Seq("environment", "Environment"),
+                    Seq("housing", "Housing"),
+                    Seq("schools", "Schools"),
+                    Seq("government", "Government"),
+                    Seq("media", "Media"),
+                    Seq("", "All sectors")
+                ).map { sector =>
+                    <li class="commercial--jobs__sector">
+                        <a href="@AdLink{@jobsHost/@sector(0)}"
+                           class="commercial--jobs__sector__link"
+                           data-link-name="merchandising-jobs-v@{version}_@{date}-low-sector-@if(sector(0).nonEmpty){sector(0)}else{all}">
+                            @sector(1) <span class="i i-double-chevron"></span>
+                        </a>
+                    </li>
+                }
             </ul>
+            @if(jobs.nonEmpty) {
+                <ul class="u-unstyled commercial--jobs__jobs">
+                    @jobs.map { job =>
+                        <li class="commercial--jobs__job">
+                            <a href="@AdLink{@job.listingUrl}"
+                               class="commercial--jobs__job__link"
+                               data-link-name="merchandising-jobs-v@{version}_@{date}-low-job-@{job.id}">
+                                <h3 class="commercial--jobs__job__title">@job.title</h3>
+                                <img src="@job.recruiterLogoUrl" class="commercial--jobs__job__logo" alt="" />
+                            </a>
+                            <p class="commercial--jobs__job__recruiter">@job.recruiterName</p>
+                        </li>
+                    }
+                </ul>
+            }
         </div>
-    }
-    <div class="commercial__foot">
-        @jobs.take(1).map { job =>
-            <a class="commercial__link" href="%OASToken%http://jobs.theguardian.com/%OmnitureToken%">Find your next @job.mainIndustry job on Guardian Jobs<i class="i i-double-arrow-right-blue"></i></a>
-        }
     </div>
-</div>
+}

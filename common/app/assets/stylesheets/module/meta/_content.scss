@@ -1,0 +1,45 @@
+.content-meta {
+    padding: 0;
+    border-top: 1px dotted $c-neutral5;
+    @include fs-textsans(3);
+    font-weight: bold;
+    @include rem((
+        margin: 0 0 $gs-baseline/2,
+        line-height: 16px
+    ));
+}
+
+.content-meta__label {
+    color: $c-neutral2;
+}
+
+.content-meta__item {
+    padding: 0;
+    margin: 0;
+}
+
+.content-meta--inline {
+    border-top: 0;
+    margin: 0;
+
+    .content-meta__label,
+    .content-meta__item {
+        display: inline-block;
+        @include rem((
+            margin-right: $gs-gutter/10
+        ));
+    }
+
+    @include mq(tablet) {
+        @include rem((
+            margin: 0 0 $gs-baseline/2
+        ));
+    }
+
+    @include mq($from: tablet, $to: leftCol) {
+        @include  rem((
+            padding-top: $gs-baseline/2
+        ));
+        border-top: 1px dotted $c-neutral5;
+    }
+}

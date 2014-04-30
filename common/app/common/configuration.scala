@@ -84,6 +84,10 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val jsLocation = configuration.getStringProperty("ophan.js.location").getOrElse("http://j.ophan.co.uk/ophan.ng")
   }
 
+  object googletag {
+    lazy val jsLocation = configuration.getStringProperty("googletag.js.location").getOrElse("//www.googletagservices.com/tag/js/gpt.js")
+  }
+
   object frontend {
     lazy val store = configuration.getMandatoryStringProperty("frontend.store")
   }
@@ -178,6 +182,13 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val apiClientHeader = configuration.getMandatoryStringProperty("discussion.apiClientHeader")
     lazy val url = configuration.getMandatoryStringProperty("discussion.url")
   }
+  
+  object commercial {
+    lazy val books_url = configuration.getMandatoryStringProperty("commercial.books_url")
+    lazy val masterclasses_url = configuration.getMandatoryStringProperty("commercial.masterclasses_url")
+    lazy val soulmates_url = configuration.getMandatoryStringProperty("commercial.soulmates_url")
+    lazy val travel_url = configuration.getMandatoryStringProperty("commercial.travel_url")
+  }
 
   object open {
     lazy val ctaApiRoot = configuration.getMandatoryStringProperty("open.cta.apiRoot")
@@ -198,7 +209,8 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
       "discussionApiRoot" -> discussion.apiRoot,
       ("secureDiscussionApiRoot", discussion.secureApiRoot),
       "discussionApiClientHeader" -> discussion.apiClientHeader,
-      ("ophanJsUrl", ophan.jsLocation)
+      ("ophanJsUrl", ophan.jsLocation),
+      ("googletagJsUrl", googletag.jsLocation)
     )
 
     lazy val pageData: Map[String, String] = {
@@ -268,6 +280,11 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
   object formstack {
     lazy val url = configuration.getMandatoryStringProperty("formstack.url")
     lazy val oAuthToken = configuration.getMandatoryStringProperty("formstack.oauthToken")
+  }
+
+  object avatars {
+    lazy val imageHost = configuration.getMandatoryStringProperty("avatars.image.host")
+    lazy val signingKey = configuration.getMandatoryStringProperty("avatars.signing.key")
   }
 }
 

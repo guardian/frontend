@@ -33,10 +33,7 @@ module.exports = function (grunt) {
                     style: 'compressed',
                     sourcemap: true,
                     noCache: true,
-                    quiet: (isDev) ? false : true,
-                    loadPath: [
-                        'common/app/assets/stylesheets/components/sass-mq'
-                    ]
+                    quiet: (isDev) ? false : true
                 }
             }
         },
@@ -51,13 +48,13 @@ module.exports = function (grunt) {
                     EventEmitter: '../../../../common/app/assets/javascripts/components/eventEmitter/EventEmitter',
                     qwery:        '../../../../common/app/assets/javascripts/components/qwery/mobile/qwery-mobile',
                     reqwest:      '../../../../common/app/assets/javascripts/components/reqwest/src/reqwest',
-                    postscribe:   '../../../../common/app/assets/javascripts/components/postscribe/dist/postscribe',
                     lodash:       '../../../../common/app/assets/javascripts/components/lodash-amd/modern',
                     imager:       '../../../../common/app/assets/javascripts/components/imager.js/src/strategies/container',
                     omniture:     '../../../../common/app/assets/javascripts/components/omniture/omniture',
                     fence:        '../../../../common/app/assets/javascripts/components/fence/fence',
                     enhancer:     '../../../../common/app/assets/javascripts/components/enhancer/enhancer',
-                    'ophan/ng':   'empty:'
+                    'ophan/ng':   'empty:',
+                    googletag:    'empty:'
                 },
                 optimize: 'uglify2',
                 generateSourceMaps: true,
@@ -69,9 +66,6 @@ module.exports = function (grunt) {
                     name: 'common/bootstraps/app',
                     out: staticTargetDir + 'javascripts/bootstraps/app.js',
                     shim: {
-                        postscribe: {
-                            exports: 'postscribe'
-                        },
                         imager: {
                             deps: ['components/imager.js/src/imager'],
                             exports: 'Imager'
@@ -92,9 +86,6 @@ module.exports = function (grunt) {
                     name: 'bootstraps/admin',
                     out: staticTargetDir + 'javascripts/bootstraps/admin.js',
                     shim: {
-                        postscribe: {
-                            exports: 'postscribe'
-                        },
                         imager: {
                             deps: ['common/components/imager.js/src/imager'],
                             exports: 'Imager'
@@ -490,6 +481,18 @@ module.exports = function (grunt) {
             }
         },
 
+        // Lint Sass sources
+        scsslint: {
+            allFiles: [
+                'common/app/assets/stylesheets'
+            ],
+            options: {
+                bundleExec: true,
+                config: '.scss-lint.yml',
+                reporterOutput: null
+            }
+        },
+
         // Much of the CasperJS setup borrowed from smlgbl/grunt-casperjs-extra
         env: {
             casperjs: {
@@ -544,6 +547,9 @@ module.exports = function (grunt) {
             },
             open: {
                 src: ['integration-tests/casper/tests/open/*.spec.js']
+            },
+            commercial: {
+                src: ['integration-tests/casper/tests/commercial/*.spec.js']
             }
         },
 
@@ -666,6 +672,7 @@ module.exports = function (grunt) {
     // Load the plugins
     grunt.loadNpmTasks('grunt-karma');
     grunt.loadNpmTasks('grunt-contrib-sass');
+    grunt.loadNpmTasks('grunt-scss-lint');
     grunt.loadNpmTasks('grunt-css-metrics');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-requirejs');
@@ -686,8 +693,8 @@ module.exports = function (grunt) {
 
     grunt.registerTask('default', ['compile', 'test', 'analyse']);
 
-    // NOTE: ideally this would just check sass, rather that full compile - can't get it to work
     grunt.registerTask('validate:css', ['sass:compile']);
+    grunt.registerTask('validate:sass', ['scsslint']);
     grunt.registerTask('validate:js', function(app) {
         if (!app) {
             grunt.task.run('jshint');

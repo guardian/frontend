@@ -10,7 +10,7 @@ import client.connection.util.{ApiHelpers, ExecutionContexts}
 import net.liftweb.json.JsonAST.{JValue, JNothing}
 import net.liftweb.json.Serialization.write
 import utils.SafeLogging
-import idapiclient.requests.TokenPassword
+import idapiclient.requests.{PasswordUpdate, TokenPassword}
 
 
 abstract class IdApi(val apiRootUrl: String, http: Http, jsonBodyParser: JsonBodyParser, val clientAuth: Auth)
@@ -92,7 +92,20 @@ abstract class IdApi(val apiRootUrl: String, http: Http, jsonBodyParser: JsonBod
     response map extractUser
   }
 
-  // PASSWORD RESET
+  // PASSWORD RESET/UPDATE
+
+  def passwordExists( auth: Auth ): Future[Response[Boolean]] = {
+    val apiPath = urlJoin("user", "password-exists")
+    val response = http.GET(apiUrl(apiPath), buildParams(Some(auth)), buildHeaders(Some(auth)))
+    response map extract[Boolean](jsonField("passwordExists"))
+  }
+
+  def updatePassword(pwdUpdate: PasswordUpdate, auth: Auth, trackingData: TrackingData ): Future[Response[Unit]] = {
+    val apiPath = urlJoin("user", "password")
+    val body = write(pwdUpdate)
+    val response = post(apiPath, Some(auth), Some(trackingData), Some(body))
+    response map extractUnit
+  }
 
   def userForToken( token : String ): Future[Response[User]] = {
     val apiPath = urlJoin("pwd-reset", "user-for-token")

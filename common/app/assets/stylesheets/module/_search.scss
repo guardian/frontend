@@ -44,10 +44,10 @@ span.gscb_a {
 }
 td.gsc-search-button {
     margin: 0 !important;
-    padding: 5px 0 0 0 !important;
+    padding: 5px 0 0 !important;
 }
 .gsc-search-button-v2 {
-    @include rounded-corners(0 !important);
+    @include border-radius(0 !important);
     margin: 0 !important;
     padding: 7px 9px 8px !important;
 }
@@ -83,7 +83,7 @@ td.gsc-search-button {
 
 // Add space between pagination links to make them more touch friendly
 .gsc-results .gsc-cursor-box {
-    margin: 0 0 ($gs-baseline/3)*4 0 !important;
+    margin: 0 0 ($gs-baseline/3)*4 !important;
 }
 .gsc-results .gsc-cursor-box .gsc-cursor-page {
     margin-right: 22px !important;
@@ -92,7 +92,7 @@ td.gsc-search-button {
 // Remove border on thumbnails
 .gs-result img.gs-image,
 .gs-result img.gs-promotion-image {
-    border: none !important;
+    border: 0 !important;
 }
 // Thumbnails are on the grid
 .gs-web-image-box-landscape img.gs-image {

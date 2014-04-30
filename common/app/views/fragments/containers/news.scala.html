@@ -1,10 +1,10 @@
-@(config: Config, collection: Collection, style: Container, containerIndex: Int)(implicit request: RequestHeader, templateDeduping: TemplateDeduping)
+@(config: Config, collection: Collection, style: NewsContainer, containerIndex: Int)(implicit request: RequestHeader, templateDeduping: TemplateDeduping)
 
 @import org.joda.time.DateTime
 
 @defining(config.displayName.orElse(collection.displayName)) { title =>
 
-    @defining(templateDeduping(8, collection.items)) { items =>
+    @defining(templateDeduping(15, collection.items)) { items =>
         @if(items.nonEmpty) {
             <section
                 class="@RenderClasses(Map(
@@ -15,7 +15,8 @@
                     "container--first" -> (containerIndex == 0)))"
                 data-link-name="block | @config.id"
                 data-id="@config.id"
-                data-type="@style.containerType">
+                data-type="@style.containerType"
+                data-component="@FaciaComponentName(config, collection)">
 
                 <div class="container__border tone-@style.tone tone-accent-border"></div>
 

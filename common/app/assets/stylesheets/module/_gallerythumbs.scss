@@ -13,11 +13,10 @@
     .js-image-upgrade {
         display: block;
     }
-}
 
-
-.gallerythumbs__item:last-child {
-    margin-bottom: 0;
+    &:last-child {
+        margin-bottom: 0;
+    }
 }
 
 .gallerythumbs__img {
@@ -85,7 +84,7 @@
 .gallery-launch-cta {
     @extend %type-7;
     line-height: 16px;
-    background-color: #FFFFFF;
+    background-color: #ffffff;
     color: $c-body !important;
     position: absolute;
     top: 0;
@@ -103,8 +102,7 @@
 }
 
 .gallery-launch-cta--dark {
-    background-color: #000000;
-    background-color: rgba(0, 0, 0, 0.9);
+    @include transparent-background(#000000, .9);
     color: #F9AF41 !important;
     padding-left: $gutter;
 }

@@ -73,15 +73,22 @@ GET         /football/:tag/results/:year/:month/:day                            
 GET         /football/:tag/results                                                                                   football.controllers.ResultsController.tagResults(tag)
 GET         /football/:tag/results.json                                                                              football.controllers.ResultsController.tagResultsJson(tag)
 
-GET         /football/live                                                                                           football.controllers.LiveMatchesController.liveMatches()
-GET         /football/live.json                                                                                      football.controllers.LiveMatchesController.liveMatchesJson()
-GET         /football/:competition/live                                                                              football.controllers.LiveMatchesController.competitionMatches(competition)
-GET         /football/:competition/live.json                                                                         football.controllers.LiveMatchesController.competitionMatchesJson(competition)
+GET         /football/live                                                                                           football.controllers.MatchDayController.liveMatches()
+GET         /football/live.json                                                                                      football.controllers.MatchDayController.liveMatchesJson()
+GET         /football/:competition/live                                                                              football.controllers.MatchDayController.competitionMatches(competition)
+GET         /football/:competition/live.json                                                                         football.controllers.MatchDayController.competitionMatchesJson(competition)
+
+GET         /football/match-day/:year/:month/:day.json                                                               football.controllers.MatchDayController.matchesForJson(year, month, day)
+GET         /football/match-day/:year/:month/:day                                                                    football.controllers.MatchDayController.matchesFor(year, month, day)
+GET         /football/match-day/:competition/:year/:month/:day.json                                                  football.controllers.MatchDayController.competitionMatchesForJson(competition, year, month, day)
+GET         /football/match-day/:competition/:year/:month/:day                                                       football.controllers.MatchDayController.competitionMatchesFor(competition, year, month, day)
 
 GET         /football/tables                                                                                         football.controllers.LeagueTableController.renderLeagueTable()
 GET         /football/tables.json                                                                                    football.controllers.LeagueTableController.renderLeagueTableJson()
 GET         /football/:competition/table                                                                             football.controllers.LeagueTableController.renderCompetition(competition)
 GET         /football/:competition/table.json                                                                        football.controllers.LeagueTableController.renderCompetitionJson(competition)
+GET         /football/:competition/:group/table                                                                      football.controllers.LeagueTableController.renderCompetitionGroup(competition, group)
+GET         /football/:competition/:group/table.json                                                                 football.controllers.LeagueTableController.renderCompetitionGroupJson(competition, group)
 
 GET         /football/api/match-nav/:year/:month/:day/:home/:away.json                                               football.controllers.MoreOnMatchController.matchNavJson(year, month, day, home, away)
 GET         /football/api/match-nav/:year/:month/:day/:home/:away                                                    football.controllers.MoreOnMatchController.matchNav(year, month, day, home, away)
@@ -150,15 +157,17 @@ GET         /admin/football/player                                              
 POST        /admin/football/player/head2head                                                                         controllers.admin.PlayerController.redirectToHead2Head
 GET         /admin/football/player/head2head/:player1Id/:player2Id                                                   controllers.admin.PlayerController.head2Head(player1Id: String, player2Id: String)
 POST        /admin/football/player/card                                                                              controllers.admin.PlayerController.redirectToCard
-GET         /admin/football/player/card/:cardType/:playerId                                                          controllers.admin.PlayerController.playerCard(playerId: String, cardType: String)
+GET         /admin/football/player/card/:cardType/:playerId/:teamId/:compId                                          controllers.admin.PlayerController.playerCard(playerId: String, teamId: String, compId: String, cardType: String)
 GET         /admin/football/tables                                                                                   controllers.admin.TablesController.tablesIndex
 POST        /admin/football/tables/league                                                                            controllers.admin.TablesController.redirectToTable
 GET         /admin/football/tables/league/:competitionId                                                             controllers.admin.TablesController.leagueTable(competitionId: String)
 GET         /admin/football/tables/league/:competitionId/:focus                                                      controllers.admin.TablesController.leagueTableFragment(competitionId: String, focus: String)
 GET         /admin/football/tables/league/:competitionId/:team1Id/:team2Id                                           controllers.admin.TablesController.leagueTable2Teams(competitionId: String, team1Id: String, team2Id: String)
+GET         /admin/football/api/squad/:teamId                                                                        controllers.admin.PlayerController.squad(teamId: String)
 
 # Commercial
 GET         /commercial/travel/offers.json                                                                           controllers.commercial.TravelOffers.listOffers
+GET         /commercial/jobs                                                                                         controllers.commercial.JobAds.renderAds
 GET         /commercial/jobs.json                                                                                    controllers.commercial.JobAds.jobs
 GET         /commercial/masterclasses.json                                                                           controllers.commercial.MasterClasses.list
 GET         /commercial/soulmates/mixed                                                                              controllers.commercial.SoulmateAds.renderAds
@@ -171,7 +180,13 @@ GET         /commercial/books/book/*pageId                                      
 
 # Onward journeys
 GET         /onward/recently-published                                                                               controllers.LatestContentController.recentlyPublished()
+GET         /series/*path.json                                                                                       controllers.SeriesController.renderSeriesStories(path)
 
+GET        /$path<.+/\d\d\d\d/\w\w\w/\d\d>                                                                           controllers.AllIndexController.on(path)
+GET        /$path<.+>/latest                                                                                         controllers.LatestIndexController.latest(path)
+GET        /$path<.+>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/newer                                                controllers.AllIndexController.newer(path, day, month, year)
+GET        /$path<.+>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/all                                                  controllers.AllIndexController.allOn(path, day, month, year)
+GET        /$path<.+>/all                                                                                            controllers.AllIndexController.all(path)
 
 # Facia
 GET         /                                                                                                        controllers.FaciaController.editionRedirect(path = "")
@@ -184,11 +199,12 @@ GET         /collection/*id/rss                                                 
 GET         /collection/*id.json                                                                                     controllers.FaciaController.renderCollectionJson(id)
 GET         /collection/*id                                                                                          controllers.FaciaController.renderCollection(id)
 
+GET         /container/*id.json                                                                                      controllers.FaciaController.renderContainerJson(id)
+
 # Editionalised pages
 GET         /$path<[^/]+(/[^/]+)?>/rss                                                                               controllers.FaciaController.renderFrontRss(path)
 GET         /$path<[^/]+(/[^/]+)?>.json                                                                              controllers.FaciaController.renderFrontJson(path)
 GET         /$path<[^/]+(/[^/]+)?>                                                                                   controllers.FaciaController.renderFront(path)
-
 
 # Applications
 GET         /sections                                                                                                controllers.SectionsController.renderSections()

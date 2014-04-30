@@ -1,7 +1,10 @@
-@(matchesList: List[FootballMatch], competition: model.Competition)(implicit request: RequestHeader)
+@(matchesList: List[FootballMatch], competition: model.Competition, date: Option[org.joda.time.DateMidnight] = null, showCaption: Boolean = false, responsiveFont: Boolean = false)(implicit request: RequestHeader)
 @import implicits.Football._
 
-<table class="table football-matches">
+<table class="table table--football football-matches@if(responsiveFont){ table--responsive-font}">
+    @if(showCaption){
+        <caption class="table__caption"><a href="@competition.url">@competition.fullName</a>@date.map{ date => <span class="football-matches__date">@date.toString("d MMMM yyyy")</span>}</caption>
+    }
     <thead hidden>
         <tr>
             <th class="match__status">Match status / kick off time</th>
@@ -31,9 +34,11 @@
                     }
                 </td>
                 <td class="football-match__teams table-column--main">
-                    <a href="@LinkTo{@theMatch.smartUrl}" class="unstyled football-teams u-cf" data-link-name="match-redirect">
+                    <a href="@LinkTo{@theMatch.smartUrl}" class="u-unstyled football-teams u-cf" data-link-name="match-redirect">
                         <div class="football-match__team football-match__team--home football-team">
-                            <div class="football-team__name">@theMatch.homeTeam.name</div>
+                            <div class="football-team__name team-name" data-team-abbr="@pa.TeamCodes.codeFor(theMatch.homeTeam)">
+                                <span class="team-name--long">@theMatch.homeTeam.name</span>
+                            </div>
                             <div class="football-team__score">@theMatch.homeTeam.score</div>
                             @if(theMatch.isFixture){
                                 <div class="football-team__form team__results--shrink">
@@ -43,7 +48,9 @@
                         </div>
 
                         <div class="football-match__team football-match__team--away football-team">
-                            <div class="football-team__name">@theMatch.awayTeam.name</div>
+                            <div class="football-team__name team-name" data-team-abbr="@pa.TeamCodes.codeFor(theMatch.awayTeam)">
+                                <span class="team-name--long">@theMatch.awayTeam.name</span>
+                            </div>
                             <div class="football-team__score">@theMatch.awayTeam.score</div>
                             @if(theMatch.isFixture){
                                 <div class="football-team__form team__results--shrink">
@@ -53,6 +60,10 @@
                         </div>
 
                         <div class="football-teams__battleline"></div>
+
+                        @theMatch.comments.map { comments =>
+                            <div class="football-match__comments">@comments.reverse.dropWhile(_ == '.').reverse</div>
+                        }
                     </a>
                 </td>
             </tr>

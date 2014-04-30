@@ -1,0 +1,42 @@
+@(config: Config, collection: Collection, style: SeriesContainer, containerIndex: Int)(implicit request: RequestHeader, templateDeduping: TemplateDeduping)
+
+@defining((config.displayName.orElse(collection.displayName), config.href.orElse(collection.href))) { case (title, href) =>
+
+    @defining(templateDeduping(5, collection.items)) { items =>
+        @if(items.nonEmpty) {
+            <section
+            class="@RenderClasses(Map(
+                "container" -> true,
+                "container--row-pattern" -> true,
+                s"container--${style.containerType}" -> true,
+                "js-container--toggle" -> (containerIndex > 0 && title.nonEmpty),
+                "container--first" -> (containerIndex == 0)))"
+            data-link-name="block | @config.id"
+            data-id="@config.id"
+            data-type="@style.containerType"
+            data-component="@style.containerType">
+
+                <div class="container__border"></div>
+
+                @title.map { title =>
+                    <h2 class="container__title">
+                        @href.map { href =>
+                        <a class="container__title__label u-text-hyphenate" data-link-name="section heading" href="@LinkTo{/@href}">@Html(title)</a>
+                        }.getOrElse{
+                            <span class="container__title__label u-text-hyphenate">@Html(title)</span>
+                        }
+                    </h2>
+
+                    @config.href.map { link =>
+                        <div class="container__meta">
+                            @fragments.meta.series(link, config.id)
+                        </div>
+                    }
+                }
+                <div class="container__body container--rolled-up-hide">
+                @fragments.collections.multimedia(items, style, containerIndex)
+                </div>
+            </section>
+        }
+    }
+}

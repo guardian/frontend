@@ -5,6 +5,7 @@ import dev.DevParametersLifecycle
 import implicits.Requests
 import model.AdminLifecycle
 import feed.{OnwardJourneyLifecycle, MostReadLifecycle}
+import conf.Filters
 
 import play.api.mvc.{RequestHeader, EssentialAction, EssentialFilter, WithFilters}
 
@@ -51,7 +52,7 @@ object DevJsonExtensionFilter extends EssentialFilter with ExecutionContexts wit
 
 
 object Global extends WithFilters(
-  DevJsonExtensionFilter :: DevCacheWarningFilter :: RequestMeasurementMetrics.asFilters: _*
+  DevJsonExtensionFilter :: DevCacheWarningFilter :: Filters.common: _*
 )
 with FrontLifecycle
 with DevParametersLifecycle

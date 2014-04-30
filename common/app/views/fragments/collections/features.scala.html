@@ -1,7 +1,6 @@
 @(items: Seq[Trail], style: FeaturesContainer, containerIndex: Int)(implicit request: RequestHeader)
-@import conf.Switches._
 
-    <div class="collection-wrapper collection-wrapper--spacing-thin collection-wrapper--position-1">
+<div class="collection-wrapper collection-wrapper--spacing-thin collection-wrapper--position-1">
     <ul class="u-unstyled l-row l-row--items-3 l-row--layout-m collection l-row--background-features">
         @items.slice(0, 1).zipWithIndex.map{ case (trail, index) =>
             @fragments.collections.items.standard(trail, index, containerIndex, "l-row__item--break-m")
@@ -13,29 +12,18 @@
 </div>
 @defining(items.slice(3, 11)) { items =>
     @if(items.nonEmpty) {
-        <div class="collection-wrapper collection-wrapper--position-2@if(style.adSlot.isEmpty){ collection-wrapper--no-outer-margins}">
-            @style.adSlot.map { adSlot =>
-                <ul class="u-unstyled l-row l-row--items-3 collection collection--linkslist-and-mpu">
-                    <li class="l-row__item l-row__item--boost-2 collection__item">
-            }
-                        <ul class="l-columns linkslist features__columns">
-                            @items.zipWithIndex.map{ case (trail, index) =>
-                                @trail match {
-                                    case l: LiveBlog if l.isLive         => { @fragments.items.linksList.live(l, index + 3, Some("boost")) }
-                                    case g: Gallery                      => { @fragments.items.linksList.gallery(g, index + 3, Some("boost")) }
-                                    case v: Video                        => { @fragments.items.linksList.video(v, index + 3, Some("boost")) }
-                                    case c if VisualTone(c) == "comment" => { @fragments.items.linksList.comment(c, index + 3, Some("boost")) }
-                                    case t                               => { @fragments.items.linksList.standard(t, index + 3, Some("boost")) }
-                                }
-                            }
-                        </ul>
-            @style.adSlot.map { adSlot =>
-                    </li>
-                    <li class="l-row__item l-row__item--mpu hide-on-mobile">
-                        @fragments.inlineAdSlot(id="mpu-in-row-pattern", adSlot=adSlot, mobileOnly=false)
-                    </li>
+        <div class="linkslist-container tone-@{style.tone} collection-wrapper--ad">
+                <ul class="l-columns linkslist features__columns">
+                    @items.zipWithIndex.map{ case (trail, index) =>
+                        @trail match {
+                            case l: LiveBlog if l.isLive         => { @fragments.items.linksList.live(l, index + 3, Some("boost")) }
+                            case g: Gallery                      => { @fragments.items.linksList.gallery(g, index + 3, Some("boost")) }
+                            case v: Video                        => { @fragments.items.linksList.video(v, index + 3, Some("boost")) }
+                            case c if VisualTone(c) == "comment" => { @fragments.items.linksList.comment(c, index + 3, Some("boost")) }
+                            case t                               => { @fragments.items.linksList.standard(t, index + 3, Some("boost")) }
+                        }
+                    }
                 </ul>
-            }
         </div>
     }
 }
@@ -55,7 +43,4 @@
             </ul>
         </div>
     }
-}
-@style.adSlot.map { adSlot =>
-    @fragments.inlineAdSlot(id="inline", adSlot=adSlot, mobileOnly=true)
 }

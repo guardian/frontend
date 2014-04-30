@@ -2,112 +2,306 @@
    Travel component
    ========================================================================== */
 
-.travel-component {
+.footer {
+    margin-top: 0 !important;
+}
+
+.commercial--travel {
     .lineitem {
-        border-bottom: 1px solid lighten($c-neutral7, 2%);
-        position: relative;
+        list-style-type: none;
+        border-top: 0;
+        @include box-sizing(border-box);
+        float: left;
+        width: 50%;
+        @include rem((
+            padding-left: 8px
+        ));
+
+        &:nth-child(n+3) {
+            display: none;
+        }
     }
-    .lineitem__offer {
-        text-shadow: 0 0 2px $c-neutral1;
-        background-color: $c-neutral1;
-        background: -moz-linear-gradient(top, fade-out($c-neutral1, 1) 0%, $c-neutral1 66%);
-        background: -webkit-linear-gradient(top, fade-out($c-neutral1, 1) 0%, $c-neutral1 66%);
-        background: -ms-linear-gradient(top, fade-out($c-neutral1, 1) 0%, $c-neutral1 66%);
-        background: linear-gradient(to bottom, fade-out($c-neutral1, 1) 0%, $c-neutral1 66%);
-        padding: ($gs-baseline/3)*2;
-        position: absolute;
-        right: 0;
-        bottom: 0;
-        left: 0;
+    .lineitem__link {
+        float: none;
     }
     .lineitem__image {
         width: 100%;
         display: block;
     }
     .lineitem__title {
-        color: #ffffff;
         font-weight: bold;
     }
-    .lineitem__meta {
-        color: #64c5f8;
+    .commercial__head {
+        position: static;
+        border-top: none;
+        height: auto;
+        overflow: auto;
+        @include rem((
+            padding: $gs-gutter/2
+        ));
+    }
+    .commercial__title {
+        padding: 0;
+        margin-bottom: 0;
+        @include fs-bodyHeading(3);
+        text-transform: lowercase;
+        color: $c-brandBlue;
+        
+        .commercial__title__middle-word {
+            color: #52aee9;
+            @include rem((
+               margin-left: -5px
+            ));
+        }
+        .commercial__title__last-word {
+           color: #006ec9;
+           @include rem((
+               margin-left: -5px
+           ));
+        }
+    }
+    .commercial__home-link {
+        float: right;
     }
     .commercial__body {
-        padding: 0;
+        @include rem((
+            padding: 0 $gs-gutter/2 0 0
+        ));
     }
-    .commercial__foot {
-        background-color: $c-neutral1;
-        margin: 0;
-        border: 0 none;
-    }
-    .commercial__link {
-        color: #ffffff;
-    }
-    .commercial__search {
-        margin-bottom: $gs-baseline/3;
-        overflow: hidden;
-        position: relative;
-
-        .i.i-search-grey {
-            background-position: 6px 6px;
-            position: absolute;
-            top: 0;
-            left: 0;
-            padding: 8px;
+    @include mq(tablet) {
+        .commercial__body {
+            padding: 0;
         }
-        .text-input {
-            padding: $gs-baseline/3 $gs-gutter/5;
-            padding-left: 2em;
-            width: 70%;
-            height: 32px;
-            float: left;
-            overflow: hidden;
+        .lineitem {
+            width: 33%;
+            
+            &:nth-child(3) {
+                display: block;
+            }
         }
-        .submit-input {
-            width: 30%;
-            float: left;
-            margin: 0;
-            min-width: 0;
+        .commercial__search {
+            position: relative;
+            float: none;
+            width: 100%;
             @include rem((
-                padding: 9px 0
+                margin-top: $gs-baseline*4
             ));
-            background-color: #37b0eb;
+        }
+        .commercial__home-link {
+            position: absolute;
+            @include rem((
+                right: 10px,
+                top: 10px
+            ));
         }
     }
+    @include mq(leftCol) {
+        .commercial__title__last-word {
+            margin-left: 0;
+        }
+    }
+}
 
-    @include mq($to: tablet) {
+/* fronts */
+.facia-container--layout-front .commercial--travel {
+    @include mq($from: tablet, $to: desktop) {
+        @include rem((
+            padding-bottom: $gs-baseline*4.5
+        ));
+        
         .commercial__head {
-            background-color: #bbdff6;
+            @include rem((
+                padding-right: 14px
+            ));
         }
-        .commercial__subtitle {
-            color: $c-brandBlue;
+        .commercial__home-link {
+            @include rem((
+                right: 14px
+            ));
+        }
+        .commercial__search {
+            position: absolute;
+            @include rem((
+                bottom: 10px
+            ));
+            width: 97%;
         }
     }
+    @include mq(desktop) {
+        .commercial__head {
+            float: left;
+            width: 25%;
+        }
+        .commercial__home-link {
+            @include rem((
+                bottom: 10px,
+                left: 10px
+            ));
+            top: auto;
+            right: auto;
+        }
+        .commercial__body {
+            @include rem((
+                padding-top: 10px
+            ));            
+        }
+        .lineitem {
+            width: 33%;
+        }
+    }
+    @include mq(leftCol) {
+        .commercial__title__last-word {
+            @include rem((
+               margin-left: -5px
+            ));
+        }
+    }
+    @include mq(faciaLeftCol) {
+        .commercial__head {
+            @include rem((
+               width: gs-span(2) + $gs-gutter
+            ));
+        }
+        .lineitem {
+            width: 25%;
 
-//    &.commercial--w600 {
-//        .lineitems {
-//            margin-right: -1px;
-//        }
-//
-//        .lineitem {
-//            @include box-sizing(border-box);
-//            width: 50%;
-//            float: left;
-//        }
-//
-//        .lineitem-reduced {
-//            border: solid lighten($c-neutral7, 2%);;
-//            border-width: 0 0 1px 1px;
-//            width: 25%;
-//            
-//            .lineitem__title {
-//                color: #ffffff;
-//                @include fs-data(2);
-//                font-weight: normal;
-//                margin: 0;
-//            }
-//            .lineitem__offer {
-//                padding: $gs-baseline/3;
-//            }
-//        }
-//    }
+            &:nth-child(n+4) {
+               display: block;
+            }
+        }
+    }
+    @include mq($from: faciaLeftCol, $to: wide) {
+        @include rem((
+            padding-bottom: $gs-baseline*3
+        ));
+        
+        .commercial__home-link {
+           @include box-sizing(border-box);
+           @include rem((
+               width: gs-span(2),
+               line-height: 18px
+           ));
+        }
+        .commercial__title__last-word {
+           margin-left: 0;
+        }
+        .commercial__search {
+            position: absolute;
+            @include box-sizing(border-box);
+            @include rem((
+                width: gs-span(6),
+                margin-top: 40px,
+                right: 10px,
+                bottom: 10px
+            ));
+        }
+    }
+    @include mq(wide) {
+        .commercial__head {
+            padding-right: 0;
+            @include rem((
+                width: gs-span(2) + $gs-gutter
+            ));
+        }
+    }
+}
+
+/* article */
+.facia-container--layout-article .commercial--travel {
+    @include mq($from: tablet, $to: rightCol) {
+        @include rem((
+            padding-bottom: $gs-baseline*4.5
+        ));
+        
+        .commercial__head {
+            @include rem((
+                padding-right: 14px
+            ));
+        }
+        .commercial__home-link {
+            @include rem((
+                right: 24px
+            ));
+        }
+        .commercial__search {
+            position: absolute;
+            @include rem((
+                bottom: 10px
+            ));
+            width: 94%;
+        }
+    }
+    @include mq(rightCol) {
+        .commercial__head {
+            width: 25%;
+            @include rem((
+                padding-right: 8px
+            ));
+            float: left;
+        }
+        .commercial__home-link {
+            @include rem((
+                bottom: 10px,
+                left: 20px
+            ));
+            top: auto;
+            right: auto;
+        }
+        .commercial__body {
+            @include rem((
+                padding-top: 10px
+            ));
+        }
+    }
+    @include mq(leftCol) {
+        .lineitem {
+            width: 25%;
+
+            &:nth-child(n+4) {
+                display: block;
+            }
+        }
+    }
+    @include mq($from: leftCol, $to: wide) {
+        @include rem((
+            padding-bottom: $gs-baseline*3
+        ));
+        
+        .commercial__home-link {
+            @include box-sizing(border-box);
+            @include rem((
+                width: gs-span(2),
+                line-height: 18px,
+                left: 10px
+            ));
+        }
+        .commercial__head {
+            padding-left: 0;
+            
+        }
+        .commercial__title {
+            @include rem((
+                margin-bottom: 10px
+            ));
+            
+            .commercial__title__middle-word {
+                margin-left: 0;
+            }
+        }
+        .commercial__search {
+            position: absolute;
+            @include box-sizing(border-box);
+            @include rem((
+                width: gs-span(6),
+                margin-top: 40px,
+                right: 20px,
+                bottom: 10px
+            ));
+        }
+    }
+    @include mq(wide) {
+        .commercial__head {
+            padding-right: 0;
+        }
+    }
 }

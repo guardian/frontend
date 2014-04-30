@@ -11,8 +11,14 @@ import com.ning.http.client.Realm
 import conf.Configuration
 import play.Play
 import common.FaciaToolMetrics.{ContentApiPutFailure, ContentApiPutSuccess}
+import org.joda.time.DateTime
 
 trait ContentApiWrite extends ExecutionContexts with Logging {
+
+  //Intentionally blank
+  val defaultTitle: String = ""
+  val defaultCollectionType: String = "news"
+  val defaultEmail: String = "guardian.frontend.fronts@theguardian.com"
 
   case class Item(
                    id: String,
@@ -21,7 +27,7 @@ trait ContentApiWrite extends ExecutionContexts with Logging {
 
   case class ContentApiPut(
                             `type`: String,
-                            displayName: Option[String],
+                            title: String,
                             groups: Seq[String],
                             curatedContent: Seq[Item],
                             backfill: Option[String],
@@ -43,9 +49,10 @@ trait ContentApiWrite extends ExecutionContexts with Logging {
       username      <- Configuration.contentApi.write.username
       password      <- Configuration.contentApi.write.password
       url           <- getCollectionUrlForWrite(config.id)
-      contentApiPut <- generateContentApiPut(config)
     } yield
     {
+      val contentApiPut = generateContentApiPut(config)
+
       val response = WS
         .url(url).withAuth(username, password, Realm.AuthScheme.NONE)
         .put(Json.toJson(contentApiPut))
@@ -62,22 +69,21 @@ trait ContentApiWrite extends ExecutionContexts with Logging {
         log.warn(s"Failure to put ${config.id} to content api with exception ${e.toString}")
       }
       response
-    }) getOrElse Future.failed(new Throwable(s"${config.id} does not exist"))
+    }) getOrElse Future.failed(new RuntimeException(s"Missing config properties for Content API write"))
   }
 
-  private def generateContentApiPut(config: Config): Option[ContentApiPut] = {
-    FaciaApi.getBlock(config.id) map { block =>
+  private def generateContentApiPut(config: Config): ContentApiPut = {
+    val maybeBlock = FaciaApi.getBlock(config.id)
 
-      ContentApiPut(
-        config.collectionType.getOrElse("news"),
-        config.displayName,
-        config.groups,
-        generateItems(block.live),
-        config.contentApiQuery,
-        block.lastUpdated,
-        block.updatedEmail
-      )
-    }
+    ContentApiPut(
+      config.collectionType.getOrElse(defaultCollectionType),
+      config.displayName.getOrElse(defaultTitle),
+      config.groups,
+      maybeBlock map { block => generateItems(block.live) } getOrElse Nil,
+      config.contentApiQuery,
+      maybeBlock map { _.lastUpdated } getOrElse { DateTime.now.toString },
+      maybeBlock map { _.updatedEmail } getOrElse { defaultEmail }
+    )
   }
 
   private def generateItems(items: List[Trail]): List[Item] =

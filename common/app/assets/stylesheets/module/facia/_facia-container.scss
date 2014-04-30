@@ -72,6 +72,10 @@
     }
 }
 .facia-container--layout-article {
+    @include rem((
+        margin-bottom: $gs-baseline*2
+    ));
+
     @include mq(tablet) {
         @include rem((
             max-width: gs-span(8)
@@ -83,7 +87,8 @@
         ));
     }
     @include mq(leftCol) {
-        .container__title {
+        .container__title,
+        .container__meta {
             margin-bottom: 0;
             float: left;
             @include rem((
@@ -91,6 +96,7 @@
                 margin-right: $gs-gutter
             ));
         }
+        .container__meta { clear: left; }
         .container__body {
             overflow: hidden;
             @include rem((
@@ -104,11 +110,29 @@
             padding-right: gs-span(1) + $gs-gutter*2
         ));
 
-        .container__title {
+        .container__title,
+        .container__meta {
             @include rem((
                 width: $a-leftColWide-width !important
             ));
         }
     }
+}
 
+.facia-container--default-heading {
+    .container__border,
+    .container__border.tone-accent-border {
+        border-top: 1px solid $c-neutral4;
+    }
+
+    .container__title,
+    .container__title.tone-background {
+        color: $c-neutral1;
+        background: transparent;
+
+        @include mq($to: tablet) {
+            @include fs-header(3, true);
+            padding-left: 0;
+        }
+    }
 }

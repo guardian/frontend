@@ -5,7 +5,7 @@
 }
 
 .i-sport-arrow--small {
-    @include transform(scale(0.6));
+    @include transform(scale(.6));
     margin: 3px 0 0 3px;
     vertical-align: top;
 }
@@ -35,7 +35,7 @@ figcaption:before {
     @extend %i;
     @extend %i-image;
     display: inline-block;
-    content: '';
+    content: "";
     vertical-align: top;
     margin: 1px 4px 0 0;
 
@@ -46,13 +46,16 @@ figcaption:before {
     }
 }
 
-//Quotes
+// Quotes
 .from-content-api blockquote.quoted:before {
     @extend %i;
     @extend %i-quote-marks;
-    content: '';
+    content: "";
     position: absolute;
-    margin-top: -3px;
+    left: 0;
+    margin-top: -2px;
+    @include transform(scale(.65));
+    @include transform-origin(0);
 
     @if ($svg-support) {
         .svg & {
@@ -60,12 +63,7 @@ figcaption:before {
         }
     }
 
-    @include mq($to: tablet) {
-        @include transform(scale(0.8));
-    }
 }
-
-
 
 .item--dark .i-comment-light-grey {
     @extend %i-comment-grey;

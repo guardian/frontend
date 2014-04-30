@@ -1,0 +1,80 @@
+@(items: Seq[Trail], style: NewsContainer, containerIndex: Int)(implicit request: RequestHeader)
+
+@defining(items.filter(_.group == Option("3"))) { baguetteItems =>
+
+    @defining(baguetteItems.size) { baguetteCount =>
+
+        @baguetteItems.zipWithIndex.map{ case (trail, index) =>
+            <div class="collection-wrapper">
+                @fragments.items.baguette(trail, index)
+            </div>
+        }
+
+        @defining(items.diff(baguetteItems)) { items =>
+
+            @items.headOption.map{ trail =>
+                <div class="collection-wrapper">
+                    @if(!trail.group.isEmpty){ @* Means this is a curated container *@
+                        @fragments.items.fromage(trail, baguetteCount)
+                    }else{ @* Not a curated container: we fake hierarchy *@
+                        @fragments.items.fromage(trail, baguetteCount, Some("boost"))
+                    }
+                </div>
+            }
+            @defining(items.slice(baguetteCount + 1, baguetteCount + 2)) { items =>
+                @if(items.nonEmpty) {
+                    <div class="collection-wrapper">
+                        @items.zipWithIndex.map{ case (trail, index) =>
+                            @fragments.items.fromage(trail, baguetteCount + 1)
+                        }
+                    </div>
+                }
+            }
+            @defining(items.slice(baguetteCount + 2, baguetteCount + 6)) { items =>
+                @if(items.nonEmpty) {
+                    <div class="collection-wrapper">
+                        <ul class="u-unstyled l-row l-row--layout-m l-row--items-4 collection">
+                            @items.zipWithIndex.map{ case (trail, index) =>
+                                @fragments.collections.items.standard(trail, baguetteCount + index + 2, containerIndex)
+                            }
+                        </ul>
+                    </div>
+                }
+            }
+            @defining(items.slice(baguetteCount + 6, baguetteCount + 14)) { items =>
+                @if(items.nonEmpty) {
+                    <div class="linkslist-container tone-@{style.tone} collection-wrapper--ad">
+                        <ul class="l-columns linkslist linkslist--with-images">
+                            @items.zipWithIndex.map{ case (trail, index) =>
+                                @trail match {
+                                    case l: LiveBlog if l.isLive         => { @fragments.items.linksList.live(l, baguetteCount + index + 6, Some("boost")) }
+                                    case g: Gallery                      => { @fragments.items.linksList.gallery(g, baguetteCount + index + 6, Some("boost")) }
+                                    case v: Video                        => { @fragments.items.linksList.video(v, baguetteCount + index + 6, Some("boost")) }
+                                    case c if VisualTone(c) == "comment" => { @fragments.items.linksList.comment(c, baguetteCount + index + 6, Some("boost")) }
+                                    case t                               => { @fragments.items.linksList.standard(t, baguetteCount + index + 6, Some("boost")) }
+                                }
+                            }
+                        </ul>
+                    </div>
+                }
+            }
+            @defining(items.slice(baguetteCount + 14, baguetteCount + 33)) { items =>
+                @if(items.nonEmpty) {
+                    <div class="linkslist-container @if(style.showMore){js-container--show-more} tone-@{style.tone}" data-tone="@style.tone">
+                        <ul class="l-columns linkslist">
+                            @items.zipWithIndex.map{ case (trail, index) =>
+                                @trail match {
+                                    case l: LiveBlog if l.isLive         => { @fragments.items.linksList.live(l, baguetteCount + index + 14) }
+                                    case g: Gallery                      => { @fragments.items.linksList.gallery(g, baguetteCount + index + 14) }
+                                    case v: Video                        => { @fragments.items.linksList.video(v, baguetteCount + index + 14) }
+                                    case c if VisualTone(c) == "comment" => { @fragments.items.linksList.comment(c, baguetteCount + index + 14) }
+                                    case t                               => { @fragments.items.linksList.standard(t, baguetteCount + index + 14) }
+                                }
+                            }
+                        </ul>
+                    </div>
+                }
+            }
+        }
+    }
+}

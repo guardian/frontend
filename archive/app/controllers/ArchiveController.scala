@@ -13,8 +13,6 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
       linksToItself(path, destination.location)
   })
 
-  private def isArchived(path: String) = services.S3Archive.getHtml(path)
-
   def isEncoded(path: String): Option[String] = {
     val decodedPath = URLDecoder.decode(path, "UTF-8")
     if (decodedPath != path) Some(decodedPath) else None
@@ -26,6 +24,12 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
   else
     None
 
+  def lowercase(path: String): Option[SimpleResult] = path.split("/").toList match {
+    case "www.theguardian.com" :: section :: other if section.exists(_.isUpper) => Some(Cached(300){
+      Redirect(s"http://www.theguardian.com/${section.toLowerCase}/${other.mkString("/")}")
+    })
+    case _ => None
+  }
 
   // Our redirects are 'normalised' Vignette URLs, Ie. path/to/0,<n>,123,<n>.html -> path/to/0,,123,.html
   private val r1ArtifactUrl = """www.theguardian.com/(.*)/[0|1]?,[\d]*,(-?\d+),[\d]*(.*)""".r
@@ -45,7 +49,7 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
   }
 
   def lookup(path: String) = Action.async{ implicit request =>
-  
+
     /*
      * This is a chain of tests that look at the URL path and attempt to figure
      * out what should happen to the request.
@@ -65,6 +69,7 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
     isEncoded(path).map(url => successful(Redirect(s"http://$url", 301)))
     .getOrElse(lookupPath(path)
       .map{ _.orElse(redirectGallery(path))
+        .orElse(lowercase(path))
         .getOrElse{
           log.info(s"Not Found (404): $path")
           logGoogleBot(request)

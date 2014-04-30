@@ -1,52 +1,51 @@
 .container--special {
-    .collection-wrapper:first-child .collection__item {
-        &:first-child .item__link {
-            border-top-width: 0;
-        }
-        @include mq(tablet) {
-            margin-top: 4px;
-
-            .item__link {
+    .collection-wrapper:first-child {
+        .collection__item {
+            &:nth-child(-n+2) .item__link {
                 border-top-width: 0;
             }
-            .item__image-container {
-                margin-top: 0;
-            }
-        }
-    }
+            @include mq(tablet) {
+                margin-top: 4px;
 
-    /**
-     * Applies to the video container only:
-     */
-
-    @include mq($to: tablet) {
-        .l-row--items-4 {
-            .item--gallery,
-            .item--video {
-                .item__media-wrapper,
-                .item__image-container {
-                    display: block;
-                }
-                .item__title--has-icon-mobile {
-                    padding-left: 0;
-
-                    .i {
-                        display: none;
-                    }
-                }
-                .item__media-wrapper {
-                    width: 50%;
-                    float: left;
-                    @include box-sizing(border-box);
-                    @include rem((
-                        margin-top: $gs-baseline/3,
-                        padding-right: $gs-gutter/4,
-                        margin-right: $gs-gutter/4
-                    ));
+                .item__link {
+                    border-top-width: 0;
                 }
                 .item__image-container {
                     margin-top: 0;
                 }
+            }
+        }
+        @include mq($to: tablet) {
+            .collection {
+                position: relative;
+
+                // Hide top of border between items
+                &:after {
+                    content: "";
+                    display: block;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    height: 4px;
+                    background: #ffffff;
+                    z-index: 1;
+                }
+            }
+        }
+    }
+    @include mq($to: tablet) {
+        // Force the image to be displayed
+        .item--has-image .item__media-wrapper,
+        .item--has-image .item__image-container {
+            display: block;
+        }
+        .item--gallery .item__title--has-icon-mobile,
+        .item--video .item__title--has-icon-mobile {
+            padding-left: 0;
+    
+            .i {
+                display: none;
             }
         }
     }

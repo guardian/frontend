@@ -1,6 +1,7 @@
 define([
     // Common libraries
     'common/$',
+    'common/utils/ajax',
     'common/utils/mediator',
     'bonzo',
     'qwery',
@@ -8,25 +9,29 @@ define([
     'common/utils/detect',
     'common/utils/storage',
     'common/utils/to-array',
+    'common/modules/ui/snaps',
     'common/modules/ui/collection-show-more',
     'modules/ui/container-show-more',
-    'modules/ui/container-toggle',
-    'common/modules/sport/football/fixtures'
+    'modules/ui/container-toggle'
 ], function (
     $,
+    ajax,
     mediator,
     bonzo,
     qwery,
     detect,
     storage,
     toArray,
+    snaps,
     CollectionShowMore,
     ContainerShowMore,
-    ContainerToggle,
-    FootballFixtures
-    ) {
-
+    ContainerToggle
+) {
     var modules = {
+
+        showSnaps: function() {
+            snaps.init('.facia-snap');
+        },
 
         showCollectionShowMore: function () {
             var collectionShowMoreAdd = function(config, context) {
@@ -62,53 +67,15 @@ define([
                     new ContainerToggle(container).addToggle();
                 });
             });
-        },
-
-        showFootballFixtures: function() {
-            mediator.on('page:front:ready', function(config, context) {
-                if (config.page.edition === 'UK' && (['', 'sport', 'uk-alpha'].indexOf(config.page.pageId) !== -1)) {
-                    // wrap the return sports stats component in an appropriate element
-                    var isNewsContainer = ['uk-alpha', 'sport'].indexOf(config.page.pageId) !== -1,
-                        prependToHtml = isNewsContainer
-                            ? '<div class="fromage tone-accent-border tone-news unstyled item--sport-stats"></div>'
-                            : '<li class="item item--sport-stats item--sport-stats-tall"></li>',
-                        $prependTo = bonzo(bonzo.create(prependToHtml));
-                    mediator.on('modules:footballfixtures:render', function() {
-                        var $container = $(isNewsContainer ? '.container--news' : '.container--sport', context).first();
-                        if ($container[0]) {
-                            if (isNewsContainer) {
-                                bonzo($('.collection-wrapper', $container[0]).get(1))
-                                    .append($prependTo);
-                            } else {
-                                var $collection = $('.container--sport .collection', context).first();
-                                $('.item:first-child', $collection[0])
-                                    // add empty item
-                                    .after($prependTo);
-                                $collection
-                                    .removeClass('collection--without-sport-stats')
-                                    .addClass('collection--with-sport-stats');
-                            }
-                        }
-                    });
-                    new FootballFixtures({
-                        prependTo: $prependTo,
-                        attachMethod: 'append',
-                        competitions: ['500', '510', '100', '400'],
-                        contextual: false,
-                        expandable: true,
-                        numVisible: config.page.pageId === '' ? 3 : 5
-                    }).init();
-                }
-            });
         }
     };
 
     var ready = function (config, context) {
         if (!this.initialised) {
             this.initialised = true;
+            modules.showSnaps();
             modules.showCollectionShowMore();
             modules.showContainerToggle();
-            modules.showFootballFixtures();
         }
         mediator.emit('page:front:ready', config, context);
     };
