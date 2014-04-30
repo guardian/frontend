@@ -297,8 +297,8 @@
 }
 .item__standfirst {
     display: none;
+    margin: 20px 0 0;
     @include rem((
-        margin: $gs-baseline 0 0,
         font-size: 14px,
         line-height: 18px
     ));
@@ -556,11 +556,6 @@ $show-more-icon: (
 // 3. Meta
 
 .item--thumbnail {
-    .item__title {
-        @include rem((
-            margin-bottom: $gs-baseline
-        ));
-    }
     .item__standfirst {
         display: block;
         @include rem((
@@ -574,8 +569,5 @@ $show-more-icon: (
         @include rem((
             margin-right: $gs-gutter/2
         ));
-    }
-    .item__image-container {
-        margin-top: 2px;
     }
 }

@@ -100,7 +100,7 @@
                 display: block;
             }
         }
-        @include mq($to: tablet) {
+        @include mq(mobile, tablet) {
             .item__link {
                 display: -webkit-flex;
                 display: flex;
@@ -115,7 +115,6 @@
         }
         .item__media-wrapper {
             @include mq(tablet) {
-                float: left;
                 @include rem((
                     width: 122px,
                     margin-right: $gs-gutter/2
@@ -190,81 +189,6 @@
                     min-height: get-line-height($fs-headlines, 2) * 3
                 ));
             }
-        }
-    }
-}
-@include mq(tablet) {
-    .collection-wrapper:first-child {
-        .row-of-two {
-            margin-top: -2px;
-
-            .collection__item + .collection__item:before {
-                top: 6px;
-            }
-        }
-    }
-    .row-of-two--boost-both {
-        .item__title {
-            @include fs-headline(4, true);
-        }
-    }
-    .row-of-two--boost-none {
-        .item__title {
-            @include fs-headline(2, true);
-        }
-    }
-    .row-of-two--boost-first .collection__item:nth-child(1),
-    .row-of-two--boost-second .collection__item:nth-child(2) {
-        @include flex-grow(3);
-        padding-bottom: 0;
-
-        .item__title {
-            @include fs-headline(4, true);
-        }
-        .item__standfirst {
-            display: block;
-        }
-        .item__media-wrapper {
-            float: right;
-            @include rem((
-                margin-left: $gs-gutter
-            ));
-        }
-        .item__meta {
-            position: static;
-            @include rem((
-                margin-top: $gs-baseline,
-                margin-bottom: $gs-baseline
-            ));
-        }
-    }
-    .row-of-two--boost-second .collection__item:nth-child(2) {
-        .item__media-wrapper {
-            float: left;
-            margin-left: 0;
-            @include rem((
-                margin-right: $gs-gutter
-            ));
-        }
-    }
-}
-.row-of-two--boost-first .collection__item:nth-child(1) .item__media-wrapper,
-.row-of-two--boost-second .collection__item:nth-child(2) .item__media-wrapper {
-    @include mq(tablet) {
-        @include rem((
-            width: gs-span(4)
-        ));
-    }
-    @include mq(desktop) {
-        @include rem((
-            width: gs-span(6)
-        ));
-    }
-}
-@include mq(desktop) {
-    .row-of-two {
-        .item__standfirst {
-            display: block;
         }
     }
 }
