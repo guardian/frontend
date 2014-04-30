@@ -1,0 +1,52 @@
+@(meta: model.MetaData, savings: Seq[model.commercial.money.SavingsAccount])(implicit request: RequestHeader)
+
+@main(meta){
+}{
+    <div class="article-wrapper monocolumn-wrapper">
+        <article id="article" class="article" itemprop="mainContentOfPage" itemscope role="main">
+            <div class="article__columning-wrapper">
+                <div class="article__main-column">
+                    <h2>The best savings accounts available at moneysupermarket.com</h2>
+                    <p>Savings accounts listed by interest (AER)</p>
+                    <ul>
+                        <li><a href="/commercial/money/savings/easy-access">Easy Access</a></li>
+                    </ul>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Account Name</th>
+                                <th>Interest Rate (AER)</th>
+                                <th>Notice</th>
+                                <th>Minimum Investment</th>
+                                <th>Access</th>
+                                <th class="u-h">Link to product</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for(saving <- savings) {
+                                <tr>
+                                    <td>
+                                        <h3>@saving.provider</h3>
+                                        <h3>@saving.name</h4>
+                                        <img src="@saving.logoUrl" />
+                                    </td>
+                                    <td>@saving.interestRate% @saving.interestPaid</td>
+                                    <td>@saving.noticeTerm</td>
+                                    <td>£@saving.minimumInvestment</td>
+                                    <td>
+                                        <ul>
+                                            @saving.access.filter(_._2).keys.map { access =>
+                                                <li>@access</li>
+                                            }
+                                        </ul>
+                                    </td>
+                                    <td><a href="@saving.applyUrl">Proceed</a></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </article>
+    </div>
+}

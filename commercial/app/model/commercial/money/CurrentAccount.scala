@@ -10,7 +10,9 @@ case class CurrentAccount(provider: String,
                           overdraftRate: Double,
                           overdraftBuffer: Double,
                           logoUrl: String,
-                          applyUrl: String)
+                          applyUrl: String,
+                          rewardAmount: String,
+                          access: Map[String, Boolean])
   extends Ad {
 
   def isTargetedAt(segment: Segment): Boolean = true
@@ -42,7 +44,15 @@ object CurrentAccountsApi extends MoneySupermarketApi[CurrentAccount] {
           (product \ "OverdraftRate").text.toDouble,
           (product \ "OverdraftBuffer").text.toDouble,
           (product \ "LogoUrl").text.trim(),
-          (product \ "ApplyUrl").text.trim()
+          (product \ "ApplyUrl").text.trim(),
+          (product \ "RewardAmount").text,
+          Map(
+            ("Branch", (product \ "AccessBranch").text.toBoolean),
+            ("Post office", (product \ "AccessPostOffice").text.toBoolean),
+            ("Online", (product \ "AccessOnline").text.toBoolean),
+            ("Post", (product \ "AccessPost").text.toBoolean),
+            ("Telephone", (product \ "AccessTelephone").text.toBoolean)
+          )
         )
     }
   }

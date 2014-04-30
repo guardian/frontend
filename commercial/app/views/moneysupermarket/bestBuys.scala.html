@@ -34,7 +34,7 @@
                             <td class="hide-cell-on-mobile">Overall cost for comparison (APR %)</td>
                         </thead>
                         <tbody>
-                         @bestBuys.mortgages.map { mortgage =>
+                         @bestBuys.mortgages.take(3).map { mortgage =>
                             <tr>
                                 <td><a href="@mortgage.detailsUrl">@mortgage.lender</a></td>
                                 <td>@mortgage.rate</td>
@@ -62,7 +62,7 @@
                             <td class="hide-cell-on-mobile">Representative APR</td>
                         </thead>
                         <tbody>
-                        @bestBuys.creditCards.map { card =>
+                        @bestBuys.creditCards.take(3).map { card =>
                             <tr>
                                 <td><a href="@card.applyUrl">@card.name</a></td>
                                 <td>@card.balanceTransferRate%</td>
@@ -89,7 +89,7 @@
                             <td>APR</td>
                         </thead>
                         <tbody>
-                        @bestBuys.loans.map { loan =>
+                        @bestBuys.loans.take(3).map { loan =>
                             <tr>
                                 <td><a href="@loan.detailsUrl">@loan.name</a></td>
                                 <td>@loan.headlineApr%</td>
@@ -115,7 +115,7 @@
                             <td>Interest</td>
                         </thead>
                         <tbody>
-                        @bestBuys.currentAccounts.map { account =>
+                        @bestBuys.currentAccounts.take(3).map { account =>
                             <tr>
                                 <td><a href="@account.applyUrl">@account.provider</a></td>
                                 <td>@account.name</td>
@@ -141,7 +141,7 @@
                             <td>AER</td>
                         </thead>
                         <tbody>
-                        @bestBuys.savings.map { account =>
+                        @bestBuys.savings.take(3).map { account =>
                             <tr>
                                 <td><a href="@account.applyUrl">@account.provider</a></td>
                                 <td class="hide-cell-on-mobile">@account.name</td>

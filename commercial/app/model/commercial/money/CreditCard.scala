@@ -8,9 +8,14 @@ case class CreditCard(name: String,
                       provider: String,
                       balanceTransferRate: Double,
                       balanceTransferRateDuration: Int,
+                      balanceTransferFee: Double,
                       example: CreditExample,
                       logoUrl: String,
-                      applyUrl: String) extends Ad {
+                      applyUrl: String,
+                      rewardNotes: String,
+                      representativeApr: Double,
+                      purchaseRate: Double,
+                      purchaseRateDuration: Int) extends Ad {
 
   def isTargetedAt(segment: Segment): Boolean = true
 }
@@ -52,9 +57,14 @@ object CreditCardsApi extends MoneySupermarketApi[CreditCard] {
           (product \ "ProviderName").text,
           (product \ "BalanceTransferRate").text.toDouble,
           (product \ "BalanceTransferRateDuration").text.toInt,
+          (product \ "BalanceTransferFee").text.toDouble,
           parseCreditExample(product),
           (product \ "LogoUrl").text,
-          (product \ "ApplyUrl").text
+          (product \ "ApplyUrl").text,
+          (product \ "RewardNotes").text,
+          (product \ "RepresentiveApr").text.toDouble,
+          (product \ "PurchaseRate").text.toDouble,
+          (product \ "PurchaseRateDuration").text.toInt
         )
     }
   }

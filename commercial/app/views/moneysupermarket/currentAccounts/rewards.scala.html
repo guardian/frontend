@@ -1,0 +1,54 @@
+@(meta: model.MetaData, currentAccounts: Seq[model.commercial.money.CurrentAccount])(implicit request: RequestHeader)
+
+@main(meta){
+}{
+    <div class="article-wrapper monocolumn-wrapper">
+        <article id="article" class="article" itemprop="mainContentOfPage" itemscope role="main">
+            <div class="article__columning-wrapper">
+                <div class="article__main-column">
+                    <h2>The best current accounts available at moneysupermarket.com</h2>
+                    <p>Current accounts listed by reward amount</p>
+                    <ul>
+                        <li><a href="/commercial/money/current-accounts/rewards">Reward/Incentive</a></li>
+                    </ul>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Account Name</th>
+                                <th>Reward and Cashback Details</th>
+                                <th>Interest Rate (AER)</th>
+                                <th>Overdraft Rate (EAR)</th>
+                                <th>Overdraft Buffer</th>
+                                <th>Access</th>
+                                <th class="u-h">Link to product</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for(currentAccount <- currentAccounts) {
+                                <tr>
+                                    <td>
+                                        <h3>@currentAccount.provider</h3>
+                                        <h3>@currentAccount.name</h4>
+                                        <img src="@currentAccount.logoUrl" />
+                                    </td>
+                                    <td>@currentAccount.rewardAmount</td>
+                                    <td>@currentAccount.interestRate%</td>
+                                    <td>@currentAccount.overdraftRate%</td>
+                                    <td>£@currentAccount.overdraftBuffer</td>
+                                    <td>
+                                        <ul>
+                                            @currentAccount.access.filter(_._2).keys.map { access =>
+                                                <li>@access</li>
+                                            }
+                                        </ul>
+                                    </td>
+                                    <td><a href="@currentAccount.applyUrl">Proceed</a></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </article>
+    </div>
+}

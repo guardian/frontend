@@ -24,6 +24,13 @@ GET        /commercial/soulmates/mixed.json        controllers.commercial.Soulma
 # Money offers
 GET        /commercial/money/bestbuys              controllers.commercial.MoneyOffers.bestBuys(format="html")
 GET        /commercial/money/bestbuys.json         controllers.commercial.MoneyOffers.bestBuys(format="json")
+GET        /commercial/money/savings/easy-access   controllers.commercial.MoneyOffers.savingsEasyAccess
+GET        /commercial/money/current-accounts/rewards   controllers.commercial.MoneyOffers.currentAccountsRewards
+GET        /commercial/money/credit-cards/balance-transfer-and-purchases   controllers.commercial.MoneyOffers.creditCardsBalanceTransferAndPurchases
+# Loans
+GET        /commercial/money/loans/good-credit   controllers.commercial.MoneyOffers.loansGoodCredit
+GET        /commercial/money/loans/fair-credit   controllers.commercial.MoneyOffers.loansFairCredit
+GET        /commercial/money/loans/poor-credit   controllers.commercial.MoneyOffers.loansPoorCredit
 
 # Book offers
 GET        /commercial/books/bestsellers           controllers.commercial.BookOffers.bestsellers(format="html")

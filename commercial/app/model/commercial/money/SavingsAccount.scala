@@ -7,8 +7,12 @@ case class SavingsAccount(
                            provider: String,
                            name: String,
                            interestRate: Double,
+                           interestPaid: String,
                            logoUrl: String,
-                           applyUrl: String)
+                           applyUrl: String,
+                           noticeTerm: String,
+                           minimumInvestment: Int,
+                           access: Map[String, Boolean])
   extends Ad {
 
   def isTargetedAt(segment: Segment): Boolean = true
@@ -28,8 +32,18 @@ object SavingsApi extends MoneySupermarketApi[SavingsAccount] {
           (product \ "ProviderName").text,
           (product \ "ProductName").text,
           (product \ "InterestRate").text.toDouble,
+          (product \ "InterestPaid").text,
           (product \ "LogoUrl").text,
-          (product \ "ApplyUrl").text
+          (product \ "ApplyUrl").text,
+          (product \ "NoticeTerm").text,
+          (product \ "MinimumInvestment").text.toInt,
+          Map(
+            ("Branch", (product \ "AccessBranch").text.toBoolean),
+            ("Internet", (product \ "AccessInternet").text.toBoolean),
+            ("Telephone", (product \ "AccessTelephone").text.toBoolean),
+            ("Post", (product \ "AccessPost").text.toBoolean),
+            ("Cash point", (product \ "AccessCashPoint").text.toBoolean)
+          )
         )
     }
   }

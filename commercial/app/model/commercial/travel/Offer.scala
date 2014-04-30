@@ -7,11 +7,10 @@ import scala.concurrent.Future
 import scala.concurrent.duration._
 import akka.util.Timeout
 import model.commercial.Segment
-import model.commercial.Keyword
 import scala.Some
 
 case class Offer(id: Int, title: String, offerUrl: String, imageUrl: String, fromPrice: String,
-                 earliestDeparture: DateTime, keywords: List[Keyword], countries: List[String], category: String,
+                 earliestDeparture: DateTime, keywords: List[model.commercial.Keyword], countries: List[String], category: String,
                  tags: List[String], duration: String, position: Int)
   extends Ad {
 
@@ -29,7 +28,7 @@ case class Offer(id: Int, title: String, offerUrl: String, imageUrl: String, fro
 
 object Countries extends ExecutionContexts with Logging {
 
-  private lazy val countryKeywords = AkkaAgent(Map.empty[String, Seq[Keyword]])
+  private lazy val countryKeywords = AkkaAgent(Map.empty[String, Seq[model.commercial.Keyword]])
 
   private val defaultCountries = Seq(
     "Albania",
