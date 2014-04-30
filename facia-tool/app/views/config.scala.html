@@ -150,24 +150,38 @@
                 <div class="cnf-front__inner">
                     <div data-bind="visible: state.openProps">
                         <div class="cnf-form" data-bind="">
-                                <label>SEO name</label>
-                                <input type="text" data-bind="
-                                    value: props.keyword"/>
-                                <label>SEO title</label>
-                                <input type="text" data-bind="
-                                    value: props.webTitle"/>
+                            <label>Name</label>
+                            <input type="text" data-bind="
+                                value: props.name"/>
+
+                            <label>Section</label>
+                            <input type="text" data-bind="
+                                value: props.section"/>
+
+                            <label>Web Title</label>
+                            <input type="text" data-bind="
+                                value: props.webTitle"/>
+
+                            <label>Description</label>
+                            <input type="text" data-bind="
+                                value: props.description"/>
+
+                            <label>Analytics Name</label>
+                            <input type="text" data-bind="
+                                value: props.analyticsName"/>
+
                             <div class="tools"><span class="tool" data-bind="click: save">Save</span></div>
                         </div>
                     </div>
                     <div data-bind="visible: !state.openProps(), click: openProps">
                         <div class="cnf-form" data-bind="">
                             <div>
-                                <label>SEO name</label>
-                                <span data-bind="text: props.keyword() || 'None!'"></span>
+                                <label>Name</label>
+                                <span data-bind="text: props.name() || 'None!'"></span>
                             </div>
                             <div>
-                                <label>SEO title</label>
-                                <span data-bind="text: props.webTitle() || 'None!'"></span>
+                                <label>Section</label>
+                                <span data-bind="text: props.section() || 'None!'"></span>
                             </div>
                         </div>
                     </div>
