@@ -116,7 +116,7 @@ define([
             $('.js-live-blog__timeline li:first-child .timeline__title').text('Latest post');
             $('.js-live-blog__timeline li:last-child .timeline__title').text('Opening post');
 
-            if(/desktop|wide/.test(detect.getBreakpoint())) {
+            if(/desktop|wide/.test(detect.getBreakpoint()) && config.page.keywordIds.indexOf('football/football') < 0) {
                 affix = new Affix({
                     element: qwery('.js-live-blog__timeline-container')[0],
                     topMarker: qwery('.js-top-marker')[0],
