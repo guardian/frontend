@@ -220,7 +220,7 @@ define([
             $img.addClass('u-h');
             loading($matchListContainer[0], 'Fetching today\'s matches…', { text: 'Impatient?', href: '/football/live' });
 
-            $('.js-football-meta').before($matchListContainer);
+            $('.js-football-meta').append($matchListContainer);
             ml.fetch($matchListContainer[0]).fail(function() {
                 ml.destroy();
                 $matchListContainer.remove();
