@@ -16,6 +16,11 @@ object SwitchingFrontPage {
     else
       OldFrontPage.apply(faciaPage)
 
+  def getDefaultFrontPage: FrontPage =
+    if (Switches.AutoSeoSwitch.isSwitchedOn)
+      FrontPage.defaultFrontPage
+    else
+      OldFrontPage.defaultFrontPage
 }
 
 object FrontPage {
