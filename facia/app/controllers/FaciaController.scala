@@ -47,7 +47,7 @@ class FaciaController extends Controller with Logging with ExecutionContexts wit
 
   def renderFrontPress(path: String) = MemcachedAction{ implicit request =>
     FrontJson.get(path).map(_.map{ faciaPage =>
-      val frontPage = FrontPage.getFrontPageFromFaciaPage(faciaPage)
+      val frontPage = SwitchingFrontPage(faciaPage)
       Cached(frontPage) {
         if (request.isRss)
           Ok(TrailsToRss(frontPage, faciaPage.collections.map(_._2).flatMap(_.items).toSeq.distinctBy(_.id)))
