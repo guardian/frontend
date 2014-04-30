@@ -484,7 +484,7 @@ $block-padding-right: $gs-gutter;
     background-color: transparent;
     @include transition(opacity 2s ease-out, background-color 4s ease-out);
 
-    & .truncated-block {
+    &.truncated-block {
         display: none;
     }
 }
@@ -568,7 +568,9 @@ $block-padding-right: $gs-gutter;
     }
 
     .block-title,
-    .block-elements > * {
+    .block-elements > *,
+    .block-elements > .element.element-tweet,
+    .block-elements > .element.element-witness {
         @include rem((
             margin-left: $gs-gutter/2,
             margin-right: $gs-gutter/2
