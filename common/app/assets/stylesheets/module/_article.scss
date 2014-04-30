@@ -771,3 +771,14 @@
     ));
     position: relative;
 }
+
+.after-article {
+    display: block;
+    content: ' ';
+    @include rem((
+        min-height: 1px
+    ));
+    @include mq(rightCol) {
+        display: none;
+    }
+}
