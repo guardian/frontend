@@ -40,7 +40,8 @@ object FrontPage {
 
     override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
       "content-type" -> networkFrontContentType,
-      "is-front" -> true
+      "is-front" -> true,
+      "new-seo" -> true
     )
   }
 
@@ -68,7 +69,8 @@ object FrontPage {
       override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
         "keywords" -> k.capitalize,
         "content-type" -> getContentType(faciaPage),
-        "is-front" -> true //Config agent trait logic?
+        "is-front" -> true, //Config agent trait logic?
+        "new-seo" -> true
       )
     }
   }.getOrElse(defaultFrontPage)
