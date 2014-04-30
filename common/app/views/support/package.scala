@@ -778,6 +778,7 @@ object GetClasses {
   def forFromage(trail: Trail, imageAdjust: String): String = {
     val baseClasses: Seq[String] = Seq(
       "fromage",
+      s"fromage--volume-${trail.group.getOrElse("0")}",
       s"tone-${VisualTone(trail)}",
       "tone-accent-border"
     )
