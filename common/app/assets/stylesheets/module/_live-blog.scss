@@ -862,6 +862,17 @@ $block-padding-right: $gs-gutter;
         }
     }
 
+    & + & {
+        .dropdown__button {
+            border-top: 0 none;
+
+            &:before,
+            &:after {
+                border-top: 0 none;
+            }
+        }
+    }
+
     .dropdown__label {
         @include fs-header(2);
         @include rem((
@@ -953,12 +964,12 @@ $timeline-width: 14px;
     }
 }
 .timeline__link {
+    display: block;
     @include rem((
         padding: $gs-baseline/6 0 $gs-baseline/2
     ));
 
     @include mq(rightCol) {
-        display: block;
         position: relative;
         @include rem((
             padding: 0 0 $gs-baseline*2 $gs-gutter

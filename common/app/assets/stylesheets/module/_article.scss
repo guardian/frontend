@@ -774,10 +774,9 @@
     display: block;
     content: ' ';
     @include rem((
-        padding-top: $gs-baseline
+        min-height: 1px
     ));
     @include mq(rightCol) {
         display: none;
     }
-
 }
