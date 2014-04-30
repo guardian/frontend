@@ -3,9 +3,9 @@ package conf
 import com.gu.management.{ DefaultSwitch, Switchable }
 import common._
 import implicits.Collections
-import play.api.{Application, Plugin}
-import play.api.libs.ws.WS
 import org.joda.time.{Days, DateTime, DateMidnight}
+import play.api.libs.ws.WS
+import play.api.{Application, Plugin}
 
 sealed trait SwitchState
 case object On extends SwitchState
@@ -127,6 +127,11 @@ object Switches extends Collections {
 
   val SponsoredSwitch = Switch("Advertising", "sponsored",
     "Show sponsored badges, logos, etc.",
+    safeState = On, sellByDate = never
+  )
+
+  val DfpApiSwitch = Switch("Advertising", "dfp-api",
+    "Allow requests out to the DFP API",
     safeState = On, sellByDate = never
   )
 
@@ -379,6 +384,7 @@ object Switches extends Collections {
     CommercialComponentsSwitch,
     VideoAdvertsSwitch,
     SponsoredSwitch,
+    DfpApiSwitch,
     AudienceScienceSwitch,
     AudienceScienceGatewaySwitch,
     CriteoSwitch,
