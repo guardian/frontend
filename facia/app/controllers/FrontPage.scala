@@ -2,6 +2,7 @@ package controllers
 
 import model.{FaciaPage, MetaData}
 import conf.Switches
+import common.Edition
 
 abstract class FrontPage(val isNetworkFront: Boolean) extends MetaData {
   override lazy val rssPath = Some(s"/$id/rss")
@@ -43,6 +44,12 @@ object FrontPage {
   private def getAnalyticsName(keyword: String): String = s"GFE:${keyword.toLowerCase}"
   private def getDescription(keyword: String): String = s"Latest $keyword news, comment and analysis from the Guardian, the world’s leading liberal voice"
 
+  private def getContentType(faciaPage: FaciaPage): String =
+    Edition.all.find(edition => faciaPage.id.endsWith(edition.id)) match {
+      case Some(_) => "Network Front"
+      case None    => "Section"
+    }
+
   def getFrontPageFromFaciaPage(faciaPage: FaciaPage): FrontPage = faciaPage.keyword.map { k =>
     new FrontPage(isNetworkFront = false) {
       override val id = getId(k)
@@ -55,7 +62,7 @@ object FrontPage {
 
       override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
         "keywords" -> k.capitalize,
-        "content-type" -> k.capitalize,
+        "content-type" -> getContentType(faciaPage),
         "is-front" -> true //Config agent trait logic?
       )
     }
