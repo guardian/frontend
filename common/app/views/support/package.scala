@@ -728,16 +728,16 @@ object GetClasses {
                         additionalClasses: String = ""): String = {
     val f: Seq[(Trail) => String] = Seq(
       (trail: Trail) => trail match {
-        case _: Gallery => "collection__item--content-type-gallery"
-        case _: Video   => "collection__item--content-type-video"
+        case _: Gallery => "facia-slice__item--content-type-gallery"
+        case _: Video   => "facia-slice__item--content-type-video"
         case _          => ""
       }
     )
     val baseClasses: Seq[String] = Seq(
       additionalClasses,
       "l-row__item",
-      "collection__item",
-      s"collection__item--volume-${trail.group.getOrElse("0")}"
+      "facia-slice__item",
+      s"facia-slice__item--volume-${trail.group.getOrElse("0")}"
     )
     val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail)} ++ makeSnapClasses(trail)
     RenderClasses(classes:_*)
