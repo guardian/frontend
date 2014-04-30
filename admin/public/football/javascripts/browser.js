@@ -174,6 +174,10 @@ jQuery(function($){
         });
     })();
 
+    // other datepickers
+    (function(){
+        $('.date-picker').datepicker({dateFormat: 'yymmdd'})
+    })();
 });
 
 // autocomplete

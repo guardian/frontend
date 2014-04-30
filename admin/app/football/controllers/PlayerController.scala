@@ -1,16 +1,17 @@
 package controllers.admin
 
 import play.api.mvc._
-import football.services.{GetPaClient}
-import pa.{PlayerProfile}
+import football.services.GetPaClient
+import pa.{StatsSummary, PlayerProfile, PlayerAppearances}
 import common.{JsonComponent, ExecutionContexts}
 import org.joda.time.DateMidnight
-import football.model.{PA}
+import football.model.PA
 import scala.concurrent.Future
 import model.{Cors, NoCache, Cached}
 import com.gu.management.JsonResponse
 import play.api.libs.Jsonp
 import play.api.libs.json.{JsString, JsArray, JsObject}
+import org.joda.time.format.DateTimeFormat
 
 
 object PlayerController extends Controller with ExecutionContexts with GetPaClient {
@@ -27,14 +28,23 @@ object PlayerController extends Controller with ExecutionContexts with GetPaClie
 
   def redirectToCard = Authenticated { request =>
     val submission = request.body.asFormUrlEncoded.get
+    val playerCardType = submission.get("playerCardType").get.head
     val playerId = submission.get("player").get.head
     val teamId = submission.get("team").get.head
-    val compId = submission.get("competition").get.head
-    val playerCardType = submission.get("playerCardType").get.head
-    NoCache(SeeOther(s"/admin/football/player/card/$playerCardType/$playerId/$teamId/$compId"))
+    println(s"startDate: ${submission.get("startDate")}, comp: ${submission.get("competition")}")
+    val redirectUrl = (submission.get("competition"), submission.get("startDate")) match {
+      case (Some(compId :: _), _) if !compId.isEmpty =>
+        println(s"comp: $compId")
+        s"/admin/football/player/card/competition/$playerCardType/$playerId/$teamId/$compId"
+      case (_, Some(startDate:: _)) =>
+        println(s"startDate: $startDate")
+        s"/admin/football/player/card/date/$playerCardType/$playerId/$teamId/$startDate"
+      case _ => throw new RuntimeException("Couldn't find competition or start date in submission")
+    }
+    NoCache(SeeOther(redirectUrl))
   }
 
-  def playerCard(playerId: String, teamId: String, competitionId: String, cardType: String) = Authenticated.async { implicit request =>
+  def playerCardCompetition(cardType: String, playerId: String, teamId: String, competitionId: String) = Authenticated.async { implicit request =>
     for {
       competitions <- client.competitions.map(PA.filterCompetitions)
       competition = competitions.find(_.competitionId == competitionId).getOrElse(throw new RuntimeException("Competition not found"))
@@ -42,33 +52,31 @@ object PlayerController extends Controller with ExecutionContexts with GetPaClie
       playerStats <- client.playerStats(playerId, competition.startDate, DateMidnight.now(), teamId, competitionId)
       playerAppearances <- client.appearances(playerId, competition.startDate, DateMidnight.now(), teamId, competitionId)
     } yield {
-      val result = cardType match {
-        case "attack" => Ok(views.html.football.player.cards.attack(playerId: String, playerProfile: PlayerProfile, playerStats, playerAppearances))
-        case "assist" => Ok(views.html.football.player.cards.assist(playerId: String, playerProfile: PlayerProfile, playerStats, playerAppearances))
-        case "discipline" => Ok(views.html.football.player.cards.discipline(playerId: String, playerProfile: PlayerProfile, playerStats, playerAppearances))
-        case "defence" => Ok(views.html.football.player.cards.defence(playerId: String, playerProfile: PlayerProfile, playerStats, playerAppearances))
-        case "goalkeeper" => Ok(views.html.football.player.cards.goalkeeper(playerId: String, playerProfile: PlayerProfile, playerStats, playerAppearances))
-        case "overview" => Ok(views.html.football.player.cards.overview(playerId: String, playerStats, playerAppearances))
-        case _ => Ok(views.html.football.player.cards.overview(playerId: String, playerStats, playerAppearances))
-      }
+      val result = renderPlayerCard(cardType, playerId, playerProfile, playerStats, playerAppearances)
       Cors(NoCache(result))
     }
   }
 
-  def redirectToHead2Head = Authenticated { request =>
-    val submission = request.body.asFormUrlEncoded.get
-    val player1Id = submission.get("player1").get.head
-    val player2Id = submission.get("player2").get.head
-    NoCache(SeeOther(s"/admin/football/player/head2head/$player1Id/$player2Id"))
+  def playerCardDate(cardType: String, playerId: String, teamId: String, startDateStr: String) = Authenticated.async { implicit request =>
+    val startDate = DateMidnight.parse(startDateStr, DateTimeFormat.forPattern("yyyyMMdd"))
+    for {
+      playerProfile <- client.playerProfile(playerId)
+      playerStats <- client.playerStats(playerId, startDate, DateMidnight.now(), teamId)
+      playerAppearances <- client.appearances(playerId, startDate, DateMidnight.now(), teamId)
+    } yield {
+      val result = renderPlayerCard(cardType, playerId, playerProfile, playerStats, playerAppearances)
+      Cors(NoCache(result))
+    }
   }
 
-  def head2Head(player1Id: String, player2Id: String) = Authenticated.async { request =>
-    for {
-      (player1h2h, player2h2h) <- client.playerHead2Head(player1Id, player2Id, new DateMidnight(2013, 7, 1), DateMidnight.now())
-      player1Appearances <- client.appearances(player1Id, new DateMidnight(2013, 7, 1), DateMidnight.now())
-      player2Appearances <- client.appearances(player2Id, new DateMidnight(2013, 7, 1), DateMidnight.now())
-    } yield {
-      Cached(60)(Ok(views.html.football.player.playerHead2Head(player1h2h, player2h2h, player1Appearances, player2Appearances)))
+  private def renderPlayerCard(cardType: String, playerId: String, playerProfile: PlayerProfile, playerStats: StatsSummary, playerAppearances: PlayerAppearances) = {
+    cardType match {
+      case "attack" => Ok(views.html.football.player.cards.attack(playerId, playerProfile, playerStats, playerAppearances))
+      case "assist" => Ok(views.html.football.player.cards.assist(playerId, playerProfile, playerStats, playerAppearances))
+      case "discipline" => Ok(views.html.football.player.cards.discipline(playerId, playerProfile, playerStats, playerAppearances))
+      case "defence" => Ok(views.html.football.player.cards.defence(playerId, playerProfile, playerStats, playerAppearances))
+      case "goalkeeper" => Ok(views.html.football.player.cards.goalkeeper(playerId, playerProfile, playerStats, playerAppearances))
+      case _ => throw new RuntimeException("Unknown card type")
     }
   }
 

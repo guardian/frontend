@@ -1,37 +1,61 @@
 @(competitions: List[pa.Season], teams: List[pa.Team])
 
 @views.html.football.main("Players") {
-    <hgroup class="page-header">
-        <h1>Players</h1>
-    </hgroup>
-
-    @*<form class="form-inline" role="form" action="/admin/football/player/head2head" method="post">
-        <h2>Player head to head</h2>
-
-        @views.html.football.fragments.choosePlayer("player1", players)
-        vs
-        @views.html.football.fragments.choosePlayer("player2", players)
-
-        <button type="submit" class="btn btn-success">Fight!</button>
-    </form>*@
-
-    <form class="form-inline" role="form" action="/admin/football/player/card" method="post">
-        <h2>Card</h2>
-        <label for="player-card-type">Card type:</label>
-        <select class="form-control" id="player-card-type" name="playerCardType">
-            <option value="attack">Attack</option>
-            <option value="assist">Assist</option>
-            <option value="discipline">Discipline</option>
-            <option value="defence">Defence</option>
-            <option value="goalkeeper">Goalkeeper</option>
-            <option value="overview">Overview</option>
-        </select>
-        @views.html.football.fragments.chooseLeague("competition", competitions)
-        @views.html.football.fragments.chooseTeam("team", teams)
-        <div class="form-group">
-            @*<select name="player" id="id-player" class="form-control foot-autocomplete" data-placeholder="Choose player"></select>*@
-            <input type="text" name="player" id="id-player" class="form-control player-chooser" autocomplete="off" placeholder="Choose player">
+    <div class="row">
+        <div class="col-sm-12">
+            <hgroup class="page-header">
+                <h1>Players</h1>
+            </hgroup>
         </div>
-        <button type="submit" class="btn btn-success">View</button>
-    </form>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <form role="form" action="/admin/football/player/card" method="post">
+                <div class="form-group">
+                    <div class="input-group">
+                        <label class="input-group-addon">Card type:</label>
+                        <select class="form-control" id="player-card-type" name="playerCardType">
+                            <option value="attack">Attack</option>
+                            <option value="assist">Assist</option>
+                            <option value="discipline">Discipline</option>
+                            <option value="defence">Defence</option>
+                            <option value="goalkeeper">Goalkeeper</option>
+                        </select>
+                    </div>
+                </div>
+
+                <hr />
+                <div class="row">
+                    <div class="col-sm-5">
+                        @views.html.football.fragments.chooseLeague("competition", competitions, withEmptyValue = true)
+                    </div>
+                    <div class="col-sm-2">
+                        <p class="text-center">Or,</p>
+                    </div>
+                    <div class="col-sm-5">
+                        <div class="form-group">
+                            <input type="text" name="startDate" class="form-control date-picker" placeholder="Choose start date" />
+                        </div>
+                    </div>
+                </div>
+                <hr />
+
+
+                <div class="row">
+                    <div class="col-sm-6">
+                        @views.html.football.fragments.chooseTeam("team", teams)
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            @*<select name="player" id="id-player" class="form-control foot-autocomplete" data-placeholder="Choose player"></select>*@
+                            <input type="text" name="player" id="id-player" class="form-control player-chooser" autocomplete="off" placeholder="Choose player">
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-success">View</button>
+            </form>
+        </div>
+    </div>
 }
