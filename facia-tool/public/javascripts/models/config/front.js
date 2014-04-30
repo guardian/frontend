@@ -25,17 +25,6 @@ define([
 
         this.id = ko.observable(opts.id);
 
-        this.id.subscribe(function(id) {
-            id = id || '';
-            id = id.toLowerCase();
-            id = id.replace(/^\/|\/$/g, '');
-            id = id.replace(/[^a-z0-9\/\-]*/g, '');
-            self.id(id);
-            if(_.filter(vars.model.fronts(), function(front) { return front.id() === id; }).length > 1) {
-                self.id(undefined);
-            }
-        });
-
         this.props  = asObservableProps([
             'section',
             'name',
@@ -63,8 +52,37 @@ define([
                 .value()
         });
 
+        this.id.subscribe(function(id) {
+            this.validate(id);
+        }, this);
+
         this.depopulateCollection = this._depopulateCollection.bind(this);
     }
+
+    Front.prototype.validate = function(id) {
+        id = id || '';
+        id = id.toLowerCase();
+        id = id.replace(/^\/|\/$/g, '');
+        id = id.replace(/[^a-z0-9\/\-]*/g, '');
+
+        this.id(id);
+
+        if (id) {
+            if(_.filter(vars.model.fronts(), function(front) { return front.id() === id; }).length > 1) {
+                this.id(undefined);
+                return;
+            }
+
+            // Suggested section & name.
+            // TODO: get it from CAPI instead.
+            if(!this.props.section()) {
+                this.props.section(id.split('/')[0]);
+            }
+            if(!this.props.name()) {
+                this.props.name(toTitleCase(id.split('/').slice(1).join(' ').replace(/\-/g, ' ')));
+            }
+        }
+    };
 
     Front.prototype.setOpen = function(isOpen, withOpenProps) {
         this.state.isOpen(isOpen);
@@ -104,6 +122,10 @@ define([
         this.collections.items.remove(collection);
         vars.model.save(collection);
     };
+
+    function toTitleCase(str) {
+        return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+    }
 
     return Front;
 });
