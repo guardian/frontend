@@ -308,11 +308,6 @@ class Article(content: ApiContentWithMeta) extends Content(content) {
 
 class LiveBlog(content: ApiContentWithMeta) extends Article(content) {
   private lazy val soupedBody = Jsoup.parseBodyFragment(body).body()
-  lazy val blockCount: Int = soupedBody.select(".block").size()
-  lazy val summary: Option[String] = soupedBody.select(".is-summary").headOption.map(_.toString)
-  lazy val groupedBlocks: List[String]= soupedBody.select(".block").toList.grouped(5).map { group =>
-    group.map(_.toString).mkString
-  }.toList
   lazy val hasKeyEvents: Boolean = soupedBody.select(".is-key-event").nonEmpty
   lazy val isSport: Boolean = tags.exists(_.id == "sport/sport")
   override def cards: List[(String, Any)] = super.cards ++ List(
