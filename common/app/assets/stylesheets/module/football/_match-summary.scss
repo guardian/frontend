@@ -106,16 +106,18 @@ $football-crest-large: 60px;
 .team__crest__img {
     @include rem((
         height: $football-crest-small,
-        max-width: $football-crest-small
+        width: $football-crest-small
     ));
-    @include background-size(contain);
+    @include background-size(auto $football-crest-small);
     display: inline-block;
+    background-repeat: no-repeat;
 
     @include mq($from: tablet) {
         @include rem((
             height: $football-crest-large,
-            max-width: $football-crest-large
-        ))
+            width: $football-crest-large
+        ));
+        @include background-size(auto $football-crest-large);
     }
 }
 

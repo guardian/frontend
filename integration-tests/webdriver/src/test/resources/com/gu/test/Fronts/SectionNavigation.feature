@@ -1,4 +1,5 @@
 @ignore
+@fronts
 Feature: As Pete I want to expand, show or hide a section
 
   Scenario: clicking the expand button of a section

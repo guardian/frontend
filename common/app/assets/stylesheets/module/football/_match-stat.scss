@@ -37,6 +37,9 @@
 }
 
 .team__results {
+    @include rem((
+        min-width: $gs-gutter*1.5
+    ));
     font-size: 0;
 }
 
