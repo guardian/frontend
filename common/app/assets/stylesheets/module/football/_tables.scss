@@ -45,13 +45,11 @@
 
     @include mq($to: $table-breakpoint-importance-1) { @include table-football--medium; }
     @include mq($to: $table-breakpoint-importance-2) {
-        .table-column--main {
-            .team-name:after {
-                content: attr(data-abbr);
-            }
-            .team-name__long {
-                @include u-h;
-            }
+        .team-name:after {
+            content: attr(data-abbr);
+        }
+        .team-name__long {
+            @include u-h;
         }
     }
 }
@@ -87,95 +85,5 @@
             top: 2px
         ));
         float: right;
-    }
-}
-
-
-.facia-snap--football {
-    background: #ffffff;
-    position: relative;
-
-    .table--football {
-        @extend .table--striped;
-        tbody tr { display: none; }
-        tbody tr:nth-of-type(-n+5) { display: table-row; }
-    }
-
-
-    .table,
-    .table__caption {
-        tr,
-        td {
-            background: inherit;
-            position: relative;
-            z-index: 2;
-        }
-    }
-
-    .table__caption--bottom {
-        @include box-sizing(border-box);
-        @include rem((
-            border-left-width: $gs-gutter/2,
-            border-right-width: $gs-gutter/2,
-            bottom: 2px,
-            padding-top: 100px
-        ));
-        background: $c-neutral8;
-        border-color: #ffffff;
-        border-style: solid;
-        border-top: 0 none;
-        left: 0;
-        position: absolute;
-        width: 100%;
-        z-index: 1;
-    }
-}
-
-.facia-snap-point--large {
-    @include table--hide-none;
-
-    .table,
-    .table__caption {
-        border-top: 0 none;
-    }
-
-    .table--football {
-        tbody tr { display: none; }
-        tbody tr:nth-of-type(-n+4) { display: table-row; }
-    }
-
-    .table__caption--bottom {
-        display: none;
-    }
-}
-
-.l-row--background-features .facia-snap-point--medium {
-    .table__caption--bottom {
-        @include rem((
-            border-left-width: 7px,
-            border-right-width: 7px
-        ));
-    }
-}
-
-.facia-snap-point--small {
-    @include table--hide-from-importance-2;
-
-    .table--football {
-        tbody tr { display: none !important; }
-        tbody tr:nth-of-type(-n+4) { display: table-row !important; }
-    }
-}
-
-.facia-snap-point--mini {
-    @include table--hide-from-importance-3;
-
-    .table--football {
-        tbody tr { display: none !important; }
-        tbody tr:nth-of-type(-n+3) { display: table-row !important; }
-    }
-
-    .competition-name {
-        display: none;
     }
 }
