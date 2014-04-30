@@ -54,33 +54,36 @@ define([
         }).length === 0;
 
         if (ready) {
-            page.rightHandComponentVisible(function() {
-                extras.forEach(function(extra) {
-                    rhc.addComponent(extra.content, extra.importance);
-                });
-            }, function() {
+            page.belowArticleVisible(function() {
                 var b;
-                $.create('<div class="football-extras"></div>').each(function(extrasContainer) {
-                    extras.forEach(function(extra, i) {
-                        if (dropdownTemplate) {
-                            $.create(dropdownTemplate).each(function (dropdown) {
-                                $('.dropdown__label', dropdown).append(extra.name);
-                                $('.dropdown__content', dropdown).append(extra.content);
-                                $('.dropdown__button', dropdown)
-                                    .attr('data-link-name', 'Show dropdown: '+ extra.name)
-                                    .each(function(el) {
-                                        if (i === 0) { b = el; }
-                                    });
-                            }).appendTo(extrasContainer);
-                        } else {
-                            extrasContainer.appendChild(extra.content);
-                        }
-                    });
-                }).insertAfter($('.article-body', context));
+                $('.js-after-article', context).append(
+                    $.create('<div class="football-extras"></div>').each(function(extrasContainer) {
+                        extras.forEach(function(extra, i) {
+                            if (dropdownTemplate) {
+                                $.create(dropdownTemplate).each(function (dropdown) {
+                                    if(config.page.isLiveBlog) { $(dropdown).addClass('dropdown--live'); }
+                                    $('.dropdown__label', dropdown).append(extra.name);
+                                    $('.dropdown__content', dropdown).append(extra.content);
+                                    $('.dropdown__button', dropdown)
+                                        .attr('data-link-name', 'Show dropdown: '+ extra.name)
+                                        .each(function(el) {
+                                            if (i === 0) { b = el; }
+                                        });
+                                }).appendTo(extrasContainer);
+                            } else {
+                                extrasContainer.appendChild(extra.content);
+                            }
+                        });
+                    })
+                );
 
                 // unfortunately this is here as the buttons event is delegated
                 // so it needs to be in the dom
                 if (b) { bean.fire(b, 'click'); }
+            }, function() {
+                extras.forEach(function(extra) {
+                    rhc.addComponent(extra.content, extra.importance);
+                });
             });
         }
     }

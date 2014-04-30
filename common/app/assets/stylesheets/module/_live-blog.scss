@@ -92,6 +92,7 @@ $block-padding-right: $gs-gutter;
         top: 0;
         z-index: 200;
         @include rem((
+            padding-top: $gs-baseline*2,
             margin-left:($a-rightCol-width + $gs-gutter) * - 1,
             width:$a-rightCol-width
         ));
@@ -905,15 +906,16 @@ $block-padding-right: $gs-gutter;
 $timeline-width: 14px;
 
 .blog__timeline {
+    @include mq(rightCol) {
+        &:before,
+        &:after,
+        .control {
+            display: none;
+        }
 
-    &:before,
-    &:after,
-    .control {
-        display: none;
-    }
-
-    .dropdown {
-        border-top: none;
+        .dropdown {
+            border-top: none;
+        }
     }
 }
 
@@ -1052,7 +1054,6 @@ $timeline-width: 14px;
 .blog {
     .after-header {
         position: relative;
-        @include full-bleed($c-neutral8);
     }
 
     .tabs__container--multiple {
@@ -1060,7 +1061,6 @@ $timeline-width: 14px;
         @include rem((
             padding-top: $gs-baseline
         ));
-        background-color: $c-neutral8;
     }
 
     .tabs__tab--selected {
@@ -1068,6 +1068,13 @@ $timeline-width: 14px;
     }
 
     @include mq(rightCol) {
+        .tabs__container--multiple {
+            background-color: $c-neutral8;
+        }
+        .after-header {
+            @include full-bleed($c-neutral8);
+        }
+
         .tabs__tab--selected .tab__link {
             background-color: $c-neutral8;
         }

@@ -769,3 +769,15 @@
         background-color: $c-brandBlue;
     }
 }
+
+.after-article {
+    display: block;
+    content: ' ';
+    @include rem((
+        padding-top: $gs-baseline
+    ));
+    @include mq(rightCol) {
+        display: none;
+    }
+
+}
