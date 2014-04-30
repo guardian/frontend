@@ -48,6 +48,7 @@ define([
 
             bean.on(context, 'click', '.article-elongator', removeTruncation.bind(this));
             mediator.on('module:liveblog:showkeyevents', removeTruncation.bind(this));
+            mediator.on('module:filter:toggle', removeTruncation.bind(this));
 
             $truncatedBlocks.addClass(truncatedClass);
             // Avoid running the twitter widget on truncated tweets.
