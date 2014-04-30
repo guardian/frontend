@@ -20,18 +20,7 @@
         }
     }
     .item__media-wrapper {
-        @include mq(faciaLeftCol) {
-            @include rem((
-                margin-top: 19px // Align with the date block in left column
-            ));
-        }
-        @include mq(wide) {
-            @include rem((
-                margin-top: 22px
-            ));
-        }
         overflow: hidden;
-        position: relative;
     }
     .item__image-container {
         padding-bottom: 40%;
