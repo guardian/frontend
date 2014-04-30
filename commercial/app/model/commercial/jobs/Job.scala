@@ -13,6 +13,7 @@ case class Job(id: Int,
                recruiterName: String,
                recruiterLogoUrl: Option[String],
                sectorIds: Seq[Int],
+               salaryDescription: String,
                keywords: Seq[Keyword] = Nil)
   extends Ad {
 

@@ -190,7 +190,7 @@
         }
         @include mq(desktop) {
             @include rem((
-                margin-left: gs-span(6)
+/*                margin-left: gs-span(6)*/
             ));
         }
     }
