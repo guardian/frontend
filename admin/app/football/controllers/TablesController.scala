@@ -16,8 +16,13 @@ import model.{Cors, NoCache, Cached}
 
 object TablesController extends Controller with ExecutionContexts with GetPaClient {
 
-  def tablesIndex = Authenticated { request =>
-    Cached(60)(Ok(views.html.football.leagueTables.tablesIndex(PA.competitions, PA.teams.all)))
+  def tablesIndex = Authenticated.async { request =>
+    for {
+      allCompetitions <- client.competitions
+    } yield {
+      val filteredCompetitions = PA.filterCompetitions(allCompetitions)
+      Cached(60)(Ok(views.html.football.leagueTables.tablesIndex(filteredCompetitions, PA.teams.all)))
+    }
   }
 
   def redirectToTable = Authenticated { implicit request =>
@@ -38,41 +43,48 @@ object TablesController extends Controller with ExecutionContexts with GetPaClie
   }
 
   def leagueTableFragment(competitionId: String, focus: String) = Authenticated.async { implicit request =>
-    PA.competitions.find(_.competitionId == competitionId).map { league =>
-      client.leagueTable(league.competitionId, DateMidnight.now()).map { tableEntries =>
-        val entries = focus match {
-          case "top" => tableEntries.take(5)
-          case "bottom" => tableEntries.reverse.take(5).reverse
-          case "none" => tableEntries
-          case teamId => surroundingItems[LeagueTableEntry](2, tableEntries, _.team.id == teamId)
+
+    client.competitions.map(PA.filterCompetitions(_).find(_.competitionId == competitionId)).flatMap { seasonOpt =>
+      seasonOpt.map { season =>
+        client.leagueTable(season.competitionId, DateMidnight.now()).map { tableEntries =>
+          val entries = focus match {
+            case "top" => tableEntries.take(5)
+            case "bottom" => tableEntries.reverse.take(5).reverse
+            case "none" => tableEntries
+            case teamId => surroundingItems[LeagueTableEntry](2, tableEntries, _.team.id == teamId)
+          }
+          Cors(NoCache(Ok(views.html.football.leagueTables.leagueTable(season, entries, List(focus)))))
         }
-        Cors(NoCache(Ok(views.html.football.leagueTables.leagueTable(league, entries, List(focus)))))
-      }
-    } getOrElse Future.successful(Cors(NoCache(InternalServerError(views.html.football.error("Please provide a valid league")))))
+      } getOrElse Future.successful(Cors(NoCache(InternalServerError(views.html.football.error("Please provide a valid league")))))
+    }
   }
 
   def leagueTable2Teams(competitionId: String, team1Id: String, team2Id: String) = Authenticated.async { implicit request =>
-    PA.competitions.find(_.competitionId == competitionId).map { league =>
-      client.leagueTable(league.competitionId, DateMidnight.now()).map { tableEntries =>
-        val aroundTeam1 = surroundingItems[LeagueTableEntry](1, tableEntries, _.team.id == team1Id)
-        val aroundTeam2 = surroundingItems[LeagueTableEntry](1, tableEntries, _.team.id == team2Id)
-        val entries = {
-          if (aroundTeam1(0).team.rank < aroundTeam2(0).team.rank)
-            (aroundTeam1 ++ aroundTeam2).distinct
-          else
-            (aroundTeam2 ++ aroundTeam1).distinct
+    client.competitions.map(PA.filterCompetitions(_).find(_.competitionId == competitionId)).flatMap { seasonOpt =>
+      seasonOpt.map { season =>
+        client.leagueTable(season.competitionId, DateMidnight.now()).map { tableEntries =>
+          val aroundTeam1 = surroundingItems[LeagueTableEntry](1, tableEntries, _.team.id == team1Id)
+          val aroundTeam2 = surroundingItems[LeagueTableEntry](1, tableEntries, _.team.id == team2Id)
+          val entries = {
+            if (aroundTeam1(0).team.rank < aroundTeam2(0).team.rank)
+              (aroundTeam1 ++ aroundTeam2).distinct
+            else
+              (aroundTeam2 ++ aroundTeam1).distinct
+          }
+          Cors(NoCache(Ok(views.html.football.leagueTables.leagueTable(season, entries, List(team1Id, team2Id)))))
         }
-        Cors(NoCache(Ok(views.html.football.leagueTables.leagueTable(league, entries, List(team1Id, team2Id)))))
-      }
-    } getOrElse Future.successful(Cors(NoCache(InternalServerError(views.html.football.error("Please provide a valid league")))))
+      } getOrElse Future.successful(Cors(NoCache(InternalServerError(views.html.football.error("Please provide a valid league")))))
+    }
   }
 
   def leagueTable(competitionId: String) = Authenticated.async { implicit request =>
-    PA.competitions.find(_.competitionId == competitionId).map { league =>
-      client.leagueTable(league.competitionId, DateMidnight.now()).map { tableEntries =>
-        Cors(NoCache(Ok(views.html.football.leagueTables.leagueTable(league, tableEntries))))
-      }
-    } getOrElse Future.successful(Cors(NoCache(InternalServerError(views.html.football.error("Please provide a valid league")))))
+    client.competitions.map(PA.filterCompetitions(_).find(_.competitionId == competitionId)).flatMap { seasonOpt =>
+      seasonOpt.map { season =>
+        client.leagueTable(season.competitionId, DateMidnight.now()).map { tableEntries =>
+          Cors(NoCache(Ok(views.html.football.leagueTables.leagueTable(season, tableEntries))))
+        }
+      } getOrElse Future.successful(Cors(NoCache(InternalServerError(views.html.football.error("Please provide a valid league")))))
+    }
   }
 
   def surroundingItems[T](surroundingNumber: Int, items: List[T], equal: (T) => Boolean): List[T] = {
