@@ -37,8 +37,8 @@ define([
         });
 
         this.props  = asObservableProps([
-            'name',
             'section',
+            'name',
             'webTitle',
             'description',
             'type'], 'front');
@@ -83,7 +83,7 @@ define([
     };
 
     Front.prototype.saveProps = function() {
-        if(this.id()) {
+        if(this.id() && this.props.name() && this.props.section()) {
             vars.model.save();
             this.state.isOpenProps(false);
         }

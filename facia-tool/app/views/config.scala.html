@@ -139,18 +139,18 @@
                 <!-- ko if: state.isOpenProps() -->
                     <div class="cnf-form">
                         <!-- ko if: !id() -->
-                            <label>Path</label>
-                            <input type="text" placeholder="eg. world/middleeast" data-bind="
+                            <label>URL path</label>
+                            <input type="text" placeholder="required, eg. world/middleeast" data-bind="
                                 value: id"/>
                         <!-- /ko -->
 
-                        <label>Name</label>
-                        <input type="text" placeholder="eg. Middle East" data-bind="
-                            value: props.name"/>
-
                         <label>Section</label>
-                        <input type="text" placeholder="eg. world" data-bind="
+                        <input type="text" placeholder="required, eg. world" data-bind="
                             value: props.section"/>
+
+                        <label>Name</label>
+                        <input type="text" placeholder="required, eg. Middle East" data-bind="
+                            value: props.name"/>
 
                         <label>Web Title</label>
                         <input type="text" placeholder="optional" data-bind="

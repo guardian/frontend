@@ -805,10 +805,6 @@ button {
     font-weight: bold;
 }
 
-.cnf-front.isProvisional {
-    background: #dbd8c9;
-}
-
 .cnf-front__inner {
     padding: 0 10px 0 10px;
 }
