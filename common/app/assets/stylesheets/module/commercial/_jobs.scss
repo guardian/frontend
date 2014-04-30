@@ -281,6 +281,12 @@
             width: 25%;
             float: left;
         }
+        .commercial__home-link {
+            left: $gs-gutter/2;
+            bottom: 10px;
+            top: auto;
+            right: auto;
+        }
         .commercial--jobs__class {
             @include rem((
                 padding-left: $gs-gutter/2
