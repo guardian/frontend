@@ -1,0 +1,41 @@
+@(trail: Video, index: Int, containerIndex: Int, element: String = "li")(implicit request: RequestHeader)
+
+@defining((VisualTone(trail), containerIndex == 0, containerIndex == 0 && index < 4)) { case (tone, isFirstContainer, inlineImages) =>
+    <@element
+        class="@GetClasses.forItem(trail, isFirstContainer, true) item--thumbnail"
+        data-link-name="trail | @{index + 1}">
+
+        <div class="item__container">
+
+            <a href="@LinkTo{@trail.url}" class="item__link tone-accent-border" data-link-name="article">
+                @fragments.items.elements.title(trail, index, containerIndex)
+                <div class="item__media-wrapper item__media-wrapper--has-icon">
+                    <div class="item__cta item__cta--video">
+                        <span class="item__cta__icon">
+                            <span class="i i-play-black"></span>
+                        </span>
+                    </div>
+                    @trail.trailPicture(5,3).map{ imageContainer =>
+                        @ImgSrc.imager(imageContainer, Item620).map { imgSrc =>
+                            <div class="item__image-container u-responsive-ratio js-image-upgrade @if(inlineImages){ inlined-image}" data-src="@imgSrc">
+                                @if(inlineImages){
+                                    @Item300.bestFor(imageContainer).map{ url => <img src="@url" class="responsive-img" alt="" /> }
+                                }
+                            </div>
+                        }
+                    }.getOrElse{
+                        <div class="item__image-container u-responsive-ratio">
+                            <img src="@Static("images/no-image.png")" class="responsive-img" alt="" />
+                        </div>
+                    }
+                </div>
+            </a>
+
+            @trail.trailText.map { text =>
+                <div class="item__standfirst">@Html(text)</div>
+            }
+
+        </div>
+
+    </@element>
+}
