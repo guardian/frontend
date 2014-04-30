@@ -1070,6 +1070,11 @@ $timeline-width: 14px;
         border-bottom-color: $c-neutral8 !important;
     }
 
+    .match-summary {
+        border-bottom: 0 none;
+        margin-bottom: 0;
+    }
+
     @include mq(rightCol) {
         .tabs__container--multiple {
             background-color: $c-neutral8;
@@ -1083,8 +1088,6 @@ $timeline-width: 14px;
         }
 
         .match-summary {
-            border-bottom: 0 none;
-            margin-bottom: 0;
             padding-bottom: 0;
         }
     }
