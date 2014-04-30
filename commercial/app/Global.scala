@@ -3,7 +3,6 @@ import conf.Filters
 import conf.Management
 import dev.DevParametersLifecycle
 import model.commercial.books.BestsellersAgent
-import model.commercial.dfp.DfpKeywordsAgent
 import model.commercial.jobs.{Industries, JobsAgent}
 import model.commercial.masterclasses.MasterClassAgent
 import model.commercial.money.BestBuysAgent
@@ -23,8 +22,7 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
     IndustriesRefresh,
     JobsRefresh,
     MoneyBestBuysRefresh,
-    BooksRefresh,
-    DfpKeywordsRefresh
+    BooksRefresh
   )
 
   override def onStart(app: PlayApp) {
@@ -57,8 +55,6 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
       BestBuysAgent.refresh()
 
       BestsellersAgent.refresh()
-
-      DfpKeywordsAgent.refresh()
     }
   }
 
@@ -70,7 +66,7 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
 }
 
 object Global extends WithFilters(Filters.common: _*) with CommercialLifecycle with DevParametersLifecycle
-with CloudWatchApplicationMetrics {
+                                                                                    with CloudWatchApplicationMetrics {
   override lazy val applicationName = Management.applicationName
 }
 
@@ -158,12 +154,4 @@ object BooksRefresh extends RefreshJob {
   def refresh() = BestsellersAgent.refresh()
 
   def stopJob() = BestsellersAgent.stop()
-}
-
-object DfpKeywordsRefresh extends RefreshJob {
-  val name: String = "DFP Keywords"
-
-  def refresh() = DfpKeywordsAgent.refresh()
-
-  def stopJob() = DfpKeywordsAgent.stop()
 }

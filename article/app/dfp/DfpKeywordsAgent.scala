@@ -1,11 +1,14 @@
-package model.commercial.dfp
+package dfp
 
 import common.AkkaAgent
 import services.DfpApi
 
+// Cache of current keywords targeted by DFP.
 object DfpKeywordsAgent {
 
-  lazy val agent = AkkaAgent[Seq[String]](Nil)
+  private lazy val agent = AkkaAgent[Seq[String]](Nil)
+
+  def currentTargetedKeywords: Seq[String] = agent.get()
 
   def refresh() {
     agent.update(DfpApi.fetchCurrentKeywordTargetingValues())
