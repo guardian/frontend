@@ -187,10 +187,6 @@
             border-top: 0;
             margin-top: 0;
             padding-top: 0;
-            @include rem((
-                margin-left: gs-span(6)
-            ));
-            margin-left: 50%;
         }
         @include mq(desktop) {
             @include rem((
