@@ -61,7 +61,24 @@
 }
 
 .football-table__container {
+    @include rem((
+        margin-bottom: $gs-baseline*3
+    ));
     position: relative;
+
+    .table__caption--top {
+        display: none;
+    }
+}
+
+.football__group {
+    @include rem((
+        margin-top: $gs-baseline*2
+    ));
+
+    &:first-child {
+        margin-top: 0;
+    }
 }
 
 .table__caption {
