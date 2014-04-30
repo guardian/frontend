@@ -86,7 +86,7 @@ class FaciaController extends Controller with Logging with ExecutionContexts wit
         collectionOption.map { collection =>
           Cached(60) {
             val config: Config = ConfigAgent.getConfig(id).getOrElse(Config(""))
-            val html = views.html.fragments.frontCollection(FrontPage("").get, (config, collection), 1, 1)
+            val html = views.html.fragments.frontCollection(SwitchingFrontPage.getDefaultFrontPage, (config, collection), 1, 1)
             if (request.isJson)
               JsonCollection(html, collection)
             else
