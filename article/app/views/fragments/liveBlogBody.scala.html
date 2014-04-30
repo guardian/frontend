@@ -68,19 +68,19 @@
                     }
                 </div>
 
-                @if(article.hasKeyEvents) {
-                    <div class="blog__left-col js-live-blog__key-events js-right-hand-component">
-                        <div class="js-components"></div>
-                        <div class="js-top-marker"></div>
-                        <div class="blog__timeline blog__dropdown">
+                <div class="blog__left-col js-right-hand-component">
+                    <div class="js-top-marker"></div>
+                    @if(article.hasKeyEvents) {
+                        <div class="blog__timeline blog__dropdown js-live-blog__key-events">
                             <div class="blog__timeline-container js-live-blog__timeline-container" data-component="timeline">
                                 @fragments.dropdown("Key events", "live") {
                                     <ul class="timeline js-live-blog__timeline u-unstyled"></ul>
                                 }
                             </div>
                         </div>
-                    </div>
-                }
+                    }
+                    <div class="js-components"></div>
+                </div>
 
                 @fragments.dropdown("Live feed", "live", true) {
                     <div class="js-article__container article__container" data-component="body">
