@@ -47,11 +47,15 @@
     .commercial--jobs__sectors {
         overflow: hidden;
         @include box-sizing(border-box);
-        padding-right: 10px;
+        @include rem((
+            padding-right: $gs-gutter/2
+        ));
     }
     .commercial--jobs__sector {
         width: 50%;
-        min-width: gs-span(1.5);
+        @include rem((
+            min-width: gs-span(1.5)
+        ));
         float: left;
         @include box-sizing(border-box);
         @include rem((
@@ -67,17 +71,17 @@
             }
         }
    
-            &:nth-child(2n+1) .commercial--jobs__sector__link {
-                @include rem((
-                    margin-right: $gs-gutter/2
-                ));
-            }
-            &:nth-child(2n) .commercial--jobs__sector__link {
-                @include rem((
-                    margin-left: $gs-gutter/2
-                ));
-            }
-    
+        &:nth-child(2n+1) .commercial--jobs__sector__link {
+            @include rem((
+                margin-right: $gs-gutter/2
+            ));
+        }
+        
+        &:nth-child(2n) .commercial--jobs__sector__link {
+            @include rem((
+                margin-left: $gs-gutter/2
+            ));
+        }
         @include mq(tablet) {
             &:nth-child(1),
             &:nth-child(2) {
@@ -282,8 +286,10 @@
             float: left;
         }
         .commercial__home-link {
-            left: $gs-gutter/2;
-            bottom: 10px;
+            @include rem((
+                left: $gs-gutter/2,
+                bottom: 10px
+            ));
             top: auto;
             right: auto;
         }
