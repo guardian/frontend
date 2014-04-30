@@ -22,5 +22,5 @@ case class FutureOpt[A](self: Future[Option[A]]) {
 object FutureOpt {
   def fromFuture[A](a: Future[A])(implicit ex: ExecutionContext): FutureOpt[A] = FutureOpt(a.map(Option(_)))
   def fromOpt[A](a: Option[A]): FutureOpt[A] = FutureOpt(Future.successful(a))
-  def fromValue[A](a: A): FutureOpt[A] = FutureOpt(Future.successful(Some(a)))
+  def fromValue[A](a: A): FutureOpt[A] = FutureOpt(Future.successful(Option(a)))
 }
