@@ -70,7 +70,9 @@ object LeagueTableController extends Controller with Logging with CompetitionTab
 
   def renderCompetitionJson(competition: String) = renderCompetition(competition)
   def renderCompetition(competition: String) = Action { implicit request =>
-    loadTables.find(_.competition.url.endsWith(s"/$competition")).map { table =>
+    val table = loadTables.find(_.competition.url.endsWith(s"/$competition")).orElse(loadTables.find(_.competition.id == competition))
+    table.map { table =>
+
       val page = new Page(
         "football/tables",
         "football",
@@ -96,7 +98,7 @@ object LeagueTableController extends Controller with Logging with CompetitionTab
   def renderCompetitionGroupJson(competition: String, groupReference: String) = renderCompetitionGroup(competition, groupReference)
   def renderCompetitionGroup(competition: String, groupReference: String) = Action { implicit request =>
     val response = for {
-      table <- loadTables.find(_.competition.url.endsWith(s"/$competition"))
+      table <- loadTables.find(_.competition.url.endsWith(s"/$competition")).orElse(loadTables.find(_.competition.id == competition))
       group <- table.groups.find { group =>
         group.round.name.exists(name => name.toLowerCase == groupReference.toLowerCase.replace("-", " "))
       }

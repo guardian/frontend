@@ -135,7 +135,7 @@ define([
                     scoreBoard.template = match.pageType === 'report' ? resp.scoreSummary : resp.matchSummary;
 
                     // only show scores on liveblogs or started matches
-                    if(!/^\s+$/.test(scoreBoard.template) && (config.page.isLiveBlog || resp.hasStarted)) {
+                    if(!/^\s+$/.test(scoreBoard.template)) {
                         scoreBoard.render(scoreContainer);
 
                         if (match.pageType === 'report') {
@@ -146,6 +146,8 @@ define([
                                 });
                             });
                         }
+                    } else {
+                        $h.removeClass('u-h');
                     }
 
                     // match stats

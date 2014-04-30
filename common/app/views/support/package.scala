@@ -298,23 +298,6 @@ case class PictureCleaner(contentImages: Seq[ImageElement]) extends HtmlCleaner 
   }
 }
 
-case class LiveBlogDateFormatter(isLiveBlog: Boolean)(implicit val request: RequestHeader) extends HtmlCleaner  {
-  def clean(body: Document): Document = {
-    if (isLiveBlog) {
-      body.select(".block-time.published-time time").foreach { el =>
-        el.attr("data-relativeformat", "med")
-        val datetime = DateTime.parse(el.attr("datetime"))
-        val hhmm = Format(datetime, "HH:mm")
-        el.after(s"""<span class="block-time__absolute">$hhmm</span>""")
-        if(datetime.isAfter(DateTime.now().minusDays(5))) {
-          el.addClass("js-timestamp")
-        }
-      }
-    }
-    body
-  }
-}
-
 object BulletCleaner {
   def apply(body: String): String = body.replace("•", """<span class="bullet">•</span>""")
 }
@@ -693,11 +676,6 @@ object VisualTone {
   val Comment = "comment"
   val News = "news"
   val Feature = "feature"
-  val Live = "live"
-
-  private val liveMappings = Seq(
-    "tone/minutebyminute"
-  )
 
   private val commentMappings = Seq(
     "tone/comment",
@@ -720,9 +698,8 @@ object VisualTone {
 
 
   // tones are all considered to be 'News' it is the default so we do not list news tones explicitly
-  def apply(tags: Tags) = if(isLive(tags.tones)) Live else if(isComment(tags.tones)) Comment else if(isFeature(tags.tones)) Feature else News
+  def apply(tags: Tags) = if(isComment(tags.tones)) Comment else if(isFeature(tags.tones)) Feature else News
 
-  private def isLive(tones: Seq[Tag]) = tones.exists(t => liveMappings.contains(t.id))
   private def isComment(tones: Seq[Tag]) = tones.exists(t => commentMappings.contains(t.id))
   private def isFeature(tones: Seq[Tag]) = tones.exists(t => featureMappings.contains(t.id))
 }
@@ -762,7 +739,7 @@ object GetClasses {
       "collection__item",
       s"collection__item--volume-${trail.group.getOrElse("0")}"
     )
-    val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail)}
+    val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail)} ++ makeSnapClasses(trail)
     RenderClasses(classes:_*)
   }
 
@@ -794,7 +771,7 @@ object GetClasses {
       (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean) =>
         if (trail.isCommentable) "item--has-discussion" else "item--has-no-discussion"
     )
-    val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail, firstContainer, forceHasImage)}
+    val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail, firstContainer, forceHasImage)} ++ makeSnapClasses(trail)
     RenderClasses(classes:_*)
   }
 
@@ -819,8 +796,13 @@ object GetClasses {
       (trail: Trail, imageAdjust: String) =>
         if (trail.isCommentable) "fromage--has-discussion" else "fromage--has-no-discussion"
     )
-    val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail, imageAdjust)}
+    val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail, imageAdjust)} ++ makeSnapClasses(trail)
     RenderClasses(classes:_*)
+  }
+
+  def makeSnapClasses(trail: Trail): Seq[String] = trail match {
+    case snap: Snap => snap.snapType.map(t => Seq(s"facia-snap facia-snap--$t")).getOrElse(Seq("facia-snap facia-snap--default"))
+    case _  => Nil
   }
 
 }
@@ -830,4 +812,15 @@ object LatestUpdate {
   def apply(collection: Collection, trails: Seq[Trail]): Option[DateTime] =
     (trails.map(_.webPublicationDate) ++ collection.lastUpdated.map(DateTime.parse(_))).sortBy(-_.getMillis).headOption
 
+}
+
+object SnapData {
+  def apply(trail: Trail): String = generateDataArrtibutes(trail).mkString(" ")
+
+  private def generateDataArrtibutes(trail: Trail): Iterable[String] = trail match {
+    case snap: Snap =>
+      snap.snapType.filter(_.nonEmpty).map(t => s"data-snap-type=$t") ++
+      snap.snapUri.filter(_.nonEmpty).map(t => s"data-snap-uri=$t")
+    case _  => Nil
+  }
 }

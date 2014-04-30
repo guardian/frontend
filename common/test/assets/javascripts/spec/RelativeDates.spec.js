@@ -33,84 +33,72 @@ define(['common/modules/ui/relativedates',
                     'date'           :      '2012-08-13T11:59:50+01:00',
                     'expectedOutput' :      '10s',
                     'expectedShortOutput' : '10s',
-                    'expectedMedOutput' :   '10s ago',
                     'expectedLongOutput' : '10 seconds ago'
                 },
                 'oneMinuteAgo': {  // singular
                     'date'           :      '2012-08-13T11:58:40+01:00',
                     'expectedOutput' :      '1m',
                     'expectedShortOutput' : '1m',
-                    'expectedMedOutput' :   '1m ago',
                     'expectedLongOutput' :  '1 minute ago'
                 },
                 'upToEightMinutesAgo': { // plural
                     'date'           :      '2012-08-13T11:52:30+01:00',
                     'expectedOutput' :      '8m',
                     'expectedShortOutput' : '8m',
-                    'expectedMedOutput' :   '8m ago',
                     'expectedLongOutput' :  '8 minutes ago'
                 },
                 'oneHourAgo': { // singular
                     'date'           :      '2012-08-13T11:00:00+01:00',
                     'expectedOutput' :      '1h',
                     'expectedShortOutput' : '1h',
-                    'expectedMedOutput' :   '1h ago',
                     'expectedLongOutput' :  '1 hour ago'
                 },
                 'betweenNinetyMinutesAndOneHour': {  // bug GFE-38
                     'date'           :      '2012-08-13T10:25:00+01:00',
                     'expectedOutput' :      '2h',
                     'expectedShortOutput' : '2h',
-                    'expectedMedOutput' :   '2h ago',
                     'expectedLongOutput' :  '2 hours ago'
                 },
                 'lessThanFiveHoursAgo': { // plural
                     'date'           :      '2012-08-13T08:30:00+01:00',
                     'expectedOutput' :      '4h',
                     'expectedShortOutput' : '4h',
-                    'expectedMedOutput' :   '4h ago',
                     'expectedLongOutput' :  '4 hours ago'
                 },
                 'moreThanFiveHoursAgo': { // ... but still today
                     'date'           :      '2012-08-13T02:03:00+01:00',
                     'expectedOutput' :      '10h',
                     'expectedShortOutput' : '10h',
-                    'expectedMedOutput' :   '10h ago',
                     'expectedLongOutput' :  '10 hours ago'
                 },
                 'yesterday': {
                     'date'           :      '2012-08-12T08:45:00+01:00',
                     'expectedOutput' :      'Yesterday, 8:45am',
                     'expectedShortOutput' : '1d',
-                    'expectedMedOutput' :   '1d ago',
                     'expectedLongOutput' :  'Yesterday, 8:45am'
                 },
                 'yesterdayButWithinTwentyFourHours': {
                     'date'           :      '2012-08-12T20:00:00+01:00',
                     'expectedOutput' :      'Yesterday, 8:00pm',
                     'expectedShortOutput' : '16h',
-                    'expectedMedOutput' :   '16h ago',
                     'expectedLongOutput' :  'Yesterday, 8:00pm'
                 },
                 'moreThanTwoDaysAgo': {
                     'date'           :      '2012-08-09T08:34:00+01:00',
                     'expectedOutput' :      'Thursday 9 Aug 2012',
                     'expectedShortOutput' : '4d',
-                    'expectedMedOutput' :   '4d ago',
                     'expectedLongOutput' :  'Thursday 9 Aug 2012'
                 },
                 'moreThanFiveDaysAgo': {
                     'date'           :      '2012-08-05T21:30:00+01:00',
                     'expectedOutput' :      '5 Aug 2012',
                     'expectedShortOutput' : '5 Aug 2012',
-                    'expectedMedOutput'   : '5 Aug 2012',
                     'expectedLongOutput' :  '5 Aug 2012'
                 },
                 'oneMinuteAgoInAnotherTimeZone': {
                     'date'           :      '2012-08-13T12:58:40+02:00',
                     'expectedOutput' :      '1m',
                     'expectedShortOutput' : '1m',
-                    'expectedMedOutput'   : '1m ago',
                     'expectedLongOutput' :  '1 minute ago'
                 }
             };
@@ -125,9 +113,6 @@ define(['common/modules/ui/relativedates',
                     it('short', function() {
                         // Do the same but in short format
                         expect(RelativeDates.makeRelativeDate(epoch, { format: 'short' })).toBe(d.expectedShortOutput);
-                    });
-                    it('med', function() {
-                        expect(RelativeDates.makeRelativeDate(epoch, { format: 'med' })).toBe(d.expectedMedOutput);
                     });
                     it('long', function() {
                         // and long format

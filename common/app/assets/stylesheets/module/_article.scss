@@ -5,6 +5,9 @@
     ));
     @include fs-bodyCopy(3);
 }
+.article--advertisement-feature {
+    @include f-textsans;
+}
 
 .article__zone {
     @include fs-header(3);
@@ -763,11 +766,10 @@
 }
 
 .article-elongator {
+    @include rem((
+        top: -$gs-baseline*2
+    ));
     position: relative;
-
-    .i-center {
-        background-color: $c-brandBlue;
-    }
 }
 
 .after-article {

@@ -151,8 +151,6 @@ GET         /admin/football/browser/*query                                      
 GET         /admin/football/team                                                                                     controllers.admin.TeamController.teamIndex
 POST        /admin/football/team/head2head                                                                           controllers.admin.TeamController.redirectToTeamHead2Head
 GET         /admin/football/team/head2head/:team1Id/:team2Id                                                         controllers.admin.TeamController.teamHead2Head(team1Id: String, team2Id: String)
-POST        /admin/football/team/images                                                                              controllers.admin.TeamController.redirectToSquadPictures
-GET         /admin/football/team/images/:teamId                                                                      controllers.admin.TeamController.squadPictures(teamId: String)
 GET         /admin/football/player                                                                                   controllers.admin.PlayerController.playerIndex
 POST        /admin/football/player/head2head                                                                         controllers.admin.PlayerController.redirectToHead2Head
 GET         /admin/football/player/head2head/:player1Id/:player2Id                                                   controllers.admin.PlayerController.head2Head(player1Id: String, player2Id: String)
@@ -164,6 +162,14 @@ GET         /admin/football/tables/league/:competitionId                        
 GET         /admin/football/tables/league/:competitionId/:focus                                                      controllers.admin.TablesController.leagueTableFragment(competitionId: String, focus: String)
 GET         /admin/football/tables/league/:competitionId/:team1Id/:team2Id                                           controllers.admin.TablesController.leagueTable2Teams(competitionId: String, team1Id: String, team2Id: String)
 GET         /admin/football/api/squad/:teamId                                                                        controllers.admin.PlayerController.squad(teamId: String)
+GET         /admin/football/fronts                                                                                   controllers.admin.FrontsController.index
+GET         /admin/football/fronts/live                                                                              controllers.admin.FrontsController.matchDay
+POST        /admin/football/fronts/results/redirect                                                                  controllers.admin.FrontsController.resultsRedirect
+GET         /admin/football/fronts/results/:competition                                                              controllers.admin.FrontsController.results(competition: String)
+POST        /admin/football/fronts/fixtures/redirect                                                                 controllers.admin.FrontsController.fixturesRedirect
+GET         /admin/football/fronts/fixtures/:competition                                                             controllers.admin.FrontsController.fixtures(competition: String)
+POST        /admin/football/fronts/tables/redirect                                                                   controllers.admin.FrontsController.tablesRedirect
+GET         /admin/football/fronts/tables/:competition                                                               controllers.admin.FrontsController.tables(competition: String)
 
 # Commercial
 GET         /commercial/travel/offers.json                                                                           controllers.commercial.TravelOffers.listOffers
