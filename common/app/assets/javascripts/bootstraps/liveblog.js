@@ -32,7 +32,7 @@ define([
     var affix = null;
 
     function getKeyEvents() {
-        return qwery('.live-blog__blocks .is-key-event').slice(0, 7);
+        return qwery('.is-key-event').slice(0, 7);
     }
 
     function getBlocks() {
