@@ -1,11 +1,16 @@
 .facia-snap--football {
     // Generic
-    @include rem((
-        border-left-width: $gs-gutter/2,
-        border-right-width: $gs-gutter/2
-    ));
-    background: #ffffff;
-    position: relative;
+    .facia-snap--mini,
+    .facia-snap--small,
+    .facia-snap--medium,
+    .facia-snap--large {
+        @include rem((
+            border-left-width: $gs-gutter/2,
+            border-right-width: $gs-gutter/2
+        ));
+        background: #ffffff;
+        position: relative;
+    }
 
     .table {
         tbody tr { display: none; }
