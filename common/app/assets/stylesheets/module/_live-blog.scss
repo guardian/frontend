@@ -477,18 +477,10 @@ $block-padding-right: $gs-gutter;
     }
 }
 
-/* Blocks container
-   ========================================================================== */
-.live-blog__blocks {
-    opacity: 1;
-    height: auto;
-    background-color: transparent;
-    @include transition(opacity 2s ease-out, background-color 4s ease-out);
-
-    &.truncated-block {
-        display: none;
-    }
+.truncated-block {
+    display: none;
 }
+
 .blog .ad-slot--mpu-banner-ad {
     @include rem((
         padding-top: $gs-baseline

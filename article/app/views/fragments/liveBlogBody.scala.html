@@ -88,17 +88,7 @@
 
                         <div class="article-body u-cf from-content-api js-blog-blocks @if(article.isLive) {live-blog}"
                         itemprop="@if(article.isReview) {reviewBody} else {articleBody}">
-
-                        @if(article.groupedBlocks.nonEmpty) {
-                            @article.groupedBlocks.map { blockGroup =>
-                                <div class="live-blog__blocks">
-                                    @BodyCleaner(article, blockGroup)
-                                </div>
-                            }
-                        } else {
                             @BodyCleaner(article, article.body)
-                        }
-
                         </div>
 
                         <div class="article__keywords" data-link-name="live blog keywords">
