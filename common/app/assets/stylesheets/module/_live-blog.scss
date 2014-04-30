@@ -568,7 +568,8 @@ $block-padding-right: $gs-gutter;
     }
 
     .block-title,
-    .block-elements > * {
+    .block-elements > *,
+    .block-elements > .element.element-tweet {
         @include rem((
             margin-left: $gs-gutter/2,
             margin-right: $gs-gutter/2
