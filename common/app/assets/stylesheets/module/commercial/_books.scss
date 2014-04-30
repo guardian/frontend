@@ -207,7 +207,7 @@
     }
     @include mq(faciaLeftCol, $to: wide) {
         .commercial__title {
-            line-height: 0;
+            line-height: 1;
             @include rem((
                 margin-bottom: 10px
             ));
