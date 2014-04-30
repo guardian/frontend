@@ -5,10 +5,12 @@
 define([
     'common/$',
     'common/modules/component',
+    'common/utils/mediator',
     'lodash/collections/toArray'
 ], function (
     $,
     component,
+    mediator,
     toArray
 ) {
     'use strict';
@@ -40,7 +42,9 @@ define([
         blocks.reverse();
 
         this.toggleState('order-by-oldest');
-        $(this.context).append(blocks);
+        $(this.context).prepend(blocks);
+
+        mediator.emit('module:filter:toggle');
     };
 
     return Filter;
