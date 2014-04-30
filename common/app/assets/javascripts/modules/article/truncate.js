@@ -21,13 +21,8 @@ define([
 ) {
     context = context();
     var truncatedClass = 'truncated-block',
-        numBlocks = config.page.section === 'football' ? 1 : 2,
-        $truncatedBlocks = bonzo(qwery('.live-blog__blocks', context).slice(numBlocks));
-
-    function shouldTruncate() {
-        var truncatableLiveBlogs = config.page.section !== 'football' || detect.getBreakpoint() === 'mobile';
-        return config.page.isLiveBlog && $('.live-blog__blocks').length > 1 && truncatableLiveBlogs;
-    }
+        numBlocks = detect.getBreakpoint() === 'mobile' ? 5 : 10,
+        $truncatedBlocks = bonzo(qwery('.block', context).slice(numBlocks));
 
     function removeTruncation() {
         // Reinstate tweets and enhance them.
@@ -40,7 +35,7 @@ define([
 
     function truncate() {
 
-        if (shouldTruncate()) {
+        if (config.page.isLiveBlog && $('.block').length > 1) {
 
             $.create(
                 '<button class="u-fauxlink u-button-reset button button--show-more article-elongator" data-link-name="continue reading">'+
