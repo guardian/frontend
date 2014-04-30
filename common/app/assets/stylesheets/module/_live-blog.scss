@@ -474,7 +474,7 @@ $block-padding-right: $gs-gutter;
     background-color: transparent;
     @include transition(opacity 2s ease-out, background-color 4s ease-out);
 
-    & .truncated-block {
+    &.truncated-block {
         display: none;
     }
 }
