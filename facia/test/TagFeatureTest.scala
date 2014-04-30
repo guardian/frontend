@@ -16,7 +16,7 @@ class TagFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
       HtmlUnit("/technology/askjack") { browser =>
         import browser._
-        val trails = $(".fromage, .facia-slice__item, .linkslist__item")
+        val trails = $(".queen, .facia-slice__item, .linkslist__item")
         trails.length should be(20)
       }
 

@@ -775,9 +775,9 @@ object GetClasses {
     RenderClasses(classes:_*)
   }
 
-  def forFromage(trail: Trail, imageAdjust: String): String = {
+  def forQueen(trail: Trail, imageAdjust: String): String = {
     val baseClasses: Seq[String] = Seq(
-      "fromage",
+      "queen",
       s"tone-${VisualTone(trail)}",
       "tone-accent-border"
     )
@@ -786,14 +786,14 @@ object GetClasses {
         if (trail.isLive) "item--live" else "",
       (trail: Trail, imageAdjust: String) =>
         if (trail.trailPicture(5,3).isEmpty || imageAdjust == "hide"){
-          "fromage--has-no-image"
+          "queen--has-no-image"
         }else{
-          "fromage--has-image"
+          "queen--has-image"
         },
       (trail: Trail, imageAdjust: String) =>
-        if (!trail.trailPicture(5,3).isEmpty) s"fromage--imageadjust-$imageAdjust" else "",
+        if (!trail.trailPicture(5,3).isEmpty) s"queen--imageadjust-$imageAdjust" else "",
       (trail: Trail, imageAdjust: String) =>
-        if (trail.isCommentable) "fromage--has-discussion" else "fromage--has-no-discussion"
+        if (trail.isCommentable) "queen--has-discussion" else "queen--has-no-discussion"
     )
     val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail, imageAdjust)} ++ makeSnapClasses(trail)
     RenderClasses(classes:_*)
