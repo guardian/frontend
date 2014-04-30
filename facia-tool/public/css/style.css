@@ -262,6 +262,7 @@ a:hover {
 
 .article.open {
     background: #dbd8c9 !important;
+    min-height: 75px;
 }
 
 .article.underDrag {
@@ -372,7 +373,7 @@ a:hover {
     border-radius: 2px;
 }
 
-.open .article__date {
+.article.open > .article__lhs > .article__date {
     top: 52px;
     text-shadow: none;
     background: rgba(0,0,0,0.1);

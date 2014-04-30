@@ -1,0 +1,103 @@
+.facia-snap--football {
+    // Generic
+    .facia-snap--mini,
+    .facia-snap--small,
+    .facia-snap--medium,
+    .facia-snap--large {
+        @include rem((
+            border-left-width: $gs-gutter/2,
+            border-right-width: $gs-gutter/2
+        ));
+        background: #ffffff;
+        position: relative;
+    }
+
+    .table {
+        tbody tr { display: none; }
+        tbody tr:nth-of-type(-n+5) { display: table-row; }
+    }
+
+    .table,
+    .table__caption {
+        border-top: 0 none;
+        tbody,
+        tr,
+        td {
+            background: inherit;
+            position: relative;
+            z-index: 2;
+        }
+    }
+
+    .table__caption--bottom {
+        @include box-sizing(border-box);
+        @include rem((
+            border-left-width: $gs-gutter/2,
+            border-right-width: $gs-gutter/2,
+            bottom: 2px,
+            padding-top: 100px
+        ));
+        background: $c-neutral8;
+        border-color: #ffffff;
+        border-style: solid;
+        border-top: 0 none;
+        left: 0;
+        position: absolute;
+        width: 100%;
+        z-index: 1;
+    }
+
+    .football-team__form,
+    .football-matches__date {
+        display: none;
+    }
+
+    // Different snap sizes
+    // See javascripts/modules/ui/snaps.js
+    &.facia-snap-point--large {
+        @include table--hide-none;
+
+        .table,
+        .table__caption {
+            border-top: 0 none;
+        }
+
+        .table--football {
+            tbody tr { display: none; }
+            tbody tr:nth-of-type(-n+4) { display: table-row; }
+        }
+
+        .table__caption--bottom {
+            display: none;
+        }
+    }
+
+    &.facia-snap-point--small {
+        @include table--hide-from-importance-2;
+
+        .table--football {
+            tbody tr { display: none !important; }
+            tbody tr:nth-of-type(-n+4) { display: table-row !important; }
+        }
+    }
+
+    &.facia-snap-point--mini {
+        @include table--hide-from-importance-3;
+
+        .table--football {
+            tbody tr { display: none !important; }
+            tbody tr:nth-of-type(-n+3) { display: table-row !important; }
+        }
+
+        .competition-name {
+            display: none;
+        }
+
+        .team-name:after {
+            content: attr(data-abbr);
+        }
+        .team-name__long {
+            @include u-h;
+        }
+    }
+}

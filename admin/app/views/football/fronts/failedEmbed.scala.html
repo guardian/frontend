@@ -1,0 +1,26 @@
+@(message: Html, snapFields: _root_.football.model.SnapFields)
+
+@views.html.football.main(snapFields.fallbackHeadline) {
+    <div class="row">
+        <div class="col-sm-12">
+            <hgroup class="page-header">
+                <button class="btn btn-success disabled pull-right">Drag to the Fronts Editor</button>
+                <h1>@snapFields.fallbackHeadline</h1>
+            </hgroup>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-danger">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Error loading Front content</h3>
+                </div>
+                <div class="panel-body">
+                    <p>Technical details were</p>
+                    <pre>@message</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+}

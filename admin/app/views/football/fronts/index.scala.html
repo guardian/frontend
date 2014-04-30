@@ -1,0 +1,71 @@
+@(competitions: List[pa.Season])
+
+@views.html.football.main("Fronts components") {
+    <hgroup class="page-header">
+        <h1>Fronts components</h1>
+    </hgroup>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <h2>Matchday</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <p>
+                <a href="/admin/football/fronts/live" class="btn btn-success">Today's matches</a>
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <h2>Fixtures</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-4">
+            <p>
+                <a href="/admin/football/fronts/fixtures/all" class="btn btn-success">All fixtures</a>
+            </p>
+        </div>
+        <div class="col-sm-8">
+            <form class="form-inline" role="form" action="/admin/football/fronts/fixtures/redirect" method="post">
+                @views.html.football.fragments.chooseLeague("competition", competitions)
+                <button type="submit" class="btn btn-success">Competition fixtures</button>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <h2>Results</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-4">
+            <p>
+                <a href="/admin/football/fronts/results/all" class="btn btn-success">All results</a>
+            </p>
+        </div>
+        <div class="col-sm-8">
+            <form class="form-inline" role="form" action="/admin/football/fronts/results/redirect" method="post">
+                @views.html.football.fragments.chooseLeague("competition", competitions)
+                <button type="submit" class="btn btn-success">Competition results</button>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <h2>Tables</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <form class="form-inline" role="form" action="/admin/football/fronts/tables/redirect" method="post">
+                @views.html.football.fragments.chooseLeague("competition", competitions)
+                <button type="submit" class="btn btn-success">League table</button>
+            </form>
+        </div>
+        <div class="col-sm-6">
+        </div>
+    </div>
+}
