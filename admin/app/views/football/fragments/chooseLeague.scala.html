@@ -1,8 +1,10 @@
 @(fieldName: String, leagues: List[pa.Season])
+@import _root_.football.model.PA.competitionName
+
 <div class="form-group">
     <select name="@fieldName" id="id-@fieldName" class="form-control" data-placeholder="Choose league">
         @for(league <- leagues) {
-        <option value="@league.competitionId">@league.name</option>
+        <option value="@league.competitionId">@competitionName(league)</option>
         }
     </select>
 </div>

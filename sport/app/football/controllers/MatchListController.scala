@@ -30,7 +30,7 @@ trait MatchListController extends Controller with Requests {
   }
 
   protected def lookupCompetition(tag: String): Option[Competition] = {
-    Competitions().withTag(tag)
+    Competitions().withTag(tag).orElse(Competitions().withId(tag))
   }
   protected def lookupTeam(tag: String): Option[FootballTeam] = {
     for {

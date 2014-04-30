@@ -1,6 +1,6 @@
 package test
 
-import concurrent.Future
+import scala.concurrent.Future
 
 import discussion.model.{PrivateProfileFields, Profile}
 import discussion.DiscussionApi

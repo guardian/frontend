@@ -19,7 +19,10 @@ class TablesControllerTest extends FreeSpec with GetPaClient with ExecutionConte
     val Some(result) = route(FakeRequest(GET, "/admin/football/tables"))
     status(result) should equal(OK)
     val content = contentAsString(result)
-    PA.competitions.foreach(season => content should include(season.name))
+    PA.competitionNames
+      .filter { case (seasonId, _) => PA.approvedCompetitions.contains(seasonId) }
+      .values
+      .foreach(seasonName => content should include(seasonName))
   }
 
   "submitting a choice of league redirects to the correct table page" in Fake {

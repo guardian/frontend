@@ -28,7 +28,7 @@ define([
             { width: 180, name: 'mini' },
             { width: 220, name: 'small' },
             { width: 300, name: 'medium' },
-            { width: 940, name: 'large' }
+            { width: 700, name: 'large' }
         ];
 
         breakpoints.forEach(function(breakpoint) {
