@@ -338,6 +338,11 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
+  val ToolSnaps = Switch("Facia Tool", "facia-tool-snaps",
+    "If this is switched on then snaps can be created by dragging arbitrary links into the tool",
+    safeState = Off, sellByDate = never
+  )
+
   val ToolSparklines = Switch("Facia Tool", "facia-tool-sparklines",
     "If this is switched on then the fronts tool renders images from sparklines.ophan.co.uk",
     safeState = Off, sellByDate = never
@@ -394,6 +399,7 @@ object Switches extends Collections {
     ToolDisable,
     ToolConfigurationDisable,
     ToolCheckPressLastmodified,
+    ToolSnaps,
     ToolSparklines,
     OphanSwitch,
     ScrollDepthSwitch,

@@ -739,7 +739,7 @@ object GetClasses {
       "collection__item",
       s"collection__item--volume-${trail.group.getOrElse("0")}"
     )
-    val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail)}
+    val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail)} ++ makeSnapClasses(trail)
     RenderClasses(classes:_*)
   }
 
@@ -771,7 +771,7 @@ object GetClasses {
       (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean) =>
         if (trail.isCommentable) "item--has-discussion" else "item--has-no-discussion"
     )
-    val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail, firstContainer, forceHasImage)}
+    val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail, firstContainer, forceHasImage)} ++ makeSnapClasses(trail)
     RenderClasses(classes:_*)
   }
 
@@ -795,8 +795,13 @@ object GetClasses {
       (trail: Trail, imageAdjust: String) =>
         if (trail.isCommentable) "fromage--has-discussion" else "fromage--has-no-discussion"
     )
-    val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail, imageAdjust)}
+    val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail, imageAdjust)} ++ makeSnapClasses(trail)
     RenderClasses(classes:_*)
+  }
+
+  def makeSnapClasses(trail: Trail): Seq[String] = trail match {
+    case snap: Snap => snap.snapType.map(t => Seq(s"facia-snap facia-snap--$t")).getOrElse(Seq("facia-snap facia-snap--default"))
+    case _  => Nil
   }
 
 }
@@ -806,4 +811,15 @@ object LatestUpdate {
   def apply(collection: Collection, trails: Seq[Trail]): Option[DateTime] =
     (trails.map(_.webPublicationDate) ++ collection.lastUpdated.map(DateTime.parse(_))).sortBy(-_.getMillis).headOption
 
+}
+
+object SnapData {
+  def apply(trail: Trail): String = generateDataArrtibutes(trail).mkString(" ")
+
+  private def generateDataArrtibutes(trail: Trail): Iterable[String] = trail match {
+    case snap: Snap =>
+      snap.snapType.filter(_.nonEmpty).map(t => s"data-snap-type=$t") ++
+      snap.snapUri.filter(_.nonEmpty).map(t => s"data-snap-uri=$t")
+    case _  => Nil
+  }
 }

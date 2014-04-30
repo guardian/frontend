@@ -44,6 +44,8 @@ define([
             model.statusPressFailure(false);
         };
 
+        model.switches = ko.observable();
+
         model.collections = ko.observableArray();
 
         model.fronts = ko.observableArray();
@@ -64,6 +66,14 @@ define([
             keepCopy:  true
         });
 
+        model.createSnap = function() {
+            var blank = new Article();
+
+            blank.convertToSnap();
+            model.clipboard.items.unshift(blank);
+            _.defer(updateScrollables);
+        };
+
         model.setFront = function(id) {
             model.front(id);
         };
@@ -83,7 +93,7 @@ define([
         function detectPressFailure() {
             model.statusPressFailure(false);
 
-            if (vars.state.switches['facia-tool-check-press-lastmodified'] && model.front()) {
+            if (model.switches()['facia-tool-check-press-lastmodified'] && model.front()) {
                 authedAjax.request({
                     url: '/front/lastmodified/' + model.front()
                 })
@@ -105,7 +115,7 @@ define([
         }
 
         var deferredDetectPressFailure = _.debounce(detectPressFailure, vars.CONST.detectPressFailureMs || 10000);
-        
+
         function pressFront() {
             model.statusPressFailure(false);
 
@@ -122,7 +132,7 @@ define([
 
         model.deferredDetectPressFailure = deferredDetectPressFailure;
         model.pressFront = pressFront;
-        
+
         function getFront() {
             return queryParams().front;
         }
@@ -153,7 +163,7 @@ define([
 
         function showFrontSpark() {
             model.frontSparkUrl(undefined);
-            if (vars.state.switches['facia-tool-sparklines']) {
+            if (model.switches()['facia-tool-sparklines']) {
                 model.frontSparkUrl(vars.sparksBaseFront + getFront());
             }
         }
@@ -191,8 +201,10 @@ define([
                     terminate();
                     return;
                 }
-                vars.state.switches = switches;
+                model.switches(switches);
+
                 vars.state.config = config;
+
                 model.fronts(
                     getFront() === 'testcard' ? ['testcard'] :
                        _.chain(_.keys(config.fronts))
