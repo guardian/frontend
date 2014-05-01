@@ -131,7 +131,7 @@
         .commercial__home-link {
             @include rem((
                 bottom: 10px,
-                left: 10px
+                left: $gs-gutter/2
             ));
             top: auto;
             right: auto;
@@ -236,7 +236,7 @@
         .commercial__home-link {
             @include rem((
                 bottom: 10px,
-                left: 20px
+                left: $gs-gutter
             ));
             top: auto;
             right: auto;
@@ -271,10 +271,9 @@
             @include rem((
                 width: gs-span(2),
                 line-height: 18px,
-                left: 10px,
+                left: $gs-gutter/2,
                 bottom: $gs-baseline*4.5
             ));
-
         }
         .commercial__head {
             padding-left: 0;
