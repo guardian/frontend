@@ -48,9 +48,24 @@ case class SeoData(
 
 case class FaciaPage(
                    id: String,
-                   webTitle: Option[String],
-                   keyword: Option[String],
-                   collections: List[(Config, Collection)])
+                   seoData: SeoData,
+                   collections: List[(Config, Collection)]) extends MetaData {
+
+  override lazy val description: Option[String] = seoData.description
+
+  override def section: String = seoData.section.getOrElse(defaultSection)
+  override def analyticsName: String = s"GFE:$getContentType"
+  override def webTitle: String = seoData.webTitle.getOrElse(defaultWebTitle)
+
+  def defaultSection: String = ""
+  def defaultWebTitle: String = ""
+
+  lazy val getContentType: String =
+    Edition.all.find(edition => id.endsWith(edition.id)) match {
+      case Some(_) => "Network Front"
+      case None    => "Section"
+    }
+}
 
 object FaciaComponentName {
   def apply(config: Config, collection: Collection): String = {
