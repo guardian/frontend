@@ -1,14 +1,9 @@
 .live-toolbar {
-    display: none;
     width: 100%;
     @include rem((
         margin-bottom: $gs-baseline,
         height: $gs-row-height + $gs-baseline
     ));
-
-    .is-live & {
-        display: table;
-    }
 
     @include mq($to: tablet) {
         font-size: .875em;
