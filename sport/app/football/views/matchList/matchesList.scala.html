@@ -66,6 +66,6 @@
             </tr>
         }
     </tbody>
-    <caption class="table__caption table__caption--top"><a href="@competition.url">@competition.fullName</a><span class="football-matches__date">@date.toString("d MMMM yyyy")</span></caption>
-    <caption class="table__caption table__caption--bottom"><a href="@competition.url@if(matchType!=""){/@matchType}">Show more <span class="competition-name">@competition.fullName</span> @matchType</a></caption>
+    <caption class="table__caption table__caption--top"><a href="@competition.url" data-link-name="view @competition.fullName">@competition.fullName</a><span class="football-matches__date">@date.toString("d MMMM yyyy")</span></caption>
+    <caption class="table__caption table__caption--bottom"><a href="@competition.url@if(matchType!=""){/@matchType}" data-link-name="view @competition.fullName matches">Show more <span class="competition-name">@competition.fullName</span> @matchType</a></caption>
 </table>
