@@ -193,6 +193,9 @@ $block-padding-right: $gs-gutter;
 
 /* Design
    ========================================================================== */
+.blog {
+    background-color: $c-neutral8;
+}
 .blog__zone--default {
     @include mq(tablet, rightCol) {
         @include full-bleed($c-liveDefault);
