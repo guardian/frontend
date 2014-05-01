@@ -16,7 +16,11 @@ case class Config(
 case class Front(
                   collections: List[String],
                   keyword: Option[String],
-                  webTitle: Option[String]
+                  webTitle: Option[String],
+                  section: Option[String],
+                  name: Option[String],
+                  description: Option[String],
+                  `type`: Option[String]
                   )
 
 case class Collection(
