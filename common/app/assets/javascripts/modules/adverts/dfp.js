@@ -118,9 +118,9 @@ define([
                 adUnitSuffix += '/';
             }
             adUnitSuffix += 'front';
-            if (this.config.switches.lifeAndStyleHack) {
+            //if (this.config.switches.lifeAndStyleHack) {
                 adUnitSuffix = adUnitSuffix.replace('Life and style', 'lifeandstyle');
-            }
+            //}
         }
         return '/' + this.config.page.dfpAccountId + '/' + this.config.page.dfpAdUnitRoot + '/' + adUnitSuffix;
     };
