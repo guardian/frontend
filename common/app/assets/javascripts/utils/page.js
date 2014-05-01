@@ -57,8 +57,8 @@ function(
         }, no);
     }
 
-    function rightHandComponentVisible(yes, no) {
-        var el = $('.js-right-hand-component')[0],
+    function belowArticleVisible(yes, no) {
+        var el = $('.js-after-article')[0],
             vis = el.offsetWidth > 0 && el.offsetHeight > 0;
 
         return isit(vis, yes, no, el);
@@ -69,7 +69,7 @@ function(
         isCompetition: isCompetition,
         isClockwatch: isClockwatch,
         isLiveClockwatch: isLiveClockwatch,
-        rightHandComponentVisible: rightHandComponentVisible
+        belowArticleVisible: belowArticleVisible
     };
 
 }); // define
