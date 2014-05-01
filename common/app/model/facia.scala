@@ -1,6 +1,7 @@
 package model
 
 import org.joda.time.DateTime
+import common.Edition
 
 case class Config(
                    id: String,
@@ -37,6 +38,13 @@ object Collection {
   def apply(curated: Seq[Content]): Collection = Collection(curated, Nil, Nil, Nil, None, None, Option(DateTime.now.toString), None, None)
   def apply(curated: Seq[Content], displayName: Option[String]): Collection = Collection(curated, Nil, Nil, Nil, displayName, None, Option(DateTime.now.toString), None, None)
 }
+
+case class SeoData(
+  id: String,
+  section: Option[String],
+  webTitle: Option[String],   //Always short, eg, "Reviews" for "tone/reviews" id
+  title: Option[String],      //Long custom title entered by editors
+  description: Option[String])
 
 case class FaciaPage(
                    id: String,
