@@ -19,7 +19,8 @@
 
     .c-football-matches,
     .c-football-table {
-        height: 0;
+        // this works as a min-height
+        height: $gs-baseline*14;
         overflow: visible;
     }
 
