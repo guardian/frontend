@@ -25,8 +25,7 @@ GET        /commercial/soulmates/mixed.json                                     
 GET        /commercial/money/bestbuys                                           controllers.commercial.MoneyOffers.bestBuys(format="html")
 GET        /commercial/money/bestbuys.json                                      controllers.commercial.MoneyOffers.bestBuys(format="json")
 GET        /commercial/money/savings/easy-access                                controllers.commercial.MoneyOffers.savingsEasyAccess
-GET        /commercial/money/current-accounts/rewards                           controllers.commercial.MoneyOffers.currentAccountsRewards
-# Credit cards
+GET        /commercial/money/current-accounts/:currentAccountType               controllers.commercial.MoneyOffers.currentAccounts(currentAccountType)
 GET        /commercial/money/credit-cards/:creditCardType                       controllers.commercial.MoneyOffers.creditCards(creditCardType)
 # Loans
 GET        /commercial/money/loans/good-credit                                  controllers.commercial.MoneyOffers.loansGoodCredit

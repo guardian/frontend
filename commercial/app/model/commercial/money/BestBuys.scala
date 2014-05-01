@@ -6,7 +6,7 @@ case class BestBuys(
                      mortgages: Seq[Mortgage],
                      creditCards: Map[String, Seq[CreditCard]],
                      loans: Seq[Loan],
-                     currentAccounts: Seq[CurrentAccount],
+                     currentAccounts: Map[String, Seq[CurrentAccount]],
                      savings: Seq[SavingsAccount]
                      )
 
@@ -23,7 +23,12 @@ object BestBuysAgent {
     creditCardsAgent.Rewards,
     creditCardsAgent.LowCredit,
     LoansAgent,
-    CurrentAccountsAgent,
+    currentAccountsAgent.Rewards,
+    currentAccountsAgent.HighInterest,
+    currentAccountsAgent.BestOverdraft,
+    currentAccountsAgent.WithBenefits,
+    currentAccountsAgent.BasicAccounts,
+    currentAccountsAgent.StandardAccounts,
     SavingsAgent
   )
 
@@ -31,7 +36,7 @@ object BestBuysAgent {
     val mortgages = MortgagesAgent.currentAds
     val creditCards = CreditCards.currentAds
     val loans = LoansAgent.currentAds
-    val currentAccounts = CurrentAccountsAgent.currentAds
+    val currentAccounts = CurrentAccounts.currentAds
     val savings = SavingsAgent.currentAds
 
     if (mortgages.isEmpty

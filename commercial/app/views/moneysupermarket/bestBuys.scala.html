@@ -115,7 +115,7 @@
                             <td>Interest</td>
                         </thead>
                         <tbody>
-                        @bestBuys.currentAccounts.take(3).map { account =>
+                        @bestBuys.currentAccounts.get("rewards").getOrElse(Nil).take(3).map { account =>
                             <tr>
                                 <td><a href="@account.applyUrl">@account.provider</a></td>
                                 <td>@account.name</td>
