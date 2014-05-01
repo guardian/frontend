@@ -50,11 +50,13 @@
                 }
             }
 
-            @trail match { case content:model.Content => @fragments.items.starRating(content) }
 
             @trail.trailText.map { text =>
-                <div class="fromage__standfirst">@Html(text)</div>
+                <div class="fromage__standfirst">@Html(text)
+                    @trail match { case content:model.Content => @fragments.items.starRating(content) }
+                </div>
             }
+
             @fragments.items.elements.supporting(trail.supporting, style = "fit")
 
             @* Display meta only if there is a discussion *@
