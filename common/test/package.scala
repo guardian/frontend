@@ -11,7 +11,7 @@ import com.gu.openplatform.contentapi.connection.Http
 import recorder.ContentApiHttpRecorder
 import com.gu.management.play.InternalManagementPlugin
 import play.api.GlobalSettings
-import concurrent.Future
+import scala.concurrent.Future
 import org.apache.commons.codec.digest.DigestUtils
 import com.gargoylesoftware.htmlunit.BrowserVersion
 

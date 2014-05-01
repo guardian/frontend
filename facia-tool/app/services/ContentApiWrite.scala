@@ -15,6 +15,11 @@ import org.joda.time.DateTime
 
 trait ContentApiWrite extends ExecutionContexts with Logging {
 
+  //Intentionally blank
+  val defaultTitle: String = ""
+  val defaultCollectionType: String = "news"
+  val defaultEmail: String = "guardian.frontend.fronts@theguardian.com"
+
   case class Item(
                    id: String,
                    metadata: Option[Map[String, JsValue]]
@@ -22,7 +27,7 @@ trait ContentApiWrite extends ExecutionContexts with Logging {
 
   case class ContentApiPut(
                             `type`: String,
-                            title: Option[String],
+                            title: String,
                             groups: Seq[String],
                             curatedContent: Seq[Item],
                             backfill: Option[String],
@@ -71,13 +76,13 @@ trait ContentApiWrite extends ExecutionContexts with Logging {
     val maybeBlock = FaciaApi.getBlock(config.id)
 
     ContentApiPut(
-      config.collectionType.getOrElse("news"),
-      config.displayName,
+      config.collectionType.getOrElse(defaultCollectionType),
+      config.displayName.getOrElse(defaultTitle),
       config.groups,
       maybeBlock map { block => generateItems(block.live) } getOrElse Nil,
       config.contentApiQuery,
       maybeBlock map { _.lastUpdated } getOrElse { DateTime.now.toString },
-      maybeBlock map { _.updatedEmail } getOrElse { "guardian.frontend.fronts@theguardian.com" }
+      maybeBlock map { _.updatedEmail } getOrElse { defaultEmail }
     )
   }
 

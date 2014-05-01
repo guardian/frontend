@@ -3,9 +3,9 @@ package conf
 import com.gu.management.{ DefaultSwitch, Switchable }
 import common._
 import implicits.Collections
-import play.api.{Application, Plugin}
-import play.api.libs.ws.WS
 import org.joda.time.{Days, DateTime, DateMidnight}
+import play.api.libs.ws.WS
+import play.api.{Application, Plugin}
 
 sealed trait SwitchState
 case object On extends SwitchState
@@ -142,6 +142,10 @@ object Switches extends Collections {
   val CriteoSwitch = Switch("Ad Targeting", "criteo",
     "If this switch is on, Criteo segments will be used to target ads.",
     safeState = Off, sellByDate = new DateMidnight(2014, 11, 1))
+
+  val LifeAndStyleHackSwitch = Switch("Ad Targeting", "life-and-style",
+    "If this switch is on, ads will work on Life and Style front while waiting for fix from Front Tools team.",
+    safeState = On, sellByDate = new DateMidnight(2014, 5, 14))
 
   // Commercial Tags
 
@@ -333,6 +337,11 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
+  val ToolSnaps = Switch("Facia Tool", "facia-tool-snaps",
+    "If this is switched on then snaps can be created by dragging arbitrary links into the tool",
+    safeState = Off, sellByDate = never
+  )
+
   val ToolSparklines = Switch("Facia Tool", "facia-tool-sparklines",
     "If this is switched on then the fronts tool renders images from sparklines.ophan.co.uk",
     safeState = Off, sellByDate = never
@@ -372,6 +381,7 @@ object Switches extends Collections {
     AudienceScienceSwitch,
     AudienceScienceGatewaySwitch,
     CriteoSwitch,
+    LifeAndStyleHackSwitch,
     DiscussionSwitch,
     OpenCtaSwitch,
     FontSwitch,
@@ -388,6 +398,7 @@ object Switches extends Collections {
     ToolDisable,
     ToolConfigurationDisable,
     ToolCheckPressLastmodified,
+    ToolSnaps,
     ToolSparklines,
     OphanSwitch,
     ScrollDepthSwitch,

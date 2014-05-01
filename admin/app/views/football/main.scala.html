@@ -10,6 +10,19 @@
         <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" />
         <link rel="stylesheet" media="screen" href='@routes.Assets.at("football/css/football-main.css")' />
         <link rel="stylesheet" href='@routes.Assets.at("football/css/jquery-ui-1.10.4.custom.css")' />
+
+            <!--[if (gt IE 9)|(IEMobile)]><!-->
+        @if(play.Play.isDev()) {
+            <link rel="stylesheet" type="text/css" href="@Static("stylesheets/head.default.css")" />
+        } else {
+            <style>
+            @Html(Static.css.head(None))
+            </style>
+        }
+            <!--<![endif]-->
+
+        <link rel="stylesheet" type="text/css" href="@Static("stylesheets/global.css")" />
+
         <script src='@routes.Assets.at("football/javascripts/jquery-1.10.2.js")'></script>
         <script src='@routes.Assets.at("football/javascripts/jquery-ui-1.10.4.custom.min.js")'></script>
         <script src='@routes.Assets.at("football/javascripts/bootstrap/bootstrap.min.js")'></script>
@@ -33,6 +46,7 @@
                   <li><a href="/admin/football/player">Players</a></li>
                   <li><a href="/admin/football/team">Teams</a></li>
                   <li><a href="/admin/football/tables">Tables</a></li>
+                  <li><a href="/admin/football/fronts">Fronts</a></li>
                   <li><a href="/admin/football/browse">API browser</a></li>
               </ul>
             </div>

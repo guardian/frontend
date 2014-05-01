@@ -45,13 +45,11 @@
 
     @include mq($to: $table-breakpoint-importance-1) { @include table-football--medium; }
     @include mq($to: $table-breakpoint-importance-2) {
-        .table-column--main {
-            .team-name:after {
-                content: attr(data-abbr);
-            }
-            .team-name__long {
-                @include u-h;
-            }
+        .team-name:after {
+            content: attr(data-abbr);
+        }
+        .team-name__long {
+            @include u-h;
         }
     }
 }
@@ -61,7 +59,24 @@
 }
 
 .football-table__container {
+    @include rem((
+        margin-bottom: $gs-baseline*3
+    ));
     position: relative;
+
+    .table__caption--top {
+        display: none;
+    }
+}
+
+.football__group {
+    @include rem((
+        margin-top: $gs-baseline*2
+    ));
+
+    &:first-child {
+        margin-top: 0;
+    }
 }
 
 .table__caption {

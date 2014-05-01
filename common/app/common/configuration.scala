@@ -159,6 +159,10 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val path = configuration.getMandatoryStringProperty("staticSport.path")
   }
 
+  object sport {
+    lazy val apiUrl = configuration.getStringProperty("sport.apiUrl").getOrElse(ajax.url)
+  }
+
   object oas {
     lazy val siteIdHost = configuration.getStringProperty("oas.siteId.host").getOrElse(".guardian.co.uk")
     lazy val url = configuration.getStringProperty("oas.url").getOrElse("http://oas.theguardian.com/RealMedia/ads/")

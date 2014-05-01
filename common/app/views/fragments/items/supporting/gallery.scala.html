@@ -1,7 +1,7 @@
 @(supporting: Gallery, index: Int)(implicit request: RequestHeader)
 
 <li class="linkslist__item supporting__item">
-    <a href="@LinkTo{@supporting.url}" class="linkslist__action supporting__action action--has-icon" data-link-name="supporting | @{index + 1}">
+    <a @LinkTo(supporting).map{url=>href="@url"} class="linkslist__action supporting__action action--has-icon" data-link-name="supporting | @{index + 1}">
         <span class="i i-gallery-yellow-small"></span>
         @Html(supporting.headline)
     </a>
