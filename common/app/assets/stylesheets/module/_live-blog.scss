@@ -193,6 +193,9 @@ $block-padding-right: $gs-gutter;
 
 /* Design
    ========================================================================== */
+.blog__secondary-column {
+    background-color: $c-neutral8;
+}
 .blog__zone--default {
     @include mq(tablet, rightCol) {
         @include full-bleed($c-liveDefault);
@@ -980,7 +983,8 @@ $timeline-width: 14px;
         ));
         border-left: 1px solid $c-neutral5;
 
-        &:hover {
+        &:hover,
+        &:active {
             text-decoration: none;
         }
 
@@ -998,7 +1002,9 @@ $timeline-width: 14px;
             background-color: $c-neutral5;
         }
 
-        &:hover:before,
+        &:hover:before {
+            background-color: $c-neutral2;
+        }
         &.live-blog__key-event--selected:before {
             background-color: $c-neutral1;
         }
@@ -1047,9 +1053,13 @@ $timeline-width: 14px;
     color: $c-neutral1;
 
     @include mq(rightCol) {
-        display: block;
+        display: inline;
+        border-color: $c-neutral8;
 
-        .timeline__link:hover &,
+        .timeline__link:hover & {
+            border-color:  $c-neutral2;
+        }
+
         .live-blog__key-event--selected & {
             font-weight: bold;
         }
