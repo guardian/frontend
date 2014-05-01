@@ -222,7 +222,9 @@
         }
         .commercial__home-link {
             left: $gs-gutter/2;
-            bottom: 10px;
+            @include rem((
+                bottom: 10px
+            ));
             top: auto;
             right: auto;
         }
@@ -230,7 +232,7 @@
     @include mq(faciaLeftCol) {
         .commercial__head {
             @include rem((
-                width: gs-span(2) + $gs-gutter
+                width: gs-span(2) + $gs-gutter/2
             ));
         }
         .commercial__home-link {
@@ -240,6 +242,11 @@
                 bottom: $gs-gutter/2,
                 left: $gs-gutter/2
             ));    
+        }
+        .commercial__body {
+            @include rem((
+                margin-left: gs-span(2) + $gs-gutter/2
+            ));            
         }
         .commercial--jobs__sectors {
             width: 50%;
@@ -254,10 +261,12 @@
             display: block;
         }
     }
-    @include mq($from: faciaLeftCol, $to: wide) {
-        .commercial__title__last-word {
-            margin-left: 0;
-        }        
+    @include mq(wide) {
+        .commercial__head {
+            @include rem((
+                margin-right: $gs-gutter/2
+            ));
+        }
     }
 }
 /* article */

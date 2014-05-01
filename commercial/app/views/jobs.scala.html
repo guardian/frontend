@@ -59,8 +59,8 @@
                                 <h3 class="commercial--jobs__job__title">@job.title</h3>
                                 <img src="@job.recruiterLogoUrl" class="commercial--jobs__job__logo" alt="" />
                             </a>
-                            <p class="commercial--jobs__job__salary">@job.salaryDescription</p>
-                            <p class="commercial--jobs__job__recruiter">@job.recruiterName</p>
+                            <p class="commercial--jobs__job__salary">@job.locationDescription - @job.shortSalaryDescription</p>
+                            <p class="commercial--jobs__job__recruiter"><a href="@AdLink{@job.recruiterPageUrl}" data-link-name="merchandising-jobs-v@{version}_@{date}-low-recruiter">@job.recruiterName</a></p>
                         </li>
                     }
                 </ul>
