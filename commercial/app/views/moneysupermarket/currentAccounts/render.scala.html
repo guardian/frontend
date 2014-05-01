@@ -1,13 +1,13 @@
-@(meta: model.MetaData, currentAccounts: Seq[model.commercial.money.CurrentAccount], currentAccountType: String)(implicit request: RequestHeader)
+@(page: controllers.commercial.MoneyPage, currentAccounts: Seq[model.commercial.money.CurrentAccount])(implicit request: RequestHeader)
 
-@main(meta){
+@main(page.meta){
 }{
     <div class="article-wrapper monocolumn-wrapper">
         <article id="article" class="article" itemprop="mainContentOfPage" itemscope role="main">
             <div class="article__columning-wrapper">
                 <div class="article__main-column">
                     <h2>The best current accounts available at moneysupermarket.com</h2>
-                    <p>Current accounts listed by reward amount</p>
+                    <p>@page.description</p>
                     <ul>
                         <li><a href="/commercial/money/current-accounts/reward-incentive">Reward/Incentive</a></li>
                         <li><a href="/commercial/money/current-accounts/high-interest">High interest</a></li>
@@ -16,7 +16,7 @@
                         <li><a href="/commercial/money/current-accounts/basic-accounts">Basic accounts</a></li>
                         <li><a href="/commercial/money/current-accounts/standard-accounts">Standard accounts</a></li>
                     </ul>
-                    @currentAccountType match {
+                    @page.id match {
                        case "reward-incentive" => { @moneysupermarket.currentAccounts.tables.rewards(currentAccounts) }
                        case "with-benefits"    => { @moneysupermarket.currentAccounts.tables.withBenefits(currentAccounts) }
                        case "basic-accounts"   => { @moneysupermarket.currentAccounts.tables.basicAccounts(currentAccounts) }
