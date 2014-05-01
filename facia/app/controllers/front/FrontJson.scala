@@ -3,7 +3,7 @@ package controllers.front
 import model._
 import scala.concurrent.Future
 import play.api.libs.ws.{Response, WS}
-import play.api.libs.json.{JsValue, Json}
+import play.api.libs.json.{JsNull, JsValue, Json}
 import common.ExecutionContexts
 import model.FaciaPage
 import services.SecureS3Request
@@ -71,11 +71,14 @@ trait FrontJson extends ExecutionContexts {
 
   private def parsePressedJson(j: String): Option[FaciaPage] = {
     val json = Json.parse(j)
+    val id: String = (json \ "id").as[String]
     Option(
       FaciaPage(
-        id          = (json \ "id").as[String],
-        webTitle    = (json \ "webTitle").asOpt[String].filter(_.nonEmpty),
-        keyword     = (json \ "keyword").asOpt[String].filter(_.nonEmpty),
+        id,
+        seoData     = (json \ "seoData")
+          .asOpt[JsValue]
+          .map(parseSeoData(id, _))
+          .getOrElse(parseSeoData(id, JsNull)),
         collections = parseOutTuple(json)
       )
     )
@@ -89,6 +92,15 @@ trait FrontJson extends ExecutionContexts {
       }
     }
   }
+
+  private def parseSeoData(id: String, seoDataJson: JsValue): SeoData =
+    SeoData(
+      id,
+      (seoDataJson \ "section").asOpt[String].filter(_.nonEmpty),
+      (seoDataJson \ "webTitle").asOpt[String].filter(_.nonEmpty),
+      (seoDataJson \ "title").asOpt[String].filter(_.nonEmpty),
+      (seoDataJson \ "description").asOpt[String].filter(_.nonEmpty)
+    )
 
 }
 
