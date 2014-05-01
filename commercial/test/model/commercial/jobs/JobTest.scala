@@ -21,4 +21,14 @@ class JobTest extends FlatSpec with Matchers {
 
     job.mainIndustry should be(Some("Arts & heritage"))
   }
+
+  "shortSalaryDescription" should "be in correct format" in {
+    val job1 =
+      Job(1, "title", "desc", "recruiter", None, None, Seq(124, 111, 101), "Unpaid Voluntary Work")
+    val job2 =
+      Job(2, "title", "desc", "recruiter", None, None, Seq(124, 111, 101), "Unpaid Voluntary Work Without Bonus")
+
+    job1.shortSalaryDescription should be("Unpaid Voluntary Work")
+    job2.shortSalaryDescription should be("Unpaid Voluntary Work ...")
+  }
 }
