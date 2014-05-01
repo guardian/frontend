@@ -49,6 +49,9 @@
                     }
                 }
             }
+
+            @trail match { case content:model.Content => @fragments.items.starRating(content) }
+
             @trail.trailText.map { text =>
                 <div class="fromage__standfirst">@Html(text)</div>
             }
