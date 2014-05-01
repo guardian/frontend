@@ -11,7 +11,8 @@ define([
     'common/modules/ui/autoupdate',
     'common/modules/live/filter',
     'common/modules/ui/notification-counter',
-    'common/modules/experiments/affix'
+    'common/modules/experiments/affix',
+    'common/modules/utils/template'
 ], function (
     mediator,
     $,
@@ -25,7 +26,8 @@ define([
     AutoUpdate,
     LiveFilter,
     NotificationCounter,
-    Affix
+    Affix,
+    template
 ) {
     'use strict';
 
@@ -47,7 +49,7 @@ define([
         return getBlocks().pop();
     }
 
-    function createScrollTransitions(){
+    function createScrollTransitions (){
 
         var selectedClass = 'live-blog__key-event--selected';
 
@@ -77,15 +79,17 @@ define([
     }
 
     function createKeyEventHTML(el) {
-        var keyEventTemplate =
-            '<li class="timeline__item" data-event-id="{id}">' +
+        var keyEventTemplate = '<li class="timeline__item" data-event-id="{id}">' +
             '<a class="timeline__link" href="#{id}" data-event-id="{id}">' +
             '<span class="timeline__date">{time}</span><span class="timeline__title">{title}</span></a></li>';
-        keyEventTemplate = keyEventTemplate.replace(/{id}/g, el.getAttribute('id'))
-                            .replace(/{title}/g, $('.block-title', el).text())
-                            .replace(/{time}/g, $('.block-time', el).html());
 
-        return keyEventTemplate;
+        var data = {
+            id: el.getAttribute('id'),
+            title: $('.block-title', el).text(),
+            time: $('.block-time', el).html()
+        };
+
+        return template(keyEventTemplate, data);
     }
 
     function getTimelineHTML(events) {

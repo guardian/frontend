@@ -926,7 +926,7 @@ $timeline-width: 14px;
 
 .blog__timeline-container {
     @include mq(rightCol) {
-        transform: translateZ(0); //To force on GPU
+        @include transform(translateZ(0)); //To force on GPU
         @include rem((
             width: $a-rightCol-width
         ));

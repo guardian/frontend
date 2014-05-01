@@ -28,7 +28,7 @@ define([
     var modules = {
         initLiveBlogging: function(config) {
             if (config.page.isLiveBlog) {
-                LiveBlog.init(config);
+                LiveBlog.init();
             }
         },
 
