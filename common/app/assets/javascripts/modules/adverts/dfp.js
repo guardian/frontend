@@ -118,7 +118,7 @@ define([
                 adUnitSuffix += '/';
             }
             adUnitSuffix += 'front';
-            if (config.switches.lifeAndStyleHack) {
+            if (this.config.switches.lifeAndStyleHack) {
                 adUnitSuffix = adUnitSuffix.replace('Life and style', 'lifeandstyle');
             }
         }
