@@ -70,6 +70,9 @@ define([
     /** @type {Number} id of autoupdate timer */
     Component.prototype.t = null;
 
+    /** @type {String} */
+    Component.prototype.manipulationType = 'append';
+
 
     /**
      * Uses the this.componentClass
@@ -126,7 +129,7 @@ define([
             self._prerender();
 
             if (!self.destroyed) {
-                bonzo(parent).append(self.elem);
+                bonzo(parent)[self.manipulationType](self.elem);
                 self._ready();
             }
         }).fail( function () {
@@ -297,6 +300,15 @@ define([
     };
 
     /**
+     * @param {string} state
+     * @param {string|null} elemName
+     */
+    Component.prototype.toggleState = function(state, elemName) {
+        var elem = elemName ? this.getElem(elemName) : this.elem;
+        bonzo(elem).toggleClass(this.componentClass + (elemName ? '__'+ elemName : '') +'--'+ state);
+    };
+
+    /**
      * @param {string|null} state
      * @param {string|null} elemName
      * return {Boolean}
@@ -339,6 +351,7 @@ define([
 
         this.detach();
         this.destroyed = true;
+        this.rendered = false;
     };
 
     /**
