@@ -18,7 +18,7 @@ case class Job(id: Int,
                keywords: Seq[Keyword] = Nil)
   extends Ad {
 
-  val shortSalaryDescription = StringUtils.abbreviate(salaryDescription, 25)
+  val shortSalaryDescription = StringUtils.abbreviate(salaryDescription, 25).replace("...","…")
 
   def listingUrl = s"http://jobs.theguardian.com/job/$id"
 

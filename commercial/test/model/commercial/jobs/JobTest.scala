@@ -29,6 +29,6 @@ class JobTest extends FlatSpec with Matchers {
       Job(2, "title", "desc", None, "recruiter", None, None, Seq(124, 111, 101), "Unpaid Voluntary Work Without Bonus")
 
     job1.shortSalaryDescription should be("Unpaid Voluntary Work")
-    job2.shortSalaryDescription should be("Unpaid Voluntary Work ...")
+    job2.shortSalaryDescription should be("Unpaid Voluntary Work …")
   }
 }
