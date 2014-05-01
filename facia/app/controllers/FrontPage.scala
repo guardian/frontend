@@ -56,12 +56,12 @@ object FrontPage {
       case None    => "Section"
     }
 
-  def getFrontPageFromFaciaPage(faciaPage: FaciaPage): FrontPage = faciaPage.keyword.map { k =>
+  def getFrontPageFromFaciaPage(faciaPage: FaciaPage): FrontPage = faciaPage.seoData.webTitle.map { k =>
     new FrontPage(isNetworkFront = false) {
       override val id = getId(k)
       override val section = getSection(k)
-      override val webTitle = faciaPage.webTitle
-        .orElse(faciaPage.keyword.map(getDescription))
+      override val webTitle = faciaPage.seoData.webTitle
+        .orElse(faciaPage.seoData.webTitle.map(getDescription))
         .getOrElse(defaultDescription)
       override lazy val analyticsName = getAnalyticsName(k)
       override lazy val description = Some(getDescription(k))
