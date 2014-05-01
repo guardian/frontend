@@ -1,10 +1,7 @@
-@(matchesList: List[FootballMatch], competition: model.Competition, date: Option[org.joda.time.DateMidnight] = null, showCaption: Boolean = false, responsiveFont: Boolean = false)(implicit request: RequestHeader)
+@(matchesList: List[FootballMatch], competition: model.Competition, date: org.joda.time.DateMidnight, responsiveFont: Boolean = false, matchType: String = "")(implicit request: RequestHeader)
 @import implicits.Football._
 
 <table class="table table--football football-matches@if(responsiveFont){ table--responsive-font}">
-    @if(showCaption){
-        <caption class="table__caption"><a href="@competition.url">@competition.fullName</a>@date.map{ date => <span class="football-matches__date">@date.toString("d MMMM yyyy")</span>}</caption>
-    }
     <thead hidden>
         <tr>
             <th class="match__status">Match status / kick off time</th>
@@ -69,4 +66,6 @@
             </tr>
         }
     </tbody>
+    <caption class="table__caption table__caption--top"><a href="@competition.url">@competition.fullName</a><span class="football-matches__date">@date.toString("d MMMM yyyy")</span></caption>
+    <caption class="table__caption table__caption--bottom"><a href="@competition.url@if(matchType!=""){/@matchType}">Show more <span class="competition-name">@competition.fullName</span> @matchType</a></caption>
 </table>
