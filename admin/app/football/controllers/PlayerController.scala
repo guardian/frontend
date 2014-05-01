@@ -31,13 +31,10 @@ object PlayerController extends Controller with ExecutionContexts with GetPaClie
     val playerCardType = submission.get("playerCardType").get.head
     val playerId = submission.get("player").get.head
     val teamId = submission.get("team").get.head
-    println(s"startDate: ${submission.get("startDate")}, comp: ${submission.get("competition")}")
     val redirectUrl = (submission.get("competition"), submission.get("startDate")) match {
       case (Some(compId :: _), _) if !compId.isEmpty =>
-        println(s"comp: $compId")
         s"/admin/football/player/card/competition/$playerCardType/$playerId/$teamId/$compId"
       case (_, Some(startDate:: _)) =>
-        println(s"startDate: $startDate")
         s"/admin/football/player/card/date/$playerCardType/$playerId/$teamId/$startDate"
       case _ => throw new RuntimeException("Couldn't find competition or start date in submission")
     }

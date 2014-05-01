@@ -148,9 +148,6 @@ GET         /admin/football                                                     
 GET         /admin/football/browse                                                                                   controllers.admin.PaBrowserController.browse
 POST        /admin/football/browserRedirect                                                                          controllers.admin.PaBrowserController.browserSubstitution
 GET         /admin/football/browser/*query                                                                           controllers.admin.PaBrowserController.browser(query)
-GET         /admin/football/team                                                                                     controllers.admin.TeamController.teamIndex
-POST        /admin/football/team/head2head                                                                           controllers.admin.TeamController.redirectToTeamHead2Head
-GET         /admin/football/team/head2head/:team1Id/:team2Id                                                         controllers.admin.TeamController.teamHead2Head(team1Id: String, team2Id: String)
 GET         /admin/football/player                                                                                   controllers.admin.PlayerController.playerIndex
 POST        /admin/football/player/card                                                                              controllers.admin.PlayerController.redirectToCard
 GET         /admin/football/player/card/competition/:cardType/:playerId/:teamId/:compId                              controllers.admin.PlayerController.playerCardCompetition(cardType: String, playerId: String, teamId: String, compId: String)
