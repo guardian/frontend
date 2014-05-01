@@ -195,6 +195,8 @@ object Content {
       Option(
         new Snap(
           snapId = itemId,
+          snapSupporting = (json \ "meta" \ "supporting").asOpt[List[JsValue]].getOrElse(Nil)
+            .flatMap(Content.fromPressedJson),
           (json \ "webPublicationDate").asOpt[DateTime].getOrElse(DateTime.now),
           snapMeta = snapMeta
         )
@@ -297,9 +299,10 @@ object SnapApiContent extends ApiContent(
     )
 
 class Snap(snapId: String,
+           snapSupporting: List[Content],
            snapWebPublicationDate: DateTime,
            snapMeta: Map[String, JsValue]
-) extends Content(new ApiContentWithMeta(SnapApiContent, metaData = snapMeta)) {
+) extends Content(new ApiContentWithMeta(SnapApiContent, supporting = snapSupporting, metaData = snapMeta)) {
 
   val snapType: Option[String] = snapMeta.get("snapType").flatMap(_.asOpt[String])
   val snapUri: Option[String] = snapMeta.get("snapUri").flatMap(_.asOpt[String])
