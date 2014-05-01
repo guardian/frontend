@@ -153,6 +153,7 @@
         color: $c-newsDefault;
     }
     .commercial--jobs__job__title {
+        @include fs-headline(1);
         margin: 0;
     }
     .commercial--jobs__job__logo {
@@ -165,6 +166,7 @@
             margin: $gs-baseline/2 0 0
         ));
     }
+    .commercial--jobs__job__salary,
     .commercial--jobs__job__recruiter {
         @include fs-textsans(1);
     }
