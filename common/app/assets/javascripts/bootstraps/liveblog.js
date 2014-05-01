@@ -81,7 +81,7 @@ define([
     function createKeyEventHTML(el) {
         var keyEventTemplate = '<li class="timeline__item" data-event-id="{{id}}">' +
             '<a class="timeline__link" href="#{{id}}" data-event-id="{{id}}">' +
-            '<span class="timeline__date">{{time}}</span><span class="timeline__title">{{title}}</span></a></li>';
+            '<span class="timeline__date">{{time}}</span><span class="timeline__title u-underline">{{title}}</span></a></li>';
 
         var data = {
             id: el.getAttribute('id'),
