@@ -16,6 +16,10 @@
         <div class="blog__inner blog__inner--head@if(isDefault){ blog__head-background--default}">
             <header class="article__head">
 
+                @article.series.headOption.map { series =>
+                    @fragments.meta.series(series.id, series.name, List("inline", "live"))
+                }
+
                 <h1 itemprop="headline" class="blog__headline js-score">@Html(article.headline)</h1>
 
                 <div class="blog__head-lower blog__head-background--accent">

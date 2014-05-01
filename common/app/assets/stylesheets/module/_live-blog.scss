@@ -390,6 +390,14 @@ $block-padding-right: $gs-gutter;
             border-top: 0 none;
         }
     }
+
+    .content-meta__label {
+        color: #e4845a;
+    }
+
+    .content-meta__item.tone-colour {
+        color: #ffffff;
+    }
 }
 
 /* Timestamps
