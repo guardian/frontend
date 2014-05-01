@@ -134,10 +134,12 @@
     }
     .commercial--jobs__job {
         @include box-sizing(border-box);
+        
         &:nth-child(n+2) {
             margin-left: 0;
             display: none;
         }
+        
         &:nth-child(2) {
             padding-right: 0;
         }
@@ -180,7 +182,6 @@
     @include rem((
         padding: $gs-gutter/2
     ));
-    
     @include mq(tablet) {
         .commercial--jobs__sectors {
             float: left;
