@@ -766,8 +766,20 @@
 }
 
 .article-elongator {
-    @include rem((
-        top: -$gs-baseline*2
-    ));
     position: relative;
+
+    .i-center {
+        background-color: $c-brandBlue;
+    }
+}
+
+.after-article {
+    display: block;
+    content: " ";
+    @include rem((
+        min-height: 1px
+    ));
+    @include mq(rightCol) {
+        display: none;
+    }
 }

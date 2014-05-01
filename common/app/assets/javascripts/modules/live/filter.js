@@ -3,76 +3,48 @@
     Description: Filter displayed events depending on their type
 */
 define([
-    'common/common',
-    'bonzo',
-    'bean'
+    'common/$',
+    'common/modules/component',
+    'common/utils/mediator',
+    'lodash/collections/toArray'
 ], function (
-    common,
-    bonzo,
-    bean
+    $,
+    component,
+    mediator,
+    toArray
 ) {
     'use strict';
 
     function Filter(context) {
         this.context = context || document;
-        this.articleContainer = this.context.getElementsByClassName('js-article__container')[0];
-        this.template =
-            '<div class="live-toggler-wrapper">' +
-            '  <button class="u-button-reset live-toggler live-toggler--all js-live-toggler"' +
-            '          data-link-name="filter show key-events" title="Show key events only">' +
-            '    <span class="u-h">Showing key events instead of</span>' +
-            '    <span class="lt__value">All posts</span>' +
-            '    <i class="i i-arrow-grey-down"></i>' +
-            '  </button>' +
-            '  <button class="u-button-reset live-toggler live-toggler--key-events js-live-toggler"' +
-            '          data-link-name="filter show all posts" title="Show all posts">' +
-            '    <span class="u-h">Showing all posts instead of</span>' +
-            '    <span class="lt__value">Key events</span>' +
-            '    <i class="i i-arrow-grey-down"></i>' +
-            '  </button>' +
-            '</div>';
+        this.componentClass = 'live-filter';
+        this.useBem = true;
     }
 
-    Filter.prototype.init = function() {
-        var self = this;
-        bonzo(this.context.getElementsByClassName('js-live-filter')[0]).replaceWith(this.template);
+    component.define(Filter);
 
-        this.findKeyEvents();
+    Filter.prototype.template = '<div><span class="live-toggler__label">Order by:</span>' +
+        '  <button class="u-button-reset live-toggler live-toggler--latest js-live-toggler" title="Sort by oldest first">' +
+        '    <span class="live-toggler__value">Latest</span>' +
+        '    <i class="i i-arrow-grey-down"></i>' +
+        '  </button>' +
+        '  <button class="u-button-reset live-toggler live-toggler--oldest js-live-toggler" title="Sort by latest first">' +
+        '    <span class="live-toggler__value">Oldest</span>' +
+        '    <i class="i i-arrow-grey-down"></i>' +
+        '  </button></div>';
 
-        common.mediator.on('modules:autoupdate:loaded', function() {
-            self.findKeyEvents.call(self);
-        });
-
-        bean.on(this.context, 'click', '.js-live-toggler', function(e) {
-            e.preventDefault();
-            self.showKeyEvents.call(self);
-        });
-
-        bean.on(window, 'hashchange', function() {
-            // Disable the filter on url hash changes
-            // Prevents linking to blocks which may otherwise be hidden
-            var hash = window.location.hash;
-
-            if (hash.indexOf('#block-') === 0) {
-                self.disable();
-                var blockEl = document.getElementById(hash.replace('#', ''));
-                window.scrollTo(0, bonzo(blockEl).offset().top);
-            }
-        });
+    Filter.prototype.ready = function() {
+        this.on('click', '.js-live-toggler', this.toggle);
     };
 
-    Filter.prototype.findKeyEvents = function() {
-        if (this.articleContainer.getElementsByClassName('is-key-event').length) {
-            bonzo(this.articleContainer).addClass('has-key-events');
-        }
-    };
+    Filter.prototype.toggle = function() {
+        var blocks = toArray($('.block', this.context).detach());
+        blocks.reverse();
 
-    Filter.prototype.showKeyEvents = function() {
-        bonzo(this.articleContainer).toggleClass('show-only-key-events');
-    };
+        this.toggleState('order-by-oldest');
+        $(this.context).prepend(blocks);
 
-    Filter.prototype.disable = function() {
-        bonzo(this.articleContainer).removeClass('show-only-key-events');
+        mediator.emit('module:filter:toggle');
     };
 
     return Filter;
