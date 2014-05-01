@@ -170,6 +170,9 @@
     .commercial--jobs__job__recruiter {
         @include fs-textsans(1);
     }
+    .commercial--jobs__job__salary {
+        margin-bottom: 0;
+    }
 }
 
 /* fronts */
