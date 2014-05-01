@@ -3,6 +3,19 @@ package model.commercial.money
 import model.commercial.{Segment, Ad}
 import scala.xml.{Node, Elem}
 
+object CreditCards {
+
+  def currentAds: Map[String, Seq[CreditCard]] = Map(
+    "balance-transfer" -> creditCardsAgent.BalanceTransferAndPurchase.currentAds,
+    "purchases" -> creditCardsAgent.Purchase.currentAds,
+    "balance-transfer-and-purchases" -> creditCardsAgent.BalanceTransfer.currentAds,
+    "cashback" -> creditCardsAgent.Cashback.currentAds,
+    "low-standard-rate" -> creditCardsAgent.LowStandardRate.currentAds,
+    "rewards" -> creditCardsAgent.Rewards.currentAds,
+    "bad-credit" -> creditCardsAgent.LowCredit.currentAds
+  )
+
+}
 
 case class CreditCard(name: String,
                       provider: String,
@@ -30,11 +43,7 @@ case class CreditExample(amount: Double,
                          fee: Double)
 
 
-object CreditCardsApi extends MoneySupermarketApi[CreditCard] {
-
-  protected val adTypeName = "Credit Cards"
-
-  protected lazy val path = "cards/balance-transfer-and-purchase"
+trait CreditCardsApi extends MoneySupermarketApi[CreditCard] {
 
   def parse(xml: Elem): Seq[CreditCard] = {
 
@@ -70,7 +79,62 @@ object CreditCardsApi extends MoneySupermarketApi[CreditCard] {
   }
 }
 
+package object creditCardsApi {
 
-object CreditCardsAgent extends MoneyAgent[CreditCard] {
-  protected def loadProducts() = CreditCardsApi.loadAds()
+  object BalanceTransfer extends CreditCardsApi {
+    protected val adTypeName = "Credit Cards - Balance Transfer"
+    protected lazy val path = "cards/balance-transfer"
+  }
+  object Purchase extends CreditCardsApi {
+    protected val adTypeName = "Credit Cards - Purchase"
+    protected lazy val path = "cards/purchase"
+  }
+  object BalanceTransferAndPurchase extends CreditCardsApi {
+    protected val adTypeName = "Credit Cards - Balance Transfer and Purchase"
+    protected lazy val path = "cards/balance-transfer-and-purchase"
+  }
+  object Cashback extends CreditCardsApi {
+    protected val adTypeName = "Credit Cards - Cashback"
+    protected lazy val path = "cards/cashback"
+  }
+  object LowStandardRate extends CreditCardsApi {
+    protected val adTypeName = "Credit Cards - Low Standard Rate"
+    protected lazy val path = "cards/low-standard-rate"
+  }
+  object Rewards extends CreditCardsApi {
+    protected val adTypeName = "Credit Cards - Rewards"
+    protected lazy val path = "cards/rewards"
+  }
+  object LowCredit extends CreditCardsApi {
+    protected val adTypeName = "Credit Cards - Low Credit"
+    protected lazy val path = "cards/low-credit"
+  }
+
+}
+
+
+package object creditCardsAgent {
+
+  object BalanceTransfer extends MoneyAgent[CreditCard] {
+    protected def loadProducts() = creditCardsApi.BalanceTransfer.loadAds()
+  }
+  object Purchase extends MoneyAgent[CreditCard] {
+    protected def loadProducts() = creditCardsApi.Purchase.loadAds()
+  }
+  object BalanceTransferAndPurchase extends MoneyAgent[CreditCard] {
+    protected def loadProducts() = creditCardsApi.BalanceTransferAndPurchase.loadAds()
+  }
+  object Cashback extends MoneyAgent[CreditCard] {
+    protected def loadProducts() = creditCardsApi.Cashback.loadAds()
+  }
+  object LowStandardRate extends MoneyAgent[CreditCard] {
+    protected def loadProducts() = creditCardsApi.LowStandardRate.loadAds()
+  }
+  object Rewards extends MoneyAgent[CreditCard] {
+    protected def loadProducts() = creditCardsApi.Rewards.loadAds()
+  }
+  object LowCredit extends MoneyAgent[CreditCard] {
+    protected def loadProducts() = creditCardsApi.LowCredit.loadAds()
+  }
+
 }

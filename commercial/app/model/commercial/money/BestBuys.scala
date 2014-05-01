@@ -4,7 +4,7 @@ import model.commercial.Segment
 
 case class BestBuys(
                      mortgages: Seq[Mortgage],
-                     creditCards: Seq[CreditCard],
+                     creditCards: Map[String, Seq[CreditCard]],
                      loans: Seq[Loan],
                      currentAccounts: Seq[CurrentAccount],
                      savings: Seq[SavingsAccount]
@@ -15,7 +15,13 @@ object BestBuysAgent {
 
   protected val agents = Seq(
     MortgagesAgent,
-    CreditCardsAgent,
+    creditCardsAgent.BalanceTransfer,
+    creditCardsAgent.Purchase,
+    creditCardsAgent.BalanceTransferAndPurchase,
+    creditCardsAgent.Cashback,
+    creditCardsAgent.LowStandardRate,
+    creditCardsAgent.Rewards,
+    creditCardsAgent.LowCredit,
     LoansAgent,
     CurrentAccountsAgent,
     SavingsAgent
@@ -23,7 +29,7 @@ object BestBuysAgent {
 
   def adsTargetedAt(segment: Segment): Option[BestBuys] = {
     val mortgages = MortgagesAgent.currentAds
-    val creditCards = CreditCardsAgent.currentAds
+    val creditCards = CreditCards.currentAds
     val loans = LoansAgent.currentAds
     val currentAccounts = CurrentAccountsAgent.currentAds
     val savings = SavingsAgent.currentAds

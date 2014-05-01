@@ -62,7 +62,7 @@
                             <td class="hide-cell-on-mobile">Representative APR</td>
                         </thead>
                         <tbody>
-                        @bestBuys.creditCards.take(3).map { card =>
+                        @bestBuys.creditCards.get("balance-transfer-and-purchase").getOrElse(Nil).take(3).map { card =>
                             <tr>
                                 <td><a href="@card.applyUrl">@card.name</a></td>
                                 <td>@card.balanceTransferRate%</td>
