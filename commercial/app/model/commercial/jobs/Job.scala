@@ -12,19 +12,19 @@ case class Job(id: Int,
                locationDescription: Option[String],
                recruiterName: String,
                recruiterPageUrl: Option[String],
-               recruiterLogoUrl: Option[String],
+               recruiterLogoUrl: String,
                sectorIds: Seq[Int],
                salaryDescription: String,
                keywords: Seq[Keyword] = Nil)
   extends Ad {
 
-  val shortSalaryDescription = StringUtils.abbreviate(salaryDescription, 25).replace("...","…")
+  val shortSalaryDescription = StringUtils.abbreviate(salaryDescription, 25).replace("...", "…")
 
   def listingUrl = s"http://jobs.theguardian.com/job/$id"
 
   def isTargetedAt(segment: Segment): Boolean = {
-    val someKeywordsMatch = intersects(segment.context.keywords, keywords.map(_.name))
-    segment.context.isInSection("business") && someKeywordsMatch
+    val adKeywords = keywords.map(_.name)
+    intersects(segment.context.keywords, adKeywords)
   }
 
   val industries: Seq[String] =

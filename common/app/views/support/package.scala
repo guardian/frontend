@@ -298,6 +298,23 @@ case class PictureCleaner(contentImages: Seq[ImageElement]) extends HtmlCleaner 
   }
 }
 
+case class LiveBlogDateFormatter(isLiveBlog: Boolean)(implicit val request: RequestHeader) extends HtmlCleaner  {
+  def clean(body: Document): Document = {
+    if (isLiveBlog) {
+      body.select(".block-time.published-time time").foreach { el =>
+        el.attr("data-relativeformat", "med")
+        val datetime = DateTime.parse(el.attr("datetime"))
+        val hhmm = Format(datetime, "HH:mm")
+        el.after(s"""<span class="block-time__absolute">$hhmm</span>""")
+        if(datetime.isAfter(DateTime.now().minusDays(5))) {
+          el.addClass("js-timestamp")
+        }
+      }
+    }
+    body
+  }
+}
+
 object BulletCleaner {
   def apply(body: String): String = body.replace("•", """<span class="bullet">•</span>""")
 }
@@ -676,6 +693,11 @@ object VisualTone {
   val Comment = "comment"
   val News = "news"
   val Feature = "feature"
+  val Live = "live"
+
+  private val liveMappings = Seq(
+    "tone/minutebyminute"
+  )
 
   private val commentMappings = Seq(
     "tone/comment",
@@ -698,8 +720,9 @@ object VisualTone {
 
 
   // tones are all considered to be 'News' it is the default so we do not list news tones explicitly
-  def apply(tags: Tags) = if(isComment(tags.tones)) Comment else if(isFeature(tags.tones)) Feature else News
+  def apply(tags: Tags) = if(isLive(tags.tones)) Live else if(isComment(tags.tones)) Comment else if(isFeature(tags.tones)) Feature else News
 
+  private def isLive(tones: Seq[Tag]) = tones.exists(t => liveMappings.contains(t.id))
   private def isComment(tones: Seq[Tag]) = tones.exists(t => commentMappings.contains(t.id))
   private def isFeature(tones: Seq[Tag]) = tones.exists(t => featureMappings.contains(t.id))
 }
@@ -801,7 +824,7 @@ object GetClasses {
   }
 
   def makeSnapClasses(trail: Trail): Seq[String] = trail match {
-    case snap: Snap => snap.snapType.map(t => Seq(s"facia-snap facia-snap--$t")).getOrElse(Seq("facia-snap facia-snap--default"))
+    case snap: Snap => "facia-snap" +: snap.snapType.map(t => Seq(s"facia-snap--$t")).getOrElse(Seq("facia-snap--default"))
     case _  => Nil
   }
 

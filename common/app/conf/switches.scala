@@ -3,9 +3,9 @@ package conf
 import com.gu.management.{ DefaultSwitch, Switchable }
 import common._
 import implicits.Collections
-import play.api.{Application, Plugin}
-import play.api.libs.ws.WS
 import org.joda.time.{Days, DateTime, DateMidnight}
+import play.api.libs.ws.WS
+import play.api.{Application, Plugin}
 
 sealed trait SwitchState
 case object On extends SwitchState
@@ -147,6 +147,10 @@ object Switches extends Collections {
   val CriteoSwitch = Switch("Ad Targeting", "criteo",
     "If this switch is on, Criteo segments will be used to target ads.",
     safeState = Off, sellByDate = new DateMidnight(2014, 11, 1))
+
+  val LifeAndStyleHackSwitch = Switch("Ad Targeting", "life-and-style",
+    "If this switch is on, ads will work on Life and Style front while waiting for fix from Front Tools team.",
+    safeState = On, sellByDate = new DateMidnight(2014, 5, 14))
 
   // Commercial Tags
 
@@ -382,6 +386,7 @@ object Switches extends Collections {
     AudienceScienceSwitch,
     AudienceScienceGatewaySwitch,
     CriteoSwitch,
+    LifeAndStyleHackSwitch,
     DiscussionSwitch,
     OpenCtaSwitch,
     FontSwitch,

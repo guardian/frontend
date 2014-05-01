@@ -26,7 +26,7 @@ object JobsApi extends XmlAdsApi[Job] {
   override def cleanResponseBody(body: String) = body.dropWhile(_ != '<')
 
   def parse(xml: Elem): Seq[Job] = {
-    (xml \ "Job") map {
+    (xml \ "Job").filterNot(job => (job \ "RecruiterLogoURL").isEmpty).map {
       job =>
         Job(
           (job \ "JobID").text.toInt,
@@ -35,7 +35,7 @@ object JobsApi extends XmlAdsApi[Job] {
           OptString((job \ "LocationDescription").text),
           (job \ "RecruiterName").text,
           OptString((job \ "RecruiterPageUrl").text),
-          OptString((job \ "RecruiterLogoURL").text),
+          (job \ "RecruiterLogoURL").text,
           ((job \ "Sectors" \ "Sector") map (_.text.toInt)).toSeq,
           (job \ "SalaryDescription").text
         )

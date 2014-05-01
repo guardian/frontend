@@ -34,7 +34,6 @@ object Fixtures {
       |      <Sector>600117</Sector>
       |      <Sector>600190</Sector>
       |    </Sectors>
-      |    <RecruiterLogoURL>http://jobs.theguardian.com/getasset/?uiAssetID=70666A14-BD49-4BB8-AC6A-FCF8B716E131</RecruiterLogoURL>
       |    <SalaryDescription>Unpaid Voluntary Work</SalaryDescription>
       |    <LocationDescription>Rotherham/Sheffield</LocationDescription>
       |    <RecruiterPageUrl>http://jobs.theguardian.com/employer/196644/</RecruiterPageUrl>
@@ -83,19 +82,8 @@ object Fixtures {
       Some("Rotherham/Sheffield"),
       "ALDI",
       Some("http://jobs.theguardian.com/employer/196643/"),
-      Some("http://jobs.theguardian.com/getasset/?uiAssetID=833D7672-6B21-4D81-BCE1-9CEF11CCEA21"),
+      "http://jobs.theguardian.com/getasset/?uiAssetID=833D7672-6B21-4D81-BCE1-9CEF11CCEA21",
       Seq(149, 158, 245),
-      "Unpaid Voluntary Work"
-    ),
-
-    Job(4302057,
-      "Listen Laugh & Learn in Worcestershire",
-      "The role of Association Visitor is a highly rewarding one with many opportunities for developing your own skills and knowledge, whilst being part of a team. Professional qualifications or personal experience of MND are not necessary...",
-      Some("Rotherham/Sheffield"),
-      "MOTOR NEURONE DISEASE ASSOCIATION",
-      Some("http://jobs.theguardian.com/employer/196644/"),
-      Some("http://jobs.theguardian.com/getasset/?uiAssetID=70666A14-BD49-4BB8-AC6A-FCF8B716E131"),
-      Seq(111, 112, 121, 286, 600117, 600190),
       "Unpaid Voluntary Work"
     ),
 
@@ -105,7 +93,7 @@ object Fixtures {
       Some("Rotherham/Sheffield"),
       "CATCH 22",
       Some("http://jobs.theguardian.com/employer/196645/"),
-      Some("http://jobs.theguardian.com/getasset/?uiAssetID=1D428A1F-65B4-4ADE-8CA3-91F2AE7423E3"),
+      "http://jobs.theguardian.com/getasset/?uiAssetID=1D428A1F-65B4-4ADE-8CA3-91F2AE7423E3",
       Seq(111, 112, 115, 219, 222, 600118, 600119),
       "Unpaid Voluntary Work"
     ),
@@ -116,7 +104,7 @@ object Fixtures {
       Some("Rotherham/Sheffield"),
       "RAF CAREERS",
       Some("http://jobs.theguardian.com/employer/196646/"),
-      Some("http://jobs.theguardian.com/getasset/?uiAssetID=14357B35-BBA3-4F96-ADF3-F9ABC82C894C"),
+      "http://jobs.theguardian.com/getasset/?uiAssetID=14357B35-BBA3-4F96-ADF3-F9ABC82C894C",
       Seq(166, 308),
       "Unpaid Voluntary Work"
     )
