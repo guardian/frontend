@@ -6,10 +6,7 @@
     }
 
     // Generic
-    &.facia-snap-point--mini,
-    &.facia-snap-point--small,
-    &.facia-snap-point--medium,
-    &.facia-snap-point--large {
+    &.facia-snap-embed {
         @include rem((
             border-left-width: $gs-gutter/2,
             border-right-width: $gs-gutter/2
