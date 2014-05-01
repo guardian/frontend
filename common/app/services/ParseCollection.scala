@@ -2,13 +2,8 @@ package services
 
 import common.FaciaMetrics.S3AuthorizationError
 import common._
-<<<<<<< HEAD
-import conf.{ContentApi => ContentApi, Configuration}
-import model.{Collection, Config, Content}
-=======
-import conf.{SwitchingContentApi => ContentApi, Configuration}
+import conf.{ContentApi, Configuration}
 import model.{Snap, Collection, Config, Content}
->>>>>>> 6386bba9d3dd72db50658b465b81394b0858c090
 import play.api.libs.json.Json._
 import play.api.libs.json.{JsObject, JsValue}
 import play.api.libs.ws.Response
@@ -152,35 +147,17 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
       Future.successful(Nil)
     }
     else {
-<<<<<<< HEAD
-      val results = collectionItems.foldLeft(Future[List[Content]](Nil)){(foldListFuture, collectionItem) =>
-        lazy val supportingAsContent: Future[List[Content]] = {
-          lazy val supportingLinks: List[CollectionItem] = retrieveSupportingLinks(collectionItem)
-          if (!hasParent) getArticles(supportingLinks, edition, hasParent=true) else Future.successful(Nil)
-        }
-        val response = ContentApi.item(collectionItem.id, edition).showFields(showFieldsWithBodyQuery).response
-
-        val content = response.map(_.content).recover {
-          case apiError: com.gu.openplatform.contentapi.ApiError if apiError.httpStatus == 404 => {
-            log.warn(s"Content API Error: 404 for ${collectionItem.id}")
-            None
-          }
-          case apiError: com.gu.openplatform.contentapi.ApiError if apiError.httpStatus == 410 => {
-            log.warn(s"Content API Error: 410 for ${collectionItem.id}")
-            None
-=======
       val results = collectionItems.foldLeft(Future[List[Content]](Nil)) {
         (foldListFuture, collectionItem) =>
           if (collectionItem.isSnap) {
             foldListFuture.map(_ :+ new Snap(collectionItem.id, collectionItem.webPublicationDate.getOrElse(DateTime.now), collectionItem.metaData.getOrElse(Map.empty)))
->>>>>>> 6386bba9d3dd72db50658b465b81394b0858c090
           }
           else {
             lazy val supportingAsContent: Future[List[Content]] = {
               lazy val supportingLinks: List[CollectionItem] = retrieveSupportingLinks(collectionItem)
               if (!hasParent) getArticles(supportingLinks, edition, hasParent = true) else Future.successful(Nil)
             }
-            val response = ContentApi().item(collectionItem.id, edition).showFields(showFieldsWithBodyQuery).response
+            val response = ContentApi.item(collectionItem.id, edition).showFields(showFieldsWithBodyQuery).response
 
             val content = response.map(_.content).recover {
               case apiError: com.gu.openplatform.contentapi.ApiError if apiError.httpStatus == 404 => {
