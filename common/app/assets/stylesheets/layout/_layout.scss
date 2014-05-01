@@ -196,6 +196,12 @@ a.edition {
             margin-top:$gs-baseline * 3
         ));
     }
+
+    &:last-child {
+        @include rem((
+            margin-bottom:$gs-baseline * 3
+        ));
+    }
 }
 
 .box-indent {
