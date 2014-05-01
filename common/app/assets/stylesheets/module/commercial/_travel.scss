@@ -5,7 +5,6 @@
 .footer {
     margin-top: 0 !important;
 }
-
 .commercial--travel {
     .lineitem {
         list-style-type: none;
@@ -27,9 +26,6 @@
     .lineitem__image {
         width: 100%;
         display: block;
-    }
-    .lineitem__title {
-        font-weight: bold;
     }
     .commercial__head {
         position: static;
@@ -68,6 +64,15 @@
             padding: 0 $gs-gutter/2 0 0
         ));
     }
+    .commercial__search {
+        position: absolute;
+        @include rem((
+            bottom: 10px,
+            margin-top: $gs-baseline*4
+        ));
+        float: none;
+        width: 100%;
+    }
     @include mq(tablet) {
         .commercial__body {
             padding: 0;
@@ -78,14 +83,6 @@
             &:nth-child(3) {
                 display: block;
             }
-        }
-        .commercial__search {
-            position: relative;
-            float: none;
-            width: 100%;
-            @include rem((
-                margin-top: $gs-baseline*4
-            ));
         }
         .commercial__home-link {
             position: absolute;
@@ -104,7 +101,7 @@
 
 /* fronts */
 .facia-container--layout-front .commercial--travel {
-    @include mq($from: tablet, $to: desktop) {
+    @include mq($to: desktop) {
         @include rem((
             padding-bottom: $gs-baseline*4.5
         ));
@@ -120,10 +117,6 @@
             ));
         }
         .commercial__search {
-            position: absolute;
-            @include rem((
-                bottom: 10px
-            ));
             width: 97%;
         }
     }
@@ -132,6 +125,9 @@
             float: left;
             width: 25%;
         }
+        .commercial__search {
+            position: relative;
+        }        
         .commercial__home-link {
             @include rem((
                 bottom: 10px,
@@ -172,14 +168,15 @@
     }
     @include mq($from: faciaLeftCol, $to: wide) {
         @include rem((
-            padding-bottom: $gs-baseline*3
+            padding-bottom: $gs-baseline*4
         ));
         
         .commercial__home-link {
            @include box-sizing(border-box);
            @include rem((
                width: gs-span(2),
-               line-height: 18px
+               line-height: 18px,
+               bottom: $gs-baseline*4.5
            ));
         }
         .commercial__title__last-word {
@@ -189,9 +186,7 @@
             position: absolute;
             @include box-sizing(border-box);
             @include rem((
-                width: gs-span(6),
-                margin-top: 40px,
-                right: 10px,
+                width: gs-span(5),
                 bottom: 10px
             ));
         }
@@ -208,7 +203,7 @@
 
 /* article */
 .facia-container--layout-article .commercial--travel {
-    @include mq($from: tablet, $to: rightCol) {
+    @include mq($to: rightCol) {
         @include rem((
             padding-bottom: $gs-baseline*4.5
         ));
@@ -224,10 +219,6 @@
             ));
         }
         .commercial__search {
-            position: absolute;
-            @include rem((
-                bottom: 10px
-            ));
             width: 94%;
         }
     }
@@ -238,6 +229,9 @@
                 padding-right: 8px
             ));
             float: left;
+        }
+        .commercial__search {
+            position: relative;
         }
         .commercial__home-link {
             @include rem((
@@ -253,6 +247,11 @@
             ));
         }
     }
+    @include mq(desktop) {
+        .commercial__search {
+            position: relative;
+        }
+    }
     @include mq(leftCol) {
         .lineitem {
             width: 25%;
@@ -264,7 +263,7 @@
     }
     @include mq($from: leftCol, $to: wide) {
         @include rem((
-            padding-bottom: $gs-baseline*3
+            padding-bottom: $gs-baseline*4
         ));
         
         .commercial__home-link {
@@ -272,12 +271,13 @@
             @include rem((
                 width: gs-span(2),
                 line-height: 18px,
-                left: 10px
+                left: 10px,
+                bottom: $gs-baseline*4.5
             ));
+
         }
         .commercial__head {
             padding-left: 0;
-            
         }
         .commercial__title {
             @include rem((
@@ -292,9 +292,7 @@
             position: absolute;
             @include box-sizing(border-box);
             @include rem((
-                width: gs-span(6),
-                margin-top: 40px,
-                right: 20px,
+                width: gs-span(5)+$gs-gutter ,
                 bottom: 10px
             ));
         }
