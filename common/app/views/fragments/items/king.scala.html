@@ -1,7 +1,7 @@
 @(trail: Trail, index: Int)(implicit request: RequestHeader)
 
 <div
-    class="@GetClasses.forItem(trail, true) baguette"
+    class="@GetClasses.forItem(trail, true) king"
     data-link-name="trail | @{index + 1}"
     @SnapData(trail)
 >
@@ -12,7 +12,7 @@
             @fragments.items.elements.title(trail, index, 0)
         </a>
         @trail.trailText.map { text =>
-            <div class="baguette__standfirst">@Html(text)</div>
+            <div class="king__standfirst">@Html(text)</div>
         }
     </div>
 

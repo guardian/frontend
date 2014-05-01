@@ -7,7 +7,7 @@
         @hugeItems.zipWithIndex.map{ case (trail, index) =>
             @if(items.nonEmpty) {
                 <div class="facia-slice-wrapper">
-                    @fragments.items.baguette(trail, index)
+                    @fragments.items.king(trail, index)
                 </div>
             }
         }
@@ -15,7 +15,7 @@
         @veryBigItems.zipWithIndex.map{ case (trail, index) =>
             @if(items.nonEmpty) {
                 <div class="facia-slice-wrapper">
-                    @fragments.items.fromage(trail, index + hugeItemsCount)
+                    @fragments.items.queen(trail, index + hugeItemsCount)
                 </div>
             }
         }
@@ -25,7 +25,7 @@
                 <div class="facia-slice-wrapper">
                     @if(items.size == 1) {
                         @items.zipWithIndex.map{ case (trail, index) =>
-                            @fragments.items.fromage(trail, index + hugeItemsCount + veryBigItemsCount + bigItemsCount)
+                            @fragments.items.queen(trail, index + hugeItemsCount + veryBigItemsCount + bigItemsCount)
                         }
                     }else{
                         @defining((items(0).imageAdjust == "boost", items(1).imageAdjust == "boost")) { case (firstStoryImageBoosted, secondStoryImageBoosted) =>
