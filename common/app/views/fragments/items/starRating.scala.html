@@ -1,7 +1,5 @@
 @(content: model.Content)(implicit request: RequestHeader)
 
-@content.delegate.safeFields
-
 @content.starRating.map { s =>
     <span class="stars s-@s" itemprop="reviewRating" itemscope itemtype="http://schema.org/Rating">
         <meta itemprop="worstRating" content="1" />
