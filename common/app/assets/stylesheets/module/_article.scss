@@ -775,7 +775,7 @@
 
 .after-article {
     display: block;
-    content: ' ';
+    content: " ";
     @include rem((
         min-height: 1px
     ));

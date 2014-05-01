@@ -47,8 +47,8 @@
     }
 }
 .live-toggler__label {
+    padding-left: 0;
     @include rem((
-        padding-left: 0,
         padding-right: $gutter/4
     ));
     color: $c-neutral2;
@@ -91,7 +91,7 @@
 /* Auto update toggle
    ========================================================================== */
 @include keyframes(live-pulse) {
-    0% {background-color: $c-live}
+    0% {background-color: $c-live;}
     10% {background-color: #df7787;}
     40% {background-color: $c-live;}
     100% {background-color: $c-live;}
