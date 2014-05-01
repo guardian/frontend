@@ -26,6 +26,18 @@
                 </h2>
             }
         </div>
+        @* TODO: example of advert on front - remove once hooked into DFP
+        <div class="ad-slot--paid-for-badge ad-slot--paid-for-badge--fronts">
+            <div class="ad-slot--paid-for-badge__inner">
+                <h3 class="ad-slot--paid-for-badge__header">Advertisement feature</h3>
+                <p class="ad-slot--paid-for-badge__label">In association with</p>
+                <a href="%%CLICK_URL_UNESC%%#" class="ad-slot--paid-for-badge__link">
+                    <img class="ad-slot--paid-for-badge__logo" src="https://pbs.twimg.com/profile_images/2162331249/unilever-logo.gif" width="140" height="80" />
+                </a>
+                <a href="%%CLICK_URL_UNESC%%#" class="ad-slot--paid-for-badge__help">What is this?</a>
+            </div>
+        </div>
+        *@
         <div class="container__body">
             @fragments.contributor(page)
             @fragments.collections.tag(collection.items, style, containerIndex)

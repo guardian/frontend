@@ -1,12 +1,10 @@
 define([
     'common/$',
-    'common/common',
     'bonzo',
     'bean',
     'common/modules/userPrefs'
 ], function (
     $,
-    common,
     bonzo,
     bean,
     userPrefs
@@ -63,7 +61,9 @@ define([
                 _$container[_state === 'displayed' ? 'removeClass' : 'addClass']('container--rolled-up');
                 // data-link-name is inverted, as happens before clickstream
                 _$button.attr('data-link-name', _toggleText[_state === 'displayed' ? 'hidden' : 'displayed']);
-                common.$g('.container__toggle__text', _$button[0]).text(_toggleText[_state]);
+                $('.container__toggle__text', _$button[0]).text(_toggleText[_state]);
+                // hide/show the badge
+                $('.ad-slot--paid-for-badge', container).css('display', _state === 'hidden' ? 'none' : 'block');
                 _updatePref(_$container, _state);
             });
             _readPrefs(_$container);
