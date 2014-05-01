@@ -291,7 +291,7 @@
             position: absolute;
             @include box-sizing(border-box);
             @include rem((
-                width: gs-span(5)+$gs-gutter ,
+                width: gs-span(5)+$gs-gutter,
                 bottom: 10px
             ));
         }
