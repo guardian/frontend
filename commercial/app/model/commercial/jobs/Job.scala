@@ -9,7 +9,7 @@ case class Job(id: Int,
                title: String,
                shortDescription: String,
                recruiterName: String,
-               recruiterLogoUrl: Option[String],
+               recruiterLogoUrl: String,
                sectorIds: Seq[Int],
                keywords: Seq[Keyword] = Nil)
   extends Ad {
@@ -22,7 +22,7 @@ case class Job(id: Int,
   }
 
   val industries: Seq[String] =
-    Industries.sectorIdIndustryMap.filter { case (id, name) => sectorIds.contains(id)}.values.toSeq
+    Industries.sectorIdIndustryMap.filter { case (sectorId, name) => sectorIds.contains(sectorId)}.values.toSeq
 
   val mainIndustry: Option[String] = industries.headOption
 }
