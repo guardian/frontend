@@ -135,16 +135,26 @@
                 visible: id,
                 click: toggleOpen"></div>
 
-            <div class="cnf-front__inner" data-bind="if: state.isOpen">
+            <!-- ko if: !id() -->
+                <div class="cnf-form">
+                    <label>Type</label>
+                    <input type="radio" name="collectionType" value="" data-bind="checkedValue: undefined, checked: props.type" />
+                    <span class="radio-label">editorial</span>
+                    <input type="radio" name="collectionType" value="commercial" data-bind="checked: props.type" />
+                    <span class="radio-label">commercial</span>
 
+                    <label>URL path</label>
+                    <input type="text" placeholder="eg. world/middleeast" data-bind="value: id"/>
+
+                    <div class="tools">
+                        <span class="tool">Create front</span>
+                    </div>
+                </div>
+            <!-- /ko -->
+
+            <div class="cnf-front__inner" data-bind="if: state.isOpen">
                 <!-- ko if: state.isOpenProps() -->
                     <div class="cnf-form">
-                        <!-- ko if: !id() -->
-                            <label>URL path</label>
-                            <input type="text" placeholder="required, eg. world/middleeast" data-bind="
-                                value: id"/>
-                        <!-- /ko -->
-
                         <label>Section</label>
                         <input type="text" data-bind="
                             attr: {placeholder: placeholders.section},
@@ -164,12 +174,6 @@
                         <input type="text" placeholder="eg. Latest Middle East news, travel guides and reviews" data-bind="
                             attr: {placeholder: placeholders.description},
                             value: props.description"/>
-
-                        <label>Type</label>
-                        <input type="radio" name="collectionType" value="" data-bind="checkedValue: undefined, checked: props.type" />
-                        <span class="radio-label">front</span>
-                        <input type="radio" name="collectionType" value="microsite" data-bind="checked: props.type" />
-                        <span class="radio-label">microsite</span>
 
                         <div class="tools">
                             <span class="tool" data-bind="click: saveProps">Save metadata</span>

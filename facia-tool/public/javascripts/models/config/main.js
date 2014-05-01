@@ -67,7 +67,6 @@ define([
                 front = new Front();
                 model.pinnedFront(front);
                 model.fronts.unshift(front);
-                model.openFront(front, true);
             } else {
                 window.alert('The maximum number of fronts (' + vars.CONST.maxFronts + ') has been exceeded. Please delete one first, by removing all its collections.');
             }

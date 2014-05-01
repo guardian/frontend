@@ -57,7 +57,9 @@ define([
 
         this.id.subscribe(function() {
             this.validate(true);
-            this.derivePlaceholders();
+            if (this.id()) {
+                this.setOpen(true);
+            }
         }, this);
 
         this.props.name.subscribe(function() {
@@ -103,21 +105,17 @@ define([
 
     Front.prototype.toggleOpen = function() {
         this.state.isOpen(!this.state.isOpen());
-        this.derivePlaceholders();
     };
 
     Front.prototype.openProps = function() {
         this.state.isOpenProps(true);
-        this.collections.items().map(function(collection) {
-            collection.close();
-        });
+        this.derivePlaceholders();
+        this.collections.items().map(function(collection) { collection.close(); });
     };
 
     Front.prototype.saveProps = function() {
-        if(this.id()) {
-            vars.model.save();
-            this.state.isOpenProps(false);
-        }
+        vars.model.save();
+        this.state.isOpenProps(false);
     };
 
     Front.prototype.createCollection = function() {
