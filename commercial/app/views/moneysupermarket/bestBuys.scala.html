@@ -141,7 +141,7 @@
                             <td>AER</td>
                         </thead>
                         <tbody>
-                        @bestBuys.savings.take(3).map { account =>
+                        @bestBuys.savings.get("easy-access").getOrElse(Nil).take(3).map { account =>
                             <tr>
                                 <td><a href="@account.applyUrl">@account.provider</a></td>
                                 <td class="hide-cell-on-mobile">@account.name</td>

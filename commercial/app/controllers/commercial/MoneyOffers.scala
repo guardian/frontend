@@ -3,7 +3,7 @@ package controllers.commercial
 import play.api.mvc._
 import model.Cached
 import common.JsonComponent
-import model.commercial.money.{CreditCard, CurrentAccount, BestBuysAgent}
+import model.commercial.money.{SavingsAccount, CreditCard, CurrentAccount, BestBuysAgent}
 import model.Page
 
 object MoneyOffers extends Controller {
@@ -19,11 +19,13 @@ object MoneyOffers extends Controller {
       }
   }
 
-  def savingsEasyAccess = Action { implicit request =>
-    Cached(60)(Ok(views.html.moneysupermarket.savings.easyAccess(
+  def savings(savingsType: String) = Action { implicit request =>
+    val savings: Seq[SavingsAccount] = BestBuysAgent.adsTargetedAt(segment).flatMap(_.savings.get(savingsType)).getOrElse(Nil)
+    Cached(60)(Ok(views.html.moneysupermarket.savings.render(
       Page("moneysupermarket-savings", "money", "Moneysupermarket | Savings", "GFE:moneysupermarket"),
-      BestBuysAgent.adsTargetedAt(segment).map(_.savings).getOrElse(Nil)))
-    )
+      savings,
+      savingsType
+    )))
   }
 
   def currentAccounts(currentAccountType: String) = Action { implicit request =>

@@ -7,7 +7,7 @@ case class BestBuys(
                      creditCards: Map[String, Seq[CreditCard]],
                      loans: Seq[Loan],
                      currentAccounts: Map[String, Seq[CurrentAccount]],
-                     savings: Seq[SavingsAccount]
+                     savings: Map[String, Seq[SavingsAccount]]
                      )
 
 
@@ -15,6 +15,7 @@ object BestBuysAgent {
 
   protected val agents = Seq(
     MortgagesAgent,
+    LoansAgent,
     creditCardsAgent.BalanceTransfer,
     creditCardsAgent.Purchase,
     creditCardsAgent.BalanceTransferAndPurchase,
@@ -22,14 +23,19 @@ object BestBuysAgent {
     creditCardsAgent.LowStandardRate,
     creditCardsAgent.Rewards,
     creditCardsAgent.LowCredit,
-    LoansAgent,
     currentAccountsAgent.Rewards,
     currentAccountsAgent.HighInterest,
     currentAccountsAgent.BestOverdraft,
     currentAccountsAgent.WithBenefits,
     currentAccountsAgent.BasicAccounts,
     currentAccountsAgent.StandardAccounts,
-    SavingsAgent
+    savingsAgent.CashIsas,
+    savingsAgent.EasyAccess,
+    savingsAgent.FixedRateBonds,
+    savingsAgent.RegularSavings,
+    savingsAgent.ChildrensAccounts,
+    savingsAgent.NoticeAccounts,
+    savingsAgent.OffshoreAccounts
   )
 
   def adsTargetedAt(segment: Segment): Option[BestBuys] = {
@@ -37,7 +43,7 @@ object BestBuysAgent {
     val creditCards = CreditCards.currentAds
     val loans = LoansAgent.currentAds
     val currentAccounts = CurrentAccounts.currentAds
-    val savings = SavingsAgent.currentAds
+    val savings = SavingsAccounts.currentAds
 
     if (mortgages.isEmpty
       && creditCards.isEmpty
