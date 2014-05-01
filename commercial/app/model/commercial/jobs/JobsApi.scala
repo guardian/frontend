@@ -1,10 +1,10 @@
 package model.commercial.jobs
 
-import scala.xml.Elem
 import conf.{Switches, CommercialConfiguration}
 import model.commercial.{OptString, XmlAdsApi}
-import org.joda.time.format.DateTimeFormat
 import org.apache.commons.lang.StringEscapeUtils.unescapeHtml
+import org.joda.time.format.DateTimeFormat
+import scala.xml.Elem
 
 object JobsApi extends XmlAdsApi[Job] {
 
@@ -33,6 +33,7 @@ object JobsApi extends XmlAdsApi[Job] {
           (job \ "JobTitle").text,
           unescapeHtml((job \ "ShortJobDescription").text),
           (job \ "RecruiterName").text,
+          OptString((job \ "RecruiterPageUrl").text),
           OptString((job \ "RecruiterLogoURL").text),
           ((job \ "Sectors" \ "Sector") map (_.text.toInt)).toSeq,
           (job \ "SalaryDescription").text

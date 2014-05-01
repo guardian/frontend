@@ -1,16 +1,15 @@
 package model.commercial.jobs
 
-import model.commercial._
 import common.{AkkaAgent, ExecutionContexts}
-import scala.concurrent.duration._
+import model.commercial._
 import scala.concurrent.Future
-import model.commercial.Segment
-import model.commercial.Keyword
+import scala.concurrent.duration._
 
 case class Job(id: Int,
                title: String,
                shortDescription: String,
                recruiterName: String,
+               recruiterPageUrl: Option[String],
                recruiterLogoUrl: Option[String],
                sectorIds: Seq[Int],
                salaryDescription: String,
@@ -24,7 +23,7 @@ case class Job(id: Int,
     segment.context.isInSection("business") && someKeywordsMatch
   }
 
-  val industries: Seq[String] = Industries.sectorIdIndustryMap.filter{ case(id, name) => sectorIds.contains(id) }.values.toSeq
+  val industries: Seq[String] = Industries.sectorIdIndustryMap.filter{ case(sectorId, name) => sectorIds.contains(sectorId) }.values.toSeq
 
   val mainIndustry: Option[String] = industries.headOption
 }
