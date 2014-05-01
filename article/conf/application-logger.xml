@@ -28,12 +28,6 @@
         </encoder>
     </appender>
 
-    <!-- TODO: make this switchable -->
-    <!-- DFP API logging -->
-    <logger name="com.google.api.ads.dfp.lib.client.DfpServiceClient.soapXmlLogger" level="OFF"/>
-    <logger name="com.google.api.client.http.HttpTransport" level="OFF"/>
-    <logger name="com.google.api.ads.dfp.lib.client.DfpServiceClient.requestInfoLogger" level="INFO"/>
-
     <root level="INFO">
         <appender-ref ref="LOGFILE"/>
     </root>

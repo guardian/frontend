@@ -1,4 +1,4 @@
-package services
+package dfp
 
 import com.google.api.ads.common.lib.auth.OfflineCredentials
 import com.google.api.ads.common.lib.auth.OfflineCredentials.Api
@@ -138,6 +138,20 @@ object DfpApi extends Logging {
 
     keywordValues.distinct.sorted
   }
+
+  def fetchSponsoredSlotKeywordTargetingValues(lineItems: Seq[LineItem]): Seq[String] =
+    dependingOnSwitch(Seq[String]()) {
+      val keywordValues = lineItems.foldLeft(Seq[String]()) { (soFar, lineItem) =>
+        val customTargeting = DfpApi.getCustomTargeting(lineItem, fetchAllKeywordTargetingValues())
+        if (!customTargeting.get("Keywords").get.isEmpty) {
+          soFar ++ customTargeting.flatMap(_._2.map(_.toString)).toSeq
+        } else {
+          soFar
+        }
+      }
+
+      keywordValues.distinct.sorted
+    }
 
   def getCustomTargeting(lineItem: LineItem, allKeywordValues: Map[Long, String]): Map[String, Seq[AnyRef]] = {
 

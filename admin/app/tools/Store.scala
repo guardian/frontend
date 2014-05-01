@@ -8,6 +8,7 @@ trait Store extends Logging {
   lazy val configKey = AdminConfiguration.configKey
   lazy val switchesKey = AdminConfiguration.switchesKey
   lazy val topStoriesKey = AdminConfiguration.topStoriesKey
+  lazy val dfpDataKey = AdminConfiguration.dfpDataKey
 
   def getConfig = S3.get(configKey)
   def putConfig(config: String) { S3.putPublic(configKey, config, "application/json") }
@@ -19,6 +20,8 @@ trait Store extends Logging {
 
   def getTopStories = S3.get(topStoriesKey)
   def putTopStories(config: String) { S3.putPublic(topStoriesKey, config, "application/json") }
+
+  def putDfpData(data: String) { S3.putPublic(dfpDataKey, data, "application/json") }
 }
 
 object Store extends Store
