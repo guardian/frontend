@@ -26,6 +26,7 @@ case class CreditCard(name: String,
                       logoUrl: String,
                       applyUrl: String,
                       rewardNotes: String,
+                      cashbackNotes: String,
                       representativeApr: Double,
                       purchaseRate: Double,
                       purchaseRateDuration: Int) extends Ad {
@@ -71,6 +72,7 @@ trait CreditCardsApi extends MoneySupermarketApi[CreditCard] {
           (product \ "LogoUrl").text,
           (product \ "ApplyUrl").text,
           (product \ "RewardNotes").text,
+          (product \ "CashbackNotes").text,
           (product \ "RepresentiveApr").text.toDouble,
           (product \ "PurchaseRate").text.toDouble,
           (product \ "PurchaseRateDuration").text.toInt

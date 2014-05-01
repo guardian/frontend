@@ -1,0 +1,32 @@
+@(meta: model.MetaData, creditCards: Seq[model.commercial.money.CreditCard], creditCardType: String)(implicit request: RequestHeader)
+
+@main(meta){
+}{
+    <div class="article-wrapper monocolumn-wrapper">
+        <article id="article" class="article" itemprop="mainContentOfPage" itemscope role="main">
+            <div class="article__columning-wrapper">
+                <div class="article__main-column">
+                    <h2>The best credit cards available at moneysupermarket.com</h2>
+                    <p>Cards listed by duration of 0% balance transfer offer</p>
+                    <ul>
+                        <li><a href="/commercial/money/credit-cards/balance-transfer">Balance transfer</a></li>
+                        <li><a href="/commercial/money/credit-cards/purchases">Purchases</a></li>
+                        <li><a href="/commercial/money/credit-cards/balance-transfer-and-purchases">Balance transfer &amp; purchases</a></li>
+                        <li><a href="/commercial/money/credit-cards/cashback">Cashback</a></li>
+                        <li><a href="/commercial/money/credit-cards/low-standard-rate">Low standard rate</a></li>
+                        <li><a href="/commercial/money/credit-cards/rewards">Rewards</a></li>
+                        <li><a href="/commercial/money/credit-cards/bad-credit">Bad credit</a></li>
+                    </ul>
+                    @creditCardType match {
+                        case "purchases"         => { @moneysupermarket.creditCards.tables.purchases(creditCards) }
+                        case "cashback"          => { @moneysupermarket.creditCards.tables.cashback(creditCards) }
+                        case "low-standard-rate" => { @moneysupermarket.creditCards.tables.lowStandardRate(creditCards) }
+                        case "rewards"           => { @moneysupermarket.creditCards.tables.rewards(creditCards) }
+                        case "bad-credit"        => { @moneysupermarket.creditCards.tables.badCredit(creditCards) }
+                        case _                   => { @moneysupermarket.creditCards.tables.default(creditCards) }
+                    }
+                </div>
+            </div>
+        </article>
+    </div>
+}

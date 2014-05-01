@@ -37,9 +37,10 @@ object MoneyOffers extends Controller {
 
   def creditCards(creditCardType: String) = Action { implicit request =>
     val creditCards: Seq[CreditCard] = BestBuysAgent.adsTargetedAt(segment).flatMap(_.creditCards.get(creditCardType)).getOrElse(Nil)
-    Cached(60)(Ok(views.html.moneysupermarket.creditCards(
+    Cached(60)(Ok(views.html.moneysupermarket.creditCards.render(
       Page("moneysupermarket-credit-cards", "money", "Moneysupermarket | Credit Cards", "GFE:moneysupermarket"),
-      creditCards
+      creditCards,
+      creditCardType
     )))
   }
 
