@@ -199,7 +199,7 @@ a.edition {
 
     &:last-child {
         @include rem((
-            margin-bottom:$gs-baseline * 3
+            margin-bottom: $gs-baseline * 3
         ));
     }
 }
