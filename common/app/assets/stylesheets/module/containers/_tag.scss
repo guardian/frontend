@@ -14,7 +14,7 @@
         }
     }
     .facia-slice-wrapper:first-child .fromage {
-        border-top-style: none;
+        border-top-width: 0;
     }
     @include mq(faciaLeftCol, wide) {
         .container__title {
