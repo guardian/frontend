@@ -9,6 +9,7 @@ import scala.concurrent.duration._
 case class Job(id: Int,
                title: String,
                shortDescription: String,
+               locationDescription: Option[String],
                recruiterName: String,
                recruiterPageUrl: Option[String],
                recruiterLogoUrl: Option[String],
