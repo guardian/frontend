@@ -13,7 +13,7 @@ with CloudWatchApplicationMetrics {
     super.onStart(app)
 
     Jobs.deschedule("DfpDataRefreshJob")
-    Jobs.schedule("DfpDataRefreshJob", "0 1/30 * * * ?") {
+    Jobs.schedule("DfpDataRefreshJob", "0 6/30 * * * ?") {
       DfpAgent.refresh()
     }
 
