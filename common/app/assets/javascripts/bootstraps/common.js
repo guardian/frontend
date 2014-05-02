@@ -306,6 +306,8 @@ define([
                 if (config.page.pageType !== 'Article' && window.location.hash !== '#show-badge') {
                     var selector = options.dfpSelector || '.ad-slot--dfp';
                     options.dfpSelector = selector + ':not(.ad-slot--paid-for-badge)';
+                } else {
+                    $('.dfp-badge-container').css('display', 'block');
                 }
 
                 dfpAds = new DFP(extend(config, options));
