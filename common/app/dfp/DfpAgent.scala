@@ -2,7 +2,7 @@ package dfp
 
 import common.{AkkaAsync, Jobs, ExecutionContexts, AkkaAgent}
 import conf.Configuration.commercial.dfpDataKey
-import model.Article
+import model.{Content, Article}
 import play.api.libs.json.Json._
 import play.api.{Application, GlobalSettings}
 import scala.concurrent.future
@@ -15,9 +15,9 @@ object DfpAgent extends ExecutionContexts {
 
   def targetedKeywords: Seq[String] = targetedKeywordsAgent get()
 
-  def isSponsored(article: Article) = {
-    val articleKeywords = article.keywords.map(_.name.toLowerCase.replace(" ", "-"))
-    !(articleKeywords intersect targetedKeywords).isEmpty
+  def isSponsored(content:Content) = {
+    val contentKeywords = content.keywords.map(_.name.toLowerCase.replace(" ", "-"))
+    !(contentKeywords intersect targetedKeywords).isEmpty
   }
 
   def refresh() {

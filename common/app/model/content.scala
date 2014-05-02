@@ -11,6 +11,7 @@ import collection.JavaConversions._
 import views.support.{VisualTone, Naked, ImgSrc, StripHtmlTagsAndUnescapeEntities}
 import play.api.libs.json.JsValue
 import conf.Configuration.facebook
+import dfp.DfpAgent
 
 class Content protected (val apiContent: ApiContentWithMeta) extends Trail with MetaData {
 
@@ -45,7 +46,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
       .getOrElse(facebook.imageFallback)
   }
 
-  lazy val isSponsored: Boolean = tags.exists(_.id == "tone/sponsoredfeatures")
+  lazy val isSponsored: Boolean = DfpAgent.isSponsored(this)
   lazy val sponsor: Option[Sponsor] = {
     if (isSponsored) {
       Sponsors.find(tags.filter(_.tagType == "keyword").head.id)
