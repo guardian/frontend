@@ -28,6 +28,7 @@ define([
     };
 
     Affix.CLASS = 'affix';
+    Affix.CLASSY_BOTTOM = 'affix-bottom';
 
     Affix.prototype.calculateContainerPositioning = function() {
 
@@ -58,8 +59,8 @@ define([
 
             // Lock the affix container to the bottom marker.
             if (bottomCheck) {
-                this.$element.removeClass('affix-bottom');
-                this.$container.removeClass('affix-bottom');
+                this.$element.removeClass(Affix.CLASSY_BOTTOM);
+                this.$container.removeClass(Affix.CLASSY_BOTTOM);
                 this.calculateContainerPositioning();
             } else {
                 // Store the container top (without element top positioning),
@@ -68,8 +69,8 @@ define([
 
                 var topStyle = this.$markerBottom.offset().top - this.$markerTop.offset().top - this.$element.dim().height + oldContainerStyling;
                 this.$container.css('top',  topStyle + 'px');
-                this.$element.addClass('affix-bottom');
-                this.$container.addClass('affix-bottom');
+                this.$element.addClass(Affix.CLASSY_BOTTOM);
+                this.$container.addClass(Affix.CLASSY_BOTTOM);
             }
 
             if (affix) {
