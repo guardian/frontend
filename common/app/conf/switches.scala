@@ -70,7 +70,7 @@ object Switches extends Collections {
 
   val GzipSwitch = Switch("Performance Switches", "gzip",
     "If switched on then http responses will be gzipped",
-    safeState = Off, sellByDate = new DateMidnight(2014, 5, 5)
+    safeState = Off, sellByDate = new DateMidnight(2014, 5, 31)
   )
 
   val DoubleCacheTimesSwitch = Switch("Performance Switches", "double-cache-times",
