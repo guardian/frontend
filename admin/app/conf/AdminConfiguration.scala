@@ -1,5 +1,6 @@
 package conf
 
+import Configuration.environment
 import com.gu.conf.ConfigurationFactory
 import org.apache.commons.configuration.MapConfiguration
 import scala.slick.session.Database
@@ -18,7 +19,7 @@ object AdminConfiguration {
   lazy val configKey = configuration.getStringProperty("admin.config.file").getOrElse(throw new RuntimeException("Config file name is not setup"))
   lazy val switchesKey = configuration.getStringProperty("switches.file").getOrElse(throw new RuntimeException("Switches file name is not setup"))
   lazy val topStoriesKey = configuration.getStringProperty("top-stories.config").getOrElse(throw new RuntimeException("Top Stories file name is not setup"))
-  lazy val dfpDataKey = configuration.getStringProperty("dfp-data.file").getOrElse(throw new RuntimeException("DFP Data file name is not setup"))
+  lazy val dfpDataKey = s"${environment.stage.toUpperCase}/commercial/dfp-data.json"
 
   object analytics {
     lazy val url = configuration.getStringProperty("analytics.db.url").getOrElse(throw new RuntimeException("Analytics database url not configured"))
