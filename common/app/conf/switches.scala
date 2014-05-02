@@ -125,11 +125,6 @@ object Switches extends Collections {
     safeState = On, sellByDate = never
   )
 
-  val DfpApiSwitch = Switch("Advertising", "dfp-api",
-    "Allow requests out to the DFP API",
-    safeState = On, sellByDate = never
-  )
-
   // Ad Targeting
   /*
     These switches are to control length of request to DFP
@@ -383,7 +378,6 @@ object Switches extends Collections {
     CommercialComponentsSwitch,
     VideoAdvertsSwitch,
     SponsoredSwitch,
-    DfpApiSwitch,
     AudienceScienceSwitch,
     AudienceScienceGatewaySwitch,
     CriteoSwitch,

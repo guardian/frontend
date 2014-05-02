@@ -7,7 +7,6 @@ import com.google.api.ads.dfp.axis.utils.v201403.StatementBuilder
 import com.google.api.ads.dfp.axis.v201403._
 import com.google.api.ads.dfp.lib.client.DfpSession
 import common.Logging
-import conf.Switches.DfpApiSwitch
 import conf.AdminConfiguration.dfpApi
 
 object DfpApi extends Logging {
@@ -34,41 +33,35 @@ object DfpApi extends Logging {
   private lazy val customTargetingServiceOption: Option[CustomTargetingServiceInterface] =
     session.map(dfpServices.get(_, classOf[CustomTargetingServiceInterface]))
 
-  private def dependingOnSwitch[T](default: T)(action: T): T = {
-    if (DfpApiSwitch.isSwitchedOn) action else default
-  }
+  def fetchCurrentLineItems(): Seq[LineItem] = lineItemServiceOption.fold(Seq[LineItem]()) { lineItemService =>
+    val statementBuilder = new StatementBuilder()
+      .where("status = :readyStatus OR status = :deliveringStatus")
+      .orderBy("id ASC")
+      .limit(StatementBuilder.SUGGESTED_PAGE_LIMIT)
+      .withBindVariableValue("readyStatus", ComputedStatus.READY.toString)
+      .withBindVariableValue("deliveringStatus", ComputedStatus.DELIVERING.toString)
 
-  def fetchCurrentLineItems(): Seq[LineItem] = dependingOnSwitch(Seq[LineItem]()) {
-    lineItemServiceOption.fold(Seq[LineItem]()) { lineItemService =>
-      val statementBuilder = new StatementBuilder()
-        .where("status = :readyStatus OR status = :deliveringStatus")
-        .orderBy("id ASC")
-        .limit(StatementBuilder.SUGGESTED_PAGE_LIMIT)
-        .withBindVariableValue("readyStatus", ComputedStatus.READY.toString)
-        .withBindVariableValue("deliveringStatus", ComputedStatus.DELIVERING.toString)
+    var totalResultSetSize = 0
+    var totalResults: Seq[LineItem] = Nil
 
-      var totalResultSetSize = 0
-      var totalResults: Seq[LineItem] = Nil
-
-      try {
-        do {
-          val page = lineItemService.getLineItemsByStatement(statementBuilder.toStatement)
-          val results = page.getResults
-          if (results != null) {
-            totalResultSetSize = page.getTotalResultSetSize
-            totalResults ++= results
-          }
-          statementBuilder.increaseOffsetBy(StatementBuilder.SUGGESTED_PAGE_LIMIT)
-        } while (statementBuilder.getOffset < totalResultSetSize)
-      } catch {
-        case e: Exception => log.error(s"Exception fetching current line items: $e")
-      }
-
-      totalResults
+    try {
+      do {
+        val page = lineItemService.getLineItemsByStatement(statementBuilder.toStatement)
+        val results = page.getResults
+        if (results != null) {
+          totalResultSetSize = page.getTotalResultSetSize
+          totalResults ++= results
+        }
+        statementBuilder.increaseOffsetBy(StatementBuilder.SUGGESTED_PAGE_LIMIT)
+      } while (statementBuilder.getOffset < totalResultSetSize)
+    } catch {
+      case e: Exception => log.error(s"Exception fetching current line items: $e")
     }
+
+    totalResults
   }
 
-  def fetchAllKeywordTargetingValues(): Map[Long, String] = dependingOnSwitch(Map[Long, String]()) {
+  def fetchAllKeywordTargetingValues(): Map[Long, String] =
     customTargetingServiceOption.fold(Map[Long, String]()) { customTargetingService =>
 
       def fetchKeywordTargetingKeyId(): Option[Long] = {
@@ -124,9 +117,8 @@ object DfpApi extends Logging {
 
       targetingValues
     }
-  }
 
-  def fetchKeywordTargetingValues(lineItems: Seq[LineItem]): Seq[String] = dependingOnSwitch(Seq[String]()) {
+  def fetchKeywordTargetingValues(lineItems: Seq[LineItem]): Seq[String] = {
     val keywordValues = lineItems.foldLeft(Seq[String]()) { (soFar, lineItem) =>
       val customTargeting = DfpApi.getCustomTargeting(lineItem, fetchAllKeywordTargetingValues())
       if (!customTargeting.get("Keywords").get.isEmpty) {
@@ -139,20 +131,19 @@ object DfpApi extends Logging {
     keywordValues.distinct.sorted
   }
 
-  def fetchSponsoredSlotKeywordTargetingValues(lineItems: Seq[LineItem]): Seq[String] =
-    dependingOnSwitch(Seq[String]()) {
-      val allKeywords = fetchAllKeywordTargetingValues()
-      val keywordValues = lineItems.foldLeft(Seq[String]()) { (soFar, lineItem) =>
-        val customTargeting = DfpApi.getCustomTargeting(lineItem, allKeywords)
-        if (!customTargeting.get("Keywords").get.isEmpty) {
-          soFar ++ customTargeting.flatMap(_._2.map(_.toString)).toSeq
-        } else {
-          soFar
-        }
+  def fetchSponsoredSlotKeywordTargetingValues(lineItems: Seq[LineItem]): Seq[String] = {
+    val allKeywords = fetchAllKeywordTargetingValues()
+    val keywordValues = lineItems.foldLeft(Seq[String]()) { (soFar, lineItem) =>
+      val customTargeting = DfpApi.getCustomTargeting(lineItem, allKeywords)
+      if (!customTargeting.get("Keywords").get.isEmpty) {
+        soFar ++ customTargeting.flatMap(_._2.map(_.toString)).toSeq
+      } else {
+        soFar
       }
-
-      keywordValues.distinct.sorted
     }
+
+    keywordValues.distinct.sorted
+  }
 
   def getCustomTargeting(lineItem: LineItem, allKeywordValues: Map[Long, String]): Map[String, Seq[AnyRef]] = {
 
