@@ -1,10 +1,10 @@
 @(competitions: List[pa.Season], teams: List[pa.Team])
 
-@views.html.football.main("Players") {
+@views.html.football.main("Player cards") {
     <div class="row">
         <div class="col-sm-12">
             <hgroup class="page-header">
-                <h1>Players</h1>
+                <h1>Player cards</h1>
             </hgroup>
         </div>
     </div>
@@ -12,42 +12,47 @@
     <div class="row">
         <div class="col-sm-12">
             <form role="form" action="/admin/football/player/card" method="post">
-                <div class="form-group">
-                    <div class="input-group">
-                        <label class="input-group-addon">Card type:</label>
-                        <select class="form-control" id="player-card-type" name="playerCardType">
-                            <option value="attack">Attack</option>
-                            <option value="assist">Assist</option>
-                            <option value="discipline">Discipline</option>
-                            <option value="defence">Defence</option>
-                            <option value="goalkeeper">Goalkeeper</option>
-                        </select>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group form-line">
+                            <div class="btn-group" data-toggle="buttons">
+                                <label class="btn btn-primary active">
+                                    <input type="radio" name="playerCardType" value="attack" checked="checked" /> Attack
+                                </label>
+                                <label class="btn btn-primary">
+                                    <input type="radio" name="playerCardType" value="assist" /> Assist
+                                </label>
+                                <label class="btn btn-primary">
+                                    <input type="radio" name="playerCardType" value="discipline" /> Discipline
+                                </label>
+                                <label class="btn btn-primary">
+                                    <input type="radio" name="playerCardType" value="defence" /> Defence
+                                </label>
+                                <label class="btn btn-primary">
+                                    <input type="radio" name="playerCardType" value="goalkeeper" /> Goalkeeper
+                                </label>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <hr />
                 <div class="row">
-                    <div class="col-sm-5">
-                        @views.html.football.fragments.chooseLeague("competition", competitions, withEmptyValue = true)
-                    </div>
-                    <div class="col-sm-2">
-                        <p class="text-center">Or,</p>
-                    </div>
-                    <div class="col-sm-5">
-                        <div class="form-group">
+                    <div class="col-sm-12">
+                        <div class="form-inline form-group">
+                            @views.html.football.fragments.chooseLeague("competition", competitions, withEmptyValue = true)
+                            <b>Or</b>
                             <input type="text" name="startDate" class="form-control date-picker" placeholder="Choose start date" />
                         </div>
                     </div>
                 </div>
-                <hr />
-
 
                 <div class="row">
-                    <div class="col-sm-6">
-                        @views.html.football.fragments.chooseTeam("team", teams)
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="form-group">
+                    <div class="col-sm-12">
+                        <div class="form-inline form-group">
+                            @views.html.football.fragments.chooseTeam("team", teams)
+                        </div>
+
+                        <div class="form-inline form-group">
                             @*<select name="player" id="id-player" class="form-control foot-autocomplete" data-placeholder="Choose player"></select>*@
                             <input type="text" name="player" id="id-player" class="form-control player-chooser" autocomplete="off" placeholder="Choose player">
                         </div>
