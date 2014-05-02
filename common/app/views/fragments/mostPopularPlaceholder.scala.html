@@ -1,12 +1,14 @@
 @(section: String, tone: String = "news")(implicit request: RequestHeader)
 
 @defining(Some(section).filter{ section => section.nonEmpty && !section.equals("global")}.map{ section => s"/most-read/$section" }.getOrElse("/most-read")){ url =>
-    <div class="article-wrapper monocolumn-wrapper tone-@tone" data-component="popular-in-section">
-        <div class="js-popular article__popular container--popular no-indent-article__zone">
-            <h2 class="article__zone tone-border">
-                <a class="most-viewed-no-js tone-colour" href="@LinkTo{@url}" data-link-name="Most viewed @section">Most popular
-                <i class="i i-arrow-grey-down"></i></a>
-            </h2>
+    <div class="gs-container">
+        <div class="monocolumn-wrapper monocolumn-wrapper--no-limit-desktop tone-@tone" data-component="popular-in-section">
+            <div class="js-popular article__popular container--popular no-indent-article__zone">
+                <h2 class="article__zone tone-border">
+                    <a class="most-viewed-no-js tone-colour" href="@LinkTo{@url}" data-link-name="Most viewed @section">Most popular
+                    <i class="i i-arrow-grey-down"></i></a>
+                </h2>
+            </div>
         </div>
     </div>
 }

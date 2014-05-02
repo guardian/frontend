@@ -8,8 +8,7 @@
                 <a class="blog__zone__link" data-link-name="article section" href="@LinkTo{/@article.section}">@Html(article.sectionName.toLowerCase)</a>
             </span>
         </h2>
-
-        <div class="monocolumn-wrapper monocolumn-wrapper--no-limit article-wrapper tone-@VisualTone(article)">
+        <div class="article-wrapper monocolumn-wrapper tone-@VisualTone(article)">
             <article id="article" class="article @if(article.isLive){is-live} blog"
             itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType" role="main">
 
@@ -131,10 +130,9 @@
                 </div>
             }
 
-
         </div>
-
-
+    </div>
+    <div class="facia-container facia-container--layout-article">
         @fragments.storyPackagePlaceholder(storyPackage)
 
         @fragments.onwardPlaceholder(VisualTone(article))

@@ -550,6 +550,9 @@
 }
 
 @include mq(rightCol) {
+    .article-wrapper {
+        max-width: none;
+    }
     .article__inner {
         @include rem((
             max-width: gs-span(8),

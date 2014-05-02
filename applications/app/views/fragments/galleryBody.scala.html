@@ -1,5 +1,5 @@
 @(gallery: Gallery, storyPackage: List[Trail], index: Int, trail: Boolean)(implicit request: RequestHeader)
-@import conf.Switches._
+
 <div class="gs-container">
     <h2 class="article__zone left-col-deport tone-@VisualTone(gallery) tone-accent-border hide-on-mobile-if-localnav">
         <span class="left-col-deport__body" data-component="meta">
@@ -76,7 +76,8 @@
         </article>
     </div>
 
-
+</div>
+<div class="facia-container facia-container--layout-article">
     @fragments.storyPackagePlaceholder(storyPackage)
 
     @fragments.onwardPlaceholder(VisualTone(gallery))

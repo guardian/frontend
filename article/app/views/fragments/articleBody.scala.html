@@ -8,7 +8,7 @@
                 <a class="tone-colour" data-link-name="article section" href="@LinkTo{/@article.section}">@Html(article.sectionName.toLowerCase)</a>
             </span>
         </h2>
-        <div class="monocolumn-wrapper monocolumn-wrapper--no-limit article-wrapper tone-@VisualTone(article)">
+        <div class="article-wrapper monocolumn-wrapper tone-@VisualTone(article)">
             <article id="article" class="article @if(article.isLive){is-live} @if(article.isAdvertisementFeature){article--advertisement-feature}"
                      itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType" role="main">
 
@@ -123,16 +123,15 @@
                 </div>
             }
         </div>
+    </div>
 
-
+    <div class="facia-container facia-container--layout-article facia-container--commercial">
         @fragments.storyPackagePlaceholder(storyPackage)
 
         @fragments.onwardPlaceholder(VisualTone(article))
 
         @fragments.mostPopularPlaceholder(article.section, VisualTone(article))
 
-    </div>
-    <div class="facia-container facia-container--layout-article facia-container--commercial">
         @fragments.commercial.commercialComponent(name="merchandising", adType="commercial-component", sizeMapping=Map("mobile" -> Seq("888,88")))
     </div>
 }

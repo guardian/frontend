@@ -167,7 +167,10 @@ a.edition {
         margin-left: auto;
         margin-right: auto;
     }
-    .monocolumn-wrapper--no-limit {
+}
+
+@include mq(desktop) {
+    .monocolumn-wrapper--no-limit-desktop {
         max-width: none;
     }
 }
