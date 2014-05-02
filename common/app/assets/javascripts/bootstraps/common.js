@@ -302,6 +302,12 @@ define([
                     options.dfpSelector = '.ad-slot--dfp:not(.ad-slot--commercial-component)';
                 }
 
+                // TODO: once front's badges slot are only added when necessary
+                if (config.page.pageType !== 'Article' && window.location.hash !== '#show-badge') {
+                    var selector = options.dfpSelector || '.ad-slot--dfp';
+                    options.dfpSelector = selector + ':not(.ad-slot--paid-for-badge)';
+                }
+
                 dfpAds = new DFP(extend(config, options));
                 dfpAds.init();
                 onResize.cmd.push(dfpAds.reload);
