@@ -13,7 +13,7 @@ import play.api.libs.ws.WS
 import scala.concurrent.Future
 import scala.concurrent.duration._
 
-class FootballStatsPlugin(app: PlayApp) extends Plugin {
+class FootballStatsPlugin(app: PlayApp) extends Plugin with ExecutionContexts {
 
   def scheduleJobs() {
     Competitions.competitionIds.zipWithIndex map { case (id, index) =>
@@ -45,10 +45,10 @@ class FootballStatsPlugin(app: PlayApp) extends Plugin {
 
     // Have all these run once at load, then on the scheduled times
     AkkaAsync.after(5.seconds){
-      Competitions.refreshCompetitionData()
+      val competitionUpdate = Competitions.refreshCompetitionData()
+      competitionUpdate.onSuccess { case _ => Competitions.competitionIds.foreach(Competitions.refreshCompetitionAgent) }
       Competitions.refreshMatchDay()
       LiveBlogAgent.refresh()
-      Competitions.competitionIds.foreach(Competitions.refreshCompetitionAgent)
       TeamMap.refresh()
     }
   }
