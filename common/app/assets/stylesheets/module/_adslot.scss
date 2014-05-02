@@ -197,40 +197,62 @@
             margin-top: $gs-baseline/3
         ));
     }
-}
-.ad-slot--paid-for-badge--fronts {
-    @include clearfix;
-    position: relative;
 
-    .ad-slot--paid-for-badge__inner {
-        border-top: 0;
+    // badges in containers
+    .container & {
+        @include clearfix;
+        position: relative;
         min-height: 80px;
-    }
-    .ad-slot--paid-for-badge__link {
-        position: absolute;
-        top: 0;
-        right: 0;
-    }
-    + .container__body .collection-wrapper:first-child .fromage {
-        border-top-width: 2px;
-    }
-    @include mq(tablet) {
-        padding-left: 50%;
-        @include rem((
-            margin-top: -$gs-row-height,
-            margin-right: gs-span(1)
-        ));
-    }
-    @include mq($facia-leftCol-trigger) {
-        padding: 0;
-        margin: 0;
-        float: left;
 
+        .ad-slot--paid-for-badge__inner {
+            border-top: 0;
+            padding-bottom: 0;
+        }
         .ad-slot--paid-for-badge__link {
-            position: relative;
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+        .ad-slot--paid-for-badge__logo {
+            display: block;
         }
         + .container__body .collection-wrapper:first-child .fromage {
-            border-top-width: 0;
+            border-top-width: 2px;
+        }
+        @include mq(tablet) {
+            margin-left: 50%;
+            width: auto;
+            @include rem((
+                margin-top: -$gs-row-height,
+                margin-right: gs-span(1)
+            ));
+
+            .ad-slot--paid-for-badge__inner {
+                padding-top: 0;
+            }
+        }
+        @include mq(desktop) {
+            @include rem((
+                padding-left: $gs-gutter/2
+            ));
+        }
+        @include mq(faciaLeftCol) {
+            padding: 0;
+            margin: 0;
+            float: left;
+            @include rem((
+                margin-top: 4px
+            ));
+
+            .ad-slot--paid-for-badge__link {
+                position: relative;
+            }
+            + .container__body .collection-wrapper:first-child .fromage {
+                border-top-width: 0;
+            }
+        }
+        @include mq(wide) {
+            clear: left;
         }
     }
 }

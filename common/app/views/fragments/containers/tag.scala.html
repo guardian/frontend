@@ -25,6 +25,7 @@
                     </h2>
                 }
             </div>
+            @fragments.commercial.badge(name="badge", adType="paid-for-badge", sizeMapping=Map("mobile" -> Seq("140,80")))
             <div class="container__body">
                 @fragments.contributor(page)
                 @fragments.collections.tag(collection.items, style, containerIndex)

@@ -90,13 +90,18 @@ class CreditCardsApiTest extends FlatSpec with Matchers {
       |</Product></Cards>""".stripMargin
 
   "parse" should "parse Credit Cards from xml feed" in {
+
+    object CreditCardsApi extends CreditCardsApi {
+      protected val adTypeName = "Credit Cards - Test"
+      protected lazy val path = "credit-cards/test"
+    }
     val cards = CreditCardsApi.parse(XML.loadString(xmlStr))
 
     cards should be(
       Seq(
-        CreditCard("Online All In One", "HALIFAX", 0.0, 15, CreditExample(1200.0, 17.95, "a purchase", interestRateFixed = false, 17.9, aprFixed = false, 0.0), "http://www.moneysupermarket.com/medias/sys_master/h38/h32/8805104222238/Halifax.png", "http://www.moneysupermarket.com/shop/media-partner-best-buy-click/?product_sku=CC_HALIFAX_ALLINONE_ATIER&source=GU6&channel_id=112"),
-        CreditCard("Platinum Balance Transfer and Purchase Credit Card", "NATWEST", 0.0, 15, CreditExample(1200.0, 16.95, "a purchase", interestRateFixed = false, 16.9, aprFixed = false, 0.0), "http://www.moneysupermarket.com/medias/sys_master/h55/hf8/8815356051486/Natwestplatinum80x50.png", "http://www.moneysupermarket.com/shop/media-partner-best-buy-click/?product_sku=CC_NATWEST_PLAT_LOW_BT_FEE&source=GU6&channel_id=112"),
-        CreditCard("Platinum Balance Transfer and Purchase Credit Card", "ROYAL BANK OF SCOTLAND", 0.0, 15, CreditExample(1200.0, 16.95, "a purchase", interestRateFixed = false, 16.9, aprFixed = false, 0.0), "http://www.moneysupermarket.com/medias/sys_master/h57/hf8/8815356117022/RBSPlatim80x51.png", "http://www.moneysupermarket.com/shop/media-partner-best-buy-click/?product_sku=CC_RBS_PLAT_LOW_BT_FEE&source=GU6&channel_id=112")
+        CreditCard("Online All In One", "HALIFAX", 0.0, 15, 0.80, CreditExample(1200.0, 17.95, "a purchase", interestRateFixed = false, 17.9, aprFixed = false, 0.0), "http://www.moneysupermarket.com/medias/sys_master/h38/h32/8805104222238/Halifax.png", "http://www.moneysupermarket.com/shop/media-partner-best-buy-click/?product_sku=CC_HALIFAX_ALLINONE_ATIER&source=GU6&channel_id=112", "There are no rewards with this card.", "", 17.90, 0.00, 15),
+        CreditCard("Platinum Balance Transfer and Purchase Credit Card", "NATWEST", 0.0, 15, 0.90, CreditExample(1200.0, 16.95, "a purchase", interestRateFixed = false, 16.9, aprFixed = false, 0.0), "http://www.moneysupermarket.com/medias/sys_master/h55/hf8/8815356051486/Natwestplatinum80x50.png", "http://www.moneysupermarket.com/shop/media-partner-best-buy-click/?product_sku=CC_NATWEST_PLAT_LOW_BT_FEE&source=GU6&channel_id=112", "You will receive discounts from a range of retailers.", "", 16.90, 0.00, 15),
+        CreditCard("Platinum Balance Transfer and Purchase Credit Card", "ROYAL BANK OF SCOTLAND", 0.0, 15, 0.90, CreditExample(1200.0, 16.95, "a purchase", interestRateFixed = false, 16.9, aprFixed = false, 0.0), "http://www.moneysupermarket.com/medias/sys_master/h57/hf8/8815356117022/RBSPlatim80x51.png", "http://www.moneysupermarket.com/shop/media-partner-best-buy-click/?product_sku=CC_RBS_PLAT_LOW_BT_FEE&source=GU6&channel_id=112", "You will receive discounts from a range of retailers.", "", 16.90, 0.00, 15)
       ))
   }
 }
