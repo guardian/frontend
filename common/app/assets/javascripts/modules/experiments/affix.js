@@ -22,8 +22,7 @@ define([
         this.$window = bonzo(document.body);
 
         // Take into account the element's top style, so that the fixed positioning happens smoothly.
-        var styleTop = this.$element.css('top');
-        this.styleTop = styleTop !== 'auto' ? parseInt(styleTop, 10) : 0;
+        this.styleTop = this.getPixels(this.$element.css('top'));
 
         this.calculateContainerPositioning();
     };
@@ -42,6 +41,10 @@ define([
         raf(this.checkPosition.bind(this));
     };
 
+    Affix.prototype.getPixels = function(top) {
+        return top !== 'auto' ? parseInt(top, 10) : 0;
+    };
+
     Affix.prototype.checkPosition = function () {
         var elementTop   = this.$window.scrollTop() + this.styleTop,
             topCheck     = elementTop >= this.$markerTop.offset().top,
@@ -52,6 +55,22 @@ define([
 
         if (this.affixed !== affix) {
             this.affixed = affix;
+
+            // Lock the affix container to the bottom marker.
+            if (bottomCheck) {
+                this.$element.removeClass('affix-bottom');
+                this.$container.removeClass('affix-bottom');
+                this.calculateContainerPositioning();
+            } else {
+                // Store the container top (without element top positioning),
+                // which needs to be re-applied when affixed to bottom.
+                var oldContainerStyling = this.getPixels(this.$container.css('top')) - this.styleTop;
+
+                var topStyle = this.$markerBottom.offset().top - this.$markerTop.offset().top - this.$element.dim().height + oldContainerStyling;
+                this.$container.css('top',  topStyle + 'px');
+                this.$element.addClass('affix-bottom');
+                this.$container.addClass('affix-bottom');
+            }
 
             if (affix) {
                 this.$element.addClass(Affix.CLASS);
