@@ -2,22 +2,15 @@ define([
     'common/common',
     'common/utils/storage',
     'common/utils/mediator',
-    'common/modules/analytics/mvt-cookie',
-
-    //Current tests
-    'common/modules/experiments/tests/home-component'
+    'common/modules/analytics/mvt-cookie'
 ], function (
     common,
     store,
     mediator,
-    mvtCookie,
-
-    HomeComponent
+    mvtCookie
     ) {
 
-    var TESTS = [
-            new HomeComponent()
-       ],
+    var TESTS = [],
        participationsKey = 'gu.ab.participations';
 
     function getParticipations() {
