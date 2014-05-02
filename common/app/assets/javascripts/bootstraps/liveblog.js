@@ -12,7 +12,8 @@ define([
     'common/modules/live/filter',
     'common/modules/ui/notification-counter',
     'common/modules/experiments/affix',
-    'common/utils/template'
+    'common/utils/template',
+    'common/utils/url'
 ], function (
     mediator,
     $,
@@ -27,7 +28,8 @@ define([
     LiveFilter,
     NotificationCounter,
     Affix,
-    template
+    template,
+    url
 ) {
     'use strict';
 
@@ -63,10 +65,11 @@ define([
             curBinding = bean.one(document, 'scroll', function() { unselect(); });
         }
 
-        bean.on(qwery('.timeline')[0], 'click', '.timeline__link', function(e){
+        bean.on(qwery('.timeline')[0], 'click', '.timeline__link', function(e) {
             mediator.emit('module:liveblog:showkeyevents', true);
             var $el = bonzo(e.currentTarget),
                 eventId = $el.attr('data-event-id'),
+                title = $('.timeline__title', $el).text(),
                 targetEl = qwery('#'+eventId),
                 dim = bonzo(targetEl).offset();
             scroller.scrollTo(dim.top, 500, 'easeOutQuint');
@@ -74,6 +77,7 @@ define([
             bean.off(curBinding);
             unselect();
             $el.addClass(selectedClass);
+            url.pushUrl({blockId: eventId}, title, '#' + window.location.pathname + '#' + eventId, true);
             e.stop();
         });
     }
