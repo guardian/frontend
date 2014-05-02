@@ -19,7 +19,7 @@
 
 }
 
-<div class="article__meta-container u-cf@if(content.byline.isEmpty){ article__meta-container--no-byline}">
+<div class="article__meta-container js-football-meta u-cf@if(content.byline.isEmpty){ article__meta-container--no-byline}">
     @if(content.isSponsored || content.isAdvertisementFeature) {
         @fragments.commercial.badge(name="badge", adType="paid-for-badge", sizeMapping=Map("mobile" -> Seq("140,80")))
     }

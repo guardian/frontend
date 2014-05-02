@@ -1,7 +1,7 @@
 @(competition: model.Competition, group: Group, highlightTeamId: Option[String] = None, multiGroup: Boolean = false)(implicit request: RequestHeader)
 @if(!multiGroup) {
 <div class="c-football-table table--hide-from-importance-1">
-    @tableView(competition, group, highlightTeamId, showMeta = true)
+    @tableView(competition, group, highlightTeamId)
 </div>
 }else{
 <div></div>

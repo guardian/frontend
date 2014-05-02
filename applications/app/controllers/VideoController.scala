@@ -26,7 +26,7 @@ object VideoController extends Controller with Logging with ExecutionContexts {
     val edition = Edition(request)
 
     log.info(s"Fetching video: $path for edition $edition")
-    val response: Future[ItemResponse] = SwitchingContentApi().item(path, edition)
+    val response: Future[ItemResponse] = ContentApi.item(path, edition)
       .showExpired(true)
       .showFields("all")
       .response

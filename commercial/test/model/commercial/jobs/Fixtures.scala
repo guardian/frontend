@@ -17,6 +17,9 @@ object Fixtures {
       |      <Sector>245</Sector>
       |    </Sectors>
       |    <RecruiterLogoURL>http://jobs.theguardian.com/getasset/?uiAssetID=833D7672-6B21-4D81-BCE1-9CEF11CCEA21</RecruiterLogoURL>
+      |    <SalaryDescription>Unpaid Voluntary Work</SalaryDescription>
+      |    <LocationDescription>Rotherham/Sheffield</LocationDescription>
+      |    <RecruiterPageUrl>http://jobs.theguardian.com/employer/196643/</RecruiterPageUrl>
       |  </Job>
       |  <Job>
       |    <JobID>4302057</JobID>
@@ -31,7 +34,9 @@ object Fixtures {
       |      <Sector>600117</Sector>
       |      <Sector>600190</Sector>
       |    </Sectors>
-      |    <RecruiterLogoURL>http://jobs.theguardian.com/getasset/?uiAssetID=70666A14-BD49-4BB8-AC6A-FCF8B716E131</RecruiterLogoURL>
+      |    <SalaryDescription>Unpaid Voluntary Work</SalaryDescription>
+      |    <LocationDescription>Rotherham/Sheffield</LocationDescription>
+      |    <RecruiterPageUrl>http://jobs.theguardian.com/employer/196644/</RecruiterPageUrl>
       |  </Job>
       |  <Job>
       |    <JobID>4365671</JobID>
@@ -48,6 +53,9 @@ object Fixtures {
       |      <Sector>600119</Sector>
       |    </Sectors>
       |    <RecruiterLogoURL>http://jobs.theguardian.com/getasset/?uiAssetID=1D428A1F-65B4-4ADE-8CA3-91F2AE7423E3</RecruiterLogoURL>
+      |    <SalaryDescription>Unpaid Voluntary Work</SalaryDescription>
+      |    <LocationDescription>Rotherham/Sheffield</LocationDescription>
+      |    <RecruiterPageUrl>http://jobs.theguardian.com/employer/196645/</RecruiterPageUrl>
       |  </Job>
       |  <Job>
       |    <JobID>4411510</JobID>
@@ -59,6 +67,9 @@ object Fixtures {
       |      <Sector>308</Sector>
       |    </Sectors>
       |    <RecruiterLogoURL>http://jobs.theguardian.com/getasset/?uiAssetID=14357B35-BBA3-4F96-ADF3-F9ABC82C894C</RecruiterLogoURL>
+      |    <SalaryDescription>Unpaid Voluntary Work</SalaryDescription>
+      |    <LocationDescription>Rotherham/Sheffield</LocationDescription>
+      |    <RecruiterPageUrl>http://jobs.theguardian.com/employer/196646/</RecruiterPageUrl>
       |  </Job>
       |</Jobs>
       | """.stripMargin
@@ -68,33 +79,34 @@ object Fixtures {
     Job(1058606,
       "Area Management Training Programme (Graduate Area Manager)",
       "We're only looking for outstanding individuals for the Aldi Management Programme.",
+      Some("Rotherham/Sheffield"),
       "ALDI",
-      Some("http://jobs.theguardian.com/getasset/?uiAssetID=833D7672-6B21-4D81-BCE1-9CEF11CCEA21"),
-      Seq(149, 158, 245)
-    ),
-
-    Job(4302057,
-      "Listen Laugh & Learn in Worcestershire",
-      "The role of Association Visitor is a highly rewarding one with many opportunities for developing your own skills and knowledge, whilst being part of a team. Professional qualifications or personal experience of MND are not necessary...",
-      "MOTOR NEURONE DISEASE ASSOCIATION",
-      Some("http://jobs.theguardian.com/getasset/?uiAssetID=70666A14-BD49-4BB8-AC6A-FCF8B716E131"),
-      Seq(111, 112, 121, 286, 600117, 600190)
+      Some("http://jobs.theguardian.com/employer/196643/"),
+      "http://jobs.theguardian.com/getasset/?uiAssetID=833D7672-6B21-4D81-BCE1-9CEF11CCEA21",
+      Seq(149, 158, 245),
+      "Unpaid Voluntary Work"
     ),
 
     Job(4365671,
       "Female Youth Work Volunteer in sports",
       "The Active Women's project helps young women access sports activities in their local area in Southampton. Volunteers will support the running of these sessions, as well as supporting the young women in accessing the sessions.",
+      Some("Rotherham/Sheffield"),
       "CATCH 22",
-      Some("http://jobs.theguardian.com/getasset/?uiAssetID=1D428A1F-65B4-4ADE-8CA3-91F2AE7423E3"),
-      Seq(111, 112, 115, 219, 222, 600118, 600119)
+      Some("http://jobs.theguardian.com/employer/196645/"),
+      "http://jobs.theguardian.com/getasset/?uiAssetID=1D428A1F-65B4-4ADE-8CA3-91F2AE7423E3",
+      Seq(111, 112, 115, 219, 222, 600118, 600119),
+      "Unpaid Voluntary Work"
     ),
 
     Job(4411510,
       "Air Traffic Controller",
       "Control some of the world’s most modern aircraft using radar & communications equipment",
+      Some("Rotherham/Sheffield"),
       "RAF CAREERS",
-      Some("http://jobs.theguardian.com/getasset/?uiAssetID=14357B35-BBA3-4F96-ADF3-F9ABC82C894C"),
-      Seq(166, 308)
+      Some("http://jobs.theguardian.com/employer/196646/"),
+      "http://jobs.theguardian.com/getasset/?uiAssetID=14357B35-BBA3-4F96-ADF3-F9ABC82C894C",
+      Seq(166, 308),
+      "Unpaid Voluntary Work"
     )
 
   )

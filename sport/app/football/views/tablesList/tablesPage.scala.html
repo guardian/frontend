@@ -15,21 +15,8 @@
         <div class="article__columning-wrapper">
             <div class="article__main-column">
                 @page.tables.map { table =>
-                    <div class="football-table__container">
-                        <div class="article__meta-container">
-                            @if(page.singleCompetition){
-                                <h1 class="article__meta-heading"><a href="@table.competition.url">@table.competition.fullName</a></h1>
-                                <p class="article__dateline" aria-hidden="true">
-                                    <i class="i i-clock-grey relative-timestamp__icon"></i>
-                                    <time itemprop="datePublished">
-                                        Last updated: a minute ago
-                                    </time>
-                                </p>
-                            } else {
-                                <h2 class="article__meta-heading"><a href="@table.competition.url">@table.competition.fullName</a></h2>
-                            }
-                        </div>
-
+                    @if(page.singleCompetition){<h1 class="u-h">@table.competition.fullName</h1>}else{<h2 class="u-h">@table.competition.fullName</h2>}
+                    <div class="football-table__container@if(page.tables.size == 1) { football-table__container--single}">
                         <div class="article__container u-cf">
                             @table.groups.map{ group =>
                                 @if(table.multiGroup){
@@ -43,18 +30,13 @@
                                     @tableView(table.competition, group, striped = true, responsiveFont = true)
                                 }
                             }
-                            @if(!page.singleCompetition){
-                                <a href='@{table.competition.url + "/table"}' data-link-name="full table" class="cta-small tone-colour">View full @table.competition.fullName table<i class="i i-sport-arrow i-sport-arrow--small"></i></a>
-                            }
                         </div>
                     </div>
                 }
             </div>
 
             <div class="article__secondary-column" aria-hidden="true">
-                <div class="article__secondary-column__inner article__secondary-column__inner--fill-vertically">
-                    @* TODO (jamesgorrie): add onwards journeys *@
-                </div>
+                <div class="article__secondary-column__inner article__secondary-column__inner--fill-vertically"></div>
             </div>
         </div>
     </article>

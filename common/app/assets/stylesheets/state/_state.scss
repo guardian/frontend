@@ -59,12 +59,8 @@
 }
 
 .update {
-    display: block;
+    display: table-cell;
     overflow: hidden;
-
-    &.hidden {
-        display: none;
-    }
 }
 
 .is-updating {

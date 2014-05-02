@@ -61,11 +61,9 @@ define([
         }
 
         if((/tablet/).test(breakpoint)) {
-            var portrait = window.innerWidth < 810;
-
-            if(portrait) {
-                this.getNewSlot('adRight').html(this.generateInlineAdSlot('inline1'));
-            } else {
+            this.getNewSlot('adRight').html(this.generateInlineAdSlot('inline1'));
+            // display second inline ad if there's no right hand ad (we show right hand column at >= 900px)
+            if(window.innerWidth < 900) {
                 this.getNewSlot('adRight').html(this.generateInlineAdSlot('inline2'));
             }
         }
