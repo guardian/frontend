@@ -2,24 +2,33 @@ package dfp
 
 import common.{ExecutionContexts, AkkaAgent}
 import conf.Configuration.commercial.dfpDataKey
+import model.Article
+import play.api.libs.json.Json._
 import scala.concurrent.future
+import scala.io.Codec.UTF8
 import services.S3
 
 object DfpAgent extends ExecutionContexts {
 
   private lazy val targetedKeywordsAgent = AkkaAgent[Seq[String]](Nil)
 
-  def targetedKeywords: Seq[String] = targetedKeywordsAgent.get()
+  def targetedKeywords: Seq[String] = targetedKeywordsAgent get()
+
+  def isSponsored(article: Article) = {
+    val articleKeywords = article.keywords.map(_.name.toLowerCase.replace(" ", "-"))
+    !(articleKeywords intersect targetedKeywords).isEmpty
+  }
 
   def refresh() {
     future {
-      val json = S3.get(dfpDataKey)
-      println(json)
+      val json = S3.get(dfpDataKey)(UTF8) map parse
+      val keywords = json map (_.as[Seq[String]]) getOrElse Nil
+      targetedKeywordsAgent update keywords
     }
 
   }
 
   def stop() {
-    targetedKeywordsAgent.close()
+    targetedKeywordsAgent close()
   }
 }
