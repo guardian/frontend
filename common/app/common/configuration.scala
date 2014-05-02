@@ -1,15 +1,14 @@
 package common
 
+import com.amazonaws.auth._
+import com.amazonaws.internal.StaticCredentialsProvider
 import com.gu.conf.ConfigurationFactory
 import com.gu.management.{ Manifest => ManifestFile }
-import com.amazonaws.auth._
-import play.api.Play
-import play.api.Play.current
+import conf.Configuration
 import java.io.{FileInputStream, File}
 import org.apache.commons.io.IOUtils
-import conf.Configuration
-import com.amazonaws.internal.StaticCredentialsProvider
-import org.apache.commons.configuration.MapConfiguration
+import play.api.Play
+import play.api.Play.current
 
 class BadConfigurationException(property: String) extends RuntimeException(s"Property $property not configured")
 
@@ -189,33 +188,6 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val masterclasses_url = configuration.getMandatoryStringProperty("commercial.masterclasses_url")
     lazy val soulmates_url = configuration.getMandatoryStringProperty("commercial.soulmates_url")
     lazy val travel_url = configuration.getMandatoryStringProperty("commercial.travel_url")
-  }
-
-  object dfpApi {
-
-    import scala.collection.JavaConversions._
-
-    def getPropertyTupleFor(key: String): Option[Tuple2[String,String]] = {
-      val fullKey = "api.dfp." + key
-      configuration.getStringProperty(fullKey) map { (fullKey, _) }
-    }
-
-    lazy val properties = getPropertyTupleFor("networkCode") ::
-      getPropertyTupleFor("refreshToken") ::
-      getPropertyTupleFor("clientId") ::
-      getPropertyTupleFor("clientSecret") ::
-      getPropertyTupleFor("applicationName") ::
-      Nil
-
-    lazy val configObject: Option[MapConfiguration] = {
-      if (properties.contains(None)) {
-        None
-      } else {
-        Option(new MapConfiguration(
-          properties.foldLeft(Map[String, String]())((b, a) => b + a.get )
-        ))
-      }
-    }
   }
 
   object open {
