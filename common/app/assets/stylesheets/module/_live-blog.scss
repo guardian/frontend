@@ -950,11 +950,7 @@ $timeline-width: 14px;
             width: $a-rightCol-width
         ));
 
-        &.affix {
-            @include rem((
-                top: $gs-baseline/2
-            ));
-        }
+        top: $gs-baseline*2;
     }
 }
 

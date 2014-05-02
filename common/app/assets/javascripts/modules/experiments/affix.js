@@ -22,17 +22,17 @@ define([
         this.$window = bonzo(document.body);
 
         // Take into account the element's top style, so that the fixed positioning happens smoothly.
-        var styleTop = this.$element.css('top');
-        this.styleTop = styleTop !== 'auto' ? parseInt(styleTop, 10) : 0;
+        this.styleTop = this.getPixels(this.$element.css('top'));
 
         this.calculateContainerPositioning();
     };
 
     Affix.CLASS = 'affix';
+    Affix.CLASSY_BOTTOM = 'affix-bottom';
 
     Affix.prototype.calculateContainerPositioning = function() {
 
-        // The absolute-positioned container defines the static positioning of the affix element.
+        // The container defines the static positioning of the affix element.
         this.$container.css('top', '0');
         var containerTop = this.$markerTop.offset().top - this.$container.offset().top;
         this.$container.css('top', containerTop + 'px');
@@ -40,6 +40,10 @@ define([
 
     Affix.prototype.checkPositionWithEventLoop = function() {
         raf(this.checkPosition.bind(this));
+    };
+
+    Affix.prototype.getPixels = function(top) {
+        return top !== 'auto' ? parseInt(top, 10) : 0;
     };
 
     Affix.prototype.checkPosition = function () {
@@ -52,6 +56,18 @@ define([
 
         if (this.affixed !== affix) {
             this.affixed = affix;
+
+            // Lock the affix container to the bottom marker.
+            if (bottomCheck) {
+                this.$container.removeClass(Affix.CLASSY_BOTTOM);
+                this.calculateContainerPositioning();
+            } else {
+                // Store the container top, which needs to be re-applied when affixed to bottom.
+                var oldContainerStyling = this.getPixels(this.$container.css('top')),
+                    topStyle = this.$markerBottom.offset().top - this.$markerTop.offset().top - this.$element.dim().height + oldContainerStyling;
+                this.$container.css('top',  topStyle + 'px');
+                this.$container.addClass(Affix.CLASSY_BOTTOM);
+            }
 
             if (affix) {
                 this.$element.addClass(Affix.CLASS);

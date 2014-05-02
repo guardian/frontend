@@ -2,6 +2,11 @@
     position: fixed;
 }
 
+.affix-bottom,
+.affix-top-marker {
+    position: absolute;
+}
+
 .home {
     top: $gs-row-height;
     display: none !important;
