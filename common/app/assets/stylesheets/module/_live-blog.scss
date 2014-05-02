@@ -193,6 +193,9 @@ $block-padding-right: $gs-gutter;
 
 /* Design
    ========================================================================== */
+.blog__secondary-column {
+    background-color: $c-neutral8;
+}
 .blog__zone--default {
     @include mq(tablet, rightCol) {
         @include full-bleed($c-liveDefault);
@@ -387,6 +390,14 @@ $block-padding-right: $gs-gutter;
             border-top: 0 none;
         }
     }
+
+    .content-meta__label {
+        color: #e4845a;
+    }
+
+    .content-meta__item.tone-colour {
+        color: #ffffff;
+    }
 }
 
 /* Timestamps
@@ -441,6 +452,10 @@ $block-padding-right: $gs-gutter;
             margin-left: 0;
         }
     }
+}
+
+.block-time__link {
+    color: $c-neutral1;
 }
 
 .updated-time {
@@ -973,16 +988,17 @@ $timeline-width: 14px;
         padding: $gs-baseline/6 0 $gs-baseline/2
     ));
 
+    &:hover,
+    &:active {
+        text-decoration: none;
+    }
+
     @include mq(rightCol) {
         position: relative;
         @include rem((
-            padding: 0 0 $gs-baseline*2 $gs-gutter
+            padding: 0 $gs-gutter $gs-baseline*2
         ));
         border-left: 1px solid $c-neutral5;
-
-        &:hover {
-            text-decoration: none;
-        }
 
         &:before {
             display: block;
@@ -998,7 +1014,9 @@ $timeline-width: 14px;
             background-color: $c-neutral5;
         }
 
-        &:hover:before,
+        &:hover:before {
+            background-color: $c-neutral2;
+        }
         &.live-blog__key-event--selected:before {
             background-color: $c-neutral1;
         }
@@ -1045,11 +1063,15 @@ $timeline-width: 14px;
     display: table-cell;
     @include fs-textsans(3);
     color: $c-neutral1;
+    border-color: $c-neutral8;
+
+    .timeline__link:hover & {
+        border-color:  $c-neutral2;
+    }
 
     @include mq(rightCol) {
-        display: block;
+        display: inline;
 
-        .timeline__link:hover &,
         .live-blog__key-event--selected & {
             font-weight: bold;
         }
@@ -1076,7 +1098,6 @@ $timeline-width: 14px;
 
     .match-summary {
         border-bottom: 0 none;
-        margin-bottom: 0;
     }
 
     @include mq(rightCol) {
