@@ -38,11 +38,4 @@
     p {
         margin-bottom: 0; // Some trail texts are wrapped in a paragraph
     }
-
-    @include mq(tablet) {
-        @include rem((
-            margin-top: $gs-baseline,
-            margin-bottom: $gs-baseline - 2
-        ));
-    }
 }
