@@ -1,6 +1,5 @@
 package conf
 
-import Configuration.environment
 import com.gu.conf.ConfigurationFactory
 import org.apache.commons.configuration.MapConfiguration
 import scala.slick.session.Database
@@ -11,7 +10,7 @@ object AdminConfiguration {
 
   object pa {
     lazy val apiKey = configuration.getStringProperty("pa.api.key")
-      .getOrElse(throw new RuntimeException("unable to load pa api key"))
+        .getOrElse(throw new RuntimeException("unable to load pa api key"))
 
     lazy val host = configuration.getStringProperty("football.api.host").getOrElse("http://pads6.pa-sport.com")
   }
@@ -43,7 +42,7 @@ object AdminConfiguration {
 
     import scala.collection.JavaConversions._
 
-    def getPropertyTupleFor(key: String): Option[Tuple2[String, String]] = {
+    def getPropertyTupleFor(key: String): Option[(String, String)] = {
       val fullKey = "api.dfp." + key
       configuration.getStringProperty(fullKey) map {
         (fullKey, _)

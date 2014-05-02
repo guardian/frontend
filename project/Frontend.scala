@@ -1,8 +1,8 @@
 package com.gu
 
-import play.Project._
-import sbt.Keys._
 import sbt._
+import sbt.Keys._
+import play.Project._
 
 object Frontend extends Build with Prototypes {
 
@@ -42,9 +42,7 @@ object Frontend extends Build with Prototypes {
   val commonWithTests = withTests(common)
 
   val facia = application("facia").dependsOn(commonWithTests).aggregate(common)
-  val article = application("article").dependsOn(commonWithTests).aggregate(common).settings(
-    libraryDependencies += "com.google.api-ads" % "dfp-axis" % "1.26.0"
-  )
+  val article = application("article").dependsOn(commonWithTests).aggregate(common)
   val applications = application("applications").dependsOn(commonWithTests).aggregate(common)
   val archive = application("archive").dependsOn(commonWithTests).aggregate(common)
   val sport = application("sport").dependsOn(commonWithTests).aggregate(common).settings(

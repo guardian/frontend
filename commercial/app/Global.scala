@@ -1,10 +1,10 @@
 import common._
-import conf.Filters
 import conf.Management
+import conf.Filters
 import dev.DevParametersLifecycle
 import model.commercial.books.BestsellersAgent
-import model.commercial.jobs.{Industries, JobsAgent}
 import model.commercial.masterclasses.MasterClassAgent
+import model.commercial.jobs.{Industries, JobsAgent}
 import model.commercial.money.BestBuysAgent
 import model.commercial.soulmates.SoulmatesAggregatingAgent
 import model.commercial.travel.{Countries, OffersAgent}
