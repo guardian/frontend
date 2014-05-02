@@ -236,7 +236,7 @@
                 padding-left: $gs-gutter/2
             ));
         }
-        @include mq($facia-leftCol-trigger) {
+        @include mq(faciaLeftCol) {
             padding: 0;
             margin: 0;
             float: left;
