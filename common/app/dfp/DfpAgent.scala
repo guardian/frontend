@@ -16,7 +16,7 @@ object DfpAgent extends ExecutionContexts {
 
   def isSponsored(content: Content) = {
     val contentKeywords = content.keywords.map(_.name.toLowerCase.replace(" ", "-"))
-    !(contentKeywords intersect targetedKeywords).isEmpty
+    (contentKeywords intersect targetedKeywords).nonEmpty
   }
 
   def refresh() {
