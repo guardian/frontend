@@ -195,6 +195,8 @@ object Content {
       Option(
         new Snap(
           snapId = itemId,
+          snapSupporting = (json \ "meta" \ "supporting").asOpt[List[JsValue]].getOrElse(Nil)
+            .flatMap(Content.fromPressedJson),
           (json \ "webPublicationDate").asOpt[DateTime].getOrElse(DateTime.now),
           snapMeta = snapMeta
         )
@@ -297,9 +299,10 @@ object SnapApiContent extends ApiContent(
     )
 
 class Snap(snapId: String,
+           snapSupporting: List[Content],
            snapWebPublicationDate: DateTime,
            snapMeta: Map[String, JsValue]
-) extends Content(new ApiContentWithMeta(SnapApiContent, metaData = snapMeta)) {
+) extends Content(new ApiContentWithMeta(SnapApiContent, supporting = snapSupporting, metaData = snapMeta)) {
 
   val snapType: Option[String] = snapMeta.get("snapType").flatMap(_.asOpt[String])
   val snapUri: Option[String] = snapMeta.get("snapUri").flatMap(_.asOpt[String])
@@ -364,11 +367,8 @@ class Article(content: ApiContentWithMeta) extends Content(content) {
 
 class LiveBlog(content: ApiContentWithMeta) extends Article(content) {
   private lazy val soupedBody = Jsoup.parseBodyFragment(body).body()
-  lazy val blockCount: Int = soupedBody.select(".block").size()
-  lazy val summary: Option[String] = soupedBody.select(".is-summary").headOption.map(_.toString)
-  lazy val groupedBlocks: List[String]= soupedBody.select(".block").toList.grouped(5).map { group =>
-    group.map(_.toString).mkString
-  }.toList
+  lazy val hasKeyEvents: Boolean = soupedBody.select(".is-key-event").nonEmpty
+  lazy val isSport: Boolean = tags.exists(_.id == "sport/sport")
   override def cards: List[(String, Any)] = super.cards ++ List(
     "twitter:card" -> "summary"
   )

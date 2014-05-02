@@ -1,62 +1,35 @@
 define([
     'common/common',
     'common/utils/mediator',
-    'common/utils/detect',
     'common/$',
     'fence',
     'common/modules/ui/rhc',
     'common/modules/article/truncate',
     'common/modules/article/twitter',
-    'common/modules/ui/autoupdate',
-    'common/modules/live/filter',
     'common/modules/discussion/loader',
-    'common/modules/ui/notification-counter',
     'common/modules/open/cta',
-    'common/modules/experiments/layoutHints'
+    'common/modules/experiments/layoutHints',
+    'common/bootstraps/liveblog'
+
 ], function (
     common,
     mediator,
-    detect,
     $,
     fence,
     rhc,
     truncate,
     twitter,
-    AutoUpdate,
-    LiveFilter,
     DiscussionLoader,
-    NotificationCounter,
     OpenCta,
-    Layout
+    Layout,
+    LiveBlog
 ) {
 
     var modules = {
-        initLiveBlogging: function() {
-            common.mediator.on('page:article:ready', function(config, context) {
-                if (config.page.isLive) {
-
-                    var timerDelay = /desktop|wide/.test(detect.getBreakpoint()) ? 30000 : 60000;
-                    new AutoUpdate({
-                        path: function() {
-                            var id = context.querySelector('.article-body .block').id,
-                                path = window.location.pathname;
-
-                           return path + '.json' + '?lastUpdate=' + id;
-                        },
-                        delay: timerDelay,
-                        attachTo: context.querySelector('.article-body'),
-                        switches: config.switches,
-                        manipulationType: 'prepend',
-                        animateInserts: true,
-                        progressToggle: true,
-                        progressColour: '#ec1c1c'
-                    }).init();
-                }
-                if (config.page.isLiveBlog) {
-                    new LiveFilter(context).init();
-                    new NotificationCounter().init();
-                }
-            });
+        initLiveBlogging: function(config) {
+            if (config.page.isLiveBlog) {
+                LiveBlog.init();
+            }
         },
 
         initDiscussion: function() {
@@ -112,7 +85,7 @@ define([
     var ready = function (config, context) {
         if (!this.initialised) {
             this.initialised = true;
-            modules.initLiveBlogging();
+            modules.initLiveBlogging(config);
             modules.initDiscussion();
             modules.initOpen(config);
             modules.initFence();
