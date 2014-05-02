@@ -2,13 +2,13 @@ package tools
 
 import common.Logging
 import conf.AdminConfiguration
+import conf.Configuration.commercial.dfpDataKey
 import services.S3
 
 trait Store extends Logging {
   lazy val configKey = AdminConfiguration.configKey
   lazy val switchesKey = AdminConfiguration.switchesKey
   lazy val topStoriesKey = AdminConfiguration.topStoriesKey
-  lazy val dfpDataKey = AdminConfiguration.dfpDataKey
 
   def getConfig = S3.get(configKey)
   def putConfig(config: String) { S3.putPublic(configKey, config, "application/json") }

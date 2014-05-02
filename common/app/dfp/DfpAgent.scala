@@ -1,25 +1,25 @@
 package dfp
 
 import common.{ExecutionContexts, AkkaAgent}
+import conf.Configuration.commercial.dfpDataKey
 import scala.concurrent.future
+import services.S3
 
-// Cache of current DFP data, used initially by articles only.
 object DfpAgent extends ExecutionContexts {
 
-  private lazy val keywordsAgent = AkkaAgent[Seq[String]](Nil)
+  private lazy val targetedKeywordsAgent = AkkaAgent[Seq[String]](Nil)
 
-  def currentTargetedKeywords: Seq[String] = keywordsAgent.get()
+  def targetedKeywords: Seq[String] = targetedKeywordsAgent.get()
 
   def refresh() {
     future {
-      //      val lineItems = DfpApi.fetchCurrentLineItems()
-      //      val keywords = DfpApi.fetchKeywordTargetingValues(lineItems)
-      //      lineItemsAgent.update(lineItems)
-      //      keywordsAgent.update(keywords)
+      val json = S3.get(dfpDataKey)
+      println(json)
     }
+
   }
 
   def stop() {
-    keywordsAgent.close()
+    targetedKeywordsAgent.close()
   }
 }

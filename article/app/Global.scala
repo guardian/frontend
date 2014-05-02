@@ -12,8 +12,8 @@ with CloudWatchApplicationMetrics {
   override def onStart(app: Application) {
     super.onStart(app)
 
-    Jobs.deschedule("DfpKeywordsRefreshJob")
-    Jobs.schedule("DfpKeywordsRefreshJob", "0 1/30 * * * ?") {
+    Jobs.deschedule("DfpDataRefreshJob")
+    Jobs.schedule("DfpDataRefreshJob", "0 1/30 * * * ?") {
       DfpAgent.refresh()
     }
 
@@ -23,7 +23,7 @@ with CloudWatchApplicationMetrics {
   }
 
   override def onStop(app: Application) {
-    Jobs.deschedule("DfpKeywordsRefreshJob")
+    Jobs.deschedule("DfpDataRefreshJob")
     DfpAgent.stop()
 
     super.onStop(app)
