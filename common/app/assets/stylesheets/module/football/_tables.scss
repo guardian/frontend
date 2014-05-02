@@ -40,7 +40,9 @@
     }
 
     .football-stat--form {
-        min-width: 75px; // 15(width of status)*5
+        @include rem((
+            min-width: 15*5 // width of status
+        ));
     }
 
     @include mq($to: $table-breakpoint-importance-1) { @include table-football--medium; }
@@ -64,6 +66,17 @@
 
     .football-matches__date {
         display: none;
+    }
+
+    // Only show "view more" and competition name on the last group table
+    .football__group {
+        .table__caption {
+            display: none;
+        }
+
+        &:last-child .table__caption {
+            display: table-caption;
+        }
     }
 
     @include mq(leftCol) {
@@ -99,18 +112,12 @@
 .football-table__container--single {
     // Hide the view more when there is only that table
     .table__caption--bottom {
-        display: none;
+        display: none !important;
     }
 }
 
 .c-football-table {
     @include table-football--medium;
-}
-
-.football-matches {
-    .table__caption--bottom {
-        display: none;
-    }
 }
 
 .football__group {
