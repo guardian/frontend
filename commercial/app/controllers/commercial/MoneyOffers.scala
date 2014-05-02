@@ -4,11 +4,6 @@ import play.api.mvc._
 import model.Cached
 import common.JsonComponent
 import model.commercial.money._
-import model.Page
-import model.commercial.money.CurrentAccount
-import model.commercial.money.SavingsAccount
-import scala.Some
-import model.commercial.money.CreditCard
 
 object MoneyOffers extends Controller {
 
@@ -33,7 +28,7 @@ object MoneyOffers extends Controller {
   }
 
   def currentAccounts(currentAccountType: String) = Action { implicit request =>
-    CurrentAccountPages.find(currentAccountType).map { page =>
+    CurrentAccountsPages.find(currentAccountType).map { page =>
       val currentAccounts: Seq[CurrentAccount] = BestBuysAgent.adsTargetedAt(segment).flatMap(_.currentAccounts.get(currentAccountType)).getOrElse(Nil)
       Cached(60)(Ok(views.html.moneysupermarket.currentAccounts.render(page, currentAccounts)))
     }.getOrElse {
@@ -42,7 +37,7 @@ object MoneyOffers extends Controller {
   }
 
   def creditCards(creditCardType: String) = Action { implicit request =>
-    CreditCardPages.find(creditCardType).map { page =>
+    CreditCardsPages.find(creditCardType).map { page =>
       val creditCards: Seq[CreditCard] = BestBuysAgent.adsTargetedAt(segment).flatMap(_.creditCards.get(creditCardType)).getOrElse(Nil)
       Cached(60)(Ok(views.html.moneysupermarket.creditCards.render(page, creditCards)))
     }.getOrElse {

@@ -1,4 +1,5 @@
 @(page: controllers.commercial.MoneyPage, savings: Seq[model.commercial.money.SavingsAccount])(implicit request: RequestHeader)
+@import controllers.commercial._
 
 @main(page.meta){
 }{
@@ -9,13 +10,9 @@
                     <h2>The best savings accounts available at moneysupermarket.com</h2>
                     <p>@page.description</p>
                     <ul>
-                        <li><a href="/commercial/money/savings/cash-isas">Cash ISAs</a></li>
-                        <li><a href="/commercial/money/savings/easy-access">Easy access</a></li>
-                        <li><a href="/commercial/money/savings/fixed-rate-bonds">Fixed rate bonds</a></li>
-                        <li><a href="/commercial/money/savings/regular-savers">Regular savers</a></li>
-                        <li><a href="/commercial/money/savings/childrens-accounts">Children's accounts</a></li>
-                        <li><a href="/commercial/money/savings/notice-accounts">Notice accounts</a></li>
-                        <li><a href="/commercial/money/savings/offshore-accounts">Offshore accounts</a></li>
+                        @SavingsPages.all.map { savingsPage =>
+                            <li><a href="/commercial/money/savings/@savingsPage.id">@savingsPage.webTitle</a></li>
+                        }
                     </ul>
                     @page.id match {
                         case "cash-isas" => { @moneysupermarket.savings.tables.cashIsas(savings) }

@@ -1,4 +1,5 @@
 @(page: controllers.commercial.MoneyPage, currentAccounts: Seq[model.commercial.money.CurrentAccount])(implicit request: RequestHeader)
+@import controllers.commercial._
 
 @main(page.meta){
 }{
@@ -9,12 +10,9 @@
                     <h2>The best current accounts available at moneysupermarket.com</h2>
                     <p>@page.description</p>
                     <ul>
-                        <li><a href="/commercial/money/current-accounts/reward-incentive">Reward/Incentive</a></li>
-                        <li><a href="/commercial/money/current-accounts/high-interest">High interest</a></li>
-                        <li><a href="/commercial/money/current-accounts/overdraft">Overdraft</a></li>
-                        <li><a href="/commercial/money/current-accounts/with-benefits">With benefits</a></li>
-                        <li><a href="/commercial/money/current-accounts/basic-accounts">Basic accounts</a></li>
-                        <li><a href="/commercial/money/current-accounts/standard-accounts">Standard accounts</a></li>
+                        @CurrentAccountsPages.all.map { currentAccountsPage =>
+                            <li><a href="/commercial/money/current-accounts/@currentAccountsPage.id">@currentAccountsPage.webTitle</a></li>
+                        }
                     </ul>
                     @page.id match {
                        case "reward-incentive" => { @moneysupermarket.currentAccounts.tables.rewards(currentAccounts) }

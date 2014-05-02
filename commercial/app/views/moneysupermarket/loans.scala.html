@@ -1,4 +1,5 @@
 @(page: controllers.commercial.MoneyPage, loans: Seq[model.commercial.money.Loan])(implicit request: RequestHeader)
+@import controllers.commercial._
 
 @main(page.meta){
 }{
@@ -9,9 +10,9 @@
                     <h2>The best loans available at moneysupermarket.com</h2>
                     <p>@page.description</p>
                     <ul>
-                        <li><a href="/commercial/money/loans/good-credit-profile">Good Credit Profile</a></li>
-                        <li><a href="/commercial/money/loans/fair-credit-profile">Fair Credit Profile</a></li>
-                        <li><a href="/commercial/money/loans/poor-credit-profile">Poor Credit Profile</a></li>
+                        @LoansPages.all.map { loansPage =>
+                            <li><a href="/commercial/money/loans/@loansPage.id">@loansPage.webTitle</a></li>
+                        }
                     </ul>
                     <table>
                         <thead>

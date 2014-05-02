@@ -1,4 +1,5 @@
 @(page: controllers.commercial.MoneyPage, creditCards: Seq[model.commercial.money.CreditCard])(implicit request: RequestHeader)
+@import controllers.commercial._
 
 @main(page.meta){
 }{
@@ -9,13 +10,9 @@
                     <h2>The best credit cards available at moneysupermarket.com</h2>
                     <p>@page.description</p>
                     <ul>
-                        <li><a href="/commercial/money/credit-cards/balance-transfer">Balance transfer</a></li>
-                        <li><a href="/commercial/money/credit-cards/purchases">Purchases</a></li>
-                        <li><a href="/commercial/money/credit-cards/balance-transfer-and-purchases">Balance transfer &amp; purchases</a></li>
-                        <li><a href="/commercial/money/credit-cards/cashback">Cashback</a></li>
-                        <li><a href="/commercial/money/credit-cards/low-standard-rate">Low standard rate</a></li>
-                        <li><a href="/commercial/money/credit-cards/rewards">Rewards</a></li>
-                        <li><a href="/commercial/money/credit-cards/bad-credit">Bad credit</a></li>
+                        @CreditCardsPages.all.map { creditCardsPage =>
+                            <li><a href="/commercial/money/credit-cards/@creditCardsPage.id">@creditCardsPage.webTitle</a></li>
+                        }
                     </ul>
                     @page.id match {
                         case "purchases"         => { @moneysupermarket.creditCards.tables.purchases(creditCards) }
