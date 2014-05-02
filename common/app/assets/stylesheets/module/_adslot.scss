@@ -256,6 +256,10 @@
         }
     }
 }
+// can be removed once we dynamically add the sponsored badge ad slot to fronts
+.dfp-badge-container {
+    display: none;
+}
 .ad-slot__label {
     height: $mpu-ad-label-height;
     background-color: $c-neutral8;
