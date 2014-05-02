@@ -1,13 +1,13 @@
-@(meta: model.MetaData, savings: Seq[model.commercial.money.SavingsAccount], savingsType: String)(implicit request: RequestHeader)
+@(page: controllers.commercial.MoneyPage, savings: Seq[model.commercial.money.SavingsAccount])(implicit request: RequestHeader)
 
-@main(meta){
+@main(page.meta){
 }{
     <div class="article-wrapper monocolumn-wrapper">
         <article id="article" class="article" itemprop="mainContentOfPage" itemscope role="main">
             <div class="article__columning-wrapper">
                 <div class="article__main-column">
                     <h2>The best savings accounts available at moneysupermarket.com</h2>
-                    <p>Savings accounts listed by interest (AER)</p>
+                    <p>@page.description</p>
                     <ul>
                         <li><a href="/commercial/money/savings/cash-isas">Cash ISAs</a></li>
                         <li><a href="/commercial/money/savings/easy-access">Easy access</a></li>
@@ -17,7 +17,7 @@
                         <li><a href="/commercial/money/savings/notice-accounts">Notice accounts</a></li>
                         <li><a href="/commercial/money/savings/offshore-accounts">Offshore accounts</a></li>
                     </ul>
-                    @savingsType match {
+                    @page.id match {
                         case "cash-isas" => { @moneysupermarket.savings.tables.cashIsas(savings) }
                         case _           => { @moneysupermarket.savings.tables.default(savings) }
                     }

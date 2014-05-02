@@ -27,10 +27,7 @@ GET        /commercial/money/bestbuys.json                                      
 GET        /commercial/money/savings/:savingsType                               controllers.commercial.MoneyOffers.savings(savingsType)
 GET        /commercial/money/current-accounts/:currentAccountType               controllers.commercial.MoneyOffers.currentAccounts(currentAccountType)
 GET        /commercial/money/credit-cards/:creditCardType                       controllers.commercial.MoneyOffers.creditCards(creditCardType)
-# Loans
-GET        /commercial/money/loans/good-credit                                  controllers.commercial.MoneyOffers.loansGoodCredit
-GET        /commercial/money/loans/fair-credit                                  controllers.commercial.MoneyOffers.loansFairCredit
-GET        /commercial/money/loans/poor-credit                                  controllers.commercial.MoneyOffers.loansPoorCredit
+GET        /commercial/money/loans/:loanType                                    controllers.commercial.MoneyOffers.loans(loanType)
 
 # Book offers
 GET        /commercial/books/bestsellers                                        controllers.commercial.BookOffers.bestsellers(format="html")
