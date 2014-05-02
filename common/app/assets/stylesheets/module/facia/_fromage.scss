@@ -44,9 +44,9 @@
        ====================================================================== */
 
     .item__meta {
-        bottom: -1px;
         overflow: hidden;
         @include rem((
+            bottom: -1px,
             margin-bottom: $gs-baseline/2
         ));
 
@@ -71,14 +71,14 @@
     border-top: 0 solid #ffffff;
     position: relative;
     @include rem((
-        padding-bottom: 32px
+        padding-bottom: $gs-row-height - $gs-baseline/3
     ));
 
     @include mq(tablet) {
         padding-bottom: 0;
 
         @include rem((
-            padding-left: gs-span(5) + $gs-gutter,
+            padding-left: gs-span(5) + $gs-gutter
         ));
     }
 }
@@ -259,7 +259,9 @@
         }
     }
     .fromage__container {
-        border-top-width: 4px;
+        @include rem((
+            border-top-width: $gs-baseline/3
+        ));
 
         @include mq(tablet) {
             @include rem((
