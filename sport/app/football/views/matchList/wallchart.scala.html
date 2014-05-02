@@ -1,0 +1,67 @@
+@(page: Page, rounds: List[(String, List[Int])])(implicit request: RequestHeader)
+
+@footballMatch(m: Int) = {
+<div class="football-match" id="football-match-@m">
+    <div class="football-match__container">
+        <div class="football-match__team football-match__team--home">Team home</div>
+        <div class="football-match__details">
+            <div class="football-match__name">Match name</div>
+            <div class="football-match__date">28 June 2014 <span class="football-match__kickoff">13:00</span></div>
+        </div>
+        <div class="football-match__team football-match__team--away">Team away</div>
+        <div class="football-match__victory-line"></div>
+    </div>
+</div>
+}
+
+@main(page, "football"){
+}{
+<div class="article__zone left-col-deport tone-news tone-accent-border hide-on-mobile-if-localnav">
+    <h2 class="page-heading--football left-col-deport__body">
+        Wallchart
+    </h2>
+</div>
+
+<div class="article-wrapper monocolumn-wrapper tone-news">
+    <article id="article" class="article" itemprop="mainContentOfPage" itemtype="http://schema.org/Article" role="main">
+
+        <div class="article__columning-wrapper">
+            <div class="article__main-column">
+
+                <div class="football-wallchart football-wallchart--@rounds.length-rounds u-cf">
+                    @rounds.map{ round =>
+                        <div class="football-round football-round--@round._2.length-matches">
+                            <div class="football-round__name">@round._1</div>
+                            @if(round._2.length == 1){
+                                <div class="football-round__matches football-round__matches--final">
+                                    @round._2.map { m => @footballMatch(m) }
+                                </div>
+                            } else {
+                                @defining(round._2.length/2) { half =>
+                                    <div class="football-round__matches">
+                                        @round._2.take(half).map{ m =>
+                                            @footballMatch(m)
+                                        }
+                                    </div>
+                                    <div class="football-round__matches">
+                                        @round._2.drop(half).map{ m =>
+                                            @footballMatch(m)
+                                        }
+                                    </div>
+                                }
+                            }
+                        </div>
+                    }
+                </div>
+
+
+            </div>
+
+            <!--div class="article__secondary-column" aria-hidden="true">
+                <div class="article__secondary-column__inner article__secondary-column__inner--fill-vertically">
+                </div>
+            </div-->
+        </div>
+    </article>
+</div>
+}
