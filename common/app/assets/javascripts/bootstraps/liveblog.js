@@ -77,7 +77,7 @@ define([
             bean.off(curBinding);
             unselect();
             $el.addClass(selectedClass);
-            url.pushUrl({blockId: eventId}, title, '#' + window.location.pathname + '#' + eventId, true);
+            url.pushUrl({blockId: eventId}, title, window.location.pathname + '#' + eventId, true);
             e.stop();
         });
     }
