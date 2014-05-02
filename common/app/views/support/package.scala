@@ -301,13 +301,17 @@ case class PictureCleaner(contentImages: Seq[ImageElement]) extends HtmlCleaner 
 case class LiveBlogDateFormatter(isLiveBlog: Boolean)(implicit val request: RequestHeader) extends HtmlCleaner  {
   def clean(body: Document): Document = {
     if (isLiveBlog) {
-      body.select(".block-time.published-time time").foreach { el =>
-        el.attr("data-relativeformat", "med")
-        val datetime = DateTime.parse(el.attr("datetime"))
-        val hhmm = Format(datetime, "HH:mm")
-        el.after(s"""<span class="block-time__absolute">$hhmm</span>""")
-        if(datetime.isAfter(DateTime.now().minusDays(5))) {
-          el.addClass("js-timestamp")
+      body.select(".block").foreach { el =>
+        val id = el.id()
+        el.select(".block-time.published-time time").foreach { time =>
+            val datetime = DateTime.parse(time.attr("datetime"))
+            val hhmm = Format(datetime, "HH:mm")
+            time.wrap(s"""<a href="#$id" class="block-time__link"></a>""")
+            time.attr("data-relativeformat", "med")
+            time.after( s"""<span class="block-time__absolute">$hhmm</span>""")
+            if (datetime.isAfter(DateTime.now().minusDays(5))) {
+              time.addClass("js-timestamp")
+            }
         }
       }
     }
@@ -823,7 +827,7 @@ object GetClasses {
   }
 
   def makeSnapClasses(trail: Trail): Seq[String] = trail match {
-    case snap: Snap => snap.snapType.map(t => Seq(s"facia-snap facia-snap--$t")).getOrElse(Seq("facia-snap facia-snap--default"))
+    case snap: Snap => "facia-snap" +: snap.snapType.map(t => Seq(s"facia-snap--$t")).getOrElse(Seq("facia-snap--default"))
     case _  => Nil
   }
 

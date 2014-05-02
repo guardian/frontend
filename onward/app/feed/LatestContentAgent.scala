@@ -1,6 +1,6 @@
 package feed
 
-import conf.SwitchingContentApi
+import conf.ContentApi
 import common._
 import model.Content
 import org.joda.time.DateTime
@@ -22,7 +22,7 @@ object LatestContentAgent extends Logging with ExecutionContexts {
   }
 
   private def update(edition: Edition) {
-    val newFetchedContent = SwitchingContentApi().search(edition).response.map(_.results.headOption.map(Content(_)))
+    val newFetchedContent = ContentApi.search(edition).response.map(_.results.headOption.map(Content(_)))
 
     newFetchedContent.map( _.foreach {content =>
 

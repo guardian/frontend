@@ -21,8 +21,10 @@ define([
         });
     }
 
-    function setSnapPoint(el, prefix) {
-        prefix = prefix || '';
+    function setSnapPoint(el) {
+        var $el = bonzo(el),
+            prefix = 'facia-snap-point--';
+
         var breakpoints = [
             { width: 0, name: 'tiny' },
             { width: 180, name: 'mini' },
@@ -32,17 +34,21 @@ define([
         ];
 
         breakpoints.forEach(function(breakpoint) {
-            el.classList.remove(prefix + breakpoint.name);
+            $el.removeClass(prefix + breakpoint.name);
         });
 
-        el.classList.add(prefix + find(breakpoints, function(breakpoint, i, arr) {
+        $el.addClass(prefix + find(breakpoints, function(breakpoint, i, arr) {
             return !arr[i+1] || (el.offsetWidth >= breakpoint.width && el.offsetWidth < arr[i+1].width);
         }).name);
     }
 
+    function setSnapEmbedded(el) {
+        bonzo(el).addClass('facia-snap-embed');
+    }
+
     function resizeSnaps(selector) {
         $(selector).each(function(el) {
-            setSnapPoint(el, 'facia-snap-point--');
+            setSnapPoint(el);
         });
     }
 
@@ -59,7 +65,8 @@ define([
                             .empty()
                             .append(html);
 
-                        setSnapPoint(el, 'facia-snap-point--');
+                        setSnapEmbedded(el);
+                        setSnapPoint(el);
                     });
                 });
             });

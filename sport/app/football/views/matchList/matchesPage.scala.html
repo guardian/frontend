@@ -32,12 +32,8 @@
                                 <div class="date-divider">@date.toString("EEEE d MMMM yyyy")</div>
                                 @competitionMatches.map { case (competition, matches) =>
                                     <div class="football-table__container">
-                                        <div class="article__meta-container">
-                                            <h3 class="article__meta-heading"><a href="@LinkTo{@competition.url}" data-link-name="view competition">@competition.fullName</a></h3>
-                                        </div>
-
                                         <div class="article__container u-cf">
-                                            @football.views.html.matchList.matchesList(matches, competition, responsiveFont = true)
+                                            @football.views.html.matchList.matchesList(matches, competition, date, responsiveFont = true, matchType = matchesList.pageType)
                                         </div>
                                     </div>
                                 }
