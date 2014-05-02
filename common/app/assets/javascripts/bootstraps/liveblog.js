@@ -86,7 +86,7 @@ define([
         var data = {
             id: el.getAttribute('id'),
             title: $('.block-title', el).text(),
-            time: $('.block-time', el).html()
+            time: $('.block-time__link', el).html()
         };
 
         return template(keyEventTemplate, data);

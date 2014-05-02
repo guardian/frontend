@@ -989,17 +989,17 @@ $timeline-width: 14px;
         padding: $gs-baseline/6 0 $gs-baseline/2
     ));
 
+    &:hover,
+    &:active {
+        text-decoration: none;
+    }
+
     @include mq(rightCol) {
         position: relative;
         @include rem((
             padding: 0 0 $gs-baseline*2 $gs-gutter
         ));
         border-left: 1px solid $c-neutral5;
-
-        &:hover,
-        &:active {
-            text-decoration: none;
-        }
 
         &:before {
             display: block;
@@ -1064,14 +1064,14 @@ $timeline-width: 14px;
     display: table-cell;
     @include fs-textsans(3);
     color: $c-neutral1;
+    border-color: $c-neutral8;
+
+    .timeline__link:hover & {
+        border-color:  $c-neutral2;
+    }
 
     @include mq(rightCol) {
         display: inline;
-        border-color: $c-neutral8;
-
-        .timeline__link:hover & {
-            border-color:  $c-neutral2;
-        }
 
         .live-blog__key-event--selected & {
             font-weight: bold;
