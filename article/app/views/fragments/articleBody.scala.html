@@ -11,18 +11,6 @@
         <div class="article-wrapper monocolumn-wrapper tone-@VisualTone(article)">
             <article id="article" class="article @if(article.isLive){is-live} @if(article.isAdvertisementFeature){article--advertisement-feature}"
                      itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType" role="main">
-
-                @if(ABHomeComponent.isSwitchedOn && article.hasMainPicture) {
-                    <div class="home-container">
-                        <div class="home js-home u-h" data-component="home" data-link-name="article-home">
-                            <a href="@LinkTo{/}" class="home__link">
-                                <span class="i i-home"></span>
-                                <span class="home__label">home</span>
-                            </a>
-                        </div>
-                    </div>
-                }
-
                 <div class="article__inner article__inner--head">
                     <header class="article__head">
 
@@ -77,10 +65,6 @@
 
                         <div class="js-article__container article__container u-cf" data-component="body">
 
-                            @if(ABHomeComponent.isSwitchedOn && article.hasMainPicture) {
-                                <div class="top-marker"></div>
-                            }
-
                             <div class="article-body u-cf from-content-api js-article__body"
                             itemprop="@if(article.isReview){reviewBody} else {articleBody}">
                                 @BodyCleaner(article, article.body)
@@ -95,9 +79,6 @@
                             @fragments.social(article)
                         </div>
 
-                        @if(ABHomeComponent.isSwitchedOn && article.hasMainPicture) {
-                            <div class="bottom-marker"></div>
-                        }
                         <div class="after-article js-after-article"></div>
                     </div>
                     <div class="article__secondary-column" aria-hidden="true">
@@ -125,13 +106,14 @@
         </div>
     </div>
 
-    <div class="facia-container facia-container--layout-article facia-container--commercial">
+    <div class="facia-container facia-container--layout-article">
         @fragments.storyPackagePlaceholder(storyPackage)
 
         @fragments.onwardPlaceholder(VisualTone(article))
 
         @fragments.mostPopularPlaceholder(article.section, VisualTone(article))
-
+    </div>
+    <div class="facia-container facia-container--layout-article facia-container--commercial">
         @fragments.commercial.commercialComponent(name="merchandising", adType="commercial-component", sizeMapping=Map("mobile" -> Seq("888,88")))
     </div>
 }
