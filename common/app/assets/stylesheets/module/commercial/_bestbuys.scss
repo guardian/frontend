@@ -32,6 +32,7 @@
         + .tabs__tab a {
             border-left: 0;
         }
+        
         a {
             background-color: transparent;
             @include fs-data(4);
@@ -78,63 +79,6 @@
         color: #A3A3A3;
         @include fs-data(1);
     }
-
-/*
-    @include mq($to: tablet) {
-        .lineitem__link,
-        .tagline {
-            display: none;
-        }
-        .commercial__head {
-            @include rem((
-                height: $gs-row-height
-            ));
-        }
-        .commercial__title {
-            padding: $gs-baseline/4;
-
-            .i {
-                margin-top: $gs-baseline/4;
-            }
-        }
-        .commercial__subtitle {
-            padding: $gs-baseline/4;
-        }
-        .commercial__title a {
-            color: #ffffff;
-        }
-        .commercial__body {
-            display: block;
-        }
-        .tabs__tab {
-            a {
-                min-height: 32px;
-            }
-        }
-        .tabs__tab span,
-        .hide-cell-on-mobile,
-        .lineitem__meta {
-            display: none;
-        }
-        thead td {
-            span:first-child {
-                display: none;
-            }
-            span:last-child {
-                display: block;
-            }
-        }
-    }
-
-    @include mq(desktop) {
-        .commercial__head {
-            position: absolute;
-            top: 0;
-            @include rem((
-                left: $gs-gutter/2
-            ));
-        }
-    }*/
 }
 
 /* fronts */
@@ -153,22 +97,46 @@
             margin-left: 25%;
             padding-left: 0;
         }        
+        .commercial__home-link {
+            position: absolute;
+            @include rem((
+                bottom: 10px,
+                left: $gs-gutter/2
+            ));
+        }
     }
     @include mq(faciaLeftCol) {
         .commercial__head {
-            width: gs-span(2) + $gs-gutter;
+            @include rem((
+                width: gs-span(2) + $gs-gutter
+            ));
         }
         .tabs__container,
         .commercial__body {
-            margin-left: gs-span(2) + $gs-gutter;
+            @include rem((
+                margin-left: gs-span(2) + $gs-gutter
+            ));
             padding-left: 0;
+        }        
+    }
+    @include mq($from: faciaLeftCol, $to: wide) {
+        .commercial__home-link {
+            line-height: 1;
+            @include rem((
+                width: gs-span(1) + $gs-gutter*2
+            ));            
         }        
     }
     @include mq(wide) {
         .tabs__container,
         .commercial__body {
-            margin-left: 20%;
+            @include rem((
+                margin-left: gs-span(3) + $gs-gutter
+            ));
             padding-left: 0;
+        }
+        .commercial__head {
+            margin-right: 0;
         }
     }
 }
@@ -176,6 +144,7 @@
 .facia-container--layout-article .commercial--bestbuys {
     @include mq(rightCol) {
         .commercial__head {
+            background: red;
             width: 25%;
             float: left;
             position: absolute;
@@ -187,6 +156,13 @@
         .commercial__body {
             margin-left: 25%;
         }
+        .commercial__home-link {
+            position: absolute;
+            @include rem((
+                bottom: 10px,
+                left: $gs-gutter/2
+            ));
+        }
     }
     @include mq($from: rightCol, $to: leftCol) {
         .tabs__container {
@@ -197,8 +173,20 @@
         }
     }
     @include mq(leftCol) {
+        .tabs__container,
         .commercial__body {
-            margin-left: gs-span(2) + $gs-gutter;
+            @include rem((
+                margin-left: gs-span(2) + $gs-gutter
+            ));
+            padding-left: 0;
+        }    
+    }
+    @include mq($from: leftCol, $to: wide) {
+        .commercial__home-link {
+            line-height: 1;
+            @include rem((
+                width: gs-span(1) + $gs-gutter*2
+            ));            
         }        
     }
     @include mq(wide) {
