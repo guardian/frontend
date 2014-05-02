@@ -1,10 +1,10 @@
 package model.commercial.jobs
 
-import scala.xml.Elem
 import conf.{Switches, CommercialConfiguration}
 import model.commercial.{OptString, XmlAdsApi}
-import org.joda.time.format.DateTimeFormat
 import org.apache.commons.lang.StringEscapeUtils.unescapeHtml
+import org.joda.time.format.DateTimeFormat
+import scala.xml.Elem
 
 object JobsApi extends XmlAdsApi[Job] {
 
@@ -26,15 +26,18 @@ object JobsApi extends XmlAdsApi[Job] {
   override def cleanResponseBody(body: String) = body.dropWhile(_ != '<')
 
   def parse(xml: Elem): Seq[Job] = {
-    (xml \ "Job") map {
+    (xml \ "Job").filterNot(job => (job \ "RecruiterLogoURL").isEmpty).map {
       job =>
         Job(
           (job \ "JobID").text.toInt,
           (job \ "JobTitle").text,
           unescapeHtml((job \ "ShortJobDescription").text),
+          OptString((job \ "LocationDescription").text),
           (job \ "RecruiterName").text,
-          OptString((job \ "RecruiterLogoURL").text),
-          ((job \ "Sectors" \ "Sector") map (_.text.toInt)).toSeq
+          OptString((job \ "RecruiterPageUrl").text),
+          (job \ "RecruiterLogoURL").text,
+          ((job \ "Sectors" \ "Sector") map (_.text.toInt)).toSeq,
+          (job \ "SalaryDescription").text
         )
     }
   }

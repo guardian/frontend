@@ -131,8 +131,8 @@ define([
                     bottomMarker: qwery('.js-bottom-marker')[0],
                     containerElement: qwery('.js-live-blog__key-events')[0]
                 });
-                createScrollTransitions();
             }
+            createScrollTransitions();
         });
     }
 
