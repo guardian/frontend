@@ -73,7 +73,7 @@ trait CurrentAccountsApi extends MoneySupermarketApi[CurrentAccount] {
   }
 }
 
-package object currentAccountsApi {
+package currentAccountsApi {
 
   object Rewards extends CurrentAccountsApi {
     protected val adTypeName = "Current Accounts - Rewards"
@@ -103,7 +103,7 @@ package object currentAccountsApi {
 }
 
 
-package object currentAccountsAgent {
+package currentAccountsAgent {
 
   object Rewards extends MoneyAgent[CurrentAccount] {
     protected def loadProducts() = currentAccountsApi.Rewards.loadAds()

@@ -61,7 +61,7 @@ trait SavingsApi extends MoneySupermarketApi[SavingsAccount] {
   }
 }
 
-package object savingsApi {
+package savingsApi {
 
   object CashIsas extends SavingsApi {
     protected val adTypeName = "Savings Accounts - Cash ISAs"
@@ -94,7 +94,7 @@ package object savingsApi {
 
 }
 
-package object savingsAgent {
+package savingsAgent {
 
   object CashIsas extends MoneyAgent[SavingsAccount] {
     protected def loadProducts() = savingsApi.CashIsas.loadAds()

@@ -81,7 +81,7 @@ trait CreditCardsApi extends MoneySupermarketApi[CreditCard] {
   }
 }
 
-package object creditCardsApi {
+package creditCardsApi {
 
   object BalanceTransfer extends CreditCardsApi {
     protected val adTypeName = "Credit Cards - Balance Transfer"
@@ -115,7 +115,7 @@ package object creditCardsApi {
 }
 
 
-package object creditCardsAgent {
+package creditCardsAgent {
 
   object BalanceTransfer extends MoneyAgent[CreditCard] {
     protected def loadProducts() = creditCardsApi.BalanceTransfer.loadAds()
