@@ -12,36 +12,24 @@
         data-id="@config.id"
         data-type="@style.containerType"
         data-component="@FaciaComponentName(config, collection)">
-
-        <div class="container__border tone-@style.tone tone-accent-border"></div>
-
-        <div class="container__header">
-            @config.displayName.orElse(collection.displayName).map { title =>
-                <h2 class="container__title tone-@style.tone tone-background">
-                    @collection.href.map { href =>
-                        <a class="container__title__label u-text-hyphenate" data-link-name="section heading" href="@LinkTo{/@href}">@Html(title)</a>
-                    }.getOrElse{
-                        <span class="container__title__label u-text-hyphenate">@Html(title)</span>
-                    }
-                </h2>
-            }
-        </div>
-        @* TODO: example of advert on front - remove once hooked into DFP
-        <div class="ad-slot--paid-for-badge ad-slot--paid-for-badge--fronts">
-            <div class="ad-slot--paid-for-badge__inner">
-                <h3 class="ad-slot--paid-for-badge__header">Advertisement feature</h3>
-                <p class="ad-slot--paid-for-badge__label">In association with</p>
-                <a href="%%CLICK_URL_UNESC%%#" class="ad-slot--paid-for-badge__link">
-                    <img class="ad-slot--paid-for-badge__logo" src="https://pbs.twimg.com/profile_images/2162331249/unilever-logo.gif" width="140" height="80" />
-                </a>
-                <a href="%%CLICK_URL_UNESC%%#" class="ad-slot--paid-for-badge__help">What is this?</a>
+        <div class="facia-container__inner">
+            <div class="container__border tone-@style.tone tone-accent-border"></div>
+            <div class="container__header">
+                @config.displayName.orElse(collection.displayName).map { title =>
+                    <h2 class="container__title tone-@style.tone tone-background">
+                        @collection.href.map { href =>
+                            <a class="container__title__label u-text-hyphenate" data-link-name="section heading" href="@LinkTo{/@href}">@Html(title)</a>
+                        }.getOrElse{
+                            <span class="container__title__label u-text-hyphenate">@Html(title)</span>
+                        }
+                    </h2>
+                }
             </div>
+            <div class="container__body">
+                @fragments.contributor(page)
+                @fragments.collections.tag(collection.items, style, containerIndex)
+            </div>
+            @pagination.map{ paginate => @fragments.pagination(page, paginate)}
         </div>
-        *@
-        <div class="container__body">
-            @fragments.contributor(page)
-            @fragments.collections.tag(collection.items, style, containerIndex)
-        </div>
-        @pagination.map{ paginate => @fragments.pagination(page, paginate)}
     </section>
 }

@@ -4,55 +4,55 @@
 
 @main(page, "football"){
 }{
-
-<h2 class="article__zone left-col-deport tone-news tone-accent-border hide-on-mobile-if-localnav">
-    <span class="left-col-deport__body">
-        <a class="tone-colour" data-link-name="article section" href="@LinkTo{/football}">football</a>
-    </span>
-</h2>
-<div class="article-wrapper monocolumn-wrapper tone-news">
-    <article class="article football-article @if(page.theMatch.isLive){is-live}" role="main">
-        <div class="article__inner article__inner--head">
-            <header class="article__head">
-                @football.views.html.fragments.matchSummary(page.theMatch)
-            </header>
-            <div class="after-header">
-                @* this 'Stats' header gets replaced by the match navigation tabs (if available) *@
-                @if(page.matchStarted){
-                    <h3 class="section-divider">Stats</h3>
-                }
-            </div>
-        </div>
-        <div class="article__columning-wrapper">
-            <div class="article__main-column">
-                <div class="js-article__container article__container u-cf">
-
-                    @if(page.theMatch.isLive) {
-                    <div class="live-toolbar">
-                        <div class="update update-live-matches update-match-stats" data-link-name="autoupdate"></div>
-                    </div>
-                    }
-                    <div class="match-stats">
-                        @matchStats(page)
+    <div class="gs-container">
+        <h2 class="article__zone left-col-deport tone-news tone-accent-border hide-on-mobile-if-localnav">
+            <span class="left-col-deport__body">
+                <a class="tone-colour" data-link-name="article section" href="@LinkTo{/football}">football</a>
+            </span>
+        </h2>
+        <div class="article-wrapper monocolumn-wrapper tone-news">
+            <article class="article football-article @if(page.theMatch.isLive){is-live}" role="main">
+                <div class="article__inner article__inner--head">
+                    <header class="article__head">
+                        @football.views.html.fragments.matchSummary(page.theMatch)
+                    </header>
+                    <div class="after-header">
+                        @* this 'Stats' header gets replaced by the match navigation tabs (if available) *@
+                        @if(page.matchStarted){
+                            <h3 class="section-divider">Stats</h3>
+                        }
                     </div>
                 </div>
-            </div>
-            <div class="article__secondary-column" aria-hidden="true">
-                <div class="article__secondary-column__inner">
-                    <div class="u-table">
-                        <div class="u-table__row">
+                <div class="article__columning-wrapper">
+                    <div class="article__main-column">
+                        <div class="js-article__container article__container u-cf">
+
+                            @if(page.theMatch.isLive) {
+                            <div class="live-toolbar">
+                                <div class="update update-live-matches update-match-stats" data-link-name="autoupdate"></div>
+                            </div>
+                            }
+                            <div class="match-stats">
+                                @matchStats(page)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="article__secondary-column" aria-hidden="true">
+                        <div class="article__secondary-column__inner">
+                            <div class="u-table">
+                                <div class="u-table__row">
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
+            </article>
+            <div class="article__inner">
+                @fragments.footballNav(page)
             </div>
+
         </div>
-    </article>
-    <div class="article__inner">
-        @fragments.footballNav(page)
+
+        @fragments.mostPopularPlaceholder("sport")
     </div>
-
-</div>
-
-@fragments.mostPopularPlaceholder("sport")
-
 }

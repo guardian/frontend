@@ -1,13 +1,3 @@
-.facia-container--commercial {
-    &.facia-container--layout-article {
-        padding: 0;
-        margin: 0;
-        @include rem((
-            max-width: gs-span(15)+($gs-gutter*1.5)
-        ));
-    }
-}
-
 .facia-container--layout-front .commercial {
     padding: 0;
     @include mq(leftCol) {
@@ -32,9 +22,6 @@
     @include rem((
         padding: 0 $gs-gutter/2
     ));
-    .container__border {
-        border-top: 0;
-    }
     .container__title {
         background: none !important;    // Overriding default page styles
         @include rem((

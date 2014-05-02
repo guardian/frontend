@@ -1,29 +1,10 @@
 .container--multimedia {
     background-color: $c-neutral1;
     padding-bottom: $gs-baseline;
-    overflow: visible;
     @include rem((
         min-height: 30px
     ));
 
-    $bgWidth: 600px;
-    &:before,
-    &:after {
-        @include box-sizing(border-box);
-        content: " ";
-        border-top: 2px solid $c-commentAccent;
-        background-color: $c-neutral1;
-        position: absolute;
-        top: 0;
-        height: 100%;
-        width: $bgWidth;
-    }
-    &:before {
-        margin-left: -$bgWidth;
-    }
-    &:after {
-        left: 100%;
-    }
     .container__title,
     .container__toggle__text,
     .item__title,

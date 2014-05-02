@@ -1,30 +1,47 @@
-.facia-container {
+.facia-container__inner {
+    @include rem((
+        padding-left: $gs-gutter / 2,
+        padding-right: $gs-gutter / 2
+    ));
 
-}
-.facia-container--layout-front {
-    @include mq(gs-span(7) + $gs-gutter*3, tablet) {
+    @include mq(mobileLandscape) {
         @include rem((
-            width: gs-span(7)
+            padding-left: $gs-gutter,
+            padding-right: $gs-gutter
         ));
-        margin: 0 auto;
     }
     @include mq(tablet) {
-        @include rem((
-            width: gs-span(9)
-        ));
-        padding-left: 0;
-        padding-right: 0;
+        margin-left: auto;
+        margin-right: auto;
     }
-    @include mq(desktop) {
-        @include rem((
-            width: gs-span(12)
-        ));
+}
+.facia-container--layout-front {
+    .facia-container__inner {
+        @include mq(gs-span(7) + $gs-gutter*3, tablet) {
+            @include rem((
+                width: gs-span(7)
+            ));
+            margin: 0 auto;
+        }
+        @include mq(tablet) {
+            @include rem((
+                width: gs-span(9)
+            ));
+            padding-left: 0;
+            padding-right: 0;
+        }
+        @include mq(desktop) {
+            @include rem((
+                width: gs-span(12)
+            ));
+        }
+        @include mq(faciaLeftCol) {
+            @include rem((
+                width: gs-span(14)
+            ));
+        }
     }
     @include mq(faciaLeftCol) {
-        @include rem((
-            width: gs-span(14)
-        ));
-
         .container__title {
             margin-bottom: 0;
         }
@@ -52,10 +69,11 @@
         }
     }
     @include mq(wide) {
-        @include rem((
-            width: gs-span(16)
-        ));
-
+        .facia-container__inner {
+            @include rem((
+                width: gs-span(16)
+            ));
+        }
         .container__title {
             float: left;
             @include rem((
@@ -72,19 +90,21 @@
     }
 }
 .facia-container--layout-article {
-    @include rem((
-        margin-bottom: $gs-baseline*2
-    ));
+    .facia-container__inner {
+        @include rem((
+            margin-bottom: $gs-baseline*2
+        ));
 
-    @include mq(tablet) {
-        @include rem((
-            max-width: gs-span(8)
-        ));
-    }
-    @include mq(rightCol) {
-        @include rem((
-            max-width: gs-span(14) + $gs-gutter*2
-        ));
+        @include mq(tablet) {
+            @include rem((
+                max-width: gs-span(8)
+            ));
+        }
+        @include mq(rightCol) {
+            @include rem((
+                max-width: gs-span(14) + $gs-gutter*2
+            ));
+        }
     }
     @include mq(leftCol) {
         .container__title,
@@ -105,11 +125,12 @@
         }
     }
     @include mq(wide) {
-        @include rem((
-            max-width: gs-span(15),
-            padding-right: gs-span(1) + $gs-gutter*2
-        ));
-
+        .facia-container__inner {
+            @include rem((
+                max-width: gs-span(15),
+                padding-right: gs-span(1) + $gs-gutter*2
+            ));
+        }
         .container__title,
         .container__meta {
             @include rem((

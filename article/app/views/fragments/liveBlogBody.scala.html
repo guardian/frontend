@@ -2,142 +2,143 @@
 @import conf.Switches._
 
 @defining((model.article, model.storyPackage, !model.article.isSport)) {  case (article, storyPackage, isDefault) =>
+    <div class="gs-container">
+        <h2 class="article__zone blog__zone @if(isDefault){blog__zone--default} right-col-deport tone-@VisualTone(article) tone-accent-border hide-on-mobile-if-localnav">
+            <span class="blog__zone__inner right-col-deport__body" data-component="meta">
+                <a class="blog__zone__link" data-link-name="article section" href="@LinkTo{/@article.section}">@Html(article.sectionName.toLowerCase)</a>
+            </span>
+        </h2>
 
-<h2 class="article__zone blog__zone @if(isDefault){blog__zone--default} right-col-deport tone-@VisualTone(article) tone-accent-border hide-on-mobile-if-localnav">
-    <span class="blog__zone__inner right-col-deport__body" data-component="meta">
-        <a class="blog__zone__link" data-link-name="article section" href="@LinkTo{/@article.section}">@Html(article.sectionName.toLowerCase)</a>
-    </span>
-</h2>
+        <div class="monocolumn-wrapper monocolumn-wrapper--no-limit article-wrapper tone-@VisualTone(article)">
+            <article id="article" class="article @if(article.isLive){is-live} blog"
+            itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType" role="main">
 
-<div class="article-wrapper monocolumn-wrapper tone-@VisualTone(article)">
-    <article id="article" class="article @if(article.isLive){is-live} blog"
-    itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType" role="main">
+                <div class="blog__inner blog__inner--head@if(isDefault){ blog__head-background--default}">
+                    <header class="article__head">
 
-        <div class="blog__inner blog__inner--head@if(isDefault){ blog__head-background--default}">
-            <header class="article__head">
+                        @article.series.headOption.map { series =>
+                            @fragments.meta.series(series.id, series.name, List("inline", "live"))
+                        }
 
-                @article.series.headOption.map { series =>
-                    @fragments.meta.series(series.id, series.name, List("inline", "live"))
-                }
+                        <h1 itemprop="headline" class="blog__headline js-score">@Html(article.headline)</h1>
 
-                <h1 itemprop="headline" class="blog__headline js-score">@Html(article.headline)</h1>
+                        <div class="blog__head-lower blog__head-background--accent">
+                            <div class="blog__last-updated-container">
+                                @if(article.isLive) {<span class="blog__live">LIVE</span> }updated <time class="js-timestamp" datetime="@article.webPublicationDate" data-relativeformat="med"></time>
+                            </div>
 
-                <div class="blog__head-lower blog__head-background--accent">
-                    <div class="blog__last-updated-container">
-                        @if(article.isLive) {<span class="blog__live">LIVE</span> }updated <time class="js-timestamp" datetime="@article.webPublicationDate" data-relativeformat="med"></time>
-                    </div>
+                            <div class="blog__meta-container">
+                                @fragments.meta.byline(article.byline, article)
+                                @fragments.meta.dateline(article.webPublicationDate, secondary = true)
+                                <div class="js-comment-count blog__comment-count"></div>
+                            </div>
+                        </div>
 
-                    <div class="blog__meta-container">
-                        @fragments.meta.byline(article.byline, article)
-                        @fragments.meta.dateline(article.webPublicationDate, secondary = true)
-                        <div class="js-comment-count blog__comment-count"></div>
-                    </div>
+                    </header>
+
+                    <div class="after-header js-after-head"></div>
                 </div>
+                <div class="blog__columning-wrapper">
+                    <div class="blog__main-column blog__main-background">
+                        <div class="blog__standfirst-container">
+                            @fragments.standfirst(article)
 
-            </header>
+                            <div class="js-football-meta"></div>
 
-            <div class="after-header js-after-head"></div>
-        </div>
-        <div class="blog__columning-wrapper">
-            <div class="blog__main-column blog__main-background">
-                <div class="blog__standfirst-container">
-                    @fragments.standfirst(article)
+                            @fragments.witnessCallToAction(article)
 
-                    <div class="js-football-meta"></div>
+                            @if(!article.hasVideoAtTop) {
+                                @if(article.hasMainVideo) {
+                                    @article.mainVideo.map{ mainVideo =>
+                                        <div class="gu-video-wrapper">
+                                            <div class="u-responsive-ratio u-responsive-ratio--hd">
+                                                <video data-media-id="@mainVideo.id" class="gu-video" controls="controls">
+                                                    @for(url <- mainVideo.videoAssets.flatMap(_.url)) {
+                                                        <source src="@url" />
+                                                    }
+                                                    @mainVideo.videoAssets.find(_.mimeType == "video/mp4").map{ encoding =>
+                                                        <object type="application/x-shockwave-flash" data="@Static("flash/flashmediaelement.swf")" width="620" height="350">
+                                                            <param name="allowFullScreen" value="true" />
+                                                            <param name="movie" value="@Static("flash/flashmediaelement.swf")" />
+                                                            <param name="flashvars" value="file=@encoding.url&amp;controls=true" />
+                                                            Sorry, your browser is unable to play this video.
+                                                        </object>
+                                                    }
+                                                </video>
+                                            </div>
+                                        </div>
+                                    }
+                                } else {
+                                    @fragments.img(article.mainPicture)
+                                }
+                            }
+                        </div>
 
-                    @fragments.witnessCallToAction(article)
-
-                    @if(!article.hasVideoAtTop) {
-                        @if(article.hasMainVideo) {
-                            @article.mainVideo.map{ mainVideo =>
-                                <div class="gu-video-wrapper">
-                                    <div class="u-responsive-ratio u-responsive-ratio--hd">
-                                        <video data-media-id="@mainVideo.id" class="gu-video" controls="controls">
-                                            @for(url <- mainVideo.videoAssets.flatMap(_.url)) {
-                                                <source src="@url" />
-                                            }
-                                            @mainVideo.videoAssets.find(_.mimeType == "video/mp4").map{ encoding =>
-                                                <object type="application/x-shockwave-flash" data="@Static("flash/flashmediaelement.swf")" width="620" height="350">
-                                                    <param name="allowFullScreen" value="true" />
-                                                    <param name="movie" value="@Static("flash/flashmediaelement.swf")" />
-                                                    <param name="flashvars" value="file=@encoding.url&amp;controls=true" />
-                                                    Sorry, your browser is unable to play this video.
-                                                </object>
-                                            }
-                                        </video>
+                        <div class="blog__left-col js-right-hand-component">
+                            <div class="js-top-marker"></div>
+                            @if(article.hasKeyEvents) {
+                                <div class="blog__timeline blog__dropdown js-live-blog__key-events">
+                                    <div class="blog__timeline-container js-live-blog__timeline-container" data-component="timeline">
+                                        @fragments.dropdown("Key events", "live") {
+                                            <ul class="timeline js-live-blog__timeline u-unstyled"></ul>
+                                        }
                                     </div>
                                 </div>
                             }
-                        } else {
-                            @fragments.img(article.mainPicture)
-                        }
-                    }
-                </div>
+                            <div class="js-components"></div>
+                        </div>
 
-                <div class="blog__left-col js-right-hand-component">
-                    <div class="js-top-marker"></div>
-                    @if(article.hasKeyEvents) {
-                        <div class="blog__timeline blog__dropdown js-live-blog__key-events">
-                            <div class="blog__timeline-container js-live-blog__timeline-container" data-component="timeline">
-                                @fragments.dropdown("Key events", "live") {
-                                    <ul class="timeline js-live-blog__timeline u-unstyled"></ul>
-                                }
+                        @fragments.dropdown("Live feed", "live", true) {
+                            <div class="js-article__container article__container" data-component="body">
+                                @fragments.liveFilter(article.isLive)
+
+                                <div class="article-body u-cf from-content-api js-blog-blocks @if(article.isLive) {live-blog}"
+                                itemprop="@if(article.isReview) {reviewBody} else {articleBody}">
+                                    @BodyCleaner(article, article.body)
+                                </div>
+
+                                <div class="article__keywords" data-link-name="live blog keywords">
+                                    @fragments.keywordList(article.keywords)
+                                </div>
                             </div>
-                        </div>
-                    }
-                    <div class="js-components"></div>
-                </div>
 
-                @fragments.dropdown("Live feed", "live", true) {
-                    <div class="js-article__container article__container" data-component="body">
-                        @fragments.liveFilter(article.isLive)
-
-                        <div class="article-body u-cf from-content-api js-blog-blocks @if(article.isLive) {live-blog}"
-                        itemprop="@if(article.isReview) {reviewBody} else {articleBody}">
-                            @BodyCleaner(article, article.body)
-                        </div>
-
-                        <div class="article__keywords" data-link-name="live blog keywords">
-                            @fragments.keywordList(article.keywords)
-                        </div>
+                            <div class="social-wrapper" data-component="share">
+                                @fragments.social(article)
+                            </div>
+                            <div class="js-bottom-marker"></div>
+                        }
+                        <div class="after-article js-after-article"></div>
                     </div>
-
-                    <div class="social-wrapper" data-component="share">
-                        @fragments.social(article)
-                    </div>
-                    <div class="js-bottom-marker"></div>
-                }
-                <div class="after-article js-after-article"></div>
-            </div>
-            <div class="blog__secondary-column" aria-hidden="true">
-                <div class="blog__secondary-column__inner">
-                    <div class="u-table">
-                        <div class="u-table__row">
-                            <div class="u-table__cell u-table__cell--top">
-                                <div class="mpu-context">
-                                    <div class="mpu-container js-mpu-ad-slot"></div>
+                    <div class="blog__secondary-column" aria-hidden="true">
+                        <div class="blog__secondary-column__inner">
+                            <div class="u-table">
+                                <div class="u-table__row">
+                                    <div class="u-table__cell u-table__cell--top">
+                                        <div class="mpu-context">
+                                            <div class="mpu-container js-mpu-ad-slot"></div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </article>
+
+            @if(DiscussionSwitch.isSwitchedOn && article.isCommentable) {
+                <div class="blog__inner" data-component="discussion">
+                    @fragments.discussion(article.isClosedForComments, article.shortUrlId)
+                </div>
+            }
+
+
         </div>
-    </article>
-
-    @if(DiscussionSwitch.isSwitchedOn && article.isCommentable) {
-        <div class="blog__inner" data-component="discussion">
-            @fragments.discussion(article.isClosedForComments, article.shortUrlId)
-        </div>
-    }
 
 
-</div>
+        @fragments.storyPackagePlaceholder(storyPackage)
 
+        @fragments.onwardPlaceholder(VisualTone(article))
 
-    @fragments.storyPackagePlaceholder(storyPackage)
-
-    @fragments.onwardPlaceholder(VisualTone(article))
-
-    @fragments.mostPopularPlaceholder(article.section)
+        @fragments.mostPopularPlaceholder(article.section)
+    </div>
 }
