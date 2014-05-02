@@ -32,7 +32,7 @@ define([
 
     Affix.prototype.calculateContainerPositioning = function() {
 
-        // The absolute-positioned container defines the static positioning of the affix element.
+        // The container defines the static positioning of the affix element.
         this.$container.css('top', '0');
         var containerTop = this.$markerTop.offset().top - this.$container.offset().top;
         this.$container.css('top', containerTop + 'px');
@@ -59,17 +59,13 @@ define([
 
             // Lock the affix container to the bottom marker.
             if (bottomCheck) {
-                this.$element.removeClass(Affix.CLASSY_BOTTOM);
                 this.$container.removeClass(Affix.CLASSY_BOTTOM);
                 this.calculateContainerPositioning();
             } else {
-                // Store the container top (without element top positioning),
-                // which needs to be re-applied when affixed to bottom.
-                var oldContainerStyling = this.getPixels(this.$container.css('top')) - this.styleTop;
-
-                var topStyle = this.$markerBottom.offset().top - this.$markerTop.offset().top - this.$element.dim().height + oldContainerStyling;
+                // Store the container top, which needs to be re-applied when affixed to bottom.
+                var oldContainerStyling = this.getPixels(this.$container.css('top')),
+                    topStyle = this.$markerBottom.offset().top - this.$markerTop.offset().top - this.$element.dim().height + oldContainerStyling;
                 this.$container.css('top',  topStyle + 'px');
-                this.$element.addClass(Affix.CLASSY_BOTTOM);
                 this.$container.addClass(Affix.CLASSY_BOTTOM);
             }
 
