@@ -8,12 +8,12 @@ import com.google.api.ads.dfp.axis.v201403._
 import com.google.api.ads.dfp.lib.client.DfpSession
 import common.Logging
 import conf.Switches.DfpApiSwitch
-import conf.{Configuration => GuConf}
+import conf.AdminConfiguration.dfpApi
 
 object DfpApi extends Logging {
 
   private lazy val session: Option[DfpSession] = for {
-    conf <- GuConf.dfpApi.configObject
+    conf <- dfpApi.configObject
   } yield {
     val auth = new OfflineCredentials.Builder()
       .forApi(Api.DFP)
@@ -141,8 +141,9 @@ object DfpApi extends Logging {
 
   def fetchSponsoredSlotKeywordTargetingValues(lineItems: Seq[LineItem]): Seq[String] =
     dependingOnSwitch(Seq[String]()) {
+      val allKeywords = fetchAllKeywordTargetingValues()
       val keywordValues = lineItems.foldLeft(Seq[String]()) { (soFar, lineItem) =>
-        val customTargeting = DfpApi.getCustomTargeting(lineItem, fetchAllKeywordTargetingValues())
+        val customTargeting = DfpApi.getCustomTargeting(lineItem, allKeywords)
         if (!customTargeting.get("Keywords").get.isEmpty) {
           soFar ++ customTargeting.flatMap(_._2.map(_.toString)).toSeq
         } else {
