@@ -1,5 +1,5 @@
 .live-toolbar {
-    display: none;
+    display: block;
     width: 100%;
     @include rem((
         margin-bottom: $gs-baseline,
