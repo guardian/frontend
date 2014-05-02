@@ -1,9 +1,10 @@
 package dfp
 
-import common.{ExecutionContexts, AkkaAgent}
+import common.{AkkaAsync, Jobs, ExecutionContexts, AkkaAgent}
 import conf.Configuration.commercial.dfpDataKey
 import model.Article
 import play.api.libs.json.Json._
+import play.api.{Application, GlobalSettings}
 import scala.concurrent.future
 import scala.io.Codec.UTF8
 import services.S3
@@ -30,5 +31,29 @@ object DfpAgent extends ExecutionContexts {
 
   def stop() {
     targetedKeywordsAgent close()
+  }
+}
+
+
+trait DfpAgentLifecycle extends GlobalSettings {
+
+  override def onStart(app: Application) {
+    super.onStart(app)
+
+    Jobs.deschedule("DfpDataRefreshJob")
+    Jobs.schedule("DfpDataRefreshJob", "0 6/30 * * * ?") {
+      DfpAgent.refresh()
+    }
+
+    AkkaAsync {
+      DfpAgent.refresh()
+    }
+  }
+
+  override def onStop(app: Application) {
+    Jobs.deschedule("DfpDataRefreshJob")
+    DfpAgent.stop()
+
+    super.onStop(app)
   }
 }
