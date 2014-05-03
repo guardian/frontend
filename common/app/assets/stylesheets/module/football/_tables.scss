@@ -40,7 +40,9 @@
     }
 
     .football-stat--form {
-        min-width: 75px; // 15(width of status)*5
+        @include rem((
+            min-width: 15*5 // width of status
+        ));
     }
 
     @include mq($to: $table-breakpoint-importance-1) { @include table-football--medium; }
@@ -54,19 +56,74 @@
     }
 }
 
-.c-football-table {
-    @include table-football--medium;
-}
-
+// This is everything on the standalone pages
+// i.e. /football/tables or /football/results
 .football-table__container {
     @include rem((
         margin-bottom: $gs-baseline*3
     ));
     position: relative;
 
-    .table__caption--top {
+    .football-matches__date {
         display: none;
     }
+
+    // Only show "view more" and competition name on the last group table
+    .football__group {
+        .table__caption {
+            display: none;
+        }
+
+        &:last-child .table__caption {
+            display: table-caption;
+        }
+    }
+
+    @include mq(leftCol) {
+        .table__caption--top {
+            @include fs-header(1);
+            @include rem((
+                margin-bottom: ($gs-baseline/3)*4,
+                margin-left: ($a-leftCol-width + $gs-gutter)*-1,
+                padding-bottom: ($gs-baseline/3)*4,
+                padding-top: ($gs-baseline/3),
+                width: $a-leftCol-width
+            ));
+            background: none;
+            border-bottom: 0 none;
+            border-top: 1px dotted $c-neutral5;
+            padding-left: 0;
+            padding-right: 0;
+            position: absolute;
+            top: 0;
+        }
+    }
+
+    @include mq(wide) {
+        .table__caption--top {
+            @include rem((
+                margin-left: (gs-span(3) + $gs-gutter)*-1,
+                width: gs-span(3)
+            ));
+        }
+    }
+}
+
+.football-matches {
+    .table__caption--bottom {
+        display: none;
+    }
+}
+
+.football-table__container--single {
+    // Hide the view more when there is only that table
+    .table__caption--bottom {
+        display: none;
+    }
+}
+
+.c-football-table {
+    @include table-football--medium;
 }
 
 .football__group {

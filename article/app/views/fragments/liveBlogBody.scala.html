@@ -16,6 +16,10 @@
         <div class="blog__inner blog__inner--head@if(isDefault){ blog__head-background--default}">
             <header class="article__head">
 
+                @article.series.headOption.map { series =>
+                    @fragments.meta.series(series.id, series.name, List("inline", "live"))
+                }
+
                 <h1 itemprop="headline" class="blog__headline js-score">@Html(article.headline)</h1>
 
                 <div class="blog__head-lower blog__head-background--accent">
@@ -71,16 +75,17 @@
                 </div>
 
                 <div class="blog__left-col js-right-hand-component">
-                    <div class="js-top-marker"></div>
-                    @if(article.hasKeyEvents) {
-                        <div class="blog__timeline blog__dropdown js-live-blog__key-events">
-                            <div class="blog__timeline-container js-live-blog__timeline-container" data-component="timeline">
-                                @fragments.dropdown("Key events", "live") {
-                                    <ul class="timeline js-live-blog__timeline u-unstyled"></ul>
-                                }
+                    <div class="js-top-marker affix-top-marker">
+                        @if(article.hasKeyEvents) {
+                            <div class="blog__timeline blog__dropdown js-live-blog__key-events">
+                                <div class="blog__timeline-container js-live-blog__timeline-container" data-component="timeline">
+                                    @fragments.dropdown("Key events", "live") {
+                                        <ul class="timeline js-live-blog__timeline u-unstyled"></ul>
+                                    }
+                                </div>
                             </div>
-                        </div>
-                    }
+                        }
+                    </div>
                     <div class="js-components"></div>
                 </div>
 

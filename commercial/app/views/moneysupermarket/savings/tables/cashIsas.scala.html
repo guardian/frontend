@@ -1,0 +1,38 @@
+@(savings: Seq[model.commercial.money.SavingsAccount])
+
+<table>
+    <thead>
+        <tr>
+            <th>Account Name</th>
+            <th>Interest Rate (AER)</th>
+            <th>Notice</th>
+            <th>Transfer In</th>
+            <th>Minimum Investment</th>
+            <th>Access</th>
+            <th class="u-h">Link to product</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for(saving <- savings) {
+            <tr>
+                <td>
+                    <h3>@saving.provider</h3>
+                    <h4>@saving.name</h4>
+                    <img src="@saving.logoUrl" />
+                </td>
+                <td>@saving.interestRate% @saving.interestPaid</td>
+                <td>@saving.noticeTerm</td>
+                <td>@if(saving.transferIn){Yes}else{No}</td>
+                <td>£@saving.minimumInvestment</td>
+                <td>
+                    <ul>
+                        @saving.access.filter(_._2).keys.map { access =>
+                            <li>@access</li>
+                        }
+                    </ul>
+                </td>
+                <td><a href="@saving.applyUrl">Proceed</a></td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -23,6 +23,7 @@ trait Client extends PaClient with Http with ExecutionContexts {
 private object Client extends Client {
 
   override def apiKey: String = Configuration.pa.apiKey
+  override lazy val base = Configuration.pa.host
 
   override def GET(urlString: String): Future[pa.Response] = {
     WS.url(urlString).get().map { response =>

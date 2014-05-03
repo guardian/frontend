@@ -149,14 +149,17 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
     else {
       val results = collectionItems.foldLeft(Future[List[Content]](Nil)) {
         (foldListFuture, collectionItem) =>
+          lazy val supportingAsContent: Future[List[Content]] = {
+            lazy val supportingLinks: List[CollectionItem] = retrieveSupportingLinks(collectionItem)
+            if (!hasParent) getArticles(supportingLinks, edition, hasParent = true) else Future.successful(Nil)
+          }
           if (collectionItem.isSnap) {
-            foldListFuture.map(_ :+ new Snap(collectionItem.id, collectionItem.webPublicationDate.getOrElse(DateTime.now), collectionItem.metaData.getOrElse(Map.empty)))
+            for {
+              contentList <- foldListFuture
+              supporting  <- supportingAsContent
+            } yield contentList :+ new Snap(collectionItem.id, supporting, collectionItem.webPublicationDate.getOrElse(DateTime.now), collectionItem.metaData.getOrElse(Map.empty))
           }
           else {
-            lazy val supportingAsContent: Future[List[Content]] = {
-              lazy val supportingLinks: List[CollectionItem] = retrieveSupportingLinks(collectionItem)
-              if (!hasParent) getArticles(supportingLinks, edition, hasParent = true) else Future.successful(Nil)
-            }
             val response = ContentApi.item(collectionItem.id, edition).showFields(showFieldsWithBodyQuery).response
 
             val content = response.map(_.content).recover {

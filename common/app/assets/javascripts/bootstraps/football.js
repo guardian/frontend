@@ -42,7 +42,7 @@ define([
             } // The promise chain is broken as Reqwest doesn't allow for creating more than 1 argument.
         }, function() {
             $('.score__container', context).remove();
-            $('.article__headline', context).removeClass('u-h');
+            $('.js-score', context).removeClass('u-h');
         });
     }
 

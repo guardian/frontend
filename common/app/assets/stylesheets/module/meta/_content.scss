@@ -43,3 +43,13 @@
         border-top: 1px dotted $c-neutral5;
     }
 }
+
+.content-meta--live {
+    @include rem((
+        padding-bottom: $gs-baseline/4
+    ));
+
+    @include mq(rightCol) {
+        border-top: none;
+    }
+}
