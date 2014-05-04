@@ -44,7 +44,7 @@ define([
             breakpoint.action = isAdd ? 'addClass' : isResize ? 'removeClass' : false;
             return breakpoint;
         })
-        .filter(function(breakpoint) {return breakpoint.action; })
+        .filter(function(breakpoint) { return breakpoint.action; })
         .forEach(function(breakpoint) {
             $el[breakpoint.action](prefix + breakpoint.name);
         });
