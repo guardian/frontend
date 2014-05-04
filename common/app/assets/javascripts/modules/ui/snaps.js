@@ -13,6 +13,12 @@ define([
     toArray,
     debounce
 ) {
+    var breakpoints = [
+        { width: 0,   name: 'tiny' },
+        { width: 180, name: 'mini' },
+        { width: 220, name: 'small' },
+        { width: 300, name: 'medium' },
+        { width: 700, name: 'large' }];
 
     function init(selector) {
         var snaps = toArray($(selector));
@@ -31,13 +37,7 @@ define([
             $el = bonzo(el),
             prefix = 'facia-snap-point--';
 
-        [
-            { width: 0,   name: 'tiny' },
-            { width: 180, name: 'mini' },
-            { width: 220, name: 'small' },
-            { width: 300, name: 'medium' },
-            { width: 700, name: 'large' }
-        ]
+        breakpoints
         .map(function(breakpoint, i, arr) {
             var isAdd = width >= breakpoint.width && (arr[i+1] ? width < arr[i+1].width : true);
 
