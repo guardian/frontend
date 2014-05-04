@@ -3,13 +3,15 @@ define([
     'bonzo',
     'common/utils/ajax',
     'common/utils/mediator',
-    'common/utils/to-array'
+    'common/utils/to-array',
+    'lodash/functions/debounce'
 ], function(
     $,
     bonzo,
     ajax,
     mediator,
-    toArray
+    toArray,
+    debounce
 ) {
 
     function init(selector) {
@@ -19,11 +21,9 @@ define([
 
         fetchSnaps(snaps);
 
-        mediator.on('window:resize', function() {
-            snaps.forEach(function(el) {
-                setSnapPoint(el, true);
-            });
-        });
+        mediator.on('window:resize', debounce(function() {
+            snaps.forEach(function(el) { setSnapPoint(el, true); });
+        }, 300));
     }
 
     function setSnapPoint(el, isResize) {
@@ -39,7 +39,7 @@ define([
             { width: 700, name: 'large' }
         ]
         .map(function(breakpoint, i, arr) {
-            var isAdd = !arr[i+1] || (width >= breakpoint.width && width < arr[i+1].width);
+            var isAdd = width >= breakpoint.width && (arr[i+1] ? width < arr[i+1].width : true);
 
             breakpoint.action = isAdd ? 'addClass' : isResize ? 'removeClass' : false;
             return breakpoint;
