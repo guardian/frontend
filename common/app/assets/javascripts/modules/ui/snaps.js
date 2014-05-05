@@ -3,15 +3,13 @@ define([
     'bonzo',
     'common/utils/ajax',
     'common/utils/mediator',
-    'common/utils/to-array',
-    'lodash/functions/debounce'
+    'common/utils/to-array'
 ], function(
     $,
     bonzo,
     ajax,
     mediator,
-    toArray,
-    debounce
+    toArray
 ) {
     var breakpoints = [
         { width: 0,   name: 'tiny' },
@@ -27,9 +25,9 @@ define([
 
         fetchSnaps(snaps);
 
-        mediator.on('window:resize', debounce(function() {
+        mediator.on('window:resize', function() {
             snaps.forEach(function(el) { setSnapPoint(el, true); });
-        }, 300));
+        });
     }
 
     function setSnapPoint(el, isResize) {
