@@ -43,16 +43,16 @@ object CompetitionStage {
         else None
       } else {
         // if multiple rounds, must be groups, else a simple league
-        if (rounds.size > 1) Some(Group(stageMatches))
-        else Some(League(stageMatches))
+        if (rounds.size > 1) Some(Group(stageMatches, competition.leagueTable.filter(_.stageNumber == stage.stageNumber).groupBy(_.round)))
+        else Some(League(stageMatches, competition.leagueTable.filter(_.stageNumber == stage.stageNumber)))
       }
     }
   }
 }
 
 
-case class League(matches: List[FootballMatch]) extends CompetitionStage
+case class League(matches: List[FootballMatch], leagueTable: Seq[LeagueTableEntry]) extends CompetitionStage
 
 case class Knockout(matches: List[FootballMatch], rounds: List[Round]) extends CompetitionStage
 
-case class Group(matches: List[FootballMatch]) extends CompetitionStage
+case class Group(matches: List[FootballMatch], groupTables: Map[Round, Seq[LeagueTableEntry]]) extends CompetitionStage

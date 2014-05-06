@@ -80,8 +80,7 @@ trait CompetitionTestData {
       fixture(now.plusDays(1), stage, round, "1")
     )
   }
-  val futureLeagueMatches = {
-    val stage = Stage("1")
+  def futureLeagueMatches(stage: Stage) = {
     val round = Round("1", Some("League"))
     List(
       fixture(now.plusDays(7), stage, round, "1"),
@@ -116,6 +115,18 @@ trait CompetitionTestData {
       fixture(now.plusDays(1), stage, Round("2", Some("Group B")), "1", teams(9), teams(13)),
       fixture(now.plusDays(1), stage, Round("3", Some("Group C")), "1", teams(10), teams(14)),
       fixture(now.plusDays(2), stage, Round("4", Some("Group D")), "1", teams(11), teams(15))
+    )
+  }
+  def futureGroupMatches(stage: Stage) = {
+    List(
+      fixture(now.plusDays(1), stage, Round("1", Some("Group A")), "1", teams(0), teams(4)),
+      fixture(now.plusDays(1), stage, Round("2", Some("Group B")), "1", teams(1), teams(5)),
+      fixture(now.plusDays(1), stage, Round("3", Some("Group C")), "1", teams(2), teams(6)),
+      fixture(now.plusDays(1), stage, Round("4", Some("Group D")), "1", teams(3), teams(7)),
+      fixture(now.plusDays(2), stage, Round("1", Some("Group A")), "1", teams(8), teams(12)),
+      fixture(now.plusDays(2), stage, Round("2", Some("Group B")), "1", teams(9), teams(13)),
+      fixture(now.plusDays(3), stage, Round("3", Some("Group C")), "1", teams(10), teams(14)),
+      fixture(now.plusDays(4), stage, Round("4", Some("Group D")), "1", teams(11), teams(15))
     )
   }
 

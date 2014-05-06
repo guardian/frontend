@@ -66,6 +66,82 @@ class CompetitionStageTest extends FreeSpec with ShouldMatchers with OptionValue
         stages(1) should be (instanceOf[League])
       }
     }
+
+    "for groups" - {
+      "adds leagueTableEntries for groups to group stage" in {
+        val stages = CompetitionStage.stagesFromCompetition(groupStage)
+        stages(0).asInstanceOf[Group].groupTables.values.flatten.toSet should equal (groupStage.leagueTable.toSet)
+      }
+
+      "if there are multiple stages" - {
+        val comp = testCompetition(
+          leagueTable = groupTables(Stage("1")) ++ groupTables(Stage("2")),
+          matches = currentGroupMatches ++ futureGroupMatches(Stage("2"))
+        )
+        val stages = CompetitionStage.stagesFromCompetition(comp)
+        val leagueTableEntries0 = stages(0).asInstanceOf[Group].groupTables.values.flatten.toSet
+        val leagueTableEntries1 = stages(1).asInstanceOf[Group].groupTables.values.flatten.toSet
+
+        "adds correct leagueTableEntries to each group stage if there are multiple stages" in {
+          leagueTableEntries0 should equal (comp.leagueTable.filter(_.stageNumber == "1").toSet)
+          leagueTableEntries1 should equal (comp.leagueTable.filter(_.stageNumber == "2").toSet)
+        }
+
+        "does not add leagueTableEntries for other rounds to group stage" in {
+          all (leagueTableEntries0) should have('stageNumber ("1"))
+          all (leagueTableEntries1) should have('stageNumber ("2"))
+        }
+      }
+    }
+
+    "for league" - {
+      "adds leagueTableEntries for the league stage" in {
+        val stages = CompetitionStage.stagesFromCompetition(league)
+        stages(0).asInstanceOf[League].leagueTable should equal (league.leagueTable)
+      }
+
+      "if there are multiple stages" - {
+        val comp = testCompetition(
+          leagueTable = leagueTable(Stage("1"), Round("1", Some("League"))) ++ leagueTable(Stage("2"), Round("1", Some("League"))),
+          matches = (pastLeagueMatches ++ futureLeagueMatches(Stage("2"))).sortBy(_.date)
+        )
+        val stages = CompetitionStage.stagesFromCompetition(comp)
+        val leagueTable0 = stages(0).asInstanceOf[League].leagueTable.toSet
+        val leagueTable1 = stages(1).asInstanceOf[League].leagueTable.toSet
+
+        "adds correct leagueTableEntries to each stage if there are multiple stages" in {
+          leagueTable0 should equal (comp.leagueTable.filter(_.stageNumber == "1").toSet)
+          leagueTable1 should equal (comp.leagueTable.filter(_.stageNumber == "2").toSet)
+        }
+
+        "does not add leagueTableEntries for other stages" in {
+          all (leagueTable0) should have('stageNumber ("1"))
+          all (leagueTable1) should have('stageNumber ("2"))
+        }
+      }
+    }
+
+    "for knockout" - {
+      "adds rounds for the stage" in {
+        val stages = CompetitionStage.stagesFromCompetition(tournament)
+        stages(0).asInstanceOf[Knockout].rounds.toSet should equal(tournament.matches.filter(_.stage == Stage("1")).map(_.round).distinct.toSet)
+      }
+
+      "if there are multiple stages" - {
+        val comp = testCompetition(
+          leagueTable = Nil,
+          matches = pastKnockoutMatches(Stage("1")) ++ futureKnockoutMatches(Stage("2"))
+        )
+        val stages = CompetitionStage.stagesFromCompetition(comp)
+        val rounds0 = stages(0).asInstanceOf[Knockout].rounds.toSet
+        val rounds1 = stages(1).asInstanceOf[Knockout].rounds.toSet
+
+        "adds correct rounds to each stage if there are multiple stages" in {
+          rounds0 should equal (comp.matches.filter(_.stage == Stage("1")).map(_.round).distinct.toSet)
+          rounds1 should equal (comp.matches.filter(_.stage == Stage("2")).map(_.round).distinct.toSet)
+        }
+      }
+    }
   }
 
   def instanceOf[T](implicit manifest: Manifest[T]) = {
