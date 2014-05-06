@@ -1,6 +1,6 @@
 @(currentAccounts: Seq[model.commercial.money.CurrentAccount])
 
-<table class="table table--football table--responsive-font table--striped">
+<table class="table table--msm table--responsive-font table--striped">
     <thead>
         <tr>
             <th>Account Name</th>
@@ -25,7 +25,7 @@
                 <td>@currentAccount.overdraftRate.map{ oR => @oR% }</td>
                 <td>@currentAccount.overdraftBuffer.map{ oB => £@oB }</td>
                 <td>
-                    <ul class="loan__access">
+                    <ul class="u-unstyled">
                         @currentAccount.access.filter(_._2).keys.map { access =>
                             <li>@access</li>
                         }

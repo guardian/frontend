@@ -9,9 +9,11 @@
                 <div class="article__main-column">
                     <h2>The best savings accounts available at moneysupermarket.com</h2>
                     <p>@page.description</p>
-                    <ul>
+                    <ul class="u-unstyled msm-items">
                         @SavingsPages.all.map { savingsPage =>
-                            <li><a href="/commercial/money/savings/@savingsPage.id">@savingsPage.webTitle</a></li>
+                            <li class="msm-item @if(page.id == savingsPage.id){msm-item--selected}">
+                                <a href="/commercial/money/savings/@savingsPage.id">@savingsPage.webTitle</a>
+                            </li>
                         }
                     </ul>
                     @page.id match {

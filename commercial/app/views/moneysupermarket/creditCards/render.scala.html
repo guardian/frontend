@@ -9,9 +9,11 @@
                 <div class="article__main-column">
                     <h2>The best credit cards available at moneysupermarket.com</h2>
                     <p>@page.description</p>
-                    <ul>
+                    <ul class="u-unstyled msm-items">
                         @CreditCardsPages.all.map { creditCardsPage =>
-                            <li><a href="/commercial/money/credit-cards/@creditCardsPage.id">@Html(creditCardsPage.webTitle)</a></li>
+                            <li class="msm-item @if(page.id == creditCardsPage.id){msm-item--selected}">
+                                <a href="/commercial/money/credit-cards/@creditCardsPage.id">@Html(creditCardsPage.webTitle)</a>
+                            </li>
                         }
                     </ul>
                     @page.id match {

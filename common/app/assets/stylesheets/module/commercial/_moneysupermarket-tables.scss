@@ -1,6 +1,28 @@
 .article-wrapper {
     max-width: none;
 }
+.msm-items {
+    font-size: 0;
+    @include rem((
+        max-width: gs-span(7),
+        margin-top: $gs-baseline*2
+    ));
+}
+.msm-item {
+    width: 50%;
+    display: inline-block;
+    vertical-align: top;
+    @include fs-data(5);
+    @include box-sizing(border-box);
+}
+.msm-item--selected {
+    font-weight: bold;
+}
+.table--msm {
+    @include rem((
+        margin-top: $gs-baseline*2
+    ));
+}
 .loan__name {
     @include fs-data(3);
 
@@ -20,7 +42,4 @@
 }
 .loan__data {
     display: block;
-}
-.loan__access {
-    margin: 0;
 }
