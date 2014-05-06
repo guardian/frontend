@@ -37,14 +37,16 @@
                                 <td>Initial&nbsp;rate</td>
                                 <td class="hide-cell-on-mobile">Scheme type</td>
                                 <td class="hide-cell-on-mobile">Overall cost for comparison (APR %)</td>
+                                <td></td>
                             </thead>
                             <tbody>
                              @bestBuys.mortgages.map { mortgage =>
                                 <tr>
-                                    <td><a href="@mortgage.detailsUrl">@mortgage.lender</a></td>
+                                    <td><a href="@mortgage.detailsUrl" data-link-name="merchandising-moneydeals-v@{version}_@{date}-low-@mortgage.lender">@mortgage.lender</a></td>
                                     <td>@mortgage.rate</td>
                                     <td class="hide-cell-on-mobile">@mortgage.description</td>
                                     <td class="hide-cell-on-mobile">@mortgage.overallCost</td>
+                                    <td><a href="@mortgage.detailsUrl" data-link-name="merchandising-moneydeals-v@{version}_@{date}-low-@mortgage.lender-more">More</a></td>
                                 </tr>
                             }
                             </tbody>
@@ -75,14 +77,16 @@
                                 <td><span>Balance transfer rate</span><span>BT&nbsp;Rate</span></td>
                                 <td><span>Balance transfer period</span><span>BT&nbsp;Period</span></td>
                                 <td class="hide-cell-on-mobile">Representative APR</td>
+                                <td></td>
                             </thead>
                             <tbody>
                             @bestBuys.creditCards.map { card =>
                                 <tr>
-                                    <td><a href="@card.applyUrl">@card.name</a></td>
+                                    <td><a href="@card.applyUrl" data-link-name="merchandising-moneydeals-v@{version}_@{date}-low-@card.name">@card.name</a></td>
                                     <td>@card.balanceTransferRate%</td>
                                     <td>@card.balanceTransferRateDuration&nbsp;mths</td>
                                     <td class="hide-cell-on-mobile">@card.example.apr%</td>
+                                    <td><a href="@card.applyUrl" data-link-name="merchandising-moneydeals-v@{version}_@{date}-low-@card.name-more">More</a></td>
                                 </tr>
                             }
                             </tbody>
@@ -112,18 +116,20 @@
                                 <td>Provider</td>
                                 <td>Headline&nbsp;Rate</td>
                                 <td>APR</td>
+                                <td></td>
                             </thead>
                             <tbody>
                             @bestBuys.loans.map { loan =>
                                 <tr>
-                                    <td><a href="@loan.detailsUrl">@loan.name</a></td>
+                                    <td><a href="@loan.detailsUrl" data-link-name="merchandising-moneydeals-v@{version}_@{date}-low-@loan.name">@loan.name</a></td>
                                     <td>@loan.headlineApr%</td>
                                     <td>@loan.apr%</td>
+                                    <td><a href="@loan.detailsUrl"  data-link-name="merchandising-moneydeals-v@{version}_@{date}-low-@loan.name-more">More</a></td>
                                 </tr>
                             }
                             </tbody>
                         </table>
-                        <a href="http://www.moneysupermarket.com/partners/guardian/loans/" class="commercial__link">
+                        <a href="http://www.moneysupermarket.com/partners/guardian/loans/" class="commercial__link" data-link-name="merchandising-moneydeals-v@{version}_@{date}-low-compare-providers">
                             Compare over 500 loan providers <i class="i i-double-arrow-right-blue"></i>
                         </a>
                         <p class="lineitem__meta">Data provided by Moneysupermarket.com. Moneysupermarket.com Limited is an appointed representative of Moneysupermarket.com Financial Group Limited &copy;, which is authorised and regulated by the Financial Services Authority (FSA FRN 303190). Moneysupermarket.com Financial group Limited, registered in England No. 3157344. Registered Office: Moneysupermarket House, St. David's Park, Ewloe, CH5 3UZ. Telephone 01244 665700.</p>
@@ -148,18 +154,20 @@
                                 <td>Provider</td>
                                 <td>Account</td>
                                 <td>Interest</td>
+                                <td></td>
                             </thead>
                             <tbody>
                             @bestBuys.currentAccounts.map { account =>
                                 <tr>
-                                    <td><a href="@account.applyUrl">@account.provider</a></td>
+                                    <td><a href="@account.applyUrl" data-link-name="merchandising-moneydeals-v@{version}_@{date}-low-browse-@account.provider">@account.provider</a></td>
                                     <td>@account.name</td>
                                     <td>@account.interestRate%</td>
+                                    <td><a href="@account.applyUrl" data-link-name="merchandising-moneydeals-v@{version}_@{date}-low-browse-@account.provider-more">More</a></td>
                                 </tr>
                             }
                             </tbody>
                         </table>
-                        <a href="http://www.moneysupermarket.com/partners/guardian/currentaccounts/" class="commercial__link">
+                        <a href="http://www.moneysupermarket.com/partners/guardian/currentaccounts/" class="commercial__link" data-link-name="merchandising-moneydeals-v@{version}_@{date}-low-browse-compare-current-rates">
                             Compare rates on current accounts <i class="i i-double-arrow-right-blue"></i>
                         </a>
                         <p class="lineitem__meta">Data provided by Moneysupermarket.com. Moneysupermarket.com Limited is an appointed representative of Moneysupermarket.com Financial Group Limited &copy;, which is authorised and regulated by the Financial Services Authority (FSA FRN 303190). Moneysupermarket.com Financial group Limited, registered in England No. 3157344. Registered Office: Moneysupermarket House, St. David's Park, Ewloe, CH5 3UZ. Telephone 01244 665700.</p>
@@ -184,18 +192,20 @@
                             <td>Name</td>
                             <td class="hide-cell-on-mobile">Account</td>
                             <td>AER</td>
+                            <td></td>
                         </thead>
                         <tbody>
                         @bestBuys.savings.map { account =>
                             <tr>
-                                <td><a href="@account.applyUrl">@account.provider</a></td>
+                                <td><a href="@account.applyUrl" data-link-name="merchandising-moneydeals-v@{version}_@{date}-low-browse-@account.provider">@account.provider</a></td>
                                 <td class="hide-cell-on-mobile">@account.name</td>
                                 <td>@account.interestRate%</td>
+                                <td><a href="@account.applyUrl" data-link-name="merchandising-moneydeals-v@{version}_@{date}-low-browse-@account.provider-more">More</a></td>
                             </tr>
                         }
                         </tbody>
                     </table>
-                    <a href="http://www.moneysupermarket.com/partners/guardian/savings/" class="commercial__link">
+                    <a href="http://www.moneysupermarket.com/partners/guardian/savings/" class="commercial__link" data-link-name="merchandising-moneydeals-v@{version}_@{date}-low-browse-compare-saving-rates">
                         Compare over 4,000 savings accounts <i class="i i-double-arrow-right-blue"></i>
                     </a>
                     <p class="lineitem__meta">Data provided by Moneysupermarket.com. Moneysupermarket.com Limited is an appointed representative of Moneysupermarket.com Financial Group Limited &copy;, which is authorised and regulated by the Financial Services Authority (FSA FRN 303190). Moneysupermarket.com Financial group Limited, registered in England No. 3157344. Registered Office: Moneysupermarket House, St. David's Park, Ewloe, CH5 3UZ. Telephone 01244 665700.</p>

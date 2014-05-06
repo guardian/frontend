@@ -2,6 +2,8 @@
    Best Buys component
    ========================================================================== */
 
+$c-money-high: #63007F;
+
 .commercial--bestbuys {
     .commercial__head {
         height: auto;
@@ -39,17 +41,18 @@
         }
     }
     .tabs__tab--selected {
-        border-color: $c-newsDefault;
+        border-color: $c-money-high;
 
         a {
             background-color: transparent;
-            color: $c-newsDefault;
+            color: $c-money-high;
             font-weight: bold;
         }
     }
     table {
         border-bottom: 1px solid $c-neutral5;
         margin-bottom: 10px;
+        @include fs-textsans(4);
     }
     thead {
         color: $c-neutral2;
@@ -78,6 +81,18 @@
     .lineitem__meta {
         color: #A3A3A3;
         @include fs-data(1);
+    }
+    @include mq($to: tablet){
+        .hide-cell-on-mobile {
+            display: none;
+        }
+    }
+    .commercial__home-link {
+        color: $c-money-high;
+        
+        .commercial__home-link__cta {
+            background-color: $c-money-high;
+        }
     }
 }
 
