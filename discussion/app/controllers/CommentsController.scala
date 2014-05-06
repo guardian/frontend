@@ -11,9 +11,7 @@ trait CommentsController extends DiscussionController {
   def commentPermalinkJson(id: Int, order: String) = commentPermalink(id, order)
 
   def commentPermalink(id: Int, order: String) = Action.async { implicit request =>
-    println(s"XXXXXXXXXXXXXXXXXXXX sort order is $order")
     discussionApi.commentContext(id, order) flatMap { context =>
-      println( "XXXXXXXXXXXXX got the comment context:\n" + context )
       getComments(context._1, context._2, forceAllResponses = true, orderBy = order)
     }
   }
@@ -36,11 +34,9 @@ trait CommentsController extends DiscussionController {
 
   def topComments(key: DiscussionKey) = comments(key, orderBy = "oldest", isTopComments = true)
   def topCommentsJson(key: DiscussionKey) = comments(key, orderBy = "oldest", isTopComments = true)
-  def oldestComments(key: DiscussionKey) = comments(key, orderBy = "oldest")
-  def oldestCommentsJson(key: DiscussionKey) = comments(key, orderBy = "oldest")
 
-  def commentsJson(key: DiscussionKey, orderBy: String) = comments(key, orderBy)
-  def comments(key: DiscussionKey, orderBy: String, isTopComments: Boolean = false) = Action.async { implicit request =>
+  def commentsJson(key: DiscussionKey, orderBy: String = "newest") = comments(key, orderBy)
+  def comments(key: DiscussionKey, orderBy: String = "newest", isTopComments: Boolean = false) = Action.async { implicit request =>
     getComments(key, request.getQueryString("page").getOrElse("1"), orderBy, isTopComments)
   }
 

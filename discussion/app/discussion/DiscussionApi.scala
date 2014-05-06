@@ -74,7 +74,6 @@ trait DiscussionApi extends Http with ExecutionContexts with Logging {
 
   def commentsFor(key: DiscussionKey, page: String, orderBy: String = "newest", allResponses: Boolean = false): Future[CommentPage] = {
     val url = s"$apiRoot/discussion/$key?pageSize=$pageSize&page=$page&orderBy=$orderBy&showSwitches=true" + (if(allResponses) "" else "&maxResponses=3")
-    println("XXXXXXXXXXXXX getting comment block with " + url + " and " + allResponses)
     getJsonForUri(key, url)
   }
 
@@ -89,7 +88,6 @@ trait DiscussionApi extends Http with ExecutionContexts with Logging {
     val apiUrl = s"$apiRoot/comment/$id/context?pageSize=$pageSize&orderBy=$orderBy"
 
     getJsonOrError(apiUrl, onError) map { json =>
-        println( "XXXXXXXXXXXXXXXXXX: " + (json \ "discussionApiUrl").as[String])
         (DiscussionKey((json \ "discussionKey").as[String]), (json \ "page").as[Int].toString)
     }
   }
