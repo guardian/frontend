@@ -1,14 +1,15 @@
 .facia-container__inner {
     position: relative;
+    overflow: hidden;
     @include rem((
-        padding-left: $gs-gutter / 2,
-        padding-right: $gs-gutter / 2
+        margin-left: $gs-gutter / 2,
+        margin-right: $gs-gutter / 2
     ));
 
     @include mq(mobileLandscape) {
         @include rem((
-            padding-left: $gs-gutter,
-            padding-right: $gs-gutter
+            margin-left: $gs-gutter,
+            margin-right: $gs-gutter
         ));
     }
     @include mq(tablet) {
@@ -28,8 +29,6 @@
             @include rem((
                 width: gs-span(9)
             ));
-            padding-left: 0;
-            padding-right: 0;
         }
         @include mq(desktop) {
             @include rem((
