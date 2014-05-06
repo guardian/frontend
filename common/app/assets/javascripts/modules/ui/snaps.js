@@ -60,16 +60,29 @@ define([
         snaps
         .filter(function(el) { return el.getAttribute('data-snap-uri'); })
         .forEach(function(el) {
-            ajax({
-                url: el.getAttribute('data-snap-uri'),
-                crossOrigin: true
-            }).then(function(resp) {
-                $.create(resp.html).each(function(html) {
-                    setSnapEmbedded(el);
-                    setSnapPoint(el);
-                    setSnapHtml(el, html);
+            var iframe;
+
+            setSnapEmbedded(el);
+            setSnapPoint(el);
+
+            if(el.getAttribute('data-snap-type') === 'interactive') {
+                iframe = document.createElement('iframe');
+                iframe.style.width = '100%';
+                iframe.style.border = 'none';
+                iframe.height = '200'; // default height
+                iframe.src = el.getAttribute('data-snap-uri');
+                bonzo(el).html(iframe);
+
+            } else {
+                ajax({
+                    url: el.getAttribute('data-snap-uri'),
+                    crossOrigin: true
+                }).then(function(resp) {
+                    $.create(resp.html).each(function(html) {
+                        setSnapHtml(el, html);
+                    });
                 });
-            });
+            }
         });
     }
 
