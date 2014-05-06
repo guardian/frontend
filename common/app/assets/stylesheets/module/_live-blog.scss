@@ -1078,6 +1078,48 @@ $timeline-width: 14px;
     }
 }
 
+/* Related content
+   ========================================================================== */
+.blog__related {
+    @include rem((
+        width: gs-span(3),
+        margin-left: gs-span(1) + $gs-gutter,
+        padding-top: ($gs-baseline/3)*2
+    ));
+}
+
+.blog__related__head {
+    @include fs-header(2);
+    @include rem((
+        margin-bottom: ($gs-baseline/3)*4
+    ));
+}
+
+.blog__related__item {
+    width: auto !important;
+    padding-bottom: 0;
+    @include rem((
+        margin-bottom: $gs-baseline*2
+    ));
+
+    .item {
+        padding: 0;
+        margin: 0;
+        border-top: 2px solid $c-neutral4;
+    }
+
+    & + &:before,
+    .item:before,
+    .item__byline,
+    .item__meta {
+        display: none;
+    }
+
+    .item__title {
+        @include fs-headline(1);
+    }
+}
+
 /* Football components
    ========================================================================== */
 .blog {
