@@ -1,6 +1,6 @@
 package dfp
 
-import common.{AkkaAsync, Jobs, ExecutionContexts, AkkaAgent}
+import common._
 import conf.Configuration.commercial.dfpDataKey
 import model.Content
 import play.api.Play.current
@@ -9,7 +9,7 @@ import play.api.{Play, Application, GlobalSettings}
 import scala.io.Codec.UTF8
 import services.S3
 
-object DfpAgent extends ExecutionContexts {
+object DfpAgent extends ExecutionContexts with Logging {
 
   private lazy val targetedKeywordsAgent = AkkaAgent[Seq[String]](Nil)
 
@@ -28,7 +28,9 @@ object DfpAgent extends ExecutionContexts {
 
   def refresh() {
     def fetchTargetedKeywords() = {
+      log.info("Loading DFP data...")
       val json = S3.get(dfpDataKey)(UTF8) map parse
+      log.info(s"Loaded DFP data: $json")
       json map (_.as[Seq[String]]) getOrElse Nil
     }
 
