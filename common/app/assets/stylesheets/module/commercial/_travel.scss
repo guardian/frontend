@@ -5,79 +5,78 @@
 .footer {
     margin-top: 0 !important;
 }
-
-.travel-component {
+.commercial--travel {
     .lineitem {
         list-style-type: none;
         border-top: 0;
         @include box-sizing(border-box);
         float: left;
         width: 50%;
-        padding-left: 0;
-        
-        &:nth-child(n+2) {
-            @include rem((
-                padding-left: $gs-gutter/2 - 1
-            ));
-        }
-        
+        @include rem((
+            padding-left: 8px
+        ));
+
         &:nth-child(n+3) {
             display: none;
         }
+    }
+    .lineitem__link {
+        float: none;
     }
     .lineitem__image {
         width: 100%;
         display: block;
     }
-    .lineitem__title {
-        font-weight: bold;
-    }
-    .lineitem__meta {
-    }
     .commercial__head {
+        position: static;
         border-top: none;
+        height: auto;
+        overflow: auto;
+        @include rem((
+            padding: $gs-gutter/2
+        ));
+    }
+    .commercial__title {
+        padding: 0;
+        margin-bottom: 0;
+        @include fs-bodyHeading(3);
+        text-transform: lowercase;
+        color: $c-brandBlue;
+        
+        .commercial__title__middle-word {
+            color: #52aee9;
+            @include rem((
+               margin-left: -5px
+            ));
+        }
+        .commercial__title__last-word {
+           color: #006ec9;
+           @include rem((
+               margin-left: -5px
+           ));
+        }
+    }
+    .commercial__home-link {
+        float: right;
     }
     .commercial__body {
-        padding: 0;
+        @include rem((
+            padding: 0 $gs-gutter/2 0 0
+        ));
     }
-    .commercial__foot {
-        margin: 0;
-        border: 0 none;
-    }
-
     .commercial__search {
-        margin-bottom: $gs-baseline/3;
-        overflow: hidden;
-        position: relative;
-
-        .i.i-search-grey {
-            background-position: 6px 6px;
-            position: absolute;
-            top: 0;
-            left: 0;
-            padding: 8px;
-        }
-        .text-input {
-            padding: $gs-baseline/3 $gs-gutter/5;
-            padding-left: 2em;
-            width: 70%;
-            height: 32px;
-            float: left;
-            overflow: hidden;
-        }
-        .submit-input {
-            width: 30%;
-            float: left;
-            margin: 0;
-            min-width: 0;
-            @include rem((
-                padding: 9px 0
-            ));
-            background-color: #37b0eb;
-        }
+        position: absolute;
+        @include rem((
+            bottom: 10px,
+            margin-top: $gs-baseline*4
+        ));
+        float: none;
+        width: 100%;
     }
-
     @include mq(tablet) {
+        .commercial__body {
+            padding: 0;
+        }
         .lineitem {
             width: 33%;
             
@@ -85,12 +84,176 @@
                 display: block;
             }
         }
+        .commercial__home-link {
+            position: absolute;
+            @include rem((
+                right: 10px,
+                top: 10px
+            ));
+        }
+    }
+    @include mq(leftCol) {
+        .commercial__title__last-word {
+            margin-left: 0;
+        }
+    }
+}
+
+/* fronts */
+.facia-container--layout-front .commercial--travel {
+    @include mq($to: desktop) {
+        @include rem((
+            padding-bottom: $gs-baseline*4.5
+        ));
+        
+        .commercial__head {
+            @include rem((
+                padding-right: 14px
+            ));
+        }
+        .commercial__home-link {
+            @include rem((
+                right: 14px
+            ));
+        }
+        .commercial__search {
+            width: 97%;
+        }
+    }
+    @include mq(desktop) {
+        .commercial__head {
+            float: left;
+            width: 25%;
+        }
+        .commercial__search {
+            position: relative;
+        }        
+        .commercial__home-link {
+            @include rem((
+                bottom: 10px,
+                left: $gs-gutter/2
+            ));
+            top: auto;
+            right: auto;
+        }
+        .commercial__body {
+            @include rem((
+                padding-top: 10px
+            ));            
+        }
+        .lineitem {
+            width: 33%;
+        }
+    }
+    @include mq(leftCol) {
+        .commercial__title__last-word {
+            @include rem((
+               margin-left: -5px
+            ));
+        }
+    }
+    @include mq(faciaLeftCol) {
+        .commercial__head {
+            @include rem((
+               width: gs-span(2) + $gs-gutter
+            ));
+        }
+        .lineitem {
+            width: 25%;
+
+            &:nth-child(n+4) {
+               display: block;
+            }
+        }
+    }
+    @include mq($from: faciaLeftCol, $to: wide) {
+        @include rem((
+            padding-bottom: $gs-baseline*4
+        ));
+        
+        .commercial__home-link {
+           @include box-sizing(border-box);
+           @include rem((
+               width: gs-span(2),
+               line-height: 18px,
+               bottom: $gs-baseline*4.5
+           ));
+        }
+        .commercial__title__last-word {
+           margin-left: 0;
+        }
+        .commercial__search {
+            position: absolute;
+            @include box-sizing(border-box);
+            @include rem((
+                width: gs-span(5),
+                bottom: 10px
+            ));
+        }
+    }
+    @include mq(wide) {
+        .commercial__head {
+            padding-right: 0;
+            @include rem((
+                width: gs-span(2) + $gs-gutter
+            ));
+        }
+    }
+}
+
+/* article */
+.facia-container--layout-article .commercial--travel {
+    @include mq($to: rightCol) {
+        @include rem((
+            padding-bottom: $gs-baseline*4.5
+        ));
+        
+        .commercial__head {
+            @include rem((
+                padding-right: 14px
+            ));
+        }
+        .commercial__home-link {
+            @include rem((
+                right: 24px
+            ));
+        }
+        .commercial__search {
+            width: 94%;
+        }
     }
     @include mq(rightCol) {
-        .lineitem {
+        .commercial__head {
+            width: 25%;
             @include rem((
-                padding-left: $gs-gutter/2 - 1
+                padding-right: 8px
             ));
+            float: left;
+        }
+        .commercial__search {
+            position: relative;
+        }
+        .commercial__home-link {
+            @include rem((
+                bottom: 10px,
+                left: $gs-gutter
+            ));
+            top: auto;
+            right: auto;
+        }
+        .commercial__body {
+            @include rem((
+                padding-top: 10px
+            ));
+        }
+    }
+    @include mq(desktop) {
+        .commercial__search {
+            position: relative;
+        }
+    }
+    @include mq(leftCol) {
+        .lineitem {
             width: 25%;
 
             &:nth-child(n+4) {
@@ -98,12 +261,44 @@
             }
         }
     }
-    @include mq(leftCol) {
-        .lineitem {
-            border-left: 1px solid $c-neutral4;
+    @include mq($from: leftCol, $to: wide) {
+        @include rem((
+            padding-bottom: $gs-baseline*4
+        ));
+        
+        .commercial__home-link {
+            @include box-sizing(border-box);
+            @include rem((
+                width: gs-span(2),
+                line-height: 18px,
+                left: $gs-gutter/2,
+                bottom: $gs-baseline*4.5
+            ));
         }
-        .commercial__title__last-word {
-            margin-left: 0;
+        .commercial__head {
+            padding-left: 0;
+        }
+        .commercial__title {
+            @include rem((
+                margin-bottom: 10px
+            ));
+            
+            .commercial__title__middle-word {
+                margin-left: 0;
+            }
+        }
+        .commercial__search {
+            position: absolute;
+            @include box-sizing(border-box);
+            @include rem((
+                width: gs-span(5)+$gs-gutter,
+                bottom: 10px
+            ));
+        }
+    }
+    @include mq(wide) {
+        .commercial__head {
+            padding-right: 0;
         }
     }
 }

@@ -121,6 +121,12 @@ module.exports = function (grunt) {
                             'font-family': 'AgateSans',
                             file: 'resources/fonts/AgateSans-Regular.woff',
                             format: 'woff'
+                        },
+                        {
+                            'font-family': 'AgateSans',
+                            'font-weight': '700',
+                            file: 'resources/fonts/AgateSans-Bold.woff',
+                            format: 'woff'
                         }
                     ]
                 }
@@ -134,6 +140,11 @@ module.exports = function (grunt) {
                             'font-family': 'AgateSans',
                             file: 'resources/fonts/AgateSans-Regular.ttf',
                             format: 'ttf'
+                        },
+                        {
+                            'font-family': 'AgateSans',
+                            'font-weight': '700',
+                            file: 'resources/fonts/AgateSans-Bold.ttf'
                         }
                     ]
                 }
@@ -481,6 +492,18 @@ module.exports = function (grunt) {
             }
         },
 
+        // Lint Sass sources
+        scsslint: {
+            allFiles: [
+                'common/app/assets/stylesheets'
+            ],
+            options: {
+                bundleExec: true,
+                config: '.scss-lint.yml',
+                reporterOutput: null
+            }
+        },
+
         // Much of the CasperJS setup borrowed from smlgbl/grunt-casperjs-extra
         env: {
             casperjs: {
@@ -660,6 +683,7 @@ module.exports = function (grunt) {
     // Load the plugins
     grunt.loadNpmTasks('grunt-karma');
     grunt.loadNpmTasks('grunt-contrib-sass');
+    grunt.loadNpmTasks('grunt-scss-lint');
     grunt.loadNpmTasks('grunt-css-metrics');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-requirejs');
@@ -680,8 +704,8 @@ module.exports = function (grunt) {
 
     grunt.registerTask('default', ['compile', 'test', 'analyse']);
 
-    // NOTE: ideally this would just check sass, rather that full compile - can't get it to work
     grunt.registerTask('validate:css', ['sass:compile']);
+    grunt.registerTask('validate:sass', ['scsslint']);
     grunt.registerTask('validate:js', function(app) {
         if (!app) {
             grunt.task.run('jshint');

@@ -37,7 +37,10 @@ trait FrontPress extends Logging {
     group:        Option[JsValue],
     imageAdjust:  Option[JsValue],
     isBreaking:   Option[Boolean],
-    supporting:   Option[Seq[JsValue]]
+    supporting:   Option[Seq[JsValue]],
+    href:         Option[JsValue],
+    snapType:     Option[JsValue],
+    snapUri:      Option[JsValue]
   )
 
   implicit val collectionJsonWrites = Json.writes[CollectionJson]
@@ -81,7 +84,7 @@ trait FrontPress extends Logging {
     Json.toJson(
       CollectionJson(
         apiQuery       = config.contentApiQuery,
-        displayName    = collection.displayName orElse config.displayName,
+        displayName    = config.displayName.orElse(collection.displayName),
         curated        = collection.curated.map(generateTrailJson),
         editorsPicks   = collection.editorsPicks.map(generateTrailJson),
         mostViewed     = collection.mostViewed.map(generateTrailJson),
@@ -162,7 +165,10 @@ trait FrontPress extends Logging {
         group =       content.apiContent.metaData.get("group"),
         imageAdjust = content.apiContent.metaData.get("imageAdjust"),
         isBreaking =  content.apiContent.metaData.get("isBreaking").flatMap(_.asOpt[Boolean]),
-        supporting =  Option(content.supporting.map(generateInnerTrailJson)).filter(_.nonEmpty)
+        supporting =  Option(content.supporting.map(generateInnerTrailJson)).filter(_.nonEmpty),
+        href =        content.apiContent.metaData.get("href"),
+        snapType = content.apiContent.metaData.get("snapType"),
+        snapUri = content.apiContent.metaData.get("snapUri")
       )
     )
 

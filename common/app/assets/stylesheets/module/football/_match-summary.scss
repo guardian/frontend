@@ -87,25 +87,37 @@ $football-crest-large: 60px;
 }
 
 .team__crest {
-    height: $football-crest-small;
+    @include rem((
+        height: $football-crest-small
+    ));
     float: left;
     overflow: hidden;
 
     @include mq($from: tablet) {
+        @include rem((
+            height: $football-crest-large
+        ));
         display: table;
-        height: $football-crest-large;
         float: none;
         width: 100%;
     }
 }
 
 .team__crest__img {
-    height: $football-crest-small;
-    max-width: $football-crest-small;
+    @include rem((
+        height: $football-crest-small,
+        width: $football-crest-small
+    ));
+    @include background-size(auto $football-crest-small);
+    display: inline-block;
+    background-repeat: no-repeat;
 
     @include mq($from: tablet) {
-        height: $football-crest-large;
-        max-width: $football-crest-large;
+        @include rem((
+            height: $football-crest-large,
+            width: $football-crest-large
+        ));
+        @include background-size(auto $football-crest-large);
     }
 }
 
@@ -244,7 +256,7 @@ $football-crest-large: 60px;
         ));
 
         &:after {
-            content: 'v';
+            content: "v";
         }
     }
 }

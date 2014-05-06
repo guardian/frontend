@@ -30,7 +30,7 @@ package object money {
     def refresh() {
       for {
         products <- loadProducts()
-      } updateCurrentAds(products.take(3))
+      } updateCurrentAds(products)
     }
   }
 

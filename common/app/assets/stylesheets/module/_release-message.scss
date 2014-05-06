@@ -10,8 +10,7 @@
     width: 100%;
     height: 100%;
     z-index: 2000;
-    background-color: #000000;
-    background-color: rgba(#000000, 0.3);
+    @include transparent-background(#000000, .3);
 
     .site-message__inner {
         margin: 0 auto;
@@ -22,11 +21,15 @@
         margin-top: $gs-baseline*3;
         background-color: $c-newsAccent;
         color: #ffffff;
-        @include box-shadow(5px 5px 0px 0px rgba(#000000, 0.2));
+        @include box-shadow(5px 5px 0 0 rgba(#000000, .2));
 
-        @include mq(tablet) { width: 60%; }
+        @include mq(tablet) {
+            width: 60%;
+        }
         @include mq(desktop) {
-            width: gs-span(7);
+            @include rem((
+                width: gs-span(7)
+            ));
             margin-top: 20%;
         }
     }
@@ -156,5 +159,5 @@
     width: 22px;
     height: 22px;
     background-color: transparent;
-    border: none;
+    border: 0;
 }

@@ -189,7 +189,19 @@ a.edition {
 .component__heading {}
 
 .component--rhc {
-    margin-top: $gs-baseline*3;
+    display: none;
+    @include mq(rightCol) {
+        display: block;
+        @include rem((
+            margin-top:$gs-baseline * 3
+        ));
+    }
+
+    &:last-child {
+        @include rem((
+            margin-bottom: $gs-baseline * 3
+        ));
+    }
 }
 
 .box-indent {

@@ -43,7 +43,12 @@
     </div>
 
     <div class="left-col">
-        <div class="title">Clipboard</div>
+        <div class="title">
+            Clipboard
+            <span class="linky" data-bind="
+                visible: switches()['facia-tool-snaps'],
+                click: createSnap">+</span>
+        </div>
         <div class="clipboard__wrapper" data-bind="with: clipboard">
             <div class="clipboard droppable" data-bind="
                 makeDropabble: true,
@@ -220,42 +225,39 @@
                 underDrag: state.underDrag
             }">
 
-            <a target="article" data-bind="
-                attr: {href: 'http://www.theguardian.com/' + id},
+            <a class="article__lhs" target="article" data-bind="
+                attr: {href: 'http://www.theguardian.com/' + id()},
                 click: open">
                 <img class="thumb" draggable="false" data-bind="
                     attr: {src: fields.thumbnail, title: id}"/>
+                <div class="article__date" data-bind="
+                    visible: humanDate,
+                    text: humanDate"></div>
             </a>
 
-            <div class="article__date" data-bind="text: humanDate"></div>
-
             <div data-bind="if: state.open">
-                <div class="image__overrides">
-                    <a data-bind="
-                        click: toggleImageAdjustBoost,
-                        text: meta.imageAdjust() === 'boost' ? 'Boosted' : 'Boost image',
-                        css: {selected: meta.imageAdjust() === 'boost'}"></a>
-                    <a data-bind="
-                        click: toggleImageAdjustHide,
-                        text: meta.imageAdjust() === 'hide' ? 'Hidden' : 'Hide image',
-                        css: {selected: meta.imageAdjust() === 'hide'}">Hide</a>
-                </div>
-
                 <div class="article__overrides u-cf">
                     <div class="article__overrides__fields">
                         <input type="text" data-bind="
+                            hasFocus: true,
                             value: headlineInput,
                             event: {blur: save},
-                            attr: {placeholder: fields.headline}"/>
+                            attr: {placeholder: fields.headline() || 'Link text'}"/>
                         <a class="revert revert--headline" data-bind="
                             click: headlineRevert,
                             attr: {title: 'Revert to: ' + fields.headline()},
                             visible: meta.headline"><i class="icon-fast-backward"></i></a>
 
+                        <input type="text" data-bind="
+                            visible: isSnap,
+                            value: meta.href,
+                            event: {blur: save},
+                            attr: {placeholder: 'Link URL, eg. uk/money or http://www.bbc.co.uk/'}"/>
+
                         <textarea class="trailtext" type="text" data-bind="
                             value: trailTextInput,
                             event: {blur: save},
-                            attr: {placeholder: fields.trailText}"/></textarea>
+                            attr: {placeholder: fields.trailText() || 'Trail text'}"/></textarea>
                         <a class="revert revert--trailtext" data-bind="
                             click: trailTextRevert,
                             attr: {title: 'Revert to: ' + fields.trailText()},
@@ -270,7 +272,18 @@
                     </div>
 
                     <div class="misc__overrides">
-                        Mark as: <a data-bind="
+                        Image
+                        <a data-bind="
+                            click: toggleImageAdjustBoost,
+                            text: meta.imageAdjust() === 'boost' ? 'boosted' : 'boost',
+                            css: {selected: meta.imageAdjust() === 'boost'}"></a>,
+                        <a data-bind="
+                            click: toggleImageAdjustHide,
+                            text: meta.imageAdjust() === 'hide' ? 'hidden' : 'hide',
+                            css: {selected: meta.imageAdjust() === 'hide'}"></a>.
+
+                        Mark as
+                        <a data-bind="
                             click: toggleIsBreaking,
                             css: {selected: meta.isBreaking}">breaking news</a>
                     </div>
@@ -292,7 +305,7 @@
             <div class="closed" data-bind="if: !state.open()">
                 <a class="spark" target="ophan" title="Dark blue: Guardian. Green: Google. Light blue: Other." data-bind="
                     visible: state.sparkUrl,
-                    attr: {href: 'http://dashboard.ophan.co.uk/graph/breakdown?path=/' + id}">
+                    attr: {href: 'http://dashboard.ophan.co.uk/graph/breakdown?path=/' + id()}">
                     <img data-bind="attr: {src: state.sparkUrl}" />
                 </a>
 
@@ -310,25 +323,21 @@
                 </a>
 
                 <a class="tool tool--small tool--small--href" target="_blank" data-bind="
-                    attr: {href: 'http://www.theguardian.com/' + id}">
+                    attr: {href: isSnap() ? meta.href() : 'http://www.theguardian.com/' + id()}">
                     <i class="icon-share-alt"></i>
                 </a>
 
                 <div class="article_content is-empty" data-bind="if: state.isEmpty">
                     <a target="article" class="is-empty__url" data-bind="
-                        attr: {href: 'http://www.theguardian.com/' + id},
+                        attr: {href: 'http://www.theguardian.com/' + id()},
                         text: id"></a>
                     This content is unavailable, deleted, or has a new URL
                 </div>
 
                 <div class="article_content" data-bind="if: !state.isEmpty()">
-
-                    <span class="is-breaking" data-bind="
-                        visible: meta.isBreaking,
-                        click: open">Breaking News</span>
-
                     <a class="headline" target="article" data-bind="
-                        text: meta.headline() || fields.headline() || id,
+                        text: meta.headline() || fields.headline() || (isSnap() ? 'Add link text!' : id),
+                        css: {'is-empty': isSnap() && !meta.headline()},
                         attr: {href: id},
                         click: open"></a>
 
@@ -340,10 +349,21 @@
                         <i class="icon-pencil"></i>
                     <!-- /ko -->
 
-                    <div class="trailtext" data-bind="
-                        attr: {href: id},
-                        html: meta.trailText() || fields.trailText()"></div>
+                    <div class="secondary">
+                        <span data-bind="
+                            visible: isSnap,
+                            attr: {class: 'is' + (meta.snapType() ? ' is--' + meta.snapType() : '')},
+                            click: open,
+                            text: meta.snapType() || 'snap'"></span>
 
+                        <span class="is is--breaking" data-bind="
+                            visible: meta.isBreaking,
+                            click: open">Breaking News</span>
+
+                        <span data-bind="
+                            attr: {href: id},
+                            html: meta.trailText() || fields.trailText()"></span>
+                    </div>
                 </div>
             </div>
         </div>

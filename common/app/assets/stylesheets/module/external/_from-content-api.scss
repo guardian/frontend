@@ -35,8 +35,8 @@
     > ol,
     > blockquote > ul,
     > ul {
-       margin-top: 0.8em;
-       list-style: none;
+        margin-top: .8em;
+        list-style: none;
     }
     > ol {
         counter-reset: li;
@@ -129,8 +129,8 @@
    ========================================================================== */
 
 .bullet {
-    font-size: 0.1px; // hides bullet character. 0.1 more consistent than 0 cross browser
-    line-height: 0.1px; // fix for line spacing issue (bullet was increasing spacing)
+    font-size: .1px; // hides bullet character. .1 more consistent than 0 cross browser
+    line-height: .1px; // fix for line spacing issue (bullet was increasing spacing)
     color: transparent;
     @include faux-bullet-point;
 }
@@ -293,7 +293,7 @@ p + video {
     .element {
         iframe {
             width: 100%;
-            border: none;
+            border: 0;
         }
     }
 }

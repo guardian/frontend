@@ -10,7 +10,7 @@
     .commercial__head {
         overflow: hidden;
         position: static;
-        border: none;
+        border: 0;
         height: auto;
         padding: 0;
     }
@@ -24,7 +24,9 @@
         ));
 
         .i:nth-child(2) {
-            margin-left: -4px
+            @include rem((
+                margin-left: -4px
+            ));
         }
     }
     .commercial__title {
@@ -84,7 +86,7 @@
     }
     .commercial--books__buy-now-button {
         background-color: #e657af;
-        border: none;
+        border: 0;
         float: right;
         color: #ffffff;
         text-align: center;
@@ -192,7 +194,7 @@
             @include rem((
                 width: gs-span(2)
             ));
-            background: red;
+            background: #ff0000;
         }
     }
     @include mq(wide) {
@@ -205,7 +207,7 @@
     }
     @include mq(faciaLeftCol, $to: wide) {
         .commercial__title {
-            line-height: 0;
+            line-height: 1;
             @include rem((
                 margin-bottom: 10px
             ));
@@ -216,7 +218,7 @@
         .commercial__search {
             @include rem((
                 margin-top: 40px
-            ));            
+            ));
         }
     }
 }
@@ -242,7 +244,7 @@
             margin-left: 0;
         }
         .commercial__search {
-            background: red;
+            background: #ff0000;
             @include rem((
                 margin-top: 40px
             ));

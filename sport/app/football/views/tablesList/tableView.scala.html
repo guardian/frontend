@@ -1,4 +1,4 @@
-@(competition: model.Competition, group: Group, highlightTeamId: Option[String] = None, showMeta: Boolean = false, striped: Boolean = false, responsiveFont: Boolean = false, multiGroup: Boolean = false)(implicit request: RequestHeader)
+@(competition: model.Competition, group: Group, highlightTeamId: Option[String] = None, striped: Boolean = false, responsiveFont: Boolean = false, multiGroup: Boolean = false)(implicit request: RequestHeader)
 <div class="table__container">
     <table class="@RenderClasses(Map(
             "table" -> true,
@@ -6,7 +6,6 @@
             "table--striped" -> striped,
             "table--responsive-font" -> responsiveFont
         ))">
-        @if(showMeta){<caption class="table__caption"><a href="@competition.url">@competition.fullName</a></caption>}
         <thead>
             <tr>
                 <th class="table-column--sub"><abbr title="Position">Pos</abbr></th>
@@ -54,6 +53,8 @@
                 </tr>
             }
         </tbody>
-        @if(showMeta){<caption class="table__caption table__caption--bottom"><a href='@{competition.url + "/table"}' data-link-name="full table">View full @competition.fullName table</a></caption>}
+
+        <caption class="table__caption table__caption--top"><a href="@competition.url">@competition.fullName</a></caption>
+        <caption class="table__caption table__caption--bottom"><a href="@{competition.url + "/table"}" data-link-name="full table">View full <span class="competition-name">@competition.fullName</span> table</a></caption>
     </table>
 </div>

@@ -9,12 +9,16 @@
             }
             data-discussion-closed="@trail.isClosedForComments"
         }
-        data-link-name="trail | @{index + 1}">
+        data-link-name="trail | @{index + 1}"
+        @SnapData(trail)>
 
         <div class="item__container">
 
-            <a href="@LinkTo{@trail.url}" class="item__link tone-accent-border" data-link-name="article">
+            <a @LinkTo(trail).map{url=>href=@url} class="item__link tone-accent-border" data-link-name="article">
                 @fragments.items.elements.image(trail, inlineImage = containerIndex == 0 && index < 4)
+
+                @trail match { case content:model.Content => @fragments.items.starRating(content) }
+
                 @fragments.items.elements.title(trail, index, containerIndex)
             </a>
 

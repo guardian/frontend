@@ -12,7 +12,7 @@
 .tabs__container {
     margin: 0;
     padding: 0;
-    border-bottom: none;
+    border-bottom: 0;
     list-style-type: none;
     overflow: hidden;
     background: #ffffff;
@@ -63,9 +63,9 @@
     a {
         color: inherit;
     }
-    
+
     & + & a {
-        border-left: 2px solid rgba(255, 255, 255, 0.75);
+        border-left: 2px solid rgba(255, 255, 255, .75);
         padding-left: 6px;
     }
 }

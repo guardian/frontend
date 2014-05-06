@@ -6,7 +6,7 @@ import com.amazonaws.services.s3.AmazonS3Client
 import com.amazonaws.services.s3.model._
 import com.amazonaws.services.s3.model.CannedAccessControlList.{Private, PublicRead}
 import com.amazonaws.util.StringInputStream
-import scala.io.Source
+import scala.io.{Codec, Source}
 import org.joda.time.DateTime
 import play.Play
 import play.api.libs.ws.WS
@@ -50,7 +50,7 @@ trait S3 extends Logging {
     }
   }
 
-  def get(key: String): Option[String] = try {
+  def get(key: String)(implicit codec: Codec): Option[String] = try {
     withS3Result(key) {
       result => Source.fromInputStream(result.getObjectContent).mkString
     }
@@ -110,7 +110,6 @@ object S3FrontsApi extends S3 {
     s"$location/pressed/$path/pressed.json"
 
   def getSchema = get(s"$location/schema.json")
-  def getConfig(id: String) = get(s"$location/config/$id/config.json")
   def getMasterConfig: Option[String] = get(s"$location/config/config.json")
   def getBlock(id: String) = get(s"$location/collection/$id/collection.json")
   def listConfigsIds: List[String] = getConfigIds(s"$location/config/")

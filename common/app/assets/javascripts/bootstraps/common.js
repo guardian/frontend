@@ -43,6 +43,7 @@ define([
     'common/modules/ui/message',
     'common/modules/identity/autosignin',
     'common/modules/adverts/article-body-adverts',
+    'common/modules/adverts/article-aside-adverts',
     'common/modules/adverts/collection-adverts',
     'common/modules/adverts/dfp',
     'common/modules/analytics/commercial/tags/container',
@@ -94,6 +95,7 @@ define([
     Message,
     AutoSignin,
     ArticleBodyAdverts,
+    ArticleAsideAdverts,
     CollectionAdverts,
     DFP,
     TagContainer,
@@ -169,15 +171,13 @@ define([
             Dropdowns.init();
         },
 
-        showRelativeDates: function (config) {
-            var dates = RelativeDates,
-                opts = config.switches.hideOldTimestamps && config.page.isFront ? {notAfter: 3600} : undefined; // 1 hour
-
+        showRelativeDates: function () {
+            var dates = RelativeDates;
             mediator.on('page:common:ready', function(config, context) {
-                dates.init(context, opts);
+                dates.init(context);
             });
             mediator.on('fragment:ready:dates', function(el) {
-                dates.init(el, opts);
+                dates.init(el);
             });
         },
 
@@ -216,7 +216,10 @@ define([
         },
 
         initRightHandComponent: function(config) {
-            if(config.page.contentType === 'Article' && detect.getBreakpoint() !== 'mobile' && parseInt(config.page.wordCount, 10) > 500  ) {
+            if(config.page.contentType === 'Article' &&
+                detect.getBreakpoint() !== 'mobile' &&
+                parseInt(config.page.wordCount, 10) > 500 &&
+                !config.page.isLiveBlog) {
                 new RightMostPopular(mediator, {type: 'image', maxTrails: 5});
             }
         },
@@ -283,8 +286,12 @@ define([
                     options = {};
 
                 // if it's an article, excluding live blogs, create our inline adverts
-                if (config.switches.standardAdverts && config.page.contentType === 'Article' && !config.page.isLiveBlog) {
-                    new ArticleBodyAdverts().init();
+                if (config.switches.standardAdverts && config.page.contentType === 'Article') {
+                    new ArticleAsideAdverts(config).init();
+                    // no inline adverts on live
+                    if (!config.page.isLiveBlog) {
+                        new ArticleBodyAdverts().init();
+                    }
                 }
 
                 new CollectionAdverts(config).init();
@@ -293,6 +300,14 @@ define([
                     options.dfpSelector = '.ad-slot--commercial-component';
                 } else if (!config.switches.commercialComponents) {
                     options.dfpSelector = '.ad-slot--dfp:not(.ad-slot--commercial-component)';
+                }
+
+                // TODO: once front's badges slot are only added when necessary
+                if (config.page.pageType !== 'Article' && window.location.hash !== '#show-badge') {
+                    var selector = options.dfpSelector || '.ad-slot--dfp';
+                    options.dfpSelector = selector + ':not(.ad-slot--paid-for-badge)';
+                } else {
+                    $('.dfp-badge-container').css('display', 'block');
                 }
 
                 dfpAds = new DFP(extend(config, options));
@@ -523,7 +538,7 @@ define([
             modules.showTabs();
             modules.initialiseNavigation(config);
             modules.showToggles();
-            modules.showRelativeDates(config);
+            modules.showRelativeDates();
             modules.transcludePopular();
             modules.loadVideoAdverts(config);
             modules.initClickstream();

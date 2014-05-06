@@ -9,9 +9,11 @@
             }
             data-discussion-closed="@trail.isClosedForComments"
         }
-        data-link-name="trail | @{index + 1}">
+        data-link-name="trail | @{index + 1}"
+        @SnapData(trail)>
+
         <div class="fromage__container">
-            <a href="@LinkTo{@trail.url}" class="fromage__link" data-link-name="article">
+            <a @LinkTo(trail).map{url=>href=@url} class="fromage__link" data-link-name="article">
                 @if(imageAdjust != Some("hide")) {
                     @trail.trailPicture(5,3).map{ imageContainer =>
                         @ImgSrc.imager(imageContainer, Item620).map { imgSrc =>
@@ -37,7 +39,7 @@
             @if(imageAdjust == "default") {
                 @trail.trailPicture(5,3).map{ imageContainer =>
                     @ImgSrc.imager(imageContainer, Item620).map { imgSrc =>
-                        <a href="@LinkTo{@trail.url}" data-link-name="article">
+                        <a @LinkTo(trail).map{url=>href=@url} data-link-name="article">
                             <div class="fromage__media-wrapper fromage__media-wrapper--second">
                                 <div class="fromage__image-container u-responsive-ratio">
                                     @Item220.bestFor(imageContainer).map{ url => <img src="@url" alt="" /> }
@@ -47,9 +49,14 @@
                     }
                 }
             }
+
+
             @trail.trailText.map { text =>
-                <div class="fromage__standfirst">@Html(text)</div>
+                <div class="fromage__standfirst">@Html(text)
+                    @trail match { case content:model.Content => @fragments.items.starRating(content) }
+                </div>
             }
+
             @fragments.items.elements.supporting(trail.supporting, style = "fit")
 
             @* Display meta only if there is a discussion *@

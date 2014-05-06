@@ -1,11 +1,11 @@
 import common.{FaciaToolMetrics, ContentApiMetrics, FaciaMetrics, CloudWatchApplicationMetrics}
-import conf.{Management, RequestMeasurementMetrics}
+import conf.{Management, Filters}
 import controllers.front._
 import dev.DevParametersLifecycle
 import play.api.mvc.WithFilters
 
 
-object Global extends WithFilters(RequestMeasurementMetrics.asFilters: _*) with FrontLifecycle
+object Global extends WithFilters(Filters.common: _*) with FrontLifecycle
                                                         with DevParametersLifecycle with CloudWatchApplicationMetrics {
   override lazy val applicationName = Management.applicationName
 

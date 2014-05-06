@@ -2,47 +2,82 @@
 define([
     'modules/authed-ajax',
     'modules/vars',
-    'modules/cache'
+    'modules/cache',
+    'utils/url-abs-path',
+    'utils/snap'
 ],
 function (
     authedAjax,
     vars,
-    cache
+    cache,
+    urlAbsPath,
+    snap
 ){
     function validateItem (item) {
-        var data = cache.get('contentApi', item.id),
-            defer = $.Deferred();
+        var defer = $.Deferred(),
+            snapId = snap.validateId(item.id()),
+            capiId = urlAbsPath(item.id()),
+            data;
 
-        if(data) {
-            populate(data, item);
+        if (snapId) {
+            item.id(snapId);
             defer.resolve();
         } else {
-            fetchContentByIds([item.id])
-            .done(function(result){
-                if (result.length === 1) {
-                    result = result[0];
-                    cache.put('contentApi', result.id, result);
-                    populate(result, item);
-                    defer.resolve();
-                } else {
-                    defer.reject();
-                }
-            }).fail(function(){
-                defer.reject();
-            });
+            data = cache.get('contentApi', capiId);
+            if (data) {
+                item.id(capiId);
+                populate(data, item);
+                defer.resolve();
+            } else {
+                fetchContentByIds([capiId])
+                .done(function(result) {
+                    if (result.length === 1) {
+                        // It's a ContentApi item
+                        item.id(capiId);
+                        cache.put('contentApi', capiId, result[0]);
+                        populate(result[0], item);
+                        defer.resolve();
+
+                    } else {
+                        // It's a snap
+                        if (!vars.model.switches()['facia-tool-snaps']) {
+                            defer.resolve(true, 'Sorry, that link wasn\'t recognised. It cannot be added to a front.');
+
+                        // A snap cannot be added in live mode if it has no headline
+                        } else if (vars.model.liveMode() &&
+                            item.parentType !== 'Clipboard' &&
+                            !item.fields.headline() &&
+                            !item.meta.headline()) {
+                            defer.resolve(true, 'Sorry, snaps without headlines can\'t be added in live mode.');
+
+                        } else {
+                            item.convertToSnap();
+                            defer.resolve();
+                        }
+                    }
+                });
+            }
         }
         return defer.promise();
     }
 
     function decorateItems (articles) {
+        var num = vars.CONST.capiBatchSize || 10;
+
+        _.each(_.range(0, articles.length, num), function(index) {
+            decorateBatch(articles.slice(index, index + num));
+        });
+    }
+
+    function decorateBatch (articles) {
         var ids = [];
 
         articles.forEach(function(article){
-            var data = cache.get('contentApi', article.id);
+            var data = cache.get('contentApi', article.id());
             if(data) {
                 populate(data, article);
             } else {
-                ids.push(article.id);
+                ids.push(article.id());
             }
         });
 
@@ -51,13 +86,15 @@ function (
             results.forEach(function(result) {
                 cache.put('contentApi', result.id, result);
                 _.filter(articles, function(article){
-                    return article.id === result.id;
+                    return article.id() === result.id;
                 }).forEach(function(article){
                     populate(result, article);
                 });
             });
 
-            _.each(articles, function(article){
+           _.chain(articles)
+            .filter(function(article) { return !article.isSnap(); })
+            .each(function(article) {
                 article.state.isEmpty(!article.state.isLoaded());
             });
         });
@@ -68,17 +105,15 @@ function (
     }
 
     function fetchContentByIds(ids) {
-        var apiUrl;
+        var capiIds = _.chain(ids)
+            .filter(function(id) { return !snap.validateId(id); })
+            .map(function(id) { return encodeURIComponent(id); })
+            .value();
 
-        if (ids.length) {
-            apiUrl = 'search?page-size=50&format=json&show-fields=all';
-            apiUrl += '&ids=' + ids.map(function(id){
-                return encodeURIComponent(id);
-            }).join(',');
-            return fetchContent(apiUrl);
-
+        if (capiIds.length) {
+            return fetchContent('search?ids=' + capiIds.join(',') + '&page-size=50&format=json&show-fields=all');
         } else {
-            return $.Deferred().reject();
+            return $.Deferred().resolve([]);
         }
     }
 
@@ -88,21 +123,15 @@ function (
         authedAjax.request({
             url: vars.CONST.apiSearchBase + '/' + apiUrl
         }).always(function(resp) {
-            var items = resp.response ?
-                        _.chain(['editorsPicks', 'results'])
-                         .filter(function(key) { return _.isArray(resp.response[key]); })
-                         .map(function(key) { return resp.response[key]; })
-                         .flatten()
-                         .value() : [];
-
-            if (items.length > 0) {
-                defer.resolve(items);
-            } else {
-                defer.reject();
-            }
+            defer.resolve(resp.response ?
+               _.chain(['editorsPicks', 'results', 'mostViewed'])
+                .filter(function(key) { return _.isArray(resp.response[key]); })
+                .map(function(key) { return resp.response[key]; })
+                .flatten()
+                .value() : []);
         });
 
-        return defer;
+        return defer.promise();
     }
 
     return {
