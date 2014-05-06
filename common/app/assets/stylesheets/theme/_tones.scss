@@ -59,6 +59,10 @@
         position: relative;
         @include full-bleed($accentColour);
 
+        @include rem((
+           padding: $gs-baseline 0 $gs-baseline 0
+        ));
+
         &:after,
         &.before {
           z-index: 2
@@ -68,7 +72,10 @@
       .tone-head--default {
         @include full-bleed($colour);
         .tone-colour {
+          color: $colour !important;
+          @include mq($from: tablet) {
             color: #ffffff !important;
+          }
         }
       }
 
