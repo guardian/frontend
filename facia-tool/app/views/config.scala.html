@@ -11,47 +11,55 @@
     <div class="updating">Updating</div>
 
     <div class="left-col">
-        <div class="title">Clipboard</div>
-        <div class="clipboard__wrapper" data-bind="with: clipboard">
-            <div class="clipboard droppable" data-bind="
-                makeDropabble: true,
-                css: {underDrag: underDrag},
-                template: {name: 'template_collection', foreach: items}"></div>
-        </div>
-
-        <div class="title">Orphaned containers</div>
+        <div class="title">Containers</div>
         <div class="scrollable cnf-collections" data-bind="
-            template: {name: 'template_collection', foreach: orphans}"></div>
+            template: {name: 'template_minimal_collection', foreach: collections}"></div>
     </div>
 
     <div class="right-col">
-        <div class="title">Fronts</div>
-        <div class="instructions">
-            Create a <span data-bind="click: createFront" class="linky">front</span>
+        <div class="title">
+            Fronts
+            <!--span data-bind="click: createFront" class="linky">+</span-->
         </div>
         <div class="scrollable cnf-fronts" data-bind="
             template: {name: 'template_front', foreach: fronts}"></div>
     </div>
 
+    <script type="text/html" id="template_minimal_collection">
+        <div class="cnf-collection">
+            <a class="cnf-collection__name" data-bind="
+                click: toggleOpen,
+                attr: {href: id, title: id},
+                text: meta.displayName() || '(no title)'"></a>
+
+            <span class="placements">
+                on
+                <span data-bind="foreach: parents">
+                    <a class="cnf-collection__also-on" data-bind="
+                        click: $root.openFront,
+                        text: id"></a>
+                </span>
+            </span>
+        </div>
+    </script>
+
     <script type="text/html" id="template_collection">
         <div class="cnf-collection" data-bind="
             css: {
                 underDrag: state.underDrag,
-                open: state.open}">
+                open: state.isOpen}">
 
             <span class="cnf-collection__index" data-bind="text: $index() + 1"></span>
 
             <a class="cnf-collection__name" data-bind="
                 click: toggleOpen,
-                attr: {href: id},
+                attr: {href: id, title: id},
                 text: meta.displayName() || '(no title)'"></a>
-
-            <span class="cnf-collection__id" data-bind="text: id"></span>
 
             <span class="placements" data-bind="
                 if: parents().length,
                 css: {'is-single': parents().length === 1}">
-                <span class="also">also</span> on
+                also on
                 <span data-bind="foreach: parents">
                     <!-- ko if: $parents[2] ? id !== $parents[2].id : true -->
                         <a class="cnf-collection__also-on" data-bind="
@@ -61,7 +69,7 @@
                 </span>
             </span>
 
-            <!-- ko if: state.open -->
+            <!-- ko if: state.isOpen -->
             <div class="cnf-form">
                 <label>Title</label>
                 <input type="text" data-bind="
@@ -107,7 +115,7 @@
 
                 <div class="tools">
                     <button class="tool" data-bind="
-                        click: save">Save</button>
+                        click: save">Save container</button>
 
                     <!-- ko if: $parents[1] -->
                         <button class="tool" data-bind="
@@ -127,45 +135,72 @@
 
     <script type="text/html" id="template_front">
         <div class="cnf-front" data-bind="
-                css: {isProvisional: !id()}">
+            css: {open: state.isOpen}">
 
             <div class="title" data-bind="
-                click: toggleOpen,
-                text: id"></div>
+                text: id,
+                visible: id,
+                click: toggleOpen"></div>
 
             <!-- ko if: !id() -->
-            <div class="cnf-form">
-                <div class="title">New Front</div>
-                <label>Path</label>
-                <input type="text" data-bind="
-                    value: id"/>
+                <div class="cnf-front__inner cnf-form">
+                    <label>Type</label>
+                    <input type="radio" name="group01" data-bind="checkedValue: undefined, checked: props.priority" />
+                    <span class="radio-label">editorial</span>
+                    <input type="radio" name="group01" value="commercial" data-bind="checked: props.priority" />
+                    <span class="radio-label">commercial</span>
 
-                <div class="tools">
-                    <button class="tool">OK</button>
+                    <label>URL path</label>
+                    <input type="text" placeholder="eg. world/middleeast" data-bind="value: id"/>
+
+                    <div class="tools">
+                        <span class="tool">Create front</span>
+                    </div>
                 </div>
-            </div>
             <!-- /ko -->
 
-            <div data-bind="if: id() && state.open()">
-                <div class="cnf-front__inner">
-                    <div data-bind="visible: state.openProps">
-                        <div class="cnf-form" data-bind="">
-                                <label>Title</label>
-                                <input type="text" data-bind="
-                                    value: props.webTitle"/>
-                            <div class="tools"><span class="tool" data-bind="click: save">Save</span></div>
+            <div class="cnf-front__inner" data-bind="if: state.isOpen">
+                <!-- ko if: state.isOpenProps() -->
+                    <div class="cnf-form">
+                        <label>Section</label>
+                        <input type="text" data-bind="
+                            attr: {placeholder: placeholders.section},
+                            value: props.section"/>
+
+                        <label>Name</label>
+                        <input type="text" data-bind="
+                            attr: {placeholder: placeholders.webTitle},
+                            value: props.webTitle"/>
+
+                        <label>SEO Title</label>
+                        <textarea data-bind="
+                            attr: {placeholder: placeholders.title},
+                            value: props.title"></textarea>
+
+                        <label>Description</label>
+                        <textarea data-bind="
+                            attr: {placeholder: placeholders.description},
+                            value: props.description"></textarea>
+
+                        <label>Type</label>
+                        <input type="radio" name="group02" data-bind="checkedValue: undefined, checked: props.priority" />
+                        <span class="radio-label">editorial</span>
+                        <input type="radio" name="group02" value="commercial" data-bind="checked: props.priority" />
+                        <span class="radio-label">commercial</span>
+
+                        <div class="tools">
+                            <span class="tool" data-bind="click: saveProps">Save metadata</span>
                         </div>
                     </div>
-                    <div data-bind="visible: !state.openProps(), click: openProps">
-                        <div class="cnf-form" data-bind="">
-                            <div>
-                                <label>Title</label>
-                                <span data-bind="text: props.webTitle() || 'None!'"></span>
-                            </div>
-                        </div>
+                <!-- /ko -->
+
+                <!-- ko if: !state.isOpenProps() && id() -->
+                    <div class="instructions">
+                        <span class="linky" data-bind="click: openProps">Edit metadata</span>
                     </div>
+                <!-- /ko -->
 
-
+                <!-- ko if: id -->
                     <div data-bind="with: collections">
                         <div class="droppable" data-bind="
                             makeDropabble: true,
@@ -173,10 +208,10 @@
                             template: {name: 'template_collection', foreach: items}"></div>
                     </div>
                     <div class="instructions">
-                        Drop a container above, or <span data-bind="click: createCollection" class="linky">create</span> one.
-                        <div data-bind="if: !collections.items().length">Note: empty fronts will be discarded</div>
+                        <span data-bind="click: createCollection" class="linky">Create a container</span> or drop one above.
+                        <span data-bind="if: !collections.items().length">Empty fronts will be discarded!</span>
                     </div>
-                </div>
+                <!-- /ko -->
             </div>
 
         </div>

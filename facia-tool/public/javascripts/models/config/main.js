@@ -64,18 +64,18 @@ define([
             var front;
 
             if (vars.model.fronts().length <= vars.CONST.maxFronts) {
-                front =  new Front();
+                front = new Front();
+                front.setOpen(true);
                 model.pinnedFront(front);
                 model.fronts.unshift(front);
-                model.openFront(front);
             } else {
                 window.alert('The maximum number of fronts (' + vars.CONST.maxFronts + ') has been exceeded. Please delete one first, by removing all its collections.');
             }
         };
 
-        model.openFront = function(front) {
+        model.openFront = function(front, withOpenProps) {
             _.each(model.fronts(), function(f){
-                f.setOpen(f === front);
+                f.setOpen(f === front, withOpenProps);
             });
         };
 
@@ -100,7 +100,7 @@ define([
                     bootstrap({
                         force: true,
                         openFronts: _.reduce(model.fronts(), function(openFronts, front) {
-                            openFronts[front.id()] = front.state.open();
+                            openFronts[front.id()] = front.state.isOpen();
                             return openFronts;
                         }, {})
                     })
@@ -151,6 +151,7 @@ define([
                 collections:
                    _.chain(model.collections())
                     .filter(function(collection) { return collection.id; })
+                    .filter(function(collection) { return collection.parents().length > 0; })
                     .reduce(function(collections, collection) {
                         collections[collection.id] =
                            _.reduce(collection.meta, function(acc, val, key) {
@@ -180,9 +181,10 @@ define([
                     vars.state.config = config;
 
                     model.collections(
-                       _.map(config.collections, function(obj, cid) {
-                            return new Collection(cloneWithKey(obj, cid));
-                        })
+                       _.chain(config.collections)
+                        .map(function(obj, cid) { return new Collection(cloneWithKey(obj, cid)); })
+                        .sortBy(function(collection) { return collection.meta.displayName(); })
+                        .value()
                     );
 
                     model.fronts(
@@ -194,7 +196,7 @@ define([
                         .map(function(id) {
                             var front = new Front(cloneWithKey(config.fronts[id], id));
 
-                            front.state.open(opts.openFronts[id]);
+                            front.state.isOpen(opts.openFronts[id]);
                             return front;
                         })
                        .value()
