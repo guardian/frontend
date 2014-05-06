@@ -6,7 +6,7 @@ import com.amazonaws.services.s3.AmazonS3Client
 import com.amazonaws.services.s3.model._
 import com.amazonaws.services.s3.model.CannedAccessControlList.{Private, PublicRead}
 import com.amazonaws.util.StringInputStream
-import scala.io.Source
+import scala.io.{Codec, Source}
 import org.joda.time.DateTime
 import play.Play
 import play.api.libs.ws.WS
@@ -50,7 +50,7 @@ trait S3 extends Logging {
     }
   }
 
-  def get(key: String): Option[String] = try {
+  def get(key: String)(implicit codec: Codec): Option[String] = try {
     withS3Result(key) {
       result => Source.fromInputStream(result.getObjectContent).mkString
     }
