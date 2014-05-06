@@ -181,7 +181,7 @@
                 @include box-sizing(border-box);
                 width: 50%;
                 @include rem((
-                    padding-right: $gs-gutter/2
+                    padding-right: $gs-gutter
                 ));
             }
         }
