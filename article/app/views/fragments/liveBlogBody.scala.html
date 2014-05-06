@@ -115,6 +115,16 @@
                     <div class="u-table">
                         <div class="u-table__row">
                             <div class="u-table__cell u-table__cell--top">
+                                @if(storyPackage.nonEmpty) {
+                                    <aside role="complementary" class="blog__related">
+                                        <h3 class="blog__related__head">More on this story</h3>
+                                        <ul class="u-unstyled">
+                                        @storyPackage.take(4).zipWithIndex.map { case (item, index) =>
+                                            @fragments.collections.items.standard(item, index, 1, "blog__related__item")
+                                        }
+                                        </ul>
+                                    </aside>
+                                }
                                 <div class="mpu-context">
                                     <div class="mpu-container js-mpu-ad-slot"></div>
                                 </div>
