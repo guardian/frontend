@@ -22,6 +22,26 @@ object LeagueTableController extends Controller with Logging with CompetitionTab
 
   private def loadTables: Seq[Table] = competitions.filter(_.hasLeagueTable).map { Table(_) }
 
+  def renderWallchart = Action { implicit request =>
+    val page = new Page(
+      "football/tables",
+      "football",
+      "All tables",
+      "GFE:Football:automatic:tables"
+    )
+
+    val rounds = List(
+      "Last 16" -> List(1,2,3,4,5,6,7,8),
+      "Quarter-final" -> List(1,2,3,4),
+       "Semi-final" -> List(1,2),
+      "Final" -> List(1)
+    )
+
+    val h = () => football.views.html.matchList.wallchart(page, rounds)
+    val j = () => football.views.html.matchList.wallchart(page, rounds)
+    renderFormat(h, j, page)
+  }
+
   def renderLeagueTableJson() = renderLeagueTable()
   def renderLeagueTable() = Action { implicit request =>
 

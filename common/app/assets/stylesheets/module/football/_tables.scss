@@ -144,3 +144,225 @@
         float: right;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+.football-wallchart {
+    font-size: 0;
+    background: $c-neutral8;
+
+    .football-match {
+        display: table;
+        text-align: center;
+        width: 100%;
+    }
+    .football-match__container {
+        display: table-cell;
+        height: 100%;
+        position: relative;
+        vertical-align: middle;
+    }
+    .football-match__team {
+        @include rem((
+            height: $gs-baseline*1.5
+        ));
+        border: 1px solid $c-neutral2;
+        border-top: 0;
+        display: block;
+        float: none;
+        padding: 0;
+        position: absolute;
+        text-align: center;
+        width: 100%;
+    }
+    .football-match__team--home {
+        @include rem((
+            margin-top: -(($gs-baseline*1.5)/2)
+        ));
+        top: 25%;
+    }
+    .football-match__team--away {
+        @include rem((
+            margin-bottom: -(($gs-baseline*1.5)/2)
+        ));
+        bottom: 25%;
+        top: auto;
+    }
+    .football-match__victory-line {
+        border-left: 1px dotted $c-neutral2;
+        height: 50%;
+        position: absolute;
+        right: 0;
+        top: 25%;
+
+        &:after {
+            border-top: 1px dotted $c-neutral2;
+            content: " ";
+            display: block;
+            position: absolute;
+            top: 50%;
+            width: $gs-gutter/2;
+        }
+    }
+}
+.football-wallchart--4-rounds {
+    .football-round {
+        width: 25%;
+    }
+}
+
+.football-round {
+    @include box-sizing(border-box);
+    @include fs-data(4);
+    @include rem((
+        padding: $gs-baseline*2 $gs-gutter/4
+    ));
+    display: inline-block;
+    float: left;
+}
+.football-round--8-matches {
+    .football-match {
+        height: 25%;
+    }
+}
+.football-round--4-matches {
+    .football-match {
+        height: 50%;
+    }
+}
+.football-round--2-matches {
+    .football-match {
+        height: 100%;
+    }
+}
+.football-round--1-matches {
+    .football-match {
+        height: 100%;
+    }
+}
+.football-round__name {
+    text-align: center;
+}
+
+.football-round__matches {
+    height: 490px;
+}
+.football-round__matches--final {
+    height: 980px;
+}
+
+
+
+
+/*
+.football-round,
+.football-round__match-container { display: none !important; }
+.football-round:first-child,
+.football-round__match-container:first-child { display: flex !important; }
+
+// WALLCHART
+.football-wallchart {
+    @include fs-data(4);
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+
+    .football-round,
+    .football-round__matches,
+    .football-round__match-container {
+        flex: 1 1 auto;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .football-round__match {
+        flex: 1 1 auto;
+    }
+
+    .football-match {
+        margin: auto 0;
+        text-align: center;
+    }
+
+    .football-match__team {
+        @include rem((
+            padding: $gs-baseline/6 $gs-gutter/4
+        ));
+        border: 1px solid $c-neutral2;
+        border-top: 0;
+        display: block;
+        float: none;
+        padding: 0;
+        text-align:center;
+        width: 100%;
+    }
+}*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
