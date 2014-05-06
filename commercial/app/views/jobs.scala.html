@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="@Static("stylesheets/commercial.css")" />
 
 @defining("http://jobs.theguardian.com", "0_2", "2014-04-30") { case (jobsHost, version, date) =>
-    <div class="commercial commercial--jobs">
+    <div class="commercial commercial--jobs facia-container__inner">
         <div class="commercial__head container__title">
             <h2 class="commercial__title"><a href="@AdLink{@jobsHost/jobs}"
                 data-link-name="merchandising-jobs-v@{version}_@{date}-low-browse-all-jobs">Guardian <span class="commercial__title__last-word">jobs</span></a></h2>

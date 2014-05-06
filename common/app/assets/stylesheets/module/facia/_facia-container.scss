@@ -1,4 +1,5 @@
 .facia-container__inner {
+    position: relative;
     @include rem((
         padding-left: $gs-gutter / 2,
         padding-right: $gs-gutter / 2

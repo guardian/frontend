@@ -1,6 +1,6 @@
 @(page: model.Page)(implicit request: RequestHeader)
 
-<main itemprop="mainContentOfPage" role="main" class="gs-container">
+<main itemprop="mainContentOfPage" role="main">
     @Edition(request).zones.map{ zone =>
         <div class="monocolumn-wrapper">
             @if(zone.name.title == "News") {
