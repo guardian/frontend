@@ -74,9 +74,19 @@
 
       .article__headline,
       .article__standfirst,
-      .article__zone {
+      .article__zone,
+      .article__section-link a
+      {
           color: #ffffff !important;
       }
+
+      .article__section-link {
+        @include mq($to: desktop) {
+          @include full-bleed($colour);
+        }
+      }
+
+
     }
   }
 }

@@ -4,7 +4,7 @@
 @defining((model.article, model.storyPackage)) { case (article, storyPackage) =>
 
     <h2 class="article__zone left-col-deport tone-@VisualTone(article) tone-@VisualTone(article)--article tone-accent-border hide-on-mobile-if-localnav">
-        <span class="left-col-deport__body tone-head--default" data-component="meta">
+        <span class="left-col-deport__body  article__section-link" data-component="meta">
             <a class="tone-colour" data-link-name="article section" href="@LinkTo{/@article.section}">@Html(article.sectionName.toLowerCase)</a>
         </span>
     </h2>

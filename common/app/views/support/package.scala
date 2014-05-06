@@ -549,7 +549,12 @@ case class Summary(amount: Int) extends HtmlCleaner {
 
 object DropCaps extends HtmlCleaner {
 
-  private def setDropCap(html: String): String = s"""<span class="drop-cap">${html.head}</span>${html.tail}"""
+  private def setDropCap(html: String): String ={
+    if ( html.matches("[a-zA-Z].*") && html.split("\\s+").head.length >= 3 )
+      s"""<span class="drop-cap">${html.head}</span>${html.tail}"""
+    else
+      html
+  }
 
   override def clean(document: Document): Document = {
 
