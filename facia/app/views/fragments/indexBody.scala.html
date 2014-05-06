@@ -1,5 +1,9 @@
 @(index: services.IndexPage)(implicit request: RequestHeader, templateDeduping: TemplateDeduping)
 
+@if(index.page.isSponsored) {
+    @fragments.commercial.badge(name="spbadge", adType="paid-for-badge", sizeMapping=Map("mobile" -> Seq("140,90")))
+}
+
 <div class="facia-container facia-container--layout-front monocolumn-wrapper monocolumn-wrapper--no-limit" data-link-name="Front" role="main">
 
     @fragments.containers.tag(index.page, Config(s"${index.page.id}/news/regular-stories", displayName = Some(index.page.webTitle)), Collection(index.trails), NewsContainer(showMore = false), containerIndex = 0, pagination = index.page.pagination)

@@ -2,7 +2,7 @@ package dfp
 
 import common.{AkkaAsync, Jobs, ExecutionContexts, AkkaAgent}
 import conf.Configuration.commercial.dfpDataKey
-import model.Content
+import model.{Tag, Content}
 import play.api.libs.json.Json._
 import play.api.{Application, GlobalSettings}
 import scala.io.Codec.UTF8
@@ -14,9 +14,13 @@ object DfpAgent extends ExecutionContexts {
 
   def targetedKeywords: Seq[String] = targetedKeywordsAgent get()
 
-  def isSponsored(content: Content) = {
-    val contentKeywords = content.keywords.map(_.name.toLowerCase.replace(" ", "-"))
-    (contentKeywords intersect targetedKeywords).nonEmpty
+  def normalise(name: String) = name.toLowerCase.replace(" ", "-")
+
+  def isSponsored(content: Content): Boolean = isSponsored(content.keywords)
+
+  def isSponsored(tags: Seq[Tag]): Boolean = {
+    val normalisedTags = tags.map(_.name.toLowerCase.replace(" ", "-"))
+    (normalisedTags intersect targetedKeywords).nonEmpty
   }
 
   def refresh() {
