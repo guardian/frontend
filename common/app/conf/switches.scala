@@ -3,9 +3,9 @@ package conf
 import com.gu.management.{ DefaultSwitch, Switchable }
 import common._
 import implicits.Collections
-import play.api.{Application, Plugin}
-import play.api.libs.ws.WS
 import org.joda.time.{Days, DateTime, DateMidnight}
+import play.api.libs.ws.WS
+import play.api.{Application, Plugin}
 
 sealed trait SwitchState
 case object On extends SwitchState
@@ -70,7 +70,7 @@ object Switches extends Collections {
 
   val GzipSwitch = Switch("Performance Switches", "gzip",
     "If switched on then http responses will be gzipped",
-    safeState = Off, sellByDate = new DateMidnight(2014, 5, 5)
+    safeState = Off, sellByDate = new DateMidnight(2014, 5, 31)
   )
 
   val DoubleCacheTimesSwitch = Switch("Performance Switches", "double-cache-times",
@@ -86,11 +86,6 @@ object Switches extends Collections {
   val CssFromStorageSwitch = Switch("Performance Switches", "css-from-storage",
     "If this switch is on CSS will be cached in users localStorage and read from there on subsequent requests.",
     safeState = Off, sellByDate = never
-  )
-
-  val ElasticSearchSwitch = Switch("Performance Switches", "elastic-search-content-api",
-    "If this switch is on then (parts of) the application will use the Elastic Search content api",
-    safeState = On, sellByDate = never
   )
 
   val ShowAllArticleEmbedsSwitch = Switch("Performance Switches", "show-all-embeds",
@@ -147,6 +142,10 @@ object Switches extends Collections {
   val CriteoSwitch = Switch("Ad Targeting", "criteo",
     "If this switch is on, Criteo segments will be used to target ads.",
     safeState = Off, sellByDate = new DateMidnight(2014, 11, 1))
+
+  val LifeAndStyleHackSwitch = Switch("Ad Targeting", "life-and-style",
+    "If this switch is on, ads will work on Life and Style front while waiting for fix from Front Tools team.",
+    safeState = On, sellByDate = new DateMidnight(2014, 5, 14))
 
   // Commercial Tags
 
@@ -299,12 +298,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
-  // A/B Test Switches
-  val ABHomeComponent = Switch("A/B Tests", "ab-home-component",
-    "This switch runs an AB test which adds a sticky-like home button.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 5, 4)
-  )
-
   // Dummy Switches
 
   val IntegrationTestSwitch = Switch("Unwired Test Switch", "integration-test-switch",
@@ -386,6 +379,7 @@ object Switches extends Collections {
     AudienceScienceSwitch,
     AudienceScienceGatewaySwitch,
     CriteoSwitch,
+    LifeAndStyleHackSwitch,
     DiscussionSwitch,
     OpenCtaSwitch,
     FontSwitch,
@@ -395,7 +389,6 @@ object Switches extends Collections {
     ClientSideErrorSwitch,
     IdentityProfileNavigationSwitch,
     CssFromStorageSwitch,
-    ElasticSearchSwitch,
     FacebookAutoSigninSwitch,
     IdentityFormstackSwitch,
     IdentityEthicalAwardsSwitch,
@@ -431,7 +424,6 @@ object Switches extends Collections {
     PopularInTagSwitch,
     EnhanceTweetsSwitch,
     IndiaRegionSwitch,
-    ABHomeComponent,
     MemcachedSwitch,
     IncludeBuildNumberInMemcachedKey,
     AutoSeoSwitch,

@@ -43,7 +43,7 @@ trait QueryDefaults extends implicits.Collections with ExecutionContexts {
     val tag = "tag=type/gallery|type/article|type/video|type/sudoku"
     val editorsPicks = "show-editors-picks=true"
     val showInlineFields = s"show-fields=$trailFields"
-    val showFields = "trailText,headline,shortUrl,liveBloggingNow,commentable,commentCloseDate,shouldHideAdverts,lastModified,byline,standfirst"
+    val showFields = "trailText,headline,shortUrl,liveBloggingNow,commentable,commentCloseDate,shouldHideAdverts,lastModified,byline,standfirst,starRating"
     val showFieldsWithBody = showFields + ",body"
 
     val all = Seq(tag, editorsPicks, showInlineFields, showFields)
@@ -100,12 +100,6 @@ with Logging {
   }
 
   private def isTagQuery(url: String) = url.endsWith("/tags")
-}
-
-class SolrContentApiClient extends ContentApiClient {
-  lazy val httpTimingMetric = ContentApiMetrics.HttpTimingMetric
-  lazy val httpTimeoutMetric= ContentApiMetrics.HttpTimeoutCountMetric
-  override val targetUrl = contentApi.host
 }
 
 class ElasticSearchContentApiClient extends ContentApiClient {

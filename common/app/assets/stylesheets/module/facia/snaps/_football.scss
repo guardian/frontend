@@ -1,0 +1,87 @@
+.facia-snap--football {
+    // Dealing with the double embedding of snaps
+    overflow: hidden;
+    .facia-snap--football {
+        overflow: visible;
+    }
+
+    // Generic
+    &.facia-snap-embed {
+        @include rem((
+            border-left-width: $gs-gutter/2,
+            border-right-width: $gs-gutter/2
+        ));
+        background: #ffffff;
+    }
+
+    .c-football-matches,
+    .c-football-table {
+        // this works as a min-height
+        height: $gs-baseline*14;
+        overflow: visible;
+    }
+
+    .table,
+    .table__caption {
+        border-top: 0 none;
+    }
+
+    .table__caption--bottom {
+        @include box-sizing(border-box);
+        @include rem((
+            border-left-width: $gs-gutter/2,
+            border-right-width: $gs-gutter/2,
+            bottom: 2px
+        ));
+        background: $c-neutral8;
+        border-color: #ffffff;
+        border-style: solid;
+        border-top: 0 none;
+        left: 0;
+        position: absolute;
+        width: 100%;
+        z-index: 2;
+    }
+
+    .football-team__form,
+    .football-matches__date {
+        display: none;
+    }
+
+    .football-matches__day:last-child {
+        .table__caption--bottom {
+            display: table-caption;
+        }
+    }
+
+    // Different snap sizes
+    // See javascripts/modules/ui/snaps.js
+    &.facia-snap-point--large {
+        @include table--hide-none;
+
+        .table,
+        .table__caption {
+            border-top: 0 none;
+        }
+    }
+
+    &.facia-snap-point--small {
+        @include table--hide-from-importance-2;
+    }
+
+    &.facia-snap-point--mini,
+    &.facia-snap-point--tiny {
+        @include table--hide-from-importance-3;
+
+        .competition-name {
+            display: none;
+        }
+
+        .team-name:after {
+            content: attr(data-abbr);
+        }
+        .team-name__long {
+            @include u-h;
+        }
+    }
+}

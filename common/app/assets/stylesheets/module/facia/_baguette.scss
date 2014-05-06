@@ -19,26 +19,29 @@
             ));
         }
     }
-    .item__media-wrapper {
-        @include mq(faciaLeftCol) {
-            @include rem((
-                margin-top: 19px // Align with the date block in left column
-            ));
+    @include mq(tablet) {
+        .item__media-wrapper {
+            overflow: hidden;
         }
-        @include mq(wide) {
-            @include rem((
-                margin-top: 22px
-            ));
-        }
-        overflow: hidden;
-        position: relative;
-    }
-    .item__image-container {
-        padding-bottom: 40%;
+        .item__image-container {
+            padding-bottom: 40%;
 
-        .responsive-img {
-            top: -25%;
-            height: auto;
+            .responsive-img {
+                top: -25%;
+                height: auto;
+            }
         }
+    }
+}
+.baguette__standfirst {
+    @include fs-headline(1);
+    color: $c-neutral2;
+    @include rem((
+        margin-top: $gs-baseline,
+        margin-bottom: $gs-baseline
+    ));
+
+    p {
+        margin-bottom: 0; // Some trail texts are wrapped in a paragraph
     }
 }

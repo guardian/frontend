@@ -2,7 +2,7 @@
 
 @if(content.isSeries) {
     @content.series.headOption.map { series =>
-        @fragments.meta.series(series.id, series.name, Some("inline"))
+        @fragments.meta.series(series.id, series.name, List("inline"))
     }
 } else {
     @if(content.isFromTheObserver ) {

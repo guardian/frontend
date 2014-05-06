@@ -298,6 +298,27 @@ case class PictureCleaner(contentImages: Seq[ImageElement]) extends HtmlCleaner 
   }
 }
 
+case class LiveBlogDateFormatter(isLiveBlog: Boolean)(implicit val request: RequestHeader) extends HtmlCleaner  {
+  def clean(body: Document): Document = {
+    if (isLiveBlog) {
+      body.select(".block").foreach { el =>
+        val id = el.id()
+        el.select(".block-time.published-time time").foreach { time =>
+            val datetime = DateTime.parse(time.attr("datetime"))
+            val hhmm = Format(datetime, "HH:mm")
+            time.wrap(s"""<a href="#$id" class="block-time__link"></a>""")
+            time.attr("data-relativeformat", "med")
+            time.after( s"""<span class="block-time__absolute">$hhmm</span>""")
+            if (datetime.isAfter(DateTime.now().minusDays(5))) {
+              time.addClass("js-timestamp")
+            }
+        }
+      }
+    }
+    body
+  }
+}
+
 object BulletCleaner {
   def apply(body: String): String = body.replace("•", """<span class="bullet">•</span>""")
 }
@@ -676,6 +697,11 @@ object VisualTone {
   val Comment = "comment"
   val News = "news"
   val Feature = "feature"
+  val Live = "live"
+
+  private val liveMappings = Seq(
+    "tone/minutebyminute"
+  )
 
   private val commentMappings = Seq(
     "tone/comment",
@@ -698,8 +724,9 @@ object VisualTone {
 
 
   // tones are all considered to be 'News' it is the default so we do not list news tones explicitly
-  def apply(tags: Tags) = if(isComment(tags.tones)) Comment else if(isFeature(tags.tones)) Feature else News
+  def apply(tags: Tags) = if(isLive(tags.tones)) Live else if(isComment(tags.tones)) Comment else if(isFeature(tags.tones)) Feature else News
 
+  private def isLive(tones: Seq[Tag]) = tones.exists(t => liveMappings.contains(t.id))
   private def isComment(tones: Seq[Tag]) = tones.exists(t => commentMappings.contains(t.id))
   private def isFeature(tones: Seq[Tag]) = tones.exists(t => featureMappings.contains(t.id))
 }
@@ -728,16 +755,16 @@ object GetClasses {
                         additionalClasses: String = ""): String = {
     val f: Seq[(Trail) => String] = Seq(
       (trail: Trail) => trail match {
-        case _: Gallery => "collection__item--content-type-gallery"
-        case _: Video   => "collection__item--content-type-video"
+        case _: Gallery => "facia-slice__item--content-type-gallery"
+        case _: Video   => "facia-slice__item--content-type-video"
         case _          => ""
       }
     )
     val baseClasses: Seq[String] = Seq(
       additionalClasses,
       "l-row__item",
-      "collection__item",
-      s"collection__item--volume-${trail.group.getOrElse("0")}"
+      "facia-slice__item",
+      s"facia-slice__item--volume-${trail.group.getOrElse("0")}"
     )
     val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail)} ++ makeSnapClasses(trail)
     RenderClasses(classes:_*)
@@ -778,7 +805,6 @@ object GetClasses {
   def forFromage(trail: Trail, imageAdjust: String): String = {
     val baseClasses: Seq[String] = Seq(
       "fromage",
-      s"fromage--volume-${trail.group.getOrElse("0")}",
       s"tone-${VisualTone(trail)}",
       "tone-accent-border"
     )
@@ -801,7 +827,7 @@ object GetClasses {
   }
 
   def makeSnapClasses(trail: Trail): Seq[String] = trail match {
-    case snap: Snap => snap.snapType.map(t => Seq(s"facia-snap facia-snap--$t")).getOrElse(Seq("facia-snap facia-snap--default"))
+    case snap: Snap => "facia-snap" +: snap.snapType.map(t => Seq(s"facia-snap--$t")).getOrElse(Seq("facia-snap--default"))
     case _  => Nil
   }
 

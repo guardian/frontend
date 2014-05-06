@@ -2,7 +2,7 @@ package controllers
 
 import play.api.mvc.{RequestHeader, Action, Controller}
 import scala.concurrent.Future
-import conf.SwitchingContentApi
+import conf.ContentApi
 import common.{Logging, ExecutionContexts, Edition}
 import model.{Cached, Tag, Content, Section}
 import services.IndexPage
@@ -76,7 +76,7 @@ object AllIndexController extends Controller with ExecutionContexts with ItemRes
 
   // this is simply the latest by date. No lead content, editors picks, or anything else
   private def loadLatest(path: String, date: DateTime)(implicit request: RequestHeader): Future[Option[IndexPage]] = {
-    val result = SwitchingContentApi().item(s"/$path", Edition(request)).pageSize(50).toDate(date).orderBy("newest").response.map{ item =>
+    val result = ContentApi.item(s"/$path", Edition(request)).pageSize(50).toDate(date).orderBy("newest").response.map{ item =>
       item.section.map( section =>
         IndexPage(Section(section), item.results.map(Content(_)), date)
       ).orElse(item.tag.map( tag =>
@@ -91,7 +91,7 @@ object AllIndexController extends Controller with ExecutionContexts with ItemRes
   }
 
   private def findNewer(path: String, date: DateTime)(implicit request: RequestHeader): Future[Option[DateTime]] = {
-    val result = SwitchingContentApi().item(s"/$path", Edition(request)).pageSize(1).fromDate(date).orderBy("oldest").response.map{ item =>
+    val result = ContentApi.item(s"/$path", Edition(request)).pageSize(1).fromDate(date).orderBy("oldest").response.map{ item =>
       item.results.headOption.map(_.webPublicationDate.withZone(Edition(request).timezone))
     }
     result.recover{ case e: Exception =>

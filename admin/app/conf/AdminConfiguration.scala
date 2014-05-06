@@ -1,6 +1,7 @@
 package conf
 
 import com.gu.conf.ConfigurationFactory
+import org.apache.commons.configuration.MapConfiguration
 import scala.slick.session.Database
 
 object AdminConfiguration {
@@ -36,4 +37,34 @@ object AdminConfiguration {
   object fastly {
     lazy val key = configuration.getStringProperty("fastly.key").getOrElse(throw new RuntimeException("Fastly key not configured"))
   }
+
+  object dfpApi {
+
+    import scala.collection.JavaConversions._
+
+    def getPropertyTupleFor(key: String): Option[(String, String)] = {
+      val fullKey = "api.dfp." + key
+      configuration.getStringProperty(fullKey) map {
+        (fullKey, _)
+      }
+    }
+
+    lazy val properties = getPropertyTupleFor("networkCode") ::
+      getPropertyTupleFor("refreshToken") ::
+      getPropertyTupleFor("clientId") ::
+      getPropertyTupleFor("clientSecret") ::
+      getPropertyTupleFor("applicationName") ::
+      Nil
+
+    lazy val configObject: Option[MapConfiguration] = {
+      if (properties.contains(None)) {
+        None
+      } else {
+        Option(new MapConfiguration(
+          properties.foldLeft(Map[String, String]())((b, a) => b + a.get)
+        ))
+      }
+    }
+  }
+
 }

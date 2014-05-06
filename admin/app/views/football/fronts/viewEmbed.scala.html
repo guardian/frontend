@@ -1,0 +1,20 @@
+@(content: Html, snapFields: _root_.football.model.SnapFields)
+
+@views.html.football.main(snapFields.fallbackHeadline) {
+    <div class="row">
+        <div class="col-sm-12">
+            <hgroup class="page-header">
+                <a href="@snapFields.snapUrl" class="btn btn-success pull-right">Drag to the Fronts Editor</a>
+                <h1>@snapFields.fallbackHeadline</h1>
+            </hgroup>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="front-embed-preview half-sm">
+                @content
+            </div>
+        </div>
+    </div>
+}

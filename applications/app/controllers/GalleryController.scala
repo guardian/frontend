@@ -40,7 +40,7 @@ object GalleryController extends Controller with Logging with ExecutionContexts 
   private def lookup(path: String, index: Int, isTrail: Boolean)(implicit request: RequestHeader) =  {
     val edition = Edition(request)
     log.info(s"Fetching gallery: $path for edition $edition")
-    SwitchingContentApi().item(path, edition)
+    ContentApi.item(path, edition)
       .showExpired(true)
       .showFields("all")
       .response.map{response =>

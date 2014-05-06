@@ -44,7 +44,7 @@ define([
     'common/modules/identity/autosignin',
     'common/modules/adverts/article-body-adverts',
     'common/modules/adverts/article-aside-adverts',
-    'common/modules/adverts/collection-adverts',
+    'common/modules/adverts/slice-adverts',
     'common/modules/adverts/dfp',
     'common/modules/analytics/commercial/tags/container',
     'common/modules/analytics/foresee-survey',
@@ -96,7 +96,7 @@ define([
     AutoSignin,
     ArticleBodyAdverts,
     ArticleAsideAdverts,
-    CollectionAdverts,
+    SliceAdverts,
     DFP,
     TagContainer,
     Foresee,
@@ -216,7 +216,10 @@ define([
         },
 
         initRightHandComponent: function(config) {
-            if(config.page.contentType === 'Article' && detect.getBreakpoint() !== 'mobile' && parseInt(config.page.wordCount, 10) > 500  ) {
+            if(config.page.contentType === 'Article' &&
+                detect.getBreakpoint() !== 'mobile' &&
+                parseInt(config.page.wordCount, 10) > 500 &&
+                !config.page.isLiveBlog) {
                 new RightMostPopular(mediator, {type: 'image', maxTrails: 5});
             }
         },
@@ -291,12 +294,20 @@ define([
                     }
                 }
 
-                new CollectionAdverts(config).init();
+                new SliceAdverts(config).init();
 
                 if (!config.switches.standardAdverts) {
                     options.dfpSelector = '.ad-slot--commercial-component';
                 } else if (!config.switches.commercialComponents) {
                     options.dfpSelector = '.ad-slot--dfp:not(.ad-slot--commercial-component)';
+                }
+
+                // TODO: once front's badges slot are only added when necessary
+                if (config.page.pageType !== 'Article' && window.location.hash !== '#show-badge') {
+                    var selector = options.dfpSelector || '.ad-slot--dfp';
+                    options.dfpSelector = selector + ':not(.ad-slot--paid-for-badge)';
+                } else {
+                    $('.dfp-badge-container').css('display', 'block');
                 }
 
                 dfpAds = new DFP(extend(config, options));

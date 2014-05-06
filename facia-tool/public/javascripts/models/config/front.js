@@ -22,10 +22,10 @@ define([
         var self = this,
             props = [
                 'section',
-                'name',
                 'webTitle',
+                'title',
                 'description',
-                'type'];
+                'priority'];
 
         opts = opts || {};
 
@@ -62,7 +62,7 @@ define([
             }
         }, this);
 
-        this.props.name.subscribe(function() {
+        this.props.webTitle.subscribe(function() {
             this.derivePlaceholders();
         }, this);
 
@@ -92,10 +92,10 @@ define([
 
         if (!path.length) { return; }
 
-        this.placeholders.section(isEditionalised ? path.length === 1 ? undefined : path[1] : path[0]);
-        this.placeholders.name(this.props.name() || toTitleCase(path.slice(path.length > 1 ? 1 : 0).join(' ').replace(/\-/g, ' ')) || this.id());
-        this.placeholders.webTitle(this.placeholders.name() + ' news, comment and analysis from the Guardian');
-        this.placeholders.description('Latest ' + this.placeholders.name() + ' news, comment and analysis from the Guardian, the world\'s leading liberal voice');
+        this.placeholders.section(this.props.section() || (isEditionalised ? path.length === 1 ? undefined : path[1] : path[0]));
+        this.placeholders.webTitle(this.props.webTitle() || toTitleCase(path.slice(path.length > 1 ? 1 : 0).join(' ').replace(/\-/g, ' ')) || this.id());
+        this.placeholders.title(this.placeholders.webTitle() + ' news, comment and analysis from the Guardian' + (this.placeholders.section() ? ' | ' + toTitleCase(this.placeholders.section()) : ''));
+        this.placeholders.description('Latest ' + this.placeholders.webTitle() + ' news, comment and analysis from the Guardian, the world\'s leading liberal voice');
     };
 
     Front.prototype.setOpen = function(isOpen, withOpenProps) {
