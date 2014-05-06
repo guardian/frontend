@@ -24,7 +24,9 @@ case class Collection(
                  `type`: Option[String],
                   href: Option[String],
                   groups: Option[List[String]],
-                  uneditable: Option[Boolean]
+                  uneditable: Option[Boolean],
+                  isTagDisplayed: Option[Boolean],
+                  isSectionNameDisplayed: Option[Boolean]
                   )
 
 case class Block(

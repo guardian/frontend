@@ -30,6 +30,8 @@ define([
             'groups',
             'type',
             'uneditable',
+            'isTagDisplayed',
+            'isSectionNameDisplayed',
             'apiQuery']);
 
         populateObservables(this.meta, opts);
