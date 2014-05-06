@@ -498,7 +498,7 @@ module.exports = function (grunt) {
                 'common/app/assets/stylesheets'
             ],
             options: {
-                bundleExec: true,
+                // bundleExec: true, // uncomment once CI excludes the :development bundler group
                 config: '.scss-lint.yml',
                 reporterOutput: null
             }
