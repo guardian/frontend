@@ -224,7 +224,7 @@
         .ad-slot--paid-for-badge__logo {
             display: block;
         }
-        + .container__body .collection-wrapper:first-child .fromage {
+        + .container__body .facia-slice-wrapper:first-child .fromage {
             border-top-width: 2px;
         }
         @include mq(tablet) {
@@ -255,7 +255,7 @@
             .ad-slot--paid-for-badge__link {
                 position: relative;
             }
-            + .container__body .collection-wrapper:first-child .fromage {
+            + .container__body .facia-slice-wrapper:first-child .fromage {
                 border-top-width: 0;
             }
         }
