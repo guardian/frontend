@@ -25,6 +25,21 @@ $c-money-high: #63007F;
         @include fs-header(2);
         line-height: 1;
     }
+    .tools__calculators {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        color: $c-money-high;
+        width: auto;
+        @include fs-textsans(2);
+        font-weight: bold;
+        
+        .i.i-arrow-white-down {
+            float: right;
+            background-color: $c-money-high;
+            margin-top: 0;
+        }
+    }
     .tabs__container {
         background-color: #edede7;
         padding-left: 10px;
