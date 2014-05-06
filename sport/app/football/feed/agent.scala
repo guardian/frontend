@@ -35,6 +35,7 @@ trait LiveMatches extends ExecutionContexts with Logging {
 
 trait LeagueTables extends ExecutionContexts with Logging {
   def getLeagueTable(competition: Competition) = FootballClient.leagueTable(competition.id, new DateMidnight).map{_.map{ t =>
+    log.info(s"refreshing table for ${competition.id}")
     val team = t.team.copy(name = TeamName(t.team))
     t.copy(team = team)
   }}
@@ -43,6 +44,7 @@ trait LeagueTables extends ExecutionContexts with Logging {
 
 trait Fixtures extends ExecutionContexts with Logging {
   def getFixtures(competition: Competition) = FootballClient.fixtures(competition.id).map{ _.map { f =>
+    log.info(s"refreshing fixtures for ${competition.id}")
     val homeTeam = f.homeTeam.copy(name = TeamName(f.homeTeam))
     val awayTeam = f.awayTeam.copy(name = TeamName(f.awayTeam))
     f.copy(homeTeam = homeTeam, awayTeam = awayTeam)
@@ -51,6 +53,7 @@ trait Fixtures extends ExecutionContexts with Logging {
 
 trait Results extends ExecutionContexts with Logging with implicits.Collections {
   def getResults(competition: Competition) = {
+    log.info(s"refreshing results for ${competition.id} with startDate: ${competition.startDate}")
     //it is possible that we do not know the startdate of the competition yet (concurrency)
     //in that case just get the last 30 days results, the start date will catch up soon enough
     val startDate = competition.startDate.getOrElse(new DateMidnight().minusDays(30))
