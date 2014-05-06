@@ -13,16 +13,13 @@ GET        /discussion/comment-counts.json                      controllers.Disc
 GET        /discussion/comment/*id.json                         controllers.DiscussionApp.commentJson(id: Int)
 GET        /discussion/comment/*id                              controllers.DiscussionApp.comment(id: Int)
 
-GET        /discussion/comment-permalink/*commentId.json        controllers.DiscussionApp.commentPermalinkJson(commentId: Int)
-GET        /discussion/comment-permalink/*commentId             controllers.DiscussionApp.commentPermalink(commentId: Int)
+GET        /discussion/comment-permalink/*order/*commentId.json        controllers.DiscussionApp.commentPermalinkJson(commentId: Int, order: String)
+GET        /discussion/comment-permalink/*order/*commentId             controllers.DiscussionApp.commentPermalink(commentId: Int, order: String)
 
 GET        /discussion/top/*discussionKey.json                  controllers.DiscussionApp.topCommentsJson(discussionKey: discussion.model.DiscussionKey)
 GET        /discussion/top/*discussionKey                       controllers.DiscussionApp.topComments(discussionKey: discussion.model.DiscussionKey)
 
-GET        /discussion/oldest/*discussionKey.json               controllers.DiscussionApp.oldestCommentsJson(discussionKey: discussion.model.DiscussionKey)
-GET        /discussion/oldest/*discussionKey                    controllers.DiscussionApp.oldestComments(discussionKey: discussion.model.DiscussionKey)
-
-GET        /discussion/*discussionKey.json                      controllers.DiscussionApp.commentsJson(discussionKey: discussion.model.DiscussionKey)
-GET        /discussion/*discussionKey                           controllers.DiscussionApp.comments(discussionKey: discussion.model.DiscussionKey)
+GET        /discussion/:order/*discussionKey.json               controllers.DiscussionApp.commentsJson(discussionKey: discussion.model.DiscussionKey, order: String)
+GET        /discussion/:order/*discussionKey                    controllers.DiscussionApp.comments(discussionKey: discussion.model.DiscussionKey, order: String)
 
 GET        /open/cta/article/*discussionKey.json                controllers.CtaController.cta(discussionKey: discussion.model.DiscussionKey)

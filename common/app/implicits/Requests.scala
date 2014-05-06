@@ -11,7 +11,7 @@ trait Requests {
 
     def getIntParameter(name: String): Option[Int] = getParameter(name).map(_.toInt)
 
-    def getBooleanParameter(name: String): Option[Boolean] = getParameter(name).map(_.toBoolean)
+    def boolParam(name: String): Boolean = getParameter(name) exists (_ == "true")
 
     lazy val isJson: Boolean = r.getQueryString("callback").isDefined || r.headers.get("Accept").exists{ header =>
       header.contains("application/json") ||
