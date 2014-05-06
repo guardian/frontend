@@ -3,8 +3,9 @@ package dfp
 import common.{AkkaAsync, Jobs, ExecutionContexts, AkkaAgent}
 import conf.Configuration.commercial.dfpDataKey
 import model.Content
+import play.api.Play.current
 import play.api.libs.json.Json._
-import play.api.{Application, GlobalSettings}
+import play.api.{Play, Application, GlobalSettings}
 import scala.io.Codec.UTF8
 import services.S3
 
@@ -12,7 +13,13 @@ object DfpAgent extends ExecutionContexts {
 
   private lazy val targetedKeywordsAgent = AkkaAgent[Seq[String]](Nil)
 
-  def targetedKeywords: Seq[String] = targetedKeywordsAgent get()
+  def targetedKeywords: Seq[String] = {
+    if (Play.isTest) {
+      Seq("live-better")
+    } else {
+      targetedKeywordsAgent get()
+    }
+  }
 
   def isSponsored(content: Content) = {
     val contentKeywords = content.keywords.map(_.name.toLowerCase.replace(" ", "-"))
