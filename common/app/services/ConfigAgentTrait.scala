@@ -2,7 +2,7 @@ package services
 
 import common.{AkkaAgent, ExecutionContexts}
 import play.api.libs.json.{JsNull, Json, JsValue}
-import model.Config
+import model.{SeoData, Config}
 import scala.concurrent.Future
 import scala.concurrent.duration._
 import akka.util.Timeout
@@ -70,15 +70,16 @@ trait ConfigAgentTrait extends ExecutionContexts {
 
   def contentsAsJsonString: String = Json.prettyPrint(configAgent.get)
 
-  case class FrontConfig(keyword: Option[String], webTitle: Option[String])
-
-  def getFrontConfig(path: String): FrontConfig = {
+  def getSeoData(path: String): SeoData = {
     val json = configAgent.get()
     (json \ "fronts" \ path).asOpt[JsValue].map { frontJson =>
-      FrontConfig(
-        keyword   = (frontJson \ "keyword").asOpt[String].filter(_.nonEmpty),
-        webTitle  = (frontJson \ "webTitle").asOpt[String].filter(_.nonEmpty)
+      SeoData(
+        path,
+        section   = (frontJson \ "keyword").asOpt[String].filter(_.nonEmpty),
+        webTitle  = (frontJson \ "webTitle").asOpt[String].filter(_.nonEmpty),
+        title  = (frontJson \ "webTitle").asOpt[String].filter(_.nonEmpty),
+        description  = (frontJson \ "webTitle").asOpt[String].filter(_.nonEmpty)
       )
     }
-  }.getOrElse(FrontConfig(None, None)) //Default
+  }.getOrElse(SeoData(path, None, None, None, None)) //Default
 }
