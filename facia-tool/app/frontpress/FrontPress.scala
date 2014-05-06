@@ -29,8 +29,8 @@ trait FrontPress extends Logging {
     updatedEmail:           Option[String],
     groups:                 Option[Seq[String]],
     href:                   Option[String],
-    isSectionNameDisplayed: Boolean,
-    isTagDisplayed:         Boolean
+    isTagDisplayed:         Boolean,
+    isSectionNameDisplayed: Boolean
   )
   case class ItemMeta
   (
