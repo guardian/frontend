@@ -38,7 +38,7 @@
                             <tbody>
                              @bestBuys.mortgages.map { mortgage =>
                                 <tr>
-                                    <td><a href="@mortgage.detailsUrl" data-link-name="merchandising-moneydeals-v@{version}_@{date}-low-@mortgage.lender">@mortgage.lender</a></td>
+                                    <td><a href="@mortgage.detailsUrl" class="apply-to-link" data-link-name="merchandising-moneydeals-v@{version}_@{date}-low-@mortgage.lender">@mortgage.lender</a></td>
                                     <td>@mortgage.rate</td>
                                     <td class="hide-cell-on-mobile">@mortgage.description</td>
                                     <td class="hide-cell-on-mobile">@mortgage.overallCost</td>
@@ -69,7 +69,7 @@
                             <tbody>
                             @bestBuys.creditCards.map { card =>
                                 <tr>
-                                    <td><a href="@card.applyUrl" data-link-name="merchandising-moneydeals-v@{version}_@{date}-low-@card.name">@card.name</a></td>
+                                    <td><a href="@card.applyUrl" class="apply-to-link" data-link-name="merchandising-moneydeals-v@{version}_@{date}-low-@card.name">@card.name</a></td>
                                     <td>@card.balanceTransferRate%</td>
                                     <td>@card.balanceTransferRateDuration&nbsp;mths</td>
                                     <td class="hide-cell-on-mobile">@card.example.apr%</td>
@@ -99,7 +99,7 @@
                             <tbody>
                             @bestBuys.loans.map { loan =>
                                 <tr>
-                                    <td><a href="@loan.detailsUrl" data-link-name="merchandising-moneydeals-v@{version}_@{date}-low-@loan.name">@loan.name</a></td>
+                                    <td><a href="@loan.detailsUrl" class="apply-to-link" data-link-name="merchandising-moneydeals-v@{version}_@{date}-low-@loan.name">@loan.name</a></td>
                                     <td>@loan.headlineApr%</td>
                                     <td>@loan.apr%</td>
                                     <td><a href="@loan.detailsUrl"  data-link-name="merchandising-moneydeals-v@{version}_@{date}-low-@loan.name-more">More</a></td>
@@ -128,7 +128,7 @@
                             <tbody>
                             @bestBuys.currentAccounts.map { account =>
                                 <tr>
-                                    <td><a href="@account.applyUrl" data-link-name="merchandising-moneydeals-v@{version}_@{date}-low-browse-@account.provider">@account.provider</a></td>
+                                    <td><a href="@account.applyUrl" class="apply-to-link" data-link-name="merchandising-moneydeals-v@{version}_@{date}-low-browse-@account.provider">@account.provider</a></td>
                                     <td>@account.name</td>
                                     <td>@account.interestRate%</td>
                                     <td><a href="@account.applyUrl" data-link-name="merchandising-moneydeals-v@{version}_@{date}-low-browse-@account.provider-more">More</a></td>
@@ -157,7 +157,7 @@
                         <tbody>
                         @bestBuys.savings.map { account =>
                             <tr>
-                                <td><a href="@account.applyUrl" data-link-name="merchandising-moneydeals-v@{version}_@{date}-low-browse-@account.provider">@account.provider</a></td>
+                                <td><a href="@account.applyUrl" class="apply-to-link" data-link-name="merchandising-moneydeals-v@{version}_@{date}-low-browse-@account.provider">@account.provider</a></td>
                                 <td class="hide-cell-on-mobile">@account.name</td>
                                 <td>@account.interestRate%</td>
                                 <td><a href="@account.applyUrl" data-link-name="merchandising-moneydeals-v@{version}_@{date}-low-browse-@account.provider-more">More</a></td>

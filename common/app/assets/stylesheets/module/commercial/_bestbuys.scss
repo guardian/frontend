@@ -95,10 +95,17 @@ $c-money-high: #63007F;
         vertical-align: top;
         line-height: 1;
     }
+    .apply-to-link {
+        font-weight: bold;
+    }
     .commercial__link {
         margin-bottom: 10px;
         display: block;
         font-weight: bold;
+        
+        .i-double-arrow-right-blue {
+            margin-bottom: -1px;
+        }
     }
     .lineitem__meta {
         color: #A3A3A3;
