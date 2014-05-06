@@ -12,18 +12,18 @@
 </div>
 @defining(items.slice(3, 11)) { items =>
     @if(items.nonEmpty) {
-        <div class="linkslist-container tone-@{style.tone} facia-slice-wrapper--ad">
-                <ul class="l-columns linkslist features__columns">
-                    @items.zipWithIndex.map{ case (trail, index) =>
-                        @trail match {
-                            case l: LiveBlog if l.isLive         => { @fragments.items.linksList.live(l, index + 3, Some("boost")) }
-                            case g: Gallery                      => { @fragments.items.linksList.gallery(g, index + 3, Some("boost")) }
-                            case v: Video                        => { @fragments.items.linksList.video(v, index + 3, Some("boost")) }
-                            case c if VisualTone(c) == "comment" => { @fragments.items.linksList.comment(c, index + 3, Some("boost")) }
-                            case t                               => { @fragments.items.linksList.standard(t, index + 3, Some("boost")) }
-                        }
+        <div class="linkslist-container tone-@{style.tone} facia-slice-wrapper facia-slice-wrapper--ad">
+            <ul class="l-columns linkslist features__columns">
+                @items.zipWithIndex.map{ case (trail, index) =>
+                    @trail match {
+                        case l: LiveBlog if l.isLive         => { @fragments.items.linksList.live(l, index + 3, Some("boost")) }
+                        case g: Gallery                      => { @fragments.items.linksList.gallery(g, index + 3, Some("boost")) }
+                        case v: Video                        => { @fragments.items.linksList.video(v, index + 3, Some("boost")) }
+                        case c if VisualTone(c) == "comment" => { @fragments.items.linksList.comment(c, index + 3, Some("boost")) }
+                        case t                               => { @fragments.items.linksList.standard(t, index + 3, Some("boost")) }
                     }
-                </ul>
+                }
+            </ul>
         </div>
     }
 }
