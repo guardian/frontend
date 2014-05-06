@@ -17,8 +17,11 @@
                       case knockoutStage: _root_.football.model.Knockout => {
                           @football.views.html.wallchart.knockout(competition, knockoutStage)
                       }
-                      case groupStage:  _root_.football.model.Group => {
+                      case groupStage:  _root_.football.model.Groups => {
                           @football.views.html.wallchart.groups(competition, groupStage)
+                      }
+                      case leagueStage:  _root_.football.model.League => {
+                          @football.views.html.wallchart.league(competition, leagueStage)
                       }
                       case _ => {
                           <p>Unexpected stage</p>

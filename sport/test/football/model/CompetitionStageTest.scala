@@ -22,7 +22,7 @@ class CompetitionStageTest extends FreeSpec with ShouldMatchers with OptionValue
     "can generate a group stage" in {
       val stages = CompetitionStage.stagesFromCompetition(groupStage)
       stages.length should equal(1)
-      stages(0).isInstanceOf[Group] should equal(true)
+      stages(0).isInstanceOf[Groups] should equal(true)
     }
 
     "will generate nothing for a competition that doesn't have useful stages" in {
@@ -35,7 +35,7 @@ class CompetitionStageTest extends FreeSpec with ShouldMatchers with OptionValue
       "will correctly extract group and knockout stages" in {
         val stages = CompetitionStage.stagesFromCompetition(groupsThenKnockout).toSet
         stages.size should equal(2)
-        stages.exists(_.isInstanceOf[Group]) should equal(true)
+        stages.exists(_.isInstanceOf[Groups]) should equal(true)
         stages.exists(_.isInstanceOf[Knockout]) should equal(true)
       }
 
@@ -70,7 +70,7 @@ class CompetitionStageTest extends FreeSpec with ShouldMatchers with OptionValue
     "for groups" - {
       "adds leagueTableEntries for groups to group stage" in {
         val stages = CompetitionStage.stagesFromCompetition(groupStage)
-        stages(0).asInstanceOf[Group].groupTables.values.flatten.toSet should equal (groupStage.leagueTable.toSet)
+        stages(0).asInstanceOf[Groups].groupTables.values.flatten.toSet should equal (groupStage.leagueTable.toSet)
       }
 
       "if there are multiple stages" - {
@@ -79,8 +79,8 @@ class CompetitionStageTest extends FreeSpec with ShouldMatchers with OptionValue
           matches = currentGroupMatches ++ futureGroupMatches(Stage("2"))
         )
         val stages = CompetitionStage.stagesFromCompetition(comp)
-        val leagueTableEntries0 = stages(0).asInstanceOf[Group].groupTables.values.flatten.toSet
-        val leagueTableEntries1 = stages(1).asInstanceOf[Group].groupTables.values.flatten.toSet
+        val leagueTableEntries0 = stages(0).asInstanceOf[Groups].groupTables.values.flatten.toSet
+        val leagueTableEntries1 = stages(1).asInstanceOf[Groups].groupTables.values.flatten.toSet
 
         "adds correct leagueTableEntries to each group stage if there are multiple stages" in {
           leagueTableEntries0 should equal (comp.leagueTable.filter(_.stageNumber == "1").toSet)
