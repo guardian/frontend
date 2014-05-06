@@ -48,40 +48,49 @@ define([
         });
     }
 
-    function setSnapHtml(el, html) {
-        bonzo(el).html(html);
-    }
-
     function setSnapEmbedded(el) {
         bonzo(el).addClass('facia-snap-embed');
+    }
+
+
+    function injectIframe(el) {
+        var iframe = document.createElement('iframe');
+
+        iframe.style.width = '100%';
+        iframe.style.border = 'none';
+        iframe.height = '200';
+        iframe.src = el.getAttribute('data-snap-uri');
+        bonzo(el).html(iframe);
+    }
+
+    function fetchFragment(el, asJson) {
+        ajax({
+            url: el.getAttribute('data-snap-uri'),
+            type: asJson ? 'json' : 'html',
+            crossOrigin: true
+        }).then(function(resp) {
+            $.create(asJson ? resp.html : resp).each(function(html) {
+                bonzo(el).html(html);
+            });
+        });
     }
 
     function fetchSnaps(snaps) {
         snaps
         .filter(function(el) { return el.getAttribute('data-snap-uri'); })
         .forEach(function(el) {
-            var iframe;
-
             setSnapEmbedded(el);
             setSnapPoint(el);
 
-            if(el.getAttribute('data-snap-type') === 'interactive') {
-                iframe = document.createElement('iframe');
-                iframe.style.width = '100%';
-                iframe.style.border = 'none';
-                iframe.height = '200'; // default height
-                iframe.src = el.getAttribute('data-snap-uri');
-                bonzo(el).html(iframe);
+            if(el.getAttribute('data-snap-type') === 'iframe') {
+                injectIframe(el);
+
+            } else if(el.getAttribute('data-snap-type') === 'fragment') {
+                fetchFragment(el);
 
             } else {
-                ajax({
-                    url: el.getAttribute('data-snap-uri'),
-                    crossOrigin: true
-                }).then(function(resp) {
-                    $.create(resp.html).each(function(html) {
-                        setSnapHtml(el, html);
-                    });
-                });
+                // assumes a {"html": "<p>Stuff</p>"} response
+                fetchFragment(el, true);
             }
         });
     }
