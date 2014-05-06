@@ -6,7 +6,7 @@
 
         @hugeItems.zipWithIndex.map{ case (trail, index) =>
             @if(items.nonEmpty) {
-                <div class="collection-wrapper">
+                <div class="facia-slice-wrapper">
                     @fragments.items.baguette(trail, index)
                 </div>
             }
@@ -14,7 +14,7 @@
 
         @veryBigItems.zipWithIndex.map{ case (trail, index) =>
             @if(items.nonEmpty) {
-                <div class="collection-wrapper">
+                <div class="facia-slice-wrapper">
                     @fragments.items.fromage(trail, index + hugeItemsCount)
                 </div>
             }
@@ -22,7 +22,7 @@
 
         @bigItems.grouped(2).map{ items =>
             @if(items.nonEmpty) {
-                <div class="collection-wrapper">
+                <div class="facia-slice-wrapper">
                     @if(items.size == 1) {
                         @items.zipWithIndex.map{ case (trail, index) =>
                             @fragments.items.fromage(trail, index + hugeItemsCount + veryBigItemsCount + bigItemsCount)
@@ -30,30 +30,30 @@
                     }else{
                         @defining((items(0).imageAdjust == "boost", items(1).imageAdjust == "boost")) { case (firstStoryImageBoosted, secondStoryImageBoosted) =>
                             @if(firstStoryImageBoosted && secondStoryImageBoosted){
-                                <ul class="row-of-two row-of-two--boost-both u-unstyled l-row l-row--layout-m l-row--items-2 collection">
+                                <ul class="row-of-two row-of-two--boost-both u-unstyled l-row l-row--items-2 facia-slice">
                                     @items.zipWithIndex.map{ case (trail, index) =>
                                         @fragments.collections.items.standard(trail, index + hugeItemsCount + veryBigItemsCount + bigItemsCount, containerIndex)
                                     }
                                 </ul>
                             }
                             @if(firstStoryImageBoosted && !secondStoryImageBoosted){
-                                <ul class="row-of-two row-of-two--boost-first u-unstyled l-row l-row--layout-m l-row--items-2 collection">
+                                <ul class="row-of-two row-of-two--boost-first u-unstyled l-row l-row--items-2 facia-slice">
                                     @items.zipWithIndex.map{ case (trail, index) =>
                                         @fragments.collections.items.standard(trail, index + hugeItemsCount + veryBigItemsCount + bigItemsCount, containerIndex)
                                     }
                                 </ul>
                             }
                             @if(!firstStoryImageBoosted && secondStoryImageBoosted){
-                                <ul class="row-of-two row-of-two--boost-second u-unstyled l-row l-row--layout-m l-row--items-2 collection">
+                                <ul class="row-of-two row-of-two--boost-second u-unstyled l-row l-row--items-2 facia-slice">
                                     @items.zipWithIndex.map{ case (trail, index) =>
                                         @fragments.collections.items.standard(trail, index + hugeItemsCount + veryBigItemsCount + bigItemsCount, containerIndex)
                                     }
                                 </ul>
                             }
                             @if(!firstStoryImageBoosted && !secondStoryImageBoosted){
-                                <ul class="row-of-two row-of-two--boost-none u-unstyled l-row l-row--layout-m l-row--items-2 collection">
+                                <ul class="row-of-two row-of-two--boost-none u-unstyled l-row l-row--items-2 facia-slice">
                                     @items.zipWithIndex.map{ case (trail, index) =>
-                                        @fragments.collections.items.thumbnail(trail, index + hugeItemsCount + veryBigItemsCount + bigItemsCount, containerIndex)
+                                        @fragments.collections.items.standard(trail, index + hugeItemsCount + veryBigItemsCount + bigItemsCount, containerIndex)
                                     }
                                 </ul>
                             }
@@ -65,8 +65,8 @@
 
         @defining(standardItems.slice(0, 4)) { items =>
             @if(items.nonEmpty) {
-                <div class="collection-wrapper">
-                    <ul class="u-unstyled l-row l-row--layout-m l-row--items-4 collection">
+                <div class="facia-slice-wrapper">
+                    <ul class="u-unstyled l-row l-row--layout-m l-row--items-4 facia-slice">
                         @items.zipWithIndex.map{ case (trail, index) =>
                             @fragments.collections.items.standard(trail, index + hugeItemsCount + veryBigItemsCount + bigItemsCount, containerIndex)
                         }

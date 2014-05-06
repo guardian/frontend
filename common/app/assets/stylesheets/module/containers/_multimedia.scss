@@ -29,31 +29,31 @@
     .item__meta {
         display: none;
     }
-    .collection-wrapper--position-1 .collection__item:first-child .item__link {
+    .facia-slice-wrapper--position-1 .facia-slice__item:first-child .item__link {
         border-top-width: 0;
     }
     @include mq($to: tablet) {
-        .collection-wrapper--position-1 .collection__item:first-child .item__title {
+        .facia-slice-wrapper--position-1 .facia-slice__item:first-child .item__title {
             @include fs-headline(2, $size-only: true);
         }
-        .collection-wrapper--position-1 .collection__item:nth-child(2),
-        .collection-wrapper--position-2 .collection__item {
+        .facia-slice-wrapper--position-1 .facia-slice__item:nth-child(2),
+        .facia-slice-wrapper--position-2 .facia-slice__item {
             &:before {
                 display: none;
             }
         }
-        .collection-wrapper--position-2 .item__title {
+        .facia-slice-wrapper--position-2 .item__title {
             @include rem((
                 margin-bottom: ($gs-baseline/3)*2
             ));
         }
     }
     @include mq(tablet) {
-        .collection__item:before {
+        .facia-slice__item:before {
             border-left-color: #6c6c6c;
         }
-        .collection-wrapper--position-1 {
-            .collection__item:first-child {
+        .facia-slice-wrapper--position-1 {
+            .facia-slice__item:first-child {
                 @include flex-grow(2);
                 @if not $browser-supports-flexbox {
                     width: 66%;
