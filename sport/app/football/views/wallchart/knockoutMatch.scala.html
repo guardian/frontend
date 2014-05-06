@@ -1,0 +1,12 @@
+@(fm: pa.FootballMatch)
+
+<div class="football-match" id="football-match-@fm.id">
+    <div class="football-match__container">
+        <div class="football-match__team football-match__team--home">@fm.homeTeam.name</div>
+        <div class="football-match__details">
+            <div class="football-match__date">@fm.date.toString("dd MMM yyyy") <span class="football-match__kickoff">@fm.date.toString("HH:mm")</span></div>
+        </div>
+        <div class="football-match__team football-match__team--away">@fm.awayTeam.name</div>
+        <div class="football-match__victory-line"></div>
+    </div>
+</div>

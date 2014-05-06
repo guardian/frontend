@@ -140,6 +140,11 @@ class CompetitionStageTest extends FreeSpec with ShouldMatchers with OptionValue
           rounds0 should equal (comp.matches.filter(_.stage == Stage("1")).map(_.round).distinct.toSet)
           rounds1 should equal (comp.matches.filter(_.stage == Stage("2")).map(_.round).distinct.toSet)
         }
+
+        "can get the matches for a given round" in {
+          val testRound = Round("1", Some("Quarter Final"))
+          all (stages(0).asInstanceOf[Knockout].matchesForRound(testRound)) should have('round (testRound))
+        }
       }
     }
   }

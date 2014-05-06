@@ -1,0 +1,30 @@
+@(page: Page, competition: model.Competition, competitionStages: List[_root_.football.model.CompetitionStage])(implicit request: RequestHeader)
+
+@main(page, "football"){
+}{
+    <div class="article__zone left-col-deport tone-news tone-accent-border hide-on-mobile-if-localnav">
+        <h2 class="page-heading--football left-col-deport__body">
+            @competition.fullName wallchart
+        </h2>
+    </div>
+
+    <div class="article-wrapper monocolumn-wrapper tone-news">
+        <article id="article" class="article" itemprop="mainContentOfPage" itemtype="http://schema.org/Article" role="main">
+
+            <div class="article__columning-wrapper">
+                <div class="article__main-column">
+                    @competitionStages.map {
+                      case knockoutStage: _root_.football.model.Knockout => {
+                          @football.views.html.wallchart.knockout(competition, knockoutStage)
+                      }
+                      case groupStage:  _root_.football.model.Group => {
+                          @football.views.html.wallchart.groups(competition, groupStage)
+                      }
+                      case _ => {
+                          <p>Unexpected stage</p>
+                      }
+                    }
+                </div>
+        </article>
+    </div>
+}

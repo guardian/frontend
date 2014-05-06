@@ -1,0 +1,30 @@
+@(competition: model.Competition, knockoutStage: _root_.football.model.Knockout)
+
+<div class="football-wallchart football-wallchart--@knockoutStage.rounds.length-rounds u-cf">
+@knockoutStage.rounds.map{ round =>
+    @defining(knockoutStage.matchesForRound(round)) { matches =>
+        <div class="football-round football-round--@matches.length-matches">
+            <div class="football-round__name">@round.name.getOrElse("")</div>
+
+            @if(matches.length == 1){
+                <div class="football-round__matches football-round__matches--final">
+                @matches.map { m => @football.views.html.wallchart.knockoutMatch(m) }
+                </div>
+            } else {
+                @defining(matches.length/2) { half =>
+                    <div class="football-round__matches">
+                        @matches.take(half).map{ m =>
+                            @football.views.html.wallchart.knockoutMatch(m)
+                        }
+                    </div>
+                    <div class="football-round__matches">
+                    @matches.drop(half).map{ m =>
+                        @football.views.html.wallchart.knockoutMatch(m)
+                    }
+                    </div>
+                }
+            }
+        </div>
+    }
+}
+</div>
