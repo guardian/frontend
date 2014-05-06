@@ -1,7 +1,7 @@
 @(page: controllers.commercial.MoneyPage, creditCards: Seq[model.commercial.money.CreditCard])(implicit request: RequestHeader)
 @import controllers.commercial._
 
-@main(page.meta){
+@main(page.meta, projectName = Option("commercial")){
 }{
     <div class="article-wrapper monocolumn-wrapper">
         <article id="article" class="article" itemprop="mainContentOfPage" itemscope role="main">
@@ -11,7 +11,7 @@
                     <p>@page.description</p>
                     <ul>
                         @CreditCardsPages.all.map { creditCardsPage =>
-                            <li><a href="/commercial/money/credit-cards/@creditCardsPage.id">@creditCardsPage.webTitle</a></li>
+                            <li><a href="/commercial/money/credit-cards/@creditCardsPage.id">@Html(creditCardsPage.webTitle)</a></li>
                         }
                     </ul>
                     @page.id match {
