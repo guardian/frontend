@@ -12,16 +12,16 @@ define([
     toArray
 ) {
 
-    function init(selector) {
-        var snaps = toArray($(selector));
+    function init() {
+        var snaps = toArray($('.facia-snap[data-snap-uri^="http"]'));
 
-        if (!snaps.length) { return; }
+        snaps.forEach(fetchSnap);
 
-        fetchSnaps(snaps);
-
-        mediator.on('window:resize', function() {
-            snaps.forEach(function(el) { setSnapPoint(el, true); });
-        });
+        if (snaps.length) {
+            mediator.on('window:resize', function() {
+                snaps.forEach(function(el) { setSnapPoint(el, true); });
+            });
+        }
     }
 
     function setSnapPoint(el, isResize) {
@@ -48,11 +48,6 @@ define([
         });
     }
 
-    function setSnapEmbedded(el) {
-        bonzo(el).addClass('facia-snap-embed');
-    }
-
-
     function injectIframe(el) {
         var iframe = document.createElement('iframe');
 
@@ -75,24 +70,20 @@ define([
         });
     }
 
-    function fetchSnaps(snaps) {
-        snaps
-        .filter(function(el) { return el.getAttribute('data-snap-uri'); })
-        .forEach(function(el) {
-            setSnapEmbedded(el);
-            setSnapPoint(el);
+    function fetchSnap(el) {
+        bonzo(el).addClass('facia-snap-embed');
+        setSnapPoint(el);
 
-            if(el.getAttribute('data-snap-type') === 'iframe') {
-                injectIframe(el);
+        if(el.getAttribute('data-snap-type') === 'iframe') {
+            injectIframe(el);
 
-            } else if(el.getAttribute('data-snap-type') === 'fragment') {
-                fetchFragment(el);
+        } else if(el.getAttribute('data-snap-type') === 'fragment') {
+            fetchFragment(el);
 
-            } else {
-                // assumes a {"html": "<p>Stuff</p>"} response
-                fetchFragment(el, true);
-            }
-        });
+        } else {
+            // assumes a {"html": "<p>Stuff</p>"} response
+            fetchFragment(el, true);
+        }
     }
 
     return {

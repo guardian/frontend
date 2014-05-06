@@ -30,7 +30,7 @@ define([
     var modules = {
 
         showSnaps: function() {
-            snaps.init('.facia-snap');
+            snaps.init();
         },
 
         showCollectionShowMore: function () {
