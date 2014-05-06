@@ -1,0 +1,17 @@
+.article-wrapper {
+    max-width: none;
+}
+.loan__name {
+    @include fs-data(3);
+
+    @include mq(desktop) {
+        @include fs-data(5, $size-only: true);
+    }
+}
+.loan__logo {
+    display: none;
+
+    @include mq(tablet) {
+        display: block;
+    }
+}

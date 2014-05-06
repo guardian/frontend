@@ -1,7 +1,8 @@
 @(page: controllers.commercial.MoneyPage, loans: Seq[model.commercial.money.Loan])(implicit request: RequestHeader)
 @import controllers.commercial._
+@import java.text.NumberFormat
 
-@main(page.meta){
+@main(page.meta, projectName = Option("commercial")){
 }{
     <div class="article-wrapper monocolumn-wrapper">
         <article id="article" class="article" itemprop="mainContentOfPage" itemscope role="main">
@@ -14,7 +15,7 @@
                             <li><a href="/commercial/money/loans/@loansPage.id">@loansPage.webTitle</a></li>
                         }
                     </ul>
-                    <table>
+                    <table class="table table--football table--responsive-font table--striped">
                         <thead>
                             <tr>
                                 <th>Loan</th>
@@ -30,13 +31,13 @@
                             @for(loan <- loans) {
                                 <tr>
                                     <td>
-                                        <h3>@loan.name</h3>
-                                        <img src="@loan.logoUrl" />
+                                        <h3 class="loan__name">@loan.name</h3>
+                                        <img class="loan__logo" src="@loan.logoUrl" />
                                     </td>
                                     <td>@loan.headlineApr%</td>
                                     <td>@loan.apr%</td>
-                                    <td>£@loan.minAdvance</td>
-                                    <td>£@loan.maxAdvance</td>
+                                    <td>£@NumberFormat.getIntegerInstance().format(loan.minAdvance)</td>
+                                    <td>£@NumberFormat.getIntegerInstance().format(loan.maxAdvance)</td>
                                     <td>@loan.comments</td>
                                     <td><a href="@loan.applyUrl">Proceed</a></td>
                                 </tr>
