@@ -91,56 +91,6 @@
     }
 }
 
-.container .l-row--items-2 {
-    .item--thumbnail {
-        .item__standfirst {
-            display: none;
-
-            @include mq(tablet) {
-                display: block;
-            }
-        }
-        @include mq($to: tablet) {
-            .item__link {
-                display: -webkit-flex;
-                display: flex;
-                -webkit-flex-direction: column;
-                flex-direction: column;
-            }
-            .item__media-wrapper {
-                -webkit-order: -1;
-                order: -1;
-                margin-right: 0;
-            }
-        }
-        .item__media-wrapper {
-            @include mq(tablet) {
-                float: left;
-                @include rem((
-                    width: 122px,
-                    margin-right: $gs-gutter/2
-                ));
-            }
-            @include mq(desktop) {
-                @include rem((
-                    width: gs-span(3),
-                    margin-right: $gs-gutter
-                ));
-            }
-        }
-        @include mq(desktop) {
-            padding-bottom: 0;
-
-            .item__meta {
-                position: static;
-                @include rem((
-                    margin-top: $gs-baseline,
-                    margin-bottom: $gs-baseline
-                ));
-            }
-        }
-    }
-}
 .container .l-row--items-4 {
     .item__byline {
         @include fs-headline(1, true);
@@ -178,6 +128,18 @@
 }
 
 @include mq($to: tablet) {
+    .row-of-two {
+        .item--imageadjust-default {
+            .item__media-wrapper {
+                float: left;
+                @include box-sizing(border-box);
+                width: 50%;
+                @include rem((
+                    padding-right: $gs-gutter/2
+                ));
+            }
+        }
+    }
     .l-row--layout-m {
         .item--imageadjust-default .item__title {
             @include rem((
@@ -193,6 +155,7 @@
         }
     }
 }
+
 @include mq(tablet) {
     .facia-slice-wrapper:first-child {
         .row-of-two {
@@ -205,12 +168,22 @@
     }
     .row-of-two--boost-both {
         .item__title {
-            @include fs-headline(4, true);
+            @include fs-headline(3, true);
         }
     }
     .row-of-two--boost-none {
         .item__title {
             @include fs-headline(2, true);
+        }
+        .item--imageadjust-default {
+            .item__media-wrapper {
+                float: left;
+                @include box-sizing(border-box);
+                width: 50%;
+                @include rem((
+                    padding-right: $gs-gutter/2
+                ));
+            }
         }
     }
     .row-of-two--boost-first .facia-slice__item:nth-child(1),

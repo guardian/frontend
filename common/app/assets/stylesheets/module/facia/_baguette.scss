@@ -19,21 +19,27 @@
             ));
         }
     }
-    .item__media-wrapper {
-        overflow: hidden;
-    }
-    .item__image-container {
-        padding-bottom: 40%;
+    @include mq(tablet) {
+        .item__media-wrapper {
+            overflow: hidden;
+        }
+        .item__image-container {
+            padding-bottom: 40%;
 
-        .responsive-img {
-            top: -25%;
-            height: auto;
+            .responsive-img {
+                top: -25%;
+                height: auto;
+            }
         }
     }
 }
 .baguette__standfirst {
     @include fs-headline(1);
     color: $c-neutral2;
+    @include rem((
+        margin-top: $gs-baseline,
+        margin-bottom: $gs-baseline
+    ));
 
     p {
         margin-bottom: 0; // Some trail texts are wrapped in a paragraph
