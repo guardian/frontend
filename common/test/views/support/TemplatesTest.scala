@@ -157,6 +157,11 @@ class TemplatesTest extends FlatSpec with Matchers {
     ArticleSlotsSwitch.switchOff()
   }
 
+  "DropCap" should "add the dropcap span to the first letter of the first paragraph" in {
+    val body = withJsoup(bodyWithoutInlines)(DropCaps).body.trim
+    body should include ("""<span class="drop-cap">""")
+  }
+
   "RowInfo" should "add row info to a sequence" in {
 
     val items = Seq("a", "b", "c", "d")

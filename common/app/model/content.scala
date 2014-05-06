@@ -326,6 +326,7 @@ class Article(content: ApiContentWithMeta) extends Content(content) {
   lazy val body: String = delegate.safeFields.getOrElse("body","")
   lazy val contentType = "Article"
   lazy val isReview = tones.exists(_.id == "tone/reviews")
+  lazy val isFeature = tones.exists(_.id == "tone/features")
 
   lazy val hasVideoAtTop: Boolean = Jsoup.parseBodyFragment(body).body().children().headOption
     .exists(e => e.hasClass("gu-video") && e.tagName() == "video")

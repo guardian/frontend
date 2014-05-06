@@ -3,12 +3,12 @@
 
 @defining((model.article, model.storyPackage)) { case (article, storyPackage) =>
 
-    <h2 class="article__zone left-col-deport tone-@VisualTone(article) tone-accent-border hide-on-mobile-if-localnav">
-        <span class="left-col-deport__body" data-component="meta">
+    <h2 class="article__zone left-col-deport tone-@VisualTone(article) tone-@VisualTone(article)--article tone-accent-border hide-on-mobile-if-localnav">
+        <span class="left-col-deport__body tone-head--default" data-component="meta">
             <a class="tone-colour" data-link-name="article section" href="@LinkTo{/@article.section}">@Html(article.sectionName.toLowerCase)</a>
         </span>
     </h2>
-    <div class="article-wrapper monocolumn-wrapper tone-@VisualTone(article)">
+    <div class="article-wrapper monocolumn-wrapper tone-@VisualTone(article) tone-@VisualTone(article)--article">
         <article id="article" class="article @if(article.isLive){is-live} @if(article.isAdvertisementFeature){article--advertisement-feature}"
                  itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType" role="main">
 
@@ -23,7 +23,7 @@
                 </div>
             }
 
-            <div class="article__inner article__inner--head">
+            <div class="article__inner article__inner--head tone-head--default">
                 <header class="article__head">
 
                     @fragments.meta.metaInline(article)
@@ -33,11 +33,13 @@
 
                     @fragments.headline(article.headline, List("js-score"))
 
-                    @fragments.standfirst(article)
+                    <div class="tone-head--accent">
+                        @fragments.standfirst(article)
 
-                    @if(article.isCommentable) {
-                        <div class="article__head__comment-count js-comment-count"></div>
-                    }
+                        @if(article.isCommentable) {
+                            <div class="article__head__comment-count js-comment-count"></div>
+                        }
+                    </div>
                 </header>
 
                 @fragments.witnessCallToAction(article)

@@ -95,6 +95,16 @@
     }
 }
 
+.article-feature__zone {
+    @include full-bleed($c-featureDefault)
+}
+
+.article-feature__zone__inner {
+    @include mq(tablet, rightCol) {
+        @include full-bleed($c-featureDefault)
+    }
+}
+
 .left-col-deport {
     @include mq(leftCol) {
         @include rem((
@@ -777,9 +787,14 @@
     display: block;
     content: " ";
     @include rem((
-        min-height: 1px
+        top: -$gs-baseline*2
     ));
-    @include mq(rightCol) {
-        display: none;
-    }
+    position: relative;
+}
+
+.drop-cap {
+    float:  left;
+    font-size: 4.8rem;
+    height: 20px;
+    padding: 15px 4px 10px 0px;
 }

@@ -32,6 +32,7 @@
     }
 }
 
+
 // Styles with global dependencies
 // or for elements which painting can be delayed
 @mixin tone-global($tone, $colour, $accentColour) {
@@ -48,4 +49,34 @@
             }
         }
     }
+}
+
+@mixin tone-head-background($tone, $colour, $accentColour) {
+  .tone-#{$tone}--article {
+    &.tone-#{$tone} {
+
+      .tone-head--accent {
+        position: relative;
+        @include full-bleed($accentColour);
+
+        &:after,
+        &.before {
+          z-index: 2
+        }
+      }
+
+      .tone-head--default {
+        @include full-bleed($colour);
+        .tone-colour {
+            color: #ffffff !important;
+        }
+      }
+
+      .article__headline,
+      .article__standfirst,
+      .article__zone {
+          color: #ffffff !important;
+      }
+    }
+  }
 }
