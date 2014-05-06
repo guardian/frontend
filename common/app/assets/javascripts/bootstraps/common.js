@@ -44,7 +44,7 @@ define([
     'common/modules/identity/autosignin',
     'common/modules/adverts/article-body-adverts',
     'common/modules/adverts/article-aside-adverts',
-    'common/modules/adverts/slice-adverts',
+    'common/modules/adverts/collection-adverts',
     'common/modules/adverts/dfp',
     'common/modules/analytics/commercial/tags/container',
     'common/modules/analytics/foresee-survey',
@@ -96,7 +96,7 @@ define([
     AutoSignin,
     ArticleBodyAdverts,
     ArticleAsideAdverts,
-    SliceAdverts,
+    CollectionAdverts,
     DFP,
     TagContainer,
     Foresee,
@@ -294,7 +294,7 @@ define([
                     }
                 }
 
-                new SliceAdverts(config).init();
+                new CollectionAdverts(config).init();
 
                 if (!config.switches.standardAdverts) {
                     options.dfpSelector = '.ad-slot--commercial-component';

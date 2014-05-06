@@ -147,7 +147,7 @@ define([
                                 return $(item).attr('href');
                             }),
                             newItems = bonzo.create(
-                                $('.facia-slice', bonzo.create('<div>' + data.html + '</div>')).html()
+                                $('.collection', bonzo.create('<div>' + data.html + '</div>')).html()
                             ) || [],
                             currentItemsCount = $('.item', that._collection).length;
                         that._items = newItems

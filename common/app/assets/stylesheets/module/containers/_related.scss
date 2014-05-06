@@ -16,7 +16,7 @@
             ));
         }
     }
-    .facia-slice__item:first-child {
+    .collection__item:first-child {
         @include item--hide-tone-border;
 
         @include mq($to: tablet) {
@@ -25,14 +25,14 @@
             }
         }
     }
-    .facia-slice__item:nth-child(n+6) {
+    .collection__item:nth-child(n+6) {
         display: none;
     }
 
     @include mq(tablet) {
         @include item--hide-tone-border;
 
-        .facia-slice__item:nth-child(n+5),
+        .collection__item:nth-child(n+5),
         &.more-on-this-story--one-item {
             display: none;
         }
@@ -47,7 +47,7 @@
     @include hide-icon-in-title;
 
     @include mq(tablet, rightCol) {
-        .facia-slice__item:nth-child(n+4) {
+        .collection__item:nth-child(n+4) {
             display: none;
         }
     }

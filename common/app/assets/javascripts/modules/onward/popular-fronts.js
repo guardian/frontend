@@ -36,7 +36,7 @@ define([
                     bonzo(container)
                         .insertAfter(insertAfter);
                     // add show more button
-                    new CollectionShowMore($('.facia-slice', container)[0])
+                    new CollectionShowMore($('.collection', container)[0])
                         .addShowMore();
                     commentCount.init(container);
                     // relativise timestamps

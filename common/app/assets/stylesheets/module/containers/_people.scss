@@ -16,7 +16,7 @@
         margin-top: $gs-baseline/2;
         margin-bottom: $gs-baseline/2;
     }
-    .facia-slice-wrapper--position-1 {
+    .collection-wrapper--position-1 {
         .item__title,
         .item__byline {
             @include fs-headline(1, true);
@@ -25,7 +25,7 @@
                 @include fs-headline(2, true);
             }
         }
-        .facia-slice__item:first-child {
+        .collection__item:first-child {
             .item__title,
             .item__byline {
                 @include fs-headline(2, true);
@@ -35,7 +35,7 @@
         @include mq(tablet) {
             @include item--hide-tone-border;
         }
-        .facia-slice__item + .facia-slice__item {
+        .collection__item + .collection__item {
             .item__media-wrapper,
             .item__image-container {
                 display: none;
