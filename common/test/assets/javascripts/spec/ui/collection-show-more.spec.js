@@ -19,7 +19,7 @@ define([
             },
             server,
             response = JSON.stringify({
-                html: '<ul class="facia-slice">' + [1, 2, 3, 4, 5, 6].reduce(function(previousValue, currentValue) {
+                html: '<ul class="collection">' + [1, 2, 3, 4, 5, 6].reduce(function(previousValue, currentValue) {
                     return previousValue + '<li class="item" data-link-name="trail | ' + currentValue + '">Item ' + currentValue + '</li>'
                 }, '') + '</ul>'
             });

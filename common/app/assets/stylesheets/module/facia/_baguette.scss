@@ -19,29 +19,26 @@
             ));
         }
     }
-    @include mq(tablet) {
-        .item__media-wrapper {
-            overflow: hidden;
+    .item__media-wrapper {
+        @include mq(faciaLeftCol) {
+            @include rem((
+                margin-top: 19px // Align with the date block in left column
+            ));
         }
-        .item__image-container {
-            padding-bottom: 40%;
-
-            .responsive-img {
-                top: -25%;
-                height: auto;
-            }
+        @include mq(wide) {
+            @include rem((
+                margin-top: 22px
+            ));
         }
+        overflow: hidden;
+        position: relative;
     }
-}
-.baguette__standfirst {
-    @include fs-headline(1);
-    color: $c-neutral2;
-    @include rem((
-        margin-top: $gs-baseline,
-        margin-bottom: $gs-baseline
-    ));
+    .item__image-container {
+        padding-bottom: 40%;
 
-    p {
-        margin-bottom: 0; // Some trail texts are wrapped in a paragraph
+        .responsive-img {
+            top: -25%;
+            height: auto;
+        }
     }
 }

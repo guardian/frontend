@@ -6,7 +6,7 @@
             display: block;
         }
     }
-    .facia-slice-wrapper:first-child .fromage {
+    .collection-wrapper:first-child .fromage {
         border-top-width: 0;
 
         @include mq(tablet, faciaLeftCol) {
@@ -25,7 +25,7 @@
     }
     @include mq($to: tablet) {
         .l-row--items-4 {
-            .facia-slice__item:nth-child(-n+2) {
+            .collection__item:nth-child(-n+2) {
                 // Force the image to be displayed
                 .item--has-image .item__media-wrapper,
                 .item--has-image .item__image-container {

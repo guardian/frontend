@@ -1,9 +1,9 @@
-.facia-slice--linkslist-and-mpu {
+.collection--linkslist-and-mpu {
     @include rem((
         padding-top: $gs-baseline/3
     ));
 
-    .facia-slice__item {
+    .collection__item {
         padding-bottom: 0;
         margin-bottom: 0;
 
