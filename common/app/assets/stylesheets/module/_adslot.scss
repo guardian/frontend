@@ -135,7 +135,8 @@
     height: 250px;
     overflow: hidden;
 }
-.ad-slot--commercial-component {
+.ad-slot--commercial-component,
+.ad-slot--commercial-component-high {
     width: 100%;
     min-height: 0;
     padding-top: 0;
@@ -143,6 +144,13 @@
     @include rem((
         margin-top: $gs-baseline
     ));
+}
+.ad-slot--commercial-component-high {
+    display: none;
+
+    @include mq(desktop) {
+        display: block;
+    }
 }
 .ad-slot--paid-for-badge {
     min-height: 0;
