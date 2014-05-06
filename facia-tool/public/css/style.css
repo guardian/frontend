@@ -665,6 +665,11 @@ button {
     cursor: pointer;
 }
 
+.tool--rhs {
+    float: right;
+    margin: 0 10px 0 0;
+}
+
 .tool:hover {
     text-decoration: none;
     color: #ffffff;

@@ -117,15 +117,8 @@
                     <button class="tool" data-bind="
                         click: save">Save container</button>
 
-                    <!-- ko if: $parents[1] -->
-                        <button class="tool" data-bind="
-                            click: $parents[1].depopulateCollection">Remove</button>
-                    <!-- /ko -->
-
-                    <!-- ko if: parents().length === 0 -->
-                        <button class="tool" data-bind="
-                            click: discard">Remove completely</button>
-                    <!-- /ko -->
+                    <button class="tool tool--rhs" data-bind="
+                        click: $parents[1].depopulateCollection">Remove</button>
                 </div>
             </div>
             <!-- /ko -->

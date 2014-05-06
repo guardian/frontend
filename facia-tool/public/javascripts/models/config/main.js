@@ -73,9 +73,9 @@ define([
             }
         };
 
-        model.openFront = function(front, withOpenProps) {
+        model.openFront = function(front) {
             _.each(model.fronts(), function(f){
-                f.setOpen(f === front, withOpenProps);
+                f.setOpen(f === front, false);
             });
         };
 
