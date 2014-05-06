@@ -13,6 +13,9 @@
 
     @include mq(tablet) {
         display: block;
+        @include rem((
+            margin-top: $gs-baseline/2
+        ));
     }
 }
 .loan__data {
