@@ -59,9 +59,12 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
     NoCache {
       configJson flatMap(_.asOpt[Config]) map {
         case update: Config => {
+
+          //Only update if it is a valid Config agent
           configJson.foreach { json =>
             ConfigAgent.refreshWith(json)
           }
+
           val identity = Identity(request).get
           UpdateActions.putMasterConfig(update, identity)
           Ok
