@@ -17,18 +17,20 @@ trait FrontPress extends Logging {
   //E.g. Get out of this: Json.obj(("field", None))
   case class CollectionJson
   (
-    apiQuery:     Option[String],
-    displayName:  Option[String],
-    `type`:       Option[String],
-    curated:      Seq[JsValue],
-    editorsPicks: Seq[JsValue],
-    mostViewed:   Seq[JsValue],
-    results:      Seq[JsValue],
-    lastUpdated:  Option[String],
-    updatedBy:    Option[String],
-    updatedEmail: Option[String],
-    groups:       Option[Seq[String]],
-    href:         Option[String]
+    apiQuery:               Option[String],
+    displayName:            Option[String],
+    `type`:                 Option[String],
+    curated:                Seq[JsValue],
+    editorsPicks:           Seq[JsValue],
+    mostViewed:             Seq[JsValue],
+    results:                Seq[JsValue],
+    lastUpdated:            Option[String],
+    updatedBy:              Option[String],
+    updatedEmail:           Option[String],
+    groups:                 Option[Seq[String]],
+    href:                   Option[String],
+    isSectionNameDisplayed: Boolean,
+    isTagDisplayed:         Boolean
   )
   case class ItemMeta
   (
@@ -94,7 +96,9 @@ trait FrontPress extends Logging {
         updatedEmail   = collection.updatedEmail,
         groups         = Option(config.groups).filter(_.nonEmpty),
         href           = collection.href.orElse(config.href),
-        `type`         = config.collectionType
+        `type`         = config.collectionType,
+        isTagDisplayed = config.isTagDisplayed,
+        isSectionNameDisplayed = config.isSectionNameDisplayed
       )
     )
 

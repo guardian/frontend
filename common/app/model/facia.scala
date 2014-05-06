@@ -8,7 +8,9 @@ case class Config(
                    displayName: Option[String] = None,
                    href: Option[String] = None,
                    groups: Seq[String],
-                   collectionType: Option[String])
+                   collectionType: Option[String],
+                   isTagDisplayed: Boolean = false,
+                   isSectionNameDisplayed: Boolean = false)
 
 object Config {
   def apply(id: String): Config = Config(id, None, None, None, Nil, None)
