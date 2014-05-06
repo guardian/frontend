@@ -28,7 +28,7 @@ object DfpAgent extends ExecutionContexts with Logging {
 
   def refresh() {
     def fetchTargetedKeywords() = {
-      log.info("Loading DFP data...")
+      log.info(s"Loading DFP data from $dfpDataKey...")
       val json = S3.get(dfpDataKey)(UTF8) map parse
       log.info(s"Loaded DFP data: $json")
       json map (_.as[Seq[String]]) getOrElse Nil
