@@ -13,10 +13,7 @@ import play.api.libs.ws.Response
 import scala.concurrent.Future
 import conf.Switches.ContentApiPutSwitch
 import model.{NoCache, Cached}
-import play.api.libs.iteratee.Enumerator
-import _root_.util.Enumerators._
 import scala.util.{Failure, Success}
-import play.api.templates.Html
 import play.api.libs.Comet
 
 object FaciaToolController extends Controller with Logging with ExecutionContexts {
