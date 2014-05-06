@@ -45,15 +45,13 @@ trait FrontPress extends Logging {
 
   implicit val collectionJsonWrites = Json.writes[CollectionJson]
   implicit val itemMetaJsonWrites = Json.writes[ItemMeta]
-
+  implicit val seoDataJsonWrites = Json.writes[SeoData]
 
   import play.api.Play.current
   private lazy implicit val frontPressContext = Akka.system.dispatchers.lookup("play.akka.actor.front-press")
 
   def generateJson(id: String): Future[JsObject] = {
-    lazy val frontConfig: FaciaToolConfigAgent.FrontConfig = FaciaToolConfigAgent.getFrontConfig(id)
-    lazy val webTitle: JsObject = frontConfig.webTitle.map(w => Json.obj(("webTitle", w))).getOrElse(JsObject.apply(Seq.empty))
-    lazy val keyword: JsObject =  frontConfig.keyword.map(k => Json.obj(("keyword", k))).getOrElse(JsObject.apply(Seq.empty))
+    val seoData: SeoData = FaciaToolConfigAgent.getSeoData(id)
     retrieveFrontByPath(id)
       .map(_.map{case (config, collection) =>
         Json.obj(
@@ -62,8 +60,7 @@ trait FrontPress extends Logging {
       .map(_.foldLeft(Json.arr()){case (l, jsObject) => l :+ jsObject})
       .map( c =>
         Json.obj("id" -> id) ++
-        webTitle ++
-        keyword  ++
+        Json.obj("seoData" -> seoData) ++
         Json.obj("collections" -> c)
       )
   }
