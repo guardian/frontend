@@ -191,7 +191,11 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val masterclasses_url = configuration.getMandatoryStringProperty("commercial.masterclasses_url")
     lazy val soulmates_url = configuration.getMandatoryStringProperty("commercial.soulmates_url")
     lazy val travel_url = configuration.getMandatoryStringProperty("commercial.travel_url")
-    lazy val dfpDataKey = s"${environment.stage.toUpperCase}/commercial/dfp-data.json"
+    lazy val dfpDataKey = {
+      val key = s"${environment.stage.toUpperCase}/commercial/dfp-data.json"
+      log.info(s"DFP data will be loaded from $key")
+      key
+    }
   }
 
   object open {
