@@ -16,12 +16,8 @@ $c-money-high: #63007F;
     }
     .commercial__title {
         height: 26px;
-        background-position: 6px 12px;
-        background-repeat: no-repeat;
-        color: transparent;
         width: auto;
         display: block;
-        background-size: contain;
         float: none;
         @include rem((
             padding: 10px 0 0 $gs-gutter/2,
@@ -53,7 +49,7 @@ $c-money-high: #63007F;
         }
     }
     .tabs__container {
-        background-color: #edede7;
+        background-color: $c-commercial-comp-neutral;
         @include rem((
             padding-left: $gs-gutter/2
         ));
@@ -65,7 +61,7 @@ $c-money-high: #63007F;
     .tabs__tab {
         width: auto;
         border-bottom: 0;
-        border-color: #edede7;
+        border-color: $c-commercial-comp-neutral;
 
         + .tabs__tab a {
             border-left: 0;
@@ -85,28 +81,28 @@ $c-money-high: #63007F;
             font-weight: bold;
         }
     }
-    table {
+    .table--commercial {
         border-bottom: 1px solid $c-neutral5;
         @include rem((
             margin-bottom: 10px
         ));
         @include fs-textsans(4);
     }
-    thead {
+    .table--commercial__head {
         color: $c-neutral2;
 
-        td {
+        .table--commercial__table--cell {
             span:last-child {
                 display: none;
             }
         }
     }
-    tbody {
-        tr {
+    .table--commercial__body {
+        .table--commercial__row {
             border-top: 1px solid $c-neutral5;
         }
     }
-    td {
+    .table--commercial__table--cell {
         @include rem((
             padding: $gs-baseline/3 $gs-gutter/5 $gs-baseline
         ));
