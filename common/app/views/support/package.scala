@@ -559,11 +559,9 @@ object DropCaps extends HtmlCleaner {
   override def clean(document: Document): Document = {
 
     val children = document.body().children().toList
-    val firstPara: Option[Element] = children.filter(_.nodeName() == "p").headOption
-
-    firstPara match {
+    children.headOption match {
       case Some(p) => {
-        p.html(setDropCap(p.html()))
+        if(p.nodeName() == "p") p.html(setDropCap(p.html()))
       }
       case _ => println("None")
     }

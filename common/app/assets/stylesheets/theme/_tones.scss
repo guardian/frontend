@@ -53,47 +53,53 @@
 
 @mixin tone-head-background($tone, $colour, $accentColour) {
   .tone-#{$tone}--article {
-    &.tone-#{$tone} {
+      &.tone-#{$tone} {
 
-      .tone-head--accent {
-        position: relative;
-        @include full-bleed($accentColour);
+          .tone-head--accent {
+              position: relative;
+              @include full-bleed($accentColour);
 
-        @include rem((
-           padding: $gs-baseline 0 $gs-baseline 0
-        ));
+              @include rem((
+                  padding: $gs-baseline 0 $gs-baseline 0
+              ));
 
-        &:after,
-        &.before {
-          z-index: 2
-        }
-      }
-
-      .tone-head--default {
-        @include full-bleed($colour);
-        .tone-colour {
-          color: $colour !important;
-          @include mq($from: tablet) {
-            color: #ffffff !important;
+              &:after,
+              &.before {
+                  z-index: 2
+              }
           }
-        }
+
+          .tone-head--default {
+              @include full-bleed($colour);
+              .tone-colour {
+                  color: $colour !important;
+                  @include mq($from: tablet) {
+                      color: #ffffff !important;
+                  }
+              }
+          }
+
+          .article__headline,
+          .article__standfirst,
+          .article__zone,
+          .article__section-link a
+          {
+              color: #ffffff !important;
+          }
+
+          .article__section-link {
+              @include mq($to: desktop) {
+                  @include full-bleed($colour);
+              }
+          }
       }
+  }
 
-      .article__headline,
-      .article__standfirst,
-      .article__zone,
-      .article__section-link a
-      {
-          color: #ffffff !important;
-      }
-
-      .article__section-link {
-        @include mq($to: desktop) {
-          @include full-bleed($colour);
-        }
-      }
-
-
-    }
+  .tone-#{$stone}-dropcap {
+    float:  left;
+    font-size: 8.8rem;
+    height: 20px;
+    padding: 20px 4px 10px 0px;
+    font-weight: 200;
   }
 }
