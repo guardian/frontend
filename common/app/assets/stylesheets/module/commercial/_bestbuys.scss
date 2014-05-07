@@ -51,7 +51,7 @@ $c-money-high: #63007F;
     .tabs__container {
         background-color: $c-commercial-comp-neutral;
         @include rem((
-            padding-left: $gs-gutter/2
+            padding: 0 0 0 $gs-gutter/2
         ));
     }
     .tabs__content {
