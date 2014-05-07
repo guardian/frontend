@@ -60,7 +60,7 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
       configJson flatMap(_.asOpt[Config]) map {
         case update: Config => {
 
-          //Only update if it is a valid Config agent
+          //Only update if it is a valid Config object
           configJson.foreach { json =>
             ConfigAgent.refreshWith(json)
           }
