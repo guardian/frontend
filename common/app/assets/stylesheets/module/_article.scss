@@ -142,7 +142,7 @@
     }
     @include mq(tablet) {
         -webkit-font-smoothing: antialiased;
-        @include fs-headline(8, true);
+        @include fs-headline(7, true);
         @include rem((
             margin-bottom: $gs-row-height
         ));
@@ -227,7 +227,10 @@
     color: $c-neutral2;
 
     @include mq(tablet) {
-        @include fs-headline(2, true);
+        @include rem((
+            font-size: 18px,
+            line-height: 22px
+        ));
         -webkit-font-smoothing: antialiased;
         @include rem((
             margin-bottom: ($gs-baseline/3)*4
