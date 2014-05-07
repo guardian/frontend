@@ -146,15 +146,54 @@
             width: 25%;
 
             &:nth-of-type(-n+4) {
-                .table--football,
-                .table__caption--top {
+                .table--league-table {
                     border-top: 0;
+
+                    .table__caption--top {
+                        border-top: 0;
+                    }
                 }
             }
 
             &:nth-of-type(4n+1) {
                 padding-left: 0;
             }
+        }
+    }
+}
+.football-group__fixtures {
+    @include rem((
+        padding-top: $gs-baseline
+    ));
+
+    .table__caption--top {
+        border-top: 0;
+    }
+
+    .football-matches__date {
+        color: $c-neutral1;
+        font-weight: bold;
+        float: none;
+    }
+
+    .football-matches {
+        .table__caption--top {
+            border-top: 1px solid darken($c-neutral8, 4%);
+        }
+    }
+
+    .football-matches:first-child {
+        .table__caption--top {
+            border-top: 2px solid $c-newsAccent;
+        }
+
+        .football-matches__date {
+            border-top: 1px solid darken($c-neutral8, 4%);
+            display: block;
+            @include rem((
+                margin-top: $gs-baseline/2,
+                padding-top: $gs-baseline/2
+            ));
         }
     }
 }

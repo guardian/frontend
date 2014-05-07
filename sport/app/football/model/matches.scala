@@ -1,9 +1,9 @@
 package football.model
 
 import feed.{CompetitionSupport, Competitions}
-import org.joda.time.{Interval, DateTime, DateMidnight}
+import org.joda.time.{DateTime, DateMidnight}
 import model.Competition
-import pa.FootballMatch
+import pa.{Round, FootballMatch}
 import implicits.Football
 import football.collections.RichList
 
@@ -131,4 +131,10 @@ case class MatchDayList(competitions: CompetitionSupport, date: DateMidnight) ex
 case class CompetitionMatchDayList(competitions: CompetitionSupport, competitionId: String, date: DateMidnight) extends MatchDays with CompetitionList {
   override def filterMatches(fMatch: FootballMatch, competition: Competition): Boolean =
     fMatch.date.toDateMidnight == date && competition.id == competitionId
+}
+case class CompetitionGroupMatchesList(competitions: CompetitionSupport, competition: Competition, round: Round) extends MatchDays {
+  override val daysToDisplay = 1000
+  override lazy val date = competition.startDate.getOrElse(DateMidnight.now)
+  override def filterMatches(fMatch: FootballMatch, matchCompetition: Competition): Boolean =
+    competition.id == matchCompetition.id && fMatch.round == round
 }

@@ -3,7 +3,7 @@
 <div class="football-knockout-chart football-knockout-chart--@knockoutStage.rounds.length-rounds u-cf">
     <div class="football-rounds football-rounds--first-half">
         @knockoutStage.rounds.map{ round =>
-            @defining(knockoutStage.matchesForRound(round)) { matches =>
+            @defining(knockoutStage.roundMatches(round)) { matches =>
                 @if(matches.length != 1){
                     <div class="football-round football-round--@matches.length-matches">
                         <div class="football-round__name">@round.name.getOrElse("")</div>
@@ -23,7 +23,7 @@
 
     <div class="football-rounds football-rounds--second-half">
         @knockoutStage.rounds.map{ round =>
-            @defining(knockoutStage.matchesForRound(round)) { matches =>
+            @defining(knockoutStage.roundMatches(round)) { matches =>
                 @if(matches.length != 1){
                     <div class="football-round football-round--@matches.length-matches">
                         <div class="football-round__name">@round.name.getOrElse("")</div>
@@ -42,7 +42,7 @@
 
     <div class="football-rounds football-rounds--finals">
         @knockoutStage.rounds.map{ round =>
-            @defining(knockoutStage.matchesForRound(round)) { matches =>
+            @defining(knockoutStage.roundMatches(round)) { matches =>
                 @if(matches.length == 1){
                     <div class="football-round football-round--@matches.length-matches football-round--final @round.name.filter(n => n == "3rd/4th Play-Offs").map{ name => football-round--playoff}">
                         <div class="football-round__name">@round.name.getOrElse("")</div>
