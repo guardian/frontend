@@ -1,4 +1,4 @@
-@(items: Seq[Trail], style: Container, containerIndex: Int)(implicit request: RequestHeader)
+@(items: Seq[Trail], style: Container, containerIndex: Int)(implicit request: RequestHeader, config: Config)
 
 @defining(items.filter(_.group == Option("3"))) { baguetteItems =>
 
@@ -13,7 +13,6 @@
         @defining(items.diff(baguetteItems)) { items =>
 
             @items.headOption.map{ trail =>
-                    // fromage here
                 <div class="collection-wrapper">
                     @if(!trail.group.isEmpty){ @* Means this is a curated container *@
                         @fragments.items.fromage(trail, baguetteCount)

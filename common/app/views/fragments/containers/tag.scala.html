@@ -1,4 +1,4 @@
-@(page: MetaData, config: Config, collection: Collection, style: NewsContainer, containerIndex: Int, pagination: Option[Pagination] = None)(implicit request: RequestHeader, templateDeduping: TemplateDeduping)
+@(page: MetaData, collection: Collection, style: NewsContainer, containerIndex: Int, pagination: Option[Pagination] = None)(implicit request: RequestHeader, templateDeduping: TemplateDeduping, config: Config)
 
 @if(collection.items.nonEmpty) {
     <section

@@ -1,4 +1,4 @@
-@(storyPackage: List[Trail])(implicit request: RequestHeader)
+@(storyPackage: List[Trail])(implicit request: RequestHeader, config: Config)
 
 @if(storyPackage.nonEmpty) {
     <aside role="complementary" class="related more-on-this-story@if(storyPackage.size == 1){ more-on-this-story--one-item}">

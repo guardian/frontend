@@ -1,4 +1,4 @@
-@(items: Seq[Trail], style: Container, containerIndex: Int)(implicit request: RequestHeader)
+@(items: Seq[Trail], style: Container, containerIndex: Int)(implicit request: RequestHeader, config: Config)
 
 @items.grouped(4).map{ items =>
     <div class="collection-wrapper">

@@ -1,4 +1,4 @@
-@(trails: Seq[Trail], heading: String, visibleTrails: Int = 5, dataComponent: String = "")(implicit request: RequestHeader)
+@(trails: Seq[Trail], heading: String, visibleTrails: Int = 5, dataComponent: String = "")(implicit request: RequestHeader, config: Config)
 
 @defining(trails.length){ numTrails =>
     <div class="facia-container facia-container--layout-article facia-container--default-heading monocolumn-wrapper monocolumn-wrapper--no-limit" @if(!dataComponent.isEmpty){data-component="@dataComponent"}>

@@ -1,8 +1,12 @@
-@(content: model.Content)(implicit request: RequestHeader)
+@(content: model.Content)(implicit request: RequestHeader, config: model.Config)
 
 <div class="item__tag tone-colour">
-    @content.tags.take(1).map { s =>
-        @s.name
+    @if(config.isTagDisplayed){
+        @content.tags.take(1).map { s =>
+            @s.name
+        }
     }
-    | @content.sectionName
+    @if(config.isSectionNameDisplayed){
+        @content.sectionName
+    }
 </div>
