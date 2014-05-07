@@ -53,7 +53,7 @@ define([
 
         iframe.style.width = '100%';
         iframe.style.border = 'none';
-        iframe.height = '200';
+        iframe.style.height = '200px';
         iframe.src = el.getAttribute('data-snap-uri');
         bonzo(el).html(iframe);
     }
@@ -74,15 +74,18 @@ define([
         bonzo(el).addClass('facia-snap-embed');
         setSnapPoint(el);
 
-        if(el.getAttribute('data-snap-type') === 'iframe') {
-            injectIframe(el);
+        switch (el.getAttribute('data-snap-type')) {
+            case 'document':
+                injectIframe(el);
+                break;
 
-        } else if(el.getAttribute('data-snap-type') === 'fragment') {
-            fetchFragment(el);
+            case 'fragment':
+                fetchFragment(el);
+                break;
 
-        } else {
-            // assumes a {"html": "<p>Stuff</p>"} response
-            fetchFragment(el, true);
+            case 'json.html':
+                fetchFragment(el, true);
+                break;
         }
     }
 
