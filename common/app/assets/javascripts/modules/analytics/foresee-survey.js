@@ -7,7 +7,7 @@ define(['common/utils/cookies'], function(Cookie) {
 
     function load() {
         
-        var sample = (Math.random() * 500) < 1, // 0.2%, or 1 in every 500, will see the survey
+        var sample = (Math.random() * 125) < 1, // 0.2%, or 1 in every 500, will see the survey
             hasForcedOptIn = /forceForesee/.test(location.hash);
     
         if (hasForcedOptIn) {
