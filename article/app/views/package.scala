@@ -18,6 +18,6 @@ object BodyCleaner {
     InlineSlotGenerator(article.wordCount),
     TableEmbedComplimentaryToP,
     LiveBlogDateFormatter(article.isLiveBlog),
-    DropCaps
+    DropCaps(article.isFeature)
   )
 }

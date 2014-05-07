@@ -547,10 +547,10 @@ case class Summary(amount: Int) extends HtmlCleaner {
   }
 }
 
-object DropCaps extends HtmlCleaner {
+case class DropCaps(isFeature: Boolean) extends HtmlCleaner {
 
   private def setDropCap(html: String): String ={
-    if ( html.matches("[a-zA-Z].*") && html.split("\\s+").head.length >= 3 )
+    if ( html.matches("^[a-hj-zA-HJ-Z].*") && html.split("\\s+").head.length >= 3 )
       s"""<span class="drop-cap">${html.head}</span>${html.tail}"""
     else
       html
@@ -558,12 +558,14 @@ object DropCaps extends HtmlCleaner {
 
   override def clean(document: Document): Document = {
 
-    val children = document.body().children().toList
-    children.headOption match {
-      case Some(p) => {
-        if(p.nodeName() == "p") p.html(setDropCap(p.html()))
+    if(isFeature) {
+      val children = document.body().children().toList
+      children.headOption match {
+        case Some(p) => {
+          if (p.nodeName() == "p") p.html(setDropCap(p.html()))
+        }
+        case _ =>
       }
-      case _ => println("None")
     }
     document
   }
