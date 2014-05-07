@@ -10,8 +10,10 @@ object DfpDataCacheJob extends ExecutionContexts {
   def run() {
     future {
       val lineItems = DfpApi.fetchCurrentLineItems()
-      val keywords = DfpApi.fetchKeywordTargetingValues(lineItems)
-      Store.putDfpData(stringify(toJson(keywords)))
+      if (lineItems.nonEmpty) {
+        val keywords = DfpApi.fetchKeywordTargetingValues(lineItems)
+        Store.putDfpData(stringify(toJson(keywords)))
+      }
     }
   }
 }
