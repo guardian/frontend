@@ -24,7 +24,7 @@ $c-money-high: #63007F;
         background-size: contain;
         float: none;
         @include rem((
-            padding: 10px 0 0 10px,
+            padding: 10px 0 0 $gs-gutter/2,
             margin-bottom: 10px
         ));
         @include mq(tablet){
