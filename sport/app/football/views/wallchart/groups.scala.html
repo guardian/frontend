@@ -1,10 +1,15 @@
 @(competition: model.Competition, groupStage: _root_.football.model.Groups)(implicit request: RequestHeader)
 
-@groupStage.groupTables.map { case (round, leagueTableEntries) =>
-<div class="football__group">
-    @round.name.map { name =>
-        <h4 class="table__headline">@name</h4>
-    }
-    @football.views.html.tablesList.tableView(competition, model.Group(round, leagueTableEntries), striped = true, multiGroup = true)
-</div>
+
+<ul class="football-groups u-unstyled">
+@groupStage.groupTables.map{ case (round, leagueTableEntries) =>
+    <li class="football-group">
+        <div class="table--hide-from-importance-3">
+            @football.views.html.tablesList.tableView(competition, model.Group(round, leagueTableEntries),
+                striped = true,
+                heading = round.name
+            )
+        </div>
+    </li>
 }
+</ul>

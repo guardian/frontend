@@ -9,7 +9,9 @@
     }
 }
 
-/** League table **/
+/* ==========================================================================
+   League tables
+   ========================================================================== */
 .table--football {
     .table-column--main {
         .team-name {
@@ -68,17 +70,6 @@
         display: none;
     }
 
-    // Only show "view more" and competition name on the last group table
-    .football__group {
-        .table__caption {
-            display: none;
-        }
-
-        &:last-child .table__caption {
-            display: table-caption;
-        }
-    }
-
     @include mq(leftCol) {
         .table__caption--top {
             @include fs-header(1);
@@ -109,19 +100,6 @@
     }
 }
 
-.football-matches {
-    .table__caption--bottom {
-        display: none;
-    }
-}
-
-.football-table__container--single {
-    // Hide the view more when there is only that table
-    .table__caption--bottom {
-        display: none;
-    }
-}
-
 .c-football-table {
     @include table-football--medium;
 }
@@ -145,21 +123,53 @@
     }
 }
 
+/* ==========================================================================
+   Football groups / lists
+   ========================================================================== */
+.football-groups {
+    .football-group {
+        @include box-sizing(border-box);
+
+        @include mq(tablet) {
+            @include rem((
+                padding: $gs-baseline/2 $gs-gutter/2
+            ));
+            float: left;
+            width: 50%;
+
+            &:nth-of-type(2n+1) {
+                padding-left: 0;
+            }
+        }
+
+        @include mq(desktop) {
+            width: 25%;
+
+            &:nth-of-type(-n+4) {
+                .table--football,
+                .table__caption--top {
+                    border-top: 0;
+                }
+            }
+
+            &:nth-of-type(4n+1) {
+                padding-left: 0;
+            }
+        }
+    }
+}
 
 
-
-
-
-
-
-
-
-
-
-
-.football-wallchart {
-    font-size: 0;
+/* ==========================================================================
+   Knockout chart (Desktop only)
+   ========================================================================== */
+.football-knockout-chart {
+    @include rem((
+        padding: 0 $gs-gutter
+    ));
     background: $c-neutral8;
+    display: none;
+    position: relative;
 
     .football-match {
         display: table;
@@ -214,20 +224,39 @@
             width: $gs-gutter/2;
         }
     }
+
+    @include mq(desktop) {
+        display: block;
+    }
 }
-.football-wallchart--4-rounds {
+.football-knockout-chart--4-rounds,
+.football-knockout-chart--5-rounds {
     .football-round {
-        width: 25%;
+        width: 14.285714286%;
+    }
+}
+
+.football-rounds--second-half {
+    .football-round {
+        float: right;
+    }
+    .football-match__victory-line {
+        left: 0;
+
+        &:after {
+            left: -$gs-gutter/2;
+        }
+    }
+    .football-round__matches {
+        @include rem((
+            padding-left: $gs-gutter/2
+        ));
+        padding-right: 0;
     }
 }
 
 .football-round {
-    @include box-sizing(border-box);
     @include fs-data(4);
-    @include rem((
-        padding: $gs-baseline*2 $gs-gutter/4
-    ));
-    display: inline-block;
     float: left;
 }
 .football-round--8-matches {
@@ -247,122 +276,42 @@
 }
 .football-round--1-matches {
     .football-match {
-        height: 100%;
+        height: 70%;
+        top: 15%;
+    }
+    .football-round__matches {
+        padding: 0;
+    }
+    .football-match__victory-line {
+        @include box-sizing(border-box);
+        border-right: 1px dotted $c-neutral2;
+        width: 100%;
+
+        &:after {
+            display: none;
+        }
     }
 }
 .football-round__name {
+    @include rem((
+        padding: $gs-baseline/2 0
+    ));
+    border-bottom: 1px solid $c-neutral3;
+    font-weight: bold;
     text-align: center;
 }
-
 .football-round__matches {
-    height: 490px;
+    @include box-sizing(border-box);
+    @include rem((
+        padding-right: $gs-gutter/2
+    ));
+    height: 530px;
 }
-.football-round__matches--final {
-    height: 980px;
-}
 
-
-
-
-/*
-.football-round,
-.football-round__match-container { display: none !important; }
-.football-round:first-child,
-.football-round__match-container:first-child { display: flex !important; }
-
-// WALLCHART
-.football-wallchart {
-    @include fs-data(4);
-    display: flex;
-    flex-direction: row;
+.football-round--playoff {
+    bottom: 0;
+    display: none;
+    margin: 0 auto;
+    position: absolute;
     width: 100%;
-
-    .football-round,
-    .football-round__matches,
-    .football-round__match-container {
-        flex: 1 1 auto;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .football-round__match {
-        flex: 1 1 auto;
-    }
-
-    .football-match {
-        margin: auto 0;
-        text-align: center;
-    }
-
-    .football-match__team {
-        @include rem((
-            padding: $gs-baseline/6 $gs-gutter/4
-        ));
-        border: 1px solid $c-neutral2;
-        border-top: 0;
-        display: block;
-        float: none;
-        padding: 0;
-        text-align:center;
-        width: 100%;
-    }
-}*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+}

@@ -5,18 +5,26 @@
 
 <div class="football-match" id="football-match-@fm.id">
     <div class="football-match__container">
-        <div class="football-match__team football-match__team--home">@fm.homeTeam.name</div>
+        <div class="football-match__team football-match__team--home">
+            @fm.homeTeam.name
+            @if(fm.isFixture){
+                <span class="football-match__score">@fm.homeTeam.score</span>
+            }
+        </div>
         <div class="football-match__details">
             @if(fm.isFixture){
                 <div class="football-match__date">@fm.date.toString("dd MMM yyyy") <span class="football-match__kickoff">@fm.date.toString("HH:mm")</span></div>
-            } else {
-                @MatchStatus(fm.matchStatus) @fm.homeTeam.score - @fm.awayTeam.score
             }
             @fm.comments.map { comments =>
                 <div class="football-match__comments">@comments.reverse.dropWhile(_ == '.').reverse</div>
             }
         </div>
-        <div class="football-match__team football-match__team--away">@fm.awayTeam.name</div>
+        <div class="football-match__team football-match__team--away">
+            @fm.awayTeam.name
+            @if(fm.isFixture){
+                <span class="football-match__score">@fm.awayTeam.score</span>
+            }
+        </div>
         <div class="football-match__victory-line"></div>
     </div>
 </div>

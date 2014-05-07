@@ -1,4 +1,4 @@
-@(competition: model.Competition, group: Group, highlightTeamId: Option[String] = None, striped: Boolean = false, responsiveFont: Boolean = false, multiGroup: Boolean = false)(implicit request: RequestHeader)
+@(competition: model.Competition, group: Group, highlightTeamId: Option[String] = None, striped: Boolean = false, responsiveFont: Boolean = false, heading: Option[String] = None, linkToCompetition: Boolean = false)(implicit request: RequestHeader)
 <div class="table__container">
     <table class="@RenderClasses(Map(
             "table" -> true,
@@ -54,7 +54,7 @@
             }
         </tbody>
 
-        <caption class="table__caption table__caption--top"><a href="@competition.url">@competition.fullName</a></caption>
-        <caption class="table__caption table__caption--bottom"><a href="@{competition.url + "/table"}" data-link-name="full table">View full <span class="competition-name">@competition.fullName</span> table</a></caption>
+        @heading.map{ h=> <caption class="table__caption table__caption--top"><a href="@competition.url">@h</a></caption>}
+        @if(linkToCompetition){<caption class="table__caption table__caption--bottom"><a href="@{competition.url + "/table"}" data-link-name="full table">View full <span class="competition-name">@competition.fullName</span> table</a></caption>}
     </table>
 </div>
