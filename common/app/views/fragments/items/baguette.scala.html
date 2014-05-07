@@ -8,12 +8,9 @@
 
     <div class="item__container">
         <a @LinkTo(trail).map{url=>href=@url} class="item__link" data-link-name="article">
-            @fragments.items.elements.image(trail, inlineImage = true, maxWidth = 940)
             @fragments.items.elements.title(trail, index, 0)
+            @fragments.items.elements.image(trail, inlineImage = true, maxWidth = 940)
         </a>
-        @trail.trailText.map { text =>
-            <div class="baguette__standfirst">@Html(text)</div>
-        }
     </div>
 
     @fragments.items.elements.supporting(trail.supporting, style = "fullwidth")

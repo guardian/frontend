@@ -14,33 +14,33 @@
     .item__byline {
         display: none;
     }
-    .facia-slice-wrapper--position-1 .facia-slice__item:first-child .item__link {
+    .collection-wrapper--position-1 .collection__item:first-child .item__link {
         border-top-width: 0;
     }
     @include mq($to: tablet) {
-        .facia-slice-wrapper--position-1 .facia-slice__item:first-child .item__title {
+        .collection-wrapper--position-1 .collection__item:first-child .item__title {
             @include fs-headline(2, $size-only: true);
         }
-        .facia-slice-wrapper--position-1 .facia-slice__item:nth-child(2),
-        .facia-slice-wrapper--position-2 .facia-slice__item {
+        .collection-wrapper--position-1 .collection__item:nth-child(2),
+        .collection-wrapper--position-2 .collection__item {
             &:before {
                 display: none;
             }
         }
-        .facia-slice-wrapper--position-2 .item__title {
+        .collection-wrapper--position-2 .item__title {
             @include rem((
                 margin-bottom: ($gs-baseline/3)*2
             ));
         }
 
-        .facia-slice-wrapper--position-2 .facia-slice__item:nth-child(n+3) {
+        .collection-wrapper--position-2 .collection__item:nth-child(n+3) {
             display: none;
         }
     }
 
     @include mq(rightCol) {
-        .facia-slice-wrapper--position-1 {
-            .facia-slice__item:first-child {
+        .collection-wrapper--position-1 {
+            .collection__item:first-child {
                 @include flex-grow(2);
                 @if not $browser-supports-flexbox {
                     width: 66%;
@@ -56,7 +56,7 @@
                 border-top-width: 0;
             }
             @if $browser-supports-flexbox {
-                .facia-slice__item:nth-child(-n+3):nth-child(n+2) {
+                .collection__item:nth-child(-n+3):nth-child(n+2) {
                     .item__standfirst {
                         display: block;
                         @include fs-bodyCopy(1);

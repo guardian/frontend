@@ -1,113 +1,79 @@
 @(items: Seq[Trail], style: Container, containerIndex: Int)(implicit request: RequestHeader)
 
-@defining(items.filter(_.group == Option("3")), items.filter(_.group == Option("2")), items.filter(_.group == Option("1")), items.filter(items => items.group == Option("0") || items.group == None)) { case (hugeItems, veryBigItems, bigItems, standardItems) =>
+@defining(items.filter(_.group == Option("3"))) { baguetteItems =>
 
-    @defining(hugeItems.size, veryBigItems.size, bigItems.size, standardItems.size) { case (hugeItemsCount, veryBigItemsCount, bigItemsCount, standardItemsCount) =>
+    @defining(baguetteItems.size) { baguetteCount =>
 
-        @hugeItems.zipWithIndex.map{ case (trail, index) =>
-            @if(items.nonEmpty) {
-                <div class="facia-slice-wrapper">
-                    @fragments.items.baguette(trail, index)
-                </div>
-            }
+        @baguetteItems.zipWithIndex.map{ case (trail, index) =>
+            <div class="collection-wrapper">
+                @fragments.items.baguette(trail, index)
+            </div>
         }
 
-        @veryBigItems.zipWithIndex.map{ case (trail, index) =>
-            @if(items.nonEmpty) {
-                <div class="facia-slice-wrapper">
-                    @fragments.items.fromage(trail, index + hugeItemsCount)
-                </div>
-            }
-        }
+        @defining(items.diff(baguetteItems)) { items =>
 
-        @bigItems.grouped(2).map{ items =>
-            @if(items.nonEmpty) {
-                <div class="facia-slice-wrapper">
-                    @if(items.size == 1) {
-                        @items.zipWithIndex.map{ case (trail, index) =>
-                            @fragments.items.fromage(trail, index + hugeItemsCount + veryBigItemsCount + bigItemsCount)
-                        }
-                    }else{
-                        @defining((items(0).imageAdjust == "boost", items(1).imageAdjust == "boost")) { case (firstStoryImageBoosted, secondStoryImageBoosted) =>
-                            @if(firstStoryImageBoosted && secondStoryImageBoosted){
-                                <ul class="row-of-two row-of-two--boost-both u-unstyled l-row l-row--items-2 facia-slice">
-                                    @items.zipWithIndex.map{ case (trail, index) =>
-                                        @fragments.collections.items.standard(trail, index + hugeItemsCount + veryBigItemsCount + bigItemsCount, containerIndex)
-                                    }
-                                </ul>
-                            }
-                            @if(firstStoryImageBoosted && !secondStoryImageBoosted){
-                                <ul class="row-of-two row-of-two--boost-first u-unstyled l-row l-row--items-2 facia-slice">
-                                    @items.zipWithIndex.map{ case (trail, index) =>
-                                        @fragments.collections.items.standard(trail, index + hugeItemsCount + veryBigItemsCount + bigItemsCount, containerIndex)
-                                    }
-                                </ul>
-                            }
-                            @if(!firstStoryImageBoosted && secondStoryImageBoosted){
-                                <ul class="row-of-two row-of-two--boost-second u-unstyled l-row l-row--items-2 facia-slice">
-                                    @items.zipWithIndex.map{ case (trail, index) =>
-                                        @fragments.collections.items.standard(trail, index + hugeItemsCount + veryBigItemsCount + bigItemsCount, containerIndex)
-                                    }
-                                </ul>
-                            }
-                            @if(!firstStoryImageBoosted && !secondStoryImageBoosted){
-                                <ul class="row-of-two row-of-two--boost-none u-unstyled l-row l-row--items-2 facia-slice">
-                                    @items.zipWithIndex.map{ case (trail, index) =>
-                                        @fragments.collections.items.standard(trail, index + hugeItemsCount + veryBigItemsCount + bigItemsCount, containerIndex)
-                                    }
-                                </ul>
-                            }
-                        }
+            @items.headOption.map{ trail =>
+                <div class="collection-wrapper">
+                    @if(!trail.group.isEmpty){ @* Means this is a curated container *@
+                        @fragments.items.fromage(trail, baguetteCount)
+                    }else{ @* Not a curated container: we fake hierarchy *@
+                        @fragments.items.fromage(trail, baguetteCount, Some("boost"))
                     }
                 </div>
             }
-        }
-
-        @defining(standardItems.slice(0, 4)) { items =>
-            @if(items.nonEmpty) {
-                <div class="facia-slice-wrapper">
-                    <ul class="u-unstyled l-row l-row--layout-m l-row--items-4 facia-slice">
+            @defining(items.slice(baguetteCount + 1, baguetteCount + 2)) { items =>
+                @if(items.nonEmpty) {
+                    <div class="collection-wrapper">
                         @items.zipWithIndex.map{ case (trail, index) =>
-                            @fragments.collections.items.standard(trail, index + hugeItemsCount + veryBigItemsCount + bigItemsCount, containerIndex)
+                            @fragments.items.fromage(trail, baguetteCount + 1)
                         }
-                    </ul>
-                </div>
+                    </div>
+                }
             }
-        }
-
-        @defining(standardItems.slice(4, 13), hugeItemsCount + veryBigItemsCount + bigItemsCount + 4) { case (items, offset) =>
-            @if(items.nonEmpty) {
-                <div class="linkslist-container tone-@{style.tone}">
-                    <ul class="l-columns linkslist linkslist--with-images">
-                        @items.zipWithIndex.map{ case (trail, index) =>
-                            @trail match {
-                                case l: LiveBlog if l.isLive         => { @fragments.items.linksList.live(l, index + offset, Some("boost")) }
-                                case g: Gallery                      => { @fragments.items.linksList.gallery(g, index + offset, Some("boost")) }
-                                case v: Video                        => { @fragments.items.linksList.video(v, index + offset, Some("boost")) }
-                                case c if VisualTone(c) == "comment" => { @fragments.items.linksList.comment(c, index + offset, Some("boost")) }
-                                case t                               => { @fragments.items.linksList.standard(t, index + offset, Some("boost")) }
+            @defining(items.slice(baguetteCount + 2, baguetteCount + 6)) { items =>
+                @if(items.nonEmpty) {
+                    <div class="collection-wrapper">
+                        <ul class="u-unstyled l-row l-row--layout-m l-row--items-4 collection">
+                            @items.zipWithIndex.map{ case (trail, index) =>
+                                @fragments.collections.items.standard(trail, baguetteCount + index + 2, containerIndex)
                             }
-                        }
-                    </ul>
-                </div>
+                        </ul>
+                    </div>
+                }
             }
-        }
-
-        @defining(standardItems.slice(13, 31), hugeItemsCount + veryBigItemsCount + bigItemsCount + 13) { case (items, offset) =>
-            @if(items.nonEmpty) {
-                <div class="linkslist-container @if(style.showMore){js-container--show-more} tone-@{style.tone}" data-tone="@style.tone">
-                    <ul class="l-columns linkslist">
-                        @items.zipWithIndex.map{ case (trail, index) =>
-                            @trail match {
-                                case l: LiveBlog if l.isLive         => { @fragments.items.linksList.live(l, index + offset) }
-                                case g: Gallery                      => { @fragments.items.linksList.gallery(g, index + offset) }
-                                case v: Video                        => { @fragments.items.linksList.video(v, index + offset) }
-                                case c if VisualTone(c) == "comment" => { @fragments.items.linksList.comment(c, index + offset) }
-                                case t                               => { @fragments.items.linksList.standard(t, index + offset) }
+            @defining(items.slice(baguetteCount + 6, baguetteCount + 15)) { items =>
+                @if(items.nonEmpty) {
+                    <div class="linkslist-container tone-@{style.tone}">
+                        <ul class="l-columns linkslist linkslist--with-images">
+                            @items.zipWithIndex.map{ case (trail, index) =>
+                                @trail match {
+                                    case l: LiveBlog if l.isLive         => { @fragments.items.linksList.live(l, baguetteCount + index + 6, Some("boost")) }
+                                    case g: Gallery                      => { @fragments.items.linksList.gallery(g, baguetteCount + index + 6, Some("boost")) }
+                                    case v: Video                        => { @fragments.items.linksList.video(v, baguetteCount + index + 6, Some("boost")) }
+                                    case c if VisualTone(c) == "comment" => { @fragments.items.linksList.comment(c, baguetteCount + index + 6, Some("boost")) }
+                                    case t                               => { @fragments.items.linksList.standard(t, baguetteCount + index + 6, Some("boost")) }
+                                }
                             }
-                        }
-                    </ul>
-                </div>
+                        </ul>
+                    </div>
+                }
+            }
+            @defining(items.slice(baguetteCount + 15, baguetteCount + 33)) { items =>
+                @if(items.nonEmpty) {
+                    <div class="linkslist-container @if(style.showMore){js-container--show-more} tone-@{style.tone}" data-tone="@style.tone">
+                        <ul class="l-columns linkslist">
+                            @items.zipWithIndex.map{ case (trail, index) =>
+                                @trail match {
+                                    case l: LiveBlog if l.isLive         => { @fragments.items.linksList.live(l, baguetteCount + index + 15) }
+                                    case g: Gallery                      => { @fragments.items.linksList.gallery(g, baguetteCount + index + 15) }
+                                    case v: Video                        => { @fragments.items.linksList.video(v, baguetteCount + index + 15) }
+                                    case c if VisualTone(c) == "comment" => { @fragments.items.linksList.comment(c, baguetteCount + index + 15) }
+                                    case t                               => { @fragments.items.linksList.standard(t, baguetteCount + index + 15) }
+                                }
+                            }
+                        </ul>
+                    </div>
+                }
             }
         }
     }
