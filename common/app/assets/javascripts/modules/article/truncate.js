@@ -35,7 +35,7 @@ define([
 
     function truncate() {
 
-        if (config.page.isLiveBlog && qwery('.block').length > numBlocks) {
+        if (config.page.isLiveBlog && qwery('.block').length > numBlocks && window.location.hash === '') {
 
             $.create(
                 '<button class="u-fauxlink u-button-reset button button--show-more article-elongator" data-link-name="continue reading">'+
