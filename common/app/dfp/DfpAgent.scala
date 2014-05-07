@@ -28,10 +28,15 @@ object DfpAgent extends ExecutionContexts with Logging {
 
   def refresh() {
     def fetchTargetedKeywords() = {
-      log.info(s"Loading DFP data from $dfpDataKey...")
       val json = S3.get(dfpDataKey)(UTF8) map parse
-      log.info(s"Loaded DFP data: $json")
-      json map (_.as[Seq[String]]) getOrElse Nil
+      val currKeywords = json map (_.as[Seq[String]]) getOrElse Nil
+
+      val removedKeywords = targetedKeywords filterNot (currKeywords.contains(_))
+      if (removedKeywords.nonEmpty) log.info(s"Removed DFP keywords: $removedKeywords")
+      val newKeywords = currKeywords filterNot (targetedKeywords.contains(_))
+      if (newKeywords.nonEmpty) log.info(s"New DFP keywords loaded: $newKeywords")
+
+      currKeywords
     }
 
     targetedKeywordsAgent sendOff (current => fetchTargetedKeywords())
