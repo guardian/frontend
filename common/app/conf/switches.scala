@@ -70,7 +70,7 @@ object Switches extends Collections {
 
   val GzipSwitch = Switch("Performance Switches", "gzip",
     "If switched on then http responses will be gzipped",
-    safeState = Off, sellByDate = new DateMidnight(2014, 5, 5)
+    safeState = Off, sellByDate = new DateMidnight(2014, 5, 31)
   )
 
   val DoubleCacheTimesSwitch = Switch("Performance Switches", "double-cache-times",
@@ -86,11 +86,6 @@ object Switches extends Collections {
   val CssFromStorageSwitch = Switch("Performance Switches", "css-from-storage",
     "If this switch is on CSS will be cached in users localStorage and read from there on subsequent requests.",
     safeState = Off, sellByDate = never
-  )
-
-  val ElasticSearchSwitch = Switch("Performance Switches", "elastic-search-content-api",
-    "If this switch is on then (parts of) the application will use the Elastic Search content api",
-    safeState = On, sellByDate = never
   )
 
   val ShowAllArticleEmbedsSwitch = Switch("Performance Switches", "show-all-embeds",
@@ -303,12 +298,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
-  // A/B Test Switches
-  val ABHomeComponent = Switch("A/B Tests", "ab-home-component",
-    "This switch runs an AB test which adds a sticky-like home button.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 5, 4)
-  )
-
   // Dummy Switches
 
   val IntegrationTestSwitch = Switch("Unwired Test Switch", "integration-test-switch",
@@ -396,7 +385,6 @@ object Switches extends Collections {
     ClientSideErrorSwitch,
     IdentityProfileNavigationSwitch,
     CssFromStorageSwitch,
-    ElasticSearchSwitch,
     FacebookAutoSigninSwitch,
     IdentityFormstackSwitch,
     IdentityEthicalAwardsSwitch,
@@ -432,7 +420,6 @@ object Switches extends Collections {
     PopularInTagSwitch,
     EnhanceTweetsSwitch,
     IndiaRegionSwitch,
-    ABHomeComponent,
     MemcachedSwitch,
     IncludeBuildNumberInMemcachedKey,
     GzipSwitch

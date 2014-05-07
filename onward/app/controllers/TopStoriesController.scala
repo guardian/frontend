@@ -31,7 +31,7 @@ object TopStoriesController extends Controller with Logging with Paging with Exe
 
   private def lookup(edition: Edition)(implicit request: RequestHeader): Future[Option[Seq[Content]]] = {
     log.info(s"Fetching top stories for edition ${edition.id}")
-    SwitchingContentApi().item("/", edition)
+    ContentApi.item("/", edition)
       .showEditorsPicks(true)
       .response
       .map { response =>

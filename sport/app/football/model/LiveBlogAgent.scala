@@ -1,7 +1,7 @@
 package model
 
 import common._
-import conf.SwitchingContentApi
+import conf.ContentApi
 
 
 trait LiveBlogAgent extends ExecutionContexts with Logging {
@@ -20,7 +20,7 @@ trait LiveBlogAgent extends ExecutionContexts with Logging {
   private def findBlogFor(edition: Edition) = {
     val tag = "football/series/saturday-clockwatch|tone/minutebyminute"
     log.info(s"Fetching football blogs with tag: $tag")
-    SwitchingContentApi().item("/football", edition)
+    ContentApi.item("/football", edition)
       .tag(tag)
       .showEditorsPicks(true)
       .response.map {response =>

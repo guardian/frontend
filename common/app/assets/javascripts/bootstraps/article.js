@@ -50,7 +50,7 @@ define([
 
                     $.create('<div class="open-cta"></div>').each(function(el) {
                         openCta.fetch(el);
-                        rhc.addComponent(el);
+                        if(!config.page.isLiveBlog){ rhc.addComponent(el); }
                     });
                 }
             });

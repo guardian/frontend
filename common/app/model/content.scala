@@ -11,6 +11,7 @@ import collection.JavaConversions._
 import views.support.{VisualTone, Naked, ImgSrc, StripHtmlTagsAndUnescapeEntities}
 import play.api.libs.json.JsValue
 import conf.Configuration.facebook
+import dfp.DfpAgent
 
 class Content protected (val apiContent: ApiContentWithMeta) extends Trail with MetaData {
 
@@ -45,7 +46,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
       .getOrElse(facebook.imageFallback)
   }
 
-  lazy val isSponsored: Boolean = tags.exists(_.id == "tone/sponsoredfeatures")
+  lazy val isSponsored: Boolean = DfpAgent.isSponsored(this)
   lazy val sponsor: Option[Sponsor] = {
     if (isSponsored) {
       Sponsors.find(tags.filter(_.tagType == "keyword").head.id)
@@ -195,6 +196,8 @@ object Content {
       Option(
         new Snap(
           snapId = itemId,
+          snapSupporting = (json \ "meta" \ "supporting").asOpt[List[JsValue]].getOrElse(Nil)
+            .flatMap(Content.fromPressedJson),
           (json \ "webPublicationDate").asOpt[DateTime].getOrElse(DateTime.now),
           snapMeta = snapMeta
         )
@@ -297,9 +300,10 @@ object SnapApiContent extends ApiContent(
     )
 
 class Snap(snapId: String,
+           snapSupporting: List[Content],
            snapWebPublicationDate: DateTime,
            snapMeta: Map[String, JsValue]
-) extends Content(new ApiContentWithMeta(SnapApiContent, metaData = snapMeta)) {
+) extends Content(new ApiContentWithMeta(SnapApiContent, supporting = snapSupporting, metaData = snapMeta)) {
 
   val snapType: Option[String] = snapMeta.get("snapType").flatMap(_.asOpt[String])
   val snapUri: Option[String] = snapMeta.get("snapUri").flatMap(_.asOpt[String])

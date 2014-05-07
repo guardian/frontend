@@ -2,17 +2,23 @@ package model.commercial.jobs
 
 import common.{AkkaAgent, ExecutionContexts}
 import model.commercial._
+import org.apache.commons.lang.StringUtils
 import scala.concurrent.Future
 import scala.concurrent.duration._
 
 case class Job(id: Int,
                title: String,
                shortDescription: String,
+               locationDescription: Option[String],
                recruiterName: String,
-               recruiterLogoUrl: Option[String],
+               recruiterPageUrl: Option[String],
+               recruiterLogoUrl: String,
                sectorIds: Seq[Int],
+               salaryDescription: String,
                keywords: Seq[Keyword] = Nil)
   extends Ad {
+
+  val shortSalaryDescription = StringUtils.abbreviate(salaryDescription, 25).replace("...", "…")
 
   def listingUrl = s"http://jobs.theguardian.com/job/$id"
 
@@ -22,7 +28,7 @@ case class Job(id: Int,
   }
 
   val industries: Seq[String] =
-    Industries.sectorIdIndustryMap.filter { case (id, name) => sectorIds.contains(id)}.values.toSeq
+    Industries.sectorIdIndustryMap.filter { case (sectorId, name) => sectorIds.contains(sectorId)}.values.toSeq
 
   val mainIndustry: Option[String] = industries.headOption
 }
