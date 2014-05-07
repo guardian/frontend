@@ -227,10 +227,7 @@
     color: $c-neutral2;
 
     @include mq(tablet) {
-        @include rem((
-            font-size: 18px,
-            line-height: 22px
-        ));
+        @include font-size(18px, 22px);
         -webkit-font-smoothing: antialiased;
         @include rem((
             margin-bottom: ($gs-baseline/3)*4
