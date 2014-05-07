@@ -1,14 +1,14 @@
 package common
 
+import com.amazonaws.auth._
+import com.amazonaws.internal.StaticCredentialsProvider
 import com.gu.conf.ConfigurationFactory
 import com.gu.management.{ Manifest => ManifestFile }
-import com.amazonaws.auth._
-import play.api.Play
-import play.api.Play.current
+import conf.Configuration
 import java.io.{FileInputStream, File}
 import org.apache.commons.io.IOUtils
-import conf.Configuration
-import com.amazonaws.internal.StaticCredentialsProvider
+import play.api.Play
+import play.api.Play.current
 
 class BadConfigurationException(property: String) extends RuntimeException(s"Property $property not configured")
 
@@ -62,7 +62,6 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
 
   object contentApi {
-    lazy val host = configuration.getMandatoryStringProperty("content.api.host")
     lazy val elasticSearchHost = configuration.getMandatoryStringProperty("content.api.elastic.host")
     lazy val key = configuration.getMandatoryStringProperty("content.api.key")
     lazy val timeout: Int = configuration.getIntegerProperty("content.api.timeout.millis").getOrElse(2000)
@@ -192,6 +191,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val masterclasses_url = configuration.getMandatoryStringProperty("commercial.masterclasses_url")
     lazy val soulmates_url = configuration.getMandatoryStringProperty("commercial.soulmates_url")
     lazy val travel_url = configuration.getMandatoryStringProperty("commercial.travel_url")
+    lazy val dfpDataKey = s"${environment.stage.toUpperCase}/commercial/dfp-data.json"
   }
 
   object open {

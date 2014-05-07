@@ -5,6 +5,10 @@
         height: $gs-row-height + $gs-baseline
     ));
 
+    .is-live & {
+        display: table;
+    }
+
     @include mq($to: tablet) {
         font-size: .875em;
     }
