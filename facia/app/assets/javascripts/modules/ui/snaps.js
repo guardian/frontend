@@ -13,7 +13,9 @@ define([
 ) {
 
     function init() {
-        var snaps = toArray($('.facia-snap[data-snap-uri^="http"]'));
+        var snaps = toArray($('.facia-snap'))
+                .filter(function(el) { return el.getAttribute('data-snap-uri'); })
+                .filter(function(el) { return el.getAttribute('data-snap-type'); });
 
         snaps.forEach(fetchSnap);
 
