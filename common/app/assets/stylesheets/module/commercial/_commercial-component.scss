@@ -1,3 +1,5 @@
+$c-commercial-comp-neutral: #edede7;
+
 .facia-container--commercial {
     &.facia-container--layout-article {
         padding: 0;
@@ -26,7 +28,7 @@
     @include box-sizing(border-box);
     width: 100%;
     position: relative;
-    background-color: #edede7;
+    background-color: $c-commercial-comp-neutral;
     color: $c-neutral1;
     text-align: left;
     @include rem((
