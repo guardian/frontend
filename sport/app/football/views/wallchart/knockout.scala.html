@@ -2,7 +2,7 @@
 
 <div class="football-wallchart football-wallchart--@knockoutStage.rounds.length-rounds u-cf">
 @knockoutStage.rounds.map{ round =>
-    @defining(knockoutStage.matchesForRound(round)) { matches =>
+    @defining(knockoutStage.roundMatches(round)) { matches =>
         <div class="football-round football-round--@matches.length-matches">
             <div class="football-round__name">@round.name.getOrElse("")</div>
 
