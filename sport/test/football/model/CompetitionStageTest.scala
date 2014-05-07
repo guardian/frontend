@@ -70,7 +70,7 @@ class CompetitionStageTest extends FreeSpec with ShouldMatchers with OptionValue
     "for groups" - {
       "adds leagueTableEntries for groups to group stage" in {
         val stages = CompetitionStage.stagesFromCompetition(groupStage)
-        stages(0).asInstanceOf[Groups].groupTables.values.flatten.toSet should equal (groupStage.leagueTable.toSet)
+        stages(0).asInstanceOf[Groups].groupTables.map(_._2).flatten.toSet should equal (groupStage.leagueTable.toSet)
       }
 
       "if there are multiple stages" - {
@@ -79,8 +79,8 @@ class CompetitionStageTest extends FreeSpec with ShouldMatchers with OptionValue
           matches = currentGroupMatches ++ futureGroupMatches(Stage("2"))
         )
         val stages = CompetitionStage.stagesFromCompetition(comp)
-        val leagueTableEntries0 = stages(0).asInstanceOf[Groups].groupTables.values.flatten.toSet
-        val leagueTableEntries1 = stages(1).asInstanceOf[Groups].groupTables.values.flatten.toSet
+        val leagueTableEntries0 = stages(0).asInstanceOf[Groups].groupTables.map(_._2).flatten.toSet
+        val leagueTableEntries1 = stages(1).asInstanceOf[Groups].groupTables.map(_._2).flatten.toSet
 
         "adds correct leagueTableEntries to each group stage if there are multiple stages" in {
           leagueTableEntries0 should equal (comp.leagueTable.filter(_.stageNumber == "1").toSet)
