@@ -127,44 +127,48 @@
    Football groups / lists
    ========================================================================== */
 .football-groups {
+    font-size: 0;
+    display: flex;
+    flex-wrap: wrap;
+
     .football-group {
         @include box-sizing(border-box);
+        @include rem((
+            margin: $gs-baseline 0
+        ));
+        vertical-align: top;
 
         @include mq(tablet) {
             @include rem((
-                padding: $gs-baseline/2 $gs-gutter/2
+                padding-left: $gs-gutter/2
             ));
-            float: left;
-            width: 50%;
-
-            &:nth-of-type(2n+1) {
-                padding-left: 0;
-            }
+            display: inline-block;
+            display: flex;
+            width: 49.5%;
         }
 
         @include mq(desktop) {
-            width: 25%;
+            width: 24.5%;
+        }
 
+        @include mq(leftCol) {
             &:nth-of-type(-n+4) {
                 .table--league-table {
-                    border-top: 0;
-
+                    border: 0 none;
                     .table__caption--top {
-                        border-top: 0;
+                        border: 0 none;
                     }
                 }
-            }
-
-            &:nth-of-type(4n+1) {
-                padding-left: 0;
             }
         }
     }
 }
+.football-group__container {
+    background: $c-neutral8;
+    flex: 1 1 auto;
+}
 .football-group__fixtures {
-    @include rem((
-        padding-top: $gs-baseline
-    ));
+    border-top: solid #ffffff $gs-baseline;
 
     .table__caption--top {
         border-top: 0;

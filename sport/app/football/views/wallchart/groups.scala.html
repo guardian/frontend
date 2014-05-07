@@ -4,7 +4,7 @@
     @groupStage.groupTables.map{ case (round, leagueTableEntries) =>
         @defining(groupStage.matchesList(competition, round)) { matches =>
             <li class="football-group">
-                <div class="table--hide-from-importance-3">
+                <div class="football-group__container table--hide-from-importance-3">
                     @football.views.html.tablesList.tableView(competition, model.Group(round, leagueTableEntries),
                         striped = true,
                         heading = round.name
