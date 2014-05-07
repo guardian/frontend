@@ -1144,8 +1144,9 @@ $timeline-width: 14px;
             @include mq(mobileLandscape) {
                 border-left: 1px solid darken($c-neutral8, 4%);
                 @include rem((
-                    margin: $gs-baseline/2 $gs-gutter 0,
-                    padding: 0 0 0 $gs-gutter
+                    margin-left: $gs-gutter,
+                    margin-right: $gs-gutter,
+                    padding-left: $gs-gutter
                 ));
             }
         }
