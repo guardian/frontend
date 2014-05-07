@@ -1,0 +1,923 @@
+{
+  "fronts" : {
+    "uk/business" : {
+      "collections" : [ "uk/business/feature-stories", "uk/business/regular-stories", "uk/business/most-viewed/regular-stories" ],
+      "webTitle" : "Latest financial, market and economic news and analysis"
+    },
+    "testcard" : {
+      "collections" : [ "5236-20ac-2c18-6634", "608e-145e-e48a-e3f7", "1626-1252-b53f-2afa", "6076-7e22-53c7-1292", "ed35-b216-d679-0480", "a116-350f-7099-27c4", "40d3-41c6-e819-f2cf", "1805-7fbf-6711-e80f", "2974-f1f5-ac63-09f9" ],
+      "webTitle" : "Testcard"
+    },
+    "lifeandstyle/home-and-garden" : {
+      "collections" : [ "4023-17ee-2510-81bc", "9ff3-334c-b065-e792" ]
+    },
+    "lifeandstyle" : {
+      "collections" : [ "5011-3940-8793-33a9", "7d2c-a2a3-f7a9-e361", "f09a-00ea-81c0-6a01", "05d7-f9f9-c7f9-1a0b", "c671-9122-a336-f9ed", "e874-80f7-9f67-1afc" ],
+      "webTitle" : "Food, homes and lifestyle news, video and pictures from the Guardian"
+    },
+    "uk" : {
+      "collections" : [ "uk-alpha/news/regular-stories", "uk-alpha/special-1/special-story", "754c-8e8c-fad9-a927", "uk-alpha/features/feature-stories", "uk/most-viewed/regular-stories", "uk-alpha/contributors/feature-stories", "uk-alpha/people-in-the-news/feature-stories", "uk-alpha/special-other/special-story", "uk/commentisfree/regular-stories", "uk/culture/regular-stories", "uk/business/regular-stories", "uk/technology/regular-stories", "uk/money/regular-stories", "uk/travel/regular-stories", "uk/lifeandstyle/regular-stories" ],
+      "webTitle" : "Latest news, sport and comment from the Guardian"
+    },
+    "lifeandstyle/love-and-sex" : {
+      "collections" : [ "6558-f6eb-d84c-4da4", "9ff3-334c-b065-e792" ]
+    },
+    "au/money" : {
+      "collections" : [ "au/money/regular-stories" ],
+      "webTitle" : "Personal finance and money news, analysis and comment"
+    },
+    "uk/commentisfree" : {
+      "collections" : [ "uk/commentisfree/regular-stories", "uk/commentisfree/feature-stories", "79ca-3806-063b-c8fa", "b417-e37f-9e55-d0a3", "9564-96dc-5703-f733", "uk/commentisfree/most-viewed/regular-stories" ],
+      "webTitle" : "Comment is free"
+    },
+    "au/commentisfree" : {
+      "collections" : [ "au/commentisfree/regular-stories" ]
+    },
+    "au/sport" : {
+      "collections" : [ "au/sport/regular-stories", "au/football/regular-stories", "au/sport/feature-stories", "au/sport/a-league/regular-stories", "au/sport/afl/regular-stories", "au/sport/rugbyleague/regular-stories", "au/sport/nrl/regular-stories", "au/sport/motorsports/regular-stories", "au/sport/cycling/regular-stories", "au/sport/us-sport/regular-stories", "au/sport/boxing/regular-stories", "au/sport/most-viewed/regular-stories" ],
+      "webTitle" : "Sport news, comment and results"
+    },
+    "uk/culture" : {
+      "collections" : [ "uk/culture/regular-stories", "uk/culture/feature-stories", "uk/film/regular-stories", "uk/music/regular-stories", "uk/tv-and-radio/regular-stories", "uk/books/regular-stories", "uk/artanddesign/regular-stories", "uk/stage/regular-stories", "uk/technology/games/regular-stories", "uk/culture/most-viewed/regular-stories" ],
+      "webTitle" : "Culture"
+    },
+    "us-alpha" : {
+      "collections" : [ "us-alpha/news/regular-stories", "us-alpha/special-1/special-story", "f6dd-d7b1-0e85-4650", "us-alpha/features/feature-stories", "us/most-viewed/regular-stories", "us-alpha/contributors/feature-stories", "us-alpha/people-in-the-news/feature-stories", "us-alpha/special-other/special-story", "us/commentisfree/regular-stories", "us/culture/regular-stories", "us/business/regular-stories", "us/lifeandstyle/regular-stories", "us/technology/regular-stories", "us/money/regular-stories", "us/travel/regular-stories" ],
+      "webTitle" : "Latest news, sport and comment from the Guardian"
+    },
+    "uk-alpha" : {
+      "collections" : [ "uk-alpha/special-1/special-story", "754c-8e8c-fad9-a927", "uk-alpha/features/feature-stories", "uk/most-viewed/regular-stories", "uk-alpha/contributors/feature-stories", "uk-alpha/people-in-the-news/feature-stories", "uk-alpha/special-other/special-story", "uk/commentisfree/regular-stories", "uk/culture/regular-stories", "uk/business/regular-stories", "uk/lifeandstyle/regular-stories", "uk/technology/regular-stories", "uk/money/regular-stories", "uk/travel/regular-stories" ],
+      "webTitle" : "Latest news, sport and comment from the Guardian"
+    },
+    "us/culture" : {
+      "collections" : [ "us/culture/regular-stories", "us/culture/feature-stories", "us/film/regular-stories", "us/music/regular-stories", "us/books/regular-stories", "us/artanddesign/regular-stories", "us/stage/regular-stories", "us/technology/games/regular-stories", "us/tv-and-radio/regular-stories", "us/culture/most-viewed/regular-stories" ],
+      "webTitle" : "Culture"
+    },
+    "us" : {
+      "collections" : [ "us-alpha/news/regular-stories", "us-alpha/special-1/special-story", "f6dd-d7b1-0e85-4650", "us-alpha/features/feature-stories", "us/most-viewed/regular-stories", "us-alpha/contributors/feature-stories", "us-alpha/people-in-the-news/feature-stories", "us/commentisfree/regular-stories", "us-alpha/special-other/special-story", "us/culture/regular-stories", "us/business/regular-stories", "us/lifeandstyle/regular-stories", "us/technology/regular-stories", "us/money/regular-stories", "us/travel/regular-stories" ],
+      "webTitle" : "Latest news, sport and comment from the Guardian"
+    },
+    "world/asia" : {
+      "collections" : [ "c531-61e2-fb9d-fcc7", "558b-3b8b-3485-d9ff" ],
+      "webTitle" : "Asia"
+    },
+    "us/commentisfree" : {
+      "collections" : [ "us/commentisfree/regular-stories", "us/commentisfree/feature-stories", "us/commentisfree/most-viewed/regular-stories" ],
+      "webTitle" : "Comment is free"
+    },
+    "uk/sport" : {
+      "collections" : [ "uk/sport/regular-stories", "uk/sport/feature-stories", "cf41-a722-fbab-f764", "966c-3482-1d33-43f7", "1c3c-57d4-1b33-8bd0", "7e29-3108-ef35-63c0", "uk/sport/most-viewed/regular-stories" ],
+      "webTitle" : "Sport news, comment and results"
+    },
+    "google-news" : {
+      "collections" : [ "uk/google-news/editors-picks", "us/google-news/editors-picks", "au/google-news/editors-picks" ],
+      "webTitle" : "Google News feeds"
+    },
+    "us/business" : {
+      "collections" : [ "us/business/regular-stories", "us/business/feature-stories", "us/business/most-viewed/regular-stories" ],
+      "webTitle" : "Latest financial, market and economic news and analysis"
+    },
+    "technology" : {
+      "collections" : [ "6bb3-9f76-43bd-4213", "c66d-aa1a-e12d-fc7a", "8185-0956-87b3-126d", "4ffe-c431-03de-3fd2", "362c-e4b2-148c-dcd0" ]
+    },
+    "us/money" : {
+      "collections" : [ "us/money/regular-stories", "us/money/feature-stories", "us/money/most-viewed/regular-stories" ],
+      "webTitle" : "Personal finance and money news, analysis and comment"
+    },
+    "us/sport" : {
+      "collections" : [ "us/sport/regular-stories", "us/sport/feature-stories", "us/sport/nfl/regular-stories", "us/sport/mlb/regular-stories", "us/sport/nba/regular-stories", "us/sport/mls/regular-stories", "us/sport/nhl/regular-stories", "us/sport/most-viewed/regular-stories" ],
+      "webTitle" : "Sport news, comment and results"
+    },
+    "environment" : {
+      "collections" : [ "6a1f-f910-eca6-fa57", "f5b8-5331-6114-6bc6", "cbbc-63a2-e730-04f7", "9785-786b-77ca-8b1d", "5fcd-337f-d6d5-8810" ],
+      "webTitle" : "Environment news, comment and analysis from the Guardian"
+    },
+    "werwer" : {
+      "collections" : [ "2675-3771-638a-0cbf" ]
+    },
+    "football" : {
+      "collections" : [ "1a78-862a-834b-b1d3", "74a5-12ce-c494-a1f1", "1975-5fe0-6b20-ee12", "b6d2-ab5f-7af8-8fc0", "a0c4-3c89-a432-aa0a", "8ce7-9d02-90ca-bf43" ],
+      "webTitle" : "Football news, match reports and fixtures"
+    },
+    "au" : {
+      "collections" : [ "au-alpha/news/regular-stories", "au-alpha/special-1/special-story", "c45d-318f-896c-3a85", "au-alpha/features/feature-stories", "au/most-viewed/regular-stories", "au-alpha/contributors/feature-stories", "au-alpha/people-in-the-news/feature-stories", "au-alpha/special-other/special-story", "au/commentisfree/regular-stories", "au/culture/regular-stories", "au/business/regular-stories", "au/lifeandstyle/regular-stories", "au/money/regular-stories", "au/technology/regular-stories" ]
+    },
+    "uk/money" : {
+      "collections" : [ "uk/money/regular-stories", "uk/money/feature-stories", "uk/money/most-viewed/regular-stories" ],
+      "webTitle" : "Personal finance and money news, analysis and comment"
+    },
+    "au-alpha" : {
+      "collections" : [ "au-alpha/news/regular-stories", "c45d-318f-896c-3a85", "au-alpha/people-in-the-news/feature-stories", "au-alpha/features/feature-stories", "au-alpha/contributors/feature-stories", "au/most-viewed/regular-stories", "au-alpha/special-other/special-story", "au/commentisfree/regular-stories", "au/culture/regular-stories", "au/business/regular-stories", "au/lifeandstyle/regular-stories", "au/money/regular-stories", "au/technology/regular-stories" ]
+    },
+    "business/companies" : {
+      "collections" : [ "5163-7ddd-126e-a0c6", "au/money/regular-stories", "3999-56e1-6250-8889" ],
+      "webTitle" : "2222"
+    },
+    "au/culture" : {
+      "collections" : [ "au/culture/regular-stories", "au/culture/feature-stories", "au/film/regular-stories", "au/music/regular-stories" ]
+    }
+  },
+  "collections" : {
+    "uk/commentisfree/most-viewed/regular-stories" : {
+      "displayName" : "Most popular",
+      "apiQuery" : "uk/commentisfree?show-most-viewed=true&show-editors-picks=false&hide-recent-content=true",
+      "type" : "news/most-popular",
+      "uneditable" : true
+    },
+    "us/sport/mlb/regular-stories" : {
+      "displayName" : "MLB",
+      "apiQuery" : "sport/mlb?edition=us",
+      "type" : "news/section",
+      "href" : "sport/mlb"
+    },
+    "us/google-news/editors-picks" : {
+      "displayName" : "US editors' picks"
+    },
+    "us/money/regular-stories" : {
+      "displayName" : "Money",
+      "apiQuery" : "money?edition=us",
+      "type" : "news/section",
+      "href" : "money"
+    },
+    "au-alpha/people-in-the-news/feature-stories" : {
+      "displayName" : "People",
+      "type" : "news/people"
+    },
+    "us/travel/regular-stories" : {
+      "displayName" : "Travel",
+      "apiQuery" : "travel?edition=us",
+      "type" : "features/section",
+      "href" : "travel",
+      "uneditable" : true
+    },
+    "5236-20ac-2c18-6634" : {
+      "displayName" : "Baguette",
+      "type" : "news",
+      "groups" : [ "standard", "big", "very big", "huge" ]
+    },
+    "us/books/regular-stories" : {
+      "displayName" : "Books",
+      "apiQuery" : "books?edition=us",
+      "type" : "features/section",
+      "href" : "books"
+    },
+    "au/music/regular-stories" : {
+      "displayName" : "Music",
+      "apiQuery" : "music?edition=au",
+      "type" : "features/section",
+      "href" : "music"
+    },
+    "uk-alpha/contributors/feature-stories" : {
+      "displayName" : "Comment and debate",
+      "type" : "comment/comment-and-debate"
+    },
+    "uk/sport/regular-stories" : {
+      "displayName" : "Sport",
+      "apiQuery" : "sport?edition=uk",
+      "type" : "news/sport",
+      "href" : "sport"
+    },
+    "608e-145e-e48a-e3f7" : {
+      "displayName" : "Fromage - Volume 2",
+      "type" : "news",
+      "groups" : [ "standard", "big", "very big", "huge" ]
+    },
+    "au-alpha/contributors/feature-stories" : {
+      "displayName" : "Comment and debate",
+      "type" : "comment/comment-and-debate"
+    },
+    "au/business/regular-stories" : {
+      "displayName" : "Business",
+      "apiQuery" : "business?edition=au",
+      "type" : "news/section",
+      "href" : "business",
+      "uneditable" : true
+    },
+    "us/sport/nfl/regular-stories" : {
+      "displayName" : "NFL",
+      "apiQuery" : "sport/nfl?edition=us",
+      "type" : "news/section",
+      "href" : "sport/nfl"
+    },
+    "uk/google-news/editors-picks" : {
+      "displayName" : "UK editors' picks"
+    },
+    "7e29-3108-ef35-63c0" : {
+      "displayName" : "In pictures",
+      "apiQuery" : "search?tag=type%2Fgallery&section=sport&page-size=50",
+      "type" : "news/special"
+    },
+    "uk/culture/feature-stories" : {
+      "displayName" : "Features",
+      "type" : "features/section"
+    },
+    "cbbc-63a2-e730-04f7" : {
+      "displayName" : "In pictures",
+      "apiQuery" : "search?tag=type%2Fgallery&section=environment",
+      "type" : "features"
+    },
+    "9785-786b-77ca-8b1d" : {
+      "displayName" : "Watch this",
+      "apiQuery" : "search?tag=type%2Fvideo&section=environment",
+      "type" : "features"
+    },
+    "9ff3-334c-b065-e792" : {
+      "displayName" : "Most popular",
+      "apiQuery" : "lifeandstyle?show-most-viewed=true&show-editors-picks=false&hide-recent-content=true",
+      "type" : "news/most-popular"
+    },
+    "966c-3482-1d33-43f7" : {
+      "displayName" : "Comment and debate",
+      "apiQuery" : "search?tag=sport%2Fblog",
+      "type" : "comment/comment-and-debate",
+      "href" : "sport/blog"
+    },
+    "uk/travel/regular-stories" : {
+      "displayName" : "Travel",
+      "apiQuery" : "travel?edition=uk",
+      "type" : "features/section",
+      "href" : "travel",
+      "uneditable" : true
+    },
+    "2675-3771-638a-0cbf" : {
+      "displayName" : "werwerw"
+    },
+    "c671-9122-a336-f9ed" : {
+      "displayName" : "Watch this",
+      "apiQuery" : "search?tag=type%2Fvideo%2C-fashion&section=lifeandstyle",
+      "type" : "features"
+    },
+    "cf41-a722-fbab-f764" : {
+      "displayName" : "Watch this",
+      "apiQuery" : "search?tag=sport%2Fseries%2Fyoutubearchive%7Ctype%2Fvideo&section=sport&page-size=50",
+      "type" : "features",
+      "href" : "sport/sport+content/video"
+    },
+    "us/film/regular-stories" : {
+      "displayName" : "Film",
+      "apiQuery" : "film?edition=us",
+      "type" : "features/section",
+      "href" : "film"
+    },
+    "uk/tv-and-radio/regular-stories" : {
+      "displayName" : "TV and radio",
+      "apiQuery" : "tv-and-radio?edition=uk",
+      "type" : "features/section",
+      "href" : "tv-and-radio"
+    },
+    "1c3c-57d4-1b33-8bd0" : {
+      "displayName" : "People",
+      "apiQuery" : "search?tag=tone%2Finterview&section=sport&page-size=50",
+      "type" : "news/people"
+    },
+    "uk/commentisfree/regular-stories" : {
+      "displayName" : "Comment is free",
+      "apiQuery" : "commentisfree?edition=uk",
+      "type" : "comment",
+      "href" : "commentisfree",
+      "uneditable" : true
+    },
+    "3999-56e1-6250-8889" : {
+      "displayName" : "Foobar",
+      "apiQuery" : "news",
+      "href" : "rewerr"
+    },
+    "f09a-00ea-81c0-6a01" : {
+      "displayName" : "Recipes",
+      "apiQuery" : "search?tag=tone%2Frecipes&section=lifeandstyle",
+      "type" : "features"
+    },
+    "5011-3940-8793-33a9" : {
+      "displayName" : "Life",
+      "apiQuery" : "lifeandstyle",
+      "type" : "features"
+    },
+    "1626-1252-b53f-2afa" : {
+      "displayName" : "Fromage - Volume 1",
+      "type" : "news",
+      "groups" : [ "standard", "big", "very big", "huge" ]
+    },
+    "au/google-news/editors-picks" : {
+      "displayName" : "Australia editors' picks"
+    },
+    "f5b8-5331-6114-6bc6" : {
+      "displayName" : "Comment and debate",
+      "apiQuery" : "search?tag=tone%2Fcomment&section=environment",
+      "type" : "comment/comment-and-debate"
+    },
+    "1a78-862a-834b-b1d3" : {
+      "displayName" : "Football",
+      "apiQuery" : "football",
+      "type" : "news",
+      "groups" : [ "standard", "big", "very big", "huge" ]
+    },
+    "uk/stage/regular-stories" : {
+      "displayName" : "Stage",
+      "apiQuery" : "stage?edition=uk",
+      "type" : "features/section",
+      "href" : "stage"
+    },
+    "5163-7ddd-126e-a0c6" : {
+      "displayName" : "Companies",
+      "apiQuery" : "search?tag=business/financial-sector|business/manufacturing-sector|business/luxury-goods-sector|business/fooddrinks|business/theairlineindustry|business/automotive-industry|business/banking|business/construction|film/film-industry|business/healthcare|business/insurance|business/mining|business/musicindustry|business/pharmaceuticals-industry|business/realestate|business/retail|business/technology|business/telecoms|business/tobacco-industry|business/travelleisure|business/utilities|business/services-sector",
+      "type" : "features"
+    },
+    "us/tv-and-radio/regular-stories" : {
+      "displayName" : "TV and radio",
+      "apiQuery" : "tv-and-radio?edition=us",
+      "type" : "features/section",
+      "href" : "tv-and-radio"
+    },
+    "uk-alpha/special-other/special-story" : {
+      "displayName" : "In pictures",
+      "type" : "news/special"
+    },
+    "us/culture/regular-stories" : {
+      "displayName" : "Culture",
+      "apiQuery" : "culture?edition=us",
+      "type" : "features",
+      "href" : "culture"
+    },
+    "au/sport/a-league/regular-stories" : {
+      "displayName" : "A-League",
+      "apiQuery" : "football/a-league?edition=au",
+      "type" : "news/section",
+      "href" : "sport/a-league"
+    },
+    "au/sport/feature-stories" : {
+      "displayName" : "Features",
+      "type" : "features"
+    },
+    "us/sport/most-viewed/regular-stories" : {
+      "displayName" : "Most popular",
+      "apiQuery" : "us/sport?show-most-viewed=true&show-editors-picks=false&hide-recent-content=true",
+      "type" : "news/most-popular",
+      "uneditable" : true
+    },
+    "uk/culture/most-viewed/regular-stories" : {
+      "displayName" : "Most popular",
+      "apiQuery" : "uk/culture?show-most-viewed=true&show-editors-picks=false&hide-recent-content=true",
+      "type" : "news/most-popular",
+      "uneditable" : true
+    },
+    "79ca-3806-063b-c8fa" : {
+      "displayName" : "Editorials",
+      "apiQuery" : "search?tag=tone%2Feditorials&section=commentisfree",
+      "type" : "news/special"
+    },
+    "us/artanddesign/regular-stories" : {
+      "displayName" : "Art and design",
+      "apiQuery" : "artanddesign?edition=us",
+      "type" : "features/section",
+      "href" : "artanddesign"
+    },
+    "us/commentisfree/feature-stories" : {
+      "displayName" : "Features",
+      "type" : "features"
+    },
+    "us-alpha/people-in-the-news/feature-stories" : {
+      "displayName" : "People in the news",
+      "type" : "news/people"
+    },
+    "au/sport/regular-stories" : {
+      "displayName" : "Sport",
+      "apiQuery" : "sport?edition=au",
+      "type" : "news/sport",
+      "href" : "sport"
+    },
+    "6bb3-9f76-43bd-4213" : {
+      "displayName" : "Technology",
+      "apiQuery" : "technology",
+      "type" : "features"
+    },
+    "uk/business/most-viewed/regular-stories" : {
+      "displayName" : "Most popular",
+      "apiQuery" : "uk/business?show-most-viewed=true&show-editors-picks=false&hide-recent-content=true",
+      "type" : "news/most-popular",
+      "uneditable" : true
+    },
+    "c45d-318f-896c-3a85" : {
+      "displayName" : "Sport",
+      "type" : "news/section",
+      "href" : "sport"
+    },
+    "uk/books/regular-stories" : {
+      "displayName" : "Books",
+      "apiQuery" : "books?edition=uk",
+      "type" : "features/section",
+      "href" : "books"
+    },
+    "uk/music/regular-stories" : {
+      "displayName" : "Music",
+      "apiQuery" : "music?edition=uk",
+      "type" : "features/section",
+      "href" : "music"
+    },
+    "4023-17ee-2510-81bc" : {
+      "displayName" : "Home and Garden",
+      "apiQuery" : "search?tag=lifeandstyle/homes|lifeandstyle/gardens",
+      "type" : "features"
+    },
+    "us-alpha/contributors/feature-stories" : {
+      "displayName" : "Comment and debate",
+      "type" : "comment/comment-and-debate"
+    },
+    "au/commentisfree/regular-stories" : {
+      "displayName" : "Comment is free",
+      "apiQuery" : "commentisfree?edition=au",
+      "type" : "comment",
+      "href" : "commentisfree",
+      "uneditable" : true
+    },
+    "us/lifeandstyle/regular-stories" : {
+      "displayName" : "Life and style",
+      "apiQuery" : "lifeandstyle?edition=us",
+      "type" : "features/section",
+      "href" : "lifeandstyle",
+      "uneditable" : true
+    },
+    "us/business/most-viewed/regular-stories" : {
+      "displayName" : "Most popular",
+      "apiQuery" : "us/business?show-most-viewed=true&show-editors-picks=false&hide-recent-content=true",
+      "type" : "news/most-popular",
+      "uneditable" : true
+    },
+    "us/commentisfree/regular-stories" : {
+      "displayName" : "Comment is free",
+      "apiQuery" : "commentisfree?edition=us",
+      "type" : "comment",
+      "href" : "commentisfree",
+      "uneditable" : true
+    },
+    "a116-350f-7099-27c4" : {
+      "displayName" : "Most popular",
+      "type" : "news/most-popular"
+    },
+    "au/sport/nrl/regular-stories" : {
+      "displayName" : "NRL",
+      "apiQuery" : "sport/nrl?edition=au",
+      "type" : "news/section",
+      "href" : "sport/nrl"
+    },
+    "au/sport/boxing/regular-stories" : {
+      "displayName" : "Boxing",
+      "apiQuery" : "sport/boxing?edition=au",
+      "type" : "news/section",
+      "href" : "sport/boxing"
+    },
+    "us-alpha/special-1/special-story" : {
+      "type" : "news/special"
+    },
+    "us/most-viewed/regular-stories" : {
+      "displayName" : "Most popular",
+      "apiQuery" : "us?show-most-viewed=true&show-editors-picks=false&hide-recent-content=true",
+      "type" : "news/most-popular",
+      "uneditable" : true
+    },
+    "74a5-12ce-c494-a1f1" : {
+      "displayName" : "Match reports",
+      "type" : "news/people"
+    },
+    "4ffe-c431-03de-3fd2" : {
+      "displayName" : "Watch this",
+      "apiQuery" : "search?tag=type%2Fvideo&section=technology",
+      "type" : "features"
+    },
+    "au-alpha/special-1/special-story" : {
+      "apiQuery" : "foobar",
+      "type" : "news/special"
+    },
+    "us/music/regular-stories" : {
+      "displayName" : "Music",
+      "apiQuery" : "music?edition=us",
+      "type" : "features/section",
+      "href" : "music"
+    },
+    "au/money/regular-stories" : {
+      "displayName" : "Money",
+      "apiQuery" : "money?edition=au",
+      "type" : "news/section",
+      "href" : "money",
+      "uneditable" : true
+    },
+    "5fcd-337f-d6d5-8810" : {
+      "displayName" : "Most popular",
+      "apiQuery" : "environment?show-most-viewed=true&show-editors-picks=false&hide-recent-content=true",
+      "type" : "news/most-popular",
+      "uneditable" : true
+    },
+    "us/business/feature-stories" : {
+      "displayName" : "Features",
+      "type" : "features"
+    },
+    "uk/sport/feature-stories" : {
+      "displayName" : "Features",
+      "type" : "features"
+    },
+    "uk-alpha/news/regular-stories" : {
+      "displayName" : "News",
+      "type" : "news",
+      "groups" : [ "standard", "big", "very big", "huge" ],
+      "isTagDisplayed" : true
+    },
+    "uk/business/regular-stories" : {
+      "displayName" : "Business",
+      "apiQuery" : "business?edition=uk",
+      "type" : "news/section",
+      "href" : "business",
+      "uneditable" : true
+    },
+    "au/film/regular-stories" : {
+      "displayName" : "Film",
+      "apiQuery" : "film?edition=au",
+      "type" : "features/section",
+      "href" : "film"
+    },
+    "au/culture/feature-stories" : {
+      "displayName" : "Features",
+      "type" : "features/section"
+    },
+    "au/culture/regular-stories" : {
+      "displayName" : "Culture",
+      "apiQuery" : "culture?edition=au",
+      "type" : "features",
+      "href" : "culture",
+      "uneditable" : true
+    },
+    "6a1f-f910-eca6-fa57" : {
+      "displayName" : "Environment",
+      "apiQuery" : "environment",
+      "type" : "features",
+      "href" : "environment"
+    },
+    "558b-3b8b-3485-d9ff" : {
+      "displayName" : "Most popular",
+      "apiQuery" : "world?show-most-viewed=true&show-editors-picks=false&hide-recent-content=true",
+      "type" : "news/most-popular",
+      "uneditable" : true
+    },
+    "us-alpha/special-other/special-story" : {
+      "displayName" : "The NSA files",
+      "type" : "news/special",
+      "href" : "world/the-nsa-files"
+    },
+    "uk/commentisfree/feature-stories" : {
+      "displayName" : "Features",
+      "type" : "features"
+    },
+    "1805-7fbf-6711-e80f" : {
+      "displayName" : "Comment",
+      "type" : "comment/comment-and-debate"
+    },
+    "40d3-41c6-e819-f2cf" : {
+      "displayName" : "Features",
+      "type" : "features"
+    },
+    "us/sport/nhl/regular-stories" : {
+      "displayName" : "NHL",
+      "apiQuery" : "sport/nhl?edition=us",
+      "type" : "news/section",
+      "href" : "sport/nhl"
+    },
+    "us/sport/feature-stories" : {
+      "displayName" : "Features",
+      "type" : "features"
+    },
+    "c66d-aa1a-e12d-fc7a" : {
+      "displayName" : "Reviews",
+      "apiQuery" : "search?tag=tone%2Freviews&section=technology",
+      "type" : "features"
+    },
+    "us/technology/games/regular-stories" : {
+      "displayName" : "Games",
+      "apiQuery" : "technology/games?edition=us",
+      "type" : "news/section",
+      "href" : "technology/games"
+    },
+    "us/sport/regular-stories" : {
+      "displayName" : "Sports",
+      "apiQuery" : "sport?edition=us",
+      "type" : "news/sport",
+      "href" : "sport"
+    },
+    "uk-alpha/people-in-the-news/feature-stories" : {
+      "displayName" : "People",
+      "type" : "news/people"
+    },
+    "au/sport/rugbyleague/regular-stories" : {
+      "displayName" : "Rugby league",
+      "apiQuery" : "sport/rugbyleague?edition=au",
+      "type" : "news/section",
+      "href" : "sport/rugbyleague"
+    },
+    "ed35-b216-d679-0480" : {
+      "displayName" : "Image hide",
+      "type" : "news",
+      "groups" : [ "standard", "big", "very big", "huge" ]
+    },
+    "us/money/most-viewed/regular-stories" : {
+      "displayName" : "Most popular",
+      "apiQuery" : "us/money?show-most-viewed=true&show-editors-picks=false&hide-recent-content=true",
+      "type" : "news/most-popular",
+      "uneditable" : true
+    },
+    "us/sport/nba/regular-stories" : {
+      "displayName" : "NBA",
+      "apiQuery" : "sport/nba?edition=us",
+      "type" : "news/section",
+      "href" : "sport/nba"
+    },
+    "us/money/feature-stories" : {
+      "displayName" : "Features",
+      "type" : "features"
+    },
+    "1975-5fe0-6b20-ee12" : {
+      "displayName" : "The week in football",
+      "apiQuery" : "football?tag=football/series/rumourmill|football/series/thefiver|football/series/you-are-the-ref|football/series/theknowledge",
+      "type" : "news/special",
+      "uneditable" : true
+    },
+    "au/lifeandstyle/regular-stories" : {
+      "displayName" : "Life and style",
+      "apiQuery" : "lifeandstyle?edition=au",
+      "type" : "features/section",
+      "href" : "lifeandstyle",
+      "uneditable" : true
+    },
+    "au/football/regular-stories" : {
+      "displayName" : "Football",
+      "apiQuery" : "football?edition=au",
+      "type" : "news/section",
+      "href" : "football"
+    },
+    "uk/money/feature-stories" : {
+      "displayName" : "Features",
+      "type" : "features"
+    },
+    "us/business/regular-stories" : {
+      "displayName" : "Business",
+      "apiQuery" : "business?edition=us",
+      "type" : "news/section",
+      "href" : "business",
+      "uneditable" : true
+    },
+    "us/commentisfree/most-viewed/regular-stories" : {
+      "displayName" : "Most popular",
+      "apiQuery" : "us/commentisfree?show-most-viewed=true&show-editors-picks=false&hide-recent-content=true",
+      "type" : "news/most-popular",
+      "uneditable" : true
+    },
+    "6076-7e22-53c7-1292" : {
+      "displayName" : "Fromage - Volume 0",
+      "type" : "news",
+      "groups" : [ "standard", "big", "very big", "huge" ]
+    },
+    "uk/technology/regular-stories" : {
+      "displayName" : "Technology",
+      "apiQuery" : "technology?edition=uk",
+      "type" : "news/section",
+      "href" : "technology",
+      "uneditable" : true
+    },
+    "au/sport/us-sport/regular-stories" : {
+      "displayName" : "US Sport",
+      "apiQuery" : "sport/us-sport?edition=au",
+      "type" : "news/section",
+      "href" : "sport/us-sport"
+    },
+    "au/sport/cycling/regular-stories" : {
+      "displayName" : "Cycling",
+      "apiQuery" : "sport/cycling?edition=au",
+      "type" : "news/section",
+      "href" : "sport/cycling"
+    },
+    "uk/lifeandstyle/regular-stories" : {
+      "displayName" : "Life and style 123",
+      "apiQuery" : "lifeandstyle?edition=uk",
+      "type" : "features/section",
+      "href" : "lifeandstyle 123",
+      "uneditable" : true
+    },
+    "uk-alpha/features/feature-stories" : {
+      "displayName" : "Features",
+      "type" : "features",
+      "href" : "tone/features"
+    },
+    "us/stage/regular-stories" : {
+      "displayName" : "Stage",
+      "apiQuery" : "stage?edition=us",
+      "type" : "features/section",
+      "href" : "stage"
+    },
+    "8185-0956-87b3-126d" : {
+      "displayName" : "Comment and debate",
+      "apiQuery" : "search?tag=tone%2Fblogpost%7Ctone%2Fcomment&section=technology",
+      "type" : "comment/comment-and-debate"
+    },
+    "uk/culture/regular-stories" : {
+      "displayName" : "Culture",
+      "apiQuery" : "culture?edition=uk",
+      "type" : "features",
+      "href" : "culture",
+      "uneditable" : true
+    },
+    "362c-e4b2-148c-dcd0" : {
+      "displayName" : "Most popular 123",
+      "apiQuery" : "technology?show-most-viewed=true&show-editors-picks=false&hide-recent-content=true",
+      "type" : "news/most-popular",
+      "uneditable" : true
+    },
+    "c531-61e2-fb9d-fcc7" : {
+      "displayName" : "Asia",
+      "apiQuery" : "search?tag=world/mongolia|world/afghanistan|world/azerbaijan|world/bangladesh|world/bhutan|world/burma|world/kazakhstan|world/kyrgyzstan|world/india|world/maldives|world/nepal|world/pakistan|world/srilanka|world/tajikistan|world/turkmenistan|world/uzbekistan|world/brunei|world/cambodia|world/china|world/indonesia|world/japan|world/laos|world/mongolia|world/malaysia|world/north-korea|world/philippines|world/singapore|world/south-korea|world/taiwan|world/thailand|world/vietnam|world/timor-leste|world/tibet",
+      "type" : "features"
+    },
+    "05d7-f9f9-c7f9-1a0b" : {
+      "displayName" : "Comment and debate",
+      "apiQuery" : "search?tag=tone%2Fblog%7Ctone%2Fcomment&section=lifeandstyle",
+      "type" : "comment/comment-and-debate"
+    },
+    "754c-8e8c-fad9-a927" : {
+      "displayName" : "Sport",
+      "type" : "news/section",
+      "href" : "sport"
+    },
+    "au-alpha/special-other/special-story" : {
+      "displayName" : "Video and photography",
+      "type" : "news/special"
+    },
+    "au/sport/afl/regular-stories" : {
+      "displayName" : "AFL",
+      "apiQuery" : "sport/afl?edition=au",
+      "type" : "news/section",
+      "href" : "sport/afl"
+    },
+    "uk/business/feature-stories" : {
+      "displayName" : "Features",
+      "type" : "features"
+    },
+    "uk/money/most-viewed/regular-stories" : {
+      "displayName" : "Most popular",
+      "apiQuery" : "uk/money?show-most-viewed=true&show-editors-picks=false&hide-recent-content=true",
+      "type" : "news/most-popular",
+      "uneditable" : true
+    },
+    "us-alpha/news/regular-stories" : {
+      "displayName" : "News",
+      "type" : "news",
+      "groups" : [ "standard", "big", "very big", "huge" ]
+    },
+    "us/technology/regular-stories" : {
+      "displayName" : "Technology",
+      "apiQuery" : "technology?edition=us",
+      "type" : "news/section",
+      "href" : "technology",
+      "uneditable" : true
+    },
+    "uk/most-viewed/regular-stories" : {
+      "displayName" : "Most popular",
+      "apiQuery" : "uk?show-most-viewed=true&show-editors-picks=false&hide-recent-content=true",
+      "type" : "news/most-popular",
+      "uneditable" : true
+    },
+    "9564-96dc-5703-f733" : {
+      "displayName" : "Video",
+      "apiQuery" : "search?tag=type%2Fvideo&section=commentisfree",
+      "type" : "news/special"
+    },
+    "uk/film/regular-stories" : {
+      "displayName" : "Film",
+      "apiQuery" : "search?tag=film/film,tone/reviews",
+      "type" : "features/section",
+      "href" : "film"
+    },
+    "us/culture/most-viewed/regular-stories" : {
+      "displayName" : "Most popular",
+      "apiQuery" : "us/culture?show-most-viewed=true&show-editors-picks=false&hide-recent-content=true",
+      "type" : "news/most-popular",
+      "uneditable" : true
+    },
+    "us/sport/mls/regular-stories" : {
+      "displayName" : "MLS",
+      "apiQuery" : "football/mls?edition=us",
+      "type" : "news/section",
+      "href" : "sport/mls"
+    },
+    "6558-f6eb-d84c-4da4" : {
+      "displayName" : "Love and Sex",
+      "apiQuery" : "search?tag=lifeandstyle/sex|lifeandstyle/relationships",
+      "type" : "features",
+      "href" : "loveandsex"
+    },
+    "us-alpha/features/feature-stories" : {
+      "displayName" : "On the Guardian",
+      "type" : "features"
+    },
+    "8ce7-9d02-90ca-bf43" : {
+      "displayName" : "Watch now",
+      "apiQuery" : "search?tag=football/football,type/video",
+      "type" : "features",
+      "uneditable" : true
+    },
+    "b417-e37f-9e55-d0a3" : {
+      "displayName" : "Cartoons",
+      "apiQuery" : "search?tag=theguardian%2Fseries%2Fguardiancommentcartoon",
+      "type" : "news/special"
+    },
+    "au-alpha/features/feature-stories" : {
+      "displayName" : "Features",
+      "type" : "features"
+    },
+    "uk/technology/games/regular-stories" : {
+      "displayName" : "Games",
+      "apiQuery" : "technology/games?edition=uk",
+      "type" : "news/section",
+      "href" : "technology/games"
+    },
+    "uk-alpha/special-1/special-story" : {
+      "type" : "news/special"
+    },
+    "au/sport/motorsports/regular-stories" : {
+      "displayName" : "Motorsports",
+      "apiQuery" : "sport/motorsports?edition=au",
+      "type" : "news/section",
+      "href" : "sport/motorsports"
+    },
+    "2974-f1f5-ac63-09f9" : {
+      "displayName" : "People",
+      "type" : "news/people"
+    },
+    "au/most-viewed/regular-stories" : {
+      "displayName" : "Most popular",
+      "apiQuery" : "au?show-most-viewed=true&show-editors-picks=false&hide-recent-content=true",
+      "type" : "news/most-popular",
+      "uneditable" : true
+    },
+    "uk/sport/most-viewed/regular-stories" : {
+      "displayName" : "Most popular",
+      "apiQuery" : "uk/sport?show-most-viewed=true&show-editors-picks=false&hide-recent-content=true",
+      "type" : "news/most-popular",
+      "uneditable" : true
+    },
+    "au/technology/regular-stories" : {
+      "displayName" : "Technology",
+      "apiQuery" : "technology?edition=au",
+      "type" : "news/section",
+      "href" : "technology",
+      "uneditable" : true
+    },
+    "uk/money/regular-stories" : {
+      "displayName" : "Money",
+      "apiQuery" : "money?edition=uk",
+      "type" : "news/section",
+      "href" : "money"
+    },
+    "a0c4-3c89-a432-aa0a" : {
+      "displayName" : "Opinion and analysis",
+      "apiQuery" : "sport/blog?section=football",
+      "type" : "comment/comment-and-debate"
+    },
+    "f6dd-d7b1-0e85-4650" : {
+      "displayName" : "Sports",
+      "type" : "news/section"
+    },
+    "uk/artanddesign/regular-stories" : {
+      "displayName" : "Art and design",
+      "apiQuery" : "artanddesign?edition=uk",
+      "type" : "features/section",
+      "href" : "artanddesign"
+    },
+    "us/culture/feature-stories" : {
+      "displayName" : "Features",
+      "type" : "features"
+    },
+    "b6d2-ab5f-7af8-8fc0" : {
+      "displayName" : "Most popular",
+      "apiQuery" : "football?show-most-viewed=true&show-editors-picks=false&hide-recent-content=true",
+      "type" : "news/most-popular"
+    },
+    "au-alpha/news/regular-stories" : {
+      "displayName" : "News",
+      "apiQuery" : "uk-news",
+      "type" : "news",
+      "groups" : [ "standard", "big", "very big", "huge" ]
+    },
+    "7d2c-a2a3-f7a9-e361" : {
+      "displayName" : "In pictures",
+      "apiQuery" : "search?tag=type%2Fgallery%2C-fashion&section=lifeandstyle",
+      "type" : "news/special"
+    },
+    "e874-80f7-9f67-1afc" : {
+      "displayName" : "Most popular",
+      "apiQuery" : "lifeandstyle?show-most-viewed=true&show-editors-picks=false&hide-recent-content=true",
+      "type" : "news/most-popular",
+      "uneditable" : true
+    },
+    "au/sport/most-viewed/regular-stories" : {
+      "displayName" : "Most popular",
+      "apiQuery" : "au/sport?show-most-viewed=true&show-editors-picks=false&hide-recent-content=true",
+      "type" : "news/most-popular",
+      "uneditable" : true
+    }
+  }
+}

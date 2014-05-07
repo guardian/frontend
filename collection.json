@@ -1,0 +1,62 @@
+{
+  "id" : "uk/news/feature-stories",
+  "live" : [ {
+    "id" : "world/shortcuts/2013/dec/03/chimpanzees-human-rights-us-lawyer",
+    "meta" : {
+      "group" : "0"
+    }
+  }, {
+    "id" : "fashion/2013/dec/03/how-to-have-a-stylish-christmas",
+    "meta" : {
+      "group" : "0"
+    }
+  }, {
+    "id" : "environment/2013/dec/03/fukushima-daiichi-tsunami-nuclear-cleanup-japan",
+    "meta" : {
+      "group" : "0"
+    }
+  }, {
+    "id" : "books/2013/dec/03/manil-suri-wins-bad-sex-book-award-city-of-devi",
+    "meta" : {
+      "group" : "0"
+    }
+  }, {
+    "id" : "commentisfree/2013/dec/04/ethical-kill-deer-badgers-conservationists-wildlife",
+    "meta" : {
+      "group" : "0"
+    }
+  }, {
+    "id" : "society/2013/dec/03/tom-daley-new-way-to-come-out",
+    "meta" : {
+      "group" : "0"
+    }
+  }, {
+    "id" : "film/2013/dec/03/class-92-trebles-round-manchester-united-alex-ferguson",
+    "meta" : {
+      "group" : "0"
+    }
+  }, {
+    "id" : "science/brain-flapping/2013/dec/04/male-female-brains-real-differences",
+    "meta" : {
+      "group" : "0"
+    }
+  }, {
+    "id" : "world/2013/dec/03/person-of-year-2013-who-gets-your-vote",
+    "meta" : {
+      "group" : "0"
+    }
+  }, {
+    "id" : "commentisfree/2013/dec/03/elan-gale-internet-hoax-rotten-online-lives",
+    "meta" : {
+      "group" : "0"
+    }
+  }, {
+    "id" : "science/shortcuts/2013/dec/03/how-to-remember-strangers-names-experts-guide",
+    "meta" : {
+      "group" : "0"
+    }
+  } ],
+  "lastUpdated" : "2013-12-04T11:34:39.614Z",
+  "updatedBy" : "Simon Jeffery",
+  "updatedEmail" : "simon.jeffery@guardian.co.uk"
+}
