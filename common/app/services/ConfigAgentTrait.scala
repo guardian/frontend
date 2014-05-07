@@ -55,8 +55,8 @@ trait ConfigAgentTrait extends ExecutionContexts {
         (collectionJson \ "href").asOpt[String],
         (collectionJson \ "groups").asOpt[Seq[String]] getOrElse Nil,
         (collectionJson \ "type").asOpt[String],
-        (collectionJson \ "isTagDisplayed").asOpt[Boolean] getOrElse false,
-        (collectionJson \ "isSectionNameDisplayed").asOpt[Boolean] getOrElse false
+        (collectionJson \ "showTags").asOpt[Boolean] getOrElse false,
+        (collectionJson \ "showSections").asOpt[Boolean] getOrElse false
       )
     }
   }
