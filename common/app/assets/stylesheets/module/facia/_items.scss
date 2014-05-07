@@ -307,6 +307,9 @@
         margin-bottom: 0; // Some trail texts are wrapped in a paragraph
     }
 }
+.item__tag {
+  @include fs-textsans(1);
+}
 .item__meta {
     position: absolute;
     bottom: 0;

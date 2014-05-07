@@ -1,0 +1,8 @@
+@(content: model.Content)(implicit request: RequestHeader)
+
+<div class="item__tag tone-colour">
+    @content.tags.take(1).map { s =>
+        @s.name
+    }
+    | @content.sectionName
+</div>

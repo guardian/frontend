@@ -13,6 +13,7 @@
         @defining(items.diff(baguetteItems)) { items =>
 
             @items.headOption.map{ trail =>
+                    // fromage here
                 <div class="collection-wrapper">
                     @if(!trail.group.isEmpty){ @* Means this is a curated container *@
                         @fragments.items.fromage(trail, baguetteCount)

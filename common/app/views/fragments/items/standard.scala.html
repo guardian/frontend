@@ -17,6 +17,8 @@
             <a @LinkTo(trail).map{url=>href=@url} class="item__link tone-accent-border" data-link-name="article">
                 @fragments.items.elements.image(trail, inlineImage = containerIndex == 0 && index < 4)
 
+                @trail match { case content:model.Content => @fragments.items.elements.tagOrSection(content) }
+
                 @trail match { case content:model.Content => @fragments.items.starRating(content) }
 
                 @fragments.items.elements.title(trail, index, containerIndex)
