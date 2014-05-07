@@ -47,6 +47,64 @@
     }
 }
 
+figure.element.element--supporting {
+
+    @include mq(leftCol) {
+        @include deport-left;
+        position: relative;
+        float: left;
+
+        @include rem((
+            width: gs-span(5),
+            margin-top: $gs-baseline/2,
+            margin-bottom: $gs-baseline,
+            margin-right: $gs-gutter
+        ));
+    }
+
+    @include mq(wide) {
+        @include rem((
+            width: gs-span(6)
+        ));
+    }
+}
+
+figure.element.element--showcase {
+
+    @include mq(leftCol) {
+        @include deport-left;
+        position: relative;
+
+        @include rem((
+            margin-bottom: ($gs-baseline/3)*4
+        ));
+    }
+}
+
+figure.element.element--showcase,
+figure.element.element--supporting {
+
+    figcaption {
+        @include mq(leftCol) {
+            background: #ffffff;
+            padding-left: 0;
+            position: absolute;
+            top: 100%;
+
+            @include rem((
+                padding-top: 21px
+            ));
+            @include reduce-left;
+        }
+    }
+}
+
+figure.element.element--supporting.element-tweet {
+    @include rem((
+        margin-top: -$gs-baseline/2
+    ));
+}
+
 figure {
     &.img--supporting {
         @include mq(leftCol) {
