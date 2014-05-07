@@ -572,6 +572,7 @@ case class DropCaps(isFeature: Boolean) extends HtmlCleaner {
       }
     }
     document
+
   }
 }
 
