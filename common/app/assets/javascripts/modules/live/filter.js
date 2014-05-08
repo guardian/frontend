@@ -44,7 +44,7 @@ define([
         this.toggleState('order-by-oldest');
         $(this.context).prepend(blocks);
 
-        mediator.emit('module:filter:toggle');
+        mediator.emit('module:filter:toggle', this.hasState('order-by-oldest'));
     };
 
     return Filter;
