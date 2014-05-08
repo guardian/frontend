@@ -332,8 +332,8 @@ Comments.prototype.loadMore = function(e) {
  */
 Comments.prototype.fetchComments = function(options) {
     var url =
-        '/discussion/'+ this.options.order + this.options.discussionId +'.json?' +
-        (options.page ? '&page='+ options.page : '') +
+        '/discussion/' + this.options.order + this.options.discussionId + '.json?' +
+        (options.page ? '&page=' + options.page : '') +
         '&maxResponses=3';
 
 
