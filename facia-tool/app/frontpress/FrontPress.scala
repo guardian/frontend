@@ -51,18 +51,23 @@ trait FrontPress extends Logging {
   private lazy implicit val frontPressContext = Akka.system.dispatchers.lookup("play.akka.actor.front-press")
 
   def generateJson(id: String): Future[JsObject] = {
-    val seoData: SeoData = FaciaToolConfigAgent.getSeoData(id)
-    retrieveFrontByPath(id)
-      .map(_.map{case (config, collection) =>
-        Json.obj(
-          config.id -> generateCollectionJson(config, collection)
-        )})
-      .map(_.foldLeft(Json.arr()){case (l, jsObject) => l :+ jsObject})
-      .map( c =>
-        Json.obj("id" -> id) ++
-        Json.obj("seoData" -> seoData) ++
-        Json.obj("collections" -> c)
-      )
+    val futureSeoData: Future[SeoData] = FaciaToolConfigAgent.getSeoData(id)
+    futureSeoData.flatMap { seoData =>
+        retrieveFrontByPath(id).map(_.map {
+          case (config, collection) =>
+            Json.obj(
+              config.id -> generateCollectionJson(config, collection)
+            )
+        })
+          .map(_.foldLeft(Json.arr()) {
+          case (l, jsObject) => l :+ jsObject
+        })
+          .map(c =>
+          Json.obj("id" -> id) ++
+            Json.obj("seoData" -> seoData) ++
+            Json.obj("collections" -> c)
+          )
+    }
   }
 
   private def retrieveFrontByPath(id: String): Future[Iterable[(Config, Collection)]] = {
