@@ -829,7 +829,7 @@ object GetClasses {
   }
 
   def makeSnapClasses(trail: Trail): Seq[String] = trail match {
-    case snap: Snap => "facia-snap" +: snap.snapType.map(t => Seq(s"facia-snap--$t")).getOrElse(Seq("facia-snap--default"))
+    case snap: Snap => "facia-snap" +: snap.snapCss.map(t => Seq(s"facia-snap--$t")).getOrElse(Seq("facia-snap--default"))
     case _  => Nil
   }
 

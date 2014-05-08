@@ -306,6 +306,7 @@ class Snap(snapId: String,
 ) extends Content(new ApiContentWithMeta(SnapApiContent, supporting = snapSupporting, metaData = snapMeta)) {
 
   val snapType: Option[String] = snapMeta.get("snapType").flatMap(_.asOpt[String])
+  val snapCss: Option[String] = snapMeta.get("snapCss").flatMap(_.asOpt[String])
   val snapUri: Option[String] = snapMeta.get("snapUri").flatMap(_.asOpt[String])
 
   lazy val snapUrl: Option[String] = snapMeta.get("href").flatMap(_.asOpt[String])
