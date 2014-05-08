@@ -52,6 +52,7 @@ define([
                 'isBreaking',
                 'group',
                 'snapType',
+                'snapCss',
                 'snapUri']);
 
             this.state = asObservableProps([
