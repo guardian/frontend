@@ -86,6 +86,7 @@ trait ConfigAgentTrait extends ExecutionContexts with Logging {
   }
 
   def getSeoData(path: String): Future[SeoData] = {
+    lazy val seoDataFromPath: SeoData = SeoData.fromPath(path)
     val seoDataWithWebTitle = for {
       seoData <- getSeoDataFromConfig(path)
       webTitle <- seoData.webTitle
@@ -104,9 +105,11 @@ trait ConfigAgentTrait extends ExecutionContexts with Logging {
           Option(SeoData.titleFromWebTitle(contentApiWebTitle)),
           Option(SeoData.descriptionFromWebTitle(contentApiWebTitle))
         )
-    }.getOrElse(SeoData.fromPath(path))}).recover{ case _ =>
+    }.getOrElse(seoDataFromPath)}).recover
+    { case _ =>
       log.info(s"Using FromPath for $path")
-      SeoData.fromPath(path)}
+      seoDataFromPath
+    }
   }
 
   private def getSectionOrTagWebTitle(id: String): Future[Option[String]] =
