@@ -19,7 +19,7 @@
 
                 @trail match { case content:model.Content => @fragments.items.elements.tagOrSection(content) }
 
-                @trail match { case content:model.Content => @fragments.items.starRating(content) }
+                @trail match { case content:model.Content => @fragments.items.elements.starRating(content) }
 
                 @fragments.items.elements.title(trail, index, containerIndex)
             </a>

@@ -54,7 +54,7 @@
 
             @trail.trailText.map { text =>
                 <div class="fromage__standfirst">@Html(text)
-                    @trail match { case content:model.Content => @fragments.items.starRating(content) }
+                    @trail match { case content:model.Content => @fragments.items.elements.starRating(content) }
                 </div>
             }
 
