@@ -87,29 +87,19 @@ trait ConfigAgentTrait extends ExecutionContexts with Logging {
 
   def getSeoData(path: String): Future[SeoData] = {
     lazy val seoDataFromPath: SeoData = SeoData.fromPath(path)
-    val seoDataWithWebTitle = for {
+    (for {
       seoData <- getSeoDataFromConfig(path)
-      webTitle <- seoData.webTitle
-    } yield seoData.copy(
-      title = seoData.title.orElse(Option(SeoData.titleFromWebTitle(webTitle))),
-      description = seoData.description.orElse(Option(SeoData.descriptionFromWebTitle(webTitle)))
-    )
-    seoDataWithWebTitle
-      .map(Future.successful)
-      .getOrElse(getSectionOrTagWebTitle(path).map { _.map { contentApiWebTitle =>
-        log.info(s"Using contentApiWebTitle $contentApiWebTitle")
-        SeoData(
-          path,
-          Option(contentApiWebTitle),
-          Option(contentApiWebTitle),
-          Option(SeoData.titleFromWebTitle(contentApiWebTitle)),
-          Option(SeoData.descriptionFromWebTitle(contentApiWebTitle))
+    } yield {
+      getSectionOrTagWebTitle(path).fallbackTo(Future.successful(None)).map { maybeWebTitle: Option[String] =>
+        val webTitle = maybeWebTitle.orElse(seoDataFromPath.webTitle)
+        seoData.copy(
+          section     = seoData.section.orElse(maybeWebTitle.orElse(seoDataFromPath.section)),
+          webTitle    = seoData.webTitle.orElse(maybeWebTitle.orElse(seoDataFromPath.webTitle)),
+          title       = seoData.title.orElse(webTitle.map(SeoData.titleFromWebTitle)).orElse(seoDataFromPath.title),
+          description = seoData.description.orElse(webTitle.map(SeoData.descriptionFromWebTitle)).orElse(seoDataFromPath.description)
         )
-    }.getOrElse(seoDataFromPath)}).recover
-    { case _ =>
-      log.info(s"Using FromPath for $path")
-      seoDataFromPath
-    }
+      }
+    }).getOrElse(Future.successful(seoDataFromPath))
   }
 
   private def getSectionOrTagWebTitle(id: String): Future[Option[String]] =
