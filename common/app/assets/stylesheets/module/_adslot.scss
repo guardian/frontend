@@ -229,8 +229,14 @@
         .ad-slot--paid-for-badge__logo {
             display: block;
         }
-        + .container__body .collection-wrapper:first-child .fromage {
-            border-top-width: 2px;
+        + .container__body {
+            @include rem((
+                margin-top: $gs-baseline/2
+            ));
+
+            .collection-wrapper:first-child .fromage {
+                border-top-width: 2px;
+            }
         }
         @include mq(tablet) {
             margin-left: 50%;
@@ -267,15 +273,6 @@
         @include mq(wide) {
             clear: left;
         }
-    }
-}
-// can be removed once we dynamically add the sponsored badge ad slot to fronts
-.dfp-badge-container {
-    display: none;
-    border-bottom: 2px solid $c-newsAccent;
-
-    @include mq(faciaLeftCol) {
-        border-bottom: 0;
     }
 }
 .ad-slot__label {
