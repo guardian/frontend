@@ -8,7 +8,8 @@ import football.model.CompetitionStage
 
 
 object WallchartController extends Controller with Logging with ExecutionContexts {
-  def renderWallchart(competitionTag: String) = Action { implicit request =>
+  def renderWallchartEmbed(competitionTag: String) = renderWallchart(competitionTag, true)
+  def renderWallchart(competitionTag: String, embed: Boolean = false) = Action { implicit request =>
     Competitions().withTag(competitionTag).map { competition =>
       val page = new Page(
         competition.url.stripSuffix("/"),
@@ -17,8 +18,10 @@ object WallchartController extends Controller with Logging with ExecutionContext
         "GFE:Football:automatic:wallchart"
       )
       val competitionStages = CompetitionStage.stagesFromCompetition(competition)
+
       Cached(300) {
-        Ok(football.views.html.wallchart.wallchart(page, competition, competitionStages))
+        if(embed) Ok(football.views.html.wallchart.embed(page, competition, competitionStages))
+        else Ok(football.views.html.wallchart.page(page, competition, competitionStages))
       }
     }.getOrElse(NotFound)
   }

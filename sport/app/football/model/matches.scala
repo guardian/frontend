@@ -132,7 +132,7 @@ case class CompetitionMatchDayList(competitions: CompetitionSupport, competition
   override def filterMatches(fMatch: FootballMatch, competition: Competition): Boolean =
     fMatch.date.toDateMidnight == date && competition.id == competitionId
 }
-case class CompetitionGroupMatchesList(competitions: CompetitionSupport, competition: Competition, round: Round) extends MatchDays {
+case class CompetitionRoundMatchesList(competitions: CompetitionSupport, competition: Competition, round: Round) extends MatchDays {
   override val daysToDisplay = 1000
   override lazy val date = competition.startDate.getOrElse(DateMidnight.now)
   override def filterMatches(fMatch: FootballMatch, matchCompetition: Competition): Boolean =

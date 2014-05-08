@@ -1,0 +1,6 @@
+@(page: Page, competition: model.Competition, competitionStages: List[_root_.football.model.CompetitionStage])(implicit request: RequestHeader)
+
+@main(page, "football"){
+}{
+    @wallchart(competition, competitionStages)
+}

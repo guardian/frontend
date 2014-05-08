@@ -1,55 +1,52 @@
-@(page: Page, competition: model.Competition, competitionStages: List[_root_.football.model.CompetitionStage])(implicit request: RequestHeader)
+@(competition: model.Competition, competitionStages: List[_root_.football.model.CompetitionStage])(implicit request: RequestHeader)
 
-@main(page, "football"){
-}{
-    @competitionStages.map {
-        case knockoutStage: _root_.football.model.Knockout => {
-            <div class="facia-container facia-container--layout-article monocolumn-wrapper monocolumn-wrapper--no-limit">
-                <div class="container container--row-pattern">
-                    <div class="container__border tone-news tone-accent-border hide-on-mobile"></div>
-                    <h2 class="container__title tone-news">
-                        <span class="container__title__label u-text-hyphenate">Knockout stages</span>
-                    </h2>
-                    <div class="container__body">
-                        <div data-link-name="@competition.fullName knockout chart">
-                            @football.views.html.wallchart.knockout(competition, knockoutStage)
-                        </div>
+@competitionStages.map {
+    case knockoutStage: _root_.football.model.Knockout => {
+        <div class="facia-container facia-container--layout-article monocolumn-wrapper monocolumn-wrapper--no-limit">
+            <div class="container container--row-pattern">
+                <div class="container__border tone-news tone-accent-border hide-on-mobile"></div>
+                <h2 class="container__title tone-news">
+                    <span class="container__title__label u-text-hyphenate">Knockout stages</span>
+                </h2>
+                <div class="container__body">
+                    <div data-link-name="@competition.fullName knockout chart">
+                        @football.views.html.wallchart.knockout(competition, knockoutStage)
                     </div>
                 </div>
             </div>
-        }
-        case groupStage:  _root_.football.model.Groups => {
-            <div class="facia-container facia-container--layout-article monocolumn-wrapper monocolumn-wrapper--no-limit">
-                <div class="container container--row-pattern">
-                    <div class="container__border tone-news tone-accent-border hide-on-mobile"></div>
-                    <h2 class="container__title tone-news">
-                        <span class="container__title__label u-text-hyphenate">Groups</span>
-                    </h2>
-                    <div class="container__body">
-                        <div data-link-name="@competition.fullName groups">
-                            @football.views.html.wallchart.groups(competition, groupStage)
-                        </div>
+        </div>
+    }
+    case groupStage:  _root_.football.model.Groups => {
+        <div class="facia-container facia-container--layout-article monocolumn-wrapper monocolumn-wrapper--no-limit">
+            <div class="container container--row-pattern">
+                <div class="container__border tone-news tone-accent-border hide-on-mobile"></div>
+                <h2 class="container__title tone-news">
+                    <span class="container__title__label u-text-hyphenate">Groups</span>
+                </h2>
+                <div class="container__body">
+                    <div data-link-name="@competition.fullName groups">
+                        @football.views.html.wallchart.groups(competition, groupStage)
                     </div>
                 </div>
             </div>
-        }
-        case leagueStage:  _root_.football.model.League => {
-            <div class="facia-container facia-container--layout-article monocolumn-wrapper monocolumn-wrapper--no-limit">
-                <div class="container container--row-pattern">
-                    <div class="container__border tone-news tone-accent-border hide-on-mobile"></div>
-                    <h2 class="container__title tone-news">
-                        <span class="container__title__label u-text-hyphenate">Leagues</span>
-                    </h2>
-                    <div class="container__body">
-                        <div data-link-name="@competition.fullName leagues">
-                            @football.views.html.wallchart.league(competition, leagueStage)
-                        </div>
+        </div>
+    }
+    case leagueStage:  _root_.football.model.League => {
+        <div class="facia-container facia-container--layout-article monocolumn-wrapper monocolumn-wrapper--no-limit">
+            <div class="container container--row-pattern">
+                <div class="container__border tone-news tone-accent-border hide-on-mobile"></div>
+                <h2 class="container__title tone-news">
+                    <span class="container__title__label u-text-hyphenate">Leagues</span>
+                </h2>
+                <div class="container__body">
+                    <div data-link-name="@competition.fullName leagues">
+                        @football.views.html.wallchart.league(competition, leagueStage)
                     </div>
                 </div>
             </div>
-        }
-        case _ => {
-            <p>Unexpected stage</p>
-        }
+        </div>
+    }
+    case _ => {
+        <p>Unexpected stage</p>
     }
 }

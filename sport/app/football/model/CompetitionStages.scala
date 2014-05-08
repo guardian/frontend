@@ -53,8 +53,10 @@ object CompetitionStage {
 
 case class League(matches: List[FootballMatch], leagueTable: Seq[LeagueTableEntry], round: Round) extends CompetitionStage
 
-case class Knockout(matches: List[FootballMatch], rounds: List[Round]) extends CompetitionStage
+case class Knockout(matches: List[FootballMatch], rounds: List[Round]) extends CompetitionStage {
+  def matchesList(competition: Competition, round: Round) = CompetitionRoundMatchesList(Competitions(), competition, round)
+}
 
 case class Groups(matches: List[FootballMatch], groupTables: List[(Round, Seq[LeagueTableEntry])]) extends CompetitionStage {
-  def matchesList(competition: Competition, round: Round) = CompetitionGroupMatchesList(Competitions(), competition, round)
+  def matchesList(competition: Competition, round: Round) = CompetitionRoundMatchesList(Competitions(), competition, round)
 }
