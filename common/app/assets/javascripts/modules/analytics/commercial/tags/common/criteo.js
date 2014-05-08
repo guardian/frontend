@@ -3,12 +3,14 @@ define([
     'common/$',
     'common/utils/cookies',
     'common/utils/config',
+    'lodash/objects/defaults',
     'lodash/objects/pairs'
 ], function (
     qwery,
     $,
     cookies,
-    config,
+    globalConfig,
+    _defaults,
     _pairs
 ) {
 
@@ -20,7 +22,7 @@ define([
     function getSegments() {
         var result = {};
 
-        if (config.switches.criteo) {
+        if (globalConfig.switches.criteo) {
             var criteoSegmentString = cookies.get(cookieName);
             if (criteoSegmentString !== null) {
                 var criteoSegments = decodeURIComponent(criteoSegmentString).split('&');
@@ -34,7 +36,15 @@ define([
         return result;
     }
 
-    function load() {
+    function load(config) {
+        config = _defaults(
+            config || {},
+            globalConfig,
+            {
+                switches: {}
+            }
+        );
+
         if (config.switches.criteo) {
             var params = _pairs({
                     netid: nId,
@@ -46,6 +56,7 @@ define([
                     .map(function (pair) { return pair.join('='); })
                     .join('&');
             var script = document.createElement('script');
+            script.className = 'criteo-script';
             script.type = 'text/javascript';
             script.src = criteoScript + '?' + params;
             script.async = true;
