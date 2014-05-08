@@ -14,7 +14,8 @@ import concurrent.FutureOpt
 
 
 object FrontsController extends Controller with ExecutionContexts with GetPaClient {
-  val SNAP_TYPE = "football"
+  val SNAP_TYPE = "json.html"
+  val SNAP_CSS = "football"
 
   def index = Action.async { implicit request =>
     for {
@@ -25,7 +26,7 @@ object FrontsController extends Controller with ExecutionContexts with GetPaClie
   }
 
   def matchDay = Action.async { implicit request =>
-    val snapFields = SnapFields(SNAP_TYPE, s"$host/football/live.json", s"${Configuration.site.host}/football/live", "Live matches", "Today's matches")
+    val snapFields = SnapFields(SNAP_TYPE, SNAP_CSS, s"$host/football/live.json", s"${Configuration.site.host}/football/live", "Live matches", "Today's matches")
     previewFrontsComponent(snapFields)
   }
 
@@ -38,13 +39,13 @@ object FrontsController extends Controller with ExecutionContexts with GetPaClie
   def results(competitionId: String) = Action.async { implicit request =>
     val foResult =
       if ("all" == competitionId) {
-        val snapFields = SnapFields(SNAP_TYPE, s"$host/football/results.json", s"${Configuration.site.host}/football/results", "Results", "View the full results from today's matches")
+        val snapFields = SnapFields(SNAP_TYPE, SNAP_CSS, s"$host/football/results.json", s"${Configuration.site.host}/football/results", "Results", "View the full results from today's matches")
         FutureOpt.fromFuture(previewFrontsComponent(snapFields))
       } else {
         for {
           season <- getCompetition(competitionId)
           competitionName = PA.competitionName(season)
-          snapFields = SnapFields(SNAP_TYPE, s"$host/football/$competitionId/results.json", s"${Configuration.site.host}/football/results", s"$competitionName results", s"View the full results from today's $competitionName matches")
+          snapFields = SnapFields(SNAP_TYPE, SNAP_CSS, s"$host/football/$competitionId/results.json", s"${Configuration.site.host}/football/results", s"$competitionName results", s"View the full results from today's $competitionName matches")
           previewContent <- FutureOpt.fromFuture(previewFrontsComponent(snapFields))
         } yield previewContent
       }
@@ -60,13 +61,13 @@ object FrontsController extends Controller with ExecutionContexts with GetPaClie
   def fixtures(competitionId: String) = Action.async { implicit request =>
     val foResult =
       if ("all" == competitionId) {
-        val snapFields = SnapFields(SNAP_TYPE, s"$host/football/fixtures.json", s"${Configuration.site.host}/football/fixtures", "Upcoming fixtures", "See which teams are up against each other")
+        val snapFields = SnapFields(SNAP_TYPE, SNAP_CSS, s"$host/football/fixtures.json", s"${Configuration.site.host}/football/fixtures", "Upcoming fixtures", "See which teams are up against each other")
         FutureOpt.fromFuture(previewFrontsComponent(snapFields))
       } else {
         for {
           season <- getCompetition(competitionId)
           competitionName = PA.competitionName(season)
-          snapFields = SnapFields(SNAP_TYPE, s"$host/football/$competitionId/fixtures.json", s"${Configuration.site.host}/football/fixtures", s"$competitionName upcoming fixtures", s"See which $competitionName teams are up against each other")
+          snapFields = SnapFields(SNAP_TYPE, SNAP_CSS, s"$host/football/$competitionId/fixtures.json", s"${Configuration.site.host}/football/fixtures", s"$competitionName upcoming fixtures", s"See which $competitionName teams are up against each other")
           previewContent <- FutureOpt.fromFuture(previewFrontsComponent(snapFields))
         } yield previewContent
       }
@@ -84,7 +85,7 @@ object FrontsController extends Controller with ExecutionContexts with GetPaClie
       for {
         season <- getCompetition(competitionId)
         competitionName = PA.competitionName(season)
-        snapFields = SnapFields(SNAP_TYPE, s"$host/football/$competitionId/table.json", s"${Configuration.site.host}/football/tables", s"$competitionName table", s"View the full standing for the $competitionName")
+        snapFields = SnapFields(SNAP_TYPE, SNAP_CSS, s"$host/football/$competitionId/table.json", s"${Configuration.site.host}/football/tables", s"$competitionName table", s"View the full standing for the $competitionName")
         previewContent <- FutureOpt.fromFuture(previewFrontsComponent(snapFields))
       } yield previewContent
     foResult.getOrElse(throw new RuntimeException(s"Competition $competitionId not found"))

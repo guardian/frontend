@@ -1,6 +1,6 @@
 @(items: Seq[Trail], style: PeopleContainer, containerIndex: Int)(implicit request: RequestHeader, config: Config)
 
-<div class="collection-wrapper collection-wrapper--position-1">
+<div class="facia-slice-wrapper facia-slice-wrapper--position-1">
     <ul class="u-unstyled l-row l-row--items-3 collection">
         @items.slice(0, 3).zipWithIndex.map{ case (trail, index) =>
             @fragments.collections.items.standard(trail, index, containerIndex)
@@ -10,7 +10,7 @@
 
 @defining(items.slice(3, 11)) { items =>
     @if(items.nonEmpty) {
-        <div class="linkslist-container tone-@{style.tone} collection-wrapper--ad">
+        <div class="linkslist-container tone-@{style.tone} facia-slice-wrapper--ad">
             <ul class="l-columns linkslist features__columns">
                 @items.zipWithIndex.map{ case (trail, index) =>
                     @trail match {

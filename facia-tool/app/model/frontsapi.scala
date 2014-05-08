@@ -61,7 +61,7 @@ case class CollectionMetaUpdate(
 trait UpdateActions extends Logging {
 
   val collectionCap: Int = Configuration.facia.collectionCap
-  val itemMetaWhitelistFields: Seq[String] = Seq("headline", "href", "snapType", "snapUri", "trailText", "group", "supporting", "imageAdjust", "isBreaking", "updatedAt")
+  val itemMetaWhitelistFields: Seq[String] = Seq("headline", "href", "snapType", "snapCss", "snapUri", "trailText", "group", "supporting", "imageAdjust", "isBreaking", "updatedAt")
   
   implicit val collectionMetaWrites = Json.writes[CollectionMetaUpdate]
   implicit val updateListWrite = Json.writes[UpdateList]

@@ -155,7 +155,7 @@
         left: gs-span(15) + $gs-gutter;
     }
 }
-.collection {
+.facia-slice {
     font-size: 0;
     overflow: hidden;
     @include rem((
@@ -297,8 +297,8 @@
 }
 .item__standfirst {
     display: none;
-    margin: 20px 0 0;
     @include rem((
+        margin: $gs-baseline 0 0,
         font-size: 14px,
         line-height: 18px
     ));
@@ -550,27 +550,4 @@ $show-more-icon: (
 }
 .container--rolled-up .container--rolled-up-hide {
     display: none;
-}
-
-
-// Thumbnail element order:
-// 1. Title
-// 2. Image + standfirst
-// 3. Meta
-
-.item--thumbnail {
-    .item__standfirst {
-        display: block;
-        @include rem((
-            margin-top: 2px
-        ));
-    }
-    .item__media-wrapper {
-        float: left;
-        clear: both;
-
-        @include rem((
-            margin-right: $gs-gutter/2
-        ));
-    }
 }
