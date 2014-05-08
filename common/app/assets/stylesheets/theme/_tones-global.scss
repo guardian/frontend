@@ -3,8 +3,8 @@
 @include tone-global(news, $c-newsDefault, $c-newsAccent);
 @include tone-global(comment, $c-commentDefault, $c-commentAccent);
 @include tone-global(feature, $c-featureDefault, $c-featureAccent);
-@include tone-head-background(feature, $c-featureDefault, $c-featureAccent2, #fff, white);
-@include tone-head-background(comment, $c-commentAccent, $c-commentAccent2, #333, dark-grey);
+@include tone-head-background(feature, $c-featureDefault, $c-featureAccent2, #fff, 'white');
+@include tone-head-background(comment, $c-commentAccent, $c-commentAccent2, #333, 'dark-grey');
 
 // Exceptions to override mixins
 

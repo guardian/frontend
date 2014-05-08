@@ -797,25 +797,27 @@
 }
 
 .drop-cap {
+    float: left;
+    text-transform: uppercase;
+    @include f-headline;
+    font-weight: 200;
 
-    @include mq($to: tablet) {
-      float: left;
-      font-size: 5.2rem;
-      height: 20px;
-      ppadding: 11px 4px 12px 0px;
-      font-weight: 200;
-    }
-}
 
-.drop-cap--wide {
+    @include font-size(52px, 46px);
+    @include rem((
+        height: 46px,
+        padding: 0 4px 0 0
+    ));
 
     @include mq($from: tablet) {
-      float: left;
-      font-size: 8.5rem;
-      height: 20px;
-      padding: 24px 5px 12px 0px;
-      font-weight: 200;
+        &.drop-cap--wide {
+            @include font-size(85px, 70px);
+            @include rem((
+                height: 70px,
+                padding-right: 5px
+            ));
+
+
+        }
     }
 }
-
-
