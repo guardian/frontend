@@ -28,7 +28,9 @@ trait FrontPress extends Logging {
     updatedBy:    Option[String],
     updatedEmail: Option[String],
     groups:       Option[Seq[String]],
-    href:         Option[String]
+    href:         Option[String],
+    showTags:     Boolean,
+    showSections: Boolean
   )
   case class ItemMeta
   (
@@ -94,7 +96,9 @@ trait FrontPress extends Logging {
         updatedEmail   = collection.updatedEmail,
         groups         = Option(config.groups).filter(_.nonEmpty),
         href           = collection.href.orElse(config.href),
-        `type`         = config.collectionType
+        `type`         = config.collectionType,
+        showTags       = config.showTags,
+        showSections   = config.showSections
       )
     )
 
