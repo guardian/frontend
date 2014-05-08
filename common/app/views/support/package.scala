@@ -211,8 +211,10 @@ object BlockNumberCleaner extends HtmlCleaner {
 case class VideoEmbedCleaner(contentVideos: Seq[VideoElement]) extends HtmlCleaner {
 
   override def clean(document: Document): Document = {
-    document.getElementsByClass("element-video").foreach { element: Element =>
-      element.child(0).wrap("<div class=\"embed-video-wrapper\"></div>")
+    document.getElementsByClass("element-video").filter { element: Element =>
+      element.getElementsByClass("gu-video").length == 0
+    }.foreach { element: Element =>
+      element.child(0).wrap("<div class=\"embed-video-wrapper u-responsive-ratio u-responsive-ratio--hd\"></div>")
     }
 
     document.getElementsByClass("gu-video").foreach { element: Element =>
@@ -235,7 +237,7 @@ case class VideoEmbedCleaner(contentVideos: Seq[VideoElement]) extends HtmlClean
                 Sorry, your browser is unable to play this video.
               </object>""")
 
-        element.wrap("<div class=\"gu-video-wrapper\"><div class=\"u-responsive-ratio u-responsive-ratio--hd\"></div></div>")
+        element.wrap("<div class=\"gu-video-wrapper u-responsive-ratio u-responsive-ratio--hd\"></div>")
       })
     }
     document
