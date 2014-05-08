@@ -59,9 +59,6 @@
     .lineitem:first-child {
         padding-top: 0;
     }
-    .lineitem:first-child .lineitem__img {
-        display: block;
-    }
     .lineitem__link {
         width: 68%;
     }
@@ -175,6 +172,19 @@
             @include rem((
                 width: gs-span(4)
             ));
+        }
+    }
+    &.commercial--books-low {
+        background: red;
+        .lineitem:first-child .lineitem__img {
+            display: block;
+        }
+    }
+    &.commercial--books-high {
+        .commercial__relevance-low {
+            .lineitem:first-child .lineitem__img {
+                display: none;
+            }
         }
     }
 }
