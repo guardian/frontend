@@ -42,7 +42,7 @@ define([
         this.state = asObservableProps([
             'isOpen',
             'isOpenProps',
-            'hasCapiProps']);
+            'hasContentApiProps']);
 
         this.collections = new Group({
             parent: self,
@@ -113,14 +113,14 @@ define([
     Front.prototype.openPropsAttempt = function() {
         var self = this;
 
-        this.state.hasCapiProps('Checking');
+        this.state.hasContentApiProps('Checking');
 
         contentApi.fetchMetaForPath(this.id())
         .done(function() {
-            self.state.hasCapiProps('Metadata for this front must be edited with the R2 Tag Manager');
+            self.state.hasContentApiProps('Metadata for this front must be edited with the R2 Tag Manager');
         })
         .fail(function() {
-            self.state.hasCapiProps(false);
+            self.state.hasContentApiProps(false);
             self.openProps();
         });
     };

@@ -189,12 +189,12 @@
 
                  <!-- ko if: id -->
                     <div class="instructions">
-                        <!-- ko if: !state.isOpenProps() && !state.hasCapiProps() -->
+                        <!-- ko if: !state.isOpenProps() && !state.hasContentApiProps() -->
                             <span class="linky" data-bind="click: openPropsAttempt">Edit metadata</span>
                         <!-- /ko -->
 
-                        <!-- ko if: state.hasCapiProps -->
-                            <span data-bind="text: state.hasCapiProps"></span>
+                        <!-- ko if: state.hasContentApiProps -->
+                            <span data-bind="text: state.hasContentApiProps"></span>
                             <span class="linky" data-bind="click: openProps">...</span>
                         <!-- /ko -->
                     </div>
