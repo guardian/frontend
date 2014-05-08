@@ -349,9 +349,9 @@
                     <div class="secondary">
                         <span data-bind="
                             visible: isSnap,
-                            attr: {class: 'is' + (meta.snapType() ? ' is--' + meta.snapType() : '')},
+                            attr: {class: 'is' + (meta.snapCss() ? ' is--' + meta.snapCss() : '')},
                             click: open,
-                            text: meta.snapType() || 'snap'"></span>
+                            text: meta.snapCss() || 'snap'"></span>
 
                         <span class="is is--breaking" data-bind="
                             visible: meta.isBreaking,
