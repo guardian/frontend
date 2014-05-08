@@ -1,29 +1,21 @@
 package football.model
 
+import org.joda.time.{Interval, DateTime}
 import feed.Competitions
 import model.Competition
 import pa._
-import pa.LiveMatch
-import model.Competition
-import scala.annotation.tailrec
-import org.joda.time.{Interval, DateTime}
+import implicits.Football._
 
 
 trait CompetitionStage {
   val matches: List[FootballMatch]
-  def roundMatches(round: Round): List[FootballMatch] = matches.filter(_.round == round).filter(_.leg == "1")
+  def roundMatches(round: Round): List[FootballMatch] = matches.filter(_.round == round)
 }
 object CompetitionStage {
 
-  private def matchesHaveStarted(matches: List[FootballMatch]): Boolean = matches.exists {
-    case _: LiveMatch => true
-    case _: Result => true
-    case _ => false
-  }
-
   def stagesFromCompetition(competition: Competition): List[CompetitionStage] = {
     val stagesWithMatches = competition.matches.groupBy(_.stage).toList
-    val allStagesHaveStarted = stagesWithMatches.forall { case (_, matches) => matchesHaveStarted(matches) }
+    val allStagesHaveStarted = stagesWithMatches.forall { case (_, matches) => matches.exists(_.hasStarted) }
 
     // if all stages have started, reverse order (typically at most two stages so means "show most recent first")
     val sortedStagesWithMatches =
@@ -67,6 +59,10 @@ case class Groups(matches: List[FootballMatch], groupTables: List[(Round, Seq[Le
 trait Knockout extends CompetitionStage {
   val rounds: List[Round]
   def matchesList(competition: Competition, round: Round): MatchesList
+  lazy val activeRound: Option[Round] = {
+    rounds.find(r => roundMatches(r).exists(!_.isResult)).orElse(rounds.lastOption)
+  }
+  def isActiveRound(round: Round): Boolean = activeRound.exists(_ == round)
 }
 case class KnockoutList(matches: List[FootballMatch], rounds: List[Round]) extends Knockout {
   override def matchesList(competition: Competition, round: Round) = CompetitionRoundMatchesList(Competitions(), competition, round)

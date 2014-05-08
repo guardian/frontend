@@ -3,7 +3,7 @@
 <div class="football-knockouts @if(hasSpider){football-knockouts--has-spider}">
     @knockoutStage.rounds.zipWithRowInfo.map{ case (round, row) =>
         @round.name.map { name =>
-            @fragments.dropdown(name, isActive = row.isFirst){
+            @fragments.dropdown(name, isActive = knockoutStage.isActiveRound(round)){
                 <ul class="u-unstyled u-cf">
                     @defining(knockoutStage.matchesList(competition, round)) { matches =>
                         <li>

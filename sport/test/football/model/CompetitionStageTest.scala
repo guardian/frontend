@@ -153,6 +153,35 @@ class CompetitionStageTest extends FreeSpec with ShouldMatchers with OptionValue
           all (stages(0).asInstanceOf[Knockout].roundMatches(testRound)) should have('round (testRound))
         }
       }
+
+      "will work out active round as" - {
+        "first round if none have started" in {
+          val ko = KnockoutList(futureKnockoutMatches(Stage("1")), knockoutRounds)
+          ko.activeRound.value should equal(quarterFinals)
+          ko.isActiveRound(quarterFinals) should equal(true)
+          ko.isActiveRound(semiFinals) should equal(false)
+          ko.isActiveRound(thirdPlacePlayoff) should equal(false)
+          ko.isActiveRound(`final`) should equal(false)
+        }
+
+        "last round if all have finished" in {
+          val ko = KnockoutList(pastKnockoutMatches(Stage("1")), knockoutRounds)
+          ko.activeRound.value should equal(`final`)
+          ko.isActiveRound(`final`) should equal(true)
+        }
+
+        "current round if we're halfway through one" in {
+          val ko = KnockoutList(currentKnockoutMatches(Stage("1")), knockoutRounds)
+          ko.activeRound.value should equal(semiFinals)
+          ko.isActiveRound(semiFinals) should equal(true)
+        }
+
+        "next round if we're between rounds" in {
+          val ko = KnockoutList(betweenRoundsKnockoutMatches(Stage("1")), knockoutRounds)
+          ko.activeRound.value should equal(thirdPlacePlayoff)
+          ko.isActiveRound(thirdPlacePlayoff) should equal(true)
+        }
+      }
     }
   }
 
