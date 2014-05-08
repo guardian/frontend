@@ -11,7 +11,8 @@ define([
     'common/modules/userPrefs',
     'common/utils/detect',
     'common/modules/live/notification-bar',
-    'lodash/objects/assign'
+    'lodash/objects/assign',
+    'common/modules/article/twitter'
 ], function (
     mediator,
     ajax,
@@ -21,7 +22,8 @@ define([
     userPrefs,
     detect,
     NotificationBar,
-    extend
+    extend,
+    twitter
 ) {
     /*
         @param {Object} options hash of configuration options:
@@ -77,6 +79,7 @@ define([
                 $attachTo[manipulation](elementsToAdd.innerHTML);
                 // add a timestamp to the attacher
                 $attachTo.attr('data-last-updated', date);
+                twitter.enhanceTweets();
 
                 if(this.isUpdating) {
                     this.notificationBar.setState('hidden');
