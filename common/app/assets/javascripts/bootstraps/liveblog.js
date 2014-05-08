@@ -13,7 +13,8 @@ define([
     'common/modules/ui/notification-counter',
     'common/modules/experiments/affix',
     'common/utils/template',
-    'common/utils/url'
+    'common/utils/url',
+    'common/utils/context'
 ], function (
     mediator,
     $,
@@ -29,11 +30,13 @@ define([
     NotificationCounter,
     Affix,
     template,
-    url
+    url,
+    getContext
 ) {
     'use strict';
 
     var affix = null;
+    var autoUpdate = null;
 
     function getKeyEvents() {
         return qwery('.is-key-event').slice(0, 7);
@@ -143,17 +146,25 @@ define([
             if (config.page.isLive) {
 
                 var timerDelay = /desktop|wide/.test(detect.getBreakpoint()) ? 30000 : 60000;
-                new AutoUpdate({
-                    path: function() {
-                        var id = context.querySelector('.article-body .block').id;
-
-                        return window.location.pathname + '.json' + '?lastUpdate=' + id;
-                    },
+                autoUpdate = new AutoUpdate({
+                    path: getUpdatePath,
                     delay: timerDelay,
                     attachTo: $('.article-body', context)[0],
                     switches: config.switches,
                     manipulationType: 'prepend'
-                }).init();
+                });
+                autoUpdate.init();
+            }
+        });
+
+        mediator.on('module:filter:toggle', function(orderedByOldest) {
+            if (!autoUpdate) {
+                return;
+            }
+            if (orderedByOldest) {
+                autoUpdate.setManipulationType('append');
+            } else {
+                autoUpdate.setManipulationType('prepend');
             }
         });
     }
@@ -163,6 +174,21 @@ define([
             new LiveFilter($('.js-blog-blocks', context)[0]).render($('.js-live-filter')[0]);
             new NotificationCounter().init();
         });
+    }
+
+    function getUpdatePath() {
+        var blocks = getContext().querySelectorAll('.article-body .block'),
+            newestBlock = null;
+
+        if (autoUpdate.getManipulationType() === 'append') {
+            newestBlock = blocks[blocks.length - 1];
+        } else {
+            newestBlock = blocks[0];
+        }
+
+        // There may be no blocks at all. 'block-0' will return any new blocks found.
+        var id = newestBlock ? newestBlock.id : 'block-0';
+        return window.location.pathname + '.json?lastUpdate=' + id;
     }
 
     return {
