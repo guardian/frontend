@@ -1,6 +1,6 @@
 @(competition: model.Competition, knockoutStage: _root_.football.model.Knockout)(implicit request: RequestHeader)
 
-<div class="">
+<div class="football-knockouts">
     @knockoutStage.rounds.zipWithRowInfo.map{ case (round, row) =>
         @round.name.map { name =>
             @fragments.dropdown(name, isActive = row.isFirst){

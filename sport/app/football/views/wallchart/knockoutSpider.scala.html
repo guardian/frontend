@@ -1,8 +1,6 @@
 @(competition: model.Competition, knockoutStage: _root_.football.model.KnockoutSpider)(implicit request: RequestHeader)
 
-<div class="football-knockouts">
-    @football.views.html.wallchart.knockoutList(competition, knockoutStage)
-</div>
+@football.views.html.wallchart.knockoutList(competition, knockoutStage)
 
 <div class="football-knockout-chart football-knockout-chart--@knockoutStage.rounds.length-rounds u-cf">
     <div class="football-rounds football-rounds--first-half">
