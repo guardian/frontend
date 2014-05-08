@@ -2,164 +2,112 @@
 
 <link rel="stylesheet" href="@Static("stylesheets/commercial.css")" />
 
-<div class="commercial bestbuys-component">
-
-    <div class="commercial__head">
-        <span class="commercial__title svg-i-moneydeals-logo"></span>
-        <a href="http://www.money-deals.co.uk/" class="lineitem__link">
-            View all money deals <i class="i i-single-arrow-right-blue"></i>
-        </a>
-    </div>
-
-    <div class="commercial__body">
-
+@defining(("1_1", "2014-05-02")) { case (version, date) =>
+    <div class="commercial commercial--bestbuys">
         <div class="tabs">
-            <ol class="tabs__container js-tabs" role="tablist">
+            <h3 class="commercial__title">
+                <span class="i i--commercial i-bestbuys-logo i-moneydeals-logo"></span>
+                <span class="u-h">money deals</span>
+            </h3>
+            <ol class="commercial__body container__body tabs__container js-tabs" role="tablist">
                 <li id="mortgages-tab" class="tabs__tab tabs__tab--selected" role="tab" aria-selected="true" aria-controls="mortgages"><a href="#mortgages">Mortgages</a></li>
-                <li id="credit-cards-tab" class="tabs__tab" role="tab" aria-selected="false" aria-controls="credit-cards"><a href="#credit-cards">Credit Cards</a></li>
-                <li id="loans-tab" class="tabs__tab" role="tab" aria-selected="false" aria-controls="loans"><a href="#loans">Loans</a></li>
-                <li id="current-accounts-tab" class="tabs__tab hide-cell-on-mobile" role="tab" aria-selected="false" aria-controls="current-accounts"><a href="#current-accounts">Current accounts</a></li>
+                <li id="current-accounts-tab" class="tabs__tab" role="tab" aria-selected="false" aria-controls="current-accounts"><a href="#current-accounts">Current accounts</a></li>
                 <li id="savings-account-tab" class="tabs__tab" role="tab" aria-selected="false" aria-controls="savings-account"><a href="#savings-account">Savings <span>account</span></a></li>
             </ol>
-
+            <a href="/money/financial-tools-calculators-mortgage-debt-consolidation-loan-repayment-savings" class="lineitem__link tools__calculators">Tools and calculators&nbsp;<i class="i i-arrow-white-down"></i></a>
             <div class="tabs__content">
-                 <div class="tabs__pane mortgages" id="mortgages" role="tabpanel" aria-labelledby="mortgages-tab">
-                    <h1 class="tagline">Featured offers on fixed rate mortgages</h1>
-
-                    <table>
-                        <thead>
-                            <td>Name</td>
-                            <td>Initial&nbsp;rate</td>
-                            <td class="hide-cell-on-mobile">Scheme type</td>
-                            <td class="hide-cell-on-mobile">Overall cost for comparison (APR %)</td>
-                        </thead>
-                        <tbody>
-                         @bestBuys.mortgages.map { mortgage =>
-                            <tr>
-                                <td><a href="@mortgage.detailsUrl">@mortgage.lender</a></td>
-                                <td>@mortgage.rate</td>
-                                <td class="hide-cell-on-mobile">@mortgage.description</td>
-                                <td class="hide-cell-on-mobile">@mortgage.overallCost</td>
-                            </tr>
-                        }
-                        </tbody>
-                    </table>
-
-                    <a href="http://guardian.lcplc-online.co.uk/" class="commercial__link">
-                        Get free mortgage advice <i class="i i-double-arrow-right-blue"></i>
-                    </a>
-                    <p class="lineitem__meta">Data provided by London &amp; Country Mortgages Ltd</p>
+                <div class="tabs__pane mortgages" id="mortgages" role="tabpanel" aria-labelledby="mortgages-tab">
+                    <div class="commercial__head container__title">
+                        <h4 class="commercial__explainer">Featured offers on fixed rate mortgages</h4>
+                    </div>
+                    <div class="commercial__body container__body">
+                        <table class="table--commercial">
+                            <thead class="table--commercial__head">
+                                <th class="table--commercial__table--cell">Name</th>
+                                <th class="table--commercial__table--cell">Initial&nbsp;rate</th>
+                                <th class="table--commercial__table--cell hide-cell-on-mobile">Scheme type</th>
+                                <th class="table--commercial__table--cell hide-cell-on-mobile">Overall cost for comparison (APR %)</th>
+                            </thead>
+                            <tbody class="table--commercial__body">
+                             @bestBuys.mortgages.take(3).map { mortgage =>
+                                <tr class="table--commercial__row">
+                                    <td class="table--commercial__table--cell"><a href="@mortgage.detailsUrl" class="apply-to-link" data-link-name="merchandising-moneydeals-v@{version}_@{date}-low-@mortgage.lender">@mortgage.lender</a></td>
+                                    <td class="table--commercial__table--cell">@mortgage.rate</td>
+                                    <td class="table--commercial__table--cell hide-cell-on-mobile">@mortgage.description</td>
+                                    <td class="table--commercial__table--cell hide-cell-on-mobile">@mortgage.overallCost</td>
+                                    <td class="table--commercial__table--cell"><a href="@mortgage.detailsUrl" data-link-name="merchandising-moneydeals-v@{version}_@{date}-low-@mortgage.lender-more">More</a></td>
+                                </tr>
+                            }
+                            </tbody>
+                        </table>
+                        <a href="http://guardian.lcplc-online.co.uk/" class="commercial__link">
+                            Get free mortgage advice <i class="i i-double-arrow-right-blue"></i>
+                        </a>
+                        <p class="lineitem__meta">Data provided by London &amp; Country Mortgages Ltd</p>
+                    </div>
                  </div>
-
-                 <div class="tabs__pane credit-cards js-hidden" id="credit-cards" role="tabpanel" aria-labelledby="credit-cards-tab">
-                    <h1 class="tagline">Featured offers on credit cards</h1>
-
-                    <table>
-                        <thead>
-                            <td>Name</td>
-                            <td><span>Balance transfer rate</span><span>BT&nbsp;Rate</span></td>
-                            <td><span>Balance transfer period</span><span>BT&nbsp;Period</span></td>
-                            <td class="hide-cell-on-mobile">Representative APR</td>
-                        </thead>
-                        <tbody>
-                        @bestBuys.creditCards.map { card =>
-                            <tr>
-                                <td><a href="@card.applyUrl">@card.name</a></td>
-                                <td>@card.balanceTransferRate%</td>
-                                <td>@card.balanceTransferRateDuration&nbsp;mths</td>
-                                <td class="hide-cell-on-mobile">@card.example.apr%</td>
-                            </tr>
-                        }
-                        </tbody>
-                    </table>
-
-                    <a href="http://www.moneysupermarket.com/partners/guardian/cards/" class="commercial__link">
-                        Compare over 300 credit cards <i class="i i-double-arrow-right-blue"></i>
-                    </a>
-                    <p class="lineitem__meta">Data provided by Moneysupermarket.com. Moneysupermarket.com Limited is an appointed representative of Moneysupermarket.com Financial Group Limited &copy;, which is authorised and regulated by the Financial Services Authority (FSA FRN 303190). Moneysupermarket.com Financial group Limited, registered in England No. 3157344. Registered Office: Moneysupermarket House, St. David's Park, Ewloe, CH5 3UZ. Telephone 01244 665700.</p>
+                <div class="tabs__pane current-accounts js-hidden" id="current-accounts" role="tabpanel" aria-labelledby="current-accounts-tab">
+                    <div class="commercial__head container__title">
+                        <h4 class="commercial__explainer">Looking after your day-to-day finances</h4>
+                    </div>
+                    <div class="commercial__body container__body">
+                        <table class="table--commercial">
+                            <thead class="table--commercial__head">
+                                <th class="table--commercial__table--cell">Provider</th>
+                                <th class="table--commercial__table--cell">Account</th>
+                                <th class="table--commercial__table--cell">Interest</th>
+                            </thead>
+                            <tbody class="table--commercial__body">
+                            @bestBuys.currentAccounts.get("reward-incentive").getOrElse(Nil).take(3).map { account =>
+                                <tr class="table--commercial__row">
+                                    <td class="table--commercial__table--cell"><a href="@account.applyUrl" class="apply-to-link" data-link-name="merchandising-moneydeals-v@{version}_@{date}-low-browse-@account.provider">@account.provider</a></td>
+                                    <td class="table--commercial__table--cell">@account.name</td>
+                                    <td class="table--commercial__table--cell">@account.interestRate%</td>
+                                    <td class="table--commercial__table--cell"><a href="@account.applyUrl" data-link-name="merchandising-moneydeals-v@{version}_@{date}-low-browse-@account.provider-more">More</a></td>
+                                </tr>
+                            }
+                            </tbody>
+                        </table>
+                        <a href="http://www.moneysupermarket.com/partners/guardian/currentaccounts/" class="commercial__link" data-link-name="merchandising-moneydeals-v@{version}_@{date}-low-browse-compare-current-rates">
+                            Compare rates on current accounts <i class="i i-double-arrow-right-blue"></i>
+                        </a>
+                        <p class="lineitem__meta">Data provided by Moneysupermarket.com. Moneysupermarket.com Limited is an appointed representative of Moneysupermarket.com Financial Group Limited &copy;, which is authorised and regulated by the Financial Services Authority (FSA FRN 303190). Moneysupermarket.com Financial group Limited, registered in England No. 3157344. Registered Office: Moneysupermarket House, St. David's Park, Ewloe, CH5 3UZ. Telephone 01244 665700.</p>
+                    </div>
                 </div>
-
-                 <div class="tabs__pane loans js-hidden" id="loans" role="tabpanel" aria-labelledby="loans-tab">
-                    <h1 class="tagline">Medium-term solutions to finance</h1>
-
-                    <table>
-                        <thead>
-                            <td>Provider</td>
-                            <td>Headline&nbsp;Rate</td>
-                            <td>APR</td>
-                        </thead>
-                        <tbody>
-                        @bestBuys.loans.map { loan =>
-                            <tr>
-                                <td><a href="@loan.detailsUrl">@loan.name</a></td>
-                                <td>@loan.headlineApr%</td>
-                                <td>@loan.apr%</td>
-                            </tr>
-                        }
-                        </tbody>
-                    </table>
-
-                    <a href="http://www.moneysupermarket.com/partners/guardian/loans/" class="commercial__link">
-                        Compare over 500 loan providers <i class="i i-double-arrow-right-blue"></i>
-                    </a>
-                    <p class="lineitem__meta">Data provided by Moneysupermarket.com. Moneysupermarket.com Limited is an appointed representative of Moneysupermarket.com Financial Group Limited &copy;, which is authorised and regulated by the Financial Services Authority (FSA FRN 303190). Moneysupermarket.com Financial group Limited, registered in England No. 3157344. Registered Office: Moneysupermarket House, St. David's Park, Ewloe, CH5 3UZ. Telephone 01244 665700.</p>
-                </div>
-
-                 <div class="tabs__pane current-accounts js-hidden" id="current-accounts" role="tabpanel" aria-labelledby="current-accounts-tab">
-                    <h1 class="tagline">Looking after your day-to-day finances</h1>
-
-                    <table>
-                        <thead>
-                            <td>Provider</td>
-                            <td>Account</td>
-                            <td>Interest</td>
-                        </thead>
-                        <tbody>
-                        @bestBuys.currentAccounts.map { account =>
-                            <tr>
-                                <td><a href="@account.applyUrl">@account.provider</a></td>
-                                <td>@account.name</td>
-                                <td>@account.interestRate%</td>
-                            </tr>
-                        }
-                        </tbody>
-                    </table>
-
-                    <a href="http://www.moneysupermarket.com/partners/guardian/currentaccounts/" class="commercial__link">
-                        Compare rates on current accounts <i class="i i-double-arrow-right-blue"></i>
-                    </a>
-                    <p class="lineitem__meta">Data provided by Moneysupermarket.com. Moneysupermarket.com Limited is an appointed representative of Moneysupermarket.com Financial Group Limited &copy;, which is authorised and regulated by the Financial Services Authority (FSA FRN 303190). Moneysupermarket.com Financial group Limited, registered in England No. 3157344. Registered Office: Moneysupermarket House, St. David's Park, Ewloe, CH5 3UZ. Telephone 01244 665700.</p>
-                </div>
-
-                <div class="tabs__pane savings-account js-hidden" id="savings-account" role="tabpanel" aria-labelledby="savings-account-tab">
-                    <h1 class="tagline">A safe home for your nest egg</h1>
-
-                    <table>
-                        <thead>
-                            <td>Name</td>
-                            <td class="hide-cell-on-mobile">Account</td>
-                            <td>AER</td>
-                        </thead>
-                        <tbody>
-                        @bestBuys.savings.map { account =>
-                            <tr>
-                                <td><a href="@account.applyUrl">@account.provider</a></td>
-                                <td class="hide-cell-on-mobile">@account.name</td>
-                                <td>@account.interestRate%</td>
-                            </tr>
-                        }
-                        </tbody>
-                    </table>
-
-                    <a href="http://www.moneysupermarket.com/partners/guardian/savings/" class="commercial__link">
-                        Compare over 4,000 savings accounts <i class="i i-double-arrow-right-blue"></i>
-                    </a>
-                    <p class="lineitem__meta">Data provided by Moneysupermarket.com. Moneysupermarket.com Limited is an appointed representative of Moneysupermarket.com Financial Group Limited &copy;, which is authorised and regulated by the Financial Services Authority (FSA FRN 303190). Moneysupermarket.com Financial group Limited, registered in England No. 3157344. Registered Office: Moneysupermarket House, St. David's Park, Ewloe, CH5 3UZ. Telephone 01244 665700.</p>
+                <div class="tabs__pane savings js-hidden" id="savings-account" role="tabpanel" aria-labelledby="savings-tab">
+                    <div class="commercial__head container__title">
+                        <h4 class="commercial__explainer">A safe home for your nest egg</h4>
+                    </div>
+                    <div class="commercial__body container__body">
+                        <table class="table--commercial">
+                            <thead class="table--commercial__head">
+                                <th class="table--commercial__table--cell">Name</th>
+                                <th class="table--commercial__table--cell hide-cell-on-mobile">Account</th>
+                                <th class="table--commercial__table--cell">AER</th>
+                            </thead>
+                            <tbody class="table--commercial__body">
+                            @bestBuys.savings.get("easy-access").getOrElse(Nil).take(3).map { account =>
+                                <tr class="table--commercial__row">
+                                    <td class="table--commercial__table--cell"><a href="@account.applyUrl" class="apply-to-link" data-link-name="merchandising-moneydeals-v@{version}_@{date}-low-browse-@account.provider">@account.provider</a></td>
+                                    <td class="table--commercial__table--cell hide-cell-on-mobile">@account.name</td>
+                                    <td class="table--commercial__table--cell">@account.interestRate%</td>
+                                    <td class="table--commercial__table--cell"><a href="@account.applyUrl" data-link-name="merchandising-moneydeals-v@{version}_@{date}-low-browse-@account.provider-more">More</a></td>
+                                </tr>
+                            }
+                            </tbody>
+                        </table>
+                        <a href="http://www.moneysupermarket.com/partners/guardian/savings/" class="commercial__link" data-link-name="merchandising-moneydeals-v@{version}_@{date}-low-browse-compare-saving-rates">
+                            Compare over 4,000 savings accounts <i class="i i-double-arrow-right-blue"></i>
+                        </a>
+                        <p class="lineitem__meta">Data provided by Moneysupermarket.com. Moneysupermarket.com Limited is an appointed representative of Moneysupermarket.com Financial Group Limited &copy;, which is authorised and regulated by the Financial Services Authority (FSA FRN 303190). Moneysupermarket.com Financial group Limited, registered in England No. 3157344. Registered Office: Moneysupermarket House, St. David's Park, Ewloe, CH5 3UZ. Telephone 01244 665700.</p>
+                    </div>
                 </div>
             </div>
-
+            <a href="http://www.money-deals.co.uk/" class="commercial__home-link" data-link-name="merchandising-moneydeals-v@{version}_@{date}-low-browse-all-deals">View all money deals
+                <span class="commercial__home-link__cta">
+                    <span class="i i-filter-arrow-down"></span>
+                </span>
+            </a>
         </div>
-
     </div>
-
-</div>
+}

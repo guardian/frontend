@@ -125,9 +125,11 @@ define([
             $('.js-live-blog__timeline li:last-child .timeline__title').text('Opening post');
 
             if(/desktop|wide/.test(detect.getBreakpoint()) && config.page.keywordIds.indexOf('football/football') < 0) {
+                var topMarker = qwery('.js-top-marker')[0];
+                bonzo(topMarker).addClass('affix-top-marker');
                 affix = new Affix({
                     element: qwery('.js-live-blog__timeline-container')[0],
-                    topMarker: qwery('.js-top-marker')[0],
+                    topMarker: topMarker,
                     bottomMarker: qwery('.js-bottom-marker')[0],
                     containerElement: qwery('.js-live-blog__key-events')[0]
                 });
