@@ -110,21 +110,25 @@ define([
         this.state.isOpen(!this.state.isOpen());
     };
 
-    Front.prototype.openProps = function() {
+    Front.prototype.openPropsAttempt = function() {
         var self = this;
 
-        this.state.hasCapiProps('Checking...');
+        this.state.hasCapiProps('Checking');
 
         contentApi.fetchMetaForPath(this.id())
         .done(function() {
             self.state.hasCapiProps('Metadata for this front must be edited with the R2 Tag Manager');
         })
         .fail(function() {
-            self.state.hasCapiProps(false);
-            self.state.isOpenProps(true);
-            self.derivePlaceholders();
-            self.collections.items().map(function(collection) { collection.close(); });
+            self.openProps();
         });
+    };
+
+    Front.prototype.openProps = function() {
+        this.state.hasCapiProps(false);
+        this.state.isOpenProps(true);
+        this.derivePlaceholders();
+        this.collections.items().map(function(collection) { collection.close(); });
     };
 
     Front.prototype.saveProps = function() {
