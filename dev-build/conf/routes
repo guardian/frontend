@@ -177,7 +177,10 @@ GET         /admin/football/fronts/tables/:competition                          
 GET         /commercial/travel/offers.json                                                                           controllers.commercial.TravelOffers.listOffers
 GET         /commercial/jobs                                                                                         controllers.commercial.JobAds.renderAds
 GET         /commercial/jobs.json                                                                                    controllers.commercial.JobAds.jobs
+GET         /commercial/masterclasses                                                                                controllers.commercial.MasterClasses.renderMasterclass
 GET         /commercial/masterclasses.json                                                                           controllers.commercial.MasterClasses.list
+GET         /commercial/masterclasses-high                                                                           controllers.commercial.MasterClasses.renderMasterclassHigh
+GET         /commercial/masterclasses-high.json                                                                      controllers.commercial.MasterClasses.listHigh
 GET         /commercial/soulmates/mixed                                                                              controllers.commercial.SoulmateAds.renderAds
 GET         /commercial/soulmates/mixed.json                                                                         controllers.commercial.SoulmateAds.mixed
 GET         /commercial/money/bestbuys.json                                                                          controllers.commercial.MoneyOffers.bestBuys(format="json")

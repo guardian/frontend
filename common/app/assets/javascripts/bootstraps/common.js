@@ -499,12 +499,17 @@ define([
         },
 
         loadCommercialComponent: function(config) {
-            var commercialComponent = /^#commercial-component=(.*)$/.exec(window.location.hash),
-                slot = qwery('[data-name="merchandising"]').shift();
-            if (commercialComponent && slot) {
-                new CommercialLoader({ config: config })
-                    .init(commercialComponent[1], slot);
-            }
+            [
+                ['commercial-component', 'merchandising'],
+                ['commercial-component-high', 'merchandising-high']
+            ].forEach(function(data) {
+                var commercialComponent = new RegExp('^#' + data[0] + '=(.*)$').exec(window.location.hash),
+                    slot = qwery('[data-name="' + data[1] + '"]').shift();
+                if (commercialComponent && slot) {
+                    new CommercialLoader({ config: config })
+                        .init(commercialComponent[1], slot);
+                }
+            });
         }
     };
 
