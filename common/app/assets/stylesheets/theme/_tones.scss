@@ -51,9 +51,31 @@
     }
 }
 
-@mixin tone-head-background($tone, $colour, $accentColour) {
+@mixin tone-head-background($tone, $colour, $accentColour, $textColour, $commentIcon) {
     .tone-#{$tone}.tone-#{$tone}--article {
 
+        .article__head__comment-count {
+            display: inline-block;
+            i {
+                @extend %i-comment-#{$commentIcon};
+                @if $svg-support {
+                    .svg & {
+                        @extend %svg-i-comment-#{$commentIcon};
+                    }
+                }
+            }
+            .commentcount {
+                color: $textColour;
+            }
+            &.article__head__comment-count--standfirst {
+                display: none;
+            }
+            &.article__head__comment-count--headline {
+                @include mq(tablet) {
+                    display: none;
+                }
+            }
+        }
 
         &.article__zone {
             border-top: 0 !important;
@@ -66,7 +88,7 @@
         .article__section-link a {
             color: $colour !important;
             @include mq($from: leftCol) {
-                color: #ffffff !important;
+                color: $textColour !important;
             }
         }
 
@@ -81,13 +103,19 @@
         .article__head {
             margin-top: 0;
             padding-top: $gs-baseline/2;
+            margin-right: 0 !important;
         }
+
+        .article__inner--head {
+            max-width: none;
+        }
+
         .localnav__inner {
             border-bottom: 0;
         }
 
         .content-meta__item a {
-            color: #ffffff;
+            color: $textColour;
         }
 
         .tone-head--accent {
@@ -106,16 +134,19 @@
 
         .tone-head--default {
             @include full-bleed($colour);
+            position: relative;
         }
 
         .article__headline,
         .article__standfirst
         {
-            color: #ffffff !important;
+            color: $textColour !important;
         }
 
         .article__headline {
             font-weight: 200;
+            margin-bottom: 0;
+            padding-bottom: 36px;
         }
 
     }

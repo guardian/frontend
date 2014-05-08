@@ -11,21 +11,36 @@
     <div class="article-wrapper monocolumn-wrapper tone-@VisualTone(article) tone-@VisualTone(article)--article">
         <article id="article" class="article @if(article.isLive){is-live} @if(article.isAdvertisementFeature){article--advertisement-feature}"
                  itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType" role="main">
-            <div class="article__inner article__inner--head tone-head--default">
+            <div class="article__inner article__inner--head">
                 <header class="article__head">
 
                     @fragments.meta.metaInline(article)
                     @if(article.isAdvertisementFeature){
                         <div class="article-hat-label">Advertisement feature</div>
                     }
-
-                    @fragments.headline(article.headline, List("js-score"))
-
+                    <div class="tone-head--default">
+                        <h1 itemprop="headline" class="article__headline js-score">
+                            @Html(article.headline)
+                            @if(article.isComment) {
+                                <div class="headline__author">
+                                @article.byline.map{ text =>
+                                    @ContributorLinks(text, article.contributors)
+                                }
+                                </div>
+                            }
+                            @if(article.isComment && article.hasLargeContributorImage) {
+                                @fragments.meta.bylineImage(article)
+                            }
+                        </h1>
+                        @if(article.isCommentable) {
+                            <div class="article__head__comment-count article__head__comment-count--headline js-comment-count"></div>
+                        }
+                    </div>
                     <div class="tone-head--accent">
                         @fragments.standfirst(article)
 
                         @if(article.isCommentable) {
-                            <div class="article__head__comment-count js-comment-count"></div>
+                            <div class="article__head__comment-count article__head__comment-count--standfirst js-comment-count"></div>
                         }
                     </div>
                 </header>
@@ -34,6 +49,7 @@
 
                 <div class="after-header"></div>
             </div>
+
             <div class="article__columning-wrapper">
                 <div class="article__main-column">
 
