@@ -134,8 +134,33 @@ function (
         return defer.promise();
     }
 
+    function fetchMetaForPath(path) {
+        var defer = $.Deferred();
+
+        authedAjax.request({
+            url: vars.CONST.apiSearchBase + '/' + path + '?page-size=0'
+        }).always(function(resp) {
+            var meta = resp.response ?
+               _.chain(['tag', 'section'])
+                .map(function(key) { return resp.response[key]; })
+                .filter(function(obj) { return _.isObject(obj) && obj.webTitle && (obj.id || obj.sectionId); })
+                .reduce(function(m, obj) {
+                    m = m || {};
+                    m.section  = obj.id || obj.sectionId;
+                    m.webTitle = obj.webTitle;
+                    return m;
+                 }, undefined)
+                .value() : undefined;
+
+            defer[meta ? 'resolve' : 'reject'](meta);
+        });
+
+        return defer.promise();
+    }
+
     return {
         fetchContent: fetchContent,
+        fetchMetaForPath: fetchMetaForPath,
         decorateItems: decorateItems,
         validateItem:  validateItem
     };

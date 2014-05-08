@@ -3,6 +3,7 @@ define([
     'knockout',
     'config',
     'modules/vars',
+    'modules/content-api',
     'models/group',
     'models/config/collection',
     'utils/as-observable-props',
@@ -12,6 +13,7 @@ define([
     ko,
     config,
     vars,
+    contentApi,
     Group,
     Collection,
     asObservableProps,
@@ -39,7 +41,8 @@ define([
 
         this.state = asObservableProps([
             'isOpen',
-            'isOpenProps']);
+            'isOpenProps',
+            'hasCapiProps']);
 
         this.collections = new Group({
             parent: self,
@@ -108,9 +111,20 @@ define([
     };
 
     Front.prototype.openProps = function() {
-        this.state.isOpenProps(true);
-        this.derivePlaceholders();
-        this.collections.items().map(function(collection) { collection.close(); });
+        var self = this;
+
+        this.state.hasCapiProps('Checking...');
+
+        contentApi.fetchMetaForPath(this.id())
+        .done(function() {
+            self.state.hasCapiProps('Metadata for this front must be edited with the R2 Tag Manager');
+        })
+        .fail(function() {
+            self.state.hasCapiProps(false);
+            self.state.isOpenProps(true);
+            self.derivePlaceholders();
+            self.collections.items().map(function(collection) { collection.close(); });
+        });
     };
 
     Front.prototype.saveProps = function() {
