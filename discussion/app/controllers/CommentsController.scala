@@ -42,7 +42,7 @@ trait CommentsController extends DiscussionController {
 
   def getComments(key: DiscussionKey, page: String = "1", orderBy: String = "newest", isTopComments: Boolean = false, forceAllResponses: Boolean = false)
                  (implicit request: RequestHeader): Future[SimpleResult] = {
-    val allResponses = forceAllResponses || (request boolParam "allResponses")
+    val allResponses = forceAllResponses || (request getBooleanParameter  "allResponses" getOrElse false)
     val commentPage = if (isTopComments) discussionApi.topCommentsFor(key) else discussionApi.commentsFor(key, page, orderBy, allResponses)
     commentPage map {
       page =>

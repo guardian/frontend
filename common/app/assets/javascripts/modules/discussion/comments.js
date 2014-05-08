@@ -46,7 +46,7 @@ var Comments = function(context, mediator, options) {
 
 
     if (this.options.commentId) {
-        this.endpoint = '/discussion/comment-permalink/' + this.options.order + '/'+ this.options.commentId +'.json';
+        this.endpoint = '/discussion/comment-permalink/' + this.options.order + '/' + this.options.commentId + '.json';
     }
 
     else {
