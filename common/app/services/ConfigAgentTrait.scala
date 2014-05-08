@@ -75,10 +75,10 @@ trait ConfigAgentTrait extends ExecutionContexts {
     (json \ "fronts" \ path).asOpt[JsValue].map { frontJson =>
       SeoData(
         path,
-        section   = (frontJson \ "keyword").asOpt[String].filter(_.nonEmpty),
+        section   = (frontJson \ "section").asOpt[String].filter(_.nonEmpty),
         webTitle  = (frontJson \ "webTitle").asOpt[String].filter(_.nonEmpty),
-        title  = (frontJson \ "webTitle").asOpt[String].filter(_.nonEmpty),
-        description  = (frontJson \ "webTitle").asOpt[String].filter(_.nonEmpty)
+        title  = (frontJson \ "title").asOpt[String].filter(_.nonEmpty),
+        description  = (frontJson \ "description").asOpt[String].filter(_.nonEmpty)
       )
     }
   }.getOrElse(SeoData(path, None, None, None, None)) //Default
