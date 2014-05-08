@@ -120,12 +120,12 @@ define([
             self.state.hasCapiProps('Metadata for this front must be edited with the R2 Tag Manager');
         })
         .fail(function() {
+            self.state.hasCapiProps(false);
             self.openProps();
         });
     };
 
     Front.prototype.openProps = function() {
-        this.state.hasCapiProps(false);
         this.state.isOpenProps(true);
         this.derivePlaceholders();
         this.collections.items().map(function(collection) { collection.close(); });
