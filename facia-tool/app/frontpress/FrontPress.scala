@@ -85,22 +85,22 @@ trait FrontPress extends Logging {
 
   private def generateCollectionJson(config: Config, collection: Collection): JsValue =
     Json.toJson(
-        CollectionJson(
-          apiQuery       = config.contentApiQuery,
-          displayName    = config.displayName.orElse(collection.displayName),
-          curated        = collection.curated.map(generateTrailJson),
-          editorsPicks   = collection.editorsPicks.map(generateTrailJson),
-          mostViewed     = collection.mostViewed.map(generateTrailJson),
-          results        = collection.results.map(generateTrailJson),
-          lastUpdated    = collection.lastUpdated,
-          updatedBy      = collection.updatedBy,
-          updatedEmail   = collection.updatedEmail,
-          groups         = Option(config.groups).filter(_.nonEmpty),
-          href           = collection.href.orElse(config.href),
-          `type`         = config.collectionType,
-          showTags       = Switches.FaciaToolContainerTagsSwitch.isSwitchedOn && config.showTags,
-          showSections   = Switches.FaciaToolContainerTagsSwitch.isSwitchedOn && config.showSections
-        )
+      CollectionJson(
+        apiQuery       = config.contentApiQuery,
+        displayName    = config.displayName.orElse(collection.displayName),
+        curated        = collection.curated.map(generateTrailJson),
+        editorsPicks   = collection.editorsPicks.map(generateTrailJson),
+        mostViewed     = collection.mostViewed.map(generateTrailJson),
+        results        = collection.results.map(generateTrailJson),
+        lastUpdated    = collection.lastUpdated,
+        updatedBy      = collection.updatedBy,
+        updatedEmail   = collection.updatedEmail,
+        groups         = Option(config.groups).filter(_.nonEmpty),
+        href           = collection.href.orElse(config.href),
+        `type`         = config.collectionType,
+        showTags       = Switches.FaciaToolContainerTagsSwitch.isSwitchedOn && config.showTags,
+        showSections   = Switches.FaciaToolContainerTagsSwitch.isSwitchedOn && config.showSections
+      )
     )
 
   private def generateTrailJson(content: Content): JsValue =
