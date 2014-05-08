@@ -9,7 +9,7 @@
                 <div class="article__main-column">
                     <h2>The best current accounts available at moneysupermarket.com</h2>
                     <p>@page.description</p>
-                    <ul class="u-unstyled msm-items">
+                    <ul class="u-unstyled msm-item-list">
                         @CurrentAccountsPages.all.map { currentAccountsPage =>
                             <li class="msm-item @if(page.id == currentAccountsPage.id){msm-item--selected}">
                                 <a href="/commercial/money/current-accounts/@currentAccountsPage.id">@currentAccountsPage.webTitle</a>

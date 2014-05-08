@@ -10,7 +10,7 @@
                 <div class="article__main-column">
                     <h2>The best loans available at moneysupermarket.com</h2>
                     <p>@page.description</p>
-                    <ul class="u-unstyled msm-items">
+                    <ul class="u-unstyled msm-item-list">
                         @LoansPages.all.map { loansPage =>
                             <li class="msm-item @if(page.id == loansPage.id){msm-item--selected}">
                                 <a href="/commercial/money/loans/@loansPage.id">@loansPage.webTitle</a>

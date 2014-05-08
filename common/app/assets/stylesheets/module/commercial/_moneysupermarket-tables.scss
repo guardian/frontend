@@ -1,7 +1,7 @@
 .article-wrapper {
     max-width: none;
 }
-.msm-items {
+.msm-item-list {
     font-size: 0;
     @include rem((
         max-width: gs-span(7),
