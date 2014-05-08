@@ -1,14 +1,14 @@
 package services
 
-import common.{AkkaAgent, ExecutionContexts}
+import common.{Logging, Edition, AkkaAgent, ExecutionContexts}
 import play.api.libs.json.{JsNull, Json, JsValue}
 import model.{SeoData, Config}
 import scala.concurrent.Future
 import scala.concurrent.duration._
 import akka.util.Timeout
-import conf.Configuration
+import conf.{ContentApi, Configuration}
 
-trait ConfigAgentTrait extends ExecutionContexts {
+trait ConfigAgentTrait extends ExecutionContexts with Logging {
   implicit val alterTimeout: Timeout = Configuration.faciatool.configBeforePressTimeout.millis
   private val configAgent = AkkaAgent[JsValue](JsNull)
 
@@ -70,7 +70,7 @@ trait ConfigAgentTrait extends ExecutionContexts {
 
   def contentsAsJsonString: String = Json.prettyPrint(configAgent.get)
 
-  def getSeoData(path: String): SeoData = {
+  private def getSeoDataFromConfig(path: String): Option[SeoData] = {
     val json = configAgent.get()
     (json \ "fronts" \ path).asOpt[JsValue].map { frontJson =>
       SeoData(
@@ -81,5 +81,41 @@ trait ConfigAgentTrait extends ExecutionContexts {
         description  = (frontJson \ "description").asOpt[String].filter(_.nonEmpty)
       )
     }
-  }.getOrElse(SeoData(path, None, None, None, None)) //Default
+  }
+
+  def getSeoData(path: String): Future[SeoData] = {
+    val seoDataWithWebTitle = for {
+      seoData <- getSeoDataFromConfig(path)
+      webTitle <- seoData.webTitle
+    } yield seoData.copy(
+      title = seoData.title.orElse(Option(SeoData.titleFromWebTitle(webTitle))),
+      description = seoData.description.orElse(Option(SeoData.descriptionFromWebTitle(webTitle)))
+    )
+    seoDataWithWebTitle
+      .map(Future.successful)
+      .getOrElse(getSectionOrTagWebTitle(path).map { _.map { contentApiWebTitle =>
+        log.info(s"Using contentApiWebTitle $contentApiWebTitle")
+        SeoData(
+          path,
+          Option(contentApiWebTitle),
+          Option(contentApiWebTitle),
+          Option(SeoData.titleFromWebTitle(contentApiWebTitle)),
+          Option(SeoData.descriptionFromWebTitle(contentApiWebTitle))
+        )
+    }.getOrElse(SeoData.fromPath(path))}).recover{ case _ =>
+      log.info(s"Using FromPath for $path")
+      SeoData.fromPath(path)}
+  }
+
+  private def getSectionOrTagWebTitle(id: String): Future[Option[String]] =
+    ContentApi
+      .item(id, Edition.defaultEdition)
+      .showEditorsPicks(false)
+      .pageSize(0)
+      .response
+      .map { response =>
+        response.tag.map(_.webTitle).orElse(response.section.map(_.webTitle))
+      }
+
+
 }
