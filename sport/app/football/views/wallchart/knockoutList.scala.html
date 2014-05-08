@@ -1,6 +1,6 @@
-@(competition: model.Competition, knockoutStage: _root_.football.model.Knockout)(implicit request: RequestHeader)
+@(competition: model.Competition, knockoutStage: _root_.football.model.Knockout, hasSpider: Boolean = false)(implicit request: RequestHeader)
 
-<div class="football-knockouts">
+<div class="football-knockouts @if(hasSpider){football-knockouts--has-spider}">
     @knockoutStage.rounds.zipWithRowInfo.map{ case (round, row) =>
         @round.name.map { name =>
             @fragments.dropdown(name, isActive = row.isFirst){

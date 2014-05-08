@@ -220,7 +220,7 @@
     }
 }
 
-.football-knockouts {
+.football-knockouts--has-spider {
     @include mq(desktop) {
         display: none;
     }
