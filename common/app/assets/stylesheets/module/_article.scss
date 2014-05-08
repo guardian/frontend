@@ -796,9 +796,9 @@
 
     @include mq($to: tablet) {
       float: left;
-      font-size: 4.9rem;
+      font-size: 5.2rem;
       height: 20px;
-      padding: 16px 2px 10px 0px;
+      ppadding: 11px 4px 12px 0px;
       font-weight: 200;
     }
 }
@@ -807,9 +807,9 @@
 
     @include mq($from: tablet) {
       float: left;
-      font-size: 5.8em;
+      font-size: 8.5rem;
       height: 20px;
-      padding: 34px 2px 12px 0px;
+      padding: 24px 5px 12px 0px;
       font-weight: 200;
     }
 }
