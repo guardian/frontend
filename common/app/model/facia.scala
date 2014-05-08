@@ -9,8 +9,8 @@ case class Config(
                    href: Option[String] = None,
                    groups: Seq[String],
                    collectionType: Option[String],
-                   isTagDisplayed: Boolean = false,
-                   isSectionNameDisplayed: Boolean = false
+                   showTags: Boolean = false,
+                   showSections: Boolean = false
                    )
 
 object Config {

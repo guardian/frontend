@@ -66,8 +66,8 @@ trait FrontJson extends ExecutionContexts {
       href            = (json \ "href").asOpt[String],
       groups          = (json \ "groups").asOpt[List[String]].getOrElse(Nil),
       collectionType  = (json \ "type").asOpt[String],
-      isTagDisplayed = (json \ "isTagDisplayed").asOpt[Boolean] getOrElse false,
-      isSectionNameDisplayed = (json \ "isSectionNameDisplayed").asOpt[Boolean] getOrElse false
+      showTags = (json \ "showTags").asOpt[Boolean] getOrElse false,
+      showSections = (json \ "showSections").asOpt[Boolean] getOrElse false
     )
   }
 

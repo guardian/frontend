@@ -29,8 +29,8 @@ trait FrontPress extends Logging {
     updatedEmail:           Option[String],
     groups:                 Option[Seq[String]],
     href:                   Option[String],
-    isTagDisplayed:         Boolean,
-    isSectionNameDisplayed: Boolean
+    showTags:         Boolean,
+    showSections: Boolean
   )
   case class ItemMeta
   (
@@ -97,8 +97,8 @@ trait FrontPress extends Logging {
         groups         = Option(config.groups).filter(_.nonEmpty),
         href           = collection.href.orElse(config.href),
         `type`         = config.collectionType,
-        isTagDisplayed = config.isTagDisplayed,
-        isSectionNameDisplayed = config.isSectionNameDisplayed
+        showTags = config.showTags,
+        showSections = config.showSections
       )
     )
 
