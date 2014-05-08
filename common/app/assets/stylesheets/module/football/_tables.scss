@@ -127,10 +127,6 @@
    Football groups / lists
    ========================================================================== */
 .football-groups {
-    font-size: 0;
-    display: flex;
-    flex-wrap: wrap;
-
     .football-group {
         @include box-sizing(border-box);
         @include rem((
@@ -162,12 +158,34 @@
             }
         }
     }
+
+    @include mq(tablet) {
+        display: flex;
+        flex-wrap: wrap;
+
+        .dropdown {
+            border-top: 0 none;
+            padding: 0;
+        }
+
+        .dropdown__button {
+            display: none;
+        }
+
+        .dropdown__content {
+            display: block;
+            margin: 0;
+        }
+    }
 }
 .football-group__container {
-    background: $c-neutral8;
-    flex: 1 1 auto;
+    @include mq(tablet) {
+        background: $c-neutral8;
+        flex: 1 1 auto;
+    }
 }
-.football-group__fixtures {
+.football-group__matches,
+.football-knockouts {
     border-top: solid #ffffff $gs-baseline;
 
     .table__caption--top {
@@ -202,6 +220,11 @@
     }
 }
 
+.football-knockouts {
+    @include mq(desktop) {
+        display: none;
+    }
+}
 
 /* ==========================================================================
    Knockout chart (Desktop only)

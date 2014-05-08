@@ -1,0 +1,13 @@
+@(page: Page, competition: model.Competition, competitionStages: List[_root_.football.model.CompetitionStage])(implicit request: RequestHeader)
+<!DOCTYPE html>
+<html class="js-off id--signed-out" lang="en-GB">
+<head>
+    @fragments.head(page, "football", Html(""), Map())
+</head>
+<body id="top" itemscope itemtype="http://schema.org/WebPage">
+
+    @wallchart(competition, competitionStages)
+    @fragments.loadCss()
+    @fragments.analytics(page)
+</body>
+</html>
