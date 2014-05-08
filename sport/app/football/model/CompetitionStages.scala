@@ -5,11 +5,13 @@ import model.Competition
 import pa._
 import pa.LiveMatch
 import model.Competition
+import scala.annotation.tailrec
+import org.joda.time.{Interval, DateTime}
 
 
 trait CompetitionStage {
   val matches: List[FootballMatch]
-  def roundMatches(round: Round): List[FootballMatch] = matches.filter(_.round == round)
+  def roundMatches(round: Round): List[FootballMatch] = matches.filter(_.round == round).filter(_.leg == "1")
 }
 object CompetitionStage {
 
@@ -34,8 +36,13 @@ object CompetitionStage {
       val rounds = stageMatches.map(_.round).distinct.sortBy(_.roundNumber)
 
       if (stageLeagueEntries.isEmpty) {
-        if (rounds.size > 1) Some(Knockout(stageMatches, rounds))  // multiple rounds without league table entries is tournament
-        else None  // or just a collection of matches (e.g. international friendlies)
+        if (rounds.size > 1) {
+          // multiple rounds without league table entries is tournament
+          val tmp = KnockoutSpider.orderings.get(competition.id).map { matchDates =>
+            KnockoutSpider(stageMatches, rounds, matchDates)
+          }.orElse(Some(KnockoutList(stageMatches, rounds)))
+          tmp
+        } else None  // or just a collection of matches (e.g. international friendlies)
       } else {
         if (rounds.size > 1) {
           // multiple rounds and league table entries is a group stage
@@ -53,10 +60,51 @@ object CompetitionStage {
 
 case class League(matches: List[FootballMatch], leagueTable: Seq[LeagueTableEntry], round: Round) extends CompetitionStage
 
-case class Knockout(matches: List[FootballMatch], rounds: List[Round]) extends CompetitionStage {
+case class Groups(matches: List[FootballMatch], groupTables: List[(Round, Seq[LeagueTableEntry])]) extends CompetitionStage {
   def matchesList(competition: Competition, round: Round) = CompetitionRoundMatchesList(Competitions(), competition, round)
 }
 
-case class Groups(matches: List[FootballMatch], groupTables: List[(Round, Seq[LeagueTableEntry])]) extends CompetitionStage {
-  def matchesList(competition: Competition, round: Round) = CompetitionRoundMatchesList(Competitions(), competition, round)
+trait Knockout extends CompetitionStage {
+  val rounds: List[Round]
+  def matchesList(competition: Competition, round: Round): MatchesList
+}
+case class KnockoutList(matches: List[FootballMatch], rounds: List[Round]) extends Knockout {
+  override def matchesList(competition: Competition, round: Round) = CompetitionRoundMatchesList(Competitions(), competition, round)
+}
+case class KnockoutSpider(matches: List[FootballMatch], rounds: List[Round], matchDates: List[DateTime]) extends Knockout {
+  override def matchesList(competition: Competition, round: Round) = CompetitionRoundMatchesList(Competitions(), competition, round)
+
+  override def roundMatches(round: Round): List[FootballMatch] =
+    super.roundMatches(round).sortWith(lt)
+
+  private val matchIntervals = matchDates.map(dateTime => new Interval(dateTime.minusHours(1), dateTime.plusHours(1)))
+  private def lt(match1: FootballMatch, match2: FootballMatch): Boolean = {
+    matchIntervals.indexWhere(_.contains(match1.date)) < matchIntervals.indexWhere(_.contains(match2.date))
+  }
+}
+object KnockoutSpider {
+  val orderings: Map[String, List[DateTime]] = Map(
+    // world cup 2014
+    "700" -> List(
+      new DateTime(2014, 6, 28, 17, 0), // 3689946
+      new DateTime(2014, 6, 28, 21, 0), // 3689963
+      new DateTime(2014, 6, 30, 17, 0), // 3689950
+      new DateTime(2014, 6, 30, 21, 0), // 3689951
+      new DateTime(2014, 6, 29, 17, 0), // 3689948
+      new DateTime(2014, 6, 29, 21, 0), // 3689949
+      new DateTime(2014, 7, 1, 17, 0),  // 3689952
+      new DateTime(2014, 7, 1, 21, 0),  // 3689953
+
+      new DateTime(2014, 7, 4, 21, 0),  // 3689954
+      new DateTime(2014, 7, 4, 17, 0),  // 3689955
+      new DateTime(2014, 7, 5, 21, 0),  // 3689956
+      new DateTime(2014, 7, 5, 17, 0),  // 3689957
+
+      new DateTime(2014, 7, 8, 21, 0),  // 3689958
+      new DateTime(2014, 7, 9, 21, 0),  // 3689959
+
+      new DateTime(2014, 7, 12, 21, 0), // 3689960
+      new DateTime(2014, 7, 13, 20, 0)  // 3689961
+    )
+  )
 }

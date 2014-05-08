@@ -21,13 +21,17 @@ trait CompetitionTestData {
   val now = DateTime.now()
   val today = DateMidnight.now()
 
-  val teams = (1 until 17).map { i =>
+  val teams = (0 until 16).map { i =>
     val idStr = i.toString
     MatchDayTeam(idStr, s"Test $idStr", Some(0), Some(0), None, None)
   }
+  val quarterFinals = Round("1", Some("Quarter Final"))
+  val semiFinals = Round("2", Some("Semi-final"))
+  val thirdPlacePlayoff = Round("2", Some("3rd/4th Play-Offs"))
+  val `final` = Round("2", Some("Final"))
 
   private val _matchDay = MatchDay("1234", today.toDateTime, None, Stage("1"), Round("1", None), "1", true, false, true, false, true, "KO", None, teams(0), teams(1), None, None, None)
-  private val _fixture = Fixture("1234", today.toDateTime, Stage("1"), Round("1", None), "1", teams(0), teams(1),None, None)
+  private val _fixture = Fixture("1234", today.toDateTime, Stage("1"), Round("1", None), "1", teams(0), teams(1), None, None)
   private val _result = Result("1234", today.toDateTime, Stage("1"), Round("1", None), "1", false, None, teams(0), teams(1), None, None, None)
 
   private def liveMatch(date: DateTime, stage: Stage, round: Round, leg: String, homeTeam: MatchDayTeam = _matchDay.homeTeam, awayTeam: MatchDayTeam = _matchDay.awayTeam) =
@@ -131,26 +135,18 @@ trait CompetitionTestData {
   }
 
   def pastKnockoutMatches(stage: Stage) = {
-    val quarterFinals = Round("1", Some("Quarter Final"))
-    val semiFinals = Round("2", Some("Semi-final"))
-    val thirdPlacePlayoff = Round("2", Some("3rd/4th Play-Offs"))
-    val `final` = Round("2", Some("Final"))
     List(
-      result(now.minusDays(7), stage, quarterFinals, "1", teams(0), teams(1)),
+      result(now.minusDays(7), stage, quarterFinals, "1", teams(6), teams(7)),
       result(now.minusDays(7), stage, quarterFinals, "1", teams(2), teams(3)),
       result(now.minusDays(7), stage, quarterFinals, "1", teams(4), teams(5)),
-      result(now.minusDays(7), stage, quarterFinals, "1", teams(5), teams(7)),
-      result(now.minusDays(5), stage, semiFinals, "1", teams(0), teams(2)),
+      result(now.minusDays(7), stage, quarterFinals, "1", teams(0), teams(1)),
       result(now.minusDays(5), stage, semiFinals, "1", teams(4), teams(6)),
+      result(now.minusDays(5), stage, semiFinals, "1", teams(0), teams(2)),
       result(now.minusDays(3), stage, thirdPlacePlayoff, "1", teams(2), teams(6)),
       result(now.minusDays(1), stage, `final`, "1", teams(0), teams(4))
     )
   }
   def currentKnockoutMatches(stage: Stage) = {
-    val quarterFinals = Round("1", Some("Quarter Final"))
-    val semiFinals = Round("2", Some("Semi-final"))
-    val thirdPlacePlayoff = Round("2", Some("3rd/4th Play-Offs"))
-    val `final` = Round("2", Some("Final"))
     List(
       result(now.minusDays(2), stage, quarterFinals, "1", teams(0), teams(1)),
       result(now.minusDays(2), stage, quarterFinals, "1", teams(2), teams(3)),
@@ -163,10 +159,6 @@ trait CompetitionTestData {
     )
   }
   def futureKnockoutMatches(stage: Stage) = {
-    val quarterFinals = Round("1", Some("Quarter Final"))
-    val semiFinals = Round("2", Some("Semi-final"))
-    val thirdPlacePlayoff = Round("2", Some("3rd/4th Play-Offs"))
-    val `final` = Round("2", Some("Final"))
     List(
       fixture(now.plusDays(1), stage, quarterFinals, "1", teams(0), teams(1)),
       fixture(now.plusDays(1), stage, quarterFinals, "1", teams(2), teams(3)),
@@ -180,10 +172,6 @@ trait CompetitionTestData {
   }
 
   def currentKnockoutMatchesWithLegs(stage: Stage) = {
-    val quarterFinals = Round("1", Some("Quarter Final"))
-    val semiFinals = Round("2", Some("Semi-final"))
-    val thirdPlacePlayoff = Round("2", Some("3rd/4th Play-Offs"))
-    val `final` = Round("2", Some("Final"))
     List(
       result(now.minusDays(4), stage, quarterFinals, "1", teams(0), teams(1)),
       result(now.minusDays(4), stage, quarterFinals, "1", teams(2), teams(3)),

@@ -1,7 +1,7 @@
 @(competition: model.Competition, competitionStages: List[_root_.football.model.CompetitionStage])(implicit request: RequestHeader)
 
 @competitionStages.map {
-    case knockoutStage: _root_.football.model.Knockout => {
+    case knockoutStage: _root_.football.model.KnockoutSpider => {
         <div class="facia-container facia-container--layout-article monocolumn-wrapper monocolumn-wrapper--no-limit">
             <div class="container container--row-pattern">
                 <div class="container__border tone-news tone-accent-border hide-on-mobile"></div>
@@ -10,7 +10,7 @@
                 </h2>
                 <div class="container__body">
                     <div data-link-name="@competition.fullName knockout chart">
-                        @football.views.html.wallchart.knockout(competition, knockoutStage)
+                        @football.views.html.wallchart.knockoutSpider(competition, knockoutStage)
                     </div>
                 </div>
             </div>
@@ -36,7 +36,7 @@
             <div class="container container--row-pattern">
                 <div class="container__border tone-news tone-accent-border hide-on-mobile"></div>
                 <h2 class="container__title tone-news">
-                    <span class="container__title__label u-text-hyphenate">Leagues</span>
+                    <span class="container__title__label u-text-hyphenate">League</span>
                 </h2>
                 <div class="container__body">
                     <div data-link-name="@competition.fullName leagues">
@@ -46,7 +46,21 @@
             </div>
         </div>
     }
+    case knockoutStage: _root_.football.model.KnockoutList => {
+        <div class="facia-container facia-container--layout-article monocolumn-wrapper monocolumn-wrapper--no-limit">
+            <div class="container container--row-pattern">
+                <div class="container__border tone-news tone-accent-border hide-on-mobile"></div>
+                <h2 class="container__title tone-news">
+                    <span class="container__title__label u-text-hyphenate">Knockout stages</span>
+                </h2>
+                <div class="container__body">
+                    <div data-link-name="@competition.fullName knockout chart">
+                    @football.views.html.wallchart.knockoutList(competition, knockoutStage)
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
     case _ => {
-        <p>Unexpected stage</p>
     }
 }
