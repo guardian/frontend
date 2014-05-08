@@ -1,6 +1,7 @@
 .facia-container__inner {
-    position: relative;
     overflow: hidden;
+    position: relative;
+
     @include rem((
         margin-left: $gs-gutter / 2,
         margin-right: $gs-gutter / 2
@@ -11,14 +12,6 @@
             margin-left: $gs-gutter,
             margin-right: $gs-gutter
         ));
-    }
-    @include mq(tablet, rightCol) {
-        margin-left: auto;
-        margin-right: auto;
-    }
-    @include mq(wide) {
-        margin-left: auto;
-        margin-right: auto;
     }
 }
 .facia-container--layout-front {
@@ -33,6 +26,8 @@
             @include rem((
                 width: gs-span(9)
             ));
+            margin-left: auto;
+            margin-right: auto;
         }
         @include mq(desktop) {
             @include rem((
@@ -42,6 +37,11 @@
         @include mq(faciaLeftCol) {
             @include rem((
                 width: gs-span(14)
+            ));
+        }
+        @include mq(wide) {
+            @include rem((
+                width: gs-span(16)
             ));
         }
     }
@@ -73,11 +73,6 @@
         }
     }
     @include mq(wide) {
-        .facia-container__inner {
-            @include rem((
-                width: gs-span(16)
-            ));
-        }
         .container__title {
             float: left;
             @include rem((
@@ -100,13 +95,27 @@
         ));
 
         @include mq(tablet) {
+            margin-left: auto;
+            margin-right: auto;
+            @include rem((
+                padding-left: $gs-gutter,
+                padding-right: $gs-gutter
+            ));
+        }
+        @include mq(tablet, rightCol) {
             @include rem((
                 max-width: gs-span(8)
             ));
         }
-        @include mq(rightCol) {
+        @include mq(leftCol) {
             @include rem((
-                max-width: gs-span(14) + $gs-gutter*2
+                max-width: gs-span(14)
+            ));
+        }
+        @include mq(wide) {
+            @include rem((
+                max-width: gs-span(15) ,
+                padding-right: gs-span(1) + $gs-gutter*2
             ));
         }
     }
@@ -120,7 +129,9 @@
                 margin-right: $gs-gutter
             ));
         }
-        .container__meta { clear: left; }
+        .container__meta {
+            clear: left;
+        }
         .container__body {
             overflow: hidden;
             @include rem((
@@ -129,12 +140,6 @@
         }
     }
     @include mq(wide) {
-        .facia-container__inner {
-            @include rem((
-                max-width: gs-span(15),
-                padding-right: gs-span(1) + $gs-gutter*2
-            ));
-        }
         .container__title,
         .container__meta {
             @include rem((
