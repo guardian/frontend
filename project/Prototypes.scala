@@ -97,11 +97,6 @@ trait Prototypes {
         case s: String if s.startsWith("scala/concurrent/stm") => MergeStrategy.first
         case s: String if s.endsWith("ServerWithStop.class") => MergeStrategy.first  // There is a scala trait and a Java interface
 
-        // transitive dependencies of DFP API
-        case "com/google/common/annotations/Beta.class" => MergeStrategy.first
-        case s: String if s.startsWith("com/google/common/") => MergeStrategy.first
-        case s: String if s.startsWith("org/apache/commons/collections/") => MergeStrategy.first
-
         // Take ours, i.e. MergeStrategy.last...
         case "logger.xml" => MergeStrategy.last
         case "version.txt" => MergeStrategy.last

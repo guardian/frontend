@@ -9,8 +9,8 @@ define([
     'common/utils/detect',
     'common/utils/storage',
     'common/utils/to-array',
-    'common/modules/ui/snaps',
     'common/modules/ui/collection-show-more',
+    'modules/ui/snaps',
     'modules/ui/container-show-more',
     'modules/ui/container-toggle'
 ], function (
@@ -22,15 +22,15 @@ define([
     detect,
     storage,
     toArray,
-    snaps,
     CollectionShowMore,
+    snaps,
     ContainerShowMore,
     ContainerToggle
 ) {
     var modules = {
 
         showSnaps: function() {
-            snaps.init('.facia-snap');
+            snaps.init();
         },
 
         showCollectionShowMore: function () {
