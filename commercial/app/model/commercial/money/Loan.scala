@@ -2,13 +2,14 @@ package model.commercial.money
 
 import model.commercial.{Segment, Ad}
 import scala.xml.{Node, Elem}
+import java.math.BigDecimal
 
 case class Loan(name: String,
                 comments: String,
                 headlineApr: Double,
                 apr: Double,
-                minAdvance: Int,
-                maxAdvance: Int,
+                minAdvance: BigDecimal,
+                maxAdvance: BigDecimal,
                 example: LoanExample,
                 logoUrl: String,
                 detailsUrl: String,
@@ -54,8 +55,8 @@ object LoansApi extends MoneySupermarketApi[Loan] {
           (product \ "LoanComments").text,
           (product \ "HeadlineApr").text.toDouble,
           (product \ "Apr").text.toDouble,
-          (product \ "MinAdvance").text.toDouble.toInt,
-          (product \ "MaxAdvance").text.toDouble.toInt,
+          new BigDecimal((product \ "MinAdvance").text),
+          new BigDecimal((product \ "MaxAdvance").text),
           parseLoanExample(product),
           (product \ "LogoUrl").text,
           (product \ "DetailsUrl").text,
