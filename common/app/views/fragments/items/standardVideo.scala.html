@@ -1,4 +1,4 @@
-@(trail: Trail, index: Int, containerIndex: Int, element: String = "li")(implicit request: RequestHeader)
+@(trail: Trail, index: Int, containerIndex: Int, element: String = "li")(implicit request: RequestHeader, config: Config)
 
 @defining((VisualTone(trail), containerIndex == 0, containerIndex == 0 && index < 4)) { case (tone, isFirstContainer, inlineImages) =>
     <@element
@@ -28,6 +28,7 @@
                         </div>
                     }
                 </div>
+                @trail match { case content:model.Content => @fragments.items.elements.tagOrSection(content) }
                 <h@if(isFirstContainer && index == 0){1}else{2} class="item__title item__title--has-icon-mobile">
                     <span class="i i-video-yellow-small"></span>
                     @RemoveOuterParaHtml(trail.headline)
