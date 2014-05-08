@@ -12,6 +12,10 @@
     }
 }
 
+.facia-container--layout-article .commercial .facia-container__inner {
+    margin-bottom: 0;
+}
+
 .commercial {
     @include box-sizing(border-box);
     width: 100%;
