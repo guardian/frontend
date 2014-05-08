@@ -3,7 +3,6 @@
 @import org.joda.time.DateTime
 
 @defining(config.displayName.orElse(collection.displayName)) { title =>
-
     @defining(templateDeduping(15, collection.items)) { items =>
         @if(items.nonEmpty) {
             <section
