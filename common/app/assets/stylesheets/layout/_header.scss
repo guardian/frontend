@@ -1,0 +1,136 @@
+/* Global header and navigation
+   ========================================================================== */
+
+.l-header {
+    position: relative;
+    z-index: 1051; // On top of Google "Adchoices" label which has z-index: 1050
+
+    @include mq(tablet) {
+        background: $c-neutral8;
+    }
+}
+
+.guardian-logo-wrapper {
+    position: relative;
+    float: right;
+    @include rem((
+        margin: $gs-baseline/4 $gs-gutter/2 $gs-baseline 0
+    ));
+
+    i {
+        display: block;
+    }
+
+    @include mq(mobileLandscape) {
+        @include rem((
+            margin-right: $gs-gutter
+        ));
+    }
+    @include mq(tablet) {
+        @include rem((
+            margin-top: 7px
+        ));
+
+        &:after {
+            content: "beta";
+            position: absolute;
+            top: 48px;
+            left: 128px;
+            font-size: 13px;
+        }
+    }
+    @include mq(desktop) {
+        @include rem((
+            margin-top: -$gs-row-height,
+            margin-bottom: $gs-baseline * 1.5
+        ));
+    }
+}
+
+/* Pre-header
+   ========================================================================== */
+
+.l-header-pre {
+    float: left;
+    min-width: gs-span(2);
+    z-index: 1;
+    position: relative;
+
+    @include mq(tablet) {
+        float: none;
+        background: $c-neutral8;
+        border-bottom: 1px solid $c-neutral4;
+    }
+    @include mq(desktop) {
+        border-bottom-color: $c-neutral8;
+    }
+}
+.l-header-pre__inner {
+    @include box-sizing(border-box);
+    @include rem((
+        padding-left: $gs-gutter/2,
+        padding-right: $gs-gutter/2
+    ));
+
+    @include mq(mobileLandscape) {
+        @include rem((
+            padding-left: $gs-gutter,
+            padding-right: $gs-gutter
+        ));
+    }
+}
+.l-preheader__editions {
+    float: left;
+    @include rem((
+        width: gs-span(3)
+    ));
+}
+.editions {
+    @include fs-header(1);
+}
+.editions,
+.editions__title,
+.edition__item,
+.edition {
+    padding: 0;
+    margin: 0;
+    display: inline-block;
+}
+.editions__title {
+    font-weight: normal;
+}
+.editions__title,
+.edition {
+    @include rem((
+        padding: $gs-baseline/2 $gs-gutter/4
+    ));
+}
+.edition__item {
+    color: $c-brandLightBlue;
+
+    & + .edition__item {
+        @include rem((
+            margin-left: $gs-gutter/4
+        ));
+    }
+}
+.edition {
+    text-decoration: none;
+    margin: 0;
+}
+a.edition {
+    &:hover,
+    &:focus {
+        color: $c-brandLightBlue;
+        text-decoration: none;
+    }
+}
+
+
+/* Main header (logo, actions)
+   ========================================================================== */
+
+.l-header-main {
+    position: relative;
+    z-index: 2;
+}

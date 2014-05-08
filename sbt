@@ -60,4 +60,5 @@ fake_secret="myKV8HQkjcaxygbDuyneHBeyFgsyyM8yCFFOxyDoT0QGuyrY7IyammSyP1VivCxS"
 java $FRONTEND_JVM_ARGS  \
   $DEBUG_PARAMS \
   -DAPP_SECRET=$fake_secret \
+  -Dsbt.ivy.home=`dirname $0`/ivy-sbt \
   -jar `dirname $0`/dev/sbt-launch.jar "$@"

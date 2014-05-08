@@ -13,7 +13,7 @@ define([
         var conf = {
                 id: 'message',
                 fixtures: [
-                    '<div id="header"></div>' +
+                    '<div id="header" class="l-header"></div>' +
                     '<div class="site-message is-hidden">' +
                         '<div class="js-site-message-copy">...</div>' +
                         '<button class="site-message__close"></button>' +

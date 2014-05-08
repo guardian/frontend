@@ -28,7 +28,9 @@ trait FrontPress extends Logging {
     updatedBy:    Option[String],
     updatedEmail: Option[String],
     groups:       Option[Seq[String]],
-    href:         Option[String]
+    href:         Option[String],
+    showTags:     Boolean,
+    showSections: Boolean
   )
   case class ItemMeta
   (
@@ -40,6 +42,7 @@ trait FrontPress extends Logging {
     supporting:   Option[Seq[JsValue]],
     href:         Option[JsValue],
     snapType:     Option[JsValue],
+    snapCss:      Option[JsValue],
     snapUri:      Option[JsValue]
   )
 
@@ -99,7 +102,9 @@ trait FrontPress extends Logging {
         updatedEmail   = collection.updatedEmail,
         groups         = Option(config.groups).filter(_.nonEmpty),
         href           = collection.href.orElse(config.href),
-        `type`         = config.collectionType
+        `type`         = config.collectionType,
+        showTags       = config.showTags,
+        showSections   = config.showSections
       )
     )
 
@@ -173,6 +178,7 @@ trait FrontPress extends Logging {
         supporting =  Option(content.supporting.map(generateInnerTrailJson)).filter(_.nonEmpty),
         href =        content.apiContent.metaData.get("href"),
         snapType = content.apiContent.metaData.get("snapType"),
+        snapCss = content.apiContent.metaData.get("snapCss"),
         snapUri = content.apiContent.metaData.get("snapUri")
       )
     )

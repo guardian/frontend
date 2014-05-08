@@ -21,10 +21,7 @@ object DfpAgent extends ExecutionContexts with Logging {
     }
   }
 
-  def isSponsored(content: Content) = {
-    val contentKeywords = content.keywords.map(_.name.toLowerCase.replace(" ", "-"))
-    (contentKeywords intersect targetedKeywords).nonEmpty
-  }
+  def isSponsored(content: Content) = false
 
   def refresh() {
     def fetchTargetedKeywords() = {
