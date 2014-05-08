@@ -66,19 +66,6 @@
     }
 }
 
-.box-indent {
-    @include rem((
-        padding: 0 $gs-gutter/2 ($gs-baseline/3)
-    ));
-
-    @include mq(mobileLandscape) {
-        @include rem((
-            padding-left: $gs-gutter,
-            padding-right: $gs-gutter
-        ));
-    }
-}
-
 
 /* Inline images: included here for faster painting
    ========================================================================== */
