@@ -332,6 +332,7 @@ class Article(content: ApiContentWithMeta) extends Content(content) {
   lazy val isReview = tones.exists(_.id == "tone/reviews")
   lazy val isFeature = tones.exists(_.id == "tone/features")
   lazy val isComment = tones.exists(_.id == "tone/comment")
+  lazy val isCommentOrFeature = tones.exists(_.id == "tone/features") || tones.exists(_.id == "tone/comment")
 
   lazy val hasVideoAtTop: Boolean = Jsoup.parseBodyFragment(body).body().children().headOption
     .exists(e => e.hasClass("gu-video") && e.tagName() == "video")
