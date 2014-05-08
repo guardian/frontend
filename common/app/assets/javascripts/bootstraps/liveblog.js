@@ -177,13 +177,13 @@ define([
     }
 
     function getUpdatePath() {
-        var blocks = getContext().querySelectorAll('.article-body .block'),
+        var blocks = qwery('.article-body .block', getContext()),
             newestBlock = null;
 
         if (autoUpdate.getManipulationType() === 'append') {
-            newestBlock = blocks[blocks.length - 1];
+            newestBlock = blocks.pop();
         } else {
-            newestBlock = blocks[0];
+            newestBlock = blocks.shift();
         }
 
         // There may be no blocks at all. 'block-0' will return any new blocks found.
