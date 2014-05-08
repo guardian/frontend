@@ -1,0 +1,123 @@
+/* Columning helpers
+   ========================================================================== */
+
+.monocolumn-wrapper {
+    @include rem((
+        padding-left: $gs-gutter / 2,
+        padding-right: $gs-gutter / 2
+    ));
+
+    @include mq(mobileLandscape) {
+        @include rem((
+            padding-left: $gs-gutter,
+            padding-right: $gs-gutter
+        ));
+    }
+    @include mq(tablet) {
+        @include rem((
+            max-width: gs-span(8)
+        ));
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .page-header,
+    .page-sub-header {
+        margin-left: 0;
+        margin-right: 0;
+    }
+}
+@include mq(desktop) {
+    .monocolumn-wrapper--no-limit-desktop {
+        max-width: none;
+    }
+}
+
+
+/* Layout helpers
+   ========================================================================== */
+
+/**
+ * @todo Should these be moved to helpers?
+ */
+
+.component {
+    @include rem((
+        margin-bottom: 20px
+    ));
+}
+
+.component__heading {}
+
+.component--rhc {
+    display: none;
+    @include mq(rightCol) {
+        display: block;
+        @include rem((
+            margin-top:$gs-baseline * 3
+        ));
+    }
+
+    &:last-child {
+        @include rem((
+            margin-bottom: $gs-baseline * 3
+        ));
+    }
+}
+
+
+/* Inline images: included here for faster painting
+   ========================================================================== */
+
+.img--inline {
+    float: left;
+    clear: left;
+    @include rem((
+        width: $inArticleInlineImgWidth
+    ));
+
+    @include mq(mobileLandscape) {
+        @include rem((
+            width: gs-span(2)
+        ));
+    }
+
+    figcaption {
+        @include rem((
+            padding-top: $gs-baseline/3
+        ));
+        word-wrap: break-word;
+    }
+}
+
+.img-tiny.img--inline {
+    width: auto;
+    @include rem((
+        max-width: $inArticleInlineImgWidth
+    ));
+}
+
+
+/* Ajax loading helpers
+   ========================================================================== */
+
+.loading,
+.preload-msg {
+    @include rem((
+        padding: 50px 50px 250px
+    ));
+    text-align: center;
+
+    .loading__link,
+    .accessible-link {
+        display: inline-block;
+        @include fs-data(2);
+    }
+}
+.loading .loading__animation,
+.preload-msg .is-updating {
+    display: block;
+    @include rem((
+        margin: 10px auto
+    ));
+}

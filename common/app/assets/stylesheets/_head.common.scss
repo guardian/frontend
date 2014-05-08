@@ -28,7 +28,8 @@
    ========================================================================== */
 
 @include grid-system;
-@import "layout/_layout";
+@import "layout/_header";
+@import "layout/_helpers";
 @include guss-row-utility;
 @include guss-columns-utility;
 
