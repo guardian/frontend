@@ -46,6 +46,32 @@ case class SeoData(
   title: Option[String],      //Long custom title entered by editors
   description: Option[String])
 
+object SeoData {
+  val editions = Edition.all.map(_.id).map(_.toLowerCase)
+
+  def fromPath(path: String): SeoData = path.split('/').toList match {
+    //This case is only to handle the nonevent of uk/technology/games
+    case edition :: section :: name :: tail if editions.contains(edition.toLowerCase) =>
+      val webTitle: String = webTitleFromTail(name :: tail)
+      SeoData(path, Option(section), Option(webTitle), Option(titleFromWebTitle(webTitle)), Option(descriptionFromWebTitle(webTitle)))
+    case edition :: name :: tail if editions.contains(edition.toLowerCase) =>
+      val webTitle: String = webTitleFromTail(name :: tail)
+      SeoData(path, Option(name), Option(webTitle), Option(titleFromWebTitle(webTitle)), Option(descriptionFromWebTitle(webTitle)))
+    case section :: name :: tail =>
+      val webTitle: String = webTitleFromTail(name :: tail)
+      SeoData(path, Option(section), Option(webTitle), Option(titleFromWebTitle(webTitle)), Option(descriptionFromWebTitle(webTitle)))
+    case oneWord :: tail =>
+      val capitalOneWorld: String = oneWord.capitalize
+      SeoData(path, Option(oneWord), Option(capitalOneWorld), Option(titleFromWebTitle(capitalOneWorld)), Option(descriptionFromWebTitle(capitalOneWorld)))
+  }
+
+  def webTitleFromTail(tail: List[String]): String = tail.flatMap(_.split('-')).flatMap(_.split('/')).map(_.capitalize).mkString(" ")
+  def webTitleFromSecondChunk(chunk: String): String = chunk.split('-').map(_.capitalize).mkString(" ")
+
+  def titleFromWebTitle(webTitle: String): String = s"$webTitle news, comment and analysis from the Guardian"
+  def descriptionFromWebTitle(webTitle: String): String = s"Latest $webTitle news, comment and analysis from the Guardian, the world's leading liberal voice"
+}
+
 case class FaciaPage(
                    id: String,
                    seoData: SeoData,
