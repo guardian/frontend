@@ -54,11 +54,10 @@
             }
         </div>
     </div>
+    @fragments.storyPackagePlaceholder(storyPackage)
+    @fragments.onwardPlaceholder(VisualTone(image))
+
     <div class="facia-container facia-container--layout-article">
-        @fragments.storyPackagePlaceholder(storyPackage)
-
-        @fragments.onwardPlaceholder(VisualTone(image))
-
         @fragments.mostPopularPlaceholder(image.section, VisualTone(image))
     </div>
 }

@@ -77,12 +77,8 @@
     </div>
 
 </div>
-<div class="facia-container facia-container--layout-article">
-    @fragments.storyPackagePlaceholder(storyPackage)
-
-    @fragments.onwardPlaceholder(VisualTone(gallery))
-
-    @fragments.mostPopularPlaceholder(gallery.section, VisualTone(gallery))
-</div>
+@fragments.storyPackagePlaceholder(storyPackage)
+@fragments.onwardPlaceholder(VisualTone(gallery))
+@fragments.mostPopularPlaceholder(gallery.section, VisualTone(gallery))
 
 <div class="gallery-overlay-bg"></div>

@@ -69,11 +69,10 @@
         </div>
     </div>
 
+    @fragments.storyPackagePlaceholder(page.storyPackage)
+    @fragments.onwardPlaceholder(VisualTone(video))
+
     <div class="facia-container facia-container--layout-article">
-        @fragments.storyPackagePlaceholder(page.storyPackage)
-
-        @fragments.onwardPlaceholder(VisualTone(video))
-
         @fragments.mostPopularPlaceholder(video.section, VisualTone(video))
     </div>
 }

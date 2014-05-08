@@ -108,11 +108,10 @@
         </div>
     </div>
 
+    @fragments.storyPackagePlaceholder(storyPackage)
+    @fragments.onwardPlaceholder(VisualTone(article))
+
     <div class="facia-container facia-container--layout-article">
-        @fragments.storyPackagePlaceholder(storyPackage)
-
-        @fragments.onwardPlaceholder(VisualTone(article))
-
         @fragments.mostPopularPlaceholder(article.section, VisualTone(article))
     </div>
     <div class="facia-container facia-container--layout-article facia-container--commercial">

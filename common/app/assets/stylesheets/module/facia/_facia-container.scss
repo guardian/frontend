@@ -12,7 +12,11 @@
             margin-right: $gs-gutter
         ));
     }
-    @include mq(tablet) {
+    @include mq(tablet, rightCol) {
+        margin-left: auto;
+        margin-right: auto;
+    }
+    @include mq(wide) {
         margin-left: auto;
         margin-right: auto;
     }
