@@ -105,7 +105,7 @@ define([
     register,
     CommercialLoader,
     TonalComponent,
-    Id
+    id
 ) {
 
     var hasBreakpointChanged = detect.hasCrossedBreakpoint();
@@ -516,7 +516,7 @@ define([
 
         repositionComments: function() {
             mediator.on('page:common:ready', function() {
-                if(!Id.isUserLoggedIn()) {
+                if(!id.isUserLoggedIn()) {
                     $('.js-comments').insertAfter(qwery('.js-popular'));
                 }
             });
