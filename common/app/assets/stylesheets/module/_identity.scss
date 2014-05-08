@@ -187,7 +187,9 @@
     float: left;
     height: 60px;
     width: 60px;
-    margin-right: 10px;
+    @include rem((
+        margin-right: $gs-gutter/2
+    ));
 }
 
 
