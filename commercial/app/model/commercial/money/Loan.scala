@@ -11,7 +11,9 @@ case class Loan(name: String,
                 maxAdvance: Double,
                 example: LoanExample,
                 logoUrl: String,
-                detailsUrl: String
+                detailsUrl: String,
+                applyUrl: String,
+                categoryName: String
                  ) extends Ad {
 
   def isTargetedAt(segment: Segment): Boolean = true
@@ -56,7 +58,9 @@ object LoansApi extends MoneySupermarketApi[Loan] {
           (product \ "MaxAdvance").text.toDouble,
           parseLoanExample(product),
           (product \ "LogoUrl").text,
-          (product \ "DetailsUrl").text
+          (product \ "DetailsUrl").text,
+          (product \ "ApplyUrl").text,
+          (product \ "CategoryName").text
         )
     }
   }

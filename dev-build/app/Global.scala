@@ -1,12 +1,11 @@
 import common.{DiagnosticsLifecycle, ExecutionContexts}
-import conf.RequestMeasurementMetrics
+import conf.Filters
 import controllers.front.FrontLifecycle
 import dev.DevParametersLifecycle
+import dfp.DfpAgentLifecycle
+import feed.{OnwardJourneyLifecycle, MostReadLifecycle}
 import implicits.Requests
 import model.AdminLifecycle
-import feed.{OnwardJourneyLifecycle, MostReadLifecycle}
-import conf.Filters
-
 import play.api.mvc.{RequestHeader, EssentialAction, EssentialFilter, WithFilters}
 
 // obviously this is only for devbuild and should never end up in one of our
@@ -61,3 +60,4 @@ with DiagnosticsLifecycle
 with OnwardJourneyLifecycle
 with CommercialLifecycle
 with MostReadLifecycle
+with DfpAgentLifecycle

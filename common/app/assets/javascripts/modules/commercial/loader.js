@@ -10,7 +10,8 @@ define([
     'common/modules/component',
     'common/modules/onward/history',
     'common/modules/ui/images',
-    'bean'
+    'bean',
+    'common/modules/ui/tabs'
 ], function (
     $,
     mediator,
@@ -19,7 +20,8 @@ define([
     Component,
     History,
     images,
-    bean
+    bean,
+    Tabs
 ) {
 
     /**
@@ -73,6 +75,9 @@ define([
                     s.eVar37 = val;
                     s.tl(true, 'o', str);
                 });
+            },
+            bestbuy: function(el) {
+                new Tabs().init(el);
             }
         };
 

@@ -544,17 +544,6 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
       }
     }
 
-    scenario("Signify to the user an article is sponsored"){
-      Given("I visit a sponsored article entitled 'Young people debt worries'")
-      StandardAdvertsSwitch.switchOn()
-      HtmlUnit("/carphone-warehouse-mobile-living/melody-makers") { browser =>
-        import browser._
-        Then("I should see a message")
-        val adSlot = $(".ad-slot--paid-for-badge")
-        adSlot.getAttribute("data-name") should be ("badge")
-        adSlot.findFirst(".ad-slot__container").getId should be ("dfp-ad--badge")
-      }
-    }
 
     scenario("Health check"){
       HtmlUnit("/world/2013/sep/15/obama-rouhani-united-nations-meeting") { browser =>
