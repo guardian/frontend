@@ -66,6 +66,6 @@
             </tr>
         }
     </tbody>
-    <caption class="table__caption table__caption--top">@heading.map{ h => <a href="@competition.url" data-link-name="view @competition.fullName">@h</a>}<span class="football-matches__date">@date.toString("d MMMM yyyy")</span></caption>
+    <caption class="table__caption table__caption--top">@heading.map{ h => <a href="@competition.url" data-link-name="view @competition.fullName">@h</a>}<span class="football-matches__date">@date.toString("E d MMMM")</span></caption>
     @if(linkToCompetition){<caption class="table__caption table__caption--bottom"><a href="@competition.url@if(matchType!=""){/@matchType}" data-link-name="view @competition.fullName matches">Show more <span class="competition-name">@competition.fullName</span> @matchType</a></caption>}
 </table>

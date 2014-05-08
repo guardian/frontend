@@ -376,8 +376,16 @@
 
 .football-round--playoff {
     bottom: 0;
-    display: none;
-    margin: 0 auto;
+    height: 25%;
+    left: 42.857142857%;
     position: absolute;
-    width: 100%;
+    z-index: 1;
+
+    .football-round__name {
+        display: none;
+    }
+    .football-match {
+        height: 25%;
+        top: 0;
+    }
 }
