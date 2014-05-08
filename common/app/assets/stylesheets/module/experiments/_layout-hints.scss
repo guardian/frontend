@@ -53,7 +53,6 @@ figure.element.element--supporting {
         @include deport-left;
         position: relative;
         float: left;
-
         @include rem((
             width: gs-span(5),
             margin-top: $gs-baseline/2,
@@ -74,7 +73,6 @@ figure.element.element--showcase {
     @include mq(leftCol) {
         @include deport-left;
         position: relative;
-
         @include rem((
             margin-bottom: ($gs-baseline/3)*4
         ));
@@ -90,7 +88,6 @@ figure.element.element--supporting {
             padding-left: 0;
             position: absolute;
             top: 100%;
-
             @include rem((
                 padding-top: 21px
             ));
