@@ -61,7 +61,7 @@
         padding-top: 0;
     }
     .lineitem__link {
-        width: 68%;
+        float: none;
     }
     .lineitem__meta {
         color: $c-neutral1;
@@ -83,9 +83,9 @@
         font-weight: bold;
     }
     .commercial--books__buy-now-button {
+        display: inline-block;
         background-color: #e657af;
         border: 0;
-        float: right;
         color: #ffffff;
         text-align: center;
         @include f-header;
