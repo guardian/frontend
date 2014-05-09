@@ -253,11 +253,8 @@
         text-align: center;
         width: 100%;
     }
-    .football-match--fixture {
-        .football-match__team {
-//            text-align: center;
-        }
-    }
+
+
     .football-match__container {
         display: table-cell;
         height: 100%;
@@ -276,6 +273,9 @@
         position: absolute;
         text-align: left;
         width: 100%;
+    }
+    .football-match__team--ghost {
+        text-align: center;
     }
     .football-match__team--home {
         @include rem((
