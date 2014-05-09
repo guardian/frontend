@@ -1,4 +1,7 @@
-@(competition: model.Competition, group: Group, highlightTeamId: Option[String] = None, striped: Boolean = false, responsiveFont: Boolean = false, heading: Option[String] = None, linkToCompetition: Boolean = false)(implicit request: RequestHeader)
+@(competition: model.Competition, group: Group,
+    heading: Option[String] = None, highlightTeamId: Option[String] = None, striped: Boolean = false,
+    responsiveFont: Boolean = false, linkToCompetition: Boolean = false,
+    withCrests: Boolean = false)(implicit request: RequestHeader)
 <div class="table__container">
     <table class="@RenderClasses(Map(
             "table" -> true,
@@ -31,6 +34,9 @@
                     <td class="table-column--sub">@entry.team.rank</td>
                     <td class="table-column--main">
                         <span class="team-name" data-abbr="@pa.TeamCodes.codeFor(entry.team)">
+                            @if(withCrests){
+                                <span class="team-crest" style="background-image: url(@Configuration.staticSport.path/football/crests/120/@{entry.team.id}.png);"></span>
+                            }
                             @TeamUrl(entry.team).map{ url =>
                                 <a href="@TeamUrl(entry.team)" data-link-name="View team" class="team-name__long">
                                     @entry.team.name

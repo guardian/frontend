@@ -9,8 +9,9 @@
                         @fragments.dropdown(name, isActive = row.isFirst){
                             <div class="football-group__table">
                                 @football.views.html.tablesList.tableView(competition, model.Group(round, leagueTableEntries),
+                                    heading = round.name,
                                     striped = true,
-                                    heading = round.name
+                                    withCrests = true
                                 )
                             </div>
 

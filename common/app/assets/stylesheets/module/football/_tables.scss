@@ -15,11 +15,23 @@
 .table--football {
     .table-column--main {
         .team-name {
-            display: block;
+            display: inline-block;
             overflow: hidden;
             white-space: nowrap;
-            width: 100%;
+            max-width: 100%;
         }
+    }
+
+    .team-crest {
+        @include rem((
+            height: 12px,
+            margin-right: $gs-gutter/4,
+            width: 22px
+        ));
+        @include background-size(22px 12px);
+        display: inline-block;
+        vertical-align: text-bottom;
+
     }
 
     .table-column--main {
