@@ -14,6 +14,8 @@ trait ConfigAgentTrait extends ExecutionContexts {
 
   def refresh() = S3FrontsApi.getMasterConfig map {s => configAgent.send(Json.parse(s))}
 
+  def refreshWith(json: JsValue): Unit = configAgent.send(json)
+
   def refreshAndReturn(): Future[JsValue] =
     S3FrontsApi.getMasterConfig
       .map(Json.parse)
