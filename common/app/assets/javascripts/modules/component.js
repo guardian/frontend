@@ -99,7 +99,7 @@ define([
 
         this.elem = template;
         this._prerender();
-        bonzo(container)[self.manipulationType](this.elem);
+        bonzo(container).append(this.elem);
         this._ready();
     };
 

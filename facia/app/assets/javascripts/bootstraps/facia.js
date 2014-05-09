@@ -74,7 +74,7 @@ define([
         upgradeMostPopularToGeo: function(config) {
             // only the 3 editionalised fronts
             if (config.page.pageId === "" && config.switches.geoMostPopular) {
-                new GeoMostPopularFront(mediator, config).render('.container--popular');
+                new GeoMostPopularFront(mediator, config);
             }
         }
     };
