@@ -8,33 +8,6 @@ abstract class FrontPage(val isNetworkFront: Boolean) extends MetaData {
   override lazy val rssPath = Some(s"/$id/rss")
 }
 
-class SwitchingSeoData(faciaPage: FaciaPage, seoData: SeoData) extends MetaData {
-  val isOldSeoOn: Boolean = Switches.AutoSeoSwitch.isSwitchedOn
-
-  lazy val frontPage = FrontPage.getFrontPageFromFaciaPage(faciaPage)
-
-  val id: String = if (isOldSeoOn) frontPage.id else seoData.id
-  val section: String  = if (isOldSeoOn) frontPage.section else seoData.section.get
-  val webTitle: String = if (isOldSeoOn) frontPage.webTitle else seoData.webTitle.get
-
-  val analyticsName: String = if (isOldSeoOn) frontPage.analyticsName else faciaPage.analyticsName
-}
-
-object SwitchingFrontPage {
-
-  def apply(faciaPage: FaciaPage): FrontPage =
-    if (Switches.AutoSeoSwitch.isSwitchedOn)
-      FrontPage.getFrontPageFromFaciaPage(faciaPage)
-    else
-      OldFrontPage.apply(faciaPage)
-
-  def getDefaultFrontPage: FrontPage =
-    if (Switches.AutoSeoSwitch.isSwitchedOn)
-      FrontPage.defaultFrontPage
-    else
-      OldFrontPage.defaultFrontPage
-}
-
 object FrontPage {
 
   val defaultDescription: String = "Latest news, comment and analysis from the Guardian, the world’s leading liberal voice"
