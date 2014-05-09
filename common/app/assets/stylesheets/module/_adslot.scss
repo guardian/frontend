@@ -275,7 +275,7 @@
     border-bottom: 2px solid $c-newsAccent;
 
     @include mq(faciaLeftCol) {
-        border-bottom: 0
+        border-bottom: 0;
     }
 }
 .ad-slot__label {
