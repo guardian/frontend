@@ -24,7 +24,7 @@
     }
 
     @include mq($to: tablet) {
-        .facia-container--layout-front .container--first {
+        /*.facia-container--layout-front*/ .container--first {
             .container__title,
             .container__border {
                 display: none;
