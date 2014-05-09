@@ -269,15 +269,6 @@
         }
     }
 }
-// can be removed once we dynamically add the sponsored badge ad slot to fronts
-.dfp-badge-container {
-    display: none;
-    border-bottom: 2px solid $c-newsAccent;
-
-    @include mq(faciaLeftCol) {
-        border-bottom: 0;
-    }
-}
 .ad-slot__label {
     height: $mpu-ad-label-height;
     background-color: $c-neutral8;

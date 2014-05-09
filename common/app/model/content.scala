@@ -46,7 +46,6 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
       .getOrElse(facebook.imageFallback)
   }
 
-  lazy val isSponsored: Boolean = DfpAgent.isSponsored(this)
   lazy val sponsor: Option[Sponsor] = {
     if (isSponsored) {
       Sponsors.find(tags.filter(_.tagType == "keyword").head.id)
