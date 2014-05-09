@@ -150,17 +150,13 @@ trait FrontPress extends Logging {
     "assets" -> element.delegate.assets.map(generateAsset)
   )
 
+  //Asset typeData: width, height, credit, caption
   private def generateAsset(asset: Asset): JsValue =
     Json.obj(
       "type" -> asset.`type`,
       "mimeType" -> asset.mimeType,
       "file" -> asset.file,
-      "typeData" -> Json.obj(
-        ("height", asset.typeData.get("height")),
-        ("credit", asset.typeData.get("credit")),
-        ("caption", asset.typeData.get("caption")),
-        ("width", asset.typeData.get("width"))
-      )
+      "typeData" -> asset.typeData
     )
 
   private def generateItemMeta(content: Content): JsValue =
