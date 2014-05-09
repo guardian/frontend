@@ -137,10 +137,15 @@ $c-commercial-comp-neutral: #edede7;
    Entries
    ========================================================================== */
 
-.lineitems {
+.lineitems,
+.highitem {
     padding: 0;
     margin: 0;
     overflow: hidden;
+}
+.highitem {
+    position: relative;
+    border-bottom: 1px solid $c-neutral4;
 }
 .lineitem {
     @include box-sizing(border-box);
@@ -219,6 +224,9 @@ $c-commercial-comp-neutral: #edede7;
     .responsive-img {
         width: auto;
         height: 100%;
+    }
+    .highitem & {
+        display: block;
     }
 }
 
