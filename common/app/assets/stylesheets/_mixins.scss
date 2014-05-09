@@ -1,278 +1,25 @@
-@import "_mq";
+@import "components/sass-mq/_mq";
 
-// Transform a value into rem
-// Assuming baseline is set to 10px on :root/html
-@function rem($value, $baseline: 10px) {
-    @if $value == 0 { @return 0; } // 0rem -> 0
-    @if type-of($value) == list {
-        $result: ();
-        @each $e in $value {
-            $result: append($result, rem($e));
-        }
-        @return $result;
-    } @else {
-        @return if(type-of($value) == number and unit($value) == px, $value / $baseline * 1rem, $value);
-    }
-}
-
-// Output rem units with px fallback
-// Expects $properties to be a Sass map
-// Usage: see font-size mixin below
-// or http://sassmeister.com/gist/7451284
-@mixin rem($properties) {
-    @each $property, $value in $properties {
-        @if (type-of($value) == number and $value != 0) {
-            // Turn any value into pixels
-            $value: if(unitless($value), $value * 1px, $value);
-        }
-
-        #{$property}: $value;
-        #{$property}: rem($value);
-    }
-}
-
-
-// Font Helpers
+// Guss - https://github.com/guardian/guss
 // =============================================================================
 
-@mixin font-size($size, $line-height: $size) {
-    @include rem((
-        font-size: $size,
-        line-height: $line-height
-    ));
-}
+@import "components/guss-rem/_rem";
+@import "components/guss-typography/_helpers";
+@import "components/guss-typography/_font-scale";
+@import "components/guss-css3/_css3";
+@import "components/guss-layout/_columns";
+@import "components/guss-layout/_row";
 
-// Use only if necessary, prefer usage of the font-scale
-@mixin font($family, $weight, $size, $line-height: $size) {
-    font-family: $family;
-    font-weight: $weight;
-    @include font-size($size, $line-height);
-}
+// The grid system is already imported in the _vars.scss file where it's needed
+// @import "components/guss-grid-system/_grid-system";
 
-// Usage: font-size: get-line-height($fs-header, 3);
-@function get-font-size($font-scale, $level) {
-    @return nth(nth($font-scale, $level), 1);
-}
-
-@function get-line-height($font-scale, $level) {
-    @return nth(nth($font-scale, $level), 2);
-}
-
-
-// Font Scale
+// CSS helpers
 // =============================================================================
 
-// Prefixes:
-// f- stands for Font: use to set a font-family only
-// fs- for Font Scale: see documentation in docs/design/font-scale.jpg
-
-@mixin f-header {
-    font-family: $serifheadline;
-    font-weight: 900;
-    -webkit-font-smoothing: antialiased;
-}
-@mixin fs-header($level, $size-only: false) {
-    $header: nth($fs-headers, $level);
-
-    @include font-size(nth($header, 1), nth($header, 2));
-
-    @if $size-only == false {
-        @include f-header;
-    }
-}
-
-@mixin f-headline {
-    font-family: $serifheadline;
-    font-weight: normal;
-    -webkit-font-smoothing: antialiased;
-}
-@mixin fs-headline($level, $size-only: false) {
-    $headline: nth($fs-headlines, $level);
-
-    @include font-size(nth($headline, 1), nth($headline, 2));
-
-    @if $size-only == false {
-        @include f-headline;
-    }
-}
-
-@mixin f-bodyHeading {
-    font-family: $serif;
-    font-weight: bold;
-    -webkit-font-smoothing: subpixel-antialiased;
-}
-@mixin fs-bodyHeading($level, $size-only: false) {
-    $heading: nth($fs-bodyHeadings, $level);
-
-    @include font-size(nth($heading, 1), nth($heading, 2));
-
-    @if $size-only == false {
-        @include f-bodyHeading;
-    }
-}
-
-@mixin f-bodyCopy {
-    font-family: $serif;
-    -webkit-font-smoothing: antialiased;
-}
-@mixin fs-bodyCopy($level, $size-only: false) {
-    $bodycopy: nth($fs-bodyCopy, $level);
-
-    @include font-size(nth($bodycopy, 1), nth($bodycopy, 2));
-
-    @if $size-only == false {
-        @include f-bodyCopy;
-    }
-}
-
-@mixin f-data {
-    font-family: $sans-serif;
-    -webkit-font-smoothing: antialiased;
-}
-@mixin fs-data($level, $size-only: false) {
-    $data: nth($fs-data, $level);
-
-    @include font-size(nth($data, 1), nth($data, 2));
-
-    @if $size-only == false {
-        @include f-data;
-    }
-}
-
-@mixin f-textsans {
-    font-family: $text-sans;
-    -webkit-font-smoothing: antialiased;
-}
-@mixin fs-textsans($level, $size-only: false) {
-    $textsans: nth($fs-textsans, $level);
-
-    @include font-size(nth($textsans, 1), nth($textsans, 2));
-
-    @if $size-only == false {
-        @include f-textsans;
-    }
-}
-
-// CSS3 helpers
-// =============================================================================
-
-@mixin box-sizing($box) {
-    -webkit-box-sizing: $box;
-    -moz-box-sizing: $box;
-    box-sizing: $box;
-}
-
-// Do not use when transitionning prefixed properties
-// to avoid impossible code like `-moz-transition: -webkit-border-radius 1s`
-@mixin transition($args...) {
-    -webkit-transition: $args;
-    -moz-transition: $args;
-    transition: $args;
-}
-
-@mixin transition-delay($args...) {
-    -webkit-transition-delay: $args;
-    -moz-transition-delay: $args;
-    transition-delay: $args;
-}
-
-@mixin transform($args) {
-    -webkit-transform: $args;
-    -moz-transform: $args;
-    -ms-transform: $args;
-    -o-transform: $args;
-    transform: $args;
-}
-
-@mixin transform-origin($args) {
-    -webkit-transform-origin: $args;
-    -moz-transform-origin: $args;
-    -ms-transform-origin: $args;
-    -o-transform-origin: $args;
-    transform-origin: $args;
-}
-
-@mixin rotate($angle) {
-    @include transform(rotate($angle));
-}
-
-@mixin animation($args) {
-    -webkit-animation: $args;
-    -moz-animation: $args;
-    animation: $args;
-}
-
-@mixin keyframes($name) {
-    @-webkit-keyframes $name { @content; }
-    @-moz-keyframes $name { @content; }
-    @keyframes $name { @content; }
-}
-
-@mixin rounded-corners($radius: 5px) {
-    -webkit-border-radius: $radius;
-    -moz-border-radius: $radius;
-    border-radius: $radius;
-}
-
-@mixin box-shadow($args...) {
-    -webkit-box-shadow: $args;
-    -moz-box-shadow: $args;
-    box-shadow: $args;
-}
-
-@mixin background-size($args...) {
-    -webkit-background-size: $args;
-    -moz-background-size: $args;
-    background-size: $args;
-}
-
-@mixin flex($flex-grow: 0, $flex-shrink: 1, $flex-basis: auto) {
-    -webkit-box-flex: $flex-grow;
-    -moz-box-flex: $flex-grow;
-    -webkit-flex: $flex-grow $flex-shrink $flex-basis;
-    -ms-flex: $flex-grow $flex-shrink $flex-basis;
-    flex: $flex-grow $flex-shrink $flex-basis;
-}
-
-@mixin flex-grow($value: 0) {
-    -webkit-box-flex: $value;
-    -webkit-flex-grow: $value;
-    -moz-flex-grow: $value;
-    -ms-flex-positive: $value;
-    flex-grow: $value;
-}
-
-@mixin flex-basis($value: auto) {
-    -webkit-flex-basis: $value;
-    -moz-flex-basis: $value;
-    -ms-flex-preferred-size: $value;
-    flex-basis: $value;
-}
-
-// Sticky positioning
-// Support is very limited but should be used in iOS
-// See http://updates.html5rocks.com/2012/08/Stick-your-landings-position-sticky-lands-in-WebKit
-@mixin sticky {
-    position: -webkit-sticky; // iOS 6+
-    position: -moz-sticky;
-    position: -ms-sticky;
-    position: sticky;
-}
-
-// Prevent user from selecting text
-@mixin user-select {
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-}
-
-// Set the properties of placeholder text
-@mixin placeholder {
-    ::-webkit-input-placeholder {@content}
-    :-moz-placeholder           {@content}
-    ::-moz-placeholder          {@content}
-    :-ms-input-placeholder      {@content}
+// Transparent background with fallback for older browsers
+@mixin transparent-background($color, $opacity) {
+    background-color: $color;
+    background-color: rgba($color, $opacity);
 }
 
 // Vertical linear gradient with a plain fallback for older browsers
@@ -291,10 +38,6 @@
     background-image: linear-gradient(to bottom, $from, $to);
 }
 
-
-// Misc
-// =============================================================================
-
 @function aspect-ratio-height($x, $y, $startingWidth: 100%) {
     @return ($y / $x) * $startingWidth;
 }
@@ -308,23 +51,15 @@
     overflow: hidden;
 }
 
-@mixin old-ie {
-    @if $old-ie { // Only use this content if we're dealing with old IE
-        @content;
-    }
-}
-
-@mixin faux-bullet-point($color: $c-neutral3, $offset-y: 6px) {
+@mixin faux-bullet-point($color: $c-neutral3, $right-space: 2px) {
     &:before {
         display: inline-block;
         content: "";
-        @include rounded-corners(6px);
+        @include border-radius(6px);
         @include rem((
             height: 12px,
             width: 12px,
-            left: 0,
-            top: $offset-y,
-            margin-right: 2px
+            margin-right: $right-space
         ));
         background-color: $color;
     }
@@ -364,7 +99,7 @@
 @mixin icon-button($buttonSize, $iconOffsetX, $iconOffsetY: null) {
     width: $buttonSize;
     height: $buttonSize;
-    @include rounded-corners($buttonSize);
+    @include border-radius($buttonSize);
     position: relative;
     display: inline-block;
 
@@ -389,8 +124,28 @@
         clear: both;
     }
     @if $old-ie {
-        & {
-            zoom: 1;
-        }
+        zoom: 1;
+    }
+}
+
+@mixin full-bleed($color) {
+    $bgWidth: 10000px;
+    background-color: $color;
+
+    &:before,
+    &:after {
+        @include box-sizing(border-box);
+        content: " ";
+        background-color: $color;
+        position: absolute;
+        top: 0;
+        height: 100%;
+        width: $bgWidth;
+    }
+    &:before {
+        margin-left: -$bgWidth;
+    }
+    &:after {
+        left: 100%;
     }
 }

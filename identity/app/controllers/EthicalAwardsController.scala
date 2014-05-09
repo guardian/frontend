@@ -13,7 +13,7 @@ import conf.Switches
 class EthicalAwardsController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
                                         idRequestParser: IdRequestParser,
                                         idUrlBuilder: IdentityUrlBuilder,
-                                        authAction: actions.AuthAction)
+                                        authAction: actions.AuthenticatedAction)
   extends Controller with ExecutionContexts with SafeLogging {
 
   val page = IdentityPage("/ethical-awards", "Ethical Awards", "ethical-awards")

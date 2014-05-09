@@ -9,8 +9,10 @@
 }
 
 .form {
-    margin-top: $gs-baseline*2;
-    margin-bottom: $gs-baseline*2;
+    @include rem((
+        margin-top: $gs-baseline*2,
+        margin-bottom: $gs-baseline*2
+    ));
 }
 
 .form__heading {
@@ -22,31 +24,38 @@
 .form__note,
 .form-field__note {
     font-family: $sans-serif;
-    font-size: 13px;
-    font-size: 1.3rem;
-    margin-bottom: 8px;
+    @include rem((
+        font-size: 13px,
+        margin-bottom: 8px
+    ));
 }
 
 .fieldset {
-    border: none;
+    border: 0;
     border-top: 1px solid $c-neutral7;
     display: table;
-    padding: (($gs-baseline/3)*4 - 1) 0 ($gs-baseline*2);
+    @include rem((
+        padding: (($gs-baseline/3)*4 - 1) 0 ($gs-baseline*2)
+    ));
     margin: 0;
 }
 
 @include mq(desktop) {
     .fieldset__heading {
         display: table-cell;
-        padding-right: $gs-gutter*5;
+        @include rem((
+            padding-right: $gs-gutter*5,
+            width: gs-span(3)
+        ));
         vertical-align: top;
-        width: gs-span(3);
     }
 
     .fieldset__fields {
         display: table-cell;
         vertical-align: top;
-        width: gs-span(6);
+        @include rem((
+            width: gs-span(6)
+        ));
     }
 }
 
@@ -56,14 +65,18 @@
 
 .form-field {
     list-style: none;
-    margin: 0 0 $gs-baseline*2 0;
+    @include rem((
+        margin: 0 0 $gs-baseline*2
+    ));
     padding: 0;
 }
 
 
 .form-field__submit {
     .form-field__note {
-        margin: 0 0 $gs-baseline*2 0;
+        @include rem((
+            margin: 0 0 $gs-baseline*2
+        ));
         @include mq(desktop) {
             float: right;
             width: 60%;
@@ -93,18 +106,36 @@
     border-bottom: 1px solid lighten($newsRed, 35%);
     border-top: 1px solid lighten($newsRed, 35%);
     color: $newsRed;
-    margin-top: 6px;
-    padding: 7px ($gs-baseline/3)*2;
+    @include rem((
+        margin-top: 6px,
+        padding: 7px ($gs-baseline/3)*2
+    ));
+}
+
+.form__success {
+    @include fs-data(4);
+    background-color: lighten($environmentGreen, 70%);
+    border-bottom: 1px solid lighten($environmentGreen, 35%);
+    border-top: 1px solid lighten($environmentGreen, 35%);
+    color: $environmentGreen;
+    @include rem((
+        margin-top: $gs-baseline/2,
+        padding: 7px ($gs-baseline/3)*2
+    ));
 }
 
 .form-field__error {
     color: $newsRed;
-    margin-top: 6px;
+    @include rem((
+        margin-top: $gs-baseline/2
+    ));
 }
 
 .form-field__note--below {
     margin-bottom: 0;
-    margin-top: 6px;
+    @include rem((
+        margin-top: $gs-baseline/2
+    ));
 }
 
 .form-field__note--left {
@@ -113,13 +144,16 @@
 
 .form-field__note--right {
     float: right;
-    margin-left: $gs-gutter;
+    @include rem((
+        margin-left: $gs-gutter
+    ));
 }
 
 .form-fields__inline {
     ul {
         margin: 0;
         padding: 0;
+
         .form-field {
             display: inline-block;
         }
@@ -127,23 +161,28 @@
 
     .form-fields__heading {
         @include fs-bodyHeading(3, true);
-        margin: 0 0 rem($gs-baseline);
+        @include rem((
+            margin: 0 0 $gs-baseline
+        ));
         display: block;
     }
 }
 
 .form-fields--date-of-birth .form-field {
-    margin: 0 rem(18px) 0 0;
+    @include rem((
+        margin: 0 18px 0 0
+    ));
 }
 
 .label {
     color: $c-neutral1;
     cursor: pointer;
     display: block;
-    font-size: 16px;
-    font-size: 1.6rem;
-    line-height: 2.4rem;
-    margin-bottom: 6px;
+    @include rem((
+        font-size: 16px,
+        line-height: 24px,
+        margin-bottom: 6px
+    ));
 }
 
 .text-input,
@@ -154,12 +193,13 @@
     color: $c-body;
     display: inline-block;
     font-family: $sans-serif;
-    font-size: 16px;
-    font-size: 1.6rem;
+    @include rem((
+        font-size: 16px,
+        padding: 8px 8px 7px
+    ));
     line-height: 1.4;
     outline: none;
-    padding: 8px 8px 7px;
-    @include rounded-corners(0);
+    @include border-radius(0);
     width: 100%;
     -webkit-appearance: none;
 
@@ -168,8 +208,9 @@
     }
 
     @include mq(tablet) {
-        font-size: 14px;
-        font-size: 1.4rem;
+        @include rem((
+            font-size: 14px
+        ));
     }
 }
 
@@ -178,16 +219,22 @@
 }
 
 .textarea--no-resize {
-    min-height: ($gs-baseline/3)*20;
+    @include rem((
+        min-height: ($gs-baseline/3)*20
+    ));
     resize: none;
 }
 
 .textarea--mid {
-    min-height: $gs-baseline*9;
+    @include rem((
+        min-height: $gs-baseline*9
+    ));
 }
 
 .textarea--long {
-    min-height: ($gs-baseline/3)*40;
+    @include rem((
+        min-height: ($gs-baseline/3)*40
+    ));
 }
 
 .submit-input {
@@ -196,12 +243,13 @@
     color: #ffffff;
     cursor: pointer;
     display: inline-block;
-    font-size: 14px;
-    font-size: 1.4rem;
-    margin: 0 $gs-gutter 0 0;
-    min-width: gs-span(2);
+    @include rem((
+        font-size: 14px,
+        margin: 0 $gs-gutter 0 0,
+        min-width: gs-span(2),
+        padding: 11px $gutter/2
+    ));
     outline: none;
-    padding: 11px $gutter/2;
     text-align: center;
 
     &:hover,
@@ -222,10 +270,11 @@
 .radio-label {
     display: block;
     font-family: $sans-serif;
-    font-size: 13px;
-    font-size: 1.3rem;
-    margin-bottom: $gs-baseline/3;
-    padding-left: $gs-gutter;
+    @include rem((
+        font-size: 13px,
+        margin-bottom: $gs-baseline/3,
+        padding-left: $gs-gutter
+    ));
 }
 
 .check-label--helper {
@@ -236,8 +285,11 @@
 [type=checkbox],
 [type=radio] {
     float: left;
-    height: 13px;
-    margin-left: -$gs-gutter;
-    margin-top: 3px;
-    width: 13px;
+    @include rem((
+        height: 13px,
+        margin-left: -$gs-gutter,
+        margin-top: 3px,
+        width: 13px
+    ));
+
 }

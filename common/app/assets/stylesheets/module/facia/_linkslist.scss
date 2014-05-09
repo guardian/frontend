@@ -13,12 +13,12 @@
     padding-top: 1px;
     @include mq(tablet) {
         @include rem((
-            margin-top: $gs-baseline
+            margin-top: $gs-baseline*.75
         ));
     }
 
     &:before {
-        content: '';
+        content: "";
         display: block;
         position: absolute;
         top: 0;

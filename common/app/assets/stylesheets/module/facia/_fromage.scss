@@ -13,33 +13,29 @@
 
 .fromage {
     @include rem((
-        margin: 0 $gs-gutter/2 $gs-baseline/2
+        margin: 0 $gs-gutter/2 $gs-baseline
     ));
     border-top-width: 2px;
     border-top-style: solid;
 
     @include mq(tablet) {
         @include rem((
-            margin-bottom: $gs-baseline*2
+            margin-bottom: $gs-baseline*1.75
         ));
     }
+
     .item__title {
         @include fs-headline(2, $size-only: true);
         padding-top: 0;
-
         @include rem((
-            margin-bottom: $gs-baseline + 2px
+            margin-bottom: $gs-baseline
         ));
+
         @include mq(tablet) {
-            display: table-cell;
-            vertical-align: top;
-            width: 100000px;
-            max-width: 100%;
-            margin-bottom: 0;
             @include fs-headline(4, true);
-        }
-        @include mq(desktop) {
-            @include fs-headline(5, true);
+            @include rem((
+                margin-bottom: $gs-baseline*1.25
+            ));
         }
     }
 
@@ -48,15 +44,23 @@
        ====================================================================== */
 
     .item__meta {
-        bottom: -1px;
         overflow: hidden;
         @include rem((
+            bottom: -1px,
             margin-bottom: $gs-baseline/2
         ));
 
         @include mq(tablet) {
-            position: static;
+            bottom: auto;
+            right: 0;
+            @include rem((
+                top: 2px,
+                min-height: 16px // Prevent jump when timestamp is removed
+            ));
         }
+    }
+    .item__timestamp {
+        display: none;
     }
 }
 .fromage,
@@ -67,14 +71,14 @@
     border-top: 0 solid #ffffff;
     position: relative;
     @include rem((
-        padding-bottom: 32px
+        padding-bottom: $gs-row-height - $gs-baseline/3
     ));
 
     @include mq(tablet) {
         padding-bottom: 0;
 
         @include rem((
-            padding-left: gs-span(5) + $gs-gutter,
+            padding-left: gs-span(5) + $gs-gutter
         ));
     }
 }
@@ -83,16 +87,13 @@
 /* Main elements
    ========================================================================== */
 
-.fromage__link,
-.supporting__action {
-    color: $c-neutral1;
-}
 .fromage__link {
+    color: $c-neutral1;
     display: block;
 
     &:hover,
     &:focus {
-       text-decoration: none;
+        text-decoration: none;
 
         .item__title {
             text-decoration: underline;
@@ -103,11 +104,10 @@
             text-decoration: none;
         }
     }
-}
-.fromage__link:visited,
-.fromage__link:visited .item__title,
-.supporting__action:visited {
-    color: $c-neutral2;
+    &:visited,
+    &:visited .item__title {
+        color: $c-neutral2;
+    }
 }
 .fromage__media-wrapper {
     @include mq(tablet) {
@@ -123,7 +123,11 @@
 .fromage__image-container {}
 
 .fromage__standfirst {
-    @include fs-headline(1);
+    @include f-headline;
+    @include rem((
+        font-size: 14px,
+        line-height: 18px
+    ));
     color: $c-neutral2;
 
     p {
@@ -132,8 +136,7 @@
 
     @include mq(tablet) {
         @include rem((
-            margin-top: $gs-baseline/2,
-            margin-bottom: $gs-baseline,
+            margin-bottom: $gs-baseline + 2,
             max-width: gs-span(5)
         ));
     }
@@ -178,6 +181,7 @@
 .fromage--has-no-image {
     .fromage__container {
         border-top-width: 0;
+
         @include mq(desktop) {
             @include rem((
                 padding-left: gs-span(6) + $gs-gutter
@@ -192,7 +196,6 @@
         @include mq(tablet) {
             float: left;
             padding-left: 0;
-
             @include rem((
                 width: gs-span(5),
                 margin-left: gs-span(5) * -1 - $gs-gutter
@@ -211,30 +214,54 @@
         @include mq(tablet) {
             @include fs-headline(5, true);
         }
-        @include mq(desktop) {
-            @include fs-headline(6, true);
-        }
     }
-    .fromage__standfirst,
-    .fromage__byline {
+    .fromage__byline,
+    .fromage__standfirst {
         @include mq(tablet) {
             @include rem((
+                padding-top: $gs-baseline/3
+            ));
+        }
+    }
+    @include mq(tablet) {
+        .fromage__standfirst,
+        .fromage__byline {
+            @include rem((
                 padding-right: $gs-gutter/4
+            ));
+        }
+        .js-on &.fromage--has-discussion .fromage__standfirst,
+        .js-on &.fromage--has-discussion .fromage__byline {
+            // If the story has a discussion, make room for the comment count
+            // in the top right of the component
+            @include rem((
+                padding-right: gs-span(1)
             ));
         }
     }
 }
 .fromage--has-image {
+    @include mq(tablet) {
+        .js-on &.fromage--has-discussion .fromage__link {
+            // If the story has a discussion, make room for the comment count
+            // in the top right of the component
+            @include rem((
+                margin-right: gs-span(1)
+            ));
+        }
+    }
     .item__title,
     .fromage__standfirst {
         @include mq(desktop) {
             @include rem((
-                max-width: gs-span(8)
+                max-width: gs-span(7)
             ));
         }
     }
     .fromage__container {
-        border-top-width: 4px;
+        @include rem((
+            border-top-width: $gs-baseline/3
+        ));
 
         @include mq(tablet) {
             @include rem((
@@ -251,36 +278,13 @@
         }
     }
 }
-.fromage--imageadjust-default {
-    .fromage__standfirst {
-        @include mq(tablet) {
-            @include rem((
-                margin-top: $gs-baseline*1.5
-            ));
-        }
-    }
-}
 .fromage--imageadjust-boost {
     .item__title {
         @include rem((
             padding-top: $gs-baseline/3
         ));
         @include mq(tablet) {
-            @include fs-headline(5, true);
             padding-top: 0;
-        }
-        @include mq(desktop) {
-            @include fs-headline(6, true);
-            @include rem((
-                max-width: none
-            ));
-        }
-    }
-    .fromage__standfirst {
-        @include mq(tablet) {
-            @include rem((
-                margin-top: $gs-baseline*2
-            ));
         }
     }
     .fromage__link {
@@ -327,122 +331,11 @@
             display: none;
         }
     }
-}
-
-
-/* Modifier: Volume 0, 1, 2
-   ========================================================================== */
-
-.fromage--volume-1,
-.fromage--volume-2 {
-    .supporting__item {
-        border-color: #ffffff;
-
-        @include mq($to: tablet) {
-            .supporting__action {
-                @include rem((
-                    margin-left: $gs-gutter/5
-                ));
-            }
-        }
-        @include mq(tablet) {
-            + .supporting__item {
-                border-left-color: #ffffff;
-            }
-            &:first-child {
-                .supporting__action {
-                    @include rem((
-                        margin-left: $gs-gutter/5
-                    ));
-                }
-            }
-            &:last-child .supporting__action {
-                @include rem((
-                    margin-right: $gs-gutter/5
-                ));
-            }
-        }
-    }
-    .item__title,
-    .item__meta,
-    .fromage__standfirst,
-    .fromage__byline {
-        // Add some breathing space to children since they're in a box
-        // that has a background color
-        @include rem((
-            padding-left: $gs-gutter/4,
-            padding-right: $gs-gutter/4
-        ));
-    }
-    .fromage__standfirst,
-    .item__meta,
-    .fromage__byline {
-        @include mq(tablet) {
-            @include rem((
-                padding-left: 0
-            ));
-        }
-    }
-    &.fromage--has-image {
-        .item__title {
-            @include mq(tablet) {
-                @include rem((
-                    padding-left: 0
-                ));
-            }
-        }
-    }
-    &.fromage--imageadjust-default {
-        .fromage__media-wrapper--second {
-            @include rem((
-                margin-left: $gs-gutter/4
-            ));
-        }
-    }
-    &.fromage--imageadjust-boost {
-        .fromage__standfirst {
-            @include mq(desktop) {
-                @include rem((
-                    margin-top: $gs-baseline*2
-                ));
-            }
-        }
-    }
-}
-.fromage--volume-1 {
-    &,
-    .fromage__container,
     .supporting {
-        background: $c-neutral8;
-    }
-    .fromage__standfirst {
-        color: $c-neutral2-contrasted;
-    }
-}
-.fromage--volume-2 {
-    -webkit-font-smoothing: antialiased; // Prevent fonts from being too bold
-                                         // on the dark background
-    &,
-    .fromage__container {
-        background-color: $c-brandBlue;
-    }
-    &,
-    .fromage__container,
-    .item__title,
-    .fromage__standfirst,
-    .item__meta,
-    .supporting__action,
-    .fromage__link {
-        color: #ffffff;
-    }
-    .fromage__link:visited,
-    .fromage__link:visited .item__title {
-        color: mix(#ffffff, $c-brandBlue, 80%);
-    }
-    .supporting {
-        background-color: lighten($c-brandBlue, 7%);
-    }
-    .supporting__action:visited {
-        color: mix(#ffffff, lighten($c-brandBlue, 7%), 80%);
+        @include mq(tablet) {
+            -webkit-column-width: rem(gs-span(2) + $gs-gutter*2);
+            -moz-column-width: rem(gs-span(2) + $gs-gutter*2);
+            column-width: rem(gs-span(2) + $gs-gutter*2);
+        }
     }
 }

@@ -1,14 +1,14 @@
 package common
 
+import com.amazonaws.auth._
+import com.amazonaws.internal.StaticCredentialsProvider
 import com.gu.conf.ConfigurationFactory
 import com.gu.management.{ Manifest => ManifestFile }
-import com.amazonaws.auth._
-import play.api.Play
-import play.api.Play.current
+import conf.Configuration
 import java.io.{FileInputStream, File}
 import org.apache.commons.io.IOUtils
-import conf.Configuration
-import com.amazonaws.internal.StaticCredentialsProvider
+import play.api.Play
+import play.api.Play.current
 
 class BadConfigurationException(property: String) extends RuntimeException(s"Property $property not configured")
 
@@ -62,7 +62,6 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
 
   object contentApi {
-    lazy val host = configuration.getMandatoryStringProperty("content.api.host")
     lazy val elasticSearchHost = configuration.getMandatoryStringProperty("content.api.elastic.host")
     lazy val key = configuration.getMandatoryStringProperty("content.api.key")
     lazy val timeout: Int = configuration.getIntegerProperty("content.api.timeout.millis").getOrElse(2000)
@@ -82,6 +81,10 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
   object ophan {
     lazy val jsLocation = configuration.getStringProperty("ophan.js.location").getOrElse("http://j.ophan.co.uk/ophan.ng")
+  }
+
+  object googletag {
+    lazy val jsLocation = configuration.getStringProperty("googletag.js.location").getOrElse("//www.googletagservices.com/tag/js/gpt.js")
   }
 
   object frontend {
@@ -156,6 +159,10 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val path = configuration.getMandatoryStringProperty("staticSport.path")
   }
 
+  object sport {
+    lazy val apiUrl = configuration.getStringProperty("sport.apiUrl").getOrElse(ajax.url)
+  }
+
   object oas {
     lazy val siteIdHost = configuration.getStringProperty("oas.siteId.host").getOrElse(".guardian.co.uk")
     lazy val url = configuration.getStringProperty("oas.url").getOrElse("http://oas.theguardian.com/RealMedia/ads/")
@@ -178,6 +185,18 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val apiClientHeader = configuration.getMandatoryStringProperty("discussion.apiClientHeader")
     lazy val url = configuration.getMandatoryStringProperty("discussion.url")
   }
+  
+  object commercial {
+    lazy val books_url = configuration.getMandatoryStringProperty("commercial.books_url")
+    lazy val masterclasses_url = configuration.getMandatoryStringProperty("commercial.masterclasses_url")
+    lazy val soulmates_url = configuration.getMandatoryStringProperty("commercial.soulmates_url")
+    lazy val travel_url = configuration.getMandatoryStringProperty("commercial.travel_url")
+    lazy val dfpDataKey = {
+      val key = s"${environment.stage.toUpperCase}/commercial/dfp-data.json"
+      log.info(s"DFP data will be loaded from $key")
+      key
+    }
+  }
 
   object open {
     lazy val ctaApiRoot = configuration.getMandatoryStringProperty("open.cta.apiRoot")
@@ -198,7 +217,8 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
       "discussionApiRoot" -> discussion.apiRoot,
       ("secureDiscussionApiRoot", discussion.secureApiRoot),
       "discussionApiClientHeader" -> discussion.apiClientHeader,
-      ("ophanJsUrl", ophan.jsLocation)
+      ("ophanJsUrl", ophan.jsLocation),
+      ("googletagJsUrl", googletag.jsLocation)
     )
 
     lazy val pageData: Map[String, String] = {
@@ -268,6 +288,11 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
   object formstack {
     lazy val url = configuration.getMandatoryStringProperty("formstack.url")
     lazy val oAuthToken = configuration.getMandatoryStringProperty("formstack.oauthToken")
+  }
+
+  object avatars {
+    lazy val imageHost = configuration.getMandatoryStringProperty("avatars.image.host")
+    lazy val signingKey = configuration.getMandatoryStringProperty("avatars.signing.key")
   }
 }
 

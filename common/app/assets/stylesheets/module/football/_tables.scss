@@ -1,6 +1,4 @@
-@mixin table-football--small() {
-    .table-column--inferior { display: none; }
-
+@mixin table-football--medium {
     th,
     td {
         min-width: 0;
@@ -14,8 +12,7 @@
 /** League table **/
 .table--football {
     .table-column--main {
-        a,
-        span {
+        .team-name {
             display: block;
             overflow: hidden;
             white-space: nowrap;
@@ -23,16 +20,12 @@
         }
     }
 
-    .football-stat--points {
-        font-weight: bold;
-    }
-
-    .football-stat--team a {
-        color: inherit;
-    }
-
     .table-column--main {
         max-width: 50px;
+
+        a {
+            color: inherit;
+        }
     }
 
     // This makes sure that all table columns are equally spaced
@@ -43,18 +36,111 @@
     // remove battle line from last row
     // (only happens in truncated tables)
     tr:last-child td {
-        border-bottom: none;
+        border-bottom: 0;
     }
 
     .football-stat--form {
-        min-width: 75px; // 15(width of status)*5
+        @include rem((
+            min-width: 15*5 // width of status
+        ));
     }
 
-    // This is as we don't have element media queries (no-one does)
-    @include mq($to: tablet) { @include table-football--small; }
-    &.table--small { @include table-football--small; }
+    @include mq($to: $table-breakpoint-importance-1) { @include table-football--medium; }
+    @include mq($to: $table-breakpoint-importance-2) {
+        .team-name:after {
+            content: attr(data-abbr);
+        }
+        .team-name__long {
+            @include u-h;
+        }
+    }
 }
 
+// This is everything on the standalone pages
+// i.e. /football/tables or /football/results
 .football-table__container {
+    @include rem((
+        margin-bottom: $gs-baseline*3
+    ));
     position: relative;
+
+    .football-matches__date {
+        display: none;
+    }
+
+    // Only show "view more" and competition name on the last group table
+    .football__group {
+        .table__caption {
+            display: none;
+        }
+
+        &:last-child .table__caption {
+            display: table-caption;
+        }
+    }
+
+    @include mq(leftCol) {
+        .table__caption--top {
+            @include fs-header(1);
+            @include rem((
+                margin-bottom: ($gs-baseline/3)*4,
+                margin-left: ($a-leftCol-width + $gs-gutter)*-1,
+                padding-bottom: ($gs-baseline/3)*4,
+                padding-top: ($gs-baseline/3),
+                width: $a-leftCol-width
+            ));
+            background: none;
+            border-bottom: 0 none;
+            border-top: 1px dotted $c-neutral5;
+            padding-left: 0;
+            padding-right: 0;
+            position: absolute;
+            top: 0;
+        }
+    }
+
+    @include mq(wide) {
+        .table__caption--top {
+            @include rem((
+                margin-left: (gs-span(3) + $gs-gutter)*-1,
+                width: gs-span(3)
+            ));
+        }
+    }
+}
+
+.football-matches {
+    .table__caption--bottom {
+        display: none;
+    }
+}
+
+.football-table__container--single {
+    // Hide the view more when there is only that table
+    .table__caption--bottom {
+        display: none;
+    }
+}
+
+.c-football-table {
+    @include table-football--medium;
+}
+
+.football__group {
+    @include rem((
+        margin-top: $gs-baseline*2
+    ));
+
+    &:first-child {
+        margin-top: 0;
+    }
+}
+
+.table__caption {
+    .item__live-indicator {
+        @include rem((
+            top: 2px
+        ));
+        float: right;
+    }
 }

@@ -5,7 +5,7 @@
     @defining(baguetteItems.size) { baguetteCount =>
 
         @baguetteItems.zipWithIndex.map{ case (trail, index) =>
-            <div class="collection-wrapper">
+            <div class="facia-slice-wrapper">
                 @fragments.items.baguette(trail, index)
             </div>
         }
@@ -13,7 +13,7 @@
         @defining(items.diff(baguetteItems)) { items =>
 
             @items.headOption.map{ trail =>
-                <div class="collection-wrapper">
+                <div class="facia-slice-wrapper">
                     @if(!trail.group.isEmpty){ @* Means this is a curated container *@
                         @fragments.items.fromage(trail, baguetteCount)
                     }else{ @* Not a curated container: we fake hierarchy *@
@@ -23,7 +23,7 @@
             }
             @defining(items.slice(baguetteCount + 1, baguetteCount + 2)) { items =>
                 @if(items.nonEmpty) {
-                    <div class="collection-wrapper">
+                    <div class="facia-slice-wrapper">
                         @items.zipWithIndex.map{ case (trail, index) =>
                             @fragments.items.fromage(trail, baguetteCount + 1)
                         }
@@ -32,7 +32,7 @@
             }
             @defining(items.slice(baguetteCount + 2, baguetteCount + 6)) { items =>
                 @if(items.nonEmpty) {
-                    <div class="collection-wrapper">
+                    <div class="facia-slice-wrapper">
                         <ul class="u-unstyled l-row l-row--layout-m l-row--items-4 collection">
                             @items.zipWithIndex.map{ case (trail, index) =>
                                 @fragments.collections.items.standard(trail, baguetteCount + index + 2, containerIndex)
@@ -43,7 +43,7 @@
             }
             @defining(items.slice(baguetteCount + 6, baguetteCount + 14)) { items =>
                 @if(items.nonEmpty) {
-                    <div class="collection-wrapper collection-wrapper--position-2 collection-wrapper--ad">
+                    <div class="linkslist-container tone-@{style.tone} facia-slice-wrapper--ad">
                         <ul class="l-columns linkslist linkslist--with-images">
                             @items.zipWithIndex.map{ case (trail, index) =>
                                 @trail match {

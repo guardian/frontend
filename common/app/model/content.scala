@@ -11,6 +11,7 @@ import collection.JavaConversions._
 import views.support.{VisualTone, Naked, ImgSrc, StripHtmlTagsAndUnescapeEntities}
 import play.api.libs.json.JsValue
 import conf.Configuration.facebook
+import dfp.DfpAgent
 
 class Content protected (val apiContent: ApiContentWithMeta) extends Trail with MetaData {
 
@@ -25,13 +26,14 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   lazy val starRating: Option[String] = fields.get("starRating")
   lazy val shortUrlPath: String = shortUrl.replace("http://gu.com", "")
   lazy val allowUserGeneratedContent: Boolean = fields.get("allowUgc").exists(_.toBoolean)
-  lazy val isCommentable: Boolean = fields.get("commentable").exists(_ == "true")
   lazy val isExpired = delegate.isExpired.getOrElse(false)
   lazy val blockVideoAds: Boolean = videoAssets.exists(_.blockVideoAds)
   lazy val isLiveBlog: Boolean = delegate.isLiveBlog
   lazy val isBlog: Boolean = blogs.nonEmpty
   lazy val isSeries: Boolean = series.nonEmpty
   lazy val hasLargeContributorImage: Boolean = tags.filter(_.hasLargeContributorImage).nonEmpty
+  lazy val isFromTheObserver: Boolean = publication == "The Observer"
+
 
   // read this before modifying
   // https://developers.facebook.com/docs/opengraph/howtos/maximizing-distribution-media-content#images
@@ -44,7 +46,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
       .getOrElse(facebook.imageFallback)
   }
 
-  lazy val isSponsored: Boolean = tags.exists(_.id == "tone/sponsoredfeatures")
+  lazy val isSponsored: Boolean = DfpAgent.isSponsored(this)
   lazy val sponsor: Option[Sponsor] = {
     if (isSponsored) {
       Sponsors.find(tags.filter(_.tagType == "keyword").head.id)
@@ -80,6 +82,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   override lazy val thumbnailPath: Option[String] = fields.get("thumbnail").map(ImgSrc(_, Naked))
   override lazy val isLive: Boolean = fields.get("liveBloggingNow").exists(_.toBoolean)
   override lazy val discussionId = Some(shortUrlPath)
+  override lazy val isCommentable: Boolean = fields.get("commentable").exists(_.toBoolean)
   override lazy val isClosedForComments: Boolean = !fields.get("commentCloseDate").exists(_.parseISODateTime.isAfterNow)
   override lazy val leadingParagraphs: List[org.jsoup.nodes.Element] = {
     val body = delegate.safeFields.get("body")
@@ -187,26 +190,41 @@ object Content {
 
   def fromPressedJson(json: JsValue): Option[Content] = {
     val contentFields: Option[Map[String, String]] = (json \ "safeFields").asOpt[Map[String, String]]
-    Option(
-      Content(ApiContentWithMeta(
-        ApiContent(
-          id = (json \ "id").as[String],
-          sectionId = (json \ "sectionId").asOpt[String],
-          sectionName = (json \ "sectionName").asOpt[String],
-          webPublicationDate = (json \ "webPublicationDate").asOpt[Long].map(new DateTime(_)).get,
-          webTitle = (json \ "safeFields" \ "headline").as[String],
-          webUrl = (json \ "webUrl").as[String],
-          apiUrl = "",
-          elements = Option(parseElements(json)),
-          fields = contentFields,
-          tags = (json \ "tags").asOpt[List[JsValue]].map(parseTags).getOrElse(Nil)
-        ),
-        supporting = (json \ "meta" \ "supporting").asOpt[List[JsValue]].getOrElse(Nil)
-          .flatMap(Content.fromPressedJson),
-        metaData = (json \ "meta").asOpt[Map[String, JsValue]].getOrElse(Map.empty)
+    val itemId: String = (json \ "id").as[String]
+    if (itemId.startsWith("snap/")) {
+      val snapMeta: Map[String, JsValue] = (json \ "meta").asOpt[Map[String, JsValue]].getOrElse(Map.empty)
+      Option(
+        new Snap(
+          snapId = itemId,
+          snapSupporting = (json \ "meta" \ "supporting").asOpt[List[JsValue]].getOrElse(Nil)
+            .flatMap(Content.fromPressedJson),
+          (json \ "webPublicationDate").asOpt[DateTime].getOrElse(DateTime.now),
+          snapMeta = snapMeta
+        )
       )
+    }
+    else {
+      Option(
+        Content(ApiContentWithMeta(
+          ApiContent(
+            itemId,
+            sectionId = (json \ "sectionId").asOpt[String],
+            sectionName = (json \ "sectionName").asOpt[String],
+            webPublicationDate = (json \ "webPublicationDate").asOpt[Long].map(new DateTime(_)).get,
+            webTitle = (json \ "safeFields" \ "headline").as[String],
+            webUrl = (json \ "webUrl").as[String],
+            apiUrl = "",
+            elements = Option(parseElements(json)),
+            fields = contentFields,
+            tags = (json \ "tags").asOpt[List[JsValue]].map(parseTags).getOrElse(Nil)
+          ),
+          supporting = (json \ "meta" \ "supporting").asOpt[List[JsValue]].getOrElse(Nil)
+            .flatMap(Content.fromPressedJson),
+          metaData = (json \ "meta").asOpt[Map[String, JsValue]].getOrElse(Map.empty)
+        )
+        )
       )
-    )
+    }
   }
 
   private def parseElements(json: JsValue): List[ApiElement] = {
@@ -264,6 +282,51 @@ private object ArticleSchemas {
   }
 }
 
+object SnapApiContent extends ApiContent(
+    id                  = "",
+    sectionId           = None,
+    sectionName         = None,
+    webPublicationDate  = DateTime.now,
+    webTitle            = "",
+    webUrl              = "http://www.theguardian.com/",
+    apiUrl              = "",
+    fields              = None,
+    tags                = Nil,
+    factboxes           = Nil,
+    mediaAssets         = Nil,
+    elements            = None,
+    references          = Nil,
+    isExpired           = None
+    )
+
+class Snap(snapId: String,
+           snapSupporting: List[Content],
+           snapWebPublicationDate: DateTime,
+           snapMeta: Map[String, JsValue]
+) extends Content(new ApiContentWithMeta(SnapApiContent, supporting = snapSupporting, metaData = snapMeta)) {
+
+  val snapType: Option[String] = snapMeta.get("snapType").flatMap(_.asOpt[String])
+  val snapCss: Option[String] = snapMeta.get("snapCss").flatMap(_.asOpt[String])
+  val snapUri: Option[String] = snapMeta.get("snapUri").flatMap(_.asOpt[String])
+
+  lazy val snapUrl: Option[String] = snapMeta.get("href").flatMap(_.asOpt[String])
+
+  //We set this to snapId as TemplateDeduping uses this ID to dedupe
+  override lazy val url: String = snapId
+
+  //Sorting is done via id
+  override lazy val id: String = snapId
+
+  //Trail implementations
+  override lazy val shortUrl: String = ""
+  override lazy val headline: String = snapMeta.get("headline").flatMap(_.asOpt[String]).getOrElse("Link")
+
+  //Meta implementations
+  override lazy val webPublicationDate = snapWebPublicationDate
+}
+
+
+
 class Article(content: ApiContentWithMeta) extends Content(content) {
   lazy val body: String = delegate.safeFields.getOrElse("body","")
   lazy val contentType = "Article"
@@ -306,11 +369,8 @@ class Article(content: ApiContentWithMeta) extends Content(content) {
 
 class LiveBlog(content: ApiContentWithMeta) extends Article(content) {
   private lazy val soupedBody = Jsoup.parseBodyFragment(body).body()
-  lazy val blockCount: Int = soupedBody.select(".block").size()
-  lazy val summary: Option[String] = soupedBody.select(".is-summary").headOption.map(_.toString)
-  lazy val groupedBlocks: List[String]= soupedBody.select(".block").toList.grouped(10).map { group =>
-    group.map(_.toString).mkString
-  }.toList
+  lazy val hasKeyEvents: Boolean = soupedBody.select(".is-key-event").nonEmpty
+  lazy val isSport: Boolean = tags.exists(_.id == "sport/sport")
   override def cards: List[(String, Any)] = super.cards ++ List(
     "twitter:card" -> "summary"
   )
@@ -364,8 +424,8 @@ class Gallery(content: ApiContentWithMeta) extends Content(content) {
 
   lazy val size = galleryImages.size
   lazy val contentType = "Gallery"
-  lazy val landscapes = largestCrops.sortBy(_.index).filter(i => i.width > i.height)
-  lazy val portraits = largestCrops.sortBy(_.index).filter(i => i.width < i.height)
+  lazy val landscapes = largestCrops.filter(i => i.width > i.height).sortBy(_.index)
+  lazy val portraits = largestCrops.filter(i => i.width < i.height).sortBy(_.index)
   lazy val isInPicturesSeries = tags.exists(_.id == "lifeandstyle/series/in-pictures")
 
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"

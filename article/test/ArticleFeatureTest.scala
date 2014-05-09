@@ -474,7 +474,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         findFirst(".related__container").getAttribute("role") should be("complementary")
         findFirst("aside").getAttribute("role") should be("complementary")
         findFirst("header").getAttribute("role") should be("banner")
-        findFirst(".footer__secondary").getAttribute("role") should be("contentinfo")
+        findFirst(".l-footer__secondary").getAttribute("role") should be("contentinfo")
         findFirst("nav").getAttribute("role") should be("navigation")
         findFirst("nav").getAttribute("aria-label") should be("Guardian sections")
         findFirst("#article").getAttribute("role") should be("main")
@@ -545,14 +545,14 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
     }
 
     scenario("Signify to the user an article is sponsored"){
-      Given("I visit a sponsored article entitled 'Young people debt worries'")
+      Given("I visit a sponsored article entitled 'Feeling hungry? Try the fine flavours of floral gastronomy'")
       StandardAdvertsSwitch.switchOn()
-      HtmlUnit("/carphone-warehouse-mobile-living/melody-makers") { browser =>
+      HtmlUnit("/lifeandstyle/2014/may/02/feeling-hungry-try-the-fine-favours-of-floral-gastronomy") { browser =>
         import browser._
         Then("I should see a message")
         val adSlot = $(".ad-slot--paid-for-badge")
-        adSlot.getAttribute("data-name") should be ("badge")
-        adSlot.findFirst(".ad-slot__container").getId should be ("dfp-ad--badge")
+        adSlot.getAttribute("data-name") should be ("spbadge")
+        adSlot.findFirst(".ad-slot__container").getId should be ("dfp-ad--spbadge")
       }
     }
 

@@ -1,7 +1,7 @@
 package views.support
 
 import common._
-import conf.Switches.{ ShowAllArticleEmbedsSwitch, ArticleSlotsSwitch, ABExternalLinksNewWindow }
+import conf.Switches.{ ShowAllArticleEmbedsSwitch, ArticleSlotsSwitch }
 import model._
 
 import java.net.URLEncoder._
@@ -107,6 +107,13 @@ case class SeriesContainer(showMore: Boolean = true) extends Container {
   val tone = "news"
 }
 
+/**
+ * Encapsulates previous and next urls
+ */
+case class PreviousAndNext(prev: Option[String], next: Option[String]) {
+  val isDefined: Boolean = prev.isDefined || next.isDefined
+}
+
 object MetadataJson {
 
   def apply(data: (String, Any)): String = data match {
@@ -204,8 +211,10 @@ object BlockNumberCleaner extends HtmlCleaner {
 case class VideoEmbedCleaner(contentVideos: Seq[VideoElement]) extends HtmlCleaner {
 
   override def clean(document: Document): Document = {
-    document.getElementsByClass("element-video").foreach { element: Element =>
-      element.child(0).wrap("<div class=\"embed-video-wrapper\"></div>")
+    document.getElementsByClass("element-video").filter { element: Element =>
+      element.getElementsByClass("gu-video").length == 0
+    }.foreach { element: Element =>
+      element.child(0).wrap("<div class=\"embed-video-wrapper u-responsive-ratio u-responsive-ratio--hd\"></div>")
     }
 
     document.getElementsByClass("gu-video").foreach { element: Element =>
@@ -228,7 +237,7 @@ case class VideoEmbedCleaner(contentVideos: Seq[VideoElement]) extends HtmlClean
                 Sorry, your browser is unable to play this video.
               </object>""")
 
-        element.wrap("<div class=\"gu-video-wrapper\"><div class=\"u-responsive-ratio u-responsive-ratio--hd\"></div></div>")
+        element.wrap("<div class=\"gu-video-wrapper u-responsive-ratio u-responsive-ratio--hd\"></div>")
       })
     }
     document
@@ -291,6 +300,27 @@ case class PictureCleaner(contentImages: Seq[ImageElement]) extends HtmlCleaner 
   }
 }
 
+case class LiveBlogDateFormatter(isLiveBlog: Boolean)(implicit val request: RequestHeader) extends HtmlCleaner  {
+  def clean(body: Document): Document = {
+    if (isLiveBlog) {
+      body.select(".block").foreach { el =>
+        val id = el.id()
+        el.select(".block-time.published-time time").foreach { time =>
+            val datetime = DateTime.parse(time.attr("datetime"))
+            val hhmm = Format(datetime, "HH:mm")
+            time.wrap(s"""<a href="#$id" class="block-time__link"></a>""")
+            time.attr("data-relativeformat", "med")
+            time.after( s"""<span class="block-time__absolute">$hhmm</span>""")
+            if (datetime.isAfter(DateTime.now().minusDays(5))) {
+              time.addClass("js-timestamp")
+            }
+        }
+      }
+    }
+    body
+  }
+}
+
 object BulletCleaner {
   def apply(body: String): String = body.replace("•", """<span class="bullet">•</span>""")
 }
@@ -318,22 +348,6 @@ case class InBodyLinkCleaner(dataLinkName: String)(implicit val edition: Edition
       }
     }
 
-    // Force external links to open in a new window
-    if (ABExternalLinksNewWindow.isSwitchedOn) {
-      links.filter{
-        link => link.tagName == "a"
-      }.filterNot{
-        link => link.attr("href") startsWith "/"
-      }.filterNot{
-        link => link.attr("href") startsWith "#"
-      }.filterNot{
-        link => link.attr("href") startsWith "http://www.theguardian.com"
-      }.filterNot{
-        link => link.attr("href") startsWith "http://www.guardian.co.uk"
-      }.foreach { link =>
-        link.attr("target", "_blank")
-      }
-    }
     body
   }
 }
@@ -685,6 +699,11 @@ object VisualTone {
   val Comment = "comment"
   val News = "news"
   val Feature = "feature"
+  val Live = "live"
+
+  private val liveMappings = Seq(
+    "tone/minutebyminute"
+  )
 
   private val commentMappings = Seq(
     "tone/comment",
@@ -707,8 +726,9 @@ object VisualTone {
 
 
   // tones are all considered to be 'News' it is the default so we do not list news tones explicitly
-  def apply(tags: Tags) = if(isComment(tags.tones)) Comment else if(isFeature(tags.tones)) Feature else News
+  def apply(tags: Tags) = if(isLive(tags.tones)) Live else if(isComment(tags.tones)) Comment else if(isFeature(tags.tones)) Feature else News
 
+  private def isLive(tones: Seq[Tag]) = tones.exists(t => liveMappings.contains(t.id))
   private def isComment(tones: Seq[Tag]) = tones.exists(t => commentMappings.contains(t.id))
   private def isFeature(tones: Seq[Tag]) = tones.exists(t => featureMappings.contains(t.id))
 }
@@ -737,18 +757,18 @@ object GetClasses {
                         additionalClasses: String = ""): String = {
     val f: Seq[(Trail) => String] = Seq(
       (trail: Trail) => trail match {
-        case _: Gallery => "collection__item--content-type-gallery"
-        case _: Video   => "collection__item--content-type-video"
+        case _: Gallery => "facia-slice__item--content-type-gallery"
+        case _: Video   => "facia-slice__item--content-type-video"
         case _          => ""
       }
     )
     val baseClasses: Seq[String] = Seq(
       additionalClasses,
       "l-row__item",
-      "collection__item",
-      s"collection__item--volume-${trail.group.getOrElse("0")}"
+      "facia-slice__item",
+      s"facia-slice__item--volume-${trail.group.getOrElse("0")}"
     )
-    val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail)}
+    val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail)} ++ makeSnapClasses(trail)
     RenderClasses(classes:_*)
   }
 
@@ -776,16 +796,17 @@ object GetClasses {
           "item--has-image"
         },
       (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean) =>
-        if (forceHasImage || !trail.trailPicture(5,3).isEmpty) s"item--imageadjust-${trail.imageAdjust}" else ""
+        if (forceHasImage || !trail.trailPicture(5,3).isEmpty) s"item--imageadjust-${trail.imageAdjust}" else "",
+      (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean) =>
+        if (trail.isCommentable) "item--has-discussion" else "item--has-no-discussion"
     )
-    val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail, firstContainer, forceHasImage)}
+    val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail, firstContainer, forceHasImage)} ++ makeSnapClasses(trail)
     RenderClasses(classes:_*)
   }
 
   def forFromage(trail: Trail, imageAdjust: String): String = {
     val baseClasses: Seq[String] = Seq(
       "fromage",
-      s"fromage--volume-${trail.group.getOrElse("0")}",
       s"tone-${VisualTone(trail)}",
       "tone-accent-border"
     )
@@ -799,10 +820,17 @@ object GetClasses {
           "fromage--has-image"
         },
       (trail: Trail, imageAdjust: String) =>
-        if (!trail.trailPicture(5,3).isEmpty) s"fromage--imageadjust-$imageAdjust" else ""
+        if (!trail.trailPicture(5,3).isEmpty) s"fromage--imageadjust-$imageAdjust" else "",
+      (trail: Trail, imageAdjust: String) =>
+        if (trail.isCommentable) "fromage--has-discussion" else "fromage--has-no-discussion"
     )
-    val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail, imageAdjust)}
+    val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail, imageAdjust)} ++ makeSnapClasses(trail)
     RenderClasses(classes:_*)
+  }
+
+  def makeSnapClasses(trail: Trail): Seq[String] = trail match {
+    case snap: Snap => "facia-snap" +: snap.snapCss.map(t => Seq(s"facia-snap--$t")).getOrElse(Seq("facia-snap--default"))
+    case _  => Nil
   }
 
 }
@@ -812,4 +840,15 @@ object LatestUpdate {
   def apply(collection: Collection, trails: Seq[Trail]): Option[DateTime] =
     (trails.map(_.webPublicationDate) ++ collection.lastUpdated.map(DateTime.parse(_))).sortBy(-_.getMillis).headOption
 
+}
+
+object SnapData {
+  def apply(trail: Trail): String = generateDataArrtibutes(trail).mkString(" ")
+
+  private def generateDataArrtibutes(trail: Trail): Iterable[String] = trail match {
+    case snap: Snap =>
+      snap.snapType.filter(_.nonEmpty).map(t => s"data-snap-type=$t") ++
+      snap.snapUri.filter(_.nonEmpty).map(t => s"data-snap-uri=$t")
+    case _  => Nil
+  }
 }

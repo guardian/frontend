@@ -20,7 +20,7 @@ class AuthActionTest extends FunSuite with ShouldMatchers with MockitoSugar {
   val goodResponse = Ok("")
   val authRequest = new AuthRequest(request, User(), new ScGuU("test"))
 
-  val authAction = new AuthAction(authService)
+  val authAction = new AuthenticatedAction(authService)
 
   test("if authentication fails, should return the error") {
     when(authService.handleAuthenticatedRequest(request)) thenReturn Left(badResponse)

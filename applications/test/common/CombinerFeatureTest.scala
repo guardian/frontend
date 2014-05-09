@@ -15,9 +15,9 @@ class CombinerFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
       HtmlUnit("/world/iraq+tone/comment") { browser =>
         import browser._
-        val trails = $(".fromage, .collection__item, .linkslist__item")
+        val trails = $(".facia-slice__item")
         Then("I should see content tagged with both tags")
-        trails.length should be(20)
+        trails.length should be > 1
       }
     }
 
@@ -27,7 +27,7 @@ class CombinerFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
       HtmlUnit("/science+technology/apple") { browser =>
         import browser._
-        val trails = $(".fromage, .collection__item, .linkslist__item")
+        val trails = $(".fromage, .facia-slice__item, .linkslist__item")
         Then("I should see content tagged with both the section and the tag")
         findFirst(".container__title").getText.toLowerCase should be ("science + apple")
         trails.length should be > 10
@@ -40,7 +40,7 @@ class CombinerFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
       HtmlUnit("/books/jkrowling+harrypotter") { browser =>
         import browser._
-        val trails = $(".fromage, .collection__item, .linkslist__item")
+        val trails = $(".fromage, .facia-slice__item, .linkslist__item")
         Then("I should see content tagged with both tags")
         trails.length should be > 10
       }
@@ -52,7 +52,7 @@ class CombinerFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
       HtmlUnit("/lifeandstyle/series/quick-and-healthy-recipes+series/hugh-fearnley-whittingstall-quick-and-healthy-lunches") { browser =>
         import browser._
-        val trails = $(".fromage, .collection__item, .linkslist__item")
+        val trails = $(".fromage, .facia-slice__item, .linkslist__item")
         Then("I should see content tagged with both tags")
         trails.length should be > 5
       }

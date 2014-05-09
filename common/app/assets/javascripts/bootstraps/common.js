@@ -19,13 +19,14 @@ define([
     'common/utils/detect',
     'common/modules/onward/popular',
     'common/modules/onward/related',
-    'common/modules/onward/series-content',
+    'common/modules/onward/onward-content',
     'common/modules/ui/images',
     'common/modules/navigation/profile',
     'common/modules/navigation/sections',
     'common/modules/navigation/search',
     'common/modules/ui/tabs',
     'common/modules/ui/toggles',
+    'common/modules/ui/dropdowns',
     'common/modules/ui/relativedates',
     'common/modules/analytics/clickstream',
     'common/modules/analytics/omniture',
@@ -42,13 +43,16 @@ define([
     'common/modules/ui/message',
     'common/modules/identity/autosignin',
     'common/modules/adverts/article-body-adverts',
-    'common/modules/adverts/collection-adverts',
+    'common/modules/adverts/article-aside-adverts',
+    'common/modules/adverts/slice-adverts',
     'common/modules/adverts/dfp',
     'common/modules/analytics/commercial/tags/container',
     'common/modules/analytics/foresee-survey',
     'common/modules/onward/right-most-popular',
     'common/modules/analytics/register',
-    'common/modules/commercial/loader'
+    'common/modules/commercial/loader',
+    'common/modules/onward/tonal',
+    'common/modules/identity/api'
 ], function (
     $,
     mediator,
@@ -67,7 +71,7 @@ define([
     detect,
     popular,
     Related,
-    Series,
+    Onward,
     images,
     Profile,
     Sections,
@@ -75,6 +79,7 @@ define([
 
     Tabs,
     Toggles,
+    Dropdowns,
     RelativeDates,
     Clickstream,
     Omniture,
@@ -91,16 +96,17 @@ define([
     Message,
     AutoSignin,
     ArticleBodyAdverts,
-    CollectionAdverts,
+    ArticleAsideAdverts,
+    SliceAdverts,
     DFP,
     TagContainer,
     Foresee,
     RightMostPopular,
     register,
-    CommercialLoader
+    CommercialLoader,
+    TonalComponent,
+    id
 ) {
-
-    var hasBreakpointChanged = detect.hasCrossedBreakpoint();
 
     var modules = {
 
@@ -138,9 +144,13 @@ define([
             });
         },
 
-        transcludeSeriesContent: function(config, context){
+        transcludeOnwardContent: function(config, context){
             if ('seriesId' in config.page) {
-                new Series(config, qwery('.js-series', context));
+                new Onward(config, qwery('.js-onward', context));
+            } else if (config.page.tones !== '') {
+                $('.js-onward', context).each(function(c) {
+                    new TonalComponent(config, c).fetch(c, 'html');
+                });
             }
         },
 
@@ -157,17 +167,17 @@ define([
             mediator.on('page:common:ready', function() {
                 toggles.reset();
             });
+
+            Dropdowns.init();
         },
 
-        showRelativeDates: function (config) {
-            var dates = RelativeDates,
-                opts = config.switches.hideOldTimestamps && config.page.isFront ? {notAfter: 3600} : undefined; // 1 hour
-
+        showRelativeDates: function () {
+            var dates = RelativeDates;
             mediator.on('page:common:ready', function(config, context) {
-                dates.init(context, opts);
+                dates.init(context);
             });
             mediator.on('fragment:ready:dates', function(el) {
-                dates.init(el, opts);
+                dates.init(el);
             });
         },
 
@@ -206,7 +216,10 @@ define([
         },
 
         initRightHandComponent: function(config) {
-            if(config.page.contentType === 'Article' && detect.getBreakpoint() !== 'mobile' && parseInt(config.page.wordCount, 10) > 500  ) {
+            if(config.page.contentType === 'Article' &&
+                detect.getBreakpoint() !== 'mobile' &&
+                parseInt(config.page.wordCount, 10) > 500 &&
+                !config.page.isLiveBlog) {
                 new RightMostPopular(mediator, {type: 'image', maxTrails: 5});
             }
         },
@@ -259,25 +272,19 @@ define([
 
             if (showAds) {
 
-                var onResize = {
-                        cmd: [],
-                        execute: function () {
-                            hasBreakpointChanged(function () {
-                                onResize.cmd.forEach(function (func) {
-                                    func();
-                                });
-                            });
-                        }
-                    },
-                    dfpAds,
-                    options = {};
 
                 // if it's an article, excluding live blogs, create our inline adverts
-                if (config.switches.standardAdverts && config.page.contentType === 'Article' && !config.page.isLiveBlog) {
-                    new ArticleBodyAdverts().init();
+                if (config.switches.standardAdverts && config.page.contentType === 'Article') {
+                    new ArticleAsideAdverts(config).init();
+                    // no inline adverts on live
+                    if (!config.page.isLiveBlog) {
+                        new ArticleBodyAdverts().init();
+                    }
                 }
 
-                new CollectionAdverts(config).init();
+                new SliceAdverts(config).init();
+
+                var options = {};
 
                 if (!config.switches.standardAdverts) {
                     options.dfpSelector = '.ad-slot--commercial-component';
@@ -285,15 +292,15 @@ define([
                     options.dfpSelector = '.ad-slot--dfp:not(.ad-slot--commercial-component)';
                 }
 
-                dfpAds = new DFP(extend(config, options));
-                dfpAds.init();
-                onResize.cmd.push(dfpAds.reload);
+                // TODO: once front's badges slot are only added when necessary
+                if (config.page.pageType !== 'Article' && window.location.hash !== '#show-badge') {
+                    var selector = options.dfpSelector || '.ad-slot--dfp';
+                    options.dfpSelector = selector + ':not(.ad-slot--paid-for-badge)';
+                } else {
+                    $('.dfp-badge-container').css('display', 'block');
+                }
 
-                // Push the reloaded command once
-                onResize.cmd.push(function () {
-                    mediator.emit('modules:adverts:reloaded');
-                });
-                mediator.on('window:resize', debounce(onResize.execute.bind(this), 2000));
+                new DFP(extend(config, options)).init();
             }
         },
 
@@ -474,12 +481,25 @@ define([
         },
 
         loadCommercialComponent: function(config) {
-            var commercialComponent = /^#commercial-component=(.*)$/.exec(window.location.hash),
-                slot = qwery('[data-name="merchandising"]').shift();
-            if (commercialComponent && slot) {
-                new CommercialLoader({ config: config })
-                    .init(commercialComponent[1], slot);
-            }
+            [
+                ['commercial-component', 'merchandising'],
+                ['commercial-component-high', 'merchandising-high']
+            ].forEach(function(data) {
+                var commercialComponent = new RegExp('^#' + data[0] + '=(.*)$').exec(window.location.hash),
+                    slot = qwery('[data-name="' + data[1] + '"]').shift();
+                if (commercialComponent && slot) {
+                    new CommercialLoader({ config: config })
+                        .init(commercialComponent[1], slot);
+                }
+            });
+        },
+
+        repositionComments: function() {
+            mediator.on('page:common:ready', function() {
+                if(!id.isUserLoggedIn()) {
+                    $('.js-comments').insertAfter(qwery('.js-popular'));
+                }
+            });
         }
     };
 
@@ -490,12 +510,12 @@ define([
                 self.initialisedDeferred = true;
                 modules.initAbTests(config);
                 modules.logLiveStats(config);
-                modules.loadAdverts(config);
                 modules.loadAnalytics(config, context);
                 modules.cleanupCookies(context);
                 modules.runAbTests(config, context);
+                modules.loadAdverts(config);
                 modules.transcludeRelated(config, context);
-                modules.transcludeSeriesContent(config, context);
+                modules.transcludeOnwardContent(config, context);
                 modules.initRightHandComponent(config, context);
                 modules.loadCommercialComponent(config, context);
             }
@@ -513,7 +533,7 @@ define([
             modules.showTabs();
             modules.initialiseNavigation(config);
             modules.showToggles();
-            modules.showRelativeDates(config);
+            modules.showRelativeDates();
             modules.transcludePopular();
             modules.loadVideoAdverts(config);
             modules.initClickstream();
@@ -528,6 +548,7 @@ define([
             modules.augmentInteractive();
             modules.runForseeSurvey(config);
             modules.startRegister(config);
+            modules.repositionComments();
         }
         mediator.emit('page:common:ready', config, context);
     };

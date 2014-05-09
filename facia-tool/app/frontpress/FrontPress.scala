@@ -9,6 +9,7 @@ import common.FaciaToolMetrics.{FrontPressSuccess, FrontPressFailure}
 import play.api.libs.concurrent.Akka
 import play.api.libs.json.JsObject
 import com.gu.openplatform.contentapi.model.Asset
+import conf.Switches
 
 trait FrontPress extends Logging {
 
@@ -28,7 +29,9 @@ trait FrontPress extends Logging {
     updatedBy:    Option[String],
     updatedEmail: Option[String],
     groups:       Option[Seq[String]],
-    href:         Option[String]
+    href:         Option[String],
+    showTags:     Boolean,
+    showSections: Boolean
   )
   case class ItemMeta
   (
@@ -37,7 +40,11 @@ trait FrontPress extends Logging {
     group:        Option[JsValue],
     imageAdjust:  Option[JsValue],
     isBreaking:   Option[Boolean],
-    supporting:   Option[Seq[JsValue]]
+    supporting:   Option[Seq[JsValue]],
+    href:         Option[JsValue],
+    snapType:     Option[JsValue],
+    snapCss:      Option[JsValue],
+    snapUri:      Option[JsValue]
   )
 
   implicit val collectionJsonWrites = Json.writes[CollectionJson]
@@ -81,7 +88,7 @@ trait FrontPress extends Logging {
     Json.toJson(
       CollectionJson(
         apiQuery       = config.contentApiQuery,
-        displayName    = collection.displayName orElse config.displayName,
+        displayName    = config.displayName.orElse(collection.displayName),
         curated        = collection.curated.map(generateTrailJson),
         editorsPicks   = collection.editorsPicks.map(generateTrailJson),
         mostViewed     = collection.mostViewed.map(generateTrailJson),
@@ -91,7 +98,9 @@ trait FrontPress extends Logging {
         updatedEmail   = collection.updatedEmail,
         groups         = Option(config.groups).filter(_.nonEmpty),
         href           = collection.href.orElse(config.href),
-        `type`         = config.collectionType
+        `type`         = config.collectionType,
+        showTags       = Switches.FaciaToolContainerTagsSwitch.isSwitchedOn && config.showTags,
+        showSections   = Switches.FaciaToolContainerTagsSwitch.isSwitchedOn && config.showSections
       )
     )
 
@@ -162,7 +171,11 @@ trait FrontPress extends Logging {
         group =       content.apiContent.metaData.get("group"),
         imageAdjust = content.apiContent.metaData.get("imageAdjust"),
         isBreaking =  content.apiContent.metaData.get("isBreaking").flatMap(_.asOpt[Boolean]),
-        supporting =  Option(content.supporting.map(generateInnerTrailJson)).filter(_.nonEmpty)
+        supporting =  Option(content.supporting.map(generateInnerTrailJson)).filter(_.nonEmpty),
+        href =        content.apiContent.metaData.get("href"),
+        snapType = content.apiContent.metaData.get("snapType"),
+        snapCss = content.apiContent.metaData.get("snapCss"),
+        snapUri = content.apiContent.metaData.get("snapUri")
       )
     )
 

@@ -2,14 +2,15 @@ package services
 
 import common.FaciaMetrics.S3AuthorizationError
 import common._
-import conf.{SwitchingContentApi => ContentApi, Configuration}
-import model.{Collection, Config, Content}
+import conf.{ContentApi, Configuration}
+import model.{Snap, Collection, Config, Content}
 import play.api.libs.json.Json._
 import play.api.libs.json.{JsObject, JsValue}
 import play.api.libs.ws.Response
 import scala.concurrent.Future
 import contentapi.QueryDefaults
 import scala.util.Try
+import org.joda.time.DateTime
 
 object Path {
   def unapply[T](uri: String) = Some(uri.split('?')(0))
@@ -34,7 +35,9 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
     def empty: CollectionMeta = CollectionMeta(None, None, None)
   }
 
-  case class CollectionItem(id: String, metaData: Option[Map[String, JsValue]])
+  case class CollectionItem(id: String, metaData: Option[Map[String, JsValue]], webPublicationDate: Option[DateTime]) {
+    val isSnap: Boolean = id.startsWith("snap/")
+  }
 
   //Curated and editorsPicks are the same, we will get rid of either
   case class Result(curated: List[Content], editorsPicks: List[Content], mostViewed: List[Content], contentApiResults: List[Content])
@@ -105,7 +108,10 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
 
             // extract the articles
             val articles: Seq[CollectionItem] = (bodyJson \ "live").as[Seq[JsObject]] map { trail =>
-              CollectionItem((trail \ "id").as[String], (trail \ "meta").asOpt[Map[String, JsValue]])
+              CollectionItem(
+                (trail \ "id").as[String],
+                (trail \ "meta").asOpt[Map[String, JsValue]],
+                (trail \ "frontPublicationDate").asOpt[DateTime])
             }
 
             getArticles(articles, edition)
@@ -141,48 +147,59 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
       Future.successful(Nil)
     }
     else {
-      val results = collectionItems.foldLeft(Future[List[Content]](Nil)){(foldListFuture, collectionItem) =>
-        lazy val supportingAsContent: Future[List[Content]] = {
-          lazy val supportingLinks: List[CollectionItem] = retrieveSupportingLinks(collectionItem)
-          if (!hasParent) getArticles(supportingLinks, edition, hasParent=true) else Future.successful(Nil)
-        }
-        val response = ContentApi().item(collectionItem.id, edition).showFields(showFieldsWithBodyQuery).response
+      val results = collectionItems.foldLeft(Future[List[Content]](Nil)) {
+        (foldListFuture, collectionItem) =>
+          lazy val supportingAsContent: Future[List[Content]] = {
+            lazy val supportingLinks: List[CollectionItem] = retrieveSupportingLinks(collectionItem)
+            if (!hasParent) getArticles(supportingLinks, edition, hasParent = true) else Future.successful(Nil)
+          }
+          if (collectionItem.isSnap) {
+            for {
+              contentList <- foldListFuture
+              supporting  <- supportingAsContent
+            } yield contentList :+ new Snap(collectionItem.id, supporting, collectionItem.webPublicationDate.getOrElse(DateTime.now), collectionItem.metaData.getOrElse(Map.empty))
+          }
+          else {
+            val response = ContentApi.item(collectionItem.id, edition).showFields(showFieldsWithBodyQuery).response
 
-        val content = response.map(_.content).recover {
-          case apiError: com.gu.openplatform.contentapi.ApiError if apiError.httpStatus == 404 => {
-            log.warn(s"Content API Error: 404 for ${collectionItem.id}")
-            None
-          }
-          case apiError: com.gu.openplatform.contentapi.ApiError if apiError.httpStatus == 410 => {
-            log.warn(s"Content API Error: 410 for ${collectionItem.id}")
-            None
-          }
-          case jsonParseError: net.liftweb.json.JsonParser.ParseException => {
-            ContentApiMetrics.ContentApiJsonParseExceptionMetric.increment()
-            throw jsonParseError
-          }
-          case mappingException: net.liftweb.json.MappingException => {
-            ContentApiMetrics.ContentApiJsonMappingExceptionMetric.increment()
-            throw mappingException
-          }
-          case t: Throwable => {
-            log.warn("%s: %s".format(collectionItem.id, t.toString))
-            throw t
-          }
-        }
-        supportingAsContent.onFailure{case t: Throwable => log.warn("Supporting links: %s: %s".format(collectionItem.id, t.toString))}
+            val content = response.map(_.content).recover {
+              case apiError: com.gu.openplatform.contentapi.ApiError if apiError.httpStatus == 404 => {
+                log.warn(s"Content API Error: 404 for ${collectionItem.id}")
+                None
+              }
+              case apiError: com.gu.openplatform.contentapi.ApiError if apiError.httpStatus == 410 => {
+                log.warn(s"Content API Error: 410 for ${collectionItem.id}")
+                None
+              }
+              case jsonParseError: net.liftweb.json.JsonParser.ParseException => {
+                ContentApiMetrics.ContentApiJsonParseExceptionMetric.increment()
+                throw jsonParseError
+              }
+              case mappingException: net.liftweb.json.MappingException => {
+                ContentApiMetrics.ContentApiJsonMappingExceptionMetric.increment()
+                throw mappingException
+              }
+              case t: Throwable => {
+                log.warn("%s: %s".format(collectionItem.id, t.toString))
+                throw t
+              }
+            }
+            supportingAsContent.onFailure {
+              case t: Throwable => log.warn("Supporting links: %s: %s".format(collectionItem.id, t.toString))
+            }
 
-        for {
-          contentList <- foldListFuture
-          itemResponse <- content
-          supporting <- supportingAsContent
-        } yield {
-          itemResponse
-            .map(Content(_, supporting, collectionItem.metaData))
-            .map(validateContent)
-            .map(_ +: contentList)
-            .getOrElse(contentList)
-        }
+            for {
+              contentList <- foldListFuture
+              itemResponse <- content
+              supporting <- supportingAsContent
+            } yield {
+              itemResponse
+                .map(Content(_, supporting, collectionItem.metaData))
+                .map(validateContent)
+                .map(_ +: contentList)
+                .getOrElse(contentList)
+            }
+          }
       }
       val sorted = results map { _.sortBy(t => collectionItems.indexWhere(_.id == t.id))}
       sorted
@@ -191,7 +208,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
 
   private def retrieveSupportingLinks(collectionItem: CollectionItem): List[CollectionItem] =
     collectionItem.metaData.map(_.get("supporting").flatMap(_.asOpt[List[JsValue]]).getOrElse(Nil)
-      .map(json => CollectionItem((json \ "id").as[String], (json \ "meta").asOpt[Map[String, JsValue]]))
+      .map(json => CollectionItem((json \ "id").as[String], (json \ "meta").asOpt[Map[String, JsValue]], (json \ "frontPublicationDate").asOpt[DateTime]))
     ).getOrElse(Nil)
 
   def executeContentApiQuery(s: Option[String], edition: Edition): Future[Result] = s filter(_.nonEmpty) map { queryString =>
@@ -200,7 +217,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
 
     val newSearch = queryString match {
       case Path(Seg("search" ::  Nil)) => {
-        val search = ContentApi().search(edition)
+        val search = ContentApi.search(edition)
           .showElements("all")
           .pageSize(20)
         val newSearch = queryParamsWithEdition.foldLeft(search){
@@ -213,10 +230,10 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
             mostViewed        = Nil,
             contentApiResults = r.results.map(Content(_)).map(validateContent)
           )
-        }
+        } recover executeContentApiQueryRecovery
       }
       case Path(id)  => {
-        val search = ContentApi().item(id, edition)
+        val search = ContentApi.item(id, edition)
           .showElements("all")
           .showEditorsPicks(true)
           .pageSize(20)
@@ -230,7 +247,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
             mostViewed        = r.mostViewed.map(Content(_)).map(validateContent),
             contentApiResults = r.results.map(Content(_)).map(validateContent)
           )
-        }
+        } recover executeContentApiQueryRecovery
       }
     }
 
@@ -247,6 +264,31 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
     }.getOrElse {
       FaciaToolMetrics.InvalidContentExceptionMetric.increment()
       throw new InvalidContent(content.id)
+    }
+  }
+
+  val executeContentApiQueryRecovery: PartialFunction[Throwable, Result] = {
+    case apiError: com.gu.openplatform.contentapi.ApiError if apiError.httpStatus == 404 => {
+      log.warn(s"Content API Error: 404 for ${apiError.httpMessage}")
+      Result(
+        curated           = Nil,
+        editorsPicks      = Nil,
+        mostViewed        = Nil,
+        contentApiResults = Nil
+      )
+    }
+    case apiError: com.gu.openplatform.contentapi.ApiError if apiError.httpStatus == 410 => {
+      log.warn(s"Content API Error: 410 for ${apiError.httpMessage}")
+      Result(
+        curated           = Nil,
+        editorsPicks      = Nil,
+        mostViewed        = Nil,
+        contentApiResults = Nil
+      )
+    }
+    case e: Exception => {
+      log.warn(s"ExecuteContentApiQueryRecovery: $e")
+      throw e
     }
   }
 

@@ -3,12 +3,13 @@ package common
 import play.api.{Application => PlayApp, GlobalSettings}
 import com.gu.management._
 import conf.RequestMeasurementMetrics
-import java.lang.management.ManagementFactory
+import java.lang.management.{GarbageCollectorMXBean, ManagementFactory}
 import model.diagnostics.CloudWatch
 import java.io.File
 import java.util.concurrent.atomic.AtomicLong
 import com.amazonaws.services.cloudwatch.model.Dimension
 import common.FaciaToolMetrics.InvalidContentExceptionMetric
+import scala.collection.JavaConversions._
 
 trait TimingMetricLogging extends Logging { self: TimingMetric =>
   override def measure[T](block: => T): T = {
@@ -42,6 +43,27 @@ object MemcachedMetrics {
 }
 
 object SystemMetrics extends implicits.Numbers {
+
+  class GcRateMetric(bean: GarbageCollectorMXBean) {
+    private val lastGcCount = new AtomicLong(0)
+    private val lastGcTime = new AtomicLong(0)
+
+    lazy val name = bean.getName.replace(" ", "_")
+
+    def gcCount: Double = {
+      val totalGcCount = bean.getCollectionCount
+      totalGcCount - lastGcCount.getAndSet(totalGcCount)
+    }
+
+    def gcTime: Double = {
+      val totalGcTime = bean.getCollectionTime
+      totalGcTime - lastGcTime.getAndSet(totalGcTime)
+    }
+  }
+
+
+  lazy val garbageCollectors: Seq[GcRateMetric] = ManagementFactory.getGarbageCollectorMXBeans.map(new GcRateMetric(_))
+
 
   // divide by 1048576 to convert bytes to MB
 
@@ -107,6 +129,17 @@ object SystemMetrics extends implicits.Numbers {
     MaxNonHeapMemoryMetric, UsedNonHeapMemoryMetric, BuildNumberMetric, LoadAverageMetric, AvailableProcessorsMetric,
     TotalPhysicalMemoryMetric, FreePhysicalMemoryMetric, FreeDiskSpaceMetric, TotalDiskSpaceMetric
   )
+}
+
+object S3Metrics {
+  object S3ClientExceptionsMetric extends SimpleCountMetric(
+    "exception",
+    "s3-client-exception",
+    "S3 Client Exceptions",
+    "Number of times the AWS S3 client has thrown an Exception"
+  )
+
+  val all: Seq[Metric] = Seq(S3ClientExceptionsMetric)
 }
 
 object ContentApiMetrics {
@@ -325,7 +358,7 @@ object FaciaToolMetrics {
     DraftPublishCount, ContentApiPutSuccess, ContentApiPutFailure,
     FrontPressSuccess, FrontPressFailure, FrontPressCronSuccess,
     FrontPressCronFailure, InvalidContentExceptionMetric
-  ) ++ ContentApiMetrics.all
+  ) ++ ContentApiMetrics.all ++ S3Metrics.all
 }
 
 object CommercialMetrics {
@@ -477,7 +510,10 @@ trait CloudWatchApplicationMetrics extends GlobalSettings {
 
     (s"$applicationName-dogpile-hits", PerformanceMetrics.dogPileHitMetric.count.getAndSet(0).toDouble),
     (s"$applicationName-dogpile-miss", PerformanceMetrics.dogPileMissMetric.count.getAndSet(0).toDouble)
-  )
+  ) ++ SystemMetrics.garbageCollectors.flatMap{ gc => Seq(
+    s"$applicationName-${gc.name}-gc-count-per-min" -> gc.gcCount,
+    s"$applicationName-${gc.name}-gc-time-per-min" -> gc.gcTime
+  )}.toMap
 
   private def report() {
     val systemMetrics  = this.systemMetrics

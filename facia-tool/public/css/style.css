@@ -14,8 +14,13 @@ p {
 }
 
 a, a:hover {
+    color: #3279F1;
     text-decoration: none;
     cursor: pointer;
+}
+
+a:hover {
+    color: #376ABF;
 }
 
 .status {
@@ -31,11 +36,11 @@ a, a:hover {
 }
 
 .status-warning {
-    background: #FF9900;
+    background: #FBCC43;
 }
 
 .status-danger {
-    background: #d61d00;
+    background: #DD4B39;
 }
 
 .status .icon-remove {
@@ -72,14 +77,14 @@ a, a:hover {
 .message {
     float: left;
     margin: 8px 10px 0 0;
-    color: #CCCCCC;
+    color: #dbd8c9;
     font-size: 26px;
     line-height: 30px;
     font-weight: normal;
 }
 
 .message--important {
-    color: #d61d00;
+    color: #DD4B39;
 }
 
 .message--loading {
@@ -102,8 +107,8 @@ a, a:hover {
     top: 49px;
     width: 50%;
     padding: 10px 15px 0 12px;
-    border-right: 1px solid #cccccc;
-    border-top: 1px solid #cccccc;
+    border-right: 1px solid #dbd8c9;
+    border-top: 1px solid #dbd8c9;
 }
 
 .finder__controls {
@@ -121,7 +126,7 @@ a, a:hover {
 }
 
 .count {
-    color: #CCCCCC;
+    color: #dbd8c9;
     font-weight: normal;
 }
 
@@ -148,7 +153,7 @@ a, a:hover {
 }
 
 .droppable.underDrag {
-    background-color: #f89406;
+    background-color: #FBCC43;
 }
 
 .open .droppable.underDrag {
@@ -161,7 +166,7 @@ a, a:hover {
 
 .updating {
     display: none;
-    color: #009900;
+    color: #46c430;
     position: absolute;
     top: 13px;
     right: 15px;
@@ -198,7 +203,7 @@ a, a:hover {
 }
 
 .list-header__timings.has-concurrent-user {
-    color: #d61d00;
+    color: #DD4B39;
 }
 
 .right-col {
@@ -223,7 +228,7 @@ a, a:hover {
 
 .collection {
     padding: 0 0 3px 0;
-    border-bottom: 1px solid #CCCCCC;
+    border-bottom: 1px solid #dbd8c9;
 }
 
 .article {
@@ -242,29 +247,30 @@ a, a:hover {
 
 .live-mode .article {
     border-color: #EEFFEE;
-    background: #EEFFEE;        
+    background: #EEFFEE;
 }
 
 .article:hover,
 .live-mode .article:hover {
-    background-color: #eeeeee;
+    background-color: #f4f3e8;
 }
 
 .supporting .article {
-    border-color: #CCCCCC;
-    background: #CCCCCC;
+    border-color: #dbd8c9;
+    background: #dbd8c9;
 }
 
 .article.open {
-    background: #CCCCCC !important;
+    background: #dbd8c9 !important;
+    min-height: 75px;
 }
 
 .article.underDrag {
-    border-top-color: #f89406; 
+    border-top-color: #FBCC43;
 }
 
 .open .article.underDrag {
-    border-top-color: #999999; 
+    border-top-color: #999999;
 }
 
 .article:last-child {
@@ -276,7 +282,7 @@ a, a:hover {
     width: 75px;
     height: 45px;
     margin: 3px 0 0 0;
-    background-color: #EEEEEE;
+    background-color: #f4f3e8;
     border-radius: 2px;
 }
 
@@ -303,19 +309,25 @@ a, a:hover {
     color: #000000;
 }
 
-.is-breaking {
-    background: #d61d00;
-    color: #ffffff;
-    font-size: 11px;
-    line-height: 11px;
-    padding: 0 2px;
-    border-radius: 2px;
+.is {
+    color: #FBCC43;
+    font-size: 10px;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.is--football {
+    color: #65b045;
+}
+
+.is--breaking {
+    color: #DD4B39;
 }
 
 .is-empty {
     font-size: 14px;
     line-height: 16px;
-    color: #d61d00;
+    color: #DD4B39;
 }
 
 .is-empty__url {
@@ -323,8 +335,8 @@ a, a:hover {
     font-size: 12px;
 }
 
-div.trailtext {
-    padding-right: 50px;
+.secondary {
+    -moz-box-sizing: border-box;
     box-sizing: border-box;
     width: 100%;
     display: inline-block;
@@ -335,6 +347,7 @@ div.trailtext {
     word-wrap: break-word;
     height: 15px;
     line-height: 16px;
+    padding-right: 50px;
     font-size: 12px;
     color: #999999;
 }
@@ -352,13 +365,18 @@ div.trailtext {
     width: 75px;
     height: 14px;
     overflow: hidden;
-    padding: 1px 0 0 4px;
+    padding: 0 0 0 4px;
     color: #FFFFFF;
     font-size: 10px;
     line-height: 14px;
-    background: rgba(0,0,0,0.2);
-    border-top-left-radius: 2px;
-    border-top-right-radius: 2px;
+    text-shadow: 0px 0px 2px #666666;
+    border-radius: 2px;
+}
+
+.article.open > .article__lhs > .article__date {
+    top: 52px;
+    text-shadow: none;
+    background: rgba(0,0,0,0.1);
 }
 
 .article__overrides {
@@ -372,7 +390,7 @@ div.trailtext {
 
 .article__overrides input {
     padding-right: 10px;
-    background: #eeeeee;
+    background: #f4f3e8;
     width: 100%;
 }
 
@@ -392,7 +410,7 @@ div.trailtext {
 }
 
 .misc__overrides .selected {
-    color: #d61d00;
+    color: #DD4B39;
     font-weight: bold;
 }
 
@@ -400,14 +418,11 @@ div.trailtext {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     position: absolute;
-    top: 3px;
-    left: 4px;
-    width: 75px;
-    height: 45px;
+    bottom: 0px;
+    height: 34px;
     font-size: 12px;
     line-height: 14px;
     color: #666666;
-    background: rgba(0,0,0,0.2);
     padding: 16px 0 0 4px;
 }
 
@@ -466,6 +481,14 @@ input[type="text"] {
     padding: 1px 5px;
     margin: 1px 0 0 0;
     color: #000000;
+    border-radius: 2px;
+}
+
+.radio-label {
+    color: #666666;
+    float: left;
+    font-size: 12px;
+    padding: 0 10px 0 2px;
 }
 
 textarea.trailtext {
@@ -478,7 +501,7 @@ textarea.trailtext {
     min-height: 35px;
     margin: 0;
     color: #333333;
-    background: #eeeeee;
+    background: #f4f3e8;
 }
 
 button {
@@ -493,7 +516,7 @@ button {
     position: relative;
     margin: 0px 0 5px 0;
     padding: 5px 0 5px 0;
-    border-bottom: 1px solid #CCCCCC;
+    border-bottom: 1px solid #dbd8c9;
 }
 
 .collection-overrides {
@@ -525,9 +548,9 @@ button {
 }
 
 .search-term {
-    position: absolute;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
+    position: absolute;
     display: inline-block;
     width: 35%;
     padding: 0 15px 0 0;
@@ -565,7 +588,7 @@ button {
     white-space: nowrap;
     background: #ffffff;
     color: #666666;
-    border-left: 1px solid #cccccc;
+    border-left: 1px solid #dbd8c9;
     padding: 0 10px;
 }
 
@@ -578,7 +601,7 @@ button {
 
 .linky {
     cursor: pointer !important;
-    color: #0088cc !important;
+    color: #3279F1 !important;
 }
 
 .linky:hover {
@@ -597,8 +620,8 @@ button {
     height: 50px;
     white-space: nowrap;
     overflow: hidden;
-    border-bottom: 1px solid #cccccc;
-    border-left: 1px solid #cccccc;
+    border-bottom: 1px solid #dbd8c9;
+    border-left: 1px solid #dbd8c9;
     margin-left: -1px;
     z-index: 1;
     background: #ffffff;
@@ -633,13 +656,18 @@ button {
 .tool {
     display: inline-block;
     padding: 0 10px;
-    background: #CCCCCC;
+    background: #dbd8c9;
     font-size: 12px;
     line-height: 20px;
     color: #FFFFFF;
     border-radius: 2px;
     border: 0;
     cursor: pointer;
+}
+
+.tool--rhs {
+    float: right;
+    margin: 0 10px 0 0;
 }
 
 .tool:hover {
@@ -665,11 +693,11 @@ button {
 }
 
 .tools .tool:first-child {
-    background: #0088cc;
+    background: #3279F1;
 }
 
 .tools .tool:first-child:hover {
-    background: #0077BB;
+    background: #376ABF;
 }
 
 .log-in-out {
@@ -737,7 +765,7 @@ button {
 
 .pref-draft.active {
     cursor: default;
-    background: #0088cc;
+    background: #3279F1;
 }
 
 .pref-live.active {
@@ -752,7 +780,6 @@ button {
 .instructions {
     font-size: 12px;
     color: #999999;
-    padding: 0 0 10px 4px;
 }
 
 /*****************************************/
@@ -760,20 +787,28 @@ button {
 /*****************************************/
 
 .cnf-fronts {
-    border-top: 1px solid #CCCCCC;
+    margin-top: 10px;
+    padding: 0 15px 0 0;
 }
 
 .cnf-front {
-    padding: 4px 0 4px 4px;
-    border-bottom: 1px solid #CCCCCC;
+    padding-top: 2px;
+}
+
+.cnf-front.open {
+    background: #f4f3e8;
+    padding-bottom: 5px;
+    margin: 0 0 10px 0;
 }
 
 .cnf-front .title {
     cursor: pointer;
+    height: 24px;
+    font-weight: normal;
 }
 
-.cnf-front.isProvisional {
-    background: #CCCCCC;
+.cnf-front.open .title {
+    font-weight: bold;
 }
 
 .cnf-front__inner {
@@ -786,45 +821,37 @@ button {
 
 .cnf-collection {
     position: relative;
-    background: #ffffff;
-    padding: 4px 0 4px 5px;
-    border-top: 3px solid #ffffff;
+    padding: 1px 0 1px 5px;
 }
 
-.cnf-collection:nth-child(odd) {
-    background: #EEEEEE;
+.cnf-front .cnf-collection {
+    border-top: 3px solid #f4f3e8;
+}
+
+.cnf-front .cnf-collection:nth-child(odd) {
+    background: #ffffff;
+}
+
+.cnf-front .cnf-collection:nth-child(even) {
+    background: #f4f3e8;
 }
 
 .cnf-collection.open {
-    background: #EEEEEE;
     padding-bottom: 5px;
 }
 
 .cnf-collection.underDrag {
-    border-top-color: #f89406;
+    border-top-color: #FBCC43;
 }
 
 .cnf-collection__index {
-    color: #CCCCCC;
+    color: #dbd8c9;
     display: inline-block;
     width: 15px;
 }
 
 .cnf-collection__name {
     color: #000000;
-}
-
-.cnf-collection__id {
-    display: none;
-    color: #999999;
-    font-size: 10px;
-    float: right;
-    margin: 0 5px 0 0;
-}
-
-.cnf-collection.open .cnf-collection__id,
-.cnf-collection:hover .cnf-collection__id {
-    display: block;
 }
 
 .cnf-collection__also-on {
@@ -844,8 +871,8 @@ button {
 }
 
 .cnf-collection .placements a {
-    color: #333333;
-    border-left: 1px solid #CCCCCC;
+    color: #999999;
+    border-left: 1px solid #dbd8c9;
     padding-left: 5px;
 }
 
@@ -858,41 +885,72 @@ button {
     display: none;
 }
 
-.cnf-form {
-    overflow: auto;
-    margin: 0 0 10px 0;
+.cnf-collection .cnf-form {
+    margin-left: 20px;
 }
 
 .cnf-form label {
     font-size: 12px;
-    color: #999999;
-    width: 65px;
+    color: #666666;
+    width: 85px;
     float: left;
     clear: left;
     margin: 1px 0 0 0;
 }
 
 .cnf-form input,
+.cnf-form textarea,
 .cnf-form select{
     float: left;
     clear: right;
+    color: #000000;
 }
 
-.cnf-form .advanced-options {
-    clear: both;
-    font-size: 10px;
+.cnf-form input[type="text"],
+.cnf-form textarea,
+.cnf-form select{
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    font-size: 12px;
+    line-height: 14px;
+    width: 300px;
+    margin: 0 0 2px 0;
 }
 
 .cnf-form .tools {
+    padding: 10px 0;
     clear: left;
 }
 
-.cnf-form .tools-advanced {
-    position: absolute;
-    bottom: 5px;
-    right: 5px;
+.cnf-form .api-query-status {
+    float: left;
+    display: inline-block;
+    margin: 2px 0 0 5px;
+    color: #999999;
+}
+
+.cnf-form .api-query-status--valid {
+    color: #46c430;
+}
+
+.cnf-form .api-query-status--invalid {
+    color: #d61d00;
+}
+
+.cnf-form .api-query-results {
+    clear: both;
+    margin: 0 10px 0 71px;
     font-size: 12px;
-    color: #CCCCCC;
+    line-height: 16px;
+    color: #666666;
+    height: 64px;
+    overflow-y: auto;
+}
+
+.cnf-form .api-query-result {
+    height: 15px;
+    overflow: hidden;
+    display: block;
 }
 
 /*****************************************/

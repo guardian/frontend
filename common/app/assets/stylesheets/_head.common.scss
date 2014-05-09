@@ -27,12 +27,10 @@
    Layout
    ========================================================================== */
 
-@import "layout/_grid-system";
-    @include grid-system;
-@import "layout/_layout";
-@import "components/guss-layout/_row";
+@include grid-system;
+@import "layout/_header";
+@import "layout/_helpers";
 @include guss-row-utility;
-@import "components/guss-layout/_columns";
 @include guss-columns-utility;
 
 
@@ -74,6 +72,7 @@
 @include tone-head(news, $c-newsDefault, $c-newsAccent);
 @include tone-head(comment, $c-commentDefault, $c-commentAccent);
 @include tone-head(feature, $c-featureDefault, $c-featureAccent);
+@include tone-head(live, $c-neutral1, $c-liveAccent);
 @import "theme/_colours";
 
 

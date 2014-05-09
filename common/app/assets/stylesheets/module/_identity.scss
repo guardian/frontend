@@ -1,13 +1,16 @@
-
 /* Identity and registration
    ========================================================================== */
 
-#header.identity-header {
-    height: 44px;
+.l-header--identity {
+    @include rem((
+        height: 44px
+    ));
     background-color: #ffffff;
 
     @include mq(tablet) {
-        height: 133px;
+        @include rem((
+            height: 133px
+        ));
         border-bottom: 2px solid #214583;
         background: $c-neutral8;
     }
@@ -16,20 +19,26 @@
 .identity-wrapper {
     margin-left: auto;
     margin-right: auto;
-    max-width: gs-span(6);
-    padding-bottom: $gs-baseline*4;
-    padding-top: $gs-baseline*4;
+    @include rem((
+        max-width: gs-span(6),
+        padding-bottom: $gs-baseline*4,
+        padding-top: $gs-baseline*4
+    ));
 
     @include mq(desktop) {
-        max-width: gs-span(10);
+        @include rem((
+            max-width: gs-span(10)
+        ));
     }
 }
 
 .identity-section {
     border-top: 1px solid $c-neutral7;
     @include box-sizing(border-box);
-    margin: ($gs-baseline/3)*5 0;
-    padding-top: ($gs-baseline/3)*5 - 1;
+    @include rem((
+        margin: ($gs-baseline/3)*5 0,
+        padding-top: ($gs-baseline/3)*5 - 1
+    ));
 
     .identity-section__head {
         @extend %type-5;
@@ -49,36 +58,44 @@
 }
 
 .nav--registration {
-    margin-top: ($gs-baseline/3)*8;
+    @include rem((
+        margin-top: ($gs-baseline/3)*8,
+        font-size: 14px
+    ));
     text-align: center;
-    font-size: 14px;
-    font-size: 1.4rem;
 
     @include mq(tablet) {
-        font-size: 16px;
-        font-size: 1.6rem;
+        @include rem((
+            font-size: 16px
+        ));
     }
 }
 
 .nav--registration .nav__item + .nav__item:before {
-    content: '\b7';
+    content: "\b7";
     margin-left: 4px;
     margin-right: 9px;
 }
 
 .social-signin {
     @include clearfix;
-    margin: $gs-baseline*2 0 ($gs-baseline/3)*4;
+    @include rem((
+        margin: $gs-baseline*2 0 ($gs-baseline/3)*4
+    ));
     text-align: center;
 
     @include mq(desktop) {
-        margin: $gs-baseline/3 0;
+        @include rem((
+            margin: $gs-baseline/3 0
+        ));
     }
 
     .social-signin__item {
         @include box-sizing(border-box);
         display: inline-block;
-        margin-bottom: ($gs-baseline/3)*2;
+        @include rem((
+            margin-bottom: ($gs-baseline/3)*2
+        ));
 
         @include mq(tablet) {
             float: left;
@@ -89,21 +106,24 @@
         color: #ffffff;
         display: block;
         font-family: $sans-serif;
-        font-size: 14px;
-        font-size: 1.4rem;
-        padding: 8px 0 9px;
+        @include rem((
+            font-size: 14px,
+            padding: 8px 0 9px,
+            text-indent: 24px,
+            width: 240px
+        ));
         position: relative;
         text-align: center;
-        text-indent: 24px;
-        width: 240px;
     }
 
     .social-signin__action--fb {
         background-color: #3b5998;
 
         @include mq(tablet) {
-            margin-right: $gs-gutter/2;
-            width: gs-span(3);
+            @include rem((
+                margin-right: $gs-gutter/2,
+                width: gs-span(3)
+            ));
         }
     }
 
@@ -111,8 +131,10 @@
         background-color: #dd4b39;
 
         @include mq(tablet) {
-            margin-left: $gs-gutter/2;
-            width: gs-span(3);
+            @include rem((
+                margin-left: $gs-gutter/2,
+                width: gs-span(3)
+            ));
         }
     }
 
@@ -140,7 +162,7 @@
     /* Indicator bar */
     &:after {
         bottom: 0;
-        content: '';
+        content: "";
         display: block;
         left: 0;
         position: absolute;
@@ -165,17 +187,22 @@
     float: left;
     height: 60px;
     width: 60px;
-    margin-right: 10px;
+    @include rem((
+        margin-right: $gs-gutter/2
+    ));
 }
+
 
 /* Formstack
    ========================================================================== */
 
 .formstack-iframe {
-    border: none;
+    border: 0;
     display: block;
     margin: 0 auto;
-    max-width: gs-span(6);
+    @include rem((
+        max-width: gs-span(6)
+    ));
     width: 100%;
 }
 
@@ -185,11 +212,15 @@
 
 .formstack-heading--first {
     @include fs-header(5);
-    margin-top: ($gs-baseline/3)*4;
+    @include rem((
+        margin-top: ($gs-baseline/3)*4
+    ));
 }
 
 .formstack-heading--first + .formstack-section {
-    margin-bottom: $gs-baseline*2;
+    @include rem((
+        margin-bottom: $gs-baseline*2
+    ));
 }
 
 .formstack-required {
@@ -197,7 +228,7 @@
 }
 
 .formstack-fieldset {
-    border: none;
+    border: 0;
     margin: 0;
     padding: 0;
 }
@@ -206,10 +237,11 @@
     position: absolute;
     color: $c-body;
     font-family: $sans-serif;
-    font-size: 13px;
-    font-size: 1.3rem;
-    margin-left: 6px;
-    padding-top: ($gs-baseline/3)*9;
+    @include rem((
+        font-size: 13px,
+        margin-left: 6px,
+        padding-top: ($gs-baseline/3)*9
+    ));
 }
 
 .ethical-awards-banner {
@@ -224,12 +256,14 @@
     width: 480px;
 }
 
+
 /* Email Validation
    ========================================================================== */
 
 .form-field.form-field--email-validation {
     position: relative;
     padding-left: 24px;
+
     i {
         position: absolute;
         top: 0;
@@ -237,14 +271,16 @@
     }
 }
 
+
 /* Account Edit page
    ========================================================================== */
 
 .identity-wrapper .tabs {
     .fieldset:first-of-type {
-        border-top: none; // Included so as not to break tabs metaphor
+        border-top: 0; // Included so as not to break tabs metaphor
     }
 }
+
 
 /* Public Profile Page
    ========================================================================== */

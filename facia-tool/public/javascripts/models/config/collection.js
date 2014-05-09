@@ -2,22 +2,27 @@
 define([
     'knockout',
     'modules/vars',
+    'modules/content-api',
     'utils/as-observable-props',
     'utils/populate-observables',
     'utils/collection-guid'
 ], function(
     ko,
     vars,
+    contentApi,
     asObservableProps,
     populateObservables,
     collectionGuid
 ) {
+    var checkCount = 0;
+
     function Collection(opts) {
         opts = opts || {};
 
         this.id = opts.id || collectionGuid();
 
         this.parents = ko.observableArray();
+        this.capiResults = ko.observableArray();
 
         this.meta   = asObservableProps([
             'displayName',
@@ -25,6 +30,8 @@ define([
             'groups',
             'type',
             'uneditable',
+            'showTags',
+            'showSections',
             'apiQuery']);
 
         populateObservables(this.meta, opts);
@@ -34,39 +41,67 @@ define([
         }
 
         this.state = asObservableProps([
-            'enableDiscard',
-            'open',
-            'openAdvanced',
-            'underDrag']);
+            'isOpen',
+            'underDrag',
+            'apiQueryStatus']);
+
+        this.meta.apiQuery.subscribe(function(val) {
+            if (this.state.isOpen()) {
+                this.meta.apiQuery(val.replace(/\s+/g, ''));
+                this.checkApiQueryStatus();
+            }
+        }, this);
     }
 
     Collection.prototype.toggleOpen = function() {
-        this.state.open(!this.state.open());
-        this.state.openAdvanced(this.state.open() && this.state.openAdvanced());
+        this.state.isOpen(!this.state.isOpen());
     };
 
-    Collection.prototype.enableDiscard = function() {
-        this.state.enableDiscard(true);
-    };
-
-    Collection.prototype.toggleOpenAdvanced = function() {
-        this.state.openAdvanced(!this.state.openAdvanced());
+    Collection.prototype.close = function() {
+        this.state.isOpen(false);
     };
 
     Collection.prototype.save = function() {
         if (vars.model.collections.indexOf(this) < 0) {
             vars.model.collections.unshift(this);
         }
-        this.state.open(false);
-        this.state.openAdvanced(false);
+        this.state.isOpen(false);
+        this.state.apiQueryStatus(undefined);
         vars.model.save(this);
     };
 
-    Collection.prototype.discard = function() {
-        if (this.state.enableDiscard()) {
-            vars.model.collections.remove(this);
-            vars.model.save(this);
+    Collection.prototype.checkApiQueryStatus = function() {
+        var self = this,
+            apiQuery = this.meta.apiQuery(),
+            cc;
+
+        this.capiResults.removeAll();
+
+        if (!apiQuery) {
+            this.state.apiQueryStatus(undefined);
+            return;
         }
+
+        this.state.apiQueryStatus('check');
+
+        checkCount += 1;
+        cc = checkCount;
+
+        apiQuery += apiQuery.indexOf('?') < 0 ? '?' : '&';
+        apiQuery += 'show-editors-picks=true&show-fields=headline';
+
+        contentApi.fetchContent(apiQuery)
+        .always(function(results) {
+            if (cc === checkCount) {
+                self.capiResults(results);
+                self.state.apiQueryStatus(results.length ? 'valid' : 'invalid');
+            }
+        });
+    };
+
+    Collection.prototype.discard = function() {
+        vars.model.collections.remove(this);
+        vars.model.save(this);
     };
 
     return Collection;

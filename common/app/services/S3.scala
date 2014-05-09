@@ -6,7 +6,7 @@ import com.amazonaws.services.s3.AmazonS3Client
 import com.amazonaws.services.s3.model._
 import com.amazonaws.services.s3.model.CannedAccessControlList.{Private, PublicRead}
 import com.amazonaws.util.StringInputStream
-import scala.io.Source
+import scala.io.{Codec, Source}
 import org.joda.time.DateTime
 import play.Play
 import play.api.libs.ws.WS
@@ -15,6 +15,7 @@ import javax.crypto.spec.SecretKeySpec
 import sun.misc.BASE64Encoder
 import com.amazonaws.auth.AWSSessionCredentials
 import controllers.Identity
+import common.S3Metrics.S3ClientExceptionsMetric
 
 trait S3 extends Logging {
 
@@ -32,15 +33,24 @@ trait S3 extends Logging {
     val result = client.getObject(request)
 
     // http://stackoverflow.com/questions/17782937/connectionpooltimeoutexception-when-iterating-objects-in-s3
-    try { Some(action(result)) } finally { result.close() }
-
+    try { Some(action(result)) }
+    catch { case e: Exception =>
+      S3ClientExceptionsMetric.increment()
+      throw e
+    }
+    finally { result.close() }
   } catch {
-    case e: AmazonS3Exception if e.getStatusCode == 404 =>
+    case e: AmazonS3Exception if e.getStatusCode == 404 => {
       log.warn("not found at %s - %s" format(bucket, key))
       None
+    }
+    case e: Exception => {
+      S3ClientExceptionsMetric.increment()
+      throw e
+    }
   }
 
-  def get(key: String): Option[String] = try {
+  def get(key: String)(implicit codec: Codec): Option[String] = try {
     withS3Result(key) {
       result => Source.fromInputStream(result.getObjectContent).mkString
     }
@@ -77,7 +87,13 @@ trait S3 extends Logging {
 
     val request = new PutObjectRequest(bucket, key, new StringInputStream(value), metadata).withCannedAcl(accessControlList)
 
-    client.putObject(request)
+    try {
+      client.putObject(request)
+    } catch {
+      case e: Exception =>
+        S3ClientExceptionsMetric.increment()
+        throw e
+    }
   }
 }
 
@@ -94,7 +110,6 @@ object S3FrontsApi extends S3 {
     s"$location/pressed/$path/pressed.json"
 
   def getSchema = get(s"$location/schema.json")
-  def getConfig(id: String) = get(s"$location/config/$id/config.json")
   def getMasterConfig: Option[String] = get(s"$location/config/config.json")
   def getBlock(id: String) = get(s"$location/collection/$id/collection.json")
   def listConfigsIds: List[String] = getConfigIds(s"$location/config/")

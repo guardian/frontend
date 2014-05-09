@@ -13,8 +13,8 @@
             ));
         }
     }
-    .collection-wrapper:first-child .fromage {
-        border-top-style: none;
+    .facia-slice-wrapper:first-child .fromage {
+        border-top-width: 0;
     }
     @include mq(faciaLeftCol, wide) {
         .container__title {

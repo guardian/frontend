@@ -3,7 +3,7 @@ $item-top-border-height: 2px;
 @mixin image-meta {
     @include mq(desktop) {
         &.item--force-image-upgrade .item__standfirst {
-            display: none
+            display: none;
         }
         &.item--force-image-upgrade .item__image-container {
             display: block !important;
@@ -126,21 +126,6 @@ $item-top-border-height: 2px;
         ));
     }
 }
-@mixin card-triple-width {
-    float: left;
-    @include rem((
-        width: gs-span(9) + $gs-gutter,
-        min-height: gs-height(12)
-    ));
-
-    @include image-meta;
-    .item__title {
-        @include fs-headline(5, $size-only: true);
-        @include rem((
-            margin-top: $gs-baseline*(2/3)
-        ));
-    }
-}
 @mixin card-full-width {
     &.item--has-image {
         @include rem((
@@ -169,25 +154,9 @@ $item-top-border-height: 2px;
         padding-bottom: 0;
     }
 }
-@mixin card-full-width-feature {
-    width: 100%;
-    @include image-meta;
-
-    .item__title {
-        @include fs-headline(4, $size-only: true);
-    }
-    .item__title {
-        @include rem((
-            margin-top: $gs-baseline*(2/3)
-        ));
-    }
-    .item__image-container {
-        margin-top: 0;
-    }
-}
 @mixin vertical-item-separator {
     &:before {
-        content: '';
+        content: "";
         display: block;
         position: absolute;
         top: 0;
@@ -197,29 +166,6 @@ $item-top-border-height: 2px;
         height: 100%;
         border-left: 1px solid $c-neutral5;
     }
-}
-@mixin hide-background-on-item-sides($separator: true) {
-    &:after,
-    &:before {
-        content: '';
-        position: absolute;
-        display: block;
-        top: 0;
-        bottom: 0;
-        height: 100%;
-        width: $gs-gutter/2 !important;
-        width: rem($gs-gutter/2) !important;
-        @include box-sizing(border-box);
-        background: #ffffff;
-        z-index: 1;
-
-        // By default, .item:before is used as a 1px border separator
-        // Set $separator: false to hide it
-        @if $separator == false {
-            border-left-width: 0;
-        }
-    }
-    &:after { right: 0; }
 }
 @mixin item--hide-tone-border {
     .item__link {

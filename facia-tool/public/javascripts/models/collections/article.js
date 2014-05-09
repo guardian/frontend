@@ -5,6 +5,7 @@ define([
     'utils/populate-observables',
     'utils/full-trim',
     'utils/deep-get',
+    'utils/snap',
     'models/group',
     'modules/authed-ajax',
     'modules/content-api',
@@ -17,6 +18,7 @@ define([
         populateObservables,
         fullTrim,
         deepGet,
+        snap,
         Group,
         authedAjax,
         contentApi,
@@ -27,10 +29,10 @@ define([
 
             opts = opts || {};
 
-            this.id = opts.id;
+            this.id = ko.observable(opts.id);
+
             this.parent = opts.parent;
             this.parentType = opts.parentType;
-
             this.uneditable = opts.uneditable;
 
             this.props = asObservableProps([
@@ -42,12 +44,16 @@ define([
                 'thumbnail']);
 
             this.meta = asObservableProps([
+                'href',
                 'updatedAt',
                 'headline',
                 'trailText',
                 'imageAdjust',
                 'isBreaking',
-                'group']);
+                'group',
+                'snapType',
+                'snapCss',
+                'snapUri']);
 
             this.state = asObservableProps([
                 'underDrag',
@@ -55,6 +61,10 @@ define([
                 'isLoaded',
                 'isEmpty',
                 'sparkUrl']);
+
+            this.isSnap = ko.computed(function() {
+                return !!snap.validateId(this.id());
+            }, this);
 
             // Computeds
             this.humanDate = ko.computed(function(){
@@ -127,7 +137,7 @@ define([
 
                 if (missingProps.length) {
                     vars.model.statusCapiErrors(true);
-                    window.console.error('ContentApi missing: "' + missingProps.join('", "') + '" for ' + this.id);
+                    window.console.error('ContentApi missing: "' + missingProps.join('", "') + '" for ' + this.id());
                 } else {
                     this.state.isLoaded(true);
                 }
@@ -141,8 +151,8 @@ define([
 
         Article.prototype.sparkline = function() {
             this.state.sparkUrl(undefined);
-            if (vars.state.switches['facia-tool-sparklines']) {
-                this.state.sparkUrl(vars.sparksBase + this.id + (this.meta.updatedAt() ? '&markers=' + this.meta.updatedAt() : ''));
+            if (vars.model.switches()['facia-tool-sparklines']) {
+                this.state.sparkUrl(vars.sparksBase + this.id() + (this.meta.updatedAt() ? '&markers=' + this.meta.updatedAt() : ''));
             }
         };
 
@@ -175,7 +185,7 @@ define([
 
         Article.prototype.get = function() {
             return {
-                id:   this.id,
+                id:   this.id(),
                 meta: this.getMeta()
             };
         };
@@ -195,8 +205,6 @@ define([
                 .map(function(p){ return [p[0], _.isString(p[1]) ? fullTrim(p[1]) : p[1]]; })
                 // reject whitespace-only strings:
                 .filter(function(p){ return _.isString(p[1]) ? p[1] : true; })
-                // for sublinks reject anything that isn't a headline
-                .filter(function(p){ return p[0] === 'headline' || self.parentType !== 'Article'; })
                 // reject vals that are equivalent to the fields (if any) that they're overwriting:
                 .filter(function(p){ return _.isUndefined(self.fields[p[0]]) || p[1] !== fullTrim(self.fields[p[0]]()); })
                 // recurse into supporting links
@@ -207,7 +215,7 @@ define([
                 })
                 // drop empty arrays:
                 .filter(function(p){ return _.isArray(p[1]) ? p[1].length : true; })
-                // return as obj, or as undefined if empty (this ommits it from any subsequent JSON.stringify result)
+                // return as obj, or as undefined if empty (this omits it from any subsequent JSON.stringify result)
                 .reduce(function(obj, p) {
                     obj = obj || {};
                     obj[p[0]] = p[1];
@@ -226,7 +234,6 @@ define([
 
             if (this.parentType === 'Article') {
                 this.parent._save();
-                this.close();
                 return;
             }
 
@@ -235,13 +242,13 @@ define([
                 itemMeta = this.getMeta();
                 timestamp = Math.floor(new Date().getTime()/1000);
 
-                itemMeta.updatedAt = (itemMeta.updatedAt ? itemMeta.updatedAt + ',' : '') + timestamp + ':0C0'; // green for overrides etc.
+                itemMeta.updatedAt = (itemMeta.updatedAt ? itemMeta.updatedAt + ',' : '') + timestamp + ':65b045'; // green for overrides etc.
 
                 authedAjax.updateCollections({
                     update: {
                         collection: this.parent,
-                        item:       this.id,
-                        position:   this.id,
+                        item:       this.id(),
+                        position:   this.id(),
                         itemMeta:   itemMeta,
                         live:       vars.state.liveMode(),
                         draft:     !vars.state.liveMode()
@@ -250,6 +257,12 @@ define([
 
                 this.parent.setPending(true);
             }
+        };
+
+        Article.prototype.convertToSnap = function() {
+            this.meta.href(this.id());
+            this.id(snap.generateId());
+            this.state.open(!this.meta.headline());
         };
 
         Article.prototype.save = function() {

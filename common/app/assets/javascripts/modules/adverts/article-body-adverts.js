@@ -28,7 +28,7 @@ define([
     ArticleBodyAdverts.prototype.inlineSlots = [];
 
     ArticleBodyAdverts.prototype.config = {
-        inlineAdTemplate: '<div class="ad-slot--dfp ad-slot--inline" data-name="%dfp_slot%" data-mobile="300,50|320,50" data-tabletportrait="300,250"><div id="dfp-ad--%dfp_slot%" class="ad-slot__container"></div></div>'
+        inlineAdTemplate: '<div class="ad-slot--dfp ad-slot--inline" data-name="%dfp_slot%" data-mobile="300,50" data-mobilelandscape="300,50|320,50" data-tabletportrait="300,250"><div id="dfp-ad--%dfp_slot%" class="ad-slot__container"></div></div>'
     };
 
     ArticleBodyAdverts.prototype.generateInlineAdSlot = function(dfpName) {
@@ -61,11 +61,9 @@ define([
         }
 
         if((/tablet/).test(breakpoint)) {
-            var portrait = window.innerWidth < 810;
-
-            if(portrait) {
-                this.getNewSlot('adRight').html(this.generateInlineAdSlot('inline1'));
-            } else {
+            this.getNewSlot('adRight').html(this.generateInlineAdSlot('inline1'));
+            // display second inline ad if there's no right hand ad (we show right hand column at >= 900px)
+            if(window.innerWidth < 900) {
                 this.getNewSlot('adRight').html(this.generateInlineAdSlot('inline2'));
             }
         }

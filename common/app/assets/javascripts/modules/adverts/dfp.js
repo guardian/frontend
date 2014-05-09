@@ -2,6 +2,7 @@
 define([
     'common/$',
     'bonzo',
+    'qwery',
     'common/modules/component',
     'lodash/objects/assign',
     'lodash/functions/debounce',
@@ -9,13 +10,16 @@ define([
     'common/utils/detect',
     'common/utils/mediator',
     'common/modules/analytics/commercial/tags/common/audience-science',
+    'common/modules/analytics/commercial/tags/common/audience-science-gateway',
     'common/modules/adverts/userAdTargeting',
     'common/modules/adverts/query-string',
     'lodash/arrays/flatten',
-    'lodash/arrays/uniq'
+    'lodash/arrays/uniq',
+    'lodash/objects/defaults'
 ], function (
     $,
     bonzo,
+    qwery,
     Component,
     extend,
     debounce,
@@ -23,10 +27,12 @@ define([
     detect,
     mediator,
     AudienceScience,
+    AudienceScienceGateway,
     UserAdTargeting,
     queryString,
     _flatten,
-    _uniq
+    _uniq,
+    _defaults
 ) {
 
     /**
@@ -57,23 +63,39 @@ define([
         'breakout__script': '<script>%content%</script>'
     };
 
+    /** A breakpoint can have various sizes assigned to it. You can assign either on
+     * set of sizes or multiple.
+     *
+     * One size       - `data-mobile="300,50"`
+     * Multiple sizes - `data-mobile="300,50|320,50"`
+     */
+    function createSizeMapping(attr) {
+        return attr.split('|').map(function(size) {
+            return size.split(',').map(Number);
+        });
+    }
+
+    function shouldRenderLabel($slot) {
+        var $parent = $slot.parent();
+        return !($slot[0].style.display === 'none' || $parent.hasClass('ad-label--showing') || $parent.data('label') === false);
+    }
+
     function DFP(config) {
-        this.context = document;
-        this.config = extend(this.config, config);
+        this.config       = _defaults(config || {}, this.config);
+        this.context      = document;
+        this.dfpAdSlots   = [];
+        this.adsToRefresh = [];
     }
 
     Component.define(DFP);
 
-    DFP.prototype.$dfpAdSlots   = [];
-    DFP.prototype.adsToRefresh = [];
-
     DFP.prototype.config = {
-        dfpUrl: '//www.googletagservices.com/tag/js/gpt.js',
         dfpSelector: '.ad-slot--dfp',
         adContainerClass: '.ad-slot__container',
         // These should match the widths inside _vars.scss
         breakpoints: {
             mobile: 0,
+            mobilelandscape: 480,
             tabletportrait: 740,
             tabletlandscape: 900,
             desktop: 980,
@@ -82,47 +104,83 @@ define([
     };
 
     DFP.prototype.setListeners = function() {
-        var parseAd = this.parseAd;
-        googletag.pubads().addEventListener('slotRenderEnded', parseAd.bind(this));
+        googletag.pubads().addEventListener('slotRenderEnded', this.parseAd.bind(this));
+    };
+
+    DFP.prototype.buildAdUnit = function () {
+        var isFront      = this.config.page.isFront || this.config.page.contentType === 'Section',
+            section      = this.config.page.section,
+            adUnitSuffix = section;
+        if (isFront) {
+            if (section !== '') {
+                adUnitSuffix += '/';
+            }
+            adUnitSuffix += 'front';
+            //if (this.config.switches.lifeAndStyleHack) {
+                adUnitSuffix = adUnitSuffix.replace('Life and style', 'lifeandstyle');
+            //}
+        }
+        return '/' + this.config.page.dfpAccountId + '/' + this.config.page.dfpAdUnitRoot + '/' + adUnitSuffix;
     };
 
     /**
-     * Sets the approiate page level targetting
+     * Builds the appropriate page level targetting
      *
      * a      = audience science
      * at     = adtest cookie
      * bp     = current breakpoint
      * cat    = section
      * ct     = content type
-     * gdncrm = user ad targetting
      * k      = keywords
      * p      = platform
      * pt     = content type
+     * url    = path
      */
-    DFP.prototype.setPageTargetting = function() {
-        var conf         = this.config.page,
-            section      = conf.section     ? conf.section.toLowerCase()     : '',
-            contentType  = conf.contentType ? conf.contentType.toLowerCase() : '',
+    DFP.prototype.buildPageTargetting = function () {
+
+        function encodeTargetValue(value) {
+            return value ? queryString.formatKeyword(value).replace(/&/g, 'and').replace(/'/g, '') : '';
+        }
+
+        var conf        = this.config.page,
+            section     = encodeTargetValue(conf.section),
+            series      = encodeTargetValue(conf.series),
+            contentType = encodeTargetValue(conf.contentType),
+            edition     = encodeTargetValue(conf.edition),
             keywords;
         if (conf.keywords) {
             keywords = conf.keywords.split(',').map(function (keyword) {
-                return queryString.formatKeyword(keyword).replace('&', 'and');
+                return encodeTargetValue(keyword);
             });
         } else {
             keywords = '';
         }
 
-        googletag.pubads().setTargeting('a', AudienceScience.getSegments() || [])
-                          .setTargeting('at', Cookies.get('adtest') || '')
-                          .setTargeting('bp', detect.getBreakpoint())
-                          .setTargeting('cat', section)
-                          .setTargeting('ct', contentType)
-                          // leave out CRM data until needed
-                          //.setTargeting('gdncrm', UserAdTargeting.getUserSegments() || [])
-                          .setTargeting('k', keywords)
-                          .setTargeting('p', 'ng')
-                          .setTargeting('pt', contentType)
-                          .setTargeting('url', window.location.pathname);
+        var targets = {
+            'url'     : window.location.pathname,
+            'edition' : edition,
+            'cat'     : section,
+            'se'      : series,
+            'k'       : keywords,
+            'ct'      : contentType,
+            'pt'      : contentType,
+            'p'       : 'ng',
+            'bp'      : detect.getBreakpoint(),
+            'a'       : AudienceScience.getSegments(),
+            'at'      : Cookies.get('adtest') || ''
+        };
+        extend(targets, AudienceScienceGateway.getSegments());
+
+        return targets;
+    };
+
+    DFP.prototype.setPageTargetting = function() {
+        var targets = this.buildPageTargetting();
+        for (var target in targets) {
+            if (targets.hasOwnProperty(target)) {
+                googletag.pubads().setTargeting(target, targets[target]);
+            }
+        }
     };
 
     /**
@@ -130,15 +188,14 @@ define([
      * attributes on the element.
      */
     DFP.prototype.defineSlots = function() {
-        var self    = this,
-            section = this.config.page.isFront ? 'networkfront' : this.config.page.section,
-            account = '/'+ this.config.page.dfpAccountId +'/'+ this.config.page.dfpAdUnitRoot +'/'+ section;
 
-        this.$dfpAdSlots.each(function(adSlot) {
+        var adUnit = this.buildAdUnit(this.config);
 
-            var id          = adSlot.querySelector(self.config.adContainerClass).id,
-                name        = adSlot.getAttribute('data-name'),
-                sizeMapping = self.defineSlotSizes(adSlot),
+        this.dfpAdSlots.forEach(function($adSlot) {
+
+            var id          = $(this.config.adContainerClass, $adSlot[0]).attr('id'),
+                name        = $adSlot.data('name'),
+                sizeMapping = this.defineSlotSizes($adSlot[0]),
                 // as we're using sizeMapping, pull out all the ad sizes, as an array of arrays
                 size        = _uniq(
                                   _flatten(sizeMapping, true, function(map) {
@@ -148,33 +205,21 @@ define([
                                       return size[0] + '-' + size[1];
                                   }
                               ),
-                refresh     = adSlot.getAttribute('data-refresh') !== 'false',
+                refresh     = $adSlot.data('refresh') !== false,
 
-                slot = googletag.defineSlot(account, size, id)
+                slot        = googletag
+                                .defineSlot(adUnit, size, id)
                                 .addService(googletag.pubads())
                                 .defineSizeMapping(sizeMapping)
                                 .setTargeting('slot', name);
 
             // Add to the array of ads to be refreshed (when the breakpoint changes)
             // only if it's `data-refresh` attribute isn't set to false.
-            if(refresh) {
-                self.adsToRefresh.push(slot);
+            if (refresh) {
+                this.adsToRefresh.push(slot);
             }
-        });
+        }, this);
     };
-
-    /** A breakpoint can have various sizes assigned to it. You can assign either on
-     * set of sizes or multiple.
-     *
-     * One size       - `data-mobile="300,50"`
-     * Multiple sizes - `data-mobile="300,50|320,50"`
-     */
-    DFP.prototype.createSizeMapping = function(attr) {
-        return attr.split('|').map(function(size) {
-            return size.split(',').map(Number);
-        });
-    };
-
 
     /**
      * Builds and assigns the correct size map for a slot based on the breakpoints
@@ -187,15 +232,14 @@ define([
      *
      */
     DFP.prototype.defineSlotSizes = function(slot) {
-        var self    = this,
-            mapping = googletag.sizeMapping();
+        var mapping = googletag.sizeMapping();
 
-        for(var breakpoint in this.config.breakpoints) {
-            var attr  = slot.getAttribute('data-'+ breakpoint),
-                width = self.config.breakpoints[breakpoint];
+        for (var breakpoint in this.config.breakpoints) {
+            var attr  = slot.getAttribute('data-' + breakpoint),
+                width = this.config.breakpoints[breakpoint];
 
-            if(attr) {
-                mapping.addSize([width, 0], self.createSizeMapping(attr));
+            if (attr) {
+                mapping.addSize([width, 0], createSizeMapping(attr));
             }
         }
 
@@ -203,9 +247,9 @@ define([
     };
 
     DFP.prototype.parseAd = function(event) {
-        var $slot = $('#'+ event.slot.getSlotId().getDomId());
+        var $slot = $('#' + event.slot.getSlotId().getDomId());
 
-        if(event.isEmpty) {
+        if (event.isEmpty) {
             this.removeLabel($slot);
         } else {
             this.checkForBreakout($slot);
@@ -243,78 +287,74 @@ define([
     };
 
     DFP.prototype.addLabel = function($slot) {
-        var $parent = $slot.parent();
-
-        if(this.shouldRenderLabel($slot)) {
-            $parent.prepend('<div class="ad-slot__label">Advertisement</div>');
-            $parent.addClass('ad-label--showing');
+        if (shouldRenderLabel($slot)) {
+            $slot.parent()
+                .prepend('<div class="ad-slot__label">Advertisement</div>')
+                .addClass('ad-label--showing');
         }
     };
 
-    DFP.prototype.shouldRenderLabel = function($slot) {
-        var $parent = $slot.parent();
-
-        return !($slot[0].style.display === 'none' || $parent.hasClass('ad-label--showing') || $parent.data('label') === false);
-    };
-
     DFP.prototype.removeLabel = function($slot) {
-        $slot.parent().removeClass('ad-label--showing');
-        $slot.previous().remove();
+        var $slotParent = $slot.parent()
+            .removeClass('ad-label--showing');
+        $('.ad-slot__label', $slotParent[0]).remove();
     };
 
     DFP.prototype.fireAdRequest = function() {
         googletag.pubads().enableSingleRequest();
-        googletag.pubads().enableAsyncRendering();
         googletag.pubads().collapseEmptyDivs();
         googletag.enableServices();
-        googletag.display(this.$dfpAdSlots[0].querySelector(this.config.adContainerClass).id);
+        // as this is an single request call, only need to make a single display call (to the first ad slot)
+        if (this.dfpAdSlots.length) {
+            googletag.display($(this.config.adContainerClass, this.dfpAdSlots.shift()).attr('id'));
+        }
     };
 
-    /**
-     * Asynchronously load the library needed for DFP to work.
-     *
-     * This was originally loaded in the define funciton at the top, but
-     * didn't play well with the unit tests, so it's been moved to here.
-     */
-    DFP.prototype.loadLibrary = function() {
-        var gads   = document.createElement('script'),
-            node   = document.getElementsByTagName('script')[0],
-            useSSL = 'https:' === document.location.protocol;
-
-        gads.async = true;
-        gads.type  = 'text/javascript';
-        gads.src   = (useSSL ? 'https:' : 'http:') + this.config.dfpUrl;
-
-        node.parentNode.insertBefore(gads, node);
-    };
-
-    DFP.prototype.reload = function() {
-        var adsToRefresh = this.adsToRefresh;
-
-        googletag.pubads().refresh(adsToRefresh);
+    DFP.prototype.refresh = function() {
+        googletag.pubads().refresh(this.adsToRefresh);
+        mediator.emit('modules:adverts:refreshed');
     };
 
     DFP.prototype.init = function() {
 
-        this.$dfpAdSlots = $(this.config.dfpSelector);
+        this.dfpAdSlots = qwery(this.config.dfpSelector)
+            // filter out hidden ads
+            .map(function(adSlot) {
+                return bonzo(adSlot);
+            })
+            .filter(function($adSlot) {
+                return $adSlot.css('display') !== 'none';
+            });
 
         // If there's no ads on the page, then don't load anything
-        if(this.$dfpAdSlots.length === 0) {
+        if (this.dfpAdSlots.length === 0) {
             return false;
         }
 
-        window.googletag = window.googletag || { cmd: [] };
+        // if we don't already have googletag, create command queue and load it
+        if (!window.googletag) {
+            window.googletag = { cmd: [] };
 
-        this.loadLibrary();
-
-        try {
-            googletag.cmd.push(this.setListeners.bind(this));
-            googletag.cmd.push(this.setPageTargetting.bind(this));
-            googletag.cmd.push(this.defineSlots.bind(this));
-            googletag.cmd.push(this.fireAdRequest.bind(this));
-        } catch(e) {
-            mediator.emit('module:error', 'DFP ad loading error: ' + e, 'common/modules/adverts/dfp.js');
+            // load the library asynchronously
+            require(['googletag']);
         }
+
+        window.googletag.cmd.push(this.setListeners.bind(this));
+        window.googletag.cmd.push(this.setPageTargetting.bind(this));
+        window.googletag.cmd.push(this.defineSlots.bind(this));
+        window.googletag.cmd.push(this.fireAdRequest.bind(this));
+
+        // anything we want to happen after displaying ads
+        window.googletag.cmd.push(function() {
+            var hasBreakpointChanged = detect.hasCrossedBreakpoint();
+            mediator.on('window:resize',
+                debounce(function() {
+                    // refresh on resize
+                    hasBreakpointChanged(this.refresh.bind(this));
+                }.bind(this), 2000)
+            );
+        }.bind(this));
+
     };
 
     return DFP;

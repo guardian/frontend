@@ -1,7 +1,7 @@
 package services
 
 import model._
-import conf.SwitchingContentApi
+import conf.ContentApi
 import model.Section
 import common._
 import com.gu.openplatform.contentapi.model.{SearchResponse, ItemResponse}
@@ -17,7 +17,9 @@ object IndexPagePagination {
   def pageSize: Int = 20 //have a good think before changing this
 }
 
-case class IndexPage(page: MetaData, trails: Seq[Content])
+case class IndexPage(page: MetaData, trails: Seq[Content],
+                     date: DateTime = DateTime.now)
+
 
 trait Index extends ConciergeRepository with QueryDefaults {
 
@@ -38,7 +40,7 @@ trait Index extends ConciergeRepository with QueryDefaults {
       case other => other
     }
 
-    val promiseOfResponse = SwitchingContentApi().search(edition)
+    val promiseOfResponse = ContentApi.search(edition)
       .tag(s"$firstTag,$secondTag")
       .page(page)
       .pageSize(IndexPagePagination.pageSize)
@@ -77,7 +79,7 @@ trait Index extends ConciergeRepository with QueryDefaults {
   ))
 
   def index(edition: Edition, path: String, pageNum: Int)(implicit request: RequestHeader): Future[Either[IndexPage, SimpleResult]] = {
-    val promiseOfResponse = SwitchingContentApi().item(path, edition)
+    val promiseOfResponse = ContentApi.item(path, edition)
       .page(pageNum)
       .pageSize(IndexPagePagination.pageSize)
       .showEditorsPicks(pageNum == 1) //only show ed pics on first page
@@ -127,7 +129,7 @@ trait ImageQuery extends ConciergeRepository with QueryDefaults {
 
   def image(edition: Edition, path: String): Future[Either[ImageContentPage, SimpleResult]]= {
     log.info(s"Fetching image content: $path for edition ${edition.id}")
-    val response = SwitchingContentApi().item(path, edition)
+    val response = ContentApi.item(path, edition)
       .showExpired(true)
       .showFields("all")
       .response.map { response =>

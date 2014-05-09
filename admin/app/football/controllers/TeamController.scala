@@ -21,21 +21,6 @@ object TeamController extends Controller with ExecutionContexts with GetPaClient
     Cached(60)(Ok(views.html.football.team.teamIndex(teams)))
   }
 
-  def redirectToSquadPictures = Authenticated { request =>
-    val submission = request.body.asFormUrlEncoded.get
-    val teamId = submission.get("team").get.head
-    NoCache(SeeOther(s"/admin/football/team/images/$teamId"))
-  }
-
-  def squadPictures(teamId: String) = Authenticated.async { request =>
-    client.squad(teamId).map { squad =>
-      val players = squad.map { squadMember =>
-        Player(squadMember.playerId, teamId, squadMember.name)
-      }
-      Cached(60)(Ok(views.html.football.team.squadImages(teamId, players, PA.teams.all)))
-    }
-  }
-
   def redirectToTeamHead2Head = Authenticated { implicit request =>
     val submission = request.body.asFormUrlEncoded.get
     val team1Id = submission.get("team1").get.head

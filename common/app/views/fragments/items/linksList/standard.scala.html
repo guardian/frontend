@@ -2,7 +2,7 @@
 
 @defining(imageAdjustOverride.getOrElse(trail.imageAdjust)) { imageAdjust =>
 <li class="l-columns__item linkslist__item" data-link-name="trail | @{index + 1}">
-    <a href="@LinkTo{@trail.url}" class="linkslist__action@if(imageAdjust == "boost" && trail.trailPicture(5,3).nonEmpty){ action--has-image}" data-link-name="article">
+    <a @LinkTo(trail).map{url=>href=@url} class="linkslist__action@if(imageAdjust == "boost" && trail.trailPicture(5,3).nonEmpty){ action--has-image}" data-link-name="article">
         @if(imageAdjust == "boost") {
             @trail.trailPicture(5,3).map{ imageContainer =>
                 @ImgSrc.imager(imageContainer, Item120).map { imgSrc =>

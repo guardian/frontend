@@ -5,7 +5,7 @@ import common._
 import model._
 import scala.concurrent.Future
 import implicits.Requests
-import conf.SwitchingContentApi
+import conf.ContentApi
 import com.gu.openplatform.contentapi.ApiError
 import com.gu.openplatform.contentapi.model.{Content => ApiContent}
 import views.support.{MultimediaContainer, TemplateDeduping, SeriesContainer}
@@ -28,7 +28,7 @@ object SeriesController extends Controller with Logging with Paging with Executi
 
     def isCurrentStory(content: ApiContent) = content.safeFields.get("shortUrl").map{shortUrl => !shortUrl.equals(currentShortUrl)}.getOrElse(false)
 
-    val promiseOrResponse = SwitchingContentApi().item(seriesId, edition)
+    val promiseOrResponse = ContentApi.item(seriesId, edition)
       .showTags("all")
       .showFields("all")
       .response

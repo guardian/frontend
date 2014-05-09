@@ -1,20 +1,4 @@
 .related {
-    @include rem((
-        margin-bottom: $gs-baseline*2
-    ));
-
-    .container__border {
-        border-top: 1px solid $c-neutral4;
-    }
-    .container__title {
-        color: $c-neutral1;
-        background: transparent;
-
-        @include mq($to: tablet) {
-            @include fs-header(3, true);
-            padding-left: 0;
-        }
-    }
     .container__body {
         @include rem((
             padding-top: $gs-baseline/3
@@ -32,7 +16,7 @@
             ));
         }
     }
-    .collection__item:first-child {
+    .facia-slice__item:first-child {
         @include item--hide-tone-border;
 
         @include mq($to: tablet) {
@@ -41,14 +25,14 @@
             }
         }
     }
-    .collection__item:nth-child(n+6) {
+    .facia-slice__item:nth-child(n+6) {
         display: none;
     }
 
     @include mq(tablet) {
         @include item--hide-tone-border;
 
-        .collection__item:nth-child(n+5),
+        .facia-slice__item:nth-child(n+5),
         &.more-on-this-story--one-item {
             display: none;
         }
@@ -63,7 +47,7 @@
     @include hide-icon-in-title;
 
     @include mq(tablet, rightCol) {
-        .collection__item:nth-child(n+4) {
+        .facia-slice__item:nth-child(n+4) {
             display: none;
         }
     }

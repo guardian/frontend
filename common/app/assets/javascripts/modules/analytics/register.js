@@ -44,7 +44,7 @@ define([
     function sendEvent(config) {
         require('ophan/ng', function (ophan) {
             ophan.record({'register': register,
-                          'abTestRegister': ab.getAbLoggableObject(config) });
+                'abTestRegister': ab.getAbLoggableObject(config) });
         });
     }
 

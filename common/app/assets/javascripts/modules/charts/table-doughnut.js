@@ -15,7 +15,7 @@ var TableDoughnut = function() {};
  * @return {Bonzo} the SVG Element
  */
 TableDoughnut.prototype.render = function(el) {
-    var width = el.scrollWidth,
+    var width = el.scrollWidth || el.getAttribute('data-chart-width'),
         headings = $('th', el),
         data = $('td', el).map(function(el, i) {
             return {

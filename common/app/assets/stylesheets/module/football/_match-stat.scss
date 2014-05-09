@@ -24,12 +24,12 @@
         top: 2px,
         width: 2px
     ));
-    border-radius: 0;
+    @include border-radius(0);
 }
 
 @mixin team-result--shrink {
+    @include border-radius(8px);
     @include rem((
-        border-radius: 8px,
         height: 4px,
         margin-left: ($gs-gutter/4)+3,
         width: 4px
@@ -37,6 +37,9 @@
 }
 
 .team__results {
+    @include rem((
+        min-width: $gs-gutter*1.5
+    ));
     font-size: 0;
 }
 
@@ -57,8 +60,8 @@
 }
 
 .team-result {
+    @include border-radius(4px);
     @include rem((
-        border-radius: 4px,
         height: 8px,
         margin-left: ($gs-gutter/4)+3,
         width: 8px
@@ -73,8 +76,10 @@
     }
 }
 
-.table--small {
-    .team-result { @include team-result--thin; }
+.c-football-table .table--football {
+    .team-result {
+        @include team-result--thin;
+    }
 }
 
 .team-result--won {

@@ -30,10 +30,12 @@ object Frontend extends Build with Prototypes {
       "com.bionicspirit" %% "shade" % "1.5.0",
 
       "rome" % "rome" % "1.0",
-      "org.rometools" % "rome-modules" % "1.0"
+      "org.rometools" % "rome-modules" % "1.0",
+
+      filters
     )
   )
-  val paVersion = "4.6"
+  val paVersion = "4.8"
 
   def withTests(project: Project) = project % "test->test;compile->compile"
 
@@ -74,6 +76,7 @@ object Frontend extends Build with Prototypes {
       "com.gu" %% "pa-client" % paVersion
     )
   )
+
   val faciaTool = application("facia-tool").dependsOn(commonWithTests)
 
   val identityLibVersion = "3.21"
@@ -151,6 +154,7 @@ object Frontend extends Build with Prototypes {
   val main = root().aggregate(
     common,
     facia,
+    faciaTool,
     article,
     applications,
     sport,

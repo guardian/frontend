@@ -16,11 +16,8 @@ object FaciaContentApiProxy extends Controller with Logging with AuthLogging wit
        "%s=%s".format(p._1, p._2.head.urlEncoded)
     }.mkString("&")
 
-    val contentApiHost = if(ElasticSearchSwitch.isSwitchedOn) {
-      Configuration.contentApi.elasticSearchHost
-    } else {
-      Configuration.contentApi.host
-    }
+    val contentApiHost = Configuration.contentApi.elasticSearchHost
+
     val url = s"$contentApiHost/$path?$queryString&api-key=${Configuration.contentApi.key}"
 
     log("Proxying tag API query to: %s" format url, request)

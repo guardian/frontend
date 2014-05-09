@@ -19,14 +19,19 @@ GET         /discussion/comment-counts                                          
 GET         /discussion/comment-counts.json                                                                          controllers.DiscussionApp.commentCountJson(shortUrls: String)
 GET         /discussion/comment/*id.json                                                                             controllers.DiscussionApp.commentJson(id: Int)
 GET         /discussion/comment/*id                                                                                  controllers.DiscussionApp.comment(id: Int)
-GET         /discussion/comment-permalink/*commentId.json                                                            controllers.DiscussionApp.commentPermalinkJson(commentId: Int)
-GET         /discussion/comment-permalink/*commentId                                                                 controllers.DiscussionApp.commentPermalink(commentId: Int)
+
+GET         /discussion/comment-permalink/*order/*commentId.json                                                     controllers.DiscussionApp.commentPermalinkJson(commentId: Int, order: String)
+GET         /discussion/comment-permalink/*order/*commentId                                                          controllers.DiscussionApp.commentPermalink(commentId: Int, order: String)
+
+
 GET         /discussion/top/*discussionKey.json                                                                      controllers.DiscussionApp.topCommentsJson(discussionKey: discussion.model.DiscussionKey)
 GET         /discussion/top/*discussionKey                                                                           controllers.DiscussionApp.topComments(discussionKey: discussion.model.DiscussionKey)
-GET         /discussion/oldest/*discussionKey.json                                                                   controllers.DiscussionApp.oldestCommentsJson(discussionKey: discussion.model.DiscussionKey)
-GET         /discussion/oldest/*discussionKey                                                                        controllers.DiscussionApp.oldestComments(discussionKey: discussion.model.DiscussionKey)
-GET         /discussion/*discussionKey.json                                                                          controllers.DiscussionApp.commentsJson(discussionKey: discussion.model.DiscussionKey)
-GET         /discussion/*discussionKey                                                                               controllers.DiscussionApp.comments(discussionKey: discussion.model.DiscussionKey)
+
+GET         /discussion/$discussionKey</?p/\w+>.json                                                                 controllers.DiscussionApp.commentsJson(discussionKey: discussion.model.DiscussionKey, order: String = "newest")
+GET         /discussion/$order<(oldest|newest)>/$discussionKey</?p/\w+>.json                                         controllers.DiscussionApp.commentsJson(discussionKey: discussion.model.DiscussionKey, order: String)
+GET         /discussion/$discussionKey</?p/\w+>                                                                      controllers.DiscussionApp.comments(discussionKey: discussion.model.DiscussionKey, order: String = "newest")
+GET         /discussion/$order<(oldest|newest)>/$discussionKey</?p/\w+>                                              controllers.DiscussionApp.comments(discussionKey: discussion.model.DiscussionKey, order: String)
+
 GET         /open/cta/article/*discussionKey.json                                                                    controllers.CtaController.cta(discussionKey: discussion.model.DiscussionKey)
 
 # Core Navigation
@@ -73,15 +78,22 @@ GET         /football/:tag/results/:year/:month/:day                            
 GET         /football/:tag/results                                                                                   football.controllers.ResultsController.tagResults(tag)
 GET         /football/:tag/results.json                                                                              football.controllers.ResultsController.tagResultsJson(tag)
 
-GET         /football/live                                                                                           football.controllers.LiveMatchesController.liveMatches()
-GET         /football/live.json                                                                                      football.controllers.LiveMatchesController.liveMatchesJson()
-GET         /football/:competition/live                                                                              football.controllers.LiveMatchesController.competitionMatches(competition)
-GET         /football/:competition/live.json                                                                         football.controllers.LiveMatchesController.competitionMatchesJson(competition)
+GET         /football/live                                                                                           football.controllers.MatchDayController.liveMatches()
+GET         /football/live.json                                                                                      football.controllers.MatchDayController.liveMatchesJson()
+GET         /football/:competition/live                                                                              football.controllers.MatchDayController.competitionMatches(competition)
+GET         /football/:competition/live.json                                                                         football.controllers.MatchDayController.competitionMatchesJson(competition)
+
+GET         /football/match-day/:year/:month/:day.json                                                               football.controllers.MatchDayController.matchesForJson(year, month, day)
+GET         /football/match-day/:year/:month/:day                                                                    football.controllers.MatchDayController.matchesFor(year, month, day)
+GET         /football/match-day/:competition/:year/:month/:day.json                                                  football.controllers.MatchDayController.competitionMatchesForJson(competition, year, month, day)
+GET         /football/match-day/:competition/:year/:month/:day                                                       football.controllers.MatchDayController.competitionMatchesFor(competition, year, month, day)
 
 GET         /football/tables                                                                                         football.controllers.LeagueTableController.renderLeagueTable()
 GET         /football/tables.json                                                                                    football.controllers.LeagueTableController.renderLeagueTableJson()
 GET         /football/:competition/table                                                                             football.controllers.LeagueTableController.renderCompetition(competition)
 GET         /football/:competition/table.json                                                                        football.controllers.LeagueTableController.renderCompetitionJson(competition)
+GET         /football/:competition/:group/table                                                                      football.controllers.LeagueTableController.renderCompetitionGroup(competition, group)
+GET         /football/:competition/:group/table.json                                                                 football.controllers.LeagueTableController.renderCompetitionGroupJson(competition, group)
 
 GET         /football/api/match-nav/:year/:month/:day/:home/:away.json                                               football.controllers.MoreOnMatchController.matchNavJson(year, month, day, home, away)
 GET         /football/api/match-nav/:year/:month/:day/:home/:away                                                    football.controllers.MoreOnMatchController.matchNav(year, month, day, home, away)
@@ -146,8 +158,6 @@ GET         /admin/football/browser/*query                                      
 GET         /admin/football/team                                                                                     controllers.admin.TeamController.teamIndex
 POST        /admin/football/team/head2head                                                                           controllers.admin.TeamController.redirectToTeamHead2Head
 GET         /admin/football/team/head2head/:team1Id/:team2Id                                                         controllers.admin.TeamController.teamHead2Head(team1Id: String, team2Id: String)
-POST        /admin/football/team/images                                                                              controllers.admin.TeamController.redirectToSquadPictures
-GET         /admin/football/team/images/:teamId                                                                      controllers.admin.TeamController.squadPictures(teamId: String)
 GET         /admin/football/player                                                                                   controllers.admin.PlayerController.playerIndex
 POST        /admin/football/player/head2head                                                                         controllers.admin.PlayerController.redirectToHead2Head
 GET         /admin/football/player/head2head/:player1Id/:player2Id                                                   controllers.admin.PlayerController.head2Head(player1Id: String, player2Id: String)
@@ -159,23 +169,44 @@ GET         /admin/football/tables/league/:competitionId                        
 GET         /admin/football/tables/league/:competitionId/:focus                                                      controllers.admin.TablesController.leagueTableFragment(competitionId: String, focus: String)
 GET         /admin/football/tables/league/:competitionId/:team1Id/:team2Id                                           controllers.admin.TablesController.leagueTable2Teams(competitionId: String, team1Id: String, team2Id: String)
 GET         /admin/football/api/squad/:teamId                                                                        controllers.admin.PlayerController.squad(teamId: String)
+GET         /admin/football/fronts                                                                                   controllers.admin.FrontsController.index
+GET         /admin/football/fronts/live                                                                              controllers.admin.FrontsController.matchDay
+POST        /admin/football/fronts/results/redirect                                                                  controllers.admin.FrontsController.resultsRedirect
+GET         /admin/football/fronts/results/:competition                                                              controllers.admin.FrontsController.results(competition: String)
+POST        /admin/football/fronts/fixtures/redirect                                                                 controllers.admin.FrontsController.fixturesRedirect
+GET         /admin/football/fronts/fixtures/:competition                                                             controllers.admin.FrontsController.fixtures(competition: String)
+POST        /admin/football/fronts/tables/redirect                                                                   controllers.admin.FrontsController.tablesRedirect
+GET         /admin/football/fronts/tables/:competition                                                               controllers.admin.FrontsController.tables(competition: String)
 
 # Commercial
 GET         /commercial/travel/offers.json                                                                           controllers.commercial.TravelOffers.listOffers
 GET         /commercial/jobs                                                                                         controllers.commercial.JobAds.renderAds
 GET         /commercial/jobs.json                                                                                    controllers.commercial.JobAds.jobs
+GET         /commercial/masterclasses                                                                                controllers.commercial.MasterClasses.renderMasterclass
 GET         /commercial/masterclasses.json                                                                           controllers.commercial.MasterClasses.list
+GET         /commercial/masterclasses-high                                                                           controllers.commercial.MasterClasses.renderMasterclassHigh
+GET         /commercial/masterclasses-high.json                                                                      controllers.commercial.MasterClasses.listHigh
 GET         /commercial/soulmates/mixed                                                                              controllers.commercial.SoulmateAds.renderAds
 GET         /commercial/soulmates/mixed.json                                                                         controllers.commercial.SoulmateAds.mixed
 GET         /commercial/money/bestbuys.json                                                                          controllers.commercial.MoneyOffers.bestBuys(format="json")
 GET         /commercial/books/bestsellers                                                                            controllers.commercial.BookOffers.bestsellers(format="html")
 GET         /commercial/books/bestsellers.json                                                                       controllers.commercial.BookOffers.bestsellers(format="json")
+GET         /commercial/money/savings/:savingsType                                                                   controllers.commercial.MoneyOffers.savings(savingsType)
+GET         /commercial/money/current-accounts/:currentAccountType                                                   controllers.commercial.MoneyOffers.currentAccounts(currentAccountType)
+GET         /commercial/money/credit-cards/:creditCardType                                                           controllers.commercial.MoneyOffers.creditCards(creditCardType)
+GET         /commercial/money/loans/:loanType                                                                        controllers.commercial.MoneyOffers.loans(loanType)
 GET         /commercial/books/book/*pageId.json                                                                      controllers.commercial.BookOffers.singleBook(pageId, format="json")
 GET         /commercial/books/book/*pageId                                                                           controllers.commercial.BookOffers.singleBook(pageId, format="html")
 
 # Onward journeys
 GET         /onward/recently-published                                                                               controllers.LatestContentController.recentlyPublished()
-GET         /series/*path.json                                                                                         controllers.SeriesController.renderSeriesStories(path)
+GET         /series/*path.json                                                                                       controllers.SeriesController.renderSeriesStories(path)
+
+GET        /$path<.+/\d\d\d\d/\w\w\w/\d\d>                                                                           controllers.AllIndexController.on(path)
+GET        /$path<.+>/latest                                                                                         controllers.LatestIndexController.latest(path)
+GET        /$path<.+>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/newer                                                controllers.AllIndexController.newer(path, day, month, year)
+GET        /$path<.+>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/all                                                  controllers.AllIndexController.allOn(path, day, month, year)
+GET        /$path<.+>/all                                                                                            controllers.AllIndexController.all(path)
 
 # Facia
 GET         /                                                                                                        controllers.FaciaController.editionRedirect(path = "")
@@ -188,11 +219,12 @@ GET         /collection/*id/rss                                                 
 GET         /collection/*id.json                                                                                     controllers.FaciaController.renderCollectionJson(id)
 GET         /collection/*id                                                                                          controllers.FaciaController.renderCollection(id)
 
+GET         /container/*id.json                                                                                      controllers.FaciaController.renderContainerJson(id)
+
 # Editionalised pages
 GET         /$path<[^/]+(/[^/]+)?>/rss                                                                               controllers.FaciaController.renderFrontRss(path)
 GET         /$path<[^/]+(/[^/]+)?>.json                                                                              controllers.FaciaController.renderFrontJson(path)
 GET         /$path<[^/]+(/[^/]+)?>                                                                                   controllers.FaciaController.renderFront(path)
-
 
 # Applications
 GET         /sections                                                                                                controllers.SectionsController.renderSections()

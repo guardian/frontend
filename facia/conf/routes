@@ -19,6 +19,8 @@ GET        /collection/*id/rss                                         controlle
 GET        /collection/*id.json                                        controllers.FaciaController.renderCollectionJson(id)
 GET        /collection/*id                                             controllers.FaciaController.renderCollection(id)
 
+GET        /container/*id.json                                         controllers.FaciaController.renderContainerJson(id)
+
 # Tag combiners
 GET        /$leftSide<[^+]+>+*rightSide/rss                            controllers.IndexController.renderCombinerRss(leftSide, rightSide)
 GET        /$leftSide<[^+]+>+*rightSide                                controllers.IndexController.renderCombiner(leftSide, rightSide)

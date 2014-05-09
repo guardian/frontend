@@ -3,14 +3,13 @@ package services
 import common.Edition
 import model.{Trail, Content}
 import scala.concurrent.Future
-import conf.{ContentApiDoNotUseForNewQueries, SwitchingContentApi}
+import conf.ContentApi
 import feed.MostReadAgent
 
 trait Related extends ConciergeRepository {
   def related(edition: Edition, path: String): Future[Seq[Trail]] = {
 
-    //TODO sticking with old content api for performance reasons
-    val response = ContentApiDoNotUseForNewQueries.item(path, edition)
+    val response = ContentApi.item(path, edition)
       .showRelated(true)
       .response
 
@@ -23,7 +22,7 @@ trait Related extends ConciergeRepository {
 
   def getPopularInTag(edition: Edition, tag: String): Future[Seq[Trail]] = {
 
-    val response = SwitchingContentApi().search(edition)
+    val response = ContentApi.search(edition)
       .tag(tag)
       .pageSize(50)
       .dateId("date/last7days")

@@ -1,14 +1,14 @@
 @(trails: Seq[Trail], heading: String, visibleTrails: Int = 5, dataComponent: String = "")(implicit request: RequestHeader)
 
 @defining(trails.length){ numTrails =>
-    <div class="facia-container facia-container--layout-article monocolumn-wrapper monocolumn-wrapper--no-limit" @if(!dataComponent.isEmpty){data-component="@dataComponent"}>
+    <div class="facia-container facia-container--layout-article facia-container--default-heading monocolumn-wrapper monocolumn-wrapper--no-limit" @if(!dataComponent.isEmpty){data-component="@dataComponent"}>
         <div class="container container--row-pattern">
             <div class="container__border hide-on-mobile"></div>
             <h2 id="related-content-head" class="container__title">
                 <span class="container__title__label u-text-hyphenate">@Html(heading)</span>
             </h2>
             <div class="container__body">
-                <div class="related__container collection-wrapper"
+                <div class="related__container facia-slice-wrapper"
                     data-count="@{trails.length - visibleTrails -1}"
                     data-link-name="Related @heading"
                     role="complementary"

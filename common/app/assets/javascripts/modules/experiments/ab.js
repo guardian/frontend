@@ -2,40 +2,15 @@ define([
     'common/common',
     'common/utils/storage',
     'common/utils/mediator',
-    'common/modules/analytics/mvt-cookie',
-
-    //Current tests
-    'common/modules/experiments/tests/external-links-new-window',
-    'common/modules/experiments/tests/abcd',
-    'common/modules/experiments/tests/blended-containers-uk',
-    'common/modules/experiments/tests/blended-containers-us',
-    'common/modules/experiments/tests/blended-containers-au',
-    'common/modules/experiments/tests/football-liveblog-truncation',
-    'common/modules/experiments/tests/onward-above-discussion'
+    'common/modules/analytics/mvt-cookie'
 ], function (
     common,
     store,
     mediator,
-    mvtCookie,
-
-    ExternalLinksNewWindow,
-    Abcd,
-    BlendedContainersUk,
-    BlendedContainersUs,
-    BlendedContainersAu,
-    FootballLiveblogTruncation,
-    OnwardAboveDiscussion
+    mvtCookie
     ) {
 
-    var TESTS = [
-            new ExternalLinksNewWindow(),
-            new Abcd(),
-            new BlendedContainersUk(),
-            new BlendedContainersUs(),
-            new BlendedContainersAu(),
-            new FootballLiveblogTruncation(),
-            new OnwardAboveDiscussion()
-       ],
+    var TESTS = [],
        participationsKey = 'gu.ab.participations';
 
     function getParticipations() {

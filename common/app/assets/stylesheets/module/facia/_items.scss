@@ -155,7 +155,7 @@
         left: gs-span(15) + $gs-gutter;
     }
 }
-.collection {
+.facia-slice {
     font-size: 0;
     overflow: hidden;
     @include rem((
@@ -264,7 +264,7 @@
 }
 .l-row--items-4 {
     @include mq($to: tablet) {
-         .item__title--has-icon-mobile {
+        .item__title--has-icon-mobile {
             @include rem((
                 padding-left: 30px
             ));
@@ -297,8 +297,11 @@
 }
 .item__standfirst {
     display: none;
-    margin: 20px 0 0;
-    @include fs-headline(1, $size-only: true);
+    @include rem((
+        margin: $gs-baseline 0 0,
+        font-size: 14px,
+        line-height: 18px
+    ));
 
     p {
         margin-bottom: 0; // Some trail texts are wrapped in a paragraph
@@ -388,9 +391,9 @@
         top: ($gs-baseline/3)*2,
         left: $gs-gutter/2.5
     ));
-    background-color: rgba($c-neutral2, 0.7);
+    background-color: rgba($c-neutral2, .7);
     z-index: 2;
-    @include rounded-corners(50%);
+    @include border-radius(50%);
 
     i {
         position: absolute;
@@ -501,19 +504,19 @@ $show-more-icon: (
 );
 
 @-webkit-keyframes spin {
-    0%   { -webkit-transform: rotate(0deg); }
-    25%  { -webkit-transform: rotate(90deg); }
-    50%  { -webkit-transform: rotate(180deg); }
-    75%  { -webkit-transform: rotate(270deg); }
+    0% { -webkit-transform: rotate(0deg); }
+    25% { -webkit-transform: rotate(90deg); }
+    50% { -webkit-transform: rotate(180deg); }
+    75% { -webkit-transform: rotate(270deg); }
     100% { -webkit-transform: rotate(360deg); }
 }
 
 .collection__show-more {
     display: block;
-    border: none;
+    border: 0;
     width: map-get($show-more-icon, width);
     height: map-get($show-more-icon, height);
-    @include rounded-corners(50%);
+    @include border-radius(50%);
     position: relative;
     left: 50%;
     margin-top: $gs-baseline;
@@ -534,7 +537,7 @@ $show-more-icon: (
         margin-bottom: map-get($show-more-icon, space-between); // a bit of space between icons to avoid
     }
     &[disabled] {
-        -webkit-animation: spin 3s cubic-bezier(0.680, -0.550, 0.265, 1.550) forwards infinite;
+        -webkit-animation: spin 3s cubic-bezier(.680, -.550, .265, 1.550) forwards infinite;
     }
 }
 .collection__show-more__icon {
@@ -544,27 +547,4 @@ $show-more-icon: (
 }
 .container--rolled-up .container--rolled-up-hide {
     display: none;
-}
-
-
-// Thumbnail element order:
-// 1. Title
-// 2. Image + standfirst
-// 3. Meta
-
-.item--thumbnail {
-    .item__standfirst {
-        display: block;
-        @include rem((
-            margin-top: 2px
-        ));
-    }
-    .item__media-wrapper {
-        float: left;
-        clear: both;
-
-        @include rem((
-            margin-right: $gs-gutter/2
-        ));
-    }
 }

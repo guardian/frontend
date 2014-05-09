@@ -9,22 +9,18 @@
         </span>
     </h2>
     <div class="article-wrapper monocolumn-wrapper tone-@VisualTone(article)">
-        <article id="article" class="article @if(article.isLive){is-live}"
+        <article id="article" class="article @if(article.isLive){is-live} @if(article.isAdvertisementFeature){article--advertisement-feature}"
                  itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType" role="main">
-
-            @if(article.isSponsored) {
-                @fragments.commercial.standardAd(name="badge", adType="paid-for-badge", sizeMapping=Map("mobile" -> Seq("300,80")))
-            }
 
             <div class="article__inner article__inner--head">
                 <header class="article__head">
 
-                    @fragments.meta.seriesInline(article)
+                    @fragments.meta.metaInline(article)
                     @if(article.isAdvertisementFeature){
                         <div class="article-hat-label">Advertisement feature</div>
                     }
 
-                    @fragments.headline(article.headline)
+                    @fragments.headline(article.headline, List("js-score"))
 
                     @fragments.standfirst(article)
 
@@ -69,6 +65,7 @@
                     @fragments.contentMeta(article)
 
                     <div class="js-article__container article__container u-cf" data-component="body">
+
                         <div class="article-body u-cf from-content-api js-article__body"
                         itemprop="@if(article.isReview){reviewBody} else {articleBody}">
                             @BodyCleaner(article, article.body)
@@ -82,6 +79,8 @@
                     <div class="social-wrapper" data-component="share">
                         @fragments.social(article)
                     </div>
+                    
+                    <div class="after-article js-after-article"></div>
                 </div>
                 <div class="article__secondary-column" aria-hidden="true">
                     <div class="article__secondary-column__inner@if(storyPackage.nonEmpty) { article__secondary-column__inner--fill-vertically}">
@@ -89,13 +88,7 @@
                             <div class="u-table__row">
                                 <div class="u-table__cell u-table__cell--top">
                                     <div class="mpu-context js-right-hand-component">
-                                        <div class="mpu-container js-mpu-ad-slot">
-                                            <div class="social-wrapper social-wrapper--aside" data-component="share">
-                                                <h2 class="article__meta-heading">Share this article</h2>
-                                                @fragments.social(article, "next to content")
-                                            </div>
-                                            @fragments.commercial.standardAd(name="right", adType="mpu-banner-ad", sizeMapping=Map("tabletlandscape" -> Seq("300,250")))
-                                        </div>
+                                        <div class="mpu-container js-mpu-ad-slot"></div>
                                         <div class="js-components"></div>
                                     </div>
                                 </div>
@@ -106,6 +99,10 @@
             </div>
         </article>
 
+        <div class="facia-container facia-container--layout-article monocolumn-wrapper monocolumn-wrapper--no-limit facia-container--commercial">
+            @fragments.commercial.commercialComponent(name="merchandising-high", adType="commercial-component-high", sizeMapping=Map("desktop" -> Seq("888,87")))
+        </div>
+
         @if(DiscussionSwitch.isSwitchedOn && article.isCommentable) {
             <div class="article__inner js-comments" data-component="discussion">
                 @fragments.discussion(article.isClosedForComments, article.shortUrlId)
@@ -114,9 +111,10 @@
     </div>
 
 
-    @fragments.seriesPlaceholder(VisualTone(article))
 
     @fragments.storyPackagePlaceholder(storyPackage)
+
+    @fragments.onwardPlaceholder(VisualTone(article))
 
     @fragments.mostPopularPlaceholder(article.section, VisualTone(article))
 

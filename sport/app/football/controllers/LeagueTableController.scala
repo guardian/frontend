@@ -70,7 +70,8 @@ object LeagueTableController extends Controller with Logging with CompetitionTab
 
   def renderCompetitionJson(competition: String) = renderCompetition(competition)
   def renderCompetition(competition: String) = Action { implicit request =>
-    loadTables.find(_.competition.url.endsWith(s"/$competition")).map { table =>
+    val table = loadTables.find(_.competition.url.endsWith(s"/$competition")).orElse(loadTables.find(_.competition.id == competition))
+    table.map { table =>
 
       val page = new Page(
         "football/tables",
@@ -81,7 +82,7 @@ object LeagueTableController extends Controller with Logging with CompetitionTab
 
       val smallTableGroup = table.copy(groups = table.groups.map { group => group.copy(entries = group.entries.take(10)) }).groups(0)
       val htmlResponse = () => football.views.html.tablesList.tablesPage(TablesPage(page, Seq(table), table.competition.url, filters, Some(table.competition)))
-      val jsonResponse = () => football.views.html.tablesList.tableView(table.competition, smallTableGroup, showMeta = true, isSmall = true, multiGroup = table.multiGroup)
+      val jsonResponse = () => football.views.html.tablesList.tablesComponent(table.competition, smallTableGroup, multiGroup = table.multiGroup)
 
       renderFormat(htmlResponse, jsonResponse, page)
 
@@ -92,5 +93,33 @@ object LeagueTableController extends Controller with Logging with CompetitionTab
         Redirect("/football/tables")
       }
     )
+  }
+
+  def renderCompetitionGroupJson(competition: String, groupReference: String) = renderCompetitionGroup(competition, groupReference)
+  def renderCompetitionGroup(competition: String, groupReference: String) = Action { implicit request =>
+    val response = for {
+      table <- loadTables.find(_.competition.url.endsWith(s"/$competition")).orElse(loadTables.find(_.competition.id == competition))
+      group <- table.groups.find { group =>
+        group.round.name.exists(name => name.toLowerCase == groupReference.toLowerCase.replace("-", " "))
+      }
+    } yield {
+      val page = new Page(
+        "football/tables",
+        "football",
+        s"${table.competition.fullName} table",
+        "GFE:Football:automatic:competition tables"
+      )
+      val groupTable = Table(table.competition, Seq(group), hasGroups = true)
+      val htmlResponse = () => football.views.html.tablesList.tablesPage(TablesPage(page, Seq(groupTable), table.competition.url, filters, Some(table.competition)))
+      val jsonResponse = () => football.views.html.tablesList.tablesComponent(table.competition, group, multiGroup = false)
+      renderFormat(htmlResponse, jsonResponse, page)
+    }
+    response.getOrElse {
+      if(request.isJson) {
+        JsonNotFound()
+      } else {
+        Redirect("/football/tables")
+      }
+    }
   }
 }

@@ -1,5 +1,5 @@
 var config = {
-    selector: '.container .ad-slot'
+    selector: '.container .ad-slot--container-inline'
 };
 
 /**

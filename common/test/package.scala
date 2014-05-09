@@ -1,6 +1,6 @@
 package test
 
-import conf.{ContentApiDoNotUseForNewQueries, ElasticSearchContentApi, Configuration}
+import conf.{ContentApi, Configuration}
 import java.net.URLEncoder
 import play.api.test._
 import play.api.test.Helpers._
@@ -11,7 +11,7 @@ import com.gu.openplatform.contentapi.connection.Http
 import recorder.ContentApiHttpRecorder
 import com.gu.management.play.InternalManagementPlugin
 import play.api.GlobalSettings
-import concurrent.Future
+import scala.concurrent.Future
 import org.apache.commons.codec.digest.DigestUtils
 import com.gargoylesoftware.htmlunit.BrowserVersion
 
@@ -44,12 +44,6 @@ trait TestSettings {
     val originalHttp = http
 
     verify(
-      Configuration.contentApi.host,
-      "b9648d72721756bad977220f11d5c239e17cb5ca34bb346de506f9b145ac39d1",
-      "YOU ARE NOT USING THE CORRECT CONTENT API HOST"
-    )
-
-    verify(
       Configuration.contentApi.elasticSearchHost,
       "37f3bee67d016a9fec7959aa5bc5e53fa7fdc688f987c0dea6fa0f6af6979079",
       "YOU ARE NOT USING THE CORRECT ELASTIC SEARCH CONTENT API HOST"
@@ -68,8 +62,7 @@ trait TestSettings {
     }
   }
 
-  ContentApiDoNotUseForNewQueries.http = toRecorderHttp(ContentApiDoNotUseForNewQueries.http)
-  ElasticSearchContentApi.http = toRecorderHttp(ElasticSearchContentApi.http)
+  ContentApi.http = toRecorderHttp(ContentApi.http)
 }
 
 /**

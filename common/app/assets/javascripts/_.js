@@ -2,9 +2,9 @@ define(['lodash/arrays/compact', 'lodash/arrays/flatten', 'lodash/arrays/zip', '
         'lodash/collections/forEach', 'lodash/collections/map', 'lodash/collections/pluck', 'lodash/collections/sortBy',
         'lodash/objects/mapValues', 'lodash/collections/max', 'lodash/objects/pairs', 'lodash/objects/values',
         'lodash/objects/forOwn', 'lodash/objects/isArray', 'lodash/utilities/mixin', 'lodash/internals/lodashWrapper',
-        'lodash/objects/functions', 'lodash/collections/filter'],
+        'lodash/objects/functions', 'lodash/collections/filter', 'lodash/arrays/first'],
 function(compact, flatten, zip, wrapperValueOf, forEach, map, pluck, sortBy, mapValues, max, pairs, values,
-         forOwn, isArray, mixin, LodashWrapper, functions, filter) {
+         forOwn, isArray, mixin, LodashWrapper, functions, filter, first) {
 
     var arrayRef = [];
     var objectProto = Object.prototype;
@@ -47,6 +47,9 @@ function(compact, flatten, zip, wrapperValueOf, forEach, map, pluck, sortBy, map
     Lodash.sortBy = sortBy;
     Lodash.values = values;
     Lodash.zip = zip;
+
+    Lodash.first = first;
+    Lodash.take = first;
 
     // add functions to `Lodash.prototype`
     mixin(Lodash);

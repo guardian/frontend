@@ -1,10 +1,11 @@
 @(page: MetaData)(implicit request: RequestHeader)
 @import conf.Switches._
+@import org.joda.time.DateTime
 
-<footer class="footer u-cf" data-link-name="footer" data-component="footer">
-    <div class="footer__primary">
+<footer class="l-footer u-cf" data-link-name="footer" data-component="footer">
+    <div class="l-footer__primary">
         <div id="footer-nav">
-            <div class="footer__banner u-cf">
+            <div class="l-footer__banner u-cf">
                 <div class="gs-container">
                     <a href="@LinkTo{/}" data-link-name="site logo" class="guardian-logo-footer hide-on-mobile">
                         <span class="u-h">The Guardian</span>
@@ -14,29 +15,27 @@
                     <a class="top top--footer" data-link-name="back to top" href="#top">Back to top<i class="i i-arrow-small-up"></i></a>
                 </div>
             </div>
-            <div class="gs-container footer__navigation-wrapper u-cf">
+            <div class="gs-container l-footer__navigation-wrapper u-cf">
                 @fragments.sections(page, true)
             </div>
         </div>
     </div>
 
-    <div class="footer__secondary gs-container" role="contentinfo">
-        <div class="box-indent">
-            <ul class="colophon u-cf">
-                <li class="colophon__item"><a data-link-name="about" href="http://next.theguardian.com/blog/welcome-to-our-beta-site/">About this site</a></li>
-                <li class="colophon__item"><a data-link-name="help" href="@LinkTo("/help/2012/nov/26/guardian-mobile-site")">Help</a></li>
-                <li class="colophon__item"><a data-link-name="contact" href="@LinkTo("/help/contact-us")">Contact us</a></li>
-                <li class="colophon__item"><a data-link-name="feedback" target="_blank" href="https://www.surveymonkey.com/s/theguardian-beta-feedback">Feedback</a></li>
-                <li class="colophon__item"><a data-link-name="terms" href="@LinkTo("/help/terms-of-service")">Terms &amp; conditions</a></li>
-                <li class="colophon__item"><a data-link-name="privacy" href="@LinkTo("/help/privacy-policy")">Privacy policy</a></li>
-                <li class="colophon__item"><a data-link-name="cookie" href="@LinkTo("/info/cookies")">Cookie policy</a></li>
-                @if(ClassicLink.hasClassicVersion()) {
-                    <li class="colophon__item hide-on-mobile">@fragments.mainSiteLink(page, label = "Current version")</li>
-                }
-            </ul>
-            <div class="footer__misc">
-                <div class="really-serious-copyright">© Guardian News and Media Limited or its affiliated companies. All rights reserved.</div>
-            </div>
+    <div class="l-footer__secondary gs-container" role="contentinfo">
+        <ul class="colophon u-cf">
+            <li class="colophon__item"><a data-link-name="about" href="http://next.theguardian.com/blog/welcome-to-our-beta-site/">About this site</a></li>
+            <li class="colophon__item"><a data-link-name="help" href="@LinkTo("/help/2012/nov/26/guardian-mobile-site")">Help</a></li>
+            <li class="colophon__item"><a data-link-name="contact" href="@LinkTo("/help/contact-us")">Contact us</a></li>
+            <li class="colophon__item"><a data-link-name="feedback" target="_blank" href="https://www.surveymonkey.com/s/theguardian-beta-feedback">Feedback</a></li>
+            <li class="colophon__item"><a data-link-name="terms" href="@LinkTo("/help/terms-of-service")">Terms &amp; conditions</a></li>
+            <li class="colophon__item"><a data-link-name="privacy" href="@LinkTo("/help/privacy-policy")">Privacy policy</a></li>
+            <li class="colophon__item"><a data-link-name="cookie" href="@LinkTo("/info/cookies")">Cookie policy</a></li>
+            @if(ClassicLink.hasClassicVersion()) {
+                <li class="colophon__item hide-on-mobile">@fragments.mainSiteLink(page, label = "Current version")</li>
+            }
+        </ul>
+        <div class="l-footer__misc">
+            <div class="really-serious-copyright">© @{new DateTime().year.getAsText} Guardian News and Media Limited or its affiliated companies. All rights reserved.</div>
         </div>
     </div>
 </footer>

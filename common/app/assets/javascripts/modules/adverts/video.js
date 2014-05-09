@@ -4,21 +4,17 @@ define([
     'common/utils/to-array',
     'bean',
     'common/utils/ajax',
-    'common/utils/detect',
-    'common/utils/cookies',
-    'common/modules/adverts/userAdTargeting',
-    'common/modules/adverts/query-string'
+    'common/modules/adverts/query-string',
+    'common/modules/adverts/dfp'
 ], function(
     $,
     mediator,
     toArray,
     bean,
     ajax,
-    detect,
-    cookies,
-    userAdTargeting,
-    queryString
-) {
+    queryString,
+    DFP
+    ) {
 
     function Video(config) {
         this.config = config.config;
@@ -206,26 +202,22 @@ define([
 
     Video.prototype.init = function(config) {
 
-        var url;
-
         this.xmlSelectors = {
             'adUrl': 'VASTAdTagURI',
             'impressionUrl': 'Impression',
             'clickTrackUrl': 'ClickTracking'
         };
 
-        var section = this.config.page.section + (this.config.page.isFront ? '/front' : ''),
-            adUnit = '/' + config.dfpAccountId + '/' + config.dfpAdUnitRoot + '/' + section;
+        var dfpAds = new DFP(config);
 
-        var rawCustParams = queryString.generateQueryString(config, userAdTargeting.getUserSegments());
-        rawCustParams += '&at=' + (cookies.get('adtest') || '');
-        rawCustParams += '&bp=' + detect.getBreakpoint();
-        rawCustParams += '&p=ng';
-        var custParams = encodeURIComponent(rawCustParams);
+        var adUnit = dfpAds.buildAdUnit.bind(this)();
+
+        var custParams = queryString.generateQueryString(dfpAds.buildPageTargetting.bind(this)());
+        var encodedCustParams = encodeURIComponent(custParams);
 
         var timestamp = new Date().getTime();
 
-        url = 'http://' + config.dfpHost + '/gampad/ads?correlator=' + timestamp + '&gdfp_req=1&env=vp&impl=s&output=xml_vast2&unviewed_position_start=1&iu=' + adUnit + '&sz=400x300&scp=slot%3Dvideo&cust_params=' + custParams;
+        var url = 'http://' + config.dfpHost + '/gampad/ads?correlator=' + timestamp + '&gdfp_req=1&env=vp&impl=s&output=xml_vast2&unviewed_position_start=1&iu=' + adUnit + '&sz=400x300&scp=slot%3Dvideo&cust_params=' + encodedCustParams;
 
         this.getVastData(url);
 

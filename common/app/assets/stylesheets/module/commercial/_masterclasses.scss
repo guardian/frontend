@@ -2,16 +2,17 @@
    Masterclass component
    ========================================================================== */
 
-.footer {
+.l-footer {
     margin-top: 0 !important;
 }
 
 .commercial--masterclasses {
     .commercial__head {
-        @include box-sizing(border-box);
         border-top: 0;
         background-color: transparent;
         height: auto;
+        margin-bottom: 0;
+        padding-bottom: 0;
         @include rem((
             padding-left: $gs-gutter/2 - 1
         ));
@@ -70,7 +71,7 @@
         }
         .commercial--masterclasses__class__description__link {
             @include fs-bodyHeading(1);
-             color: $c-newsDefault;
+            color: $c-newsDefault;
         }
         .commercial--masterclasses__class__link__sub {
             color: $c-neutral2;
@@ -100,6 +101,13 @@
             margin-left: 0;
         }
     }
+    @include mq(wide) {
+        .commercial__title__last-word {
+            @include rem((
+                margin-left: -5px
+            ));
+        }
+    }
     .lineitem__image {
         margin-right: $gs-gutter/5;
         outline: 1px solid $c-neutral7;
@@ -115,44 +123,50 @@
 }
 
 /* fronts */
-.facia-container--layout-front .commercial {
-    @include mq(faciaLeftCol) {
-        .commercial__head {
-            @include rem((
-                width: gs-span(2) + $gs-gutter
-            ));
-        }        
-    }
+.facia-container--layout-front .commercial--masterclasses {
     @include mq(desktop) {
         .commercial--masterclasses__class {
             @include rem((
                 padding-left: $gs-gutter/2
             ));
-            @include rem((
-                width: 25%
-            ));
+            width: 25%;
         
             &:nth-child(n+4) {
                 display: block;
             }
         }
     }
+    @include mq(leftCol) {
+        .commercial__title__last-word {
+            @include rem((
+                margin-left: -5px
+            ));
+        }
+    }
+    @include mq(faciaLeftCol) {
+        .commercial__head {
+            @include rem((
+                width: gs-span(2) + $gs-gutter
+            ));
+        }
+    }
+    @include mq(faciaLeftCol, $to: wide) {
+        .commercial__title__last-word {
+            margin-left: 0;
+        }
+    }
 }
 /* article */
-.facia-container--commercial {
-    &.facia-container--layout-article {
-        @include mq(rightCol) {
-            .commercial--masterclasses__class {
-                @include rem((
-                    padding-left: $gs-gutter/2
-                ));
-                @include rem((
-                    width: 25%
-                ));
-        
-                &:nth-child(n+4) {
-                    display: block;
-                }
+.facia-container--layout-article .commercial--masterclasses {
+    @include mq(rightCol) {
+        .commercial--masterclasses__class {
+            @include rem((
+                padding-left: $gs-gutter/2
+            ));
+            width: 25%;
+
+            &:nth-child(n+4) {
+                display: block;
             }
         }
     }

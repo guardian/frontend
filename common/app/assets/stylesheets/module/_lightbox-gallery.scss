@@ -19,7 +19,7 @@ i.gallery__watermark {
 .gallery--hide-furniture {
     .gallery__nav .gallery__arrow-cta,
     .gallery__watermark,
-    .gallerycaption  {
+    .gallerycaption {
         display: none;
     }
 }
@@ -118,7 +118,7 @@ i.gallery__watermark {
         text-align: center;
     }
 
-    @include mq($and: '(orientation: portrait)') {
+    @include mq($and: "(orientation: portrait)") {
         .gallery__item--landscape .gallery__img {
             width: 100% !important;
             height: auto !important;
@@ -133,7 +133,6 @@ i.gallery__watermark {
         margin: 0 auto;
     }
 }
-
 
 
 /* ==========================================================================
@@ -165,7 +164,7 @@ i.gallery__watermark {
     &,
     &:active,
     &:focus {
-        background: rgba(0,0,0,0); // Makes transparent element clickable in IE9
+        background: rgba(0, 0, 0, 0); // Makes transparent element clickable in IE9
         outline: none;
     }
 
@@ -204,12 +203,11 @@ i.gallery__watermark {
     display: block;
     width: 22px;
     height: 36px;
-    background: rgb(34, 34, 34);
-    background: rgba(34, 34, 34, 0.90);
+    @include transparent-background(rgb(34, 34, 34), .9);
 
     i {
         margin: 2px -5px;
-        @include transform(scale(0.5));
+        @include transform(scale(.5));
     }
 }
 
@@ -228,7 +226,6 @@ i.gallery__watermark {
 .gallery__arrow-cta--right {
     @include rotate(0deg);
 }
-
 
 
 /* ==========================================================================
@@ -254,8 +251,7 @@ i.gallery__watermark {
 }
 
 .gallerycaption__inner {
-    background: rgb(34, 34, 34);
-    background: rgba(34, 34, 34, 0.90);
+    @include transparent-background(rgb(34, 34, 34), .9);
     padding: ($gs-baseline/3)*4 $gutter;
 }
 
@@ -264,7 +260,7 @@ i.gallery__watermark {
     padding-bottom: ($gs-baseline/3)*4;
     border-bottom: 1px solid $c-neutral2;
     max-width: 620px;
-    margin: 0 auto $gs-baseline/3 auto;
+    margin: 0 auto $gs-baseline/3;
 }
 
 .gallerycaption__credit {
@@ -274,7 +270,6 @@ i.gallery__watermark {
     max-width: 620px;
     margin: 0 auto;
 }
-
 
 
 /* ==========================================================================
@@ -351,11 +346,10 @@ i.gallery__watermark {
 }
 
 
-
-
 /* ==========================================================================
    Slideshow styles
    ========================================================================== */
+
 .gallery--slideshow {
     margin-bottom: 0;
 

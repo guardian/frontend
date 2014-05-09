@@ -11,8 +11,9 @@ import pa.FootballMatch
 import implicits.{ Requests, Football }
 
 import scala.concurrent.Future
-import conf.{SwitchingContentApi, ContentApiDoNotUseForNewQueries}
+import conf.ContentApi
 import org.joda.time.{DateMidnight, Interval}
+import play.api.templates.Html
 
 case class Report(trail: Trail, name: String)
 
@@ -40,20 +41,28 @@ object MoreOnMatchController extends Controller with Football with Requests with
       val related: Future[Seq[Content]] = loadMoreOn(request, theMatch)
       // We are only interested in content with exactly 2 team tags
 
-    related map { _ filter hasExactlyTwoTeams } map {
+      val group = theMatch.round.name.flatMap {
+        case roundName if roundName.toLowerCase.startsWith("group") => Some(roundName.toLowerCase.replace(' ', '-'))
+        case _ => None
+      }.getOrElse("")
+
+      related map { _ filter hasExactlyTwoTeams } map {
         case Nil => Cached(300){JsonNotFound()}
         case filtered => Cached(if(theMatch.isLive) 10 else 300) {
           JsonComponent(
             "nav" -> football.views.html.fragments.matchNav(populateNavModel(theMatch, filtered)),
             "matchSummary" -> football.views.html.fragments.matchSummary(theMatch),
             "scoreSummary" -> football.views.html.fragments.scoreSummary(theMatch),
-            "hasStarted" -> theMatch.hasStarted
+            "hasStarted" -> theMatch.hasStarted,
+            "group" -> group,
+            "matchDate" ->  DateTimeFormat.forPattern("yyyy/MMM/dd").print(theMatch.date).toLowerCase(),
+            "dropdown" -> views.html.fragments.dropdown("")(Html(""))
           )
         }
       }
     }
 
-    maybeResponse.getOrElse(Future.successful(Cached(300){ JsonNotFound() }))
+    maybeResponse.getOrElse(Future.successful(Cached(30){ JsonNotFound() }))
   }
 
   def moreOnJson(matchId: String) = moreOn(matchId)
@@ -73,14 +82,13 @@ object MoreOnMatchController extends Controller with Football with Requests with
     }
 
     val response: Future[SimpleResult] = maybeResponse.getOrElse(Future { JsonNotFound() })
-    response map { Cached(300) }
+    response map { Cached(60) }
   }
 
   def loadMoreOn(request: RequestHeader, theMatch: FootballMatch): Future[Seq[Content]] = {
     val matchDate = theMatch.date.toDateMidnight
 
-    // TODO search by reference does not work in new content api
-    ContentApiDoNotUseForNewQueries.search(Edition(request))
+    ContentApi.search(Edition(request))
       .section("football")
       .tag("tone/matchreports|football/series/squad-sheets|football/series/match-previews|football/series/saturday-clockwatch")
       .fromDate(matchDate.minusDays(2))

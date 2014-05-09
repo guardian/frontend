@@ -35,8 +35,8 @@
     > ol,
     > blockquote > ul,
     > ul {
-       margin-top: 0.8em;
-       list-style: none;
+        margin-top: .8em;
+        list-style: none;
     }
     > ol {
         counter-reset: li;
@@ -112,16 +112,6 @@
         @include rem((
             margin-left: $gs-gutter * 1.5
         ));
-
-
-        > ul:first-child {
-            // Fix list and quote icon overlap - #2026
-            margin-left: map-get($quoted-offset, default);
-
-            @include mq(tablet) {
-                margin-left: map-get($quoted-offset, tablet);
-            }
-        }
     }
 }
 
@@ -138,21 +128,20 @@
 /* Bullet points
    ========================================================================== */
 
+.bullet {
+    font-size: .1px; // hides bullet character. .1 more consistent than 0 cross browser
+    line-height: .1px; // fix for line spacing issue (bullet was increasing spacing)
+    color: transparent;
+    @include faux-bullet-point;
+}
 
-.bullet,
 .from-content-api ul > li,
 .article__standfirst ul > li {
-    @include faux-bullet-point($offset-y: 3px);
+    @include faux-bullet-point($right-space: 4px);
 
     > p:first-child { // this stops line breaking for the following bullet point format: <ul><li><p>text</p></li></ul>
         display: inline;
     }
-
-}
-
-.bullet {
-    font-size: 0.1px;
-    color: transparent;
 }
 
 
@@ -198,13 +187,6 @@ figure {
             margin-top: ($gs-baseline/3)*4,
             margin-bottom: ($gs-baseline/3)*5
         ));
-
-        @include mq(leftCol) {
-            @include rem((
-                margin-top: ($gs-baseline/3)*5,
-                margin-bottom: $gs-baseline*2
-            ));
-        }
     }
     &.img--landscape,
     &.img--portrait {
@@ -220,6 +202,11 @@ figure {
                 ));
             }
         }
+    }
+    &.img--inline {
+        @include rem((
+            margin: 5px $gs-gutter 6px 0
+        ));
     }
 }
 
@@ -306,7 +293,7 @@ p + video {
     .element {
         iframe {
             width: 100%;
-            border: none;
+            border: 0;
         }
     }
 }

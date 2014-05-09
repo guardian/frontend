@@ -1,6 +1,7 @@
 define([
     // Common libraries
     'common/$',
+    'common/utils/ajax',
     'common/utils/mediator',
     'bonzo',
     'qwery',
@@ -9,10 +10,12 @@ define([
     'common/utils/storage',
     'common/utils/to-array',
     'common/modules/ui/collection-show-more',
+    'modules/ui/snaps',
     'modules/ui/container-show-more',
     'modules/ui/container-toggle'
 ], function (
     $,
+    ajax,
     mediator,
     bonzo,
     qwery,
@@ -20,11 +23,15 @@ define([
     storage,
     toArray,
     CollectionShowMore,
+    snaps,
     ContainerShowMore,
     ContainerToggle
 ) {
-
     var modules = {
+
+        showSnaps: function() {
+            snaps.init();
+        },
 
         showCollectionShowMore: function () {
             var collectionShowMoreAdd = function(config, context) {
@@ -66,6 +73,7 @@ define([
     var ready = function (config, context) {
         if (!this.initialised) {
             this.initialised = true;
+            modules.showSnaps();
             modules.showCollectionShowMore();
             modules.showContainerToggle();
         }

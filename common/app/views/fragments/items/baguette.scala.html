@@ -2,15 +2,20 @@
 
 <div
     class="@GetClasses.forItem(trail, true) baguette"
-    data-link-name="trail | @{index + 1}">
+    data-link-name="trail | @{index + 1}"
+    @SnapData(trail)
+>
 
     <div class="item__container">
-        <a href="@LinkTo{@trail.url}" class="item__link" data-link-name="article">
-            @fragments.items.elements.title(trail, index, 0)
+        <a @LinkTo(trail).map{url=>href=@url} class="item__link" data-link-name="article">
             @fragments.items.elements.image(trail, inlineImage = true, maxWidth = 940)
+            @fragments.items.elements.title(trail, index, 0)
         </a>
+        @trail.trailText.map { text =>
+            <div class="baguette__standfirst">@Html(text)</div>
+        }
     </div>
 
-    @fragments.items.elements.supporting(trail.supporting, hasBackground = true)
+    @fragments.items.elements.supporting(trail.supporting, style = "fullwidth")
 
 </div>

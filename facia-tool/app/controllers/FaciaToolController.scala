@@ -8,13 +8,13 @@ import play.api.libs.json._
 import common.{FaciaToolMetrics, ExecutionContexts, Logging}
 import conf.{Switches, Configuration}
 import tools.FaciaApi
-import services.{ConfigAgent, ContentApiWrite}
+import services.{ContentApiRefresh, ConfigAgent, ContentApiWrite, S3FrontsApi}
 import play.api.libs.ws.Response
 import scala.concurrent.Future
 import conf.Switches.ContentApiPutSwitch
-import services.S3FrontsApi
 import model.{NoCache, Cached}
-
+import scala.util.{Failure, Success}
+import play.api.libs.Comet
 
 object FaciaToolController extends Controller with Logging with ExecutionContexts {
   implicit val collectionRead = Json.reads[Collection]
@@ -55,9 +55,16 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
 
   def updateConfig(): Action[AnyContent] = AjaxExpiringAuthentication { request =>
     FaciaToolMetrics.ApiUsageCount.increment()
+    val configJson: Option[JsValue] = request.body.asJson
     NoCache {
-      request.body.asJson flatMap(_.asOpt[Config]) map {
+      configJson flatMap(_.asOpt[Config]) map {
         case update: Config => {
+
+          //Only update if it is a valid Config object
+          configJson.foreach { json =>
+            ConfigAgent.refreshWith(json)
+          }
+
           val identity = Identity(request).get
           UpdateActions.putMasterConfig(update, identity)
           Ok
@@ -74,6 +81,17 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
         Ok(json).as("application/json")
       } getOrElse NotFound
     }
+  }
+
+  def publishAll() = ExpiringAuthentication { request =>
+    Ok(views.html.publish_all(Configuration.environment.stage, Identity(request)))
+  }
+
+  def publishAllStream() = ExpiringAuthentication { request =>
+    Ok.chunked((ContentApiRefresh.refresh() map {
+      case (collectionId, Success(_)) => s"Successfully published $collectionId"
+      case (collectionId, Failure(error)) => s"Failed to publish $collectionId: ${error.getMessage}"
+    }) through Comet(callback = "parent.cometMessage"))
   }
 
   def publishCollection(id: String) = AjaxExpiringAuthentication { request =>
@@ -126,6 +144,7 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
           }.flatten.toMap
 
           pressCollectionIds(updatedCollections.keySet)
+          updatedCollections.keys.foreach(notifyContentApi)
 
           if (updatedCollections.nonEmpty)
             Ok(Json.toJson(updatedCollections)).as("application/json")

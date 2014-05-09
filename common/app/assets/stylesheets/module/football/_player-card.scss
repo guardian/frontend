@@ -1,5 +1,5 @@
 $player-card-avatar: (
-    default: 44px,
+    default: 80px,
     mobileLandscape: 100px
 );
 
@@ -23,7 +23,7 @@ $player-card-avatar: (
     float: right;
 }
 .player-card__image {
-    @include rounded-corners(50%);
+    @include border-radius(50%);
     @include rem((
         height: map-get($player-card-avatar, default),
         width: map-get($player-card-avatar, default)
@@ -40,13 +40,14 @@ $player-card-avatar: (
 
 .player-card__player {
     @include rem((
-        margin-bottom: $gs-baseline*2,
+        margin-bottom: $gs-baseline,
         min-height: map-get($player-card-avatar, default),
         padding-right: map-get($player-card-avatar, default)
     ));
 
     @include mq(mobileLandscape) {
         @include rem((
+            margin-bottom: $gs-baseline*2,
             min-height: map-get($player-card-avatar, mobileLandscape),
             padding-right: map-get($player-card-avatar, mobileLandscape)
         ));

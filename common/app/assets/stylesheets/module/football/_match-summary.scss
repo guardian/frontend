@@ -88,27 +88,36 @@ $football-crest-large: 60px;
 
 .team__crest {
     @include rem((
-        margin-bottom: $gs-baseline
+        height: $football-crest-small
     ));
-    display: table;
-    height: $football-crest-small;
     float: left;
     overflow: hidden;
 
     @include mq($from: tablet) {
-        height: $football-crest-large;
+        @include rem((
+            height: $football-crest-large
+        ));
+        display: table;
         float: none;
         width: 100%;
     }
 }
 
 .team__crest__img {
-    max-height: $football-crest-small;
-    max-width: $football-crest-small;
+    @include rem((
+        height: $football-crest-small,
+        width: $football-crest-small
+    ));
+    @include background-size(auto $football-crest-small);
+    display: inline-block;
+    background-repeat: no-repeat;
 
     @include mq($from: tablet) {
-        max-height: $football-crest-large;
-        max-width: $football-crest-large;
+        @include rem((
+            height: $football-crest-large,
+            width: $football-crest-large
+        ));
+        @include background-size(auto $football-crest-large);
     }
 }
 
@@ -173,7 +182,7 @@ $football-crest-large: 60px;
 
 .status__time {
     @include fs-data(2);
-    @include rounded-corners(24px);
+    @include border-radius(24px);
     @include rem((
         height: $football-crest-small,
         line-height: $football-crest-small,
@@ -201,7 +210,7 @@ $football-crest-large: 60px;
 }
 
 .team__battle-line {
-    @include fs-headline(8);
+    @include fs-headline(7);
     display: none;
     height: 50px;
     position: absolute;
@@ -247,7 +256,7 @@ $football-crest-large: 60px;
         ));
 
         &:after {
-            content: 'v';
+            content: "v";
         }
     }
 }

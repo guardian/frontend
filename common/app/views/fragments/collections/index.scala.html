@@ -1,0 +1,11 @@
+@(items: Seq[Trail], style: Container, containerIndex: Int)(implicit request: RequestHeader)
+
+@items.grouped(4).map{ items =>
+    <div class="facia-slice-wrapper">
+        <ul class="u-unstyled l-row l-row--layout-m l-row--items-4 facia-slice">
+            @items.zipWithIndex.map{ case (trail, index) =>
+                @fragments.collections.items.standard(trail, index + 2, containerIndex)
+            }
+        </ul>
+    </div>
+}
