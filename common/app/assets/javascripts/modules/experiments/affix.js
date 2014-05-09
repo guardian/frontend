@@ -44,11 +44,12 @@ define([
     };
 
     Affix.prototype.checkPosition = function () {
-        var topCheck     = this.$window.scrollTop() >= this.$markerTop.offset().top,
-            bottomCheck  = this.$window.scrollTop() + this.$element.dim().height < this.$markerBottom.offset().top;
+        var topCheck      = this.$window.scrollTop() >= this.$markerTop.offset().top,
+            bottomCheck   = this.$window.scrollTop() + this.$element.dim().height < this.$markerBottom.offset().top,
+            viewportCheck = this.$element.dim().height < bonzo.viewport().height;
 
         // This is true when the element is positioned below the top threshold and above the bottom threshold.
-        var affix = bottomCheck && topCheck;
+        var affix = bottomCheck && topCheck && viewportCheck;
 
         if (this.affixed !== affix) {
             this.affixed = affix;
