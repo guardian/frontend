@@ -51,7 +51,8 @@ define([
     'common/modules/onward/right-most-popular',
     'common/modules/analytics/register',
     'common/modules/commercial/loader',
-    'common/modules/onward/tonal'
+    'common/modules/onward/tonal',
+    'common/modules/identity/api'
 ], function (
     $,
     mediator,
@@ -103,7 +104,8 @@ define([
     RightMostPopular,
     register,
     CommercialLoader,
-    TonalComponent
+    TonalComponent,
+    id
 ) {
 
     var hasBreakpointChanged = detect.hasCrossedBreakpoint();
@@ -510,6 +512,14 @@ define([
                         .init(commercialComponent[1], slot);
                 }
             });
+        },
+
+        repositionComments: function() {
+            mediator.on('page:common:ready', function() {
+                if(!id.isUserLoggedIn()) {
+                    $('.js-comments').insertAfter(qwery('.js-popular'));
+                }
+            });
         }
     };
 
@@ -558,6 +568,7 @@ define([
             modules.augmentInteractive();
             modules.runForseeSurvey(config);
             modules.startRegister(config);
+            modules.repositionComments();
         }
         mediator.emit('page:common:ready', config, context);
     };
