@@ -21,9 +21,6 @@ define([
         this.$element = bonzo(options.element);
         this.$window = bonzo(document.body);
 
-        // Take into account the element's top style, so that the fixed positioning happens smoothly.
-        this.styleTop = this.getPixels(this.$element.css('top'));
-
         this.calculateContainerPositioning();
     };
 
@@ -47,9 +44,8 @@ define([
     };
 
     Affix.prototype.checkPosition = function () {
-        var elementTop   = this.$window.scrollTop() + this.styleTop,
-            topCheck     = elementTop >= this.$markerTop.offset().top,
-            bottomCheck  = elementTop + this.$element.dim().height < this.$markerBottom.offset().top;
+        var topCheck     = this.$window.scrollTop() >= this.$markerTop.offset().top,
+            bottomCheck  = this.$window.scrollTop() + this.$element.dim().height < this.$markerBottom.offset().top;
 
         // This is true when the element is positioned below the top threshold and above the bottom threshold.
         var affix = bottomCheck && topCheck;
