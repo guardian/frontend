@@ -1,0 +1,4 @@
+@(competition: model.Competition, leagueStage: _root_.football.model.League)(implicit request: RequestHeader)
+
+
+@football.views.html.tablesList.tableView(competition, model.Group(leagueStage.round, leagueStage.leagueTable), striped = true, responsiveFont = true)

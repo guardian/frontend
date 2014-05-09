@@ -1,0 +1,15 @@
+@(page: Page, competition: model.Competition, competitionStages: List[_root_.football.model.CompetitionStage])(implicit request: RequestHeader)
+<!DOCTYPE html>
+<html class="js-off id--signed-out" lang="en-GB">
+    <head>
+        @fragments.head(page, "football", Html(""), Map())
+        <script>guardian.config.page.isFootballWorldCup2014 = true;</script>
+    </head>
+    <body id="top" itemscope itemtype="http://schema.org/WebPage">
+        <div id="js-context" class="football-wallchart-embed">
+            @wallchart(competition, competitionStages)
+            @fragments.loadCss()
+            @fragments.analytics(page)
+        </div>
+    </body>
+</html>

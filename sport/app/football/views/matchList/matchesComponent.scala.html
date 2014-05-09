@@ -6,7 +6,13 @@
     @matchesList.matchesGroupedByDateAndCompetition.map { case (date, competitionMatches) =>
         <div class="football-matches__day">
             @competitionMatches.map { case (competition, matches) =>
-                @football.views.html.matchList.matchesList(matches, competition, date, matchType = matchesList.pageType)
+                @football.views.html.matchList.matchesList(
+                    matches,
+                    competition,
+                    date,
+                    matchType = matchesList.pageType,
+                    heading = Option(competition.fullName)
+                )
             }
         </div>
     }

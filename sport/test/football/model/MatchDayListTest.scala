@@ -2,8 +2,6 @@ package football.model
 
 import org.scalatest._
 import implicits.Football
-import pa.FootballMatch
-import org.joda.time.DateTimeUtils
 
 
 class MatchDayListTest extends FreeSpec with ShouldMatchers with MatchTestData with Football with OptionValues {
@@ -79,6 +77,14 @@ class MatchDayListTest extends FreeSpec with ShouldMatchers with MatchTestData w
       "should be empty" in {
         matches.relevantMatches.size should equal(0)
       }
+    }
+  }
+
+  "the competition group matches" - {
+    val matches = new CompetitionRoundMatchesList(competitions, competition1, round2)
+
+    "should get all matches for the specified round and competition" in {
+      matches.relevantMatches.map { case (fMatch, _) => fMatch.id } should equal(List("3", "8", "12"))
     }
   }
 }
