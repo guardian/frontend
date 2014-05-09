@@ -3,34 +3,13 @@
 <html class="js-off id--signed-out" lang="en-GB">
     <head>
         @fragments.head(page, "football", Html(""), Map())
+        <script>guardian.config.page.isFootballWorldCup2014 = true;</script>
     </head>
     <body id="top" itemscope itemtype="http://schema.org/WebPage">
-        <div id="js-context">
+        <div id="js-context" class="football-wallchart-embed">
             @wallchart(competition, competitionStages)
             @fragments.loadCss()
             @fragments.analytics(page)
         </div>
-        <script>
-            (function() {
-                var t, h, i;
-
-                // This stops the SecurityError from halting the execution any further.
-                try {
-                    i = window.parent.document.querySelector('.interactive iframe');
-                } catch(e) {}
-
-                function resize() {
-                    if (!t) {
-                        // if this isn't timed out, it triggers another resize
-                        h = document.getElementById('js-context').scrollHeight+30;
-
-                        if (i) { i.height = h; }
-                        t = setTimeout(function() { clearTimeout(t); t = null; }, 200);
-                    }
-                }
-                resize();
-                window.addEventListener('resize', resize);
-            })();
-        </script>
     </body>
 </html>
