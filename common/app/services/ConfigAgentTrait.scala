@@ -7,6 +7,7 @@ import scala.concurrent.Future
 import scala.concurrent.duration._
 import akka.util.Timeout
 import conf.{ContentApi, Configuration}
+import com.gu.openplatform.contentapi.model.ItemResponse
 
 trait ConfigAgentTrait extends ExecutionContexts with Logging {
   implicit val alterTimeout: Timeout = Configuration.faciatool.configBeforePressTimeout.millis
@@ -72,45 +73,45 @@ trait ConfigAgentTrait extends ExecutionContexts with Logging {
 
   def contentsAsJsonString: String = Json.prettyPrint(configAgent.get)
 
-  private def getSeoDataFromConfig(path: String): Option[SeoData] = {
+  private def getSeoDataFromConfig(path: String): SeoData = {
     val json = configAgent.get()
-    (json \ "fronts" \ path).asOpt[JsValue].map { frontJson =>
-      SeoData(
-        path,
-        section   = (frontJson \ "section").asOpt[String].filter(_.nonEmpty),
-        webTitle  = (frontJson \ "webTitle").asOpt[String].filter(_.nonEmpty),
-        title  = (frontJson \ "title").asOpt[String].filter(_.nonEmpty),
-        description  = (frontJson \ "description").asOpt[String].filter(_.nonEmpty)
-      )
-    }
+    val frontJson = (json \ "fronts" \ path).as[JsValue]
+    SeoData(
+      path,
+      section   = (frontJson \ "section").asOpt[String].filter(_.nonEmpty),
+      webTitle  = (frontJson \ "webTitle").asOpt[String].filter(_.nonEmpty),
+      title  = (frontJson \ "title").asOpt[String].filter(_.nonEmpty),
+      description  = (frontJson \ "description").asOpt[String].filter(_.nonEmpty)
+    )
   }
 
   def getSeoData(path: String): Future[SeoData] = {
-    lazy val seoDataFromPath: SeoData = SeoData.fromPath(path)
-    (for {
-      seoData <- getSeoDataFromConfig(path)
+    val seoDataFromConfig:   Future[SeoData] = Future.successful(getSeoDataFromConfig(path))
+    val itemResponseForPath: Future[Option[ItemResponse]] = getSectionOrTagWebTitle(path)
+    val seoDataFromPath:     Future[SeoData] = Future.successful(SeoData.fromPath(path))
+
+    for {
+      sc <- seoDataFromConfig
+      ir <- itemResponseForPath
+      sp <- seoDataFromPath
     } yield {
-      getSectionOrTagWebTitle(path).fallbackTo(Future.successful(None)).map { maybeWebTitle: Option[String] =>
-        val webTitle = maybeWebTitle.orElse(seoDataFromPath.webTitle)
-        seoData.copy(
-          section     = seoData.section.orElse(maybeWebTitle.orElse(seoDataFromPath.section)),
-          webTitle    = seoData.webTitle.orElse(maybeWebTitle.orElse(seoDataFromPath.webTitle)),
-          title       = seoData.title.orElse(webTitle.map(SeoData.titleFromWebTitle)).orElse(seoDataFromPath.title),
-          description = seoData.description.orElse(webTitle.map(SeoData.descriptionFromWebTitle)).orElse(seoDataFromPath.description)
-        )
-      }
-    }).getOrElse(Future.successful(seoDataFromPath))
+      val section:  Option[String] = sc.section.orElse(ir.flatMap(_.section.map(_.id)).orElse(ir.flatMap(_.tag.flatMap(_.sectionId)))).orElse(sp.section)
+      val webTitle: Option[String] = sc.webTitle.orElse(ir.flatMap(_.tag.map(_.webTitle))).orElse(sp.webTitle)
+      val title: Option[String] = webTitle.map(SeoData.titleFromWebTitle)
+      val description: Option[String] = webTitle.map(SeoData.descriptionFromWebTitle)
+
+      SeoData(path, section, webTitle, title, description)
+    }
   }
 
-  private def getSectionOrTagWebTitle(id: String): Future[Option[String]] =
+  private def getSectionOrTagWebTitle(id: String): Future[Option[ItemResponse]] =
     ContentApi
       .item(id, Edition.defaultEdition)
       .showEditorsPicks(false)
       .pageSize(0)
       .response
-      .map { response =>
-        response.tag.map(_.webTitle).orElse(response.section.map(_.webTitle))
-      }
+      .map(Option.apply)
+      .fallbackTo(Future.successful(None))
 
 
 }
