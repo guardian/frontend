@@ -42,7 +42,7 @@ define([
             adSlices = [],
             containerGap = 2;
         // pull out ad slices which are have at least x containers between them
-        while (index <= containers.length) {
+        while (index < containers.length) {
             var $adSlice = $(this.config.sliceSelector, containers[index]);
             if ($adSlice.length) {
                 adSlices.push($adSlice.first());
