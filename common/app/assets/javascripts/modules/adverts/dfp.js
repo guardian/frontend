@@ -322,11 +322,11 @@ define([
 
         this.dfpAdSlots = qwery(this.config.dfpSelector)
             // filter out hidden ads
-            .filter(function(adSlot) {
-                return bonzo(adSlot).css('display') !== 'none';
-            })
             .map(function(adSlot) {
                 return bonzo(adSlot);
+            })
+            .filter(function($adSlot) {
+                return $adSlot.css('display') !== 'none';
             });
 
         // If there's no ads on the page, then don't load anything
