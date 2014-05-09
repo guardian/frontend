@@ -47,7 +47,7 @@
             display: none;
         }
 
-        .dropdown__content {
+        .dropdown-styled .dropdown__content {
             display: block;
             margin: 0;
         }
@@ -57,6 +57,7 @@
     @include mq(tablet) {
         background: $c-neutral8;
         flex: 1 1 auto;
+        margin-bottom: 0;
     }
 }
 .football-group__matches,
@@ -117,7 +118,6 @@
         text-align: center;
         width: 100%;
     }
-
     .football-match__container {
         display: table-cell;
         height: 100%;
