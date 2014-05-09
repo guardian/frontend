@@ -5,8 +5,8 @@
 
 <div class="football-match" id="football-match-@fm.id">
     <div class="football-match__container">
-        <div class="football-match__team football-match__team--home @if(fm.homeTeam.isGhostTeam){football-match--ghost-team}">
-            <span class="team-crest" style="background-image: url(@Configuration.staticSport.path/football/crests/120/@{fm.homeTeam.id}.png);"></span>
+        <div class="football-match__team football-match__team--home @if(fm.homeTeam.isGhostTeam){football-match__team--ghost}">
+            @if(!fm.homeTeam.isGhostTeam){<span class="team-crest" style="background-image: url(@Configuration.staticSport.path/football/crests/120/@{fm.homeTeam.id}.png);"></span>}
             @fm.homeTeam.knockoutName
             @if(fm.hasStarted){
                 <span class="football-match__score">@fm.homeTeam.score</span>
@@ -20,15 +20,18 @@
                 </div>
             }
             @if(fm.isFixture){
-                <div class="football-match__date">@fm.date.toString("E dd MMM") <span class="football-match__kickoff">@fm.date.toString("HH:mm")</span></div>
+                <div class="football-match__date">
+                    <span class="football-match__kickoff">@fm.date.toString("HH:mm")</span>
+                    @fm.date.toString("E dd MMMM")
+                </div>
             }
             @fm.comments.map { comments =>
                 <div class="football-match__comments">@comments.reverse.dropWhile(_ == '.').reverse</div>
             }
 
         </div>
-        <div class="football-match__team football-match__team--away @if(fm.awayTeam.isGhostTeam){football-match--ghost-team}"">
-            <span class="team-crest" style="background-image: url(@Configuration.staticSport.path/football/crests/120/@{fm.awayTeam.id}.png);"></span>
+        <div class="football-match__team football-match__team--away @if(fm.awayTeam.isGhostTeam){football-match__team--ghost}"">
+            @if(!fm.awayTeam.isGhostTeam){<span class="team-crest" style="background-image: url(@Configuration.staticSport.path/football/crests/120/@{fm.awayTeam.id}.png);"></span>}
             @fm.awayTeam.knockoutName
             @if(fm.hasStarted){
                 <span class="football-match__score">@fm.awayTeam.score</span>
