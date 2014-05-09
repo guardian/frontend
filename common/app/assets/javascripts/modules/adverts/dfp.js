@@ -85,7 +85,7 @@ define([
     function DFP(config) {
         this.config       = _defaults(config || {}, this.config);
         this.context      = document;
-        this.$dfpAdSlots  = [];
+        this.dfpAdSlots   = [];
         this.adsToRefresh = [];
     }
 
@@ -194,11 +194,11 @@ define([
 
         var adUnit = this.buildAdUnit(this.config);
 
-        this.$dfpAdSlots.each(function(adSlot) {
+        this.dfpAdSlots.forEach(function($adSlot) {
 
-            var id          = adSlot.querySelector(this.config.adContainerClass).id,
-                name        = adSlot.getAttribute('data-name'),
-                sizeMapping = this.defineSlotSizes(adSlot),
+            var id          = $(this.config.adContainerClass, $adSlot[0]).attr('id'),
+                name        = $adSlot.data('name'),
+                sizeMapping = this.defineSlotSizes($adSlot[0]),
                 // as we're using sizeMapping, pull out all the ad sizes, as an array of arrays
                 size        = _uniq(
                                   _flatten(sizeMapping, true, function(map) {
@@ -208,7 +208,7 @@ define([
                                       return size[0] + '-' + size[1];
                                   }
                               ),
-                refresh     = adSlot.getAttribute('data-refresh') !== 'false',
+                refresh     = $adSlot.data('refresh') !== false,
 
                 slot        = googletag
                                 .defineSlot(adUnit, size, id)
@@ -305,35 +305,39 @@ define([
 
     DFP.prototype.fireAdRequest = function() {
         googletag.pubads().enableSingleRequest();
-        googletag.pubads().enableAsyncRendering();
         googletag.pubads().collapseEmptyDivs();
         googletag.enableServices();
-        googletag.display(this.$dfpAdSlots[0].querySelector(this.config.adContainerClass).id);
+        // as this is an single request call, only need to make a single display call (to the first ad slot)
+        if (this.dfpAdSlots.length) {
+            googletag.display($(this.config.adContainerClass, this.dfpAdSlots.shift()).attr('id'));
+        }
     };
 
-    DFP.prototype.reload = function() {
+    DFP.prototype.refresh = function() {
         googletag.pubads().refresh(this.adsToRefresh);
+        mediator.emit('modules:adverts:refreshed');
     };
 
     DFP.prototype.init = function() {
 
-        var dfpAdSlots = qwery(this.config.dfpSelector)
+        this.dfpAdSlots = qwery(this.config.dfpSelector)
             // filter out hidden ads
             .filter(function(adSlot) {
                 return bonzo(adSlot).css('display') !== 'none';
+            })
+            .map(function(adSlot) {
+                return bonzo(adSlot);
             });
 
-        this.$dfpAdSlots = bonzo(dfpAdSlots);
-
         // If there's no ads on the page, then don't load anything
-        if (this.$dfpAdSlots.length === 0) {
+        if (this.dfpAdSlots.length === 0) {
             return false;
         }
 
-        // if we don't already have googletag, load it and create command queue
+        // if we don't already have googletag, create command queue and load it
         if (!window.googletag) {
-            // load the library asynchronously
             window.googletag = { cmd: [] };
+            // load the library asynchronously
             require(['googletag']);
         }
 
@@ -341,6 +345,18 @@ define([
         window.googletag.cmd.push(this.setPageTargetting.bind(this));
         window.googletag.cmd.push(this.defineSlots.bind(this));
         window.googletag.cmd.push(this.fireAdRequest.bind(this));
+
+        // anything we want to happen after requesting ads
+        window.googletag.cmd.push(function() {
+            var hasBreakpointChanged = detect.hasCrossedBreakpoint();
+            mediator.on('window:resize',
+                debounce(function() {
+                    // refresh on resize
+                    hasBreakpointChanged(this.refresh.bind(this));
+                }.bind(this), 2000)
+            );
+        }.bind(this));
+
     };
 
     return DFP;

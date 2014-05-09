@@ -81,7 +81,7 @@ define([
 
         it('should find a DFP ad slot', function() {
             dfp.init();
-            expect(dfp.$dfpAdSlots.length).toBe(4);
+            expect(dfp.dfpAdSlots.length).toBe(4);
         });
 
         describe('Label', function() {
@@ -192,9 +192,17 @@ define([
         it('should not create ad if slot is not displayed', function() {
             $('.ad-slot--dfp').first().css('display', 'none');
             dfp.init();
-            expect(dfp.$dfpAdSlots.length).toBe(3);
-            var adSlots = dfp.$dfpAdSlots.map(function(adSlot) { return adSlot; });
-            expect(adSlots.some(function(adSlot) { return adSlot === $('.ad-slot--dfp').first()[0]; })).toBe(false);
+            expect(dfp.dfpAdSlots.length).toBe(3);
+            expect(
+                dfp.dfpAdSlots
+                    .map(function($adSlot) {
+                        return $adSlot[0];
+                    })
+                    .some(function(adSlot) {
+                        return adSlot === $('.ad-slot--dfp').first();
+                    }
+                )
+            ).toBe(false);
         });
 
     });
