@@ -50,7 +50,8 @@
             margin-top: $gs-baseline
         ));
     }
-    .lineitem {
+    .lineitem,
+    .highitem {
         @include box-sizing(border-box);
         @include rem((
             padding: $gs-baseline/2 0
@@ -100,12 +101,8 @@
     }
 
     @include mq(tablet) {
-        .commercial__branding {
-            float: none;
-        }
-        .commercial__head {
-            float: left;
-            width: gs-span(3);
+        .commercial__body {
+            margin-top: 0;
         }
         .commercial__search {
             position: relative;
@@ -114,21 +111,11 @@
             @include rem((
                 margin-top: $gs-baseline*4
             ));
-        }
-        .commercial__home-link {
-            position: absolute;
-            @include rem((
-                bottom: $gs-baseline
-            ));
-        }
-        .commercial__body {
-            margin-top: 0;
-        }
+        }        
         .lineitem {
             position: relative;
             width: 33%;
             @include rem((
-                min-height: 250px,
                 padding: 0 $gs-gutter/2 $gs-baseline*2.5
             ));
 
@@ -154,9 +141,6 @@
             bottom: 0;
             left: 8px;
         }
-        .commercial__foot {
-            display: none;
-        }
     }
     @include mq(desktop) {
         .lineitem {
@@ -174,17 +158,105 @@
             ));
         }
     }
-    &.commercial--books-low {
-        background: red;
+    &.commercial--low {
         .lineitem:first-child .lineitem__img {
             display: block;
         }
+        
+        @include mq(tablet) {
+            .lineitem {
+                @include rem((
+                    min-height: 250px,
+                ));
+            }
+            .commercial__home-link {
+                position: absolute;
+                @include rem((
+                    bottom: $gs-baseline
+                ));
+            }
+            .commercial__branding {
+                float: none;
+            }
+            .commercial__head {
+                float: left;
+                width: gs-span(3);
+            }
+            .commercial__foot {
+                display: none;
+            }
+        }
     }
-    &.commercial--books-high {
+    &.commercial--high {
+        .lineitem__title {
+            clear: none;
+        }
+        .commercial__head .commercial__search {
+            display: none;
+        }
         .commercial__relevance-low {
             .lineitem:first-child .lineitem__img {
                 display: none;
             }
+        }
+        @include mq(tablet) {
+            .lineitem {
+                border-left: 1px solid $c-neutral4;
+                width: auto;
+                &:nth-child(n+2) {
+                    display: none;
+                }
+            }
+            .highitem {
+                border-bottom: none;
+                padding-bottom: $gs-baseline*2;
+
+                .commercial--books__buy-now-button {
+                    left: 0;
+                }
+            }
+            .commercial__search {
+                margin-top: $gs-baseline;
+            }
+            .commercial__relevance-high {
+                width: 66%;
+                float: left;
+            }
+            .commercial__relevance-low {
+                width: 33%;
+                float: left;
+                .lineitem:first-child .lineitem__img {
+                    display: block;
+                }
+            }
+        }
+        @include mq(rightCol) {
+            .commercial__head {
+                float: left;
+                
+                .commercial__search {
+                    display: block;
+                }
+            }
+            .commercial__relevance-high {
+                width: 66%;
+            }
+            .commercial__relevance-low {
+                width: 33%;
+            }
+            .commercial__foot {
+                display: none;
+            }
+        }
+        @include mq(leftCol) {
+            .commercial__relevance-high,
+            .commercial__relevance-low,
+            .lineitem {
+                width: 50%;
+            }
+            .lineitem:nth-child(n+2) {
+                display: block;
+            }           
         }
     }
 }
