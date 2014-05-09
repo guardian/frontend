@@ -108,8 +108,6 @@ define([
     id
 ) {
 
-    var hasBreakpointChanged = detect.hasCrossedBreakpoint();
-
     var modules = {
 
         upgradeImages: function () {
@@ -274,18 +272,6 @@ define([
 
             if (showAds) {
 
-                var onResize = {
-                        cmd: [],
-                        execute: function () {
-                            hasBreakpointChanged(function () {
-                                onResize.cmd.forEach(function (func) {
-                                    func();
-                                });
-                            });
-                        }
-                    },
-                    dfpAds,
-                    options = {};
 
                 // if it's an article, excluding live blogs, create our inline adverts
                 if (config.switches.standardAdverts && config.page.contentType === 'Article') {
@@ -297,6 +283,8 @@ define([
                 }
 
                 new SliceAdverts(config).init();
+
+                var options = {};
 
                 if (!config.switches.standardAdverts) {
                     options.dfpSelector = '.ad-slot--commercial-component';
@@ -312,15 +300,7 @@ define([
                     $('.dfp-badge-container').css('display', 'block');
                 }
 
-                dfpAds = new DFP(extend(config, options));
-                dfpAds.init();
-                onResize.cmd.push(dfpAds.reload);
-
-                // Push the reloaded command once
-                onResize.cmd.push(function () {
-                    mediator.emit('modules:adverts:reloaded');
-                });
-                mediator.on('window:resize', debounce(onResize.execute.bind(this), 2000));
+                new DFP(extend(config, options)).init();
             }
         },
 
