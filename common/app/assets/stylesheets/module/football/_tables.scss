@@ -315,6 +315,11 @@
         font-weight: bold;
     }
 
+    .football-match__kickoff {
+        display: block;
+        font-weight: bold;
+    }
+
     .football-match__kickoff,
     .football-match__date,
     .football-match__comments {
@@ -345,6 +350,14 @@
     }
 }
 
+.football-knockout-chart__timezone {
+    @include fs-data(1);
+    @include rem((
+        padding: $gs-baseline/2 0
+    ));
+    text-align: center;
+}
+
 .football-rounds--second-half {
     .football-round {
         float: right;
@@ -367,6 +380,11 @@
 .football-round {
     @include fs-data(4);
     float: left;
+}
+.football-round--active {
+    .football-match__team {
+        font-weight: bold;
+    }
 }
 .football-round--8-matches {
     .football-match {

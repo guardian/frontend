@@ -20,7 +20,10 @@
                 </div>
             }
             @if(fm.isFixture){
-                <div class="football-match__date">@fm.date.toString("E dd MMM") <span class="football-match__kickoff">@fm.date.toString("HH:mm")</span></div>
+                <div class="football-match__date">
+                    <span class="football-match__kickoff">@fm.date.toString("HH:mm")</span>
+                    @fm.date.toString("E dd MMMM")
+                </div>
             }
             @fm.comments.map { comments =>
                 <div class="football-match__comments">@comments.reverse.dropWhile(_ == '.').reverse</div>

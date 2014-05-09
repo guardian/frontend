@@ -7,7 +7,7 @@
         @knockoutStage.rounds.map{ round =>
             @defining(knockoutStage.roundMatches(round)) { matches =>
                 @if(matches.length != 1){
-                    <div class="football-round football-round--@matches.length-matches">
+                    <div class="football-round football-round--@matches.length-matches @if(knockoutStage.isActiveRound(round)){football-round--active}">
                         <div class="football-round__name">@round.name.getOrElse("")</div>
 
                         @defining(matches.length/2) { half =>
@@ -27,7 +27,7 @@
         @knockoutStage.rounds.map{ round =>
             @defining(knockoutStage.roundMatches(round)) { matches =>
                 @if(matches.length != 1){
-                    <div class="football-round football-round--@matches.length-matches">
+                    <div class="football-round football-round--@matches.length-matches @if(knockoutStage.isActiveRound(round)){football-round--active}">
                         <div class="football-round__name">@round.name.getOrElse("")</div>
                             @defining(matches.length/2) { half =>
                                 <div class="football-round__matches">
@@ -46,7 +46,11 @@
         @knockoutStage.rounds.map{ round =>
             @defining(knockoutStage.roundMatches(round)) { matches =>
                 @if(matches.length == 1){
-                    <div class="football-round football-round--@matches.length-matches football-round--final @round.name.filter(n => n == "3rd/4th Play-Offs").map{ name => football-round--playoff}">
+                    <div class="football-round
+                                football-round--@matches.length-matches
+                                football-round--final
+                                @if(knockoutStage.isActiveRound(round)){football-round--active}
+                                @round.name.filter(n => n == "3rd/4th Play-Offs").map{ name => football-round--playoff}">
                         <div class="football-round__name">@round.name.getOrElse("")</div>
                         <div class="football-round__matches">
                             @matches.map{ m =>
@@ -58,4 +62,6 @@
             }
         }
     </div>
+
+    <div class="football-knockout-chart__timezone">All matches are in UK time</div>
 </div>
