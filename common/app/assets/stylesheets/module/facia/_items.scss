@@ -308,7 +308,7 @@
     }
 }
 .item__tag {
-  @include fs-textsans(1);
+    @include fs-textsans(1);
 }
 .item__meta {
     position: absolute;
