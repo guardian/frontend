@@ -3,15 +3,13 @@ define([
     'common/$',
     'common/utils/cookies',
     'common/utils/config',
-    'lodash/objects/defaults',
-    'lodash/objects/pairs'
+    'lodash/objects/defaults'
 ], function (
     qwery,
     $,
     cookies,
     globalConfig,
-    _defaults,
-    _pairs
+    _defaults
 ) {
 
     var nId = '1476',
@@ -46,12 +44,12 @@ define([
         );
 
         if (config.switches.criteo) {
-            var params = _pairs({
-                    netid: nId,
-                    cookieName: cookieName,
-                    rnd: Math.floor(Math.random() * 99999999999),
-                    varName: 'crtg_content'
-                })
+            var params = [
+                    ['netid', nId],
+                    ['cookieName', cookieName],
+                    ['rnd', Math.floor(Math.random() * 99999999999)],
+                    ['varName', 'crtg_content']
+                ]
                     // turn into a query string
                     .map(function (pair) { return pair.join('='); })
                     .join('&');
