@@ -20,10 +20,7 @@ define([
         register.begin('geo-most-popular');
         this.config = extend(this.config, config);
         this.mediator = mediator;
-
-        function go() {
-            this.fetch(qwery('.mpu-context'), 'rightHtml');
-        }
+        this.fetch(qwery('.mpu-context'), 'rightHtml');
     }
 
     Component.define(GeoMostPopular);
