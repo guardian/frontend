@@ -9,60 +9,6 @@ abstract class FrontPage(val isNetworkFront: Boolean) extends MetaData {
 }
 
 object FrontPage {
-
-  val defaultDescription: String = "Latest news, comment and analysis from the Guardian, the world’s leading liberal voice"
-  val networkFrontAnalytics: String = "GFE:Network Front"
-  val defaultWebTitle: String = "Latest news, sport and comment from the Guardian"
-
-  val networkFrontContentType: String = "Network Front"
-
-  val defaultFrontPage: FrontPage = new FrontPage(isNetworkFront = true) {
-    override val id = ""
-    override val section = ""
-    override val webTitle = defaultWebTitle
-    override lazy val analyticsName = networkFrontAnalytics
-    override lazy val description = Some(defaultDescription)
-
-    override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
-      "content-type" -> networkFrontContentType,
-      "is-front" -> true,
-      "new-seo" -> true
-    )
-  }
-
-  private def getId(keyword: String): String = keyword.toLowerCase
-  private def getSection(keyword: String): String = keyword.toLowerCase
-  private def getAnalyticsName(keyword: String): String = s"GFE:${keyword.toLowerCase}"
-  private def getDescription(keyword: String): String = s"Latest $keyword news, comment and analysis from the Guardian, the world’s leading liberal voice"
-
-  private def getContentType(faciaPage: FaciaPage): String =
-    Edition.all.find(edition => faciaPage.id.endsWith(edition.id)) match {
-      case Some(_) => "Network Front"
-      case None    => "Section"
-    }
-
-  def getFrontPageFromFaciaPage(faciaPage: FaciaPage): FrontPage = faciaPage.seoData.webTitle.map { k =>
-    new FrontPage(isNetworkFront = false) {
-      override val id = getId(k)
-      override val section = getSection(k)
-      override val webTitle = faciaPage.seoData.webTitle
-        .orElse(faciaPage.seoData.webTitle.map(getDescription))
-        .getOrElse(defaultDescription)
-      override lazy val analyticsName = getAnalyticsName(k)
-      override lazy val description = Some(getDescription(k))
-
-      override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
-        "keywords" -> k.capitalize,
-        "content-type" -> getContentType(faciaPage),
-        "is-front" -> true, //Config agent trait logic?
-        "new-seo" -> true
-      )
-    }
-  }.getOrElse(defaultFrontPage)
-}
-
-object OldFrontPage {
-
   private val fronts = Seq(
 
     new FrontPage(isNetworkFront = false) {
