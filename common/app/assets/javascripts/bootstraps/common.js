@@ -44,14 +44,15 @@ define([
     'common/modules/identity/autosignin',
     'common/modules/adverts/article-body-adverts',
     'common/modules/adverts/article-aside-adverts',
-    'common/modules/adverts/collection-adverts',
+    'common/modules/adverts/slice-adverts',
     'common/modules/adverts/dfp',
     'common/modules/analytics/commercial/tags/container',
     'common/modules/analytics/foresee-survey',
     'common/modules/onward/right-most-popular',
     'common/modules/analytics/register',
     'common/modules/commercial/loader',
-    'common/modules/onward/tonal'
+    'common/modules/onward/tonal',
+    'common/modules/identity/api'
 ], function (
     $,
     mediator,
@@ -96,14 +97,15 @@ define([
     AutoSignin,
     ArticleBodyAdverts,
     ArticleAsideAdverts,
-    CollectionAdverts,
+    SliceAdverts,
     DFP,
     TagContainer,
     Foresee,
     RightMostPopular,
     register,
     CommercialLoader,
-    TonalComponent
+    TonalComponent,
+    id
 ) {
 
     var hasBreakpointChanged = detect.hasCrossedBreakpoint();
@@ -294,7 +296,7 @@ define([
                     }
                 }
 
-                new CollectionAdverts(config).init();
+                new SliceAdverts(config).init();
 
                 if (!config.switches.standardAdverts) {
                     options.dfpSelector = '.ad-slot--commercial-component';
@@ -499,12 +501,25 @@ define([
         },
 
         loadCommercialComponent: function(config) {
-            var commercialComponent = /^#commercial-component=(.*)$/.exec(window.location.hash),
-                slot = qwery('[data-name="merchandising"]').shift();
-            if (commercialComponent && slot) {
-                new CommercialLoader({ config: config })
-                    .init(commercialComponent[1], slot);
-            }
+            [
+                ['commercial-component', 'merchandising'],
+                ['commercial-component-high', 'merchandising-high']
+            ].forEach(function(data) {
+                var commercialComponent = new RegExp('^#' + data[0] + '=(.*)$').exec(window.location.hash),
+                    slot = qwery('[data-name="' + data[1] + '"]').shift();
+                if (commercialComponent && slot) {
+                    new CommercialLoader({ config: config })
+                        .init(commercialComponent[1], slot);
+                }
+            });
+        },
+
+        repositionComments: function() {
+            mediator.on('page:common:ready', function() {
+                if(!id.isUserLoggedIn()) {
+                    $('.js-comments').insertAfter(qwery('.js-popular'));
+                }
+            });
         }
     };
 
@@ -553,6 +568,7 @@ define([
             modules.augmentInteractive();
             modules.runForseeSurvey(config);
             modules.startRegister(config);
+            modules.repositionComments();
         }
         mediator.emit('page:common:ready', config, context);
     };

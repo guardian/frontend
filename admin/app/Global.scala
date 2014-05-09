@@ -1,4 +1,4 @@
-import common.{Jobs, CloudWatchApplicationMetrics}
+import common.{AkkaAsync, Jobs, CloudWatchApplicationMetrics}
 import conf.{Gzipper, Management}
 import jobs.RefreshFrontsJob
 import model.AdminLifecycle

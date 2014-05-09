@@ -45,9 +45,6 @@
     <div class="left-col">
         <div class="title">
             Clipboard
-            <span class="linky" data-bind="
-                visible: switches()['facia-tool-snaps'],
-                click: createSnap">+</span>
         </div>
         <div class="clipboard__wrapper" data-bind="with: clipboard">
             <div class="clipboard droppable" data-bind="
@@ -352,9 +349,9 @@
                     <div class="secondary">
                         <span data-bind="
                             visible: isSnap,
-                            attr: {class: 'is' + (meta.snapType() ? ' is--' + meta.snapType() : '')},
+                            attr: {class: 'is' + (meta.snapCss() ? ' is--' + meta.snapCss() : '')},
                             click: open,
-                            text: meta.snapType() || 'snap'"></span>
+                            text: meta.snapCss() || 'snap'"></span>
 
                         <span class="is is--breaking" data-bind="
                             visible: meta.isBreaking,

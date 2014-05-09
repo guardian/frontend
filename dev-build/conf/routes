@@ -19,14 +19,19 @@ GET         /discussion/comment-counts                                          
 GET         /discussion/comment-counts.json                                                                          controllers.DiscussionApp.commentCountJson(shortUrls: String)
 GET         /discussion/comment/*id.json                                                                             controllers.DiscussionApp.commentJson(id: Int)
 GET         /discussion/comment/*id                                                                                  controllers.DiscussionApp.comment(id: Int)
-GET         /discussion/comment-permalink/*commentId.json                                                            controllers.DiscussionApp.commentPermalinkJson(commentId: Int)
-GET         /discussion/comment-permalink/*commentId                                                                 controllers.DiscussionApp.commentPermalink(commentId: Int)
+
+GET         /discussion/comment-permalink/*order/*commentId.json                                                     controllers.DiscussionApp.commentPermalinkJson(commentId: Int, order: String)
+GET         /discussion/comment-permalink/*order/*commentId                                                          controllers.DiscussionApp.commentPermalink(commentId: Int, order: String)
+
+
 GET         /discussion/top/*discussionKey.json                                                                      controllers.DiscussionApp.topCommentsJson(discussionKey: discussion.model.DiscussionKey)
 GET         /discussion/top/*discussionKey                                                                           controllers.DiscussionApp.topComments(discussionKey: discussion.model.DiscussionKey)
-GET         /discussion/oldest/*discussionKey.json                                                                   controllers.DiscussionApp.oldestCommentsJson(discussionKey: discussion.model.DiscussionKey)
-GET         /discussion/oldest/*discussionKey                                                                        controllers.DiscussionApp.oldestComments(discussionKey: discussion.model.DiscussionKey)
-GET         /discussion/*discussionKey.json                                                                          controllers.DiscussionApp.commentsJson(discussionKey: discussion.model.DiscussionKey)
-GET         /discussion/*discussionKey                                                                               controllers.DiscussionApp.comments(discussionKey: discussion.model.DiscussionKey)
+
+GET         /discussion/$discussionKey</?p/\w+>.json                                                                 controllers.DiscussionApp.commentsJson(discussionKey: discussion.model.DiscussionKey, order: String = "newest")
+GET         /discussion/$order<(oldest|newest)>/$discussionKey</?p/\w+>.json                                         controllers.DiscussionApp.commentsJson(discussionKey: discussion.model.DiscussionKey, order: String)
+GET         /discussion/$discussionKey</?p/\w+>                                                                      controllers.DiscussionApp.comments(discussionKey: discussion.model.DiscussionKey, order: String = "newest")
+GET         /discussion/$order<(oldest|newest)>/$discussionKey</?p/\w+>                                              controllers.DiscussionApp.comments(discussionKey: discussion.model.DiscussionKey, order: String)
+
 GET         /open/cta/article/*discussionKey.json                                                                    controllers.CtaController.cta(discussionKey: discussion.model.DiscussionKey)
 
 # Core Navigation
@@ -177,7 +182,10 @@ GET         /admin/football/fronts/tables/:competition                          
 GET         /commercial/travel/offers.json                                                                           controllers.commercial.TravelOffers.listOffers
 GET         /commercial/jobs                                                                                         controllers.commercial.JobAds.renderAds
 GET         /commercial/jobs.json                                                                                    controllers.commercial.JobAds.jobs
+GET         /commercial/masterclasses                                                                                controllers.commercial.MasterClasses.renderMasterclass
 GET         /commercial/masterclasses.json                                                                           controllers.commercial.MasterClasses.list
+GET         /commercial/masterclasses-high                                                                           controllers.commercial.MasterClasses.renderMasterclassHigh
+GET         /commercial/masterclasses-high.json                                                                      controllers.commercial.MasterClasses.listHigh
 GET         /commercial/soulmates/mixed                                                                              controllers.commercial.SoulmateAds.renderAds
 GET         /commercial/soulmates/mixed.json                                                                         controllers.commercial.SoulmateAds.mixed
 GET         /commercial/money/bestbuys.json                                                                          controllers.commercial.MoneyOffers.bestBuys(format="json")

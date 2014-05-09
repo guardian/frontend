@@ -11,7 +11,6 @@ define([
     'common/utils/mediator',
     'common/modules/analytics/commercial/tags/common/audience-science',
     'common/modules/analytics/commercial/tags/common/audience-science-gateway',
-    'common/modules/analytics/commercial/tags/common/criteo',
     'common/modules/adverts/userAdTargeting',
     'common/modules/adverts/query-string',
     'lodash/arrays/flatten',
@@ -29,7 +28,6 @@ define([
     mediator,
     AudienceScience,
     AudienceScienceGateway,
-    Criteo,
     UserAdTargeting,
     queryString,
     _flatten,
@@ -172,7 +170,6 @@ define([
             'at'      : Cookies.get('adtest') || ''
         };
         extend(targets, AudienceScienceGateway.getSegments());
-        extend(targets, Criteo.getSegments());
 
         return targets;
     };
@@ -317,7 +314,13 @@ define([
 
     DFP.prototype.init = function() {
 
-        this.$dfpAdSlots = $(this.config.dfpSelector);
+        var dfpAdSlots = qwery(this.config.dfpSelector)
+            // filter out hidden ads
+            .filter(function(adSlot) {
+                return bonzo(adSlot).css('display') !== 'none';
+            });
+
+        this.$dfpAdSlots = bonzo(dfpAdSlots);
 
         // If there's no ads on the page, then don't load anything
         if (this.$dfpAdSlots.length === 0) {

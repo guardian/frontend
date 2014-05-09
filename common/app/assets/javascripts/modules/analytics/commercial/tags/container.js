@@ -5,12 +5,14 @@ define([
     'common/modules/analytics/commercial/tags/common/audience-science',
     'common/modules/analytics/commercial/tags/common/imrworldwide',
     'common/modules/analytics/commercial/tags/common/media-math',
+    'common/modules/analytics/commercial/tags/common/criteo',
     'common/modules/analytics/commercial/tags/au/amaa',
     'common/modules/analytics/commercial/tags/au/effective-measure'
 ], function(
     AudienceScience,
     IMRWorldwide,
     mediaMath,
+    criteo,
     Amaa,
     EffectiveMeasure
 ) {
@@ -49,6 +51,7 @@ define([
         }
 
         mediaMath.load();
+        criteo.load();
     }
 
     return {

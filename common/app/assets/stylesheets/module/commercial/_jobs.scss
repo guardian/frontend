@@ -4,7 +4,7 @@
 
 /* remove top margin on the footer to make component sit on top of it as per design */
 
-.footer {
+.l-footer {
     margin-top: 0 !important;
 }
 
@@ -159,6 +159,7 @@
     }
     .commercial--jobs__job__logo {
         border: 1px solid $c-neutral1;
+        max-width: 100%;
     }
     .commercial--jobs__job__logo,
     .commercial--jobs__job__description,
