@@ -803,10 +803,10 @@
     font-weight: 200;
     @include box-sizing(border-box);
     @include rem((
-        height: 48px
+        height: 48px,
+        padding-top: 2px,
+        margin-right: 4px
     ));
-    padding-top: 2px;
-    margin-right: 4px;
 
     span {
         display: inline-block;
