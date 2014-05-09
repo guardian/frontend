@@ -20,13 +20,12 @@ define([
         this.mediator = mediator;
         this.manipulationType = 'html';
 
-        /*jshint unused:false*/
-        function go() {
+        this.go = function() {
            var parent = qwery('.js-popular-trails')[0];
             if (parent) {
                 this.fetch(parent, 'html');
             }
-        }
+        };
     }
 
     Component.define(GeoMostPopularFront);
