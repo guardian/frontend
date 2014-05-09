@@ -108,11 +108,17 @@ trait ConfigAgentTrait extends ExecutionContexts with Logging {
 
   private def getSectionFromItemResponse(itemResponse: ItemResponse): Option[String] =
     itemResponse.tag.flatMap(_.sectionId)
-    .orElse(itemResponse.section.map(_.id))
+    .orElse(itemResponse.section.map(_.id).map(removeLeadEditionFromSectionId))
 
   private def getWebTitleFromItemResponse(itemResponse: ItemResponse): Option[String] =
     itemResponse.tag.map(_.webTitle)
     .orElse(itemResponse.section.map(_.webTitle))
+
+  //This will turn au/culture into culture. We want to stay consistent with the manual entry and autogeneration
+  private def removeLeadEditionFromSectionId(sectionId: String): String = sectionId.split('/').toList match {
+    case edition :: tail if Edition.all.map(_.id.toLowerCase).contains(edition.toLowerCase) => tail.mkString("/")
+    case _ => sectionId
+  }
 
   private def getSectionOrTagWebTitle(id: String): Future[Option[ItemResponse]] =
     ContentApi
