@@ -70,6 +70,7 @@ define([
 
         bean.on(qwery('.timeline')[0], 'click', '.timeline__link', function(e) {
             mediator.emit('module:liveblog:showkeyevents', true);
+            $('.dropdown--live-feed', getContext()).addClass('dropdown--active');
             var $el = bonzo(e.currentTarget),
                 eventId = $el.attr('data-event-id'),
                 title = $('.timeline__title', $el).text(),
@@ -129,7 +130,6 @@ define([
 
             if(/desktop|wide/.test(detect.getBreakpoint()) && config.page.keywordIds.indexOf('football/football') < 0) {
                 var topMarker = qwery('.js-top-marker')[0];
-                bonzo(topMarker).addClass('affix-top-marker');
                 affix = new Affix({
                     element: qwery('.js-live-blog__timeline-container')[0],
                     topMarker: topMarker,

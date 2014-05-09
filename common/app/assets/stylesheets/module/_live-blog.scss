@@ -92,7 +92,6 @@ $block-padding-right: $gs-gutter;
         top: 0;
         z-index: 200;
         @include rem((
-            padding-top: $gs-baseline*2,
             margin-left:($a-rightCol-width + $gs-gutter) * - 1,
             width:$a-rightCol-width
         ));
@@ -804,7 +803,8 @@ $block-padding-right: $gs-gutter;
 
 /* Dropdowns
    ========================================================================== */
-.dropdown--live {
+.dropdown--key-events,
+.dropdown--live-feed {
     position: relative;
     padding: 0;
     z-index: 100;
@@ -930,6 +930,10 @@ $timeline-width: 14px;
         .dropdown {
             border-top: 0 none;
         }
+
+        @include rem((
+            padding-top: $gs-baseline*2
+        ));
     }
 }
 
