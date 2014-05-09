@@ -208,10 +208,13 @@ $c-commercial-comp-neutral: #edede7;
     @include fs-textsans(2);
     margin: 0;
 }
-.lineitem__img {
+.lineitem__img,
+.highitem__img {
     height: 100px;
     display: none;
-    margin-right: ($gs-baseline/3)*2;
+    @include rem((
+        margin-right: $gs-gutter/2
+    ));
     float: left;
     text-align: center;
 
@@ -219,11 +222,17 @@ $c-commercial-comp-neutral: #edede7;
         width: auto;
         height: 100%;
     }
-    .highitem & {
-        display: block;
-    }
 }
-
+.highitem__img {
+    display: block;
+    height: auto;
+    width: 80px;
+}
+.highitem__details {
+    @include rem((
+        margin-left: 90px
+    ));
+}
 
 /* ==========================================================================
    300x50 varient
@@ -274,6 +283,14 @@ $c-commercial-comp-neutral: #edede7;
     .lineitem__img {
         display: block;
         margin-bottom: $gs-baseline;
+    }
+    .highitem__details {
+        @include rem((
+            margin-left: 110px
+        ));
+    }
+    .highitem__img {
+        width: 100px;
     }
 }
 
