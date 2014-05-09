@@ -210,16 +210,21 @@
     .container & {
         @include clearfix;
         position: relative;
-        min-height: 80px;
+        min-height: 90px;
+        @include rem((
+            padding-bottom: $gs-baseline/2
+        ));
 
         .ad-slot--paid-for-badge__inner {
             border-top: 0;
             padding-bottom: 0;
         }
         .ad-slot--paid-for-badge__link {
-            position: absolute;
-            top: 0;
-            right: 0;
+            position: relative;
+            float: right;
+            @include rem((
+                margin-top: nth(nth($fs-textsans, 2), 2)*-2
+            ));
         }
         .ad-slot--paid-for-badge__logo {
             display: block;
@@ -231,8 +236,7 @@
             margin-left: 50%;
             width: auto;
             @include rem((
-                margin-top: -$gs-row-height,
-                margin-right: gs-span(1)
+                margin-top: -$gs-row-height
             ));
 
             .ad-slot--paid-for-badge__inner {
@@ -253,10 +257,11 @@
             ));
 
             .ad-slot--paid-for-badge__link {
-                position: relative;
+                float: none;
+                margin-top: 0;
             }
             + .container__body .collection-wrapper:first-child .fromage {
-                border-top-width: 0;
+                border-top: 0;
             }
         }
         @include mq(wide) {
@@ -267,6 +272,11 @@
 // can be removed once we dynamically add the sponsored badge ad slot to fronts
 .dfp-badge-container {
     display: none;
+    border-bottom: 2px solid $c-newsAccent;
+
+    @include mq(faciaLeftCol) {
+        border-bottom: 0
+    }
 }
 .ad-slot__label {
     height: $mpu-ad-label-height;
