@@ -4,13 +4,11 @@
  */
 define([
     'qwery',
-    'common/utils/ajax',
     'lodash/objects/assign',
     'common/modules/component',
     'common/modules/analytics/register'
 ], function (
     qwery,
-    ajax,
     extend,
     Component,
     register
