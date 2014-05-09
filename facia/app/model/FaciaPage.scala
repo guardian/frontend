@@ -9,7 +9,7 @@ case class FaciaPage(
                       seoData: SeoData,
                       collections: List[(Config, Collection)]) extends MetaData {
 
-  lazy val frontPage: FrontPage = FrontPage.getFrontPageFromFaciaPage(this)
+  lazy val frontPage: FrontPage = FrontPage(this)
 
   private val isOldSeoOn: Boolean = Switches.NewSeoSwitch.isSwitchedOn
   def oldOrNewSeo[T](oldValue: T, newValue: T): T = if (isOldSeoOn) oldValue else newValue
