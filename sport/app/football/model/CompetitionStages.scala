@@ -29,11 +29,11 @@ object CompetitionStage {
 
       if (stageLeagueEntries.isEmpty) {
         if (rounds.size > 1) {
-          // multiple rounds without league table entries is tournament
-          val tmp = KnockoutSpider.orderings.get(competition.id).map { matchDates =>
+          KnockoutSpider.orderings.get(competition.id).map { matchDates =>
+            // TODO: PA will be "postponing" matches in the world cup to turn "winner group A" teams into real nation teams
+            // add filtering when PA get back to us with an example
             KnockoutSpider(stageMatches, rounds, matchDates)
           }.orElse(Some(KnockoutList(stageMatches, rounds)))
-          tmp
         } else None  // or just a collection of matches (e.g. international friendlies)
       } else {
         if (rounds.size > 1) {
