@@ -17,7 +17,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   lazy val delegate: ApiContent = apiContent.delegate
 
   lazy val publication: String = fields.get("publication").getOrElse("")
-  lazy val lastModified: DateTime = fields("lastModified").parseISODateTime
+  lazy val lastModified: DateTime = fields.get("lastModified").map(_.parseISODateTime).getOrElse(DateTime.now)
   lazy val shortUrl: String = delegate.safeFields("shortUrl")
   lazy val shortUrlId: String = delegate.safeFields("shortUrl").replace("http://gu.com", "")
   lazy val webUrl: String = delegate.webUrl
@@ -73,7 +73,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   private lazy val fields: Map[String, String] = delegate.safeFields
 
   // Inherited from Trail
-  override lazy val webPublicationDate: DateTime = delegate.webPublicationDate
+  override lazy val webPublicationDate: DateTime = delegate.webPublicationDateOption.getOrElse(DateTime.now)
   override lazy val linkText: String = webTitle
   override lazy val url: String = SupportedUrl(delegate)
   override lazy val section: String = delegate.sectionId.getOrElse("")
@@ -209,7 +209,7 @@ object Content {
             itemId,
             sectionId = (json \ "sectionId").asOpt[String],
             sectionName = (json \ "sectionName").asOpt[String],
-            webPublicationDate = (json \ "webPublicationDate").asOpt[Long].map(new DateTime(_)).get,
+            webPublicationDateOption = (json \ "webPublicationDate").asOpt[Long].map(new DateTime(_)),
             webTitle = (json \ "safeFields" \ "headline").as[String],
             webUrl = (json \ "webUrl").as[String],
             apiUrl = "",
@@ -285,7 +285,7 @@ object SnapApiContent extends ApiContent(
     id                  = "",
     sectionId           = None,
     sectionName         = None,
-    webPublicationDate  = DateTime.now,
+    webPublicationDateOption = Some(DateTime.now),
     webTitle            = "",
     webUrl              = "http://www.theguardian.com/",
     apiUrl              = "",

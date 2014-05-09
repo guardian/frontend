@@ -1,0 +1,46 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# For dev machines
+GET         /assets/internal/*file                                                                                   controllers.Assets.at(path="/public", file)
+GET         /assets/*path                                                                                            dev.DevAssetsController.at(path)
+
+# Facia
+GET         /                                                                                                        controllers.FaciaController.editionRedirect(path = "")
+GET         /$path<(culture|sport|commentisfree|business|money|rss)>                                                 controllers.FaciaController.editionRedirect(path)
+
+#Facia Press
+GET         /pressed/*path                                                                                           controllers.FaciaController.renderFrontPress(path)
+
+GET         /collection/*id/rss                                                                                      controllers.FaciaController.renderCollectionRss(id)
+GET         /collection/*id.json                                                                                     controllers.FaciaController.renderCollectionJson(id)
+GET         /collection/*id                                                                                          controllers.FaciaController.renderCollection(id)
+
+GET         /container/*id.json                                                                                      controllers.FaciaController.renderContainerJson(id)
+
+# Editionalised pages
+GET         /$path<[^/]+(/[^/]+)?>/rss                                                                               controllers.FaciaController.renderFrontRss(path)
+GET         /$path<[^/]+(/[^/]+)?>.json                                                                              controllers.FaciaController.renderFrontJson(path)
+GET        /$path<[^/]+(/[^/]+)?>                                                                                    controllers.FaciaController.renderFront(path)
+
+# Applications
+GET         /sections                                                                                                controllers.SectionsController.renderSections()
+GET         /sections.json                                                                                           controllers.SectionsController.renderSectionsJson()
+
+GET         /$path<[\w\d-]*(/[\w\d-]*)?/gallery/.*>/lightbox.json                                                    controllers.GalleryController.renderLightbox(path)
+GET         /$path<[\w\d-]*(/[\w\d-]*)?/gallery/.*>.json                                                             controllers.GalleryController.renderJson(path)
+GET         /$path<[\w\d-]*(/[\w\d-]*)?/gallery/.*>                                                                  controllers.GalleryController.render(path)
+
+GET         /$path<[\w\d-]*(/[\w\d-]*)?/(cartoon|graphic|picture)/.*>.json                                           controllers.ImageContentController.renderJson(path)
+GET         /$path<[\w\d-]*(/[\w\d-]*)?/(cartoon|graphic|picture)/.*>                                                controllers.ImageContentController.render(path)
+
+GET         /$path<[\w\d-]*(/[\w\d-]*)?/video/.*>.json                                                               controllers.VideoController.renderJson(path)
+GET         /$path<[\w\d-]*(/[\w\d-]*)?/video/.*>                                                                    controllers.VideoController.render(path)
+
+GET         /$path<[\w\d-]*(/[\w\d-]*)?/(interactive|ng-interactive)/.*>.json                                        controllers.InteractiveController.renderInteractiveJson(path)
+GET         /$path<[\w\d-]*(/[\w\d-]*)?/(interactive|ng-interactive)/.*>                                             controllers.InteractiveController.renderInteractive(path)
+
+# Articles
+GET         /*path.json                                                                                              controllers.ArticleController.renderLatest(path, lastUpdate: Option[String])
+GET         /*path                                                                                                   controllers.ArticleController.renderArticle(path)

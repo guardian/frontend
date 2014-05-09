@@ -9,7 +9,7 @@ object Frontend extends Build with Prototypes {
   val common = application("common").settings(
     libraryDependencies ++= Seq(
       "com.gu" %% "configuration" % "3.9",
-      "com.gu.openplatform" %% "content-api-client" % "2.9",
+      "com.gu.openplatform" %% "content-api-client" % "2.13",
 
       "com.typesafe.akka" %% "akka-agent" % "2.1.0",
 
@@ -142,12 +142,20 @@ object Frontend extends Build with Prototypes {
       archive,
       sport,
       discussion,
-      router,
       diagnostics,
       identity,
       admin,
       commercial,
       onward
+    )
+
+  // this app has a very limited set.
+  // it is designed to get all other services (e.g. onwards) from PROD
+  val preview = application("preview")
+    .dependsOn(
+      facia,
+      applications,
+      article
     )
 
   val main = root().aggregate(

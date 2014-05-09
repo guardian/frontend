@@ -5,7 +5,6 @@ import org.scalatest.Matchers
 import java.io.{FileInputStream, File}
 import org.apache.commons.codec.digest.DigestUtils
 
-
 class GuardianConfigurationTest extends FlatSpec with Matchers {
 
   "Guardian Configuration" should "expose guardian.page properties" in {

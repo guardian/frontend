@@ -60,11 +60,17 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
   override def toString = configuration.toString
 
+  case class Auth(user: String, password: String)
 
   object contentApi {
     lazy val elasticSearchHost = configuration.getMandatoryStringProperty("content.api.elastic.host")
     lazy val key = configuration.getMandatoryStringProperty("content.api.key")
     lazy val timeout: Int = configuration.getIntegerProperty("content.api.timeout.millis").getOrElse(2000)
+
+    lazy val previewAuth: Option[Auth] = for {
+      user <- configuration.getStringProperty("content.api.preview.user")
+      password <- configuration.getStringProperty("content.api.preview.password")
+    } yield Auth(user, password)
 
     object write {
       lazy val username: Option[String] = configuration.getStringProperty("contentapi.write.username")
