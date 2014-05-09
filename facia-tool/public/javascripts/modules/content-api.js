@@ -141,7 +141,7 @@ function (
             url: vars.CONST.apiSearchBase + '/' + path + '?page-size=0'
         }).always(function(resp) {
             var meta = resp.response ?
-               _.chain(['tag', 'section'])
+               _.chain(['section', 'tag'])
                 .map(function(key) { return resp.response[key]; })
                 .filter(function(obj) { return _.isObject(obj) && obj.webTitle && (obj.id || obj.sectionId); })
                 .reduce(function(m, obj) {

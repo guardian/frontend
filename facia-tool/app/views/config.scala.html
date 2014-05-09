@@ -90,7 +90,7 @@
                     <div class="api-query-results">
                         <div data-bind="
                             attr: {class: 'api-query-status--' + state.apiQueryStatus()},
-                            text: state.apiQueryStatus() === 'check' ? 'Checking...' : state.apiQueryStatus() === 'invalid' ? 'Found no matches' : 'Found matches:'"></div>
+                            text: state.apiQueryStatus() === 'check' ? 'Checking...' : state.apiQueryStatus() === 'invalid' ? 'No matches found' : 'Found matches:'"></div>
                         <div data-bind="foreach: capiResults">
                             <a target="_article" class="api-query-result" data-bind="
                                     attr: {href: 'http://www.theguardian.com/' + id},
