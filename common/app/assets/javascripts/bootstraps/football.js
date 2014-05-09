@@ -6,6 +6,7 @@ define([
     'common/utils/context',
     'common/utils/config',
     'common/utils/page',
+    'common/utils/mediator',
     'common/modules/ui/rhc',
     'common/modules/charts/table-doughnut',
     'common/modules/sport/football/match-list-live',
@@ -20,6 +21,7 @@ define([
     context,
     config,
     page,
+    mediator,
     rhc,
     Doughnut,
     MatchListLive,
@@ -290,7 +292,7 @@ define([
                     }
                     return r;
                 })();
-                window.addEventListener('resize', resize);
+                mediator.on('window:resize', resize);
                 bean.on(document, 'click', '.dropdown__button', resize);
             })();
         }
