@@ -80,7 +80,7 @@ define([
             return;
         }
 
-        this.state.apiQueryStatus('checking');
+        this.state.apiQueryStatus('check');
 
         checkCount += 1;
         cc = checkCount;
@@ -89,16 +89,10 @@ define([
         apiQuery += 'show-editors-picks=true&show-fields=headline';
 
         contentApi.fetchContent(apiQuery)
-        .done(function(results) {
+        .always(function(results) {
             if (cc === checkCount) {
                 self.capiResults(results);
                 self.state.apiQueryStatus(results.length ? 'valid' : 'invalid');
-            }
-        })
-        .fail(function() {
-            if (cc === checkCount) {
-                self.capiResults.removeAll();
-                self.state.apiQueryStatus('invalid');
             }
         });
     };

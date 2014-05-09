@@ -117,7 +117,7 @@ define([
 
         contentApi.fetchMetaForPath(this.id())
         .done(function() {
-            self.state.hasCapiProps('Metadata for this front must be edited with the R2 Tag Manager');
+            self.state.hasCapiProps('Metadata for this front should be edited in the Tag Manager');
         })
         .fail(function() {
             self.openProps();
