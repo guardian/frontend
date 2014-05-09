@@ -221,6 +221,11 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 6, 1)
   )
 
+  val GeoMostPopular = Switch("Feature Switches", "geo-most-popular",
+    "If this is switched on users then 'most popular' will be upgraded to geo targeted",
+    safeState = On, sellByDate = never
+  )
+
   val FontSwitch = Switch("Feature Switches", "web-fonts",
     "If this is switched on then the custom Guardian web font will load.",
     safeState = Off, sellByDate = never
@@ -428,7 +433,8 @@ object Switches extends Collections {
     IndiaRegionSwitch,
     MemcachedSwitch,
     IncludeBuildNumberInMemcachedKey,
-    GzipSwitch
+    GzipSwitch,
+    GeoMostPopular
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
