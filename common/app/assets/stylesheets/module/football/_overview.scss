@@ -61,7 +61,7 @@
 }
 .football-group__matches,
 .football-knockouts {
-    border-top: solid #ffffff $gs-baseline;
+    border-top: $gs-baseline solid #ffffff; // style, colour, width
 
     .table__caption--top {
         border-top: 0;
@@ -304,7 +304,7 @@
 .football-round--playoff {
     bottom: 0;
     height: 25%;
-    left: 42.857142857%;
+    left: 42.857142857%; // 50 - (100/7/2) Half off the width of a seventh to get it exactly center
     position: absolute;
     z-index: 1;
 

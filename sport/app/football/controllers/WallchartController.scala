@@ -19,7 +19,7 @@ object WallchartController extends Controller with Logging with ExecutionContext
       )
       val competitionStages = CompetitionStage.stagesFromCompetition(competition)
 
-      Cached(300) {
+      Cached(60) {
         if(embed) Ok(football.views.html.wallchart.embed(page, competition, competitionStages))
         else Ok(football.views.html.wallchart.page(page, competition, competitionStages))
       }
