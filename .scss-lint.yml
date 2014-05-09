@@ -27,8 +27,11 @@ linters:
         - common/app/assets/stylesheets/base/_type.scss # We need to declare font-size twice
         - common/app/assets/stylesheets/_mixins.scss
 
+  MergeableSelector:
+    enabled: false
+
   DuplicateRoot:
-    enabled: true
+    enabled: false
 
   EmptyLineBetweenBlocks:
     enabled: false
