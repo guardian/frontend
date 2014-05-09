@@ -22,18 +22,6 @@
         }
     }
 
-    .team-crest {
-        @include rem((
-            height: 12px,
-            margin-right: $gs-gutter/4,
-            width: 22px
-        ));
-        @include background-size(22px 12px);
-        display: inline-block;
-        vertical-align: text-bottom;
-
-    }
-
     .table-column--main {
         max-width: 50px;
 
@@ -68,6 +56,17 @@
             @include u-h;
         }
     }
+}
+
+.team-crest {
+    @include rem((
+        height: 12px,
+        margin-right: $gs-gutter/4,
+        width: 22px
+    ));
+    @include background-size(22px 12px);
+    display: inline-block;
+    vertical-align: text-bottom;
 }
 
 // This is everything on the standalone pages
@@ -155,7 +154,7 @@
             width: 49.5%;
         }
 
-        @include mq(desktop) {
+        @include mq(rightCol) {
             width: 24.5%;
         }
 
@@ -233,7 +232,7 @@
 }
 
 .football-knockouts--has-spider {
-    @include mq(desktop) {
+    @include mq(rightCol) {
         display: none;
     }
 }
@@ -243,7 +242,7 @@
    ========================================================================== */
 .football-knockout-chart {
     @include rem((
-        padding: 0 $gs-gutter
+        padding: 0 $gs-gutter/2
     ));
     background: $c-neutral8;
     display: none;
@@ -254,6 +253,11 @@
         text-align: center;
         width: 100%;
     }
+    .football-match--fixture {
+        .football-match__team {
+//            text-align: center;
+        }
+    }
     .football-match__container {
         display: table-cell;
         height: 100%;
@@ -262,15 +266,15 @@
     }
     .football-match__team {
         @include rem((
-            height: $gs-baseline*1.5
+            height: ($gs-baseline/1.5)*2,
+            padding: 0 0 $gs-baseline*1.5
         ));
         border: 1px solid $c-neutral2;
         border-top: 0;
         display: block;
         float: none;
-        padding: 0;
         position: absolute;
-        text-align: center;
+        text-align: left;
         width: 100%;
     }
     .football-match__team--home {
@@ -303,7 +307,34 @@
         }
     }
 
-    @include mq(desktop) {
+    .football-match__score {
+        @include rem((
+            margin-right: $gs-gutter/5
+        ));
+        float: right;
+        font-weight: bold;
+    }
+
+    .football-match__kickoff,
+    .football-match__date,
+    .football-match__comments {
+        @include fs-data(2, true);
+    }
+
+    .football-match__comments {
+        @include rem((
+            padding: 0 $gs-gutter/4
+        ));
+    }
+
+    .team-crest {
+        @include rem((
+            margin-bottom: 2px,
+            margin-left: 1px
+        ));
+    }
+
+    @include mq(rightCol) {
         display: block;
     }
 }
