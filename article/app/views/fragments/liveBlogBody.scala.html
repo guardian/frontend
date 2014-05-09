@@ -120,7 +120,7 @@
                                         <h3 class="blog__related__head">More on this story</h3>
                                         <ul class="u-unstyled">
                                         @storyPackage.take(4).zipWithIndex.map { case (item, index) =>
-                                            @fragments.collections.items.standard(item, index, 1, "blog__related__item")
+                                            @fragments.collections.items.standard(item, index, 1, "blog__related__item")(request, Config.emptyConfig)
                                         }
                                         </ul>
                                     </aside>
