@@ -4,14 +4,16 @@ define([
     'bonzo',
     'qwery',
     'common/modules/adverts/dfp',
-    'helpers/fixtures'
+    'helpers/fixtures',
+    'common/utils/mediator'
 ], function(
     $,
     bean,
     bonzo,
     qwery,
     DFP,
-    fixtures
+    fixtures,
+    mediator
 ) {
 
     describe('DFP', function() {
@@ -80,6 +82,7 @@ define([
         });
 
         it('should find a DFP ad slot', function() {
+            window.googletag = { cmd: [] };
             dfp.init();
             expect(dfp.dfpAdSlots.length).toBe(4);
         });
@@ -191,6 +194,7 @@ define([
 
         it('should not create ad if slot is not displayed', function() {
             $('.ad-slot--dfp').first().css('display', 'none');
+            window.googletag = { cmd: [] };
             dfp.init();
             expect(dfp.dfpAdSlots.length).toBe(3);
             expect(
@@ -203,6 +207,38 @@ define([
                     }
                 )
             ).toBe(false);
+        });
+
+        it('should refresh on breakpoint changed', function() {
+            var $style = $.create('<style></style>')
+                    .html('body:after { content: "desktop"; }')
+                    .appendTo('head'),
+                refreshSpy = sinon.spy(),
+                mediatorEmitSpy = sinon.spy(mediator, 'emit');
+
+            window.googletag = {
+                cmd: [],
+                pubads: function() {
+                    return {
+                        refresh: refreshSpy
+                    };
+                }
+            };
+            dfp.init();
+            // run last cmd
+            window.googletag.cmd.pop()();
+            // change breakpoint
+            $style.html('body:after { content: "mobile"; }');
+            // 'resize'
+            mediator.emit('window:resize');
+            waitsFor(function() {
+                return refreshSpy.called;
+            });
+            runs(function() {
+                expect(mediatorEmitSpy).toHaveBeenCalledWith('modules:adverts:refreshed');
+                $style.remove();
+                mediatorEmitSpy.restore();
+            });
         });
 
     });

@@ -337,6 +337,7 @@ define([
         // if we don't already have googletag, create command queue and load it
         if (!window.googletag) {
             window.googletag = { cmd: [] };
+
             // load the library asynchronously
             require(['googletag']);
         }
@@ -346,7 +347,7 @@ define([
         window.googletag.cmd.push(this.defineSlots.bind(this));
         window.googletag.cmd.push(this.fireAdRequest.bind(this));
 
-        // anything we want to happen after requesting ads
+        // anything we want to happen after displaying ads
         window.googletag.cmd.push(function() {
             var hasBreakpointChanged = detect.hasCrossedBreakpoint();
             mediator.on('window:resize',
