@@ -40,16 +40,17 @@ var Comments = function(context, mediator, options) {
     this.mediator = mediator;
     this.setOptions(options);
 
-    if (this.options.commentId) {
-        this.endpoint = '/discussion/comment-permalink/'+ this.options.commentId +'.json';
-    }
-
     if (userPrefs.get('discussion.order')) {
         this.options.order = userPrefs.get('discussion.order');
     }
 
-    if (this.options.order === 'oldest') {
-        this.endpoint = '/discussion/oldest'+ this.options.discussionId + '.json';
+
+    if (this.options.commentId) {
+        this.endpoint = '/discussion/comment-permalink/' + this.options.order + '/' + this.options.commentId + '.json';
+    }
+
+    else {
+        this.endpoint = '/discussion/' + this.options.order + this.options.discussionId + '.json';
     }
 };
 Component.define(Comments);
@@ -330,10 +331,11 @@ Comments.prototype.loadMore = function(e) {
  * }
  */
 Comments.prototype.fetchComments = function(options) {
-    var url = options.comment ? '/discussion/comment-permalink/'+ options.comment +'.json' :
-                '/discussion/'+ (this.options.order === 'oldest' ? 'oldest' : '') + this.options.discussionId +'.json?'+
-                (options.page ? '&page='+ options.page : '') +
-                '&maxResponses=3';
+    var url =
+        '/discussion/' + this.options.order + this.options.discussionId + '.json?' +
+        (options.page ? '&page=' + options.page : '') +
+        '&maxResponses=3';
+
 
     return ajax({
         url: url,

@@ -28,7 +28,7 @@
 /* Footer
    ========================================================================== */
 
-.footer {
+.l-footer {
     @include rem((
         padding: 0 0 ($gs-baseline/3)*4,
         margin-top: $gs-baseline*3
@@ -39,32 +39,40 @@
         display: none !important;
     }
 }
-.footer__primary {
+.l-footer__primary {
     background: #ffffff;
 }
-.footer__banner {
+.l-footer__banner {
     border-top: 2px solid $c-brandBlue;
     @include rem((
         margin-bottom: ($gs-baseline/3)*2
     ));
 }
 @include mq(tablet) {
-    .js-on .footer__navigation-wrapper {
+    .js-on .l-footer__navigation-wrapper {
         display: none;
     }
 }
-.footer__secondary {
+.l-footer__secondary {
+    @include box-sizing(border-box);
     @include font($sans-serif, normal, 13, 19);
-    @include rem((
-        padding-top: ($gs-baseline/3)*5
-    ));
     color: lighten($c-neutral2, 15%);
+    @include rem((
+        padding: ($gs-baseline/3)*5 $gs-gutter/2 ($gs-baseline/3)
+    ));
 
+    @include mq(mobileLandscape) {
+        @include rem((
+            padding-left: $gs-gutter,
+            padding-right: $gs-gutter
+        ));
+    }
     @include mq(tablet) {
         @include rem((
             padding-top: ($gs-baseline/3)*2
         ));
     }
+
     a {
         color: darken($c-neutral2, 3%); // Enhance contrast on non-white background
     }
@@ -134,7 +142,7 @@
     }
 }
 
-.footer__misc {
+.l-footer__misc {
     border-top: 1px solid lighten($c-neutral2, 40%);
     @include rem((
         padding-top: $gs-baseline/3 - 1
