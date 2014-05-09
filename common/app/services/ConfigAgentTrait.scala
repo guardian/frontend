@@ -99,8 +99,8 @@ trait ConfigAgentTrait extends ExecutionContexts with Logging {
     } yield {
       val section:  Option[String] = sc.section.orElse(ir.flatMap(getSectionFromItemResponse)).orElse(sp.section)
       val webTitle: Option[String] = sc.webTitle.orElse(ir.flatMap(getWebTitleFromItemResponse)).orElse(sp.webTitle)
-      val title: Option[String] = webTitle.map(SeoData.titleFromWebTitle)
-      val description: Option[String] = webTitle.map(SeoData.descriptionFromWebTitle)
+      val title: Option[String]    = sc.title.orElse(webTitle.map(SeoData.titleFromWebTitle))
+      val description: Option[String] = sc.description.orElse(webTitle.map(SeoData.descriptionFromWebTitle))
 
       SeoData(path, section, webTitle, title, description)
     }
