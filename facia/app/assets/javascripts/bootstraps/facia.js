@@ -12,7 +12,8 @@ define([
     'common/modules/ui/collection-show-more',
     'modules/ui/snaps',
     'modules/ui/container-show-more',
-    'modules/ui/container-toggle'
+    'modules/ui/container-toggle',
+    'modules/onwards/geo-most-popular-front'
 ], function (
     $,
     ajax,
@@ -25,7 +26,8 @@ define([
     CollectionShowMore,
     snaps,
     ContainerShowMore,
-    ContainerToggle
+    ContainerToggle,
+    GeoMostPopularFront
 ) {
     var modules = {
 
@@ -67,6 +69,13 @@ define([
                     new ContainerToggle(container).addToggle();
                 });
             });
+        },
+
+        upgradeMostPopularToGeo: function(config) {
+            // only the 3 editionalised fronts
+            if (config.page.pageId === "" && config.switches.geoMostPopular) {
+                new GeoMostPopularFront(mediator, config).render('.container--popular');
+            }
         }
     };
 
@@ -76,6 +85,7 @@ define([
             modules.showSnaps();
             modules.showCollectionShowMore();
             modules.showContainerToggle();
+            modules.upgradeMostPopularToGeo(config);
         }
         mediator.emit('page:front:ready', config, context);
     };

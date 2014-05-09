@@ -73,7 +73,6 @@ define([
     /** @type {String} */
     Component.prototype.manipulationType = 'append';
 
-
     /**
      * Uses the this.componentClass
      * TODO (jamesgorrie): accept strings etc Also what to do with multiple objects?
@@ -100,7 +99,7 @@ define([
 
         this.elem = template;
         this._prerender();
-        bonzo(container).append(this.elem);
+        bonzo(container)[self.manipulationType](this.elem);
         this._ready();
     };
 
