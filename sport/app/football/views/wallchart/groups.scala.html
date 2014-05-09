@@ -1,0 +1,34 @@
+@(competition: model.Competition, groupStage: _root_.football.model.Groups)(implicit request: RequestHeader)
+
+<ul class="football-groups u-unstyled u-cf">
+    @groupStage.groupTables.zipWithRowInfo.map{ case ((round, leagueTableEntries), row) =>
+        @defining(groupStage.matchesList(competition, round)) { matches =>
+            <li class="football-group">
+                <div class="football-group__container table--hide-from-importance-3">
+                    @round.name.map{ name =>
+                        @fragments.dropdown(name, isActive = row.isFirst){
+                            <div class="football-group__table">
+                                @football.views.html.tablesList.tableView(competition, model.Group(round, leagueTableEntries),
+                                    heading = round.name,
+                                    striped = true,
+                                    withCrests = true
+                                )
+                            </div>
+
+                            <div class="football-group__matches">
+                                @matches.matchesGroupedByDateAndCompetition.zipWithRowInfo.map { case ((date, competitionMatches), info) =>
+                                    @competitionMatches.map { case (competition, matches) =>
+                                        @football.views.html.matchList.matchesList(matches, competition, date,
+                                            linkToCompetition = false,
+                                            heading = if(info.isFirst) Option("Fixtures and results") else None
+                                        )
+                                    }
+                                }
+                            </div>
+                        }
+                    }
+                </div>
+            </li>
+        }
+    }
+</ul>

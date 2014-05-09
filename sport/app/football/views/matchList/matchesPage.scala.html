@@ -33,7 +33,14 @@
                                 @competitionMatches.map { case (competition, matches) =>
                                     <div class="football-table__container">
                                         <div class="article__container u-cf">
-                                            @football.views.html.matchList.matchesList(matches, competition, date, responsiveFont = true, matchType = matchesList.pageType)
+                                            @football.views.html.matchList.matchesList(
+                                                matches,
+                                                competition,
+                                                date,
+                                                responsiveFont = true,
+                                                matchType = matchesList.pageType,
+                                                heading = Option(competition.fullName)
+                                            )
                                         </div>
                                     </div>
                                 }
