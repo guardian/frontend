@@ -361,6 +361,12 @@ object Switches extends Collections {
     "If this switch is on then the SEO elements for pages will be automatically generated from keyword and title",
     safeState = Off, sellByDate = new DateMidnight(2014, 5, 30)
   )
+
+  val FaciaToolContainerTagsSwitch = Switch("Facia Tool", "facia-tool-tags",
+    "If this switch is on the container configuration will allow articles to show their tags or sections",
+    safeState = Off, sellByDate = new DateMidnight(2014, 6, 7)
+  )
+
   // Image Switch
 
   val ImageServerSwitch = Switch("Image Server", "image-server",
@@ -419,6 +425,7 @@ object Switches extends Collections {
     FaciaToolPressSwitch,
     ShowAllArticleEmbedsSwitch,
     FrontPressJobSwitch,
+    FaciaToolContainerTagsSwitch,
     LayoutHintsSwitch,
     RssLinkSwitch,
     PopularInTagSwitch,

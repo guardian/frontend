@@ -11,7 +11,9 @@ define([
     'common/modules/userPrefs',
     'common/utils/detect',
     'common/modules/live/notification-bar',
-    'lodash/objects/assign'
+    'lodash/objects/assign',
+    'common/modules/article/twitter',
+    'lodash/collections/toArray'
 ], function (
     mediator,
     ajax,
@@ -21,7 +23,9 @@ define([
     userPrefs,
     detect,
     NotificationBar,
-    extend
+    extend,
+    twitter,
+    toArray
 ) {
     /*
         @param {Object} options hash of configuration options:
@@ -29,7 +33,6 @@ define([
             delay            : {Number}              Timeout in milliseconds to query endpoint,
             attachTo         : {DOMElement|Object}   DOMElement or list of elements insert response into
             switches         : {Object}              Global switches object
-            loadOnInitialise : {Number}              Make the first request when the module is created
             manipulationType : {String}              Which manipulation method used to insert content into DOM
     */
     function Autoupdate(config) {
@@ -59,24 +62,29 @@ define([
             '    <span class="u-h">(turn on)</span>' +
             '  </button>';
 
-        // View
         this.view = {
-            render: function (res) {
+            render: function(res) {
                 var attachTo = options.attachTo,
-                    manipulation = options.manipulationType,
+                    manipulation = this.getManipulationType(),
                     date = new Date().toString(),
                     $attachTo = bonzo(attachTo),
-                    elementsToAdd = $.create('<div>' + res.html + '</div>')[0];
+                    resultHtml = $.create('<div>' + res.html + '</div>')[0],
+                    elementsToAdd = resultHtml.innerHTML;
 
-                this.unreadBlocks += elementsToAdd.children.length;
+                this.unreadBlocks += resultHtml.children.length;
 
                 if (manipulation === 'prepend') {
-                    bonzo(elementsToAdd.children).addClass('autoupdate--hidden');
+                    bonzo(resultHtml.children).addClass('autoupdate--hidden');
+                    elementsToAdd = toArray(resultHtml.children);
+                } else if (manipulation === 'append') {
+                    bonzo(resultHtml.children).addClass('autoupdate--hidden');
+                    elementsToAdd = toArray(resultHtml.children).reverse();
                 }
 
-                $attachTo[manipulation](elementsToAdd.innerHTML);
+                $attachTo[manipulation](elementsToAdd);
                 // add a timestamp to the attacher
                 $attachTo.attr('data-last-updated', date);
+                twitter.enhanceTweets();
 
                 if(this.isUpdating) {
                     this.notificationBar.setState('hidden');
@@ -88,7 +96,7 @@ define([
                 mediator.emit('modules:autoupdate:render');
             },
 
-            toggle: function (btn) {
+            toggle: function(btn) {
                 var action = btn.getAttribute('data-action');
 
                 $(options.btnClass).removeClass(options.activeClass);
@@ -97,7 +105,7 @@ define([
                 this[action]();
             },
 
-            destroy: function () {
+            destroy: function() {
                 $('.update').remove();
                 mediator.emit('modules:autoupdate:destroyed');
             },
@@ -119,8 +127,7 @@ define([
             }
         };
 
-        // Model
-        this.load = function () {
+        this.load = function() {
             var that = this,
                 path = (typeof options.path === 'function') ? options.path() : options.path + '.json';
 
@@ -144,7 +151,7 @@ define([
             );
         };
 
-        this.on = function () {
+        this.on = function() {
             var that = this;
 
             this.nextReload = new Date().getTime() + options.delay;
@@ -157,12 +164,11 @@ define([
             }, options.delay);
         };
 
-        this.off = function () {
+        this.off = function() {
             this.isUpdating = false;
         };
 
-        // Initialise
-        this.init = function () {
+        this.init = function() {
             if (options.switches && options.switches.autoRefresh !== true) {
                 return;
             }
@@ -196,6 +202,13 @@ define([
             this.view.toggle.call(this, this.btns[1]);
         };
 
+        this.setManipulationType = function(manipulation) {
+            options.manipulationType = manipulation;
+        };
+
+        this.getManipulationType = function() {
+            return options.manipulationType;
+        };
     }
 
     return Autoupdate;

@@ -1,6 +1,6 @@
 @(items: Seq[Trail], style: Container, containerIndex: Int)(implicit request: RequestHeader)
 
-<div class="collection-wrapper">
+<div class="facia-slice-wrapper">
     <ul class="u-unstyled l-row l-row--items-4 l-row--layout-m collection">
         @items.slice(0, 4).zipWithIndex.map{ case (trail, index) =>
             @fragments.collections.items.standard(trail, index + 3, containerIndex)

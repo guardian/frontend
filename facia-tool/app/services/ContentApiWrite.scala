@@ -77,7 +77,7 @@ trait ContentApiWrite extends ExecutionContexts with Logging {
 
     ContentApiPut(
       config.collectionType.getOrElse(defaultCollectionType),
-      config.displayName.getOrElse(defaultTitle),
+      config.displayName.orElse(maybeBlock.flatMap(_.displayName)).getOrElse(defaultTitle),
       config.groups,
       maybeBlock map { block => generateItems(block.live) } getOrElse Nil,
       config.contentApiQuery,

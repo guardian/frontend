@@ -113,13 +113,13 @@
                 <input type="checkbox" data-bind="
                     checked: meta.uneditable" />
 
-                <label>Show tags</label>
-                <input type="checkbox" data-bind="
-                    checked: meta.showTags" />
+                @defining(if(Switches.FaciaToolContainerTagsSwitch.isSwitchedOn) "" else "style=display:none") { showTags =>
+                <label @showTags for="showTags" >Show tags</label>
+                <input @showTags id="showTags" type="checkbox" data-bind="checked: meta.showTags" />
 
-                <label>Show sections</label>
-                <input type="checkbox" data-bind="
-                    checked: meta.showSections" />
+                <label @showTags for="showSections" >Show sections</label>
+                <input @showTags id="showSections" type="checkbox" data-bind="checked: meta.showSections" />
+                }
 
                 <div class="tools">
                     <button class="tool" data-bind="
