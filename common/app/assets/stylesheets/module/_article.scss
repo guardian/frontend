@@ -801,23 +801,26 @@
     text-transform: uppercase;
     @include f-headline;
     font-weight: 200;
-
-
-    @include font-size(52px, 46px);
+    @include box-sizing(border-box);
     @include rem((
-        height: 46px,
-        padding: 0 4px 0 0
+        height: 48px
     ));
+    padding-top: 2px;
+    margin-right: 4px;
 
-    @include mq($from: tablet) {
-        &.drop-cap--wide {
-            @include font-size(85px, 70px);
-            @include rem((
-                height: 70px,
-                padding-right: 5px
-            ));
+    span {
+        display: inline-block;
+        vertical-align: text-top;
+        @include font-size(50px, 40px);
+    }
 
+    &.drop-cap--wide {
+        @include rem((
+            height: 72px
+        ));
 
+        span {
+            @include font-size(84px, 68px);
         }
     }
 }

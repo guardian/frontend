@@ -13,12 +13,15 @@
                  itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType" role="main">
             <div class="article__inner article__inner--head">
                 <header class="article__head">
-
-                    @fragments.meta.metaInline(article)
-                    @if(article.isAdvertisementFeature){
-                        <div class="article-hat-label">Advertisement feature</div>
-                    }
                     <div class="tone-head--default">
+
+
+                        @fragments.meta.metaInline(article)
+
+                        @if(article.isAdvertisementFeature){
+                            <div class="article-hat-label">Advertisement feature</div>
+                        }
+
                         <h1 itemprop="headline" class="article__headline js-score">
                             @Html(article.headline)
                             @if(article.isComment) {

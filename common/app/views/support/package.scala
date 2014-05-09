@@ -558,7 +558,7 @@ case class DropCaps(isFeature: Boolean) extends HtmlCleaner {
     val len = html.length
     val span = if (html.length > 325) "drop-cap drop-cap--wide" else "drop-cap"
     if ( html.matches("^[\"a-hj-zA-HJ-Z].*") && html.split("\\s+").head.length >= 3 )
-      s"""<span class="${span}">${html.head}</span>${html.tail}"""
+      s"""<div class="${span}"><span>${html.head}</span></div>${html.tail}"""
     else
       html
   }

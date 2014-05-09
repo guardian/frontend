@@ -143,9 +143,9 @@
         width: $bgWidth;
     }
     &:before {
-        margin-left: -$bgWidth;
+        right: 100%;
     }
     &:after {
-        left: 100%;
+        left: 99.999%;
     }
 }

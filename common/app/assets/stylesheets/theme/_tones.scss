@@ -97,7 +97,10 @@
         .article__columning-wrapper {
             @include rem((
                 margin-top: $gs-baseline*2
-            ))
+            ));
+            @include mq($to: tablet) {
+                margin-top: 0;
+            }
         }
 
         .article__head,
@@ -109,6 +112,11 @@
             margin-top: 0;
             padding-top: 0;
             margin-right: 0 !important;
+        }
+
+        .article__head .content-meta {
+            padding: 0.6rem 0 0 0;
+            margin: 0;
         }
 
         .article__inner--head {
@@ -123,23 +131,26 @@
             color: $textColour;
         }
 
+        .content-meta__label {
+            color: lighten($accentColour, 20);
+        }
+
         .tone-head--accent {
             position: relative;
-            @include full-bleed($accentColour);
-
             @include rem((
-                padding: $gs-baseline/2 0 $gs-baseline 0
+                    padding: $gs-baseline/2 0 $gs-baseline 0
             ));
 
-            &:after,
-            &.before {
-                z-index: 2
-            }
+            @include full-bleed($accentColour);
+            padding-left: 1px; // hack to get rid of a <1px separator line on tablet devices
+            &:before{ right: 99.999%; }
         }
 
         .tone-head--default {
-            @include full-bleed($colour);
             position: relative;
+            @include full-bleed($colour);
+            padding-left: 1px; // hack to get rid of a <1px separator line on tablet devices
+            &:before{ right: 99.999%; }
         }
 
         .article__headline,
@@ -148,11 +159,26 @@
             color: $textColour !important;
         }
 
+        .article__standfirst {
+            margin-bottom: 0;
+        }
+
+        .article__standfirst a {
+            color: white;
+            &.u-underline {
+                border-bottom-color: lighten($accentColour, 18);
+                &:hover {
+                    border-bottom-color: white;
+                }
+            }
+        }
+
         .article__headline {
             font-weight: 200;
             margin-bottom: 0;
             padding-top: $gs-baseline/2;
             padding-bottom: $gs-baseline*2;
+            min-height: $gs-baseline*5;
             @include mq($from: tablet) {
                 padding-bottom: $gs-baseline*3;
             }
