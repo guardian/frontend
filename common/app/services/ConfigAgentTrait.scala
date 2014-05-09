@@ -95,14 +95,22 @@ trait ConfigAgentTrait extends ExecutionContexts with Logging {
       ir <- itemResponseForPath
       sp <- seoDataFromPath
     } yield {
-      val section:  Option[String] = sc.section.orElse(ir.flatMap(_.section.map(_.id)).orElse(ir.flatMap(_.tag.flatMap(_.sectionId)))).orElse(sp.section)
-      val webTitle: Option[String] = sc.webTitle.orElse(ir.flatMap(_.tag.map(_.webTitle))).orElse(sp.webTitle)
+      val section:  Option[String] = sc.section.orElse(ir.flatMap(getSectionFromItemResponse)).orElse(sp.section)
+      val webTitle: Option[String] = sc.webTitle.orElse(ir.flatMap(getWebTitleFromItemResponse)).orElse(sp.webTitle)
       val title: Option[String] = webTitle.map(SeoData.titleFromWebTitle)
       val description: Option[String] = webTitle.map(SeoData.descriptionFromWebTitle)
 
       SeoData(path, section, webTitle, title, description)
     }
   }
+
+  private def getSectionFromItemResponse(itemResponse: ItemResponse): Option[String] =
+    itemResponse.tag.flatMap(_.sectionId)
+    .orElse(itemResponse.section.map(_.id))
+
+  private def getWebTitleFromItemResponse(itemResponse: ItemResponse): Option[String] =
+    itemResponse.tag.map(_.webTitle)
+    .orElse(itemResponse.section.map(_.webTitle))
 
   private def getSectionOrTagWebTitle(id: String): Future[Option[ItemResponse]] =
     ContentApi
