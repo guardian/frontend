@@ -70,6 +70,7 @@ define([
 
         bean.on(qwery('.timeline')[0], 'click', '.timeline__link', function(e) {
             mediator.emit('module:liveblog:showkeyevents', true);
+            $('.dropdown--live-feed', getContext()).addClass('dropdown--active');
             var $el = bonzo(e.currentTarget),
                 eventId = $el.attr('data-event-id'),
                 title = $('.timeline__title', $el).text(),

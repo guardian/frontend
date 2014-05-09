@@ -803,7 +803,8 @@ $block-padding-right: $gs-gutter;
 
 /* Dropdowns
    ========================================================================== */
-.dropdown--live {
+.dropdown--key-events,
+.dropdown--live-feed {
     position: relative;
     padding: 0;
     z-index: 100;
