@@ -229,14 +229,8 @@
         .ad-slot--paid-for-badge__logo {
             display: block;
         }
-        + .container__body {
-            @include rem((
-                margin-top: $gs-baseline/2
-            ));
-
-            .collection-wrapper:first-child .fromage {
-                border-top-width: 2px;
-            }
+        + .container__body .collection-wrapper:first-child .fromage {
+            border-top-width: 2px;
         }
         @include mq(tablet) {
             margin-left: 50%;
