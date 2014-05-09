@@ -3,10 +3,10 @@
 <div class="item__tag tone-colour">
     @if(config.showTags){
         @content.tags.take(1).map { s =>
-            @s.name
+            <a href="@LinkTo(s.webUrl)">@s.name</a>
         }
     }
     @if(config.showSections){
-        @content.sectionName
+        <a href="@LinkTo{/@content.section}">@content.section</a>
     }
 </div>
