@@ -141,18 +141,19 @@ function (
             url: vars.CONST.apiSearchBase + '/' + path + '?page-size=0'
         }).always(function(resp) {
             var meta = resp.response ?
-               _.chain(['section', 'tag'])
+               _.chain(['tag', 'section'])
                 .map(function(key) { return resp.response[key]; })
-                .filter(function(obj) { return _.isObject(obj) && obj.webTitle && (obj.id || obj.sectionId); })
+                .filter(function(obj) { return _.isObject(obj); })
                 .reduce(function(m, obj) {
-                    m = m || {};
-                    m.section  = obj.id || obj.sectionId;
-                    m.webTitle = obj.webTitle;
+                    m.section = m.section || _.last((obj.id || obj.sectionId).split('/'));
+                    m.webTitle = m.webTitle || obj.webTitle;
+                    m.description = m.description || obj.description; // upcoming in Capi, at time of writing
+                    m.title = m.title || obj.title;                   // this may never be added to Capi, or may under another name
                     return m;
-                 }, undefined)
-                .value() : undefined;
+                 }, {})
+                .value() : {};
 
-            defer[meta ? 'resolve' : 'reject'](meta);
+            defer.resolve(meta);
         });
 
         return defer.promise();

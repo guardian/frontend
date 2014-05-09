@@ -22,6 +22,8 @@ define([
 ) {
     function Front(opts) {
         var self = this,
+            path,
+            isEditionalised,
             props = [
                 'section',
                 'webTitle',
@@ -35,14 +37,13 @@ define([
 
         this.props  = asObservableProps(props);
 
-        this.placeholders  = asObservableProps(props);
-
         populateObservables(this.props,  opts);
+
+        this.capiProps = asObservableProps(props);
 
         this.state = asObservableProps([
             'isOpen',
-            'isOpenProps',
-            'hasContentApiProps']);
+            'isOpenProps']);
 
         this.collections = new Group({
             parent: self,
@@ -65,11 +66,28 @@ define([
             }
         }, this);
 
-        this.props.webTitle.subscribe(function() {
-            this.derivePlaceholders();
+        this.depopulateCollection = this._depopulateCollection.bind(this);
+
+        path = (this.id() || '').split('/');
+        isEditionalised = _.some(['uk', 'us', 'au'], function(edition) { return edition === path[0]; });
+
+        this.placeholders = {};
+
+        this.placeholders.section = ko.computed(function() {
+            return this.props.section() || this.capiProps.section() || (isEditionalised ? path.length === 1 ? undefined : path[1] : path[0]);
         }, this);
 
-        this.depopulateCollection = this._depopulateCollection.bind(this);
+        this.placeholders.webTitle = ko.computed(function() {
+            return this.props.webTitle() || this.capiProps.webTitle() || (toTitleCase(path.slice(path.length > 1 ? 1 : 0).join(' ').replace(/\-/g, ' ')) || this.id());
+        }, this);
+
+        this.placeholders.title = ko.computed(function() {
+            return this.props.title() || this.capiProps.title() || (this.placeholders.webTitle() + ' news, comment and analysis from the Guardian' + (this.placeholders.section() ? ' | ' + toTitleCase(this.placeholders.section()) : ''));
+        }, this);
+
+        this.placeholders.description  = ko.computed(function() {
+            return this.props.description() || this.capiProps.description() || ('Latest ' + this.placeholders.webTitle() + ' news, comment and analysis from the Guardian, the world\'s leading liberal voice');
+        }, this);
     }
 
     Front.prototype.validate = function(checkUniqueness) {
@@ -89,18 +107,6 @@ define([
         }
     };
 
-    Front.prototype.derivePlaceholders = function() {
-        var path = (this.id() || '').split('/'),
-            isEditionalised = _.some(['uk', 'us', 'au'], function(edition) { return edition === path[0]; });
-
-        if (!path.length) { return; }
-
-        this.placeholders.section(this.props.section() || (isEditionalised ? path.length === 1 ? undefined : path[1] : path[0]));
-        this.placeholders.webTitle(this.props.webTitle() || toTitleCase(path.slice(path.length > 1 ? 1 : 0).join(' ').replace(/\-/g, ' ')) || this.id());
-        this.placeholders.title(this.placeholders.webTitle() + ' news, comment and analysis from the Guardian' + (this.placeholders.section() ? ' | ' + toTitleCase(this.placeholders.section()) : ''));
-        this.placeholders.description('Latest ' + this.placeholders.webTitle() + ' news, comment and analysis from the Guardian, the world\'s leading liberal voice');
-    };
-
     Front.prototype.setOpen = function(isOpen, withOpenProps) {
         this.state.isOpen(isOpen);
         this.state.isOpenProps(withOpenProps);
@@ -110,25 +116,19 @@ define([
         this.state.isOpen(!this.state.isOpen());
     };
 
-    Front.prototype.openPropsAttempt = function() {
+    Front.prototype.openProps = function() {
         var self = this;
 
-        this.state.hasContentApiProps('Checking');
+        this.state.isOpenProps(true);
+        this.collections.items().map(function(collection) { collection.close(); });
 
         contentApi.fetchMetaForPath(this.id())
-        .done(function() {
-            self.state.hasContentApiProps('Metadata for this front must be edited in Tag Manager');
-        })
-        .fail(function() {
-            self.state.hasContentApiProps(false);
-            self.openProps();
+        .done(function(meta) {
+            meta = meta || {};
+            _.each(self.capiProps, function(val, key) {
+                val(meta[key]);
+            });
         });
-    };
-
-    Front.prototype.openProps = function() {
-        this.state.isOpenProps(true);
-        this.derivePlaceholders();
-        this.collections.items().map(function(collection) { collection.close(); });
     };
 
     Front.prototype.saveProps = function() {
