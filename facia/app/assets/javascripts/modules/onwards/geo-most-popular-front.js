@@ -19,10 +19,13 @@ define([
         this.config = extend(this.config, config);
         this.mediator = mediator;
         this.manipulationType = 'html';
-        var parent = qwery('.js-popular-trails')[0];
-        if (parent) {
-            this.fetch(parent, 'html');
-        }
+
+        this.go = function() {
+           var parent = qwery('.js-popular-trails')[0];
+            if (parent) {
+                this.fetch(parent, 'html');
+            }
+        };
     }
 
     Component.define(GeoMostPopularFront);

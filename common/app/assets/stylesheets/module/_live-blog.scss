@@ -1060,7 +1060,7 @@ $timeline-width: 14px;
     border-color: $c-neutral8;
 
     .timeline__link:hover & {
-        border-color:  $c-neutral2;
+        border-color: $c-neutral2;
     }
 
     @include mq(rightCol) {

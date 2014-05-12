@@ -1,4 +1,4 @@
-@(items: Seq[Trail], style: Container, containerIndex: Int)(implicit request: RequestHeader)
+@(items: Seq[Trail], style: Container, containerIndex: Int)(implicit request: RequestHeader, config: Config)
 
 @defining(items.filter(_.group == Option("3")), items.filter(_.group == Option("2")), items.filter(_.group == Option("1")), items.filter(items => items.group == Option("0") || items.group == None)) { case (hugeItems, veryBigItems, bigItems, standardItems) =>
 
