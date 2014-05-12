@@ -42,6 +42,9 @@ GET        /football/:competition/table.json                                    
 GET        /football/:competition/:group/table                                                 football.controllers.LeagueTableController.renderCompetitionGroup(competition, group)
 GET        /football/:competition/:group/table.json                                            football.controllers.LeagueTableController.renderCompetitionGroupJson(competition, group)
 
+GET        /football/:competitionTag/overview/embed                                            football.controllers.WallchartController.renderWallchartEmbed(competitionTag)
+GET        /football/:competitionTag/overview                                                  football.controllers.WallchartController.renderWallchart(competitionTag)
+
 GET        /football/api/match-nav/:year/:month/:day/:home/:away.json                          football.controllers.MoreOnMatchController.matchNavJson(year, month, day, home, away)
 GET        /football/api/match-nav/:year/:month/:day/:home/:away                               football.controllers.MoreOnMatchController.matchNav(year, month, day, home, away)
 GET        /football/api/match-nav/:matchId.json                                               football.controllers.MoreOnMatchController.moreOnJson(matchId)

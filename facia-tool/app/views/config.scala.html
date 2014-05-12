@@ -90,7 +90,7 @@
                     <div class="api-query-results">
                         <div data-bind="
                             attr: {class: 'api-query-status--' + state.apiQueryStatus()},
-                            text: state.apiQueryStatus"></div>
+                            text: state.apiQueryStatus() === 'check' ? 'Checking...' : state.apiQueryStatus() === 'invalid' ? 'No matches found' : 'Found matches:'"></div>
                         <div data-bind="foreach: capiResults">
                             <a target="_article" class="api-query-result" data-bind="
                                     attr: {href: 'http://www.theguardian.com/' + id},
@@ -195,13 +195,18 @@
                     </div>
                 <!-- /ko -->
 
-                <!-- ko if: !state.isOpenProps() && id() -->
+                 <!-- ko if: id -->
                     <div class="instructions">
-                        <span class="linky" data-bind="click: openProps">Edit metadata</span>
-                    </div>
-                <!-- /ko -->
+                        <!-- ko if: !state.isOpenProps() && !state.hasContentApiProps() -->
+                            <span class="linky" data-bind="click: openPropsAttempt">Edit metadata</span>
+                        <!-- /ko -->
 
-                <!-- ko if: id -->
+                        <!-- ko if: state.hasContentApiProps -->
+                            <span data-bind="text: state.hasContentApiProps"></span>
+                            <span class="linky" data-bind="click: openProps">...</span>
+                        <!-- /ko -->
+                    </div>
+
                     <div data-bind="with: collections">
                         <div class="droppable" data-bind="
                             makeDropabble: true,
@@ -213,7 +218,7 @@
                         <span data-bind="if: !collections.items().length">Empty fronts will be discarded!</span>
                     </div>
                 <!-- /ko -->
-            </div>
+           </div>
 
         </div>
     </script>

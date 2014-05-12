@@ -73,7 +73,6 @@ define([
     /** @type {String} */
     Component.prototype.manipulationType = 'append';
 
-
     /**
      * Uses the this.componentClass
      * TODO (jamesgorrie): accept strings etc Also what to do with multiple objects?

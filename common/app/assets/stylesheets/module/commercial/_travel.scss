@@ -44,7 +44,7 @@ $c-commercial-travel-dark: #002b6c;
     }
     .commercial__head {
         position: static;
-        border-top: none;
+        border-top: 0;
         height: auto;
         overflow: auto;
         margin-top: 0;
@@ -66,10 +66,10 @@ $c-commercial-travel-dark: #002b6c;
             ));
         }
         .commercial__title__last-word {
-           color: $travelBlue;
-           @include rem((
+            color: $travelBlue;
+            @include rem((
                margin-left: -5px
-           ));
+            ));
         }
     }
     .commercial__home-link {
@@ -183,7 +183,7 @@ $c-commercial-travel-dark: #002b6c;
             width: 25%;
 
             &:nth-child(n+4) {
-               display: block;
+                display: block;
             }
         }
     }
@@ -193,15 +193,15 @@ $c-commercial-travel-dark: #002b6c;
         ));
         
         .commercial__home-link {
-           @include box-sizing(border-box);
-           @include rem((
+            @include box-sizing(border-box);
+            @include rem((
                width: gs-span(2),
                line-height: 18px,
                bottom: $gs-baseline*4.5
-           ));
+            ));
         }
         .commercial__title__last-word {
-           margin-left: 0;
+            margin-left: 0;
         }
         .commercial__search {
             position: absolute;

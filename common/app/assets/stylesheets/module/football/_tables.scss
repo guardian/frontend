@@ -9,14 +9,16 @@
     }
 }
 
-/** League table **/
+/* ==========================================================================
+   League tables
+   ========================================================================== */
 .table--football {
     .table-column--main {
         .team-name {
-            display: block;
+            display: inline-block;
             overflow: hidden;
             white-space: nowrap;
-            width: 100%;
+            max-width: 100%;
         }
     }
 
@@ -56,6 +58,17 @@
     }
 }
 
+.team-crest {
+    @include rem((
+        height: 12px,
+        margin-right: $gs-gutter/4,
+        width: 22px
+    ));
+    @include background-size(22px 12px);
+    display: inline-block;
+    vertical-align: text-bottom;
+}
+
 // This is everything on the standalone pages
 // i.e. /football/tables or /football/results
 .football-table__container {
@@ -66,17 +79,6 @@
 
     .football-matches__date {
         display: none;
-    }
-
-    // Only show "view more" and competition name on the last group table
-    .football__group {
-        .table__caption {
-            display: none;
-        }
-
-        &:last-child .table__caption {
-            display: table-caption;
-        }
     }
 
     @include mq(leftCol) {
@@ -106,19 +108,6 @@
                 width: gs-span(3)
             ));
         }
-    }
-}
-
-.football-matches {
-    .table__caption--bottom {
-        display: none;
-    }
-}
-
-.football-table__container--single {
-    // Hide the view more when there is only that table
-    .table__caption--bottom {
-        display: none;
     }
 }
 
