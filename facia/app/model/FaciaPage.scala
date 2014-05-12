@@ -19,9 +19,16 @@ case class FaciaPage(
   override lazy val analyticsName: String = oldOrNewSeo(frontPage.analyticsName, s"GFE:${seoData.webTitle.capitalize}")
   override lazy val webTitle: String = oldOrNewSeo(frontPage.webTitle, seoData.webTitle)
 
-  override lazy val metaData: Map[String, Any] = super.metaData + ("newSeo" -> isNewSeoOn.toString)
+  override lazy val metaData: Map[String, Any] = super.metaData ++ faciaPageMetaData + ("newSeo" -> isNewSeoOn.toString)
 
-  lazy val getContentType: String =
+  lazy val faciaPageMetaData: Map[String, Any] = oldOrNewSeo(frontPage.metaData, newMetaData)
+  lazy val newMetaData: Map[String, Any] = Map(
+    "keywords" -> webTitle.capitalize,
+    "content-type" -> contentType,
+    "is-front" -> true
+  )
+
+  lazy val contentType: String =
     Edition.all.find(edition => id.endsWith(edition.id)) match {
       case Some(_) => "Network Front"
       case None    => "Section"
