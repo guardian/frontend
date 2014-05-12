@@ -797,6 +797,7 @@
 
 .drop-cap {
     float: left;
+    display: inline-block;
     text-transform: uppercase;
     @include f-headline;
     font-weight: 200;
@@ -807,7 +808,7 @@
         margin-right: 4px
     ));
 
-    span {
+    .drop-cap__inner {
         display: inline-block;
         vertical-align: text-top;
         @include font-size(52px, 40px);
@@ -820,7 +821,7 @@
                 height: 72px
             ));
 
-            span {
+            .drop-cap__inner {
                 @include font-size(84px, 68px);
             }
         }
