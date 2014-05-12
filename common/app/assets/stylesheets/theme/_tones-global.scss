@@ -3,37 +3,4 @@
 @include tone-global(news, $c-newsDefault, $c-newsAccent);
 @include tone-global(comment, $c-commentDefault, $c-commentAccent);
 @include tone-global(feature, $c-featureDefault, $c-featureAccent);
-@include tone-head-background(feature, $c-featureDefault, $c-featureAccent2, #fff, 'white');
-@include tone-head-background(comment, $c-commentAccent, $c-commentAccent2, #333, 'dark-grey');
-
-// Exceptions to override mixins
-
-.tone-comment.tone-comment--article {
-
-    .byline {
-        display: none;
-    }
-
-    .article__head .byline-img {
-
-        height: 100%;
-        position: absolute;
-        bottom: 0;
-        right: 0;
-
-        .byline-img__img {
-            height: 100%;
-        }
-    }
-
-    .headline__author,
-    .headline__author a {
-        color: $c-neutral2;
-    }
-
-    .headline__author a:hover {
-        text-decoration: none;
-        border-bottom: 2px solid;
-    }
-
-}
+@include tone-head-comment-icon(feature, 'white');

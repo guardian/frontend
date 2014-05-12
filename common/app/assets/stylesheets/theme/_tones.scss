@@ -51,19 +51,24 @@
     }
 }
 
+@mixin tone-head-comment-icon($tone, $commentIcon) {
+    .tone-#{$tone}.tone-#{$tone}--article .article__head__comment-count i {
+        @extend %i-comment-#{$commentIcon};
+        @if $svg-support {
+            .svg & {
+                @extend %svg-i-comment-#{$commentIcon};
+            }
+        }
+    }
+}
+
+
 @mixin tone-head-background($tone, $colour, $accentColour, $textColour, $commentIcon) {
     .tone-#{$tone}.tone-#{$tone}--article {
 
         .article__head__comment-count {
             display: inline-block;
-            i {
-                @extend %i-comment-#{$commentIcon};
-                @if $svg-support {
-                    .svg & {
-                        @extend %svg-i-comment-#{$commentIcon};
-                    }
-                }
-            }
+
             .commentcount {
                 color: $textColour;
             }
