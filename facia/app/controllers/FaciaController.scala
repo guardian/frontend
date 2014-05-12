@@ -9,6 +9,7 @@ import views.support.{TemplateDeduping, NewsContainer}
 import scala.concurrent.Future
 import play.api.templates.Html
 import performance.MemcachedAction
+import services.ConfigAgent
 
 
 class FaciaController extends Controller with Logging with ExecutionContexts with implicits.Collections {

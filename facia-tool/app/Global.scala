@@ -1,11 +1,10 @@
 import common._
 import conf.{Gzipper, Management}
-import frontpress.FaciaToolConfigAgent
 import java.io.File
 import jobs.FrontPressJob
 import play.api._
 import play.api.mvc.WithFilters
-import services.FaciaToolLifecycle
+import services.{ConfigAgent, FaciaToolLifecycle}
 
 object Global extends WithFilters(Gzipper) with FaciaToolLifecycle with GlobalSettings with CloudWatchApplicationMetrics {
 
@@ -41,7 +40,7 @@ object Global extends WithFilters(Gzipper) with FaciaToolLifecycle with GlobalSe
 
   def scheduleJobs() {
     Jobs.schedule("ConfigAgentJob", "0 * * * * ?") {
-      FaciaToolConfigAgent.refresh()
+      ConfigAgent.refresh()
     }
 
     Jobs.schedule("FaciaToolPressJob", "0/10 * * * * ?") {
@@ -60,7 +59,7 @@ object Global extends WithFilters(Gzipper) with FaciaToolLifecycle with GlobalSe
     scheduleJobs()
 
     AkkaAsync {
-      FaciaToolConfigAgent.refresh()
+      ConfigAgent.refresh()
     }
   }
 

@@ -2,6 +2,7 @@ package controllers.front
 
 import common.{AkkaAsync, Jobs}
 import play.api.GlobalSettings
+import services.ConfigAgent
 
 trait FrontLifecycle extends GlobalSettings {
   override def onStart(app: play.api.Application) {
