@@ -158,16 +158,29 @@ jQuery(function($){
     (function(){
         $('.player-chooser').each(function(){
             var el = $(this);
-
             el.autocomplete({ source: [] });
+
+            $(this.form).on('submit', function() {
+                el.val(el.attr('data-real-value'));
+            });
+
             $('#id-team').change(function(e) {
                 var teamId = $(this).val();
                 el.val("").addClass("loading")
                     .autocomplete({source: []});
+
                 $.ajax("/admin/football/api/squad/" + teamId, {
                     success: function(json){
                         el.removeClass("loading")
-                            .autocomplete({source: json.players});
+                            .autocomplete({
+                                source: json.players,
+                                select: function(e, ui) {
+                                    // hackhackhack
+                                    this.value = ui.item.label;
+                                    this.setAttribute('data-real-value', ui.item.value);
+                                    return false;
+                                }
+                            });
                     }
                 });
             });
