@@ -95,6 +95,7 @@ GET         /football/:competition/table.json                                   
 GET         /football/:competition/:group/table                                                                      football.controllers.LeagueTableController.renderCompetitionGroup(competition, group)
 GET         /football/:competition/:group/table.json                                                                 football.controllers.LeagueTableController.renderCompetitionGroupJson(competition, group)
 
+GET         /football/world-cup-2014/embed-tmp                                                                       football.controllers.WallchartController.renderWallchartEmbedTmp()
 GET         /football/:competitionTag/overview/embed                                                                 football.controllers.WallchartController.renderWallchartEmbed(competitionTag)
 GET         /football/:competitionTag/overview                                                                       football.controllers.WallchartController.renderWallchart(competitionTag)
 

@@ -1,0 +1,238 @@
+@(page: Page, competition: model.Competition, competitionStages: List[_root_.football.model.CompetitionStage])(implicit request: RequestHeader)
+@import implicits.Football._
+<html>
+<head>
+    <meta name="robots" CONTENT="noindex, nofollow" />
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+        .groups-embed {
+            width: 620px;
+        }
+
+        .groups {
+            margin-top: 20px;
+        }
+        .groups--first {
+            margin-top: 0;
+        }
+        .group {
+            /* Taken from pasteups .col */
+            margin-left: 20px;
+            float: left;
+            width: 140px;
+        }
+        .group:first-child {
+            margin-left: 0;
+        }
+        .group a {
+            color: #005689;
+            text-decoration: none;
+        }
+        .group__name {
+            background: #f6f6f6;
+            color: #333333;
+            font-size: 16px;
+            font-family: georgia, serif;
+            padding: 5px 5px 10px;
+        }
+
+        .flags {
+            background: #f6f6f6;
+            font-size: 0;
+            padding: 5px;
+        }
+        .flag {
+            margin-left: 12px;
+            display: inline-block;
+            height: 15px;
+            width: 23px;
+        }
+        .flag:first-child {
+            margin-left: 0;
+        }
+
+        .group__teams {
+            background: #f6f6f6;
+            border-collapse: collapse;
+            color: #333;
+            font-family: arial, sans-serif;
+            font-size: 12px;
+            padding: 5px;
+            text-align: left;
+            width: 100%;
+        }
+        .group__teams thead {
+            font-weight: normal;
+        }
+        .group__teams td,
+        .group__teams th {
+            padding: 5px;
+            text-align: left;
+        }
+
+        .team {}
+        .team--stripe td {
+            background: #ececec;
+        }
+        .team__flag {
+            display: inline-block;
+            height: 20px;
+            width: 100px;
+        }
+        .team__rank {
+            color: #767676;
+        }
+        .team__name {
+            width: 100%;
+        }
+
+        .match {
+            background: #ececec;
+            border-top: 1px dotted #767676;
+            display: block;
+            font-family: arial, sans-serif;
+            font-size: 12px;
+            padding: 5px;
+            text-decoration: none;
+        }
+        .match__heading {
+            color: #333333;
+            float: left;
+            font-weight: bold;
+            margin-right: 15px;
+        }
+        .match__time {
+            float: left;
+            font-weight: bold;
+            margin-top: 4px;
+            text-align: center;
+        }
+        .match__date {
+            margin-left: 14px;
+            margin-top: 4px;
+            float: right;
+        }
+        .match__teams {
+            color: #005689;
+            float: right;
+        }
+        .match__team {
+            display: inline-block;
+        }
+        .match__team--home {
+            margin-right: 5px;
+        }
+        .match__team--away {
+            margin-left: 5px;
+        }
+
+
+        /* u-cf */
+        .u-cf:after,
+        .u-cf:before {
+            content: "";
+            display: table;
+        }
+        .u-cf:after {
+            clear: both;
+        }
+
+        .knockout-cta {
+            border: 1px solid #005689;
+            border-radius: 5px;
+            color: #005689;
+            display: block;
+            line-height: 40px;
+            margin-top: 20px;
+            text-align: center;
+            text-decoration: none;
+        }
+        .knockout-cta:hover {
+            text-decoration: underline;
+        }
+        .knockout-cta__brazil {
+            height: 25px;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <div class="groups-embed">
+        @renderGroup(round: Round, leagueTableEntries: Seq[LeagueTableEntry], matchesList: football.model.MatchesList) = {
+            <div class="group">
+                @defining(model.Group(round, leagueTableEntries)) { group =>
+                    @round.name.map{ name => <div class="group__name">@name</div>}
+                    <div class="flags">
+                        @group.entries.map{ entry =>
+                            <div class="flag"><img src="@Configuration.staticSport.path/football/crests/120/@{entry.team.id}.png" width="26" height="15" alt="Flag for @entry.team.name" /></div>
+                        }
+                    </div>
+                    <table class="group__teams">
+                        <thead>
+                            <tr>
+                                <th>Pos</th>
+                                <th>Team</th>
+                                <th>Pts</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        @group.entries.zipWithRowInfo.map{ case (entry, row) =>
+                            <tr class="group__team team @if(row.isOdd){ team--stripe}">
+                                <td class="team__rank">@entry.team.rank</td>
+                                <td class="team__name">
+                                    <a href="@TeamUrl(entry.team)">@entry.team.name.replace("Bosnia-Herzegovina", "Bosnia H")</a>
+                                </td>
+                                <td>@entry.team.points</td>
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                }
+
+                @defining(matchesList.relevantMatches.find(_._1.isFixture)) { nextMatches =>
+                    @nextMatches.map{ nextMatch =>
+                        <a href="@LinkTo{@nextMatch._1.smartUrl}" class="match u-cf">
+                            <div class="match__heading">Next:</div>
+                            <div class="match__teams">
+                                <span class="match__team match__team--home">@pa.TeamCodes.codeFor(nextMatch._1.homeTeam)</span>
+                                <span class="match__battle-line">v</span>
+                                <span class="match__team match__team--away">@pa.TeamCodes.codeFor(nextMatch._1.awayTeam)</span>
+                            </div>
+                            <div class="match__time">@nextMatch._1.date.toString("HH:mm")</div>
+                            <div class="match__date">@nextMatch._1.date.toString("E d MMMM")</div>
+                        </a>
+                    }
+                }
+            </div>
+        }
+
+        @competitionStages.map {
+            case groupStage:  _root_.football.model.Groups => {
+                <div class="groups groups--first u-cf">
+                    @groupStage.groupTables.take(4).map{ case (round, leagueTableEntries) =>
+                        @renderGroup(round, leagueTableEntries, groupStage.matchesList(competition, round))
+                    }
+                </div>
+                <div class="groups u-cf">
+                    @groupStage.groupTables.drop(4).map{ case (round, leagueTableEntries) =>
+                        @renderGroup(round, leagueTableEntries, groupStage.matchesList(competition, round))
+                    }
+                </div>
+            }
+
+            case knockoutStage: _root_.football.model.KnockoutSpider => {
+                <a href="/tobedefined" class="knockout-cta">
+                    <img src="http://sport.guim.co.uk/football/world-cup-2014/brazil-small.png" class="knockout-cta__brazil" />View the knockout stage
+                </a>
+            }
+
+            case _ => {}
+        }
+    </div>
+</body>
+</html>
