@@ -222,14 +222,20 @@
                 underDrag: state.underDrag
             }">
 
+            <div class="article__time">
+                <span class="article__time__publication" data-bind="
+                    visible: webPublicationTime,
+                    text: webPublicationTime"></span>
+                <span class="article__time__front" data-bind="
+                    visible: frontPublicationTime,
+                    text: frontPublicationTime"></span>
+            </div>
+
             <a class="article__lhs" target="article" data-bind="
                 attr: {href: 'http://www.theguardian.com/' + id()},
                 click: open">
                 <img class="thumb" draggable="false" data-bind="
                     attr: {src: fields.thumbnail, title: id}"/>
-                <div class="article__date" data-bind="
-                    visible: humanDate,
-                    text: humanDate"></div>
             </a>
 
             <div data-bind="if: state.open">

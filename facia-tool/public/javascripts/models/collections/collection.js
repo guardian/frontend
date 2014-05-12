@@ -1,21 +1,22 @@
-/* global _: true, humanized_time_span: true */
+/* global _: true */
 define([
     'config',
     'knockout',
     'modules/vars',
     'utils/as-observable-props',
     'utils/populate-observables',
+    'utils/human-time',
     'modules/authed-ajax',
     'models/group',
     'models/collections/article',
-    'modules/content-api',
-    'js!humanized-time-span'
+    'modules/content-api'
 ], function(
     config,
     ko,
     vars,
     asObservableProps,
     populateObservables,
+    humanTime,
     authedAjax,
     Group,
     Article,
@@ -251,6 +252,7 @@ define([
         _.each(this.groups, function(group) {
             _.each(group.items(), function(item) {
                 item.sparkline();
+                item.setFrontPublicationTime();
             });
         });
     };
@@ -275,7 +277,7 @@ define([
     };
 
     Collection.prototype.getTimeAgo = function(date) {
-        return date ? humanized_time_span(date) : '';
+        return date ? humanTime(date) : '';
     };
 
     return Collection;
