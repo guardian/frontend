@@ -50,7 +50,8 @@ object SeriesController extends Controller with Logging with Paging with Executi
 
   private def renderSeriesTrails(trails: Seq[Content], seriesId: String)(implicit request: RequestHeader) = {
     val series = request.getQueryString("series").getOrElse("")
-    val response = () => views.html.fragments.containers.series(Config(id = series, href = Option(seriesId), displayName = Some("More from this series") ), Collection(trails.take(7)), SeriesContainer(), 0)
+    implicit val config = Config(id = series, href = Option(seriesId), displayName = Some("More from this series") )
+    val response = () => views.html.fragments.containers.series(Collection(trails.take(7)), SeriesContainer(), 0)
     renderFormat(response, response, 1)
   }
 }
