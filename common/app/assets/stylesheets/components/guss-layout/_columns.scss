@@ -109,7 +109,7 @@ $guss-columns-fallback-columns: 3 !default;
             ));
             @if $column-rule != none {
                 &:nth-child(n+1):before {
-                    content: "";
+                    content: '';
                     position: absolute;
                     top: 0;
                     @include rem((
