@@ -33,6 +33,6 @@ define(['bonzo'], function (bonzo) {
         ];
     };
 
-    return GeoMostPopular;
+    return HeaderSearchText;
 
 });

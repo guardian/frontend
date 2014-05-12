@@ -2,15 +2,17 @@ define([
     'common/common',
     'common/utils/storage',
     'common/utils/mediator',
-    'common/modules/analytics/mvt-cookie'
+    'common/modules/analytics/mvt-cookie',
+    'modules/experiments/tests/searchText'
 ], function (
     common,
     store,
     mediator,
-    mvtCookie
+    mvtCookie,
+    HeaderSearchText
     ) {
 
-    var TESTS = [],
+    var TESTS = [HeaderSearchText],
        participationsKey = 'gu.ab.participations';
 
     function getParticipations() {
