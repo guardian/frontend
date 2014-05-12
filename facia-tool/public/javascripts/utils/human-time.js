@@ -3,7 +3,7 @@ define(function () {
     return function(date) {
         if (!date) { return; }
 
-        var elapsed = (new Date() - (date ? new Date(date) : new Date()))/1000,
+        var elapsed = (new Date() - new Date(date))/1000,
             period = _.find([
                 { secs: 30758400, unit: 'year'},
                 { secs: 2563200, unit: 'month'},
@@ -13,6 +13,7 @@ define(function () {
             ], function(period) { return elapsed >= period.secs; }),
             units = period ? Math.round(elapsed/period.secs) : null;
 
-        return period ? units + ' ' + period.unit + (units !== 1 ? 's' : '') : units > -60 ? 'just now' : 'ahead';
+        // 60 second leeway for "just now"
+        return period ? units + ' ' + period.unit + (units !== 1 ? 's' : '') : elapsed > -60 ? 'just now' : 'ahead';
     };
 });
