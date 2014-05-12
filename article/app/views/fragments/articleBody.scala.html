@@ -97,14 +97,14 @@
                     </div>
                 </div>
             </article>
-            <div class="facia-container facia-container--layout-article monocolumn-wrapper monocolumn-wrapper--no-limit-desktop facia-container--commercial">
-                @fragments.commercial.commercialComponent(name="merchandising-high", adType="commercial-component-high", sizeMapping=Map("desktop" -> Seq("888,87")))
-            </div>
             @if(DiscussionSwitch.isSwitchedOn && article.isCommentable) {
                 <div class="article__inner js-comments" data-component="discussion">
                     @fragments.discussion(article.isClosedForComments, article.shortUrlId)
                 </div>
             }
+            <div class="facia-container facia-container--layout-article monocolumn-wrapper monocolumn-wrapper--no-limit-desktop facia-container--commercial">
+                @fragments.commercial.commercialComponent(name="merchandising-high", adType="commercial-component-high", sizeMapping=Map("desktop" -> Seq("888,87")))
+            </div>
         </div>
     </div>
 

@@ -32,7 +32,8 @@
         ));
     }
     .no-indent-article__zone &,
-    .monocolumn-wrapper & {
+    .monocolumn-wrapper &,
+    .facia-container__inner & {
         margin-left: 0;
         margin-right: 0;
     }
