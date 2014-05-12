@@ -11,13 +11,20 @@ import contentapi.QueryDefaults
 import scala.concurrent.Future
 import play.api.mvc.{RequestHeader, SimpleResult}
 import com.gu.openplatform.contentapi.ApiError
+import dfp.DfpAgent
 
 object IndexPagePagination {
   def pageSize: Int = 20 //have a good think before changing this
 }
 
 case class IndexPage(page: MetaData, trails: Seq[Content],
-                     date: DateTime = DateTime.now)
+                     date: DateTime = DateTime.now) {
+
+  def isSponsored = {
+    val tags = (page.keywords ++ trails.flatMap(_.keywords)).distinct
+    DfpAgent.isSponsored(tags)
+  }
+}
 
 trait Index extends ConciergeRepository with QueryDefaults {
 
