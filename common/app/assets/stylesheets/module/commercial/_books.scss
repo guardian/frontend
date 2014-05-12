@@ -233,6 +233,10 @@ $c-commercial-books-dark: #630D4C;
             .lineitem {
                 border-left: 1px solid $c-neutral4;
                 width: 100%;
+                @include rem((
+                    min-height: $gs-baseline*13.5
+                ));
+                
                 &:nth-child(n+2) {
                     display: none;
                 }
