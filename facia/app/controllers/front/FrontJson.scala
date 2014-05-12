@@ -77,10 +77,7 @@ trait FrontJson extends ExecutionContexts {
     Option(
       FaciaPage(
         id,
-        seoData     = (json \ "seoData")
-          .asOpt[JsValue]
-          .map(parseSeoData(id, _))
-          .getOrElse(parseSeoData(id, JsNull)),
+        seoData     = parseSeoData(id, (json \ "seoData").asOpt[JsValue].getOrElse(JsNull)),
         collections = parseOutTuple(json)
       )
     )
