@@ -12,7 +12,7 @@ case class FaciaPage(
   lazy val frontPage: FrontPage = FrontPage(this)
 
   private val isNewSeoOn: Boolean = Switches.NewSeoSwitch.isSwitchedOn
-  def oldOrNewSeo[T](oldValue: T, newValue: T): T = if (isNewSeoOn) newValue else oldValue
+  def oldOrNewSeo[T](oldValue: => T, newValue: => T): T = if (isNewSeoOn) newValue else oldValue
 
   override lazy val description: Option[String] = oldOrNewSeo(frontPage.description, seoData.description)
   override lazy val section: String = oldOrNewSeo(frontPage.section, seoData.section.get)
