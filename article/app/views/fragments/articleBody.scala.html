@@ -22,9 +22,8 @@
                             <div class="article-hat-label">Advertisement feature</div>
                         }
 
-                        <h1 itemprop="headline" class="article__headline js-score">
-                            @Html(article.headline)
-                        </h1>
+                        @fragments.headline(article.headline, List("js-score"))
+
                         @if(article.isCommentable) {
                             <div class="article__head__comment-count article__head__comment-count--headline js-comment-count"></div>
                         }

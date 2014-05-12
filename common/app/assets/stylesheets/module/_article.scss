@@ -803,7 +803,7 @@
     font-weight: 200;
     @include box-sizing(border-box);
     @include rem((
-        height: 48px,
+        height: 2*get-line-height($fs-bodyCopy, 3),
         padding-top: 1px,
         margin-right: 4px
     ));
@@ -818,7 +818,7 @@
         &.drop-cap--wide {
             @include rem((
                 margin-right: 5px,
-                height: 72px
+                height: 3*get-line-height($fs-bodyCopy, 3)
             ));
 
             .drop-cap__inner {
