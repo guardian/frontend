@@ -31,26 +31,28 @@ object PlayerController extends Controller with ExecutionContexts with GetPaClie
     val playerCardType = submission.get("playerCardType").get.head
     val playerId = submission.get("player").get.head
     val teamId = submission.get("team").get.head
-    val redirectUrl = (submission.get("competition"), submission.get("startDate")) match {
+    val result = (submission.get("competition"), submission.get("startDate")) match {
       case (Some(compId :: _), _) if !compId.isEmpty =>
-        s"/admin/football/player/card/competition/$playerCardType/$playerId/$teamId/$compId"
+        NoCache(SeeOther(s"/admin/football/player/card/competition/$playerCardType/$playerId/$teamId/$compId"))
       case (_, Some(startDate:: _)) =>
-        s"/admin/football/player/card/date/$playerCardType/$playerId/$teamId/$startDate"
-      case _ => throw new RuntimeException("Couldn't find competition or start date in submission")
+        NoCache(SeeOther(s"/admin/football/player/card/date/$playerCardType/$playerId/$teamId/$startDate"))
+      case _ => NoCache(NotFound(views.html.football.error("Couldn't find competition or start date in submission")))
     }
-    NoCache(SeeOther(redirectUrl))
+    result
   }
 
   def playerCardCompetition(cardType: String, playerId: String, teamId: String, competitionId: String) = Authenticated.async { implicit request =>
-    for {
-      competitions <- client.competitions.map(PA.filterCompetitions)
-      competition = competitions.find(_.competitionId == competitionId).getOrElse(throw new RuntimeException("Competition not found"))
-      playerProfile <- client.playerProfile(playerId)
-      playerStats <- client.playerStats(playerId, competition.startDate, DateMidnight.now(), teamId, competitionId)
-      playerAppearances <- client.appearances(playerId, competition.startDate, DateMidnight.now(), teamId, competitionId)
-    } yield {
-      val result = renderPlayerCard(cardType, playerId, playerProfile, playerStats, playerAppearances)
-      Cors(NoCache(result))
+    client.competitions.map(PA.filterCompetitions).flatMap { competitions =>
+      competitions.find(_.competitionId == competitionId).fold(Future.successful(NoCache(NotFound(views.html.football.error(s"Competition $competitionId not found"))))) { competition =>
+        for {
+          playerProfile <- client.playerProfile(playerId)
+          playerStats <- client.playerStats(playerId, competition.startDate, DateMidnight.now(), teamId, competitionId)
+          playerAppearances <- client.appearances(playerId, competition.startDate, DateMidnight.now(), teamId, competitionId)
+        } yield {
+          val result = renderPlayerCard(cardType, playerId, playerProfile, playerStats, playerAppearances)
+          Cors(NoCache(result))
+        }
+      }
     }
   }
 
@@ -73,7 +75,7 @@ object PlayerController extends Controller with ExecutionContexts with GetPaClie
       case "discipline" => Ok(views.html.football.player.cards.discipline(playerId, playerProfile, playerStats, playerAppearances))
       case "defence" => Ok(views.html.football.player.cards.defence(playerId, playerProfile, playerStats, playerAppearances))
       case "goalkeeper" => Ok(views.html.football.player.cards.goalkeeper(playerId, playerProfile, playerStats, playerAppearances))
-      case _ => throw new RuntimeException("Unknown card type")
+      case _ => NotFound(views.html.football.error("Unknown card type"))
     }
   }
 
