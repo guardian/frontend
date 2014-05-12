@@ -132,7 +132,7 @@
         }
 
         .content-meta__label {
-            color: lighten($accentColour, 20);
+            color: lighten($accentColour, 25);
         }
 
         .tone-head--accent {
@@ -173,6 +173,10 @@
             }
         }
 
+        .article__standfirst .bullet:before {
+            background-color: lighten($accentColour, 18);
+        }
+
         .article__headline {
             font-weight: 200;
             margin-bottom: 0;
@@ -182,6 +186,9 @@
             @include mq($from: tablet) {
                 padding-bottom: $gs-baseline*3;
             }
+        }
+        .drop-cap {
+            color: $colour;
         }
 
     }
