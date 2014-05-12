@@ -89,7 +89,10 @@
         }
 
         .article__section-link {
-            padding-top: $gs-baseline/2;
+            @include rem((
+                padding-top: $gs-baseline/2
+            ));
+
         }
 
         .article__section-link a {
@@ -120,7 +123,10 @@
         }
 
         .article__head .content-meta {
-            padding: 0.6rem 0 0 0;
+            @include rem((
+                padding: 6px 0 0 0
+            ));
+
             margin: 0;
         }
 
@@ -149,6 +155,7 @@
             @include full-bleed($accentColour);
             padding-left: 1px; // hack to get rid of a <1px separator line on tablet devices
             &:before{ right: 99.999%; }
+            &:after{ left: 99.999%; }
         }
 
         .tone-head--default {
@@ -156,6 +163,7 @@
             @include full-bleed($colour);
             padding-left: 1px; // hack to get rid of a <1px separator line on tablet devices
             &:before{ right: 99.999%; }
+            &:after{ left: 99.999%; }
         }
 
         .article__headline,
@@ -185,9 +193,12 @@
         .article__headline {
             font-weight: 200;
             margin-bottom: 0;
-            padding-top: $gs-baseline/2;
-            padding-bottom: $gs-baseline*2;
-            min-height: $gs-baseline*5;
+            @include rem((
+                padding-top: $gs-baseline/2,
+                padding-bottom: $gs-baseline*2,
+                min-height: $gs-baseline*5
+            ));
+
             @include mq($from: tablet) {
                 padding-bottom: $gs-baseline*3;
             }
