@@ -1,4 +1,4 @@
-@(page: MetaData, collection: Collection, style: NewsContainer, containerIndex: Int, pagination: Option[Pagination] = None)(implicit request: RequestHeader, templateDeduping: TemplateDeduping, config: Config)
+@(page: MetaData, collection: Collection, style: NewsContainer, containerIndex: Int, pagination: Option[Pagination] = None, isSponsored: Boolean = false)(implicit request: RequestHeader, templateDeduping: TemplateDeduping, config: Config)
 
 @if(collection.items.nonEmpty) {
     <section
@@ -26,7 +26,7 @@
                 </h2>
             }
         </div>
-        @if(page.isSponsored) {
+        @if(isSponsored) {
             @fragments.commercial.badge(name="spbadge", adType="paid-for-badge", sizeMapping=Map("mobile" -> Seq("140,90")))
         }
         <div class="container__body">
