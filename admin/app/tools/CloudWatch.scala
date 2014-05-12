@@ -43,7 +43,8 @@ object CloudWatch extends implicits.Futures{
     LoadBalancer( "frontend-commercial"),
     LoadBalancer( "frontend-onward"),
     LoadBalancer( "frontend-r2football"),
-    LoadBalancer( "frontend-diagnostics" )
+    LoadBalancer( "frontend-diagnostics" ),
+    LoadBalancer( "frontend-archive" )
   ).flatten
 
   val loadBalancers = primaryLoadBalancers ++ secondaryLoadBalancers

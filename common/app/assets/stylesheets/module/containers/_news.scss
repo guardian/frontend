@@ -27,8 +27,8 @@
         .l-row--items-4 {
             .facia-slice__item:nth-child(-n+2) {
                 // Force the image to be displayed
-                .item--has-image .item__media-wrapper,
-                .item--has-image .item__image-container {
+                .item__media-wrapper,
+                .item__image-container {
                     display: block;
                 }
                 // And here we don't need two "gallery" or "video" icons

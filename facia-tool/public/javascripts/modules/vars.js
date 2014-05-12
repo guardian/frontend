@@ -1,6 +1,8 @@
 /* global _: true */
 define(['knockout'], function(ko) {
     var CONST = {
+        editions: ['uk', 'us', 'au'],
+
         types: [
             'news',
             'news/most-popular',

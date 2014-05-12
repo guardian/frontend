@@ -22,6 +22,8 @@ object Config {
     = Config(id, None, displayName, None, Nil, None)
   def apply (id: String, displayName: Option[String], href: Option[String]): Config
     = Config(id, None, displayName, href, Nil, None)
+
+  val emptyConfig = Config("")
 }
 
 case class Collection(curated: Seq[Content],

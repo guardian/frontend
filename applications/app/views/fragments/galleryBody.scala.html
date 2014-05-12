@@ -1,87 +1,87 @@
 @(gallery: Gallery, storyPackage: List[Trail], index: Int, trail: Boolean)(implicit request: RequestHeader)
-@import conf.Switches._
 
-<h2 class="article__zone left-col-deport tone-@VisualTone(gallery) tone-accent-border hide-on-mobile-if-localnav">
-    <span class="left-col-deport__body" data-component="meta">
-        <a class="tone-colour" data-link-name="article section" href="/@gallery.section">@Html(gallery.sectionName.toLowerCase)</a>
-    </span>
-</h2>
-<div class="article-wrapper monocolumn-wrapper tone-@VisualTone(gallery)">
-    <article class="js-gallery article gallery-page" itemprop="mainContentOfPage"
-         itemscope itemtype="@gallery.schemaType" role="main">
-        <div class="article__inner article__inner--head">
-            <header class="article__head">
-                @fragments.meta.metaInline(gallery)
-                @fragments.headline(gallery.headline)
+<div class="gs-container">
+    <h2 class="article__zone left-col-deport tone-@VisualTone(gallery) tone-accent-border hide-on-mobile-if-localnav">
+        <span class="left-col-deport__body" data-component="meta">
+            <a class="tone-colour" data-link-name="article section" href="/@gallery.section">@Html(gallery.sectionName.toLowerCase)</a>
+        </span>
+    </h2>
+    <div class="article-wrapper monocolumn-wrapper tone-@VisualTone(gallery)">
+        <article class="js-gallery article gallery-page" itemprop="mainContentOfPage"
+             itemscope itemtype="@gallery.schemaType" role="main">
+            <div class="article__inner article__inner--head">
+                <header class="article__head">
+                    @fragments.meta.metaInline(gallery)
+                    @fragments.headline(gallery.headline)
 
-                @if(gallery.isCommentable) {
-                    <div class="article__head__comment-count js-comment-count"></div>
-                }
-            </header>
-        </div>
-        <div class="article__columning-wrapper">
-            <div class="article__main-column">
+                    @if(gallery.isCommentable) {
+                        <div class="article__head__comment-count js-comment-count"></div>
+                    }
+                </header>
+            </div>
+            <div class="article__columning-wrapper">
+                <div class="article__main-column">
 
-                @fragments.contentMeta(gallery)
+                    @fragments.contentMeta(gallery)
 
-                <!-- Lightbox JS Gallery -->
-                @fragments.galleryThumbs(gallery, showCta=true)
+                    <!-- Lightbox JS Gallery -->
+                    @fragments.galleryThumbs(gallery, showCta=true)
 
-                <!-- Non-JS Gallery / LightboxSwitch off mode -->
-                <div class="js-hidden">
-                    <p class="gallery-nav">
+                    <!-- Non-JS Gallery / LightboxSwitch off mode -->
+                    <div class="js-hidden">
+                        <p class="gallery-nav">
 
-                        @if(index > 1) {
-                            <a class="gallery-prev control tone-colour" href="?index=@(index - 1)">Previous</a>
-                        }
-
-                        Image @index of @gallery.size
-
-                        @if(index < gallery.size) {
-                            <a class="gallery-next control tone-colour" href="?index=@(index + 1)">Next</a>
-                        } else {
-                            <a class="gallery-next control tone-colour" href="?index=1">Next</a>
-                        }
-                    </p>
-
-                    <div class="gallery-container">
-                        @gallery.largestCrops.zipWithRowInfo.map{ case(image, row) =>
-                            @if(row.rowNum == index) {
-                                <img class="maxed @if(image.width >= image.height){landscape} else {portrait}"
-                                    src="@image.path"
-                                    alt="@image.altText.getOrElse("")"
-                                />
-
-                                <div class="gallery-caption">
-                                    <p class="caption">@Html(image.caption.getOrElse(""))</p>
-                                    <p class="caption-credit">@image.credit</p>
-                                </div>
+                            @if(index > 1) {
+                                <a class="gallery-prev control tone-colour" href="?index=@(index - 1)">Previous</a>
                             }
-                        }
-                    </div>
-                </div>
-                <div class="article__container" data-component="body">
-                    @fragments.standfirst(gallery)
 
-                    <div class="article__keywords" data-link-name="gallery keywords">
-                        @fragments.keywordList(gallery.keywords)
-                    </div>
-                </div>
+                            Image @index of @gallery.size
 
-                <div class="social-wrapper" data-component="share">
-                    @fragments.social(gallery)
+                            @if(index < gallery.size) {
+                                <a class="gallery-next control tone-colour" href="?index=@(index + 1)">Next</a>
+                            } else {
+                                <a class="gallery-next control tone-colour" href="?index=1">Next</a>
+                            }
+                        </p>
+
+                        <div class="gallery-container">
+                            @gallery.largestCrops.zipWithRowInfo.map{ case(image, row) =>
+                                @if(row.rowNum == index) {
+                                    <img class="maxed @if(image.width >= image.height){landscape} else {portrait}"
+                                        src="@image.path"
+                                        alt="@image.altText.getOrElse("")"
+                                    />
+
+                                    <div class="gallery-caption">
+                                        <p class="caption">@Html(image.caption.getOrElse(""))</p>
+                                        <p class="caption-credit">@image.credit</p>
+                                    </div>
+                                }
+                            }
+                        </div>
+                    </div>
+                    <div class="article__container" data-component="body">
+                        @fragments.standfirst(gallery)
+
+                        <div class="article__keywords" data-link-name="gallery keywords">
+                            @fragments.keywordList(gallery.keywords)
+                        </div>
+                    </div>
+
+                    <div class="social-wrapper" data-component="share">
+                        @fragments.social(gallery)
+                    </div>
                 </div>
             </div>
-        </div>
-    </article>
+        </article>
+    </div>
+
 </div>
-
-
 @fragments.storyPackagePlaceholder(storyPackage)
-
 @fragments.onwardPlaceholder(VisualTone(gallery))
 
-@fragments.mostPopularPlaceholder(gallery.section, VisualTone(gallery))
-
+<div class="facia-container facia-container--layout-article">
+    @fragments.mostPopularPlaceholder(gallery.section, VisualTone(gallery))
+</div>
 
 <div class="gallery-overlay-bg"></div>
