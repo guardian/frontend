@@ -2,7 +2,7 @@ package services
 
 import common.{Logging, Edition, AkkaAgent, ExecutionContexts}
 import play.api.libs.json.{JsNull, Json, JsValue}
-import model.{SeoData, Config}
+import model.{SeoDataJson, SeoData, Config}
 import scala.concurrent.Future
 import scala.concurrent.duration._
 import akka.util.Timeout
@@ -75,10 +75,10 @@ trait ConfigAgentTrait extends ExecutionContexts with Logging {
 
   def contentsAsJsonString: String = Json.prettyPrint(configAgent.get)
 
-  private def getSeoDataFromConfig(path: String): SeoData = {
+  private def getSeoDataFromConfig(path: String): SeoDataJson = {
     val json = configAgent.get()
     val frontJson = (json \ "fronts" \ path).as[JsValue]
-    SeoData(
+    SeoDataJson(
       path,
       section   = (frontJson \ "section").asOpt[String].filter(_.nonEmpty),
       webTitle  = (frontJson \ "webTitle").asOpt[String].filter(_.nonEmpty),
@@ -88,7 +88,7 @@ trait ConfigAgentTrait extends ExecutionContexts with Logging {
   }
 
   def getSeoData(path: String): Future[SeoData] = {
-    val seoDataFromConfig:   Future[SeoData] = Future.successful(getSeoDataFromConfig(path))
+    val seoDataFromConfig:   Future[SeoDataJson] = Future.successful(getSeoDataFromConfig(path))
     val itemResponseForPath: Future[Option[ItemResponse]] = getSectionOrTagWebTitle(path)
     val seoDataFromPath:     Future[SeoData] = Future.successful(SeoData.fromPath(path))
 
@@ -97,10 +97,10 @@ trait ConfigAgentTrait extends ExecutionContexts with Logging {
       ir <- itemResponseForPath
       sp <- seoDataFromPath
     } yield {
-      val section:  Option[String] = sc.section.orElse(ir.flatMap(getSectionFromItemResponse)).orElse(sp.section)
-      val webTitle: Option[String] = sc.webTitle.orElse(ir.flatMap(getWebTitleFromItemResponse)).orElse(sp.webTitle)
-      val title: Option[String]    = sc.title.orElse(webTitle.map(SeoData.titleFromWebTitle))
-      val description: Option[String] = sc.description.orElse(webTitle.map(SeoData.descriptionFromWebTitle))
+      val section:  String = sc.section.orElse(ir.flatMap(getSectionFromItemResponse)).getOrElse(sp.section)
+      val webTitle: String = sc.webTitle.orElse(ir.flatMap(getWebTitleFromItemResponse)).getOrElse(sp.webTitle)
+      val title: String    = sc.title.getOrElse(SeoData.titleFromWebTitle(webTitle))
+      val description: Option[String] = sc.description.orElse(SeoData.descriptionFromWebTitle(webTitle))
 
       SeoData(path, section, webTitle, title, description)
     }
