@@ -27,7 +27,7 @@ define(['bonzo'], function (bonzo) {
             {
                 id: 'hide',
                 test: function (context, config) {
-                    bonzo(context.querySelector('.control--search .control__info')).hide();
+//                    bonzo(context.querySelector('.control--search .control__info')).hide();
                 }
             }
         ];

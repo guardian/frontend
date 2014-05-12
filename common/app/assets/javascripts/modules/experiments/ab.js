@@ -3,7 +3,7 @@ define([
     'common/utils/storage',
     'common/utils/mediator',
     'common/modules/analytics/mvt-cookie',
-    'modules/experiments/tests/searchText'
+    'common/modules/experiments/searchText'
 ], function (
     common,
     store,
