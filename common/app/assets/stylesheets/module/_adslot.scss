@@ -131,7 +131,12 @@
 .ad-slot--mpu-banner-ad {
     padding: 0;
     width: 300px;
+    min-height: 300px;
     height: auto;
+
+    .ad-slot__label {
+        min-height: 50px;
+    }
 }
 .ad-slot--commercial-component,
 .ad-slot--commercial-component-high {
