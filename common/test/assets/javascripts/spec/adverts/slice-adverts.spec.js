@@ -19,11 +19,11 @@ define([
         var fixturesConfig = {
                 id: 'slice-adverts',
                 fixtures: [
-                    '<div class="container"><div class="linkslist-container facia-slice-wrapper--ad"><div class="slice-one"></div></div></div>',
-                    '<div class="container"></div>',
-                    '<div class="container"><div class="facia-slice-wrapper--ad"><div class="slice-two"></div></div></div>',
-                    '<div class="container"><div class="facia-slice-wrapper--ad"><div class="slice-three"></div></div></div>',
-                    '<div class="container"><div class="facia-slice-wrapper--ad"><div class="slice-one"></div></div></div>'
+                    '<div class="container container-first"><div class="linkslist-container facia-slice-wrapper--ad"><div class="slice"></div></div></div>',
+                    '<div class="container container-second"></div>',
+                    '<div class="container container-third"><div class="facia-slice-wrapper--ad"><div class="slice"></div></div></div>',
+                    '<div class="container container-fourth"><div class="facia-slice-wrapper--ad"><div class="slice"></div></div></div>',
+                    '<div class="container container-fifth"><div class="facia-slice-wrapper--ad"><div class="slice"></div></div></div>'
                 ]
             },
             createSwitch = function(isOn){
@@ -52,7 +52,7 @@ define([
             expect(sliceAdverts.init()).toBeFalsy();
         });
 
-        it('should only create a maximum of 2 advert slorts', function() {
+        it('should only create a maximum of 2 advert slots', function() {
             var sliceAdverts = new SliceAdverts(createSwitch(true));
             sliceAdverts.init();
             expect(qwery('.facia-slice-wrapper--ad .ad-slot').length).toEqual(2);
@@ -80,20 +80,9 @@ define([
         it('should move the existing content', function() {
             var sliceAdverts = new SliceAdverts(createSwitch(true));
             sliceAdverts.init();
-            var $sliceItem = $('.facia-slice-wrapper--ad .facia-slice__item').map(function(slot) { return $(slot); });
-            expect($sliceItem[0].html()).toEqual('<div class="slice-one"></div>');
-            expect($sliceItem[1].html()).toEqual('<div class="slice-two"></div>');
-        });
-
-        it('should not ad slot to hidden container', function() {
-            $('.container')
-                .first()
-                .css('display', 'none');
-            var sliceAdverts = new SliceAdverts(createSwitch(true));
-            sliceAdverts.init();
-            var $sliceItem = $('.facia-slice-wrapper--ad .facia-slice__item').map(function(slot) { return $(slot); });
-            expect($sliceItem[0].html()).toEqual('<div class="slice-two"></div>');
-            expect($sliceItem[1].html()).toEqual('<div class="slice-three"></div>');
+            qwery('.facia-slice-wrapper--ad .facia-slice__item').forEach(function(slot) {
+                expect(bonzo(slot.children[0]).hasClass('slice')).toBe(true);
+            });
         });
 
         it('should change collection classes', function() {
@@ -102,6 +91,13 @@ define([
                 expect($adSlice.hasClass('linkslist-container')).toEqual(false);
                 expect($adSlice.hasClass('facia-slice-wrapper facia-slice-wrapper--position-2')).toEqual(true);
             });
+        });
+
+        it('should have at least two non-advert containers between advert containers', function() {
+            var sliceAdverts = new SliceAdverts(createSwitch(true));
+            sliceAdverts.init();
+            expect(qwery('.container-first .ad-slot').length).toBe(1);
+            expect(qwery('.container-fourth .ad-slot').length).toBe(1);
         });
 
     });
