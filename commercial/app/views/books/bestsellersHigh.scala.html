@@ -46,11 +46,13 @@
                     <div class="highitem">
                         <h4 class="commercial__relevance-title commercial__relevance-title-high">Featured book</h4>
                         @books.take(1).map { book =>
-                        <a href="@AdLink{@book.buyUrl}" class="lineitem__link" data-link-name="merchandising-bookshop-v@{version}_@{date}-high-@{book.isbn}-@{book.author}-@{book.title}">
+                        <a href="@AdLink{@book.buyUrl}" class="lineitem__link" data-link-name="merchandising-bookshop-v@{version}_@{date}-high-@{book.isbn}-@{book.author}-@{book.title}-image">
                             @book.jacketUrl.map { url =>
                             <img class="highitem__img" src="@url" alt="">
                             }
-                            <div class="highitem__details">
+                        </a>
+                        <div class="highitem__details">
+                            <a href="@AdLink{@book.buyUrl}" class="lineitem__link" data-link-name="merchandising-bookshop-v@{version}_@{date}-high-@{book.isbn}-@{book.author}-@{book.title}">
                                 <h4 class="lineitem__title">@book.title</h4>
                                 @if(book.author) {
                                 <p class="lineitem__meta">By @book.author</p>
@@ -64,9 +66,9 @@
                                     <span class="commercial--books__price__our">Our price: &pound;@("%.2f".format(price))</span>
                                     }
                                 </p>
-                            </div>
-                        </a>
-                        <a href="@AdLink{@book.buyUrl}" class="commercial--books__buy-now-button" data-link-name="merchandising-bookshop-v@{version}_@{date}-high-@{book.isbn}-@{book.author}-@{book.title}-button">Buy now</a>
+                            </a>
+                            <a href="@AdLink{@book.buyUrl}" class="commercial--books__buy-now-button" data-link-name="merchandising-bookshop-v@{version}_@{date}-high-@{book.isbn}-@{book.author}-@{book.title}-button">Buy now</a>
+                        </div>
                         }
                     </div>
                 </div>
@@ -75,24 +77,28 @@
                     <ul class="u-unstyled lineitems">
                         @books.take(2).map { book =>
                         <li class="lineitem u-cf">
-                            <a href="@AdLink{@book.buyUrl}" class="lineitem__link" data-link-name="merchandising-bookshop-v@{version}_@{date}-high-@{book.isbn}-@{book.author}-@{book.title}">
+                            <a href="@AdLink{@book.buyUrl}" data-link-name="merchandising-bookshop-v@{version}_@{date}-high-@{book.isbn}-@{book.author}-@{book.title}-cover">
                                 @book.jacketUrl.map { url =>
                                 <img class="lineitem__img" src="@url" alt="">
                                 }
-                                <h4 class="lineitem__title">@book.title</h4>
-                                @if(book.author) {
-                                <p class="lineitem__meta">By @book.author</p>
-                                }
-                                <p class="commercial--books__price">
-                                    @book.price.map { price =>
-                                    <span class="commercial--books__price__rrp">RRP &pound;@("%.2f".format(price))</span>
-                                    }
-                                    @book.offerPrice.map { price =>
-                                    <span class="commercial--books__price__our">Our price: &pound;@("%.2f".format(price))</span>
-                                    }
-                                </p>
                             </a>
-                            <a href="@AdLink{@book.buyUrl}" class="commercial--books__buy-now-button" data-link-name="merchandising-bookshop-v@{version}_@{date}-high-@{book.isbn}-@{book.author}-@{book.title}-button">Buy now</a>
+                            <div class="lowitem__details">
+                                <a href="@AdLink{@book.buyUrl}" data-link-name="merchandising-bookshop-v@{version}_@{date}-high-@{book.isbn}-@{book.author}-@{book.title}">
+                                    <h4 class="lineitem__title">@book.title</h4>
+                                    @if(book.author) {
+                                    <p class="lineitem__meta">By @book.author</p>
+                                    }
+                                    <p class="commercial--books__price">
+                                        @book.price.map { price =>
+                                        <span class="commercial--books__price__rrp">RRP &pound;@("%.2f".format(price))</span>
+                                        }
+                                        @book.offerPrice.map { price =>
+                                        <span class="commercial--books__price__our">Our price: &pound;@("%.2f".format(price))</span>
+                                        }
+                                    </p>
+                                </a>
+                                <a href="@AdLink{@book.buyUrl}" class="commercial--books__buy-now-button" data-link-name="merchandising-bookshop-v@{version}_@{date}-high-@{book.isbn}-@{book.author}-@{book.title}-button">Buy now</a>
+                            </div>
                         </li>
                         }
                     </ul>
