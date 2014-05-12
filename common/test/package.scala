@@ -1,6 +1,6 @@
 package test
 
-import conf.{ElasticSearchContentApi, Configuration}
+import conf.{ContentApi, Configuration}
 import java.net.URLEncoder
 import play.api.test._
 import play.api.test.Helpers._
@@ -62,7 +62,7 @@ trait TestSettings {
     }
   }
 
-  ElasticSearchContentApi.http = toRecorderHttp(ElasticSearchContentApi.http)
+  ContentApi.http = toRecorderHttp(ContentApi.http)
 }
 
 /**

@@ -2,16 +2,19 @@ package model.commercial.money
 
 import model.commercial.{Segment, Ad}
 import scala.xml.{Node, Elem}
+import java.math.BigDecimal
 
 case class Loan(name: String,
                 comments: String,
                 headlineApr: Double,
                 apr: Double,
-                minAdvance: Double,
-                maxAdvance: Double,
+                minAdvance: BigDecimal,
+                maxAdvance: BigDecimal,
                 example: LoanExample,
                 logoUrl: String,
-                detailsUrl: String
+                detailsUrl: String,
+                applyUrl: String,
+                categoryName: String
                  ) extends Ad {
 
   def isTargetedAt(segment: Segment): Boolean = true
@@ -52,11 +55,13 @@ object LoansApi extends MoneySupermarketApi[Loan] {
           (product \ "LoanComments").text,
           (product \ "HeadlineApr").text.toDouble,
           (product \ "Apr").text.toDouble,
-          (product \ "MinAdvance").text.toDouble,
-          (product \ "MaxAdvance").text.toDouble,
+          new BigDecimal((product \ "MinAdvance").text),
+          new BigDecimal((product \ "MaxAdvance").text),
           parseLoanExample(product),
           (product \ "LogoUrl").text,
-          (product \ "DetailsUrl").text
+          (product \ "DetailsUrl").text,
+          (product \ "ApplyUrl").text,
+          (product \ "CategoryName").text
         )
     }
   }

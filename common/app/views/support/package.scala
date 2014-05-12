@@ -211,8 +211,10 @@ object BlockNumberCleaner extends HtmlCleaner {
 case class VideoEmbedCleaner(contentVideos: Seq[VideoElement]) extends HtmlCleaner {
 
   override def clean(document: Document): Document = {
-    document.getElementsByClass("element-video").foreach { element: Element =>
-      element.child(0).wrap("<div class=\"embed-video-wrapper\"></div>")
+    document.getElementsByClass("element-video").filter { element: Element =>
+      element.getElementsByClass("gu-video").length == 0
+    }.foreach { element: Element =>
+      element.child(0).wrap("<div class=\"embed-video-wrapper u-responsive-ratio u-responsive-ratio--hd\"></div>")
     }
 
     document.getElementsByClass("gu-video").foreach { element: Element =>
@@ -235,7 +237,7 @@ case class VideoEmbedCleaner(contentVideos: Seq[VideoElement]) extends HtmlClean
                 Sorry, your browser is unable to play this video.
               </object>""")
 
-        element.wrap("<div class=\"gu-video-wrapper\"><div class=\"u-responsive-ratio u-responsive-ratio--hd\"></div></div>")
+        element.wrap("<div class=\"gu-video-wrapper u-responsive-ratio u-responsive-ratio--hd\"></div>")
       })
     }
     document
@@ -301,13 +303,17 @@ case class PictureCleaner(contentImages: Seq[ImageElement]) extends HtmlCleaner 
 case class LiveBlogDateFormatter(isLiveBlog: Boolean)(implicit val request: RequestHeader) extends HtmlCleaner  {
   def clean(body: Document): Document = {
     if (isLiveBlog) {
-      body.select(".block-time.published-time time").foreach { el =>
-        el.attr("data-relativeformat", "med")
-        val datetime = DateTime.parse(el.attr("datetime"))
-        val hhmm = Format(datetime, "HH:mm")
-        el.after(s"""<span class="block-time__absolute">$hhmm</span>""")
-        if(datetime.isAfter(DateTime.now().minusDays(5))) {
-          el.addClass("js-timestamp")
+      body.select(".block").foreach { el =>
+        val id = el.id()
+        el.select(".block-time.published-time time").foreach { time =>
+            val datetime = DateTime.parse(time.attr("datetime"))
+            val hhmm = Format(datetime, "HH:mm")
+            time.wrap(s"""<a href="#$id" class="block-time__link"></a>""")
+            time.attr("data-relativeformat", "med")
+            time.after( s"""<span class="block-time__absolute">$hhmm</span>""")
+            if (datetime.isAfter(DateTime.now().minusDays(5))) {
+              time.addClass("js-timestamp")
+            }
         }
       }
     }
@@ -751,16 +757,16 @@ object GetClasses {
                         additionalClasses: String = ""): String = {
     val f: Seq[(Trail) => String] = Seq(
       (trail: Trail) => trail match {
-        case _: Gallery => "collection__item--content-type-gallery"
-        case _: Video   => "collection__item--content-type-video"
+        case _: Gallery => "facia-slice__item--content-type-gallery"
+        case _: Video   => "facia-slice__item--content-type-video"
         case _          => ""
       }
     )
     val baseClasses: Seq[String] = Seq(
       additionalClasses,
       "l-row__item",
-      "collection__item",
-      s"collection__item--volume-${trail.group.getOrElse("0")}"
+      "facia-slice__item",
+      s"facia-slice__item--volume-${trail.group.getOrElse("0")}"
     )
     val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail)} ++ makeSnapClasses(trail)
     RenderClasses(classes:_*)
@@ -801,7 +807,6 @@ object GetClasses {
   def forFromage(trail: Trail, imageAdjust: String): String = {
     val baseClasses: Seq[String] = Seq(
       "fromage",
-      s"fromage--volume-${trail.group.getOrElse("0")}",
       s"tone-${VisualTone(trail)}",
       "tone-accent-border"
     )
@@ -824,7 +829,7 @@ object GetClasses {
   }
 
   def makeSnapClasses(trail: Trail): Seq[String] = trail match {
-    case snap: Snap => "facia-snap" +: snap.snapType.map(t => Seq(s"facia-snap--$t")).getOrElse(Seq("facia-snap--default"))
+    case snap: Snap => "facia-snap" +: snap.snapCss.map(t => Seq(s"facia-snap--$t")).getOrElse(Seq("facia-snap--default"))
     case _  => Nil
   }
 

@@ -26,7 +26,7 @@
                     </h2>
                 }
             </div>
-            <div class="container__body container--rolled-up-hide">
+            <div class="container__body container--rolled-up-hide js-popular-trails">
                 @defining(Seq(MostPopular("Popular", "popular", collection.items.slice(0, 10)))){ popular =>
                     @fragments.collections.popular(popular)
                 }

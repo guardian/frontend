@@ -4,36 +4,17 @@
 
 /* remove top margin on the footer to make component sit on top of it as per design */
 
-.footer {
+.l-footer {
     margin-top: 0 !important;
 }
 
 .commercial--jobs {
-    @include rem((
-        padding: $gs-gutter/2
-    ));
     .commercial__head {
         background-color: transparent;
-        padding: 0;
         height: auto;
+        padding: 0;
         border: 0;
-
-        @include mq(tablet) {
-            @include rem((
-                width: gs-span(2.25)
-            ));
-            float: left;
-        }
-        @include mq(desktop) {
-            @include rem((
-                width: gs-span(3)
-            ));
-        }
-        @include mq(desktop) {
-            @include rem((
-                margin-right: $gs-gutter
-            ));
-        }
+        position: static;
     }
     .commercial__title {
         padding: 0;
@@ -50,37 +31,31 @@
     }
     .commercial__home-link {
         float: right;
-
         @include mq(tablet) {
             position: absolute;
             @include rem((
-                left: $gs-gutter,
-                bottom: $gs-baseline
+                top: 10px,
+                right: $gs-gutter/2
             ));
         }
     }
     .commercial__body {
-        padding: 0;
+        @include rem((
+            padding: 10px 0
+        ));
     }
     .commercial--jobs__sectors {
         overflow: hidden;
-
-        @include mq(tablet) {
-            float: left;
-            @include rem((
-                width: gs-span(5)
-            ));
-            width: 50%;
-        }
-        @include mq(desktop) {
-            @include rem((
-                width: gs-span(6)
-            ));
-        }
+        @include box-sizing(border-box);
+        @include rem((
+            padding-right: $gs-gutter/2
+        ));
     }
     .commercial--jobs__sector {
         width: 50%;
-        min-width: gs-span(1.5);
+        @include rem((
+            min-width: gs-span(1.5)
+        ));
         float: left;
         @include box-sizing(border-box);
         @include rem((
@@ -95,17 +70,17 @@
                 background-color: $c-newsDefault;
             }
         }
-        @include mq($to: desktop) {
-            &:nth-child(2n+1) .commercial--jobs__sector__link {
-                @include rem((
-                    margin-right: $gs-gutter/2
-                ));
-            }
-            &:nth-child(2n) .commercial--jobs__sector__link {
-                @include rem((
-                    margin-left: $gs-gutter/2
-                ));
-            }
+   
+        &:nth-child(2n+1) .commercial--jobs__sector__link {
+            @include rem((
+                margin-right: $gs-gutter/2
+            ));
+        }
+        
+        &:nth-child(2n) .commercial--jobs__sector__link {
+            @include rem((
+                margin-left: $gs-gutter/2
+            ));
         }
         @include mq(tablet) {
             &:nth-child(1),
@@ -122,40 +97,6 @@
                         ));
                     }
                 }
-            }
-        }
-        @include mq(desktop) {
-            width: 33%;
-
-            &:nth-child(-n+3) {
-                margin-top: 0;
-
-                .commercial--jobs__sector__link {
-                    border-top: 0;
-                    padding-top: 0;
-
-                    .i {
-                        @include rem((
-                            top: $gs-baseline/6
-                        ));
-                    }
-                }
-            }
-            &:nth-child(3n+1) .commercial--jobs__sector__link {
-                @include rem((
-                    margin-right: $gs-gutter/2
-                ));
-            }
-            &:nth-child(3n+2) .commercial--jobs__sector__link {
-                @include rem((
-                    margin-left: $gs-gutter/2,
-                    margin-right: $gs-gutter/2
-                ));
-            }
-            &:nth-child(3n) .commercial--jobs__sector__link {
-                @include rem((
-                    margin-left: $gs-gutter/2
-                ));
             }
         }
     }
@@ -184,44 +125,28 @@
             margin-top: $gs-baseline*2,
             padding-top: $gs-baseline/3
         ));
-
         @include mq(tablet) {
             border-top: 0;
             margin-top: 0;
             padding-top: 0;
-            @include rem((
-                margin-left: gs-span(6)
-            ));
-            margin-left: 50%;
-        }
-        @include mq(desktop) {
-            @include rem((
-                margin-left: gs-span(6)
-            ));
         }
     }
     .commercial--jobs__job {
-        float: left;
         @include box-sizing(border-box);
 
         &:nth-child(n+2) {
+            margin-left: 0;
             display: none;
+        }
+        
+        &:nth-child(2) {
+            padding-right: 0;
         }
         @include mq(tablet) {
             border-left: 2px solid $c-neutral4;
             @include rem((
-                margin-left: $gs-gutter/2,
-                padding-left: $gs-gutter/2 - 1
+                padding: 0 ($gs-gutter/2 - 1)
             ));
-        }
-        @include mq(wide) {
-            @include rem((
-                width: gs-span(2.75)
-            ));
-
-            &:nth-child(2) {
-                display: block;
-            }
         }
     }
     .commercial--jobs__job__title,
@@ -229,10 +154,12 @@
         color: $c-newsDefault;
     }
     .commercial--jobs__job__title {
+        @include fs-headline(1);
         margin: 0;
     }
     .commercial--jobs__job__logo {
         border: 1px solid $c-neutral1;
+        max-width: 100%;
     }
     .commercial--jobs__job__logo,
     .commercial--jobs__job__description,
@@ -241,13 +168,157 @@
             margin: $gs-baseline/2 0 0
         ));
     }
+    .commercial--jobs__job__salary,
     .commercial--jobs__job__recruiter {
         @include fs-textsans(1);
     }
+    .commercial--jobs__job__salary {
+        margin-bottom: 0;
+    }
 }
 
+/* fronts */
 .facia-container--layout-front .commercial--jobs {
     @include rem((
         padding: $gs-gutter/2
     ));
+    @include mq(tablet) {
+        .commercial--jobs__sectors {
+            float: left;
+            width: 66%;
+        }
+        .commercial--jobs__job {
+            float: left;
+            width: 33%;
+        }
+    }
+    @include mq(desktop) {
+        .commercial__head {
+            width: 25%;
+            float: left;
+        }
+        .commercial--jobs__sectors {
+            @include rem((
+                width: gs-span(6) + $gs-gutter/2
+            ));
+        }
+        .commercial--jobs__jobs {
+            @include rem((
+                width: gs-span(3)
+            ));
+            float: left;
+        }
+        .commercial--jobs__job {
+            width: auto;
+        }
+        .commercial--jobs__class {
+            @include rem((
+                padding-left: $gs-gutter/2
+            ));
+            width: 25%;
+        
+            &:nth-child(n+4) {
+                display: block;
+            }
+        }
+        .commercial__home-link {
+            @include rem((
+                left: $gs-gutter/2,
+                bottom: 10px
+            ));
+            top: auto;
+            right: auto;
+        }
+    }
+    @include mq(faciaLeftCol) {
+        .commercial__head {
+            @include rem((
+                width: gs-span(2) + $gs-gutter/2
+            ));
+        }
+        .commercial__home-link {
+            top: auto;
+            right: auto;
+            @include rem((
+                bottom: $gs-gutter/2,
+                left: $gs-gutter/2
+            ));    
+        }
+        .commercial__body {
+            @include rem((
+                margin-left: gs-span(2) + $gs-gutter/2
+            ));            
+        }
+        .commercial--jobs__sectors,
+        .commercial--jobs__jobs,
+        .commercial--jobs__job {
+            width: 50%;
+        }
+        .commercial--jobs__job:nth-child(n+2) {
+            display: block;
+        }
+    }
+    @include mq(wide) {
+        .commercial__head {
+            @include rem((
+                margin-right: $gs-gutter/2
+            ));
+        }
+    }
+}
+/* article */
+.facia-container--layout-article .commercial--jobs {
+    .commercial__body {
+        padding: 0;
+        @include rem((
+            padding: $gs-gutter/2
+        ));
+    }
+    @include mq(tablet) {
+        .commercial--jobs__sectors {
+            float: left;
+            width: 66%;
+        }
+        .commercial--jobs__job {
+            float: left;
+            width: 33%;
+        }        
+    }
+    @include mq(rightCol) {
+        .commercial__head {
+            width: 25%;
+            float: left;
+        }
+        .commercial__home-link {
+            @include rem((
+                left: $gs-gutter/2,
+                bottom: 10px
+            ));
+            top: auto;
+            right: auto;
+        }
+        .commercial--jobs__class {
+            @include rem((
+                padding-left: $gs-gutter/2
+            ));
+            width: 25%;
+
+            &:nth-child(n+4) {
+                display: block;
+            }
+        }
+    }
+    @include mq(leftCol) {
+        .commercial--jobs__sectors,
+        .commercial--jobs__jobs,
+        .commercial--jobs__job {
+            width: 50%;
+        }
+        .commercial--jobs__jobs {
+            float: left;
+        }
+        .commercial--jobs__job:nth-child(n+2) {
+            display: block;
+        }
+    }
 }

@@ -6,7 +6,7 @@ set -o errexit
 
 export PATH=dev/gems/bin:$PATH
 
-bundle install --binstubs dev/gems/bin --path dev/gems
+bundle install --binstubs dev/gems/bin --path dev/gems --without development
 npm install
 
 grunt "$@"

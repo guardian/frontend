@@ -12,11 +12,20 @@ class SavingsApiTest extends FlatSpec with Matchers {
       |</Savings>""".stripMargin
 
   "parse" should "parse Savings Accounts from xml feed" in {
+
+    object SavingsApi extends SavingsApi {
+      protected val adTypeName = "Savings - Test"
+      protected lazy val path = "savings/test"
+    }
     val accounts = SavingsApi.parse(XML.loadString(xmlStr))
 
     accounts should be(Seq(
-      SavingsAccount("Coventry Building Society", "Online Saver (5)", 1.6, "http://www.money.com/medias/sys_master/h98/h4b/8824644435998/coventrybs.png", "http://www.money.com/shop/media-partner-best-buy-click/?product_sku=SAV_coventry_a9728a4bea5b4357b9e404991c26e3a7&source=GU1&channel_id=116"),
-      SavingsAccount("Tesco Bank", "Internet Saver", 1.55, "http://www.money.com/medias/sys_master/h99/h4b/8824644468766.png", "http://www.money.com/shop/media-partner-best-buy-click/?product_sku=SAV_tesco_c2872aa51ecf468c8033cfe96b1979d9&source=GU1&channel_id=116")
+      SavingsAccount(
+        "Coventry Building Society", "Online Saver (5)", 1.6, "Anniversary", "http://www.money.com/medias/sys_master/h98/h4b/8824644435998/coventrybs.png", "http://www.money.com/shop/media-partner-best-buy-click/?product_sku=SAV_coventry_a9728a4bea5b4357b9e404991c26e3a7&source=GU1&channel_id=116", "none", 1, false,
+        Map(("Branch", false), ("Internet", true), ("Telephone" -> false), ("Post", false), ("Cash point", false))),
+      SavingsAccount(
+        "Tesco Bank", "Internet Saver", 1.55, "Yearly", "http://www.money.com/medias/sys_master/h99/h4b/8824644468766.png", "http://www.money.com/shop/media-partner-best-buy-click/?product_sku=SAV_tesco_c2872aa51ecf468c8033cfe96b1979d9&source=GU1&channel_id=116", "none", 1, false,
+        Map(("Branch", false), ("Internet", true), ("Telephone" -> false), ("Post", false), ("Cash point", false)))
     ))
   }
 }

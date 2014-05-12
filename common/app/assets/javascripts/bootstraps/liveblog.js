@@ -12,7 +12,9 @@ define([
     'common/modules/live/filter',
     'common/modules/ui/notification-counter',
     'common/modules/experiments/affix',
-    'common/utils/template'
+    'common/utils/template',
+    'common/utils/url',
+    'common/utils/context'
 ], function (
     mediator,
     $,
@@ -27,11 +29,14 @@ define([
     LiveFilter,
     NotificationCounter,
     Affix,
-    template
+    template,
+    url,
+    getContext
 ) {
     'use strict';
 
     var affix = null;
+    var autoUpdate = null;
 
     function getKeyEvents() {
         return qwery('.is-key-event').slice(0, 7);
@@ -63,10 +68,12 @@ define([
             curBinding = bean.one(document, 'scroll', function() { unselect(); });
         }
 
-        bean.on(qwery('.timeline')[0], 'click', '.timeline__link', function(e){
+        bean.on(qwery('.timeline')[0], 'click', '.timeline__link', function(e) {
             mediator.emit('module:liveblog:showkeyevents', true);
+            $('.dropdown--live-feed', getContext()).addClass('dropdown--active');
             var $el = bonzo(e.currentTarget),
                 eventId = $el.attr('data-event-id'),
+                title = $('.timeline__title', $el).text(),
                 targetEl = qwery('#'+eventId),
                 dim = bonzo(targetEl).offset();
             scroller.scrollTo(dim.top, 500, 'easeOutQuint');
@@ -74,6 +81,7 @@ define([
             bean.off(curBinding);
             unselect();
             $el.addClass(selectedClass);
+            url.pushUrl({blockId: eventId}, title, window.location.pathname + '#' + eventId, true);
             e.stop();
         });
     }
@@ -81,12 +89,12 @@ define([
     function createKeyEventHTML(el) {
         var keyEventTemplate = '<li class="timeline__item" data-event-id="{{id}}">' +
             '<a class="timeline__link" href="#{{id}}" data-event-id="{{id}}">' +
-            '<span class="timeline__date">{{time}}</span><span class="timeline__title">{{title}}</span></a></li>';
+            '<span class="timeline__date">{{time}}</span><span class="timeline__title u-underline">{{title}}</span></a></li>';
 
         var data = {
             id: el.getAttribute('id'),
             title: $('.block-title', el).text(),
-            time: $('.block-time', el).html()
+            time: $('.block-time__link', el).html()
         };
 
         return template(keyEventTemplate, data);
@@ -121,14 +129,15 @@ define([
             $('.js-live-blog__timeline li:last-child .timeline__title').text('Opening post');
 
             if(/desktop|wide/.test(detect.getBreakpoint()) && config.page.keywordIds.indexOf('football/football') < 0) {
+                var topMarker = qwery('.js-top-marker')[0];
                 affix = new Affix({
                     element: qwery('.js-live-blog__timeline-container')[0],
-                    topMarker: qwery('.js-top-marker')[0],
+                    topMarker: topMarker,
                     bottomMarker: qwery('.js-bottom-marker')[0],
                     containerElement: qwery('.js-live-blog__key-events')[0]
                 });
-                createScrollTransitions();
             }
+            createScrollTransitions();
         });
     }
 
@@ -137,17 +146,25 @@ define([
             if (config.page.isLive) {
 
                 var timerDelay = /desktop|wide/.test(detect.getBreakpoint()) ? 30000 : 60000;
-                new AutoUpdate({
-                    path: function() {
-                        var id = context.querySelector('.article-body .block').id;
-
-                        return window.location.pathname + '.json' + '?lastUpdate=' + id;
-                    },
+                autoUpdate = new AutoUpdate({
+                    path: getUpdatePath,
                     delay: timerDelay,
                     attachTo: $('.article-body', context)[0],
                     switches: config.switches,
                     manipulationType: 'prepend'
-                }).init();
+                });
+                autoUpdate.init();
+            }
+        });
+
+        mediator.on('module:filter:toggle', function(orderedByOldest) {
+            if (!autoUpdate) {
+                return;
+            }
+            if (orderedByOldest) {
+                autoUpdate.setManipulationType('append');
+            } else {
+                autoUpdate.setManipulationType('prepend');
             }
         });
     }
@@ -157,6 +174,21 @@ define([
             new LiveFilter($('.js-blog-blocks', context)[0]).render($('.js-live-filter')[0]);
             new NotificationCounter().init();
         });
+    }
+
+    function getUpdatePath() {
+        var blocks = qwery('.article-body .block', getContext()),
+            newestBlock = null;
+
+        if (autoUpdate.getManipulationType() === 'append') {
+            newestBlock = blocks.pop();
+        } else {
+            newestBlock = blocks.shift();
+        }
+
+        // There may be no blocks at all. 'block-0' will return any new blocks found.
+        var id = newestBlock ? newestBlock.id : 'block-0';
+        return window.location.pathname + '.json?lastUpdate=' + id;
     }
 
     return {

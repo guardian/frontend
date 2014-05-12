@@ -13,7 +13,7 @@
         }
 
         .tabs__tab:first-child {
-            width: 100%;
+            max-width: 100%;
             border-top: 0;
             padding: $gs-baseline/3 $gs-gutter/4 $gs-baseline/3 0;
 

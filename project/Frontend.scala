@@ -76,6 +76,7 @@ object Frontend extends Build with Prototypes {
       "com.gu" %% "pa-client" % paVersion
     )
   )
+
   val faciaTool = application("facia-tool").dependsOn(commonWithTests)
 
   val identityLibVersion = "3.21"

@@ -9,14 +9,16 @@
     }
 }
 
-/** League table **/
+/* ==========================================================================
+   League tables
+   ========================================================================== */
 .table--football {
     .table-column--main {
         .team-name {
-            display: block;
+            display: inline-block;
             overflow: hidden;
             white-space: nowrap;
-            width: 100%;
+            max-width: 100%;
         }
     }
 
@@ -40,7 +42,9 @@
     }
 
     .football-stat--form {
-        min-width: 75px; // 15(width of status)*5
+        @include rem((
+            min-width: 15*5 // width of status
+        ));
     }
 
     @include mq($to: $table-breakpoint-importance-1) { @include table-football--medium; }
@@ -54,19 +58,61 @@
     }
 }
 
-.c-football-table {
-    @include table-football--medium;
+.team-crest {
+    @include rem((
+        height: 12px,
+        margin-right: $gs-gutter/4,
+        width: 22px
+    ));
+    @include background-size(22px 12px);
+    display: inline-block;
+    vertical-align: text-bottom;
 }
 
+// This is everything on the standalone pages
+// i.e. /football/tables or /football/results
 .football-table__container {
     @include rem((
         margin-bottom: $gs-baseline*3
     ));
     position: relative;
 
-    .table__caption--top {
+    .football-matches__date {
         display: none;
     }
+
+    @include mq(leftCol) {
+        .table__caption--top {
+            @include fs-header(1);
+            @include rem((
+                margin-bottom: ($gs-baseline/3)*4,
+                margin-left: ($a-leftCol-width + $gs-gutter)*-1,
+                padding-bottom: ($gs-baseline/3)*4,
+                padding-top: ($gs-baseline/3),
+                width: $a-leftCol-width
+            ));
+            background: none;
+            border-bottom: 0 none;
+            border-top: 1px dotted $c-neutral5;
+            padding-left: 0;
+            padding-right: 0;
+            position: absolute;
+            top: 0;
+        }
+    }
+
+    @include mq(wide) {
+        .table__caption--top {
+            @include rem((
+                margin-left: (gs-span(3) + $gs-gutter)*-1,
+                width: gs-span(3)
+            ));
+        }
+    }
+}
+
+.c-football-table {
+    @include table-football--medium;
 }
 
 .football__group {
