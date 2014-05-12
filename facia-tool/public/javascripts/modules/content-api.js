@@ -40,7 +40,7 @@ function (
 
                 // Snap, but they're disabled
                 } else if (!vars.model.switches()['facia-tool-snaps']) {
-                        defer.resolve(true, 'Sorry, that link wasn\'t recognised. It cannot be added to a front.');
+                    defer.resolve(true, 'Sorry, that link wasn\'t recognised. It cannot be added to a front.');
 
                 // Snap, but cannot be added in live mode if it has no headline
                 } else if (vars.model.liveMode() &&
