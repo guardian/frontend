@@ -154,21 +154,20 @@
 
             @include full-bleed($accentColour);
             padding-left: 1px; // hack to get rid of a <1px separator line on tablet devices
-            &:before{ right: 99.999%; }
-            &:after{ left: 99.999%; }
+            &:before { right: 99.999%; }
+            &:after { left: 99.999%; }
         }
 
         .tone-head--default {
             position: relative;
             @include full-bleed($colour);
             padding-left: 1px; // hack to get rid of a <1px separator line on tablet devices
-            &:before{ right: 99.999%; }
-            &:after{ left: 99.999%; }
+            &:before { right: 99.999%; }
+            &:after { left: 99.999%; }
         }
 
         .article__headline,
-        .article__standfirst
-        {
+        .article__standfirst {
             color: $textColour !important;
         }
 
@@ -177,11 +176,11 @@
         }
 
         .article__standfirst a {
-            color: white;
+            color: #fff;
             &.u-underline {
                 border-bottom-color: lighten($accentColour, 18);
                 &:hover {
-                    border-bottom-color: white;
+                    border-bottom-color: #fff;
                 }
             }
         }
