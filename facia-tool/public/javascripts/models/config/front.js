@@ -69,7 +69,7 @@ define([
         this.depopulateCollection = this._depopulateCollection.bind(this);
 
         path = (this.id() || '').split('/');
-        isEditionalised = _.some(['uk', 'us', 'au'], function(edition) { return edition === path[0]; });
+        isEditionalised = vars.CONST.editions.some(function(edition) { return edition === path[0]; });
 
         this.placeholders = {};
 
