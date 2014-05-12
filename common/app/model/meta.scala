@@ -2,6 +2,7 @@ package model
 
 import common.{Pagination, ManifestData}
 import conf.Configuration
+import dfp.DfpAgent
 
 trait MetaData extends Tags {
   def id: String
@@ -136,4 +137,6 @@ trait Tags {
   lazy val blogs: Seq[Tag] = tagsOfType("blog")
   lazy val tones: Seq[Tag] = tagsOfType("tone")
   lazy val types: Seq[Tag] = tagsOfType("type")
+
+  def isSponsored = DfpAgent.isSponsored(keywords)
 }

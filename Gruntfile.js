@@ -719,6 +719,7 @@ module.exports = function (grunt) {
     grunt.registerTask('validate', function(app) {
         grunt.task.run([
             'validate:css',
+            'validate:sass',
             'validate:js:' + (app || '')
         ]);
     });

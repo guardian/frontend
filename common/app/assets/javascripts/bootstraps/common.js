@@ -44,14 +44,15 @@ define([
     'common/modules/identity/autosignin',
     'common/modules/adverts/article-body-adverts',
     'common/modules/adverts/article-aside-adverts',
-    'common/modules/adverts/collection-adverts',
+    'common/modules/adverts/slice-adverts',
     'common/modules/adverts/dfp',
     'common/modules/analytics/commercial/tags/container',
     'common/modules/analytics/foresee-survey',
     'common/modules/onward/right-most-popular',
     'common/modules/analytics/register',
     'common/modules/commercial/loader',
-    'common/modules/onward/tonal'
+    'common/modules/onward/tonal',
+    'common/modules/identity/api'
 ], function (
     $,
     mediator,
@@ -96,17 +97,16 @@ define([
     AutoSignin,
     ArticleBodyAdverts,
     ArticleAsideAdverts,
-    CollectionAdverts,
+    SliceAdverts,
     DFP,
     TagContainer,
     Foresee,
     RightMostPopular,
     register,
     CommercialLoader,
-    TonalComponent
+    TonalComponent,
+    id
 ) {
-
-    var hasBreakpointChanged = detect.hasCrossedBreakpoint();
 
     var modules = {
 
@@ -272,18 +272,6 @@ define([
 
             if (showAds) {
 
-                var onResize = {
-                        cmd: [],
-                        execute: function () {
-                            hasBreakpointChanged(function () {
-                                onResize.cmd.forEach(function (func) {
-                                    func();
-                                });
-                            });
-                        }
-                    },
-                    dfpAds,
-                    options = {};
 
                 // if it's an article, excluding live blogs, create our inline adverts
                 if (config.switches.standardAdverts && config.page.contentType === 'Article') {
@@ -294,7 +282,9 @@ define([
                     }
                 }
 
-                new CollectionAdverts(config).init();
+                new SliceAdverts(config).init();
+
+                var options = {};
 
                 if (!config.switches.standardAdverts) {
                     options.dfpSelector = '.ad-slot--commercial-component';
@@ -302,23 +292,7 @@ define([
                     options.dfpSelector = '.ad-slot--dfp:not(.ad-slot--commercial-component)';
                 }
 
-                // TODO: once front's badges slot are only added when necessary
-                if (config.page.pageType !== 'Article' && window.location.hash !== '#show-badge') {
-                    var selector = options.dfpSelector || '.ad-slot--dfp';
-                    options.dfpSelector = selector + ':not(.ad-slot--paid-for-badge)';
-                } else {
-                    $('.dfp-badge-container').css('display', 'block');
-                }
-
-                dfpAds = new DFP(extend(config, options));
-                dfpAds.init();
-                onResize.cmd.push(dfpAds.reload);
-
-                // Push the reloaded command once
-                onResize.cmd.push(function () {
-                    mediator.emit('modules:adverts:reloaded');
-                });
-                mediator.on('window:resize', debounce(onResize.execute.bind(this), 2000));
+                new DFP(extend(config, options)).init();
             }
         },
 
@@ -499,12 +473,25 @@ define([
         },
 
         loadCommercialComponent: function(config) {
-            var commercialComponent = /^#commercial-component=(.*)$/.exec(window.location.hash),
-                slot = qwery('[data-name="merchandising"]').shift();
-            if (commercialComponent && slot) {
-                new CommercialLoader({ config: config })
-                    .init(commercialComponent[1], slot);
-            }
+            [
+                ['commercial-component', 'merchandising'],
+                ['commercial-component-high', 'merchandising-high']
+            ].forEach(function(data) {
+                var commercialComponent = new RegExp('^#' + data[0] + '=(.*)$').exec(window.location.hash),
+                    slot = qwery('[data-name="' + data[1] + '"]').shift();
+                if (commercialComponent && slot) {
+                    new CommercialLoader({ config: config })
+                        .init(commercialComponent[1], slot);
+                }
+            });
+        },
+
+        repositionComments: function() {
+            mediator.on('page:common:ready', function() {
+                if(!id.isUserLoggedIn()) {
+                    $('.js-comments').insertAfter(qwery('.js-popular'));
+                }
+            });
         }
     };
 
@@ -553,6 +540,7 @@ define([
             modules.augmentInteractive();
             modules.runForseeSurvey(config);
             modules.startRegister(config);
+            modules.repositionComments();
         }
         mediator.emit('page:common:ready', config, context);
     };

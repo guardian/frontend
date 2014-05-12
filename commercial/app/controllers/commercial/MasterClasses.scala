@@ -28,4 +28,25 @@ object MasterClasses extends Controller {
         }
       }
   }
+
+  def renderMasterclassHigh = Action {
+    implicit request =>
+      MasterClassAgent.getUpcoming match {
+        case Nil => NotFound
+        case upcoming => {
+          Cached(60)(Ok(views.html.masterclassesHigh(upcoming take 4)))
+        }
+      }
+  }
+
+  def listHigh = Action {
+    implicit request =>
+      MasterClassAgent.getUpcoming match {
+        case Nil => JsonNotFound.apply()
+        case upcoming => {
+          Cached(60)(JsonComponent(views.html.masterclassesHigh(upcoming take 4)))
+        }
+      }
+  }
+
 }

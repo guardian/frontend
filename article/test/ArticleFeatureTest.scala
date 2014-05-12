@@ -474,7 +474,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         findFirst(".related__container").getAttribute("role") should be("complementary")
         findFirst("aside").getAttribute("role") should be("complementary")
         findFirst("header").getAttribute("role") should be("banner")
-        findFirst(".footer__secondary").getAttribute("role") should be("contentinfo")
+        findFirst(".l-footer__secondary").getAttribute("role") should be("contentinfo")
         findFirst("nav").getAttribute("role") should be("navigation")
         findFirst("nav").getAttribute("aria-label") should be("Guardian sections")
         findFirst("#article").getAttribute("role") should be("main")
