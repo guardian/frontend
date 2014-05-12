@@ -129,8 +129,11 @@ trait Competitions extends LiveMatches with Logging with implicits.Collections w
   def refreshCompetitionData() = FootballClient.competitions.map(_.flatMap{ season =>
     log.info("Refreshing competition data")
     competitionAgents.find(_.competition.id == season.id).map { agent =>
-      val newCompetition = agent.competition.copy(startDate = Some(season.startDate))
-      agent.update(newCompetition)
+      val newCompetition = agent.competition.startDate match {
+        case Some(existingStartDate) if season.startDate.isAfter(existingStartDate) => agent.update(agent.competition.copy(startDate = Some(season.startDate)))
+        case None => agent.update(agent.competition.copy(startDate = Some(season.startDate)))
+        case _ =>
+      }
     }
   })
 

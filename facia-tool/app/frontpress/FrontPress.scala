@@ -9,6 +9,7 @@ import common.FaciaToolMetrics.{FrontPressSuccess, FrontPressFailure}
 import play.api.libs.concurrent.Akka
 import play.api.libs.json.JsObject
 import com.gu.openplatform.contentapi.model.Asset
+import conf.Switches
 
 trait FrontPress extends Logging {
 
@@ -98,8 +99,8 @@ trait FrontPress extends Logging {
         groups         = Option(config.groups).filter(_.nonEmpty),
         href           = collection.href.orElse(config.href),
         `type`         = config.collectionType,
-        showTags       = config.showTags,
-        showSections   = config.showSections
+        showTags       = Switches.FaciaToolContainerTagsSwitch.isSwitchedOn && config.showTags,
+        showSections   = Switches.FaciaToolContainerTagsSwitch.isSwitchedOn && config.showSections
       )
     )
 

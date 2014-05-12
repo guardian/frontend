@@ -1,0 +1,67 @@
+@(competition: model.Competition, knockoutStage: _root_.football.model.KnockoutSpider)(implicit request: RequestHeader)
+
+@football.views.html.wallchart.knockoutList(competition, knockoutStage, true)
+
+<div class="football-knockout-chart football-knockout-chart--@knockoutStage.rounds.length-rounds u-cf">
+    <div class="football-rounds football-rounds--first-half">
+        @knockoutStage.rounds.map{ round =>
+            @defining(knockoutStage.roundMatches(round)) { matches =>
+                @if(matches.length != 1){
+                    <div class="football-round football-round--@matches.length-matches @if(knockoutStage.isActiveRound(round)){football-round--active}">
+                        <div class="football-round__name">@round.name.getOrElse("")</div>
+
+                        @defining(matches.length/2) { half =>
+                            <div class="football-round__matches">
+                                @matches.take(half).map{ m =>
+                                    @football.views.html.wallchart.knockoutMatch(m, round)
+                                }
+                            </div>
+                        }
+                    </div>
+                }
+            }
+        }
+    </div>
+
+    <div class="football-rounds football-rounds--second-half">
+        @knockoutStage.rounds.map{ round =>
+            @defining(knockoutStage.roundMatches(round)) { matches =>
+                @if(matches.length != 1){
+                    <div class="football-round football-round--@matches.length-matches @if(knockoutStage.isActiveRound(round)){football-round--active}">
+                        <div class="football-round__name">@round.name.getOrElse("")</div>
+                            @defining(matches.length/2) { half =>
+                                <div class="football-round__matches">
+                                    @matches.drop(half).map{ m =>
+                                        @football.views.html.wallchart.knockoutMatch(m, round)
+                                    }
+                                </div>
+                            }
+                    </div>
+                }
+            }
+        }
+    </div>
+
+    <div class="football-rounds football-rounds--finals">
+        @knockoutStage.rounds.map{ round =>
+            @defining(knockoutStage.roundMatches(round)) { matches =>
+                @if(matches.length == 1){
+                    <div class="football-round
+                                football-round--@matches.length-matches
+                                football-round--final
+                                @if(knockoutStage.isActiveRound(round)){football-round--active}
+                                @round.name.filter(n => n == "3rd/4th Play-Offs").map{ name => football-round--playoff}">
+                        <div class="football-round__name">@round.name.getOrElse("")</div>
+                        <div class="football-round__matches">
+                            @matches.map{ m =>
+                                @football.views.html.wallchart.knockoutMatch(m, round)
+                            }
+                        </div>
+                    </div>
+                }
+            }
+        }
+    </div>
+
+    <div class="football-knockout-chart__timezone">All matches are in UK time</div>
+</div>

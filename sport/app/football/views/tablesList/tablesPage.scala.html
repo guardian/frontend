@@ -19,16 +19,26 @@
                             @if(page.singleCompetition){<h1 class="u-h">@table.competition.fullName</h1>}else{<h2 class="u-h">@table.competition.fullName</h2>}
                             <div class="football-table__container@if(page.tables.size == 1) { football-table__container--single}">
                                 <div class="article__container u-cf">
-                                    @table.groups.map{ group =>
+                                    @table.groups.zipWithRowInfo.map{ case (group, info) =>
                                         @if(table.multiGroup){
                                             @group.round.name.map { name =>
                                                 <div class="football__group">
                                                     <h4 class="table__headline">@name</h4>
-                                                    @tableView(table.competition, group, striped = true, responsiveFont = true)
+                                                    @tableView(table.competition, group,
+                                                        striped = true,
+                                                        responsiveFont = true,
+                                                        heading = if(info.rowNum == 1) Option(table.competition.fullName) else None,
+                                                        linkToCompetition = info.isLast && !page.singleCompetition
+                                                    )
                                                 </div>
                                             }
                                         }else{
-                                            @tableView(table.competition, group, striped = true, responsiveFont = true)
+                                            @tableView(table.competition, group,
+                                                striped = true,
+                                                responsiveFont = true,
+                                                heading = Option(table.competition.fullName),
+                                                linkToCompetition = true
+                                            )
                                         }
                                     }
                                 </div>
@@ -44,6 +54,7 @@
             @football.views.html.fragments.footballCompetitionNav(page.comp)
         </div>
     </div>
+
     <div class="facia-container facia-container--layout-article">
         @views.html.fragments.mostPopularPlaceholder("sport")
     </div>

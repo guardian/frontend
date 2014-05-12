@@ -2,12 +2,14 @@ define([
     'common/$',
     'bonzo',
     'qwery',
-    'lodash/objects/assign'
+    'lodash/objects/assign',
+    'common/utils/template'
 ], function (
     $,
     bonzo,
     qwery,
-    _assign
+    _assign,
+    template
 ) {
 
     var adNames = ['inline1', 'inline2'],
@@ -27,32 +29,38 @@ define([
 
     SliceAdverts.prototype.defaultConfig = {
         containerSelector: '.container',
-        selector: '.facia-slice-wrapper--ad'
+        sliceSelector: '.facia-slice-wrapper--ad'
     };
 
     SliceAdverts.prototype.init = function() {
         if (!this.config.switches.standardAdverts) {
             return false;
         }
-        // filter out hidden containers
-        var adSlices = $(this.config.containerSelector)
-            .map(function(container) { return $(container); })
-            .filter(function($container) {
-                return qwery(this.config.selector, $container[0]).length && $container.css('display') !== 'none';
-            }, this)
-            .map(function($container) {
-                return $(this.config.selector, $container[0]).first();
-            }, this)
-            .slice(0, adNames.length);
+        // get all the containers
+        var containers = qwery(this.config.containerSelector),
+            index = 0,
+            adSlices = [],
+            containerGap = 2;
+        // pull out ad slices which are have at least x containers between them
+        while (index < containers.length) {
+            var $adSlice = $(this.config.sliceSelector, containers[index]);
+            if ($adSlice.length) {
+                adSlices.push($adSlice.first());
+                index += (containerGap + 1);
+            } else {
+                index++;
+            }
+        }
 
-        adSlices.forEach(function($originalSlice, index) {
+        adSlices.slice(0, adNames.length).forEach(function($originalSlice, index) {
             $originalSlice
                 .removeClass('linkslist-container')
                 .addClass('facia-slice-wrapper facia-slice-wrapper--position-2')
                 .html(
-                    newSliceTemplate
-                        .replace('{{linkslist}}', $originalSlice.html())
-                        .replace('{{adSlot}}', adSlotTemplate.replace(/{{name}}/g, adNames[index]))
+                    template(newSliceTemplate, {
+                        linkslist: $originalSlice.html(),
+                        adSlot: template(adSlotTemplate, { name: adNames[index] })
+                    })
                 );
         });
 

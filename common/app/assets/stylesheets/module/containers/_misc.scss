@@ -52,9 +52,11 @@
     position: relative;
 
     @include mq(tablet) {
+        max-height: gs-height(6);
         min-height: $mpu-ad-label-height + $mpu-resulting-height + $mpu-align-offset;
     }
     @include mq(desktop) {
+        max-height: gs-height(7);
         min-height: $mpu-ad-label-height + $mpu-original-height + $mpu-align-offset;
     }
 
