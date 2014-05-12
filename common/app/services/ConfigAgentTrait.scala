@@ -14,6 +14,8 @@ trait ConfigAgentTrait extends ExecutionContexts {
 
   def refresh() = S3FrontsApi.getMasterConfig map {s => configAgent.send(Json.parse(s))}
 
+  def refreshWith(json: JsValue): Unit = configAgent.send(json)
+
   def refreshAndReturn(): Future[JsValue] =
     S3FrontsApi.getMasterConfig
       .map(Json.parse)
@@ -54,7 +56,9 @@ trait ConfigAgentTrait extends ExecutionContexts {
         (collectionJson \ "displayName").asOpt[String].filter(_.nonEmpty),
         (collectionJson \ "href").asOpt[String],
         (collectionJson \ "groups").asOpt[Seq[String]] getOrElse Nil,
-        (collectionJson \ "type").asOpt[String]
+        (collectionJson \ "type").asOpt[String],
+        (collectionJson \ "showTags").asOpt[Boolean] getOrElse false,
+        (collectionJson \ "showSections").asOpt[Boolean] getOrElse false
       )
     }
   }

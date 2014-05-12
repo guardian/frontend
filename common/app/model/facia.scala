@@ -8,7 +8,10 @@ case class Config(
                    displayName: Option[String] = None,
                    href: Option[String] = None,
                    groups: Seq[String],
-                   collectionType: Option[String])
+                   collectionType: Option[String],
+                   showTags: Boolean = false,
+                   showSections: Boolean = false
+                   )
 
 object Config {
   def apply(id: String): Config = Config(id, None, None, None, Nil, None)
@@ -18,6 +21,8 @@ object Config {
     = Config(id, None, displayName, None, Nil, None)
   def apply (id: String, displayName: Option[String], href: Option[String]): Config
     = Config(id, None, displayName, href, Nil, None)
+
+  val emptyConfig = Config("")
 }
 
 case class Collection(curated: Seq[Content],

@@ -1,8 +1,7 @@
-
 /* Identity and registration
    ========================================================================== */
 
-#header.identity-header {
+.l-header--identity {
     @include rem((
         height: 44px
     ));
@@ -188,8 +187,11 @@
     float: left;
     height: 60px;
     width: 60px;
-    margin-right: 10px;
+    @include rem((
+        margin-right: $gs-gutter/2
+    ));
 }
+
 
 /* Formstack
    ========================================================================== */

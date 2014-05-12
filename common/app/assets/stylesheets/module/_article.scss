@@ -565,7 +565,6 @@
 
 @include mq(rightCol) {
     .article-wrapper {
-        position: relative;
         max-width: none;
     }
     .article__inner {

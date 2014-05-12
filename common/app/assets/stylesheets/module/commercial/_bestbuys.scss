@@ -7,7 +7,7 @@ $c-money-high: #63007F;
 .commercial--bestbuys {
     .tabs .commercial__head {
         height: auto;
-        border: none;
+        border: 0;
         @include rem((
             padding-left: $gs-gutter/2
         ));
@@ -23,7 +23,7 @@ $c-money-high: #63007F;
             padding: 10px 0 0 $gs-gutter/2,
             margin-bottom: 10px
         ));
-        @include mq(tablet){
+        @include mq(tablet) {
             float: left;
         }
     }
@@ -51,7 +51,7 @@ $c-money-high: #63007F;
     .tabs__container {
         background-color: $c-commercial-comp-neutral;
         @include rem((
-            padding-left: $gs-gutter/2
+            padding: 0 0 0 $gs-gutter/2
         ));
     }
     .tabs__content {
@@ -140,7 +140,7 @@ $c-money-high: #63007F;
             background-color: $c-money-high;
         }
     }
-    @include mq($to: tablet){
+    @include mq($to: tablet) {
         .hide-cell-on-mobile {
             display: none;
         }
@@ -265,7 +265,6 @@ $c-money-high: #63007F;
                 padding-top: 4px,
                 padding-right: $gs-gutter/2
             ));
-            background: red;
             width: 25%;
             float: left;
         }

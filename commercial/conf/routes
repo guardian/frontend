@@ -16,6 +16,8 @@ GET        /commercial/jobs.json                                     controllers
 # Masterclasses
 GET        /commercial/masterclasses                                 controllers.commercial.MasterClasses.renderMasterclass
 GET        /commercial/masterclasses.json                            controllers.commercial.MasterClasses.list
+GET        /commercial/masterclasses-high                            controllers.commercial.MasterClasses.renderMasterclassHigh
+GET        /commercial/masterclasses-high.json                       controllers.commercial.MasterClasses.listHigh
 
 # Soulmates
 GET        /commercial/soulmates/mixed                               controllers.commercial.SoulmateAds.renderAds

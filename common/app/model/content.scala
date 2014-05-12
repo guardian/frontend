@@ -46,7 +46,6 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
       .getOrElse(facebook.imageFallback)
   }
 
-  lazy val isSponsored: Boolean = DfpAgent.isSponsored(this)
   lazy val sponsor: Option[Sponsor] = {
     if (isSponsored) {
       Sponsors.find(tags.filter(_.tagType == "keyword").head.id)
@@ -306,6 +305,7 @@ class Snap(snapId: String,
 ) extends Content(new ApiContentWithMeta(SnapApiContent, supporting = snapSupporting, metaData = snapMeta)) {
 
   val snapType: Option[String] = snapMeta.get("snapType").flatMap(_.asOpt[String])
+  val snapCss: Option[String] = snapMeta.get("snapCss").flatMap(_.asOpt[String])
   val snapUri: Option[String] = snapMeta.get("snapUri").flatMap(_.asOpt[String])
 
   lazy val snapUrl: Option[String] = snapMeta.get("href").flatMap(_.asOpt[String])

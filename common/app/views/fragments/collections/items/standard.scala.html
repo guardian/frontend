@@ -1,4 +1,4 @@
-@(trail: Trail, index: Int, containerIndex: Int, additionalClasses: String = "")(implicit request: RequestHeader)
+@(trail: Trail, index: Int, containerIndex: Int, additionalClasses: String = "")(implicit request: RequestHeader, config: Config)
 
 <li class="@GetClasses.forCollectionItem(trail, additionalClasses)">
 

@@ -90,7 +90,7 @@
                     <div class="api-query-results">
                         <div data-bind="
                             attr: {class: 'api-query-status--' + state.apiQueryStatus()},
-                            text: state.apiQueryStatus"></div>
+                            text: state.apiQueryStatus() === 'check' ? 'Checking...' : state.apiQueryStatus() === 'invalid' ? 'No matches found' : 'Found matches:'"></div>
                         <div data-bind="foreach: capiResults">
                             <a target="_article" class="api-query-result" data-bind="
                                     attr: {href: 'http://www.theguardian.com/' + id},
@@ -112,6 +112,14 @@
                 <label>No curation</label>
                 <input type="checkbox" data-bind="
                     checked: meta.uneditable" />
+
+                @defining(if(Switches.FaciaToolContainerTagsSwitch.isSwitchedOn) "" else "style=display:none") { showTags =>
+                <label @showTags for="showTags" >Show tags</label>
+                <input @showTags id="showTags" type="checkbox" data-bind="checked: meta.showTags" />
+
+                <label @showTags for="showSections" >Show sections</label>
+                <input @showTags id="showSections" type="checkbox" data-bind="checked: meta.showSections" />
+                }
 
                 <div class="tools">
                     <button class="tool" data-bind="
@@ -187,13 +195,13 @@
                     </div>
                 <!-- /ko -->
 
-                <!-- ko if: !state.isOpenProps() && id() -->
+                 <!-- ko if: id -->
                     <div class="instructions">
-                        <span class="linky" data-bind="click: openProps">Edit metadata</span>
+                        <!-- ko if: !state.isOpenProps() -->
+                            <span class="linky" data-bind="click: openProps">Edit metadata</span>
+                        <!-- /ko -->
                     </div>
-                <!-- /ko -->
 
-                <!-- ko if: id -->
                     <div data-bind="with: collections">
                         <div class="droppable" data-bind="
                             makeDropabble: true,
@@ -205,7 +213,7 @@
                         <span data-bind="if: !collections.items().length">Empty fronts will be discarded!</span>
                     </div>
                 <!-- /ko -->
-            </div>
+           </div>
 
         </div>
     </script>

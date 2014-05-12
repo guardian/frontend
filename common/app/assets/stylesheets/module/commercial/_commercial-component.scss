@@ -1,15 +1,5 @@
 $c-commercial-comp-neutral: #edede7;
 
-.facia-container--commercial {
-    &.facia-container--layout-article {
-        padding: 0;
-        margin: 0;
-        @include rem((
-            max-width: gs-span(15)+($gs-gutter*1.5)
-        ));
-    }
-}
-
 .facia-container--layout-front .commercial {
     padding: 0;
     @include mq(leftCol) {
@@ -22,6 +12,10 @@ $c-commercial-comp-neutral: #edede7;
             float: left;
         }
     }
+}
+
+.facia-container--layout-article .commercial .facia-container__inner {
+    margin-bottom: 0;
 }
 
 .commercial {
@@ -96,12 +90,11 @@ $c-commercial-comp-neutral: #edede7;
     overflow: hidden;
 }
 .commercial__search__input {
-    @include border-radius(0);
     @include box-sizing(border-box);
     width: 100%;
     height: $gs-row-height;
     padding: $gs-baseline/3 32px $gs-baseline/3 ($gs-baseline/3) * 2;
-    @include fs-bodyCopy(1);
+    @include fs-textsans(2);
     border: 0;
     float: left;
     overflow: hidden;

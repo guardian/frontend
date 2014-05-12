@@ -2,7 +2,10 @@
    Travel component
    ========================================================================== */
 
-.footer {
+$c-commercial-travel-light: #2cace7;
+$c-commercial-travel-dark: #002b6c;
+
+.l-footer {
     margin-top: 0 !important;
 }
 .commercial--travel {
@@ -22,6 +25,18 @@
     }
     .lineitem__link {
         float: none;
+            
+        .i.i-arrow-white-down {
+            background-color: $c-commercial-travel-light;
+        }
+    }
+    .lineitem__offer {
+        @include rem((
+            padding-top: 10px
+        ));
+    }
+    .lineitem__meta {
+        color: $travelBlue;
     }
     .lineitem__image {
         width: 100%;
@@ -29,9 +44,10 @@
     }
     .commercial__head {
         position: static;
-        border-top: none;
+        border-top: 0;
         height: auto;
         overflow: auto;
+        margin-top: 0;
         @include rem((
             padding: $gs-gutter/2
         ));
@@ -44,20 +60,25 @@
         color: $c-brandBlue;
         
         .commercial__title__middle-word {
-            color: #52aee9;
+            color: $c-commercial-travel-light;
             @include rem((
                margin-left: -5px
             ));
         }
         .commercial__title__last-word {
-           color: #006ec9;
-           @include rem((
+            color: $travelBlue;
+            @include rem((
                margin-left: -5px
-           ));
+            ));
         }
     }
     .commercial__home-link {
         float: right;
+        color: $c-commercial-travel-light;
+        
+        .commercial__home-link__cta {
+            background-color: $c-commercial-travel-light;
+        }
     }
     .commercial__body {
         @include rem((
@@ -162,7 +183,7 @@
             width: 25%;
 
             &:nth-child(n+4) {
-               display: block;
+                display: block;
             }
         }
     }
@@ -172,15 +193,15 @@
         ));
         
         .commercial__home-link {
-           @include box-sizing(border-box);
-           @include rem((
+            @include box-sizing(border-box);
+            @include rem((
                width: gs-span(2),
                line-height: 18px,
                bottom: $gs-baseline*4.5
-           ));
+            ));
         }
         .commercial__title__last-word {
-           margin-left: 0;
+            margin-left: 0;
         }
         .commercial__search {
             position: absolute;
