@@ -4,7 +4,7 @@ define(['bonzo'], function (bonzo) {
 
         this.id = 'HeaderSearchText';
         this.start = '2014-05-12';
-        this.expiry = '2014-06-9';
+        this.expiry = '2014-06-09';
         this.author = 'Raul Tudor';
         this.description = 'The header search box will display a label for tablet and desktop.';
         this.audience = 0.1;
