@@ -119,8 +119,9 @@ object DfpApi extends Logging {
     }
 
   def fetchKeywordTargetingValues(lineItems: Seq[LineItem]): Seq[String] = {
+    val allKeywordTargetingValues = fetchAllKeywordTargetingValues()
     val keywordValues = lineItems.foldLeft(Seq[String]()) { (soFar, lineItem) =>
-      val customTargeting = DfpApi.getCustomTargeting(lineItem, fetchAllKeywordTargetingValues())
+      val customTargeting = DfpApi.getCustomTargeting(lineItem, allKeywordTargetingValues)
       if (!customTargeting.get("Keywords").get.isEmpty) {
         soFar ++ customTargeting.flatMap(_._2.map(_.toString)).toSeq
       } else {
