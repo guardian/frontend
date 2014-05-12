@@ -1,17 +1,16 @@
 package services
 
-import common.{Logging, Edition, AkkaAgent, ExecutionContexts}
+import common.{Logging, AkkaAgent, ExecutionContexts}
 import play.api.libs.json.{JsNull, Json, JsValue}
-import model.{SeoDataJson, SeoData, Config}
+import model.{SeoDataJson, Config}
 import scala.concurrent.Future
 import scala.concurrent.duration._
 import akka.util.Timeout
-import conf.{ContentApi, Configuration}
-import com.gu.openplatform.contentapi.model.ItemResponse
+import conf.Configuration
 
 trait ConfigAgentTrait extends ExecutionContexts with Logging {
   implicit val alterTimeout: Timeout = Configuration.faciatool.configBeforePressTimeout.millis
-  private val configAgent = AkkaAgent[JsValue](JsNull)
+  private lazy val configAgent = AkkaAgent[JsValue](JsNull)
 
   def refresh() = S3FrontsApi.getMasterConfig map {s => configAgent.send(Json.parse(s))}
 
@@ -75,7 +74,7 @@ trait ConfigAgentTrait extends ExecutionContexts with Logging {
 
   def contentsAsJsonString: String = Json.prettyPrint(configAgent.get)
 
-  private def getSeoDataFromConfig(path: String): SeoDataJson = {
+  def getSeoDataJsonFromConfig(path: String): SeoDataJson = {
     val json = configAgent.get()
     val frontJson = (json \ "fronts" \ path).as[JsValue]
     SeoDataJson(
@@ -87,47 +86,6 @@ trait ConfigAgentTrait extends ExecutionContexts with Logging {
     )
   }
 
-  def getSeoData(path: String): Future[SeoData] = {
-    val seoDataFromConfig:   Future[SeoDataJson] = Future.successful(getSeoDataFromConfig(path))
-    val itemResponseForPath: Future[Option[ItemResponse]] = getSectionOrTagWebTitle(path)
-    val seoDataFromPath:     Future[SeoData] = Future.successful(SeoData.fromPath(path))
-
-    for {
-      sc <- seoDataFromConfig
-      ir <- itemResponseForPath
-      sp <- seoDataFromPath
-    } yield {
-      val section:  String = sc.section.orElse(ir.flatMap(getSectionFromItemResponse)).getOrElse(sp.section)
-      val webTitle: String = sc.webTitle.orElse(ir.flatMap(getWebTitleFromItemResponse)).getOrElse(sp.webTitle)
-      val title: String    = sc.title.getOrElse(SeoData.titleFromWebTitle(webTitle))
-      val description: Option[String] = sc.description.orElse(SeoData.descriptionFromWebTitle(webTitle))
-
-      SeoData(path, section, webTitle, title, description)
-    }
-  }
-
-  private def getSectionFromItemResponse(itemResponse: ItemResponse): Option[String] =
-    itemResponse.tag.flatMap(_.sectionId)
-    .orElse(itemResponse.section.map(_.id).map(removeLeadEditionFromSectionId))
-
-  private def getWebTitleFromItemResponse(itemResponse: ItemResponse): Option[String] =
-    itemResponse.tag.map(_.webTitle)
-    .orElse(itemResponse.section.map(_.webTitle))
-
-  //This will turn au/culture into culture. We want to stay consistent with the manual entry and autogeneration
-  private def removeLeadEditionFromSectionId(sectionId: String): String = sectionId.split('/').toList match {
-    case edition :: tail if Edition.all.map(_.id.toLowerCase).contains(edition.toLowerCase) => tail.mkString("/")
-    case _ => sectionId
-  }
-
-  private def getSectionOrTagWebTitle(id: String): Future[Option[ItemResponse]] =
-    ContentApi
-      .item(id, Edition.defaultEdition)
-      .showEditorsPicks(false)
-      .pageSize(0)
-      .response
-      .map(Option.apply)
-      .fallbackTo(Future.successful(None))
-
-
 }
+
+object ConfigAgent extends ConfigAgentTrait

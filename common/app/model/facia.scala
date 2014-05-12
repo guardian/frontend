@@ -1,7 +1,11 @@
 package model
 
 import org.joda.time.DateTime
-import common.Edition
+import common.{ExecutionContexts, Edition}
+import scala.concurrent.Future
+import com.gu.openplatform.contentapi.model.ItemResponse
+import conf.ContentApi
+import services.ConfigAgent
 
 case class Config(
                    id: String,
@@ -57,7 +61,7 @@ case class SeoData(
   title: String,
   description: Option[String])
 
-object SeoData {
+object SeoData extends ExecutionContexts {
   val editions = Edition.all.map(_.id).map(_.toLowerCase)
 
   def fromPath(path: String): SeoData = path.split('/').toList match {
@@ -77,9 +81,51 @@ object SeoData {
   }
 
   def webTitleFromTail(tail: List[String]): String = tail.flatMap(_.split('-')).flatMap(_.split('/')).map(_.capitalize).mkString(" ")
-  
+
   def titleFromWebTitle(webTitle: String): String = s"$webTitle news, comment and analysis from the Guardian"
   def descriptionFromWebTitle(webTitle: String): Option[String] = Option(s"Latest $webTitle news, comment and analysis from the Guardian, the world's leading liberal voice")
+
+  def getSeoData(path: String): Future[SeoData] = {
+    val seoDataFromConfig:   Future[SeoDataJson] = Future.successful(ConfigAgent.getSeoDataJsonFromConfig(path))
+    val itemResponseForPath: Future[Option[ItemResponse]] = getSectionOrTagWebTitle(path)
+    val seoDataFromPath:     Future[SeoData] = Future.successful(SeoData.fromPath(path))
+
+    for {
+      sc <- seoDataFromConfig
+      ir <- itemResponseForPath
+      sp <- seoDataFromPath
+    } yield {
+      val section:  String = sc.section.orElse(ir.flatMap(getSectionFromItemResponse)).getOrElse(sp.section)
+      val webTitle: String = sc.webTitle.orElse(ir.flatMap(getWebTitleFromItemResponse)).getOrElse(sp.webTitle)
+      val title: String    = sc.title.getOrElse(SeoData.titleFromWebTitle(webTitle))
+      val description: Option[String] = sc.description.orElse(SeoData.descriptionFromWebTitle(webTitle))
+
+      SeoData(path, section, webTitle, title, description)
+    }
+  }
+
+  private def getSectionFromItemResponse(itemResponse: ItemResponse): Option[String] =
+    itemResponse.tag.flatMap(_.sectionId)
+      .orElse(itemResponse.section.map(_.id).map(removeLeadEditionFromSectionId))
+
+  private def getWebTitleFromItemResponse(itemResponse: ItemResponse): Option[String] =
+    itemResponse.tag.map(_.webTitle)
+      .orElse(itemResponse.section.map(_.webTitle))
+
+  //This will turn au/culture into culture. We want to stay consistent with the manual entry and autogeneration
+  private def removeLeadEditionFromSectionId(sectionId: String): String = sectionId.split('/').toList match {
+    case edition :: tail if Edition.all.map(_.id.toLowerCase).contains(edition.toLowerCase) => tail.mkString("/")
+    case _ => sectionId
+  }
+
+  private def getSectionOrTagWebTitle(id: String): Future[Option[ItemResponse]] =
+    ContentApi
+      .item(id, Edition.defaultEdition)
+      .showEditorsPicks(false)
+      .pageSize(0)
+      .response
+      .map(Option.apply)
+      .fallbackTo(Future.successful(None))
 }
 
 object FaciaComponentName {
