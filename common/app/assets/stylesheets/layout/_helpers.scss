@@ -13,6 +13,13 @@
             padding-right: $gs-gutter
         ));
     }
+    @include mq(tablet) {
+        @include rem((
+            max-width: gs-span(8)
+        ));
+        margin-left: auto;
+        margin-right: auto;
+    }
 
     .page-header,
     .page-sub-header {
@@ -20,16 +27,8 @@
         margin-right: 0;
     }
 }
-
-@include mq(tablet) {
-    .monocolumn-wrapper {
-        @include rem((
-            max-width: gs-span(8)
-        ));
-        margin-left: auto;
-        margin-right: auto;
-    }
-    .monocolumn-wrapper--no-limit {
+@include mq(desktop) {
+    .monocolumn-wrapper--no-limit-desktop {
         max-width: none;
     }
 }

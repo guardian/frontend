@@ -15,20 +15,20 @@
                 data-id="@config.id"
                 data-type="@style.containerType"
                 data-component="@FaciaComponentName(config, collection)">
-
                 <div class="container__border tone-@style.tone tone-accent-border"></div>
-
-                @title.map { title =>
-                    <h2 class="container__title tone-@style.tone tone-background">
-                        @href.map { href =>
-                            <a class="container__title__label u-text-hyphenate" data-link-name="section heading" href="@LinkTo{/@href}">@Html(title)</a>
-                        }.getOrElse{
-                            <span class="container__title__label u-text-hyphenate">@Html(title)</span>
-                        }
-                    </h2>
-                }
-                <div class="container__body container--rolled-up-hide">
-                    @fragments.collections.multimedia(items, style, containerIndex)
+                <div class="facia-container__inner">
+                    @title.map { title =>
+                        <h2 class="container__title tone-@style.tone tone-background">
+                            @href.map { href =>
+                                <a class="container__title__label u-text-hyphenate" data-link-name="section heading" href="@LinkTo{/@href}">@Html(title)</a>
+                            }.getOrElse{
+                                <span class="container__title__label u-text-hyphenate">@Html(title)</span>
+                            }
+                        </h2>
+                    }
+                    <div class="container__body container--rolled-up-hide">
+                        @fragments.collections.multimedia(items, style, containerIndex)
+                    </div>
                 </div>
             </section>
         }

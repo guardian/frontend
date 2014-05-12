@@ -14,24 +14,24 @@
                 data-id="@config.id"
                 data-type="@style.containerType"
                 data-component="@FaciaComponentName(config, collection)">
+                <div class="facia-container__inner">
+                    <div class="container__border tone-@style.tone tone-accent-border"></div>
+                    <div class="container__header">
+                        @title.map { title =>
+                            <h2 class="container__title tone-@style.tone tone-background">
+                                @href.map { href =>
+                                    <a class="container__title__label u-text-hyphenate" data-link-name="section heading" href="@LinkTo{/@href}">@Html(title)</a>
+                                }.getOrElse{
+                                    <span class="container__title__label u-text-hyphenate">@Html(title)</span>
+                                }
+                            </h2>
+                        }
+                    </div>
+                    <div class="container__body container--rolled-up-hide">
+                        @fragments.contributor(page)
 
-                <div class="container__border tone-@style.tone tone-accent-border"></div>
-
-                <div class="container__header">
-                    @title.map { title =>
-                        <h2 class="container__title tone-@style.tone tone-background">
-                            @href.map { href =>
-                                <a class="container__title__label u-text-hyphenate" data-link-name="section heading" href="@LinkTo{/@href}">@Html(title)</a>
-                            }.getOrElse{
-                                <span class="container__title__label u-text-hyphenate">@Html(title)</span>
-                            }
-                        </h2>
-                    }
-                </div>
-                <div class="container__body container--rolled-up-hide">
-                    @fragments.contributor(page)
-
-                    @fragments.collections.standard(items, style, containerIndex, 6)
+                        @fragments.collections.standard(items, style, containerIndex, 6)
+                    </div>
                 </div>
             </section>
         }

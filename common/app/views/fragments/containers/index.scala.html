@@ -16,36 +16,36 @@
                                 data-link-name="all index"
                                 data-type="@style.containerType"
                                 data-component="all index">
-
-                <div class="tone-@style.tone tone-accent-border"></div>
-
-                <div class="container__header">
-                    <h2 class="container__title">
-                        <span class="container__title__label today">
-                            <b class="today__dayofweek js-dayofweek">@Format(date, "EEEE")</b>
-                            <span class="u-nobr today__sub">
-                                <span class="today__dayofmonth js-dayofmonth">@Format(date, "d")</span>
-                                <span class="today__month">@Format(date, "MMMM")</span>
-                                <span class="today__year">@Format(date, "yyyy")</span>
+                <div class="facia-container__inner">
+                    <div class="tone-@style.tone tone-accent-border"></div>
+                    <div class="container__header">
+                        <h2 class="container__title">
+                            <span class="container__title__label today">
+                                <b class="today__dayofweek js-dayofweek">@Format(date, "EEEE")</b>
+                                <span class="u-nobr today__sub">
+                                    <span class="today__dayofmonth js-dayofmonth">@Format(date, "d")</span>
+                                    <span class="today__month">@Format(date, "MMMM")</span>
+                                    <span class="today__year">@Format(date, "yyyy")</span>
+                                </span>
                             </span>
-                        </span>
-                    </h2>
-                </div>
-                <div class="container__body">
-                    @fragments.collections.index(items, style, containerIndex)
-                    @if(nav.isDefined) {
-                        <div class="pagination u-cf">
-                            <ol class="u-unstyled pagination__links">
-                                <li class="pagination__item pagination__item--next">
-                                    @nav.prev.map{ prev => <a rel="prev" href="@LinkTo{@prev}">Older</a> }
-                                </li>
+                        </h2>
+                    </div>
+                    <div class="container__body">
+                        @fragments.collections.index(items, style, containerIndex)
+                        @if(nav.isDefined) {
+                            <div class="pagination u-cf">
+                                <ol class="u-unstyled pagination__links">
+                                    <li class="pagination__item pagination__item--next">
+                                        @nav.prev.map{ prev => <a rel="prev" href="@LinkTo{@prev}">Older</a> }
+                                    </li>
 
-                                <li class="pagination__item pagination__item--prev">
-                                    @nav.next.map{ next => <a rel="next" href="@LinkTo{@next}">Newer</a> }
-                                </li>
-                            </ol>
-                        </div>
-                    }
+                                    <li class="pagination__item pagination__item--prev">
+                                        @nav.next.map{ next => <a rel="next" href="@LinkTo{@next}">Newer</a> }
+                                    </li>
+                                </ol>
+                            </div>
+                        }
+                    </div>
                 </div>
             </section>
         }

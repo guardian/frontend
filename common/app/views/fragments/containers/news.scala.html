@@ -16,37 +16,37 @@
                 data-id="@config.id"
                 data-type="@style.containerType"
                 data-component="@FaciaComponentName(config, collection)">
-
-                <div class="container__border tone-@style.tone tone-accent-border"></div>
-
-                <div class="container__header">
-                    <h2 class="container__title">
-                        <span class="container__title__label today">
-                            <b class="today__dayofweek js-dayofweek">@Format(DateTime.now(), "EEEE")</b>
-                            <span class="u-nobr today__sub">
-                                <span class="today__dayofmonth js-dayofmonth">@Format(DateTime.now(), "d")</span>
-                                <span class="today__month">@Format(DateTime.now(), "MMMM")</span>
-                                <span class="today__year">@Format(DateTime.now(), "yyyy")</span>
-                            </span>
-                        </span>
-                        @LatestUpdate(collection, items).map { latestUpdate =>
-                            <span class="container__updated">
-                                <span class="i--circle i--clock">
-                                    <span class="i i-clock-hands-white"></span>
+                <div class="facia-container__inner">
+                    <div class="container__border tone-@style.tone tone-accent-border"></div>
+                    <div class="container__header">
+                        <h2 class="container__title">
+                            <span class="container__title__label today">
+                                <b class="today__dayofweek js-dayofweek">@Format(DateTime.now(), "EEEE")</b>
+                                <span class="u-nobr today__sub">
+                                    <span class="today__dayofmonth js-dayofmonth">@Format(DateTime.now(), "d")</span>
+                                    <span class="today__month">@Format(DateTime.now(), "MMMM")</span>
+                                    <span class="today__year">@Format(DateTime.now(), "yyyy")</span>
                                 </span>
-                                Last updated:
-                                <time
-                                    class="js-timestamp"
-                                    itemprop="datePublished"
-                                    datetime="@latestUpdate.toString("yyyy-MM-dd'T'HH:mm:ssZ")"
-                                    data-relativeformat="long"
-                                    data-timestamp="@latestUpdate.getMillis"><span class="timestamp__text">@Format(latestUpdate, "E, h:ma")</span></time>
                             </span>
-                        }
-                    </h2>
-                </div>
-                <div class="container__body">
-                    @fragments.collections.news(items, style, containerIndex)
+                            @LatestUpdate(collection, items).map { latestUpdate =>
+                                <span class="container__updated">
+                                    <span class="i--circle i--clock">
+                                        <span class="i i-clock-hands-white"></span>
+                                    </span>
+                                    Last updated:
+                                    <time
+                                        class="js-timestamp"
+                                        itemprop="datePublished"
+                                        datetime="@latestUpdate.toString("yyyy-MM-dd'T'HH:mm:ssZ")"
+                                        data-relativeformat="long"
+                                        data-timestamp="@latestUpdate.getMillis"><span class="timestamp__text">@Format(latestUpdate, "E, h:ma")</span></time>
+                                </span>
+                            }
+                        </h2>
+                    </div>
+                    <div class="container__body">
+                        @fragments.collections.news(items, style, containerIndex)
+                    </div>
                 </div>
             </section>
         }

@@ -229,7 +229,7 @@
         .ad-slot--paid-for-badge__logo {
             display: block;
         }
-        + .container__body .collection-wrapper:first-child .fromage {
+        + .container__body .facia-slice-wrapper:first-child .fromage {
             border-top-width: 2px;
         }
         @include mq(tablet) {
@@ -260,8 +260,8 @@
                 float: none;
                 margin-top: 0;
             }
-            + .container__body .collection-wrapper:first-child .fromage {
-                border-top: 0;
+            + .container__body .facia-slice-wrapper:first-child .fromage {
+                border-top-width: 0;
             }
         }
         @include mq(wide) {
