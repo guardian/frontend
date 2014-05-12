@@ -16,12 +16,13 @@ define([
     NotificationBar.prototype.manipulationType = 'prepend';
     NotificationBar.prototype.classes = {
         'count' : 'js-notify-count',
-        'button' : 'js-notify-btn'
+        'button' : 'js-notify-btn',
+        'count-plural' : 'js-notify-count__plural'
     };
 
     NotificationBar.prototype.template = '<div class="block block--notification js-block-notification notify">' +
         '<div class="block-elements"><button class="notify__btn u-button-reset js-notify-btn"> ' +
-        'Show <span class="notify__count js-notify-count"></span> new posts</button></div></div>';
+        'Show <span class="notify__count js-notify-count"></span> new post<span class="js-notify-count__plural">s</button></div></div>';
 
     NotificationBar.prototype.ready = function() {
         this.on('click', this.getClass('button'), function() {
@@ -38,6 +39,7 @@ define([
 
     NotificationBar.prototype.setCount = function(count) {
         this.getElem('count').innerHTML = count;
+        this.getElem('count-plural').style.display = (count === 1) ? 'none' : 'inline';
     };
 
     return NotificationBar;
