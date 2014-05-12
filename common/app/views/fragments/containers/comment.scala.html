@@ -1,4 +1,4 @@
-@(config: Config, collection: Collection, style: Container, containerIndex: Int)(implicit request: RequestHeader, templateDeduping: TemplateDeduping)
+@(collection: Collection, style: Container, containerIndex: Int)(implicit request: RequestHeader, templateDeduping: TemplateDeduping, config: Config)
 
 @defining((config.displayName.orElse(collection.displayName), config.href.orElse(collection.href))) { case (title, href) =>
 
@@ -28,7 +28,7 @@
                         }
                     </div>
                     <div class="container__body container--rolled-up-hide">
-                        @fragments.collections.standard(config, items, style, containerIndex, 5)
+                        @fragments.collections.standard(items, style, containerIndex, 5)
                     </div>
                 </div>
             </section>

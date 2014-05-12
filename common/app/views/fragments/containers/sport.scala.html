@@ -1,4 +1,4 @@
-@(page: model.MetaData, config: Config, collection: Collection, style: Container, containerIndex: Int)(implicit request: RequestHeader, templateDeduping: TemplateDeduping)
+@(page: model.MetaData, collection: Collection, style: Container, containerIndex: Int)(implicit request: RequestHeader, templateDeduping: TemplateDeduping, config: Config)
 
 @defining((config.displayName.orElse(collection.displayName), config.href.orElse(collection.href))) { case (title, href) =>
 
@@ -30,7 +30,7 @@
                     <div class="container__body container--rolled-up-hide">
                         @fragments.contributor(page)
 
-                        @fragments.collections.standard(config, items, style, containerIndex, 6)
+                        @fragments.collections.standard(items, style, containerIndex, 6)
                     </div>
                 </div>
             </section>
