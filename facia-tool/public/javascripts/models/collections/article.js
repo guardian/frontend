@@ -52,6 +52,7 @@ define([
                 'headline',
                 'trailText',
                 'imageAdjust',
+                'imageSrc',
                 'isBreaking',
                 'group',
                 'snapType',

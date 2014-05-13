@@ -257,6 +257,12 @@
                             event: {blur: save},
                             attr: {placeholder: 'Link URL, eg. uk/money or http://www.bbc.co.uk/'}"/>
 
+                        <input type="text" data-bind="
+                            visible: true,
+                            value: meta.imageSrc,
+                            event: {blur: save},
+                            attr: {placeholder: 'Image URL. Must be 5x3 aspect.'}"/>
+
                         <textarea class="trailtext" type="text" data-bind="
                             value: trailTextInput,
                             event: {blur: save},
