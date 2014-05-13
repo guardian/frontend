@@ -221,8 +221,14 @@
             position: relative;
             float: right;
             @include rem((
-                margin-top: nth(nth($fs-textsans, 2), 2)*-2
+                margin-top: nth(nth($fs-textsans, 2), 2)*-1
             ));
+
+            .facia-container--advertisement-feature & {
+                @include rem((
+                    margin-top: nth(nth($fs-textsans, 2), 2)*-2
+                ));
+            }
         }
         .ad-slot--paid-for-badge__logo {
             display: block;
