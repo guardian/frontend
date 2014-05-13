@@ -82,7 +82,6 @@ object SeoData extends ExecutionContexts {
 
   def webTitleFromTail(tail: List[String]): String = tail.flatMap(_.split('-')).flatMap(_.split('/')).map(_.capitalize).mkString(" ")
 
-  def titleFromWebTitle(webTitle: String): String = s"$webTitle news, comment and analysis from the Guardian"
   def descriptionFromWebTitle(webTitle: String): Option[String] = Option(s"Latest $webTitle news, comment and analysis from the Guardian, the world's leading liberal voice")
 
   def getSeoData(path: String): Future[SeoData] = {
