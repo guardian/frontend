@@ -398,3 +398,14 @@
         }
     }
 }
+
+.top-nav__item--search {
+    @include mq(tablet) {
+        @include rem((
+            width: 92px
+        ));
+    }
+}
+
+.top-nav__item--search__hidden {
+}

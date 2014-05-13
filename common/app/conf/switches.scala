@@ -303,6 +303,11 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
+  val ABHeaderSearchText = Switch("A/B Tests", "ab-header-search-text",
+    "If this switch is turned on then the header search box will display a label for tablet and desktop.",
+    safeState = Off, sellByDate = new DateMidnight(2014, 6, 9)
+  )
+
   // Dummy Switches
 
   val IntegrationTestSwitch = Switch("Unwired Test Switch", "integration-test-switch",
@@ -434,7 +439,8 @@ object Switches extends Collections {
     MemcachedSwitch,
     IncludeBuildNumberInMemcachedKey,
     GzipSwitch,
-    GeoMostPopular
+    GeoMostPopular,
+    ABHeaderSearchText
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
