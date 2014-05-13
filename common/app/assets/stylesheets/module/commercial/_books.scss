@@ -6,7 +6,7 @@ $c-commercial-books-dark: #630D4C;
 
 .commercial--books {
     @include rem((
-        padding: $gs-gutter/2
+        padding: $gs-gutter/2 0
     ));
     .commercial__branding,
     .commercial__head {
@@ -53,6 +53,7 @@ $c-commercial-books-dark: #630D4C;
         float: right;
         clear: right;
         color: $c-commercial-books-dark;
+        bottom: 0;
     }
     .commercial__home-link__cta {
         background-color: $c-commercial-books-dark;
@@ -264,7 +265,7 @@ $c-commercial-books-dark: #630D4C;
             }
             .commercial__relevance-low {
                 width: 33%;
-                float: left;
+                float: right;
                 
                 .lineitem:first-child .lineitem__img {
                     display: block;
@@ -281,9 +282,6 @@ $c-commercial-books-dark: #630D4C;
             }
             .commercial__home-link {
                 position: absolute;
-                @include rem((
-                    bottom: $gs-baseline
-                ));
             }
             .commercial__relevance-high {
                 width: 66%;
