@@ -143,10 +143,6 @@ object Switches extends Collections {
     "If this switch is on, Criteo segments will be used to target ads.",
     safeState = Off, sellByDate = new DateMidnight(2014, 11, 1))
 
-  val LifeAndStyleHackSwitch = Switch("Ad Targeting", "life-and-style",
-    "If this switch is on, ads will work on Life and Style front while waiting for fix from Front Tools team.",
-    safeState = On, sellByDate = new DateMidnight(2014, 5, 14))
-
   // Commercial Tags
 
   val ImrWorldwideSwitch = Switch("Commercial Tags", "imr-worldwide",
@@ -385,7 +381,6 @@ object Switches extends Collections {
     AudienceScienceSwitch,
     AudienceScienceGatewaySwitch,
     CriteoSwitch,
-    LifeAndStyleHackSwitch,
     DiscussionSwitch,
     OpenCtaSwitch,
     FontSwitch,
