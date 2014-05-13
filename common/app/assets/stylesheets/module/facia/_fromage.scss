@@ -68,7 +68,7 @@
     @include clearfix;
 }
 .fromage__container {
-    border-top: 0 solid #ffffff;
+    border-top: 0 solid transparent;
     position: relative;
     @include rem((
         padding-bottom: $gs-row-height - $gs-baseline/3
