@@ -17,47 +17,46 @@ function (
         var defer = $.Deferred(),
             snapId = snap.validateId(item.id()),
             capiId = urlAbsPath(item.id()),
-            data;
+            data = cache.get('contentApi', capiId);
 
         if (snapId) {
             item.id(snapId);
             defer.resolve();
+
+        } else if (data) {
+            item.id(capiId);
+            populate(data, item);
+            defer.resolve();
+
         } else {
-            data = cache.get('contentApi', capiId);
-            if (data) {
-                item.id(capiId);
-                populate(data, item);
-                defer.resolve();
-            } else {
-                fetchContentByIds([capiId])
-                .done(function(result) {
-                    if (result.length === 1) {
-                        // It's a ContentApi item
-                        item.id(capiId);
-                        cache.put('contentApi', capiId, result[0]);
-                        populate(result[0], item);
-                        defer.resolve();
+            fetchContentByIds([capiId])
+            .done(function(result) {
+                // ContentApi item
+                if (result.length === 1) {
+                    item.id(capiId);
+                    cache.put('contentApi', capiId, result[0]);
+                    populate(result[0], item);
+                    defer.resolve();
 
-                    } else {
-                        // It's a snap
-                        if (!vars.model.switches()['facia-tool-snaps']) {
-                            defer.resolve(true, 'Sorry, that link wasn\'t recognised. It cannot be added to a front.');
+                // Snap, but they're disabled
+                } else if (!vars.model.switches()['facia-tool-snaps']) {
+                    defer.resolve(true, 'Sorry, that link wasn\'t recognised. It cannot be added to a front.');
 
-                        // A snap cannot be added in live mode if it has no headline
-                        } else if (vars.model.liveMode() &&
-                            item.parentType !== 'Clipboard' &&
-                            !item.fields.headline() &&
-                            !item.meta.headline()) {
-                            defer.resolve(true, 'Sorry, snaps without headlines can\'t be added in live mode.');
+                // Snap, but cannot be added in live mode if it has no headline
+                } else if (vars.model.liveMode() &&
+                    item.parentType !== 'Clipboard' &&
+                    !item.fields.headline() &&
+                    !item.meta.headline()) {
+                    defer.resolve(true, 'Sorry, snaps without headlines can\'t be added in live mode.');
 
-                        } else {
-                            item.convertToSnap();
-                            defer.resolve();
-                        }
-                    }
-                });
-            }
+                // Snap!
+                } else {
+                    item.convertToSnap();
+                    defer.resolve();
+                }
+            });
         }
+
         return defer.promise();
     }
 
@@ -140,19 +139,18 @@ function (
         authedAjax.request({
             url: vars.CONST.apiSearchBase + '/' + path + '?page-size=0'
         }).always(function(resp) {
-            var meta = resp.response ?
-               _.chain(['section', 'tag'])
+            defer.resolve(!resp.response ? {} :
+               _.chain(['tag', 'section'])
                 .map(function(key) { return resp.response[key]; })
-                .filter(function(obj) { return _.isObject(obj) && obj.webTitle && (obj.id || obj.sectionId); })
+                .filter(function(obj) { return _.isObject(obj); })
                 .reduce(function(m, obj) {
-                    m = m || {};
-                    m.section  = obj.id || obj.sectionId;
-                    m.webTitle = obj.webTitle;
+                    m.section = m.section || _.last((obj.id || obj.sectionId).split('/'));
+                    m.webTitle = m.webTitle || obj.webTitle;
+                    m.description = m.description || obj.description; // upcoming in Capi, at time of writing
+                    m.title = m.title || obj.title;                   // this may never be added to Capi, or may under another name
                     return m;
-                 }, undefined)
-                .value() : undefined;
-
-            defer[meta ? 'resolve' : 'reject'](meta);
+                 }, {})
+                .value());
         });
 
         return defer.promise();

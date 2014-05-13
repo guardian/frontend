@@ -1,6 +1,8 @@
 /* global _: true */
 define(['knockout'], function(ko) {
     var CONST = {
+        editions: ['uk', 'us', 'au'],
+
         types: [
             'news',
             'news/most-popular',
@@ -38,6 +40,7 @@ define(['knockout'], function(ko) {
         configSettingsPollMs:  30000,
         cacheExpiryMs:         60000,
         sparksRefreshMs:       300000,
+        pubTimeRefreshMs:      30000,
 
         apiBase:               '',
         apiSearchBase:         '/api/proxy',
@@ -48,7 +51,7 @@ define(['knockout'], function(ko) {
             showStats: 1,
             showHours: 1,
             width: 100,
-            height: 40
+            height: 35
         },
         sparksFrontParams: {
             graphs: 'other:3279F1,google:65b045,guardian:376ABF',

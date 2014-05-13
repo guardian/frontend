@@ -1,21 +1,21 @@
 @(front: FrontPage, block: (Config, Collection), collectionsSize: Int = 1, index: Int = 1)(implicit request: RequestHeader, templateDeduping: TemplateDeduping)
 
 @block._1.collectionType match {
-    case Some("news")                       => { @containers.news(block._1,  block._2, NewsContainer(), index) }
+    case Some("news")                       => { @containers.news(block._2, NewsContainer(), index)(request, templateDeduping, block._1) }
     case _ if index == 0                    => { @collectionsSize match {
-        case size if size < 3 => { @containers.tag(front, block._1,  block._2, NewsContainer(showMore = false), index) }
-        case _                => { @containers.tag(front, block._1,  block._2, NewsContainer(), index) }
+        case size if size < 3 => { @containers.tag(front, block._2, NewsContainer(showMore = false), index)(request, templateDeduping, block._1) }
+        case _                => { @containers.tag(front, block._2, NewsContainer(), index)(request, templateDeduping, block._1) }
     }}
-    case Some("news/sport")                 => { @containers.sport(front, block._1, block._2, SportContainer(), index) }
-    case Some("comment")                    => { @containers.comment(block._1, block._2, CommentContainer(), index) }
-    case Some("comment/comment-and-debate") => { @containers.commentanddebate(block._1, block._2, CommentAndDebateContainer(), index) }
-    case Some("features")                   => { @containers.features(block._1, block._2, FeaturesContainer(), index) }
-    case Some("news/most-popular")          => { @containers.popular(block._1, block._2, PopularContainer(), index) }
-    case Some("news/people")                => { @containers.people(block._1, block._2, PeopleContainer(), index) }
-    case Some("news/special")               => { @containers.special(block._1, block._2, SpecialContainer(), index) }
-    case Some("news/section")               => { @containers.section(block._1, block._2, SectionContainer(), index) }
-    case Some("features/section")           => { @containers.section(block._1, block._2, SectionContainer(tone = "feature"), index) }
-    case Some("comment/section")            => { @containers.section(block._1, block._2, SectionContainer(tone = "comment"), index) }
-    case Some("features/multimedia")        => { @containers.multimedia(block._1, block._2, MultimediaContainer(), index) }
-    case _                                  => { @containers.section(block._1, block._2, SectionContainer(), index) }
+    case Some("news/sport")                 => { @containers.sport(front, block._2, SportContainer(), index)(request, templateDeduping, block._1) }
+    case Some("comment")                    => { @containers.comment(block._2, CommentContainer(), index)(request, templateDeduping, block._1) }
+    case Some("comment/comment-and-debate") => { @containers.commentanddebate(block._2, CommentAndDebateContainer(), index)(request, templateDeduping, block._1) }
+    case Some("features")                   => { @containers.features(block._2, FeaturesContainer(), index)(request, templateDeduping, block._1) }
+    case Some("news/most-popular")          => { @containers.popular(block._2, PopularContainer(), index)(request, block._1) }
+    case Some("news/people")                => { @containers.people(block._2, PeopleContainer(), index)(request, templateDeduping, block._1) }
+    case Some("news/special")               => { @containers.special(block._2, SpecialContainer(), index)(request, templateDeduping, block._1) }
+    case Some("news/section")               => { @containers.section(block._2, SectionContainer(), index)(request, templateDeduping, block._1) }
+    case Some("features/section")           => { @containers.section(block._2, SectionContainer(tone = "feature"), index)(request, templateDeduping, block._1) }
+    case Some("comment/section")            => { @containers.section(block._2, SectionContainer(tone = "comment"), index)(request, templateDeduping, block._1) }
+    case Some("features/multimedia")        => { @containers.multimedia(block._2, MultimediaContainer(), index)(request, templateDeduping, block._1) }
+    case _                                  => { @containers.section(block._2, SectionContainer(), index)(request, templateDeduping, block._1) }
 }

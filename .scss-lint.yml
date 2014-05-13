@@ -75,7 +75,9 @@ linters:
 
   SelectorDepth:
     enabled: true
-    max_depth: 5
+    max_depth: 4
+    exclude: # Exclude if forced to break the inception rule to style third party components
+        - common/app/assets/stylesheets/module/_live-blog.scss
 
   Shorthand:
     enabled: true

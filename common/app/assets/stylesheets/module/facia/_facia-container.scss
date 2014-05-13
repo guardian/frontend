@@ -1,30 +1,51 @@
-.facia-container {
+.facia-container__inner {
+    overflow: hidden;
+    position: relative;
 
+    @include rem((
+        margin-left: $gs-gutter / 2,
+        margin-right: $gs-gutter / 2
+    ));
+
+    @include mq(mobileLandscape) {
+        @include rem((
+            margin-left: $gs-gutter,
+            margin-right: $gs-gutter
+        ));
+    }
 }
 .facia-container--layout-front {
-    @include mq(gs-span(7) + $gs-gutter*3, tablet) {
-        @include rem((
-            width: gs-span(7)
-        ));
-        margin: 0 auto;
-    }
-    @include mq(tablet) {
-        @include rem((
-            width: gs-span(9)
-        ));
-        padding-left: 0;
-        padding-right: 0;
-    }
-    @include mq(desktop) {
-        @include rem((
-            width: gs-span(12)
-        ));
+    .facia-container__inner {
+        @include mq(gs-span(7) + $gs-gutter*3, tablet) {
+            @include rem((
+                width: gs-span(7)
+            ));
+            margin: 0 auto;
+        }
+        @include mq(tablet) {
+            @include rem((
+                width: gs-span(9)
+            ));
+            margin-left: auto;
+            margin-right: auto;
+        }
+        @include mq(desktop) {
+            @include rem((
+                width: gs-span(12)
+            ));
+        }
+        @include mq(faciaLeftCol) {
+            @include rem((
+                width: gs-span(14)
+            ));
+        }
+        @include mq(wide) {
+            @include rem((
+                width: gs-span(16)
+            ));
+        }
     }
     @include mq(faciaLeftCol) {
-        @include rem((
-            width: gs-span(14)
-        ));
-
         .container__title {
             margin-bottom: 0;
         }
@@ -52,10 +73,6 @@
         }
     }
     @include mq(wide) {
-        @include rem((
-            width: gs-span(16)
-        ));
-
         .container__title {
             float: left;
             @include rem((
@@ -72,19 +89,35 @@
     }
 }
 .facia-container--layout-article {
-    @include rem((
-        margin-bottom: $gs-baseline*2
-    ));
+    .facia-container__inner {
+        @include rem((
+            margin-bottom: $gs-baseline*2
+        ));
 
-    @include mq(tablet) {
-        @include rem((
-            max-width: gs-span(8)
-        ));
-    }
-    @include mq(rightCol) {
-        @include rem((
-            max-width: gs-span(14) + $gs-gutter*2
-        ));
+        @include mq(tablet) {
+            margin-left: auto;
+            margin-right: auto;
+            @include rem((
+                padding-left: $gs-gutter,
+                padding-right: $gs-gutter
+            ));
+        }
+        @include mq(tablet, rightCol) {
+            @include rem((
+                max-width: gs-span(8)
+            ));
+        }
+        @include mq(leftCol) {
+            @include rem((
+                max-width: gs-span(14)
+            ));
+        }
+        @include mq(wide) {
+            @include rem((
+                max-width: gs-span(15) ,
+                padding-right: gs-span(1) + $gs-gutter*2
+            ));
+        }
     }
     @include mq(leftCol) {
         .container__title,
@@ -96,7 +129,9 @@
                 margin-right: $gs-gutter
             ));
         }
-        .container__meta { clear: left; }
+        .container__meta {
+            clear: left;
+        }
         .container__body {
             overflow: hidden;
             @include rem((
@@ -105,11 +140,6 @@
         }
     }
     @include mq(wide) {
-        @include rem((
-            max-width: gs-span(15),
-            padding-right: gs-span(1) + $gs-gutter*2
-        ));
-
         .container__title,
         .container__meta {
             @include rem((

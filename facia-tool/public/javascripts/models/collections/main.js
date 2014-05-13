@@ -193,6 +193,16 @@ define([
             }, period);
         });
 
+        var startPublicationTimePoller = _.once(function() {
+            var period = vars.CONST.pubTimeRefreshMs || 60000;
+
+            setInterval(function(){
+                model.collections().forEach(function(list){
+                    list.refreshFrontPublicationTime();
+                });
+            }, period);
+        });
+
         this.init = function() {
             droppable.init();
 
@@ -246,6 +256,7 @@ define([
 
                 startCollectionsPoller();
                 startSparksPoller();
+                startPublicationTimePoller();
 
                 model.latestArticles.search();
                 model.latestArticles.startPoller();
