@@ -62,7 +62,7 @@ case class SeoData(
   description: Option[String])
 
 object SeoData extends ExecutionContexts {
-  val editions = Edition.all.map(_.id).map(_.toLowerCase)
+  val editions = Edition.all.map(_.id.toLowerCase)
 
   def fromPath(path: String): SeoData = path.split('/').toList match {
     //This case is only to handle the nonevent of uk/technology/games
