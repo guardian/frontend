@@ -312,7 +312,7 @@ module.exports = function (grunt) {
                             'font-family': 'HeadlineSans',
                             file: 'resources/fonts/HeadlineSans-Light.woff',
                             'font-weight': '200',
-                            format: 'ttf'
+                            format: 'woff'
                         }
                     ]
                 }
