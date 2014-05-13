@@ -32,6 +32,8 @@ object DfpAgent extends ExecutionContexts with Logging {
     (normalisedTags intersect targetedKeywords).nonEmpty
   }
 
+  def isAdvertisementFeature(content: Content): Boolean = isSponsored(content.keywords)
+
   def refresh() {
     def fetchTargetedKeywords() = {
       val json = S3.get(dfpDataKey)(UTF8) map parse
