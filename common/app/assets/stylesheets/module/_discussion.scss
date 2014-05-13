@@ -18,6 +18,26 @@ $c-replyText: $c-body;
         ));
     }
 }
+
+.discussion--lowered  {
+  @include mq(leftCol) {
+    @include rem((
+            margin-right: - ($a-leftCol-width + ($gs-gutter * 9))
+    ));
+    .d-discussion { max-width: gs-span(12) }
+  }
+  @include mq(wide) {
+    @include rem((
+            margin-right: - ($a-leftColWide-width + ($gs-gutter * 5))
+    ));
+    .d-discussion { max-width: gs-span(12) }
+  }
+
+
+}
+
+
+
 .d-discussion {
     @include rem((
         font-size: 14px
