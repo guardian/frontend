@@ -490,7 +490,7 @@ define([
             mediator.on('page:common:ready', function() {
                 if(!id.isUserLoggedIn()) {
                     $('.js-comments').insertBefore(qwery('.js-popular'));
-                    $('.discussion').addClass("discussion--lowered");
+                    $('.discussion').addClass('discussion--lowered');
                 }
             });
         }
