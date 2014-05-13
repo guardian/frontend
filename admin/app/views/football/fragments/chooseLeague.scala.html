@@ -1,8 +1,11 @@
-@(fieldName: String, leagues: List[pa.Season])
+@(fieldName: String, leagues: List[pa.Season], withEmptyValue: Boolean = false)
 @import _root_.football.model.PA.competitionName
 
 <div class="form-group">
     <select name="@fieldName" id="id-@fieldName" class="form-control" data-placeholder="Choose league">
+        @if(withEmptyValue) {
+            <option value="">Choose competition</option>
+        }
         @for(league <- leagues) {
         <option value="@league.competitionId">@competitionName(league)</option>
         }

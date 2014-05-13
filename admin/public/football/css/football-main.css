@@ -129,7 +129,10 @@ label[for] {
 }
 
 .loading {
-    background: url("/assets/internal/images/ajax-loader.gif") right center no-repeat;
+    background: url("/assets/internal/images/ajax-loader.gif") right center no-repeat #ccc;
+    /* Override NGW styles */
+    padding: 6px 12px !important;
+    text-align: left !important;
 }
 
 .front-embed-preview {

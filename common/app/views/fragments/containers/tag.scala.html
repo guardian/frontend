@@ -12,27 +12,27 @@
         data-id="@config.id"
         data-type="@style.containerType"
         data-component="@FaciaComponentName(config, collection)">
-
-        <div class="container__border tone-@style.tone tone-accent-border"></div>
-
-        <div class="container__header">
-            @config.displayName.orElse(collection.displayName).map { title =>
-                <h2 class="container__title tone-@style.tone tone-background">
-                    @collection.href.map { href =>
-                        <a class="container__title__label u-text-hyphenate" data-link-name="section heading" href="@LinkTo{/@href}">@Html(title)</a>
-                    }.getOrElse{
-                        <span class="container__title__label u-text-hyphenate">@Html(title)</span>
-                    }
-                </h2>
+        <div class="facia-container__inner">
+            <div class="container__border tone-@style.tone tone-accent-border"></div>
+            <div class="container__header">
+                @config.displayName.orElse(collection.displayName).map { title =>
+                    <h2 class="container__title tone-@style.tone tone-background">
+                        @collection.href.map { href =>
+                            <a class="container__title__label u-text-hyphenate" data-link-name="section heading" href="@LinkTo{/@href}">@Html(title)</a>
+                        }.getOrElse{
+                            <span class="container__title__label u-text-hyphenate">@Html(title)</span>
+                        }
+                    </h2>
+                }
+            </div>
+            @if(page.isSponsored) {
+                @fragments.commercial.badge(name="spbadge", adType="paid-for-badge", sizeMapping=Map("mobile" -> Seq("140,90")))
             }
+            <div class="container__body">
+                @fragments.contributor(page)
+                @fragments.collections.tag(collection.items, style, containerIndex)
+            </div>
+            @pagination.map{ paginate => @fragments.pagination(page, paginate)}
         </div>
-        @if(page.isSponsored) {
-            @fragments.commercial.badge(name="spbadge", adType="paid-for-badge", sizeMapping=Map("mobile" -> Seq("140,90")))
-        }
-        <div class="container__body">
-            @fragments.contributor(page)
-            @fragments.collections.tag(collection.items, style, containerIndex)
-        </div>
-        @pagination.map{ paginate => @fragments.pagination(page, paginate)}
     </section>
 }

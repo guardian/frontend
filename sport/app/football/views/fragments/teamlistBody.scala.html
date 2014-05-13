@@ -24,7 +24,6 @@
 
     <h1 class="page-header">@pageModel.page.webTitle</h1>
 
-
     @comps.map{ comp =>
         @renderTeamList(comp)
     }
@@ -32,4 +31,6 @@
     @fragments.footballNav(pageModel.page)
 </div>
 
-@fragments.mostPopularPlaceholder("sport")
+<div class="facia-container facia-container--layout-article">
+    @fragments.mostPopularPlaceholder("sport")
+</div>
