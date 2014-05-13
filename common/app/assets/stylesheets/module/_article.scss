@@ -694,6 +694,9 @@
 
 .article__popular {
     clear: left;
+    @include rem((
+        margin-bottom: $gs-baseline*2
+    ));
 
     .article__zone {
         border-color: $c-newsAccent; // Acts as a default

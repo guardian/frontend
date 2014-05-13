@@ -54,7 +54,7 @@ private object TestClient extends Client {
         Future(xml)(context)
       }
       case None => {
-        Logger.warn(s"Missing fixture for API response: $suffix")
+        Logger.warn(s"Missing fixture for API response: $suffix ($filename)")
         val response = Client.get(realApiCallPath)(context)
         response.onComplete {
           case Success(str) => {

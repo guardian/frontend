@@ -129,11 +129,9 @@
     }
 }
 .ad-slot--mpu-banner-ad {
-    padding-top: 0;
-    padding-bottom: 37px;
+    padding: 0;
     width: 300px;
-    height: 250px;
-    overflow: hidden;
+    min-height: 284px;
 }
 .ad-slot--commercial-component,
 .ad-slot--commercial-component-high {

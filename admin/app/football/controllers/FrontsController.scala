@@ -49,7 +49,7 @@ object FrontsController extends Controller with ExecutionContexts with GetPaClie
           previewContent <- FutureOpt.fromFuture(previewFrontsComponent(snapFields))
         } yield previewContent
       }
-    foResult.getOrElse(throw new RuntimeException(s"Competition $competitionId not found"))
+    foResult.getOrElse(NoCache(NotFound(views.html.football.error(s"Competition $competitionId not found"))))
   }
 
   def fixturesRedirect = Action { implicit request =>
@@ -71,7 +71,7 @@ object FrontsController extends Controller with ExecutionContexts with GetPaClie
           previewContent <- FutureOpt.fromFuture(previewFrontsComponent(snapFields))
         } yield previewContent
       }
-    foResult.getOrElse(throw new RuntimeException(s"Competition $competitionId not found"))
+    foResult.getOrElse(NoCache(NotFound(views.html.football.error(s"Competition $competitionId not found"))))
   }
 
   def tablesRedirect = Action { implicit request =>
@@ -88,7 +88,7 @@ object FrontsController extends Controller with ExecutionContexts with GetPaClie
         snapFields = SnapFields(SNAP_TYPE, SNAP_CSS, s"$host/football/$competitionId/table.json", s"${Configuration.site.host}/football/tables", s"$competitionName table", s"View the full standing for the $competitionName")
         previewContent <- FutureOpt.fromFuture(previewFrontsComponent(snapFields))
       } yield previewContent
-    foResult.getOrElse(throw new RuntimeException(s"Competition $competitionId not found"))
+    foResult.getOrElse(NoCache(NotFound(views.html.football.error(s"Competition $competitionId not found"))))
   }
 
   private def getCompetition(competitionId: String): FutureOpt[Season] = {
