@@ -495,6 +495,11 @@ case class InlineSlotGenerator(articleWordCount: Int) extends HtmlCleaner {
 
 class TagLinker(article: Article)(implicit val edition: Edition) extends HtmlCleaner{
 
+  private val group1 = "$1"
+  private val group2 = "$2"
+  private val group4 = "$4"
+  private val group5 = "$5"
+
   private val dot = Pattern.quote(".")
   private val question = Pattern.quote("?")
 
@@ -517,11 +522,11 @@ class TagLinker(article: Article)(implicit val edition: Edition) extends HtmlCle
         val unlinkedParas = paragraphs.filterNot(_.html.contains("<a"))
 
         // pre-filter paragraphs so we do not do multiple regexes on every single paragraph in every single article
-        val candidateParagraphs = unlinkedParas.filter(_.text.contains(keyword.name))
+        val candidateParagraphs = unlinkedParas.filter(_.html.contains(keyword.name))
 
         if (candidateParagraphs.nonEmpty) {
           val regex = keywordRegex(keyword)
-          val paragraphsWithMatchers = candidateParagraphs.map(p => (regex.pattern.matcher(p.text()), p)).find(_._1.matches())
+          val paragraphsWithMatchers = candidateParagraphs.map(p => (regex.pattern.matcher(p.html), p)).find(_._1.matches())
 
           paragraphsWithMatchers.foreach { case (matcher, p) =>
             val tagLink = doc.createElement("a")
@@ -529,7 +534,8 @@ class TagLinker(article: Article)(implicit val edition: Edition) extends HtmlCle
             tagLink.text(keyword.name)
             tagLink.attr("data-link-name", "auto-linked-tag")
             tagLink.addClass("u-underline")
-            val newHtml = matcher.replaceFirst(s"$$1$$2${tagLink.toString}$$4$$5")
+            val tagLinkHtml = tagLink.toString
+            val newHtml = matcher.replaceFirst(s"$group1$group2$tagLinkHtml$group4$group5")
             p.html(newHtml)
           }
         }
