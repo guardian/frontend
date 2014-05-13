@@ -4,10 +4,7 @@
   "dependencies": {
     "bootstrap.css": "~2.3.2",
     "curl": "~0.8.4",
-    "eventEmitter": "~4.2.6",
-    "js_humanized_time_span": "layam/js_humanized_time_span",
     "jquery": "~2.0.3",
-    "jquery.sparkline": "http://omnipotent.net/jquery.sparkline/2.1.2/jquery.sparkline.min.js",
     "knockout.js": "~3.0.0",
     "underscore": "~1.5.2"
   },
