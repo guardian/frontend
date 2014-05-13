@@ -51,8 +51,8 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         import browser._
 
         Then("I should see a short description of the article")
-        findFirst("[itemprop=description]").getText should
-          be("Payments for 'ecosystem services' look like the prelude to the greatest privatisation since enclosure")
+        findFirst("[itemprop=description]").getAttribute("content") should
+          be("George Monbiot: Payments for 'ecosystem services' look like the prelude to the greatest privatisation since enclosure")
       }
     }
 
