@@ -21,7 +21,7 @@ define([], function () {
     }
 
     function formatKeyword(keyword) {
-        return keyword.replace(/\s/g, '-').toLowerCase();
+        return keyword.replace(/\+/g, '').replace(/\s+/g, '-').toLowerCase();
     }
 
     function getKeywords(config) {
