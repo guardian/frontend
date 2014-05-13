@@ -4,9 +4,13 @@ import java.io.File
 import jobs.FrontPressJob
 import play.api._
 import play.api.mvc.WithFilters
-import services.{ConfigAgent, FaciaToolLifecycle}
+import services.{ConfigAgentLifecycle, ConfigAgent, FaciaToolLifecycle}
 
-object Global extends WithFilters(Gzipper) with FaciaToolLifecycle with GlobalSettings with CloudWatchApplicationMetrics {
+object Global extends WithFilters(Gzipper)
+  with FaciaToolLifecycle
+  with GlobalSettings
+  with CloudWatchApplicationMetrics
+  with ConfigAgentLifecycle {
 
   lazy val devConfig = Configuration.from(Map("session.secure" -> "false"))
 
@@ -39,17 +43,12 @@ object Global extends WithFilters(Gzipper) with FaciaToolLifecycle with GlobalSe
   }
 
   def scheduleJobs() {
-    Jobs.schedule("ConfigAgentJob", "0 * * * * ?") {
-      ConfigAgent.refresh()
-    }
-
     Jobs.schedule("FaciaToolPressJob", "0/10 * * * * ?") {
       FrontPressJob.run()
     }
   }
 
   def descheduleJobs() {
-    Jobs.deschedule("ConfigAgentJob")
     Jobs.deschedule("FaciaToolPressJob")
   }
 
@@ -57,10 +56,6 @@ object Global extends WithFilters(Gzipper) with FaciaToolLifecycle with GlobalSe
     super.onStart(app)
     descheduleJobs()
     scheduleJobs()
-
-    AkkaAsync {
-      ConfigAgent.refresh()
-    }
   }
 
   override def onStop(app: play.api.Application) {
