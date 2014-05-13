@@ -14,29 +14,22 @@ import xml.Utility.escape
 
 class PlayerControllerTest extends FreeSpec with ShouldMatchers with GetPaClient with ExecutionContexts {
 
-  "test redirects player head2head form submission to correct player page" in Fake {
-    val Some(result) = route(FakeRequest(POST, "/admin/football/player/head2head", FakeHeaders(), AnyContentAsFormUrlEncoded(Map("player1" -> List("123456"), "player2" -> List("654321")))))
+  "test redirects player card form submission to correct player page" in Fake {
+    val Some(result) = route(FakeRequest(POST, "/admin/football/player/card", FakeHeaders(), AnyContentAsFormUrlEncoded(Map("player" -> List("123456"), "team" -> List("1"), "competition" -> List("100"), "playerCardType" -> List("attack")))))
     status(result) should equal(SEE_OTHER)
-    redirectLocation(result) should equal(Some("/admin/football/player/head2head/123456/654321"))
+    redirectLocation(result) should equal(Some("/admin/football/player/card/competition/attack/123456/1/100"))
   }
 
-  "test player head to head renders correctly" in Fake {
-    val Some(result) = route(FakeRequest(GET, "/admin/football/player/head2head/237670/193388"))
+  "test player card renders correctly" in Fake {
+    val Some(result) = route(FakeRequest(GET, "/admin/football/player/card/competition/attack/237670/19/100"))
     status(result) should equal(OK)
     val content = contentAsString(result)
 
     content should include("Emmanuel Adebayor")
-    content should include("Jermain Defoe")
   }
 
-  "test redirects player card form submission to correct player page" in Fake {
-    val Some(result) = route(FakeRequest(POST, "/admin/football/player/card", FakeHeaders(), AnyContentAsFormUrlEncoded(Map("player" -> List("123456"), "team" -> List("1"), "competition" -> List("100"), "playerCardType" -> List("overview")))))
-    status(result) should equal(SEE_OTHER)
-    redirectLocation(result) should equal(Some("/admin/football/player/card/overview/123456/1/100"))
-  }
-
-  "test player card renders correctly" in Fake {
-    val Some(result) = route(FakeRequest(GET, "/admin/football/player/card/overview/237670/19/100"))
+  "test player card renders correctly for date instead of competition" in Fake {
+    val Some(result) = route(FakeRequest(GET, "/admin/football/player/card/date/attack/237670/19/20140101"))
     status(result) should equal(OK)
     val content = contentAsString(result)
 
