@@ -7,7 +7,6 @@ import play.api.mvc.WithFilters
 import services.{ConfigAgentLifecycle, ConfigAgent, FaciaToolLifecycle}
 
 object Global extends WithFilters(Gzipper)
-  with FaciaToolLifecycle
   with GlobalSettings
   with CloudWatchApplicationMetrics
   with ConfigAgentLifecycle {
