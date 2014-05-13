@@ -17,6 +17,7 @@ object BodyCleaner {
     new TagLinker(article),
     InlineSlotGenerator(article.wordCount),
     TableEmbedComplimentaryToP,
-    LiveBlogDateFormatter(article.isLiveBlog)
+    LiveBlogDateFormatter(article.isLiveBlog),
+    DropCaps(article.isComment || article.isFeature)
   )
 }

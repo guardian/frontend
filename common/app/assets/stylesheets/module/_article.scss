@@ -95,6 +95,16 @@
     }
 }
 
+.article-feature__zone {
+    @include full-bleed($c-featureDefault)
+}
+
+.article-feature__zone__inner {
+    @include mq(tablet, rightCol) {
+        @include full-bleed($c-featureDefault)
+    }
+}
+
 .left-col-deport {
     @include mq(leftCol) {
         @include rem((
@@ -172,7 +182,11 @@
     @include mq(tablet) {
         display: none;
     }
+    &.article__head__comment-count--headline { // used in tonal templates
+        display: none;
+    }
 }
+
 
 .article__dateline {
     position: relative;
@@ -338,7 +352,7 @@
     }
 }
 
-.byline-img {
+.article__meta-container .byline-img {
     position: relative;
     width: gs-span(1);
     height: 60px; //Intentionally off grid
@@ -359,7 +373,7 @@
     }
 }
 
-.byline-img__img {
+.article__meta-container .byline-img__img {
     position: absolute;
     width: auto;
     //This centres the image within its container
@@ -779,9 +793,40 @@
     display: block;
     content: " ";
     @include rem((
-        min-height: 1px
+        top: -$gs-baseline*2
     ));
-    @include mq(rightCol) {
-        display: none;
+    position: relative;
+}
+
+.drop-cap {
+    float: left;
+    display: inline-block;
+    text-transform: uppercase;
+    @include f-headline;
+    font-weight: 200;
+    @include box-sizing(border-box);
+    @include rem((
+        height: 2*get-line-height($fs-bodyCopy, 3),
+        padding-top: 1px,
+        margin-right: 4px
+    ));
+
+    .drop-cap__inner {
+        display: inline-block;
+        vertical-align: text-top;
+        @include font-size(52px, 40px);
+    }
+
+    @include mq($from: tablet) {
+        &.drop-cap--wide {
+            @include rem((
+                margin-right: 5px,
+                height: 3*get-line-height($fs-bodyCopy, 3)
+            ));
+
+            .drop-cap__inner {
+                @include font-size(84px, 68px);
+            }
+        }
     }
 }
