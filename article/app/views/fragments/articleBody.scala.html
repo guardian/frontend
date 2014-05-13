@@ -2,123 +2,135 @@
 @import conf.Switches._
 
 @defining((model.article, model.storyPackage)) { case (article, storyPackage) =>
-    <div class="gs-container">
-        <h2 class="article__zone left-col-deport tone-@VisualTone(article) tone-accent-border hide-on-mobile-if-localnav">
-            <span class="left-col-deport__body" data-component="meta">
-                <a class="tone-colour" data-link-name="article section" href="@LinkTo{/@article.section}">@Html(article.sectionName.toLowerCase)</a>
-            </span>
-        </h2>
-        <div class="article-wrapper monocolumn-wrapper tone-@VisualTone(article)">
-            <article id="article" class="article @if(article.isLive){is-live} @if(article.isAdvertisementFeature){article--advertisement-feature}"
-                     itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType" role="main">
-                <div class="article__inner article__inner--head">
-                    <header class="article__head">
+<div class="gs-container">
+    <h2 class="article__zone left-col-deport tone-@VisualTone(article) tone-@VisualTone(article)--article tone-accent-border hide-on-mobile-if-localnav">
+        <span class="left-col-deport__body  article__section-link" data-component="meta">
+            <a class="tone-colour" data-link-name="article section" href="@LinkTo{/@article.section}">@Html(article.sectionName.toLowerCase)</a>
+        </span>
+    </h2>
+    <div class="article-wrapper monocolumn-wrapper tone-@VisualTone(article) tone-@VisualTone(article)--article">
+        <article id="article" class="article @if(article.isLive){is-live} @if(article.isAdvertisementFeature){article--advertisement-feature}"
+                 itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType" role="main">
+            <div class="article__inner article__inner--head">
+                <header class="article__head">
+                    <div class="tone-head--default">
+
 
                         @fragments.meta.metaInline(article)
+
                         @if(article.isAdvertisementFeature){
                             <div class="article-hat-label">Advertisement feature</div>
                         }
 
                         @fragments.headline(article.headline, List("js-score"))
 
+                        @if(article.isCommentable) {
+                            <div class="article__head__comment-count article__head__comment-count--headline js-comment-count"></div>
+                        }
+                    </div>
+                    <div class="tone-head--accent">
                         @fragments.standfirst(article)
 
                         @if(article.isCommentable) {
-                            <div class="article__head__comment-count js-comment-count"></div>
+                            <div class="article__head__comment-count article__head__comment-count--standfirst js-comment-count"></div>
                         }
-                    </header>
-
-                    @fragments.witnessCallToAction(article)
-
-                    <div class="after-header"></div>
-                </div>
-                <div class="article__columning-wrapper">
-                    <div class="article__main-column">
-
-                        @if(!article.hasVideoAtTop) {
-                            @if(article.hasMainVideo) {
-                                @article.mainVideo.map{ mainVideo =>
-                                    <div class="gu-video-wrapper">
-                                        <div class="u-responsive-ratio u-responsive-ratio--hd">
-                                            <video data-media-id="@mainVideo.id" class="gu-video" controls="controls">
-                                                @for(url <- mainVideo.videoAssets.flatMap(_.url)) {
-                                                    <source src="@url" />
-                                                }
-                                                @mainVideo.videoAssets.find(_.mimeType == "video/mp4").map{ encoding =>
-                                                    <object type="application/x-shockwave-flash" data="@Static("flash/flashmediaelement.swf")" width="620" height="350">
-                                                        <param name="allowFullScreen" value="true" />
-                                                        <param name="movie" value="@Static("flash/flashmediaelement.swf")" />
-                                                        <param name="flashvars" value="file=@encoding.url&amp;controls=true" />
-                                                        Sorry, your browser is unable to play this video.
-                                                    </object>
-                                                }
-                                            </video>
-                                        </div>
-                                    </div>
-                                }
-                            } else {
-                                @fragments.img(article.mainPicture)
-                            }
-                        }
-
-                        @fragments.contentMeta(article)
-
-                        <div class="js-article__container article__container u-cf" data-component="body">
-
-                            <div class="article-body u-cf from-content-api js-article__body"
-                            itemprop="@if(article.isReview){reviewBody} else {articleBody}">
-                                @BodyCleaner(article, article.body)
-                            </div>
-
-                            <div class="article__keywords" data-link-name="article keywords">
-                                @fragments.keywordList(article.keywords)
-                            </div>
-                        </div>
-
-                        <div class="social-wrapper" data-component="share">
-                            @fragments.social(article)
-                        </div>
-
-                        <div class="after-article js-after-article"></div>
                     </div>
-                    <div class="article__secondary-column" aria-hidden="true">
-                        <div class="article__secondary-column__inner@if(storyPackage.nonEmpty) { article__secondary-column__inner--fill-vertically}">
-                            <div class="u-table">
-                                <div class="u-table__row">
-                                    <div class="u-table__cell u-table__cell--top">
-                                        <div class="mpu-context js-right-hand-component">
-                                            <div class="mpu-container js-mpu-ad-slot"></div>
-                                            <div class="js-components"></div>
-                                        </div>
+                </header>
+
+                @fragments.witnessCallToAction(article)
+
+                <div class="after-header"></div>
+            </div>
+            <div class="article__columning-wrapper">
+                <div class="article__main-column">
+
+                    @if(!article.hasVideoAtTop) {
+                        @if(article.hasMainVideo) {
+                            @article.mainVideo.map{ mainVideo =>
+                                <div class="gu-video-wrapper">
+                                    <div class="u-responsive-ratio u-responsive-ratio--hd">
+                                        <video data-media-id="@mainVideo.id" class="gu-video" controls="controls">
+                                            @for(url <- mainVideo.videoAssets.flatMap(_.url)) {
+                                                <source src="@url" />
+                                            }
+                                            @mainVideo.videoAssets.find(_.mimeType == "video/mp4").map{ encoding =>
+                                                <object type="application/x-shockwave-flash" data="@Static("flash/flashmediaelement.swf")" width="620" height="350">
+                                                    <param name="allowFullScreen" value="true" />
+                                                    <param name="movie" value="@Static("flash/flashmediaelement.swf")" />
+                                                    <param name="flashvars" value="file=@encoding.url&amp;controls=true" />
+                                                    Sorry, your browser is unable to play this video.
+                                                </object>
+                                            }
+                                        </video>
+                                    </div>
+                                </div>
+                            }
+                        } else {
+                            @fragments.img(article.mainPicture)
+                        }
+                    }
+
+                    @fragments.contentMeta(article)
+
+                    <div class="js-article__container article__container u-cf" data-component="body">
+
+                        <div class="article-body u-cf from-content-api js-article__body"
+                        itemprop="@if(article.isReview){reviewBody} else {articleBody}">
+                            @BodyCleaner(article, article.body)
+                        </div>
+
+                        <div class="article__keywords" data-link-name="article keywords">
+                            @fragments.keywordList(article.keywords)
+                        </div>
+                    </div>
+
+                    <div class="social-wrapper" data-component="share">
+                        @fragments.social(article)
+                    </div>
+
+                    <div class="after-article js-after-article"></div>
+                </div>
+                <div class="article__secondary-column" aria-hidden="true">
+                    <div class="article__secondary-column__inner@if(storyPackage.nonEmpty) { article__secondary-column__inner--fill-vertically}">
+                        <div class="u-table">
+                            <div class="u-table__row">
+                                <div class="u-table__cell u-table__cell--top">
+                                    <div class="mpu-context js-right-hand-component">
+                                        <div class="mpu-container js-mpu-ad-slot"></div>
+                                        <div class="js-components"></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </article>
-        </div>
-    </div>
-    @if(DiscussionSwitch.isSwitchedOn && article.isCommentable) {
-    <div class="gs-container">
-        <div class="article-wrapper monocolumn-wrapper tone-@VisualTone(article)">
-            <div class="article__inner js-comments" data-component="discussion">
-                @fragments.discussion(article.isClosedForComments, article.shortUrlId)
             </div>
+        </article>
+    </div>
+</div>
+
+@if(DiscussionSwitch.isSwitchedOn && article.isCommentable) {
+<div class="gs-container">
+    <div class="article-wrapper monocolumn-wrapper tone-@VisualTone(article)">
+        <div class="article__inner js-comments" data-component="discussion">
+            @fragments.discussion(article.isClosedForComments, article.shortUrlId)
         </div>
     </div>
-    }
-    <div class="facia-container facia-container--layout-article facia-container--commercial">
-        @fragments.commercial.commercialComponent(name="merchandising-high", adType="commercial-component-high", sizeMapping=Map("desktop" -> Seq("888,87")))
-    </div>
+</div>
+}
+<div class="facia-container facia-container--layout-article facia-container--commercial">
+    @fragments.commercial.commercialComponent(name="merchandising-high", adType="commercial-component-high", sizeMapping=Map("desktop" -> Seq("888,87")))
+</div>
 
-    @fragments.storyPackagePlaceholder(storyPackage)
-    @fragments.onwardPlaceholder(VisualTone(article))
 
-    <div class="facia-container facia-container--layout-article">
-        @fragments.mostPopularPlaceholder(article.section, VisualTone(article))
-    </div>
-    <div class="facia-container facia-container--layout-article facia-container--commercial">
-        @fragments.commercial.commercialComponent(name="merchandising", adType="commercial-component", sizeMapping=Map("mobile" -> Seq("888,88")))
-    </div>
+@fragments.storyPackagePlaceholder(storyPackage)
+
+@fragments.onwardPlaceholder(VisualTone(article))
+
+<div class="facia-container facia-container--layout-article">
+    @fragments.mostPopularPlaceholder(article.section, VisualTone(article))
+</div>
+<div class="facia-container facia-container--layout-article facia-container--commercial">
+    @fragments.commercial.commercialComponent(name="merchandising", adType="commercial-component", sizeMapping=Map("mobile" -> Seq("888,88")))
+</div>
 }

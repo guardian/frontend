@@ -2,6 +2,7 @@ package model
 
 import com.gu.openplatform.contentapi.model.{ Section => ApiSection }
 import common.Pagination
+import dfp.DfpAgent
 
 case class Section(private val delegate: ApiSection, override val pagination: Option[Pagination] = None) extends MetaData {
 
@@ -22,4 +23,6 @@ case class Section(private val delegate: ApiSection, override val pagination: Op
     "keywords" -> webTitle,
     "content-type" -> "Section"
   )
+
+  override def isSponsored = DfpAgent.isSponsored(this)
 }

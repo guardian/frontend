@@ -1,37 +1,65 @@
 @(competitions: List[pa.Season], teams: List[pa.Team])
 
-@views.html.football.main("Players") {
-    <hgroup class="page-header">
-        <h1>Players</h1>
-    </hgroup>
-
-    @*<form class="form-inline" role="form" action="/admin/football/player/head2head" method="post">
-        <h2>Player head to head</h2>
-
-        @views.html.football.fragments.choosePlayer("player1", players)
-        vs
-        @views.html.football.fragments.choosePlayer("player2", players)
-
-        <button type="submit" class="btn btn-success">Fight!</button>
-    </form>*@
-
-    <form class="form-inline" role="form" action="/admin/football/player/card" method="post">
-        <h2>Card</h2>
-        <label for="player-card-type">Card type:</label>
-        <select class="form-control" id="player-card-type" name="playerCardType">
-            <option value="attack">Attack</option>
-            <option value="assist">Assist</option>
-            <option value="discipline">Discipline</option>
-            <option value="defence">Defence</option>
-            <option value="goalkeeper">Goalkeeper</option>
-            <option value="overview">Overview</option>
-        </select>
-        @views.html.football.fragments.chooseLeague("competition", competitions)
-        @views.html.football.fragments.chooseTeam("team", teams)
-        <div class="form-group">
-            @*<select name="player" id="id-player" class="form-control foot-autocomplete" data-placeholder="Choose player"></select>*@
-            <input type="text" name="player" id="id-player" class="form-control player-chooser" autocomplete="off" placeholder="Choose player">
+@views.html.football.main("Player cards") {
+    <div class="row">
+        <div class="col-sm-12">
+            <hgroup class="page-header">
+                <h1>Player cards</h1>
+            </hgroup>
         </div>
-        <button type="submit" class="btn btn-success">View</button>
-    </form>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <form role="form" action="/admin/football/player/card" method="post">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group form-line">
+                            <div class="btn-group" data-toggle="buttons">
+                                <label class="btn btn-primary active">
+                                    <input type="radio" name="playerCardType" value="attack" checked="checked" /> Attack
+                                </label>
+                                <label class="btn btn-primary">
+                                    <input type="radio" name="playerCardType" value="assist" /> Assist
+                                </label>
+                                <label class="btn btn-primary">
+                                    <input type="radio" name="playerCardType" value="discipline" /> Discipline
+                                </label>
+                                <label class="btn btn-primary">
+                                    <input type="radio" name="playerCardType" value="defence" /> Defence
+                                </label>
+                                <label class="btn btn-primary">
+                                    <input type="radio" name="playerCardType" value="goalkeeper" /> Goalkeeper
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-inline form-group">
+                            @views.html.football.fragments.chooseLeague("competition", competitions, withEmptyValue = true)
+                            <b>Or</b>
+                            <input type="text" name="startDate" class="form-control date-picker" placeholder="Choose start date" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-inline form-group">
+                            @views.html.football.fragments.chooseTeam("team", teams)
+                        </div>
+
+                        <div class="form-inline form-group">
+                            <input type="text" name="player" id="id-player" class="form-control player-chooser" autocomplete="off" placeholder="Choose player">
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-success">View</button>
+            </form>
+        </div>
+    </div>
 }

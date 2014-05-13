@@ -129,11 +129,9 @@
     }
 }
 .ad-slot--mpu-banner-ad {
-    padding-top: 0;
-    padding-bottom: 37px;
+    padding: 0;
     width: 300px;
-    height: 250px;
-    overflow: hidden;
+    min-height: 284px;
 }
 .ad-slot--commercial-component,
 .ad-slot--commercial-component-high {
@@ -223,8 +221,14 @@
             position: relative;
             float: right;
             @include rem((
-                margin-top: nth(nth($fs-textsans, 2), 2)*-2
+                margin-top: nth(nth($fs-textsans, 2), 2)*-1
             ));
+
+            .facia-container--advertisement-feature & {
+                @include rem((
+                    margin-top: nth(nth($fs-textsans, 2), 2)*-2
+                ));
+            }
         }
         .ad-slot--paid-for-badge__logo {
             display: block;
