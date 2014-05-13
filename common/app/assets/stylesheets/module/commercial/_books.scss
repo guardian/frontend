@@ -200,9 +200,6 @@ $c-commercial-books-dark: #630D4C;
                     width: gs-span(3)
                 ));
             }
-            .lineitem__img {
-            
-            }
             .commercial__foot {
                 display: none;
             }
@@ -220,7 +217,9 @@ $c-commercial-books-dark: #630D4C;
                 width: 100%;
             }
             .lineitem__img {
-                width: 66px;
+                @include rem((
+                    width: 66px
+                ));
                 height: auto;
             }
         }
@@ -246,7 +245,9 @@ $c-commercial-books-dark: #630D4C;
                 padding-bottom: 0
             }
             .lowitem__details {
-                margin-left: 76px;
+                @include rem((
+                    margin-left: 76px
+                ));
             }
             .commercial__search {
                 @include rem((
