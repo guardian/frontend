@@ -65,4 +65,4 @@ GET        /football/match/:matchId                                             
 GET        /football/match-redirect/:year/:month/:day/:homeTeamId/:awayTeamId                  football.controllers.MoreOnMatchController.redirectToMatch(year,month,day,homeTeamId,awayTeamId)
 GET        /football/match-redirect/:matchId                                                   football.controllers.MoreOnMatchController.redirectToMatchId(matchId)
 
-GET        /football/world-cup-2014/embed-tmp                                                  football.controllers.WallchartController.renderWallchartEmbedTmp()
+GET        /football/world-cup-2014/r2-front-world-cup-embed                                   football.controllers.WallchartController.renderR2FrontWorldCupEmbed()

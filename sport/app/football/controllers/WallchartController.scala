@@ -27,17 +27,17 @@ object WallchartController extends Controller with Logging with ExecutionContext
   }
 
 
-  def renderWallchartEmbedTmp() = Action { implicit request =>
+  def renderR2FrontWorldCupEmbed() = Action { implicit request =>
     conf.Switches.WorldCupWallchartEmbedSwitch.isSwitchedOn
     Competitions().withTag("world-cup-2014").map { competition =>
       val page = new Page(
         competition.url.stripSuffix("/"),
         "football",
         s"${competition.fullName} temp embed",
-        "GFE:Football:automatic:embed-tmp"
+        "GFE:Football:automatic:r2-front-world-cup-embed"
       )
       val competitionStages = CompetitionStage.stagesFromCompetition(competition)
-      Cached(60){Ok(football.views.html.wallchart.embedTmp(page, competition, competitionStages))}
+      Cached(60){Ok(football.views.html.wallchart.r2FrontWorldCupEmbed(page, competition, competitionStages))}
     }.getOrElse(NotFound)
   }
 }
