@@ -145,7 +145,7 @@ object Switches extends Collections {
 
   val LifeAndStyleHackSwitch = Switch("Ad Targeting", "life-and-style",
     "If this switch is on, ads will work on Life and Style front while waiting for fix from Front Tools team.",
-    safeState = On, sellByDate = new DateMidnight(2014, 5, 14))
+    safeState = On, sellByDate = new DateMidnight(2014, 5, 21))
 
   // Commercial Tags
 
