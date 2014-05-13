@@ -1,12 +1,14 @@
 package services
 
-import common.{Logging, AkkaAgent, ExecutionContexts}
+import common._
 import play.api.libs.json.{JsNull, Json, JsValue}
-import model.{SeoDataJson, Config}
+import model.Config
 import scala.concurrent.Future
 import scala.concurrent.duration._
 import akka.util.Timeout
 import conf.Configuration
+import play.api.{Application, GlobalSettings}
+import model.SeoDataJson
 
 trait ConfigAgentTrait extends ExecutionContexts with Logging {
   implicit val alterTimeout: Timeout = Configuration.faciatool.configBeforePressTimeout.millis
@@ -91,3 +93,26 @@ trait ConfigAgentTrait extends ExecutionContexts with Logging {
 }
 
 object ConfigAgent extends ConfigAgentTrait
+
+trait ConfigAgentLifecycle extends GlobalSettings {
+
+  override def onStart(app: Application) {
+    super.onStart(app)
+
+    Jobs.deschedule("ConfigAgentJob")
+    Jobs.schedule("ConfigAgentJob", "0 * * * * ?") {
+      ConfigAgent.refresh()
+    }
+
+    AkkaAsync {
+      ConfigAgent.refresh()
+    }
+  }
+
+  override def onStop(app: Application) {
+    Jobs.deschedule("ConfigAgentJob")
+    ConfigAgent.close()
+
+    super.onStop(app)
+  }
+}
