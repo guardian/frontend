@@ -298,6 +298,11 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 5, 14)
   )
 
+  val TagLinkingSwitch = Switch("Feature Switches", "tag-linking",
+    "If this switch is turned on then tags will be 'auto' linked to where possible in article bodies",
+    safeState = On, sellByDate = new DateMidnight(2014, 6, 30)
+  )
+
   val EnhanceTweetsSwitch = Switch("Feature Switches", "enhance-tweets",
     "If this switch is turned on then embedded tweets will be enhanced using Twitter's widgets.",
     safeState = Off, sellByDate = never
@@ -434,7 +439,8 @@ object Switches extends Collections {
     MemcachedSwitch,
     IncludeBuildNumberInMemcachedKey,
     GzipSwitch,
-    GeoMostPopular
+    GeoMostPopular,
+    TagLinkingSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }

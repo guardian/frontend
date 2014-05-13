@@ -1,7 +1,7 @@
 package views.support
 
 import common._
-import conf.Switches.{ ShowAllArticleEmbedsSwitch, ArticleSlotsSwitch }
+import conf.Switches.{ ShowAllArticleEmbedsSwitch, ArticleSlotsSwitch, TagLinkingSwitch }
 import model._
 
 import java.net.URLEncoder._
@@ -19,6 +19,7 @@ import play.api.mvc.SimpleResult
 import play.api.templates.Html
 import scala.collection.JavaConversions._
 import java.text.DecimalFormat
+import java.util.regex.Pattern
 
 sealed trait Style {
   val className: String
@@ -493,28 +494,48 @@ case class InlineSlotGenerator(articleWordCount: Int) extends HtmlCleaner {
 }
 
 class TagLinker(article: Article)(implicit val edition: Edition) extends HtmlCleaner{
-  def clean(d: Document): Document = {
-    if (article.linkCounts.noLinks) {
-      val paragraphs = d.getElementsByTag("p")
+
+  private val dot = Pattern.quote(".")
+  private val question = Pattern.quote("?")
+
+  private def keywordRegex(tag: Tag) = {
+    val tagName = Pattern.quote(tag.name)
+    s"""(.*)( |^)($tagName)( |,|$$|$dot|$question)(.*)""".r
+  }
+
+  def clean(doc: Document): Document = {
+
+    if (TagLinkingSwitch.isSwitchedOn) {
+
+      val paragraphs = doc.getElementsByTag("p")
 
       // order by length of name so we do not make simple match errors
       // e.g 'Northern Ireland' & 'Ireland'
-      article.keywords.filterNot(_.isSectionTag).sortBy(_.name.length).reverse.foreach{ keyword =>
-        // don't link again in paragraphs we have already upgraded
+      article.keywords.filterNot(_.isSectionTag).sortBy(_.name.length).reverse.foreach { keyword =>
+
+        // don't link again in paragraphs that already have links
         val unlinkedParas = paragraphs.filterNot(_.html.contains("<a"))
-        unlinkedParas.find(_.text().contains(" " + keyword.name + " ")).foreach{ p =>
 
-          val tagLink = d.createElement("a")
-          tagLink.attr("href", LinkTo(keyword.url, edition))
-          tagLink.text(keyword.name)
-          tagLink.attr("data-link-name", "auto-linked-tag")
-          tagLink.addClass("u-underline")
+        // pre-filter paragraphs so we do not do multiple regexes on every single paragraph in every single article
+        val candidateParagraphs = unlinkedParas.filter(_.text.contains(keyword.name))
 
-          p.html(p.html().replaceFirst(" " + keyword.name + " ", " " + tagLink.toString + " "))
+        if (candidateParagraphs.nonEmpty) {
+          val regex = keywordRegex(keyword)
+          val paragraphsWithMatchers = candidateParagraphs.map(p => (regex.pattern.matcher(p.text()), p)).find(_._1.matches())
+
+          paragraphsWithMatchers.foreach { case (matcher, p) =>
+            val tagLink = doc.createElement("a")
+            tagLink.attr("href", LinkTo(keyword.url, edition))
+            tagLink.text(keyword.name)
+            tagLink.attr("data-link-name", "auto-linked-tag")
+            tagLink.addClass("u-underline")
+            val newHtml = matcher.replaceFirst(s"$$1$$2${tagLink.toString}$$4$$5")
+            p.html(newHtml)
+          }
         }
       }
     }
-    d
+    doc
   }
 }
 
