@@ -30,6 +30,10 @@ class FaciaController extends Controller with Logging with ExecutionContexts wit
     Cached(60)(Redirect(redirectPath))
   }
 
+  def applicationsRedirect(path: String) = Action {
+    Ok.withHeaders("X-Accel-Redirect" -> s"/applications/$path")
+  }
+
   // Needed as aliases for reverse routing
   def renderFrontRss(id: String) = renderFront(id)
   def renderFrontJson(id: String) = renderFront(id)
@@ -40,7 +44,7 @@ class FaciaController extends Controller with Logging with ExecutionContexts wit
   def renderFront(path: String) = {
     log.info(s"Serving Path: $path")
     if (!ConfigAgent.getPathIds.contains(path))
-      IndexController.render(path)
+      applicationsRedirect(path)
     else
       renderFrontPress(path)
   }
