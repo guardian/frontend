@@ -58,7 +58,7 @@ case class SeoData(
   id: String,
   section: String,
   webTitle: String,
-  title: String,
+  title: Option[String],
   description: Option[String])
 
 object SeoData extends ExecutionContexts {
@@ -68,16 +68,16 @@ object SeoData extends ExecutionContexts {
     //This case is only to handle the nonevent of uk/technology/games
     case edition :: section :: name :: tail if editions.contains(edition.toLowerCase) =>
       val webTitle: String = webTitleFromTail(name :: tail)
-      SeoData(path, section, webTitle, titleFromWebTitle(webTitle), descriptionFromWebTitle(webTitle))
+      SeoData(path, section, webTitle, None, descriptionFromWebTitle(webTitle))
     case edition :: name :: tail if editions.contains(edition.toLowerCase) =>
       val webTitle: String = webTitleFromTail(name :: tail)
-      SeoData(path, name, webTitle, titleFromWebTitle(webTitle), descriptionFromWebTitle(webTitle))
+      SeoData(path, name, webTitle, None, descriptionFromWebTitle(webTitle))
     case section :: name :: tail =>
       val webTitle: String = webTitleFromTail(name :: tail)
-      SeoData(path, section, webTitle, titleFromWebTitle(webTitle), descriptionFromWebTitle(webTitle))
+      SeoData(path, section, webTitle, None, descriptionFromWebTitle(webTitle))
     case oneWord :: tail =>
       val capitalOneWorld: String = oneWord.capitalize
-      SeoData(path, oneWord, capitalOneWorld, titleFromWebTitle(capitalOneWorld), descriptionFromWebTitle(capitalOneWorld))
+      SeoData(path, oneWord, capitalOneWorld, None, descriptionFromWebTitle(capitalOneWorld))
   }
 
   def webTitleFromTail(tail: List[String]): String = tail.flatMap(_.split('-')).flatMap(_.split('/')).map(_.capitalize).mkString(" ")
@@ -97,7 +97,7 @@ object SeoData extends ExecutionContexts {
     } yield {
       val section:  String = sc.section.orElse(ir.flatMap(getSectionFromItemResponse)).getOrElse(sp.section)
       val webTitle: String = sc.webTitle.orElse(ir.flatMap(getWebTitleFromItemResponse)).getOrElse(sp.webTitle)
-      val title: String    = sc.title.getOrElse(SeoData.titleFromWebTitle(webTitle))
+      val title: Option[String] = sc.title
       val description: Option[String] = sc.description.orElse(SeoData.descriptionFromWebTitle(webTitle))
 
       SeoData(path, section, webTitle, title, description)

@@ -107,7 +107,7 @@ trait FrontJson extends ExecutionContexts {
       id,
       seoDataJson.section.getOrElse(seoDataFromPath.section),
       seoDataJson.webTitle.getOrElse(seoDataFromPath.webTitle),
-      seoDataJson.title.getOrElse(seoDataFromPath.title),
+      seoDataJson.title,
       seoDataJson.description.orElse(seoDataFromPath.description)
       )
   }
