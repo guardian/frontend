@@ -39,7 +39,8 @@ define(['knockout'], function(ko) {
         latestArticlesPollMs:  20000,
         configSettingsPollMs:  30000,
         cacheExpiryMs:         60000,
-        sparksRefreshMs:       30000,
+        sparksRefreshMs:       300000,
+        pubTimeRefreshMs:      30000,
 
         apiBase:               '',
         apiSearchBase:         '/api/proxy',

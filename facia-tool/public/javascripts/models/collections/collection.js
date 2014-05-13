@@ -252,6 +252,13 @@ define([
         _.each(this.groups, function(group) {
             _.each(group.items(), function(item) {
                 item.sparkline();
+            });
+        });
+    };
+
+    Collection.prototype.refreshFrontPublicationTime = function() {
+        _.each(this.groups, function(group) {
+            _.each(group.items(), function(item) {
                 item.setFrontPublicationTime();
             });
         });
