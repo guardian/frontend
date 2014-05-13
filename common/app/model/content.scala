@@ -54,7 +54,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
     }
   }
 
-  lazy val isAdvertisementFeature: Boolean = tags.exists(_.id == "tone/advertisement-features")
+  lazy val isAdvertisementFeature: Boolean = DfpAgent.isAdvertisementFeature(this)
 
   lazy val shouldHideAdverts: Boolean = fields.get("shouldHideAdverts").exists(_.toBoolean)
 
