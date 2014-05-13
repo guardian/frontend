@@ -7,15 +7,15 @@ define(['bonzo'], function (bonzo) {
         this.expiry = '2014-06-09';
         this.author = 'Raul Tudor';
         this.description = 'The header search box will display a label for tablet and desktop.';
-        this.audience = 0.1;
-        this.audienceOffset = 0.4;
+        this.audience = 0.5;
+        this.audienceOffset = 0;
         this.successMeasure = 'Clicks/taps on the search box.';
         this.audienceCriteria = 'Users who are not on mobile.';
-        this.dataLinkNames = 'header search box label';
+        this.dataLinkNames = 'Search icon';
         this.idealOutcome = 'Increased number of clicks/taps on the search box.';
 
-        this.canRun = function(config) {
-            detect.getBreakpoint() !== 'mobile';
+        this.canRun = function (config) {
+            return detect.getBreakpoint() !== 'mobile';
         };
 
         this.variants = [
@@ -27,7 +27,12 @@ define(['bonzo'], function (bonzo) {
             {
                 id: 'hide',
                 test: function (context, config) {
-//                    bonzo(context.querySelector('.control--search .control__info')).hide();
+                    // hide text
+                    bonzo(context.querySelector('.top-nav__item--search .control__info')).hide();
+                    // make it narrower
+                    bonzo(context.querySelector('.top-nav__item--search'))
+                        .removeClass('top-nav__item--search')
+                        .addClass('top-nav__item--search__hidden');
                 }
             }
         ];

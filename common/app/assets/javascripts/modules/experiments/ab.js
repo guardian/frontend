@@ -9,11 +9,11 @@ define([
     store,
     mediator,
     mvtCookie,
-    HeaderSearchText
+    ABHeaderSearchText
     ) {
 
-    var TESTS = [HeaderSearchText],
-       participationsKey = 'gu.ab.participations';
+    var TESTS = [new ABHeaderSearchText()];
+    var participationsKey = 'gu.ab.participations';
 
     function getParticipations() {
         return store.local.get(participationsKey) || {};
