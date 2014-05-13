@@ -11,6 +11,7 @@ define([
     'common/utils/mediator',
     'common/modules/analytics/commercial/tags/common/audience-science',
     'common/modules/analytics/commercial/tags/common/audience-science-gateway',
+    'common/modules/analytics/commercial/tags/common/criteo',
     'common/modules/adverts/userAdTargeting',
     'common/modules/adverts/query-string',
     'lodash/arrays/flatten',
@@ -28,6 +29,7 @@ define([
     mediator,
     AudienceScience,
     AudienceScienceGateway,
+    criteo,
     UserAdTargeting,
     queryString,
     _flatten,
@@ -170,6 +172,7 @@ define([
             'at'      : Cookies.get('adtest') || ''
         };
         extend(targets, AudienceScienceGateway.getSegments());
+        extend(targets, criteo.getSegments());
 
         return targets;
     };

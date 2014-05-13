@@ -3,7 +3,7 @@ package dfp
 import common._
 import conf.Configuration.commercial.dfpDataKey
 import play.api.Play.current
-import model.{Tag, Content}
+import model.{Section, Tag, Content}
 import play.api.libs.json.Json._
 import play.api.{Play, Application, GlobalSettings}
 import scala.io.Codec.UTF8
@@ -25,8 +25,10 @@ object DfpAgent extends ExecutionContexts with Logging {
 
   def isSponsored(content: Content): Boolean = isSponsored(content.keywords)
 
+  def isSponsored(section: Section): Boolean = targetedKeywords contains normalise(section.webTitle)
+
   def isSponsored(tags: Seq[Tag]): Boolean = {
-    val normalisedTags = tags.map(_.name.toLowerCase.replace(" ", "-"))
+    val normalisedTags = tags.map(tag => normalise(tag.name))
     (normalisedTags intersect targetedKeywords).nonEmpty
   }
 

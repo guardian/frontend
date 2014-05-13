@@ -553,6 +553,33 @@ case class Summary(amount: Int) extends HtmlCleaner {
   }
 }
 
+case class DropCaps(isFeature: Boolean) extends HtmlCleaner {
+
+  private def setDropCap(p: Element): String = {
+    val html = p.html
+    val len = html.length
+    val span = if (html.length > 325) "drop-cap drop-cap--wide" else "drop-cap"
+    if ( html.matches("^[\"a-hj-zA-HJ-Z].*") && html.split("\\s+").head.length >= 3 )
+      s"""<span class="${span}"><span class="drop-cap__inner">${html.head}</span></span>${html.tail}"""
+    else
+      html
+  }
+
+  override def clean(document: Document): Document = {
+
+    if(isFeature) {
+      val children = document.body().children().toList
+      children.headOption match {
+        case Some(p) => {
+          if (p.nodeName() == "p") p.html(setDropCap(p))
+        }
+        case _ =>
+      }
+    }
+    document
+  }
+}
+
 // whitespace in the <span> below is significant
 // (results in spaces after author names before commas)
 // so don't add any, fool.
