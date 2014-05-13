@@ -251,6 +251,15 @@
                             attr: {title: 'Revert to: ' + fields.headline()},
                             visible: meta.headline"><i class="icon-fast-backward"></i></a>
 
+                        <textarea class="trailtext" type="text" data-bind="
+                            value: trailTextInput,
+                            event: {blur: save},
+                            attr: {placeholder: fields.trailText() || 'Trail text'}"/></textarea>
+                        <a class="revert revert--trailtext" data-bind="
+                            click: trailTextRevert,
+                            attr: {title: 'Revert to: ' + fields.trailText()},
+                            visible: meta.trailText"><i class="icon-fast-backward"></i></a>
+
                         <input type="text" data-bind="
                             visible: isSnap,
                             value: meta.href,
@@ -262,15 +271,6 @@
                             value: meta.imageSrc,
                             event: {blur: save},
                             attr: {placeholder: 'Image URL. Must be 5x3 aspect.'}"/>
-
-                        <textarea class="trailtext" type="text" data-bind="
-                            value: trailTextInput,
-                            event: {blur: save},
-                            attr: {placeholder: fields.trailText() || 'Trail text'}"/></textarea>
-                        <a class="revert revert--trailtext" data-bind="
-                            click: trailTextRevert,
-                            attr: {title: 'Revert to: ' + fields.trailText()},
-                            visible: meta.trailText"><i class="icon-fast-backward"></i></a>
                     </div>
 
                     <div class="tools">
