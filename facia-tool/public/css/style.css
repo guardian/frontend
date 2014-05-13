@@ -717,11 +717,11 @@ button {
 }
 
 .article > .closed .tool--small--href {
-    top: 27px;
+    top: 4px;
 }
 
 .article > .closed .tool--small--remove {
-    top: 4px;
+    top: 27px;
 }
 
 .article:hover > .closed .tool--small {
