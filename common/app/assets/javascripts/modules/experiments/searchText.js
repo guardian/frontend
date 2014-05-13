@@ -1,4 +1,4 @@
-define(['bonzo'], function (bonzo) {
+define(['bonzo', 'common/utils/detect'], function (bonzo, detect) {
 
     var HeaderSearchText = function () {
 
