@@ -8,10 +8,10 @@ import com.gu.openplatform.contentapi.model.{SearchResponse, ItemResponse}
 import org.joda.time.DateTime
 import org.scala_tools.time.Implicits._
 import contentapi.QueryDefaults
-import controllers.ImageContentPage
 import scala.concurrent.Future
 import play.api.mvc.{RequestHeader, SimpleResult}
 import com.gu.openplatform.contentapi.ApiError
+import controllers.ImageContentPage
 
 object IndexPagePagination {
   def pageSize: Int = 20 //have a good think before changing this
@@ -20,45 +20,63 @@ object IndexPagePagination {
 case class IndexPage(page: MetaData, trails: Seq[Content],
                      date: DateTime = DateTime.now)
 
-
 trait Index extends ConciergeRepository with QueryDefaults {
 
-  def index(edition: Edition, leftSide: String, rightSide: String, page: Int): Future[Either[IndexPage, SimpleResult]] = {
+  private val rssFields = s"$trailFields,byline,body,standfirst"
+
+  def normaliseTag(tag: String): String = {
+    val conversions: Map[String, String] =
+      Map("content" -> "type")
+
+    conversions.foldLeft(tag){
+      case (newTag, (from, to)) =>
+        if (newTag.startsWith(s"$from/"))
+          newTag.replace(from, to)
+        else
+          newTag
+    }
+  }
+
+  def index(edition: Edition, leftSide: String, rightSide: String, page: Int, isRss: Boolean): Future[Either[IndexPage, SimpleResult]] = {
 
     val section = leftSide.split('/').head
 
     // if the first tag is just one part then change it to a section tag...
-    val firstTag = leftSide match {
-      case SinglePart(wordsForUrl) => s"$wordsForUrl/$wordsForUrl"
-      case other => other
-    }
+    val firstTag = normaliseTag(
+      leftSide match {
+        case SinglePart(wordsForUrl) => s"$wordsForUrl/$wordsForUrl"
+        case other => other
+      }
+    )
 
     // if the second tag is just one part then it is in the same section as the first tag...
-    val secondTag = rightSide match {
-      case SinglePart(wordsForUrl) => s"$section/$wordsForUrl"
-      case SeriesInSameSection(series) => s"$section/$series"
-      case other => other
-    }
+    val secondTag = normaliseTag(
+      rightSide match {
+        case SinglePart(wordsForUrl) => s"$section/$wordsForUrl"
+        case SeriesInSameSection(series) => s"$section/$series"
+        case other => other
+      }
+    )
 
     val promiseOfResponse = ContentApi.search(edition)
       .tag(s"$firstTag,$secondTag")
       .page(page)
       .pageSize(IndexPagePagination.pageSize)
+      .showFields(if (isRss) rssFields else trailFields)
       .response.map {response =>
-        val trails = response.results map { Content(_) }
-        trails match {
-          case Nil => Right(NotFound)
-          case head :: _ =>
-            //we can use .head here as the query is guaranteed to return the 2 tags
-            val tag1 = head.tags.find(_.id == firstTag).head
-            val tag2 = head.tags.find(_.id == secondTag).head
-            val pageName = s"${tag1.name} + ${tag2.name}"
-            val page = Page(s"$leftSide+$rightSide", tag1.section, pageName,
-              s"GFE:${tag1.section}:$pageName", pagination = pagination(response),
-              description = Some(s"Articles and other features published by The Guardian about ${tag1.name} and ${tag2.name}"))
+      val trails = response.results map { Content(_) }
+      trails match {
+        case Nil => Right(NotFound)
+        case head :: _ =>
+          //we can use .head here as the query is guaranteed to return the 2 tags
+          val tag1 = head.tags.find(_.id == firstTag).head
+          val tag2 = head.tags.find(_.id == secondTag).head
+          val pageName = s"${tag1.name} + ${tag2.name}"
+          val page = Page(s"$leftSide+$rightSide", tag1.section, pageName,
+            s"GFE:${tag1.section}:$pageName", pagination = pagination(response))
 
-            Left(IndexPage(page, trails))
-        }
+          Left(IndexPage(page, trails))
+      }
     }
 
     promiseOfResponse.recover(convertApiExceptions)
@@ -78,11 +96,13 @@ trait Index extends ConciergeRepository with QueryDefaults {
     response.total
   ))
 
-  def index(edition: Edition, path: String, pageNum: Int)(implicit request: RequestHeader): Future[Either[IndexPage, SimpleResult]] = {
+  def index(edition: Edition, path: String, pageNum: Int, isRss: Boolean)(implicit request: RequestHeader): Future[Either[IndexPage, SimpleResult]] = {
+
     val promiseOfResponse = ContentApi.item(path, edition)
       .page(pageNum)
       .pageSize(IndexPagePagination.pageSize)
       .showEditorsPicks(pageNum == 1) //only show ed pics on first page
+      .showFields(if (isRss) rssFields else trailFields)
       .response.map {
       response =>
         val page = response.tag.flatMap(t => tag(response, pageNum))
