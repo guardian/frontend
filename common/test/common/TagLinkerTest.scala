@@ -60,8 +60,7 @@ class TagLinkerTest extends FlatSpec with Matchers {
 
   it should "escape the tag name" in {
     val cleaned = new TagLinker(article(tag("sport/cycling", "Cycling?."))).clean(souped(
-      """<p>Help with the Cycling?.
-        |</p>""".stripMargin))
+      """<p>Help with the Cycling?.</p>"""))
     cleaned.firstPara should be ("""Help with the <a href="/sport/cycling" data-link-name="auto-linked-tag" class=" u-underline">Cycling?.</a>""")
   }
 
