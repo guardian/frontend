@@ -48,14 +48,14 @@
                         @books.take(1).map { book =>
                         <a href="@AdLink{@book.buyUrl}" class="lineitem__link" data-link-name="merchandising-bookshop-v@{version}_@{date}-high-@{book.isbn}-@{book.author}-@{book.title}-image">
                             @book.jacketUrl.map { url =>
-                            <img class="highitem__img" src="@url" alt="">
+                            <img class="highitem__img" src="@url" alt="" />
                             }
                         </a>
                         <div class="highitem__details">
                             <a href="@AdLink{@book.buyUrl}" class="lineitem__link" data-link-name="merchandising-bookshop-v@{version}_@{date}-high-@{book.isbn}-@{book.author}-@{book.title}">
                                 <h4 class="lineitem__title">@book.title</h4>
                                 @if(book.author) {
-                                <p class="lineitem__meta">By @book.author</p>
+                                    <p class="lineitem__meta">By @book.author</p>
                                 }
                                 <p class="commercial--books__description">@book.description</p>
                                 <p class="commercial--books__price">
@@ -79,7 +79,7 @@
                         <li class="lineitem u-cf">
                             <a href="@AdLink{@book.buyUrl}" data-link-name="merchandising-bookshop-v@{version}_@{date}-high-@{book.isbn}-@{book.author}-@{book.title}-cover">
                                 @book.jacketUrl.map { url =>
-                                <img class="lineitem__img" src="@url" alt="">
+                                <img class="lineitem__img" src="@url" alt="" />
                                 }
                             </a>
                             <div class="lowitem__details">

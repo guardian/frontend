@@ -6,7 +6,7 @@ $c-commercial-books-dark: #630D4C;
 
 .commercial--books {
     @include rem((
-        padding: $gs-gutter/2 0
+        padding: 10px 0
     ));
     .commercial__branding,
     .commercial__head {
@@ -112,7 +112,7 @@ $c-commercial-books-dark: #630D4C;
         @include rem((
             top: 10px,
             padding: 0 $gs-gutter/2,
-            min-width: 60px
+            min-width: gs-span(1)
         ));
     }
 
@@ -224,7 +224,7 @@ $c-commercial-books-dark: #630D4C;
         .highitem__details {
             @include rem((
                 padding-right: $gs-gutter/2
-            ))
+            ));
         }
         @include mq(tablet) {
             .lineitem {
