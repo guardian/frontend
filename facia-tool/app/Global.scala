@@ -4,7 +4,7 @@ import java.io.File
 import jobs.FrontPressJob
 import play.api._
 import play.api.mvc.WithFilters
-import services.{ConfigAgentLifecycle, ConfigAgent, FaciaToolLifecycle}
+import services.ConfigAgentLifecycle
 
 object Global extends WithFilters(Gzipper)
   with GlobalSettings

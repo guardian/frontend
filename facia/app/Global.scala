@@ -1,6 +1,5 @@
 import common.{FaciaToolMetrics, ContentApiMetrics, FaciaMetrics, CloudWatchApplicationMetrics}
 import conf.{Management, Filters}
-import controllers.front._
 import dev.DevParametersLifecycle
 import dfp.DfpAgentLifecycle
 import play.api.mvc.WithFilters
