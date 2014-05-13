@@ -11,7 +11,7 @@ define([], function () {
                 var targetValue = queryParams[param];
                 if (typeof targetValue === 'string') {
                     query += param + '=' + targetValue;
-                } else {
+                } else if(typeof targetValue === 'object') {
                     query += param + '=' + targetValue.join('&' + param + '=');
                 }
             }
@@ -21,7 +21,7 @@ define([], function () {
     }
 
     function formatKeyword(keyword) {
-        return keyword.replace(/\s/g, '-').toLowerCase();
+        return keyword.replace(/[+\s]+/g, '-').toLowerCase();
     }
 
     function getKeywords(config) {

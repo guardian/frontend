@@ -43,6 +43,13 @@
 }
 
 
+/* Search control & control info (text label next to it)
+   ========================================================================== */
+
+.control--search {
+    overflow: visible; // Makes control__info visible
+}
+
 /* Profile control & control info (text label next to it)
    ========================================================================== */
 

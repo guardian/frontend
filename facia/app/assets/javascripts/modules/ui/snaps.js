@@ -3,12 +3,14 @@ define([
     'bonzo',
     'common/utils/ajax',
     'common/utils/mediator',
+    'common/utils/template',
     'common/utils/to-array'
 ], function(
     $,
     bonzo,
     ajax,
     mediator,
+    template,
     toArray
 ) {
 
@@ -51,13 +53,13 @@ define([
     }
 
     function injectIframe(el) {
-        var iframe = document.createElement('iframe');
-
-        iframe.style.width = '100%';
-        iframe.style.border = 'none';
-        iframe.style.height = '200px';
-        iframe.src = el.getAttribute('data-snap-uri');
-        bonzo(el).html(iframe);
+        // Wrapping iframe to fix iOS height-setting bug
+        bonzo(el).html(template(
+            '<div style="height:{{height}}px; overflow:none;">' +
+                '<iframe src="{{src}}" style="height:{{height}}px; width: 100%; border: none;"></iframe>' +
+            '</div>',
+            {src: el.getAttribute('data-snap-uri'), height: 200}
+        ));
     }
 
     function fetchFragment(el, asJson) {
