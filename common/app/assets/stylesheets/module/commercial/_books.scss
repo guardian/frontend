@@ -188,9 +188,6 @@ $c-commercial-books-dark: #630D4C;
         @include mq(tablet) {
             .commercial__home-link {
                 position: absolute;
-                @include rem((
-                    bottom: $gs-baseline
-                ));
             }
             .commercial__branding {
                 float: none;

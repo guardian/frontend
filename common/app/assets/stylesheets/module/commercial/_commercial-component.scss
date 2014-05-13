@@ -246,7 +246,7 @@ $c-commercial-comp-neutral: #edede7;
         overflow: hidden;
     }
     .commercial__title {
-        padding: $gs-baseline/3 $gs-gutter/5;
+        padding: 0;
 
         .i {
             margin-top: $gs-baseline/3;
@@ -339,7 +339,7 @@ $c-commercial-comp-neutral: #edede7;
             width: map-get($cta-diameter, tablet);
             height: map-get($cta-diameter, tablet);
             @include rem((
-                margin-top: -(map-get($cta-diameter, tablet)/2)-1
+                margin-top: -(map-get($cta-diameter, tablet)/2)
             ));
         }
     }
