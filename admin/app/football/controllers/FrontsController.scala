@@ -9,8 +9,16 @@ import football.model.{SnapFields, PA}
 import model.{NoCache, Cached}
 import conf.Configuration
 import scala.concurrent.Future
-import pa.Season
+import pa._
 import concurrent.FutureOpt
+import org.joda.time.DateMidnight
+import football.model.SnapFields
+import scala.Some
+import pa.Season
+import pa.Fixture
+import play.api.mvc.SimpleResult
+import pa.Result
+import pa.LiveMatch
 
 
 object FrontsController extends Controller with ExecutionContexts with GetPaClient {
@@ -20,6 +28,8 @@ object FrontsController extends Controller with ExecutionContexts with GetPaClie
   def index = Action.async { implicit request =>
     for {
       competitions <- client.competitions.map(PA.filterCompetitions)
+      competitionTeams <- Future.traverse(competitions){comp => client.teams(comp.competitionId, comp.startDate, comp.endDate)}
+      allTeams = competitionTeams.flatten.distinct
     } yield {
       Cached(3600)(Ok(views.html.football.fronts.index(competitions)))
     }
@@ -91,6 +101,28 @@ object FrontsController extends Controller with ExecutionContexts with GetPaClie
     foResult.getOrElse(NoCache(NotFound(views.html.football.error(s"Competition $competitionId not found"))))
   }
 
+  /* Matches */
+
+  def chooseMatchForComp(competitionId: String) = chooseMatch(competitionId, None, None)
+  def chooseMatchForCompAndTeam(competitionId: String, team1Id: String) = chooseMatch(competitionId, Some(team1Id), None)
+  def chooseMatchForCompAndTeams(competitionId: String, team1Id: String, team2Id: String) = chooseMatch(competitionId, Some(team1Id), Some(team2Id))
+  private def chooseMatch(competitionId: String, team1IdOpt: Option[String], team2IdOpt: Option[String]) = Authenticated.async { implicit request =>
+    for {
+      (liveMatches, fixtures, results) <- getMatchesFor(competitionId, team2IdOpt, team2IdOpt)
+    } yield Cached(60)(Ok(views.html.football.fronts.matchesList(liveMatches, fixtures, results)))
+  }
+
+  def bigMatchSpecial(matchId: String) = Authenticated.async { implicit request =>
+    for {
+      matchInfo <- client.matchInfo(matchId)
+      snapFields = SnapFields(SNAP_TYPE, SNAP_CSS, s"$host/football/api/match-nav/$matchId.json",
+        s"${Configuration.site.host}/football/match-redirect/$matchId",
+        s"${matchInfo.homeTeam.name} v ${matchInfo.awayTeam.name}",
+        s"TODO")
+      previewContent <- previewFrontsComponent(snapFields)
+    } yield previewContent
+  }
+
   private def getCompetition(competitionId: String): FutureOpt[Season] = {
     FutureOpt {
       for {
@@ -98,6 +130,28 @@ object FrontsController extends Controller with ExecutionContexts with GetPaClie
       } yield competitionOpt
     }
   }
+
+  private def getMatchesFor(competitionId: String, team1IdOpt: Option[String], team2IdOpt: Option[String]): Future[(List[LiveMatch], List[Fixture], List[Result])] = {
+    val today = DateMidnight.now
+    for {
+      liveMatches <- client.liveMatches(competitionId)
+      fixtures <- client.fixtures(competitionId)
+      results <- client.results(competitionId, today.minusDays(2))
+    } yield {
+      val filterFn: FootballMatch => Boolean = (team1IdOpt, team2IdOpt) match {
+        case (Some(team1Id), Some(team2Id)) => (lm: FootballMatch) => hasTeam(lm, team1Id) && hasTeam(lm, team2Id)
+        case (Some(team1Id), None) => (lm: FootballMatch) => hasTeam(lm, team1Id)
+        case (None, Some(team2Id)) => (lm: FootballMatch) => hasTeam(lm, team2Id)
+        case (None, None) => (_) => true
+      }
+      (
+        liveMatches.filter(filterFn),
+        fixtures.filter(filterFn),
+        results.filter(filterFn)
+        )
+    }
+  }
+  private def hasTeam(m: FootballMatch, teamId: String) = m.homeTeam.id == teamId || m.awayTeam.id == teamId
 
   private def previewFrontsComponent(snapFields: SnapFields): Future[SimpleResult] = {
     val result = (for {
