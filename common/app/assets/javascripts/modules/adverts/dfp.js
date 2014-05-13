@@ -82,6 +82,10 @@ define([
         return !($slot[0].style.display === 'none' || $parent.hasClass('ad-label--showing') || $parent.data('label') === false);
     }
 
+    function encodeTargetValue(value) {
+        return value ? queryString.formatKeyword(value).replace(/&/g, 'and').replace(/'/g, '') : '';
+    }
+
     function DFP(config) {
         this.config       = _defaults(config || {}, this.config);
         this.context      = document;
@@ -111,16 +115,13 @@ define([
 
     DFP.prototype.buildAdUnit = function () {
         var isFront      = this.config.page.isFront || this.config.page.contentType === 'Section',
-            section      = this.config.page.section,
+            section      = encodeTargetValue(this.config.page.section).replace(/-/g, ''),
             adUnitSuffix = section;
         if (isFront) {
             if (section !== '') {
                 adUnitSuffix += '/';
             }
             adUnitSuffix += 'front';
-            //if (this.config.switches.lifeAndStyleHack) {
-                adUnitSuffix = adUnitSuffix.replace('Life and style', 'lifeandstyle');
-            //}
         }
         return '/' + this.config.page.dfpAccountId + '/' + this.config.page.dfpAdUnitRoot + '/' + adUnitSuffix;
     };
@@ -139,10 +140,6 @@ define([
      * url    = path
      */
     DFP.prototype.buildPageTargetting = function () {
-
-        function encodeTargetValue(value) {
-            return value ? queryString.formatKeyword(value).replace(/&/g, 'and').replace(/'/g, '') : '';
-        }
 
         var conf        = this.config.page,
             section     = encodeTargetValue(conf.section),
