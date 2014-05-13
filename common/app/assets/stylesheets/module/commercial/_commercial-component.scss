@@ -25,9 +25,6 @@ $c-commercial-comp-neutral: #edede7;
     background-color: $c-commercial-comp-neutral;
     color: $c-neutral1;
     text-align: left;
-    @include rem((
-        padding: 0 $gs-gutter/2
-    ));
     .container__border {
         border-top: 0;
     }

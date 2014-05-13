@@ -80,9 +80,7 @@ $c-commercial-travel-dark: #002b6c;
         }
     }
     .commercial__body {
-        @include rem((
-            padding: 0 $gs-gutter/2 0 0
-        ));
+        padding: 0;
     }
     .commercial__search {
         position: absolute;
@@ -151,7 +149,7 @@ $c-commercial-travel-dark: #002b6c;
         .commercial__home-link {
             @include rem((
                 bottom: 10px,
-                left: $gs-gutter/2
+                left: $gs-gutter
             ));
             top: auto;
             right: auto;
@@ -224,9 +222,11 @@ $c-commercial-travel-dark: #002b6c;
 /* article */
 .facia-container--layout-article .commercial--travel {
     @include mq($to: rightCol) {
-        @include rem((
-            padding-bottom: $gs-baseline*4.5
-        ));
+        .facia-container__inner {
+            @include rem((
+                padding-bottom: $gs-baseline*4.5
+            ));
+        }
         
         .commercial__head {
             @include rem((
@@ -282,16 +282,16 @@ $c-commercial-travel-dark: #002b6c;
         }
     }
     @include mq($from: leftCol, $to: wide) {
-        @include rem((
-            padding-bottom: $gs-baseline*4
-        ));
-        
+        .facia-container__inner {
+            @include rem((
+                padding-bottom: $gs-baseline*4
+            ));
+        }
         .commercial__home-link {
             @include box-sizing(border-box);
             @include rem((
                 width: gs-span(2),
                 line-height: 18px,
-                left: $gs-gutter/2,
                 bottom: $gs-baseline*4.5
             ));
         }
