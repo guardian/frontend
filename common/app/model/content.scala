@@ -11,7 +11,6 @@ import collection.JavaConversions._
 import views.support.{VisualTone, Naked, ImgSrc, StripHtmlTagsAndUnescapeEntities}
 import play.api.libs.json.JsValue
 import conf.Configuration.facebook
-import dfp.DfpAgent
 
 class Content protected (val apiContent: ApiContentWithMeta) extends Trail with MetaData {
 
@@ -33,7 +32,6 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   lazy val isSeries: Boolean = series.nonEmpty
   lazy val hasLargeContributorImage: Boolean = tags.filter(_.hasLargeContributorImage).nonEmpty
   lazy val isFromTheObserver: Boolean = publication == "The Observer"
-
 
   // read this before modifying
   // https://developers.facebook.com/docs/opengraph/howtos/maximizing-distribution-media-content#images
@@ -70,6 +68,10 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
     )getOrElse(Nil)
   }
 
+  lazy val wordCount: Int = {
+    Jsoup.clean(delegate.safeFields.getOrElse("body",""), Whitelist.none()).split("\\s+").size
+  }
+
   private lazy val fields: Map[String, String] = delegate.safeFields
 
   // Inherited from Trail
@@ -91,10 +93,6 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
     }
 
     souped getOrElse Nil
-  }
-
-  lazy val wordCount: Int = {
-    Jsoup.clean(delegate.safeFields.getOrElse("body",""), Whitelist.none()).split("\\s+").size
   }
 
   override lazy val byline: Option[String] = fields.get("byline")
@@ -324,8 +322,6 @@ class Snap(snapId: String,
   override lazy val webPublicationDate = snapWebPublicationDate
 }
 
-
-
 class Article(content: ApiContentWithMeta) extends Content(content) {
   lazy val body: String = delegate.safeFields.getOrElse("body","")
   lazy val contentType = "Article"
@@ -342,7 +338,6 @@ class Article(content: ApiContentWithMeta) extends Content(content) {
   // if you change these rules make sure you update IMAGES.md (in this project)
   override def trailPicture: Option[ImageContainer] = thumbnail.find(_.imageCrops.exists(_.width >= 620))
       .orElse(mainPicture).orElse(videos.headOption)
-
 
   lazy val linkCounts = LinkTo.countLinks(body) + standfirst.map(LinkTo.countLinks).getOrElse(LinkCounts.None)
   override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
