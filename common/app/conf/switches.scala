@@ -263,7 +263,7 @@ object Switches extends Collections {
 
   val IdentityEthicalAwardsSwitch = Switch("Feature Switches", "id-ethical-awards",
     "If this switch is on, Ethical awards forms will be available",
-    safeState = Off, sellByDate = new DateMidnight(2014, 5, 15))
+    safeState = Off, sellByDate = new DateMidnight(2014, 5, 16))
 
   val NetworkFrontOptIn = Switch("Feature Switches", "network-front-opt-in",
     "If this is switched on then an opt-in message will be displayed to users coming from the R2 network front",
@@ -291,11 +291,6 @@ object Switches extends Collections {
   val RssLinkSwitch = Switch("Feature Switches", "rss-link",
     "If this switch is on a link to the RSS is rendered in the HTML",
     safeState = Off, sellByDate = new DateMidnight(2014, 6, 30)
-  )
-
-  val PopularInTagSwitch = Switch("Feature Switches", "popular-in-tag",
-    "If this switch is turned on then popular-in-tag will override related content for the selected tags.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 5, 14)
   )
 
   val EnhanceTweetsSwitch = Switch("Feature Switches", "enhance-tweets",
@@ -433,7 +428,6 @@ object Switches extends Collections {
     FaciaToolContainerTagsSwitch,
     LayoutHintsSwitch,
     RssLinkSwitch,
-    PopularInTagSwitch,
     EnhanceTweetsSwitch,
     IndiaRegionSwitch,
     MemcachedSwitch,
