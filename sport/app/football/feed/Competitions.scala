@@ -58,6 +58,9 @@ trait CompetitionSupport extends implicits.Football {
 
   def findMatch(id: String): Option[FootballMatch] = matches.find(_.id == id)
 
+  def competitionForMatch(matchId: String): Option[Competition] =
+    Competitions().competitions.find(_.matches.exists(_.id == matchId))
+
   def withTeamMatches(teamId: String) = competitions.filter(_.hasMatches).flatMap(c =>
     c.matches.filter(m => m.homeTeam.id == teamId || m.awayTeam.id == teamId).sortByDate.map { m =>
       TeamFixture(c, m)

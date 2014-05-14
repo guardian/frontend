@@ -131,7 +131,7 @@ object FrontsController extends Controller with ExecutionContexts with GetPaClie
       trailText = {
         matchInfo.competition.fold("")(c => s"${c.name}, ") + matchInfo.venue.fold("")(c => s"${c.name}, ") + matchInfo.date.toString("HH:mm")
       }
-      snapFields = SnapFields(SNAP_TYPE, SNAP_CSS, s"$host/football/api/match-nav/$matchId.json",
+      snapFields = SnapFields(SNAP_TYPE, SNAP_CSS, s"$host/football/api/big-match-special/$matchId.json",
         s"${Configuration.site.host}/football/match-redirect/$matchId",
         s"${matchInfo.homeTeam.name} v ${matchInfo.awayTeam.name}",
         trailText)
