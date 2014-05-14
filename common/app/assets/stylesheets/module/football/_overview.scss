@@ -96,6 +96,15 @@
     }
 }
 
+.football-group__matches {
+    .team-name:after {
+        content: attr(data-abbr);
+    }
+    .team-name__long {
+        @include u-h;
+    }
+}
+
 .football-knockouts--has-spider {
     @include mq(rightCol) {
         display: none;
@@ -301,11 +310,12 @@
 }
 
 .football-round--playoff {
+    background: $c-neutral8;
     bottom: 0;
     height: 25%;
     left: 42.857142857%; // 50 - (100/7/2) Half off the width of a seventh to get it exactly center
     position: absolute;
-    z-index: 1;
+    z-index: 2;
 
     .football-round__name {
         display: none;
