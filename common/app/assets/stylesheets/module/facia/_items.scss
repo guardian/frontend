@@ -234,6 +234,25 @@
 .item__standfirst {
     @include f-headline;
 }
+.facia-container--advertisement-feature {
+    background-color: $c-neutral8;
+
+    .linkslist__action:visited,
+    .item__link:visited,
+    .item__link:visited .item__title,
+    .fromage__link:visited,
+    .fromage__link:visited .item__title,
+    .item__standfirst,
+    .fromage__standfirst {
+        color: $c-neutral2-contrasted;
+    }
+    .item__title,
+    .item__standfirst,
+    .fromage__standfirst,
+    .linkslist__action {
+        @include f-headlineSans;
+    }
+}
 .item__title {
     position: relative;
     @include rem((
