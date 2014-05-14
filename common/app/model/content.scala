@@ -444,8 +444,9 @@ class Gallery(content: ApiContentWithMeta) extends Content(content) {
     "article:modified_time" -> lastModified,
     "article:section" -> sectionName,
     "article:tag" -> keywords.map(_.name).mkString(","),
+    "article:author" -> contributors.map(_.webUrl).mkString(","),
     "og:image" -> openGraphImage
-  ) ++ tags.filter(_.isContributor).map("article:author" -> _.webUrl)
+  )
 
   private lazy val galleryImages: Seq[ImageElement] = images.filter(_.isGallery)
   lazy val largestCrops: Seq[ImageAsset] = galleryImages.flatMap(_.largestImage)
