@@ -404,30 +404,21 @@ a:hover {
 }
 
 .image__overrides {
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
     position: absolute;
-    bottom: 0px;
-    height: 34px;
+    bottom: 4px;
     font-size: 12px;
-    line-height: 14px;
-    color: #666666;
-    padding: 16px 0 0 4px;
+    font-weight: bold;
+    line-height: 12px;
+    color: #ffffff;
+    padding: 0 0 0 3px;
+}
+
+.image__overrides * {
+    text-shadow: 0px 0px 2px #666666;
 }
 
 .supporting .image__overrides {
     display: none;
-}
-
-.image__overrides a,
-.image__overrides span {
-    display: block;
-    color: #FFFFFF;
-    text-shadow: 0px 0px 2px #666666;
-}
-
-.image__overrides .selected {
-    font-weight: bold;
 }
 
 .supporting-message {

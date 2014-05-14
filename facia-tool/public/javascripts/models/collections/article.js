@@ -289,24 +289,37 @@ define([
             var self = this,
                 img;
 
-            if (!this.meta.imageSrc()) { return; }
+            this.meta.imageSrc(fullTrim(this.meta.imageSrc()));
+
+            if (!this.meta.imageSrc()) {
+                return;
+            }
+
+            if (!this.meta.imageSrc().match(new RegExp('^http://' + vars.CONST.imageCdnDomain + '/'))) {
+                this.meta.imageSrc(undefined);
+                window.alert('Sorry! Only images from  ' + vars.CONST.imageCdnDomain + ' are acceptable');
+                return;
+            }
 
             img = new Image();
-
             img.onload = function() {
-                var w = this.width || 1,
-                    h = this.height || 1;
+                var w = this.width  || 1,
+                    h = this.height || 1,
+                    err;
 
-                if (Math.abs((3 * w)/(5 * h) - 1) > 0.01) { // One percent tolerance on aspect ratio
-                    self.meta.imageSrc(undefined);
-                    window.alert('Sorry, that image doesn\'t have a 5x3 aspect ratio so cannot be used');
-
+                if (w > 2048) {
+                    err = 'Images cannot be more than 2048 pixels wide';
                 } else if (w < 620 ) {
+                    err = 'Images cannot be less than 620 pixels wide';
+                } else if (Math.abs((3 * w)/(5 * h) - 1) > 0.01) { // One percent tolerance
+                    err = 'Image must have a 5x3 aspect ratio';
+                }
+
+                if (err) {
                     self.meta.imageSrc(undefined);
-                    window.alert('Sorry, that image is less than 620 pixel wide so cannot be used');
+                    window.alert('Sorry! ' + err);
                 }
             };
-
             img.src = this.meta.imageSrc();
         };
 
