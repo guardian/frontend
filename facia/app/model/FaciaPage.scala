@@ -29,9 +29,5 @@ case class FaciaPage(
     "is-front" -> true
   )
 
-  lazy val contentType: String =
-    Edition.all.find(edition => id.endsWith(edition.id)) match {
-      case Some(_) => "Network Front"
-      case None    => "Section"
-    }
+  lazy val contentType: String = if (Edition.all.exists(edition => id.endsWith(edition.id))) "Network Front" else "Section"
 }
