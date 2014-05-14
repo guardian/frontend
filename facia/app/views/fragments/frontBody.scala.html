@@ -1,7 +1,7 @@
 @(front: FrontPage, faciaTrailblock: FaciaPage)(implicit request: RequestHeader, templateDeduping: TemplateDeduping)
 
 @if(faciaTrailblock.collections.nonEmpty) {
-    <div class="facia-container facia-container--layout-front @if(front.isSponsored){facia-container--sponsored}" data-link-name="Front" role="main">
+    <div class="facia-container facia-container--layout-front @if(front.isAdvertisementFeature){facia-container--advertisement-feature}" data-link-name="Front" role="main">
         @defining(faciaTrailblock.collections.filter(_._2.items.nonEmpty)) { collections =>
             @collections.zipWithIndex.map{ case(block, index) =>
                 @fragments.frontCollection(front, block, collections.size, index)

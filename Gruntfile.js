@@ -288,6 +288,34 @@ module.exports = function (grunt) {
                         }
                     ]
                 }
+            },
+            WebHeadlineSansTtf: {
+                options: {
+                    filename: staticTargetDir + 'fonts/WebHeadlineSans.ttf.json',
+                    callback: 'guFont',
+                    fonts: [
+                        {
+                            'font-family': 'HeadlineSans',
+                            file: 'resources/fonts/HeadlineSans-Light.ttf',
+                            'font-weight': '200',
+                            format: 'ttf'
+                        }
+                    ]
+                }
+            },
+            WebHeadlineSansWoff: {
+                options: {
+                    filename: staticTargetDir + 'fonts/WebHeadlineSans.woff.json',
+                    callback: 'guFont',
+                    fonts: [
+                        {
+                            'font-family': 'HeadlineSans',
+                            file: 'resources/fonts/HeadlineSans-Light.woff',
+                            'font-weight': '200',
+                            format: 'woff'
+                        }
+                    ]
+                }
             }
         },
 
