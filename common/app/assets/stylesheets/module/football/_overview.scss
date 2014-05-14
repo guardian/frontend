@@ -15,6 +15,9 @@
             ));
             display: inline-block;
             display: flex;
+            @supports not (flex-wrap: wrap) {
+                display: inline-block;
+            }
             width: 49.5%;
         }
 
@@ -37,6 +40,10 @@
     @include mq(tablet) {
         display: flex;
         flex-wrap: wrap;
+
+        @supports not (flex-wrap: wrap) {
+            display: block;
+        }
 
         .dropdown {
             border-top: 0 none;
