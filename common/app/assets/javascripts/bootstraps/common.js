@@ -99,7 +99,7 @@ define([
     ArticleBodyAdverts,
     ArticleAsideAdverts,
     SliceAdverts,
-    DFP,
+    dfp,
     TagContainer,
     Foresee,
     GeoMostPopular,
@@ -289,12 +289,11 @@ define([
                 var options = {};
 
                 if (!config.switches.standardAdverts) {
-                    options.dfpSelector = '.ad-slot--commercial-component';
+                    options.adSlotSelector = '.ad-slot--commercial-component';
                 } else if (!config.switches.commercialComponents) {
-                    options.dfpSelector = '.ad-slot--dfp:not(.ad-slot--commercial-component)';
+                    options.adSlotSelector = '.ad-slot--dfp:not(.ad-slot--commercial-component)';
                 }
-
-                new DFP(extend(config, options)).init();
+                dfp.init(extend(config, options));
             }
         },
 
