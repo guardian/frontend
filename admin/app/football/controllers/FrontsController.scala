@@ -3,7 +3,7 @@ package controllers.admin
 import play.api.mvc.{RequestHeader, Action, Controller, SimpleResult}
 import play.api.libs.ws.WS
 import play.api.templates.Html
-import common.ExecutionContexts
+import common.{Logging, ExecutionContexts}
 import football.services.GetPaClient
 import football.model.{SnapFields, PA}
 import model.{NoCache, Cached}
@@ -19,9 +19,10 @@ import pa.Fixture
 import play.api.mvc.SimpleResult
 import pa.Result
 import pa.LiveMatch
+import play.api.libs.json.JsResultException
 
 
-object FrontsController extends Controller with ExecutionContexts with GetPaClient {
+object FrontsController extends Controller with ExecutionContexts with GetPaClient with Logging {
   val SNAP_TYPE = "json.html"
   val SNAP_CSS = "football"
 
@@ -31,7 +32,7 @@ object FrontsController extends Controller with ExecutionContexts with GetPaClie
       competitionTeams <- Future.traverse(competitions){comp => client.teams(comp.competitionId, comp.startDate, comp.endDate)}
       allTeams = competitionTeams.flatten.distinct
     } yield {
-      Cached(3600)(Ok(views.html.football.fronts.index(competitions)))
+      Cached(3600)(Ok(views.html.football.fronts.index(competitions, allTeams)))
     }
   }
 
@@ -103,22 +104,37 @@ object FrontsController extends Controller with ExecutionContexts with GetPaClie
 
   /* Matches */
 
+
+  def matchesRedirect = Action { implicit request =>
+    val submission = request.body.asFormUrlEncoded.get
+    val competitionId = submission.get("competition").get.head
+    (submission.get("team1").map(_.head), submission.get("team2").map(_.head)) match {
+      case (Some(team1Id), Some(team2Id)) => Cached(60)(SeeOther(s"/admin/football/fronts/matches/$competitionId/$team1Id/$team2Id"))
+      case (Some(team1Id), None) => Cached(60)(SeeOther(s"/admin/football/fronts/matches/$competitionId/$team1Id"))
+      case (None, Some(team1Id)) => Cached(60)(SeeOther(s"/admin/football/fronts/matches/$competitionId/$team1Id"))
+      case (None, None) => Cached(60)(SeeOther(s"/admin/football/fronts/matches/$competitionId"))
+    }
+  }
+
   def chooseMatchForComp(competitionId: String) = chooseMatch(competitionId, None, None)
   def chooseMatchForCompAndTeam(competitionId: String, team1Id: String) = chooseMatch(competitionId, Some(team1Id), None)
   def chooseMatchForCompAndTeams(competitionId: String, team1Id: String, team2Id: String) = chooseMatch(competitionId, Some(team1Id), Some(team2Id))
   private def chooseMatch(competitionId: String, team1IdOpt: Option[String], team2IdOpt: Option[String]) = Authenticated.async { implicit request =>
     for {
-      (liveMatches, fixtures, results) <- getMatchesFor(competitionId, team2IdOpt, team2IdOpt)
+      (liveMatches, fixtures, results) <- getMatchesFor(competitionId, team1IdOpt, team2IdOpt)
     } yield Cached(60)(Ok(views.html.football.fronts.matchesList(liveMatches, fixtures, results)))
   }
 
   def bigMatchSpecial(matchId: String) = Authenticated.async { implicit request =>
     for {
       matchInfo <- client.matchInfo(matchId)
+      trailText = {
+        matchInfo.competition.fold("")(c => s"${c.name}, ") + matchInfo.venue.fold("")(c => s"${c.name}, ") + matchInfo.date.toString("HH:mm")
+      }
       snapFields = SnapFields(SNAP_TYPE, SNAP_CSS, s"$host/football/api/match-nav/$matchId.json",
         s"${Configuration.site.host}/football/match-redirect/$matchId",
         s"${matchInfo.homeTeam.name} v ${matchInfo.awayTeam.name}",
-        s"TODO")
+        trailText)
       previewContent <- previewFrontsComponent(snapFields)
     } yield previewContent
   }
@@ -139,16 +155,20 @@ object FrontsController extends Controller with ExecutionContexts with GetPaClie
       results <- client.results(competitionId, today.minusDays(2))
     } yield {
       val filterFn: FootballMatch => Boolean = (team1IdOpt, team2IdOpt) match {
-        case (Some(team1Id), Some(team2Id)) => (lm: FootballMatch) => hasTeam(lm, team1Id) && hasTeam(lm, team2Id)
-        case (Some(team1Id), None) => (lm: FootballMatch) => hasTeam(lm, team1Id)
-        case (None, Some(team2Id)) => (lm: FootballMatch) => hasTeam(lm, team2Id)
-        case (None, None) => (_) => true
+        case (Some(team1Id), Some(team2Id)) =>
+          (lm: FootballMatch) => hasTeam(lm, team1Id) && hasTeam(lm, team2Id)
+        case (Some(team1Id), None) =>
+          (lm: FootballMatch) => hasTeam(lm, team1Id)
+        case (None, Some(team2Id)) =>
+          (lm: FootballMatch) => hasTeam(lm, team2Id)
+        case (None, None) => (_) =>
+          true
       }
       (
         liveMatches.filter(filterFn),
         fixtures.filter(filterFn),
         results.filter(filterFn)
-        )
+      )
     }
   }
   private def hasTeam(m: FootballMatch, teamId: String) = m.homeTeam.id == teamId || m.awayTeam.id == teamId
@@ -160,7 +180,8 @@ object FrontsController extends Controller with ExecutionContexts with GetPaClie
       val embedContent = (previewResponse.json \ "html").as[String]
       Cached(60)(Ok(views.html.football.fronts.viewEmbed(Html(embedContent), snapFields)))
     }).recover { case e =>
-      NoCache(Ok(views.html.football.fronts.failedEmbed(Html(e.getMessage), snapFields)))
+       log.error(s"Failed to preview snap content from ${snapFields.uri}", e)
+       NoCache(Ok(views.html.football.fronts.failedEmbed(Html(e.getMessage), snapFields)))
     }
     result
   }
