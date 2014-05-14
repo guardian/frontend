@@ -34,6 +34,8 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   lazy val hasLargeContributorImage: Boolean = tags.filter(_.hasLargeContributorImage).nonEmpty
   lazy val isFromTheObserver: Boolean = publication == "The Observer"
 
+  lazy val showInRelated: Boolean = delegate.safeFields.get("showInRelatedContent").exists(_ == "true")
+
 
   // read this before modifying
   // https://developers.facebook.com/docs/opengraph/howtos/maximizing-distribution-media-content#images
@@ -53,8 +55,6 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
       None
     }
   }
-
-  lazy val isAdvertisementFeature: Boolean = tags.exists(_.id == "tone/advertisement-features")
 
   lazy val shouldHideAdverts: Boolean = fields.get("shouldHideAdverts").exists(_.toBoolean)
 

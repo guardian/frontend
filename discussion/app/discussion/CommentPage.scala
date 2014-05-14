@@ -6,7 +6,7 @@ import play.api.libs.json.JsObject
 
 case class CommentPage(
                         override val id: String,
-                        title: String,
+                        override val title: String,
                         comments: Seq[Comment],
                         commentCount: Int,
                         topLevelCommentCount: Int,

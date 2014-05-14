@@ -121,9 +121,9 @@ define([
 
     GeoMostPopular) {
     
-    var TESTS = {
-            Related: new GeoMostPopular()    //  and here.
-        };
+    var TESTS = [
+            new GeoMostPopular()    //  and here.
+        ];
     
     ...
 

@@ -7,6 +7,7 @@ import feed.{OnwardJourneyLifecycle, MostReadLifecycle}
 import implicits.Requests
 import model.AdminLifecycle
 import play.api.mvc.{RequestHeader, EssentialAction, EssentialFilter, WithFilters}
+import services.ConfigAgentLifecycle
 
 // obviously this is only for devbuild and should never end up in one of our
 // prod projects
@@ -61,3 +62,4 @@ with OnwardJourneyLifecycle
 with CommercialLifecycle
 with MostReadLifecycle
 with DfpAgentLifecycle
+with ConfigAgentLifecycle

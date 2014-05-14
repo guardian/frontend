@@ -116,6 +116,8 @@ GET         /football/match/:matchId                                            
 GET         /football/match-redirect/:year/:month/:day/:homeTeamId/:awayTeamId                                       football.controllers.MoreOnMatchController.redirectToMatch(year,month,day,homeTeamId,awayTeamId)
 GET         /football/match-redirect/:matchId                                                                        football.controllers.MoreOnMatchController.redirectToMatchId(matchId)
 
+GET         /football/world-cup-2014/r2-front-world-cup-embed                                                        football.controllers.WallchartController.renderR2FrontWorldCupEmbed()
+
 # Admin
 GET         /login                                                                                                   controllers.admin.Login.login
 POST        /login                                                                                                   controllers.admin.Login.loginPost
@@ -191,6 +193,8 @@ GET         /commercial/soulmates/mixed.json                                    
 GET         /commercial/money/bestbuys.json                                                                          controllers.commercial.MoneyOffers.bestBuys(format="json")
 GET         /commercial/books/bestsellers                                                                            controllers.commercial.BookOffers.bestsellers(format="html")
 GET         /commercial/books/bestsellers.json                                                                       controllers.commercial.BookOffers.bestsellers(format="json")
+GET         /commercial/books/bestsellers-high                                                                       controllers.commercial.BookOffers.bestsellersHigh(format="html")
+GET         /commercial/books/bestsellers-high.json                                                                  controllers.commercial.BookOffers.bestsellersHigh(format="json")
 GET         /commercial/money/savings/:savingsType                                                                   controllers.commercial.MoneyOffers.savings(savingsType)
 GET         /commercial/money/current-accounts/:currentAccountType                                                   controllers.commercial.MoneyOffers.currentAccounts(currentAccountType)
 GET         /commercial/money/credit-cards/:creditCardType                                                           controllers.commercial.MoneyOffers.creditCards(creditCardType)

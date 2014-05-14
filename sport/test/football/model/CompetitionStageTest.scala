@@ -34,14 +34,14 @@ class CompetitionStageTest extends FreeSpec with ShouldMatchers with OptionValue
 
     "for multiple stages" - {
 
-      "will correctly extract group and knockout stages" in {
+      "will correctly extract group and knockout stage" in {
         val stages = CompetitionStage.stagesFromCompetition(groupsThenKnockout).toSet
         stages.size should equal(2)
         stages.exists(_.isInstanceOf[Groups]) should equal(true)
         stages.exists(_.isInstanceOf[Knockout]) should equal(true)
       }
 
-      "will correctly extract league and knockout stages" in {
+      "will correctly extract league and knockout stage" in {
         val stages = CompetitionStage.stagesFromCompetition(leagueWithPlayoffs).toSet
         stages.size should equal(2)
         stages.exists(_.isInstanceOf[League]) should equal(true)
