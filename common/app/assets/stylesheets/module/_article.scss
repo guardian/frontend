@@ -830,3 +830,110 @@
         }
     }
 }
+
+
+
+.article2__section {
+    @include mq($to: tablet) {
+        display: none;
+    }
+    @include fs-header(3);
+    @include box-sizing(border-box);
+    margin-bottom: $gs-baseline;
+    @include mq($from: leftCol) {
+        float: left;
+        margin-left: -160px;
+    }
+    @include mq($from: wide) {
+        margin-left: -240px;
+    }
+
+}
+
+.article2__headline {
+    @include fs-headline(4);
+    @include rem((
+            margin-bottom: $gs-baseline*2,
+            padding-top: $gs-baseline/3
+    ));
+
+    @include mq(mobileLandscape) {
+        @include fs-headline(6, true);
+    }
+    @include mq(tablet) {
+        -webkit-font-smoothing: antialiased;
+        @include fs-headline(7, true);
+        @include rem((
+            margin-bottom: $gs-row-height
+        ));
+        padding-top: 0;
+        border-top: 0;
+    }
+    a {
+        &,
+        &:hover,
+        &:active,
+        &:focus {
+            color: $c-neutral1;
+        }
+    }
+    em {
+        font-style: normal;
+    }
+    strong {
+        font-weight: normal;
+    }
+}
+
+.article2__main-column {
+    margin: 0 $gs-gutter/2 0 $gs-gutter/2;
+    @include mq($from: mobileLandscape) {
+        margin: 0 $gs-gutter 0 $gs-gutter;
+    }
+    @include mq($from: tablet) {
+        max-width: 620px;
+        margin: auto;
+    }
+    @include mq($from: rightCol) {
+        margin-left: $gs-gutter;
+        padding-right: 340px;
+    }
+    @include mq($from: leftCol) {
+        margin-left: 180px;
+    }
+    @include mq($from: wide) {
+        margin-left: 260px;
+    }
+}
+
+.article2__secondary-column {
+    @include mq($to: rightCol) {
+        display: none;
+    }
+
+    width: 300px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    margin-right: $gs-gutter;
+}
+
+.mpu-container {
+    width: 300px;
+    height: 300px;
+    background-color: yellow;
+}
+
+.article2__top-border {
+    @include mq($to: tablet) {
+        display: none;
+    }
+    @include mq($from:tablet, $to: rightCol) {
+        max-width: 620px;
+        margin: auto;
+    }
+    height: $gs-baseline/2;
+    margin: 0 $gs-gutter;
+    border-top: 1px dotted $c-neutral5;
+}

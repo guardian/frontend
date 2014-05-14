@@ -46,10 +46,7 @@
         text-align: left;
     }
 }
-.mpu-context {
-    // Provides context to sticky positioned blocks
-    height: 100%;
-}
+
 .ad-slot--container-inline {
     min-height: 50px;
     @include box-sizing(border-box);

@@ -74,7 +74,7 @@
             &.article__head__comment-count--standfirst {
                 display: none;
             }
-            &.article__head__comment-count--headline {
+            &.articlearticle__head__comment-count--headline {
                 @include mq(tablet) {
                     display: none;
                 }
