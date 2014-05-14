@@ -357,11 +357,11 @@ class Article(content: ApiContentWithMeta) extends Content(content) {
     "og:type" -> "article",
     "article:published_time" -> webPublicationDate,
     "article:modified_time" -> lastModified,
+    "article:tag" -> keywords.map(_.name).mkString(","),
     "article:section" -> sectionName,
     "article:publisher" -> "https://www.facebook.com/theguardian",
     "og:image" -> openGraphImage
-  ) ++ tags.map("article:tag" -> _.name) ++
-    tags.filter(_.isContributor).map("article:author" -> _.webUrl)
+  ) ++ tags.filter(_.isContributor).map("article:author" -> _.webUrl)
 
   override def cards: List[(String, Any)] = super.cards ++ List(
     "twitter:card" -> "summary_large_image"
@@ -411,8 +411,9 @@ class Video(content: ApiContentWithMeta) extends Content(content) {
     "og:type" -> "video",
     "og:video:type" -> "text/html",
     "og:video:url" -> webUrl,
-    "og:image" -> openGraphImage
-  ) ++ tags.map("video:tag" -> _.name)
+    "og:image" -> openGraphImage,
+    "video:tag" -> keywords.map(_.name).mkString(",")
+  )
 }
 
 object Video {
@@ -441,9 +442,9 @@ class Gallery(content: ApiContentWithMeta) extends Content(content) {
     "article:published_time" -> webPublicationDate,
     "article:modified_time" -> lastModified,
     "article:section" -> sectionName,
+    "article:tag" -> keywords.map(_.name).mkString(","),
     "og:image" -> openGraphImage
-  ) ++ tags.map("article:tag" -> _.name) ++
-    tags.filter(_.isContributor).map("article:author" -> _.webUrl)
+  ) ++ tags.filter(_.isContributor).map("article:author" -> _.webUrl)
 
   private lazy val galleryImages: Seq[ImageElement] = images.filter(_.isGallery)
   lazy val largestCrops: Seq[ImageAsset] = galleryImages.flatMap(_.largestImage)
