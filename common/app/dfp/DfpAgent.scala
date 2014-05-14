@@ -21,7 +21,7 @@ object DfpAgent extends ExecutionContexts with Logging {
     }
   }
 
-  def normalise(name: String) = name.toLowerCase.replace(" ", "-")
+  private def normalise(name: String) = name.toLowerCase.replace(" ", "-")
 
   def isSponsored(content: Content): Boolean = isSponsored(content.keywords)
 
