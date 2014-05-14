@@ -10,6 +10,7 @@ import play.api.libs.concurrent.Akka
 import play.api.libs.json.JsObject
 import com.gu.openplatform.contentapi.model.Asset
 import conf.Switches
+import services.ConfigAgent
 
 trait FrontPress extends Logging {
 
@@ -49,28 +50,33 @@ trait FrontPress extends Logging {
 
   implicit val collectionJsonWrites = Json.writes[CollectionJson]
   implicit val itemMetaJsonWrites = Json.writes[ItemMeta]
-
+  implicit val seoDataJsonWrites = Json.writes[SeoData]
 
   import play.api.Play.current
   private lazy implicit val frontPressContext = Akka.system.dispatchers.lookup("play.akka.actor.front-press")
 
   def generateJson(id: String): Future[JsObject] = {
-    retrieveFrontByPath(id)
-      .map(_.map{case (config, collection) =>
-        Json.obj(
-          config.id -> generateCollectionJson(config, collection)
-        )})
-      .map(_.foldLeft(Json.arr()){case (l, jsObject) => l :+ jsObject})
-      .map( c =>
-        Json.obj(
-          ("id", id),
-          ("collections", c)
-        )
-      )
+    val futureSeoData: Future[SeoData] = SeoData.getSeoData(id)
+    futureSeoData.flatMap { seoData =>
+        retrieveFrontByPath(id).map(_.map {
+          case (config, collection) =>
+            Json.obj(
+              config.id -> generateCollectionJson(config, collection)
+            )
+        })
+          .map(_.foldLeft(Json.arr()) {
+          case (l, jsObject) => l :+ jsObject
+        })
+          .map(c =>
+          Json.obj("id" -> id) ++
+            Json.obj("seoData" -> seoData) ++
+            Json.obj("collections" -> c)
+          )
+    }
   }
 
   private def retrieveFrontByPath(id: String): Future[Iterable[(Config, Collection)]] = {
-    val collectionIds: List[Config] = FaciaToolConfigAgent.getConfigForId(id).getOrElse(Nil)
+    val collectionIds: List[Config] = ConfigAgent.getConfigForId(id).getOrElse(Nil)
     val collections = collectionIds.map(config => FaciaToolCollectionParser.getCollection(config.id, config, Uk, isWarmedUp=true).map((config, _)))
     val futureSequence = Future.sequence(collections)
     futureSequence.onFailure{case t: Throwable =>
