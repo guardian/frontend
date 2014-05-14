@@ -2,11 +2,7 @@ package com.gu.test.Common;
 
 import com.gu.test.pages.FrontPage;
 import com.gu.test.TestRunner;
-import jdk.nashorn.internal.ir.annotations.Ignore;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
