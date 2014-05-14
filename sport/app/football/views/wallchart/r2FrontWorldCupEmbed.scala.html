@@ -234,5 +234,16 @@
             case _ => {}
         }
     </div>
+
+    <script>
+        (function() {
+            var i,
+                as = document.getElementsByTagName('a');
+
+            for (i = 0; i < as.length; i++) {
+                as[i].setAttribute('target', '_top');
+            }
+        })();
+    </script>
 </body>
 </html>

@@ -308,9 +308,16 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 8, 10)
   )
 
+  // A/B Tests
+
   val ABHeaderSearchText = Switch("A/B Tests", "ab-header-search-text",
     "If this switch is turned on then the header search box will display a label for tablet and desktop.",
     safeState = Off, sellByDate = new DateMidnight(2014, 6, 9)
+  )
+
+  val ABHighRelevanceCommercialComponent = Switch("A/B Tests", "ab-high-relevance-commercial-component",
+    "If this switch is turned on, run the HighRelevanceCommercialComponent A/B test.",
+    safeState = Off, sellByDate = new DateMidnight(2014, 5, 31)
   )
 
   // Dummy Switches
@@ -370,6 +377,11 @@ object Switches extends Collections {
   val FrontPressJobSwitch = Switch("Front Press Switches", "front-press-job-switch",
     "If this switch is on then the jobs to push and pull from SQS will run",
     safeState = Off, sellByDate = never
+  )
+
+  val NewSeoSwitch = Switch("Facia Switches", "new-seo-switch",
+    "If this switch is on then the SEO elements for pages will be take from the tool, content api and generated",
+    safeState = Off, sellByDate = new DateMidnight(2014, 5, 30)
   )
 
   val FaciaToolContainerTagsSwitch = Switch("Facia Tool", "facia-tool-tags",
@@ -443,10 +455,12 @@ object Switches extends Collections {
     IndiaRegionSwitch,
     MemcachedSwitch,
     IncludeBuildNumberInMemcachedKey,
+    NewSeoSwitch,
     GzipSwitch,
     GeoMostPopular,
     TagLinkingSwitch,
-    ABHeaderSearchText
+    ABHeaderSearchText,
+    ABHighRelevanceCommercialComponent
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
