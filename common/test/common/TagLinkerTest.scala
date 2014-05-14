@@ -64,15 +64,25 @@ class TagLinkerTest extends FlatSpec with Matchers {
     cleaned.firstPara should be ("""Help with the <a href="/sport/cycling" data-link-name="auto-linked-tag" class=" u-underline">Cycling?.</a>""")
   }
 
+  it should "not link tags in articles that should be excluded from related content" in {
+    val cleaned = new TagLinker(sensitiveArticle(tag("sport/cycling", "Cycling"))).clean(souped("""<p>Cycling is an awesome sport.</p>"""))
+    cleaned.firstPara should be ("""Cycling is an awesome sport.""")
+  }
+
   private def tag(id: String, name: String) = new ApiTag(id, "keyword", webTitle = name, webUrl = "does not matter",
     apiUrl = "does not matter", sectionId = Some("does not matter"))
+
+  private def sensitiveArticle(tags: ApiTag*) = new Article(ApiContentWithMeta(
+    article(tags:_*).delegate.copy(fields = Some(Map("showInRelatedContent" -> "false")))
+  ))
 
   private def article(tags: ApiTag*) = new Article(ApiContentWithMeta(ApiContent("foo/2012/jan/07/bar", None, None,
     new DateTime, "Some article",
     "http://www.guardian.co.uk/foo/2012/jan/07/bar",
     "http://content.guardianapis.com/foo/2012/jan/07/bar",
     elements = None,
-    tags = tags.toList
+    tags = tags.toList,
+    fields = Some(Map("showInRelatedContent" -> "true"))
   )))
 
   private def souped(s: String) = Jsoup.parseBodyFragment(s)

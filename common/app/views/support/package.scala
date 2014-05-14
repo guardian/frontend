@@ -510,7 +510,7 @@ class TagLinker(article: Article)(implicit val edition: Edition) extends HtmlCle
 
   def clean(doc: Document): Document = {
 
-    if (TagLinkingSwitch.isSwitchedOn) {
+    if (TagLinkingSwitch.isSwitchedOn && article.showInRelated) {
 
       val paragraphs = doc.getElementsByTag("p")
 
