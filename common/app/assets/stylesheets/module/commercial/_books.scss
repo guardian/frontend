@@ -88,7 +88,7 @@ $c-commercial-books-dark: #630D4C;
         @include rem((
             margin-top: $gs-baseline/2
         ));
-        margin-bottom: 0
+        margin-bottom: 0;
     }
     .commercial--books__price__rrp,
     .commercial--books__price__our {
@@ -239,8 +239,8 @@ $c-commercial-books-dark: #630D4C;
                 }
             }
             .highitem {
-                border-bottom: none;
-                padding-bottom: 0
+                border-bottom: 0;
+                padding-bottom: 0;
             }
             .lowitem__details {
                 @include rem((
