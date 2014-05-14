@@ -21,7 +21,7 @@ define([
         this.audienceOffset = 0.5;
         this.successMeasure = 'Click component through/revenue, and container\'s click through.';
         this.audienceCriteria = 'Audience to the fronts';
-        this.dataLinkNames = 'High relevance commercial component';
+        this.dataLinkNames = 'ad slot merchandising-high';
         this.idealOutcome = 'Click through/revenue produced by component increases, without detrimentally impacting click through on containers/';
 
         this.canRun = function (config) {
