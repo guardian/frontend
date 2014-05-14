@@ -14,7 +14,7 @@
             <article class="article football-article @if(page.theMatch.isLive){is-live}" role="main">
                 <div class="article__inner article__inner--head">
                     <header class="article__head">
-                        @football.views.html.fragments.matchSummary(page.theMatch)
+                        @football.views.html.fragments.matchSummary(page.theMatch, responsive=true)
                     </header>
                     <div class="after-header">
                         @* this 'Stats' header gets replaced by the match navigation tabs (if available) *@
