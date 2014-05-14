@@ -293,11 +293,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 6, 30)
   )
 
-  val PopularInTagSwitch = Switch("Feature Switches", "popular-in-tag",
-    "If this switch is turned on then popular-in-tag will override related content for the selected tags.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 5, 14)
-  )
-
   val EnhanceTweetsSwitch = Switch("Feature Switches", "enhance-tweets",
     "If this switch is turned on then embedded tweets will be enhanced using Twitter's widgets.",
     safeState = Off, sellByDate = never
@@ -433,7 +428,6 @@ object Switches extends Collections {
     FaciaToolContainerTagsSwitch,
     LayoutHintsSwitch,
     RssLinkSwitch,
-    PopularInTagSwitch,
     EnhanceTweetsSwitch,
     IndiaRegionSwitch,
     MemcachedSwitch,
