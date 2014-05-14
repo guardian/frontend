@@ -194,13 +194,7 @@ define([
         };
 
         Article.prototype.toggleOpenImage = function() {
-            var self = this;
-
             this.state.isOpenImage(!this.state.isOpenImage());
-
-            _.defer(function(){
-                self.state.isOpenImage.valueHasMutated();
-            });
         };
 
         Article.prototype.close = function() {
