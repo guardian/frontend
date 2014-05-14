@@ -106,6 +106,14 @@ trait Elements {
   def mainPicture: Option[ImageContainer] = images.find(_.isMain)
 
   lazy val hasMainPicture = mainPicture.flatMap(_.imageCrops.headOption).isDefined
+  lazy val hasShowcaseMainPicture = {
+    val showcase = for {
+      main  <- mainPicture
+      image <- main.largestImage
+      role  <- image.role
+    } yield role == "showcase"
+    showcase.getOrElse(false)
+  }
 
   def mainVideo: Option[VideoElement] = videos.find(_.isMain).headOption
   lazy val hasMainVideo: Boolean = mainVideo.flatMap(_.videoAssets.headOption).isDefined

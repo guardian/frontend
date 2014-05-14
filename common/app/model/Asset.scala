@@ -3,8 +3,6 @@ package model
 import com.gu.openplatform.contentapi.model.Asset
 import org.apache.commons.math3.fraction.Fraction
 import views.support.{Naked, ImgSrc}
-import play.api.templates.Html
-import java.net.URI
 
 case class ImageAsset(private val delegate: Asset, index: Int) {
 
@@ -28,6 +26,7 @@ case class ImageAsset(private val delegate: Asset, index: Int) {
 
   lazy val width: Int = fields.get("width").map(_.toInt).getOrElse(0)
   lazy val height: Int = fields.get("height").map(_.toInt).getOrElse(0)
+  lazy val role: Option[String] = fields.get("role")
 
   lazy val caption: Option[String] = fields.get("caption")
   lazy val altText: Option[String] = fields.get("altText")
