@@ -375,6 +375,14 @@ module.exports = function (grunt) {
                     dest: staticTargetDir + 'javascripts/vendor'
                 }]
             },
+            'curl': {
+                files: [{
+                    expand: true,
+                    cwd: 'common/app/assets/javascripts/components/curl/dist/curl',
+                    src: ['curl.js'],
+                    dest: staticTargetDir + 'javascripts'
+                }]
+            },
             'javascript-common': {
                 files: [{
                     expand: true,
@@ -789,6 +797,7 @@ module.exports = function (grunt) {
             'clean:assets',
             'copy:headCss',
             'copy:vendor',
+            'copy:curl',
             'hash'
         ]);
     });
