@@ -8,11 +8,38 @@ import tools.Store
 
 object DfpDataCacheJob extends ExecutionContexts {
 
+  private implicit val targetWrites = new Writes[Target] {
+    def writes(target: Target): JsValue = {
+      Json.obj(
+        "name" -> target.name,
+        "op" -> target.op,
+        "values" -> target.values
+      )
+    }
+  }
+
+  private implicit val targetSetWrites = new Writes[TargetSet] {
+    def writes(targetSet: TargetSet): JsValue = {
+      Json.obj(
+        "op" -> targetSet.op,
+        "targets" -> targetSet.targets
+      )
+    }
+  }
+
+  private implicit val adWrites = new Writes[Ad] {
+    def writes(ad: Ad): JsValue = {
+      Json.obj(
+        "id" -> ad.id,
+        "targetSets" -> ad.targetSets
+      )
+    }
+  }
+
   private implicit val dfpDataWrites = new Writes[DfpData] {
     def writes(data: DfpData): JsValue = {
       Json.obj(
-        "sponsoredKeywords" -> data.sponsoredKeywords,
-        "advertisedFeatureKeywords" -> data.advertisedFeatureKeywords
+        "lineItems" -> data.lineItems
       )
     }
   }
@@ -20,12 +47,10 @@ object DfpDataCacheJob extends ExecutionContexts {
   def run() {
     future {
       val lineItems = DfpApi.fetchCurrentLineItems()
+      println(lineItems.size)
       if (lineItems.nonEmpty) {
-        val sponsoredKeywords = DfpApi.fetchSponsoredKeywordTargetingValues(lineItems)
-        val advertisedFeatureKeywords = DfpApi.fetchAdvertisedFeatureKeywordTargetingValues(lineItems)
-        val dfpData = DfpData(sponsoredKeywords, advertisedFeatureKeywords)
-//        Store.putDfpData(stringify(toJson(dfpData)))
-        println(stringify(toJson(dfpData)))
+        val dfpData = DfpData(lineItems)
+        Store.putDfpData(stringify(toJson(dfpData)))
       }
     }
   }

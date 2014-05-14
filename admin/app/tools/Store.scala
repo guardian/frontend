@@ -21,7 +21,7 @@ trait Store extends Logging {
   def getTopStories = S3.get(topStoriesKey)
   def putTopStories(config: String) { S3.putPublic(topStoriesKey, config, "application/json") }
 
-  def putDfpData(data: String) { S3.putPublic(dfpDataKey, data, "application/json;charset=utf-8") }
+  def putDfpData(data: String) { S3.putPublic(dfpDataKey+".test", data, "application/json;charset=utf-8") }
 }
 
 object Store extends Store

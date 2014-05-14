@@ -34,7 +34,10 @@ object DfpApi extends Logging {
   private lazy val customTargetingServiceOption: Option[CustomTargetingServiceInterface] =
     session.map(dfpServices.get(_, classOf[CustomTargetingServiceInterface]))
 
-  def fetchCurrentLineItems(): Seq[LineItem] = lineItemServiceOption.fold(Seq[LineItem]()) { lineItemService =>
+  private val slotTargetKeyId = 174447
+  private val keywordTargetKeyId = 177687
+
+  def fetchCurrentLineItems(): Seq[Ad] = lineItemServiceOption.fold(Seq[Ad]()) { lineItemService =>
     val statementBuilder = new StatementBuilder()
       .where("status = :readyStatus OR status = :deliveringStatus")
       .orderBy("id ASC")
@@ -61,38 +64,43 @@ object DfpApi extends Logging {
 
     val targetingKeys = mutable.Map[Long, String]()
     val targetingValues = mutable.Map[Long, String]()
-    def buildTargetSet(crits: CustomCriteriaSet): TargetSet = {
-      val targets = crits.getChildren.map { crit =>
+
+    def buildTargetSet(crits: CustomCriteriaSet): Option[TargetSet] = {
+      val targets = crits.getChildren.flatMap { crit =>
         buildTarget(crit.asInstanceOf[CustomCriteria])
+      }.toSeq
+      if (targets.isEmpty) None
+      else Some(TargetSet(crits.getLogicalOperator.getValue, targets))
+    }
+
+    def buildTarget(crit: CustomCriteria): Option[Target] = {
+      val id = crit.getKeyId
+      if (id == slotTargetKeyId || crit.getKeyId == keywordTargetKeyId) {
+        val keyName = targetingKeys.getOrElseUpdate(id, fetchCustomTargetingKeyName(id))
+        Some(Target(keyName, crit.getOperator.getValue, buildValueNames(crit.getValueIds)))
+      } else {
+        None
       }
-      TargetSet(crits.getLogicalOperator.getValue, targets)
     }
-    def buildTarget(crit: CustomCriteria): Target = {
-      val keyName = targetingKeys.getOrElseUpdate(crit.getKeyId, fetchCustomTargetingKeyName(crit.getKeyId))
-      Target(keyName, crit.getOperator.getValue, buildValueNames(crit.getValueIds))
-    }
+
     def buildValueNames(valueIds: Array[Long]): Seq[String] = {
       valueIds map { id =>
         targetingValues.getOrElseUpdate(id, fetchCustomTargetingValueName(id))
       }
     }
-    totalResults.take(100).foreach { r =>
-      val targeting: Targeting = r.getTargeting
-      if (targeting != null) {
-        val customTargeting: CustomCriteriaSet = targeting.getCustomTargeting
-        if (customTargeting != null) {
-          println(r.getId)
-          customTargeting.getChildren.foreach { critSet =>
-            val ts = buildTargetSet(critSet.asInstanceOf[CustomCriteriaSet])
-            println(ts.op)
-            ts.targets.foreach(target => println(target))
-          }
-          println()
-        }
-      }
-    }
 
-    totalResults
+    val filtered = totalResults.filter { r =>
+      r.getTargeting != null && r.getTargeting.getCustomTargeting != null
+    }
+    filtered.flatMap { r =>
+      val targeting: Targeting = r.getTargeting
+      val customTargeting: CustomCriteriaSet = targeting.getCustomTargeting
+      val targetSets = customTargeting.getChildren.flatMap { critSet =>
+        buildTargetSet(critSet.asInstanceOf[CustomCriteriaSet])
+      }.toSeq
+      if (targetSets.isEmpty) None
+      else Some(Ad(r.getId, targetSets))
+    }
   }
 
   def fetchAllKeywordTargetingValues(): Map[Long, String] =
