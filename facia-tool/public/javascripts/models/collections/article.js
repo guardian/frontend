@@ -61,7 +61,8 @@ define([
 
             this.state = asObservableProps([
                 'underDrag',
-                'open',
+                'isOpen',
+                'isOpenImage',
                 'isLoaded',
                 'isEmpty',
                 'sparkUrl']);
@@ -99,6 +100,10 @@ define([
 
                 contentApi.decorateItems(self.meta.supporting.items());
             }
+
+            this.meta.imageSrc.subscribe(function() {
+                this.validateImageSrc();
+            }, this);
 
             this.sparkline();
             this.setFrontPublicationTime();
@@ -184,14 +189,25 @@ define([
             if (this.uneditable) { return; }
 
             _.defer(function(){
-                self.state.open(true);
+                self.state.isOpen(true);
+            });
+        };
+
+        Article.prototype.toggleOpenImage = function() {
+            var self = this;
+
+            this.state.isOpenImage(!this.state.isOpenImage());
+
+            _.defer(function(){
+                self.state.isOpenImage.valueHasMutated();
             });
         };
 
         Article.prototype.close = function() {
             var self = this;
+
             _.defer(function(){
-                self.state.open(false);
+                self.state.isOpen(false);
             });
         };
 
@@ -269,10 +285,35 @@ define([
             }
         };
 
+        Article.prototype.validateImageSrc = function() {
+            var self = this,
+                img;
+
+            if (!this.meta.imageSrc()) { return; }
+
+            img = new Image();
+
+            img.onload = function() {
+                var w = this.width || 1,
+                    h = this.height || 1;
+
+                if (Math.abs((3 * w)/(5 * h) - 1) > 0.01) { // One percent tolerance on aspect ratio
+                    self.meta.imageSrc(undefined);
+                    window.alert('Sorry, that image doesn\'t have a 5x3 aspect ratio so cannot be used');
+
+                } else if (w < 620 ) {
+                    self.meta.imageSrc(undefined);
+                    window.alert('Sorry, that image is less than 620 pixel wide so cannot be used');
+                }
+            };
+
+            img.src = this.meta.imageSrc();
+        };
+
         Article.prototype.convertToSnap = function() {
             this.meta.href(this.id());
             this.id(snap.generateId());
-            this.state.open(!this.meta.headline());
+            this.state.isOpen(!this.meta.headline());
         };
 
         Article.prototype.save = function() {

@@ -216,9 +216,9 @@
     </script>
 
     <script type="text/html" id="template_article">
-        <div class="article u-cf" data-bind="
+        <div class="article" data-bind="
             css: {
-                open: state.open,
+                open: state.isOpen,
                 underDrag: state.underDrag
             }">
 
@@ -235,16 +235,16 @@
                 attr: {href: 'http://www.theguardian.com/' + id()},
                 click: open">
                 <img class="thumb" draggable="false" data-bind="
-                    attr: {src: fields.thumbnail, title: id}"/>
+                    attr: {src: meta.imageSrc() || fields.thumbnail(), title: id}"/>
             </a>
 
-            <div data-bind="if: state.open">
-                <div class="article__overrides u-cf">
+            <div data-bind="if: state.isOpen">
+                <div class="article__overrides">
                     <div class="article__overrides__fields">
                         <input type="text" data-bind="
                             hasFocus: true,
-                            value: headlineInput,
                             event: {blur: save},
+                            value: headlineInput,
                             attr: {placeholder: fields.headline() || 'Link text'}"/>
                         <a class="revert revert--headline" data-bind="
                             click: headlineRevert,
@@ -252,25 +252,26 @@
                             visible: meta.headline"><i class="icon-fast-backward"></i></a>
 
                         <textarea class="trailtext" type="text" data-bind="
-                            value: trailTextInput,
                             event: {blur: save},
+                            value: trailTextInput,
                             attr: {placeholder: fields.trailText() || 'Trail text'}"/></textarea>
                         <a class="revert revert--trailtext" data-bind="
                             click: trailTextRevert,
                             attr: {title: 'Revert to: ' + fields.trailText()},
                             visible: meta.trailText"><i class="icon-fast-backward"></i></a>
 
-                        <input type="text" data-bind="
+                        <input type="text" placeholder="Link URL, eg. uk/money or http://www.bbc.co.uk/" data-bind="
+                            event: {blur: save},
                             visible: isSnap,
-                            value: meta.href,
-                            event: {blur: save},
-                            attr: {placeholder: 'Link URL, eg. uk/money or http://www.bbc.co.uk/'}"/>
+                            value: meta.href"/>
 
-                        <input type="text" data-bind="
-                            visible: true,
-                            value: meta.imageSrc,
-                            event: {blur: save},
-                            attr: {placeholder: 'Image URL. Must be 5x3 aspect.'}"/>
+                        <div data-bind="
+                            if: state.isOpenImage">
+                            <input type="text" placeholder="Image URL, 5x3 aspect ratio" data-bind="
+                                hasFocus: true;
+                                event: {blur: save},
+                                value: meta.imageSrc"/>
+                        </div>
                     </div>
 
                     <div class="tools">
@@ -289,12 +290,16 @@
                         <a data-bind="
                             click: toggleImageAdjustHide,
                             text: meta.imageAdjust() === 'hide' ? 'hidden' : 'hide',
-                            css: {selected: meta.imageAdjust() === 'hide'}"></a>.
+                            css: {selected: meta.imageAdjust() === 'hide'}"></a>,
+                        <a data-bind="
+                            click: toggleOpenImage,
+                            text: meta.imageSrc() ? 'replaced' : 'replace',
+                            css: {selected: meta.imageSrc}"></a>.
 
                         Mark as
                         <a data-bind="
                             click: toggleIsBreaking,
-                            css: {selected: meta.isBreaking}">breaking news</a>
+                            css: {selected: meta.isBreaking}">breaking news</a>.
                     </div>
 
                     <div class="supporting-message">Add supporting content below</div>
@@ -311,7 +316,7 @@
                 </div>
             </div>
 
-            <div class="closed" data-bind="if: !state.open()">
+            <div class="closed" data-bind="if: !state.isOpen()">
                 <a class="spark" target="ophan" title="Dark blue: Guardian. Green: Google. Light blue: Other." data-bind="
                     visible: state.sparkUrl,
                     attr: {href: 'http://dashboard.ophan.co.uk/graph/breakdown?path=/' + id()}">

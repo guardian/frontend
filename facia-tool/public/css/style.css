@@ -53,11 +53,6 @@ a:hover {
     overflow-y: scroll;
 }
 
-.u-cf:before,
-.u-cf:after{content:"";display:table}
-.u-cf:after{clear:both}
-.u-cf{zoom:1}
-
 .logo {
     position: fixed;
     top: 8px;
