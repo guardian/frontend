@@ -10,7 +10,7 @@ class SeoDataTest extends FlatSpec with Matchers {
     seoData.id should be("uk/culture")
     seoData.section should be ("culture")
     seoData.webTitle should be ("Culture")
-    seoData.title should include ("Culture")
+    seoData.title.map(_ should include ("Culture"))
     seoData.description.get should include ("Culture")
   }
 
@@ -19,7 +19,7 @@ class SeoDataTest extends FlatSpec with Matchers {
 
     seoData.section should be ("technology")
     seoData.webTitle should be ("Games")
-    seoData.title should include ("Games")
+    seoData.title.map(_ should include ("Games"))
     seoData.description.get should include ("Games")
   }
 
@@ -28,7 +28,7 @@ class SeoDataTest extends FlatSpec with Matchers {
 
     seoData.section should be ("technology")
     seoData.webTitle should be ("Games Stuff")
-    seoData.title should include ("Games Stuff")
+    seoData.title.map(_ should include ("Games Stuff"))
     seoData.description.get should include ("Games Stuff")
   }
 
@@ -38,7 +38,7 @@ class SeoDataTest extends FlatSpec with Matchers {
     seoData.id should be("abc/def")
     seoData.section should be ("abc")
     seoData.webTitle should be ("Def")
-    seoData.title should include ("Def")
+    seoData.title.map(_ should include ("Def"))
     seoData.description.get should include ("Def")
   }
 
@@ -48,7 +48,7 @@ class SeoDataTest extends FlatSpec with Matchers {
     seoData.id should be("somethinghere")
     seoData.section should be ("somethinghere")
     seoData.webTitle should be ("Somethinghere")
-    seoData.title should include ("Somethinghere")
+    seoData.title.map(_  should include ("Somethinghere"))
     seoData.description.get should include ("Somethinghere")
   }
 
@@ -58,7 +58,7 @@ class SeoDataTest extends FlatSpec with Matchers {
     seoData.id should be("technology/games-and-things")
     seoData.section should be ("technology")
     seoData.webTitle should be ("Games And Things")
-    seoData.title should include ("Games And Things")
+    seoData.title.map(_  should include ("Games And Things"))
     seoData.description.get should include ("Games And Things")
   }
 
@@ -68,7 +68,7 @@ class SeoDataTest extends FlatSpec with Matchers {
     seoData.id should be("technology/games/and/things")
     seoData.section should be ("technology")
     seoData.webTitle should be ("Games And Things")
-    seoData.title should include ("Games And Things")
+    seoData.title.map(_  should include ("Games And Things"))
     seoData.description.get should include ("Games And Things")
   }
 
@@ -78,7 +78,7 @@ class SeoDataTest extends FlatSpec with Matchers {
     seoData.id should be("technology/games-and-things/sony")
     seoData.section should be ("technology")
     seoData.webTitle should be ("Games And Things Sony")
-    seoData.title should include ("Games And Things Sony")
+    seoData.title.map(_  should include ("Games And Things Sony"))
     seoData.description.get should include ("Games And Things Sony")
   }
 
