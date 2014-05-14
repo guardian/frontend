@@ -31,7 +31,7 @@
                         <div class="container__body container--rolled-up-hide">
                             <div class="facia-slice-wrapper facia-slice-wrapper--position-1">
                                 <ul class="u-unstyled l-row l-row--items-3 l-row--layout-m collection">
-                                    @items.slice(0, 1).zipWithIndex.map{ case (trail, index) =>
+                                    @items.take(1).zipWithIndex.map{ case (trail, index) =>
                                         @fragments.collections.items.standard(trail, index, containerIndex, "l-row__item--break-m")
                                     }
                                     @items.slice(1, 3).zipWithIndex.map{ case (trail, index) =>
