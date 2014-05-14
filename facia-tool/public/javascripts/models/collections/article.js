@@ -1,4 +1,4 @@
-/* global _: true, humanized_time_span: true */
+/* global _: true */
 define([
     'modules/vars',
     'utils/as-observable-props',
@@ -6,11 +6,11 @@ define([
     'utils/full-trim',
     'utils/deep-get',
     'utils/snap',
+    'utils/human-time',
     'models/group',
     'modules/authed-ajax',
     'modules/content-api',
-    'knockout',
-    'js!humanized-time-span'
+    'knockout'
 ],
     function (
         vars,
@@ -19,6 +19,7 @@ define([
         fullTrim,
         deepGet,
         snap,
+        humanTime,
         Group,
         authedAjax,
         contentApi,
@@ -35,6 +36,9 @@ define([
             this.parentType = opts.parentType;
             this.uneditable = opts.uneditable;
 
+            this.frontPublicationDate = opts.frontPublicationDate;
+            this.frontPublicationTime = ko.observable();
+
             this.props = asObservableProps([
                 'webPublicationDate']);
 
@@ -45,7 +49,6 @@ define([
 
             this.meta = asObservableProps([
                 'href',
-                'updatedAt',
                 'headline',
                 'trailText',
                 'imageAdjust',
@@ -67,8 +70,8 @@ define([
             }, this);
 
             // Computeds
-            this.humanDate = ko.computed(function(){
-                return this.props.webPublicationDate() ? humanized_time_span(this.props.webPublicationDate()) : '';
+            this.webPublicationTime = ko.computed(function(){
+                return humanTime(this.props.webPublicationDate());
             }, this);
 
             this.headlineInput  = this.overrider('headline');
@@ -97,6 +100,7 @@ define([
             }
 
             this.sparkline();
+            this.setFrontPublicationTime();
         }
 
         Article.prototype.overrider = function(key) {
@@ -144,6 +148,10 @@ define([
             }
         };
 
+        Article.prototype.setFrontPublicationTime = function() {
+            this.frontPublicationTime(humanTime(this.frontPublicationDate));
+        };
+
         Article.prototype.toggleIsBreaking = function() {
             this.meta.isBreaking(!this.meta.isBreaking());
             this._save();
@@ -152,7 +160,10 @@ define([
         Article.prototype.sparkline = function() {
             this.state.sparkUrl(undefined);
             if (vars.model.switches()['facia-tool-sparklines']) {
-                this.state.sparkUrl(vars.sparksBase + this.id() + (this.meta.updatedAt() ? '&markers=' + this.meta.updatedAt() : ''));
+                this.state.sparkUrl(
+                    vars.sparksBase + this.id() +
+                    (this.frontPublicationDate ? '&markers=' + (this.frontPublicationDate/1000) + ':FED24C' : '')
+                );
             }
         };
 
@@ -241,8 +252,6 @@ define([
 
                 itemMeta = this.getMeta();
                 timestamp = Math.floor(new Date().getTime()/1000);
-
-                itemMeta.updatedAt = (itemMeta.updatedAt ? itemMeta.updatedAt + ',' : '') + timestamp + ':65b045'; // green for overrides etc.
 
                 authedAjax.updateCollections({
                     update: {

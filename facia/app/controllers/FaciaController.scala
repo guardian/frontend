@@ -9,6 +9,7 @@ import views.support.{TemplateDeduping, NewsContainer}
 import scala.concurrent.Future
 import play.api.templates.Html
 import performance.MemcachedAction
+import services.ConfigAgent
 
 
 class FaciaController extends Controller with Logging with ExecutionContexts with implicits.Collections {
@@ -50,21 +51,17 @@ class FaciaController extends Controller with Logging with ExecutionContexts wit
   }
 
   def renderFrontPress(path: String) = MemcachedAction{ implicit request =>
-
-    FrontPage(path).map { frontPage =>
-      FrontJson.get(path).map(_.map{ faciaPage =>
-        Cached(frontPage) {
-          if (request.isRss)
-            Ok(TrailsToRss(frontPage, faciaPage.collections.map(_._2).flatMap(_.items).toSeq.distinctBy(_.id)))
-              .as("text/xml; charset=utf-8")
-          else if (request.isJson)
-            JsonFront(frontPage, faciaPage)
-          else
-            Ok(views.html.front(frontPage, faciaPage))
-        }
-      }.getOrElse(Cached(60)(NotFound)))
-    }.getOrElse(Future.successful(Cached(60)(NotFound)))
-
+    FrontJson.get(path).map(_.map{ faciaPage =>
+      Cached(faciaPage) {
+        if (request.isRss)
+          Ok(TrailsToRss(faciaPage, faciaPage.collections.map(_._2).flatMap(_.items).toSeq.distinctBy(_.id)))
+            .as("text/xml; charset=utf-8")
+        else if (request.isJson)
+          JsonFront(faciaPage)
+        else
+          Ok(views.html.front(faciaPage))
+      }
+    }.getOrElse(Cached(60)(NotFound)))
   }
 
   def renderCollection(id: String) = MemcachedAction{ implicit request =>
@@ -93,7 +90,7 @@ class FaciaController extends Controller with Logging with ExecutionContexts wit
         collectionOption.map { collection =>
           Cached(60) {
             val config: Config = ConfigAgent.getConfig(id).getOrElse(Config(""))
-            val html = views.html.fragments.frontCollection(FrontPage("").get, (config, collection), 1, 1)
+            val html = views.html.fragments.frontCollection(FrontPage.defaultFrontPage, (config, collection), 1, 1)
             if (request.isJson)
               JsonCollection(html, collection)
             else
@@ -110,9 +107,9 @@ class FaciaController extends Controller with Logging with ExecutionContexts wit
   }
 
   private object JsonFront{
-    def apply(frontPage: FrontPage, faciaPage: FaciaPage)(implicit request: RequestHeader) = JsonComponent(
-      "html" -> views.html.fragments.frontBody(frontPage, faciaPage),
-      "config" -> Json.parse(views.html.fragments.javaScriptConfig(frontPage).body)
+    def apply(faciaPage: FaciaPage)(implicit request: RequestHeader) = JsonComponent(
+      "html" -> views.html.fragments.frontBody(faciaPage),
+      "config" -> Json.parse(views.html.fragments.javaScriptConfig(faciaPage).body)
     )
   }
 

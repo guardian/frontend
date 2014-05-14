@@ -145,6 +145,24 @@ define(['fixtures/config', 'analytics/omniture', 'common/common'], function(test
             });
         });
 
+        it("should send event16 when social button has been clicked", function(){
+            var o = new Omniture(s),
+                clickSpec = {
+                    target: document.documentElement,
+                    samePage: false,
+                    sameHost: false,
+                    tag: 'social | facebook | top'
+                }
+                ;
+            o.go(config);
+            waits(100);
+            runs(function() {
+                common.mediator.emit('module:clickstream:click', clickSpec);
+                expect(s.apl).toHaveBeenCalled();
+                expect(s.apl.args[0][1]).toBe('event16');
+            });
+        });
+
         it("should make a non-delayed s.tl call for same-page links", function(){
 
             var o = new Omniture(s),
