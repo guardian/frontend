@@ -68,6 +68,7 @@
     @include clearfix;
 }
 .fromage__container {
+    // used for spacing, width set if needed
     border-top: 0 solid transparent;
     position: relative;
     @include rem((
