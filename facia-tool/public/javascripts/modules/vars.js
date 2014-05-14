@@ -24,7 +24,7 @@ define(['knockout'], function(ko) {
 
         groups: ['standard,big,very big,huge'],
 
-        imageCdnDomain: 'static.guim.co.uk',
+        imageCdnDomain: 'guim.co.uk',
 
         viewer: 'http://s3-eu-west-1.amazonaws.com/facia/responsive-viewer.html',
 

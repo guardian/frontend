@@ -289,15 +289,14 @@ define([
             var self = this,
                 img;
 
-            this.meta.imageSrc(fullTrim(this.meta.imageSrc()));
-
             if (!this.meta.imageSrc()) {
+                self.save();
                 return;
-            }
 
-            if (!this.meta.imageSrc().match(new RegExp('^http://' + vars.CONST.imageCdnDomain + '/'))) {
+            } else if (!this.meta.imageSrc().match(new RegExp('^http://.*\\.' + vars.CONST.imageCdnDomain + '/'))) {
                 this.meta.imageSrc(undefined);
-                window.alert('Sorry! Only images from  ' + vars.CONST.imageCdnDomain + ' are acceptable');
+                window.alert('Sorry! Images must come from *.' + vars.CONST.imageCdnDomain);
+                self.save();
                 return;
             }
 
@@ -305,19 +304,15 @@ define([
             img.onload = function() {
                 var w = this.width  || 1,
                     h = this.height || 1,
-                    err;
-
-                if (w > 2048) {
-                    err = 'Images cannot be more than 2048 pixels wide';
-                } else if (w < 620 ) {
-                    err = 'Images cannot be less than 620 pixels wide';
-                } else if (Math.abs((3 * w)/(5 * h) - 1) > 0.01) { // One percent tolerance
-                    err = 'Image must have a 5x3 aspect ratio';
-                }
+                    err =  w > 2048 ? 'Images cannot be more than 2048 pixels wide' :
+                           w < 620  ? 'Images cannot be less than 620 pixels wide'  :
+                           Math.abs((3 * w)/(5 * h) - 1) > 0.01 ?  'Image must have a 5x3 aspect ratio' : false;
 
                 if (err) {
                     self.meta.imageSrc(undefined);
                     window.alert('Sorry! ' + err);
+                } else {
+                    self.save();
                 }
             };
             img.src = this.meta.imageSrc();
