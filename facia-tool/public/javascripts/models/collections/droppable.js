@@ -45,7 +45,6 @@ define([
             newItemsPersister: function(newItems, sourceList, targetList, position, isAfter) {
                 var id = newItems[0].id(),
                     itemMeta,
-                    timestamp,
                     supporting,
                     remove;
 
@@ -76,9 +75,6 @@ define([
                     } else {
                         delete itemMeta.group;
                     }
-
-                    timestamp = Math.floor(new Date().getTime()/1000);
-                    itemMeta.updatedAt = itemMeta.updatedAt ? itemMeta.updatedAt + ',' + timestamp : timestamp + ':fbcc43'; // yellow for the initial flag
 
                     remove = (deepGet(sourceList, '.parent.id') && deepGet(sourceList, '.parent.id') !== targetList.parent.id);
                     remove = remove ? remover(sourceList, id) : undefined;

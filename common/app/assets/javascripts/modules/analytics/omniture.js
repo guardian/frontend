@@ -81,6 +81,13 @@ define([
             // this allows 'live' Omniture tracking of Navigation Interactions
             s.eVar7 = 'D=pageName';
             s.prop37 = 'D=v37';
+
+            if(/social/.test(tag)) {
+                s.linkTrackVars += ',eVar12';
+                s.linkTrackEvents += ',event16';
+                s.eVar12 = tag;
+                s.events = s.apl(s.events, 'event16', ',');
+            }
         };
 
         // used where we don't have an element to pass as a tag

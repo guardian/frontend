@@ -26,18 +26,19 @@ Provides Sass mixins for the most frequently used CSS3 features.
 }
 
 .element {
-    @include box-sizing(border-box);
-    @include transition(width .2s ease-in-out);
-    @include transform(scale(1.3));
-    @include transform-origin(0 50%);
-    @include rotate(90deg);
     @include animation(fadeIn 5s ease-out);
+    @include background-size(100% 60%);
     @include border-radius(30px);
     @include box-shadow(none);
-    @include background-size(100% 60%);
-    @include sticky;
+    @include box-sizing(border-box);
+    @include column-width(300px);
     @include flex($flex-grow: 0, $flex-shrink: 1, $flex-basis: auto);
-    @include flex-grow(0);
     @include flex-basis(auto);
+    @include flex-grow(0);
+    @include rotate(90deg);
+    @include sticky;
+    @include transform(scale(1.3));
+    @include transform-origin(0 50%);
+    @include transition(width .2s ease-in-out);
 }
 ```

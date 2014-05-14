@@ -2,16 +2,18 @@ define([
     'common/common',
     'common/utils/storage',
     'common/utils/mediator',
-    'common/modules/analytics/mvt-cookie'
+    'common/modules/analytics/mvt-cookie',
+    'common/modules/experiments/searchText'
 ], function (
     common,
     store,
     mediator,
-    mvtCookie
+    mvtCookie,
+    ABHeaderSearchText
     ) {
 
-    var TESTS = [],
-       participationsKey = 'gu.ab.participations';
+    var TESTS = [new ABHeaderSearchText()];
+    var participationsKey = 'gu.ab.participations';
 
     function getParticipations() {
         return store.local.get(participationsKey) || {};

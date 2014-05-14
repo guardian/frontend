@@ -145,7 +145,7 @@ object Switches extends Collections {
 
   val LifeAndStyleHackSwitch = Switch("Ad Targeting", "life-and-style",
     "If this switch is on, ads will work on Life and Style front while waiting for fix from Front Tools team.",
-    safeState = On, sellByDate = new DateMidnight(2014, 5, 14))
+    safeState = On, sellByDate = new DateMidnight(2014, 5, 21))
 
   // Commercial Tags
 
@@ -263,7 +263,7 @@ object Switches extends Collections {
 
   val IdentityEthicalAwardsSwitch = Switch("Feature Switches", "id-ethical-awards",
     "If this switch is on, Ethical awards forms will be available",
-    safeState = Off, sellByDate = new DateMidnight(2014, 5, 15))
+    safeState = Off, sellByDate = new DateMidnight(2014, 5, 16))
 
   val NetworkFrontOptIn = Switch("Feature Switches", "network-front-opt-in",
     "If this is switched on then an opt-in message will be displayed to users coming from the R2 network front",
@@ -293,14 +293,24 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 6, 30)
   )
 
-  val PopularInTagSwitch = Switch("Feature Switches", "popular-in-tag",
-    "If this switch is turned on then popular-in-tag will override related content for the selected tags.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 5, 14)
+  val TagLinkingSwitch = Switch("Feature Switches", "tag-linking",
+    "If this switch is turned on then tags will be 'auto' linked to where possible in article bodies",
+    safeState = On, sellByDate = new DateMidnight(2014, 6, 30)
   )
 
   val EnhanceTweetsSwitch = Switch("Feature Switches", "enhance-tweets",
     "If this switch is turned on then embedded tweets will be enhanced using Twitter's widgets.",
     safeState = Off, sellByDate = never
+  )
+
+  val WorldCupWallchartEmbedSwitch = Switch("Feature Switches", "worldcup-wallchart-embed",
+    "If this switch is turned on JavaScript will load. It will be removed after the new Premier League session starts.",
+    safeState = Off, sellByDate = new DateMidnight(2014, 8, 10)
+  )
+
+  val ABHeaderSearchText = Switch("A/B Tests", "ab-header-search-text",
+    "If this switch is turned on then the header search box will display a label for tablet and desktop.",
+    safeState = Off, sellByDate = new DateMidnight(2014, 6, 9)
   )
 
   // Dummy Switches
@@ -433,14 +443,16 @@ object Switches extends Collections {
     FaciaToolContainerTagsSwitch,
     LayoutHintsSwitch,
     RssLinkSwitch,
-    PopularInTagSwitch,
     EnhanceTweetsSwitch,
+    WorldCupWallchartEmbedSwitch,
     IndiaRegionSwitch,
     MemcachedSwitch,
     IncludeBuildNumberInMemcachedKey,
     NewSeoSwitch,
     GzipSwitch,
-    GeoMostPopular
+    GeoMostPopular,
+    TagLinkingSwitch,
+    ABHeaderSearchText
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }

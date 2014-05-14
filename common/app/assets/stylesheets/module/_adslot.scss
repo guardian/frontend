@@ -188,6 +188,10 @@
     .ad-slot--paid-for-badge__label {
         color: $c-neutral2;
         margin: 0;
+
+        .facia-container--advertisement-feature & {
+            color: $c-neutral2-contrasted;
+        }
     }
     .ad-slot--paid-for-badge__header {
         font-weight: bold;

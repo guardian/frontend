@@ -1,11 +1,15 @@
 /*jshint loopfunc: true */
 define([
+    'qwery',
+    'bonzo',
     'common/utils/ajax',
-    'common/common',
+    'common/utils/mediator',
     'common/utils/storage'
 ], function (
+    qwery,
+    bonzo,
     ajax,
-    common,
+    mediator,
     storage
 ) {
 
@@ -36,7 +40,7 @@ define([
                         success: (function (style) {
                             return function (json) {
                                 if (!json) {
-                                    common.mediator.emit('module:error', 'Failed to load fonts', 'fonts.js');
+                                    mediator.emit('module:error', 'Failed to load fonts', 'fonts.js');
                                     return;
                                 }
                                 if (typeof callback === 'function') {
@@ -47,12 +51,12 @@ define([
 
                                 that.clearFont(nameAndCacheKey[0]);
                                 storage.local.set(storagePrefix + nameAndCacheKey[0] + '.' + nameAndCacheKey[1], json.css);
-                                common.mediator.emit('modules:fonts:loaded', [json.name]);
+                                mediator.emit('modules:fonts:loaded', [json.name]);
                             };
                         }(style))
                     });
                 } else {
-                    common.mediator.emit('modules:fonts:notloaded', []);
+                    mediator.emit('modules:fonts:notloaded', []);
                 }
             }
         };
@@ -91,10 +95,17 @@ define([
                     widthMatches = false;
                 }
 
-                return (cachedValue === null && widthMatches);
+                // if this font is only for advertisement features, make sure that's what the page is
+                var fontRequired = (bonzo(style).data('advertisement-feature') !== undefined) ? isAdvertisementFeature() : true;
+
+                return cachedValue === null && widthMatches && fontRequired;
             } else {
                 return false;
             }
+        }
+
+        function isAdvertisementFeature() {
+            return qwery('.facia-container--advertisement-feature').length > 0;
         }
 
     }
