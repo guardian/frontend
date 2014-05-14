@@ -1,17 +1,37 @@
 @(keywords: Seq[Tag], visibleKeywords: Int = 5)(implicit request: RequestHeader)
 
-@defining(keywords.filterNot(_.isSectionTag).take(visibleKeywords)) { keywordsList => 
-    @if(keywordsList.nonEmpty) {
-        <ul class="inline-list">
-            <li class="inline-list__item">Tags:</li>
-            @keywordsList.zipWithRowInfo.map{ case(keyword, row) =>
-                <li class="inline-list__item">
-                    <a class="@if(keyword.isFootballTeam){js-football-team} @if(keyword.isFootballCompetition){ js-football-competition}"
-                        href="@LinkTo(keyword.url)"
-                        data-link-name="keyword: @keyword.id"
-                        itemprop="keywords">@keyword.name</a>@if(!row.isLast){, }
-                </li>
-            }
-        </ul>
+@renderItem(keyword: Tag, row: RowInfo, clazz: String = "", trailingComma: Boolean = false) = {
+    <li class="inline-list__item @clazz">
+        <a class="@if(keyword.isFootballTeam){js-football-team} @if(keyword.isFootballCompetition){ js-football-competition}"
+           href="@LinkTo(keyword.url)"
+           data-link-name="keyword: @keyword.id"
+           itemprop="keywords">@keyword.name</a>@if(!row.isLast || trailingComma){, }
+    </li>
+}
+
+@defining(keywords.filterNot(_.isSectionTag).take(visibleKeywords)) { shownKeywords =>
+    @defining(keywords.filterNot(_.isSectionTag).drop(visibleKeywords)) { hiddenKeywords =>
+        @if(shownKeywords.nonEmpty) {
+            <ul class="inline-list">
+                <li class="inline-list__item">Tags:</li>
+                @shownKeywords.zipWithRowInfo.map{ case(keyword, row) =>
+                    @renderItem(keyword, row, trailingComma = hiddenKeywords.nonEmpty)
+                }
+
+                @if(hiddenKeywords.nonEmpty) {
+
+                    @* this is initially hidden as it is of no use to non-javascript browsers *@
+                    <li class="inline-list__item js-more-tags js-hidden">
+                        <button class="u-button-reset u-fauxlink js-more-tags__link"
+                           data-link-name="more-tags">more…</button>
+                    </li>
+
+                    @hiddenKeywords.zipWithRowInfo.map{ case(keyword, row) =>
+                        @renderItem(keyword, row, clazz = "js-hidden js-hidden-tag")
+                    }
+                }
+
+            </ul>
+        }
     }
 }
