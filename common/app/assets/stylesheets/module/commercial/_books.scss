@@ -186,6 +186,11 @@ $c-commercial-books-dark: #630D4C;
         }
         
         @include mq(tablet) {
+            .commercial__body {
+                @include rem((
+                    padding-left: $gs-gutter/2
+                ));
+            }
             .commercial__home-link {
                 position: absolute;
             }
@@ -349,12 +354,25 @@ $c-commercial-books-dark: #630D4C;
 
 /* article */
 .facia-container--layout-article .commercial--books {
-    .commercial__head {
-        @include mq(rightCol) {
+    @include mq(rightCol) {
+        .commercial__head {
             width: 25%;
             @include rem((
-                padding-right: 8px
+                padding-right: $gs-gutter/2
             ));
+        }
+        .commercial__body {
+            padding-left: 0;
+        }
+    }
+    @include mq($from: rightCol, $to: leftCol) {
+        &.commercial--high .commercial__head {
+            padding-right: 16px;
+        }
+    }
+    @include mq(leftCol) {
+        .commercial__head {
+            padding-right: 0;
         }
     }
     @include mq(leftCol, $to: wide) {
