@@ -5,14 +5,9 @@
 $c-soulmates-red: #d70851;
 .commercial--soulmates {
     .commercial__head {
-        position: static;
         height: auto;
         overflow: auto;
         border: 0;
-        @include rem((
-            padding-left: $gs-gutter/2,
-            padding-right: $gs-gutter/2
-        ));
     }
     .commercial__title {
         float: none;
@@ -22,12 +17,6 @@ $c-soulmates-red: #d70851;
         width: auto;
         display: block;
         background-size: contain;
-    }
-    @include mq(mobileLandscape) {
-        @include rem((
-            padding-left: $gs-gutter,
-            padding-right: $gs-gutter
-        ));
     }
     @include mq(tablet) {
         .commercial__header {
@@ -54,16 +43,16 @@ $c-soulmates-red: #d70851;
             border: 0;
             color: #ffffff;
             @include fs-headline(1, $size-only: true);
+            right: 0;
             @include rem((
                 top: $gs-gutter/2,
-                right: $gs-gutter/2,
                 padding: $gs-baseline/3 $gs-baseline*2
             ));
         }
     }
     .commercial__body {
         @include rem((
-            padding: $gs-gutter/2 0 $gs-gutter
+            padding: $gs-gutter/2 0
         ));
         position: relative;
     }
@@ -192,7 +181,8 @@ $c-soulmates-red: #d70851;
     }
     .search__dropdown__options {
         float: right;
-        border: 0;
+        min-width: 54%;
+        direction: rtl;
     }
     $search-submit-cta-diameter: 20px;
     .search__submit {
@@ -243,13 +233,9 @@ $c-soulmates-red: #d70851;
 
 /* fronts */
 .facia-container--layout-front .commercial--soulmates {
-    .commercial__search {
-        @include rem((
-            padding: 0 $gs-gutter/2
-        ));
-    }
     @include mq(faciaLeftCol) {
         .commercial__head {
+            position: static;
             @include rem((
                 width: gs-span(2) + $gs-gutter
             ));
@@ -267,6 +253,9 @@ $c-soulmates-red: #d70851;
 /* article */
 .facia-container--layout-article .commercial--soulmates {
     @include mq(leftCol) {
+        .commercial__head {
+            position: static;
+        }
         .commercial__buy-now-button {
             left: auto;
             right: auto;
