@@ -236,9 +236,14 @@
     </div>
 
     <script>
-        Array.prototype.forEach.call(document.getElementsByTagName('a'), function(a) {
-            a.setAttribute('target', '_top');
-        });
+        (function() {
+            var i,
+                as = document.getElementsByTagName('a');
+
+            for (i = 0; i < as.length; i++) {
+                as[i].setAttribute('target', '_top');
+            }
+        })();
     </script>
 </body>
 </html>
