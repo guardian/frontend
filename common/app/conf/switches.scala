@@ -303,6 +303,11 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
+  val WorldCupWallchartEmbedSwitch = Switch("Feature Switches", "worldcup-wallchart-embed",
+    "If this switch is turned on JavaScript will load. It will be removed after the new Premier League session starts.",
+    safeState = Off, sellByDate = new DateMidnight(2014, 8, 10)
+  )
+
   val ABHeaderSearchText = Switch("A/B Tests", "ab-header-search-text",
     "If this switch is turned on then the header search box will display a label for tablet and desktop.",
     safeState = Off, sellByDate = new DateMidnight(2014, 6, 9)
@@ -434,6 +439,7 @@ object Switches extends Collections {
     LayoutHintsSwitch,
     RssLinkSwitch,
     EnhanceTweetsSwitch,
+    WorldCupWallchartEmbedSwitch,
     IndiaRegionSwitch,
     MemcachedSwitch,
     IncludeBuildNumberInMemcachedKey,
