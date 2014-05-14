@@ -354,14 +354,15 @@ class Article(content: ApiContentWithMeta) extends Content(content) {
   )
 
   override def openGraph: Map[String, Any] = super.openGraph ++ Map(
-    "og:type" -> "article",
-    "article:published_time" -> webPublicationDate,
-    "article:modified_time" -> lastModified,
-    "article:tag" -> keywords.map(_.name).mkString(","),
-    "article:section" -> sectionName,
-    "article:publisher" -> "https://www.facebook.com/theguardian",
-    "og:image" -> openGraphImage
-  ) ++ tags.filter(_.isContributor).map("article:author" -> _.webUrl)
+    ("og:type", "article"),
+    ("article:published_time", webPublicationDate),
+    ("article:modified_time", lastModified),
+    ("article:tag", keywords.map(_.name).mkString(",")),
+    ("article:section", sectionName),
+    ("article:publisher", "https://www.facebook.com/theguardian"),
+    ("article:author", contributors.map(_.webUrl).mkString(",")),
+    ("og:image", openGraphImage)
+  )
 
   override def cards: List[(String, Any)] = super.cards ++ List(
     "twitter:card" -> "summary_large_image"
