@@ -234,5 +234,11 @@
             case _ => {}
         }
     </div>
+
+    <script>
+        Array.prototype.forEach.call(document.getElementsByTagName('a'), function(a) {
+            a.setAttribute('target', '_top');
+        });
+    </script>
 </body>
 </html>
