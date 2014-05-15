@@ -21,7 +21,7 @@
                     <div class="container__border tone-@style.tone tone-accent-border"></div>
                     <div class="container__header">
                         <h2 class="container__title tone-news tone-background">
-                            @if(! Configuration.facia.editionFronts.contains(request.uri.toLowerCase) ){
+                            @if(! Edition.editionFronts.contains(request.uri.toLowerCase) ){
                                 @*if we are not on edition fronts we don't display dated title, *@
                                 @*but rather the container's title with an optional link specified in facia-tool *@
                                 @if(config.href){
