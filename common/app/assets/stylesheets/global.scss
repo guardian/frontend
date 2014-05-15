@@ -68,6 +68,20 @@
 
 
 /* ==========================================================================
+   Sport
+   ========================================================================== */
+
+@import "module/football/_tables";
+@import "module/football/_match-stat";
+@import "module/football/_match-summary";
+@import "module/football/_matches";
+@import "module/football/_live-summary";
+@import "module/football/_stats";
+@import "module/football/_player-card";
+@import "module/football/_article-embeds";
+
+
+/* ==========================================================================
    Facia
    ========================================================================== */
 
@@ -86,20 +100,6 @@
 @import "module/containers/_series";
 @import "module/facia/_pagination";
 @import "module/facia/snaps/_football";
-
-
-/* ==========================================================================
-   Sport
-   ========================================================================== */
-
-@import "module/football/_tables";
-@import "module/football/_match-stat";
-@import "module/football/_match-summary";
-@import "module/football/_matches";
-@import "module/football/_live-summary";
-@import "module/football/_stats";
-@import "module/football/_player-card";
-@import "module/football/_article-embeds";
 
 
 /* ==========================================================================

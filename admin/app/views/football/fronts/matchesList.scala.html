@@ -1,0 +1,24 @@
+@(liveMatches: List[pa.LiveMatch], fixtures: List[pa.Fixture], results: List[pa.Result])
+
+@views.html.football.main("Matches") {
+    <hgroup class="page-header">
+        <h1>Choose match</h1>
+    </hgroup>
+
+    <h2>Matches</h2>
+        @(liveMatches ++ fixtures ++ results) match {
+            case Nil => {
+                <p>No matches found</p>
+            }
+            case matches => {
+                <div class="list-group">
+                @for(fMatch <- matches) {
+                    <a href="/admin/football/fronts/match/@fMatch.id" class="list-group-item">
+                        <span class="badge">@fMatch.date.toString("E dd MMMM HH:mm")</span>
+                        @fMatch.homeTeam.name v @fMatch.awayTeam.name
+                    </a>
+                }
+                </div>
+            }
+        }
+}
