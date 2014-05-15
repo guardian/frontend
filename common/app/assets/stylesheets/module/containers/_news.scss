@@ -15,7 +15,7 @@
     }
     .container__title {
         display: none;
-        color: $c-neutral1;
+        color: $c-newsDefault;
         margin-bottom: 0;
     }
     @include mq(tablet) {
