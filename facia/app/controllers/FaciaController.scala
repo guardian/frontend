@@ -35,6 +35,9 @@ class FaciaController extends Controller with Logging with ExecutionContexts wit
     Ok.withHeaders("X-Accel-Redirect" -> s"/applications/$path")
   }
 
+  //Only used by dev-build for rending special urls such as lifeandstyle/home-and-garden
+  def renderFrontPressSpecial(path: String) = renderFrontPress(path)
+
   // Needed as aliases for reverse routing
   def renderFrontRss(id: String) = renderFront(id)
   def renderFrontJson(id: String) = renderFront(id)
