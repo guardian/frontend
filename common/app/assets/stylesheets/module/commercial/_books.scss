@@ -6,7 +6,7 @@ $c-commercial-books-dark: #630D4C;
 
 .commercial--books {
     @include rem((
-        padding: 10px 0
+        padding: $comercial-comp-padding 0
     ));
     .commercial__branding,
     .commercial__head {
@@ -68,12 +68,12 @@ $c-commercial-books-dark: #630D4C;
     .highitem {
         @include box-sizing(border-box);
         @include rem((
-            padding: 0 0 10px
+            padding: 0 0 $comercial-comp-padding
         ));
     }
     .lineitem {
         @include rem((
-            padding: 10px 0
+            padding: $comercial-comp-padding 0
         ));        
     }
     .lineitem:first-child {
@@ -110,7 +110,7 @@ $c-commercial-books-dark: #630D4C;
         @include f-header;
         @include font-size(12, 20);
         @include rem((
-            top: 10px,
+            top: $comercial-comp-padding,
             padding: 0 $gs-gutter/2,
             min-width: gs-span(1)
         ));
@@ -160,7 +160,7 @@ $c-commercial-books-dark: #630D4C;
             right: auto;
             top: auto;
             @include rem((
-                margin-top: 10px
+                margin-top: $comercial-comp-padding
             ));
         }
     }
@@ -338,7 +338,7 @@ $c-commercial-books-dark: #630D4C;
         .commercial__title {
             line-height: 1;
             @include rem((
-                margin-bottom: 10px
+                margin-bottom: $comercial-comp-padding
             ));
         }
         .i-bookshop-logo--bookshop {
@@ -379,7 +379,7 @@ $c-commercial-books-dark: #630D4C;
         .commercial__title {
             line-height: 1;
             @include rem((
-                margin-bottom: 10px
+                margin-bottom: $comercial-comp-padding
             ));
         }
         .i-bookshop-logo--bookshop {

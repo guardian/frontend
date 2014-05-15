@@ -1,4 +1,5 @@
 $c-commercial-comp-neutral: #edede7;
+$comercial-comp-padding: 10px;
 
 .facia-container--layout-front .commercial {
     padding: 0;
@@ -70,7 +71,7 @@ $c-commercial-comp-neutral: #edede7;
 }
 .commercial__body {
     @include rem((
-        padding: 10px
+        padding: $comercial-comp-padding
     ));
     overflow: hidden;
 }

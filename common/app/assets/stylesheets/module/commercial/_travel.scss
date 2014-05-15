@@ -37,7 +37,7 @@ $c-commercial-travel-dark: #002b6c;
     }
     .lineitem__offer {
         @include rem((
-            padding-top: 10px
+            padding-top: $comercial-comp-padding
         ));
     }
     .lineitem__meta {
@@ -54,7 +54,7 @@ $c-commercial-travel-dark: #002b6c;
         overflow: auto;
         margin-top: 0;
         @include rem((
-            padding: 10px 0
+            padding: $comercial-comp-padding 0
         ));
     }
     .commercial__title {
@@ -90,7 +90,7 @@ $c-commercial-travel-dark: #002b6c;
     .commercial__search {
         position: absolute;
         @include rem((
-            bottom: 10px,
+            bottom: $comercial-comp-padding,
             margin-top: $gs-baseline*4
         ));
         float: none;
@@ -116,7 +116,7 @@ $c-commercial-travel-dark: #002b6c;
             position: absolute;
             right: 0;
             @include rem((
-                top: 10px
+                top: $comercial-comp-padding
             ));
         }
     }
@@ -146,7 +146,7 @@ $c-commercial-travel-dark: #002b6c;
         }        
         .commercial__home-link {
             @include rem((
-                bottom: 10px,
+                bottom: $comercial-comp-padding,
                 left: $gs-gutter/2
             ));
             left: 0;
@@ -155,7 +155,7 @@ $c-commercial-travel-dark: #002b6c;
         }
         .commercial__body {
             @include rem((
-                padding-top: 10px
+                padding-top: $comercial-comp-padding
             ));            
         }
         .lineitem {
@@ -217,7 +217,7 @@ $c-commercial-travel-dark: #002b6c;
             @include box-sizing(border-box);
             @include rem((
                 width: gs-span(5),
-                bottom: 10px
+                bottom: $comercial-comp-padding
             ));
         }
     }
@@ -259,7 +259,7 @@ $c-commercial-travel-dark: #002b6c;
         }
         .commercial__home-link {
             @include rem((
-                bottom: 10px,
+                bottom: $comercial-comp-padding,
                 left: $gs-gutter
             ));
             top: auto;
@@ -267,7 +267,7 @@ $c-commercial-travel-dark: #002b6c;
         }
         .commercial__body {
             @include rem((
-                padding-top: 10px
+                padding-top: $comercial-comp-padding
             ));
         }
     }
@@ -301,7 +301,7 @@ $c-commercial-travel-dark: #002b6c;
         }
         .commercial__title {
             @include rem((
-                margin-bottom: 10px
+                margin-bottom: $comercial-comp-padding
             ));
             
             .commercial__title__middle-word {
@@ -313,7 +313,7 @@ $c-commercial-travel-dark: #002b6c;
             @include box-sizing(border-box);
             @include rem((
                 width: gs-span(5)+$gs-gutter,
-                bottom: 10px
+                bottom: $comercial-comp-padding
             ));
         }
     }

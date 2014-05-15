@@ -20,8 +20,8 @@ $c-money-high: #63007F;
         display: block;
         float: none;
         @include rem((
-            padding: 10px 0 0,
-            margin-bottom: 10px
+            padding: $comercial-comp-padding 0 0,
+            margin-bottom: $comercial-comp-padding
         ));
         @include mq(tablet) {
             float: left;
@@ -58,7 +58,7 @@ $c-money-high: #63007F;
         .commercial__head,
         .commercial__body {
             @include rem((
-                padding: 10px 0
+                padding: $comercial-comp-padding 0
             ));
         }
     }
@@ -88,7 +88,7 @@ $c-money-high: #63007F;
     .table--commercial {
         border-bottom: 1px solid $c-neutral5;
         @include rem((
-            margin-bottom: 10px
+            margin-bottom: $comercial-comp-padding
         ));
         @include fs-textsans(4);
     }
@@ -118,7 +118,7 @@ $c-money-high: #63007F;
     }
     .commercial__link {
         @include rem((
-            margin-bottom: 10px
+            margin-bottom: $comercial-comp-padding
         ));
         display: block;
         font-weight: bold;
@@ -161,12 +161,12 @@ $c-money-high: #63007F;
     @include mq(tablet) {
         .commercial__home-link {
             @include rem((
-                bottom: 10px
+                bottom: $comercial-comp-padding
             ));
         }
         .tabs__content {
             @include rem((
-                margin-bottom: 10px
+                margin-bottom: $comercial-comp-padding
             ));
         }
     }
@@ -199,7 +199,7 @@ $c-money-high: #63007F;
             position: absolute;
             margin-left: 0;
             @include rem((
-                bottom: 10px
+                bottom: $comercial-comp-padding
             ));
         }
     }
@@ -253,12 +253,12 @@ $c-money-high: #63007F;
     @include mq($from: tablet, $to: rightCol) {
         .tabs__content {
             @include rem((
-                padding-bottom: 10px
+                padding-bottom: $comercial-comp-padding
             ));
         }
         .commercial__home-link {
             @include rem((
-                bottom: 10px
+                bottom: $comercial-comp-padding
             ));
         }
     }
@@ -289,7 +289,7 @@ $c-money-high: #63007F;
             position: absolute;
             @include rem((
                 left: $gs-gutter,
-                bottom: 10px
+                bottom: $comercial-comp-padding
             ));
         }
     }
