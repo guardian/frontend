@@ -122,10 +122,10 @@
     @fragments.commercial.commercialComponent(name="merchandising-high", adType="commercial-component-high", sizeMapping=Map("desktop" -> Seq("888,87")))
 </div>
 
-
 @fragments.storyPackagePlaceholder(storyPackage)
 
 @fragments.onwardPlaceholder(VisualTone(article))
+
 
 <div class="facia-container facia-container--layout-article">
     @fragments.mostPopularPlaceholder(article.section, VisualTone(article))
@@ -133,4 +133,5 @@
 <div class="facia-container facia-container--layout-article facia-container--commercial">
     @fragments.commercial.commercialComponent(name="merchandising", adType="commercial-component", sizeMapping=Map("mobile" -> Seq("888,88")))
 </div>
+@fragments.breadcrumb(article)
 }

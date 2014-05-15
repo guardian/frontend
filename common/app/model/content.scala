@@ -33,6 +33,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   lazy val isSeries: Boolean = series.nonEmpty
   lazy val hasLargeContributorImage: Boolean = tags.filter(_.hasLargeContributorImage).nonEmpty
   lazy val isFromTheObserver: Boolean = publication == "The Observer"
+  lazy val primaryKeyWordTag: Option[Tag] = tags.find(!_.isSectionTag)
 
 
   // read this before modifying
