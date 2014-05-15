@@ -49,14 +49,7 @@
         // must always be set before the Omniture file is parsed
         window.s_account = guardian.config.page.omnitureAccount;
 
-        if (!isModern) {
-            var s = document.createElement('script' ),
-                sc = document.getElementsByTagName('script')[0];
-            s.src = '@Static("javascripts/bootstraps/ophan.js")';
-            s.aysnc = true;
-            sc.parentNode.insertBefore(s, sc);
-            return false;
-        }
+        if (!isModern) { return false; }
 
         @if(CssFromStorageSwitch.isSwitchedOn && !play.Play.isDev()) {
             function loadCssFromStorage() {
