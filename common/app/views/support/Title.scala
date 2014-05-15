@@ -2,7 +2,6 @@ package views.support
 
 import model.{Tag, Content, MetaData}
 import play.api.templates.Html
-import common.{Edition, Navigation}
 import play.api.mvc.RequestHeader
 
 object Title {
@@ -17,7 +16,7 @@ object Title {
   }
 
   private def getSectionConsideringWebtitle(webTitle: String, section: Option[String]): String =
-    section.filterNot(_.toLowerCase == webTitle.toLowerCase).fold(""){ s => s" | ${s.capitalize}"}
+    section.filter(_.nonEmpty).filterNot(_.toLowerCase == webTitle.toLowerCase).fold(""){ s => s" | ${s.capitalize}"}
 
   private def pagination(page: MetaData) = page.pagination.filterNot(_.isFirstPage).map{ pagination =>
     s" | Page ${pagination.currentPage} of ${pagination.lastPage}"
