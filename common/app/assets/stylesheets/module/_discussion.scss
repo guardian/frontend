@@ -19,7 +19,7 @@ $c-replyText: $c-body;
     }
 }
 
-.discussion--lowered  {
+.discussion--lowered {
     @include mq(leftCol) {
         @include rem((
             margin-right: - ($a-leftCol-width + ($gs-gutter * 9))

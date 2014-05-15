@@ -151,24 +151,22 @@
     min-height: 0;
     padding: 0;
     text-align: left;
+    @include rem((
+        padding-top: $gs-baseline / 3,
+        margin-bottom: ($gs-baseline / 3) * 2
+    ));
 
+    @include mq(leftCol) {
+        border-top: 1px dotted $c-neutral5;
+    }
     .ad-slot__container {
         width: 100%;
         display: block;
     }
     .ad-slot--paid-for-badge__inner {
         overflow: hidden;
-        border-top: 1px dotted $c-neutral5;
-        @include rem((
-            padding-top: $gs-baseline / 3,
-            padding-bottom: ($gs-baseline / 3) * 2
-        ));
 
         @include mq(leftCol) {
-            @include rem((
-                padding-top: 2px,
-                padding-bottom: $gs-baseline
-            ));
             .article__meta-container--no-byline & {
                 @include rem((
                     padding-top: $gs-baseline / 3
@@ -185,6 +183,10 @@
     .ad-slot--paid-for-badge__label {
         color: $c-neutral2;
         margin: 0;
+
+        .facia-container--advertisement-feature & {
+            color: $c-neutral2-contrasted;
+        }
     }
     .ad-slot--paid-for-badge__header {
         font-weight: bold;
@@ -206,26 +208,15 @@
         @include clearfix;
         position: relative;
         min-height: 90px;
-        @include rem((
-            padding-bottom: $gs-baseline/2
-        ));
+        border-top: none;
+        z-index: 99;
 
-        .ad-slot--paid-for-badge__inner {
-            border-top: 0;
-            padding-bottom: 0;
-        }
         .ad-slot--paid-for-badge__link {
             position: relative;
             float: right;
             @include rem((
                 margin-top: nth(nth($fs-textsans, 2), 2)*-1
             ));
-
-            .facia-container--advertisement-feature & {
-                @include rem((
-                    margin-top: nth(nth($fs-textsans, 2), 2)*-2
-                ));
-            }
         }
         .ad-slot--paid-for-badge__logo {
             display: block;
@@ -236,13 +227,10 @@
         @include mq(tablet) {
             margin-left: 50%;
             width: auto;
+            padding-top: 0;
             @include rem((
                 margin-top: -$gs-row-height
             ));
-
-            .ad-slot--paid-for-badge__inner {
-                padding-top: 0;
-            }
         }
         @include mq(desktop) {
             @include rem((

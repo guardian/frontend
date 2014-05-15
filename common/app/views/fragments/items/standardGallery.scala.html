@@ -32,13 +32,13 @@
                 </div>
             </a>
             <a href="@LinkTo{@trail.url}" class="item__link item__link--no-border" data-link-name="article">
-                @trail match { case content:model.Content => @fragments.items.elements.tagOrSection(content) }
-
                 <h@if(isFirstContainer && index == 0){1}else{2} class="item__title item__title--has-icon-mobile">
                     <span class="i i-gallery-yellow-small"></span>
                     @RemoveOuterParaHtml(trail.headline)
                 </h@if(isFirstContainer && index == 0){1}else{2}>
             </a>
+
+            @trail match { case content:model.Content => @fragments.items.elements.tagOrSection(content) }
 
             @trail.trailText.map { text =>
                 <div class="item__standfirst">@Html(text)</div>

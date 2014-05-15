@@ -517,7 +517,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         import browser._
 
         Then("I should see links to keywords")
-        $(".article__keywords a").size should be (5)
+        $(".article__keywords a").size should be (18)
       }
     }
 

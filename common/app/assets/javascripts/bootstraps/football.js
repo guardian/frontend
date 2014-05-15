@@ -271,7 +271,9 @@ define([
             window.location = this.value;
         });
 
-        // World Cup content - TODO (jamesgorrie): be sure to remove
+        // World Cup content
+        // config.switches.worldCupWallchartEmbed
+        // Remove this content below when you remove the switch as it's specific to World Cup 2014
         if (config.page.isFootballWorldCup2014) {
             $('a').attr('target', '_top');
             (function() {

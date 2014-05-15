@@ -5,9 +5,6 @@
     ));
     @include fs-bodyCopy(3);
 }
-.article--advertisement-feature {
-    @include f-textsans;
-}
 
 .article__zone {
     @include fs-header(3);
@@ -303,6 +300,15 @@
     }
 }
 
+.article--advertisement-feature {
+    @include f-textsans;
+
+    .article__headline,
+    .article__standfirst {
+        @include f-headlineSans;
+    }
+}
+
 .article-body {
     @include mq(tablet) {
         @include rem((
@@ -502,6 +508,11 @@
         margin-top: $gs-baseline,
         margin-bottom: $gs-baseline
     ));
+}
+
+.article__keywords--more-tags {
+  vertical-align: bottom;
+  display: inline-block;
 }
 
 
@@ -797,6 +808,8 @@
 }
 
 .drop-cap {
+  @include mq($to: tablet) {
+
     float: left;
     display: inline-block;
     text-transform: uppercase;
@@ -814,17 +827,23 @@
         vertical-align: text-top;
         @include font-size(52px, 40px);
     }
+  }
+}
 
+.drop-cap--wide {
     @include mq($from: tablet) {
-        &.drop-cap--wide {
-            @include rem((
-                margin-right: 5px,
-                height: 3*get-line-height($fs-bodyCopy, 3)
-            ));
+        float: left;
+        display: inline-block;
+        text-transform: uppercase;
+        @include f-headline;
+        font-weight: 200;
+        @include rem((
+            margin-right: 5px,
+            height: 3*get-line-height($fs-bodyCopy, 3)
+        ));
 
-            .drop-cap__inner {
-                @include font-size(84px, 68px);
-            }
+        .drop-cap__inner {
+            @include font-size(84px, 68px);
         }
     }
 }
