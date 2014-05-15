@@ -62,7 +62,8 @@ define([
             masterclassesHigh: this.host + 'masterclasses-high.json?'       + this.userSegments + '&s=' + this.section,
             soulmates:         this.host + 'soulmates/mixed.json?'          + this.userSegments + '&s=' + this.section,
             soulmatesHigh:     this.host + 'soulmates/mixed-high.json?'     + this.userSegments + '&s=' + this.section,
-            travel:            this.host + 'travel/offers.json?'            + this.userSegments + '&s=' + this.section + '&' + this.getKeywords()
+            travel:            this.host + 'travel/offers.json?'            + this.userSegments + '&s=' + this.section + '&' + this.getKeywords(),
+            travelHigh:        this.host + 'travel/offers-high.json?'       + this.userSegments + '&s=' + this.section + '&' + this.getKeywords()
         };
         this.postLoadEvents = {
             books: function(el) {

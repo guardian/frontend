@@ -1,0 +1,54 @@
+@(offers: Seq[model.commercial.travel.Offer])(implicit request: RequestHeader)
+
+@import conf.Configuration
+
+<link rel="stylesheet" href="@Static("stylesheets/commercial.css")" />
+
+@defining(("1_0", "2014-05-15")) { case (version, date) =>
+    <div class="commercial commercial--travel">
+        <div class="facia-container__inner">
+            <div class="container__title commercial__head">
+                <h3 class="commercial__title">
+                    <a href="@AdLink{@Configuration.commercial.travel_url/}" data-link-name="merchandising-travel-v@{version}_@{date}-high-title">
+                        <span>Guardian <span class="commercial__title__middle-word">Holiday</span> <span class="commercial__title__last-word">Offers</span></span>
+                    </a>
+                </h3>
+                <form action="@Configuration.commercial.travel_url/Search" class="commercial__search">
+                    <div>
+                        <label for="traveloffer" class="u-h">Find hand picked holidays for hundreds of destinations</label>
+                        <input id="traveloffer" name="search" class="commercial__search__input" type="text" placeholder="Find your perfect holiday" />
+                        <button type="submit" class="u-button-reset commercial__search__submit" data-link-name="merchandising-travel-v@{version}_@{date}-high-search">
+                            <i class="i i-search"></i>
+                            <span class="u-h">Find your perfect holiday</span>
+                        </button>
+                        <input value="%JustOmnitureToken%" name="INTCMP" type="hidden" />
+                    </div>
+                </form>
+                <a class="commercial__home-link" href="@AdLink{@Configuration.commercial.travel_url}" data-link-name="merchandising-travel-v@{version}_@{date}-high-visit-shop">View more great deals
+                    <span class="commercial__home-link__cta">
+                        <span class="i i-filter-arrow-down"></span>
+                    </span>
+                </a>
+            </div>
+
+            <div class="container__body commercial__body">
+                <ul class="lineitems">
+                    @offers.take(4).map { offer =>
+                        <li class="lineitem">
+                            <div>
+                                <a class="lineitem__link" href="@AdLink{@offer.offerUrl}" data-link-name="merchandising-travel-v@{version}_@{date}-high-@{offer.title}">
+                                    <img class="lineitem__image" src="@offer.imageUrl" alt="" />
+                                    <div class="lineitem__offer">
+                                        <h4 class="lineitem__title">@offer.title</h4>
+                                        <p class="lineitem__meta">@offer.durationInWords from <span class="lineitem__price">£@offer.fromPrice</span></p>
+                                    </div>
+                                </a>
+                                <p class="lineitem__description commercial--travel__item__description"><a class="lineitem__link commercial--travel__description__link" href="@AdLink{@offer.offerUrl}" data-link-name="merchandising-travel-v@{version}_@{date}-high-@{offer.title}-book-now"><i class="i i-arrow-white-down"></i>Book now</a></p>
+                            </div>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+}
