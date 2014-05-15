@@ -162,7 +162,7 @@ $c-commercial-travel-dark: #002b6c;
             width: 33%;
         }
     }
-    @include mq($from: desktop, $to: faciaLeftCol){
+    @include mq($from: desktop, $to: faciaLeftCol) {
         .commercial__head {
             @include rem((
                 padding-right: $gs-gutter
