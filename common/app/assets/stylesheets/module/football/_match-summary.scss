@@ -12,7 +12,7 @@ $football-crest-large: 60px;
     display: block;
     position: relative;
 
-    &:hover {
+    &a:hover {
         background: $c-neutral7;
         text-decoration: none;
     }
@@ -194,6 +194,12 @@ $football-crest-large: 60px;
 }
 
 @mixin match-summary--responsive {
+    .match-summary {
+        @include rem((
+            margin-bottom: $gs-baseline*3
+        ));
+    }
+
     .match-summary__teams {
         border-top: 0 none;
     }
