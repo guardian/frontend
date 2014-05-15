@@ -1,19 +1,32 @@
 @(article: Article)(implicit request: RequestHeader)
 
-<div class="gs-container">
-    <div class="article2__section">
-        <a class="tone-colour" data-link-name="article section" href="@LinkTo{/@article.section}">@Html(article.sectionName.toLowerCase)</a>
+<header class="article2__head article2__head--tonal">
+
+    <div class="tone-background">
+        <div class="gs-container">
+            <div class="article2__main-column">
+
+                <div class="article2__section">
+                    <a class="tone-colour" data-link-name="article section" href="@LinkTo{/@article.section}">@Html(article.sectionName.toLowerCase)</a>
+                </div>
+
+                <h1 itemprop="headline" class="article2__headline js-score">@Html(article.headline)</h1>
+
+                @if(article.isCommentable) {
+                    <div class="article__head__comment-count article__head__comment-count--standfirst js-comment-count"></div>
+                }
+
+            </div>
+        </div>
     </div>
 
-    <header class="article2__head">
+    <div class="tone-background--accent">
+        <div class="gs-container">
+            <div class="article2__main-column">
 
-        <h1 itemprop="headline" class="article__headline js-score">@Html(article.headline)</h1>
+                @fragments.standfirst(article)
 
-        @fragments.standfirst(article)
+            </div>
+        </div>
 
-        @if(article.isCommentable) {
-            <div class="article__head__comment-count article__head__comment-count--standfirst js-comment-count"></div>
-        }
-
-    </header>
-</div>
+</header>

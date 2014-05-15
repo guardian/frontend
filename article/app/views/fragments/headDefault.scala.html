@@ -1,14 +1,14 @@
 @(article: Article)(implicit request: RequestHeader)
 
-<div class="gs-container">
-    <div class="article2__top-border"></div>
-    <div class="article2__main-column">
+<header class="article2__head">
 
-        <div class="article2__section">
-            <a class="tone-colour" data-link-name="article section" href="@LinkTo{/@article.section}">@Html(article.sectionName.toLowerCase)</a>
-        </div>
+    <div class="gs-container">
+        <div class="article2__top-border"></div>
+        <div class="article2__main-column">
 
-        <header class="article2__head">
+            <div class="article2__section">
+                <a class="tone-colour" data-link-name="article section" href="@LinkTo{/@article.section}">@Html(article.sectionName.toLowerCase)</a>
+            </div>
 
             <h1 itemprop="headline" class="article2__headline js-score">@Html(article.headline)</h1>
 
@@ -18,6 +18,6 @@
                 <div class="article__head__comment-count article__head__comment-count--standfirst js-comment-count"></div>
             }
 
-        </header>
+        </div>
     </div>
-</div>
+</header>

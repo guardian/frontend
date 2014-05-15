@@ -3,12 +3,12 @@
 
 @defining(page.video){ video =>
     <div class="gs-container">
-        <h2 class="article__zone left-col-deport tone-@{video.visualTone} tone-accent-border hide-on-mobile-if-localnav">
+        <h2 class="article__zone left-col-deport tone-@video.visualTone tone-accent-border hide-on-mobile-if-localnav">
             <span class="left-col-deport__body" data-component="meta">
                 <a class="tone-colour tone-border" data-link-name="article section" href="/@LinkTo(video.section)">@Html(video.sectionName.toLowerCase)</a>
             </span>
         </h2>
-        <div class="article-wrapper monocolumn-wrapper tone-@{video.visualTone}">
+        <div class="article-wrapper monocolumn-wrapper tone-@video.visualTone">
 
             <article id="article" class="article video @if(video.isLive){is-live}" itemprop="mainContentOfPage"
                      itemscope itemtype="@video.schemaType" role="main">
@@ -70,9 +70,9 @@
     </div>
 
     @fragments.storyPackagePlaceholder(page.storyPackage)
-    @fragments.onwardPlaceholder(@{video.visualTone})
+    @fragments.onwardPlaceholder(video.visualTone)
 
     <div class="facia-container facia-container--layout-article">
-        @fragments.mostPopularPlaceholder(video.section, @{video.visualTone})
+        @fragments.mostPopularPlaceholder(video.section, video.visualTone)
     </div>
 }

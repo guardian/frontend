@@ -2,7 +2,7 @@
 @import conf.Switches._
 
 @defining((model.article, model.storyPackage)) { case (article, storyPackage) =>
-<div>
+<div class="tone-@article.visualTone tone-@article.visualTone--article">
     @if(article.isFeature || article.isComment) {
         @fragments.headTonal(article)
     } else {
