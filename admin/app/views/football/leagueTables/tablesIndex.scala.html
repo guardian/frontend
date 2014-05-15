@@ -12,17 +12,7 @@
                 @views.html.football.fragments.chooseLeague("competitionId", leagues)
 
                 <div class="form-group">
-                    <select name="group" id="id-group" class="form-control" data-placeholder="Choose group">
-                        <option value="">choose group (only supported with full league)</option>
-                        <option value="group-a">Group A</option>
-                        <option value="group-b">Group B</option>
-                        <option value="group-c">Group C</option>
-                        <option value="group-d">Group D</option>
-                        <option value="group-e">Group E</option>
-                        <option value="group-f">Group F</option>
-                        <option value="group-g">Group G</option>
-                        <option value="group-h">Group H</option>
-                    </select>
+                    @views.html.football.fragments.chooseGroup("group")
                 </div>
             </div>
 
