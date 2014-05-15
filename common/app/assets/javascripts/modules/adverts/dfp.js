@@ -116,20 +116,25 @@ define([
          */
         checkForBreakout = function($slot) {
             /* jshint evil: true */
-            var frameContents = $slot[0].querySelector('iframe').contentDocument.body;
+            var iFrame = $slot[0].querySelector('iframe');
+            if (iFrame) {
 
-            for (var cls in breakoutHash) {
-                var $el = bonzo(frameContents.querySelector('.' + cls));
+                var frameContents = iFrame.contentDocument.body;
 
-                if ($el.length > 0) {
-                    if ($el[0].nodeName.toLowerCase() === 'script') {
-                        // evil, but we own the returning js snippet
-                        eval($el.html());
-                    } else {
-                        $slot.html('');
-                        $slot.first().append(breakoutHash[cls].replace(/%content%/g, $el.html()));
+                for (var cls in breakoutHash) {
+                    var $el = bonzo(frameContents.querySelector('.' + cls));
+
+                    if ($el.length > 0) {
+                        if ($el[0].nodeName.toLowerCase() === 'script') {
+                            // evil, but we own the returning js snippet
+                            eval($el.html());
+                        } else {
+                            $slot.html('');
+                            $slot.first().append(breakoutHash[cls].replace(/%content%/g, $el.html()));
+                        }
                     }
                 }
+
             }
         },
         refresh = function() {
@@ -172,7 +177,7 @@ define([
             return mapping.build();
         },
         /**
-         * Builds the appropriate page level targetting
+         * Builds the appropriate page level targeting
          *
          * a      = audience science
          * at     = adtest cookie
@@ -184,7 +189,7 @@ define([
          * pt     = content type
          * url    = path
          */
-        buildPageTargetting = function () {
+        buildPageTargeting = function () {
 
             function encodeTargetValue(value) {
                 return value ? queryString.formatKeyword(value).replace(/&/g, 'and').replace(/'/g, '') : '';
@@ -219,8 +224,8 @@ define([
             }, AudienceScienceGateway.getSegments(), criteo.getSegments());
         },
         buildAdUnit = function () {
-            var isFront      = this.config.page.isFront || this.config.page.contentType === 'Section',
-                section      = this.config.page.section,
+            var isFront      = config.page.isFront || config.page.contentType === 'Section',
+                section      = config.page.section,
                 adUnitSuffix = section;
             if (isFront) {
                 if (section !== '') {
@@ -228,7 +233,7 @@ define([
                 }
                 adUnitSuffix += 'front';
             }
-            return '/' + this.config.page.dfpAccountId + '/' + this.config.page.dfpAdUnitRoot + '/' + adUnitSuffix;
+            return '/' + config.page.dfpAccountId + '/' + config.page.dfpAdUnitRoot + '/' + adUnitSuffix;
         };
 
     /**
@@ -237,8 +242,8 @@ define([
     var setListeners = function() {
             googletag.pubads().addEventListener('slotRenderEnded', parseAd);
         },
-        setPageTargetting = function() {
-            var targets = buildPageTargetting();
+        setPageTargeting = function() {
+            var targets = buildPageTargeting();
             for (var target in targets) {
                 if (targets.hasOwnProperty(target)) {
                     googletag.pubads().setTargeting(target, targets[target]);
@@ -326,7 +331,7 @@ define([
             }
 
             window.googletag.cmd.push(setListeners);
-            window.googletag.cmd.push(setPageTargetting);
+            window.googletag.cmd.push(setPageTargeting);
             window.googletag.cmd.push(defineSlots);
             window.googletag.cmd.push(fireAdRequest);
             // anything we want to happen after displaying ads
