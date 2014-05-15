@@ -82,6 +82,28 @@ define([
             this.trailTextInput  = this.overrider('trailText');
             this.trailTextRevert = this.reverter('trailText');
 
+            this.provisionalImageSrc = ko.observable();
+            this.meta.imageSrc.subscribe(function(src) {
+                this.provisionalImageSrc(src);
+            }, this);
+
+            this.provisionalImageSrc.subscribe(function(src) {
+                var self = this;
+
+                if (src === this.meta.imageSrc()) { return; }
+
+                this.validateImageSrc(src)
+                .done(function() {
+                    self.meta.imageSrc(src);
+                    self.state.isOpenImage(false);
+                    self.save();
+                })
+                .fail(function(err) {
+                    self.provisionalImageSrc(undefined);
+                    window.alert('Sorry! ' + err);
+                });
+            }, this);
+
             this.populate(opts);
 
             // Populate supporting
@@ -100,19 +122,6 @@ define([
 
                 contentApi.decorateItems(self.meta.supporting.items());
             }
-
-            this.meta.imageSrc.subscribe(function(src) {
-                var self = this;
-
-                this.validateImageSrc(src)
-                .done(function() {
-                    self.save();
-                })
-                .fail(function(err) {
-                    self.meta.imageSrc(undefined);
-                    window.alert('Sorry! ' + err);
-                });
-            }, this);
 
             this.sparkline();
             this.setFrontPublicationTime();

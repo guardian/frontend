@@ -266,11 +266,11 @@
                             value: meta.href"/>
 
                         <div data-bind="
-                            if: meta.imageSrc() || state.isOpenImage">
+                            if: state.isOpenImage() || meta.imageSrc()">
                             <input type="text" placeholder="Image URL, 5x3 aspect ratio, min width 620px" data-bind="
-                                hasFocus: true;
+                                hasFocus: state.isOpenImage;
                                 event: {blur: save},
-                                value: meta.imageSrc"/>
+                                value: provisionalImageSrc"/>
                         </div>
                     </div>
 
@@ -283,6 +283,14 @@
 
                     <div class="misc__overrides">
                         Image
+
+                        <!-- ko if: $root.switches()['facia-tool-image-override'] -->
+                        <a data-bind="
+                            click: toggleOpenImage,
+                            text: meta.imageSrc() ? 'replaced' : 'replace',
+                            css: {selected: meta.imageSrc}"></a>
+                        &middot;
+                        <!-- /ko -->
                         <a data-bind="
                             click: toggleImageAdjustBoost,
                             text: meta.imageAdjust() === 'boost' ? 'boosted' : 'boost',
@@ -292,14 +300,6 @@
                             click: toggleImageAdjustHide,
                             text: meta.imageAdjust() === 'hide' ? 'hidden' : 'hide',
                             css: {selected: meta.imageAdjust() === 'hide'}"></a>
-
-                        <!-- ko if: $root.switches()['facia-tool-image-override'] -->
-                        &middot;
-                        <a data-bind="
-                            click: toggleOpenImage,
-                            text: meta.imageSrc() ? 'replaced' : 'replace',
-                            css: {selected: meta.imageSrc}"></a>
-                        <!-- /ko -->
 
                         &middot;
                         Mark as
