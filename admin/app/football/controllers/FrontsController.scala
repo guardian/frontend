@@ -108,12 +108,13 @@ object FrontsController extends Controller with ExecutionContexts with GetPaClie
   def matchesRedirect = Action { implicit request =>
     val submission = request.body.asFormUrlEncoded.get
     val competitionId = submission.get("competition").get.head
-    (submission.get("team1").map(_.head), submission.get("team2").map(_.head)) match {
-      case (Some(team1Id), Some(team2Id)) => Cached(60)(SeeOther(s"/admin/football/fronts/matches/$competitionId/$team1Id/$team2Id"))
-      case (Some(team1Id), None) => Cached(60)(SeeOther(s"/admin/football/fronts/matches/$competitionId/$team1Id"))
-      case (None, Some(team1Id)) => Cached(60)(SeeOther(s"/admin/football/fronts/matches/$competitionId/$team1Id"))
-      case (None, None) => Cached(60)(SeeOther(s"/admin/football/fronts/matches/$competitionId"))
+    val url = (submission.get("team1").flatMap(_.filterNot(_.isEmpty).headOption), submission.get("team2").flatMap(_.filterNot(_.isEmpty).headOption)) match {
+      case (Some(team1Id), Some(team2Id)) => s"/admin/football/fronts/matches/$competitionId/$team1Id/$team2Id"
+      case (Some(team1Id), None) => s"/admin/football/fronts/matches/$competitionId/$team1Id"
+      case (None, Some(team2Id)) => s"/admin/football/fronts/matches/$competitionId/$team2Id"
+      case (_, _) => s"/admin/football/fronts/matches/$competitionId"
     }
+    Cached(60)(SeeOther(url))
   }
 
   def chooseMatchForComp(competitionId: String) = chooseMatch(competitionId, None, None)
@@ -149,10 +150,13 @@ object FrontsController extends Controller with ExecutionContexts with GetPaClie
 
   private def getMatchesFor(competitionId: String, team1IdOpt: Option[String], team2IdOpt: Option[String]): Future[(List[LiveMatch], List[Fixture], List[Result])] = {
     val today = DateMidnight.now
+    val fLiveMatches = client.liveMatches(competitionId)
+    val fFixtures = client.fixtures(competitionId)
+    val fResults = client.results(competitionId, today.minusDays(2))
     for {
-      liveMatches <- client.liveMatches(competitionId)
-      fixtures <- client.fixtures(competitionId)
-      results <- client.results(competitionId, today.minusDays(2))
+      liveMatches <- fLiveMatches
+      fixtures <- fFixtures
+      results <- fResults
     } yield {
       val filterFn: FootballMatch => Boolean = (team1IdOpt, team2IdOpt) match {
         case (Some(team1Id), Some(team2Id)) =>
