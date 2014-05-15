@@ -28,7 +28,9 @@ define(['common/$', 'common/utils/detect'], function ($, detect) {
                 id: 'hide',
                 test: function () {
                     // hide text
-                    $('.top-nav__item--search .control__info').hide();
+                    $('.top-nav__item--search .control__info').css({
+fix                         display: "none !important"
+                    });
                     // make it narrower
                     $('.top-nav__item--search')
                         .removeClass('top-nav__item--search')
