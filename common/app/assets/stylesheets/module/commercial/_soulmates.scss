@@ -181,8 +181,9 @@ $c-soulmates-red: #d70851;
     }
     .search__dropdown__options {
         float: right;
-        min-width: 54%;
-        direction: rtl;
+        @include mq($to: tablet) {
+            min-width: 54%;
+        }
     }
     $search-submit-cta-diameter: 20px;
     .search__submit {

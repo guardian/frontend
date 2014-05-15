@@ -35,7 +35,7 @@ $c-money-high: #63007F;
         position: absolute;
         right: 0;
         @include rem((
-            top: 13px
+            top: $gs-baseline
         ));
         color: $c-money-high;
         width: auto;
