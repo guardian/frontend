@@ -172,7 +172,9 @@ $football-crest-large: 60px;
 }
 
 .match-summary__comment {
-    bottom: -$gs-baseline*2;
+    @include rem((
+        bottom: -$gs-baseline*2
+    ));
     position: absolute;
 }
 
@@ -217,7 +219,6 @@ $football-crest-large: 60px;
             @include rem((
                 padding-left: $gs-gutter*2
             ));
-
             padding-right: 0;
             text-align: right;
         }
@@ -293,7 +294,9 @@ $football-crest-large: 60px;
     }
 
     .match-info {
-        bottom: -$gs-baseline*2;
+        @include rem((
+            bottom: -$gs-baseline*2
+        ));
         display: block;
         left: 0;
         padding-left: 0;
@@ -313,5 +316,3 @@ $football-crest-large: 60px;
         @include match-summary--responsive;
     }
 }
-
-
