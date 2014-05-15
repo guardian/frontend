@@ -101,8 +101,17 @@ define([
                 contentApi.decorateItems(self.meta.supporting.items());
             }
 
-            this.meta.imageSrc.subscribe(function() {
-                this.validateImageSrc();
+            this.meta.imageSrc.subscribe(function(src) {
+                var self = this;
+
+                this.validateImageSrc(src)
+                .done(function() {
+                    self.save();
+                })
+                .fail(function(err) {
+                    self.meta.imageSrc(undefined);
+                    window.alert('Sorry! ' + err);
+                });
             }, this);
 
             this.sparkline();
@@ -279,37 +288,34 @@ define([
             }
         };
 
-        Article.prototype.validateImageSrc = function() {
-            var self = this,
+        Article.prototype.validateImageSrc = function(src) {
+            var defer = $.Deferred(),
                 img;
 
-            if (!this.meta.imageSrc()) {
-                self.save();
-                return;
+            if (!src) {
+                defer.resolve();
 
-            } else if (!this.meta.imageSrc().match(new RegExp('^http://.*\\.' + vars.CONST.imageCdnDomain + '/'))) {
-                this.meta.imageSrc(undefined);
-                window.alert('Sorry! Images must come from *.' + vars.CONST.imageCdnDomain);
-                self.save();
-                return;
+            } else if (!src.match(new RegExp('^http://.*\\.' + vars.CONST.imageCdnDomain + '/'))) {
+                defer.reject('Images must come from *.' + vars.CONST.imageCdnDomain);
+
+            } else {
+                img = new Image();
+                img.onerror = function() {
+                    defer.reject('That image could not be found');
+                };
+                img.onload = function() {
+                    var w = this.width  || 1,
+                        h = this.height || 1,
+                        err =  w > 2048 ? 'Images cannot be more than 2048 pixels wide' :
+                               w < 620  ? 'Images cannot be less than 620 pixels wide'  :
+                               Math.abs((3 * w)/(5 * h) - 1) > 0.01 ?  'Images must have a 5x3 aspect ratio' : false;
+
+                    defer[err ? 'reject' : 'resolve'](err);
+                };
+                img.src = src;
             }
 
-            img = new Image();
-            img.onload = function() {
-                var w = this.width  || 1,
-                    h = this.height || 1,
-                    err =  w > 2048 ? 'Images cannot be more than 2048 pixels wide' :
-                           w < 620  ? 'Images cannot be less than 620 pixels wide'  :
-                           Math.abs((3 * w)/(5 * h) - 1) > 0.01 ?  'Image must have a 5x3 aspect ratio' : false;
-
-                if (err) {
-                    self.meta.imageSrc(undefined);
-                    window.alert('Sorry! ' + err);
-                } else {
-                    self.save();
-                }
-            };
-            img.src = this.meta.imageSrc();
+            return defer.promise();
         };
 
         Article.prototype.convertToSnap = function() {
