@@ -181,7 +181,7 @@ define([
 
     Collection.prototype.hasOpenArticles = function() {
         return _.reduce(this.groups, function(hasOpen, group) {
-            return hasOpen || _.some(group.items(), function(article) { return article.state.open(); });
+            return hasOpen || _.some(group.items(), function(article) { return article.state.isOpen(); });
         }, false);
     };
 
