@@ -115,7 +115,7 @@ object MoreOnMatchController extends Controller with Football with Requests with
     val response = Competitions().competitions.find { _.matches.exists(_.id == matchId) }
       .fold(JsonNotFound()) { competition =>
         val fMatch = competition.matches.find(_.id == matchId).head
-        JsonComponent("html" -> football.views.html.fragments.matchSummary(fMatch, Some(competition)))
+        JsonComponent("html" -> football.views.html.fragments.matchSummary(fMatch, Some(competition), link = true))
       }
     Cached(30)(response)
   }

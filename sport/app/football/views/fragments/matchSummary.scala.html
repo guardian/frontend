@@ -1,8 +1,8 @@
-@(theMatch: FootballMatch, competition: Option[model.Competition] = None, responsive: Boolean = false)
+@(theMatch: FootballMatch, competition: Option[model.Competition] = None, responsive: Boolean = false, link: Boolean = false)(implicit request: RequestHeader)
 @import implicits.Football._
 
 @defining((theMatch.homeTeam, theMatch.awayTeam)){ case (homeTeam, awayTeam) =>
-<div class="@RenderClasses(Map(
+<@if(link){a href="@LinkTo("/football/match-redirect/"+theMatch.id)"}else{div} class="@RenderClasses(Map(
         "match-summary" -> true,
         "match-summary--fixture" -> theMatch.isFixture,
         "match-summary--responsive" -> responsive
@@ -37,14 +37,24 @@
             </div>
             <div class="team__info">
                 <h2 class="team__heading">
-                    <span class="team__name">@homeTeam.name</span>
+                    <span class="team__name" data-abbr="@pa.TeamCodes.codeFor(homeTeam)">
+                        <span class="team__name-long">@homeTeam.name</span>
+                    </span>
                     @if(theMatch.isLive || theMatch.isResult){<span class="team__score">@homeTeam.score</span>}
                 </h2>
 
-                <dl class="team__scorers u-unstyled">
-                    <dt class="u-h">Home team scorers</dt>
-                    @homeTeam.scorers.map{scorers => @scorers.split(",").map{ scorer => <dd>@scorer.replace("(", "").replace(")", "")</dd>}}
-                </dl>
+                @if(theMatch.isFixture){
+                    <div class="team__results-container">
+                        @competition.map{ competition =>
+                            @teamForm(homeTeam.id, competition)
+                        }
+                    </div>
+                }else{
+                    <dl class="team__scorers u-unstyled">
+                        <dt class="u-h">Home team scorers</dt>
+                        @homeTeam.scorers.map{scorers => @scorers.split(",").map{ scorer => <dd>@scorer.replace("(", "").replace(")", "")</dd>}}
+                    </dl>
+                }
             </div>
         </div>
 
@@ -56,14 +66,23 @@
             </div>
             <div class="team__info">
                 <h2 class="team__heading">
-                    <span class="team__name">@awayTeam.name</span>
+                    <span class="team__name" data-abbr="@pa.TeamCodes.codeFor(awayTeam)">
+                        <span class="team__name-long">@awayTeam.name</span>
+                    </span>
                     @if(theMatch.isLive || theMatch.isResult){<span class="team__score">@awayTeam.score</span>}
                 </h2>
-
-                <dl class="team__scorers u-unstyled">
-                    <dt class="u-h">Away team scorers</dt>
-                    @awayTeam.scorers.map{scorers => @scorers.split(",").map{ scorer => <dd>@scorer.replace("(", "").replace(")", "")</dd>}}
-                </dl>
+                @if(theMatch.isFixture){
+                    <div class="team__results-container">
+                        @competition.map{ competition =>
+                            @teamForm(awayTeam.id, competition)
+                        }
+                    </div>
+                }else{
+                    <dl class="team__scorers u-unstyled">
+                        <dt class="u-h">Away team scorers</dt>
+                        @awayTeam.scorers.map{scorers => @scorers.split(",").map{ scorer => <dd>@scorer.replace("(", "").replace(")", "")</dd>}}
+                    </dl>
+                }
             </div>
         </div>
         <div class="team__battle-line"></div>
@@ -71,5 +90,5 @@
 
     @theMatch.comments.map{ comments => <div class="match-summary__comment">@comments.replace("(", "").replace(")", "")</div>}
     @theMatch.homeTeam.aggregateScore.map{ score => <div class="match-summary__aggregate">agg. @score-@theMatch.awayTeam.aggregateScore</div>}
-</div>
+</@if(link){a}else{div}>
 }

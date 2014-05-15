@@ -64,6 +64,14 @@
             padding-right: $gs-gutter/2
         ));
         background: $c-neutral8;
+
+        &:hover {
+           background: $c-neutral7;
+        }
+    }
+
+    .team__heading {
+        @include fs-headline(2, true);
     }
 
 
@@ -71,10 +79,23 @@
     // See javascripts/modules/ui/snaps.js
     &.facia-snap-point--large {
         @include table--hide-none;
-
         .table,
         .table__caption {
             border-top: 0 none;
+        }
+    }
+
+    &.facia-snap-point--large,
+    &.facia-snap-point--medium {
+        @include match-summary--responsive;
+        .team__crest {
+            @include rem((
+                line-height: $gs-gutter*2
+            ));
+        }
+
+        .team__heading {
+            @include fs-headline(5, true)
         }
     }
 
@@ -90,11 +111,17 @@
             display: none;
         }
 
-        .team-name:after {
+        .team-name:after,
+        .team__name:after {
             content: attr(data-abbr);
         }
-        .team-name__long {
+        .team-name__long,
+        .team__name-long {
             @include u-h;
+        }
+
+        .match-info__venue {
+            display: none;
         }
     }
 }
