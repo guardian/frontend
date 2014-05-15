@@ -22,6 +22,8 @@ GET        /commercial/masterclasses-high.json                       controllers
 # Soulmates
 GET        /commercial/soulmates/mixed                               controllers.commercial.SoulmateAds.renderAds
 GET        /commercial/soulmates/mixed.json                          controllers.commercial.SoulmateAds.mixed
+GET        /commercial/soulmates/mixed-high                          controllers.commercial.SoulmateAds.renderAdsHigh
+GET        /commercial/soulmates/mixed-high.json                     controllers.commercial.SoulmateAds.mixedHigh
 
 # Money offers
 GET        /commercial/money/bestbuys                                controllers.commercial.MoneyOffers.bestBuys(format="html")
@@ -34,7 +36,7 @@ GET        /commercial/money/loans/:loanType                         controllers
 # Book offers
 GET        /commercial/books/bestsellers                             controllers.commercial.BookOffers.bestsellers(format="html")
 GET        /commercial/books/bestsellers.json                        controllers.commercial.BookOffers.bestsellers(format="json")
-GET        /commercial/books/bestsellers-high                       controllers.commercial.BookOffers.bestsellersHigh(format="html")
-GET        /commercial/books/bestsellers-high.json                        controllers.commercial.BookOffers.bestsellersHigh(format="json")
+GET        /commercial/books/bestsellers-high                        controllers.commercial.BookOffers.bestsellersHigh(format="html")
+GET        /commercial/books/bestsellers-high.json                   controllers.commercial.BookOffers.bestsellersHigh(format="json")
 GET        /commercial/books/book/*pageId.json                       controllers.commercial.BookOffers.singleBook(pageId, format="json")
 GET        /commercial/books/book/*pageId                            controllers.commercial.BookOffers.singleBook(pageId, format="html")

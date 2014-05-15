@@ -1,4 +1,4 @@
-@(competitions: List[pa.Season])
+@(competitions: List[pa.Season], teams: List[pa.Team])
 
 @views.html.football.main("Fronts components") {
     <hgroup class="page-header">
@@ -63,6 +63,23 @@
             <form class="form-inline" role="form" action="/admin/football/fronts/tables/redirect" method="post">
                 @views.html.football.fragments.chooseLeague("competition", competitions)
                 <button type="submit" class="btn btn-success">League table</button>
+            </form>
+        </div>
+        <div class="col-sm-6">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <h2>Big match special</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <form class="form-inline" role="form" action="/admin/football/fronts/matches/redirect" method="post">
+                @views.html.football.fragments.chooseLeague("competition", competitions)
+                @views.html.football.fragments.chooseTeam("team1", teams)
+                @views.html.football.fragments.chooseTeam("team2", teams)
+                <button type="submit" class="btn btn-success">Find matches</button>
             </form>
         </div>
         <div class="col-sm-6">

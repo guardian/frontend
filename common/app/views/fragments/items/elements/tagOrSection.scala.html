@@ -8,7 +8,7 @@
             }
         }
         @if(config.showSections) {
-            <a href="@LinkTo {/@content.section}">@content.section</a>
+            <a href="@LinkTo {/@content.section}">@content.section.capitalize</a>
         }
     </div>
 }

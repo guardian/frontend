@@ -80,6 +80,16 @@ module.exports = function (grunt) {
                     }
                 }
             },
+            ophan: {
+                options: {
+                    baseUrl: 'common/app/assets/javascripts',
+                    name: 'common/bootstraps/ophan',
+                    out: staticTargetDir + 'javascripts/bootstraps/ophan.js',
+                    wrap: {
+                        startFile: 'common/app/assets/javascripts/components/curl/dist/curl/curl.js'
+                    }
+                }
+            },
             admin: {
                 options: {
                     baseUrl: 'admin/app/assets/javascripts',
@@ -757,10 +767,10 @@ module.exports = function (grunt) {
     grunt.registerTask('compile:css', ['clean:css', 'sass:compile', 'replace:cssSourceMaps', 'copy:css']);
     grunt.registerTask('compile:js', function(app) {
         grunt.task.run(['clean:js']);
-        var apps = ['common'];
+        var apps = ['common', 'ophan'];
         if (!app) { // if no app supplied, compile all apps
-            apps = apps.concat(Object.keys(grunt.config('requirejs')).filter(function(app) { return ['options', 'common'].indexOf(app) === -1; }));
-        } else if (app !== 'common') {
+            apps = apps.concat(Object.keys(grunt.config('requirejs')).filter(function(app) { return ['options', 'common', 'ophan'].indexOf(app) === -1; }));
+        } else if (app !== 'common' && app !== 'ophan') {
             if (grunt.config('requirejs')[app]) {
                 apps.push(app);
             } else {

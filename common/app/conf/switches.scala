@@ -143,10 +143,6 @@ object Switches extends Collections {
     "If this switch is on, Criteo segments will be used to target ads.",
     safeState = Off, sellByDate = new DateMidnight(2014, 11, 1))
 
-  val LifeAndStyleHackSwitch = Switch("Ad Targeting", "life-and-style",
-    "If this switch is on, ads will work on Life and Style front while waiting for fix from Front Tools team.",
-    safeState = On, sellByDate = new DateMidnight(2014, 5, 21))
-
   // Commercial Tags
 
   val ImrWorldwideSwitch = Switch("Commercial Tags", "imr-worldwide",
@@ -261,10 +257,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
-  val IdentityEthicalAwardsSwitch = Switch("Feature Switches", "id-ethical-awards",
-    "If this switch is on, Ethical awards forms will be available",
-    safeState = Off, sellByDate = new DateMidnight(2014, 5, 16))
-
   val NetworkFrontOptIn = Switch("Feature Switches", "network-front-opt-in",
     "If this is switched on then an opt-in message will be displayed to users coming from the R2 network front",
     safeState = Off, sellByDate = new DateMidnight(2014, 5, 31)
@@ -308,9 +300,16 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 8, 10)
   )
 
+  // A/B Tests
+
   val ABHeaderSearchText = Switch("A/B Tests", "ab-header-search-text",
     "If this switch is turned on then the header search box will display a label for tablet and desktop.",
     safeState = Off, sellByDate = new DateMidnight(2014, 6, 9)
+  )
+
+  val ABHighRelevanceCommercialComponent = Switch("A/B Tests", "ab-high-relevance-commercial-component",
+    "If this switch is turned on, run the HighRelevanceCommercialComponent A/B test.",
+    safeState = Off, sellByDate = new DateMidnight(2014, 5, 31)
   )
 
   // Dummy Switches
@@ -348,6 +347,11 @@ object Switches extends Collections {
 
   val ToolSnaps = Switch("Facia Tool", "facia-tool-snaps",
     "If this is switched on then snaps can be created by dragging arbitrary links into the tool",
+    safeState = Off, sellByDate = never
+  )
+
+  val ToolImageOverride = Switch("Facia Tool", "facia-tool-image-override",
+    "If this is switched on then images can be overridden in the fronts tool",
     safeState = Off, sellByDate = never
   )
 
@@ -400,7 +404,6 @@ object Switches extends Collections {
     AudienceScienceSwitch,
     AudienceScienceGatewaySwitch,
     CriteoSwitch,
-    LifeAndStyleHackSwitch,
     DiscussionSwitch,
     OpenCtaSwitch,
     FontSwitch,
@@ -412,12 +415,12 @@ object Switches extends Collections {
     CssFromStorageSwitch,
     FacebookAutoSigninSwitch,
     IdentityFormstackSwitch,
-    IdentityEthicalAwardsSwitch,
     IdentityAvatarUploadSwitch,
     ToolDisable,
     ToolConfigurationDisable,
     ToolCheckPressLastmodified,
     ToolSnaps,
+    ToolImageOverride,
     ToolSparklines,
     OphanSwitch,
     ScrollDepthSwitch,
@@ -452,7 +455,8 @@ object Switches extends Collections {
     GzipSwitch,
     GeoMostPopular,
     TagLinkingSwitch,
-    ABHeaderSearchText
+    ABHeaderSearchText,
+    ABHighRelevanceCommercialComponent
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
