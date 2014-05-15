@@ -37,7 +37,8 @@
     "moment": "~2.5.1",
     "grunt-contrib-uglify": "~0.4.0",
     "grunt-env": "~0.4.1",
-    "grunt-scss-lint": "^0.1.7"
+    "grunt-scss-lint": "^0.1.7",
+    "grunt-reloadlet": "~0.1.1"
   },
   "scripts": {
     "postinstall": "grunt hookmeup"
