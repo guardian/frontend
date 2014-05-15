@@ -6,11 +6,11 @@ import conf.Configuration
 import com.amazonaws.services.sqs.model._
 import com.amazonaws.regions.{Regions, Region}
 import scala.collection.JavaConversions._
-import services.S3FrontsApi
+import services.{ConfigAgent, S3FrontsApi}
 import play.api.libs.json.{JsObject, Json}
 import scala.concurrent.duration._
 import scala.concurrent.{Future, Await}
-import frontpress.{FaciaToolConfigAgent, FrontPress}
+import frontpress.FrontPress
 import common.FaciaToolMetrics.{FrontPressCronFailure, FrontPressCronSuccess}
 import play.api.libs.concurrent.Akka
 import scala.util.{Failure, Success}
@@ -73,10 +73,10 @@ object FrontPressJob extends Logging with implicits.Collections {
 
   def pressByCollectionIds(ids: Set[String]): Future[Set[JsObject]] = {
     //Give it one second to update
-    Await.ready(FaciaToolConfigAgent.refreshAndReturn(), Configuration.faciatool.configBeforePressTimeout.millis)
+    Await.ready(ConfigAgent.refreshAndReturn(), Configuration.faciatool.configBeforePressTimeout.millis)
     val paths: Set[String] = for {
       id <- ids
-      path <- FaciaToolConfigAgent.getConfigsUsingCollectionId(id)
+      path <- ConfigAgent.getConfigsUsingCollectionId(id)
     } yield path
     val setOfFutureJson: Set[Future[JsObject]] = paths.map(pressByPathId)
     Future.sequence(setOfFutureJson) //To a Future of Set Json

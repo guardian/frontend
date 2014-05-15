@@ -81,8 +81,8 @@
             ));
         }
         .container__body {
-            margin-left: 0;
             @include rem((
+                margin-left: gs-span(3) + $gs-gutter,
                 width: gs-span(12)
             ));
         }

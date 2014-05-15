@@ -80,6 +80,16 @@ module.exports = function (grunt) {
                     }
                 }
             },
+            ophan: {
+                options: {
+                    baseUrl: 'common/app/assets/javascripts',
+                    name: 'common/bootstraps/ophan',
+                    out: staticTargetDir + 'javascripts/bootstraps/ophan.js',
+                    wrap: {
+                        startFile: 'common/app/assets/javascripts/components/curl/dist/curl/curl.js'
+                    }
+                }
+            },
             admin: {
                 options: {
                     baseUrl: 'admin/app/assets/javascripts',
@@ -285,6 +295,34 @@ module.exports = function (grunt) {
                             'font-weight': '700',
                             file: 'resources/fonts/TextSans-Medium.ttf',
                             format: 'ttf'
+                        }
+                    ]
+                }
+            },
+            WebHeadlineSansTtf: {
+                options: {
+                    filename: staticTargetDir + 'fonts/WebHeadlineSans.ttf.json',
+                    callback: 'guFont',
+                    fonts: [
+                        {
+                            'font-family': 'HeadlineSans',
+                            file: 'resources/fonts/HeadlineSans-Light.ttf',
+                            'font-weight': '200',
+                            format: 'ttf'
+                        }
+                    ]
+                }
+            },
+            WebHeadlineSansWoff: {
+                options: {
+                    filename: staticTargetDir + 'fonts/WebHeadlineSans.woff.json',
+                    callback: 'guFont',
+                    fonts: [
+                        {
+                            'font-family': 'HeadlineSans',
+                            file: 'resources/fonts/HeadlineSans-Light.woff',
+                            'font-weight': '200',
+                            format: 'woff'
                         }
                     ]
                 }

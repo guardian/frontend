@@ -1,4 +1,4 @@
-define(['bonzo', 'common/utils/detect'], function (bonzo, detect) {
+define(['common/$', 'common/utils/detect'], function ($, detect) {
 
     var HeaderSearchText = function () {
 
@@ -14,23 +14,25 @@ define(['bonzo', 'common/utils/detect'], function (bonzo, detect) {
         this.dataLinkNames = 'Search icon';
         this.idealOutcome = 'Increased number of clicks/taps on the search box.';
 
-        this.canRun = function (config) {
+        this.canRun = function () {
             return detect.getBreakpoint() !== 'mobile';
         };
 
         this.variants = [
             {
                 id: 'control',
-                test: function (context, config) {
+                test: function () {
                 }
             },
             {
                 id: 'hide',
-                test: function (context, config) {
+                test: function () {
                     // hide text
-                    bonzo(context.querySelector('.top-nav__item--search .control__info')).hide();
+                    $('.top-nav__item--search .control__info').css({
+                        display: 'none !important'
+                    });
                     // make it narrower
-                    bonzo(context.querySelector('.top-nav__item--search'))
+                    $('.top-nav__item--search')
                         .removeClass('top-nav__item--search')
                         .addClass('top-nav__item--search__hidden');
                 }

@@ -52,7 +52,8 @@ define([
     'common/modules/analytics/register',
     'common/modules/commercial/loader',
     'common/modules/onward/tonal',
-    'common/modules/identity/api'
+    'common/modules/identity/api',
+    'common/modules/onward/more-tags'
 ], function (
     $,
     mediator,
@@ -105,7 +106,8 @@ define([
     register,
     CommercialLoader,
     TonalComponent,
-    id
+    id,
+    MoreTags
 ) {
 
     var modules = {
@@ -493,6 +495,10 @@ define([
                     $('.discussion').addClass('discussion--lowered');
                 }
             });
+        },
+
+        showMoreTagsLink: function() {
+            new MoreTags().init();
         }
     };
 
@@ -542,6 +548,7 @@ define([
             modules.runForseeSurvey(config);
             modules.startRegister(config);
             modules.repositionComments();
+            modules.showMoreTagsLink();
         }
         mediator.emit('page:common:ready', config, context);
     };
