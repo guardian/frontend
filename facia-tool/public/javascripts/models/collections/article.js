@@ -83,6 +83,7 @@ define([
             this.trailTextRevert = this.reverter('trailText');
 
             this.provisionalImageSrc = ko.observable();
+
             this.meta.imageSrc.subscribe(function(src) {
                 this.provisionalImageSrc(src);
             }, this);
