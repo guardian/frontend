@@ -8,8 +8,6 @@ import org.joda.time.DateMidnight
 import football.model.PA
 import scala.concurrent.Future
 import model.{Cors, NoCache, Cached}
-import com.gu.management.JsonResponse
-import play.api.libs.Jsonp
 import play.api.libs.json.{JsString, JsArray, JsObject}
 import org.joda.time.format.DateTimeFormat
 
