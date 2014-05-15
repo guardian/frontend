@@ -473,16 +473,6 @@
 /* Layout changes across devices
    ========================================================================== */
 
-.article__meta-container,
-.article__inner {
-    @include rem((
-        max-width: gs-span(7)
-    ));
-
-    @include mq(rightCol) {
-        max-width: none;
-    }
-}
 .article__inner--head {
     max-width: none;
 
@@ -538,12 +528,6 @@
     .article-wrapper {
         max-width: none;
     }
-    .article__inner {
-        @include rem((
-            max-width: gs-span(8),
-            padding-right: $a-rightCol-width + $gs-gutter
-        ));
-    }
     .article__columning-wrapper {
         width: 100%;
         display: table;
@@ -588,11 +572,6 @@
             padding-right: gs-span(1) + $gs-gutter * 2
         ));
     }
-    .article__inner {
-        @include rem((
-            padding-right: $a-rightCol-width + gs-span(1) + $gs-gutter*2
-        ));
-    }
 }
 
 @include mq(leftCol) {
@@ -602,16 +581,9 @@
             padding-right: $gs-gutter
         ));
     }
-    .article__inner,
     .article__main-column {
         @include rem((
             padding-left: $a-leftCol-width + $gs-gutter
-        ));
-    }
-
-    .article__inner {
-        @include rem((
-            padding-right: $a-rightCol-width + $gs-gutter
         ));
     }
 
@@ -635,7 +607,6 @@
 }
 
 @include mq(wide) {
-    .article__inner,
     .article__main-column {
         @include rem((
             padding-left: gs-span(3) + $gs-gutter
@@ -644,11 +615,6 @@
     .article__main-column {
         @include rem((
             padding-right: gs-span(1) + $gs-gutter*2
-        ));
-    }
-    .article__inner {
-        @include rem((
-            padding-right: $a-rightCol-width + gs-span(1) + $gs-gutter*2
         ));
     }
 }
