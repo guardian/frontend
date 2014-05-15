@@ -1,6 +1,5 @@
 import common.{DiagnosticsLifecycle, ExecutionContexts}
 import conf.Filters
-import controllers.front.FrontLifecycle
 import dev.DevParametersLifecycle
 import dfp.DfpAgentLifecycle
 import feed.{OnwardJourneyLifecycle, MostReadLifecycle}
@@ -54,7 +53,6 @@ object DevJsonExtensionFilter extends EssentialFilter with ExecutionContexts wit
 object Global extends WithFilters(
   DevJsonExtensionFilter :: DevCacheWarningFilter :: Filters.common: _*
 )
-with FrontLifecycle
 with DevParametersLifecycle
 with AdminLifecycle
 with DiagnosticsLifecycle

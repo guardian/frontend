@@ -4,22 +4,20 @@
  */
 define([
     'common/$',
-    'bonzo',
     'bean'
 ], function (
     $,
-    bonzo,
     bean
 ) {
 
     function MoreTags() {
         this.init = function() {
-            var more = $('.js-more-tags')[0];
-            if (more) {
-                bonzo(more).removeClass('js-hidden');
+            var $more = $('.js-more-tags');
+            if ($more.length !== 0) {
+                $more.removeClass('js-hidden');
                 bean.on(document.querySelector('.js-more-tags__link'), 'click', function(){
-                    bonzo($('.js-hidden-tag')).removeClass('js-hidden');
-                    bonzo(more).addClass('js-hidden');
+                    $('.js-hidden-tag').removeClass('js-hidden');
+                    $more.addClass('js-hidden');
                 });
             }
         };

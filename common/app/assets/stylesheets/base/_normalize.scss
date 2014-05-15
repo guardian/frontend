@@ -229,7 +229,8 @@ samp {
  *    Known issue: affects color of disabled elements.
  * 2. Correct font properties not being inherited.
  * 3. Address margins set differently in Firefox 4+, Safari, and Chrome.
- * 4. It seems from testing that this needs to appear in the same block as 'font : ...'
+ * 4. -webkit-font-smoothing:... does not filter down to buttons
+ *    see: http://jameskoster.co.uk/work/using-webkit-font-smoothing-antialiased-check-your-buttons/
  */
 
 button,

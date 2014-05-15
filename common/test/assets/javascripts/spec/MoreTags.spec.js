@@ -1,13 +1,11 @@
 define([
+    'common/$',
     'common/modules/onward/more-tags',
-    'helpers/fixtures',
-    'bonzo',
-    'qwery'
+    'helpers/fixtures'
     ], function(
+    $,
     MoreTags,
-    fixtures,
-    bonzo,
-    qwery
+    fixtures
     ) {
 
     describe("MoreTabs", function() {
@@ -60,28 +58,30 @@ define([
         });
 
         it("should initially hide the 'more...' link", function(){
-            expect(bonzo(qwery('.js-more-tags')).hasClass('js-hidden')).toBeTruthy();
-            expect(bonzo(qwery('.js-hidden-tag')).hasClass('js-hidden')).toBeTruthy();
+            expect($('.js-more-tags').hasClass('js-hidden')).toBeTruthy();
+            expect($('.js-hidden-tag').hasClass('js-hidden')).toBeTruthy();
         });
 
         it("should reveal the 'more...' link when initialised", function(){
-            var t = new MoreTags();
-            t.init();
-            expect(bonzo(qwery('.js-more-tags')).hasClass('js-hidden')).toBeFalsy();
+
+            new MoreTags().init();
+
+            expect($('.js-more-tags').hasClass('js-hidden')).toBeFalsy();
 
             // but the tags should remain hidden
-            expect(bonzo(qwery('.js-hidden-tag')).hasClass('js-hidden')).toBeTruthy();
+            expect($('.js-hidden-tag').hasClass('js-hidden')).toBeTruthy();
         });
 
         it("should reveal the hidden keywords when clicked", function(){
-            var t = new MoreTags();
-            t.init();
+
+            new MoreTags().init();
+
             document.querySelector('.js-more-tags__link').click();
 
-            expect(bonzo(qwery('.js-hidden-tag')).hasClass('js-hidden')).toBeFalsy();
+            expect($('.js-hidden-tag').hasClass('js-hidden')).toBeFalsy();
 
             // but the more link should now be hidden
-            expect(bonzo(qwery('.js-more-tags')).hasClass('js-hidden')).toBeTruthy();
+            expect($('.js-more-tags').hasClass('js-hidden')).toBeTruthy();
         });
     });
 });
