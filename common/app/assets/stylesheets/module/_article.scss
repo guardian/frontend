@@ -317,7 +317,6 @@
     }
 }
 
-.article__container,
 .article__inner,
 .article__main-column {
     position: relative;
@@ -474,7 +473,6 @@
 /* Layout changes across devices
    ========================================================================== */
 
-.article__container,
 .article__meta-container,
 .article__inner {
     @include rem((

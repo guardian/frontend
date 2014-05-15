@@ -158,10 +158,6 @@ $block-padding-right: $gs-gutter;
     }
 }
 
-.blog .article__container {
-    max-width: none;
-}
-
 .right-col-deport {
     @include mq(rightCol) {
         @include rem((
