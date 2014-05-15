@@ -60,4 +60,10 @@
     <div class="facia-container facia-container--layout-article">
         @fragments.mostPopularPlaceholder(image.section, VisualTone(image))
     </div>
+    <div class="gs-container">
+        <div class="article-wrapper article__breadcrumb" itemscope itemtype="http://data-vocabulary.org/Breadcrumb" data-link-name="image breadcrumbs">
+            @fragments.breadcrumb(article)
+        </div>
+    </div>
+
 }
