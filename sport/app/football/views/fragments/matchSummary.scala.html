@@ -44,11 +44,11 @@
                 </h2>
 
                 @if(theMatch.isFixture){
-                    <div class="team__results-container">
-                        @competition.map{ competition =>
+                    @competition.map{ competition =>
+                        <div class="team__results-container">
                             @teamForm(homeTeam.id, competition)
-                        }
-                    </div>
+                        </div>
+                    }
                 }else{
                     <dl class="team__scorers u-unstyled">
                         <dt class="u-h">Home team scorers</dt>
@@ -72,11 +72,11 @@
                     @if(theMatch.isLive || theMatch.isResult){<span class="team__score">@awayTeam.score</span>}
                 </h2>
                 @if(theMatch.isFixture){
-                    <div class="team__results-container">
-                        @competition.map{ competition =>
+                    @competition.map{ competition =>
+                        <div class="team__results-container">
                             @teamForm(awayTeam.id, competition)
-                        }
-                    </div>
+                        </div>
+                    }
                 }else{
                     <dl class="team__scorers u-unstyled">
                         <dt class="u-h">Away team scorers</dt>
