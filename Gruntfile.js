@@ -767,7 +767,7 @@ module.exports = function (grunt) {
     grunt.registerTask('compile:css', ['clean:css', 'sass:compile', 'replace:cssSourceMaps', 'copy:css']);
     grunt.registerTask('compile:js', function(app) {
         grunt.task.run(['clean:js']);
-        var apps = ['common'];
+        var apps = ['common', 'ophan'];
         if (!app) { // if no app supplied, compile all apps
             apps = apps.concat(Object.keys(grunt.config('requirejs')).filter(function(app) { return ['options', 'common'].indexOf(app) === -1; }));
         } else if (app !== 'common') {
