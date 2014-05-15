@@ -147,4 +147,52 @@ trait Tags {
   lazy val types: Seq[Tag] = tagsOfType("type")
 
   def isSponsored = DfpAgent.isSponsored(keywords)
+
+  lazy val isLive = tones.exists(t => Tags.liveMappings.contains(t.id))
+  lazy val isComment = tones.exists(t => Tags.commentMappings.contains(t.id))
+  lazy val isFeature = tones.exists(t => Tags.featureMappings.contains(t.id))
+  lazy val isReview = tones.exists(t => Tags.reviewMappings.contains(t.id))
+
+  // Tones are all considered to be 'News' it is the default so we do not list news tones explicitly
+  lazy val visualTone: String =  if(isLive) Tags.VisualTone.Live
+                                   else if(isComment) Tags.VisualTone.Comment
+                                   else if(isFeature) Tags.VisualTone.Feature
+                                   else Tags.VisualTone.News
+}
+
+object Tags {
+
+  object VisualTone {
+    val Live = "live"
+    val Comment = "comment"
+    val Feature = "feature"
+    val News = "news"
+  }
+
+  private val liveMappings = Seq(
+    "tone/minutebyminute"
+  )
+
+  private val commentMappings = Seq(
+    "tone/comment",
+    "tone/letters",
+    "tone/profiles",
+    "tone/editorials"
+  )
+
+  private val featureMappings = Seq(
+    "tone/features",
+    "tone/recipes",
+    "tone/interview",
+    "tone/performances",
+    "tone/extract",
+    "tone/reviews",
+    "tone/albumreview",
+    "tone/livereview",
+    "tone/childrens-user-reviews"
+  )
+
+  private val reviewMappings = Seq(
+    "tone/reviews"
+  )
 }

@@ -8,7 +8,7 @@ import common.{LinkCounts, LinkTo, Reference}
 import org.jsoup.Jsoup
 import org.jsoup.safety.Whitelist
 import collection.JavaConversions._
-import views.support.{VisualTone, Naked, ImgSrc, StripHtmlTagsAndUnescapeEntities}
+import views.support.{Naked, ImgSrc, StripHtmlTagsAndUnescapeEntities}
 import play.api.libs.json.JsValue
 import conf.Configuration.facebook
 
@@ -272,7 +272,7 @@ private object ArticleSchemas {
       "http://schema.org/Review"
     else if (article.isBlog)
       "http://schema.org/BlogPosting"
-    else if (VisualTone(article) == VisualTone.News)
+    else if (article.visualTone == Tags.VisualTone.News)
       "http://schema.org/NewsArticle"
     else
       "http://schema.org/Article"
@@ -325,9 +325,6 @@ class Snap(snapId: String,
 class Article(content: ApiContentWithMeta) extends Content(content) {
   lazy val body: String = delegate.safeFields.getOrElse("body","")
   lazy val contentType = "Article"
-  lazy val isReview = tones.exists(_.id == "tone/reviews")
-  lazy val isFeature = tones.exists(_.id == "tone/features")
-  lazy val isComment = tones.exists(_.id == "tone/comment")
 
   lazy val hasVideoAtTop: Boolean = Jsoup.parseBodyFragment(body).body().children().headOption
     .exists(e => e.hasClass("gu-video") && e.tagName() == "video")

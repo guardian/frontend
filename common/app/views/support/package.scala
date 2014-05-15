@@ -721,45 +721,6 @@ object TableEmbedComplimentaryToP extends HtmlCleaner {
   }
 }
 
-object VisualTone {
-
-  val Comment = "comment"
-  val News = "news"
-  val Feature = "feature"
-  val Live = "live"
-
-  private val liveMappings = Seq(
-    "tone/minutebyminute"
-  )
-
-  private val commentMappings = Seq(
-    "tone/comment",
-    "tone/letters",
-    "tone/profiles",
-    "tone/editorials"
-  )
-
-  private val featureMappings = Seq(
-    "tone/features",
-    "tone/recipes",
-    "tone/interview",
-    "tone/performances",
-    "tone/extract",
-    "tone/reviews",
-    "tone/albumreview",
-    "tone/livereview",
-    "tone/childrens-user-reviews"
-  )
-
-
-  // tones are all considered to be 'News' it is the default so we do not list news tones explicitly
-  def apply(tags: Tags) = if(isLive(tags.tones)) Live else if(isComment(tags.tones)) Comment else if(isFeature(tags.tones)) Feature else News
-
-  private def isLive(tones: Seq[Tag]) = tones.exists(t => liveMappings.contains(t.id))
-  private def isComment(tones: Seq[Tag]) = tones.exists(t => commentMappings.contains(t.id))
-  private def isFeature(tones: Seq[Tag]) = tones.exists(t => featureMappings.contains(t.id))
-}
-
 object RenderOtherStatus {
   def gonePage(implicit request: RequestHeader) = model.Page(request.path, "news", "This page has been removed", "GFE:Gone")
   def apply(result: SimpleResult)(implicit request: RequestHeader) = result.header.status match {
@@ -804,7 +765,7 @@ object GetClasses {
               forceHasImage: Boolean = false): String = {
     val baseClasses: Seq[String] = Seq(
       "item",
-      s"tone-${VisualTone(trail)}"
+      s"tone-${trail.visualTone}"
     )
     val f: Seq[(Trail, Boolean, Boolean) => String] = Seq(
       (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean) => trail match {
@@ -834,7 +795,7 @@ object GetClasses {
   def forFromage(trail: Trail, imageAdjust: String): String = {
     val baseClasses: Seq[String] = Seq(
       "fromage",
-      s"tone-${VisualTone(trail)}",
+      s"tone-${trail.visualTone}",
       "tone-accent-border"
     )
     val f: Seq[(Trail, String) => String] = Seq(
