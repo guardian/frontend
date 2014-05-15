@@ -18,7 +18,7 @@ object Title {
   }
 
   private def getSectionConsideringWebtitle(webTitle: String, section: Option[String]): String =
-    section.filterNot(_.toLowerCase == webTitle.toLowerCase).map{ s => s" | ${s.capitalize}"}.getOrElse("")
+    section.filterNot(_.toLowerCase == webTitle.toLowerCase).fold(""){ s => s" | ${s.capitalize}"}
 
   private def pagination(page: MetaData) = page.pagination.filterNot(_.isFirstPage).map{ pagination =>
     s" | Page ${pagination.currentPage} of ${pagination.lastPage}"
