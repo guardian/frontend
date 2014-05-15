@@ -11,11 +11,14 @@
                 <p>No matches found</p>
             }
             case matches => {
-                <ul>
+                <div class="list-group">
                 @for(fMatch <- matches) {
-                    <li><a href="/admin/football/fronts/match/@fMatch.id">@fMatch.date.toString("E dd MMMM HH:mm"): @fMatch.homeTeam.name v @fMatch.awayTeam.name</a></li>
+                    <a href="/admin/football/fronts/match/@fMatch.id" class="list-group-item">
+                        <span class="badge">@fMatch.date.toString("E dd MMMM HH:mm")</span>
+                        @fMatch.homeTeam.name v @fMatch.awayTeam.name
+                    </a>
                 }
-                </ul>
+                </div>
             }
         }
 }
