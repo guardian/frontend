@@ -1,7 +1,7 @@
 @(interactive: Interactive, storyPackage: List[Trail], index: Int, trail: Boolean)(implicit request: RequestHeader)
 @import conf.Switches.DiscussionSwitch
 <div class="gs-container">
-    <h2 class="article__zone tone-@VisualTone(interactive) tone-accent-border hide-on-mobile">
+    <h2 class="article__zone tone-@{interactive.visualTone} tone-accent-border hide-on-mobile">
         <a class="tone-colour" data-link-name="article section" href="@LinkTo{/@interactive.section}">@Html(interactive.sectionName.toLowerCase)</a>
     </h2>
 

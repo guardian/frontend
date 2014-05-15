@@ -3,12 +3,12 @@
 
 @defining((page.image, page.storyPackage)) { case (image, storyPackage) =>
     <div class="gs-container">
-        <h2 class="article__zone left-col-deport tone-@VisualTone(image) tone-accent-border hide-on-mobile-if-localnav">
+        <h2 class="article__zone left-col-deport tone-@{image.visualTone} tone-accent-border hide-on-mobile-if-localnav">
             <span class="left-col-deport__body" data-component="meta">
                 <a class="tone-colour" data-link-name="article section" href="/@image.section">@Html(image.sectionName.toLowerCase)</a>
             </span>
         </h2>
-        <div class="article-wrapper monocolumn-wrapper tone-@VisualTone(image)">
+        <div class="article-wrapper monocolumn-wrapper tone-@{image.visualTone}">
             <article id="article" class="article"
                      itemprop="mainContentOfPage" itemscope itemtype="@image.schemaType" role="main">
                 <div class="article__inner article__inner--head">
@@ -55,9 +55,9 @@
         </div>
     </div>
     @fragments.storyPackagePlaceholder(storyPackage)
-    @fragments.onwardPlaceholder(VisualTone(image))
+    @fragments.onwardPlaceholder(image.visualTone)
 
     <div class="facia-container facia-container--layout-article">
-        @fragments.mostPopularPlaceholder(image.section, VisualTone(image))
+        @fragments.mostPopularPlaceholder(image.section, image.visualTone)
     </div>
 }

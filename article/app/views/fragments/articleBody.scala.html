@@ -53,12 +53,12 @@
 
 @fragments.storyPackagePlaceholder(storyPackage)
 
-@fragments.onwardPlaceholder(VisualTone(article))
+@fragments.onwardPlaceholder(article.visualTone)
 
 <div class="js-repositioned-comments"></div>
 
 <div class="facia-container facia-container--layout-article">
-    @fragments.mostPopularPlaceholder(article.section, VisualTone(article))
+    @fragments.mostPopularPlaceholder(article.section, article.visualTone)
 </div>
 <div class="facia-container facia-container--layout-article facia-container--commercial">
     @fragments.commercial.commercialComponent(name="merchandising", adType="commercial-component", sizeMapping=Map("mobile" -> Seq("888,88")))

@@ -1,12 +1,12 @@
 @(gallery: Gallery, storyPackage: List[Trail], index: Int, trail: Boolean)(implicit request: RequestHeader)
 
 <div class="gs-container">
-    <h2 class="article__zone left-col-deport tone-@VisualTone(gallery) tone-accent-border hide-on-mobile-if-localnav">
+    <h2 class="article__zone left-col-deport tone-@{gallery.visualTone} tone-accent-border hide-on-mobile-if-localnav">
         <span class="left-col-deport__body" data-component="meta">
             <a class="tone-colour" data-link-name="article section" href="/@gallery.section">@Html(gallery.sectionName.toLowerCase)</a>
         </span>
     </h2>
-    <div class="article-wrapper monocolumn-wrapper tone-@VisualTone(gallery)">
+    <div class="article-wrapper monocolumn-wrapper tone-@{gallery.visualTone}">
         <article class="js-gallery article gallery-page" itemprop="mainContentOfPage"
              itemscope itemtype="@gallery.schemaType" role="main">
             <div class="article__inner article__inner--head">
@@ -78,10 +78,10 @@
 
 </div>
 @fragments.storyPackagePlaceholder(storyPackage)
-@fragments.onwardPlaceholder(VisualTone(gallery))
+@fragments.onwardPlaceholder(gallery.visualTone)
 
 <div class="facia-container facia-container--layout-article">
-    @fragments.mostPopularPlaceholder(gallery.section, VisualTone(gallery))
+    @fragments.mostPopularPlaceholder(gallery.section, gallery.visualTone)
 </div>
 
 <div class="gallery-overlay-bg"></div>

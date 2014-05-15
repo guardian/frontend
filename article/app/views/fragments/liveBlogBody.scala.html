@@ -3,12 +3,12 @@
 
 @defining((model.article, model.storyPackage, !model.article.isSport)) {  case (article, storyPackage, isDefault) =>
     <div class="gs-container">
-        <h2 class="article__zone blog__zone @if(isDefault){blog__zone--default} right-col-deport tone-@VisualTone(article) tone-accent-border hide-on-mobile-if-localnav">
+        <h2 class="article__zone blog__zone @if(isDefault){blog__zone--default} right-col-deport tone-@{article.visualTone} tone-accent-border hide-on-mobile-if-localnav">
             <span class="blog__zone__inner right-col-deport__body" data-component="meta">
                 <a class="blog__zone__link" data-link-name="article section" href="@LinkTo{/@article.section}">@Html(article.sectionName.toLowerCase)</a>
             </span>
         </h2>
-        <div class="article-wrapper monocolumn-wrapper tone-@VisualTone(article)">
+        <div class="article-wrapper monocolumn-wrapper tone-@{article.visualTone}">
             <article id="article" class="article @if(article.isLive){is-live} blog"
             itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType" role="main">
 
@@ -144,7 +144,7 @@
     </div>
 
     @fragments.storyPackagePlaceholder(storyPackage)
-    @fragments.onwardPlaceholder(VisualTone(article))
+    @fragments.onwardPlaceholder(article.visualTone)
 
     <div class="facia-container facia-container--layout-article">
         @fragments.mostPopularPlaceholder(article.section)
