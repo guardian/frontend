@@ -715,30 +715,7 @@ module.exports = function (grunt) {
                     to: ''
                 }]
             }
-        },
-
-        reloadlet: {
-            options: {
-                port: 8005
-            },
-            main: {
-                sass: {
-                    src: 'common/app/assets/stylesheets/',
-                    dest: 'static/target/stylesheets'
-                },
-                assets: [
-                    {
-                        local: 'static/target/stylesheets/head.default.css',
-                        remote: '/assets/stylesheets/head.default.css'
-                    },
-                    {
-                        local: 'static/target/stylesheets/global.css',
-                        remote: '/assets/stylesheets/global.css'
-                    }
-                ]
-            }
         }
-
     });
 
     // Load the plugins
@@ -762,7 +739,6 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-asset-monitor');
     grunt.loadNpmTasks('grunt-text-replace');
-    grunt.loadNpmTasks('grunt-reloadlet');
 
     grunt.registerTask('default', ['compile', 'test', 'analyse']);
 
