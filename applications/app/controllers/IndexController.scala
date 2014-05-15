@@ -18,7 +18,7 @@ trait IndexController extends Controller with Index with Logging with Paging wit
 
   def renderCombiner(leftSide: String, rightSide: String) = MemcachedAction{ implicit request =>
     logGoogleBot(request)
-    index(Edition(request), leftSide, rightSide, extractPage(request), request.isRss).map {
+    index(Edition(request), leftSide, rightSide, inferPage(request), request.isRss).map {
       case Left(page) => renderFaciaFront(page)
       case Right(other) => other
     }
@@ -34,15 +34,16 @@ trait IndexController extends Controller with Index with Logging with Paging wit
 
   def render(path: String) = MemcachedAction{ implicit request =>
     logGoogleBot(request)
-    index(Edition(request), path, extractPage(request), request.isRss) map {
+    index(Edition(request), path, inferPage(request), request.isRss) map {
       case Left(model) => renderFaciaFront(model)
       case Right(other) => other
     }
   }
 
   def renderTrailsJson(path: String) = renderTrails(path)
+
   def renderTrails(path: String) = MemcachedAction{ implicit request =>
-    index(Edition(request), path, extractPage(request), request.isRss) map {
+    index(Edition(request), path, inferPage(request), request.isRss) map {
       case Left(model) => renderTrailsFragment(model)
       case Right(notFound) => notFound
     }
