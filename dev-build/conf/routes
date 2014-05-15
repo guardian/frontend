@@ -196,6 +196,8 @@ GET         /commercial/masterclasses-high                                      
 GET         /commercial/masterclasses-high.json                                                                      controllers.commercial.MasterClasses.listHigh
 GET         /commercial/soulmates/mixed                                                                              controllers.commercial.SoulmateAds.renderAds
 GET         /commercial/soulmates/mixed.json                                                                         controllers.commercial.SoulmateAds.mixed
+GET         /commercial/soulmates/mixed-high                                                                         controllers.commercial.SoulmateAds.renderAdsHigh
+GET         /commercial/soulmates/mixed-high.json                                                                    controllers.commercial.SoulmateAds.mixedHigh
 GET         /commercial/money/bestbuys.json                                                                          controllers.commercial.MoneyOffers.bestBuys(format="json")
 GET         /commercial/books/bestsellers                                                                            controllers.commercial.BookOffers.bestsellers(format="html")
 GET         /commercial/books/bestsellers.json                                                                       controllers.commercial.BookOffers.bestsellers(format="json")
