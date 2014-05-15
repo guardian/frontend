@@ -770,7 +770,7 @@ module.exports = function (grunt) {
         var apps = ['common', 'ophan'];
         if (!app) { // if no app supplied, compile all apps
             apps = apps.concat(Object.keys(grunt.config('requirejs')).filter(function(app) { return ['options', 'common', 'ophan'].indexOf(app) === -1; }));
-        } else if (app !== 'common') {
+        } else if (app !== 'common' && app !== 'ophan') {
             if (grunt.config('requirejs')[app]) {
                 apps.push(app);
             } else {
