@@ -849,3 +849,8 @@
         }
     }
 }
+
+.breadcrumb-list__item {
+    color: lighten($c-neutral2, 15%);
+    @include fs-data(1);
+}

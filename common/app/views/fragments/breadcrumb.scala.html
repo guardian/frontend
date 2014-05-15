@@ -1,26 +1,24 @@
 @(content: model.Content)(implicit request: RequestHeader)
 @import common.{Navigation, LinkTo}
 
-<div class="breadcrumb l-breadcrumb-primary" itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
-    <ul class="inline-list">
-        <li class="inline-list__item">
+    <ul class="breadcrumb-list inline-list">
+        <li class="breadcrumb-list__item inline-list__item">
             <div class="i-breadcrumb-home" itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
-                <a href="@LinkTo{/}"><span itemprop="title">home</span></a>
+                <a href="@LinkTo{/}"><span itemprop="title">home >> </span></a>
             </div>
         </li>
-        <li class="inline-list__item">
+        <li class="breadcrumb-list__item inline-list__item">
             <div class="i-breadcrumb-section" itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
-                <a href="@LinkTo{/@content.section}"><span itemprop="title">@Html(content.sectionName.toLowerCase)</span></a>
+                <a href="@LinkTo{/@content.section}"><span itemprop="title">@Html(content.sectionName.toLowerCase) >> </span></a>
             </div>
         </li>
         @content.primaryKeyWordTag.map { keyword =>
-        <li class="inline-list__item">
+        <li class="breadcrumb-list__item inline-list__item">
             <div class="i-breadcrumb-keyword" itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
                 <a href="@LinkTo{@keyword.url}"><span itemprop="title">@Html(keyword.name.toLowerCase)</span></a>
             </div>
         </li>
         }
     </ul>
-</div>
 
 

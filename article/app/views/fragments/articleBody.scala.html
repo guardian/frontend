@@ -133,5 +133,10 @@
 <div class="facia-container facia-container--layout-article facia-container--commercial">
     @fragments.commercial.commercialComponent(name="merchandising", adType="commercial-component", sizeMapping=Map("mobile" -> Seq("888,88")))
 </div>
-@fragments.breadcrumb(article)
+
+<div class="gs-container">
+    <div class="article-wrapper article__breadcrumb" itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+        @fragments.breadcrumb(article)
+    </div>
+</div>
 }
