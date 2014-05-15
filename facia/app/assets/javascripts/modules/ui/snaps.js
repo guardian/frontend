@@ -55,7 +55,7 @@ define([
     function injectIframe(el) {
         // Wrapping iframe to fix iOS height-setting bug
         bonzo(el).html(template(
-            '<div style="height:{{height}}px; overflow:none;">' +
+            '<div style="height:{{height}}px; overflow:hidden;">' +
                 '<iframe src="{{src}}" style="height:{{height}}px; width: 100%; border: none;"></iframe>' +
             '</div>',
             {src: el.getAttribute('data-snap-uri'), height: 200}

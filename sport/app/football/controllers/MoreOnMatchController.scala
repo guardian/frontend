@@ -14,6 +14,7 @@ import scala.concurrent.Future
 import conf.ContentApi
 import org.joda.time.{DateMidnight, Interval}
 import play.api.templates.Html
+import com.gu.management.JsonResponse
 
 case class Report(trail: Trail, name: String)
 
@@ -51,7 +52,7 @@ object MoreOnMatchController extends Controller with Football with Requests with
         case filtered => Cached(if(theMatch.isLive) 10 else 300) {
           JsonComponent(
             "nav" -> football.views.html.fragments.matchNav(populateNavModel(theMatch, filtered)),
-            "matchSummary" -> football.views.html.fragments.matchSummary(theMatch),
+            "matchSummary" -> football.views.html.fragments.matchSummary(theMatch, Competitions().competitionForMatch(theMatch.id)),
             "scoreSummary" -> football.views.html.fragments.scoreSummary(theMatch),
             "hasStarted" -> theMatch.hasStarted,
             "group" -> group,
@@ -108,6 +109,15 @@ object MoreOnMatchController extends Controller with Football with Requests with
     val contentDate = dateFormat.parseDateTime(year + month + day).toDateMidnight
     val maybeMatch = Competitions().matchFor(interval(contentDate), home, away)
     canonicalRedirectForMatch(maybeMatch, request)
+  }
+
+  def bigMatchSpecial(matchId: String) = Action { implicit request =>
+    val response = Competitions().competitions.find { _.matches.exists(_.id == matchId) }
+      .fold(JsonNotFound()) { competition =>
+        val fMatch = competition.matches.find(_.id == matchId).head
+        JsonComponent("html" -> football.views.html.fragments.matchSummary(fMatch, Some(competition), link = true))
+      }
+    Cached(30)(response)
   }
 
   private def canonicalRedirectForMatch(maybeMatch: Option[FootballMatch], request: RequestHeader): Future[SimpleResult] = {

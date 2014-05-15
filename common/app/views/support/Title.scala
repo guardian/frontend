@@ -12,7 +12,7 @@ object Title {
     val title = page match {
       case c: Content => s"${c.webTitle}${pagination(page)} | ${section.getOrElse(c.sectionName).capitalize}"
       case t: Tag     => s"${t.webTitle}${pagination(page)}${section.map(s => s" | ${s.capitalize}").getOrElse("")}"
-      case _          => s"${page.webTitle}${pagination(page)}${section.map(s => s" | ${s.capitalize}").getOrElse("")}"
+      case _          => s"${page.title}${pagination(page)}${section.map(s => s" | ${s.capitalize}").getOrElse("")}"
     }
     s"${title.trim} | The Guardian"
   }

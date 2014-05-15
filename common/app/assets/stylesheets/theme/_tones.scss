@@ -78,6 +78,17 @@
         .article__head__comment-count .commentcount {
             color: $textColour;
         }
-    }
 
+        .drop-cap {
+            @include mq($to: tablet) {
+                color: $colour;
+            }
+        }
+
+        .drop-cap--wide {
+            @include mq($from: tablet) {
+                color: $colour;
+            }
+        }
+    }
 }

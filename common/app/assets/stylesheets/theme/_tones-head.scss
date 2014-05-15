@@ -4,6 +4,7 @@
 @include tone-head(comment, $c-commentDefault, $c-commentAccent);
 @include tone-head(feature, $c-featureDefault, $c-featureAccent);
 @include tone-head(live, $c-neutral1, $c-liveAccent);
+@include tone-head(media, $c-mediaDefault, $c-mediaDefault);
 
 // Tonal article styles
 @include article-tone(feature, $c-featureDefault, $c-featureAccent2, #fff, "white");

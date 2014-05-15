@@ -43,7 +43,7 @@ trait QueryDefaults extends implicits.Collections with ExecutionContexts {
     val tag = "tag=type/gallery|type/article|type/video|type/sudoku"
     val editorsPicks = "show-editors-picks=true"
     val showInlineFields = s"show-fields=$trailFields"
-    val showFields = "trailText,headline,shortUrl,liveBloggingNow,commentable,commentCloseDate,shouldHideAdverts,lastModified,byline,standfirst,starRating"
+    val showFields = "trailText,headline,shortUrl,liveBloggingNow,commentable,commentCloseDate,shouldHideAdverts,lastModified,byline,standfirst,starRating,showInRelatedContent"
     val showFieldsWithBody = showFields + ",body"
 
     val all = Seq(tag, editorsPicks, showInlineFields, showFields)
