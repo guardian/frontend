@@ -80,6 +80,16 @@ module.exports = function (grunt) {
                     }
                 }
             },
+            ophan: {
+                options: {
+                    baseUrl: 'common/app/assets/javascripts',
+                    name: 'common/bootstraps/ophan',
+                    out: staticTargetDir + 'javascripts/bootstraps/ophan.js',
+                    wrap: {
+                        startFile: 'common/app/assets/javascripts/components/curl/dist/curl/curl.js'
+                    }
+                }
+            },
             admin: {
                 options: {
                     baseUrl: 'admin/app/assets/javascripts',
@@ -373,14 +383,6 @@ module.exports = function (grunt) {
                     cwd: 'common/app/public/javascripts/vendor',
                     src: ['**/foresee/**'],
                     dest: staticTargetDir + 'javascripts/vendor'
-                }]
-            },
-            'curl': {
-                files: [{
-                    expand: true,
-                    cwd: 'common/app/assets/javascripts/components/curl/dist/curl',
-                    src: ['curl.js'],
-                    dest: staticTargetDir + 'javascripts'
                 }]
             },
             'javascript-common': {
@@ -797,7 +799,6 @@ module.exports = function (grunt) {
             'clean:assets',
             'copy:headCss',
             'copy:vendor',
-            'copy:curl',
             'hash'
         ]);
     });
