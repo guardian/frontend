@@ -80,6 +80,16 @@ module.exports = function (grunt) {
                     }
                 }
             },
+            ophan: {
+                options: {
+                    baseUrl: 'common/app/assets/javascripts',
+                    name: 'common/bootstraps/ophan',
+                    out: staticTargetDir + 'javascripts/bootstraps/ophan.js',
+                    wrap: {
+                        startFile: 'common/app/assets/javascripts/components/curl/dist/curl/curl.js'
+                    }
+                }
+            },
             admin: {
                 options: {
                     baseUrl: 'admin/app/assets/javascripts',
