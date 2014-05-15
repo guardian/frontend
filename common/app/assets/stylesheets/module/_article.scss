@@ -415,6 +415,13 @@
     }
 }
 
+.article__meta-container.article__meta-container--showcase {
+    @include mq(leftCol) {
+        float: left;
+        position: static;
+    }
+}
+
 .meta__body {
     @include mq(leftCol) {
         clear: left;
@@ -547,8 +554,8 @@
         border-top: 0;
     }
     .media-primary {
-        margin-left: 0 !important;
-        margin-right: 0 !important;
+        margin-left: 0;
+        margin-right: 0;
     }
     .article__columning-wrapper {
         @include rem((
@@ -659,15 +666,6 @@
     .commentcount {
         .article__head & {
             display: none;
-        }
-
-        .article__meta-container & {
-            display: block;
-            @include rem((
-                padding-top: ($gs-baseline/3),
-                margin-bottom: $gs-baseline
-            ));
-            border-top: 1px dotted $c-neutral5;
         }
     }
 }

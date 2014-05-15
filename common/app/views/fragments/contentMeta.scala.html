@@ -19,7 +19,10 @@
 
 }
 
-<div class="article__meta-container js-football-meta u-cf@if(content.byline.isEmpty){ article__meta-container--no-byline}">
+<div class="article__meta-container js-football-meta u-cf
+    @if(content.byline.isEmpty){ article__meta-container--no-byline}
+    @if(content.hasShowcaseMainPicture){ article__meta-container--showcase}">
+
     @if(content.isSponsored) {
         @fragments.commercial.badge(name="spbadge", adType="paid-for-badge", sizeMapping=Map("mobile" -> Seq("140,90")))
     }

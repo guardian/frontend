@@ -1,8 +1,9 @@
-@(image: Option[model.ImageContainer])
-@import views.support.{ImgSrc, Item940, Item620}
+@(image: Option[model.ImageContainer], isShowcase: Boolean = false)
+@import views.support.Item620
 
 @image.map{ picture =>
-    <figure itemprop="associatedMedia image" itemscope itemtype="http://schema.org/ImageObject" class="media-primary media-content" data-component="image">
+    <figure itemprop="associatedMedia image" itemscope itemtype="http://schema.org/ImageObject" data-component="image"
+        class="media-primary media-content@if(isShowcase){ media-primary--showcase}" >
         <img src="@Item620.bestFor(picture).map(Html(_))"
              class="maxed responsive-img"
              itemprop="contentURL representativeOfPage"

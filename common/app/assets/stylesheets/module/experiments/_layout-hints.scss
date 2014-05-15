@@ -128,6 +128,10 @@ figure {
     ));
 }
 
+.media-primary.media-primary--showcase {
+    @include deport-left;
+}
+
 .layout-hints {
 
     &.rescue-from-antarctica {
