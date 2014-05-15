@@ -41,7 +41,7 @@ define([
 
     function getSlotsOfTypes(types, empty) {
         var cssSelector = types.map(function(t){ return slotTypeToCssSelector(t, empty); }).join(', ');
-        return qwery(cssSelector, '.article-body');
+        return qwery(cssSelector, '.js-article__body');
     }
 
     function getSlotsOfType(type, empty) {
