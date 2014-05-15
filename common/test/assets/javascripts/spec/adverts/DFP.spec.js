@@ -17,9 +17,7 @@ define([
 ) {
 
     describe('DFP', function() {
-        var addSizeSpy = sinon.spy(),
-            buildSpy = sinon.spy(),
-            style,
+        var style,
             conf = {
                 id: 'article',
                 fixtures: [
@@ -43,22 +41,6 @@ define([
                     this.contentDocument.body.innerHTML = html;
                 };
                 $frame.appendTo(qwery('#' + id)[0]);
-            },
-            createGoogletag = function() {
-                return googletag = {
-                    cmd: [],
-                    sizeMapping: function() {
-                        return {
-                            build: buildSpy,
-                            addSize: addSizeSpy
-                        }
-                    },
-                    defineSlot: function() { return this; },
-                    addService: function() { return this; },
-                    defineSizeMapping: function() { return this; },
-                    setTargeting: function() { return this; },
-                    pubads: function() { }
-                };
             };
 
         beforeEach(function() {
@@ -66,22 +48,62 @@ define([
             style = $.create('<style type="text/css"></style>')
                 .html('body:after{ content: "wide"}')
                 .appendTo('head');
-            window.googletag = { cmd: [] };
+            var pubAds = {
+                    addEventListener: sinon.spy(),
+                    setTargeting: sinon.spy(),
+                    enableSingleRequest: sinon.spy(),
+                    collapseEmptyDivs: sinon.spy()
+                },
+                sizeMapping = {
+                    addSize: sinon.spy(),
+                    build: sinon.spy()
+                };
+            window.googletag = {
+                cmd: [],
+                pubads: function() {
+                    return pubAds;
+                },
+                sizeMapping: function() {
+                    return sizeMapping;
+                },
+                defineSlot: function() { return this; },
+                addService: function() { return this; },
+                defineSizeMapping: function() { return this; },
+                setTargeting: function() { return this; },
+                enableServices: sinon.spy(),
+                display: sinon.spy()
+            };
         });
 
         afterEach(function() {
             fixtures.clean(conf.id);
             style.remove();
             window.googletag = null;
+            dfp.reset();
         });
 
         it('should return dfp object on init', function() {
             expect(dfp.init()).toBe(dfp);
         });
 
-        it('should find the DFP ad slots', function() {
+        it('should get the ad slots', function() {
             var adSlots = dfp.init().getAdSlots();
             expect(adSlots.length).toBe(4);
+        });
+
+        it('should not get hidden ad slots', function() {
+            var hiddenSlot = $('.ad-slot--dfp').first().css('display', 'none')[0],
+                adSlots = dfp.init().getAdSlots();
+            expect(adSlots.length).toBe(3);
+            adSlots.forEach(function($adSlot) {
+                expect($adSlot[0]).not.toBe(hiddenSlot);
+            })
+        });
+
+        it('should set listeners', function() {
+            dfp.init();
+            window.googletag.cmd.forEach(function(func) { func(); });
+            expect(googletag.pubads().addEventListener).toHaveBeenCalled();
         });
 
         describe('Label', function() {
@@ -187,23 +209,6 @@ define([
 //            expect(addSizeSpy).toHaveBeenCalledWith([0, 0], [[300, 50], [320, 50]]);
 //            expect(addSizeSpy).toHaveBeenCalledWith([740, 0], [[300, 250]]);
 //            expect(setTargetingSpy).toHaveBeenCalledWith('slot', 'inline1');
-//        });
-//
-//        it('should not create ad if slot is not displayed', function() {
-//            $('.ad-slot--dfp').first().css('display', 'none');
-//            window.googletag = { cmd: [] };
-//            dfp.init();
-//            expect(dfp.dfpAdSlots.length).toBe(3);
-//            expect(
-//                dfp.dfpAdSlots
-//                    .map(function($adSlot) {
-//                        return $adSlot[0];
-//                    })
-//                    .some(function(adSlot) {
-//                        return adSlot === $('.ad-slot--dfp').first();
-//                    }
-//                )
-//            ).toBe(false);
 //        });
 //
 //        it('should refresh on breakpoint changed', function() {

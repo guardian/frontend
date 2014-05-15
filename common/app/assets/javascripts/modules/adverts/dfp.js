@@ -79,7 +79,17 @@ define([
     /**
      * Private functions
      */
-    var addLabel = function($slot) {
+    var parseAd = function(event) {
+            var $slot = $('#' + event.slot.getSlotId().getDomId());
+
+            if (event.isEmpty) {
+                removeLabel($slot);
+            } else {
+                checkForBreakout($slot);
+                addLabel($slot);
+            }
+        },
+        addLabel = function($slot) {
             if (shouldRenderLabel($slot)) {
                 $slot.parent()
                     .prepend('<div class="ad-slot__label">Advertisement</div>')
@@ -120,16 +130,6 @@ define([
                         $slot.first().append(breakoutHash[cls].replace(/%content%/g, $el.html()));
                     }
                 }
-            }
-        },
-        parseAd = function(event) {
-            var $slot = $('#' + event.slot.getSlotId().getDomId());
-
-            if (event.isEmpty) {
-                removeLabel($slot);
-            } else {
-                checkForBreakout($slot);
-                addLabel($slot);
             }
         },
         refresh = function() {
@@ -296,46 +296,60 @@ define([
             );
         };
 
-    var dfp = {
+    /**
+     * Initialisation function
+     */
+    var init = function (c) {
 
-        init: once(function (c) {
+        config = defaults(c || {}, {
+            adSlotSelector: '.ad-slot--dfp',
+            adContainerClass: '.ad-slot__container',
+            page: {},
+            switches: {}
+        });
 
-            config = defaults(c || {}, {
-                adSlotSelector: '.ad-slot--dfp',
-                adContainerClass: '.ad-slot__container',
-                page: {}
+        adSlots = qwery(config.adSlotSelector)
+            // filter out hidden ads
+            .map(function (adSlot) {
+                return bonzo(adSlot);
+            })
+            .filter(function ($adSlot) {
+                return $adSlot.css('display') !== 'none';
             });
 
-            adSlots = qwery(config.adSlotSelector)
-                // filter out hidden ads
-                .map(function (adSlot) {
-                    return bonzo(adSlot);
-                })
-                .filter(function ($adSlot) {
-                    return $adSlot.css('display') !== 'none';
-                });
-
-            if (adSlots.length > 0) {
-                // if we don't already have googletag, create command queue and load it async
-                if (!window.googletag) {
-                    window.googletag = { cmd: [] };
-                    // load the library asynchronously
-                    require(['googletag']);
-                }
-
-                window.googletag.cmd.push(setListeners);
-                window.googletag.cmd.push(setPageTargetting);
-                window.googletag.cmd.push(defineSlots);
-                window.googletag.cmd.push(fireAdRequest);
-                // anything we want to happen after displaying ads
-                window.googletag.cmd.push(postDisplay);
+        if (adSlots.length > 0) {
+            // if we don't already have googletag, create command queue and load it async
+            if (!window.googletag) {
+                window.googletag = { cmd: [] };
+                // load the library asynchronously
+                require(['googletag']);
             }
 
-            return dfp;
+            window.googletag.cmd.push(setListeners);
+            window.googletag.cmd.push(setPageTargetting);
+            window.googletag.cmd.push(defineSlots);
+            window.googletag.cmd.push(fireAdRequest);
+            // anything we want to happen after displaying ads
+            window.googletag.cmd.push(postDisplay);
+        }
 
-        }),
+        return dfp;
+
+    };
+
+    var dfp = {
+
+        init: once(init),
 
         getAdSlots: function() {
+            return adSlots;
+        },
+
+        // really only useful for testing
+        reset: function() {
+            adSlots = [];
+            slotsToRefresh = [];
+            dfp.init = once(init);
             return adSlots;
         }
 
