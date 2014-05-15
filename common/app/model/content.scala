@@ -34,6 +34,8 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   lazy val hasLargeContributorImage: Boolean = tags.filter(_.hasLargeContributorImage).nonEmpty
   lazy val isFromTheObserver: Boolean = publication == "The Observer"
 
+  lazy val showInRelated: Boolean = delegate.safeFields.get("showInRelatedContent").exists(_ == "true")
+
 
   // read this before modifying
   // https://developers.facebook.com/docs/opengraph/howtos/maximizing-distribution-media-content#images
@@ -53,8 +55,6 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
       None
     }
   }
-
-  lazy val isAdvertisementFeature: Boolean = tags.exists(_.id == "tone/advertisement-features")
 
   lazy val shouldHideAdverts: Boolean = fields.get("shouldHideAdverts").exists(_.toBoolean)
 
@@ -330,6 +330,8 @@ class Article(content: ApiContentWithMeta) extends Content(content) {
   lazy val body: String = delegate.safeFields.getOrElse("body","")
   lazy val contentType = "Article"
   lazy val isReview = tones.exists(_.id == "tone/reviews")
+  lazy val isFeature = tones.exists(_.id == "tone/features")
+  lazy val isComment = tones.exists(_.id == "tone/comment")
 
   lazy val hasVideoAtTop: Boolean = Jsoup.parseBodyFragment(body).body().children().headOption
     .exists(e => e.hasClass("gu-video") && e.tagName() == "video")
@@ -352,14 +354,15 @@ class Article(content: ApiContentWithMeta) extends Content(content) {
   )
 
   override def openGraph: Map[String, Any] = super.openGraph ++ Map(
-    "og:type" -> "article",
-    "article:published_time" -> webPublicationDate,
-    "article:modified_time" -> lastModified,
-    "article:section" -> sectionName,
-    "article:publisher" -> "https://www.facebook.com/theguardian",
-    "og:image" -> openGraphImage
-  ) ++ tags.map("article:tag" -> _.name) ++
-    tags.filter(_.isContributor).map("article:author" -> _.webUrl)
+    ("og:type", "article"),
+    ("article:published_time", webPublicationDate),
+    ("article:modified_time", lastModified),
+    ("article:tag", keywords.map(_.name).mkString(",")),
+    ("article:section", sectionName),
+    ("article:publisher", "https://www.facebook.com/theguardian"),
+    ("article:author", contributors.map(_.webUrl).mkString(",")),
+    ("og:image", openGraphImage)
+  )
 
   override def cards: List[(String, Any)] = super.cards ++ List(
     "twitter:card" -> "summary_large_image"
@@ -409,8 +412,9 @@ class Video(content: ApiContentWithMeta) extends Content(content) {
     "og:type" -> "video",
     "og:video:type" -> "text/html",
     "og:video:url" -> webUrl,
-    "og:image" -> openGraphImage
-  ) ++ tags.map("video:tag" -> _.name)
+    "og:image" -> openGraphImage,
+    "video:tag" -> keywords.map(_.name).mkString(",")
+  )
 }
 
 object Video {
@@ -439,9 +443,10 @@ class Gallery(content: ApiContentWithMeta) extends Content(content) {
     "article:published_time" -> webPublicationDate,
     "article:modified_time" -> lastModified,
     "article:section" -> sectionName,
+    "article:tag" -> keywords.map(_.name).mkString(","),
+    "article:author" -> contributors.map(_.webUrl).mkString(","),
     "og:image" -> openGraphImage
-  ) ++ tags.map("article:tag" -> _.name) ++
-    tags.filter(_.isContributor).map("article:author" -> _.webUrl)
+  )
 
   private lazy val galleryImages: Seq[ImageElement] = images.filter(_.isGallery)
   lazy val largestCrops: Seq[ImageAsset] = galleryImages.flatMap(_.largestImage)

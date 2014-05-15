@@ -35,6 +35,9 @@
     &.tone-comment:before {
         background: $c-commentAccent;
     }
+    &.tone-media:before {
+        background: $c-mediaDefault;
+    }
 
     &.show-more--hidden {
         &,

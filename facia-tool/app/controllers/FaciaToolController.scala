@@ -134,7 +134,7 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
     FaciaToolMetrics.ApiUsageCount.increment()
     NoCache {
       request.body.asJson flatMap (_.asOpt[Map[String, UpdateList]]) map {
-        case update: Map[String, UpdateList] => {
+        case update: Map[String, UpdateList] =>
           val identity: Identity = Identity(request).get
           val updatedCollections: Map[String, Block] = update.collect {
             case ("update", updateList) =>
@@ -150,8 +150,6 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
             Ok(Json.toJson(updatedCollections)).as("application/json")
           else
             NotFound
-        }
-        case _ => NotFound
       } getOrElse NotFound
     }
   }

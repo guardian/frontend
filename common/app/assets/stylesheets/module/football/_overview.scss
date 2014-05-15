@@ -15,6 +15,9 @@
             ));
             display: inline-block;
             display: flex;
+            @supports not (flex-wrap: wrap) {
+                display: inline-block;
+            }
             width: 49.5%;
         }
 
@@ -37,6 +40,10 @@
     @include mq(tablet) {
         display: flex;
         flex-wrap: wrap;
+
+        @supports not (flex-wrap: wrap) {
+            display: block;
+        }
 
         .dropdown {
             border-top: 0 none;
@@ -93,6 +100,15 @@
                 padding-top: $gs-baseline/2
             ));
         }
+    }
+}
+
+.football-group__matches {
+    .team-name:after {
+        content: attr(data-abbr);
+    }
+    .team-name__long {
+        @include u-h;
     }
 }
 
@@ -301,11 +317,12 @@
 }
 
 .football-round--playoff {
+    background: $c-neutral8;
     bottom: 0;
     height: 25%;
     left: 42.857142857%; // 50 - (100/7/2) Half off the width of a seventh to get it exactly center
     position: absolute;
-    z-index: 1;
+    z-index: 2;
 
     .football-round__name {
         display: none;

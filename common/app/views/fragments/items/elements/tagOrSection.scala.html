@@ -1,12 +1,14 @@
 @(content: model.Content)(implicit request: RequestHeader, config: model.Config)
 
-<div class="item__tag tone-colour">
-    @if(config.showTags){
-        @content.tags.take(1).map { s =>
-            <a href="@LinkTo(s.webUrl)">@s.name</a>
+@if(config.showTags || config.showSections) {
+    <div class="item__tag tone-colour">
+        @if(config.showTags) {
+            @content.tags.take(1).map { s =>
+                <a href="@LinkTo(s.webUrl)">@s.name</a>
+            }
         }
-    }
-    @if(config.showSections){
-        <a href="@LinkTo{/@content.section}">@content.section</a>
-    }
-</div>
+        @if(config.showSections) {
+            <a href="@LinkTo {/@content.section}">@content.section.capitalize</a>
+        }
+    </div>
+}
