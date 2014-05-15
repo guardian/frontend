@@ -205,8 +205,17 @@
 
             }
         }
+
         .drop-cap {
-            color: $colour;
+            @include mq($to: tablet) {
+                color: $colour;
+            }
+        }
+
+        .drop-cap--wide {
+            @include mq($from: tablet) {
+                color: $colour;
+            }
         }
 
     }
