@@ -19,7 +19,8 @@ public class TestRunner {
 
     public FrontPage goToFronts(WebDriver driver) {
         String frontPageURL = baseUrl + betaSite;
-        return new FrontPage(driver, frontPageURL);
+        driver.get(frontPageURL);
+        return new FrontPage(driver);
     }
 
 

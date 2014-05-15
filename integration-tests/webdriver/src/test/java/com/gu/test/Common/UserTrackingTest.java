@@ -45,10 +45,29 @@ public class UserTrackingTest {
     @Test
     public void theCorrectTrackingInformationShouldBeSentForSportArticle() throws Exception {
 
-        Article sportArticle = fronts.goToArticleInSportContainer(driver);
+        Article sportArticle = fronts.goToArticleInSportContainer();
         sportArticle.waitForArticleLoad(driver);
         List<LoggedRequest> requests = httpMock.findAllRequestsTo("ophan.theguardian.com");
         String dataComponent = "sport";
+
+        boolean contains = false;
+        for (LoggedRequest request : requests) {
+            if (request.getUrl().contains("referringComponent=" + dataComponent)) {
+                contains = true;
+            }
+        }
+
+        Assert.assertTrue("Failure: Tracking Not Found", contains);
+
+    }
+
+    @Test
+    public void theCorrectTrackingInformationShouldBeSentForTopStoriesArticle() throws Exception {
+
+        Article sportArticle = fronts.goToArticleInTopStories();
+        sportArticle.waitForArticleLoad(driver);
+        List<LoggedRequest> requests = httpMock.findAllRequestsTo("ophan.theguardian.com");
+        String dataComponent = "top-stories";
 
         boolean contains = false;
         for (LoggedRequest request : requests) {
