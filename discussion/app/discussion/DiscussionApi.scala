@@ -42,7 +42,7 @@ trait DiscussionApi extends Http with ExecutionContexts with Logging {
 
         CommentPage(
           id = s"/$key",
-          title = (json \ "discussion" \ "title").as[String],
+          commentPageTitle = (json \ "discussion" \ "title").as[String],
           contentUrl = (json \ "discussion" \ "webUrl").as[String],
           comments = comments,
           commentCount = (json \ "discussion" \ "commentCount").as[Int],
