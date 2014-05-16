@@ -1,8 +1,6 @@
 $football-match-summary-breakpoint: tablet;
 $football-crest--small: 44px;
 $football-crest--large: 60px;
-$football-flag--small:  (120/(67/$football-crest--small));
-$football-flag--large:  (120/(67/$football-crest--large));
 
 .match-summary {
     @include rem((
@@ -46,7 +44,8 @@ $football-flag--large:  (120/(67/$football-crest--large));
         height: $football-crest--small,
         width: $football-crest--small
     ));
-    @include background-size(auto $football-crest--small);
+    @include background-size(contain);
+    background-position: 100% 0;
     display: inline-block;
     background-repeat: no-repeat;
 }
@@ -116,6 +115,7 @@ $football-flag--large:  (120/(67/$football-crest--large));
     text-align: center;
 }
 
+
 .match-summary__status--live {
     .status__time {
         border-color: $c-newsAccent;
@@ -128,7 +128,7 @@ $football-flag--large:  (120/(67/$football-crest--large));
     @include fs-headline(7);
     @include rem((
         height: $gs-baseline*2.5,
-        top: $gs-baseline*6.5
+        top: 74px
     ));
     display: none;
     position: absolute;
@@ -192,36 +192,11 @@ $football-flag--large:  (120/(67/$football-crest--large));
     display: none;
 }
 
-// Flags for the world cup have a different ratio to crests
-// We could make it one ratio, but crests then have loads of horizontal spacing
-.match-summary--world-cup {
-    .team__crest__img {
-        @include rem((
-            width: $football-flag--small
-        ));
-    }
-
-    .team__info {
-        @include rem((
-            margin-left: $gs-gutter/2+$football-flag--small
-        ));
-    }
-}
-
 @mixin match-summary--responsive {
     .match-summary {
         @include rem((
             margin-bottom: $gs-baseline*3
         ));
-    }
-
-    &.match-summary--world-cup,
-    .match-summary--world-cup {
-        .team__crest__img {
-            @include rem((
-                width: $football-flag--large
-            ));
-        }
     }
 
     .match-summary__teams {
@@ -285,7 +260,7 @@ $football-flag--large:  (120/(67/$football-crest--large));
             height: $football-crest--large,
             width: $football-crest--large
         ));
-        @include background-size(auto $football-crest--large);
+        @include background-size(contain);
     }
 
     .team__info {
@@ -300,9 +275,9 @@ $football-flag--large:  (120/(67/$football-crest--large));
     }
 
     .status__time {
-        @include rem((
-            top: ($football-crest--large - $football-crest--small)
-        ));
+//        @include rem((
+//            top: ($football-crest--large - $football-crest--small)
+//        ));
         position: relative;
     }
 
