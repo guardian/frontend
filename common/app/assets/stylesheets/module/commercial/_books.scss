@@ -291,7 +291,6 @@ $c-commercial-books-dark: #630D4C;
             @include rem((
                 width: gs-span(2)
             ));
-            background: #ff0000;
         }
     }
     @include mq(wide) {
@@ -330,7 +329,38 @@ $c-commercial-books-dark: #630D4C;
             }
         }
         @include mq(desktop) {
-            
+            .commercial__head {
+                float: left;
+                width: 25%;
+                @include rem((
+                    padding-right: $gs-gutter/2
+                ));
+                
+                .commercial__search {
+                    display: block;
+                }
+            }
+            .commercial__body {
+                @include rem((
+                    padding-left: 8px
+                ));
+            }
+            .commercial__relevance-high {
+                width: 66%;
+            }
+            .commercial__relevance-low {
+                width: 33%;
+            }
+            .lineitem {
+                width: 100%;
+                
+                &:nth-child(n+2) {
+                display: none;
+                }
+            }
+            .commercial__foot {
+                display: none;
+            }
         }
     }
 }
@@ -339,6 +369,7 @@ $c-commercial-books-dark: #630D4C;
 .facia-container--layout-article .commercial--books {
     @include mq(rightCol) {
         .commercial__head {
+            float: left;
             width: 25%;
             @include rem((
                 padding-right: $gs-gutter/2
