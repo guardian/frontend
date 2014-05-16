@@ -63,7 +63,7 @@ function(
 
     function belowArticleVisible(yes, no) {
         var el = $('.js-after-article')[0],
-            vis =  window.getComputedStyle(el).getPropertyValue('display') !== 'none';
+            vis = window.getComputedStyle(el).getPropertyValue('display') !== 'none';
 
         return isit(vis, yes, no, el);
     }
