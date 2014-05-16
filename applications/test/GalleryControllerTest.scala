@@ -34,7 +34,7 @@ class GalleryControllerTest extends FlatSpec with Matchers {
   it should "internal redirect when content type is not gallery" in Fake {
     val result = controllers.GalleryController.render("world/video/2012/feb/10/inside-tibet-heart-protest-video")(TestRequest("/world/video/2012/feb/10/inside-tibet-heart-protest-video"))
     status(result) should be(200)
-    header("X-Accel-Redirect", result).get should be("/type/video/world/video/2012/feb/10/inside-tibet-heart-protest-video")
+    header("X-Accel-Redirect", result).get should be("/applications/world/video/2012/feb/10/inside-tibet-heart-protest-video")
   }
 
   it should "display an expired message for expired content" in Fake {

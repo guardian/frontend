@@ -13,7 +13,7 @@ define([
     bean,
     ajax,
     queryString,
-    DFP
+    dfp
     ) {
 
     function Video(config) {
@@ -208,11 +208,10 @@ define([
             'clickTrackUrl': 'ClickTracking'
         };
 
-        var dfpAds = new DFP(config);
+        var dfpAds = dfp.init(config);
+        var adUnit = dfp.buildAdUnit();
 
-        var adUnit = dfpAds.buildAdUnit.bind(this)();
-
-        var custParams = queryString.generateQueryString(dfpAds.buildPageTargetting.bind(this)());
+        var custParams = queryString.generateQueryString(dfpAds.buildPageTargeting());
         var encodedCustParams = encodeURIComponent(custParams);
 
         var timestamp = new Date().getTime();

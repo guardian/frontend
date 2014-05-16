@@ -257,10 +257,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
-  val IdentityEthicalAwardsSwitch = Switch("Feature Switches", "id-ethical-awards",
-    "If this switch is on, Ethical awards forms will be available",
-    safeState = Off, sellByDate = new DateMidnight(2014, 5, 16))
-
   val NetworkFrontOptIn = Switch("Feature Switches", "network-front-opt-in",
     "If this is switched on then an opt-in message will be displayed to users coming from the R2 network front",
     safeState = Off, sellByDate = new DateMidnight(2014, 5, 31)
@@ -354,6 +350,11 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
+  val ToolImageOverride = Switch("Facia Tool", "facia-tool-image-override",
+    "If this is switched on then images can be overridden in the fronts tool",
+    safeState = Off, sellByDate = never
+  )
+
   val ToolSparklines = Switch("Facia Tool", "facia-tool-sparklines",
     "If this is switched on then the fronts tool renders images from sparklines.ophan.co.uk",
     safeState = Off, sellByDate = never
@@ -414,12 +415,12 @@ object Switches extends Collections {
     CssFromStorageSwitch,
     FacebookAutoSigninSwitch,
     IdentityFormstackSwitch,
-    IdentityEthicalAwardsSwitch,
     IdentityAvatarUploadSwitch,
     ToolDisable,
     ToolConfigurationDisable,
     ToolCheckPressLastmodified,
     ToolSnaps,
+    ToolImageOverride,
     ToolSparklines,
     OphanSwitch,
     ScrollDepthSwitch,

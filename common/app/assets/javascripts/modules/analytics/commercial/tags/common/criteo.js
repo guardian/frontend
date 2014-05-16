@@ -20,7 +20,7 @@ define([
     function getSegments() {
         var result = {};
 
-        if (globalConfig.switches.criteo) {
+        if (globalConfig.switches && globalConfig.switches.criteo) {
             var criteoSegmentString = cookies.get(cookieName);
             if (criteoSegmentString !== null) {
                 var criteoSegments = decodeURIComponent(criteoSegmentString).split('&');

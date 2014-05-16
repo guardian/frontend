@@ -138,6 +138,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
     ("references", delegate.references.map(r => Reference(r.id)))
     ) ++ Map(seriesMeta : _*)
   }
+
   override lazy val cacheSeconds = {
     if (isLive) 30 // live blogs can expect imminent updates
     else if (lastModified > DateTime.now - 1.hour) 60 // an hour gives you time to fix obvious typos and stuff
@@ -145,7 +146,8 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   }
   override def openGraph: Map[String, Any] = super.openGraph ++ Map(
     "og:title" -> webTitle,
-    "og:description" -> trailText.map(StripHtmlTagsAndUnescapeEntities(_)).getOrElse("")
+    "og:description" -> trailText.map(StripHtmlTagsAndUnescapeEntities(_)).getOrElse(""),
+    "og:image" -> openGraphImage
   )
 
   override def cards: List[(String, Any)] = super.cards ++ List(
@@ -360,8 +362,7 @@ class Article(content: ApiContentWithMeta) extends Content(content) {
     ("article:tag", keywords.map(_.name).mkString(",")),
     ("article:section", sectionName),
     ("article:publisher", "https://www.facebook.com/theguardian"),
-    ("article:author", contributors.map(_.webUrl).mkString(",")),
-    ("og:image", openGraphImage)
+    ("article:author", contributors.map(_.webUrl).mkString(","))
   )
 
   override def cards: List[(String, Any)] = super.cards ++ List(
@@ -412,7 +413,6 @@ class Video(content: ApiContentWithMeta) extends Content(content) {
     "og:type" -> "video",
     "og:video:type" -> "text/html",
     "og:video:url" -> webUrl,
-    "og:image" -> openGraphImage,
     "video:tag" -> keywords.map(_.name).mkString(",")
   )
 }
@@ -444,8 +444,7 @@ class Gallery(content: ApiContentWithMeta) extends Content(content) {
     "article:modified_time" -> lastModified,
     "article:section" -> sectionName,
     "article:tag" -> keywords.map(_.name).mkString(","),
-    "article:author" -> contributors.map(_.webUrl).mkString(","),
-    "og:image" -> openGraphImage
+    "article:author" -> contributors.map(_.webUrl).mkString(",")
   )
 
   private lazy val galleryImages: Seq[ImageElement] = images.filter(_.isGallery)

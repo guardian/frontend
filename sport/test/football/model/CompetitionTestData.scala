@@ -174,9 +174,9 @@ trait CompetitionTestData {
   def futureKnockoutMatches(stage: Stage) = {
     List(
       fixture(now.plusDays(1), stage, quarterFinals, "1", teams(0), teams(1)),
-      fixture(now.plusDays(1), stage, quarterFinals, "1", teams(2), teams(3)),
-      fixture(now.plusDays(1), stage, quarterFinals, "1", teams(4), teams(5)),
-      fixture(now.plusDays(1), stage, quarterFinals, "1", teams(5), teams(7)),
+      fixture(now.plusDays(1).plusMinutes(5), stage, quarterFinals, "1", teams(2), teams(3)),
+      fixture(now.plusDays(1).plusMinutes(10), stage, quarterFinals, "1", teams(4), teams(5)),
+      fixture(now.plusDays(1).plusMinutes(15), stage, quarterFinals, "1", teams(5), teams(7)),
       fixture(now.plusDays(3), stage, semiFinals, "1", teams(0), teams(2)),
       fixture(now.plusDays(3), stage, semiFinals, "1", teams(4), teams(6)),
       fixture(now.plusDays(5), stage, thirdPlacePlayoff, "1", teams(2), teams(6)),

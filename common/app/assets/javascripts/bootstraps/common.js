@@ -45,6 +45,7 @@ define([
     'common/modules/adverts/article-body-adverts',
     'common/modules/adverts/article-aside-adverts',
     'common/modules/adverts/slice-adverts',
+    'common/modules/adverts/front-commercial-components',
     'common/modules/adverts/dfp',
     'common/modules/analytics/commercial/tags/container',
     'common/modules/analytics/foresee-survey',
@@ -52,7 +53,8 @@ define([
     'common/modules/analytics/register',
     'common/modules/commercial/loader',
     'common/modules/onward/tonal',
-    'common/modules/identity/api'
+    'common/modules/identity/api',
+    'common/modules/onward/more-tags'
 ], function (
     $,
     mediator,
@@ -98,14 +100,16 @@ define([
     ArticleBodyAdverts,
     ArticleAsideAdverts,
     SliceAdverts,
-    DFP,
+    frontCommercialComponents,
+    dfp,
     TagContainer,
     Foresee,
     GeoMostPopular,
     register,
     CommercialLoader,
     TonalComponent,
-    id
+    id,
+    MoreTags
 ) {
 
     var modules = {
@@ -284,15 +288,16 @@ define([
 
                 new SliceAdverts(config).init();
 
+                frontCommercialComponents.init(config);
+
                 var options = {};
 
                 if (!config.switches.standardAdverts) {
-                    options.dfpSelector = '.ad-slot--commercial-component';
+                    options.adSlotSelector = '.ad-slot--commercial-component';
                 } else if (!config.switches.commercialComponents) {
-                    options.dfpSelector = '.ad-slot--dfp:not(.ad-slot--commercial-component)';
+                    options.adSlotSelector = '.ad-slot--dfp:not(.ad-slot--commercial-component)';
                 }
-
-                new DFP(extend(config, options)).init();
+                dfp.init(extend(config, options));
             }
         },
 
@@ -493,6 +498,10 @@ define([
                     $('.discussion').addClass('discussion--lowered');
                 }
             });
+        },
+
+        showMoreTagsLink: function() {
+            new MoreTags().init();
         }
     };
 
@@ -542,6 +551,7 @@ define([
             modules.runForseeSurvey(config);
             modules.startRegister(config);
             modules.repositionComments();
+            modules.showMoreTagsLink();
         }
         mediator.emit('page:common:ready', config, context);
     };
