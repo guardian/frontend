@@ -1,6 +1,8 @@
 define([
+    'qwery',
     'common/$'
 ], function (
+    qwery,
     $
     ) {
 
@@ -25,7 +27,8 @@ define([
         this.idealOutcome = 'Click through/revenue produced by component increases, without detrimentally impacting click through on containers/';
 
         this.canRun = function (config) {
-            return config.page.contentType === 'Tag' || config.page.isFront;
+            // only apply on fronts with at least 4 containers
+            return (config.page.contentType === 'Tag' || config.page.isFront) && qwery('.facia-container section.container').length >= 4;
         };
 
         this.variants = [
