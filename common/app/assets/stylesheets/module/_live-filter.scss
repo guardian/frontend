@@ -41,7 +41,7 @@
         position: absolute;
         @include rem((
             top: 14px,
-            right: ($gs-gutter*0.75)*-1
+            right: ($gs-gutter*.75)*-1
         ));
     }
 }

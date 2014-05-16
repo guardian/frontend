@@ -216,49 +216,62 @@
     </script>
 
     <script type="text/html" id="template_article">
-        <div class="article u-cf" data-bind="
+        <div class="article" data-bind="
             css: {
-                open: state.open,
+                open: state.isOpen,
                 underDrag: state.underDrag
             }">
+
+            <div class="article__time">
+                <span class="article__time__publication" data-bind="
+                    visible: webPublicationTime,
+                    text: webPublicationTime"></span>
+                <span class="article__time__front" data-bind="
+                    visible: frontPublicationTime,
+                    text: frontPublicationTime"></span>
+            </div>
 
             <a class="article__lhs" target="article" data-bind="
                 attr: {href: 'http://www.theguardian.com/' + id()},
                 click: open">
                 <img class="thumb" draggable="false" data-bind="
-                    attr: {src: fields.thumbnail, title: id}"/>
-                <div class="article__date" data-bind="
-                    visible: humanDate,
-                    text: humanDate"></div>
+                    attr: {src: meta.imageSrc() || fields.thumbnail(), title: id}"/>
             </a>
 
-            <div data-bind="if: state.open">
-                <div class="article__overrides u-cf">
+            <div data-bind="if: state.isOpen">
+                <div class="article__overrides">
                     <div class="article__overrides__fields">
                         <input type="text" data-bind="
                             hasFocus: true,
-                            value: headlineInput,
                             event: {blur: save},
+                            value: headlineInput,
                             attr: {placeholder: fields.headline() || 'Link text'}"/>
                         <a class="revert revert--headline" data-bind="
                             click: headlineRevert,
                             attr: {title: 'Revert to: ' + fields.headline()},
                             visible: meta.headline"><i class="icon-fast-backward"></i></a>
 
-                        <input type="text" data-bind="
-                            visible: isSnap,
-                            value: meta.href,
-                            event: {blur: save},
-                            attr: {placeholder: 'Link URL, eg. uk/money or http://www.bbc.co.uk/'}"/>
-
                         <textarea class="trailtext" type="text" data-bind="
-                            value: trailTextInput,
                             event: {blur: save},
+                            value: trailTextInput,
                             attr: {placeholder: fields.trailText() || 'Trail text'}"/></textarea>
                         <a class="revert revert--trailtext" data-bind="
                             click: trailTextRevert,
                             attr: {title: 'Revert to: ' + fields.trailText()},
                             visible: meta.trailText"><i class="icon-fast-backward"></i></a>
+
+                        <input type="text" placeholder="Link URL, eg. uk/money or http://www.bbc.co.uk/" data-bind="
+                            event: {blur: save},
+                            visible: isSnap,
+                            value: meta.href"/>
+
+                        <div data-bind="
+                            if: state.isOpenImage() || meta.imageSrc()">
+                            <input type="text" placeholder="Image URL, 5x3 aspect ratio, min width 620px" data-bind="
+                                hasFocus: state.isOpenImage;
+                                event: {blur: save},
+                                value: provisionalImageSrc"/>
+                        </div>
                     </div>
 
                     <div class="tools">
@@ -270,15 +283,25 @@
 
                     <div class="misc__overrides">
                         Image
+
+                        <!-- ko if: $root.switches()['facia-tool-image-override'] -->
+                        <a data-bind="
+                            click: toggleOpenImage,
+                            text: meta.imageSrc() ? 'replaced' : 'replace',
+                            css: {selected: meta.imageSrc}"></a>
+                        &middot;
+                        <!-- /ko -->
                         <a data-bind="
                             click: toggleImageAdjustBoost,
                             text: meta.imageAdjust() === 'boost' ? 'boosted' : 'boost',
-                            css: {selected: meta.imageAdjust() === 'boost'}"></a>,
+                            css: {selected: meta.imageAdjust() === 'boost'}"></a>
+                        &middot;
                         <a data-bind="
                             click: toggleImageAdjustHide,
                             text: meta.imageAdjust() === 'hide' ? 'hidden' : 'hide',
-                            css: {selected: meta.imageAdjust() === 'hide'}"></a>.
+                            css: {selected: meta.imageAdjust() === 'hide'}"></a>
 
+                        &middot;
                         Mark as
                         <a data-bind="
                             click: toggleIsBreaking,
@@ -299,20 +322,20 @@
                 </div>
             </div>
 
-            <div class="closed" data-bind="if: !state.open()">
+            <div class="closed" data-bind="if: !state.isOpen()">
                 <a class="spark" target="ophan" title="Dark blue: Guardian. Green: Google. Light blue: Other." data-bind="
                     visible: state.sparkUrl,
                     attr: {href: 'http://dashboard.ophan.co.uk/graph/breakdown?path=/' + id()}">
                     <img data-bind="attr: {src: state.sparkUrl}" />
                 </a>
 
-                <div class="image__overrides" data-bind="
-                    visible: meta.imageAdjust,
-                    click: open">
-                    <span class="selected" data-bind="
-                        visible: meta.imageAdjust() === 'boost'">Boosted</span>
-                    <span class="selected" data-bind="
-                        visible: meta.imageAdjust() === 'hide'">Hidden</span>
+                <div class="image__overrides" data-bind="click: open">
+                    <div data-bind="
+                        visible: meta.imageAdjust() === 'boost'">Boosted</div>
+                    <div data-bind="
+                        visible: meta.imageAdjust() === 'hide'">Hidden</div>
+                    <div data-bind="
+                        visible: meta.imageSrc">Replaced</div>
                 </div>
 
                 <a class="tool tool--small tool--small--remove" data-bind="click: $parent.omitItem">
@@ -349,9 +372,9 @@
                     <div class="secondary">
                         <span data-bind="
                             visible: isSnap,
-                            attr: {class: 'is' + (meta.snapType() ? ' is--' + meta.snapType() : '')},
+                            attr: {class: 'is' + (meta.snapCss() ? ' is--' + meta.snapCss() : '')},
                             click: open,
-                            text: meta.snapType() || 'snap'"></span>
+                            text: meta.snapCss() || 'snap'"></span>
 
                         <span class="is is--breaking" data-bind="
                             visible: meta.isBreaking,

@@ -2,6 +2,7 @@ package model
 
 import common.{Pagination, ManifestData}
 import conf.Configuration
+import dfp.DfpAgent
 
 trait MetaData extends Tags {
   def id: String
@@ -14,6 +15,7 @@ trait MetaData extends Tags {
   def description: Option[String] = None
   def rssPath: Option[String] = None
 
+  def title: String = webTitle
   // this is here so it can be included in analytics.
   // Basically it helps us understand the impact of changes and needs
   // to be an integral part of each page
@@ -136,4 +138,7 @@ trait Tags {
   lazy val blogs: Seq[Tag] = tagsOfType("blog")
   lazy val tones: Seq[Tag] = tagsOfType("tone")
   lazy val types: Seq[Tag] = tagsOfType("type")
+
+  def isSponsored = DfpAgent.isSponsored(keywords)
+  def isAdvertisementFeature = DfpAgent.isAdvertisementFeature(keywords)
 }

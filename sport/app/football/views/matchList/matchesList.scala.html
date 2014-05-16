@@ -1,4 +1,11 @@
-@(matchesList: List[FootballMatch], competition: model.Competition, date: org.joda.time.DateMidnight, responsiveFont: Boolean = false, matchType: String = "")(implicit request: RequestHeader)
+@(matchesList: List[FootballMatch],
+    competition: model.Competition,
+    date: org.joda.time.DateMidnight,
+    responsiveFont: Boolean = false,
+    matchType: String = "",
+    linkToCompetition: Boolean = false,
+    heading: Option[String] = None,
+    link: Option[(String, String)] = None)(implicit request: RequestHeader)
 @import implicits.Football._
 
 <table class="table table--football football-matches@if(responsiveFont){ table--responsive-font}">
@@ -66,6 +73,7 @@
             </tr>
         }
     </tbody>
-    <caption class="table__caption table__caption--top"><a href="@competition.url" data-link-name="view @competition.fullName">@competition.fullName</a><span class="football-matches__date">@date.toString("d MMMM yyyy")</span></caption>
-    <caption class="table__caption table__caption--bottom"><a href="@competition.url@if(matchType!=""){/@matchType}" data-link-name="view @competition.fullName matches">Show more <span class="competition-name">@competition.fullName</span> @matchType</a></caption>
+    <caption class="table__caption table__caption--top">@heading.map{ h => <a href="@competition.url" data-link-name="view @competition.fullName">@h</a>}<span class="football-matches__date">@date.toString("E d MMMM")</span></caption>
+    @if(linkToCompetition && link == None){<caption class="table__caption table__caption--bottom"><a href="@competition.url@if(matchType!=""){/@matchType}" data-link-name="view @competition.fullName matches" class="full-table-link">Show more <span class="competition-name">@competition.fullName</span> @matchType</a></caption>}
+    @link.map{ case (text, href) => <caption class="table__caption table__caption--bottom"><a href="@href" data-link-name="view matches" class="full-table-link">@text</a></caption>}
 </table>

@@ -3,7 +3,7 @@ package controllers.front
 import model._
 import scala.concurrent.Future
 import play.api.libs.ws.{Response, WS}
-import play.api.libs.json.{JsValue, Json}
+import play.api.libs.json.{JsNull, JsValue, Json}
 import common.ExecutionContexts
 import model.FaciaPage
 import services.SecureS3Request
@@ -65,16 +65,20 @@ trait FrontJson extends ExecutionContexts {
       displayName     = (json \ "displayName").asOpt[String],
       href            = (json \ "href").asOpt[String],
       groups          = (json \ "groups").asOpt[List[String]].getOrElse(Nil),
-      collectionType  = (json \ "type").asOpt[String]
+      collectionType  = (json \ "type").asOpt[String],
+      showTags = (json \ "showTags").asOpt[Boolean] getOrElse false,
+      showSections = (json \ "showSections").asOpt[Boolean] getOrElse false
     )
   }
 
   private def parsePressedJson(j: String): Option[FaciaPage] = {
     val json = Json.parse(j)
+    val id: String = (json \ "id").as[String]
     Option(
       FaciaPage(
-        (json \ "id").as[String],
-        parseOutTuple(json)
+        id,
+        seoData     = parseSeoData(id, (json \ "seoData").asOpt[JsValue].getOrElse(JsNull)),
+        collections = parseOutTuple(json)
       )
     )
   }
@@ -86,6 +90,26 @@ trait FrontJson extends ExecutionContexts {
         case _   => None
       }
     }
+  }
+
+  private def parseSeoData(id: String, seoJson: JsValue): SeoData = {
+    val seoDataJson = SeoDataJson(
+      id,
+      (seoJson \ "section").asOpt[String].filter(_.nonEmpty),
+      (seoJson \ "webTitle").asOpt[String].filter(_.nonEmpty),
+      (seoJson \ "title").asOpt[String].filter(_.nonEmpty),
+      (seoJson \ "description").asOpt[String].filter(_.nonEmpty)
+    )
+
+    val seoDataFromPath: SeoData = SeoData.fromPath(id)
+
+    SeoData(
+      id,
+      seoDataJson.section.getOrElse(seoDataFromPath.section),
+      seoDataJson.webTitle.getOrElse(seoDataFromPath.webTitle),
+      seoDataJson.title,
+      seoDataJson.description.orElse(seoDataFromPath.description)
+      )
   }
 
 }

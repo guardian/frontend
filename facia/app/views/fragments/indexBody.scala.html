@@ -1,10 +1,10 @@
 @(index: services.IndexPage)(implicit request: RequestHeader, templateDeduping: TemplateDeduping)
 
-<div class="facia-container facia-container--layout-front monocolumn-wrapper monocolumn-wrapper--no-limit" data-link-name="Front" role="main">
+<div data-link-name="Front" role="main" class="facia-container facia-container--layout-front @if(index.page.isAdvertisementFeature){facia-container--advertisement-feature}">
 
-    @fragments.containers.tag(index.page, Config(s"${index.page.id}/news/regular-stories", displayName = Some(index.page.webTitle)), Collection(index.trails), NewsContainer(showMore = false), containerIndex = 0, pagination = index.page.pagination)
+    @fragments.containers.tag(index.page, Collection(index.trails), NewsContainer(showMore = false), containerIndex = 0, pagination = index.page.pagination)(request, templateDeduping, Config(s"${index.page.id}/news/regular-stories", displayName = Some(index.page.webTitle)))
 
-    <section class="no-indent-article__zone">
+    <section class="no-indent-article__zone facia-container__inner">
         @fragments.footballNav(index.page)
     </section>
 

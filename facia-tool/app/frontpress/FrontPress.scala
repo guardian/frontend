@@ -9,6 +9,8 @@ import common.FaciaToolMetrics.{FrontPressSuccess, FrontPressFailure}
 import play.api.libs.concurrent.Akka
 import play.api.libs.json.JsObject
 import com.gu.openplatform.contentapi.model.Asset
+import conf.Switches
+import services.ConfigAgent
 
 trait FrontPress extends Logging {
 
@@ -42,33 +44,39 @@ trait FrontPress extends Logging {
     supporting:   Option[Seq[JsValue]],
     href:         Option[JsValue],
     snapType:     Option[JsValue],
+    snapCss:      Option[JsValue],
     snapUri:      Option[JsValue]
   )
 
   implicit val collectionJsonWrites = Json.writes[CollectionJson]
   implicit val itemMetaJsonWrites = Json.writes[ItemMeta]
-
+  implicit val seoDataJsonWrites = Json.writes[SeoData]
 
   import play.api.Play.current
   private lazy implicit val frontPressContext = Akka.system.dispatchers.lookup("play.akka.actor.front-press")
 
   def generateJson(id: String): Future[JsObject] = {
-    retrieveFrontByPath(id)
-      .map(_.map{case (config, collection) =>
-        Json.obj(
-          config.id -> generateCollectionJson(config, collection)
-        )})
-      .map(_.foldLeft(Json.arr()){case (l, jsObject) => l :+ jsObject})
-      .map( c =>
-        Json.obj(
-          ("id", id),
-          ("collections", c)
-        )
-      )
+    val futureSeoData: Future[SeoData] = SeoData.getSeoData(id)
+    futureSeoData.flatMap { seoData =>
+        retrieveFrontByPath(id).map(_.map {
+          case (config, collection) =>
+            Json.obj(
+              config.id -> generateCollectionJson(config, collection)
+            )
+        })
+          .map(_.foldLeft(Json.arr()) {
+          case (l, jsObject) => l :+ jsObject
+        })
+          .map(c =>
+          Json.obj("id" -> id) ++
+            Json.obj("seoData" -> seoData) ++
+            Json.obj("collections" -> c)
+          )
+    }
   }
 
   private def retrieveFrontByPath(id: String): Future[Iterable[(Config, Collection)]] = {
-    val collectionIds: List[Config] = FaciaToolConfigAgent.getConfigForId(id).getOrElse(Nil)
+    val collectionIds: List[Config] = ConfigAgent.getConfigForId(id).getOrElse(Nil)
     val collections = collectionIds.map(config => FaciaToolCollectionParser.getCollection(config.id, config, Uk, isWarmedUp=true).map((config, _)))
     val futureSequence = Future.sequence(collections)
     futureSequence.onFailure{case t: Throwable =>
@@ -97,8 +105,8 @@ trait FrontPress extends Logging {
         groups         = Option(config.groups).filter(_.nonEmpty),
         href           = collection.href.orElse(config.href),
         `type`         = config.collectionType,
-        showTags       = config.showTags,
-        showSections   = config.showSections
+        showTags       = Switches.FaciaToolContainerTagsSwitch.isSwitchedOn && config.showTags,
+        showSections   = Switches.FaciaToolContainerTagsSwitch.isSwitchedOn && config.showSections
       )
     )
 
@@ -148,17 +156,13 @@ trait FrontPress extends Logging {
     "assets" -> element.delegate.assets.map(generateAsset)
   )
 
+  //Asset typeData: width, height, credit, caption
   private def generateAsset(asset: Asset): JsValue =
     Json.obj(
       "type" -> asset.`type`,
       "mimeType" -> asset.mimeType,
       "file" -> asset.file,
-      "typeData" -> Json.obj(
-        ("height", asset.typeData.get("height")),
-        ("credit", asset.typeData.get("credit")),
-        ("caption", asset.typeData.get("caption")),
-        ("width", asset.typeData.get("width"))
-      )
+      "typeData" -> asset.typeData
     )
 
   private def generateItemMeta(content: Content): JsValue =
@@ -172,6 +176,7 @@ trait FrontPress extends Logging {
         supporting =  Option(content.supporting.map(generateInnerTrailJson)).filter(_.nonEmpty),
         href =        content.apiContent.metaData.get("href"),
         snapType = content.apiContent.metaData.get("snapType"),
+        snapCss = content.apiContent.metaData.get("snapCss"),
         snapUri = content.apiContent.metaData.get("snapUri")
       )
     )

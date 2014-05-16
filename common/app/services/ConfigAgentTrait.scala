@@ -1,18 +1,22 @@
 package services
 
-import common.{AkkaAgent, ExecutionContexts}
+import common._
 import play.api.libs.json.{JsNull, Json, JsValue}
 import model.Config
 import scala.concurrent.Future
 import scala.concurrent.duration._
 import akka.util.Timeout
 import conf.Configuration
+import play.api.{Application, GlobalSettings}
+import model.SeoDataJson
 
-trait ConfigAgentTrait extends ExecutionContexts {
+trait ConfigAgentTrait extends ExecutionContexts with Logging {
   implicit val alterTimeout: Timeout = Configuration.faciatool.configBeforePressTimeout.millis
-  private val configAgent = AkkaAgent[JsValue](JsNull)
+  private lazy val configAgent = AkkaAgent[JsValue](JsNull)
 
   def refresh() = S3FrontsApi.getMasterConfig map {s => configAgent.send(Json.parse(s))}
+
+  def refreshWith(json: JsValue): Unit = configAgent.send(json)
 
   def refreshAndReturn(): Future[JsValue] =
     S3FrontsApi.getMasterConfig
@@ -71,4 +75,44 @@ trait ConfigAgentTrait extends ExecutionContexts {
   def close() = configAgent.close()
 
   def contentsAsJsonString: String = Json.prettyPrint(configAgent.get)
+
+  def getSeoDataJsonFromConfig(path: String): SeoDataJson = {
+    val json = configAgent.get()
+    val frontJson = (json \ "fronts" \ path).as[JsValue]
+    SeoDataJson(
+      path,
+      section   = (frontJson \ "section").asOpt[String].filter(_.nonEmpty),
+      webTitle  = (frontJson \ "webTitle").asOpt[String].filter(_.nonEmpty).map(webTitleCase),
+      title  = (frontJson \ "title").asOpt[String].filter(_.nonEmpty),
+      description  = (frontJson \ "description").asOpt[String].filter(_.nonEmpty)
+    )
+  }
+
+  private def webTitleCase(webTitle: String): String = webTitle.split(' ').map(_.capitalize).mkString(" ")
+
+}
+
+object ConfigAgent extends ConfigAgentTrait
+
+trait ConfigAgentLifecycle extends GlobalSettings {
+
+  override def onStart(app: Application) {
+    super.onStart(app)
+
+    Jobs.deschedule("ConfigAgentJob")
+    Jobs.schedule("ConfigAgentJob", "0 * * * * ?") {
+      ConfigAgent.refresh()
+    }
+
+    AkkaAsync {
+      ConfigAgent.refresh()
+    }
+  }
+
+  override def onStop(app: Application) {
+    Jobs.deschedule("ConfigAgentJob")
+    ConfigAgent.close()
+
+    super.onStop(app)
+  }
 }

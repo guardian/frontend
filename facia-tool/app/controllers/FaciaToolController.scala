@@ -13,10 +13,7 @@ import play.api.libs.ws.Response
 import scala.concurrent.Future
 import conf.Switches.ContentApiPutSwitch
 import model.{NoCache, Cached}
-import play.api.libs.iteratee.Enumerator
-import _root_.util.Enumerators._
 import scala.util.{Failure, Success}
-import play.api.templates.Html
 import play.api.libs.Comet
 
 object FaciaToolController extends Controller with Logging with ExecutionContexts {
@@ -58,9 +55,16 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
 
   def updateConfig(): Action[AnyContent] = AjaxExpiringAuthentication { request =>
     FaciaToolMetrics.ApiUsageCount.increment()
+    val configJson: Option[JsValue] = request.body.asJson
     NoCache {
-      request.body.asJson flatMap(_.asOpt[Config]) map {
+      configJson flatMap(_.asOpt[Config]) map {
         case update: Config => {
+
+          //Only update if it is a valid Config object
+          configJson.foreach { json =>
+            ConfigAgent.refreshWith(json)
+          }
+
           val identity = Identity(request).get
           UpdateActions.putMasterConfig(update, identity)
           Ok
@@ -130,7 +134,7 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
     FaciaToolMetrics.ApiUsageCount.increment()
     NoCache {
       request.body.asJson flatMap (_.asOpt[Map[String, UpdateList]]) map {
-        case update: Map[String, UpdateList] => {
+        case update: Map[String, UpdateList] =>
           val identity: Identity = Identity(request).get
           val updatedCollections: Map[String, Block] = update.collect {
             case ("update", updateList) =>
@@ -146,8 +150,6 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
             Ok(Json.toJson(updatedCollections)).as("application/json")
           else
             NotFound
-        }
-        case _ => NotFound
       } getOrElse NotFound
     }
   }

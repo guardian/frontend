@@ -3,6 +3,7 @@ define([
     'knockout',
     'config',
     'modules/vars',
+    'modules/content-api',
     'models/group',
     'models/config/collection',
     'utils/as-observable-props',
@@ -12,6 +13,7 @@ define([
     ko,
     config,
     vars,
+    contentApi,
     Group,
     Collection,
     asObservableProps,
@@ -33,9 +35,9 @@ define([
 
         this.props  = asObservableProps(props);
 
-        this.placeholders  = asObservableProps(props);
-
         populateObservables(this.props,  opts);
+
+        this.capiProps = asObservableProps(props);
 
         this.state = asObservableProps([
             'isOpen',
@@ -62,11 +64,30 @@ define([
             }
         }, this);
 
-        this.props.webTitle.subscribe(function() {
-            this.derivePlaceholders();
+        this.depopulateCollection = this._depopulateCollection.bind(this);
+
+        this.placeholders = {};
+
+        this.placeholders.section = ko.computed(function() {
+            var path = asPath(this.id()),
+                isEditionalised = vars.CONST.editions.some(function(edition) { return edition === path[0]; });
+
+            return this.props.section() || this.capiProps.section() || (isEditionalised ? path.length === 1 ? undefined : path[1] : path[0]);
         }, this);
 
-        this.depopulateCollection = this._depopulateCollection.bind(this);
+        this.placeholders.webTitle = ko.computed(function() {
+            var path = asPath(this.id());
+
+            return this.props.webTitle() || this.capiProps.webTitle() || (toTitleCase(path.slice(path.length > 1 ? 1 : 0).join(' ').replace(/\-/g, ' ')) || this.id());
+        }, this);
+
+        this.placeholders.title = ko.computed(function() {
+            return this.props.title() || this.capiProps.title() || (this.placeholders.webTitle() + ' news, comment and analysis from the Guardian' + (this.placeholders.section() ? ' | ' + toTitleCase(this.placeholders.section()) : ''));
+        }, this);
+
+        this.placeholders.description  = ko.computed(function() {
+            return this.props.description() || this.capiProps.description() || ('Latest ' + this.placeholders.webTitle() + ' news, comment and analysis from the Guardian, the world\'s leading liberal voice');
+        }, this);
     }
 
     Front.prototype.validate = function(checkUniqueness) {
@@ -86,18 +107,6 @@ define([
         }
     };
 
-    Front.prototype.derivePlaceholders = function() {
-        var path = (this.id() || '').split('/'),
-            isEditionalised = _.some(['uk', 'us', 'au'], function(edition) { return edition === path[0]; });
-
-        if (!path.length) { return; }
-
-        this.placeholders.section(this.props.section() || (isEditionalised ? path.length === 1 ? undefined : path[1] : path[0]));
-        this.placeholders.webTitle(this.props.webTitle() || toTitleCase(path.slice(path.length > 1 ? 1 : 0).join(' ').replace(/\-/g, ' ')) || this.id());
-        this.placeholders.title(this.placeholders.webTitle() + ' news, comment and analysis from the Guardian' + (this.placeholders.section() ? ' | ' + toTitleCase(this.placeholders.section()) : ''));
-        this.placeholders.description('Latest ' + this.placeholders.webTitle() + ' news, comment and analysis from the Guardian, the world\'s leading liberal voice');
-    };
-
     Front.prototype.setOpen = function(isOpen, withOpenProps) {
         this.state.isOpen(isOpen);
         this.state.isOpenProps(withOpenProps);
@@ -108,9 +117,18 @@ define([
     };
 
     Front.prototype.openProps = function() {
+        var self = this;
+
         this.state.isOpenProps(true);
-        this.derivePlaceholders();
         this.collections.items().map(function(collection) { collection.close(); });
+
+        contentApi.fetchMetaForPath(this.id())
+        .done(function(meta) {
+            meta = meta || {};
+            _.each(self.capiProps, function(val, key) {
+                val(meta[key]);
+            });
+        });
     };
 
     Front.prototype.saveProps = function() {
@@ -136,6 +154,10 @@ define([
 
     function toTitleCase(str) {
         return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+    }
+
+    function asPath(str) {
+       return (str || '').split('/');
     }
 
     return Front;

@@ -3,17 +3,21 @@ define([
     'bonzo',
     'common/utils/ajax',
     'common/utils/mediator',
+    'common/utils/template',
     'common/utils/to-array'
 ], function(
     $,
     bonzo,
     ajax,
     mediator,
+    template,
     toArray
 ) {
 
     function init() {
-        var snaps = toArray($('.facia-snap[data-snap-uri^="http"]'));
+        var snaps = toArray($('.facia-snap'))
+                .filter(function(el) { return el.getAttribute('data-snap-uri'); })
+                .filter(function(el) { return el.getAttribute('data-snap-type'); });
 
         snaps.forEach(fetchSnap);
 
@@ -49,13 +53,13 @@ define([
     }
 
     function injectIframe(el) {
-        var iframe = document.createElement('iframe');
-
-        iframe.style.width = '100%';
-        iframe.style.border = 'none';
-        iframe.height = '200';
-        iframe.src = el.getAttribute('data-snap-uri');
-        bonzo(el).html(iframe);
+        // Wrapping iframe to fix iOS height-setting bug
+        bonzo(el).html(template(
+            '<div style="height:{{height}}px; overflow:hidden;">' +
+                '<iframe src="{{src}}" style="height:{{height}}px; width: 100%; border: none;"></iframe>' +
+            '</div>',
+            {src: el.getAttribute('data-snap-uri'), height: 200}
+        ));
     }
 
     function fetchFragment(el, asJson) {
@@ -74,15 +78,18 @@ define([
         bonzo(el).addClass('facia-snap-embed');
         setSnapPoint(el);
 
-        if(el.getAttribute('data-snap-type') === 'iframe') {
-            injectIframe(el);
+        switch (el.getAttribute('data-snap-type')) {
+            case 'document':
+                injectIframe(el);
+                break;
 
-        } else if(el.getAttribute('data-snap-type') === 'fragment') {
-            fetchFragment(el);
+            case 'fragment':
+                fetchFragment(el);
+                break;
 
-        } else {
-            // assumes a {"html": "<p>Stuff</p>"} response
-            fetchFragment(el, true);
+            case 'json.html':
+                fetchFragment(el, true);
+                break;
         }
     }
 

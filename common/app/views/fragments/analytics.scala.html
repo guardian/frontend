@@ -46,6 +46,13 @@
                             *@
                             var img = new Image();
                             img.src = "@{Configuration.debug.beaconUrl}/count/pva.gif";
+
+                            var s = document.createElement('script'),
+                                    sc = document.getElementsByTagName('script')[0];
+
+                            s.src = '@Static("javascripts/bootstraps/ophan.js")';
+                            s.aysnc = true;
+                            sc.parentNode.insertBefore(s, sc);
                         }
                     }
                 </script>

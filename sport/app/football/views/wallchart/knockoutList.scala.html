@@ -1,0 +1,23 @@
+@(competition: model.Competition, knockoutStage: _root_.football.model.Knockout, hasSpider: Boolean = false)(implicit request: RequestHeader)
+
+<div class="football-knockouts @if(hasSpider){football-knockouts--has-spider}">
+    @knockoutStage.rounds.zipWithRowInfo.map{ case (round, row) =>
+        @round.name.map { name =>
+            @fragments.dropdown(name, isActive = knockoutStage.isActiveRound(round)){
+                <ul class="u-unstyled u-cf">
+                    @defining(knockoutStage.matchesList(competition, round)) { matches =>
+                        <li>
+                            @matches.matchesGroupedByDateAndCompetition.zipWithRowInfo.map { case ((date, competitionMatches), info) =>
+                                @competitionMatches.map { case (competition, matches) =>
+                                    @football.views.html.matchList.matchesList(matches, competition, date,
+                                        heading = if(info.isFirst) Option("Fixtures and results") else None
+                                    )
+                                }
+                            }
+                        </li>
+                    }
+                </ul>
+            }
+        }
+    }
+</div>

@@ -51,8 +51,8 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         import browser._
 
         Then("I should see a short description of the article")
-        findFirst("[itemprop=description]").getText should
-          be("Payments for 'ecosystem services' look like the prelude to the greatest privatisation since enclosure")
+        findFirst("[itemprop=description]").getAttribute("content") should
+          be("George Monbiot: Payments for 'ecosystem services' look like the prelude to the greatest privatisation since enclosure")
       }
     }
 
@@ -435,15 +435,15 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         import browser._
 
         val mailShareUrl = "mailto:?subject=Mark%20Kermode%27s%20DVD%20round-up&body=http%3A%2F%2Flocalhost%3A9000%2Ffilm%2F2012%2Fnov%2F11%2Fmargin-call-cosmopolis-friends-with-kids-dvd-review"
-        val fbShareUrl = "https://www.facebook.com/dialog/feed?app_id=232588266837342&redirect_uri=http%3A%2F%2Flocalhost%3A9000%2Ffilm%2F2012%2Fnov%2F11%2Fmargin-call-cosmopolis-friends-with-kids-dvd-review&link=http%3A%2F%2Flocalhost%3A9000%2Ffilm%2F2012%2Fnov%2F11%2Fmargin-call-cosmopolis-friends-with-kids-dvd-review&ref=responsive"
+        val fbShareUrl = "https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A9000%2Ffilm%2F2012%2Fnov%2F11%2Fmargin-call-cosmopolis-friends-with-kids-dvd-review&ref=responsive"
         val twitterShareUrl = "https://twitter.com/intent/tweet?text=Mark+Kermode%27s+DVD+round-up&url=http%3A%2F%2Flocalhost%3A9000%2Ffilm%2F2012%2Fnov%2F11%2Fmargin-call-cosmopolis-friends-with-kids-dvd-review"
         val gplusShareUrl = "https://plus.google.com/share?url=http%3A%2F%2Flocalhost%3A9000%2Ffilm%2F2012%2Fnov%2F11%2Fmargin-call-cosmopolis-friends-with-kids-dvd-review&hl=en-GB&wwc=1"
 
         Then("I should see buttons for my favourite social network")
-        findFirst(".social__action[data-link-name=social-mail]").getAttribute("href") should be(mailShareUrl)
-        findFirst(".social__action[data-link-name=social-fb]").getAttribute("href") should be(fbShareUrl)
-        findFirst(".social__action[data-link-name=social-twitter]").getAttribute("href") should be(twitterShareUrl)
-        findFirst(".social__action[data-link-name=social-gplus]").getAttribute("href") should be(gplusShareUrl)
+        findFirst(".social__item[data-link-name=email] .social__action").getAttribute("href") should be(mailShareUrl)
+        findFirst(".social__item[data-link-name=facebook] .social__action").getAttribute("href") should be(fbShareUrl)
+        findFirst(".social__item[data-link-name=twitter] .social__action").getAttribute("href") should be(twitterShareUrl)
+        findFirst(".social__item[data-link-name=gplus] .social__action").getAttribute("href") should be(gplusShareUrl)
       }
 
       Given("I want to track the responsive share buttons using Facebook Insights")
@@ -454,7 +454,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         val fbShareTrackingToken = "ref=responsive"
 
         Then("I should pass Facebook a tracking token")
-        findFirst(".social__action[data-link-name=social-fb]").getAttribute("href") should include(fbShareTrackingToken)
+        findFirst(".social__item[data-link-name=facebook] .social__action").getAttribute("href") should include(fbShareTrackingToken)
       }
 
 
@@ -474,7 +474,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         findFirst(".related__container").getAttribute("role") should be("complementary")
         findFirst("aside").getAttribute("role") should be("complementary")
         findFirst("header").getAttribute("role") should be("banner")
-        findFirst(".footer__secondary").getAttribute("role") should be("contentinfo")
+        findFirst(".l-footer__secondary").getAttribute("role") should be("contentinfo")
         findFirst("nav").getAttribute("role") should be("navigation")
         findFirst("nav").getAttribute("aria-label") should be("Guardian sections")
         findFirst("#article").getAttribute("role") should be("main")
@@ -517,7 +517,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         import browser._
 
         Then("I should see links to keywords")
-        $(".article__keywords a").size should be (5)
+        $(".article__keywords a").size should be (18)
       }
     }
 
@@ -544,6 +544,17 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
       }
     }
 
+    scenario("Signify to the user an article is sponsored"){
+      Given("I visit a sponsored article entitled 'Feeling hungry? Try the fine flavours of floral gastronomy'")
+      StandardAdvertsSwitch.switchOn()
+      HtmlUnit("/lifeandstyle/2014/may/02/feeling-hungry-try-the-fine-favours-of-floral-gastronomy") { browser =>
+        import browser._
+        Then("I should see a message")
+        val adSlot = $(".ad-slot--paid-for-badge")
+        adSlot.getAttribute("data-name") should be ("spbadge")
+        adSlot.findFirst(".ad-slot__container").getId should be ("dfp-ad--spbadge")
+      }
+    }
 
     scenario("Health check"){
       HtmlUnit("/world/2013/sep/15/obama-rouhani-united-nations-meeting") { browser =>

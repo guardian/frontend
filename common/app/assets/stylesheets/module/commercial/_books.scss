@@ -1,10 +1,12 @@
 /* ==========================================================================
-   Books component
+   Books components
    ========================================================================== */
+
+$c-commercial-books-dark: #630D4C;
 
 .commercial--books {
     @include rem((
-        padding: $gs-gutter/2
+        padding: $comercial-comp-baseline 0
     ));
     .commercial__branding,
     .commercial__head {
@@ -13,6 +15,7 @@
         border: 0;
         height: auto;
         padding: 0;
+        margin-top: 0;
     }
     .commercial__branding {
         float: left;
@@ -32,6 +35,12 @@
     .commercial__title {
         margin: 0;
     }
+    .commercial__relevance-title {
+        @include fs-bodyHeading(3);
+        @include rem((
+            margin-bottom: $gs-baseline/2
+        ));
+    }
     .i-bookshop-logo--bookshop {
         @include rem((
             margin-left: -5px
@@ -43,6 +52,11 @@
     .commercial__home-link {
         float: right;
         clear: right;
+        color: $c-commercial-books-dark;
+        bottom: 0;
+    }
+    .commercial__home-link__cta {
+        background-color: $c-commercial-books-dark;
     }
     .commercial__body {
         padding: 0;
@@ -50,30 +64,31 @@
             margin-top: $gs-baseline
         ));
     }
-    .lineitem {
+    .lineitem,
+    .highitem {
         @include box-sizing(border-box);
         @include rem((
-            padding: $gs-baseline/2 0
+            padding: 0 0 $comercial-comp-baseline
         ));
+    }
+    .lineitem {
+        @include rem((
+            padding: $comercial-comp-baseline 0
+        ));        
     }
     .lineitem:first-child {
         padding-top: 0;
     }
-    .lineitem:first-child .lineitem__img {
-        display: block;
-    }
-    .lineitem__link {
-        width: 68%;
-    }
+
     .lineitem__meta {
         color: $c-neutral1;
         @include fs-textsans(1);
     }
     .commercial--books__price {
         @include rem((
-            margin-top: $gs-baseline/2,
-            margin-bottom: 0
+            margin-top: $gs-baseline/2
         ));
+        margin-bottom: 0;
     }
     .commercial--books__price__rrp,
     .commercial--books__price__our {
@@ -85,16 +100,19 @@
         font-weight: bold;
     }
     .commercial--books__buy-now-button {
+        display: inline-block;
         background-color: #e657af;
         border: 0;
-        float: right;
         color: #ffffff;
         text-align: center;
+        position: absolute;
+        right: 0;
         @include f-header;
         @include font-size(12, 20);
         @include rem((
+            top: $comercial-comp-baseline,
             padding: 0 $gs-gutter/2,
-            min-width: 60px
+            min-width: gs-span(1)
         ));
     }
 
@@ -103,12 +121,8 @@
     }
 
     @include mq(tablet) {
-        .commercial__branding {
-            float: none;
-        }
-        .commercial__head {
-            float: left;
-            width: gs-span(3);
+        .commercial__body {
+            margin-top: 0;
         }
         .commercial__search {
             position: relative;
@@ -117,29 +131,18 @@
             @include rem((
                 margin-top: $gs-baseline*4
             ));
-        }
-        .commercial__home-link {
-            position: absolute;
-            @include rem((
-                bottom: $gs-baseline
-            ));
-        }
-        .commercial__body {
-            margin-top: 0;
-        }
+        }        
         .lineitem {
             position: relative;
             width: 33%;
             @include rem((
-                min-height: 250px,
-                padding: 0 $gs-gutter/2 $gs-baseline*2.5
+                padding: 0 $gs-gutter/2
             ));
 
             &:nth-child(n+4) {
                 display: none;
             }
         }
-        .lineitem__link,
         .commercial--books__price {
             width: 100%;
         }
@@ -153,12 +156,12 @@
             display: inline;
         }
         .commercial--books__buy-now-button {
-            position: absolute;
-            bottom: 0;
-            left: 8px;
-        }
-        .commercial__foot {
-            display: none;
+            position: static;
+            right: auto;
+            top: auto;
+            @include rem((
+                margin-top: $comercial-comp-baseline
+            ));
         }
     }
     @include mq(desktop) {
@@ -175,6 +178,132 @@
             @include rem((
                 width: gs-span(4)
             ));
+        }
+    }
+    &.commercial--low {
+        .lineitem:first-child .lineitem__img {
+            display: block;
+        }
+        
+        @include mq(tablet) {
+            .commercial__body {
+                @include rem((
+                    padding-left: $gs-gutter/2
+                ));
+            }
+            .commercial__home-link {
+                position: absolute;
+            }
+            .commercial__branding {
+                float: none;
+            }
+            .commercial__head {
+                float: left;
+                @include rem((
+                    width: gs-span(3)
+                ));
+            }
+            .commercial__foot {
+                display: none;
+            }
+        }
+    }
+    &.commercial--high {
+        .lineitem__title {
+            clear: none;
+        }
+        .commercial__head .commercial__search {
+            display: none;
+        }
+        .commercial__relevance-low {
+            .lineitem_link {
+                width: 100%;
+            }
+            .lineitem__img {
+                @include rem((
+                    width: 66px
+                ));
+                height: auto;
+            }
+        }
+        .highitem__details {
+            @include rem((
+                padding-right: $gs-gutter/2
+            ));
+        }
+        @include mq(tablet) {
+            .lineitem {
+                border-left: 1px solid $c-neutral4;
+                width: 100%;
+                @include rem((
+                    min-height: $gs-baseline*13.5
+                ));
+                
+                &:nth-child(n+2) {
+                    display: none;
+                }
+            }
+            .highitem {
+                border-bottom: 0;
+                padding-bottom: 0;
+            }
+            .lowitem__details {
+                @include rem((
+                    margin-left: 76px
+                ));
+            }
+            .commercial__search {
+                @include rem((
+                    margin-top: $gs-baseline
+                ));
+            }
+            .commercial__relevance-high {
+                width: 66%;
+                float: left;
+                
+                .lineitem__link {
+                    width: auto;
+                }
+            }
+            .commercial__relevance-low {
+                width: 33%;
+                float: right;
+                
+                .lineitem:first-child .lineitem__img {
+                    display: block;
+                }
+            }
+        }
+        @include mq(rightCol) {
+            .commercial__head {
+                float: left;
+                
+                .commercial__search {
+                    display: block;
+                }
+            }
+            .commercial__home-link {
+                position: absolute;
+            }
+            .commercial__relevance-high {
+                width: 66%;
+            }
+            .commercial__relevance-low {
+                width: 33%;
+            }
+            .commercial__foot {
+                display: none;
+            }
+        }
+        @include mq(leftCol) {
+            .commercial__relevance-high,
+            .commercial__relevance-low,
+            .lineitem {
+                width: 50%;
+            }
+            .lineitem:nth-child(n+2) {
+                display: block;
+            }           
         }
     }
 }
@@ -209,7 +338,7 @@
         .commercial__title {
             line-height: 1;
             @include rem((
-                margin-bottom: 10px
+                margin-bottom: $comercial-comp-baseline
             ));
         }
         .i-bookshop-logo--bookshop {
@@ -225,19 +354,32 @@
 
 /* article */
 .facia-container--layout-article .commercial--books {
-    .commercial__head {
-        @include mq(rightCol) {
+    @include mq(rightCol) {
+        .commercial__head {
             width: 25%;
             @include rem((
-                padding-right: 8px
+                padding-right: $gs-gutter/2
             ));
+        }
+        .commercial__body {
+            padding-left: 0;
+        }
+    }
+    @include mq($from: rightCol, $to: leftCol) {
+        &.commercial--high .commercial__head {
+            padding-right: 16px;
+        }
+    }
+    @include mq(leftCol) {
+        .commercial__head {
+            padding-right: 0;
         }
     }
     @include mq(leftCol, $to: wide) {
         .commercial__title {
             line-height: 1;
             @include rem((
-                margin-bottom: 10px
+                margin-bottom: $comercial-comp-baseline
             ));
         }
         .i-bookshop-logo--bookshop {

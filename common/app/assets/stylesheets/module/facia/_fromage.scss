@@ -13,14 +13,14 @@
 
 .fromage {
     @include rem((
-        margin: 0 $gs-gutter/2 $gs-baseline/2
+        margin: 0 $gs-gutter/2 $gs-baseline
     ));
     border-top-width: 2px;
     border-top-style: solid;
 
     @include mq(tablet) {
         @include rem((
-            margin-bottom: $gs-baseline*2
+            margin-bottom: $gs-baseline*1.75
         ));
     }
 
@@ -34,7 +34,7 @@
         @include mq(tablet) {
             @include fs-headline(4, true);
             @include rem((
-                margin-bottom: $gs-baseline*2 - $gs-baseline/3
+                margin-bottom: $gs-baseline*1.25
             ));
         }
     }
@@ -44,9 +44,9 @@
        ====================================================================== */
 
     .item__meta {
-        bottom: -1px;
         overflow: hidden;
         @include rem((
+            bottom: -1px,
             margin-bottom: $gs-baseline/2
         ));
 
@@ -68,17 +68,18 @@
     @include clearfix;
 }
 .fromage__container {
-    border-top: 0 solid #ffffff;
+    // used for spacing, width set if needed
+    border-top: 0 solid transparent;
     position: relative;
     @include rem((
-        padding-bottom: 32px
+        padding-bottom: $gs-row-height - $gs-baseline/3
     ));
 
     @include mq(tablet) {
         padding-bottom: 0;
 
         @include rem((
-            padding-left: gs-span(5) + $gs-gutter,
+            padding-left: gs-span(5) + $gs-gutter
         ));
     }
 }
@@ -259,7 +260,9 @@
         }
     }
     .fromage__container {
-        border-top-width: 4px;
+        @include rem((
+            border-top-width: $gs-baseline/3
+        ));
 
         @include mq(tablet) {
             @include rem((
@@ -335,92 +338,5 @@
             -moz-column-width: rem(gs-span(2) + $gs-gutter*2);
             column-width: rem(gs-span(2) + $gs-gutter*2);
         }
-    }
-}
-
-
-/* Modifier: Volume 0, 1, 2
-   ========================================================================== */
-
-.fromage--volume-1,
-.fromage--volume-2 {
-    @include mq($to: tablet) {
-        .supporting__item {
-            border-color: #ffffff;
-        }
-        .supporting__action {
-            @include rem((
-                margin-left: $gs-gutter/5,
-            ));
-        }
-    }
-    .item__title,
-    .item__meta,
-    .fromage__standfirst,
-    .fromage__byline {
-        // Add some breathing space to children since they're in a box
-        // that has a background color
-        @include rem((
-            padding-left: $gs-gutter/4,
-            padding-right: $gs-gutter/4
-        ));
-    }
-    .fromage__standfirst,
-    .item__meta,
-    .fromage__byline {
-        @include mq(tablet) {
-            @include rem((
-                padding-left: 0
-            ));
-        }
-    }
-    &.fromage--has-image {
-        .item__title {
-            @include mq(tablet) {
-                @include rem((
-                    padding-left: 0
-                ));
-            }
-        }
-    }
-    &.fromage--imageadjust-default {
-        .fromage__media-wrapper--second {
-            @include rem((
-                margin-left: $gs-gutter/4
-            ));
-        }
-    }
-}
-.fromage--volume-1 {
-    &,
-    .fromage__container {
-        background: $c-neutral8;
-    }
-    .fromage__standfirst {
-        color: $c-neutral2-contrasted;
-    }
-}
-.fromage--volume-2 {
-    -webkit-font-smoothing: antialiased; // Prevent fonts from being too bold
-                                         // on the dark background
-    &,
-    .fromage__container {
-        background-color: $c-brandBlue;
-    }
-    &,
-    .fromage__container,
-    .item__title,
-    .fromage__standfirst,
-    .item__meta,
-    .supporting__action,
-    .fromage__link {
-        color: #ffffff;
-    }
-    .fromage__link:visited,
-    .fromage__link:visited .item__title {
-        color: mix(#ffffff, $c-brandBlue, 80%);
-    }
-    .supporting__action:visited {
-        color: mix(#ffffff, lighten($c-brandBlue, 7%), 80%);
     }
 }

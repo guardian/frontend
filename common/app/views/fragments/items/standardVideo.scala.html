@@ -1,4 +1,4 @@
-@(trail: Trail, index: Int, containerIndex: Int, element: String = "li")(implicit request: RequestHeader)
+@(trail: Trail, index: Int, containerIndex: Int, element: String = "li")(implicit request: RequestHeader, config: Config)
 
 @defining((VisualTone(trail), containerIndex == 0, containerIndex == 0 && index < 4)) { case (tone, isFirstContainer, inlineImages) =>
     <@element
@@ -33,6 +33,8 @@
                     @RemoveOuterParaHtml(trail.headline)
                 </h@if(isFirstContainer && index == 0){1}else{2}>
             </a>
+
+            @trail match { case content:model.Content => @fragments.items.elements.tagOrSection(content) }
 
             @trail.trailText.map { text =>
                 <div class="item__standfirst">@Html(text)</div>

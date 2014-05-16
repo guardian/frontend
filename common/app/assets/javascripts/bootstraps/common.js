@@ -44,14 +44,17 @@ define([
     'common/modules/identity/autosignin',
     'common/modules/adverts/article-body-adverts',
     'common/modules/adverts/article-aside-adverts',
-    'common/modules/adverts/collection-adverts',
+    'common/modules/adverts/slice-adverts',
+    'common/modules/adverts/front-commercial-components',
     'common/modules/adverts/dfp',
     'common/modules/analytics/commercial/tags/container',
     'common/modules/analytics/foresee-survey',
-    'common/modules/onward/right-most-popular',
+    'common/modules/onward/geo-most-popular',
     'common/modules/analytics/register',
     'common/modules/commercial/loader',
-    'common/modules/onward/tonal'
+    'common/modules/onward/tonal',
+    'common/modules/identity/api',
+    'common/modules/onward/more-tags'
 ], function (
     $,
     mediator,
@@ -96,17 +99,18 @@ define([
     AutoSignin,
     ArticleBodyAdverts,
     ArticleAsideAdverts,
-    CollectionAdverts,
-    DFP,
+    SliceAdverts,
+    frontCommercialComponents,
+    dfp,
     TagContainer,
     Foresee,
-    RightMostPopular,
+    GeoMostPopular,
     register,
     CommercialLoader,
-    TonalComponent
+    TonalComponent,
+    id,
+    MoreTags
 ) {
-
-    var hasBreakpointChanged = detect.hasCrossedBreakpoint();
 
     var modules = {
 
@@ -220,7 +224,7 @@ define([
                 detect.getBreakpoint() !== 'mobile' &&
                 parseInt(config.page.wordCount, 10) > 500 &&
                 !config.page.isLiveBlog) {
-                new RightMostPopular(mediator, {type: 'image', maxTrails: 5});
+                new GeoMostPopular({});
             }
         },
 
@@ -272,18 +276,6 @@ define([
 
             if (showAds) {
 
-                var onResize = {
-                        cmd: [],
-                        execute: function () {
-                            hasBreakpointChanged(function () {
-                                onResize.cmd.forEach(function (func) {
-                                    func();
-                                });
-                            });
-                        }
-                    },
-                    dfpAds,
-                    options = {};
 
                 // if it's an article, excluding live blogs, create our inline adverts
                 if (config.switches.standardAdverts && config.page.contentType === 'Article') {
@@ -294,31 +286,18 @@ define([
                     }
                 }
 
-                new CollectionAdverts(config).init();
+                new SliceAdverts(config).init();
+
+                frontCommercialComponents.init(config);
+
+                var options = {};
 
                 if (!config.switches.standardAdverts) {
-                    options.dfpSelector = '.ad-slot--commercial-component';
+                    options.adSlotSelector = '.ad-slot--commercial-component';
                 } else if (!config.switches.commercialComponents) {
-                    options.dfpSelector = '.ad-slot--dfp:not(.ad-slot--commercial-component)';
+                    options.adSlotSelector = '.ad-slot--dfp:not(.ad-slot--commercial-component)';
                 }
-
-                // TODO: once front's badges slot are only added when necessary
-                if (config.page.pageType !== 'Article' && window.location.hash !== '#show-badge') {
-                    var selector = options.dfpSelector || '.ad-slot--dfp';
-                    options.dfpSelector = selector + ':not(.ad-slot--paid-for-badge)';
-                } else {
-                    $('.dfp-badge-container').css('display', 'block');
-                }
-
-                dfpAds = new DFP(extend(config, options));
-                dfpAds.init();
-                onResize.cmd.push(dfpAds.reload);
-
-                // Push the reloaded command once
-                onResize.cmd.push(function () {
-                    mediator.emit('modules:adverts:reloaded');
-                });
-                mediator.on('window:resize', debounce(onResize.execute.bind(this), 2000));
+                dfp.init(extend(config, options));
             }
         },
 
@@ -510,6 +489,19 @@ define([
                         .init(commercialComponent[1], slot);
                 }
             });
+        },
+
+        repositionComments: function() {
+            mediator.on('page:common:ready', function() {
+                if(!id.isUserLoggedIn()) {
+                    $('.js-comments').insertBefore(qwery('.js-popular'));
+                    $('.discussion').addClass('discussion--lowered');
+                }
+            });
+        },
+
+        showMoreTagsLink: function() {
+            new MoreTags().init();
         }
     };
 
@@ -558,6 +550,8 @@ define([
             modules.augmentInteractive();
             modules.runForseeSurvey(config);
             modules.startRegister(config);
+            modules.repositionComments();
+            modules.showMoreTagsLink();
         }
         mediator.emit('page:common:ready', config, context);
     };

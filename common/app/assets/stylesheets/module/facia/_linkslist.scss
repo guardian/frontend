@@ -13,7 +13,7 @@
     padding-top: 1px;
     @include mq(tablet) {
         @include rem((
-            margin-top: $gs-baseline
+            margin-top: $gs-baseline*.75
         ));
     }
 
@@ -34,6 +34,9 @@
     }
     &.tone-comment:before {
         background: $c-commentAccent;
+    }
+    &.tone-media:before {
+        background: $c-mediaDefault;
     }
 
     &.show-more--hidden {
