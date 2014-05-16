@@ -544,6 +544,15 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
       }
     }
 
+    scenario("Canonical url"){
+      Given("I am on an article entitled 'Iran's Rouhani may meet Obama at UN after American president reaches out'")
+      HtmlUnit("/world/2013/sep/15/obama-rouhani-united-nations-meeting?view=mobile") { browser =>
+        import browser._
+        Then("There should be a canonical url")
+        findFirst("link[rel='canonical']").getAttribute("href")  should endWith ("/world/2013/sep/15/obama-rouhani-united-nations-meeting")
+      }
+    }
+
     scenario("Signify to the user an article is sponsored"){
       Given("I visit a sponsored article entitled 'Feeling hungry? Try the fine flavours of floral gastronomy'")
       StandardAdvertsSwitch.switchOn()

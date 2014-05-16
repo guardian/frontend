@@ -100,3 +100,20 @@ object ClassicLink {
   private def specialLiveBlog(request: RequestHeader) = request.path.contains("-sp-")
 }
 
+object CanonicalLink {
+
+  val significantParams: Seq[String] = Seq(
+    "index",
+    "page"
+  )
+
+  def apply(implicit request: RequestHeader): String = {
+    val queryString = {
+      val q = significantParams.flatMap(key => request.getQueryString(key).map(value => s"$key=${value.urlEncoded}"))
+        .sorted.mkString("&")
+      if (q.isEmpty) "" else s"?$q"
+    }
+    LinkTo(s"${request.path}$queryString")
+  }
+}
+
