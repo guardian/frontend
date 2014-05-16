@@ -198,7 +198,9 @@
     }
     .ad-slot--paid-for-badge__link {
         display: block;
-        margin-top: $gs-row-height/4;
+        @include rem((
+            margin-top: $gs-row-height/4
+        ))
     }
     .ad-slot--paid-for-badge__logo {
         display: block;
