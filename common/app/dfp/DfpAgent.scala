@@ -10,7 +10,6 @@ import play.api.libs.functional.syntax._
 import play.api.libs.json.Json._
 import play.api.libs.json.{JsSuccess, JsResult, JsValue, JsPath, Reads}
 import play.api.{Play, Application, GlobalSettings}
-import scala.Some
 import scala.io.Codec.UTF8
 import services.S3
 
