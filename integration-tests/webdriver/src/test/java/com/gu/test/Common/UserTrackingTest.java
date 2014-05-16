@@ -1,6 +1,5 @@
 package com.gu.test.Common;
 
-import com.github.tomakehurst.wiremock.junit.WireMockRule;
 import com.github.tomakehurst.wiremock.verification.LoggedRequest;
 import com.gu.test.HttpMock;
 import com.gu.test.pages.Article;
@@ -9,13 +8,12 @@ import com.gu.test.TestRunner;
 import org.junit.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-
-import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig;
 
 public class UserTrackingTest {
     WebDriver driver;
@@ -26,15 +24,12 @@ public class UserTrackingTest {
     @Before
     public void setUp() throws Exception {
 
-        httpMock = new HttpMock();
-        httpMock.startServer();
-
-        String PROXY = "localhost:8080";
-        org.openqa.selenium.Proxy proxy = new org.openqa.selenium.Proxy();
-        proxy.setHttpProxy(PROXY).setFtpProxy(PROXY).setSslProxy(PROXY).setSocksProxy(PROXY);
-        DesiredCapabilities cap = new DesiredCapabilities();
-        cap.setCapability(CapabilityType.PROXY, proxy);
-        driver = new FirefoxDriver(cap);
+      httpMock = new HttpMock();
+      httpMock.startServer();
+        FirefoxProfile profile = new FirefoxProfile();
+        profile.setPreference("network.proxy.http", "localhost");
+        profile.setPreference("network.proxy.http_port", "8089");
+        driver = new FirefoxDriver(profile);
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 
         testRunner = new TestRunner(driver);

@@ -1,8 +1,8 @@
 package com.gu.test.Fronts;
 
+import com.gu.test.TestRunner;
 import com.gu.test.pages.Article;
 import com.gu.test.pages.FrontPage;
-import com.gu.test.TestRunner;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
