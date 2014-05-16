@@ -937,6 +937,10 @@ $timeline-width: 14px;
         }
     }
 
+    .article2__head .article2__main-column--live-blog {
+        max-width: 620px;
+    }
+
     .article2 {
         padding-top: $gs-baseline;
         @include mq(rightCol) {
