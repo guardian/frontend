@@ -16,7 +16,7 @@ define([
     function getSegments() {
         var result = {};
 
-        if (config.switches.audienceScienceGateway) {
+        if (config.switches && config.switches.audienceScienceGateway) {
 
             var targetedSegments = segments[config.page.section];
             if (typeof targetedSegments === 'undefined') {

@@ -13,7 +13,9 @@
         <h1 class="u-h">@homeTeam.name v @awayTeam.name</h1>
     }
 
-    <div class="match-summary__status @if(theMatch.isLive){match-summary__status--live}">
+    <div class="@RenderClasses(Map(
+        "match-summary__status" -> true,
+        "match-summary__status--live" -> theMatch.isLive))">
         <div class="status__time">
             @if(theMatch.isFixture){
                 @theMatch.date.toString("HH:mm")

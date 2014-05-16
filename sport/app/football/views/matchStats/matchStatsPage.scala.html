@@ -1,6 +1,25 @@
 @(page: MatchPage, competition: Option[model.Competition])(implicit request: RequestHeader)
 
 @import implicits.Football._
+@import views.FootballHelpers._
+
+@team(players: Seq[LineUpPlayer]) = {
+    <ul class="team-list u-unstyled">
+    @players.map{ player =>
+        <li class="team-list__item">
+            @player.name
+            @player.events.map{ event =>
+                @{ event.eventType match {
+                    case "booking" => <i class="i i-yellow-card"></i>
+                    case "dismissal" => <i class="i i-red-card"></i>
+                    case "substitution" => "(s " + event.eventTime + "')"
+                    case _ =>  ""
+                }}
+            }
+        </li>
+    }
+    </ul>
+}
 
 @main(page, "football"){
 }{
@@ -33,8 +52,39 @@
                             </div>
                             }
                             <div class="match-stats">
-                                @matchStats(page)
+                                @football.views.html.matchStats.matchStatsComponent(page)
                             </div>
+
+                            <h3 class="section-divider">Teams</h3>
+                            <div class="component u-cf">
+                                <div class="u-cf">
+                                    <h5 class="team-list-name type-5">@page.theMatch.homeTeam.name</h5>
+                                    <h5 class="team-list-name type-5">@page.theMatch.awayTeam.name</h5>
+                                </div>
+
+                                @if(!page.hasLineUp){
+                                    <p>Team lineups will be available once announced.</p>
+                                } else {
+                                    <div class="u-cf">
+                                        <div class="lineup">
+                                        @team(page.lineUp.homeTeam.players.filterNot{_.isUnusedSub})
+                                        </div>
+                                        <div class="lineup">
+                                        @team(page.lineUp.awayTeam.players.filterNot{_.isUnusedSub})
+                                        </div>
+                                    </div>
+                                    <h3 class="type-5 item-divider">Unused substitutes</h3>
+                                    <div class="u-cf">
+                                        <div class="lineup">
+                                        @team(page.lineUp.homeTeam.players.filter{_.isUnusedSub})
+                                        </div>
+                                        <div class="lineup">
+                                        @team(page.lineUp.awayTeam.players.filter{_.isUnusedSub})
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+
                         </div>
                     </div>
                     <div class="article__secondary-column" aria-hidden="true">

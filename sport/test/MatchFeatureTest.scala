@@ -22,16 +22,28 @@ class MatchFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         $("h2").getTexts should contain("Blackburn 1")
 
         And("I should see the home possession")
-        findFirst("[data-stat=Possession]").findFirst(".home-num").getText should be("54%")
+        findFirst("[data-chart-class=chart--football-possession]").findFirst(".bar-fight__bar--home").getText should be("54")
 
         And("I should see the away possession")
-        findFirst("[data-stat=Possession]").findFirst(".away-num").getText should be("46%")
+        findFirst("[data-chart-class=chart--football-possession]").findFirst(".bar-fight__bar--away").getText should be("46")
 
         And("I should see the home corners")
-        findFirst("[data-stat=Corners]").findFirst(".home-num").getText should be("7")
+        findFirst("[data-stat-type='corners'][class*='--home']").getText should be("7")
 
         And("I should see the away corners")
-        findFirst("[data-stat=Corners]").findFirst(".away-num").getText should be("5")
+        findFirst("[data-stat-type='corners'][class*='--away']").getText should be("5")
+
+        And("I should see the home fouls")
+        findFirst("[data-stat-type='fouls'][class*='--home']").getText should be("13")
+
+        And("I should see the away fouls")
+        findFirst("[data-stat-type='fouls'][class*='--away']").getText should be("10")
+
+        And("I should see the home offsides")
+        findFirst("[data-stat-type='offsides'][class*='--home']").getText should be("2")
+
+        And("I should see the away offsides")
+        findFirst("[data-stat-type='offsides'][class*='--away']").getText should be("1")
 
         And("I should see the home team lineup")
         findFirst(".team-list").getText should include("John Brayford")

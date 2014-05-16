@@ -148,7 +148,7 @@ trait Tags {
   lazy val types: Seq[Tag] = tagsOfType("type")
 
   def isSponsored = DfpAgent.isSponsored(keywords)
-  def isAdvertisementFeature = false
+  def isAdvertisementFeature = DfpAgent.isAdvertisementFeature(keywords)
 
   lazy val isLive = tones.exists(t => Tags.liveMappings.contains(t.id))
   lazy val isComment = tones.exists(t => Tags.commentMappings.contains(t.id))
