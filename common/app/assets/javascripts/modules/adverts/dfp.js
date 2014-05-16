@@ -4,7 +4,6 @@ define([
     'bonzo',
     'qwery',
     'common/modules/component',
-    'lodash/objects/assign',
     'lodash/functions/debounce',
     'common/utils/cookies',
     'common/utils/detect',
@@ -22,7 +21,6 @@ define([
     bonzo,
     qwery,
     Component,
-    extend,
     debounce,
     Cookies,
     detect,
@@ -141,12 +139,6 @@ define([
             return value ? queryString.formatKeyword(value).replace(/&/g, 'and').replace(/'/g, '') : '';
         }
 
-        function addTarget(targets, target) {
-            if (target.length > 0) {
-                extend(targets, target);
-            }
-        }
-
         var conf        = this.config.page,
             section     = encodeTargetValue(conf.section),
             series      = encodeTargetValue(conf.series),
@@ -161,23 +153,19 @@ define([
             keywords = '';
         }
 
-        var targets = {
-            'url'     : window.location.pathname,
-            'edition' : edition,
-            'cat'     : section,
-            'se'      : series,
-            'k'       : keywords,
-            'ct'      : contentType,
-            'pt'      : contentType,
-            'p'       : 'ng',
-            'bp'      : detect.getBreakpoint(),
-            'a'       : AudienceScience.getSegments(),
-            'at'      : Cookies.get('adtest') || ''
-        };
-        addTarget(targets, AudienceScienceGateway.getSegments());
-        addTarget(targets, criteo.getSegments());
-
-        return targets;
+        return _defaults({
+            url     : window.location.pathname,
+            edition : edition,
+            cat     : section,
+            se      : series,
+            k       : keywords,
+            ct      : contentType,
+            pt      : contentType,
+            p       : 'ng',
+            bp      : detect.getBreakpoint(),
+            a       : AudienceScience.getSegments(),
+            at      : Cookies.get('adtest') || ''
+        }, AudienceScienceGateway.getSegments(), criteo.getSegments());
     };
 
     DFP.prototype.setPageTargetting = function() {
