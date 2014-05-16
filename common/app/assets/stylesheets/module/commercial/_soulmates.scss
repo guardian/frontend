@@ -282,17 +282,6 @@ $c-soulmates-red: #d70851;
         .lineitems {
             width: 75%
         }
-        .commercial--masterclasses__class {
-            @include rem((
-                padding-left: $gs-gutter/2
-            ));
-            width: 25%;
-            background: #ff0000;
-
-            &:nth-child(n+4) {
-                display: block;
-            }
-        }
     }
     @include mq(leftCol) {
         .commercial__search {
