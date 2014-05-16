@@ -44,7 +44,7 @@ object TeamMap extends ExecutionContexts with Logging {
     ("45938", "Airdrie"),
     ("125", "QOS FC"),
     ("17635", "Annan"),
-    ("128", "East Stirling"),
+    ("128", "Stirling Albion"),
     ("13732", "Harrogate"),
     ("79", "Halifax"),
     ("136", "Boston"),
