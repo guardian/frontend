@@ -1,4 +1,4 @@
-@(article: Article)(implicit request: RequestHeader)
+@(content: model.Content)(implicit request: RequestHeader)
 
 <header class="article2__head article2__head--tonal">
 
@@ -7,12 +7,14 @@
             <div class="article2__main-column">
 
                 <div class="article2__section">
-                    <a class="tone-colour" data-link-name="article section" href="@LinkTo{/@article.section}">@Html(article.sectionName.toLowerCase)</a>
+                    <a class="tone-colour" data-link-name="article section" href="@LinkTo{/@content.section}">@Html(content.sectionName.toLowerCase)</a>
                 </div>
 
-                <h1 itemprop="headline" class="article2__headline js-score">@Html(article.headline)</h1>
+                @fragments.meta.metaInline(content)
 
-                @if(article.isCommentable) {
+                <h1 itemprop="headline" class="article2__headline js-score">@Html(content.headline)</h1>
+
+                @if(content.isCommentable) {
                     <div class="article__head__comment-count article__head__comment-count--standfirst js-comment-count"></div>
                 }
 
@@ -24,9 +26,10 @@
         <div class="gs-container">
             <div class="article2__main-column">
 
-                @fragments.standfirst(article)
+                @fragments.standfirst(content)
 
             </div>
         </div>
+    </div>
 
 </header>

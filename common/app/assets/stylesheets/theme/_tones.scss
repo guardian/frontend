@@ -62,8 +62,8 @@
     }
 }
 
-@mixin article-tone($tone, $colour, $accentColour, $textColour, $commentIcon) {
-    .tone-#{$tone}--article .article2__head--tonal {
+@mixin article-header-tone($tone, $colour, $accentColour, $textColour, $commentIcon) {
+    .tone-#{$tone} .article2__head--tonal {
         .article2__headline,
         .article__standfirst,
         .article2__section .tone-colour {
@@ -79,6 +79,15 @@
             color: $textColour;
         }
 
+        .content-meta__item a {
+            color: $textColour;
+        }
+
+        .content-meta__label {
+            color: lighten($accentColour, 25);
+        }
+    }
+    .tone-#{$tone} .article2 {
         .drop-cap {
             @include mq($to: tablet) {
                 color: $colour;

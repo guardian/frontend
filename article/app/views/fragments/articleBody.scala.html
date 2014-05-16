@@ -2,7 +2,7 @@
 @import conf.Switches._
 
 @defining((model.article, model.storyPackage)) { case (article, storyPackage) =>
-<div class="tone-@article.visualTone tone-@article.visualTone--article">
+<article class="tone-@article.visualTone tone-@article.visualTone--article">
     @if(article.isFeature || article.isComment) {
         @fragments.headTonal(article)
     } else {
@@ -37,7 +37,7 @@
         </div>
 
     </div>
-</div>
+</article>
 
 @if(DiscussionSwitch.isSwitchedOn && article.isCommentable) {
 <div class="gs-container js-comments">
