@@ -10,7 +10,7 @@ object Title {
   def apply(page: MetaData)(implicit request: RequestHeader): Html = Html{
     val section: String = Navigation.topLevelItem(Edition(request).navigation, page).map(_.name.title).getOrElse(page.section)
     val title = page match {
-      case c: Content => s"${c.webTitle}${pagination(page)}${getSectionConsideringWebtitle(c.webTitle, Option(section)))}"
+      case c: Content => s"${c.webTitle}${pagination(page)}${getSectionConsideringWebtitle(c.webTitle, Option(section))}"
       case t: Tag     => s"${t.webTitle}${pagination(page)}${getSectionConsideringWebtitle(t.webTitle, Option(section))}"
       case _          => s"${page.title}${pagination(page)}${getSectionConsideringWebtitle(page.title, Option(section))}"
     }
