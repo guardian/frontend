@@ -4,14 +4,14 @@
 
 <div class="c-football-matches">
     @matchesList.matchesGroupedByDateAndCompetition.zipWithRowInfo.map { case ((date, competitionMatches), dateRow) =>
-        <div class="football-matches__day">
+        <div class="football-matches__day" data-is-first="@dateRow.isFirst">
             @competitionMatches.zipWithRowInfo.map { case ((competition, matches), matchRow) =>
                 @football.views.html.matchList.matchesList(
                     matches,
                     competition,
                     date,
                     matchType = matchesList.pageType,
-                    heading = Option(competition.fullName),
+                    heading = if(dateRow.isFirst) Option(competition.fullName) else None,
                     link = if(dateRow.isLast && matchRow.isLast)
                             Some(("View all "+matchesList.pageType, "/football/"+matchesList.pageType)) else None
                 )
