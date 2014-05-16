@@ -188,7 +188,7 @@ define([
          * pt     = content type
          * url    = path
          */
-        buildPageTargeting = function () {
+        buildPageTargeting = function (config) {
 
             function encodeTargetValue(value) {
                 return value ? queryString.formatKeyword(value).replace(/&/g, 'and').replace(/'/g, '') : '';
@@ -222,7 +222,7 @@ define([
                 at      : cookies.get('adtest') || ''
             }, audienceScienceGateway.getSegments(), criteo.getSegments());
         },
-        buildAdUnit = function () {
+        buildAdUnit = function (config) {
             var isFront      = config.page.isFront || config.page.contentType === 'Section',
                 section      = config.page.section,
                 adUnitSuffix = section;
@@ -242,7 +242,7 @@ define([
             googletag.pubads().addEventListener('slotRenderEnded', parseAd);
         },
         setPageTargeting = function() {
-            var targets = buildPageTargeting();
+            var targets = buildPageTargeting(config);
             for (var target in targets) {
                 if (targets.hasOwnProperty(target)) {
                     googletag.pubads().setTargeting(target, targets[target]);
