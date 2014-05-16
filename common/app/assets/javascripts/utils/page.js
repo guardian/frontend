@@ -57,6 +57,10 @@ function(
         }, no);
     }
 
+    function isFootballStatsPage(yes, no) {
+        return isit(config.page.hasOwnProperty('footballMatch'), yes, no);
+    }
+
     function belowArticleVisible(yes, no) {
         var el = $('.js-after-article')[0],
             vis = el.offsetWidth > 0 && el.offsetHeight > 0;
@@ -69,6 +73,7 @@ function(
         isCompetition: isCompetition,
         isClockwatch: isClockwatch,
         isLiveClockwatch: isLiveClockwatch,
+        isFootballStatsPage: isFootballStatsPage,
         belowArticleVisible: belowArticleVisible
     };
 
