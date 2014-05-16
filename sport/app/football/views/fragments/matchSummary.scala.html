@@ -5,7 +5,8 @@
 <@if(link){a href="@LinkTo("/football/match-redirect/"+theMatch.id)"}else{div} class="@RenderClasses(Map(
         "match-summary" -> true,
         "match-summary--fixture" -> theMatch.isFixture,
-        "match-summary--responsive" -> responsive
+        "match-summary--responsive" -> responsive,
+        "match-summary--world-cup" -> competition.map(_.fullName == "World Cup 2014").getOrElse(false)
     ))" data-match-id="@theMatch.id">
     @if(theMatch.isLive || theMatch.isResult){
         <h1 class="u-h">@homeTeam.name @homeTeam.score - @awayTeam.score @awayTeam.name</h1>
@@ -13,7 +14,9 @@
         <h1 class="u-h">@homeTeam.name v @awayTeam.name</h1>
     }
 
-    <div class="match-summary__status @if(theMatch.isLive){match-summary__status--live}">
+    <div class="@RenderClasses(Map(
+        "match-summary__status" -> true,
+        "match-summary__status--live" -> theMatch.isLive))">
         <div class="status__time">
             @if(theMatch.isFixture){
                 @theMatch.date.toString("HH:mm")

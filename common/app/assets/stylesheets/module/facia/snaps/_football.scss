@@ -65,8 +65,11 @@
         ));
         background: $c-neutral8;
 
-        &:hover {
-           background: $c-neutral7;
+        &:hover,
+        &:active {
+            background: $c-neutral6;
+            color: $c-neutral1;
+            text-decoration: none;
         }
     }
 
