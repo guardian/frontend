@@ -2,7 +2,7 @@
 
 @import football.model._
 
-<div class="c-football-matches">
+<div data-component="football-matches-embed" class="c-football-matches">
     @matchesList.matchesGroupedByDateAndCompetition.zipWithRowInfo.map { case ((date, competitionMatches), dateRow) =>
         <div class="football-matches__day">
             @competitionMatches.zipWithRowInfo.map { case ((competition, matches), matchRow) =>
