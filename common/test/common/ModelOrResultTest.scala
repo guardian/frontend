@@ -70,7 +70,7 @@ class ModelOrResultTest extends FlatSpec with Matchers with ExecutionContexts {
     }
 
     status(notFound) should be(200)
-    headers(notFound).apply("X-Accel-Redirect") should be("/type/gallery/the/id")
+    headers(notFound).apply("X-Accel-Redirect") should be("/applications/the/id")
   }
 
   it should "Redirect to classic if it is an unsupported content type" in {
