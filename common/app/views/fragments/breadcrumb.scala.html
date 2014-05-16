@@ -1,10 +1,6 @@
 @(content: model.Content)(implicit request: RequestHeader)
 @import common.{Navigation, LinkTo, Edition}
-     @*
-      *Primary Section
-      *Secondary section
-      *Primary tag
-      *@
+
 <ul class="breadcrumb-list inline-list">
     @defining(Edition(request).navigation) { navigation =>
         @defining(Navigation.topLevelItem(navigation, content)) { topLevelSelected =>
