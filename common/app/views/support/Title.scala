@@ -3,14 +3,16 @@ package views.support
 import model.{Tag, Content, MetaData}
 import play.api.templates.Html
 import play.api.mvc.RequestHeader
+import common.{Edition, Navigation}
 
 object Title {
 
   def apply(page: MetaData)(implicit request: RequestHeader): Html = Html{
+    val section: String = Navigation.topLevelItem(Edition(request).navigation, page).map(_.name.title).getOrElse(page.section)
     val title = page match {
-      case c: Content => s"${c.webTitle}${pagination(page)}${getSectionConsideringWebtitle(c.webTitle, Option(page.section).orElse(Option(c.sectionName)))}"
-      case t: Tag     => s"${t.webTitle}${pagination(page)}${getSectionConsideringWebtitle(t.webTitle, Option(page.section))}"
-      case _          => s"${page.title}${pagination(page)}${getSectionConsideringWebtitle(page.title, Option(page.section))}"
+      case c: Content => s"${c.webTitle}${pagination(page)}${getSectionConsideringWebtitle(c.webTitle, Option(section).orElse(Option(c.sectionName)))}"
+      case t: Tag     => s"${t.webTitle}${pagination(page)}${getSectionConsideringWebtitle(t.webTitle, Option(section))}"
+      case _          => s"${page.title}${pagination(page)}${getSectionConsideringWebtitle(page.title, Option(section))}"
     }
     s"${title.trim} | The Guardian"
   }
