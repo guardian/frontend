@@ -3,12 +3,12 @@
 
 @defining((page.image, page.storyPackage)) { case (image, storyPackage) =>
 
-<div class="tone-@image.visualTone">
+<div class="content content--image tone-@image.visualTone">
 
     @fragments.headDefault(image)
 
     <div class="gs-container">
-        <div class="content content__main-column">
+        <div class="content__main-column content__main-column--image">
 
             @fragments.img(image.mainPicture)
 

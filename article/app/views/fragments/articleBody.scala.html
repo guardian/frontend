@@ -2,7 +2,7 @@
 @import conf.Switches._
 
 @defining((model.article, model.storyPackage)) { case (article, storyPackage) =>
-<article class="tone-@article.visualTone tone-@article.visualTone--article">
+<article class="content content--article tone-@article.visualTone tone-@article.visualTone--article">
     @if(article.isFeature || article.isComment) {
         @fragments.headTonal(article)
     } else {
@@ -11,7 +11,7 @@
 
     @fragments.witnessCallToAction(article)
     <div class="gs-container">
-        <div class="content content__main-column">
+        <div class="content__main-column content__main-column--article">
 
             @fragments.mainMedia(article)
 

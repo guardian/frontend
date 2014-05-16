@@ -11,6 +11,7 @@
 
 .from-content-api {
     word-wrap: break-word;
+    @include fs-bodyCopy(3);
 }
 .from-content-api,
 .from-content-api .block-elements {

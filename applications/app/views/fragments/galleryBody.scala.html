@@ -1,11 +1,11 @@
 @(gallery: Gallery, storyPackage: List[Trail], index: Int)(implicit request: RequestHeader)
 
-<div class="tone-@gallery.visualTone">
+<div class="content content--gallery tone-@gallery.visualTone">
 
     @fragments.headDefault(gallery)
 
     <div class="gs-container">
-        <div class="content content__main-column">
+        <div class="content__main-column content__main-column--gallery">
 
             @fragments.contentMeta(gallery)
 

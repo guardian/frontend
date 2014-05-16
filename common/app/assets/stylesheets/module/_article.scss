@@ -92,16 +92,6 @@
     }
 }
 
-.article-feature__zone {
-    @include full-bleed($c-featureDefault)
-}
-
-.article-feature__zone__inner {
-    @include mq(tablet, rightCol) {
-        @include full-bleed($c-featureDefault)
-    }
-}
-
 .left-col-deport {
     @include mq(leftCol) {
         @include rem((
@@ -127,58 +117,6 @@
         @include rem((
             width: $a-leftColWide-width
         ));
-    }
-}
-
-.article__head {
-    @include rem((
-        margin-top: ($gs-baseline/3)
-    ));
-    border-top: 1px dotted $c-neutral5;
-}
-
-.article__dateline {
-    position: relative;
-    color: $c-neutral2;
-    @include box-sizing(border-box);
-    @include fs-data(2);
-
-    i {
-        position: relative;
-        top: 1px;
-    }
-    .relative-timestamp__icon {
-        vertical-align: top;
-        @include rem((
-            top: 3px
-        ));
-    }
-
-    .article__meta-container--no-byline & {
-        border-top: 1px dotted $c-neutral5;
-        @include rem((
-            padding-top: $gs-baseline/3
-        ));
-    }
-
-    @include mq(tablet) {
-        padding-right: 0;
-        @include fs-data(3, true);
-    }
-
-    @include mq(leftCol) {
-        @include rem((
-            height: $gs-row-height,
-            padding-top: 2px,
-            padding-bottom: $gs-baseline
-        ));
-        border-top: 1px dotted $c-neutral5;
-    }
-
-    @include mq(wide) {
-        .article__dateline-time {
-            display: inline-block;
-        }
     }
 }
 
@@ -238,76 +176,6 @@
     }
 }
 
-.article__meta-container .byline-img {
-    position: relative;
-    width: gs-span(1);
-    height: 60px; //Intentionally off grid
-    @include rem((
-        margin: $gs-baseline/2 0
-    ));
-    overflow: hidden;
-    @include border-radius(50%);
-    background-color: $c-neutral7;
-
-    @include mq(leftCol) {
-        width: gs-span(2);
-        height: gs-span(2); //This is intentionally square
-        margin-right: 0;
-        @include rem((
-            margin-bottom: $gs-baseline,
-        ));
-    }
-}
-
-.article__meta-container .byline-img__img {
-    position: absolute;
-    width: auto;
-    //This centres the image within its container
-    height: 110%;
-    bottom: -6px;
-    left: -15%;
-
-    @include mq(leftCol) {
-        bottom: -14px;
-    }
-}
-
-.article__meta-container {
-    min-height: gs-height(1);
-    position: relative;
-    @include rem((
-        margin-bottom: $gs-baseline
-    ));
-    border-top: 1px dotted $c-neutral5;
-    border-bottom: 1px dotted $c-neutral5;
-
-    @include mq(leftCol) {
-        position: absolute;
-        top: 0;
-        @include rem((
-            margin-left: ($a-leftCol-width + $gs-gutter)*-1,
-            margin-bottom: ($gs-baseline/3)*4,
-            width: $a-leftCol-width
-        ));
-        border-top: 0;
-        border-bottom: 0;
-    }
-
-    @include mq(wide) {
-        @include rem((
-            margin-left: (gs-span(3) + $gs-gutter)*-1,
-            width: gs-span(3)
-        ));
-    }
-}
-
-.article__meta-container.article__meta-container--showcase {
-    @include mq(leftCol) {
-        float: left;
-        position: static;
-    }
-}
-
 .meta__body {
     @include mq(leftCol) {
         clear: left;
@@ -341,15 +209,6 @@
 /* Layout changes across devices
    ========================================================================== */
 
-.article__inner--head {
-    max-width: none;
-
-    @include mq(tablet) {
-        @include rem((
-            max-width: gs-span(7)
-        ));
-    }
-}
 .main-caption {
     @include rem((
         min-height: ($gs-baseline/3)*7,
@@ -367,13 +226,9 @@
 }
 
 @include mq(tablet) {
-    .article__head,
     .main-caption {
         padding-left: 0 !important;
         padding-right: 0 !important;
-    }
-    .article__head {
-        border-top: 0;
     }
     .media-primary {
         margin-left: 0;
@@ -384,7 +239,6 @@
             padding-right: gs-span(1) + $gs-gutter
         ));
     }
-    .article__head,
     .article__columning-wrapper .media-primary {
         @include rem((
             margin-right: (gs-span(1) + $gs-gutter) * -1 !important
@@ -403,7 +257,6 @@
         padding-right: 0;
         position: relative;
     }
-    .article__head,
     .article__columning-wrapper .media-primary {
         margin-right: 0 !important;
     }
@@ -461,18 +314,12 @@
         ));
     }
 
-    .article__head {
-        @include rem((
-            padding-top: $gs-baseline
-        ));
-    }
-
     .commentcount {
-        .article__head & {
+        .content__head & {
             display: none;
         }
 
-        .article__meta-container & {
+        .content__meta-container & {
             display: block;
             @include rem((
                     padding-top: ($gs-baseline/3),
@@ -495,7 +342,6 @@
         ));
     }
 }
-
 
 .article__popular {
     clear: left;
@@ -643,9 +489,6 @@
     }
 }
 
-
-
-
 .mpu-container {
     width: 300px;
     height: 300px;
@@ -664,7 +507,7 @@
         ));
     }
 
-    .article__head & {
+    .content__head & {
         display: block;
         @include rem((
                 margin-bottom: $gs-baseline
@@ -677,7 +520,7 @@
         right: 0;
         top: $gs-baseline/2;
 
-        .article__head & {
+        .content__head & {
             display: none;
         }
     }
@@ -692,7 +535,7 @@
 }
 
 .commentcount__label {
-    .article__head & {
+    .content__head & {
         @extend %u-h;
     }
 }

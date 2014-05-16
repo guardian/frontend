@@ -2,12 +2,12 @@
 @import conf.Switches._
 
 @defining(page.video){ video =>
-<article class="tone-@video.visualTone" itemprop="mainContentOfPage" itemscope itemtype="@video.schemaType" role="main">
+<article class="content content--video tone-@video.visualTone" itemprop="mainContentOfPage" itemscope itemtype="@video.schemaType" role="main">
 
     @fragments.headDefault(video)
 
     <div class="gs-container">
-        <div class="content content__main-column content__main-column--video">
+        <div class="content__main-column content__main-column--video">
 
             <div class="media-primary player">
 

@@ -1,12 +1,12 @@
 @(interactive: Interactive)(implicit request: RequestHeader)
 @import conf.Switches.DiscussionSwitch
 
-<div class="tone-@interactive.visualTone">
+<div class="content content--interactive tone-@interactive.visualTone">
 
     @fragments.headDefault(interactive)
 
     <div class="gs-container">
-        <div class="content content__main-column">
+        <div class="content__main-column content__main-column--interactive">
             @interactive.body.map { body =>
                 @HtmlFormat.raw(body)
             }.getOrElse {

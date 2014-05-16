@@ -167,7 +167,7 @@
         overflow: hidden;
 
         @include mq(leftCol) {
-            .article__meta-container--no-byline & {
+            .content__meta-container--no-byline & {
                 @include rem((
                     padding-top: $gs-baseline / 3
                 ));

@@ -1,12 +1,6 @@
-.content {
-    position: relative;
-    @include rem((
-        margin-bottom: $gs-baseline*3.5 !important
-    ));
-    @include fs-bodyCopy(3);
-}
-
 .content__main-column {
+    position: relative;
+
     @include rem((
         margin: 0 $gs-gutter/2
     ));
@@ -42,6 +36,16 @@
                 padding-right: 100px
             ));
         }
+    }
+
+    &.content__main-column--video,
+    &.content__main-column--gallery,
+    &.content__main-column--image,
+    &.content__main-column--expired,
+    &.content__main-column--article {
+        @include rem((
+            margin-bottom: $gs-baseline*3.5
+        ))
     }
 }
 
@@ -219,5 +223,121 @@
                 ));
             }
         }
+    }
+}
+
+.content__dateline {
+    position: relative;
+    color: $c-neutral2;
+    @include box-sizing(border-box);
+    @include fs-data(2);
+
+    i {
+        position: relative;
+        top: 1px;
+    }
+    .relative-timestamp__icon {
+        vertical-align: top;
+        @include rem((
+                top: 3px
+        ));
+    }
+
+    .content__meta-container--no-byline & {
+        border-top: 1px dotted $c-neutral5;
+        @include rem((
+                padding-top: $gs-baseline/3
+        ));
+    }
+
+    @include mq(tablet) {
+        padding-right: 0;
+        @include fs-data(3, true);
+    }
+
+    @include mq(leftCol) {
+        @include rem((
+                height: $gs-row-height,
+                padding-top: 2px,
+                padding-bottom: $gs-baseline
+        ));
+        border-top: 1px dotted $c-neutral5;
+    }
+
+    @include mq(wide) {
+        .content__dateline-time {
+            display: inline-block;
+        }
+    }
+}
+
+
+.content__meta-container .byline-img {
+    position: relative;
+    width: gs-span(1);
+    height: 60px; //Intentionally off grid
+    @include rem((
+            margin: $gs-baseline/2 0
+    ));
+    overflow: hidden;
+    @include border-radius(50%);
+    background-color: $c-neutral7;
+
+    @include mq(leftCol) {
+        width: gs-span(2);
+        height: gs-span(2); //This is intentionally square
+        margin-right: 0;
+        @include rem((
+                margin-bottom: $gs-baseline,
+        ));
+    }
+}
+
+.content__meta-container .byline-img__img {
+    position: absolute;
+    width: auto;
+    //This centres the image within its container
+    height: 110%;
+    bottom: -6px;
+    left: -15%;
+
+    @include mq(leftCol) {
+        bottom: -14px;
+    }
+}
+
+.content__meta-container {
+    min-height: gs-height(1);
+    position: relative;
+    @include rem((
+            margin-bottom: $gs-baseline
+    ));
+    border-top: 1px dotted $c-neutral5;
+    border-bottom: 1px dotted $c-neutral5;
+
+    @include mq(leftCol) {
+        position: absolute;
+        top: 0;
+        @include rem((
+                margin-left: ($a-leftCol-width + $gs-gutter)*-1,
+                margin-bottom: ($gs-baseline/3)*4,
+                width: $a-leftCol-width
+        ));
+        border-top: 0;
+        border-bottom: 0;
+    }
+
+    @include mq(wide) {
+        @include rem((
+                margin-left: (gs-span(3) + $gs-gutter)*-1,
+                width: gs-span(3)
+        ));
+    }
+}
+
+.content__meta-container.content__meta-container--showcase {
+    @include mq(leftCol) {
+        float: left;
+        position: static;
     }
 }
