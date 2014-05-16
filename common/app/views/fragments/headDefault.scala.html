@@ -12,6 +12,10 @@
 
             @fragments.meta.metaInline(content)
 
+            @if(content.delegate.isInteractive) {
+                @fragments.dateline(content.webPublicationDate)
+            }
+
             <h1 itemprop="headline" class="article2__headline js-score">@Html(content.headline)</h1>
 
             @if(!content.delegate.isVideo && !content.delegate.isGallery) {
