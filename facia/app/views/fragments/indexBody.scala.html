@@ -1,6 +1,6 @@
 @(index: services.IndexPage)(implicit request: RequestHeader, templateDeduping: TemplateDeduping)
 
-<div data-link-name="Front" role="main" class="facia-container facia-container--layout-front @if(index.page.isAdvertisementFeature){facia-container--advertisement-feature}">
+<div data-link-name="Front" role="main" class="facia-container facia-container--layout-front @if(index.page.isAdvertisementFeature && !index.page.isSponsored){facia-container--advertisement-feature}">
 
     @fragments.containers.tag(index.page, Collection(index.trails), NewsContainer(showMore = false), containerIndex = 0, pagination = index.page.pagination)(request, templateDeduping, Config(s"${index.page.id}/news/regular-stories", displayName = Some(index.page.webTitle)))
 
