@@ -18,7 +18,7 @@
 
                         @fragments.meta.metaInline(article)
 
-                        @if(article.isAdvertisementFeature){
+                        @if(article.isAdvertisementFeature && !article.isSponsored){
                             <div class="article-hat-label">Advertisement feature</div>
                         }
 
