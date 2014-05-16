@@ -10,7 +10,6 @@
                             @matches.matchesGroupedByDateAndCompetition.zipWithRowInfo.map { case ((date, competitionMatches), info) =>
                                 @competitionMatches.map { case (competition, matches) =>
                                     @football.views.html.matchList.matchesList(matches, competition, date,
-                                        linkToCompetition = false,
                                         heading = if(info.isFirst) Option("Fixtures and results") else None
                                     )
                                 }

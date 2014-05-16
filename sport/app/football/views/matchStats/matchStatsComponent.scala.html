@@ -61,19 +61,18 @@
     <dl class="u-cf match-stats bar-fight">
         <dt class="match-stats__caption">Corners</dt>
         @defining(PercentMaker(home.corners, away.corners)){ case (homePercent, awayPercent) =>
-            <dd class="bar-fight__bar bar-fight__bar--home" style="background-color: @teamColours.home; width: @NudgePercent(homePercent, awayPercent)%;">@home.corners</dd>
-            <dd class="bar-fight__bar bar-fight__bar--away" style="background-color: @teamColours.away; width: @NudgePercent(awayPercent, homePercent)%;">@away.corners</dd>
+            <dd class="bar-fight__bar bar-fight__bar--home" data-stat-type="corners" style="background-color: @teamColours.home; width: @NudgePercent(homePercent, awayPercent)%;">@home.corners</dd>
+            <dd class="bar-fight__bar bar-fight__bar--away" data-stat-type="corners" style="background-color: @teamColours.away; width: @NudgePercent(awayPercent, homePercent)%;">@away.corners</dd>
         }
         <dt class="match-stats__caption">Fouls</dt>
         @defining(PercentMaker(home.fouls, away.fouls)){ case (homePercent, awayPercent) =>
-            <dd class="bar-fight__bar bar-fight__bar--home" style="background-color: @teamColours.home; width: @NudgePercent(homePercent, awayPercent)%;">@home.fouls</dd>
-            <dd class="bar-fight__bar bar-fight__bar--away" style="background-color: @teamColours.away; width: @NudgePercent(awayPercent, homePercent)%;">@away.fouls</dd>
+            <dd class="bar-fight__bar bar-fight__bar--home" data-stat-type="fouls" style="background-color: @teamColours.home; width: @NudgePercent(homePercent, awayPercent)%;">@home.fouls</dd>
+            <dd class="bar-fight__bar bar-fight__bar--away" data-stat-type="fouls" style="background-color: @teamColours.away; width: @NudgePercent(awayPercent, homePercent)%;">@away.fouls</dd>
         }
-
         <dt class="match-stats__caption">Offsides</dt>
         @defining(PercentMaker(home.offsides, away.offsides)){ case (homePercent, awayPercent) =>
-            <dd class="bar-fight__bar bar-fight__bar--home" style="background-color: @teamColours.home; width: @NudgePercent(homePercent, awayPercent)%;">@home.offsides</dd>
-            <dd class="bar-fight__bar bar-fight__bar--away" style="background-color: @teamColours.away; width: @NudgePercent(awayPercent, homePercent)%;">@away.offsides</dd>
+            <dd class="bar-fight__bar bar-fight__bar--home" data-stat-type="offsides" style="background-color: @teamColours.home; width: @NudgePercent(homePercent, awayPercent)%;">@home.offsides</dd>
+            <dd class="bar-fight__bar bar-fight__bar--away" data-stat-type="offsides" style="background-color: @teamColours.away; width: @NudgePercent(awayPercent, homePercent)%;">@away.offsides</dd>
         }
     </dl>
 </div>

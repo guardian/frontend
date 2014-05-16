@@ -1,15 +1,20 @@
 .container--multimedia {
-    background-color: $c-neutral1;
-    padding-bottom: $gs-baseline;
-    @include rem((
-        min-height: 30px
-    ));
+    @include item--hide-tone-border;
 
     .container__title,
     .container__toggle__text,
+    .item__link,
     .item__title,
     .linkslist__action {
         color: #ffffff;
+    }
+    .item__link:visited,
+    .item__link:visited .item__title,
+    .linkslist__action:visited {
+        color: mix(#ffffff, lighten($c-neutral1, 4%), 80%);
+    }
+    .linkslist__item {
+        border-top-color: mix(#ffffff, lighten($c-neutral1, 8%), 50%);
     }
     .container__title {
         background-color: transparent;
@@ -17,25 +22,25 @@
     .item {
         margin-bottom: 0;
     }
-    .item__link:visited .item__title,
-    .linkslist__action:visited {
-        color: mix(#ffffff, lighten($c-neutral1, 7%), 80%);
-    }
-    .item__link {
-        border-top-color: $c-commentAccent;
-    }
     .item__standfirst,
     .item__byline,
     .item__meta {
         display: none;
     }
-    .facia-slice-wrapper--position-1 .facia-slice__item:first-child .item__link {
-        border-top-width: 0;
+    .facia-slice__item:before {
+        border-left-color: lighten($c-neutral1, 16%);
     }
-    @include mq($to: tablet) {
-        .facia-slice-wrapper--position-1 .facia-slice__item:first-child .item__title {
+    .collection__show-more {
+        @include rem((
+            top: -$gs-baseline
+        ));
+    }
+    .facia-slice-wrapper--position-1 .facia-slice__item:first-child {
+        .item__title {
             @include fs-headline(2, $size-only: true);
         }
+    }
+    @include mq($to: tablet) {
         .facia-slice-wrapper--position-1 .facia-slice__item:nth-child(2),
         .facia-slice-wrapper--position-2 .facia-slice__item {
             &:before {
@@ -49,9 +54,8 @@
         }
     }
     @include mq(tablet) {
-        .facia-slice__item:before {
-            border-left-color: #6c6c6c;
-        }
+        @include item--hide-tone-border;
+
         .facia-slice-wrapper--position-1 {
             .facia-slice__item:first-child {
                 @include flex-grow(2);
@@ -59,10 +63,28 @@
                     width: 66%;
                 }
             }
-            .item__link {
-                border-top-width: 0;
+        }
+    }
+    @include mq(faciaLeftCol) {
+        .facia-slice-wrapper--position-1 {
+            @include rem((
+                padding-top: $gs-baseline/2
+            ));
+        }
+    }
+    .container__banding {
+        @include clearfix;
+        background-color: $c-neutral1;
+
+        + .container__banding {
+            @include rem((
+                padding-top: $gs-baseline
+            ));
+            background-color: lighten($c-neutral1, 4%);
+
+            + .container__banding {
+                background-color: lighten($c-neutral1, 8%);
             }
         }
     }
-
 }

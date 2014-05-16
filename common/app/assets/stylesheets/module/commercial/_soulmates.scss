@@ -5,14 +5,9 @@
 $c-soulmates-red: #d70851;
 .commercial--soulmates {
     .commercial__head {
-        position: static;
         height: auto;
         overflow: auto;
         border: 0;
-        @include rem((
-            padding-left: $gs-gutter/2,
-            padding-right: $gs-gutter/2
-        ));
     }
     .commercial__title {
         float: none;
@@ -22,12 +17,6 @@ $c-soulmates-red: #d70851;
         width: auto;
         display: block;
         background-size: contain;
-    }
-    @include mq(mobileLandscape) {
-        @include rem((
-            padding-left: $gs-gutter,
-            padding-right: $gs-gutter
-        ));
     }
     @include mq(tablet) {
         .commercial__header {
@@ -54,16 +43,16 @@ $c-soulmates-red: #d70851;
             border: 0;
             color: #ffffff;
             @include fs-headline(1, $size-only: true);
+            right: 0;
             @include rem((
                 top: $gs-gutter/2,
-                right: $gs-gutter/2,
                 padding: $gs-baseline/3 $gs-baseline*2
             ));
         }
     }
     .commercial__body {
         @include rem((
-            padding: $gs-gutter/2 0 $gs-gutter
+            padding: $gs-gutter/2 0
         ));
         position: relative;
     }
@@ -73,10 +62,8 @@ $c-soulmates-red: #d70851;
         ));
 
         @include mq(tablet) {
-            margin-top: 0;
-            @include rem((
-                margin-right: gs-span(3),
-            ));
+            float: left;
+            margin: 0;
         }
     }
     .lineitem {
@@ -161,16 +148,15 @@ $c-soulmates-red: #d70851;
         @include font-size(11);
     }
     .commercial__search {
+        @include box-sizing(border-box);
         width: auto;
         float: none;
         @include rem((
             margin-top: $gs-baseline
         ));
-
         @include mq(tablet) {
-            position: absolute;
-            top: 0;
-            right: 0;
+            margin-top: 0;
+            float: right;
             @include rem((
                 width: gs-span(3) - $gs-gutter/2
             ));
@@ -192,7 +178,9 @@ $c-soulmates-red: #d70851;
     }
     .search__dropdown__options {
         float: right;
-        border: 0;
+        @include mq($to: tablet) {
+            min-width: 54%;
+        }
     }
     $search-submit-cta-diameter: 20px;
     .search__submit {
@@ -243,13 +231,24 @@ $c-soulmates-red: #d70851;
 
 /* fronts */
 .facia-container--layout-front .commercial--soulmates {
-    .commercial__search {
-        @include rem((
-            padding: 0 $gs-gutter/2
-        ));
+    @include mq(tablet) {
+        .lineitems {
+            width: 66%;
+        }
+        .commercial__search {
+            width: 33%;
+        }
+    }
+    @include mq(desktop) {
+        .commercial__search {
+            @include rem((
+                padding-left: $gs-gutter/2
+            ));
+        }
     }
     @include mq(faciaLeftCol) {
         .commercial__head {
+            position: static;
             @include rem((
                 width: gs-span(2) + $gs-gutter
             ));
@@ -266,7 +265,34 @@ $c-soulmates-red: #d70851;
 }
 /* article */
 .facia-container--layout-article .commercial--soulmates {
+    @include mq(tablet) {
+        .lineitems {
+            @include rem((
+                width: gs-span(6) - $gs-gutter*3
+            ));
+        }
+    }
+    @include mq(rightCol) {
+        .commercial__search {
+            width: 25%;
+            @include rem((
+                padding-left: $gs-gutter
+            ));
+        }
+        .lineitems {
+            width: 75%
+        }
+    }
     @include mq(leftCol) {
+        .commercial__search {
+            @include rem((
+                width: gs-span(3) - $gs-gutter
+            ));
+            padding: 0;
+        }
+        .commercial__head {
+            position: static;
+        }
         .commercial__buy-now-button {
             left: auto;
             right: auto;
@@ -289,18 +315,10 @@ $c-soulmates-red: #d70851;
                 margin-top: $gs-baseline
             ));
         }
-    }
-    @include mq(rightCol) {
-        .commercial--masterclasses__class {
+        .commercial__search {
             @include rem((
-                padding-left: $gs-gutter/2
+                width: gs-span(3)
             ));
-            width: 25%;
-            background: #ff0000;
-
-            &:nth-child(n+4) {
-                display: block;
-            }
         }
     }
 }

@@ -5,9 +5,6 @@
     ));
     @include fs-bodyCopy(3);
 }
-.article--advertisement-feature {
-    @include f-textsans;
-}
 
 .article__zone {
     @include fs-header(3);
@@ -95,6 +92,16 @@
     }
 }
 
+.article-feature__zone {
+    @include full-bleed($c-featureDefault)
+}
+
+.article-feature__zone__inner {
+    @include mq(tablet, rightCol) {
+        @include full-bleed($c-featureDefault)
+    }
+}
+
 .left-col-deport {
     @include mq(leftCol) {
         @include rem((
@@ -172,7 +179,11 @@
     @include mq(tablet) {
         display: none;
     }
+    &.article__head__comment-count--headline { // used in tonal templates
+        display: none;
+    }
 }
+
 
 .article__dateline {
     position: relative;
@@ -289,6 +300,15 @@
     }
 }
 
+.article--advertisement-feature {
+    @include f-textsans;
+
+    .article__headline,
+    .article__standfirst {
+        @include f-headlineSans;
+    }
+}
+
 .article-body {
     @include mq(tablet) {
         @include rem((
@@ -338,7 +358,7 @@
     }
 }
 
-.byline-img {
+.article__meta-container .byline-img {
     position: relative;
     width: gs-span(1);
     height: 60px; //Intentionally off grid
@@ -359,7 +379,7 @@
     }
 }
 
-.byline-img__img {
+.article__meta-container .byline-img__img {
     position: absolute;
     width: auto;
     //This centres the image within its container
@@ -481,6 +501,11 @@
         margin-top: $gs-baseline,
         margin-bottom: $gs-baseline
     ));
+}
+
+.article__keywords--more-tags {
+  vertical-align: bottom;
+  display: inline-block;
 }
 
 
@@ -680,6 +705,9 @@
 
 .article__popular {
     clear: left;
+    @include rem((
+        margin-bottom: $gs-baseline*2
+    ));
 
     .article__zone {
         border-color: $c-newsAccent; // Acts as a default
@@ -773,12 +801,53 @@
 }
 
 .after-article {
+    position: relative;
     display: block;
     content: " ";
-    @include rem((
-        min-height: 1px
-    ));
+
+    //This is required for football components, please do not remove
     @include mq(rightCol) {
         display: none;
+    }
+}
+
+.drop-cap {
+  @include mq($to: tablet) {
+
+    float: left;
+    display: inline-block;
+    text-transform: uppercase;
+    @include f-headline;
+    font-weight: 200;
+    @include box-sizing(border-box);
+    @include rem((
+        height: 2*get-line-height($fs-bodyCopy, 3),
+        padding-top: 1px,
+        margin-right: 4px
+    ));
+
+    .drop-cap__inner {
+        display: inline-block;
+        vertical-align: text-top;
+        @include font-size(52px, 40px);
+    }
+  }
+}
+
+.drop-cap--wide {
+    @include mq($from: tablet) {
+        float: left;
+        display: inline-block;
+        text-transform: uppercase;
+        @include f-headline;
+        font-weight: 200;
+        @include rem((
+            margin-right: 5px,
+            height: 3*get-line-height($fs-bodyCopy, 3)
+        ));
+
+        .drop-cap__inner {
+            @include font-size(84px, 68px);
+        }
     }
 }

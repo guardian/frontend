@@ -33,7 +33,7 @@ define([
 
     Related.prototype.popularInTagOverride = function(config) {
         // whitelist of tags to override related story component with a popular-in-tag component
-        if (!config.switches.popularInTag || !config.page.keywordIds) { return; }
+        if (!config.page.keywordIds) { return; }
         var whitelistedTags = [ // order matters here (first match wins)
             // sport tags
             'sport/cricket', 'sport/rugby-union', 'sport/rugbyleague', 'sport/formulaone',

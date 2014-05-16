@@ -1,12 +1,12 @@
 import common.{DiagnosticsLifecycle, ExecutionContexts}
 import conf.Filters
-import controllers.front.FrontLifecycle
 import dev.DevParametersLifecycle
 import dfp.DfpAgentLifecycle
 import feed.{OnwardJourneyLifecycle, MostReadLifecycle}
 import implicits.Requests
 import model.AdminLifecycle
 import play.api.mvc.{RequestHeader, EssentialAction, EssentialFilter, WithFilters}
+import services.ConfigAgentLifecycle
 
 // obviously this is only for devbuild and should never end up in one of our
 // prod projects
@@ -53,7 +53,6 @@ object DevJsonExtensionFilter extends EssentialFilter with ExecutionContexts wit
 object Global extends WithFilters(
   DevJsonExtensionFilter :: DevCacheWarningFilter :: Filters.common: _*
 )
-with FrontLifecycle
 with DevParametersLifecycle
 with AdminLifecycle
 with DiagnosticsLifecycle
@@ -61,3 +60,4 @@ with OnwardJourneyLifecycle
 with CommercialLifecycle
 with MostReadLifecycle
 with DfpAgentLifecycle
+with ConfigAgentLifecycle

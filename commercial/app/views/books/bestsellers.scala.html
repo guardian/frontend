@@ -13,7 +13,7 @@
 <link rel="stylesheet" href="@Static("stylesheets/commercial.css")" />
 
 @defining(("1_1", "2014-03-28")) { case (version, date) =>
-    <div class="commercial commercial--books" role="complementary">
+    <div class="commercial commercial--low commercial--books" role="complementary">
         <div class="facia-container__inner">
             <div class="commercial__head container__title">
                 <a href="@AdLink{http://www.guardianbookshop.co.uk/}" data-link-name="merchandising-bookshop-v@{version}_@{date}-low-visit-shop">
@@ -42,7 +42,6 @@
                     </span>
                 </a>
             </div>
-        
             <div class="commercial__body">
                 <ul class="u-unstyled lineitems">
                 @books.map { book =>
@@ -69,7 +68,6 @@
                 }
                 </ul>
             </div>
-
             <div class="commercial__foot">
                 <form action="@Configuration.commercial.books_url/BerteShopWeb/search.do" method="POST" class="commercial__search" name="QuickSearchForm">
                     <div>

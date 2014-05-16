@@ -22,8 +22,6 @@ define([
 ) {
     function Front(opts) {
         var self = this,
-            path,
-            isEditionalised,
             props = [
                 'section',
                 'webTitle',
@@ -68,16 +66,18 @@ define([
 
         this.depopulateCollection = this._depopulateCollection.bind(this);
 
-        path = (this.id() || '').split('/');
-        isEditionalised = vars.CONST.editions.some(function(edition) { return edition === path[0]; });
-
         this.placeholders = {};
 
         this.placeholders.section = ko.computed(function() {
+            var path = asPath(this.id()),
+                isEditionalised = vars.CONST.editions.some(function(edition) { return edition === path[0]; });
+
             return this.props.section() || this.capiProps.section() || (isEditionalised ? path.length === 1 ? undefined : path[1] : path[0]);
         }, this);
 
         this.placeholders.webTitle = ko.computed(function() {
+            var path = asPath(this.id());
+
             return this.props.webTitle() || this.capiProps.webTitle() || (toTitleCase(path.slice(path.length > 1 ? 1 : 0).join(' ').replace(/\-/g, ' ')) || this.id());
         }, this);
 
@@ -154,6 +154,10 @@ define([
 
     function toTitleCase(str) {
         return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+    }
+
+    function asPath(str) {
+       return (str || '').split('/');
     }
 
     return Front;

@@ -15,6 +15,7 @@ trait MetaData extends Tags {
   def description: Option[String] = None
   def rssPath: Option[String] = None
 
+  def title: String = webTitle
   // this is here so it can be included in analytics.
   // Basically it helps us understand the impact of changes and needs
   // to be an integral part of each page
@@ -139,4 +140,5 @@ trait Tags {
   lazy val types: Seq[Tag] = tagsOfType("type")
 
   def isSponsored = DfpAgent.isSponsored(keywords)
+  def isAdvertisementFeature = DfpAgent.isAdvertisementFeature(keywords)
 }

@@ -60,7 +60,7 @@ define([
         it('should have the correct size mappings', function() {
             var articleAsideAdverts = new ArticleAsideAdverts(createSwitch(true));
             articleAsideAdverts.init();
-            expect($('#' + fixturesConfig.id + ' .ad-slot').data('tabletlandscape')).toBe('300,250');
+            expect($('#' + fixturesConfig.id + ' .ad-slot').data('tabletlandscape')).toBe('300,250|300,600');
         });
 
         it('should not add ad slot to hidden column', function() {

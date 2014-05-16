@@ -33,6 +33,8 @@
         }
     }
 
+    <link rel="canonical" href="@CanonicalLink(request)" />
+
     @item.pagination.map{ pagination =>
         @pagination.next.map{ next => <link rel="next" href="@LinkTo(item.url)?page=@next" /> }
         @pagination.previous.map{ prev => <link rel="prev" href="@LinkTo(item.url)@if(prev != 1){?page=@prev}" /> }
@@ -56,10 +58,8 @@
 
     @* https://support.google.com/news/publisher/answer/68297?hl=en-GB *@
     @if(item.keywords.nonEmpty) {
-        @defining(item.keywords.map(_.name).mkString(",")){ keywords =>
-            <meta name="keywords" content="@keywords" />
-            <meta name="news_keywords" content="@keywords" />
-        }
+        <meta name="keywords" content="@item.keywords.map(_.name).mkString(",")" />
+        <meta name="news_keywords" content="@item.keywords.take(10).map(_.name).mkString(",")" />
     }
 
     @item.openGraph.map{ case (key, value) =>
