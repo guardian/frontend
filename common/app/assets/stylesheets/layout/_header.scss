@@ -8,6 +8,7 @@
     @include mq(tablet) {
         background: $c-neutral8;
         border-top: 2px solid $c-newsDefault;
+        margin-bottom: $gs-row-height*.5;
     }
 }
 

@@ -20,7 +20,7 @@
     background-color: #f0f0f0;
     height: 50px;
     @include rem((
-        padding: $gs-row-height*.5 0
+        padding: $gs-baseline 0
     ));
 
     @include mq(tablet) {
