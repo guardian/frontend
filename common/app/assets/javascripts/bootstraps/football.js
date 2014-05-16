@@ -63,7 +63,7 @@ define([
                         extras.forEach(function(extra, i) {
                             if (dropdownTemplate) {
                                 $.create(dropdownTemplate).each(function (dropdown) {
-                                    if(config.page.isLiveBlog) { $(dropdown).addClass('dropdown--live'); }
+                                    if(config.page.isLiveBlog) { $(dropdown).addClass('dropdown--key-events'); }
                                     $('.dropdown__label', dropdown).append(extra.name);
                                     $('.dropdown__content', dropdown).append(extra.content);
                                     $('.dropdown__button', dropdown)
