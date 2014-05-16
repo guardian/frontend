@@ -62,6 +62,7 @@
         <div class="col-sm-6">
             <form class="form-inline" role="form" action="/admin/football/fronts/tables/redirect" method="post">
                 @views.html.football.fragments.chooseLeague("competition", competitions)
+                @views.html.football.fragments.chooseGroup("group")
                 <button type="submit" class="btn btn-success">League table</button>
             </form>
         </div>
