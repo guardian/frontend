@@ -97,6 +97,20 @@
         ));
     }
 
+    .team__scorers {
+        @include fs-data(2, true);
+
+        dd:nth-child(3) {
+            &:after {
+                content: "…";
+                display: block;
+            }
+        }
+        dd:nth-of-type(n+3) {
+            display: none;
+        }
+    }
+
     // Different snap sizes
     // See javascripts/modules/ui/snaps.js
     &.facia-snap-point--large {
