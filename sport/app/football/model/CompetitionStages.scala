@@ -5,6 +5,7 @@ import feed.Competitions
 import model.Competition
 import pa._
 import implicits.Football._
+import scala.util.Try
 
 
 trait CompetitionStage {
@@ -13,10 +14,9 @@ trait CompetitionStage {
 }
 object CompetitionStage {
 
-  def stagesFromCompetition(competition: Competition): List[CompetitionStage] = {
-    val stagesWithMatches = competition.matches.groupBy(_.stage).toList
+  def stagesFromCompetition(competition: Competition, orderings: Map[String, List[DateTime]] = KnockoutSpider.orderings): List[CompetitionStage] = {
+    val stagesWithMatches = competition.matches.toList.stableGroupBy(_.stage)
     val allStagesHaveStarted = stagesWithMatches.forall { case (_, matches) => matches.exists(_.hasStarted) }
-
     // if all stages have started, reverse order (typically at most two stages so means "show most recent first")
     val sortedStagesWithMatches =
       if (allStagesHaveStarted) stagesWithMatches.reverse
@@ -29,10 +29,16 @@ object CompetitionStage {
 
       if (stageLeagueEntries.isEmpty) {
         if (rounds.size > 1) {
-          KnockoutSpider.orderings.get(competition.id).map { matchDates =>
-            // TODO: PA will be "postponing" matches in the world cup to turn "winner group A" teams into real nation teams
-            // add filtering when PA get back to us with an example
-            KnockoutSpider(stageMatches, rounds, matchDates)
+          orderings.get(competition.id).map { matchDates =>
+            // for knockout tournaments PA delete and re-issue ghost/placeholder matches when the actual teams become available
+            // this would create duplicate matches since our addMatches code is purely additive, so we must de-dupe matches based on KO time
+            val dedupedMatches = stageMatches.stableGroupBy(_.date).flatMap { case (_, dateMatches) =>
+              dateMatches.sortWith { case (match1, match2) =>
+                Try(match1.id.toInt > match2.id.toInt)
+                  .getOrElse(match1.id > match2.id)
+              }.headOption
+            }
+            KnockoutSpider(dedupedMatches, rounds, matchDates)
           }.orElse(Some(KnockoutList(stageMatches, rounds)))
         } else None  // or just a collection of matches (e.g. international friendlies)
       } else {

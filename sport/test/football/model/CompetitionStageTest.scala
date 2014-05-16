@@ -6,8 +6,9 @@ import pa.{Fixture, Round, Stage}
 import org.scalatest.matchers.{BePropertyMatchResult, BePropertyMatcher}
 import org.joda.time.DateTime
 import org.scalatest.exceptions.TestFailedException
+import implicits.Collections
 
-class CompetitionStageTest extends FreeSpec with ShouldMatchers with OptionValues with CompetitionTestData {
+class CompetitionStageTest extends FreeSpec with ShouldMatchers with OptionValues with CompetitionTestData with Collections {
   "stagesFromCompetition" - {
     "will generate a League" in {
       val stages = CompetitionStage.stagesFromCompetition(league)
@@ -182,9 +183,38 @@ class CompetitionStageTest extends FreeSpec with ShouldMatchers with OptionValue
           ko.isActiveRound(thirdPlacePlayoff) should equal(true)
         }
       }
+
+      "will create a spider if a suitable ordering is available" in {
+        val matchDates = List(DateTime.now, DateTime.now.plusDays(1))
+        val orderings = Map("1" -> matchDates)
+        val stages = CompetitionStage.stagesFromCompetition(tournament, orderings)
+        stages(0) should be (instanceOf[KnockoutSpider])
+        stages(0).asInstanceOf[KnockoutSpider].matchDates should equal(matchDates)
+      }
+
+      "creates a knockout list in the absence of a suitable ordering for the competition" in {
+        val stages = CompetitionStage.stagesFromCompetition(tournament)
+        stages(0) should be (instanceOf[KnockoutList])
+      }
+
+      "will de-dupe spider matches based on provided ordering" in {
+        // for knockout tournaments PA will delete and then re-issue a ghost/placeholder match when the actual teams become available
+        // e.g. final teams are known after semi finals are done
+        // this would create duplicate matches since our addMatches code is purely additive, so we must de-dupe matches based on time
+        val matches = futureKnockoutMatches(Stage("1"))
+        val reissuedMatches = List(matches(0).copy(id="1235"), matches(1).copy(id="1236"), matches(2).copy(id="1237"), matches(3).copy(id="1238"))
+        val comp = testCompetition(leagueTable = Nil, matches = futureKnockoutMatches(Stage("1")) ++ reissuedMatches)
+        val stages = CompetitionStage.stagesFromCompetition(comp, Map("1" -> Nil))
+        val ko = stages(0).asInstanceOf[KnockoutSpider]
+        ko should be (instanceOf[KnockoutSpider])
+        val qfMatches = ko.roundMatches(quarterFinals)
+
+        qfMatches.map(_.id).toSet should equal(Set("1235", "1236", "1237", "1238"))
+      }
     }
   }
 
+  conf.Switches.WorldCupWallchartEmbedSwitch.isSwitchedOn  // these tests can go when the hard-coded WC 2014 data is done
   "World Cup 2014 wallchart spider can sort based on the hard-coded match datetimes" - {
     def m(id: String, date: DateTime, roundNumber: String) =
       Fixture(id, date, Stage("2"), Round(roundNumber, None), "1", teams(0), teams(1), None, None)
