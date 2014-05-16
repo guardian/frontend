@@ -800,7 +800,7 @@ $timeline-width: 14px;
     @include rem((
         width: gs-span(3),
         margin-left: gs-span(1) + $gs-gutter,
-        padding-top: ($gs-baseline/3)*2
+        padding-top: $gs-baseline*2
     ));
 }
 
@@ -949,7 +949,8 @@ $timeline-width: 14px;
     }
 
     .article2__head__lower {
-        padding-top: 2px;
+        padding-top: $gs-baseline/4;
+        padding-bottom: 0;
         min-height: 54px;
     }
 
