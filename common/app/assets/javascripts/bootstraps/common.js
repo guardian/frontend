@@ -45,6 +45,7 @@ define([
     'common/modules/adverts/article-body-adverts',
     'common/modules/adverts/article-aside-adverts',
     'common/modules/adverts/slice-adverts',
+    'common/modules/adverts/front-commercial-components',
     'common/modules/adverts/dfp',
     'common/modules/analytics/commercial/tags/container',
     'common/modules/analytics/foresee-survey',
@@ -99,6 +100,7 @@ define([
     ArticleBodyAdverts,
     ArticleAsideAdverts,
     SliceAdverts,
+    frontCommercialComponents,
     dfp,
     TagContainer,
     Foresee,
@@ -285,6 +287,8 @@ define([
                 }
 
                 new SliceAdverts(config).init();
+
+                frontCommercialComponents.init(config);
 
                 var options = {};
 
