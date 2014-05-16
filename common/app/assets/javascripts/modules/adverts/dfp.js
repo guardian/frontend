@@ -103,7 +103,7 @@ define([
         },
         shouldRenderLabel = function ($slot) {
             var $parent = $slot.parent();
-            return !($slot[0].style.display === 'none' || $parent.hasClass('ad-label--showing') || $parent.data('label') === false);
+            return !($slot.css('display') === 'none' || $parent.hasClass('ad-label--showing') || $parent.data('label') === false);
         },
         /**
          * Checks the contents of the ad for special classes (see breakoutHash).
