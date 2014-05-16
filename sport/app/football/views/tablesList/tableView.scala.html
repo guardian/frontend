@@ -62,6 +62,6 @@
         </tbody>
 
         @heading.map{ h=> <caption class="table__caption table__caption--top"><a href="@competition.url">@h</a></caption>}
-        @if(linkToCompetition){<caption class="table__caption table__caption--bottom"><a href="@{competition.url + "/table"}" data-link-name="full table">View full <span class="competition-name">@competition.fullName</span> table</a></caption>}
+        @if(linkToCompetition){<caption class="table__caption table__caption--bottom"><a href="@{competition.url + "/table"}" data-link-name="full table" class="full-table-link">View full <span class="competition-name">@competition.fullName</span> table</a></caption>}
     </table>
 </div>
