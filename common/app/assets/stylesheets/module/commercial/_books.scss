@@ -232,17 +232,6 @@ $c-commercial-books-dark: #630D4C;
             ));
         }
         @include mq(tablet) {
-            .lineitem {
-                border-left: 1px solid $c-neutral4;
-                width: 100%;
-                @include rem((
-                    min-height: $gs-baseline*13.5
-                ));
-                
-                &:nth-child(n+2) {
-                    display: none;
-                }
-            }
             .highitem {
                 border-bottom: 0;
                 padding-bottom: 0;
@@ -272,27 +261,6 @@ $c-commercial-books-dark: #630D4C;
                 .lineitem:first-child .lineitem__img {
                     display: block;
                 }
-            }
-        }
-        @include mq(rightCol) {
-            .commercial__head {
-                float: left;
-                
-                .commercial__search {
-                    display: block;
-                }
-            }
-            .commercial__home-link {
-                position: absolute;
-            }
-            .commercial__relevance-high {
-                width: 66%;
-            }
-            .commercial__relevance-low {
-                width: 33%;
-            }
-            .commercial__foot {
-                display: none;
             }
         }
         @include mq(leftCol) {
@@ -350,6 +318,21 @@ $c-commercial-books-dark: #630D4C;
             ));
         }
     }
+    &.commercial--high {
+        @include mq(tablet) {
+            .commercial__relevance-high,
+            .commercial__relevance-low,
+            .lineitem {
+                width: 50%;
+            }        
+            .lineitem:nth-child(n+2) {
+                display: block;
+            }
+        }
+        @include mq(desktop) {
+            
+        }
+    }
 }
 
 /* article */
@@ -390,6 +373,42 @@ $c-commercial-books-dark: #630D4C;
             @include rem((
                 margin-top: 40px
             ));
+        }
+    }
+    &.commercial--high {
+        @include mq(tablet) {
+         .lineitem {
+ /*                  border-left: 1px solid $c-neutral4;
+                width: 100%;
+                @include rem((
+                    min-height: $gs-baseline*13.5
+                ));
+  */              
+                &:nth-child(n+2) {
+                    display: none;
+                }
+            }
+        }
+        @include mq(rightCol) {
+            .commercial__head {
+                float: left;
+                
+                .commercial__search {
+                    display: block;
+                }
+            }
+            .commercial__home-link {
+                position: absolute;
+            }
+           .commercial__relevance-high {
+                width: 66%;
+            }
+            .commercial__relevance-low {
+                width: 33%;
+            }
+            .commercial__foot {
+                display: none;
+            }
         }
     }
 }
