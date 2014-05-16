@@ -1,7 +1,6 @@
 /*global guardian:true */
 define([
     'domReady',
-    'common/utils/polyfill',
     'common/utils/mediator',
     'common/utils/ajax',
     'common/utils/detect',
@@ -26,7 +25,6 @@ define([
     'common/bootstraps/identity'
 ], function (
     domReady,
-    polyfill,
     mediator,
     ajax,
     detect,
