@@ -791,6 +791,12 @@
     @include mq($from: wide) {
         margin-left: -240px;
     }
+    @include mq($from: leftCol, $to: wide) {
+        @include rem((
+            width: gs-span(2)
+        ));
+
+    }
 
 }
 
@@ -847,6 +853,21 @@
     }
     @include mq($from: wide) {
         margin-left: 260px;
+    }
+
+    &.article2__main-column--video {
+        @include mq(rightCol) {
+            @include rem((
+                padding-right: $gs-gutter
+            ));
+            max-width: none;
+        }
+        @include mq(wide) {
+            @include rem((
+                padding-right: 100px
+            ));
+        }
+
     }
 }
 
