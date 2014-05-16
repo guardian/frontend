@@ -1,9 +1,9 @@
 package model
+
 import pa._
 import org.joda.time.DateMidnight
 import pa.LeagueTableEntry
-import pa.{Result, MatchDayTeam}
-import java.awt.image.BandCombineOp
+import pa.MatchDayTeam
 import java.awt.Color
 
 
@@ -119,8 +119,12 @@ object PrevResult {
 
 case class TeamColours(homeTeam: LineUpTeam, awayTeam: LineUpTeam) {
   private val darkenFactor = 0.3
-  private val homeColour = homeTeam.teamColour.toLowerCase
-  private val awayColour = awayTeam.teamColour.toLowerCase
+  private val homeColour =
+    if (homeTeam.teamColour.isEmpty) "#eeeeee"
+    else homeTeam.teamColour.toLowerCase
+  private val awayColour =
+    if (awayTeam.teamColour.isEmpty) "#eeeeee"
+    else awayTeam.teamColour.toLowerCase
 
   lazy val home =
     if (homeColour == "#ffffff") "#eeeeee"

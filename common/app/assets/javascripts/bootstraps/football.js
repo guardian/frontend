@@ -240,6 +240,12 @@ define([
             });
         });
 
+        page.isFootballStatsPage(function() {
+            $('.js-chart').each(function(el) {
+                new Doughnut().render(el);
+            });
+        });
+
         // Binding
         bean.on(context, 'click', '.table tr[data-link-to]', function(e) {
             if (!e.target.getAttribute('href')) {
