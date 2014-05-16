@@ -143,6 +143,12 @@
     cursor: pointer;
 }
 
+.article__secondary-column {
+    .football-match:nth-of-type(n+13) {
+        display: none;
+    }
+}
+
 /* Footnotes */
 // [1] See: http://css-tricks.com/fighting-the-space-between-inline-block-elements/
 //     It would be nice to not do this, but I felt the tidyness of the HTML was more important in this instant.
