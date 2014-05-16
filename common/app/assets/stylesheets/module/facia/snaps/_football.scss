@@ -73,8 +73,15 @@
         }
     }
 
-    .team__heading {
+    .team__heading,
+    .team__battle-line {
         @include fs-headline(2, true);
+    }
+
+    .status__time {
+        @include rem((
+            top: $gs-baseline/2
+        ));
     }
 
     // Different snap sizes
@@ -84,6 +91,10 @@
         .table,
         .table__caption {
             border-top: 0 none;
+        }
+        .team__heading,
+        .team__battle-line {
+            @include fs-headline(5, true)
         }
     }
 
@@ -95,11 +106,20 @@
                 line-height: $gs-gutter*2
             ));
         }
+    }
 
-        .team__heading {
-            @include fs-headline(5, true)
+    &.facia-snap-point--medium {
+        .team__heading,
+        .team__battle-line {
+            @include fs-headline(2, true)
+        }
+        .team__battle-line {
+            @include rem((
+                top: $gs-baseline*7
+            ));
         }
     }
+
 
     &.facia-snap-point--small {
         @include table--hide-from-importance-2;
