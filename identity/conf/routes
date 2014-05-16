@@ -24,8 +24,6 @@ POST        /account/edit                           @controllers.EditProfileCont
 GET         /verify-email/:token                    @controllers.EmailVerificationController.verify(token: String)
 GET         /verify-email                           @controllers.EmailVerificationController.resendEmailValidationEmail()
 
-GET         /ethical-awards/complete                @controllers.EthicalAwardsController.complete
-GET         /ethical-awards/:formReference          @controllers.EthicalAwardsController.ethicalAwardsForm(formReference: String)
 GET         /form/complete                          @controllers.FormstackController.complete
 GET         /form/:formReference                    @controllers.FormstackController.formstackForm(formReference: String, composer: Boolean = false)
 GET         /form/embed/:formReference              @controllers.FormstackController.formstackForm(formReference: String, composer: Boolean = true)

@@ -9,7 +9,7 @@
         </span>
     </h2>
     <div class="article-wrapper monocolumn-wrapper tone-@VisualTone(article) tone-@VisualTone(article)--article">
-        <article id="article" class="article @if(article.isLive){is-live} @if(article.isAdvertisementFeature){article--advertisement-feature}"
+        <article id="article" class="article @if(article.isLive){is-live} @if(article.isAdvertisementFeature && !article.isSponsored){article--advertisement-feature}"
                  itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType" role="main">
             <div class="article__inner article__inner--head">
                 <header class="article__head">
@@ -119,7 +119,7 @@
 </div>
 }
 <div class="facia-container facia-container--layout-article facia-container--commercial">
-    @fragments.commercial.commercialComponent(name="merchandising-high", adType="commercial-component-high", sizeMapping=Map("desktop" -> Seq("888,87")))
+    @fragments.commercial.commercialComponent(name="merchandising-high", adType="commercial-component-high", sizeMapping=Map("desktop" -> Seq("888,88")))
 </div>
 
 @fragments.storyPackagePlaceholder(storyPackage)

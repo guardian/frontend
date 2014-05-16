@@ -34,14 +34,14 @@
         @include mq(tablet) {
             position: absolute;
             @include rem((
-                top: 10px,
+                top: $comercial-comp-baseline,
                 right: $gs-gutter/2
             ));
         }
     }
     .commercial__body {
         @include rem((
-            padding: 10px 0
+            padding: $comercial-comp-baseline 0
         ));
     }
     .commercial--jobs__sectors {
@@ -226,7 +226,7 @@
         .commercial__home-link {
             @include rem((
                 left: $gs-gutter/2,
-                bottom: 10px
+                bottom: $comercial-comp-baseline
             ));
             top: auto;
             right: auto;
@@ -288,7 +288,7 @@
         .commercial__home-link {
             @include rem((
                 left: $gs-gutter,
-                bottom: 10px
+                bottom: $comercial-comp-baseline
             ));
             top: auto;
             right: auto;
