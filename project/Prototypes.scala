@@ -6,6 +6,7 @@ import sbt.Keys._
 import play.Project._
 import sbtassembly.Plugin.AssemblyKeys._
 import sbtassembly.Plugin._
+import com.typesafe.sbt.SbtNativePackager._
 
 trait Prototypes {
   val version = "1-SNAPSHOT"
@@ -118,7 +119,8 @@ trait Prototypes {
 
   def root() = Project("root", base = file("."))
 
-  def application(name: String) = play.Project(name, version, path = file(name))
+  def application(applicationName: String) = {
+    play.Project(applicationName, version, path = file(applicationName))
     .settings(frontendDependencyManagementSettings:_*)
     .settings(frontendCompilationSettings:_*)
     .settings(frontendClientSideSettings:_*)
@@ -131,4 +133,6 @@ trait Prototypes {
         "commons-io" % "commons-io" % "2.4"
       )
     )
+      .settings(Seq(name in Universal := applicationName): _*)
+  }
 }
