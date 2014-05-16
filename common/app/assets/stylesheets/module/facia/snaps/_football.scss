@@ -30,20 +30,18 @@
 
     .table__caption--bottom {
         @include box-sizing(border-box);
-        @include rem((
-            bottom: 0
-        ));
         background: $c-neutral8;
         border-left: $gs-gutter/2 solid #ffffff;
         border-right: $gs-gutter/2 solid #ffffff;
+        bottom: 0;
         left: 0;
         position: absolute;
         width: 100%;
         z-index: 2;
 
-        a {
+        .full-table-link {
             @include rem((
-                margin-left: -$gs-gutter/2
+                margin-left: $gs-gutter/2
             ));
             display: inline-block;
         }
