@@ -9,7 +9,7 @@
         </span>
     </h2>
     <div class="article-wrapper monocolumn-wrapper tone-@VisualTone(article) tone-@VisualTone(article)--article">
-        <article id="article" class="article @if(article.isLive){is-live} @if(article.isAdvertisementFeature){article--advertisement-feature}"
+        <article id="article" class="article @if(article.isLive){is-live} @if(article.isAdvertisementFeature && !article.isSponsored){article--advertisement-feature}"
                  itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType" role="main">
             <div class="article__inner article__inner--head">
                 <header class="article__head">
