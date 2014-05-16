@@ -88,7 +88,11 @@ object FrontsController extends Controller with ExecutionContexts with GetPaClie
   def tablesRedirect = Action { implicit request =>
     val submission = request.body.asFormUrlEncoded.get
     val competitionId = submission.get("competition").get.head
-    Cached(60)(SeeOther(s"/admin/football/fronts/tables/$competitionId"))
+    val url = submission.get("group").flatMap(_.filterNot(_.isEmpty).headOption) match {
+      case Some(group) => s"/admin/football/fronts/tables/$competitionId/$group"
+      case None => s"/admin/football/fronts/tables/$competitionId"
+    }
+    NoCache(SeeOther(url))
   }
 
   def tables(competitionId: String) = Action.async { implicit request =>
@@ -97,6 +101,18 @@ object FrontsController extends Controller with ExecutionContexts with GetPaClie
         season <- getCompetition(competitionId)
         competitionName = PA.competitionName(season)
         snapFields = SnapFields(SNAP_TYPE, SNAP_CSS, s"$host/football/$competitionId/table.json", s"${Configuration.site.host}/football/tables", s"$competitionName table", s"View the full standing for the $competitionName")
+        previewContent <- FutureOpt.fromFuture(previewFrontsComponent(snapFields))
+      } yield previewContent
+    foResult.getOrElse(NoCache(NotFound(views.html.football.error(s"Competition $competitionId not found"))))
+  }
+
+  def groupTables(competitionId: String, group: String) = Action.async { implicit request =>
+    val fancyGroupName = group.replace('-', ' ')
+    val foResult =
+      for {
+        season <- getCompetition(competitionId)
+        competitionName = PA.competitionName(season)
+        snapFields = SnapFields(SNAP_TYPE, SNAP_CSS, s"$host/football/$competitionId/$group/table.json", s"${Configuration.site.host}/football/tables", s"$competitionName $fancyGroupName table", s"View the $fancyGroupName standing for the $competitionName")
         previewContent <- FutureOpt.fromFuture(previewFrontsComponent(snapFields))
       } yield previewContent
     foResult.getOrElse(NoCache(NotFound(views.html.football.error(s"Competition $competitionId not found"))))
