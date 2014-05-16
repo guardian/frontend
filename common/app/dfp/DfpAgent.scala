@@ -29,13 +29,24 @@ object DfpAgent extends ExecutionContexts with Logging {
 
   private def normalise(name: String) = name.toLowerCase.replaceAll("[+\\s]+", "-")
 
+  private def isSponsoredType(keyword: String, p: DfpData => String => Boolean): Boolean = {
+    dfpData.fold(false) { data =>
+      p(data)(normalise(keyword))
+    }
+  }
+
   def isSponsored(content: Content): Boolean = isSponsored(content.keywords)
 
   def isSponsored(section: Section): Boolean = isSponsored(section.webTitle)
 
   def isSponsored(keywords: Seq[Tag]): Boolean = keywords.exists(keyword => isSponsored(keyword.name))
 
-  def isSponsored(keyword: String): Boolean = dfpData.fold(false)(_.isSponsored(normalise(keyword)))
+  def isSponsored(keyword: String): Boolean = isSponsoredType(keyword, _.isSponsored)
+
+  def isAdvertisementFeature(keywords: Seq[Tag]): Boolean =
+    keywords.exists(keyword => isAdvertisementFeature(keyword.name))
+
+  def isAdvertisementFeature(keyword: String): Boolean = isSponsoredType(keyword, _.isAdvertisementFeature)
 
   def refresh() {
 
