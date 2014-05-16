@@ -24,7 +24,7 @@ set -o errexit
 echo "Disting $1/target/artifacts.zip"
 
 
-# Remove previous finaly "artifacts.zip" file
+# Remove previous Play Assembly "artifacts.zip" file
 rm -f "$1/target/artifacts.zip"
 rm -fr "$1/target/dist"
 
