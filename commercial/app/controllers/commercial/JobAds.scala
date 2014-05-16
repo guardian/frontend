@@ -28,4 +28,24 @@ object JobAds extends Controller {
         }
       }
   }
+
+  def renderAdsHigh = Action {
+    implicit request =>
+      JobsAgent.adsTargetedAt(segment) match {
+        case Nil => NotFound
+        case jobs => {
+          Cached(60)(Ok(views.html.jobsHigh(jobs take 2)))
+        }
+      }
+  }
+
+  def jobsHigh = Action {
+    implicit request =>
+      JobsAgent.adsTargetedAt(segment) match {
+        case Nil => JsonNotFound.apply()
+        case jobs => {
+          Cached(60)(JsonComponent(views.html.jobsHigh(jobs take 2)))
+        }
+      }
+  }
 }

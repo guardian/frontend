@@ -58,6 +58,7 @@ define([
             books:             this.host + 'books/bestsellers.json?'        + this.userSegments + '&s=' + this.section + '&' + this.getKeywords(),
             booksHigh:         this.host + 'books/bestsellers-high.json?'   + this.userSegments + '&s=' + this.section + '&' + this.getKeywords(),
             jobs:              this.host + 'jobs.json?'                     + this.userSegments + '&s=' + this.section + '&' + this.getKeywords(),
+            jobsHigh:          this.host + 'jobs-high.json?'                + this.userSegments + '&s=' + this.section + '&' + this.getKeywords(),
             masterclasses:     this.host + 'masterclasses.json?'            + this.userSegments + '&s=' + this.section,
             masterclassesHigh: this.host + 'masterclasses-high.json?'       + this.userSegments + '&s=' + this.section,
             soulmates:         this.host + 'soulmates/mixed.json?'          + this.userSegments + '&s=' + this.section,
