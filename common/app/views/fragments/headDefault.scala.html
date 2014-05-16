@@ -1,12 +1,12 @@
 @(content: model.Content)(implicit request: RequestHeader)
 
-<header class="article2__head">
+<header class="content__head">
 
     <div class="gs-container">
-        <div class="article2__top-border"></div>
-        <div class="article2__main-column">
+        <div class="content__top-border"></div>
+        <div class="content__main-column">
 
-            <div class="article2__section">
+            <div class="content__section">
                 <a class="tone-colour" data-link-name="article section" href="@LinkTo{/@content.section}">@Html(content.sectionName.toLowerCase)</a>
             </div>
 
@@ -16,7 +16,7 @@
                 @fragments.dateline(content.webPublicationDate)
             }
 
-            <h1 itemprop="headline" class="article2__headline js-score">@Html(content.headline)</h1>
+            <h1 itemprop="headline" class="content__headline js-score">@Html(content.headline)</h1>
 
             @if(!content.delegate.isVideo && !content.delegate.isGallery) {
                 @fragments.standfirst(content)

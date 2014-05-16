@@ -1,18 +1,18 @@
 @(content: model.Content)(implicit request: RequestHeader)
 
-<header class="article2__head article2__head--tonal">
+<header class="content__head content__head--tonal">
 
     <div class="tone-background">
         <div class="gs-container">
-            <div class="article2__main-column">
+            <div class="content__main-column">
 
-                <div class="article2__section">
+                <div class="content__section">
                     <a class="tone-colour" data-link-name="article section" href="@LinkTo{/@content.section}">@Html(content.sectionName.toLowerCase)</a>
                 </div>
 
                 @fragments.meta.metaInline(content)
 
-                <h1 itemprop="headline" class="article2__headline js-score">@Html(content.headline)</h1>
+                <h1 itemprop="headline" class="content__headline js-score">@Html(content.headline)</h1>
 
                 @if(content.isCommentable) {
                     <div class="article__head__comment-count article__head__comment-count--standfirst js-comment-count"></div>
@@ -24,7 +24,7 @@
 
     <div class="tone-background--accent">
         <div class="gs-container">
-            <div class="article2__main-column">
+            <div class="content__main-column">
 
                 @fragments.standfirst(content)
 

@@ -6,7 +6,7 @@
     @fragments.headDefault(interactive)
 
     <div class="gs-container">
-        <div class="article2 article2__main-column">
+        <div class="content content__main-column">
             @interactive.body.map { body =>
                 @HtmlFormat.raw(body)
             }.getOrElse {

@@ -777,7 +777,7 @@
 
 
 
-.article2__section {
+.content__section {
     @include mq($to: tablet) {
         display: none;
     }
@@ -800,7 +800,7 @@
 
 }
 
-.article2__headline {
+.content__headline {
     @include fs-headline(4);
     @include rem((
         padding-bottom: $gs-baseline*2,
@@ -835,7 +835,7 @@
     }
 }
 
-.article2__main-column {
+.content__main-column {
     margin: 0 $gs-gutter/2;
     @include mq($from: mobileLandscape) {
         margin: 0 $gs-gutter;
@@ -855,7 +855,7 @@
         margin-left: 260px;
     }
 
-    &.article2__main-column--video {
+    &.content__main-column--video {
         @include mq(rightCol) {
             @include rem((
                 padding-right: $gs-gutter
@@ -870,7 +870,7 @@
     }
 }
 
-.article2__secondary-column {
+.content__secondary-column {
     @include mq($to: rightCol) {
         display: none;
     }
@@ -889,7 +889,7 @@
     background-color: #fffe00;
 }
 
-.article2__top-border {
+.content__top-border {
     @include mq($to: tablet) {
         display: none;
     }
@@ -947,7 +947,7 @@
     }
 }
 
-.article2 {
+.content {
     position: relative;
     @include rem((
             margin-bottom: $gs-baseline*3.5

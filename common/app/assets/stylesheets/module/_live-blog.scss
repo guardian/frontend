@@ -906,7 +906,7 @@ $timeline-width: 14px;
 
 .blog {
     background-color: $c-neutral8;
-    .article2__headline {
+    .content__headline {
         @include rem((
                 padding-bottom: $gs-baseline*3
         ));
@@ -923,7 +923,7 @@ $timeline-width: 14px;
         }
     }
 
-    .article2__main-column--live-blog {
+    .content__main-column--live-blog {
         @include mq(rightCol) {
             @include rem((
                 max-width: gs-span(8),
@@ -937,31 +937,31 @@ $timeline-width: 14px;
         }
     }
 
-    .article2__head .article2__main-column--live-blog {
+    .content__head .content__main-column--live-blog {
         max-width: 620px;
     }
 
-    .article2 {
+    .content {
         padding-top: $gs-baseline;
         @include mq(rightCol) {
             padding-top: $gs-baseline*2;
         }
     }
 
-    .article2__head__lower {
+    .content__head__lower {
         padding-top: $gs-baseline/4;
         padding-bottom: 0;
         min-height: 54px;
     }
 
-    .article2__section {
+    .content__section {
         @include mq(rightCol) {
             margin-left: -($a-rightCol-width + $gs-gutter);
             float: left;
         }
     }
 
-    .article2__secondary-column {
+    .content__secondary-column {
         @include mq($to: wide) {
             display: none;
         }

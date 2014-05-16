@@ -4,12 +4,12 @@
 @defining((model.article, model.storyPackage, !model.article.isSport)) {  case (article, storyPackage, isDefault) =>
 <article class="tone-@article.visualTone blog @if(article.isLive){is-live}" itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType" role="main">
 
-    <header class="article2__head article2__head--tonal">
+    <header class="content__head content__head--tonal">
         @* UPPER HEADER *@
         <div class="tone-background">
             <div class="gs-container">
-                <div class="article2__main-column article2__main-column--live-blog">
-                    <div class="article2__section">
+                <div class="content__main-column content__main-column--live-blog">
+                    <div class="content__section">
                         <a class="tone-colour" data-link-name="article section" href="@LinkTo{/@article.section}">@Html(article.sectionName.toLowerCase)</a>
                     </div>
 
@@ -17,14 +17,14 @@
                         @fragments.meta.series(series.id, series.name, List("inline", "live"))
                     }
 
-                    <h1 itemprop="headline" class="article2__headline js-score">@Html(article.headline)</h1>
+                    <h1 itemprop="headline" class="content__headline js-score">@Html(article.headline)</h1>
                 </div>
             </div>
         </div>
         @* LOWER HEADER *@
-        <div class="tone-background--accent article2__head__lower">
+        <div class="tone-background--accent content__head__lower">
             <div class="gs-container">
-                <div class="article2__main-column article2__main-column--live-blog">
+                <div class="content__main-column content__main-column--live-blog">
                     <div class="blog__last-updated-container">
                         @if(article.isLive) {<span class="blog__live">LIVE</span> }updated <time class="js-timestamp" datetime="@article.webPublicationDate" data-relativeformat="med"></time>
                     </div>
@@ -41,7 +41,7 @@
     </header>
 
     <div class="gs-container">
-        <div class="article2 article2__main-column article2__main-column--live-blog">
+        <div class="content content__main-column content__main-column--live-blog">
 
             @fragments.standfirst(article)
 
@@ -83,7 +83,7 @@
         </div>
 
 
-        <div class="article2__secondary-column" aria-hidden="true">
+        <div class="content__secondary-column" aria-hidden="true">
             @if(storyPackage.nonEmpty) {
                 <aside role="complementary" class="blog__related">
                     <h3 class="blog__related__head">More on this story</h3>
@@ -101,7 +101,7 @@
 </article>
 
 @if(DiscussionSwitch.isSwitchedOn && article.isCommentable) {
-    <div class="article2__main-column article2__main-column--live-blog" data-component="discussion">
+    <div class="content__main-column content__main-column--live-blog" data-component="discussion">
         @fragments.discussion(article.isClosedForComments, article.shortUrlId)
     </div>
 }

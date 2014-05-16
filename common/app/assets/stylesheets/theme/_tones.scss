@@ -63,10 +63,10 @@
 }
 
 @mixin article-header-tone($tone, $colour, $accentColour, $textColour, $commentIcon) {
-    .tone-#{$tone} .article2__head--tonal {
-        .article2__headline,
+    .tone-#{$tone} .content__head--tonal {
+        .content__headline,
         .article__standfirst,
-        .article2__section .tone-colour {
+        .content__section .tone-colour {
             color: $textColour;
         }
         .tone-background {
@@ -87,7 +87,7 @@
             color: lighten($accentColour, 25);
         }
     }
-    .tone-#{$tone} .article2 {
+    .tone-#{$tone} .content {
         .drop-cap {
             @include mq($to: tablet) {
                 color: $colour;

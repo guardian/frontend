@@ -11,14 +11,14 @@
 @include article-header-tone(live, $c-liveDefault, $c-liveAccent, #fff, "white");
 
 
-.article2__head--tonal {
+.content__head--tonal {
     .tone-background {
         padding-top: $gs-baseline/2;
     }
     .tone-background--accent {
         padding: $gs-baseline/2 0 $gs-baseline;
     }
-    .article2__headline {
+    .content__headline {
         font-weight: 200;
     }
     .article__standfirst {
@@ -26,11 +26,11 @@
     }
 }
 
-.tone-live .article2__head--tonal {
+.tone-live .content__head--tonal {
     .content-meta__label {
         color: #e4845a;
     }
-    .article2__headline {
+    .content__headline {
         font-weight: normal;
     }
 }
@@ -38,7 +38,7 @@
 .tone-feature--article,
 .tone-comment--article {
     @include mq($from: tablet) {
-        .article2 {
+        .content {
             margin-top: $gs-baseline*2;
         }
     }

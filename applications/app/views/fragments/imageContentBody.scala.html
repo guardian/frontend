@@ -8,7 +8,7 @@
     @fragments.headDefault(image)
 
     <div class="gs-container">
-        <div class="article2 article2__main-column">
+        <div class="content content__main-column">
 
             @fragments.img(image.mainPicture)
 
@@ -25,7 +25,7 @@
         </div>
 
 
-        <div class="article2__secondary-column" aria-hidden="true">
+        <div class="content__secondary-column" aria-hidden="true">
             <div class="mpu-container js-mpu-ad-slot"></div>
             <div class="js-components-container"></div>
         </div>
@@ -35,7 +35,7 @@
 
 @if(DiscussionSwitch.isSwitchedOn && image.isCommentable) {
     <div class="gs-container js-comments">
-        <div class="article2__main-column" data-component="discussion">
+        <div class="content__main-column" data-component="discussion">
         @fragments.discussion(image.isClosedForComments, image.shortUrlId)
         </div>
     </div>
