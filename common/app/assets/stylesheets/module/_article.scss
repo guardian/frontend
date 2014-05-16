@@ -854,3 +854,12 @@
     color: lighten($c-neutral2, 15%);
     @include fs-data(1);
 }
+
+.breadcrumb-keyword {
+
+    &:after {
+        content: '>> ';
+        display: inline-block;
+        margin-left: $gs-gutter/5;
+    }
+}

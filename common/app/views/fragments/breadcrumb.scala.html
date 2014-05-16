@@ -1,24 +1,52 @@
 @(content: model.Content)(implicit request: RequestHeader)
-@import common.{Navigation, LinkTo}
-
-    <ul class="breadcrumb-list inline-list">
-        <li class="breadcrumb-list__item inline-list__item">
-            <div class="i-breadcrumb-home" itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
-                <a href="@LinkTo{/}"><span itemprop="title">home >> </span></a>
-            </div>
-        </li>
-        <li class="breadcrumb-list__item inline-list__item">
-            <div class="i-breadcrumb-section" itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
-                <a href="@LinkTo{/@content.section}"><span itemprop="title">@Html(content.sectionName.toLowerCase) >> </span></a>
-            </div>
-        </li>
-        @content.primaryKeyWordTag.map { keyword =>
-        <li class="breadcrumb-list__item inline-list__item">
-            <div class="i-breadcrumb-keyword" itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
-                <a href="@LinkTo{@keyword.url}"><span itemprop="title">@Html(keyword.name.toLowerCase)</span></a>
-            </div>
-        </li>
+@import common.{Navigation, LinkTo, Edition}
+     @*
+      *Primary Section
+      *Secondary section
+      *Primary tag
+      *@
+<ul class="breadcrumb-list inline-list">
+    @defining(Edition(request).navigation) { navigation =>
+        @defining(Navigation.topLevelItem(navigation, content)) { topLevelSelected =>
+            @*
+            * See here for more info on Breadcrumbs
+            * https://support.google.com/webmasters/answer/185417?hl=en
+            *@
+            @navigation.map { nav =>
+                @if(topLevelSelected.exists(_ == nav) ) {
+                    <li class="breadcrumb-list__item inline-list__item">
+                        <div class="breadcrumb-keyword" itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+                            <a itemprop="url" href="@LinkTo{nav.name.href}"><span itemprop="title">@Html(nav.name.title)</span></a>
+                        </div>
+                    </li>
+                }
+            }
+            @* Secondary nav item *@
+            @Navigation.localNav(navigation, content).map { localNav =>
+                @defining(localNav.find(_.currentFor(content))){ currentSubSection =>
+                    @localNav.map { nav =>
+                        @if( currentSubSection.exists(_ == nav)) {
+                            <li class="breadcrumb-list__item inline-list__item">
+                                <div class="breadcrumb-keyword" itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+                                    <a itemprop="url" href="@LinkTo{@nav.href}"><span itemprop="title">@Html(nav.title)</span></a>
+                                </div>
+                            </li>
+                        }
+                    }
+                }
+            }
         }
-    </ul>
+    }
+    @content.primaryKeyWordTag.map { keyword =>
+        <li class="breadcrumb-list__item inline-list__item">
+            <div itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+                <a itemprop="url" href="@LinkTo {
+                    @keyword.url
+                }"><span itemprop="title">@Html(keyword.name.toLowerCase)</span></a>
+            </div>
+        </li>
+    }
+</ul>
+
 
 
