@@ -171,7 +171,6 @@ define([
                 if (attr) {
                     mapping.addSize([width, 0], createSizeMapping(attr));
                 }
->>>>>>> change dfp to object, rather than class
             }
 
             return mapping.build();
@@ -209,7 +208,7 @@ define([
                 keywords = '';
             }
 
-            return _defaults({
+            return defaults({
                 url     : window.location.pathname,
                 edition : edition,
                 cat     : section,
@@ -219,9 +218,9 @@ define([
                 pt      : contentType,
                 p       : 'ng',
                 bp      : detect.getBreakpoint(),
-                a       : AudienceScience.getSegments(),
-                at      : Cookies.get('adtest') || ''
-            }, AudienceScienceGateway.getSegments(), criteo.getSegments());
+                a       : audienceScience.getSegments(),
+                at      : cookies.get('adtest') || ''
+            }, audienceScienceGateway.getSegments(), criteo.getSegments());
         },
         buildAdUnit = function () {
             var isFront      = config.page.isFront || config.page.contentType === 'Section',
