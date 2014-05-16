@@ -1,24 +1,21 @@
 @(page: CommentPage)(implicit request: RequestHeader)
 
-@main(page){ }{
+@main(page){ } {
+<header class="content__head">
     <div class="gs-container">
-        <div class="article-wrapper monocolumn-wrapper">
-            <main itemprop="mainContentOfPage" role="main">
-                <div class="article__inner--head">
-                    <header class="article__head">
-                        <h1 class="article__headline">
-                            <a href="@LinkTo{@page.contentUrl}">@Html(page.title)</a>
-                        </h1>
-                    </header>
-                </div>
-                <div class="article__columning-wrapper">
-                    <div class="article__main-column">
-                        <h2 class="page-sub-header tone-colour">Comments</h2>
-                        @fragments.commentsBody(page)
-                    </div>
-                    <div class="article__secondary-column" aria-hidden="true"></div>
-                </div>
-            </div>
+        <div class="content__main-column">
+            <h1 itemprop="headline" class="content__headline">
+                <a href="@LinkTo {
+                    @page.contentUrl
+                }">@Html(page.title)</a>
+            </h1>
         </div>
     </div>
+</header>
+<div class="gs-container">
+    <div class="content content__main-column">
+        <h2 class="page-sub-header tone-colour">Comments</h2>
+        @fragments.commentsBody(page)
+    </div>
+</div>
 }

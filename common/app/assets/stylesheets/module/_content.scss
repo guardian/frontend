@@ -1,0 +1,223 @@
+.content {
+    position: relative;
+    @include rem((
+        margin-bottom: $gs-baseline*3.5 !important
+    ));
+    @include fs-bodyCopy(3);
+}
+
+.content__main-column {
+    @include rem((
+        margin: 0 $gs-gutter/2
+    ));
+    @include mq($from: mobileLandscape) {
+        @include rem((
+            margin: 0 $gs-gutter
+        ));
+    }
+    @include mq($from: tablet) {
+        max-width: 620px;
+        margin: auto;
+    }
+    @include mq($from: rightCol) {
+        margin-left: $gs-gutter;
+        padding-right: 340px;
+    }
+    @include mq($from: leftCol) {
+        margin-left: 180px;
+    }
+    @include mq($from: wide) {
+        margin-left: 260px;
+    }
+
+    &.content__main-column--video {
+        @include mq(rightCol) {
+            @include rem((
+                    padding-right: $gs-gutter
+            ));
+            max-width: none;
+        }
+        @include mq(wide) {
+            @include rem((
+                padding-right: 100px
+            ));
+        }
+    }
+}
+
+.content__secondary-column {
+    @include mq($to: rightCol) {
+        display: none;
+    }
+
+    width: 300px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    margin-right: $gs-gutter;
+}
+
+.content__top-border {
+    @include mq($to: tablet) {
+        display: none;
+    }
+    @include mq($from:tablet, $to: rightCol) {
+        max-width: 620px;
+        margin: auto;
+    }
+    height: $gs-baseline/2;
+    margin: 0 $gs-gutter;
+    border-top: 1px dotted $c-neutral5;
+}
+
+.content__head__comment-count {
+    @include rem((
+            height: 16px + $gs-baseline //font-size + $gs-baseline
+    ));
+    @include mq(tablet) {
+        display: none;
+    }
+    &.content__head__comment-count--headline { // used in tonal templates
+        display: none;
+    }
+}
+
+.content__keywords {
+    @include fs-data(4);
+    @include rem((
+            margin-top: $gs-baseline,
+            margin-bottom: $gs-baseline
+    ));
+}
+
+.content__keywords--more-tags {
+    vertical-align: bottom;
+    display: inline-block;
+}
+
+.content__section {
+    @include mq($to: tablet) {
+        display: none;
+    }
+    @include fs-header(3);
+    @include box-sizing(border-box);
+    margin-bottom: $gs-baseline;
+    @include mq($from: leftCol) {
+        float: left;
+        margin-left: -160px;
+    }
+    @include mq($from: wide) {
+        margin-left: -240px;
+    }
+    @include mq($from: leftCol, $to: wide) {
+        @include rem((
+                width: gs-span(2)
+        ));
+    }
+}
+
+.content__headline {
+    @include fs-headline(4);
+    @include rem((
+            padding-bottom: $gs-baseline*2,
+            padding-top: $gs-baseline/2
+    ));
+
+    @include mq(mobileLandscape) {
+        @include fs-headline(6, true);
+    }
+    @include mq(tablet) {
+        -webkit-font-smoothing: antialiased;
+        @include fs-headline(7, true);
+        @include rem((
+                padding-bottom: $gs-row-height
+        ));
+        padding-top: 0;
+        border-top: 0;
+    }
+    a {
+        &,
+        &:hover,
+        &:active,
+        &:focus {
+            color: $c-neutral1;
+        }
+    }
+    em {
+        font-style: normal;
+    }
+    strong {
+        font-weight: normal;
+    }
+}
+
+.content__standfirst {
+    @include fs-headline(1);
+    @include rem((
+            margin-bottom: $gs-baseline
+    ));
+    color: $c-neutral2;
+
+    @include mq(tablet) {
+        @include font-size(18px, 22px);
+        -webkit-font-smoothing: antialiased;
+        @include rem((
+                margin-bottom: ($gs-baseline/3)*4
+        ));
+    }
+
+    > ul,
+    > ol {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+
+        > li {
+            position: relative;
+
+            + li {
+                margin-top: .6em;
+            }
+        }
+
+        + * {
+            margin-top: .6em;
+        }
+    }
+
+    > ol {
+        counter-reset: li;
+
+        >li {
+            @include rem((
+                    text-indent: 18px
+            ));
+
+            @include mq(tablet) {
+                @include rem((
+                        text-indent: 20px
+                ));
+            }
+        }
+
+        > li:before {
+            position: absolute;
+            @include rem((
+                    left: -16px
+            ));
+            content: counter(li)".";
+            counter-increment: li;
+            @include fs-header(1);
+            color: $c-neutral3;
+
+            @include mq(tablet) {
+                @include fs-header(3, true);
+                @include rem((
+                        left: -20px,
+                        top: -2px
+                ));
+            }
+        }
+    }
+}

@@ -52,7 +52,7 @@
 }
 
 @mixin tone-head-comment-icon($tone, $commentIcon) {
-    .tone-#{$tone}.tone-#{$tone}--article .article__head__comment-count i {
+    .tone-#{$tone}.tone-#{$tone}--article .content__head__comment-count i {
         @extend %i-comment-#{$commentIcon};
         @if $svg-support {
             .svg & {
@@ -65,7 +65,7 @@
 @mixin article-header-tone($tone, $colour, $accentColour, $textColour, $commentIcon) {
     .tone-#{$tone} .content__head--tonal {
         .content__headline,
-        .article__standfirst,
+        .content__standfirst,
         .content__section .tone-colour {
             color: $textColour;
         }
@@ -75,7 +75,7 @@
         .tone-background--accent {
             background-color: $accentColour;
         }
-        .article__head__comment-count .commentcount {
+        .content__head__comment-count .commentcount {
             color: $textColour;
         }
 

@@ -273,7 +273,7 @@ $block-padding-right: $gs-gutter;
    ========================================================= */
 .blog {
 
-    .article__keywords {
+    .content__keywords {
         border-top: 1px dotted $c-neutral3;
         @include rem((
             line-height: 20px
@@ -966,7 +966,7 @@ $timeline-width: 14px;
             display: none;
         }
     }
-    .article__standfirst {
+    .content__standfirst {
         @include fs-headline(1);
         color: $c-neutral2-contrasted;
 
