@@ -198,7 +198,8 @@
                  <!-- ko if: id -->
                     <div class="instructions">
                         <!-- ko if: !state.isOpenProps() -->
-                            <span class="linky" data-bind="click: openProps">Edit metadata</span>
+                            <a class="linky" data-bind="attr: {href: '/?front=' + id()}">edit content</a> |
+                            <span class="linky" data-bind="click: openProps">edit metadata</span>
                         <!-- /ko -->
                     </div>
 
@@ -209,8 +210,8 @@
                             template: {name: 'template_collection', foreach: items}"></div>
                     </div>
                     <div class="instructions">
-                        <span data-bind="click: createCollection" class="linky">Create a container</span> or drop one above.
-                        <span data-bind="if: !collections.items().length">Empty fronts will be discarded!</span>
+                        <span data-bind="click: createCollection" class="linky">create a container</span> or drop one above.
+                        <span data-bind="if: !collections.items().length">empty fronts will be discarded!</span>
                     </div>
                 <!-- /ko -->
            </div>
