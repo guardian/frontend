@@ -90,6 +90,24 @@ define([
         }
     }
 
+    function renderTable(competition, extras, template) {
+        extras[2] = { ready: false };
+        $.create('<div class="js-football-table" data-link-name="football-table-embed"></div>').each(function(container) {
+            football.tableFor(competition).fetch(container).then(function() {
+                extras[2] = $('.table__container', container).length > 0 ? {
+                    name: 'Table',
+                    importance: 3,
+                    content: container,
+                    ready: true
+                } : undefined;
+                renderExtras(extras, template);
+            }, function() {
+                delete extras[2];
+                renderExtras(extras, template);
+            });
+        });
+    }
+
     function loading(elem, message, link) {
         bonzo(elem).append(bonzo.create(
             '<div class="loading">'+
@@ -175,8 +193,13 @@ define([
                         renderExtras(extras, dropdownTemplate);
                     }
 
-                    // match day
+                    // Group table & Match day
                     page.isCompetition(function(competition) {
+                        // Group table
+                        if (resp.group !== '') {
+                            renderTable(competition +'/'+ resp.group, extras, dropdownTemplate);
+                        }
+
                         $.create('<div class="js-football-match-day" data-link-name="football-match-day-embed"></div>').each(function (container) {
                             football.matchDayFor(competition, resp.matchDate).fetch(container).then(function() {
                                 extras[1] = {
@@ -197,22 +220,7 @@ define([
         });
 
         page.isCompetition(function(competition) {
-            extras[2] = { ready: false };
-
-            $.create('<div class="js-football-table" data-link-name="football-table-embed"></div>').each(function(container) {
-                football.tableFor(competition).fetch(container).then(function() {
-                    extras[2] = $('.table__container', container).length > 0 ? {
-                        name: 'Table',
-                        importance: 3,
-                        content: container,
-                        ready: true
-                    } : undefined;
-                    renderExtras(extras, dropdownTemplate);
-                }, function() {
-                    delete extras[2];
-                    renderExtras(extras, dropdownTemplate);
-                });
-            });
+            renderTable(competition, extras, dropdownTemplate);
         });
 
         page.isLiveClockwatch(function() {
