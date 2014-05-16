@@ -118,9 +118,6 @@ define([
                 adUnitSuffix += '/';
             }
             adUnitSuffix += 'front';
-            //if (this.config.switches.lifeAndStyleHack) {
-                adUnitSuffix = adUnitSuffix.replace('Life and style', 'lifeandstyle');
-            //}
         }
         return '/' + this.config.page.dfpAccountId + '/' + this.config.page.dfpAdUnitRoot + '/' + adUnitSuffix;
     };
@@ -142,6 +139,12 @@ define([
 
         function encodeTargetValue(value) {
             return value ? queryString.formatKeyword(value).replace(/&/g, 'and').replace(/'/g, '') : '';
+        }
+
+        function addTarget(targets, target) {
+            if (target.length > 0) {
+                extend(targets, target);
+            }
         }
 
         var conf        = this.config.page,
@@ -171,8 +174,8 @@ define([
             'a'       : AudienceScience.getSegments(),
             'at'      : Cookies.get('adtest') || ''
         };
-        extend(targets, AudienceScienceGateway.getSegments());
-        extend(targets, criteo.getSegments());
+        addTarget(targets, AudienceScienceGateway.getSegments());
+        addTarget(targets, criteo.getSegments());
 
         return targets;
     };

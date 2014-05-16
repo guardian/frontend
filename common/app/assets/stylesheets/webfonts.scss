@@ -108,3 +108,14 @@
     font-style: normal;
     font-stretch: normal;
 }
+@font-face {
+    font-family: "HeadlineSans";
+    src: url("http://pasteup.guim.co.uk/fonts/latin1/GuardianSansHeadline-Light.eot");
+    src: url("http://pasteup.guim.co.uk/fonts/latin1/GuardianSansHeadline-Light?#iefix") format("embedded-opentype"),
+    url("http://pasteup.guim.co.uk/fonts/latin1/GuardianSansHeadline-Light.woff") format("woff"),
+    url("http://pasteup.guim.co.uk/fonts/latin1/GuardianSansHeadline-Light.ttf") format("truetype"),
+    url("http://pasteup.guim.co.uk/fonts/latin1/GuardianSansHeadline-Light.svg#Guardian Sans Web") format("svg");
+    font-weight: 200;
+    font-style: normal;
+    font-stretch: normal;
+}

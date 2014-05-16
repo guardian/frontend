@@ -1,4 +1,5 @@
 $c-commercial-comp-neutral: #edede7;
+$comercial-comp-baseline: 10px;
 
 .facia-container--layout-front .commercial {
     padding: 0;
@@ -25,16 +26,13 @@ $c-commercial-comp-neutral: #edede7;
     background-color: $c-commercial-comp-neutral;
     color: $c-neutral1;
     text-align: left;
-    @include rem((
-        padding: 0 $gs-gutter/2
-    ));
     .container__border {
         border-top: 0;
     }
     .container__title {
         background: none !important;    // Overriding default page styles
+        padding: 0;
         @include rem((
-            padding: $gs-baseline/3 0,
             margin-top: ($gs-baseline/3)
         ));
         float: none;
@@ -73,7 +71,7 @@ $c-commercial-comp-neutral: #edede7;
 }
 .commercial__body {
     @include rem((
-        padding: 10px
+        padding: $comercial-comp-baseline
     ));
     overflow: hidden;
 }

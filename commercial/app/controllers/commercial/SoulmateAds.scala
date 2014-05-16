@@ -26,4 +26,25 @@ object SoulmateAds extends Controller {
         }
       }
   }
+
+  def renderAdsHigh = Action {
+    implicit request =>
+      SoulmatesAggregatingAgent.sampleMembers(segment) match {
+        case Nil => NotFound
+        case members => {
+          Cached(60)(Ok(views.html.soulmatesHigh(members)))
+        }
+      }
+  }
+
+  def mixedHigh = Action {
+    implicit request =>
+      SoulmatesAggregatingAgent.sampleMembers(segment) match {
+        case Nil => JsonNotFound.apply()
+        case members => {
+          Cached(60)(JsonComponent(views.html.soulmatesHigh(members)))
+        }
+      }
+  }
+
 }

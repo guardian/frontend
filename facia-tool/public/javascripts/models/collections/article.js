@@ -52,6 +52,7 @@ define([
                 'headline',
                 'trailText',
                 'imageAdjust',
+                'imageSrc',
                 'isBreaking',
                 'group',
                 'snapType',
@@ -60,7 +61,8 @@ define([
 
             this.state = asObservableProps([
                 'underDrag',
-                'open',
+                'isOpen',
+                'isOpenImage',
                 'isLoaded',
                 'isEmpty',
                 'sparkUrl']);
@@ -79,6 +81,29 @@ define([
 
             this.trailTextInput  = this.overrider('trailText');
             this.trailTextRevert = this.reverter('trailText');
+
+            this.provisionalImageSrc = ko.observable();
+
+            this.meta.imageSrc.subscribe(function(src) {
+                this.provisionalImageSrc(src);
+            }, this);
+
+            this.provisionalImageSrc.subscribe(function(src) {
+                var self = this;
+
+                if (src === this.meta.imageSrc()) { return; }
+
+                this.validateImageSrc(src)
+                .done(function() {
+                    self.meta.imageSrc(src);
+                    self.state.isOpenImage(false);
+                    self.save();
+                })
+                .fail(function(err) {
+                    self.provisionalImageSrc(undefined);
+                    window.alert('Sorry! ' + err);
+                });
+            }, this);
 
             this.populate(opts);
 
@@ -183,14 +208,19 @@ define([
             if (this.uneditable) { return; }
 
             _.defer(function(){
-                self.state.open(true);
+                self.state.isOpen(true);
             });
+        };
+
+        Article.prototype.toggleOpenImage = function() {
+            this.state.isOpenImage(!this.state.isOpenImage());
         };
 
         Article.prototype.close = function() {
             var self = this;
+
             _.defer(function(){
-                self.state.open(false);
+                self.state.isOpen(false);
             });
         };
 
@@ -268,10 +298,40 @@ define([
             }
         };
 
+        Article.prototype.validateImageSrc = function(src) {
+            var defer = $.Deferred(),
+                img;
+
+            if (!src) {
+                defer.resolve();
+
+            } else if (!src.match(new RegExp('^http://.*\\.' + vars.CONST.imageCdnDomain + '/'))) {
+                defer.reject('Images must come from *.' + vars.CONST.imageCdnDomain);
+
+            } else {
+                img = new Image();
+                img.onerror = function() {
+                    defer.reject('That image could not be found');
+                };
+                img.onload = function() {
+                    var w = this.width  || 1,
+                        h = this.height || 1,
+                        err =  w > 2048 ? 'Images cannot be more than 2048 pixels wide' :
+                               w < 620  ? 'Images cannot be less than 620 pixels wide'  :
+                               Math.abs((3 * w)/(5 * h) - 1) > 0.01 ?  'Images must have a 5x3 aspect ratio' : false;
+
+                    defer[err ? 'reject' : 'resolve'](err);
+                };
+                img.src = src;
+            }
+
+            return defer.promise();
+        };
+
         Article.prototype.convertToSnap = function() {
             this.meta.href(this.id());
             this.id(snap.generateId());
-            this.state.open(!this.meta.headline());
+            this.state.isOpen(!this.meta.headline());
         };
 
         Article.prototype.save = function() {
