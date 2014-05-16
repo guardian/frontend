@@ -349,6 +349,10 @@ define([
             return adSlots;
         },
 
+        buildPageTargeting: buildPageTargeting,
+
+        buildAdUnit : buildAdUnit,
+
         // really only useful for testing
         reset: function() {
             adSlots = [];
