@@ -152,14 +152,14 @@
 }
 .ad-slot--paid-for-badge {
     min-height: 0;
-    padding: 0;
     text-align: left;
+    border-bottom: 1px dotted $c-neutral5;
     @include rem((
-        padding-top: $gs-baseline / 3,
-        margin-bottom: ($gs-baseline / 3) * 2
+        padding: 2px 0 $gs-baseline
     ));
 
     @include mq(leftCol) {
+        border-bottom-width: 0;
         border-top: 1px dotted $c-neutral5;
     }
     .ad-slot__container {
@@ -180,7 +180,7 @@
     .ad-slot--paid-for-badge__header,
     .ad-slot--paid-for-badge__label,
     .ad-slot--paid-for-badge__help {
-        @include fs-textsans(2);
+        @include fs-data(3);
     }
     .ad-slot--paid-for-badge__header,
     .ad-slot--paid-for-badge__label {
@@ -191,13 +191,17 @@
             color: $c-neutral2-contrasted;
         }
     }
-    .ad-slot--paid-for-badge__header {
-        font-weight: bold;
-    }
     .ad-slot--paid-for-badge__link,
     .ad-slot--paid-for-badge__help {
         float: left;
         clear: left;
+    }
+    .ad-slot--paid-for-badge__link {
+        display: block;
+        margin-top: $gs-row-height/4;
+    }
+    .ad-slot--paid-for-badge__logo {
+        display: block;
     }
     .ad-slot--paid-for-badge__help {
         @include fs-textsans(1, $size-only: true);
@@ -213,16 +217,14 @@
         min-height: 90px;
         border-top: none;
         z-index: 99;
+        border-bottom-width: 0;
 
         .ad-slot--paid-for-badge__link {
             position: relative;
             float: right;
             @include rem((
-                margin-top: nth(nth($fs-textsans, 2), 2)*-1
+                margin-top: get-line-height($fs-data, 3)*-1
             ));
-        }
-        .ad-slot--paid-for-badge__logo {
-            display: block;
         }
         + .container__body .facia-slice-wrapper:first-child .fromage {
             border-top-width: 2px;
@@ -250,7 +252,9 @@
 
             .ad-slot--paid-for-badge__link {
                 float: none;
-                margin-top: 0;
+                @include rem((
+                    margin-top: $gs-row-height/4
+                ));
             }
             + .container__body .facia-slice-wrapper:first-child .fromage {
                 border-top-width: 0;
