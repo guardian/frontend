@@ -58,7 +58,7 @@ function(
     }
 
     function isFootballStatsPage(yes, no) {
-        return isit(config.page.hasOwnProperty("footballMatch"), yes, no);
+        return isit(config.page.hasOwnProperty('footballMatch'), yes, no);
     }
 
     function belowArticleVisible(yes, no) {
