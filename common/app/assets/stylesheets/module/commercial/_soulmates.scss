@@ -62,10 +62,8 @@ $c-soulmates-red: #d70851;
         ));
 
         @include mq(tablet) {
-            margin-top: 0;
-            @include rem((
-                margin-right: gs-span(3),
-            ));
+            float: left;
+            margin: 0;
         }
     }
     .lineitem {
@@ -150,16 +148,15 @@ $c-soulmates-red: #d70851;
         @include font-size(11);
     }
     .commercial__search {
+        @include box-sizing(border-box);
         width: auto;
         float: none;
         @include rem((
             margin-top: $gs-baseline
         ));
-
         @include mq(tablet) {
-            position: absolute;
-            top: 0;
-            right: 0;
+            margin-top: 0;
+            float: right;
             @include rem((
                 width: gs-span(3) - $gs-gutter/2
             ));
@@ -234,6 +231,21 @@ $c-soulmates-red: #d70851;
 
 /* fronts */
 .facia-container--layout-front .commercial--soulmates {
+    @include mq(tablet) {
+        .lineitems {
+            width: 66%;
+        }
+        .commercial__search {
+            width: 33%;
+        }
+    }
+    @include mq(desktop) {
+        .commercial__search {
+            @include rem((
+                padding-left: $gs-gutter/2
+            ));
+        }
+    }
     @include mq(faciaLeftCol) {
         .commercial__head {
             position: static;
@@ -253,7 +265,31 @@ $c-soulmates-red: #d70851;
 }
 /* article */
 .facia-container--layout-article .commercial--soulmates {
+    @include mq(tablet) {
+        .lineitems {
+            @include rem((
+                width: gs-span(6) - $gs-gutter*3
+            ));
+        }
+    }
+    @include mq(rightCol) {
+        .commercial__search {
+            width: 25%;
+            @include rem((
+                padding-left: $gs-gutter
+            ));
+        }
+        .lineitems {
+            width: 75%;
+        }
+    }
     @include mq(leftCol) {
+        .commercial__search {
+            @include rem((
+                width: gs-span(3) - $gs-gutter
+            ));
+            padding: 0;
+        }
         .commercial__head {
             position: static;
         }
@@ -279,18 +315,10 @@ $c-soulmates-red: #d70851;
                 margin-top: $gs-baseline
             ));
         }
-    }
-    @include mq(rightCol) {
-        .commercial--masterclasses__class {
+        .commercial__search {
             @include rem((
-                padding-left: $gs-gutter/2
+                width: gs-span(3)
             ));
-            width: 25%;
-            background: #ff0000;
-
-            &:nth-child(n+4) {
-                display: block;
-            }
         }
     }
 }

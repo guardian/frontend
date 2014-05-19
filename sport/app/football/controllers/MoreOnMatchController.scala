@@ -52,8 +52,7 @@ object MoreOnMatchController extends Controller with Football with Requests with
         case filtered => Cached(if(theMatch.isLive) 10 else 300) {
           JsonComponent(
             "nav" -> football.views.html.fragments.matchNav(populateNavModel(theMatch, filtered)),
-            "matchSummary" -> football.views.html.fragments.matchSummary(theMatch, Competitions().competitionForMatch(theMatch.id)),
-            "scoreSummary" -> football.views.html.fragments.scoreSummary(theMatch),
+            "matchSummary" -> football.views.html.fragments.matchSummary(theMatch, Competitions().competitionForMatch(theMatch.id), responsive = true),
             "hasStarted" -> theMatch.hasStarted,
             "group" -> group,
             "matchDate" ->  DateTimeFormat.forPattern("yyyy/MMM/dd").print(theMatch.date).toLowerCase(),

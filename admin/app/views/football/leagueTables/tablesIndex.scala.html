@@ -10,6 +10,10 @@
             <div class="col-xs-6">
                 <label for="id-competitionId">League</label>
                 @views.html.football.fragments.chooseLeague("competitionId", leagues)
+
+                <div class="form-group">
+                    @views.html.football.fragments.chooseGroup("group")
+                </div>
             </div>
 
             <div class="col-xs-6">

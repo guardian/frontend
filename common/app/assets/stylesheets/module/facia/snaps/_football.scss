@@ -30,23 +30,35 @@
 
     .table__caption--bottom {
         @include box-sizing(border-box);
-        @include rem((
-            border-left-width: $gs-gutter/2,
-            border-right-width: $gs-gutter/2,
-            bottom: 2px
-        ));
         background: $c-neutral8;
-        border-color: #ffffff;
-        border-style: solid;
-        border-top: 0 none;
+        border-left: $gs-gutter/2 solid #ffffff;
+        border-right: $gs-gutter/2 solid #ffffff;
+        bottom: 0;
         left: 0;
         position: absolute;
         width: 100%;
         z-index: 2;
+
+        .full-table-link {
+            @include rem((
+                margin-left: $gs-gutter/2
+            ));
+            display: inline-block;
+        }
+
+        &:after {
+            @include simple-gradient(transparent, #f6f6f6);
+            height: $gs-baseline*1.5;
+            border-bottom: 1px solid $c-neutral3;
+            bottom: $gs-baseline*2.75-2;
+            content: " ";
+            left: 0;
+            position: absolute;
+            width: 100%;
+        }
     }
 
-    .football-team__form,
-    .football-matches__date {
+    .football-team__form {
         display: none;
     }
 
@@ -65,13 +77,36 @@
         ));
         background: $c-neutral8;
 
-        &:hover {
-           background: $c-neutral7;
+        &:hover,
+        &:active {
+            background: $c-neutral6;
+            color: $c-neutral1;
+            text-decoration: none;
         }
     }
 
-    .team__heading {
+    .team__info {
         @include fs-headline(2, true);
+    }
+
+    .status__time {
+        @include rem((
+            top: $gs-baseline/2
+        ));
+    }
+
+    .team__scorers {
+        @include fs-data(2, true);
+
+        dd:nth-child(3) {
+            &:after {
+                content: "…";
+                display: block;
+            }
+        }
+        dd:nth-of-type(n+3) {
+            display: none;
+        }
     }
 
     // Different snap sizes
@@ -81,6 +116,9 @@
         .table,
         .table__caption {
             border-top: 0 none;
+        }
+        .team__info {
+            @include fs-headline(5, true)
         }
     }
 
@@ -92,14 +130,21 @@
                 line-height: $gs-gutter*2
             ));
         }
+    }
 
-        .team__heading {
-            @include fs-headline(5, true)
+    &.facia-snap-point--medium {
+        .team__info {
+            @include fs-headline(2, true)
         }
     }
 
+
     &.facia-snap-point--small {
         @include table--hide-from-importance-2;
+
+        .team__info {
+            @include fs-headline(1, true)
+        }
     }
 
     &.facia-snap-point--mini,

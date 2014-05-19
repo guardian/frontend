@@ -1,11 +1,13 @@
 define([
+    'qwery',
     'common/$'
 ], function (
+    qwery,
     $
     ) {
 
     var adSlot =
-        '<div class="ad-slot ad-slot--dfp ad-slot--commercial-component-high" data-link-name="ad slot merchandising-high" data-name="merchandising-high" data-label="false" data-refresh="false" data-desktop="888,87">' +
+        '<div class="ad-slot ad-slot--dfp ad-slot--commercial-component-high" data-link-name="ad slot merchandising-high" data-name="merchandising-high" data-label="false" data-refresh="false" data-desktop="888,88">' +
             '<div id="dfp-ad--merchandising-high" class="ad-slot__container"></div>' +
         '</div>';
 
@@ -25,7 +27,8 @@ define([
         this.idealOutcome = 'Click through/revenue produced by component increases, without detrimentally impacting click through on containers/';
 
         this.canRun = function (config) {
-            return config.page.contentType === 'Tag' || config.page.isFront;
+            // only apply on fronts with at least 4 containers
+            return (config.page.contentType === 'Tag' || config.page.isFront) && qwery('.facia-container section.container').length >= 4;
         };
 
         this.variants = [

@@ -1,8 +1,8 @@
 {
     "packages":{
-        "frontend-admin":{
+        "admin":{
             "type":"autoscaling",
-            "apps":[ "frontend::front" ],
+            "apps":[ "frontend::admin" ],
             "data":{
                 "secondsToWait":1200,
                 "port":18080,
@@ -27,10 +27,10 @@
             "depends" : ["staticFilesUpload", "artifactUpload", "deploy"]
         },
         "deploy":{
-            "actionsBeforeApp": ["frontend-admin.deploy"]
+            "actionsBeforeApp": ["admin.deploy"]
         },
         "artifactUpload":{
-            "actionsBeforeApp": ["frontend-admin.uploadArtifacts"]
+            "actionsBeforeApp": ["admin.uploadArtifacts"]
         },
         "staticFilesUpload":{
             "actionsBeforeApp": ["frontend-static.uploadStaticFiles"]

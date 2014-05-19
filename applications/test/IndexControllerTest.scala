@@ -39,7 +39,7 @@ class IndexControllerTest extends FlatSpec with Matchers {
   it should "internal redirect when content type is not front" in Fake {
     val result = controllers.IndexController.render("world/video/2012/feb/10/inside-tibet-heart-protest-video")(TestRequest("/world/video/2012/feb/10/inside-tibet-heart-protest-video"))
     status(result) should be(200)
-    header("X-Accel-Redirect", result).get should be("/type/video/world/video/2012/feb/10/inside-tibet-heart-protest-video")
+    header("X-Accel-Redirect", result).get should be("/applications/world/video/2012/feb/10/inside-tibet-heart-protest-video")
   }
 
   it should "200 when content type is front trails" in Fake {

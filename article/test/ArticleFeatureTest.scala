@@ -544,10 +544,21 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
       }
     }
 
-    scenario("Signify to the user an article is sponsored"){
+    scenario("Canonical url"){
+      Given("I am on an article entitled 'Iran's Rouhani may meet Obama at UN after American president reaches out'")
+      HtmlUnit("/world/2013/sep/15/obama-rouhani-united-nations-meeting?view=mobile") { browser =>
+        import browser._
+        Then("There should be a canonical url")
+        findFirst("link[rel='canonical']").getAttribute("href")  should endWith ("/world/2013/sep/15/obama-rouhani-united-nations-meeting")
+      }
+    }
+
+    // There are no sponsored articles at the moment
+    ignore("Signify to the user an article is sponsored") {
+      // scenario("Signify to the user an article is sponsored"){
       Given("I visit a sponsored article entitled 'Feeling hungry? Try the fine flavours of floral gastronomy'")
       StandardAdvertsSwitch.switchOn()
-      HtmlUnit("/lifeandstyle/2014/may/02/feeling-hungry-try-the-fine-favours-of-floral-gastronomy") { browser =>
+      HtmlUnit("/lifeandstyle/live-better") { browser =>
         import browser._
         Then("I should see a message")
         val adSlot = $(".ad-slot--paid-for-badge")
