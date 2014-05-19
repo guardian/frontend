@@ -1,6 +1,5 @@
 .ad-slot--dfp {
     width: 100%;
-    overflow-x: hidden;
     text-align: center;
     min-height: 56px;
     // For expandables
@@ -217,7 +216,7 @@
         @include clearfix;
         position: relative;
         min-height: 90px;
-        border-top: none;
+        border-top: 0;
         z-index: 99;
         border-bottom-width: 0;
 

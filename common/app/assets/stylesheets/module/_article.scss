@@ -504,8 +504,8 @@
 }
 
 .article__keywords--more-tags {
-  vertical-align: bottom;
-  display: inline-block;
+    vertical-align: bottom;
+    display: inline-block;
 }
 
 
@@ -812,26 +812,26 @@
 }
 
 .drop-cap {
-  @include mq($to: tablet) {
+    @include mq($to: tablet) {
 
-    float: left;
-    display: inline-block;
-    text-transform: uppercase;
-    @include f-headline;
-    font-weight: 200;
-    @include box-sizing(border-box);
-    @include rem((
-        height: 2*get-line-height($fs-bodyCopy, 3),
-        padding-top: 1px,
-        margin-right: 4px
-    ));
-
-    .drop-cap__inner {
+        float: left;
         display: inline-block;
-        vertical-align: text-top;
-        @include font-size(52px, 40px);
+        text-transform: uppercase;
+        @include f-headline;
+        font-weight: 200;
+        @include box-sizing(border-box);
+        @include rem((
+            height: 2*get-line-height($fs-bodyCopy, 3),
+            padding-top: 1px,
+            margin-right: 4px
+        ));
+
+        .drop-cap__inner {
+            display: inline-block;
+            vertical-align: text-top;
+            @include font-size(52px, 40px);
+        }
     }
-  }
 }
 
 .drop-cap--wide {

@@ -190,8 +190,8 @@ $football-crest--large: 60px;
 }
 
 @mixin match-summary--responsive {
-   &.match-summary,
-   .match-summary {
+    &.match-summary,
+    .match-summary {
         @include rem((
             margin-bottom: $gs-baseline*4
         ));
