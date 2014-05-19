@@ -1,5 +1,18 @@
 {
     "packages":{
+        "frontend-admin":{
+            "type":"autoscaling",
+            "apps":[ "frontend::admin" ],
+            "data":{
+                "secondsToWait":1200,
+                "port":18080,
+                "healthcheckGrace":20,
+                "bucket":"aws-frontend-artifacts",
+                "healthcheck_paths":[
+                    "/management/healthcheck"
+                ]
+            }
+        },
         "admin":{
             "type":"autoscaling",
             "apps":[ "frontend::admin" ],
@@ -30,7 +43,7 @@
             "actionsBeforeApp": ["admin.deploy"]
         },
         "artifactUpload":{
-            "actionsBeforeApp": ["admin.uploadArtifacts"]
+            "actionsBeforeApp": ["frontend-admin.uploadArtifacts", "admin.uploadArtifacts"]
         },
         "staticFilesUpload":{
             "actionsBeforeApp": ["frontend-static.uploadStaticFiles"]

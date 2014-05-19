@@ -13,7 +13,7 @@
                 @if(topLevelSelected.exists(_ == nav) && nav.name.href != primaryKeywordLink) {
                     <li class="breadcrumb-list__item inline-list__item">
                         <div class="breadcrumb-keyword" itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
-                            <a itemprop="url" href="@LinkTo{nav.name.href}"><span itemprop="title">@Html(nav.name.title)</span></a>
+                            <a itemprop="url" href="@LinkTo{nav.name.href}" data-link-name="@nav.name.href"><span itemprop="title">@Html(nav.name.title)</span></a>
                         </div>
                     </li>
                 }
@@ -25,7 +25,7 @@
                         @if( currentSubSection.exists(_ == nav) && nav.href != primaryKeywordLink) {
                             <li class="breadcrumb-list__item inline-list__item">
                                 <div class="breadcrumb-keyword" itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
-                                    <a itemprop="url" href="@LinkTo{@nav.href}"><span itemprop="title">@Html(nav.title)</span></a>
+                                    <a itemprop="url" href="@LinkTo{@nav.href}" data-link-name="@nav.href"><span itemprop="title">@Html(nav.title)</span></a>
                                 </div>
                             </li>
                         }
@@ -37,9 +37,7 @@
     @content.primaryKeyWordTag.map { keyword =>
         <li class="breadcrumb-list__item inline-list__item">
             <div itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
-                <a itemprop="url" href="@LinkTo {
-                    @keyword.url
-                }"><span itemprop="title">@Html(keyword.name.toLowerCase)</span></a>
+                <a itemprop="url" href="@LinkTo {@keyword.url}" data-link-name="@keyword.url"><span itemprop="title">@Html(keyword.name.toLowerCase)</span></a>
             </div>
         </li>
     }
