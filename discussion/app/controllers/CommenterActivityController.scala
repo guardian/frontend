@@ -2,6 +2,7 @@ package controllers
 
 import play.api.mvc.Action
 import model.Cached
+import common.JsonComponent
 
 trait CommenterActivityController extends DiscussionController{
 
@@ -12,7 +13,10 @@ trait CommenterActivityController extends DiscussionController{
       discussionApi.commentsForUser(userId, page, order) map {
         userComments =>
           Cached(60){
-            Ok(views.html.fragments.commenterActivity(userComments))
+            if (request.isJson)
+              JsonComponent("html" -> views.html.fragments.commenterActivity(userComments).toString)
+            else
+              Ok(views.html.fragments.commenterActivity(userComments))
           }
       }
 
