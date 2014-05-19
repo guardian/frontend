@@ -13,7 +13,7 @@
                 @if(topLevelSelected.exists(_ == nav) && nav.name.href != primaryKeywordLink) {
                     <li class="breadcrumb-list__item inline-list__item">
                         <div class="breadcrumb-keyword" itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
-                            <a itemprop="url" href="@LinkTo{nav.name.href}" data-link-name="@nav.name.href"><span itemprop="title">@Html(nav.name.title)</span></a>
+                            <a itemprop="url" href="@LinkTo{@nav.name.href}" data-link-name="@nav.name.href"><span itemprop="title">@Html(nav.name.title)</span></a>
                         </div>
                     </li>
                 }
