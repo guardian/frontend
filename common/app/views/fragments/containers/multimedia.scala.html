@@ -1,4 +1,4 @@
-@(config: Config, collection: Collection, style: MultimediaContainer, containerIndex: Int)(implicit request: RequestHeader, templateDeduping: TemplateDeduping)
+@(collection: Collection, style: MultimediaContainer, containerIndex: Int)(implicit request: RequestHeader, templateDeduping: TemplateDeduping, config: Config)
 
 @defining((config.displayName.orElse(collection.displayName), config.href.orElse(collection.href))) { case (title, href) =>
 
@@ -15,20 +15,72 @@
                 data-id="@config.id"
                 data-type="@style.containerType"
                 data-component="@FaciaComponentName(config, collection)">
-
                 <div class="container__border tone-@style.tone tone-accent-border"></div>
 
-                @title.map { title =>
-                    <h2 class="container__title tone-@style.tone tone-background">
-                        @href.map { href =>
-                            <a class="container__title__label u-text-hyphenate" data-link-name="section heading" href="@LinkTo{/@href}">@Html(title)</a>
-                        }.getOrElse{
-                            <span class="container__title__label u-text-hyphenate">@Html(title)</span>
+                <div class="container__banding">
+                    <div class="facia-container__inner">
+                        @title.map { title =>
+                            <h2 class="container__title tone-@style.tone tone-background">
+                                @href.map { href =>
+                                    <a class="container__title__label u-text-hyphenate" data-link-name="section heading" href="@LinkTo{/@href}">@Html(title)</a>
+                                }.getOrElse{
+                                    <span class="container__title__label u-text-hyphenate">@Html(title)</span>
+                                }
+                            </h2>
                         }
-                    </h2>
-                }
-                <div class="container__body container--rolled-up-hide">
-                    @fragments.collections.multimedia(items, style, containerIndex)
+                        <div class="container__body container--rolled-up-hide">
+                            <div class="facia-slice-wrapper facia-slice-wrapper--position-1">
+                                <ul class="u-unstyled l-row l-row--items-3 l-row--layout-m collection">
+                                    @items.take(1).zipWithIndex.map{ case (trail, index) =>
+                                        @fragments.collections.items.standard(trail, index, containerIndex, "l-row__item--break-m")
+                                    }
+                                    @items.slice(1, 3).zipWithIndex.map{ case (trail, index) =>
+                                        @fragments.collections.items.standard(trail, index + 1, containerIndex)
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="container__banding">
+                    <div class="facia-container__inner container--rolled-up-hide">
+                        <div class="container__body">
+                            @defining(items.slice(3, 7)) { items =>
+                                @if(items.nonEmpty) {
+                                    <div class="facia-slice-wrapper facia-slice-wrapper--position-2">
+                                        <ul class="u-unstyled l-row l-row--items-4 collection">
+                                            @items.zipWithIndex.map{ case (trail, index) =>
+                                                @fragments.collections.items.standard(trail, index + 3, containerIndex)
+                                            }
+                                        </ul>
+                                    </div>
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="container__banding">
+                    <div class="facia-container__inner container--rolled-up-hide">
+                        <div class="container__body">
+                            @defining(items.drop(7)) { items =>
+                                @if(items.nonEmpty) {
+                                    <div class="linkslist-container @if(style.showMore){js-container--show-more container--show-more-dark} tone-@{style.tone}" data-tone="@style.tone">
+                                        <ul class="l-columns linkslist">
+                                            @items.zipWithIndex.map{ case (trail, index) =>
+                                                @trail match {
+                                                    case l: LiveBlog if l.isLive         => { @fragments.items.linksList.live(l, index + 7) }
+                                                    case g: Gallery                      => { @fragments.items.linksList.gallery(g, index + 7) }
+                                                    case v: Video                        => { @fragments.items.linksList.video(v, index + 7) }
+                                                    case c if VisualTone(c) == "comment" => { @fragments.items.linksList.comment(c, index + 7) }
+                                                    case t                               => { @fragments.items.linksList.standard(t, index + 7) }
+                                                }
+                                            }
+                                        </ul>
+                                    </div>
+                                }
+                            }
+                        </div>
+                    </div>
                 </div>
             </section>
         }

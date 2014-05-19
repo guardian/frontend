@@ -1,4 +1,4 @@
-@(trail: Trail, index: Int, imageAdjustOverride: Option[String] = None)(implicit request: RequestHeader)
+@(trail: Trail, index: Int, imageAdjustOverride: Option[String] = None)(implicit request: RequestHeader, config: Config)
 
 @defining((VisualTone(trail), imageAdjustOverride.getOrElse(trail.imageAdjust))) { case (tone, imageAdjust) =>
     <div
@@ -50,10 +50,11 @@
                 }
             }
 
+            @trail match { case content:model.Content => @fragments.items.elements.tagOrSection(content) }
 
             @trail.trailText.map { text =>
                 <div class="fromage__standfirst">@Html(text)
-                    @trail match { case content:model.Content => @fragments.items.starRating(content) }
+                    @trail match { case content:model.Content => @fragments.items.elements.starRating(content) }
                 </div>
             }
 

@@ -9,6 +9,7 @@ $sans-serif: "AgateSans", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", s
 $serif: "EgyptianText", georgia, serif !default;
 $serifheadline: "EgyptianHeadline", georgia, serif !default;
 $text-sans: "TextSans", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif !default;
+$headline-sans: "HeadlineSans", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif !default;
 
 // Font scale
 // font-size (px) line-height (px) // level
@@ -152,4 +153,10 @@ $fs-textsans: (
     @if $size-only == false {
         @include f-textsans;
     }
+}
+
+@mixin f-headlineSans {
+    font-family: $headline-sans;
+    font-weight: 200;
+    -webkit-font-smoothing: antialiased;
 }

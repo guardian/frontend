@@ -1,4 +1,4 @@
-@(items: Seq[Trail], style: NewsContainer, containerIndex: Int)(implicit request: RequestHeader)
+@(items: Seq[Trail], style: NewsContainer, containerIndex: Int)(implicit request: RequestHeader, config: Config)
 
 @defining(items.filter(_.group == Option("3"))) { baguetteItems =>
 

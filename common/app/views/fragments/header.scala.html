@@ -7,7 +7,7 @@ Identity pages use identityHeader.scala.html, be sure
 to apply any necessary changes to non-shared code there too.
 -->*@
 
-<header id="header" class="l-header u-cf" role="banner" data-link-name="global navigation: header" itemscope itemtype="http://schema.org/Organization">
+<header id="header" class="l-header u-cf" role="banner" data-link-name="global navigation: header">
     <div class="l-header-pre">
         <div class="l-header-pre__inner gs-container u-cf">
             <div class="top-nav">
@@ -22,14 +22,14 @@ to apply any necessary changes to non-shared code there too.
                     </a>
                 </div>
                 @if(SearchSwitch.isSwitchedOn) {
-                    <div class="top-nav__item" data-component="search">
-                        <a href="https://www.google.co.uk/advanced_search?q=site:www.theguardian.com" data-is-ajax data-link-name="Search icon" 
-                           class="control control--search js-search-toggle" data-toggle="nav-popup--search">
-                           <span class="u-h">Search</span>
-                           <span class="control__icon">
-                               <i class="i i-search"></i>
-                               <i class="i i-search-active"></i>
-                           </span>
+                    <div class="top-nav__item top-nav__item--search" data-component="search">
+                        <a href="https://www.google.co.uk/advanced_search?q=site:www.theguardian.com" data-is-ajax data-link-name="Search icon"
+                            class="control control--search js-search-toggle" data-toggle="nav-popup--search">
+                            <span class="control__icon">
+                                <i class="i i-search"></i>
+                                <i class="i i-search-active"></i>
+                            </span>
+                            <span class="control__info hide-on-mobile">Search</span>
                         </a>
                     </div>
                 }
@@ -110,51 +110,39 @@ to apply any necessary changes to non-shared code there too.
     </div>
     @defining(Edition(request).navigation) { navigation =>
         @defining(Navigation.topLevelItem(navigation, page)) { topLevelSelected =>
-            @*
-            * See here for more info on Breadcrumbs
-            * https://support.google.com/webmasters/answer/185417?hl=en
-            *@
-            <div itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
-                @* Top level nav *@
-                <div class="nav-container u-cf" data-component="navigation">
-                    <div class="gs-container">
-                        <ul class="nav nav--global" data-link-name="Sections">
-                            @navigation.map { nav =>
-                                <li class="nav__item @if(topLevelSelected.exists(_ == nav)) {is-active}">
-                                    <a href="@LinkTo {@nav.name.href}" @if(topLevelSelected.exists(_ == nav)) { itemprop="url" } data-link-name="@nav.name.href" class="nav__link">
-                                        <span @if(topLevelSelected.exists(_ == nav)){ itemprop="title" }>
-                                            @Html(nav.name.title)
-                                        </span>
-                                    </a>
-                                </li>
-                            }
-                        </ul>
-                    </div>
+            @* Top level nav *@
+            <div class="nav-container u-cf" data-component="navigation">
+                <div class="gs-container">
+                    <ul class="nav nav--global" data-link-name="Sections">
+                        @navigation.map { nav =>
+                            <li class="nav__item @if(topLevelSelected.exists(_ == nav)) {is-active}">
+                                <a href="@LinkTo {@nav.name.href}"  data-link-name="@nav.name.href" class="nav__link">
+                                    @Html(nav.name.title)
+                                </a>
+                            </li>
+                        }
+                    </ul>
                 </div>
-                @* Secondary nav *@
-                @Navigation.localNav(navigation, page).map { localNav =>
-                    @defining(localNav.find(_.currentFor(page))){ currentSublink =>
-                        <div class="localnav-container u-cf" data-component="navigation"
-                             @currentSublink.map{ s => itemprop="child" itemscope itemtype="http://data-vocabulary.org/Breadcrumb" }>
-                            <div class="gs-container">
-                                <ul class="nav nav--local" data-link-name="Local Navigation">
-                                    @localNav.map { nav =>
-                                        <li class="nav__item @currentSublink.filter(_.href == nav.href).map{ current => is-active }">
-                                            <a href="@LinkTo{@nav.href}" class="nav__link"
-                                                data-link-name="@nav.href"
-                                                @if(currentSublink.exists(_ == nav)) { itemprop="url" }>
-                                                <span @if(currentSublink.exists(_ == nav)) { itemprop="title" }>
-                                                    @Html(nav.title)
-                                                </span>
-                                            </a>
-                                        </li>
-                                    }
-                                </ul>
-                            </div>
-                        </div>
-                    }
-                }
             </div>
+            @* Secondary nav *@
+            @Navigation.localNav(navigation, page).map { localNav =>
+                @defining(localNav.find(_.currentFor(page))){ currentSublink =>
+                    <div class="localnav-container u-cf" data-component="navigation"
+                         @currentSublink.map{ s => itemprop="child" itemscope itemtype="http://data-vocabulary.org/Breadcrumb" }>
+                        <div class="gs-container">
+                            <ul class="nav nav--local" data-link-name="Local Navigation">
+                                @localNav.map { nav =>
+                                    <li class="nav__item @currentSublink.filter(_.href == nav.href).map{ current => is-active }">
+                                        <a href="@LinkTo{@nav.href}" class="nav__link" data-link-name="@nav.href">
+                                                @Html(nav.title)
+                                        </a>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                }
+            }
         }
     }
 </header>

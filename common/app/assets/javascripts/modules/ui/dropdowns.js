@@ -16,6 +16,9 @@ define([
         content: '.dropdown__content'
     };
     function init() {
+
+        if(!$(s.container).length) { return false; }
+
         function ancestor(el, c) {
             if (!el.parentNode || bonzo(el.parentNode).hasClass(c.substring(1))) {
                 return el.parentNode;

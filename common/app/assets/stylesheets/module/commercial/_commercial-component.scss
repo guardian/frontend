@@ -1,14 +1,5 @@
 $c-commercial-comp-neutral: #edede7;
-
-.facia-container--commercial {
-    &.facia-container--layout-article {
-        padding: 0;
-        margin: 0;
-        @include rem((
-            max-width: gs-span(15)+($gs-gutter*1.5)
-        ));
-    }
-}
+$comercial-comp-baseline: 10px;
 
 .facia-container--layout-front .commercial {
     padding: 0;
@@ -24,6 +15,10 @@ $c-commercial-comp-neutral: #edede7;
     }
 }
 
+.facia-container--layout-article .commercial .facia-container__inner {
+    margin-bottom: 0;
+}
+
 .commercial {
     @include box-sizing(border-box);
     width: 100%;
@@ -31,16 +26,13 @@ $c-commercial-comp-neutral: #edede7;
     background-color: $c-commercial-comp-neutral;
     color: $c-neutral1;
     text-align: left;
-    @include rem((
-        padding: 0 $gs-gutter/2
-    ));
     .container__border {
         border-top: 0;
     }
     .container__title {
         background: none !important;    // Overriding default page styles
+        padding: 0;
         @include rem((
-            padding: $gs-baseline/3 0,
             margin-top: ($gs-baseline/3)
         ));
         float: none;
@@ -79,7 +71,7 @@ $c-commercial-comp-neutral: #edede7;
 }
 .commercial__body {
     @include rem((
-        padding: 10px
+        padding: $comercial-comp-baseline
     ));
     overflow: hidden;
 }
@@ -137,10 +129,15 @@ $c-commercial-comp-neutral: #edede7;
    Entries
    ========================================================================== */
 
-.lineitems {
+.lineitems,
+.highitem {
     padding: 0;
     margin: 0;
     overflow: hidden;
+}
+.highitem {
+    position: relative;
+    border-bottom: 1px solid $c-neutral4;
 }
 .lineitem {
     @include box-sizing(border-box);
@@ -209,10 +206,13 @@ $c-commercial-comp-neutral: #edede7;
     @include fs-textsans(2);
     margin: 0;
 }
-.lineitem__img {
+.lineitem__img,
+.highitem__img {
     height: 100px;
     display: none;
-    margin-right: ($gs-baseline/3)*2;
+    @include rem((
+        margin-right: $gs-gutter/2
+    ));
     float: left;
     text-align: center;
 
@@ -221,7 +221,16 @@ $c-commercial-comp-neutral: #edede7;
         height: 100%;
     }
 }
-
+.highitem__img {
+    display: block;
+    height: auto;
+    width: 80px;
+}
+.highitem__details {
+    @include rem((
+        margin-left: 90px
+    ));
+}
 
 /* ==========================================================================
    300x50 varient
@@ -235,7 +244,7 @@ $c-commercial-comp-neutral: #edede7;
         overflow: hidden;
     }
     .commercial__title {
-        padding: $gs-baseline/3 $gs-gutter/5;
+        padding: 0;
 
         .i {
             margin-top: $gs-baseline/3;
@@ -272,6 +281,14 @@ $c-commercial-comp-neutral: #edede7;
     .lineitem__img {
         display: block;
         margin-bottom: $gs-baseline;
+    }
+    .highitem__details {
+        @include rem((
+            margin-left: 110px
+        ));
+    }
+    .highitem__img {
+        width: 100px;
     }
 }
 
@@ -320,7 +337,7 @@ $c-commercial-comp-neutral: #edede7;
             width: map-get($cta-diameter, tablet);
             height: map-get($cta-diameter, tablet);
             @include rem((
-                margin-top: -(map-get($cta-diameter, tablet)/2)-1
+                margin-top: -(map-get($cta-diameter, tablet)/2)
             ));
         }
     }

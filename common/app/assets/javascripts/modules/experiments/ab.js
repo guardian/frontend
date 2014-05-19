@@ -2,16 +2,23 @@ define([
     'common/common',
     'common/utils/storage',
     'common/utils/mediator',
-    'common/modules/analytics/mvt-cookie'
+    'common/modules/analytics/mvt-cookie',
+    'common/modules/experiments/searchText',
+    'common/modules/experiments/tests/high-relevance-commercial-component'
 ], function (
     common,
     store,
     mediator,
-    mvtCookie
+    mvtCookie,
+    ABHeaderSearchText,
+    ABHighRelevanceCommercialComponent
     ) {
 
-    var TESTS = [],
-       participationsKey = 'gu.ab.participations';
+    var TESTS = [
+            new ABHeaderSearchText(),
+            new ABHighRelevanceCommercialComponent()
+        ],
+        participationsKey = 'gu.ab.participations';
 
     function getParticipations() {
         return store.local.get(participationsKey) || {};

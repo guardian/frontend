@@ -1,14 +1,17 @@
 @(content: model.Content)(implicit request: RequestHeader)
 
 @* live with empty standfirst as it is used to hook things into the page with javascript *@
-<div class="article__standfirst" itemprop="description" data-link-name="standfirst" data-component="standfirst">
+<div class="article__standfirst" data-link-name="standfirst" data-component="standfirst">
+    @content.trailText.map{ t =>
+        <meta itemprop="description" content="@StripHtmlTags(t)" />
+    }
     @content.standfirst.map { s =>
         @withJsoup(BulletCleaner(s))(
             InBodyLinkCleaner("in standfirst link")(Edition(request))
         )
 
         @content.starRating.map { s =>
-            @fragments.items.starRating(content)
+            @fragments.items.elements.starRating(content)
         }
     }
 </div>

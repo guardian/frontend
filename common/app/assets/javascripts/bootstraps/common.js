@@ -45,14 +45,16 @@ define([
     'common/modules/adverts/article-body-adverts',
     'common/modules/adverts/article-aside-adverts',
     'common/modules/adverts/slice-adverts',
+    'common/modules/adverts/front-commercial-components',
     'common/modules/adverts/dfp',
     'common/modules/analytics/commercial/tags/container',
     'common/modules/analytics/foresee-survey',
-    'common/modules/onward/right-most-popular',
+    'common/modules/onward/geo-most-popular',
     'common/modules/analytics/register',
     'common/modules/commercial/loader',
     'common/modules/onward/tonal',
-    'common/modules/identity/api'
+    'common/modules/identity/api',
+    'common/modules/onward/more-tags'
 ], function (
     $,
     mediator,
@@ -98,14 +100,16 @@ define([
     ArticleBodyAdverts,
     ArticleAsideAdverts,
     SliceAdverts,
-    DFP,
+    frontCommercialComponents,
+    dfp,
     TagContainer,
     Foresee,
-    RightMostPopular,
+    GeoMostPopular,
     register,
     CommercialLoader,
     TonalComponent,
-    id
+    id,
+    MoreTags
 ) {
 
     var modules = {
@@ -220,7 +224,7 @@ define([
                 detect.getBreakpoint() !== 'mobile' &&
                 parseInt(config.page.wordCount, 10) > 500 &&
                 !config.page.isLiveBlog) {
-                new RightMostPopular(mediator, {type: 'image', maxTrails: 5});
+                new GeoMostPopular({});
             }
         },
 
@@ -284,15 +288,16 @@ define([
 
                 new SliceAdverts(config).init();
 
+                frontCommercialComponents.init(config);
+
                 var options = {};
 
                 if (!config.switches.standardAdverts) {
-                    options.dfpSelector = '.ad-slot--commercial-component';
+                    options.adSlotSelector = '.ad-slot--commercial-component';
                 } else if (!config.switches.commercialComponents) {
-                    options.dfpSelector = '.ad-slot--dfp:not(.ad-slot--commercial-component)';
+                    options.adSlotSelector = '.ad-slot--dfp:not(.ad-slot--commercial-component)';
                 }
-
-                new DFP(extend(config, options)).init();
+                dfp.init(extend(config, options));
             }
         },
 
@@ -489,9 +494,14 @@ define([
         repositionComments: function() {
             mediator.on('page:common:ready', function() {
                 if(!id.isUserLoggedIn()) {
-                    $('.js-comments').insertAfter(qwery('.js-popular'));
+                    $('.js-comments').insertBefore(qwery('.js-popular'));
+                    $('.discussion').addClass('discussion--lowered');
                 }
             });
+        },
+
+        showMoreTagsLink: function() {
+            new MoreTags().init();
         }
     };
 
@@ -541,6 +551,7 @@ define([
             modules.runForseeSurvey(config);
             modules.startRegister(config);
             modules.repositionComments();
+            modules.showMoreTagsLink();
         }
         mediator.emit('page:common:ready', config, context);
     };

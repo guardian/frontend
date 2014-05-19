@@ -1,58 +1,110 @@
-@(page: MatchPage)(implicit request: RequestHeader)
+@(page: MatchPage, competition: Option[model.Competition])(implicit request: RequestHeader)
 
 @import implicits.Football._
+@import views.FootballHelpers._
+
+@team(players: Seq[LineUpPlayer]) = {
+    <ul class="team-list u-unstyled">
+    @players.map{ player =>
+        <li class="team-list__item">
+            @player.name
+            @player.events.map{ event =>
+                @{ event.eventType match {
+                    case "booking" => <i class="i i-yellow-card"></i>
+                    case "dismissal" => <i class="i i-red-card"></i>
+                    case "substitution" => "(s " + event.eventTime + "')"
+                    case _ =>  ""
+                }}
+            }
+        </li>
+    }
+    </ul>
+}
 
 @main(page, "football"){
 }{
-
-<h2 class="article__zone left-col-deport tone-news tone-accent-border hide-on-mobile-if-localnav">
-    <span class="left-col-deport__body">
-        <a class="tone-colour" data-link-name="article section" href="@LinkTo{/football}">football</a>
-    </span>
-</h2>
-<div class="article-wrapper monocolumn-wrapper tone-news">
-    <article class="article football-article @if(page.theMatch.isLive){is-live}" role="main">
-        <div class="article__inner article__inner--head">
-            <header class="article__head">
-                @football.views.html.fragments.matchSummary(page.theMatch)
-            </header>
-            <div class="after-header">
-                @* this 'Stats' header gets replaced by the match navigation tabs (if available) *@
-                @if(page.matchStarted){
-                    <h3 class="section-divider">Stats</h3>
-                }
-            </div>
-        </div>
-        <div class="article__columning-wrapper">
-            <div class="article__main-column">
-                <div class="js-article__container article__container u-cf">
-
-                    @if(page.theMatch.isLive) {
-                    <div class="live-toolbar">
-                        <div class="update update-live-matches update-match-stats" data-link-name="autoupdate"></div>
-                    </div>
-                    }
-                    <div class="match-stats">
-                        @matchStats(page)
+    <div class="gs-container">
+        <h2 class="article__zone left-col-deport tone-news tone-accent-border hide-on-mobile-if-localnav">
+            <span class="left-col-deport__body">
+                <a class="tone-colour" data-link-name="article section" href="@LinkTo{/football}">football</a>
+            </span>
+        </h2>
+        <div class="article-wrapper monocolumn-wrapper tone-news">
+            <article class="article football-article @if(page.theMatch.isLive){is-live}" role="main">
+                <div class="article__inner article__inner--head">
+                    <header class="article__head">
+                        @football.views.html.fragments.matchSummary(page.theMatch, competition, responsive=true)
+                    </header>
+                    <div class="after-header">
+                        @* this 'Stats' header gets replaced by the match navigation tabs (if available) *@
+                        @if(page.matchStarted){
+                            <h3 class="section-divider">Stats</h3>
+                        }
                     </div>
                 </div>
-            </div>
-            <div class="article__secondary-column" aria-hidden="true">
-                <div class="article__secondary-column__inner">
-                    <div class="u-table">
-                        <div class="u-table__row">
+                <div class="article__columning-wrapper">
+                    <div class="article__main-column">
+                        <div class="js-article__container article__container u-cf">
+
+                            @if(page.theMatch.isLive) {
+                            <div class="live-toolbar">
+                                <div class="update update-live-matches update-match-stats" data-link-name="autoupdate"></div>
+                            </div>
+                            }
+                            <div class="match-stats">
+                                @football.views.html.matchStats.matchStatsComponent(page)
+                            </div>
+
+                            <h3 class="section-divider">Teams</h3>
+                            <div class="component u-cf">
+                                <div class="u-cf">
+                                    <h5 class="team-list-name type-5">@page.theMatch.homeTeam.name</h5>
+                                    <h5 class="team-list-name type-5">@page.theMatch.awayTeam.name</h5>
+                                </div>
+
+                                @if(!page.hasLineUp){
+                                    <p>Team lineups will be available once announced.</p>
+                                } else {
+                                    <div class="u-cf">
+                                        <div class="lineup">
+                                        @team(page.lineUp.homeTeam.players.filterNot{_.isUnusedSub})
+                                        </div>
+                                        <div class="lineup">
+                                        @team(page.lineUp.awayTeam.players.filterNot{_.isUnusedSub})
+                                        </div>
+                                    </div>
+                                    <h3 class="type-5 item-divider">Unused substitutes</h3>
+                                    <div class="u-cf">
+                                        <div class="lineup">
+                                        @team(page.lineUp.homeTeam.players.filter{_.isUnusedSub})
+                                        </div>
+                                        <div class="lineup">
+                                        @team(page.lineUp.awayTeam.players.filter{_.isUnusedSub})
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="article__secondary-column" aria-hidden="true">
+                        <div class="article__secondary-column__inner">
+                            <div class="u-table">
+                                <div class="u-table__row">
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
+            </article>
+            <div class="article__inner">
+                @fragments.footballNav(page)
             </div>
+
         </div>
-    </article>
-    <div class="article__inner">
-        @fragments.footballNav(page)
+
     </div>
-
-</div>
-
-@fragments.mostPopularPlaceholder("sport")
-
+    <div class="facia-container facia-container--layout-article">
+        @fragments.mostPopularPlaceholder("sport")
+    </div>
 }

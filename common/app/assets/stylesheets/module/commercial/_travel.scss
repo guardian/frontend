@@ -9,6 +9,11 @@ $c-commercial-travel-dark: #002b6c;
     margin-top: 0 !important;
 }
 .commercial--travel {
+    .lineitems {
+        @include rem((
+            margin-left: -8px
+        ));
+    }
     .lineitem {
         list-style-type: none;
         border-top: 0;
@@ -32,7 +37,7 @@ $c-commercial-travel-dark: #002b6c;
     }
     .lineitem__offer {
         @include rem((
-            padding-top: 10px
+            padding-top: $comercial-comp-baseline
         ));
     }
     .lineitem__meta {
@@ -49,11 +54,10 @@ $c-commercial-travel-dark: #002b6c;
         overflow: auto;
         margin-top: 0;
         @include rem((
-            padding: $gs-gutter/2
+            padding: $comercial-comp-baseline 0
         ));
     }
     .commercial__title {
-        padding: 0;
         margin-bottom: 0;
         @include fs-bodyHeading(3);
         text-transform: lowercase;
@@ -81,14 +85,12 @@ $c-commercial-travel-dark: #002b6c;
         }
     }
     .commercial__body {
-        @include rem((
-            padding: 0 $gs-gutter/2 0 0
-        ));
+        padding: 0;
     }
     .commercial__search {
         position: absolute;
         @include rem((
-            bottom: 10px,
+            bottom: $comercial-comp-baseline,
             margin-top: $gs-baseline*4
         ));
         float: none;
@@ -97,6 +99,11 @@ $c-commercial-travel-dark: #002b6c;
     @include mq(tablet) {
         .commercial__body {
             padding: 0;
+        }
+        .lineitems {
+            @include rem((
+                margin-right: -16px
+            ));
         }
         .lineitem {
             width: 33%;
@@ -107,9 +114,9 @@ $c-commercial-travel-dark: #002b6c;
         }
         .commercial__home-link {
             position: absolute;
+            right: 0;
             @include rem((
-                right: 10px,
-                top: 10px
+                top: $comercial-comp-baseline
             ));
         }
     }
@@ -123,22 +130,10 @@ $c-commercial-travel-dark: #002b6c;
 /* fronts */
 .facia-container--layout-front .commercial--travel {
     @include mq($to: desktop) {
-        @include rem((
-            padding-bottom: $gs-baseline*4.5
-        ));
-        
-        .commercial__head {
+        .facia-container__inner {
             @include rem((
-                padding-right: 14px
+                padding-bottom: $gs-baseline*4.5
             ));
-        }
-        .commercial__home-link {
-            @include rem((
-                right: 14px
-            ));
-        }
-        .commercial__search {
-            width: 97%;
         }
     }
     @include mq(desktop) {
@@ -151,19 +146,27 @@ $c-commercial-travel-dark: #002b6c;
         }        
         .commercial__home-link {
             @include rem((
-                bottom: 10px,
+                bottom: $comercial-comp-baseline,
                 left: $gs-gutter/2
             ));
+            left: 0;
             top: auto;
             right: auto;
         }
         .commercial__body {
             @include rem((
-                padding-top: 10px
+                padding-top: $comercial-comp-baseline
             ));            
         }
         .lineitem {
             width: 33%;
+        }
+    }
+    @include mq($from: desktop, $to: faciaLeftCol) {
+        .commercial__head {
+            @include rem((
+                padding-right: $gs-gutter
+            ));
         }
     }
     @include mq(leftCol) {
@@ -179,6 +182,11 @@ $c-commercial-travel-dark: #002b6c;
                width: gs-span(2) + $gs-gutter
             ));
         }
+        .lineitems {
+            @include rem((
+                margin-right: -8px
+            ));
+        }
         .lineitem {
             width: 25%;
 
@@ -188,10 +196,11 @@ $c-commercial-travel-dark: #002b6c;
         }
     }
     @include mq($from: faciaLeftCol, $to: wide) {
-        @include rem((
-            padding-bottom: $gs-baseline*4
-        ));
-        
+        .facia-container__inner {
+            @include rem((
+                padding-bottom: $gs-baseline*4
+            ));
+        }
         .commercial__home-link {
             @include box-sizing(border-box);
             @include rem((
@@ -208,13 +217,12 @@ $c-commercial-travel-dark: #002b6c;
             @include box-sizing(border-box);
             @include rem((
                 width: gs-span(5),
-                bottom: 10px
+                bottom: $comercial-comp-baseline
             ));
         }
     }
     @include mq(wide) {
         .commercial__head {
-            padding-right: 0;
             @include rem((
                 width: gs-span(2) + $gs-gutter
             ));
@@ -224,31 +232,26 @@ $c-commercial-travel-dark: #002b6c;
 
 /* article */
 .facia-container--layout-article .commercial--travel {
-    @include mq($to: rightCol) {
-        @include rem((
-            padding-bottom: $gs-baseline*4.5
-        ));
-        
-        .commercial__head {
-            @include rem((
-                padding-right: 14px
-            ));
+    @include mq(tablet) {
+        .commercial__search {
+            width: 94%;
         }
         .commercial__home-link {
             @include rem((
                 right: 24px
             ));
         }
-        .commercial__search {
-            width: 94%;
+    }
+    @include mq($to: rightCol) {
+        .facia-container__inner {
+            @include rem((
+                padding-bottom: $gs-baseline*4.5
+            ));
         }
     }
     @include mq(rightCol) {
         .commercial__head {
             width: 25%;
-            @include rem((
-                padding-right: 8px
-            ));
             float: left;
         }
         .commercial__search {
@@ -256,7 +259,7 @@ $c-commercial-travel-dark: #002b6c;
         }
         .commercial__home-link {
             @include rem((
-                bottom: 10px,
+                bottom: $comercial-comp-baseline,
                 left: $gs-gutter
             ));
             top: auto;
@@ -264,7 +267,7 @@ $c-commercial-travel-dark: #002b6c;
         }
         .commercial__body {
             @include rem((
-                padding-top: 10px
+                padding-top: $comercial-comp-baseline
             ));
         }
     }
@@ -283,25 +286,22 @@ $c-commercial-travel-dark: #002b6c;
         }
     }
     @include mq($from: leftCol, $to: wide) {
-        @include rem((
-            padding-bottom: $gs-baseline*4
-        ));
-        
+        .facia-container__inner {
+            @include rem((
+                padding-bottom: $gs-baseline*4
+            ));
+        }
         .commercial__home-link {
             @include box-sizing(border-box);
             @include rem((
                 width: gs-span(2),
                 line-height: 18px,
-                left: $gs-gutter/2,
                 bottom: $gs-baseline*4.5
             ));
         }
-        .commercial__head {
-            padding-left: 0;
-        }
         .commercial__title {
             @include rem((
-                margin-bottom: 10px
+                margin-bottom: $comercial-comp-baseline
             ));
             
             .commercial__title__middle-word {
@@ -313,13 +313,8 @@ $c-commercial-travel-dark: #002b6c;
             @include box-sizing(border-box);
             @include rem((
                 width: gs-span(5)+$gs-gutter,
-                bottom: 10px
+                bottom: $comercial-comp-baseline
             ));
-        }
-    }
-    @include mq(wide) {
-        .commercial__head {
-            padding-right: 0;
         }
     }
 }
