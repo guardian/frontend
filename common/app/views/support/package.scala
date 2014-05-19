@@ -710,9 +710,16 @@ object Format {
   def apply(a: Int): String = new DecimalFormat("#,###").format(a)
 }
 
+object BreakCleaner extends HtmlCleaner {
+  override def clean(d: Document): Document = {
+    d.getElementsByTag("br").foreach(_.remove())
+    d
+  }
+}
+
 object cleanTrailText {
   def apply(text: String)(implicit edition: Edition): Html = {
-    withJsoup(RemoveOuterParaHtml(BulletCleaner(text)))(InBodyLinkCleaner("in trail text link"))
+    withJsoup(RemoveOuterParaHtml(BulletCleaner(text)))(InBodyLinkCleaner("in trail text link"), BreakCleaner)
   }
 }
 

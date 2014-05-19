@@ -37,6 +37,8 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
 
   lazy val showInRelated: Boolean = delegate.safeFields.get("showInRelatedContent").exists(_ == "true")
 
+  override lazy val description: Option[String] = trailText
+
 
   // read this before modifying
   // https://developers.facebook.com/docs/opengraph/howtos/maximizing-distribution-media-content#images
