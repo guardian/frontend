@@ -24,6 +24,7 @@
 @main(page, "football"){
 } {
 
+<article class="content">
     <header class="content__head">
         <div class="gs-container">
             <div class="content__top-border"></div>
@@ -47,7 +48,7 @@
     </header>
 
     <div class="gs-container">
-        <div class="content content__main-column">
+        <div class="content__main-column">
 
             <div class="js-article__container u-cf">
 
@@ -103,7 +104,8 @@
 
         </div>
     </div>
-    <div class="facia-container facia-container--layout-article">
-    @fragments.mostPopularPlaceholder("sport")
-    </div>
+</article>
+<div class="facia-container facia-container--layout-article">
+@fragments.mostPopularPlaceholder("sport")
+</div>
 }

@@ -24,6 +24,11 @@
     .content__standfirst {
         margin-bottom: 0;
     }
+    .content__headline {
+        @include rem((
+            min-height: 60px
+        ));
+    }
 }
 
 .tone-live .content__head--tonal {
@@ -38,7 +43,7 @@
 .tone-feature--article,
 .tone-comment--article {
     @include mq($from: tablet) {
-        .content {
+        .content__main-column--article {
             margin-top: $gs-baseline*2;
         }
     }

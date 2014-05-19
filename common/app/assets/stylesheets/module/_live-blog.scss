@@ -923,7 +923,7 @@ $timeline-width: 14px;
         }
     }
 
-    .content__main-column--live-blog {
+    .content__main-column--liveblog {
         @include mq(rightCol) {
             @include rem((
                 max-width: gs-span(8),
@@ -937,7 +937,7 @@ $timeline-width: 14px;
         }
     }
 
-    .content__head .content__main-column--live-blog {
+    .content__head .content__main-column--liveblog {
         max-width: 620px;
     }
 

@@ -43,7 +43,7 @@
 @if(DiscussionSwitch.isSwitchedOn && article.isCommentable) {
 <div class="gs-container js-comments">
     <div class="content__main-column" data-component="discussion">
-    @fragments.discussion(article.isClosedForComments, article.shortUrlId)
+        @fragments.discussion(article.isClosedForComments, article.shortUrlId)
     </div>
 </div>
 }

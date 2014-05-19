@@ -2,13 +2,13 @@
 @import conf.Switches._
 
 @defining((model.article, model.storyPackage, !model.article.isSport)) {  case (article, storyPackage, isDefault) =>
-<article class="tone-@article.visualTone blog @if(article.isLive){is-live}" itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType" role="main">
+<article class="content content--liveblog tone-@article.visualTone blog @if(article.isLive){is-live}" itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType" role="main">
 
     <header class="content__head content__head--tonal">
         @* UPPER HEADER *@
         <div class="tone-background">
             <div class="gs-container">
-                <div class="content__main-column content__main-column--live-blog">
+                <div class="content__main-column content__main-column--liveblog">
                     <div class="content__section">
                         <a class="tone-colour" data-link-name="article section" href="@LinkTo{/@article.section}">@Html(article.sectionName.toLowerCase)</a>
                     </div>
@@ -24,7 +24,7 @@
         @* LOWER HEADER *@
         <div class="tone-background--accent content__head__lower">
             <div class="gs-container">
-                <div class="content__main-column content__main-column--live-blog">
+                <div class="content__main-column content__main-column--liveblog">
                     <div class="blog__last-updated-container">
                         @if(article.isLive) {<span class="blog__live">LIVE</span> }updated <time class="js-timestamp" datetime="@article.webPublicationDate" data-relativeformat="med"></time>
                     </div>
@@ -41,7 +41,7 @@
     </header>
 
     <div class="gs-container">
-        <div class="content content__main-column content__main-column--live-blog">
+        <div class="content__main-column content__main-column--liveblog">
 
             @fragments.standfirst(article)
 
@@ -101,9 +101,11 @@
 </article>
 
 @if(DiscussionSwitch.isSwitchedOn && article.isCommentable) {
-    <div class="content__main-column content__main-column--live-blog" data-component="discussion">
+<div class="gs-container">
+    <div class="content__main-column content__main-column--liveblog" data-component="discussion">
         @fragments.discussion(article.isClosedForComments, article.shortUrlId)
     </div>
+</div>
 }
 @fragments.storyPackagePlaceholder(storyPackage)
 @fragments.onwardPlaceholder(article.visualTone)

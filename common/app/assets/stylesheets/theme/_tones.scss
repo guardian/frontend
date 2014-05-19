@@ -87,7 +87,7 @@
             color: lighten($accentColour, 25);
         }
     }
-    .tone-#{$tone} .content {
+    .content.tone-#{$tone} {
         .drop-cap {
             @include mq($to: tablet) {
                 color: $colour;
