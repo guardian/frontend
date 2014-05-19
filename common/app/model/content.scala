@@ -156,8 +156,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   )
 
   override def elements: Seq[Element] = delegate.elements
-      .map(imageElement ++ _)
-      .map(_.toSeq)
+      .map(imageElement ++: _)
       .map(_.zipWithIndex.map{ case (element, index) =>  Element(element, index)})
       .getOrElse(Nil)
 
