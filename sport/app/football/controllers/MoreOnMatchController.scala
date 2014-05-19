@@ -52,7 +52,7 @@ object MoreOnMatchController extends Controller with Football with Requests with
         case filtered => Cached(if(theMatch.isLive) 10 else 300) {
           JsonComponent(
             "nav" -> football.views.html.fragments.matchNav(populateNavModel(theMatch, filtered)),
-            "matchSummary" -> football.views.html.fragments.matchSummary(theMatch, Competitions().competitionForMatch(theMatch.id)),
+            "matchSummary" -> football.views.html.fragments.matchSummary(theMatch, Competitions().competitionForMatch(theMatch.id), responsive = true),
             "scoreSummary" -> football.views.html.fragments.scoreSummary(theMatch),
             "hasStarted" -> theMatch.hasStarted,
             "group" -> group,

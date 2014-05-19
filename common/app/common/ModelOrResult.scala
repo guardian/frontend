@@ -53,8 +53,8 @@ private object InternalRedirect{
   def contentTypes(response: ItemResponse)(implicit request: RequestHeader): Option[Right[Nothing, SimpleResult]] = {
     response.content.map {
       case a if a.isArticle || a.isLiveBlog => internalRedirect("type/article", a.id)
-      case v if v.isVideo => internalRedirect("type/video", v.id)
-      case g if g.isGallery => internalRedirect("type/gallery", g.id)
+      case v if v.isVideo => internalRedirect("applications", v.id)
+      case g if g.isGallery => internalRedirect("applications", g.id)
       case unsupportedContent => Right(Redirect(unsupportedContent.webUrl, Map("view" -> Seq("classic"))))
     }
   }

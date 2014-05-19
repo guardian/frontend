@@ -81,7 +81,7 @@ class ArticleControllerTest extends FlatSpec with Matchers {
   it should "internal redirect unsupported content to classic" in Fake {
     val result = controllers.ArticleController.renderArticle("world/video/2012/feb/10/inside-tibet-heart-protest-video")(TestRequest("world/video/2012/feb/10/inside-tibet-heart-protest-video"))
     status(result) should be(200)
-    header("X-Accel-Redirect", result).get should be("/type/video/world/video/2012/feb/10/inside-tibet-heart-protest-video")
+    header("X-Accel-Redirect", result).get should be("/applications/world/video/2012/feb/10/inside-tibet-heart-protest-video")
   }
 
   val expiredArticle = "football/2012/sep/14/zlatan-ibrahimovic-paris-st-germain-toulouse"
