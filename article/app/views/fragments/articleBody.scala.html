@@ -5,6 +5,9 @@
 <article class="content content--article @if(article.isAdvertisementFeature && !article.isSponsored){article--advertisement-feature} tone-@article.visualTone tone-@article.visualTone--article">
     @if(article.isFeature || article.isComment) {
         @fragments.headTonal(article)
+        @if(article.isFeature && article.hasShowcaseMainPicture) {
+            @fragments.mainMedia(article)
+        }
     } else {
         @fragments.headDefault(article)
     }
@@ -14,7 +17,9 @@
     <div class="gs-container">
         <div class="content__main-column content__main-column--article">
 
-            @fragments.mainMedia(article)
+            @if(!(article.isFeature && article.hasShowcaseMainPicture)) {
+                @fragments.mainMedia(article)
+            }
 
             @fragments.contentMeta(article)
 

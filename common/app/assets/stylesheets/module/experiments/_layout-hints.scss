@@ -132,6 +132,18 @@ figure {
     @include deport-left;
 }
 
+.tone-feature .media-primary.media-primary--showcase {
+    margin-left: 0;
+
+    .responsive-img {
+        height: auto;
+    }
+
+    .main-caption {
+        padding-left: 0;
+    }
+}
+
 .layout-hints {
 
     &.rescue-from-antarctica {

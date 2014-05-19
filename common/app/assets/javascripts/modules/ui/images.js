@@ -16,7 +16,7 @@ function (
         upgrade: function(context) {
             context = context || document;
             var options = {
-                    availableWidths: [ 140, 220, 300, 460, 620, 700, 940 ],
+                    availableWidths: [ 140, 220, 300, 460, 620, 700, 940, 2060 ],
                     strategy: 'container',
                     replacementDelay: 0
                 },
