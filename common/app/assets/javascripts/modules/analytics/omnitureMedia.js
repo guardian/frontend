@@ -127,7 +127,7 @@ define([
 
             s.loadMediaModule(provider, restricted);
 
-            s.prop11 = config.page.section || '';
+            s.prop11 = config.page.sectionName || '';
             s.prop43 = 'Video';
             s.prop44 = config.page.analyticsName;
             s.prop45 = s.channel;
