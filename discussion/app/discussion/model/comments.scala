@@ -35,7 +35,7 @@ object DiscussionComments {
   }
 }
 
-case class UserComments(
+case class ProfileComments(
   profile: Profile,
   comments: Seq[Comment],
   pagination: Pagination
@@ -43,15 +43,45 @@ case class UserComments(
   val switches = Nil
 }
 
-object UserComments{
+object ProfileComments{
 
-  def apply(json: JsValue): UserComments = {
+  def apply(json: JsValue): ProfileComments = {
     val profile = Profile(json)
     val comments = (json \ "comments").as[JsArray].value map {Comment(_, Some(profile), None)}
-    UserComments(
+    ProfileComments(
       profile = profile,
       comments = comments,
       pagination = Pagination(json)
+    )
+  }
+}
+
+case class ProfileDiscussions(
+  profile: Profile,
+  discussions: Seq[DiscussionComments]
+)
+
+object ProfileDiscussions{
+
+  def apply(json: JsValue): ProfileDiscussions = {
+    val profile = Profile(json)
+    val discussions = (json \ "discussions").as[JsArray].value map { d =>
+      val discussion = Discussion(d)
+      print((d \ "comments").as[JsArray])
+
+      DiscussionComments(
+        discussion = discussion,
+        comments = (d \ "comments").as[JsArray].value.map { Comment(_, Some(profile), Some(discussion)) },
+        pagination = Pagination(json),
+        commentCount = 0,
+        topLevelCommentCount = 0,
+        commenterCount = 0,
+        switches = Seq()
+      )
+    }
+    ProfileDiscussions(
+      profile = profile,
+      discussions = discussions
     )
   }
 }

@@ -3,26 +3,27 @@
 # ~~~~
 
 # For assets on dev machines
-GET        /assets/*path                                        dev.DevAssetsController.at(path)
+GET         /assets/*path                                                       dev.DevAssetsController.at(path)
 
-GET        /discussion/comment-box.json                         controllers.DiscussionApp.commentBox()
+GET         /discussion/comment-box.json                                        controllers.DiscussionApp.commentBox()
 
-GET        /discussion/comment-counts                           controllers.DiscussionApp.commentCount(shortUrls: String)
-GET        /discussion/comment-counts.json                      controllers.DiscussionApp.commentCountJson(shortUrls: String)
+GET         /discussion/comment-counts                                          controllers.DiscussionApp.commentCount(shortUrls: String)
+GET         /discussion/comment-counts.json                                     controllers.DiscussionApp.commentCountJson(shortUrls: String)
 
-GET        /discussion/comment/*id.json                         controllers.DiscussionApp.commentJson(id: Int)
-GET        /discussion/comment/*id                              controllers.DiscussionApp.comment(id: Int)
+GET         /discussion/comment/*id.json                                        controllers.DiscussionApp.commentJson(id: Int)
+GET         /discussion/comment/*id                                             controllers.DiscussionApp.comment(id: Int)
 
-GET        /discussion/comment-permalink/*order/*commentId.json        controllers.DiscussionApp.commentPermalinkJson(commentId: Int, order: String)
-GET        /discussion/comment-permalink/*order/*commentId             controllers.DiscussionApp.commentPermalink(commentId: Int, order: String)
+GET         /discussion/comment-permalink/*order/*commentId.json                controllers.DiscussionApp.commentPermalinkJson(commentId: Int, order: String)
+GET         /discussion/comment-permalink/*order/*commentId                     controllers.DiscussionApp.commentPermalink(commentId: Int, order: String)
 
-GET        /discussion/top/*discussionKey.json                  controllers.DiscussionApp.topCommentsJson(discussionKey: discussion.model.DiscussionKey)
-GET        /discussion/top/*discussionKey                       controllers.DiscussionApp.topComments(discussionKey: discussion.model.DiscussionKey)
+GET         /discussion/top/*discussionKey.json                                 controllers.DiscussionApp.topCommentsJson(discussionKey: discussion.model.DiscussionKey)
+GET         /discussion/top/*discussionKey                                      controllers.DiscussionApp.topComments(discussionKey: discussion.model.DiscussionKey)
 
 GET         /discussion/$discussionKey</?p/\w+>.json                            controllers.DiscussionApp.commentsJson(discussionKey: discussion.model.DiscussionKey, order: String = "newest")
 GET         /discussion/$order<(oldest|newest)>/$discussionKey</?p/\w+>.json    controllers.DiscussionApp.commentsJson(discussionKey: discussion.model.DiscussionKey, order: String)
 GET         /discussion/$discussionKey</?p/\w+>                                 controllers.DiscussionApp.comments(discussionKey: discussion.model.DiscussionKey, order: String = "newest")
 GET         /discussion/$order<(oldest|newest)>/$discussionKey</?p/\w+>         controllers.DiscussionApp.comments(discussionKey: discussion.model.DiscussionKey, order: String)
 
+GET         /discussion/user/:id/discussions.json                               controllers.DiscussionApp.profileDiscussions(id: String)
 
-GET        /open/cta/article/*discussionKey.json                controllers.CtaController.cta(discussionKey: discussion.model.DiscussionKey)
+GET         /open/cta/article/*discussionKey.json                               controllers.CtaController.cta(discussionKey: discussion.model.DiscussionKey)

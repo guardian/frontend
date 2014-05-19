@@ -71,13 +71,23 @@ trait DiscussionApi extends Http with ExecutionContexts with Logging {
     }
   }
 
-  def commentsForUser(userId: String, page: String, orderBy: String = "newest"): Future[UserComments] = {
+  def profileComments(userId: String, page: String, orderBy: String = "newest"): Future[ProfileComments] = {
     def onError(r: Response) =
       s"Discussion API: Error loading comments for User $userId, status: ${r.status}, message: ${r.statusText}, response: ${r.body}"
     val apiUrl = s"$apiRoot/profile/$userId/comments?pageSize=$pageSize&page=$page&orderBy=$orderBy&showSwitches=true"
 
     getJsonOrError(apiUrl, onError) map {
-      json => UserComments(json)
+      json => ProfileComments(json)
+    }
+  }
+
+  def profileDiscussions(userId: String, page: String, orderBy: String = "newest"): Future[ProfileDiscussions] = {
+    def onError(r: Response) =
+      s"Discussion API: Error loading discussions for User $userId, status: ${r.status}, message: ${r.statusText}, response: ${r.body}"
+    val apiUrl = s"$apiRoot/profile/$userId/discussions?pageSize=$pageSize&page=$page&orderBy=$orderBy&showSwitches=true"
+
+    getJsonOrError(apiUrl, onError) map {
+      json => ProfileDiscussions(json)
     }
   }
 
