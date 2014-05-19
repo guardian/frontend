@@ -14,7 +14,7 @@ class TitleTest extends FlatSpec with Matchers {
   it should "should create a 'default' title" in {
     val page = Page("", "", "The title", "", None)
     //without pagination
-    Title(page).body should be ("The title | Home | The Guardian")
+    Title(page).body should be ("The title | The Guardian")
 
     val withPagination = new MetaData() {
       override def analyticsName = ""
@@ -25,14 +25,14 @@ class TitleTest extends FlatSpec with Matchers {
     }
 
     //with pagination
-    Title(withPagination).body should be ("The title | Page 7 of 50 | Home | The Guardian")
+    Title(withPagination).body should be ("The title | Page 7 of 50 | The Guardian")
   }
 
   it should "should create a title for Content" in {
     val content = ApiContent("lifeandstyle/foobar", Some("lifeandstyle"), Some("Life & Style"), new DateTime(),
       "The title", "http://www.guardian.co.uk/canonical", "http://foo.bar", elements = None)
 
-    Title(Content(content))(FakeRequest("GET", "/sport/foobar")).body should be ("The title | Life | The Guardian")
+    Title(Content(content))(FakeRequest("GET", "/sport/foobar")).body should be ("The title | Lifeandstyle | The Guardian")
   }
 
   it should "should create a title for a Tag" in {
