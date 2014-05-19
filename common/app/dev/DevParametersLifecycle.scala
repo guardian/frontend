@@ -3,38 +3,19 @@ package dev
 import play.api.{Play, GlobalSettings}
 import play.api.mvc.RequestHeader
 import Play.isProd
+import common.CanonicalLink
 
 trait DevParametersLifecycle extends GlobalSettings with implicits.Requests {
 
-  /*
 
-    If you are reading this you have probably added a new parameter to the application.
-    Before doing this you need to understand the implications this has on caching and SEO.
-
-    This is not to stop you adding parameters, it is here to make you think before doing so.
-
-    Please read and understand the following...
-
-    http://support.google.com/webmasters/bin/answer.py?hl=en&answer=1235687
-
-    Make sure you have done everything necessary before releasing a new parameter.
-
-    Make sure you have discussed what you want to do with the team.
-
-    You might need to modify the CDN to accept your new parameter.
-
-  */
 
   /*
-    IMPORTANT - we strip out other parameters in the CDN - simply adding a parameter here is not enough
+    IMPORTANT
+    these params are only whitelisted on dev machines, they will not make it through the CDN on www.theguardian.com
+    this means that the server side **CANNOT** rely on them. They may be used by Javascript, or simply in the
+    development environment
   */
-  val allowedParams = Seq(
-
-    // these params are whitelisted in the CDN
-    "index",
-    "page",
-
-    // these params are only whitelisted on dev machines, they will not make it through the CDN
+  val insignificantParams = Seq(
     "view",
     "_edition", //allows us to spoof edition in tests
     "k", // keywords in commercial component requests
@@ -45,6 +26,8 @@ trait DevParametersLifecycle extends GlobalSettings with implicits.Requests {
     "googfc",
     "shortUrl" // Used by series component in onwards journeys
   )
+
+  val allowedParams = CanonicalLink.significantParams ++ insignificantParams
 
   override def onRouteRequest(request: RequestHeader) = {
 

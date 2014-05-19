@@ -504,8 +504,8 @@
 }
 
 .article__keywords--more-tags {
-  vertical-align: bottom;
-  display: inline-block;
+    vertical-align: bottom;
+    display: inline-block;
 }
 
 
@@ -801,35 +801,37 @@
 }
 
 .after-article {
+    position: relative;
     display: block;
     content: " ";
-    @include rem((
-        top: -$gs-baseline*2
-    ));
-    position: relative;
+
+    //This is required for football components, please do not remove
+    @include mq(rightCol) {
+        display: none;
+    }
 }
 
 .drop-cap {
-  @include mq($to: tablet) {
+    @include mq($to: tablet) {
 
-    float: left;
-    display: inline-block;
-    text-transform: uppercase;
-    @include f-headline;
-    font-weight: 200;
-    @include box-sizing(border-box);
-    @include rem((
-        height: 2*get-line-height($fs-bodyCopy, 3),
-        padding-top: 1px,
-        margin-right: 4px
-    ));
-
-    .drop-cap__inner {
+        float: left;
         display: inline-block;
-        vertical-align: text-top;
-        @include font-size(52px, 40px);
+        text-transform: uppercase;
+        @include f-headline;
+        font-weight: 200;
+        @include box-sizing(border-box);
+        @include rem((
+            height: 2*get-line-height($fs-bodyCopy, 3),
+            padding-top: 1px,
+            margin-right: 4px
+        ));
+
+        .drop-cap__inner {
+            display: inline-block;
+            vertical-align: text-top;
+            @include font-size(52px, 40px);
+        }
     }
-  }
 }
 
 .drop-cap--wide {
@@ -847,5 +849,19 @@
         .drop-cap__inner {
             @include font-size(84px, 68px);
         }
+    }
+}
+
+.breadcrumb-list__item {
+    color: lighten($c-neutral2, 15%);
+    @include fs-data(1);
+}
+
+.breadcrumb-keyword {
+
+    &:after {
+        content: '>> ';
+        display: inline-block;
+        margin-left: $gs-gutter/5;
     }
 }

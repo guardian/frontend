@@ -43,7 +43,7 @@ define([
                 callback(resp, $nav);
             } // The promise chain is broken as Reqwest doesn't allow for creating more than 1 argument.
         }, function() {
-            $('.score__container', context).remove();
+            $('.score-container', context).remove();
             $('.js-score', context).removeClass('u-h');
         });
     }
@@ -63,7 +63,7 @@ define([
                         extras.forEach(function(extra, i) {
                             if (dropdownTemplate) {
                                 $.create(dropdownTemplate).each(function (dropdown) {
-                                    if(config.page.isLiveBlog) { $(dropdown).addClass('dropdown--live'); }
+                                    if(config.page.isLiveBlog) { $(dropdown).addClass('dropdown--key-events'); }
                                     $('.dropdown__label', dropdown).append(extra.name);
                                     $('.dropdown__content', dropdown).append(extra.content);
                                     $('.dropdown__button', dropdown)
@@ -88,6 +88,24 @@ define([
                 });
             });
         }
+    }
+
+    function renderTable(competition, extras, template) {
+        extras[2] = { ready: false };
+        $.create('<div class="js-football-table" data-link-name="football-table-embed"></div>').each(function(container) {
+            football.tableFor(competition).fetch(container).then(function() {
+                extras[2] = $('.table__container', container).length > 0 ? {
+                    name: 'Table',
+                    importance: 3,
+                    content: container,
+                    ready: true
+                } : undefined;
+                renderExtras(extras, template);
+            }, function() {
+                delete extras[2];
+                renderExtras(extras, template);
+            });
+        });
     }
 
     function loading(elem, message, link) {
@@ -118,7 +136,7 @@ define([
                 var $h = $('.js-score', context),
                     scoreBoard = new ScoreBoard(),
                     scoreContainer = bonzo.create(
-                        '<div class="score__container">'+
+                        '<div class="score-container">'+
                             '<div class="score__loading'+ (match.pageType !== 'report' ? ' score__loading--live':'') +'">'+
                                 '<div class="loading__text">Fetching the scores…</div>'+
                                 '<div class="is-updating"></div>'+
@@ -126,28 +144,20 @@ define([
                         '</div>'
                     )[0];
 
-                $h.before(scoreContainer);
-                if (match.pageType !== 'report') {
-                    $h.addClass('u-h');
+                if (match.pageType === 'report') {
+                    $h.after(scoreContainer);
+                } else {
+                    $h.addClass('u-h').before(scoreContainer);
                 }
 
                 renderNav(match, function(resp, $nav) {
                     dropdownTemplate = resp.dropdown;
                     scoreContainer.innerHTML = '';
-                    scoreBoard.template = match.pageType === 'report' ? resp.scoreSummary : resp.matchSummary;
+                    scoreBoard.template = resp.matchSummary;
 
-                    // only show scores on liveblogs or started matches
                     if(!/^\s+$/.test(scoreBoard.template)) {
                         scoreBoard.render(scoreContainer);
-
-                        if (match.pageType === 'report') {
-                            $('.tab--min-by-min a', $nav).first().each(function(el) {
-                                bonzo(scoreBoard.elem).addClass('u-fauxlink');
-                                bean.on(scoreBoard.elem, 'click', function() {
-                                    window.location = el.getAttribute('href');
-                                });
-                            });
-                        }
+                        scoreBoard.setState(match.pageType);
                     } else {
                         $h.removeClass('u-h');
                     }
@@ -175,8 +185,13 @@ define([
                         renderExtras(extras, dropdownTemplate);
                     }
 
-                    // match day
+                    // Group table & Match day
                     page.isCompetition(function(competition) {
+                        // Group table
+                        if (resp.group !== '') {
+                            renderTable(competition +'/'+ resp.group, extras, dropdownTemplate);
+                        }
+
                         $.create('<div class="js-football-match-day" data-link-name="football-match-day-embed"></div>').each(function (container) {
                             football.matchDayFor(competition, resp.matchDate).fetch(container).then(function() {
                                 extras[1] = {
@@ -197,22 +212,7 @@ define([
         });
 
         page.isCompetition(function(competition) {
-            extras[2] = { ready: false };
-
-            $.create('<div class="js-football-table" data-link-name="football-table-embed"></div>').each(function(container) {
-                football.tableFor(competition).fetch(container).then(function() {
-                    extras[2] = $('.table__container', container).length > 0 ? {
-                        name: 'Table',
-                        importance: 3,
-                        content: container,
-                        ready: true
-                    } : undefined;
-                    renderExtras(extras, dropdownTemplate);
-                }, function() {
-                    delete extras[2];
-                    renderExtras(extras, dropdownTemplate);
-                });
-            });
+            renderTable(competition, extras, dropdownTemplate);
         });
 
         page.isLiveClockwatch(function() {

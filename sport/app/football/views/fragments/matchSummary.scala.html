@@ -2,7 +2,9 @@
 @import implicits.Football._
 
 @defining((theMatch.homeTeam, theMatch.awayTeam)){ case (homeTeam, awayTeam) =>
-<@if(link){a href="@LinkTo("/football/match-redirect/"+theMatch.id)"}else{div} class="@RenderClasses(Map(
+<@if(link){a href="@LinkTo("/football/match-redirect/"+theMatch.id)"}else{div}
+    data-component="big-match-special"
+    class="@RenderClasses(Map(
         "match-summary" -> true,
         "match-summary--fixture" -> theMatch.isFixture,
         "match-summary--responsive" -> responsive
@@ -57,6 +59,7 @@
                         @homeTeam.scorers.map{scorers => @scorers.split(",").map{ scorer => <dd>@scorer.replace("(", "").replace(")", "")</dd>}}
                     </dl>
                 }
+                <div class="team__battle-line"></div>
             </div>
         </div>
 
@@ -87,7 +90,6 @@
                 }
             </div>
         </div>
-        <div class="team__battle-line"></div>
     </div>
 
     @theMatch.comments.map{ comments => <div class="match-summary__comment">@comments.replace("(", "").replace(")", "")</div>}
