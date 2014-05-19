@@ -10,14 +10,14 @@ trait AdAgent[T <: Ad] extends BaseAdAgent[T] with Logging {
 
   def currentAds: Seq[T] = agent()
 
-  protected def updateCurrentAds(freshAds: Seq[T]) = agent.alter { oldAds =>
+  protected def updateCurrentAds(freshAds: Seq[T]) = agent.send { oldAds =>
     if (freshAds.nonEmpty) {
       freshAds
     } else {
       log.warn("Cannot update current ads because feed is empty")
       oldAds
     }
-  }(1.seconds)
+  }
 
   def stop() {
     agent.close()
