@@ -107,4 +107,21 @@ class ArticleSlotTest extends FlatSpec with Matchers with BeforeAndAfterEach {
       characterCount should be > 850
     }
   }
+
+  it should "render sponsor badge slot" in Fake {
+    val result = controllers.ArticleController.renderArticle(slotTest1)(TestRequest(slotTest1))
+    val document = Jsoup.parse(contentAsString(result))
+
+    val adSlots = document.select(".ad-slot--paid-for-badge")
+    adSlots.size() should be(1)
+
+    val adSlot = adSlots.first()
+    adSlot.attr("data-name") should be("spbadge")
+
+    val containers = adSlot.select(".ad-slot__container")
+    containers.size() should be(1)
+
+    val container = containers.first()
+    container.id() should be("dfp-ad--spbadge")
+  }
 }
