@@ -27,8 +27,18 @@ $football-crest--large: 60px;
     ));
 }
 
-.team__heading {
+.team__info {
     @include fs-headline(5);
+    @include rem((
+        margin-left: $gs-gutter/2+$football-crest--small
+    ));
+    position: relative;
+}
+
+.team__heading {
+    font-size: inherit;
+    font-weight: normal;
+    line-height: inherit;
     position: relative;
 }
 
@@ -52,12 +62,6 @@ $football-crest--large: 60px;
 .team__crest__img-container {
     display: table-cell;
     vertical-align: middle;
-}
-
-.team__info {
-    @include rem((
-        margin-left: $gs-gutter/2+$football-crest--small
-    ));
 }
 
 .team__results-container {
@@ -125,18 +129,24 @@ $football-crest--large: 60px;
 }
 
 .team__battle-line {
-    @include fs-headline(7);
     @include rem((
-        height: $gs-baseline*2.5,
-        top: 74px
+        left: $gs-gutter
     ));
     display: none;
     position: absolute;
     text-align: center;
-    width: 100%;
+    top: 0;
+    width: 200%;
 
     &:after {
         content: "\2013";
+    }
+}
+.match-summary--fixture {
+    .team__battle-line {
+        &:after {
+            content: "v";
+        }
     }
 }
 
@@ -150,19 +160,6 @@ $football-crest--large: 60px;
     right: 0;
     text-align: right;
     width: 100%;
-}
-
-.match-summary--fixture {
-    .team__battle-line {
-        @include fs-headline(4);
-        @include rem((
-            top: $football-crest--large+25
-        ));
-
-        &:after {
-            content: "v";
-        }
-    }
 }
 
 .match-summary__aggregate,
@@ -193,9 +190,10 @@ $football-crest--large: 60px;
 }
 
 @mixin match-summary--responsive {
-    .match-summary {
+   &.match-summary,
+   .match-summary {
         @include rem((
-            margin-bottom: $gs-baseline*3
+            margin-bottom: $gs-baseline*4
         ));
     }
 
@@ -240,7 +238,7 @@ $football-crest--large: 60px;
         }
     }
 
-    .team__heading {
+    .team__info {
         @include fs-headline(7, true);
     }
 
@@ -312,9 +310,50 @@ $football-crest--large: 60px;
         }
     }
 }
-
 .match-summary--responsive {
     @include mq($football-match-summary-breakpoint) {
         @include match-summary--responsive;
+    }
+}
+
+.match-summary--report {
+    border-bottom: 1px solid $c-neutral6;
+    border-top: 1px solid $c-neutral6;
+
+    .match-summary__status {
+        display: none;
+    }
+    .match-summary__team--home {
+        @include rem((
+            margin-bottom: $gs-baseline
+        ));
+    }
+    .team__info {
+        @include fs-headline(3, true);
+    }
+    .team__scorers {
+        @include fs-data(2, true);
+    }
+
+    .team__crest {
+        width: auto;
+    }
+    .team__crest--home {
+        @include rem((
+            margin-right: $gs-gutter
+        ));
+        float: left;
+    }
+    .team__crest--away {
+        @include rem((
+            margin-left: $gs-gutter
+        ));
+        float: right;
+    }
+    .team__crest__img {
+        @include rem((
+            height: $football-crest--small,
+            width: $football-crest--small
+        ));
     }
 }

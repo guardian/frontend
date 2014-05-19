@@ -43,7 +43,7 @@ define([
                 callback(resp, $nav);
             } // The promise chain is broken as Reqwest doesn't allow for creating more than 1 argument.
         }, function() {
-            $('.score__container', context).remove();
+            $('.score-container', context).remove();
             $('.js-score', context).removeClass('u-h');
         });
     }
@@ -136,7 +136,7 @@ define([
                 var $h = $('.js-score', context),
                     scoreBoard = new ScoreBoard(),
                     scoreContainer = bonzo.create(
-                        '<div class="score__container">'+
+                        '<div class="score-container">'+
                             '<div class="score__loading'+ (match.pageType !== 'report' ? ' score__loading--live':'') +'">'+
                                 '<div class="loading__text">Fetching the scores…</div>'+
                                 '<div class="is-updating"></div>'+
@@ -144,28 +144,20 @@ define([
                         '</div>'
                     )[0];
 
-                $h.before(scoreContainer);
-                if (match.pageType !== 'report') {
-                    $h.addClass('u-h');
+                if (match.pageType === 'report') {
+                    $h.after(scoreContainer);
+                } else {
+                    $h.addClass('u-h').before(scoreContainer);
                 }
 
                 renderNav(match, function(resp, $nav) {
                     dropdownTemplate = resp.dropdown;
                     scoreContainer.innerHTML = '';
-                    scoreBoard.template = match.pageType === 'report' ? resp.scoreSummary : resp.matchSummary;
+                    scoreBoard.template = resp.matchSummary;
 
-                    // only show scores on liveblogs or started matches
                     if(!/^\s+$/.test(scoreBoard.template)) {
                         scoreBoard.render(scoreContainer);
-
-                        if (match.pageType === 'report') {
-                            $('.tab--min-by-min a', $nav).first().each(function(el) {
-                                bonzo(scoreBoard.elem).addClass('u-fauxlink');
-                                bean.on(scoreBoard.elem, 'click', function() {
-                                    window.location = el.getAttribute('href');
-                                });
-                            });
-                        }
+                        scoreBoard.setState(match.pageType);
                     } else {
                         $h.removeClass('u-h');
                     }
