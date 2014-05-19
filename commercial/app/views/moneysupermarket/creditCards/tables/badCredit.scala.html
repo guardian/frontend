@@ -1,6 +1,6 @@
 @(creditCards: Seq[model.commercial.money.CreditCard])
 
-<table>
+<table class="table table--msm table--responsive-font table--striped">
     <thead>
         <tr>
             <th>Account Name</th>
@@ -12,9 +12,9 @@
         @for(creditCard <- creditCards) {
             <tr>
                 <td>
-                    <h3>@creditCard.provider</h3>
+                    <h3 class="loan__name">@creditCard.provider</h3>
                     <h4>@creditCard.name</h4>
-                    <img src="@creditCard.logoUrl" />
+                    <img class="loan__logo" src="@creditCard.logoUrl" alt="" />
                 </td>
                 <td>@creditCard.representativeApr% APR</td>
                 <td><a href="@creditCard.applyUrl">Proceed</a></td>

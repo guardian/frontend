@@ -92,7 +92,6 @@ $block-padding-right: $gs-gutter;
         top: 0;
         z-index: 200;
         @include rem((
-            padding-top: $gs-baseline*2,
             margin-left:($a-rightCol-width + $gs-gutter) * - 1,
             width:$a-rightCol-width
         ));
@@ -664,22 +663,12 @@ $block-padding-right: $gs-gutter;
             thead {
                 border-top: 1px solid darken($c-neutral8, 4%);
             }
-            .player-card {
-                background: none;
-                border: 0;
-                border-left: 1px solid darken($c-neutral8, 4%);
-                margin: $gs-baseline/2 $gs-gutter 0;
-                padding: 0 0 0 $gs-gutter;
-            }
-            .player-card__position {
-                @include fs-data(4);
-                color: $c-neutral1;
-                font-weight: 700;
-            }
         }
 
         > .element-table .table--football,
-        > .element-comment {
+        > .element-comment,
+        > .element-embed,
+        > .element-audio {
             width: auto;
             @include rem((
                 margin:$gs-baseline $gs-gutter/2 ($gs-baseline / 3) * 4 $gs-gutter/2
@@ -814,7 +803,8 @@ $block-padding-right: $gs-gutter;
 
 /* Dropdowns
    ========================================================================== */
-.dropdown--live {
+.dropdown--key-events,
+.dropdown--live-feed {
     position: relative;
     padding: 0;
     z-index: 100;
@@ -940,6 +930,10 @@ $timeline-width: 14px;
         .dropdown {
             border-top: 0 none;
         }
+
+        @include rem((
+            padding-top: $gs-baseline*2
+        ));
     }
 }
 
@@ -1066,7 +1060,7 @@ $timeline-width: 14px;
     border-color: $c-neutral8;
 
     .timeline__link:hover & {
-        border-color:  $c-neutral2;
+        border-color: $c-neutral2;
     }
 
     @include mq(rightCol) {
@@ -1075,6 +1069,48 @@ $timeline-width: 14px;
         .live-blog__key-event--selected & {
             font-weight: bold;
         }
+    }
+}
+
+/* Related content
+   ========================================================================== */
+.blog__related {
+    @include rem((
+        width: gs-span(3),
+        margin-left: gs-span(1) + $gs-gutter,
+        padding-top: ($gs-baseline/3)*2
+    ));
+}
+
+.blog__related__head {
+    @include fs-header(2);
+    @include rem((
+        margin-bottom: ($gs-baseline/3)*4
+    ));
+}
+
+.blog__related__item {
+    width: auto !important;
+    padding-bottom: 0;
+    @include rem((
+        margin-bottom: $gs-baseline*2
+    ));
+
+    .item {
+        padding: 0;
+        margin: 0;
+        border-top: 2px solid $c-neutral4;
+    }
+
+    & + &:before,
+    .item:before,
+    .item__byline,
+    .item__meta {
+        display: none;
+    }
+
+    .item__title {
+        @include fs-headline(1);
     }
 }
 
@@ -1098,6 +1134,31 @@ $timeline-width: 14px;
 
     .match-summary {
         border-bottom: 0 none;
+    }
+
+    .element-table {
+        .player-card {
+            padding: 0;
+            background: none;
+            border: 0;
+            @include rem((
+                margin: $gs-baseline/2 $gs-gutter/2 0
+            ));
+
+            @include mq(mobileLandscape) {
+                border-left: 1px solid darken($c-neutral8, 4%);
+                @include rem((
+                    margin-left: $gs-gutter,
+                    margin-right: $gs-gutter,
+                    padding-left: $gs-gutter
+                ));
+            }
+        }
+        .player-card__position {
+            @include fs-data(4);
+            color: $c-neutral1;
+            font-weight: 700;
+        }
     }
 
     .dropdown .match-stats__container {

@@ -1,5 +1,6 @@
-$football-crest-small: 44px;
-$football-crest-large: 60px;
+$football-match-summary-breakpoint: tablet;
+$football-crest--small: 44px;
+$football-crest--large: 60px;
 
 .match-summary {
     @include rem((
@@ -7,6 +8,8 @@ $football-crest-large: 60px;
         margin-bottom: $gs-baseline*2
     ));
     border-bottom: 1px dotted $c-neutral2;
+    color: $c-neutral1;
+    display: block;
     position: relative;
 }
 
@@ -17,129 +20,54 @@ $football-crest-large: 60px;
     border-top: 1px dotted $c-neutral2;
     font-size: 0;
     position: relative;
-
-    @include mq($from: tablet) {
-        border-top: 0 none;
-    }
 }
-
-.match-summary__team {
-    @include mq($from: tablet) {
-        @include box-sizing(border-box);
-        display: inline-block;
-        width: 50%;
-        vertical-align: top;
-    }
-}
-
 .match-summary__team--home {
     @include rem((
         margin-bottom: $gs-baseline*2
     ));
-
-    @include mq($from: tablet) {
-        @include rem((
-            padding-right: $gs-gutter
-        ));
-    }
 }
 
-.match-summary__team--away {
-    @include mq($from: tablet) {
-        @include rem((
-            padding-left: $gs-gutter
-        ));
-
-        .team__heading {
-            text-align: right;
-        }
-
-        .team__name {
-            @include rem((
-                padding-left: $gs-gutter*2
-            ));
-
-            display: inline-block;
-            padding-right: 0;
-            position: relative;
-            text-align: left;
-            max-width: 100%;
-        }
-
-        .team__score {
-            left: 0;
-            right: auto;
-        }
-
-        .team__scorers {
-            text-align: right;
-        }
-    }
+.team__info {
+    @include fs-headline(5);
+    @include rem((
+        margin-left: $gs-gutter/2+$football-crest--small
+    ));
+    position: relative;
 }
 
 .team__heading {
-    @include fs-headline(5);
+    font-size: inherit;
+    font-weight: normal;
+    line-height: inherit;
     position: relative;
-
-    @include mq($from: tablet) {
-        @include fs-headline(7, true);
-    }
 }
 
 .team__crest {
     @include rem((
-        height: $football-crest-small
+        height: $football-crest--small
     ));
     float: left;
     overflow: hidden;
-
-    @include mq($from: tablet) {
-        @include rem((
-            height: $football-crest-large
-        ));
-        display: table;
-        float: none;
-        width: 100%;
-    }
 }
-
 .team__crest__img {
     @include rem((
-        height: $football-crest-small,
-        width: $football-crest-small
+        height: $football-crest--small,
+        width: $football-crest--small
     ));
-    @include background-size(auto $football-crest-small);
+    @include background-size(contain);
+    background-position: 100% 0;
     display: inline-block;
     background-repeat: no-repeat;
-
-    @include mq($from: tablet) {
-        @include rem((
-            height: $football-crest-large,
-            width: $football-crest-large
-        ));
-        @include background-size(auto $football-crest-large);
-    }
 }
-
 .team__crest__img-container {
     display: table-cell;
     vertical-align: middle;
 }
 
-.team__crest--away {
-    @include mq($from: tablet) {
-        text-align: right;
-    }
-}
-
-.team__info {
+.team__results-container {
     @include rem((
-        margin-left: $gs-gutter+$football-crest-small
+        margin-top: $gs-baseline/2
     ));
-
-    @include mq($from: tablet) {
-        margin: 0;
-    }
 }
 
 .team__name {
@@ -172,34 +100,25 @@ $football-crest-large: 60px;
     @include rem((
         padding: $gs-baseline 0
     ));
-
-    @include mq($from: tablet) {
-        height: 0; /* removing it from the flow but maintaining the ability to center */
-        padding: 0;
-        text-align: center;
-    }
+    display: inline-block;
+    vertical-align: middle;
 }
 
 .status__time {
     @include fs-data(2);
     @include border-radius(24px);
+    @include box-sizing(border-box);
     @include rem((
-        height: $football-crest-small,
-        line-height: $football-crest-small,
-        width: $football-crest-small
+        height: $football-crest--small,
+        line-height: $football-crest--small - 3, // account for the border
+        width: $football-crest--small
     ));
 
     border: 2px dotted $c-neutral2;
     display: inline-block;
     text-align: center;
-
-    @include mq($from: tablet) {
-        @include rem((
-            top: ($football-crest-large - $football-crest-small)
-        ));
-        position: relative;
-    }
 }
+
 
 .match-summary__status--live {
     .status__time {
@@ -210,20 +129,24 @@ $football-crest-large: 60px;
 }
 
 .team__battle-line {
-    @include fs-headline(8);
+    @include rem((
+        left: $gs-gutter
+    ));
     display: none;
-    height: 50px;
     position: absolute;
     text-align: center;
-    top: $football-crest-large+10; /* crest size+10 */
-    width: 100%;
+    top: 0;
+    width: 200%;
 
     &:after {
         content: "\2013";
     }
-
-    @include mq($from: tablet) {
-        display: block;
+}
+.match-summary--fixture {
+    .team__battle-line {
+        &:after {
+            content: "v";
+        }
     }
 }
 
@@ -233,30 +156,214 @@ $football-crest-large: 60px;
         margin-top: $gs-baseline
     ));
 
-    color: $c-neutral1;
     position: absolute;
     right: 0;
     text-align: right;
     width: 100%;
+}
 
-    @include mq($from: tablet) {
+.match-summary__aggregate,
+.match-summary__comment {
+    @include fs-data(3);
+}
+
+.match-summary__comment {
+    @include rem((
+        bottom: -$gs-baseline*2
+    ));
+    position: absolute;
+}
+
+.match-info {
+    @include fs-data(3);
+    @include rem((
+        padding-left: $gs-gutter/2
+    ));
+    display: inline-block;
+    vertical-align: middle;
+}
+.match-info__competition {
+    font-weight: bold;
+}
+.match-info:empty {
+    display: none;
+}
+
+@mixin match-summary--responsive {
+    &.match-summary,
+    .match-summary {
+        @include rem((
+            margin-bottom: $gs-baseline*4
+        ));
+    }
+
+    .match-summary__teams {
+        border-top: 0 none;
+    }
+    .match-summary__team {
+        @include box-sizing(border-box);
+        display: inline-block;
+        width: 50%;
+        vertical-align: top;
+    }
+    .match-summary__team--home {
+        @include rem((
+            padding-right: $gs-gutter
+        ));
+    }
+    .match-summary__team--away {
+        @include rem((
+            padding-left: $gs-gutter
+        ));
+        .team__heading {
+            text-align: right;
+        }
+        .team__name {
+            @include rem((
+                padding-left: $gs-gutter*2
+            ));
+            padding-right: 0;
+            text-align: right;
+        }
+        .team__score {
+            left: 0;
+            right: auto;
+        }
+        .team__scorers {
+            text-align: right;
+        }
+
+        .team__results {
+            text-align: right;
+        }
+    }
+
+    .team__info {
+        @include fs-headline(7, true);
+    }
+
+    .team__crest {
+        @include rem((
+            height: $football-crest--large
+        ));
+        display: table;
+        float: none;
+        width: 100%;
+    }
+    .team__crest--away {
+        text-align: right;
+    }
+    .team__crest__img {
+        @include rem((
+            height: $football-crest--large,
+            width: $football-crest--large
+        ));
+        @include background-size(contain);
+    }
+
+    .team__info {
+        margin: 0;
+    }
+
+    .match-summary__status {
+        display: block;
+        height: 0; /* removing it from the flow but maintaining the ability to center */
+        padding: 0;
+        text-align: center;
+    }
+
+    .status__time {
+        position: relative;
+    }
+
+    .team__battle-line {
+        display: block;
+    }
+
+    .match-summary__aggregate {
         @include rem((
             top: $gs-gutter*6
         ));
         bottom: 0;
         text-align: center;
     }
+
+    .match-summary__comment {
+        text-align: right;
+        width: 100%;
+    }
+
+    .match-info {
+        @include rem((
+            bottom: -$gs-baseline*2
+        ));
+        display: block;
+        left: 0;
+        padding-left: 0;
+        position: absolute;
+        text-align: left;
+        width: 100%;
+
+        .match-info__venue,
+        .match-info__competition {
+            display: inline-block;
+        }
+    }
+}
+.match-summary--responsive {
+    @include mq($football-match-summary-breakpoint) {
+        @include match-summary--responsive;
+    }
 }
 
-.match-summary--fixture {
-    .team__battle-line {
-        @include fs-headline(4);
-        @include rem((
-            top: $football-crest-large+25
-        ));
+.match-summary--report {
+    border-bottom: 1px solid $c-neutral6;
+    border-top: 1px solid $c-neutral6;
 
-        &:after {
-            content: "v";
+    .match-summary__status {
+        display: none;
+    }
+    .match-summary__team--home {
+        @include rem((
+            margin-bottom: $gs-baseline
+        ));
+    }
+    .match-info {
+        @include rem((
+            padding: $gs-gutter/2 0
+        ));
+    }
+
+    .team__info {
+        @include fs-headline(3, true);
+    }
+    .team__scorers {
+        @include fs-data(2, true);
+    }
+    .team__crest {
+        @include rem((
+            margin-right: $gs-gutter
+        ));
+        float: left;
+        width: auto;
+    }
+    .team__crest__img {
+        @include rem((
+            height: $football-crest--small,
+            width: $football-crest--small
+        ));
+    }
+
+    @include mq($football-match-summary-breakpoint) {
+        .team__crest--away {
+            @include rem((
+                margin-left: $gs-baseline
+            ));
+            float: right;
+            margin-right: 0;
+        }
+        .match-info {
+            padding: 0;
         }
     }
 }

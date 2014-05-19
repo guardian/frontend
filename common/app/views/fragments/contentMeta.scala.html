@@ -14,15 +14,20 @@
     <div class="js-comment-count"></div>
     <div class="social-wrapper social-wrapper--aside" data-component="share">
         <h2 class="social__head">Share this article</h2>
-        @fragments.social(content, "next to content")
+        @fragments.social(content, "top")
     </div>
 
 }
 
 <div class="article__meta-container js-football-meta u-cf@if(content.byline.isEmpty){ article__meta-container--no-byline}">
-    @if(content.isSponsored || content.isAdvertisementFeature) {
-        @fragments.commercial.badge(name="badge", adType="paid-for-badge", sizeMapping=Map("mobile" -> Seq("140,80")))
+    @if(content.isSponsored) {
+        @fragments.commercial.badge(name="spbadge", adType="paid-for-badge", sizeMapping=Map("mobile" -> Seq("140,90")))
+    } else {
+        @if(content.isAdvertisementFeature) {
+            @fragments.commercial.badge(name="adbadge", adType="paid-for-badge", sizeMapping=Map("mobile" -> Seq("140,90")))
+        }
     }
+
     @if(content.hasLargeContributorImage) {
         <div class="media__img meta__image">
             @fragments.meta.bylineImage(content)

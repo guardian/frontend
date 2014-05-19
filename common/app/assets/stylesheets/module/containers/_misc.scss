@@ -1,9 +1,9 @@
-.collection--linkslist-and-mpu {
+.facia-slice--linkslist-and-mpu {
     @include rem((
         padding-top: $gs-baseline/3
     ));
 
-    .collection__item {
+    .facia-slice__item {
         padding-bottom: 0;
         margin-bottom: 0;
 
@@ -52,9 +52,11 @@
     position: relative;
 
     @include mq(tablet) {
+        max-height: gs-height(6);
         min-height: $mpu-ad-label-height + $mpu-resulting-height + $mpu-align-offset;
     }
     @include mq(desktop) {
+        max-height: gs-height(7);
         min-height: $mpu-ad-label-height + $mpu-original-height + $mpu-align-offset;
     }
 

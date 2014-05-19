@@ -58,6 +58,9 @@ trait CompetitionSupport extends implicits.Football {
 
   def findMatch(id: String): Option[FootballMatch] = matches.find(_.id == id)
 
+  def competitionForMatch(matchId: String): Option[Competition] =
+    Competitions().competitions.find(_.matches.exists(_.id == matchId))
+
   def withTeamMatches(teamId: String) = competitions.filter(_.hasMatches).flatMap(c =>
     c.matches.filter(m => m.homeTeam.id == teamId || m.awayTeam.id == teamId).sortByDate.map { m =>
       TeamFixture(c, m)
@@ -129,8 +132,11 @@ trait Competitions extends LiveMatches with Logging with implicits.Collections w
   def refreshCompetitionData() = FootballClient.competitions.map(_.flatMap{ season =>
     log.info("Refreshing competition data")
     competitionAgents.find(_.competition.id == season.id).map { agent =>
-      val newCompetition = agent.competition.copy(startDate = Some(season.startDate))
-      agent.update(newCompetition)
+      val newCompetition = agent.competition.startDate match {
+        case Some(existingStartDate) if season.startDate.isAfter(existingStartDate) => agent.update(agent.competition.copy(startDate = Some(season.startDate)))
+        case None => agent.update(agent.competition.copy(startDate = Some(season.startDate)))
+        case _ =>
+      }
     }
   })
 

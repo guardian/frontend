@@ -80,6 +80,16 @@ module.exports = function (grunt) {
                     }
                 }
             },
+            ophan: {
+                options: {
+                    baseUrl: 'common/app/assets/javascripts',
+                    name: 'common/bootstraps/ophan',
+                    out: staticTargetDir + 'javascripts/bootstraps/ophan.js',
+                    wrap: {
+                        startFile: 'common/app/assets/javascripts/components/curl/dist/curl/curl.js'
+                    }
+                }
+            },
             admin: {
                 options: {
                     baseUrl: 'admin/app/assets/javascripts',
@@ -285,6 +295,34 @@ module.exports = function (grunt) {
                             'font-weight': '700',
                             file: 'resources/fonts/TextSans-Medium.ttf',
                             format: 'ttf'
+                        }
+                    ]
+                }
+            },
+            WebHeadlineSansTtf: {
+                options: {
+                    filename: staticTargetDir + 'fonts/WebHeadlineSans.ttf.json',
+                    callback: 'guFont',
+                    fonts: [
+                        {
+                            'font-family': 'HeadlineSans',
+                            file: 'resources/fonts/HeadlineSans-Light.ttf',
+                            'font-weight': '200',
+                            format: 'ttf'
+                        }
+                    ]
+                }
+            },
+            WebHeadlineSansWoff: {
+                options: {
+                    filename: staticTargetDir + 'fonts/WebHeadlineSans.woff.json',
+                    callback: 'guFont',
+                    fonts: [
+                        {
+                            'font-family': 'HeadlineSans',
+                            file: 'resources/fonts/HeadlineSans-Light.woff',
+                            'font-weight': '200',
+                            format: 'woff'
                         }
                     ]
                 }
@@ -677,6 +715,28 @@ module.exports = function (grunt) {
                     to: ''
                 }]
             }
+        },
+
+        reloadlet: {
+            options: {
+                port: 8005
+            },
+            main: {
+                sass: {
+                    src: 'common/app/assets/stylesheets/',
+                    dest: 'static/target/stylesheets'
+                },
+                assets: [
+                    {
+                        local: 'static/target/stylesheets/head.default.css',
+                        remote: '/assets/stylesheets/head.default.css'
+                    },
+                    {
+                        local: 'static/target/stylesheets/global.css',
+                        remote: '/assets/stylesheets/global.css'
+                    }
+                ]
+            }
         }
     });
 
@@ -701,6 +761,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-asset-monitor');
     grunt.loadNpmTasks('grunt-text-replace');
+    grunt.loadNpmTasks('grunt-reloadlet');
 
     grunt.registerTask('default', ['compile', 'test', 'analyse']);
 
@@ -719,6 +780,7 @@ module.exports = function (grunt) {
     grunt.registerTask('validate', function(app) {
         grunt.task.run([
             'validate:css',
+            'validate:sass',
             'validate:js:' + (app || '')
         ]);
     });
@@ -728,10 +790,10 @@ module.exports = function (grunt) {
     grunt.registerTask('compile:css', ['clean:css', 'sass:compile', 'replace:cssSourceMaps', 'copy:css']);
     grunt.registerTask('compile:js', function(app) {
         grunt.task.run(['clean:js']);
-        var apps = ['common'];
+        var apps = ['common', 'ophan'];
         if (!app) { // if no app supplied, compile all apps
-            apps = apps.concat(Object.keys(grunt.config('requirejs')).filter(function(app) { return ['options', 'common'].indexOf(app) === -1; }));
-        } else if (app !== 'common') {
+            apps = apps.concat(Object.keys(grunt.config('requirejs')).filter(function(app) { return ['options', 'common', 'ophan'].indexOf(app) === -1; }));
+        } else if (app !== 'common' && app !== 'ophan') {
             if (grunt.config('requirejs')[app]) {
                 apps.push(app);
             } else {

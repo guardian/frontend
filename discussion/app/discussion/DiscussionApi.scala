@@ -42,7 +42,7 @@ trait DiscussionApi extends Http with ExecutionContexts with Logging {
 
         CommentPage(
           id = s"/$key",
-          title = (json \ "discussion" \ "title").as[String],
+          commentPageTitle = (json \ "discussion" \ "title").as[String],
           contentUrl = (json \ "discussion" \ "webUrl").as[String],
           comments = comments,
           commentCount = (json \ "discussion" \ "commentCount").as[Int],
@@ -73,7 +73,8 @@ trait DiscussionApi extends Http with ExecutionContexts with Logging {
   }
 
   def commentsFor(key: DiscussionKey, page: String, orderBy: String = "newest", allResponses: Boolean = false): Future[CommentPage] = {
-    getJsonForUri(key, s"$apiRoot/discussion/$key?pageSize=$pageSize&page=$page&orderBy=$orderBy&showSwitches=true" + (if(allResponses) "" else "&maxResponses=3"))
+    val url = s"$apiRoot/discussion/$key?pageSize=$pageSize&page=$page&orderBy=$orderBy&showSwitches=true" + (if(allResponses) "" else "&maxResponses=3")
+    getJsonForUri(key, url)
   }
 
   def topCommentsFor(key: DiscussionKey): Future[CommentPage] = {
@@ -86,8 +87,7 @@ trait DiscussionApi extends Http with ExecutionContexts with Logging {
 
     val apiUrl = s"$apiRoot/comment/$id/context?pageSize=$pageSize&orderBy=$orderBy"
 
-    getJsonOrError(apiUrl, onError) map {
-      json =>
+    getJsonOrError(apiUrl, onError) map { json =>
         (DiscussionKey((json \ "discussionKey").as[String]), (json \ "page").as[Int].toString)
     }
   }

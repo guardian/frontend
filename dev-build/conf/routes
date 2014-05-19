@@ -19,14 +19,19 @@ GET         /discussion/comment-counts                                          
 GET         /discussion/comment-counts.json                                                                          controllers.DiscussionApp.commentCountJson(shortUrls: String)
 GET         /discussion/comment/*id.json                                                                             controllers.DiscussionApp.commentJson(id: Int)
 GET         /discussion/comment/*id                                                                                  controllers.DiscussionApp.comment(id: Int)
-GET         /discussion/comment-permalink/*commentId.json                                                            controllers.DiscussionApp.commentPermalinkJson(commentId: Int)
-GET         /discussion/comment-permalink/*commentId                                                                 controllers.DiscussionApp.commentPermalink(commentId: Int)
+
+GET         /discussion/comment-permalink/*order/*commentId.json                                                     controllers.DiscussionApp.commentPermalinkJson(commentId: Int, order: String)
+GET         /discussion/comment-permalink/*order/*commentId                                                          controllers.DiscussionApp.commentPermalink(commentId: Int, order: String)
+
+
 GET         /discussion/top/*discussionKey.json                                                                      controllers.DiscussionApp.topCommentsJson(discussionKey: discussion.model.DiscussionKey)
 GET         /discussion/top/*discussionKey                                                                           controllers.DiscussionApp.topComments(discussionKey: discussion.model.DiscussionKey)
-GET         /discussion/oldest/*discussionKey.json                                                                   controllers.DiscussionApp.oldestCommentsJson(discussionKey: discussion.model.DiscussionKey)
-GET         /discussion/oldest/*discussionKey                                                                        controllers.DiscussionApp.oldestComments(discussionKey: discussion.model.DiscussionKey)
-GET         /discussion/*discussionKey.json                                                                          controllers.DiscussionApp.commentsJson(discussionKey: discussion.model.DiscussionKey)
-GET         /discussion/*discussionKey                                                                               controllers.DiscussionApp.comments(discussionKey: discussion.model.DiscussionKey)
+
+GET         /discussion/$discussionKey</?p/\w+>.json                                                                 controllers.DiscussionApp.commentsJson(discussionKey: discussion.model.DiscussionKey, order: String = "newest")
+GET         /discussion/$order<(oldest|newest)>/$discussionKey</?p/\w+>.json                                         controllers.DiscussionApp.commentsJson(discussionKey: discussion.model.DiscussionKey, order: String)
+GET         /discussion/$discussionKey</?p/\w+>                                                                      controllers.DiscussionApp.comments(discussionKey: discussion.model.DiscussionKey, order: String = "newest")
+GET         /discussion/$order<(oldest|newest)>/$discussionKey</?p/\w+>                                              controllers.DiscussionApp.comments(discussionKey: discussion.model.DiscussionKey, order: String)
+
 GET         /open/cta/article/*discussionKey.json                                                                    controllers.CtaController.cta(discussionKey: discussion.model.DiscussionKey)
 
 # Core Navigation
@@ -90,10 +95,14 @@ GET         /football/:competition/table.json                                   
 GET         /football/:competition/:group/table                                                                      football.controllers.LeagueTableController.renderCompetitionGroup(competition, group)
 GET         /football/:competition/:group/table.json                                                                 football.controllers.LeagueTableController.renderCompetitionGroupJson(competition, group)
 
+GET         /football/:competitionTag/overview/embed                                                                 football.controllers.WallchartController.renderWallchartEmbed(competitionTag)
+GET         /football/:competitionTag/overview                                                                       football.controllers.WallchartController.renderWallchart(competitionTag)
+
 GET         /football/api/match-nav/:year/:month/:day/:home/:away.json                                               football.controllers.MoreOnMatchController.matchNavJson(year, month, day, home, away)
 GET         /football/api/match-nav/:year/:month/:day/:home/:away                                                    football.controllers.MoreOnMatchController.matchNav(year, month, day, home, away)
 GET         /football/api/match-nav/:matchId.json                                                                    football.controllers.MoreOnMatchController.moreOnJson(matchId)
 GET         /football/api/match-nav/:matchId                                                                         football.controllers.MoreOnMatchController.moreOn(matchId)
+GET         /football/api/big-match-special/:matchId.json                                                            football.controllers.MoreOnMatchController.bigMatchSpecial(matchId)
 
 GET         /football/competitions                                                                                   football.controllers.CompetitionListController.renderCompetitionList()
 GET         /football/competitions.json                                                                              football.controllers.CompetitionListController.renderCompetitionListJson()
@@ -107,6 +116,8 @@ GET         /football/match/:matchId                                            
 
 GET         /football/match-redirect/:year/:month/:day/:homeTeamId/:awayTeamId                                       football.controllers.MoreOnMatchController.redirectToMatch(year,month,day,homeTeamId,awayTeamId)
 GET         /football/match-redirect/:matchId                                                                        football.controllers.MoreOnMatchController.redirectToMatchId(matchId)
+
+GET         /football/world-cup-2014/r2-front-world-cup-embed                                                        football.controllers.WallchartController.renderR2FrontWorldCupEmbed()
 
 # Admin
 GET         /login                                                                                                   controllers.admin.Login.login
@@ -150,20 +161,15 @@ GET         /admin/football                                                     
 GET         /admin/football/browse                                                                                   controllers.admin.PaBrowserController.browse
 POST        /admin/football/browserRedirect                                                                          controllers.admin.PaBrowserController.browserSubstitution
 GET         /admin/football/browser/*query                                                                           controllers.admin.PaBrowserController.browser(query)
-GET         /admin/football/team                                                                                     controllers.admin.TeamController.teamIndex
-POST        /admin/football/team/head2head                                                                           controllers.admin.TeamController.redirectToTeamHead2Head
-GET         /admin/football/team/head2head/:team1Id/:team2Id                                                         controllers.admin.TeamController.teamHead2Head(team1Id: String, team2Id: String)
 GET         /admin/football/player                                                                                   controllers.admin.PlayerController.playerIndex
-POST        /admin/football/player/head2head                                                                         controllers.admin.PlayerController.redirectToHead2Head
-GET         /admin/football/player/head2head/:player1Id/:player2Id                                                   controllers.admin.PlayerController.head2Head(player1Id: String, player2Id: String)
 POST        /admin/football/player/card                                                                              controllers.admin.PlayerController.redirectToCard
-GET         /admin/football/player/card/:cardType/:playerId/:teamId/:compId                                          controllers.admin.PlayerController.playerCard(playerId: String, teamId: String, compId: String, cardType: String)
+GET         /admin/football/player/card/competition/:cardType/:playerId/:teamId/:compId                              controllers.admin.PlayerController.playerCardCompetition(cardType: String, playerId: String, teamId: String, compId: String)
+GET         /admin/football/player/card/date/:cardType/:playerId/:teamId/:startDate                                  controllers.admin.PlayerController.playerCardDate(cardType: String, playerId: String, teamId: String, startDate: String)
 GET         /admin/football/tables                                                                                   controllers.admin.TablesController.tablesIndex
 POST        /admin/football/tables/league                                                                            controllers.admin.TablesController.redirectToTable
 GET         /admin/football/tables/league/:competitionId                                                             controllers.admin.TablesController.leagueTable(competitionId: String)
 GET         /admin/football/tables/league/:competitionId/:focus                                                      controllers.admin.TablesController.leagueTableFragment(competitionId: String, focus: String)
 GET         /admin/football/tables/league/:competitionId/:team1Id/:team2Id                                           controllers.admin.TablesController.leagueTable2Teams(competitionId: String, team1Id: String, team2Id: String)
-GET         /admin/football/api/squad/:teamId                                                                        controllers.admin.PlayerController.squad(teamId: String)
 GET         /admin/football/fronts                                                                                   controllers.admin.FrontsController.index
 GET         /admin/football/fronts/live                                                                              controllers.admin.FrontsController.matchDay
 POST        /admin/football/fronts/results/redirect                                                                  controllers.admin.FrontsController.resultsRedirect
@@ -172,17 +178,34 @@ POST        /admin/football/fronts/fixtures/redirect                            
 GET         /admin/football/fronts/fixtures/:competition                                                             controllers.admin.FrontsController.fixtures(competition: String)
 POST        /admin/football/fronts/tables/redirect                                                                   controllers.admin.FrontsController.tablesRedirect
 GET         /admin/football/fronts/tables/:competition                                                               controllers.admin.FrontsController.tables(competition: String)
+GET         /admin/football/fronts/tables/:competition/:group                                                        controllers.admin.FrontsController.groupTables(competition, group)
+POST        /admin/football/fronts/matches/redirect                                                                  controllers.admin.FrontsController.matchesRedirect
+GET         /admin/football/fronts/matches/:competitionId                                                            controllers.admin.FrontsController.chooseMatchForComp(competitionId)
+GET         /admin/football/fronts/matches/:competitionId/:teamId                                                    controllers.admin.FrontsController.chooseMatchForCompAndTeam(competitionId, teamId)
+GET         /admin/football/fronts/matches/:competitionId/:team1Id/:team2Id                                          controllers.admin.FrontsController.chooseMatchForCompAndTeams(competitionId, team1Id, team2Id)
+GET         /admin/football/fronts/match/:matchId                                                                    controllers.admin.FrontsController.bigMatchSpecial(matchId)
+
+GET         /admin/football/api/squad/:teamId                                                                        controllers.admin.PlayerController.squad(teamId: String)
 
 # Commercial
 GET         /commercial/travel/offers.json                                                                           controllers.commercial.TravelOffers.listOffers
 GET         /commercial/jobs                                                                                         controllers.commercial.JobAds.renderAds
 GET         /commercial/jobs.json                                                                                    controllers.commercial.JobAds.jobs
+GET         /commercial/jobs-high                                                                                    controllers.commercial.JobAds.renderAdsHigh
+GET         /commercial/jobs-high.json                                                                               controllers.commercial.JobAds.jobsHigh
+GET         /commercial/masterclasses                                                                                controllers.commercial.MasterClasses.renderMasterclass
 GET         /commercial/masterclasses.json                                                                           controllers.commercial.MasterClasses.list
+GET         /commercial/masterclasses-high                                                                           controllers.commercial.MasterClasses.renderMasterclassHigh
+GET         /commercial/masterclasses-high.json                                                                      controllers.commercial.MasterClasses.listHigh
 GET         /commercial/soulmates/mixed                                                                              controllers.commercial.SoulmateAds.renderAds
 GET         /commercial/soulmates/mixed.json                                                                         controllers.commercial.SoulmateAds.mixed
+GET         /commercial/soulmates/mixed-high                                                                         controllers.commercial.SoulmateAds.renderAdsHigh
+GET         /commercial/soulmates/mixed-high.json                                                                    controllers.commercial.SoulmateAds.mixedHigh
 GET         /commercial/money/bestbuys.json                                                                          controllers.commercial.MoneyOffers.bestBuys(format="json")
 GET         /commercial/books/bestsellers                                                                            controllers.commercial.BookOffers.bestsellers(format="html")
 GET         /commercial/books/bestsellers.json                                                                       controllers.commercial.BookOffers.bestsellers(format="json")
+GET         /commercial/books/bestsellers-high                                                                       controllers.commercial.BookOffers.bestsellersHigh(format="html")
+GET         /commercial/books/bestsellers-high.json                                                                  controllers.commercial.BookOffers.bestsellersHigh(format="json")
 GET         /commercial/money/savings/:savingsType                                                                   controllers.commercial.MoneyOffers.savings(savingsType)
 GET         /commercial/money/current-accounts/:currentAccountType                                                   controllers.commercial.MoneyOffers.currentAccounts(currentAccountType)
 GET         /commercial/money/credit-cards/:creditCardType                                                           controllers.commercial.MoneyOffers.creditCards(creditCardType)

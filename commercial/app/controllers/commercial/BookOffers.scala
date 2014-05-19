@@ -17,6 +17,17 @@ object BookOffers extends Controller with ExecutionContexts {
           Cached(60)(Ok(views.html.books.bestsellers(books)))
       }
   }
+  
+  def bestsellersHigh(format: String) = Action {
+    implicit request =>
+      BestsellersAgent.adsTargetedAt(segment) match {
+        case Nil => NoCache(NotFound)
+        case books if format == "json" =>
+          Cached(60)(JsonComponent(views.html.books.bestsellersHigh(books)))
+        case books if format == "html" =>
+          Cached(60)(Ok(views.html.books.bestsellersHigh(books)))
+      }
+  }
 
   def singleBook(pageId: String, format: String) = Action.async {
     implicit request =>

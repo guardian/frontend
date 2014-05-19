@@ -1,6 +1,7 @@
 package conf
 
 import com.gu.conf.ConfigurationFactory
+
 import scala.slick.session.Database
 
 object AdminConfiguration {
@@ -36,4 +37,5 @@ object AdminConfiguration {
   object fastly {
     lazy val key = configuration.getStringProperty("fastly.key").getOrElse(throw new RuntimeException("Fastly key not configured"))
   }
+
 }

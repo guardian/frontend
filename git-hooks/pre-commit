@@ -5,9 +5,9 @@
 
 # Validate CSS
 CSS_SRC_PATTERN="\.scss"
-git diff --cached --name-only | if grep "CSS_SRC_PATTERN"
+git diff --cached --name-only | if grep "$CSS_SRC_PATTERN"
 then
-    grunt validate:css
+    grunt validate:css validate:sass
 fi
 cssValidateResult=$?
 

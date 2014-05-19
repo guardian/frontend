@@ -30,6 +30,8 @@ define([
             'groups',
             'type',
             'uneditable',
+            'showTags',
+            'showSections',
             'apiQuery']);
 
         populateObservables(this.meta, opts);
@@ -39,12 +41,12 @@ define([
         }
 
         this.state = asObservableProps([
-            'open',
+            'isOpen',
             'underDrag',
             'apiQueryStatus']);
 
         this.meta.apiQuery.subscribe(function(val) {
-            if (this.state.open()) {
+            if (this.state.isOpen()) {
                 this.meta.apiQuery(val.replace(/\s+/g, ''));
                 this.checkApiQueryStatus();
             }
@@ -52,14 +54,18 @@ define([
     }
 
     Collection.prototype.toggleOpen = function() {
-        this.state.open(!this.state.open());
+        this.state.isOpen(!this.state.isOpen());
+    };
+
+    Collection.prototype.close = function() {
+        this.state.isOpen(false);
     };
 
     Collection.prototype.save = function() {
         if (vars.model.collections.indexOf(this) < 0) {
             vars.model.collections.unshift(this);
         }
-        this.state.open(false);
+        this.state.isOpen(false);
         this.state.apiQueryStatus(undefined);
         vars.model.save(this);
     };
@@ -76,7 +82,7 @@ define([
             return;
         }
 
-        this.state.apiQueryStatus('checking');
+        this.state.apiQueryStatus('check');
 
         checkCount += 1;
         cc = checkCount;
@@ -85,16 +91,10 @@ define([
         apiQuery += 'show-editors-picks=true&show-fields=headline';
 
         contentApi.fetchContent(apiQuery)
-        .done(function(results) {
+        .always(function(results) {
             if (cc === checkCount) {
                 self.capiResults(results);
                 self.state.apiQueryStatus(results.length ? 'valid' : 'invalid');
-            }
-        })
-        .fail(function() {
-            if (cc === checkCount) {
-                self.capiResults.removeAll();
-                self.state.apiQueryStatus('invalid');
             }
         });
     };

@@ -1,6 +1,5 @@
 .ad-slot--dfp {
     width: 100%;
-    overflow-x: hidden;
     text-align: center;
     min-height: 56px;
     // For expandables
@@ -129,13 +128,12 @@
     }
 }
 .ad-slot--mpu-banner-ad {
-    padding-top: 0;
-    padding-bottom: 37px;
+    padding: 0;
     width: 300px;
-    height: 250px;
-    overflow: hidden;
+    min-height: 284px;
 }
-.ad-slot--commercial-component {
+.ad-slot--commercial-component,
+.ad-slot--commercial-component-high {
     width: 100%;
     min-height: 0;
     padding-top: 0;
@@ -144,28 +142,33 @@
         margin-top: $gs-baseline
     ));
 }
+.ad-slot--commercial-component-high {
+    display: none;
+
+    @include mq(desktop) {
+        display: block;
+    }
+}
 .ad-slot--paid-for-badge {
     min-height: 0;
-    padding: 0;
     text-align: left;
+    border-bottom: 1px dotted $c-neutral5;
+    @include rem((
+        padding: 2px 0 $gs-baseline
+    ));
 
+    @include mq(leftCol) {
+        border-bottom-width: 0;
+        border-top: 1px dotted $c-neutral5;
+    }
     .ad-slot__container {
         width: 100%;
         display: block;
     }
     .ad-slot--paid-for-badge__inner {
         overflow: hidden;
-        border-top: 1px dotted $c-neutral5;
-        @include rem((
-            padding-top: $gs-baseline / 3,
-            padding-bottom: ($gs-baseline / 3) * 2
-        ));
 
         @include mq(leftCol) {
-            @include rem((
-                padding-top: 2px,
-                padding-bottom: $gs-baseline
-            ));
             .article__meta-container--no-byline & {
                 @include rem((
                     padding-top: $gs-baseline / 3
@@ -176,20 +179,30 @@
     .ad-slot--paid-for-badge__header,
     .ad-slot--paid-for-badge__label,
     .ad-slot--paid-for-badge__help {
-        @include fs-textsans(2);
+        @include fs-data(3);
     }
     .ad-slot--paid-for-badge__header,
     .ad-slot--paid-for-badge__label {
         color: $c-neutral2;
         margin: 0;
-    }
-    .ad-slot--paid-for-badge__header {
-        font-weight: bold;
+
+        .facia-container--advertisement-feature & {
+            color: $c-neutral2-contrasted;
+        }
     }
     .ad-slot--paid-for-badge__link,
     .ad-slot--paid-for-badge__help {
         float: left;
         clear: left;
+    }
+    .ad-slot--paid-for-badge__link {
+        display: block;
+        @include rem((
+            margin-top: $gs-row-height/4
+        ))
+    }
+    .ad-slot--paid-for-badge__logo {
+        display: block;
     }
     .ad-slot--paid-for-badge__help {
         @include fs-textsans(1, $size-only: true);
@@ -202,34 +215,28 @@
     .container & {
         @include clearfix;
         position: relative;
-        min-height: 80px;
+        min-height: 90px;
+        border-top: 0;
+        z-index: 99;
+        border-bottom-width: 0;
 
-        .ad-slot--paid-for-badge__inner {
-            border-top: 0;
-            padding-bottom: 0;
-        }
         .ad-slot--paid-for-badge__link {
-            position: absolute;
-            top: 0;
-            right: 0;
+            position: relative;
+            float: right;
+            @include rem((
+                margin-top: get-line-height($fs-data, 3)*-1
+            ));
         }
-        .ad-slot--paid-for-badge__logo {
-            display: block;
-        }
-        + .container__body .collection-wrapper:first-child .fromage {
+        + .container__body .facia-slice-wrapper:first-child .fromage {
             border-top-width: 2px;
         }
         @include mq(tablet) {
             margin-left: 50%;
             width: auto;
+            padding-top: 0;
             @include rem((
-                margin-top: -$gs-row-height,
-                margin-right: gs-span(1)
+                margin-top: -$gs-row-height
             ));
-
-            .ad-slot--paid-for-badge__inner {
-                padding-top: 0;
-            }
         }
         @include mq(desktop) {
             @include rem((
@@ -245,9 +252,12 @@
             ));
 
             .ad-slot--paid-for-badge__link {
-                position: relative;
+                float: none;
+                @include rem((
+                    margin-top: $gs-row-height/4
+                ));
             }
-            + .container__body .collection-wrapper:first-child .fromage {
+            + .container__body .facia-slice-wrapper:first-child .fromage {
                 border-top-width: 0;
             }
         }
@@ -255,10 +265,6 @@
             clear: left;
         }
     }
-}
-// can be removed once we dynamically add the sponsored badge ad slot to fronts
-.dfp-badge-container {
-    display: none;
 }
 .ad-slot__label {
     height: $mpu-ad-label-height;

@@ -27,8 +27,11 @@ linters:
         - common/app/assets/stylesheets/base/_type.scss # We need to declare font-size twice
         - common/app/assets/stylesheets/_mixins.scss
 
+  MergeableSelector:
+    enabled: false
+
   DuplicateRoot:
-    enabled: true
+    enabled: false
 
   EmptyLineBetweenBlocks:
     enabled: false
@@ -72,7 +75,9 @@ linters:
 
   SelectorDepth:
     enabled: true
-    max_depth: 5
+    max_depth: 4
+    exclude: # Exclude if forced to break the inception rule to style third party components
+        - common/app/assets/stylesheets/module/_live-blog.scss
 
   Shorthand:
     enabled: true

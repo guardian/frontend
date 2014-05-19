@@ -2,7 +2,7 @@
    Masterclass component
    ========================================================================== */
 
-.footer {
+.l-footer {
     margin-top: 0 !important;
 }
 
@@ -12,7 +12,6 @@
         background-color: transparent;
         height: auto;
         margin-bottom: 0;
-        padding-bottom: 0;
         @include rem((
             padding-left: $gs-gutter/2 - 1
         ));

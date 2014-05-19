@@ -9,10 +9,11 @@ define([
     'common/utils/detect',
     'common/utils/storage',
     'common/utils/to-array',
-    'common/modules/ui/snaps',
     'common/modules/ui/collection-show-more',
+    'modules/ui/snaps',
     'modules/ui/container-show-more',
-    'modules/ui/container-toggle'
+    'modules/ui/container-toggle',
+    'modules/onwards/geo-most-popular-front'
 ], function (
     $,
     ajax,
@@ -22,15 +23,16 @@ define([
     detect,
     storage,
     toArray,
-    snaps,
     CollectionShowMore,
+    snaps,
     ContainerShowMore,
-    ContainerToggle
+    ContainerToggle,
+    GeoMostPopularFront
 ) {
     var modules = {
 
         showSnaps: function() {
-            snaps.init('.facia-snap');
+            snaps.init();
         },
 
         showCollectionShowMore: function () {
@@ -67,6 +69,12 @@ define([
                     new ContainerToggle(container).addToggle();
                 });
             });
+        },
+
+        upgradeMostPopularToGeo: function(config) {
+            if (config.page.contentType === 'Network Front' && config.switches.geoMostPopular) {
+                new GeoMostPopularFront(mediator, config).go();
+            }
         }
     };
 
@@ -76,6 +84,7 @@ define([
             modules.showSnaps();
             modules.showCollectionShowMore();
             modules.showContainerToggle();
+            modules.upgradeMostPopularToGeo(config);
         }
         mediator.emit('page:front:ready', config, context);
     };

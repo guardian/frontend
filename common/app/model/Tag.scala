@@ -36,6 +36,8 @@ case class Tag(private val delegate: ApiTag, override val pagination: Option[Pag
     !idParts.exists(_ != section)
   }
 
+  override lazy val tags = Seq(this)
+
   lazy val isFootballTeam = delegate.references.exists(_.`type` == "pa-football-team")
 
   lazy val isFootballCompetition = delegate.references.exists(_.`type` == "pa-football-competition")
@@ -48,6 +50,7 @@ case class Tag(private val delegate: ApiTag, override val pagination: Option[Pag
 
   override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
     "keywords" -> name,
+    "keywordIds" -> id,
     "content-type" -> "Tag"
   ) ++ Map("references" -> delegate.references.map(r => Reference(r.id)))
 }

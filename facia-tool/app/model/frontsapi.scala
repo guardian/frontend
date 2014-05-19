@@ -15,7 +15,11 @@ case class Config(
 
 case class Front(
                   collections: List[String],
-                  webTitle: Option[String]
+                  section: Option[String],
+                  webTitle: Option[String],
+                  title: Option[String],
+                  description: Option[String],
+                  priority: Option[String]
                   )
 
 case class Collection(
@@ -24,7 +28,9 @@ case class Collection(
                  `type`: Option[String],
                   href: Option[String],
                   groups: Option[List[String]],
-                  uneditable: Option[Boolean]
+                  uneditable: Option[Boolean],
+                  showTags: Option[Boolean],
+                  showSections: Option[Boolean]
                   )
 
 case class Block(
@@ -55,7 +61,18 @@ case class CollectionMetaUpdate(
 trait UpdateActions extends Logging {
 
   val collectionCap: Int = Configuration.facia.collectionCap
-  val itemMetaWhitelistFields: Seq[String] = Seq("headline", "href", "snapType", "snapUri", "trailText", "group", "supporting", "imageAdjust", "isBreaking", "updatedAt")
+  val itemMetaWhitelistFields: Seq[String] = Seq(
+    "headline",
+    "href",
+    "snapType",
+    "snapCss",
+    "snapUri",
+    "trailText",
+    "group",
+    "supporting",
+    "imageAdjust",
+    "imageSrc",
+    "isBreaking")
   
   implicit val collectionMetaWrites = Json.writes[CollectionMetaUpdate]
   implicit val updateListWrite = Json.writes[UpdateList]

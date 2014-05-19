@@ -155,7 +155,7 @@
         left: gs-span(15) + $gs-gutter;
     }
 }
-.collection {
+.facia-slice {
     font-size: 0;
     overflow: hidden;
     @include rem((
@@ -234,6 +234,25 @@
 .item__standfirst {
     @include f-headline;
 }
+.facia-container--advertisement-feature {
+    background-color: $c-neutral8;
+
+    .linkslist__action:visited,
+    .item__link:visited,
+    .item__link:visited .item__title,
+    .fromage__link:visited,
+    .fromage__link:visited .item__title,
+    .item__standfirst,
+    .fromage__standfirst {
+        color: $c-neutral2-contrasted;
+    }
+    .item__title,
+    .item__standfirst,
+    .fromage__standfirst,
+    .linkslist__action {
+        @include f-headlineSans;
+    }
+}
 .item__title {
     position: relative;
     @include rem((
@@ -297,8 +316,8 @@
 }
 .item__standfirst {
     display: none;
-    margin: 20px 0 0;
     @include rem((
+        margin: $gs-baseline 0 0,
         font-size: 14px,
         line-height: 18px
     ));
@@ -306,6 +325,9 @@
     p {
         margin-bottom: 0; // Some trail texts are wrapped in a paragraph
     }
+}
+.item__tag {
+    @include fs-headline(1);
 }
 .item__meta {
     position: absolute;
@@ -547,27 +569,4 @@ $show-more-icon: (
 }
 .container--rolled-up .container--rolled-up-hide {
     display: none;
-}
-
-
-// Thumbnail element order:
-// 1. Title
-// 2. Image + standfirst
-// 3. Meta
-
-.item--thumbnail {
-    .item__standfirst {
-        display: block;
-        @include rem((
-            margin-top: 2px
-        ));
-    }
-    .item__media-wrapper {
-        float: left;
-        clear: both;
-
-        @include rem((
-            margin-right: $gs-gutter/2
-        ));
-    }
 }

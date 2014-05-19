@@ -1,12 +1,5 @@
-.facia-container--commercial {
-    &.facia-container--layout-article {
-        padding: 0;
-        margin: 0;
-        @include rem((
-            max-width: gs-span(15)+($gs-gutter*1.5)
-        ));
-    }
-}
+$c-commercial-comp-neutral: #edede7;
+$comercial-comp-baseline: 10px;
 
 .facia-container--layout-front .commercial {
     padding: 0;
@@ -22,23 +15,24 @@
     }
 }
 
+.facia-container--layout-article .commercial .facia-container__inner {
+    margin-bottom: 0;
+}
+
 .commercial {
     @include box-sizing(border-box);
     width: 100%;
     position: relative;
-    background-color: #edede7;
+    background-color: $c-commercial-comp-neutral;
     color: $c-neutral1;
     text-align: left;
-    @include rem((
-        padding: 0 $gs-gutter/2
-    ));
     .container__border {
         border-top: 0;
     }
     .container__title {
         background: none !important;    // Overriding default page styles
+        padding: 0;
         @include rem((
-            padding: $gs-baseline/3 0,
             margin-top: ($gs-baseline/3)
         ));
         float: none;
@@ -77,7 +71,7 @@
 }
 .commercial__body {
     @include rem((
-        padding: 10px
+        padding: $comercial-comp-baseline
     ));
     overflow: hidden;
 }
@@ -94,12 +88,11 @@
     overflow: hidden;
 }
 .commercial__search__input {
-    @include border-radius(0);
     @include box-sizing(border-box);
     width: 100%;
     height: $gs-row-height;
     padding: $gs-baseline/3 32px $gs-baseline/3 ($gs-baseline/3) * 2;
-    @include fs-bodyCopy(1);
+    @include fs-textsans(2);
     border: 0;
     float: left;
     overflow: hidden;
@@ -136,10 +129,15 @@
    Entries
    ========================================================================== */
 
-.lineitems {
+.lineitems,
+.highitem {
     padding: 0;
     margin: 0;
     overflow: hidden;
+}
+.highitem {
+    position: relative;
+    border-bottom: 1px solid $c-neutral4;
 }
 .lineitem {
     @include box-sizing(border-box);
@@ -208,10 +206,13 @@
     @include fs-textsans(2);
     margin: 0;
 }
-.lineitem__img {
+.lineitem__img,
+.highitem__img {
     height: 100px;
     display: none;
-    margin-right: ($gs-baseline/3)*2;
+    @include rem((
+        margin-right: $gs-gutter/2
+    ));
     float: left;
     text-align: center;
 
@@ -220,7 +221,16 @@
         height: 100%;
     }
 }
-
+.highitem__img {
+    display: block;
+    height: auto;
+    width: 80px;
+}
+.highitem__details {
+    @include rem((
+        margin-left: 90px
+    ));
+}
 
 /* ==========================================================================
    300x50 varient
@@ -234,7 +244,7 @@
         overflow: hidden;
     }
     .commercial__title {
-        padding: $gs-baseline/3 $gs-gutter/5;
+        padding: 0;
 
         .i {
             margin-top: $gs-baseline/3;
@@ -271,6 +281,14 @@
     .lineitem__img {
         display: block;
         margin-bottom: $gs-baseline;
+    }
+    .highitem__details {
+        @include rem((
+            margin-left: 110px
+        ));
+    }
+    .highitem__img {
+        width: 100px;
     }
 }
 
@@ -319,7 +337,7 @@
             width: map-get($cta-diameter, tablet);
             height: map-get($cta-diameter, tablet);
             @include rem((
-                margin-top: -(map-get($cta-diameter, tablet)/2)-1
+                margin-top: -(map-get($cta-diameter, tablet)/2)
             ));
         }
     }

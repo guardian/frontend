@@ -3,13 +3,20 @@
 @import model._
 @import conf._
 @import Switches._
+@import play.api.Play
+@import play.api.Play.current
 
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
 
     @* https://support.google.com/plus/answer/1713826 *@
     <link rel="publisher" href="https://plus.google.com/113000071431138202574" />
 
-    <link rel="shortcut icon" type="image/png" href="@Static("images/favicons/32x32.ico")" />
+    @if(Play.isDev){
+        <link rel="shortcut icon" type="image/png" href="@Static("images/favicons/32x32-dev.ico")" />
+    } else {
+        <link rel="shortcut icon" type="image/png" href="@Static("images/favicons/32x32.ico")" />
+    }
+
 
     <link rel="apple-touch-icon" sizes="152x152" href="@Static("images/favicons/152x152.png")" />
     <link rel="apple-touch-icon" sizes="144x144" href="@Static("images/favicons/144x144.png")" />
@@ -33,6 +40,8 @@
         }
     }
 
+    <link rel="canonical" href="@CanonicalLink(request)" />
+
     @item.pagination.map{ pagination =>
         @pagination.next.map{ next => <link rel="next" href="@LinkTo(item.url)?page=@next" /> }
         @pagination.previous.map{ prev => <link rel="prev" href="@LinkTo(item.url)@if(prev != 1){?page=@prev}" /> }
@@ -51,15 +60,13 @@
     }
 
     @item.description.map { description =>
-        <meta name="description" content="@description" />
+        <meta name="description" content="@StripHtmlTags(description)" />
     }
 
     @* https://support.google.com/news/publisher/answer/68297?hl=en-GB *@
     @if(item.keywords.nonEmpty) {
-        @defining(item.keywords.map(_.name).mkString(",")){ keywords =>
-            <meta name="keywords" content="@keywords" />
-            <meta name="news_keywords" content="@keywords" />
-        }
+        <meta name="keywords" content="@item.keywords.map(_.name).mkString(",")" />
+        <meta name="news_keywords" content="@item.keywords.take(10).map(_.name).mkString(",")" />
     }
 
     @item.openGraph.map{ case (key, value) =>

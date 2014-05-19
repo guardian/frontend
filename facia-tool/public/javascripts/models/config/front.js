@@ -3,6 +3,7 @@ define([
     'knockout',
     'config',
     'modules/vars',
+    'modules/content-api',
     'models/group',
     'models/config/collection',
     'utils/as-observable-props',
@@ -12,6 +13,7 @@ define([
     ko,
     config,
     vars,
+    contentApi,
     Group,
     Collection,
     asObservableProps,
@@ -19,31 +21,27 @@ define([
     findFirstById
 ) {
     function Front(opts) {
-        var self = this;
+        var self = this,
+            props = [
+                'section',
+                'webTitle',
+                'title',
+                'description',
+                'priority'];
 
         opts = opts || {};
 
         this.id = ko.observable(opts.id);
 
-        this.id.subscribe(function(id) {
-            id = id || '';
-            id = id.toLowerCase();
-            id = id.replace(/^\/|\/$/g, '');
-            id = id.replace(/[^a-z0-9\/\-]*/g, '');
-            self.id(id);
-            if(_.filter(vars.model.fronts(), function(front) { return front.id() === id; }).length > 1) {
-                self.id(undefined);
-            }
-        });
-
-        this.props  = asObservableProps([
-            'webTitle']);
+        this.props  = asObservableProps(props);
 
         populateObservables(this.props,  opts);
 
+        this.capiProps = asObservableProps(props);
+
         this.state = asObservableProps([
-            'open',
-            'openProps']);
+            'isOpen',
+            'isOpenProps']);
 
         this.collections = new Group({
             parent: self,
@@ -59,19 +57,83 @@ define([
                 .value()
         });
 
+        this.id.subscribe(function() {
+            this.validate(true);
+            if (this.id()) {
+                this.setOpen(true);
+            }
+        }, this);
+
         this.depopulateCollection = this._depopulateCollection.bind(this);
+
+        this.placeholders = {};
+
+        this.placeholders.section = ko.computed(function() {
+            var path = asPath(this.id()),
+                isEditionalised = vars.CONST.editions.some(function(edition) { return edition === path[0]; });
+
+            return this.props.section() || this.capiProps.section() || (isEditionalised ? path.length === 1 ? undefined : path[1] : path[0]);
+        }, this);
+
+        this.placeholders.webTitle = ko.computed(function() {
+            var path = asPath(this.id());
+
+            return this.props.webTitle() || this.capiProps.webTitle() || (toTitleCase(path.slice(path.length > 1 ? 1 : 0).join(' ').replace(/\-/g, ' ')) || this.id());
+        }, this);
+
+        this.placeholders.title = ko.computed(function() {
+            return this.props.title() || this.capiProps.title() || (this.placeholders.webTitle() + ' news, comment and analysis from the Guardian' + (this.placeholders.section() ? ' | ' + toTitleCase(this.placeholders.section()) : ''));
+        }, this);
+
+        this.placeholders.description  = ko.computed(function() {
+            return this.props.description() || this.capiProps.description() || ('Latest ' + this.placeholders.webTitle() + ' news, comment and analysis from the Guardian, the world\'s leading liberal voice');
+        }, this);
     }
 
-    Front.prototype.setOpen = function(isOpen) {
-        this.state.open(isOpen);
+    Front.prototype.validate = function(checkUniqueness) {
+        var self = this;
+
+        this.id((this.id() || '')
+            .toLowerCase()
+            .replace(/^\/|\/$/g, '')
+            .replace(/[^a-z0-9\/\-]*/g, '')
+        );
+
+        if (!this.id()) { return; }
+
+        if(checkUniqueness && _.filter(vars.model.fronts(), function(front) { return front.id() === self.id(); }).length > 1) {
+            this.id(undefined);
+            return;
+        }
+    };
+
+    Front.prototype.setOpen = function(isOpen, withOpenProps) {
+        this.state.isOpen(isOpen);
+        this.state.isOpenProps(withOpenProps);
     };
 
     Front.prototype.toggleOpen = function() {
-        this.state.open(!this.state.open());
+        this.state.isOpen(!this.state.isOpen());
     };
 
     Front.prototype.openProps = function() {
-        this.state.openProps(true);
+        var self = this;
+
+        this.state.isOpenProps(true);
+        this.collections.items().map(function(collection) { collection.close(); });
+
+        contentApi.fetchMetaForPath(this.id())
+        .done(function(meta) {
+            meta = meta || {};
+            _.each(self.capiProps, function(val, key) {
+                val(meta[key]);
+            });
+        });
+    };
+
+    Front.prototype.saveProps = function() {
+        vars.model.save();
+        this.state.isOpenProps(false);
     };
 
     Front.prototype.createCollection = function() {
@@ -84,16 +146,19 @@ define([
     };
 
     Front.prototype._depopulateCollection = function(collection) {
-        collection.state.open(false);
+        collection.state.isOpen(false);
         collection.parents.remove(this);
         this.collections.items.remove(collection);
         vars.model.save(collection);
     };
 
-    Front.prototype.save = function() {
-        vars.model.save();
-        this.state.openProps(false);
-    };
+    function toTitleCase(str) {
+        return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+    }
+
+    function asPath(str) {
+       return (str || '').split('/');
+    }
 
     return Front;
 });

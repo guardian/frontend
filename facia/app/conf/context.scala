@@ -5,7 +5,7 @@ import com.gu.management.{ PropertiesPage, StatusPage, ManifestPage, ManagementP
 import com.gu.management.play.{ Management => GuManagement }
 import com.gu.management.logback.LogbackLevelPage
 import com.gu.management.HttpRequest
-import controllers.front.ConfigAgent
+import services.ConfigAgent
 
 object Management extends GuManagement {
   val applicationName = "frontend-facia"
