@@ -336,24 +336,26 @@ $football-crest--large: 60px;
     }
 
     .team__crest {
-        width: auto;
-    }
-    .team__crest--home {
         @include rem((
             margin-right: $gs-gutter
         ));
         float: left;
-    }
-    .team__crest--away {
-        @include rem((
-            margin-left: $gs-gutter
-        ));
-        float: right;
+        width: auto;
     }
     .team__crest__img {
         @include rem((
             height: $football-crest--small,
             width: $football-crest--small
         ));
+    }
+
+    @include mq($football-match-summary-breakpoint) {
+        .team__crest--away {
+            @include rem((
+                margin-left: $gs-gutter
+            ));
+            float: right;
+            margin-right: 0;
+        }
     }
 }
