@@ -86,7 +86,6 @@ define([
 
             modules.initialiseAjax(config);
             modules.initialiseDiscussionApi(config);
-//            modules.attachGlobalErrorHandler(config);
             modules.loadFonts(config, navigator.userAgent);
             modules.initId(config, context);
             modules.initUserAdTargeting();
