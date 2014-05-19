@@ -40,10 +40,10 @@
             "depends" : ["staticFilesUpload", "artifactUpload", "deploy"]
         },
         "deploy":{
-            "actionsBeforeApp": ["frontend-admin.deploy"]
+            "actionsBeforeApp": ["frontend-admin.deploy", "admin.deploy"]
         },
         "artifactUpload":{
-            "actionsBeforeApp": ["frontend-admin.uploadArtifacts"]
+            "actionsBeforeApp": ["frontend-admin.uploadArtifacts", "admin.uploadArtifacts"]
         },
         "staticFilesUpload":{
             "actionsBeforeApp": ["frontend-static.uploadStaticFiles"]
