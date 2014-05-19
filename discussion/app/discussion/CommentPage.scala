@@ -6,7 +6,7 @@ import play.api.libs.json.JsObject
 
 case class CommentPage(
                         override val id: String,
-                        override val title: String,
+                        commentPageTitle: String,
                         comments: Seq[Comment],
                         commentCount: Int,
                         topLevelCommentCount: Int,
@@ -17,7 +17,7 @@ case class CommentPage(
                         orderBy: String,
                         isClosedForRecommendation: Boolean,
                         switches: Seq[Switch]
-                        ) extends Page(id = id, section = "Global", webTitle = title, analyticsName = s"GFE:Article:Comment discussion page $currentPage") {
+                        ) extends Page(id = id, section = "Global", webTitle = commentPageTitle, analyticsName = s"GFE:Article:Comment discussion page $currentPage") {
 
   lazy val hasMore: Boolean = currentPage < pages
 }
