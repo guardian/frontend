@@ -25,6 +25,10 @@
 
     @if(content.isSponsored) {
         @fragments.commercial.badge(name="spbadge", adType="paid-for-badge", sizeMapping=Map("mobile" -> Seq("140,90")))
+    } else {
+        @if(content.isAdvertisementFeature) {
+            @fragments.commercial.badge(name="adbadge", adType="paid-for-badge", sizeMapping=Map("mobile" -> Seq("140,90")))
+        }
     }
 
     @if(content.hasLargeContributorImage) {

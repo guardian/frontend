@@ -4,7 +4,7 @@
 @import feed._
 
 @defining((page.lineUp.homeTeam, page.lineUp.awayTeam, page.lineUp, TeamColours(page.lineUp.homeTeam, page.lineUp.awayTeam))){ case (home, away, lineUp, teamColours) =>
-<div class="@RenderClasses(Map(
+<div data-component="football-stats-embed" class="@RenderClasses(Map(
             "c-match-stats" -> true,
             "match-stats--darken-home" -> teamColours.homeTeamIsLight,
             "match-stats--darken-away" -> teamColours.awayTeamIsLight

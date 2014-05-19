@@ -132,7 +132,8 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
     ("wordCount", wordCount),
     ("shortUrl", shortUrl),
     ("thumbnail", thumbnailPath.getOrElse(false)),
-    ("references", delegate.references.map(r => Reference(r.id)))
+    ("references", delegate.references.map(r => Reference(r.id))),
+    ("sectionName", sectionName)
     ) ++ Map(seriesMeta : _*)
   }
 

@@ -208,10 +208,9 @@ define([
             'clickTrackUrl': 'ClickTracking'
         };
 
-        var dfpAds = dfp.init(config);
-        var adUnit = dfp.buildAdUnit();
+        var adUnit = dfp.buildAdUnit({ page: config });
 
-        var custParams = queryString.generateQueryString(dfpAds.buildPageTargeting());
+        var custParams = queryString.generateQueryString(dfp.buildPageTargeting({ page: config }));
         var encodedCustParams = encodeURIComponent(custParams);
 
         var timestamp = new Date().getTime();

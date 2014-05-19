@@ -7,7 +7,7 @@ define([
     ) {
 
     var adSlot =
-        '<div class="ad-slot ad-slot--dfp ad-slot--commercial-component-high" data-link-name="ad slot merchandising-high" data-name="merchandising-high" data-label="false" data-refresh="false" data-desktop="888,87">' +
+        '<div class="ad-slot ad-slot--dfp ad-slot--commercial-component-high" data-link-name="ad slot merchandising-high" data-name="merchandising-high" data-label="false" data-refresh="false" data-desktop="888,88">' +
             '<div id="dfp-ad--merchandising-high" class="ad-slot__container"></div>' +
         '</div>';
 

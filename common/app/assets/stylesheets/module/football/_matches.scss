@@ -35,9 +35,11 @@
 }
 
 .football-matches__date {
-    color: $c-neutral2-contrasted;
-    float: right;
-    font-weight: normal;
+    color: $c-neutral1;
+    display: block;
+    @include rem((
+        margin-top: $gs-baseline/2
+    ));
 }
 
 .football-match__report {

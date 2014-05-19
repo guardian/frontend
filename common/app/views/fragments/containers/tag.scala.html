@@ -3,11 +3,11 @@
 @if(collection.items.nonEmpty) {
     <section
         class="@RenderClasses(Map(
-            "container" -> true,
-            "container--row-pattern" -> true,
-            "container--news" -> true,
-            "container--tag" -> true,
-            "container--first" -> (containerIndex == 0)))"
+            ("container", true),
+            ("container--row-pattern", true),
+            ("container--news", true),
+            ("container--tag", true),
+            ("container--first", (containerIndex == 0))))"
         data-link-name="block | @config.id"
         data-id="@config.id"
         data-type="@style.containerType"
@@ -27,6 +27,10 @@
             </div>
             @if(page.isSponsored) {
                 @fragments.commercial.badge(name="spbadge", adType="paid-for-badge", sizeMapping=Map("mobile" -> Seq("140,90")))
+            } else {
+                @if(page.isAdvertisementFeature) {
+                    @fragments.commercial.badge(name="adbadge", adType="paid-for-badge", sizeMapping=Map("mobile" -> Seq("140,90")))
+                }
             }
             <div class="container__body">
                 @fragments.contributor(page)
