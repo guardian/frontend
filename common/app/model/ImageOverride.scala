@@ -5,11 +5,7 @@ import org.joda.time.DateTime
 
 object ImageOverride {
 
-  def createElementWithOneAsset(imageSrc: String): ImageElement = {
-    new ImageElement(makeElement(imageSrc), 0)
-  }
-
-  private def makeElement(imageSrc: String): ApiElement = ApiElement(
+  def createElementWithOneAsset(imageSrc: String): ApiElement = ApiElement(
     id = DateTime.now.getMillis.toString,
     relation = "thumbnail",
     `type` = "image",

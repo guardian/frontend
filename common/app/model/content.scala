@@ -156,6 +156,8 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   )
 
   override def elements: Seq[Element] = delegate.elements
+      .map(imageElement ++ _)
+      .map(_.toSeq)
       .map(_.zipWithIndex.map{ case (element, index) =>  Element(element, index)})
       .getOrElse(Nil)
 
@@ -167,10 +169,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   override lazy val supporting: List[Content] = apiContent.supporting
 
   override lazy val imageSrc: Option[String] = apiContent.metaData.get("imageSrc").flatMap(_.asOpt[String])
-  lazy val imageElement: Option[ImageElement] = imageSrc.map(ImageOverride.createElementWithOneAsset)
-
-  override def trailPicture: Option[ImageContainer] = imageElement.orElse(super.trailPicture)
-  override def trailPicture(aspectWidth: Int, aspectHeight: Int) = imageElement.orElse(super.trailPicture(aspectWidth, aspectHeight))
+  lazy val imageElement: Option[ApiElement] = imageSrc.map(ImageOverride.createElementWithOneAsset)
 }
 
 object Content {
