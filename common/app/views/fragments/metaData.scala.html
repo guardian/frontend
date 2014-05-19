@@ -60,7 +60,7 @@
     }
 
     @item.description.map { description =>
-        <meta name="description" content="@cleanTrailText(description)" />
+        <meta name="description" content="@StripHtmlTags(description)" />
     }
 
     @* https://support.google.com/news/publisher/answer/68297?hl=en-GB *@
