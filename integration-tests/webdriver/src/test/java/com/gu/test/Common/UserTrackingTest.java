@@ -30,7 +30,7 @@ public class UserTrackingTest {
         profile.setPreference("network.proxy.http", "localhost");
         profile.setPreference("network.proxy.http_port", "8089");
         driver = new FirefoxDriver(profile);
-        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
         testRunner = new TestRunner(driver);
         fronts = testRunner.goToFronts(driver);
@@ -40,10 +40,10 @@ public class UserTrackingTest {
     @Test
     public void theCorrectTrackingInformationShouldBeSentForSportArticle() throws Exception {
 
-        Article sportArticle = fronts.goToArticleInSportContainer();
+        Article sportArticle = fronts.goToArticleInReviewsContainer();
         sportArticle.waitForArticleLoad(driver);
         List<LoggedRequest> requests = httpMock.findAllRequestsTo("ophan.theguardian.com");
-        String dataComponent = "sport";
+        String dataComponent = "reviews";
 
         boolean contains = false;
         for (LoggedRequest request : requests) {
@@ -57,12 +57,12 @@ public class UserTrackingTest {
     }
 
     @Test
-    public void theCorrectTrackingInformationShouldBeSentForTopStoriesArticle() throws Exception {
+    public void theCorrectTrackingInformationShouldBeSentForPeopleArticle() throws Exception {
 
-        Article sportArticle = fronts.goToArticleInTopStories();
+        Article sportArticle = fronts.goToArticleInPeople();
         sportArticle.waitForArticleLoad(driver);
         List<LoggedRequest> requests = httpMock.findAllRequestsTo("ophan.theguardian.com");
-        String dataComponent = "top-stories";
+        String dataComponent = "people";
 
         boolean contains = false;
         for (LoggedRequest request : requests) {

@@ -14,28 +14,44 @@ public class FrontPage {
 
     }
 
-    public WebElement expandSection() {
-        WebElement section = driver.findElement(By.cssSelector("button.collection__show-more"));
-        WebElement parent = section.findElement(By.xpath(".."));
-        section.click();
-        return parent;
-    }
-
-
-    public Article goToFirstArticle() {
-        driver.findElement(By.xpath("/descendant::a[@data-link-name=\"article\"][1]")).click();
-        return new Article(driver);
+    public void expandContainer(String container) {
+        String expandButton = "//section[@data-component=\"" + container + "\"]//button[@data-link-name=\"Show more | 0\"]";
+        WebElement containerExpandButton = driver.findElement(By.xpath(expandButton));
+        containerExpandButton.click();
 
     }
 
 
-    public Article goToArticleInTopStories() {
-        driver.findElement(By.xpath("/descendant::section[@data-component=\"top-stories\"]//a[@data-link-name=\"article\"][1]")).click();
-        return new Article(driver);
+    public void hideContainer(String container) {
+        String hideButton = "//section[@data-component=\"" + container + "\"]//span[contains(text(), \"Hide\")]";
+        WebElement containerHideButton = driver.findElement(By.xpath(hideButton));
+        containerHideButton.click();
     }
 
-    public Article goToArticleInSportContainer() {
-        driver.findElement(By.xpath("/descendant::section[@data-component=\"sport\"]//a[@data-link-name=\"article\"][1]")).click();
+    public void showContainer(String container) {
+        String showButton = "//section[@data-component=\"" + container + "\"]//span[contains(text(), \"Show\")]";
+
+        WebElement containerHideButton = driver.findElement(By.xpath(showButton));
+        containerHideButton.click();
+    }
+
+
+    public String currentStateOfShowHide(String container) {
+        String buttonState = driver.findElement(By.xpath("//section[@data-component=\"features\"]//span[@class=\"container__toggle__text\"]")).getText();
+        return buttonState;
+    }
+
+
+    public Article goToArticleInPeople() {
+        return goToArticleInContainer("people");
+    }
+
+    public Article goToArticleInReviewsContainer() {
+        return goToArticleInContainer("reviews");
+    }
+
+    private Article goToArticleInContainer(String container) {
+        driver.findElement(By.xpath("/descendant::section[@data-component=\"" + container + "\"]//a[@data-link-name=\"article\"][1]")).click();
         return new Article(driver);
     }
 

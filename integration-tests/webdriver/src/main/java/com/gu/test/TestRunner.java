@@ -6,7 +6,7 @@ import org.openqa.selenium.WebDriver;
 public class TestRunner {
     private WebDriver driver;
     protected final String baseUrl = "http://m.code.dev-theguardian.com";
-    protected final String betaSite = "/uk?view=mobile";
+    protected final String betaSite = "/testcard";
 
     public TestRunner(WebDriver driver) {
         this.driver = driver;
