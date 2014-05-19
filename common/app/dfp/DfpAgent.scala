@@ -20,7 +20,7 @@ object DfpAgent extends ExecutionContexts with Logging {
 
   private def dfpData: Option[DfpData] = {
     if (Play.isTest) {
-      Some(defaultDfpData)
+      Some(testDfpData)
     } else {
       dfpDataAgent get()
     }
@@ -108,7 +108,7 @@ object DfpAgent extends ExecutionContexts with Logging {
     dfpDataAgent close()
   }
 
-  private val defaultDfpData = DfpData(Seq(
+  private val testDfpData = DfpData(Seq(
     LineItem(0, Seq(TargetSet("AND", Seq(Target("slot","IS",Seq("spbadge")),Target("k","IS",Seq("media"))))))
   ))
 }
