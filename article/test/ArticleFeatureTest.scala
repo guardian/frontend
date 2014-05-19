@@ -56,6 +56,13 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
       }
     }
 
+    scenario("Have a meta description") {
+      HtmlUnit("/sport/2012/jun/12/london-2012-olympic-opening-ceremony") { browser =>
+        import browser._
+        findFirst("meta[name=description]").getAttribute("content") should be ("Director Danny Boyle reveals plans for London 2012 Olympic opening ceremony, including village cricket, maypoles and rain")
+     }
+    }
+
     scenario("Display the article author", ArticleComponents) {
 
       Given("I am on an article entitled 'TV highlights 09/08/2012'")
