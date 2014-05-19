@@ -2,14 +2,15 @@
 @import common.{Navigation, LinkTo, Edition}
 
 <ul class="breadcrumb-list inline-list">
-    @defining(Edition(request).navigation) { navigation =>
+    @defining(Edition(request).navigation, content.primaryKeyWordTag.get.url) { case (navigation, primaryKeywordLink ) =>
         @defining(Navigation.topLevelItem(navigation, content)) { topLevelSelected =>
             @*
             * See here for more info on Breadcrumbs
             * https://support.google.com/webmasters/answer/185417?hl=en
             *@
+
             @navigation.map { nav =>
-                @if(topLevelSelected.exists(_ == nav) ) {
+                @if(topLevelSelected.exists(_ == nav) && nav.name.href != primaryKeywordLink) {
                     <li class="breadcrumb-list__item inline-list__item">
                         <div class="breadcrumb-keyword" itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
                             <a itemprop="url" href="@LinkTo{nav.name.href}"><span itemprop="title">@Html(nav.name.title)</span></a>
@@ -21,7 +22,7 @@
             @Navigation.localNav(navigation, content).map { localNav =>
                 @defining(localNav.find(_.currentFor(content))){ currentSubSection =>
                     @localNav.map { nav =>
-                        @if( currentSubSection.exists(_ == nav)) {
+                        @if( currentSubSection.exists(_ == nav) && nav.href != primaryKeywordLink) {
                             <li class="breadcrumb-list__item inline-list__item">
                                 <div class="breadcrumb-keyword" itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
                                     <a itemprop="url" href="@LinkTo{@nav.href}"><span itemprop="title">@Html(nav.title)</span></a>
