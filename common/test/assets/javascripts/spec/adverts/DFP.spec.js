@@ -35,6 +35,20 @@ define([
                         <div id="dfp-ad-dont-label" class="ad-slot__container"></div>\
                     </div>'
                 ]
+            },
+            makeFakeEvent = function(id, isEmpty) {
+                return {
+                    isEmpty: isEmpty,
+                    slot: {
+                        getSlotId: function() {
+                            return {
+                                getDomId: function() {
+                                    return id
+                                }
+                            }
+                        }
+                    }
+                }
             };
 
         beforeEach(function() {
@@ -187,51 +201,42 @@ define([
 
         describe('labelling', function() {
 
-            function makeFakeEvent(id, isEmpty) {
-                return {
-                    isEmpty: isEmpty,
-                    slot: {
-                        getSlotId: function() {
-                            return {
-                                getDomId: function() {
-                                    return id
-                                }
-                            }
-                        }
-                    }
-                }
-            };
-
             var slotId = 'dfp-ad-html-slot';
 
             it('should be added', function() {
-                var fakeEvent = makeFakeEvent(slotId),
-                    $slot = $('#' + slotId).parent();
+                var $slot = $('#' + slotId).parent();
                 dfp.init();
                 window.googletag.cmd.forEach(function(func) { func(); });
-                window.googletag.pubads().listener(fakeEvent);
+                window.googletag.pubads().listener(makeFakeEvent(slotId));
                 expect($slot.hasClass('ad-label--showing')).toBe(true);
                 expect($('.ad-slot__label', $slot[0]).text()).toBe('Advertisement');
             });
 
             it('should not be added if data-label attribute is false', function() {
-                var fakeEvent = makeFakeEvent(slotId),
-                    $slot = $('#' + slotId).parent().data('label', false);
+                var $slot = $('#' + slotId).parent().data('label', false);
                 dfp.init();
                 window.googletag.cmd.forEach(function(func) { func(); });
-                window.googletag.pubads().listener(fakeEvent);
+                window.googletag.pubads().listener(makeFakeEvent(slotId));
+                expect($slot.hasClass('ad-label--showing')).toBe(false);
+                expect($('.ad-slot__label', $slot[0]).length).toBe(0);
+            });
+
+            it('should not be added if slot is hidden', function() {
+                var $slot = $('#' + slotId).css('display', 'none');
+                dfp.init();
+                window.googletag.cmd.forEach(function(func) { func(); });
+                window.googletag.pubads().listener(makeFakeEvent(slotId));
                 expect($slot.hasClass('ad-label--showing')).toBe(false);
                 expect($('.ad-slot__label', $slot[0]).length).toBe(0);
             });
 
             it('should be removed if event is empty', function() {
-                var fakeEvent = makeFakeEvent(slotId, true),
-                    $slot = $('#' + slotId).parent()
+                var $slot = $('#' + slotId).parent()
                         .addClass('ad-label--showing')
                         .prepend('<div class="ad-slot__label">Advertisement</div>');
                 dfp.init();
                 window.googletag.cmd.forEach(function(func) { func(); });
-                window.googletag.pubads().listener(fakeEvent);
+                window.googletag.pubads().listener(makeFakeEvent(slotId, true));
                 expect($slot.hasClass('ad-label--showing')).toBe(false);
                 expect($('.ad-slot__label', $slot[0]).length).toBe(0);
             });
@@ -246,7 +251,42 @@ define([
                 expect($('.ad-slot__label', $slot[0]).length).toBe(1);
             });
 
-        })
+        });
+
+        describe('breakout', function() {
+
+            var slotId = 'dfp-ad-html-slot',
+                createTestIframe = function(id, html) {
+                    var $frame = $.create('<iframe></iframe>')
+                        .attr({
+                            id: 'mock_frame',
+                            src: 'javascript:"<html><body style="background:transparent"></body></html>"'
+                        });
+                    $frame[0].onload = function() {
+                        this.contentDocument.body.innerHTML = html;
+                    };
+                    $frame.appendTo(qwery('#' + id)[0]);
+                };
+
+            it('should insert html', function() {
+                var html = '<div class="dfp-iframe-content">Some content</div>';
+                createTestIframe(slotId, '<div class="breakout__html">' + html + '</div>');
+                dfp.init();
+                window.googletag.cmd.forEach(function(func) { func(); });
+                window.googletag.pubads().listener(makeFakeEvent(slotId));
+                expect($('#' + slotId).html()).toBe('<div class="dfp-iframe-content">Some content</div>');
+            });
+
+            it('should run javascript', function() {
+                var str = 'This came from an iframe';
+                createTestIframe(slotId, '<script class="breakout__script">window.dfpModuleTestVar = "'+ str +'"</script>');
+                dfp.init();
+                window.googletag.cmd.forEach(function(func) { func(); });
+                window.googletag.pubads().listener(makeFakeEvent(slotId));
+                expect(window.dfpModuleTestVar).toBe(str);
+            });
+
+        });
 
     });
 });

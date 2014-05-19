@@ -4,6 +4,7 @@ define([
 
 var ScoreBoard = function() {};
 component.define(ScoreBoard);
+ScoreBoard.prototype.componentClass = 'match-summary';
 
 return ScoreBoard;
 
