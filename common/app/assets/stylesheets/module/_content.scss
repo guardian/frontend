@@ -16,18 +16,28 @@
         ));
     }
     @include mq($from: tablet) {
-        max-width: 620px;
+        @include rem((
+            max-width: 620px
+        ));
         margin: auto;
     }
     @include mq($from: rightCol) {
-        margin-left: $gs-gutter;
-        padding-right: 340px;
+        @include rem((
+            margin-left: $gs-gutter,
+            padding-right: gs-span(4) + $gs-gutter*2
+        ))
+
     }
     @include mq($from: leftCol) {
-        margin-left: 180px;
+        @include rem((
+            margin-left: gs-span(2) + $gs-gutter*2
+        ))
+
     }
     @include mq($from: wide) {
-        margin-left: 260px;
+        @include rem((
+            margin-left: gs-span(3) + $gs-gutter*2
+        ));
     }
 
     &.content__main-column--video,
@@ -51,7 +61,10 @@
         display: none;
     }
 
-    width: 300px;
+    @include rem((
+        width: gs-span(4)
+    ));
+
     position: absolute;
     top: 0;
     right: 0;
@@ -64,17 +77,22 @@
         display: none;
     }
     @include mq($from:tablet, $to: rightCol) {
-        max-width: 620px;
+        @include rem((
+            max-width: gs-span(8)
+        ));
         margin: auto;
     }
-    height: $gs-baseline/2;
-    margin: 0 $gs-gutter;
+    @include rem((
+        height: $gs-baseline/2,
+        margin: 0 $gs-gutter
+    ));
+
     border-top: 1px dotted $c-neutral5;
 }
 
 .content__head__comment-count {
     @include rem((
-            height: 16px + $gs-baseline //font-size + $gs-baseline
+        height: 16px + $gs-baseline //font-size + $gs-baseline
     ));
     @include mq(tablet) {
         display: none;
@@ -87,8 +105,8 @@
 .content__keywords {
     @include fs-data(4);
     @include rem((
-            margin-top: $gs-baseline,
-            margin-bottom: $gs-baseline
+        margin-top: $gs-baseline,
+        margin-bottom: $gs-baseline
     ));
 }
 
@@ -103,17 +121,26 @@
     }
     @include fs-header(3);
     @include box-sizing(border-box);
-    margin-bottom: $gs-baseline;
+    @include rem((
+        margin-bottom: $gs-baseline
+    ));
+
     @include mq($from: leftCol) {
         float: left;
-        margin-left: -160px;
+        @include rem((
+            margin-left: -(gs-span(2) + $gs-gutter)
+        ));
+
     }
     @include mq($from: wide) {
-        margin-left: -240px;
+        @include rem((
+            margin-left: -(gs-span(3) + $gs-gutter)
+        ));
+
     }
     @include mq($from: leftCol, $to: wide) {
         @include rem((
-                width: gs-span(2)
+            width: gs-span(2)
         ));
     }
 }
@@ -121,8 +148,8 @@
 .content__headline {
     @include fs-headline(4);
     @include rem((
-            padding-bottom: $gs-baseline*2,
-            padding-top: $gs-baseline/2
+        padding-bottom: $gs-baseline*2,
+        padding-top: $gs-baseline/2
     ));
 
     @include mq(mobileLandscape) {
@@ -192,12 +219,12 @@
 
         >li {
             @include rem((
-                    text-indent: 18px
+                text-indent: 18px
             ));
 
             @include mq(tablet) {
                 @include rem((
-                        text-indent: 20px
+                    text-indent: 20px
                 ));
             }
         }
@@ -205,7 +232,7 @@
         > li:before {
             position: absolute;
             @include rem((
-                    left: -16px
+                left: -16px
             ));
             content: counter(li)".";
             counter-increment: li;
@@ -215,8 +242,8 @@
             @include mq(tablet) {
                 @include fs-header(3, true);
                 @include rem((
-                        left: -20px,
-                        top: -2px
+                    left: -20px,
+                    top: -2px
                 ));
             }
         }
@@ -236,14 +263,14 @@
     .relative-timestamp__icon {
         vertical-align: top;
         @include rem((
-                top: 3px
+            top: 3px
         ));
     }
 
     .content__meta-container--no-byline & {
         border-top: 1px dotted $c-neutral5;
         @include rem((
-                padding-top: $gs-baseline/3
+            padding-top: $gs-baseline/3
         ));
     }
 
@@ -254,9 +281,9 @@
 
     @include mq(leftCol) {
         @include rem((
-                height: $gs-row-height,
-                padding-top: 2px,
-                padding-bottom: $gs-baseline
+            height: $gs-row-height,
+            padding-top: 2px,
+            padding-bottom: $gs-baseline
         ));
         border-top: 1px dotted $c-neutral5;
     }
