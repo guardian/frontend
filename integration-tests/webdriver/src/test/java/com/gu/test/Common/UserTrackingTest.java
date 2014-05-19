@@ -9,8 +9,7 @@ import org.junit.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
-import org.openqa.selenium.remote.CapabilityType;
-import org.openqa.selenium.remote.DesiredCapabilities;
+
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -28,22 +27,22 @@ public class UserTrackingTest {
       httpMock.startServer();
         FirefoxProfile profile = new FirefoxProfile();
         profile.setPreference("network.proxy.http", "localhost");
-        profile.setPreference("network.proxy.http_port", "8089");
+        profile.setPreference("network.proxy.http_port", "8080");
         driver = new FirefoxDriver(profile);
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 
         testRunner = new TestRunner(driver);
-        fronts = testRunner.goToFronts(driver);
+        fronts = testRunner.goToFrontsForTracking(driver);
     }
 
 
     @Test
     public void theCorrectTrackingInformationShouldBeSentForSportArticle() throws Exception {
 
-        Article sportArticle = fronts.goToArticleInReviewsContainer();
+        Article sportArticle = fronts.goToArticleInSportContainer();
         sportArticle.waitForArticleLoad(driver);
         List<LoggedRequest> requests = httpMock.findAllRequestsTo("ophan.theguardian.com");
-        String dataComponent = "reviews";
+        String dataComponent = "sport";
 
         boolean contains = false;
         for (LoggedRequest request : requests) {
@@ -78,7 +77,8 @@ public class UserTrackingTest {
 
     @After
     public void tearDown() throws Exception {
-        httpMock.stopServer();
+
         testRunner.endTest(driver);
+        httpMock.stopServer();
     }
 }

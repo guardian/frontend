@@ -18,7 +18,7 @@ public class HttpMock {
 
     public HttpMock() {
         wireMockServer =
-                new WireMockServer(new WireMockConfiguration().port(8089).enableBrowserProxying(true));
+                new WireMockServer(new WireMockConfiguration().port(8080).enableBrowserProxying(true));
     }
 
     public void startServer() {

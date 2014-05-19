@@ -46,8 +46,8 @@ public class FrontPage {
         return goToArticleInContainer("people");
     }
 
-    public Article goToArticleInReviewsContainer() {
-        return goToArticleInContainer("reviews");
+    public Article goToArticleInSportContainer() {
+        return goToArticleInContainer("sport");
     }
 
     private Article goToArticleInContainer(String container) {

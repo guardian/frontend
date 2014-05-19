@@ -18,11 +18,16 @@ public class TestRunner {
     }
 
     public FrontPage goToFronts(WebDriver driver) {
-        String frontPageURL = baseUrl + betaSite;
+        String frontPageURL = this.getBaseUrl() + betaSite;
         driver.get(frontPageURL);
         return new FrontPage(driver);
     }
 
+    public FrontPage goToFrontsForTracking(WebDriver driver) {
+        String frontPageURL = this.getBaseUrl() + "/uk?view=mobile";
+        driver.get(frontPageURL);
+        return new FrontPage(driver);
+    }
 
     public void endTest(WebDriver driver) {
         if (driver != null) {
