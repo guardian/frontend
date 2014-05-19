@@ -20,7 +20,7 @@ object DfpAgent extends ExecutionContexts with Logging {
 
   private def dfpData: Option[DfpData] = {
     if (Play.isTest) {
-      Some(DfpData(Seq(LineItem(0, Nil))))
+      Some(defaultDfpData)
     } else {
       dfpDataAgent get()
     }
@@ -49,21 +49,15 @@ object DfpAgent extends ExecutionContexts with Logging {
 
   def refresh() {
 
-    implicit val targetReads: Reads[Target] = (
-      (JsPath \ "name").read[String] and
-        (JsPath \ "op").read[String] and
-        (JsPath \ "values").read[Seq[String]]
-      )(Target.apply _)
-
-    implicit val targetSetReads: Reads[TargetSet] = (
+    implicit val targetReads: Reads[Target] = ((JsPath \ "name").read[String] and
       (JsPath \ "op").read[String] and
-        (JsPath \ "targets").read[Seq[Target]]
-      )(TargetSet.apply _)
+      (JsPath \ "values").read[Seq[String]])(Target.apply _)
 
-    implicit val lineItemReads: Reads[LineItem] = (
-      (JsPath \ "id").read[Long] and
-        (JsPath \ "targetSets").read[Seq[TargetSet]]
-      )(LineItem.apply _)
+    implicit val targetSetReads: Reads[TargetSet] = ((JsPath \ "op").read[String] and
+      (JsPath \ "targets").read[Seq[Target]])(TargetSet.apply _)
+
+    implicit val lineItemReads: Reads[LineItem] = ((JsPath \ "id").read[Long] and
+      (JsPath \ "targetSets").read[Seq[TargetSet]])(LineItem.apply _)
 
     // See http://stackoverflow.com/questions/18625185/parsing-a-list-of-models-in-play-2-1-x
     implicit val reader = new Reads[DfpData] {
@@ -76,10 +70,8 @@ object DfpAgent extends ExecutionContexts with Logging {
 
       def logDataChanges(freshData: Option[DfpData]) {
         def minus(optData: Option[DfpData], optSubData: Option[DfpData]): Seq[LineItem] = {
-          for {
-            data <- optData
-            subData <- optSubData
-          } yield
+          for {data <- optData
+               subData <- optSubData} yield
             data.lineItems filterNot (subData.lineItems contains _)
         }.getOrElse(Nil)
         val removedLineItems = minus(dfpData, freshData)
@@ -107,6 +99,10 @@ object DfpAgent extends ExecutionContexts with Logging {
   def stop() {
     dfpDataAgent close()
   }
+
+  private val defaultDfpData = DfpData(Seq(
+    LineItem(0, Seq(TargetSet("AND", Seq(Target("slot","IS",Seq("spbadge")),Target("k","IS",Seq("media"))))))
+  ))
 }
 
 
