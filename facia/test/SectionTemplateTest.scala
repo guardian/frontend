@@ -12,6 +12,7 @@ class SectionTemplateTest extends FlatSpec with Matchers {
   }
 
   ignore should "Link to an RSS feed" in HtmlUnit("/books") { browser =>
+
       import browser._
       val front = findFirst("link[type='application/rss+xml']")
       front.getAttribute("href") should be ("/books/rss")
