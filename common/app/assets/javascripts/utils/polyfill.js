@@ -1,4 +1,4 @@
-define('common/utils/polyfill', [], function() {
+define(function() {
 
     /**
      * ARE YOU SURE YOU WANT TO ADD SOMETHING TO THIS FILE?!
