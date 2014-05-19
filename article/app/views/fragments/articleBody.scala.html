@@ -18,10 +18,6 @@
 
                         @fragments.meta.metaInline(article)
 
-                        @if(article.isAdvertisementFeature){
-                            <div class="article-hat-label">Advertisement feature</div>
-                        }
-
                         @fragments.headline(article.headline, List("js-score"))
 
                         @if(article.isCommentable) {

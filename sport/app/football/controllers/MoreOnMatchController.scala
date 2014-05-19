@@ -53,7 +53,6 @@ object MoreOnMatchController extends Controller with Football with Requests with
           JsonComponent(
             "nav" -> football.views.html.fragments.matchNav(populateNavModel(theMatch, filtered)),
             "matchSummary" -> football.views.html.fragments.matchSummary(theMatch, Competitions().competitionForMatch(theMatch.id), responsive = true),
-            "scoreSummary" -> football.views.html.fragments.scoreSummary(theMatch),
             "hasStarted" -> theMatch.hasStarted,
             "group" -> group,
             "matchDate" ->  DateTimeFormat.forPattern("yyyy/MMM/dd").print(theMatch.date).toLowerCase(),
