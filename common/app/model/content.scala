@@ -165,6 +165,12 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   override lazy val imageAdjust: String = apiContent.metaData.get("imageAdjust").flatMap(_.asOpt[String]).getOrElse("default")
   override lazy val isBreaking: Boolean = apiContent.metaData.get("isBreaking").flatMap(_.asOpt[Boolean]).getOrElse(false)
   override lazy val supporting: List[Content] = apiContent.supporting
+
+  override lazy val imageSrc: Option[String] = apiContent.metaData.get("imageSrc").flatMap(_.asOpt[String])
+  lazy val imageElement: Option[ImageElement] = imageSrc.map(ImageOverride.createElementWithOneAsset)
+
+  override def trailPicture: Option[ImageContainer] = imageElement.orElse(super.trailPicture)
+  override def trailPicture(aspectWidth: Int, aspectHeight: Int) = imageElement.orElse(super.trailPicture(aspectWidth, aspectHeight))
 }
 
 object Content {
