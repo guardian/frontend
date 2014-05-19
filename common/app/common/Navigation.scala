@@ -6,7 +6,8 @@ case class SectionLink(zone: String, title: String, href: String,newWindow: Bool
   def currentFor(page: MetaData): Boolean = page.url == href ||
     s"/${page.section}" == href ||
     page.url == href ||
-    page.tags.exists(t => s"/${t.id}" == href)
+    page.tags.exists(t => s"/${t.id}" == href) ||
+    (Edition.all.exists(_.id.toLowerCase == page.id.toLowerCase) && href == "/")
 }
 
 case class Zone(name: SectionLink, sections: Seq[SectionLink])
