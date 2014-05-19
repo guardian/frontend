@@ -116,21 +116,24 @@ define([
          */
         checkForBreakout = function($slot) {
             /* jshint evil: true */
-            var iFrame = $slot[0].querySelector('iframe');
+            var iFrame = qwery('iframe', $slot[0])[0];
+
             if (iFrame) {
 
                 var frameContents = iFrame.contentDocument.body;
 
                 for (var cls in breakoutHash) {
-                    var $el = bonzo(frameContents.querySelector('.' + cls));
+                    var $el = $('.' + cls, frameContents);
 
                     if ($el.length > 0) {
                         if ($el[0].nodeName.toLowerCase() === 'script') {
                             // evil, but we own the returning js snippet
                             eval($el.html());
                         } else {
-                            $slot.html('');
-                            $slot.first().append(breakoutHash[cls].replace(/%content%/g, $el.html()));
+                            $slot
+                                .html('')
+                                .first()
+                                .append(breakoutHash[cls].replace(/%content%/g, $el.html()));
                         }
                     }
                 }
