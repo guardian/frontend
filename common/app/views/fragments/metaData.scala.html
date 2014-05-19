@@ -3,13 +3,20 @@
 @import model._
 @import conf._
 @import Switches._
+@import play.api.Play
+@import play.api.Play.current
 
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
 
     @* https://support.google.com/plus/answer/1713826 *@
     <link rel="publisher" href="https://plus.google.com/113000071431138202574" />
 
-    <link rel="shortcut icon" type="image/png" href="@Static("images/favicons/32x32.ico")" />
+    @if(Play.isDev){
+        <link rel="shortcut icon" type="image/png" href="@Static("images/favicons/32x32-dev.ico")" />
+    } else {
+        <link rel="shortcut icon" type="image/png" href="@Static("images/favicons/32x32.ico")" />
+    }
+
 
     <link rel="apple-touch-icon" sizes="152x152" href="@Static("images/favicons/152x152.png")" />
     <link rel="apple-touch-icon" sizes="144x144" href="@Static("images/favicons/144x144.png")" />
