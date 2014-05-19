@@ -33,15 +33,15 @@ mkdir -p "$1/target/dist/packages/frontend-$1"
 
 
 # Copy packages to dist directory
-cp "$1/conf/deploy.json" "$1/target/dist"
-cp "$1/target/scala-2.10/frontend-$1.jar" "$1/target/dist/packages/frontend-$1"
-cp -r "static/target" "$1/target/dist/packages/frontend-static"
-cp -r "$PWD/static/abtests.json" "$1/target/dist/packages/frontend-abtests"
+cp "$1/conf/deploy.json" "$1/target/dist/"
+cp "$1/target/scala-2.10/frontend-$1.jar" "$1/target/dist/packages/frontend-$1/"
+cp -r "static/target" "$1/target/dist/packages/frontend-static/"
+cp -r "$PWD/static/abtests.json" "$1/target/dist/packages/frontend-abtests/"
 
 # Generate folder for the application zip.
 mkdir -p "$1/target/dist/packages/$1"
 ./sbt-tc "project $1" dist
-cp "$1/target/universal/$1.zip" "$1/target/dist/packages/$1"
+cp "$1/target/universal/$1.zip" "$1/target/dist/packages/$1/"
 
 # And zip up the packet
 cd "$1/target/dist"
