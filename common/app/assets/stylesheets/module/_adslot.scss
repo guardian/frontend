@@ -8,13 +8,10 @@
     }
 }
 .top-banner-ad-container {
-    margin: 0 auto;
-
-    @include mq(faciaLeftCol) {
-        @include rem((
-            width: gs-span(14)
-        ));
-    }
+    background-color: #f0f0f0;
+}
+.top-banner-ad-container--desktop {
+    background-color: $c-neutral8;
 }
 .ad-slot--top-banner-ad {
     background-color: #f0f0f0;
