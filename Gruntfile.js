@@ -63,7 +63,7 @@ module.exports = function (grunt) {
             common: {
                 options: {
                     baseUrl: 'common/app/assets/javascripts',
-                    name: 'common/bootstraps/app',
+                    name: 'common/bootstraps/go',
                     out: staticTargetDir + 'javascripts/bootstraps/app.js',
                     shim: {
                         imager: {
@@ -75,8 +75,7 @@ module.exports = function (grunt) {
                         }
                     },
                     wrap: {
-                        startFile: 'common/app/assets/javascripts/components/curl/dist/curl-with-js-and-domReady/curl.js',
-                        endFile:   'common/app/assets/javascripts/bootstraps/go.js'
+                        startFile: 'common/app/assets/javascripts/components/curl/dist/curl-with-js-and-domReady/curl.js'
                     }
                 }
             },

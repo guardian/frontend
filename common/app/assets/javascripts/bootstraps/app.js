@@ -8,7 +8,6 @@ define([
     'common/utils/context',
     'common/utils/userTiming',
 
-    'common/modules/analytics/errors',
     'common/modules/ui/fonts',
     'common/modules/adverts/userAdTargeting',
     'common/modules/discussion/api',
@@ -32,7 +31,6 @@ define([
     Context,
     userTiming,
 
-    Errors,
     Fonts,
     UserAdTargeting,
     DiscussionApi,
@@ -57,18 +55,6 @@ define([
 
         initialiseDiscussionApi: function(config) {
             DiscussionApi.init(config);
-        },
-
-        attachGlobalErrorHandler: function (config) {
-            if (!config.switches.clientSideErrors) {
-                return false;
-            }
-            var e = new Errors({
-                isDev: config.page.isDev,
-                buildNumber: config.page.buildNumber
-            });
-            e.init();
-            mediator.on('module:error', e.log);
         },
 
         loadFonts: function(config, ua) {
@@ -100,7 +86,7 @@ define([
 
             modules.initialiseAjax(config);
             modules.initialiseDiscussionApi(config);
-            modules.attachGlobalErrorHandler(config);
+//            modules.attachGlobalErrorHandler(config);
             modules.loadFonts(config, navigator.userAgent);
             modules.initId(config, context);
             modules.initUserAdTargeting();
