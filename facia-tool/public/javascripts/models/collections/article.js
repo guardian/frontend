@@ -249,12 +249,12 @@ define([
                 .filter(function(p){ return p[1] !== false; })
                 // trim strings:
                 .map(function(p){ return [p[0], _.isString(p[1]) ? fullTrim(p[1]) : p[1]]; })
-                // convert numbers to strings:
-                .map(function(p){ return [p[0], _.isNumber(p[1]) ? '' + p[1] : p[1]]; })
                 // reject whitespace-only strings:
                 .filter(function(p){ return _.isString(p[1]) ? p[1] : true; })
                 // reject vals that are equivalent to the fields (if any) that they're overwriting:
                 .filter(function(p){ return _.isUndefined(self.fields[p[0]]) || p[1] !== fullTrim(self.fields[p[0]]()); })
+                // convert numbers to strings:
+                .map(function(p){ return [p[0], _.isNumber(p[1]) ? '' + p[1] : p[1]]; })
                 // recurse into supporting links
                 .map(function(p) {
                     return [p[0], p[0] === 'supporting' ? _.map(p[1].items(), function(item) {
