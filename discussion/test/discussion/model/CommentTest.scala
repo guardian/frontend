@@ -8,7 +8,7 @@ class CommentTest extends FreeSpec with ShouldMatchers {
 
   "A comment with Json" in {
     val json: JsValue = Json.parse(aCommentJson)
-    val aComment = Comment.apply(json, None, Some(Discussion.empty))
+    val aComment = Comment.apply(json)
 
     aComment.body should include("<p>Morning,</p><p>In")
     aComment.id should be(12495317)

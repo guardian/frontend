@@ -9,11 +9,10 @@ case class Profile(
   displayName: String,
   isStaff: Boolean = false,
   isContributor: Boolean = false,
-  privateFields: Option[PrivateProfileFields] = None
+  privateFields: Option[PrivateProfileFields]
 )
 
 object Profile {
-  lazy val empty = Profile("", "", "")
 
   def apply(json: JsValue): Profile = {
     val profileJson = json \ "userProfile"
