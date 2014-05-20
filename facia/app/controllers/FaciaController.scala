@@ -39,11 +39,18 @@ class FaciaController extends Controller with Logging with ExecutionContexts wit
   def renderFrontPressSpecial(path: String) = renderFrontPress(path)
 
   // Needed as aliases for reverse routing
-  def renderFrontRss(id: String) = renderFront(s"$id/rss")
   def renderFrontJson(id: String) = renderFront(id)
   def renderCollectionRss(id: String) = renderCollection(id)
   def renderCollectionJson(id: String) = renderCollection(id)
   def renderContainerJson(id: String) = renderContainer(id)
+
+  def renderFrontRss(path: String) = {
+    log.info(s"Serving RSS Path: $path")
+    if (!ConfigAgent.getPathIds.contains(path))
+      applicationsRedirect(s"$path/rss")
+    else
+      renderFrontPress(path)
+  }
 
   def renderFront(path: String) = {
     log.info(s"Serving Path: $path")
