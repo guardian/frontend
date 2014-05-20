@@ -31,15 +31,15 @@ class FaciaController extends Controller with Logging with ExecutionContexts wit
     Cached(60)(Redirect(redirectPath))
   }
 
-  def applicationsRedirect(path: String) = Action { implicit request =>
-    Ok.withHeaders("X-Accel-Redirect" -> (s"/applications/$path" + (if (request.isRss) "/rss" else "")))
+  def applicationsRedirect(path: String) = Action {
+    Ok.withHeaders("X-Accel-Redirect" -> s"/applications/$path")
   }
 
   //Only used by dev-build for rending special urls such as lifeandstyle/home-and-garden
   def renderFrontPressSpecial(path: String) = renderFrontPress(path)
 
   // Needed as aliases for reverse routing
-  def renderFrontRss(id: String) = renderFront(id)
+  def renderFrontRss(id: String) = renderFront(s"$id/rss")
   def renderFrontJson(id: String) = renderFront(id)
   def renderCollectionRss(id: String) = renderCollection(id)
   def renderCollectionJson(id: String) = renderCollection(id)
