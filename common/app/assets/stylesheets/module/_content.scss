@@ -369,13 +369,13 @@
 
 
 .content-meta {
-    padding: 0;
     border-top: 1px dotted $c-neutral5;
     @include fs-textsans(3);
     font-weight: bold;
     @include rem((
-            margin: 0 0 $gs-baseline/2,
-            line-height: 16px
+        padding-top: $gs-baseline,
+        margin: 0 0 $gs-baseline/2,
+        line-height: 16px
     ));
 }
 
