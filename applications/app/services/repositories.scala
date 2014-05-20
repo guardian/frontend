@@ -98,7 +98,7 @@ trait Index extends ConciergeRepository with QueryDefaults {
 
   def index(edition: Edition, path: String, pageNum: Int, isRss: Boolean)(implicit request: RequestHeader): Future[Either[IndexPage, SimpleResult]] = {
 
-    val promiseOfResponse = ContentApi.item(path, edition)
+    val promiseOfResponse = ContentApi.item(path.replace("/rss", ""), edition)
       .page(pageNum)
       .pageSize(IndexPagePagination.pageSize)
       .showEditorsPicks(pageNum == 1) //only show ed pics on first page
