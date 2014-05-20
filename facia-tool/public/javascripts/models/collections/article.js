@@ -100,6 +100,7 @@ define([
                     self.meta.imageSrc(src);
                     self.meta.imageSrcWidth(width);
                     self.meta.imageSrcHeight(height);
+
                     self.state.isOpenImage(false);
                     self.save();
                 })
@@ -248,6 +249,8 @@ define([
                 .filter(function(p){ return p[1] !== false; })
                 // trim strings:
                 .map(function(p){ return [p[0], _.isString(p[1]) ? fullTrim(p[1]) : p[1]]; })
+                // convert numbers to strings:
+                .map(function(p){ return [p[0], _.isNumber(p[1]) ? '' + p[1] : p[1]]; })
                 // reject whitespace-only strings:
                 .filter(function(p){ return _.isString(p[1]) ? p[1] : true; })
                 // reject vals that are equivalent to the fields (if any) that they're overwriting:
@@ -320,8 +323,8 @@ define([
                 img.onload = function() {
                     var width = this.width || 1,
                         height = this.height || 1,
-                        err =  width > 2048 ? 'Images cannot be more than 2048 pixels wide' :
-                               width < 620  ? 'Images cannot be less than 620 pixels wide'  :
+                        err =  width > 940 ? 'Images cannot be more than 2048 pixels wide' :
+                               width < 620 ? 'Images cannot be less than 620 pixels wide'  :
                                Math.abs((width * 3)/(height * 5) - 1) > 0.01 ?  'Images must have a 5x3 aspect ratio' : false;
 
                     if (err) {
