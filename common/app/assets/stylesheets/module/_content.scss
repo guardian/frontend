@@ -1,7 +1,8 @@
 .content {
     @include rem((
         margin-bottom: $gs-baseline*3.5
-    ))
+    ));
+    @include fs-bodyCopy(3);
 }
 
 .content__main-column {
@@ -75,7 +76,7 @@
 
 .content__top-border {
     @include rem((
-        height: $gs-baseline/4,
+        height: $gs-baseline/2,
         margin: 0 $gs-gutter
     ));
     border-top: 1px dotted $c-neutral5;
@@ -95,6 +96,9 @@
     @include mq($to: tablet) {
         border-top-style: solid;
         border-top-width: 2px;
+        .has-localnav & {
+            border-top: 0;
+        }
     }
 }
 

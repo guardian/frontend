@@ -1,4 +1,4 @@
-.article {
+.article, {
     position: relative;
     @include rem((
             margin-bottom: $gs-baseline*3.5
