@@ -33,10 +33,10 @@
             "depends" : ["artifactUpload", "deploy"]
         },
         "deploy":{
-            "actionsBeforeApp": ["frontend-onward.deploy", "onward.deploy"]
+            "actionsBeforeApp": ["frontend-onward.deploy"]
         },
         "artifactUpload":{
-            "actionsBeforeApp": ["frontend-onward.uploadArtifacts"]
+            "actionsBeforeApp": ["frontend-onward.uploadArtifacts", "onward.uploadArtifacts"]
         }
     }
 }

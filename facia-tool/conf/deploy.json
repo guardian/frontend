@@ -32,10 +32,10 @@
             "depends" : ["artifactUpload", "deploy"]
         },
         "deploy":{
-            "actionsBeforeApp": ["frontend-facia-tool.deploy", "facia-tool.deploy"]
+            "actionsBeforeApp": ["frontend-facia-tool.deploy"]
         },
         "artifactUpload":{
-            "actionsBeforeApp": ["frontend-facia-tool.uploadArtifacts"]
+            "actionsBeforeApp": ["frontend-facia-tool.uploadArtifacts", "facia-tool.uploadArtifacts"]
         }
     }
 }

@@ -32,10 +32,10 @@
             "depends" : ["artifactUpload", "deploy"]
         },
         "deploy":{
-            "actionsBeforeApp": ["frontend-diagnostics.deploy", "diagnostics.deploy"]
+            "actionsBeforeApp": ["frontend-diagnostics.deploy"]
         },
         "artifactUpload":{
-            "actionsBeforeApp": ["frontend-diagnostics.uploadArtifacts"]
+            "actionsBeforeApp": ["frontend-diagnostics.uploadArtifacts", "diagnostics.uploadArtifacts"]
         }
     }
 }

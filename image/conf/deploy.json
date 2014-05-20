@@ -33,10 +33,10 @@
             "depends" : ["artifactUpload", "deploy"]
         },
         "deploy":{
-            "actionsBeforeApp": ["frontend-image.deploy", "image.deploy"]
+            "actionsBeforeApp": ["frontend-image.deploy"]
         },
         "artifactUpload":{
-            "actionsBeforeApp": ["frontend-image.uploadArtifacts"]
+            "actionsBeforeApp": ["frontend-image.uploadArtifacts", "image.uploadArtifacts"]
         }
     }
 }
