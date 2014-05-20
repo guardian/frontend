@@ -1,0 +1,47 @@
+@(profileDiscussions: discussion.model.ProfileDiscussions)(implicit request: RequestHeader)
+
+<div class="profile-discussions">
+@profileDiscussions.discussions.map{ discussion =>
+     <div class="facia-container facia-container--default-heading facia-container--layout-article facia-container--layout-discussion">
+        <div class="container container--row-pattern">
+            <div class="facia-container__inner">
+                <div class="container__border tone-accent-border hide-on-mobile"></div>
+                <h3 class="container__title tone-news">
+                    <a href="@discussion.discussion.webUrl" class="container__title__label u-text-hyphenate">@discussion.discussion.title</a>
+                </h3>
+                <div class="container__body">
+                    <ul class="disc-discussions u-unstyled" itemprop itemtype="http://schema.org/UserComments">
+                        @discussion.comments.map{ comment =>
+                            <li class="disc-comment u-cf" itemprop itemtype="http://schema.org/Comment">
+                                <div class="disc-comment__meta">
+                                    <time class="disc-comment__date-published"
+                                          itemprop="datePublished"
+                                          datetime="@comment.date.toString("yyyy-MM-dd'T'HH:mm:ss'Z'")"
+                                          data-timestamp="@comment.date.getMillis">
+                                        @comment.date.toString("d MMM y HH:mm")
+                                    </time>
+
+                                    <button class="disc-comment__recommend u-button-reset">
+                                        <div class="disc-comment__recommend-count">
+                                            @comment.numRecommends
+                                        </div>
+                                        <div class="disc-comment__recommend-button">
+                                            <i class="i i-recommend"></i>
+                                        </div>
+                                    </button>
+                                </div>
+
+                                <div class="disc-comment__body" itemprop="text">
+                                    @withJsoup(BulletCleaner(comment.body))(
+                                        InBodyLinkCleaner("in body link")(Edition(request))
+                                    )
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+</div>
