@@ -81,6 +81,7 @@ define([
 
         userTiming.mark('App Begin');
 
+        errors.init({ isDev: config.page.isDev, buildNumber: config.page.buildNumber });
         mediator.on('module:error', errors.log);
 
         domReady(function() {
