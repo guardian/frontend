@@ -21,7 +21,6 @@ require([
         });
     };
 
-
     if (guardian.isModernBrowser) {
         attachGlobalErrorHandler(config);
         polyfills.load();
