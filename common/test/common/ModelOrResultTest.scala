@@ -47,7 +47,7 @@ class ModelOrResultTest extends FlatSpec with Matchers with ExecutionContexts {
     }
 
     status(notFound) should be(200)
-    headers(notFound).apply("X-Accel-Redirect") should be("/applications/the/id")
+    headers(notFound).apply("X-Accel-Redirect") should be("/type/article/the/id")
   }
 
   it should "internal redirect to a video if it has shown up at the wrong server" in {
