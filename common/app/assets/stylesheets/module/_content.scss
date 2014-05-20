@@ -399,7 +399,7 @@
 
     @include mq($from: tablet) {
         @include rem((
-            padding-top: $gs-baseline
+            padding-top: $gs-baseline/2
         ));
     }
 }
@@ -437,9 +437,11 @@
         border-top: 1px dotted $c-neutral5;
     }
 
-    .has-localnav & {
-        border-top: 0;
-        padding-top: 0;
+    @include mq($to: tablet) {
+        .has-localnav & {
+            border-top: 0;
+            padding-top: 0;
+        }
     }
 
     @include mq($from: leftCol) {
@@ -449,7 +451,7 @@
 
 .content-meta--live {
     @include rem((
-            padding-bottom: $gs-baseline/4
+        padding-bottom: $gs-baseline/4
     ));
 
     @include mq(rightCol) {
