@@ -1,14 +1,12 @@
 /*global guardian:true */
 require([
     'common/utils/config',
-    'common/utils/mediator',
     'common/modules/analytics/errors',
     'common/utils/polyfill',
     'common/bootstraps/app'
 ], function(
     config,
-    mediator,
-    Errors,
+    errors,
     polyfills,
     bootstrap
 ) {
@@ -17,12 +15,10 @@ require([
         if (!config.switches.clientSideErrors) {
             return false;
         }
-        var e = new Errors({
+        errors.init({
             isDev: config.page.isDev,
             buildNumber: config.page.buildNumber
         });
-        e.init();
-        mediator.on('module:error', e.log);
     };
 
 
