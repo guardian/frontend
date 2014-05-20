@@ -61,6 +61,7 @@ private object InternalRedirect extends implicits.Requests {
 
   private def internalRedirect(base: String, id: String)(implicit request: RequestHeader) = request.path match {
     case ShortUrl(_) => Right(Found(s"/$id"))
+    case _ if request.isRss => Right(Ok.withHeaders("X-Accel-Redirect" -> s"/$base/$id/rss"))
     case _ => Right(Ok.withHeaders("X-Accel-Redirect" -> s"/$base/$id"))
   }
 
