@@ -41,13 +41,13 @@ private object ItemOrRedirect extends ItemResponses with Logging{
 
 // http://wiki.nginx.org/X-accel
 // this might have ended up at the wrong server if it has a 'funny' url
-private object InternalRedirect{
+private object InternalRedirect extends implicits.Requests {
 
   lazy val ShortUrl = """^(/p/.*)$""".r
 
   def apply(response: ItemResponse)(implicit request: RequestHeader) = contentTypes(response)
-    .orElse(response.tag.map(t => internalRedirect("type/tag", t.id)))
-    .orElse(response.section.map(s => internalRedirect("type/section", s.id)))
+    .orElse(response.tag.map(t => internalRedirect("applications", t.id)))
+    .orElse(response.section.map(s => internalRedirect("applications", s.id + (if (request.isRss) "/rss" else ""))))
 
 
   def contentTypes(response: ItemResponse)(implicit request: RequestHeader): Option[Right[Nothing, SimpleResult]] = {
