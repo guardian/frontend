@@ -125,9 +125,6 @@
 }
 
 .content__section {
-    @include mq($to: tablet) {
-        display: none;
-    }
     @include fs-header(3);
     @include box-sizing(border-box);
     @include rem((
@@ -137,8 +134,14 @@
         @include rem((
             margin-bottom: ($gs-baseline/2) * 3
         ));
-
     }
+
+    .has-localnav & {
+        @include mq($to: tablet) {
+            display: none;
+        }
+    }
+
     @include mq($from: leftCol) {
         float: left;
         @include rem((
@@ -386,10 +389,15 @@
     @include fs-textsans(3);
     font-weight: bold;
     @include rem((
-        padding-top: $gs-baseline/4,
         margin: 0 0 $gs-baseline/2,
         line-height: 16px
     ));
+
+    @include mq($from: tablet) {
+        @include rem((
+            padding-top: $gs-baseline
+        ));
+    }
 }
 
 .content-meta__label {
@@ -402,28 +410,36 @@
 }
 
 .content-meta--inline {
-    border-top: 0;
     margin: 0;
 
     .content-meta__label,
     .content-meta__item {
         display: inline-block;
         @include rem((
-                margin-right: $gs-gutter/10
+            margin-right: $gs-gutter/10
         ));
     }
 
     @include mq(tablet) {
         @include rem((
-                margin: 0 0 $gs-baseline/2
+            margin: 0 0 $gs-baseline/2
         ));
     }
 
-    @include mq($from: tablet, $to: leftCol) {
-        @include  rem((
-                padding-top: $gs-baseline/2
+    @include mq($to: leftCol) {
+        @include rem((
+            padding-top: $gs-baseline/2
         ));
         border-top: 1px dotted $c-neutral5;
+    }
+
+    .has-localnav & {
+        border-top: 0;
+        padding-top: 0;
+    }
+
+    @include mq($from: leftCol) {
+        border-top: 0;
     }
 }
 
