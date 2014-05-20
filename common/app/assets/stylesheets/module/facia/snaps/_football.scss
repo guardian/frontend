@@ -58,8 +58,7 @@
         }
     }
 
-    .football-team__form,
-    .football-matches__date {
+    .football-team__form {
         display: none;
     }
 
@@ -86,8 +85,7 @@
         }
     }
 
-    .team__heading,
-    .team__battle-line {
+    .team__info {
         @include fs-headline(2, true);
     }
 
@@ -95,6 +93,20 @@
         @include rem((
             top: $gs-baseline/2
         ));
+    }
+
+    .team__scorers {
+        @include fs-data(2, true);
+
+        dd:nth-child(3) {
+            &:after {
+                content: "…";
+                display: block;
+            }
+        }
+        dd:nth-of-type(n+3) {
+            display: none;
+        }
     }
 
     // Different snap sizes
@@ -105,8 +117,7 @@
         .table__caption {
             border-top: 0 none;
         }
-        .team__heading,
-        .team__battle-line {
+        .team__info {
             @include fs-headline(5, true)
         }
     }
@@ -122,20 +133,18 @@
     }
 
     &.facia-snap-point--medium {
-        .team__heading,
-        .team__battle-line {
+        .team__info {
             @include fs-headline(2, true)
-        }
-        .team__battle-line {
-            @include rem((
-                top: $gs-baseline*7
-            ));
         }
     }
 
 
     &.facia-snap-point--small {
         @include table--hide-from-importance-2;
+
+        .team__info {
+            @include fs-headline(1, true)
+        }
     }
 
     &.facia-snap-point--mini,

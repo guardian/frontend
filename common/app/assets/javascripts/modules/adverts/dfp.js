@@ -116,21 +116,24 @@ define([
          */
         checkForBreakout = function($slot) {
             /* jshint evil: true */
-            var iFrame = $slot[0].querySelector('iframe');
+            var iFrame = qwery('iframe', $slot[0])[0];
+
             if (iFrame) {
 
                 var frameContents = iFrame.contentDocument.body;
 
                 for (var cls in breakoutHash) {
-                    var $el = bonzo(frameContents.querySelector('.' + cls));
+                    var $el = $('.' + cls, frameContents);
 
                     if ($el.length > 0) {
                         if ($el[0].nodeName.toLowerCase() === 'script') {
                             // evil, but we own the returning js snippet
                             eval($el.html());
                         } else {
-                            $slot.html('');
-                            $slot.first().append(breakoutHash[cls].replace(/%content%/g, $el.html()));
+                            $slot
+                                .html('')
+                                .first()
+                                .append(breakoutHash[cls].replace(/%content%/g, $el.html()));
                         }
                     }
                 }
@@ -188,7 +191,7 @@ define([
          * pt     = content type
          * url    = path
          */
-        buildPageTargeting = function () {
+        buildPageTargeting = function (config) {
 
             function encodeTargetValue(value) {
                 return value ? queryString.formatKeyword(value).replace(/&/g, 'and').replace(/'/g, '') : '';
@@ -222,7 +225,7 @@ define([
                 at      : cookies.get('adtest') || ''
             }, audienceScienceGateway.getSegments(), criteo.getSegments());
         },
-        buildAdUnit = function () {
+        buildAdUnit = function (config) {
             var isFront      = config.page.isFront || config.page.contentType === 'Section',
                 section      = config.page.section,
                 adUnitSuffix = section;
@@ -242,7 +245,7 @@ define([
             googletag.pubads().addEventListener('slotRenderEnded', parseAd);
         },
         setPageTargeting = function() {
-            var targets = buildPageTargeting();
+            var targets = buildPageTargeting(config);
             for (var target in targets) {
                 if (targets.hasOwnProperty(target)) {
                     googletag.pubads().setTargeting(target, targets[target]);

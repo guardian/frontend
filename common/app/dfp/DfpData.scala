@@ -38,7 +38,7 @@ case class DfpData(lineItems: Seq[LineItem]) {
 
   val sponsoredKeywords = lineItems.flatMap(_.sponsoredKeywords).distinct
 
-  val advertisementFeatureKeywords = lineItems.flatMap(_.sponsoredKeywords).distinct
+  val advertisementFeatureKeywords = lineItems.flatMap(_.advertisementFeatureKeywords).distinct
 
   def isSponsored(keyword: String) = sponsoredKeywords contains keyword
 

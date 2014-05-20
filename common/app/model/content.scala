@@ -33,8 +33,11 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   lazy val isSeries: Boolean = series.nonEmpty
   lazy val hasLargeContributorImage: Boolean = tags.filter(_.hasLargeContributorImage).nonEmpty
   lazy val isFromTheObserver: Boolean = publication == "The Observer"
+  lazy val primaryKeyWordTag: Option[Tag] = tags.find(!_.isSectionTag)
 
   lazy val showInRelated: Boolean = delegate.safeFields.get("showInRelatedContent").exists(_ == "true")
+
+  override lazy val description: Option[String] = trailText
 
 
   // read this before modifying
@@ -135,7 +138,8 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
     ("wordCount", wordCount),
     ("shortUrl", shortUrl),
     ("thumbnail", thumbnailPath.getOrElse(false)),
-    ("references", delegate.references.map(r => Reference(r.id)))
+    ("references", delegate.references.map(r => Reference(r.id))),
+    ("sectionName", sectionName)
     ) ++ Map(seriesMeta : _*)
   }
 

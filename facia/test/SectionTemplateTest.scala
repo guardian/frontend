@@ -11,14 +11,8 @@ class SectionTemplateTest extends FlatSpec with Matchers {
     $(".container__title").first.getText should be ("UK news")
   }
 
-  it should "render section navigation" in  HtmlUnit("/books") { browser =>
-      import browser._
-      val navigation = findFirst("[itemtype='http://data-vocabulary.org/Breadcrumb']")
-      navigation.findFirst("[itemprop='url']").getAttribute("href") should endWith ("/uk/culture")
-      navigation.find("[itemprop='url']")(1).getAttribute("href") should endWith ("/books")
-  }
-  
   ignore should "Link to an RSS feed" in HtmlUnit("/books") { browser =>
+
       import browser._
       val front = findFirst("link[type='application/rss+xml']")
       front.getAttribute("href") should be ("/books/rss")

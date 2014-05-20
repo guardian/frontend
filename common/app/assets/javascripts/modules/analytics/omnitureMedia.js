@@ -87,7 +87,7 @@ define([
                         break;
                 }
                 s.prop41 = type;
-                s.linkTrackVars = 'prop43,prop44,prop45,eVar43,eVar44,eVar45,prop41,events';
+                s.linkTrackVars = 'prop11,prop43,prop44,prop45,eVar11,eVar43,eVar44,eVar45,prop41,events';
                 s.linkTrackEvents = event;
                 s.events = event;
 
@@ -127,10 +127,12 @@ define([
 
             s.loadMediaModule(provider, restricted);
 
+            s.prop11 = config.page.sectionName || '';
             s.prop43 = 'Video';
             s.prop44 = config.page.analyticsName;
             s.prop45 = s.channel;
 
+            s.eVar11 = s.prop11;
             s.eVar43 = s.prop43;
             s.eVar44 = s.prop44;
             s.eVar45 = s.prop45;

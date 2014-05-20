@@ -15,7 +15,7 @@ case class CommentPage(discussionComments: DiscussionComments)
   lazy val discussion = discussionComments.discussion
   lazy val comments = discussionComments.comments
   lazy val paging = discussionComments.pagination
-  override lazy val title = discussion.title
+  lazy val commentPageTitle = discussion.title
   lazy val commentCount = discussionComments.commentCount
   lazy val topLevelCommentCount = discussionComments.topLevelCommentCount
   lazy val commenterCount = discussionComments.commenterCount
