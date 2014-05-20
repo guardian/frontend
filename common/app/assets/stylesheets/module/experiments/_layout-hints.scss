@@ -136,11 +136,18 @@ figure {
     margin-left: 0;
 
     .responsive-img {
+        top: -25%;
         height: auto;
     }
 
     .main-caption {
         padding-left: 0;
+    }
+
+    .u-responsive-ratio--letterbox {
+        @include mq(1920px) {
+            padding-bottom: 768px;
+        }
     }
 }
 
