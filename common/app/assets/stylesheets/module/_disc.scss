@@ -21,17 +21,58 @@ $disc-respond-when: rightCol;
 }
 .disc-comment__meta {
     @include fs-textsans(1);
+    @include rem((
+        margin-bottom: $gs-baseline*1.5
+    ));
     color: $c-neutral2-contrasted;
 
     @include mq($disc-respond-when) {
         float: right;
     }
 }
-.disc-comment__date-published {}
+.disc-comment__date-published {
+    @include mq($disc-respond-when) {
+        display: block;
+    }
+}
+.disc-comment__recommend {
+    display: inline-block;
+    cursor: default;
+    float: right;
+    width: auto;
+
+    @include mq($disc-respond-when) {
+        @include rem((
+            margin-top: $gs-baseline/2
+        ));
+        display: block;
+    }
+}
+.disc-comment__recommend-count {
+    @include rem((
+        margin-right: $gs-gutter/4
+    ));
+    display: inline-block;
+}
+.disc-comment__recommend-button {
+    @include border-radius(18px);
+    @include rem((
+        height: 19px,
+        width: 18px
+    ));
+    background-color: $c-neutral2-contrasted;
+    display: inline-block;
+    vertical-align: middle;
+
+    .i {
+        vertical-align: middle;
+    }
+}
+
 
 .disc-comment__body {
     @include rem((
-        margin-top: $gs-baseline
+        margin-bottom: $gs-baseline
     ));
 
     @include mq($disc-respond-when) {

@@ -12,7 +12,7 @@
                 <div class="container__body">
                     <ul class="disc-discussions u-unstyled" itemprop itemtype="http://schema.org/UserComments">
                         @discussion.comments.map{ comment =>
-                            <li class="disc-comment" itemprop itemtype="http://schema.org/Comment">
+                            <li class="disc-comment u-cf" itemprop itemtype="http://schema.org/Comment">
                                 <div class="disc-comment__meta">
                                     <time class="disc-comment__date-published"
                                           itemprop="datePublished"
@@ -20,6 +20,15 @@
                                           data-timestamp="@comment.date.getMillis">
                                         @comment.date.toString("d MMM y HH:mm")
                                     </time>
+
+                                    <button class="disc-comment__recommend u-button-reset">
+                                        <div class="disc-comment__recommend-count">
+                                            @comment.numRecommends
+                                        </div>
+                                        <div class="disc-comment__recommend-button">
+                                            <i class="i i-recommend"></i>
+                                        </div>
+                                    </button>
                                 </div>
 
                                 <div class="disc-comment__body" itemprop="text">
