@@ -7,6 +7,7 @@ define([
     'common/utils/config',
     'common/utils/context',
     'common/utils/userTiming',
+    'common/modules/analytics/errors',
 
     'common/modules/ui/fonts',
     'common/modules/adverts/userAdTargeting',
@@ -30,6 +31,7 @@ define([
     config,
     Context,
     userTiming,
+    errors,
 
     Fonts,
     UserAdTargeting,
@@ -78,6 +80,8 @@ define([
     var routes = function() {
 
         userTiming.mark('App Begin');
+
+        mediator.on('module:error', errors.log);
 
         domReady(function() {
             var context = document.getElementById('js-context');
