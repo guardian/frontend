@@ -43,4 +43,22 @@ class TitleTest extends FlatSpec with Matchers {
 
     Title(Tag(tag, Some(Pagination(3, 4, 10))))(FakeRequest("GET", "/sport/foobar")).body should be ("The title | Page 3 of 4 | Sport | The Guardian")
   }
+
+  it should "filter out section if it is the same as webTitle" in {
+    val page = Page(id="id", webTitle="The Title", section="The title", analyticsName="")
+
+    Title(page).body should be ("The Title | The Guardian")
+  }
+
+  it should "keep section if it is not the same as webTitle" in {
+    val page = Page(id="id", webTitle="The Title", section="The title thing", analyticsName="")
+
+    Title(page).body should be ("The Title | The title thing | The Guardian")
+  }
+
+  it should "capitalize the section and not the webTitle" in {
+    val page = Page(id="id", webTitle="the title", section="the title thing", analyticsName="")
+
+    Title(page).body should be ("the title | The title thing | The Guardian")
+  }
 }
