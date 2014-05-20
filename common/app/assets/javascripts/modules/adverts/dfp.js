@@ -14,7 +14,9 @@ define([
     'lodash/arrays/flatten',
     'lodash/arrays/uniq',
     'lodash/functions/once',
-    'lodash/objects/defaults'
+    'lodash/objects/defaults',
+    'lodash/objects/pairs',
+    'common/utils/template'
 ], function (
     $,
     bonzo,
@@ -30,7 +32,9 @@ define([
     flatten,
     uniq,
     once,
-    defaults
+    defaults,
+    pairs,
+    template
 ) {
 
     /**
@@ -74,6 +78,34 @@ define([
         breakoutHash = {
             'breakout__html': '%content%',
             'breakout__script': '<script>%content%</script>'
+        },
+        adSlotDefinitions = {
+            right: {
+                sizeMappings: {
+                    tabletlandscape: '300,250|300,600'
+                }
+            },
+            inline1: {
+                sizeMappings: {
+                    mobile: '300,50',
+                    mobilelandscape: '300,50|320,50',
+                    tabletportrait: '300,250'
+                }
+            },
+            inline2: {
+                sizeMappings: {
+                    mobile: '300,50',
+                    mobilelandscape: '300,50|320,50',
+                    tabletportrait: '300,250'
+                }
+            },
+            'merchandising-high': {
+                label: false,
+                refresh: false,
+                sizeMappings: {
+                    desktop: '888,88'
+                }
+            }
         };
 
     /**
@@ -231,6 +263,19 @@ define([
                 adUnitSuffix += 'front';
             }
             return '/' + config.page.dfpAccountId + '/' + config.page.dfpAdUnitRoot + '/' + adUnitSuffix;
+        },
+        createAdSlot = function(name, type) {
+            var definition = adSlotDefinitions[name];
+            return template(
+                '<div id="dfp-ad--{{name}}" class="ad-slot ad-slot--dfp ad-slot--{{type}}" data-link-name="ad slot {{name}}" data-name="{{name}}" data-refresh="{{refresh}}" data-label="{{label}}"{{sizeMappings}}></div>',
+                {
+                    name: name,
+                    type: type,
+                    refresh: definition.refresh !== undefined ? definition.refresh : true,
+                    label: definition.label !== undefined ? definition.label : true,
+                    sizeMappings: pairs(definition.sizeMappings).map(function(size) { return ' data-' + size[0] + '="' + size[1] + '"'; }).join('')
+                }
+            );
         };
 
     /**
@@ -349,6 +394,8 @@ define([
         buildPageTargeting: buildPageTargeting,
 
         buildAdUnit : buildAdUnit,
+
+        createAdSlot: createAdSlot,
 
         // really only useful for testing
         reset: function() {

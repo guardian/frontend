@@ -191,6 +191,11 @@ define([
             expect(window.googletag.display).toHaveBeenCalled('dfp-ad-html-slot');
         });
 
+        it('should create ad slot', function() {
+            var adSlot = dfp.createAdSlot('right', 'right-type')
+            expect(adSlot).toBe('<div id="dfp-ad--right" class="ad-slot ad-slot--dfp ad-slot--right-type" data-link-name="ad slot right" data-name="right" data-refresh="true" data-label="true" data-tabletlandscape="300,250|300,600"></div>')
+        });
+
         describe('labelling', function() {
 
             var slotId = 'dfp-ad-html-slot';

@@ -3,18 +3,18 @@ define([
     'bonzo',
     'qwery',
     'lodash/objects/assign',
-    'common/utils/template'
+    'common/utils/template',
+    'common/modules/adverts/dfp'
 ], function (
     $,
     bonzo,
     qwery,
     _assign,
-    template
+    template,
+    dfp
 ) {
 
     var adNames = ['inline1', 'inline2'],
-        adSlotTemplate =
-            '<div id="dfp-ad--{{name}}" class="ad-slot ad-slot--dfp ad-slot--container-inline" data-link-name="ad slot {{name}}" data-name="{{name}}" data-mobile="300,50" data-mobilelandscape="300,50|320,50" data-tabletportrait="300,250"></div>',
         newSliceTemplate =
             '<ul class="u-unstyled l-row l-row--items-3 facia-slice facia-slice--linkslist-and-mpu">' +
                 '<li class="l-row__item l-row__item--boost-2 facia-slice__item">{{linkslist}}</li>' +
@@ -57,7 +57,7 @@ define([
                 .html(
                     template(newSliceTemplate, {
                         linkslist: $originalSlice.html(),
-                        adSlot: template(adSlotTemplate, { name: adNames[index] })
+                        adSlot: dfp.createAdSlot(adNames[index], 'container-inline')
                     })
                 );
         });

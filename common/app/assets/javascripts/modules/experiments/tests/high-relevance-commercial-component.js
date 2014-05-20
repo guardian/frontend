@@ -1,17 +1,14 @@
 define([
     'qwery',
     'common/$',
+    'common/modules/adverts/dfp',
     'common/utils/detect'
 ], function (
     qwery,
     $,
+    dfp,
     detect
     ) {
-
-    var adSlot =
-        '<div class="ad-slot ad-slot--dfp ad-slot--commercial-component-high" data-link-name="ad slot merchandising-high" data-name="merchandising-high" data-label="false" data-refresh="false" data-desktop="888,88">' +
-            '<div id="dfp-ad--merchandising-high" class="ad-slot__container"></div>' +
-        '</div>';
 
     return function () {
 
@@ -39,13 +36,13 @@ define([
             {
                 id: 'second-and-third',
                 test: function () {
-                    $('.container:nth-child(2)').after(adSlot);
+                    $('.container:nth-child(2)').after(dfp('merchandising-high', 'commercial-component-high'));
                 }
             },
             {
                 id: 'third-and-fourth',
                 test: function () {
-                    $('.container:nth-child(3)').after(adSlot);
+                    $('.container:nth-child(3)').after(dfp('merchandising-high', 'commercial-component-high'));
                 }
             }
         ];
