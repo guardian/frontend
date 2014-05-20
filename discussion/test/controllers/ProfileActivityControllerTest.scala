@@ -7,20 +7,13 @@ import play.api.test.FakeRequest
 import test.`package`._
 import test.TestRequest
 
-class CommenterActivityControllerTest extends FlatSpec with Matchers {
+class ProfileActivityControllerTest extends FlatSpec with Matchers {
 
   val callbackName = "foo"
   val userId = "10000001"
 
-  "CommenterActivity" should "work for simple request" in Fake{
-    val action = DiscussionApp.commenterActivity(userId)
-    val result = action(TestRequest())
-    status(result) should be(200)
-    contentType(result).get should be("text/html")
-  }
-
-  it should "return JSONP when callback is supplied" in Fake {
-    val action = DiscussionApp.commenterActivity(userId)
+  "CommenterActivity" should "return JSONP when callback is supplied" in Fake {
+    val action = DiscussionApp.profileDiscussions(userId)
     val fakeRequest = FakeRequest(GET, "/discussion/p/37v3a.json?callback=" + callbackName).withHeaders("host" -> "localhost:9000")
     val result = action(fakeRequest)
 
