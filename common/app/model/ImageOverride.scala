@@ -6,7 +6,7 @@ import org.joda.time.DateTime
 object ImageOverride {
 
   def createElementWithOneAsset(imageSrc: String, width: String, height: String): ApiElement = ApiElement(
-    id = DateTime.now.getMillis.toString,
+    id = "override",
     relation = "thumbnail",
     `type` = "image",
     galleryIndex = None,
