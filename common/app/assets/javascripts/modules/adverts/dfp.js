@@ -82,6 +82,9 @@ define([
     var parseAd = function(event) {
             var $slot = $('#' + event.slot.getSlotId().getDomId());
 
+//            console.log(event.size[1]);
+//            $slot.parent().css('height', event.size[1]);
+
             if (event.isEmpty) {
                 removeLabel($slot);
             } else {
