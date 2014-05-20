@@ -5,6 +5,7 @@ define(['knockout'], function(ko) {
 
         types: [
             'news',
+            'news/auto',
             'news/most-popular',
             'news/people',
             'news/section',

@@ -13,6 +13,19 @@
                 ]
             }
         },
+        "sport":{
+            "type":"autoscaling",
+            "apps":[ "frontend::sport" ],
+            "data":{
+                "secondsToWait":1200,
+                "port":18080,
+                "healthcheckGrace":20,
+                "bucket":"aws-frontend-artifacts",
+                "healthcheck_paths":[
+                    "/management/healthcheck"
+                ]
+            }
+        },
         "frontend-static":{
             "type":"aws-s3",
             "apps":[ "aws-s3" ],
@@ -30,7 +43,7 @@
             "actionsBeforeApp": ["frontend-sport.deploy"]
         },
         "artifactUpload":{
-            "actionsBeforeApp": ["frontend-sport.uploadArtifacts"]
+            "actionsBeforeApp": ["frontend-sport.uploadArtifacts", "sport.uploadArtifacts"]
         },
         "staticFilesUpload":{
             "actionsBeforeApp": ["frontend-static.uploadStaticFiles"]

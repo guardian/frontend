@@ -423,3 +423,14 @@
         border-top: 0;
     }
 }
+
+.content__breadcrumb {
+    @include rem((
+        padding: $gs-gutter
+    ));
+    @include mq($from: mobileLandscape) {
+        @include rem((
+            padding: $gs-gutter
+        ));
+    }
+}

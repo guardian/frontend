@@ -56,6 +56,13 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
       }
     }
 
+    scenario("Have a meta description") {
+      HtmlUnit("/sport/2012/jun/12/london-2012-olympic-opening-ceremony") { browser =>
+        import browser._
+        findFirst("meta[name=description]").getAttribute("content") should be ("Director Danny Boyle reveals plans for London 2012 Olympic opening ceremony, including village cricket, maypoles and rain")
+     }
+    }
+
     scenario("Display the article author", ArticleComponents) {
 
       Given("I am on an article entitled 'TV highlights 09/08/2012'")
@@ -553,20 +560,6 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
       }
     }
 
-    // There are no sponsored articles at the moment
-    ignore("Signify to the user an article is sponsored") {
-      // scenario("Signify to the user an article is sponsored"){
-      Given("I visit a sponsored article entitled 'Feeling hungry? Try the fine flavours of floral gastronomy'")
-      StandardAdvertsSwitch.switchOn()
-      HtmlUnit("/lifeandstyle/live-better") { browser =>
-        import browser._
-        Then("I should see a message")
-        val adSlot = $(".ad-slot--paid-for-badge")
-        adSlot.getAttribute("data-name") should be ("spbadge")
-        adSlot.findFirst(".ad-slot__container").getId should be ("dfp-ad--spbadge")
-      }
-    }
-
     scenario("Health check"){
       HtmlUnit("/world/2013/sep/15/obama-rouhani-united-nations-meeting") { browser =>
         Await.result(WS.url("http://localhost:9000/_cdn_healthcheck").get(), 10.seconds).status should be (503)
@@ -586,18 +579,6 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
       }
     }
 
-
-    scenario("Section navigation") {
-      Given("I am on an article")
-      HtmlUnit("/football/2013/oct/29/arsene-wenger-arsenal-chelsea-capital-one-cup") { browser =>
-        import browser._
-
-        Then("I should see the section and local nav")
-        val navigation = findFirst("[itemtype='http://data-vocabulary.org/Breadcrumb']")
-        navigation.findFirst("[itemprop='url']").getAttribute("href") should endWith ("/football")
-        navigation.find(".nav--local").find(".nav__item").size should be (6)
-      }
-    }
 
     scenario("'Classic' link") {
       Given("I am on a piece of content that has an R2 version")

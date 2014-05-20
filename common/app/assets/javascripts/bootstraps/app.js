@@ -7,8 +7,8 @@ define([
     'common/utils/config',
     'common/utils/context',
     'common/utils/userTiming',
-
     'common/modules/analytics/errors',
+
     'common/modules/ui/fonts',
     'common/modules/adverts/userAdTargeting',
     'common/modules/discussion/api',
@@ -31,8 +31,8 @@ define([
     config,
     Context,
     userTiming,
+    errors,
 
-    Errors,
     Fonts,
     UserAdTargeting,
     DiscussionApi,
@@ -59,18 +59,6 @@ define([
             DiscussionApi.init(config);
         },
 
-        attachGlobalErrorHandler: function (config) {
-            if (!config.switches.clientSideErrors) {
-                return false;
-            }
-            var e = new Errors({
-                isDev: config.page.isDev,
-                buildNumber: config.page.buildNumber
-            });
-            e.init();
-            mediator.on('module:error', e.log);
-        },
-
         loadFonts: function(config, ua) {
             if (config.switches.webFonts && !guardian.shouldLoadFontsAsynchronously) {
                 var fileFormat = detect.getFontFormatSupport(ua),
@@ -93,6 +81,9 @@ define([
 
         userTiming.mark('App Begin');
 
+        errors.init({ isDev: config.page.isDev, buildNumber: config.page.buildNumber });
+        mediator.on('module:error', errors.log);
+
         domReady(function() {
             var context = document.getElementById('js-context');
 
@@ -100,7 +91,6 @@ define([
 
             modules.initialiseAjax(config);
             modules.initialiseDiscussionApi(config);
-            modules.attachGlobalErrorHandler(config);
             modules.loadFonts(config, navigator.userAgent);
             modules.initId(config, context);
             modules.initUserAdTargeting();

@@ -1,7 +1,7 @@
 .article {
     position: relative;
     @include rem((
-        margin-bottom: $gs-baseline*3.5
+            margin-bottom: $gs-baseline*3.5
     ));
     @include fs-bodyCopy(3);
 }
@@ -10,24 +10,24 @@
     @include fs-header(3);
     @include box-sizing(border-box);
     @include rem((
-        min-height: $gs-row-height,
-        padding: 0 $gs-gutter/2,
-        border-top-width: $gs-baseline/6
+            min-height: $gs-row-height,
+            padding: 0 $gs-gutter/2,
+            border-top-width: $gs-baseline/6
     ));
     border-top-style: solid;
 
     @include mq(mobileLandscape) {
         @include rem((
-            padding-left: $gs-gutter,
-            padding-right: $gs-gutter
+                padding-left: $gs-gutter,
+                padding-right: $gs-gutter
         ))
     }
 
     @include mq(tablet) {
         min-height: 0;
         @include rem((
-            padding: $gs-baseline/3 0 $gs-baseline*1.25,
-            max-width: gs-span(8)
+                padding: $gs-baseline/3 0 $gs-baseline*1.25,
+                max-width: gs-span(8)
         ));
         border-top: 1px dotted $c-neutral5 !important; // Disable tone colour
         margin-left: auto;
@@ -36,22 +36,22 @@
 
     @include mq(rightCol) {
         @include rem((
-            margin-left: $gs-gutter,
-            margin-right: $gs-gutter
+                margin-left: $gs-gutter,
+                margin-right: $gs-gutter
         ));
         max-width: none;
     }
 
     @include mq(leftCol) {
         @include rem((
-            padding-left: $a-leftCol-width + $gs-gutter
+                padding-left: $a-leftCol-width + $gs-gutter
         ));
     }
 
     @include mq(wide) {
         @include rem((
-            padding-left:  gs-span(3) + $gs-gutter,
-            padding-right: $a-rightCol-width + gs-span(1) + $gs-gutter*2
+                padding-left:  gs-span(3) + $gs-gutter,
+                padding-right: $a-rightCol-width + gs-span(1) + $gs-gutter*2
         ));
     }
 
@@ -70,18 +70,18 @@
 
 .article__zone--bleed-out {
     @include rem((
-        margin-left: -$gs-gutter/2,
-        margin-right: -$gs-gutter/2,
-        padding-left: $gs-gutter/2,
-        padding-right: $gs-gutter/2
+            margin-left: -$gs-gutter/2,
+            margin-right: -$gs-gutter/2,
+            padding-left: $gs-gutter/2,
+            padding-right: $gs-gutter/2
     ));
 
     @include mq(mobileLandscape) {
         @include rem((
-            margin-left: -$gs-gutter,
-            margin-right: -$gs-gutter,
-            padding-left: $gs-gutter,
-            padding-right: $gs-gutter
+                margin-left: -$gs-gutter,
+                margin-right: -$gs-gutter,
+                padding-left: $gs-gutter,
+                padding-right: $gs-gutter
         ));
     }
     @include mq(tablet) {
@@ -95,7 +95,7 @@
 .left-col-deport {
     @include mq(leftCol) {
         @include rem((
-            padding: 0
+                padding: 0
         ));
     }
 }
@@ -103,8 +103,8 @@
     @include mq(leftCol) {
         float: left;
         @include rem((
-            padding-top: $gs-baseline/1.5,
-            width: $a-leftCol-width
+                padding-top: $gs-baseline/1.5,
+                width: $a-leftCol-width
         ));
         margin-left: 0;
 
@@ -115,7 +115,7 @@
     }
     @include mq(wide) {
         @include rem((
-            width: $a-leftColWide-width
+                width: $a-leftColWide-width
         ));
     }
 }
@@ -131,7 +131,7 @@
 .article-body {
     @include mq(tablet) {
         @include rem((
-            margin-bottom: ($gs-baseline/3)*4
+                margin-bottom: ($gs-baseline/3)*4
         ));
     }
 }
@@ -150,16 +150,16 @@
     margin-bottom: 0;
     @include fs-bodyHeading(1);
     @include rem((
-        padding-top: $gs-baseline/3,
-        line-height: 20px
+            padding-top: $gs-baseline/3,
+            line-height: 20px
     ));
     color: $c-neutral2;
 
     @include mq(tablet) {
         @include fs-bodyHeading(2, true);
         @include rem((
-            padding-right: gs-span(2),
-            line-height: 22px
+                padding-right: gs-span(2),
+                line-height: 22px
         ));
     }
 
@@ -167,9 +167,9 @@
         margin-bottom: 0;
         padding-right: 0;
         @include rem((
-            min-height: gs-height(1),
-            padding-top: $gs-baseline/6,
-            padding-bottom: $gs-baseline
+                min-height: gs-height(1),
+                padding-top: $gs-baseline/6,
+                padding-bottom: $gs-baseline
         ));
         border-bottom: 0;
         border-top: 1px dotted $c-neutral5;
@@ -185,13 +185,13 @@
 
 .media-primary {
     @include rem((
-        margin-left: $gs-gutter / -2,
-        margin-right: $gs-gutter / -2
+            margin-left: $gs-gutter / -2,
+            margin-right: $gs-gutter / -2
     ));
     @include mq(mobileLandscape) {
         @include rem((
-            margin-left: $gs-gutter / -1,
-            margin-right: $gs-gutter / -1
+                margin-left: $gs-gutter / -1,
+                margin-right: $gs-gutter / -1
         ));
     }
 }
@@ -199,8 +199,8 @@
 .article__meta-heading {
     @include fs-header(1);
     @include rem((
-        padding-top: ($gs-baseline/3),
-        padding-bottom: ($gs-baseline/3)*4
+            padding-top: ($gs-baseline/3),
+            padding-bottom: ($gs-baseline/3)*4
     ));
     margin-bottom: 0;
     border-top: 1px dotted $c-neutral5;
@@ -211,13 +211,13 @@
 
 .main-caption {
     @include rem((
-        min-height: ($gs-baseline/3)*7,
-        max-width: gs-span(7)
+            min-height: ($gs-baseline/3)*7,
+            max-width: gs-span(7)
     ));
 
     @include mq(tablet) {
         @include rem((
-            max-width: gs-span(7)
+                max-width: gs-span(7)
         ));
     }
     @include mq(rightCol) {
@@ -236,13 +236,13 @@
     }
     .article__columning-wrapper {
         @include rem((
-            padding-right: gs-span(1) + $gs-gutter
+                padding-right: gs-span(1) + $gs-gutter
         ));
     }
     .article__columning-wrapper .media-primary {
         @include rem((
-            margin-right: (gs-span(1) + $gs-gutter) * -1 !important
-        ));
+                margin-right: (gs-span(1) + $gs-gutter) * -1 !important
+    ));
     }
 }
 
@@ -264,8 +264,8 @@
         display: table-cell;
         vertical-align: top;
         @include rem((
-            max-width: gs-span(8),
-            padding-right: $gs-gutter
+                max-width: gs-span(8),
+                padding-right: $gs-gutter
         ));
     }
     .article__secondary-column {
@@ -273,7 +273,7 @@
         display: table-cell;
         z-index: 1;
         @include rem((
-            width: $a-rightCol-width
+                width: $a-rightCol-width
         ));
     }
     .article__secondary-column__inner--fill-vertically {
@@ -290,7 +290,7 @@
 @include mq(gs-span(12) + $gs-gutter * 2) {
     .article__main-column {
         @include rem((
-            padding-right: gs-span(1) + $gs-gutter * 2
+                padding-right: gs-span(1) + $gs-gutter * 2
         ));
     }
 }
@@ -298,19 +298,19 @@
 @include mq(leftCol) {
     .article-wrapper {
         @include rem((
-            padding-left: $gs-gutter,
-            padding-right: $gs-gutter
+                padding-left: $gs-gutter,
+                padding-right: $gs-gutter
         ));
     }
     .article__main-column {
         @include rem((
-            padding-left: $a-leftCol-width + $gs-gutter
+                padding-left: $a-leftCol-width + $gs-gutter
         ));
     }
 
     .article__main-column {
         @include rem((
-            padding-right: $gs-gutter
+                padding-right: $gs-gutter
         ));
     }
 
@@ -333,12 +333,12 @@
 @include mq(wide) {
     .article__main-column {
         @include rem((
-            padding-left: gs-span(3) + $gs-gutter
+                padding-left: gs-span(3) + $gs-gutter
         ));
     }
     .article__main-column {
         @include rem((
-            padding-right: gs-span(1) + $gs-gutter*2
+                padding-right: gs-span(1) + $gs-gutter*2
         ));
     }
 }
@@ -346,7 +346,7 @@
 .article__popular {
     clear: left;
     @include rem((
-        margin-bottom: $gs-baseline*2
+            margin-bottom: $gs-baseline*2
     ));
 
     .article__zone {
@@ -356,7 +356,7 @@
     i {
         @include rotate(-90deg);
         @include rem((
-            margin-top: 10px
+                margin-top: 10px
         ));
     }
 }
@@ -369,21 +369,21 @@
 .article__sponsor {
     min-height: $gs-row-height;
     @include rem((
-        padding: 0 $gs-gutter/2
+            padding: 0 $gs-gutter/2
     ));
 
     @include mq(mobileLandscape) {
         @include rem((
-            padding-left: $gs-gutter,
-            padding-right: $gs-gutter
+                padding-left: $gs-gutter,
+                padding-right: $gs-gutter
         ));
     }
 
     @include mq(tablet) {
         min-height: 0;
         @include rem((
-            padding: $gs-baseline 0,
-            max-width: gs-span(8)
+                padding: $gs-baseline 0,
+                max-width: gs-span(8)
         ));
         margin-left: auto;
         margin-right: auto;
@@ -391,22 +391,22 @@
 
     @include mq(rightCol) {
         @include rem((
-            margin-left: $gs-gutter,
-            margin-right: $gs-gutter
+                margin-left: $gs-gutter,
+                margin-right: $gs-gutter
         ));
         max-width: none;
     }
 
     @include mq(leftCol) {
         @include rem((
-            padding-left: $a-leftCol-width + $gs-gutter
+                padding-left: $a-leftCol-width + $gs-gutter
         ));
     }
 
     @include mq(wide) {
         @include rem((
-            padding-left:  gs-span(3) + $gs-gutter,
-            padding-right: $a-rightCol-width + gs-span(1) + $gs-gutter*2
+                padding-left:  gs-span(3) + $gs-gutter,
+                padding-right: $a-rightCol-width + gs-span(1) + $gs-gutter*2
         ));
     }
 }
@@ -414,20 +414,20 @@
 .article-hat-label {
     @include fs-data(3);
     @include rem((
-        margin-top: $gs-baseline/2
+            margin-top: $gs-baseline/2
     ));
 
     @include mq(tablet) {
         @include rem((
-            margin-top: 0,
-            margin-bottom: $gs-baseline/2
+                margin-top: 0,
+                margin-bottom: $gs-baseline/2
         ));
     }
 
     @include mq(leftCol) {
         @include rem((
-            margin-top: $gs-baseline/3,
-            margin-bottom: $gs-baseline/2
+                margin-top: $gs-baseline/3,
+                margin-bottom: $gs-baseline/2
         ));
     }
 }
@@ -460,9 +460,9 @@
         font-weight: 200;
         @include box-sizing(border-box);
         @include rem((
-            height: 2*get-line-height($fs-bodyCopy, 3),
-            padding-top: 1px,
-            margin-right: 4px
+                height: 2*get-line-height($fs-bodyCopy, 3),
+                padding-top: 1px,
+                margin-right: 4px
         ));
 
         .drop-cap__inner {
@@ -481,8 +481,8 @@
         @include f-headline;
         font-weight: 200;
         @include rem((
-            margin-right: 5px,
-            height: 3*get-line-height($fs-bodyCopy, 3)
+                margin-right: 5px,
+                height: 3*get-line-height($fs-bodyCopy, 3)
         ));
 
         .drop-cap__inner {
@@ -498,8 +498,8 @@
     i {
         vertical-align: bottom;
         @include rem((
-            margin-right: 3px,
-            vertical-align: -4px
+                margin-right: 3px,
+                vertical-align: -4px
         ));
     }
 
@@ -533,5 +533,19 @@
 .commentcount__label {
     .content__head & {
         @extend %u-h;
+    }
+}
+
+.breadcrumb-list__item {
+    color: lighten($c-neutral2, 15%);
+    @include fs-data(1);
+}
+
+.breadcrumb-keyword {
+
+    &:after {
+        content: ">> ";
+        display: inline-block;
+        margin-left: $gs-gutter/5;
     }
 }

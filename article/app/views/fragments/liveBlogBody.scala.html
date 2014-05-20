@@ -107,10 +107,17 @@
     </div>
 </div>
 }
+
 @fragments.storyPackagePlaceholder(storyPackage)
 @fragments.onwardPlaceholder(article.visualTone)
 
 <div class="facia-container facia-container--layout-article">
     @fragments.mostPopularPlaceholder(article.section)
+</div>
+
+<div class="gs-container">
+    <div class="content__breadcrumb" itemscope itemtype="http://schema.org/Organization" data-link-name="article breadcrumbs">
+        @fragments.breadcrumb(article)
+    </div>
 </div>
 }

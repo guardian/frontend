@@ -1,17 +1,21 @@
-define(['common/common', 'bean', 'common/modules/analytics/errors'], function(common, bean, Errors) {
+define(['common/common', 'bean', 'common/modules/analytics/errors'], function(common, bean, errors) {
 
     describe("Errors", function() {
-       
-        var e,
-            p = '/uk/2012/oct/15/mod-military-arms-firms',
-            w = {},
+
+        var w = {
+                location: {
+                    hash: ''
+                }
+            },
             fakeError = { 'message': 'foo', lineno: 1, filename: 'foo.js' };
-        
+
         beforeEach(function() {
-            e = new Errors({window: w, buildNumber: 643});
-            e.init();
+            errors.init({
+                window: w,
+                buildNumber: 643
+            });
         });
-        
+
         afterEach(function() {
             common.$g('#js-err').remove();
         });
@@ -21,32 +25,35 @@ define(['common/common', 'bean', 'common/modules/analytics/errors'], function(co
         });
 
         it("should log javascript errors with the error message, line number, build number, and file", function(){
-            expect(e.log(fakeError.message, fakeError.filename, fakeError.lineno)).toBeTruthy();
+            expect(errors.log(fakeError.message, fakeError.filename, fakeError.lineno)).toBeTruthy();
         });
 
-        it("after logging, should let browser handle error if user pref switch 'showErrors is on", function(){
-            var userPrefs = {
-                    isOn: jasmine.createSpy('isOn').andReturn(true)
-                },
-                e = new Errors({ userPrefs: userPrefs });
-            expect(e.log(fakeError.message, fakeError.filename, fakeError.lineno)).toBeFalsy();
+        it("after logging, should let browser handle error if window hash is set", function(){
+            var win = {
+                location: {
+                    hash: '#showErrors'
+                }
+            };
+            errors.init({window: win, buildNumber: 643});
+            expect(errors.log(fakeError.message, fakeError.filename, fakeError.lineno)).toBeFalsy();
         });
 
         it("if DEV, and an uncaught error, should do nothing", function(){
             var cons = {
-                    error: jasmine.createSpy('error')
-                },
-                e = new Errors({ isDev: true, console: cons });
-            expect(e.log(fakeError.message, fakeError.filename, fakeError.lineno, true)).toBeFalsy();
+                error: jasmine.createSpy('error')
+            };
+            errors.init({ isDev: true, console: cons });
+            expect(errors.log(fakeError.message, fakeError.filename, fakeError.lineno, true)).toBeFalsy();
             expect(cons.error).not.toHaveBeenCalled();
         });
 
         it("if DEV, and a caught error, should log to console", function(){
             var cons = {
-                    error: jasmine.createSpy('error')
-                },
-                e = new Errors({ isDev: true, console: cons, buildNumber: 643 });
-            expect(e.log(fakeError.message, fakeError.filename, fakeError.lineno)).toBeFalsy(false);
+                error: jasmine.createSpy('error')
+            };
+
+            errors.init({ isDev: true, console: cons, buildNumber: 643 });
+            expect(errors.log(fakeError.message, fakeError.filename, fakeError.lineno)).toBeFalsy(false);
             expect(cons.error.mostRecentCall.args[0]).toEqual({
                 message: fakeError.message, filename: fakeError.filename, lineno: fakeError.lineno,
                 build: 643, type: 'js'
@@ -59,7 +66,7 @@ define(['common/common', 'bean', 'common/modules/analytics/errors'], function(co
             script.src = 'http://foo.com/bar.js';
             // fake event
             bean.on(script, 'error', function(event) {
-                expect(e.log(event.originalEvent, fakeError.filename, fakeError.lineno)).toBeTruthy();
+                expect(errors.log(event.originalEvent, fakeError.filename, fakeError.lineno)).toBeTruthy();
             })
             bean.fire(script, 'error');
         });

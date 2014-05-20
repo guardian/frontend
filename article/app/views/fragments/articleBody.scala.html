@@ -62,11 +62,18 @@
 
 <div class="js-repositioned-comments"></div>
 
+
 <div class="facia-container facia-container--layout-article">
     @fragments.mostPopularPlaceholder(article.section, article.visualTone)
 </div>
 
 <div class="facia-container facia-container--layout-article facia-container--commercial">
     @fragments.commercial.commercialComponent(name="merchandising", adType="commercial-component", sizeMapping=Map("mobile" -> Seq("888,88")))
+</div>
+
+<div class="gs-container">
+    <div class="content__breadcrumb" itemscope itemtype="http://schema.org/Organization" data-link-name="article breadcrumbs">
+        @fragments.breadcrumb(article)
+    </div>
 </div>
 }
