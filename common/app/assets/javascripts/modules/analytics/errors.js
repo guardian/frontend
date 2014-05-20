@@ -1,65 +1,69 @@
 define([
+    'common/modules/userPrefs',
     'common/modules/analytics/beacon'
 ], function (
+    userPrefs,
     beacon
 ) {
 
-    var isDev,
-        cons,
-        win,
-        buildNumber;
+    var Errors = function (config) {
 
-    function makeUrl(properties) {
-        var query = [];
+        var c = config || {},
+            isDev = (c.isDev !== undefined) ? c.isDev : false,
+            cons = c.console || window.console,
+            win = c.window || window,
+            prefs = c.userPrefs || userPrefs,
+            buildNumber = c.buildNumber || 'unknown',
 
-        for (var name in properties) {
-            query.push(name + '=' + encodeURIComponent(properties[name]));
-        }
-        return '/js.gif?' + query.join('&');
-    }
+            makeUrl = function(properties) {
+                var query = [];
 
-    function log(message, filename, lineno, isUncaught) {
-        // error events are thrown by script elements
-        if (message.toString() === '[object Event]' && message.target instanceof HTMLScriptElement) {
-            message = 'Syntax or http error: ' + message.target.src;
-        }
-        var errorType = 'js';
-        if (filename === 'common/modules/adverts/documentwriteslot.js' || message === 'Script error.') {
-            errorType = 'ads';
-        }
+                for (var name in properties) {
+                    query.push(name + '=' + encodeURIComponent(properties[name]));
+                }
+                return '/js.gif?' + query.join('&');
+            },
 
-        var error = {
-            message: message,
-            filename: filename,
-            lineno: lineno,
-            build: buildNumber,
-            type: errorType
+            log = function(message, filename, lineno, isUncaught) {
+                // error events are thrown by script elements
+                if (message.toString() === '[object Event]' && message.target instanceof HTMLScriptElement) {
+                    message = 'Syntax or http error: ' + message.target.src;
+                }
+                var errorType = 'js';
+                if (filename === 'common/modules/adverts/documentwriteslot.js' || message === 'Script error.') {
+                    errorType = 'ads';
+                }
+
+                var error = {
+                    message: message,
+                    filename: filename,
+                    lineno: lineno,
+                    build: buildNumber,
+                    type: errorType
+                };
+                if (isDev) {
+                    if (isUncaught !== true) {
+                        cons.error(error);
+                    }
+                    return false;
+                } else {
+                    beacon.fire(makeUrl(error));
+                    return (prefs.isOn('showErrors')) ? false : true;
+                }
+            },
+
+            init = function() {
+                win.onerror = function(message, filename, lineno) {
+                    return log(message, filename, lineno, true);
+                };
+            };
+
+        return {
+            log: log,
+            init: init
         };
-        if (isDev) {
-            if (isUncaught !== true) {
-                cons.error(error);
-            }
-            return false;
-        } else {
-            beacon.fire(makeUrl(error));
-            return (!/#showErrors/.test(win.location.hash));
-        }
-    }
 
-    function init(config) {
-        isDev = config.isDev || false;
-        cons = config.console || window.console;
-        win = config.window || window;
-        buildNumber = config.buildNumber || 'unknown';
-
-        win.onerror = function(message, filename, lineno) {
-            return log(message, filename, lineno, true);
-        };
-    }
-
-    return {
-        log: log,
-        init: init
     };
 
+    return Errors;
 });
