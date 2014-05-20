@@ -1,7 +1,8 @@
 @(profileDiscussions: discussion.model.ProfileDiscussions)(implicit request: RequestHeader)
 
+<div class="profile-discussions">
 @profileDiscussions.discussions.map{ discussion =>
-     <div class="profile-discussions facia-container facia-container--layout-article">
+     <div class="facia-container facia-container--default-heading facia-container--layout-article facia-container--layout-discussion">
         <div class="container container--row-pattern">
             <div class="facia-container__inner">
                 <div class="container__border tone-accent-border hide-on-mobile"></div>
@@ -9,17 +10,19 @@
                     <a href="@discussion.discussion.webUrl" class="container__title__label u-text-hyphenate">@discussion.discussion.title</a>
                 </h3>
                 <div class="container__body">
-                    <ul class="profile-discussion unstyled" itemprop itemtype="http://schema.org/UserComments">
+                    <ul class="disc-discussions u-unstyled" itemprop itemtype="http://schema.org/UserComments">
                         @discussion.comments.map{ comment =>
-                            <li class="comment" itemprop itemtype="http://schema.org/Comment">
-                                <time class="comment__date-published"
-                                      itemprop="datePublished"
-                                      datetime="@comment.date.toString("yyyy-MM-dd'T'HH:mm:ss'Z'")"
-                                      data-timestamp="@comment.date.getMillis">
-                                    @comment.date.toString("d MMM y HH:mm")
-                                </time>
+                            <li class="disc-comment" itemprop itemtype="http://schema.org/Comment">
+                                <div class="disc-comment__meta">
+                                    <time class="disc-comment__date-published"
+                                          itemprop="datePublished"
+                                          datetime="@comment.date.toString("yyyy-MM-dd'T'HH:mm:ss'Z'")"
+                                          data-timestamp="@comment.date.getMillis">
+                                        @comment.date.toString("d MMM y HH:mm")
+                                    </time>
+                                </div>
 
-                                <div class="comment__body">
+                                <div class="disc-comment__body" itemprop="text">
                                     @withJsoup(BulletCleaner(comment.body))(
                                         InBodyLinkCleaner("in body link")(Edition(request))
                                     )
@@ -32,3 +35,4 @@
         </div>
     </div>
 }
+</div>

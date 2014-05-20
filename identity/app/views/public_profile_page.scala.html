@@ -6,11 +6,11 @@
 }{
 <div class="identity-wrapper monocolumn-wrapper identity-wrapper--stretched">
     <h1 class="identity-title article__inner article__inner--head">
-        <header class="article__head user">
-            <div class="user-avatar" data-userid="@user.id"></div>
-            <div class="user__name">@user.publicFields.displayName</div>
+        <header class="article__head profile u-cf">
+            <div class="profile__avatar user-avatar" data-userid="@user.id"></div>
+            <div class="profile__name">@user.publicFields.displayName</div>
             @user.dates.accountCreatedDate.map { activityDate =>
-                <p class="user__joined-date">
+                <p class="profile__last-seen">
                     <i class="i i-clock-light-grey"></i>
                     Last seen on @activityDate.toString("d MMM yyyy")
                 </p>
@@ -18,8 +18,7 @@
         </header>
     </h1>
 
-
-    <div class="user__comments js-comment-stream" data-user-id="@user.id"></div>
+    <div class="js-comment-stream" data-user-id="@user.id" data-stream-type="discussions"></div>
     @registrationFooter(page, idRequest, idUrlBuilder)
 </div>
 }

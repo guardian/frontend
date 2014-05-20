@@ -10,28 +10,30 @@ function(
     component,
     mapValues
 ) {
-    function UserDiscussions(opts) {
+    function ProfileDiscussions(opts) {
         this.setOptions(opts);
     }
-    component.define(UserDiscussions);
-    UserDiscussions.prototype.endpoint = '/discussion/user/:userId/discussions.json';
-    UserDiscussions.prototype.defaultOptions = { userId: null };
+    component.define(ProfileDiscussions);
+    ProfileDiscussions.prototype.endpoint = '/discussion/user/:userId/:streamType.json';
+    ProfileDiscussions.prototype.defaultOptions = {
+        userId: null,
+        streamType: 'discussions'
+    };
 
-    function getCommentStreams() {
+    function getProfileDiscussions() {
         var opts = {
-            'userId': 'data-user-id'
+            userId: 'data-user-id',
+            streamType: 'data-stream-type'
         };
         $('.js-comment-stream').each(function(el) {
-            (new UserDiscussions(mapValues(opts, function(key) {
+            (new ProfileDiscussions(mapValues(opts, function(key) {
                 return el.getAttribute(key);
             }))).fetch(el);
         });
     }
 
-
-
     function init() {
-        getCommentStreams();
+        getProfileDiscussions();
     }
 
     return {

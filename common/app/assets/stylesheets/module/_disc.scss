@@ -1,0 +1,42 @@
+$disc-respond-when: rightCol;
+.disc-discussions {
+    margin: 0;
+}
+.disc-discussion {}
+
+.disc-comment {
+    @include fs-textsans(4);
+    @include rem((
+        padding-bottom: $gs-baseline/2,
+        padding-top: $gs-baseline/2
+    ));
+    border-top: 1px solid $c-neutral4;
+    color: $c-neutral1;
+
+    @include mq($disc-respond-when) {
+        &:first-of-type {
+            border-top: 0;
+        }
+    }
+}
+.disc-comment__meta {
+    @include fs-textsans(1);
+    color: $c-neutral2-contrasted;
+
+    @include mq($disc-respond-when) {
+        float: right;
+    }
+}
+.disc-comment__date-published {}
+
+.disc-comment__body {
+    @include rem((
+        margin-top: $gs-baseline
+    ));
+
+    @include mq($disc-respond-when) {
+        @include rem((
+            width: gs-span(8)
+        ));
+    }
+}

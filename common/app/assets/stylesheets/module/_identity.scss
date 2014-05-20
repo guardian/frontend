@@ -196,6 +196,27 @@
     ));
 }
 
+.profile {
+    @include rem((
+        margin-left: $gs-gutter,
+        margin-right: $gs-gutter
+    ));
+}
+.profile__name {
+    @include fs-headline(3);
+    @include mq(tablet) {
+        @include fs-headline(6, true);
+    }
+}
+.profile__avatar {
+
+}
+.profile__last-seen {
+    @include fs-data(2);
+    color: $c-neutral2-contrasted;
+    font-weight: normal;
+}
+
 
 /* Formstack
    ========================================================================== */
