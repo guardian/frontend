@@ -109,7 +109,7 @@ object FrontPage {
 
     new FrontPage(isNetworkFront = false) {
       override val id = "lifeandstyle/love-and-sex"
-      override val section = "Life and style"
+      override val section = "lifeandstyle"
       override val webTitle = "Love and sex"
       override lazy val analyticsName = "GFE:Love and sex"
       override lazy val description = Some("Sex and relationship advice from the Guardian. Sexual health matters, sexuality, information and sex tips all discussed")
@@ -123,7 +123,7 @@ object FrontPage {
 
     new FrontPage(isNetworkFront = false) {
       override val id = "lifeandstyle/home-and-garden"
-      override val section = "Life and style"
+      override val section = "lifeandstyle"
       override val webTitle = "Home and garden"
       override lazy val analyticsName = "GFE:Home and garden"
       override lazy val description = Some("Latest home and garden news, comment and analysis from the Guardian, the world’s leading liberal voice")
@@ -178,7 +178,7 @@ object FrontPage {
 
     new FrontPage(isNetworkFront = false) {
       override val id = "lifeandstyle"
-      override val section = "Life and style"
+      override val section = "lifeandstyle"
       override val webTitle = "Life"
       override lazy val analyticsName = "GFE:Life and style"
       override lazy val description = Some("Latest news and comment on life and style from the Guardian")
