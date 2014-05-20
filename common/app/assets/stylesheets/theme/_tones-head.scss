@@ -40,8 +40,7 @@
     }
 }
 
-.tone-feature--article,
-.tone-comment--article {
+.tone-feature--article {
     @include mq($from: tablet) {
         .content__main-column--article {
             margin-top: $gs-baseline*2;

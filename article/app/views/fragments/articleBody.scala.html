@@ -3,7 +3,7 @@
 
 @defining((model.article, model.storyPackage)) { case (article, storyPackage) =>
 <article class="content content--article @if(article.isAdvertisementFeature && !article.isSponsored){article--advertisement-feature} tone-@article.visualTone tone-@article.visualTone--article">
-    @if(article.isFeature || article.isComment) {
+    @if(article.isFeature) {
         @fragments.headTonal(article)
         @if(article.isFeature && article.hasShowcaseMainPicture) {
             @fragments.mainMedia(article)
@@ -60,7 +60,9 @@
 @fragments.storyPackagePlaceholder(storyPackage)
 @fragments.onwardPlaceholder(article.visualTone)
 
-<div class="js-repositioned-comments"></div>
+<div class="js-repositioned-comments content__repositioned-comments">
+
+</div>
 
 
 <div class="facia-container facia-container--layout-article">

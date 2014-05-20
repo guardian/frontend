@@ -74,6 +74,12 @@
 }
 
 .content__top-border {
+    @include rem((
+        height: $gs-baseline/4,
+        margin: 0 $gs-gutter
+    ));
+    border-top: 1px dotted $c-neutral5;
+
     @include mq($to: tablet) {
         display: none;
     }
@@ -83,12 +89,6 @@
         ));
         margin: auto;
     }
-    @include rem((
-        height: $gs-baseline/2,
-        margin: 0 $gs-gutter
-    ));
-
-    border-top: 1px dotted $c-neutral5;
 }
 
 .content__head__comment-count {
@@ -125,7 +125,12 @@
     @include rem((
         margin-bottom: $gs-baseline
     ));
+    @include mq($from: tablet) {
+        @include rem((
+            margin-bottom: ($gs-baseline/2) * 3
+        ));
 
+    }
     @include mq($from: leftCol) {
         float: left;
         @include rem((

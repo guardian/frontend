@@ -1153,3 +1153,14 @@ $c-replyText: $c-body;
         display: block;
     }
 }
+
+.content__repositioned-comments .content__main-column {
+    @include mq(rightCol) {
+        max-width: none;
+        @include rem((
+            padding-right: 25%
+        ));
+    }
+
+
+}
