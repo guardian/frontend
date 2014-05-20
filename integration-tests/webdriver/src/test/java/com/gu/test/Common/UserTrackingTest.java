@@ -11,14 +11,11 @@ import org.junit.Test;
 import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-
-import static com.gu.test.helpers.WaitHelper.waitForArticleLoad;
 
 public class UserTrackingTest {
     WebDriver driver;
@@ -44,7 +41,7 @@ public class UserTrackingTest {
         DesiredCapabilities cap = new DesiredCapabilities();
         cap.setCapability(CapabilityType.PROXY, proxy);
         driver = new FirefoxDriver(cap);
-        driver.manage().timeouts().implicitlyWait(100, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         return  driver;
     }
 

@@ -159,6 +159,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   )
 
   override def elements: Seq[Element] = delegate.elements
+      .map(imageElement ++: _)
       .map(_.zipWithIndex.map{ case (element, index) =>  Element(element, index)})
       .getOrElse(Nil)
 
@@ -168,6 +169,15 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   override lazy val imageAdjust: String = apiContent.metaData.get("imageAdjust").flatMap(_.asOpt[String]).getOrElse("default")
   override lazy val isBreaking: Boolean = apiContent.metaData.get("isBreaking").flatMap(_.asOpt[Boolean]).getOrElse(false)
   override lazy val supporting: List[Content] = apiContent.supporting
+
+  override lazy val imageSrc: Option[String] = apiContent.metaData.get("imageSrc").flatMap(_.asOpt[String])
+  override lazy val imageSrcWidth: Option[String] = apiContent.metaData.get("imageSrcWidth").flatMap(_.asOpt[String])
+  override lazy val imageSrcHeight: Option[String] = apiContent.metaData.get("imageSrcHeight").flatMap(_.asOpt[String])
+  lazy val imageElement: Option[ApiElement] = for {
+    src <- imageSrc
+    width <- imageSrcWidth
+    height <- imageSrcHeight
+  } yield ImageOverride.createElementWithOneAsset(src, width, height)
 }
 
 object Content {

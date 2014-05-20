@@ -53,6 +53,8 @@ define([
                 'trailText',
                 'imageAdjust',
                 'imageSrc',
+                'imageSrcWidth',
+                'imageSrcHeight',
                 'isBreaking',
                 'group',
                 'snapType',
@@ -94,8 +96,11 @@ define([
                 if (src === this.meta.imageSrc()) { return; }
 
                 this.validateImageSrc(src)
-                .done(function() {
+                .done(function(width, height) {
                     self.meta.imageSrc(src);
+                    self.meta.imageSrcWidth(width);
+                    self.meta.imageSrcHeight(height);
+
                     self.state.isOpenImage(false);
                     self.save();
                 })
@@ -248,6 +253,8 @@ define([
                 .filter(function(p){ return _.isString(p[1]) ? p[1] : true; })
                 // reject vals that are equivalent to the fields (if any) that they're overwriting:
                 .filter(function(p){ return _.isUndefined(self.fields[p[0]]) || p[1] !== fullTrim(self.fields[p[0]]()); })
+                // convert numbers to strings:
+                .map(function(p){ return [p[0], _.isNumber(p[1]) ? '' + p[1] : p[1]]; })
                 // recurse into supporting links
                 .map(function(p) {
                     return [p[0], p[0] === 'supporting' ? _.map(p[1].items(), function(item) {
@@ -314,13 +321,17 @@ define([
                     defer.reject('That image could not be found');
                 };
                 img.onload = function() {
-                    var w = this.width  || 1,
-                        h = this.height || 1,
-                        err =  w > 2048 ? 'Images cannot be more than 2048 pixels wide' :
-                               w < 620  ? 'Images cannot be less than 620 pixels wide'  :
-                               Math.abs((3 * w)/(5 * h) - 1) > 0.01 ?  'Images must have a 5x3 aspect ratio' : false;
+                    var width = this.width || 1,
+                        height = this.height || 1,
+                        err =  width > 940 ? 'Images cannot be more than 2048 pixels wide' :
+                               width < 620 ? 'Images cannot be less than 620 pixels wide'  :
+                               Math.abs((width * 3)/(height * 5) - 1) > 0.01 ?  'Images must have a 5x3 aspect ratio' : false;
 
-                    defer[err ? 'reject' : 'resolve'](err);
+                    if (err) {
+                        defer.reject(err);
+                    } else {
+                        defer.resolve(width, height);
+                    }
                 };
                 img.src = src;
             }
