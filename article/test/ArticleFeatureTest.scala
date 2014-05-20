@@ -56,6 +56,13 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
       }
     }
 
+    scenario("Have a meta description") {
+      HtmlUnit("/sport/2012/jun/12/london-2012-olympic-opening-ceremony") { browser =>
+        import browser._
+        findFirst("meta[name=description]").getAttribute("content") should be ("Director Danny Boyle reveals plans for London 2012 Olympic opening ceremony, including village cricket, maypoles and rain")
+     }
+    }
+
     scenario("Display the article author", ArticleComponents) {
 
       Given("I am on an article entitled 'TV highlights 09/08/2012'")
@@ -572,18 +579,6 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
       }
     }
 
-
-    scenario("Section navigation") {
-      Given("I am on an article")
-      HtmlUnit("/football/2013/oct/29/arsene-wenger-arsenal-chelsea-capital-one-cup") { browser =>
-        import browser._
-
-        Then("I should see the section and local nav")
-        val navigation = findFirst("[itemtype='http://data-vocabulary.org/Breadcrumb']")
-        navigation.findFirst("[itemprop='url']").getAttribute("href") should endWith ("/football")
-        navigation.find(".nav--local").find(".nav__item").size should be (6)
-      }
-    }
 
     scenario("'Classic' link") {
       Given("I am on a piece of content that has an R2 version")
