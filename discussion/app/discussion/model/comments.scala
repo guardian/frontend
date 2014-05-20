@@ -67,8 +67,6 @@ object ProfileDiscussions{
     val profile = Profile(json)
     val discussions = (json \ "discussions").as[JsArray].value map { d =>
       val discussion = Discussion(d)
-      print((d \ "comments").as[JsArray])
-
       DiscussionComments(
         discussion = discussion,
         comments = (d \ "comments").as[JsArray].value.map { Comment(_, Some(profile), Some(discussion)) },

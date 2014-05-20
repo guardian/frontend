@@ -32,6 +32,10 @@
     }
 }
 
+.identity-wrapper--stretched {
+    max-width: none;
+}
+
 .identity-section {
     border-top: 1px solid $c-neutral7;
     @include box-sizing(border-box);

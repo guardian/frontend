@@ -4,9 +4,9 @@
 
 @identityMain(page, Switches.all){
 }{
-<div class="identity-wrapper monocolumn-wrapper identity-public-profile">
-    <h1 class="identity-title">
-        <div class="user">
+<div class="identity-wrapper monocolumn-wrapper identity-wrapper--stretched">
+    <h1 class="identity-title article__inner article__inner--head">
+        <header class="article__head user">
             <div class="user-avatar" data-userid="@user.id"></div>
             <div class="user__name">@user.publicFields.displayName</div>
             @user.dates.accountCreatedDate.map { activityDate =>
@@ -15,13 +15,11 @@
                     Last seen on @activityDate.toString("d MMM yyyy")
                 </p>
             }
-        </div>
+        </header>
     </h1>
 
 
     <div class="user__comments js-comment-stream" data-user-id="@user.id"></div>
-
-
     @registrationFooter(page, idRequest, idUrlBuilder)
 </div>
 }

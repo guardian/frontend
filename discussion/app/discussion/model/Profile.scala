@@ -18,7 +18,6 @@ object Profile {
   def apply(json: JsValue): Profile = {
     val profileJson = json \ "userProfile"
     val badges = profileJson \ "badge" \\ "name"
-    println("+++ userId: " + profileJson \ "userId")
     Profile(
       userId = (profileJson \ "userId").as[String],
       avatar = (profileJson \ "avatar").as[String],
