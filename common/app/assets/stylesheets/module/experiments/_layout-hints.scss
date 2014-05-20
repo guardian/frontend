@@ -136,7 +136,9 @@ figure {
     margin-left: 0;
 
     .responsive-img {
-        top: -25%;
+        @include mq($from: rightCol) {
+            top: -25%;
+        }
         height: auto;
     }
 
@@ -145,6 +147,11 @@ figure {
     }
 
     .u-responsive-ratio--letterbox {
+
+        @include mq($to: rightCol) {
+            padding-bottom: aspect-ratio-height(5, 3);
+        }
+
         @include mq(1920px) {
             padding-bottom: 768px;
         }
