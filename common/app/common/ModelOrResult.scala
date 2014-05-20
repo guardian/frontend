@@ -46,8 +46,8 @@ private object InternalRedirect extends implicits.Requests {
   lazy val ShortUrl = """^(/p/.*)$""".r
 
   def apply(response: ItemResponse)(implicit request: RequestHeader) = contentTypes(response)
-    .orElse(response.tag.map(t => internalRedirect("applications", t.id)))
-    .orElse(response.section.map(s => internalRedirect("applications", s.id)))
+    .orElse(response.tag.map(t => internalRedirect("facia", t.id)))
+    .orElse(response.section.map(s => internalRedirect("facia", s.id)))
 
 
   def contentTypes(response: ItemResponse)(implicit request: RequestHeader): Option[Right[Nothing, SimpleResult]] = {
