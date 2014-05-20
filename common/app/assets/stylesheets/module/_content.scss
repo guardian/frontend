@@ -41,7 +41,8 @@
     }
 
     &.content__main-column--video,
-    &.content__main-column--gallery {
+    &.content__main-column--gallery,
+    &.content__main-column--wide {
         @include mq(rightCol) {
             @include rem((
                 padding-right: $gs-gutter

@@ -64,9 +64,28 @@
 
 @mixin article-header-tone($tone, $colour, $accentColour, $textColour, $commentIcon) {
     .tone-#{$tone} .content__head--tonal {
+        .content__section {
+            border-top: 1px dotted $c-neutral5;
+            @include rem((
+                padding-top: $gs-baseline/3
+            ));
+            @include mq($from: leftCol) {
+                border-top: 0;
+                @include rem((
+                    padding-top: $gs-baseline/2
+                ));
+            }
+        }
+        .content__section .tone-colour {
+            color: $colour;
+            @include mq($from: leftCol) {
+                color: $textColour;
+            }
+        }
         .content__headline,
         .content__standfirst,
-        .content__section .tone-colour {
+        .content__standfirst a,
+        .content__section {
             color: $textColour;
         }
         .tone-background {
@@ -85,6 +104,15 @@
 
         .content-meta__label {
             color: lighten($accentColour, 25);
+        }
+        .content__standfirst .bullet:before {
+            background-color: lighten($accentColour, 25);
+        }
+        .u-underline {
+            border-bottom-color: lighten($accentColour, 25);
+            &:hover {
+                border-bottom-color: #fff;
+            }
         }
     }
     .content.tone-#{$tone} {

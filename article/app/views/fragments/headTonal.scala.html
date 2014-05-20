@@ -2,13 +2,17 @@
 
 <header class="content__head content__head--tonal">
 
+    <div class="gs-container">
+        <div class="content__main-column content__main-column--wide">
+            <div class="content__section">
+                <a class="tone-colour" data-link-name="article section" href="@LinkTo{/@content.section}">@Html(content.sectionName.toLowerCase)</a>
+            </div>
+        </div>
+    </div>
+
     <div class="tone-background">
         <div class="gs-container">
             <div class="content__main-column">
-
-                <div class="content__section">
-                    <a class="tone-colour" data-link-name="article section" href="@LinkTo{/@content.section}">@Html(content.sectionName.toLowerCase)</a>
-                </div>
 
                 @fragments.meta.metaInline(content)
 
