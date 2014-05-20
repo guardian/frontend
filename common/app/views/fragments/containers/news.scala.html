@@ -8,17 +8,17 @@
         @defining(Edition.editionFronts.contains(request.uri.toLowerCase)) { isEdition =>
             @if(items.nonEmpty) {
                 <section
-                class="@RenderClasses(Map(
-                    "container" -> true,
-                    "container--row-pattern" -> true,
-                    s"container--${style.containerType}" -> true,
-                    s"container--tag" -> !isEdition,
-                    "js-container--toggle" -> (containerIndex > 0 && title.nonEmpty),
-                    "container--first" -> (containerIndex == 0)))"
-                data-link-name="block | @config.id"
-                data-id="@config.id"
-                data-type="@style.containerType"
-                data-component="@FaciaComponentName(config, collection)">
+                    class="@RenderClasses(Map(
+                        "container" -> true,
+                        "container--row-pattern" -> true,
+                        s"container--${style.containerType}" -> true,
+                        s"container--tag" -> !isEdition,
+                        "js-container--toggle" -> (containerIndex > 0 && title.nonEmpty),
+                        "container--first" -> (containerIndex == 0)))"
+                    data-link-name="block | @config.id"
+                    data-id="@config.id"
+                    data-type="@style.containerType"
+                    data-component="@FaciaComponentName(config, collection)">
                     <div class="facia-container__inner">
                         <div class="container__border tone-@style.tone tone-accent-border"></div>
                         <div class="container__header">
