@@ -12,7 +12,7 @@ import performance.MemcachedAction
 import services.ConfigAgent
 
 
-class FaciaController extends Controller with Logging with ExecutionContexts with implicits.Collections {
+class FaciaController extends Controller with Logging with ExecutionContexts with implicits.Collections with implicits.Requests {
 
   val EditionalisedKey = """^\w\w(/.*)?$""".r
 
@@ -31,8 +31,8 @@ class FaciaController extends Controller with Logging with ExecutionContexts wit
     Cached(60)(Redirect(redirectPath))
   }
 
-  def applicationsRedirect(path: String) = Action {
-    Ok.withHeaders("X-Accel-Redirect" -> s"/applications/$path")
+  def applicationsRedirect(path: String) = Action { implicit request =>
+    Ok.withHeaders("X-Accel-Redirect" -> (s"/applications/$path" + (if (request.isRss) "/rss" else "")))
   }
 
   //Only used by dev-build for rending special urls such as lifeandstyle/home-and-garden
