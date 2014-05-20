@@ -1,5 +1,6 @@
 package com.gu.test.pages;
 
+import com.gu.test.helpers.WaitHelper;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -7,20 +8,16 @@ import com.gu.test.pages.Article;
 
 public class FrontPage {
     private WebDriver driver;
-    private String dataComponent;
 
     public FrontPage(WebDriver driver) {
         this.driver = driver;
-
     }
 
     public void expandContainer(String container) {
         String expandButton = "//section[@data-component=\"" + container + "\"]//button[@data-link-name=\"Show more | 0\"]";
         WebElement containerExpandButton = driver.findElement(By.xpath(expandButton));
         containerExpandButton.click();
-
     }
-
 
     public void hideContainer(String container) {
         String hideButton = "//section[@data-component=\"" + container + "\"]//span[contains(text(), \"Hide\")]";
@@ -37,10 +34,9 @@ public class FrontPage {
 
 
     public String currentStateOfShowHide(String container) {
-        String buttonState = driver.findElement(By.xpath("//section[@data-component=\"features\"]//span[@class=\"container__toggle__text\"]")).getText();
+        String buttonState = driver.findElement(By.xpath("//section[@data-component=\"" + container + "\"]//span[@class=\"container__toggle__text\"]")).getText();
         return buttonState;
     }
-
 
     public Article goToArticleInPeople() {
         return goToArticleInContainer("people");
@@ -52,6 +48,7 @@ public class FrontPage {
 
     private Article goToArticleInContainer(String container) {
         driver.findElement(By.xpath("/descendant::section[@data-component=\"" + container + "\"]//a[@data-link-name=\"article\"][1]")).click();
+        WaitHelper.waitForArticleLoad(driver);
         return new Article(driver);
     }
 

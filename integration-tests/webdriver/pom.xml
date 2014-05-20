@@ -18,7 +18,6 @@
             <groupId>com.github.tomakehurst</groupId>
             <artifactId>wiremock</artifactId>
             <version>[1.46,)</version>
-            <classifier>standalone</classifier>
             <exclusions>
                 <exclusion>
                     <groupId>junit</groupId>
