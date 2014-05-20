@@ -30,7 +30,7 @@ trait Paging extends implicits.Numbers {
     paging + ("actual-offset" -> actualOffset)
   }
 
-  protected def extractPage(request: RequestHeader): Int = request.getQueryString("page")
+  protected def inferPage(request: RequestHeader): Int = request.getQueryString("page")
     .filter(_.isInt).map(_.toInt).getOrElse(1)
 
 }

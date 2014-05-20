@@ -20,7 +20,7 @@ object DfpAgent extends ExecutionContexts with Logging {
 
   private def dfpData: Option[DfpData] = {
     if (Play.isTest) {
-      Some(DfpData(Seq(LineItem(0, Nil))))
+      Some(testDfpData)
     } else {
       dfpDataAgent get()
     }
@@ -28,13 +28,26 @@ object DfpAgent extends ExecutionContexts with Logging {
 
   private def normalise(name: String) = name.toLowerCase.replaceAll("[+\\s]+", "-")
 
+  private def isSponsoredType(keyword: String, p: DfpData => String => Boolean): Boolean = {
+    dfpData.fold(false) { data =>
+      p(data)(normalise(keyword))
+    }
+  }
+
   def isSponsored(content: Content): Boolean = isSponsored(content.keywords)
 
   def isSponsored(section: Section): Boolean = isSponsored(section.webTitle)
 
   def isSponsored(keywords: Seq[Tag]): Boolean = keywords.exists(keyword => isSponsored(keyword.name))
 
-  def isSponsored(keyword: String): Boolean = dfpData.fold(false)(_.isSponsored(normalise(keyword)))
+  def isSponsored(keyword: String): Boolean = isSponsoredType(keyword, _.isSponsored)
+
+  def isAdvertisementFeature(section: Section): Boolean = isAdvertisementFeature(section.webTitle)
+
+  def isAdvertisementFeature(keywords: Seq[Tag]): Boolean =
+    keywords.exists(keyword => isAdvertisementFeature(keyword.name))
+
+  def isAdvertisementFeature(keyword: String): Boolean = isSponsoredType(keyword, _.isAdvertisementFeature)
 
   def refresh() {
 
@@ -62,27 +75,8 @@ object DfpAgent extends ExecutionContexts with Logging {
     }
 
     def fetchDfpData(): Option[DfpData] = {
-
-      def logDataChanges(freshData: Option[DfpData]) {
-        def minus(optData: Option[DfpData], optSubData: Option[DfpData]): Seq[LineItem] = {
-          for {
-            data <- optData
-            subData <- optSubData
-          } yield
-            data.lineItems filterNot (subData.lineItems contains _)
-        }.getOrElse(Nil)
-        val removedLineItems = minus(dfpData, freshData)
-        if (removedLineItems.nonEmpty) log.info(s"Removed DFP line items: $removedLineItems")
-        val newLineItems = minus(freshData, dfpData)
-        if (newLineItems.nonEmpty) log.info(s"New DFP line items loaded: $newLineItems")
-      }
-
       val json = S3.get(dfpDataKey)(UTF8) map parse
-      val freshData = json map (_.as[DfpData])
-
-      logDataChanges(freshData)
-
-      freshData
+      json map (_.as[DfpData])
     }
 
     dfpDataAgent sendOff { oldData =>
@@ -96,6 +90,10 @@ object DfpAgent extends ExecutionContexts with Logging {
   def stop() {
     dfpDataAgent close()
   }
+
+  private val testDfpData = DfpData(Seq(
+    LineItem(0, Seq(TargetSet("AND", Seq(Target("slot","IS",Seq("spbadge")),Target("k","IS",Seq("media"))))))
+  ))
 }
 
 

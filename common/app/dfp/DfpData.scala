@@ -1,5 +1,7 @@
 package dfp
 
+import common.Logging
+
 case class Target(name: String, op: String, values: Seq[String]) {
 
   def isPositive(targetName: String) = name == targetName && op == "IS"
@@ -34,11 +36,19 @@ case class LineItem(id: Long, targetSets: Seq[TargetSet]) {
   val advertisementFeatureKeywords = targetSets.flatMap(_.advertisementFeatureKeywords).distinct
 }
 
-case class DfpData(lineItems: Seq[LineItem]) {
+case class DfpData(lineItems: Seq[LineItem]) extends Logging {
 
-  val sponsoredKeywords = lineItems.flatMap(_.sponsoredKeywords).distinct
+  val sponsoredKeywords = {
+    val keywords = lineItems.flatMap(_.sponsoredKeywords).distinct
+    log.info(s"Sponsored keywords: $keywords")
+    keywords
+  }
 
-  val advertisementFeatureKeywords = lineItems.flatMap(_.sponsoredKeywords).distinct
+  val advertisementFeatureKeywords = {
+    val keywords = lineItems.flatMap(_.advertisementFeatureKeywords).distinct
+    log.info(s"Advertisement feature keywords: $keywords")
+    keywords
+  }
 
   def isSponsored(keyword: String) = sponsoredKeywords contains keyword
 
