@@ -17,7 +17,7 @@
         <dependency>
             <groupId>com.github.tomakehurst</groupId>
             <artifactId>wiremock</artifactId>
-            <version>[1.45,)</version>
+            <version>[1.46,)</version>
             <exclusions>
                 <exclusion>
                     <groupId>junit</groupId>
@@ -57,13 +57,6 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
                 <version>2.10</version>
-                <dependencies>
-                    <dependency>
-                        <groupId>hu.meza.tools</groupId>
-                        <artifactId>checkstyle</artifactId>
-                        <version>LATEST</version>
-                    </dependency>
-                </dependencies>
                 <configuration>
                     <configLocation>checkstyle.xml</configLocation>
                     <includeTestSourceDirectory>true</includeTestSourceDirectory>
