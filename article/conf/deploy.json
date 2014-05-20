@@ -13,6 +13,19 @@
                 ]
             }
         },
+        "article":{
+            "type":"autoscaling",
+            "apps":[ "frontend::article" ],
+            "data":{
+                "secondsToWait":1200,
+                "port":18080,
+                "healthcheckGrace":20,
+                "bucket":"aws-frontend-artifacts",
+                "healthcheck_paths":[
+                    "/management/healthcheck"
+                ]
+            }
+        },
         "frontend-static":{
             "type":"aws-s3",
             "apps":[ "aws-s3" ],
@@ -38,7 +51,7 @@
             "actionsBeforeApp": ["frontend-article.deploy"]
         },
         "artifactUpload":{
-            "actionsBeforeApp": ["frontend-article.uploadArtifacts"]
+            "actionsBeforeApp": ["frontend-article.uploadArtifacts", "article.uploadArtifacts"]
         },
         "staticFilesUpload":{
             "actionsBeforeApp": ["frontend-static.uploadStaticFiles"]

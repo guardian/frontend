@@ -12,7 +12,21 @@
                     "/management/healthcheck"
                 ]
             }
+        },
+        "router":{
+            "type":"autoscaling",
+            "apps":[ "frontend::router" ],
+            "data":{
+                "secondsToWait":1200,
+                "port":18080,
+                "healthcheckGrace":20,
+                "bucket":"aws-frontend-artifacts",
+                "healthcheck_paths":[
+                    "/management/healthcheck"
+                ]
+            }
         }
+
     },
     "recipes":{
         "default":{
@@ -22,7 +36,7 @@
             "actionsBeforeApp": ["frontend-router.deploy"]
         },
         "artifactUpload":{
-            "actionsBeforeApp": ["frontend-router.uploadArtifacts"]
+            "actionsBeforeApp": ["frontend-router.uploadArtifacts", "router.uploadArtifacts"]
         }
     }
 }
