@@ -91,6 +91,14 @@
     }
 }
 
+.content__head {
+    @include mq($to: tablet) {
+        border-top-style: solid;
+        border-top-width: 2px;
+    }
+}
+
+
 .content__head__comment-count {
     @include rem((
         height: 16px + $gs-baseline //font-size + $gs-baseline
@@ -165,9 +173,9 @@
         -webkit-font-smoothing: antialiased;
         @include fs-headline(7, true);
         @include rem((
-                padding-bottom: $gs-row-height
+            padding-bottom: $gs-row-height,
+            padding-top: $gs-baseline/6
         ));
-        padding-top: 0;
         border-top: 0;
     }
     a {
@@ -378,7 +386,7 @@
     @include fs-textsans(3);
     font-weight: bold;
     @include rem((
-        padding-top: $gs-baseline,
+        padding-top: $gs-baseline/4,
         margin: 0 0 $gs-baseline/2,
         line-height: 16px
     ));
