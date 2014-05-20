@@ -1,6 +1,7 @@
 @(name: String, adType: String, sizeMapping: Map[String, Seq[String]], showLabel: Boolean = true, refresh: Boolean = true)
 
 <div
+    id="dfp-ad--@name"
     class="ad-slot ad-slot--dfp ad-slot--@adType"
     data-link-name="ad slot @name"
     data-name="@name"
@@ -8,6 +9,4 @@
     @if(!refresh){ data-refresh="false" }
     @sizeMapping.map{ case(breakpoint, sizes) =>
         data-@breakpoint="@sizes.mkString("|")"
-    }>
-    <div id="dfp-ad--@name" class="ad-slot__container"></div>
-</div>
+    }></div>

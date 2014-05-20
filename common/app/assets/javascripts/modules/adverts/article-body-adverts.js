@@ -28,7 +28,7 @@ define([
     ArticleBodyAdverts.prototype.inlineSlots = [];
 
     ArticleBodyAdverts.prototype.config = {
-        inlineAdTemplate: '<div class="ad-slot--dfp ad-slot--inline" data-name="%dfp_slot%" data-mobile="300,50" data-mobilelandscape="300,50|320,50" data-tabletportrait="300,250"><div id="dfp-ad--%dfp_slot%" class="ad-slot__container"></div></div>'
+        inlineAdTemplate: '<div id="dfp-ad--%dfp_slot%" class="ad-slot--dfp ad-slot--inline" data-name="%dfp_slot%" data-mobile="300,50" data-mobilelandscape="300,50|320,50" data-tabletportrait="300,250"></div>'
     };
 
     ArticleBodyAdverts.prototype.generateInlineAdSlot = function(dfpName) {

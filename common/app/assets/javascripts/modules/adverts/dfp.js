@@ -91,19 +91,14 @@ define([
         },
         addLabel = function($slot) {
             if (shouldRenderLabel($slot)) {
-                $slot.parent()
-                    .prepend('<div class="ad-slot__label">Advertisement</div>')
-                    .addClass('ad-label--showing');
+                $slot.prepend('<div class="ad-slot__label">Advertisement</div>');
             }
         },
         removeLabel = function($slot) {
-            var $slotParent = $slot.parent()
-                .removeClass('ad-label--showing');
-            $('.ad-slot__label', $slotParent[0]).remove();
+            $('.ad-slot__label', $slot).remove();
         },
         shouldRenderLabel = function ($slot) {
-            var $parent = $slot.parent();
-            return !($slot.css('display') === 'none' || $parent.hasClass('ad-label--showing') || $parent.data('label') === false);
+            return $slot.data('label') !== false && qwery('.ad-slot__label', $slot[0]).length === 0;
         },
         /**
          * Checks the contents of the ad for special classes (see breakoutHash).
@@ -168,7 +163,7 @@ define([
             var mapping = googletag.sizeMapping();
 
             for (var breakpoint in breakpoints) {
-                var attr  = slot.getAttribute('data-' + breakpoint),
+                var attr  = slot.data(breakpoint),
                     width = breakpoints[breakpoint];
 
                 if (attr) {
@@ -262,8 +257,8 @@ define([
 
             adSlots.forEach(function($adSlot) {
 
-                var id          = $(config.adContainerClass, $adSlot[0]).attr('id'),
-                    sizeMapping = defineSlotSizes($adSlot[0]),
+                var id          = $adSlot.attr('id'),
+                    sizeMapping = defineSlotSizes($adSlot),
                     // as we're using sizeMapping, pull out all the ad sizes, as an array of arrays
                     size        = uniq(
                         flatten(sizeMapping, true, function(map) {
@@ -291,7 +286,7 @@ define([
             googletag.pubads().collapseEmptyDivs();
             googletag.enableServices();
             // as this is an single request call, only need to make a single display call (to the first ad slot)
-            googletag.display($(config.adContainerClass, adSlots.shift()).attr('id'));
+            googletag.display(adSlots.shift().attr('id'));
         },
         postDisplay = function() {
             var hasBreakpointChanged = detect.hasCrossedBreakpoint();
@@ -310,7 +305,6 @@ define([
 
         config = defaults(c || {}, {
             adSlotSelector: '.ad-slot--dfp',
-            adContainerClass: '.ad-slot__container',
             page: {},
             switches: {}
         });
