@@ -32,7 +32,6 @@ class PublicProfileController @Inject()(idUrlBuilder: IdentityUrlBuilder,
     implicit request =>
       futureUser map {
         case Left(errors) =>
-          print(errors)
           logger.info(s"public profile page returned errors ${errors.toString()}")
           NotFound(views.html.errors._404())
 
