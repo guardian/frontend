@@ -2,68 +2,55 @@
 @import conf.Switches._
 
 @defining((page.image, page.storyPackage)) { case (image, storyPackage) =>
+
+<article class="content content--image tone-@image.visualTone" itemprop="mainContentOfPage" itemscope itemtype="@image.schemaType" role="main">
+
+    @fragments.headDefault(image)
+
     <div class="gs-container">
-        <h2 class="article__zone left-col-deport tone-@VisualTone(image) tone-accent-border hide-on-mobile-if-localnav">
-            <span class="left-col-deport__body" data-component="meta">
-                <a class="tone-colour" data-link-name="article section" href="/@image.section">@Html(image.sectionName.toLowerCase)</a>
-            </span>
-        </h2>
-        <div class="article-wrapper monocolumn-wrapper tone-@VisualTone(image)">
-            <article id="article" class="article"
-                     itemprop="mainContentOfPage" itemscope itemtype="@image.schemaType" role="main">
-                <div class="article__inner article__inner--head">
-                    <header class="article__head">
-                        @fragments.meta.metaInline(image)
-                        @fragments.headline(image.headline)
+        <div class="content__main-column content__main-column--image">
 
-                        @fragments.standfirst(image)
+            @fragments.img(image.mainPicture)
 
-                        @if(image.isCommentable) {
-                            <div class="article__head__comment-count js-comment-count"></div>
-                        }
-                    </header>
+            @fragments.contentMeta(image)
 
-                    <div class="after-header"></div>
-                </div>
-                <div class="article__columning-wrapper" data-component="body">
-                    <div class="article__main-column">
 
-                        @fragments.img(image.mainPicture)
+            <div class="content__keywords" data-link-name="article keywords">
+                @fragments.keywordList(image.keywords)
+            </div>
 
-                        @fragments.contentMeta(image)
+            <div class="social-wrapper" data-component="share">
+                @fragments.social(image)
+            </div>
+        </div>
 
-                        <div class="social-wrapper" data-component="share">
-                            @fragments.social(image)
-                        </div>
-                    </div>
-                    <div class="article__secondary-column" aria-hidden="true" data-component="share">
-                        <div class="article__secondary-column__inner">
-                            <div class="u-table">
-                                <div class="u-table__row">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </article>
 
-            @if(DiscussionSwitch.isSwitchedOn && image.isCommentable) {
-                <div class="article__inner js-comments" data-component="discussion">
-                    @fragments.discussion(image.isClosedForComments, image.shortUrlId)
-                </div>
-            }
+        <div class="content__secondary-column" aria-hidden="true">
+            <div class="mpu-container js-mpu-ad-slot"></div>
+            <div class="js-components-container"></div>
+        </div>
+
+    </div>
+</article>
+
+@if(DiscussionSwitch.isSwitchedOn && image.isCommentable) {
+    <div class="gs-container js-comments">
+        <div class="content__main-column" data-component="discussion">
+        @fragments.discussion(image.isClosedForComments, image.shortUrlId)
         </div>
     </div>
-    @fragments.storyPackagePlaceholder(storyPackage)
-    @fragments.onwardPlaceholder(VisualTone(image))
+}
 
-    <div class="facia-container facia-container--layout-article">
-        @fragments.mostPopularPlaceholder(image.section, VisualTone(image))
-    </div>
-    <div class="gs-container">
-        <div class="article-wrapper article__breadcrumb" itemscope itemtype="http://schema.org/Organization" data-link-name="image breadcrumbs">
-            @fragments.breadcrumb(image)
-        </div>
-    </div>
+@fragments.storyPackagePlaceholder(storyPackage)
+@fragments.onwardPlaceholder(image.visualTone)
 
+<div class="facia-container facia-container--layout-article">
+    @fragments.mostPopularPlaceholder(image.section, image.visualTone)
+</div>
+
+<div class="gs-container">
+    <div class="content__breadcrumb" itemscope itemtype="http://schema.org/Organization" data-link-name="article breadcrumbs">
+        @fragments.breadcrumb(image)
+    </div>
+</div>
 }

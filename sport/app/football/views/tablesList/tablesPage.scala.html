@@ -18,7 +18,7 @@
                         @page.tables.map { table =>
                             @if(page.singleCompetition){<h1 class="u-h">@table.competition.fullName</h1>}else{<h2 class="u-h">@table.competition.fullName</h2>}
                             <div class="football-table__container@if(page.tables.size == 1) { football-table__container--single}">
-                                <div class="article__container u-cf">
+                                <div class="u-cf">
                                     @table.groups.zipWithRowInfo.map{ case (group, info) =>
                                         @if(table.multiGroup){
                                             @group.round.name.map { name =>

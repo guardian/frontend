@@ -8,7 +8,7 @@ import common.{LinkCounts, LinkTo, Reference}
 import org.jsoup.Jsoup
 import org.jsoup.safety.Whitelist
 import collection.JavaConversions._
-import views.support.{VisualTone, Naked, ImgSrc, StripHtmlTagsAndUnescapeEntities}
+import views.support.{Naked, ImgSrc, StripHtmlTagsAndUnescapeEntities}
 import play.api.libs.json.JsValue
 import conf.Configuration.facebook
 import dfp.DfpAgent
@@ -28,7 +28,6 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   lazy val allowUserGeneratedContent: Boolean = fields.get("allowUgc").exists(_.toBoolean)
   lazy val isExpired = delegate.isExpired.getOrElse(false)
   lazy val blockVideoAds: Boolean = videoAssets.exists(_.blockVideoAds)
-  lazy val isLiveBlog: Boolean = delegate.isLiveBlog
   lazy val isBlog: Boolean = blogs.nonEmpty
   lazy val isSeries: Boolean = series.nonEmpty
   lazy val hasLargeContributorImage: Boolean = tags.filter(_.hasLargeContributorImage).nonEmpty
@@ -123,23 +122,23 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   override def metaData: Map[String, Any] = {
 
     super.metaData ++ Map(
-    ("keywords", keywords.map { _.name }.mkString(",")),
-    ("keywordIds", keywords.map { _.id }.mkString(",")),
-    ("publication", publication),
-    ("headline", headline),
-    ("web-publication-date", webPublicationDate),
-    ("author", contributors.map(_.name).mkString(",")),
-    ("tones", tones.map(_.name).mkString(",")),
-    ("blogs", blogs.map { _.name }.mkString(",")),
-    ("commentable", isCommentable),
-    ("has-story-package", fields.get("hasStoryPackage").exists(_.toBoolean)),
-    ("page-code", fields("internalPageCode")),
-    ("isLive", isLive),
-    ("wordCount", wordCount),
-    ("shortUrl", shortUrl),
-    ("thumbnail", thumbnailPath.getOrElse(false)),
-    ("references", delegate.references.map(r => Reference(r.id))),
-    ("sectionName", sectionName)
+      ("keywords", keywords.map { _.name }.mkString(",")),
+      ("keywordIds", keywords.map { _.id }.mkString(",")),
+      ("publication", publication),
+      ("headline", headline),
+      ("web-publication-date", webPublicationDate),
+      ("author", contributors.map(_.name).mkString(",")),
+      ("tones", tones.map(_.name).mkString(",")),
+      ("blogs", blogs.map { _.name }.mkString(",")),
+      ("commentable", isCommentable),
+      ("has-story-package", fields.get("hasStoryPackage").exists(_.toBoolean)),
+      ("page-code", fields("internalPageCode")),
+      ("isLive", isLive),
+      ("wordCount", wordCount),
+      ("shortUrl", shortUrl),
+      ("thumbnail", thumbnailPath.getOrElse(false)),
+      ("references", delegate.references.map(r => Reference(r.id))),
+      ("sectionName", sectionName)
     ) ++ Map(seriesMeta : _*)
   }
 
@@ -244,29 +243,29 @@ object Content {
 
   private def parseElements(json: JsValue): List[ApiElement] = {
     (json \ "elements").asOpt[List[JsValue]].map(_.map{ elementJson =>
-        ApiElement(
+      ApiElement(
         (elementJson \ "id").as[String],
         (elementJson \ "relation").as[String],
         (elementJson \ "type").as[String],
         (elementJson \ "galleryIndex").asOpt[Int],
         parseAssets(elementJson)
-       )
+      )
     }).getOrElse(Nil)
   }
 
   private def parseTags(tagsJson: List[JsValue]): List[ApiTag] =
     tagsJson.map { tagJson =>
-        ApiTag(
-          id              = (tagJson \ "id").as[String],
-          `type`          = (tagJson \ "type").as[String],
-          sectionId       = (tagJson \ "section").asOpt[String],
-          sectionName     = None,
-          webTitle        = (tagJson \ "webTitle").as[String],
-          webUrl          = (tagJson \ "webUrl").as[String],
-          apiUrl          = "",
-          references      = Nil,
-          bio             = None,
-          bylineImageUrl  = (tagJson \ "bylineImageUrl").asOpt[String]
+      ApiTag(
+        id              = (tagJson \ "id").as[String],
+        `type`          = (tagJson \ "type").as[String],
+        sectionId       = (tagJson \ "section").asOpt[String],
+        sectionName     = None,
+        webTitle        = (tagJson \ "webTitle").as[String],
+        webUrl          = (tagJson \ "webUrl").as[String],
+        apiUrl          = "",
+        references      = Nil,
+        bio             = None,
+        bylineImageUrl  = (tagJson \ "bylineImageUrl").asOpt[String]
       )
     }
 
@@ -290,7 +289,7 @@ private object ArticleSchemas {
       "http://schema.org/Review"
     else if (article.isBlog)
       "http://schema.org/BlogPosting"
-    else if (VisualTone(article) == VisualTone.News)
+    else if (article.visualTone == Tags.VisualTone.News)
       "http://schema.org/NewsArticle"
     else
       "http://schema.org/Article"
@@ -298,27 +297,27 @@ private object ArticleSchemas {
 }
 
 object SnapApiContent extends ApiContent(
-    id                  = "",
-    sectionId           = None,
-    sectionName         = None,
-    webPublicationDate  = DateTime.now,
-    webTitle            = "",
-    webUrl              = "http://www.theguardian.com/",
-    apiUrl              = "",
-    fields              = None,
-    tags                = Nil,
-    factboxes           = Nil,
-    mediaAssets         = Nil,
-    elements            = None,
-    references          = Nil,
-    isExpired           = None
-    )
+  id                  = "",
+  sectionId           = None,
+  sectionName         = None,
+  webPublicationDate  = DateTime.now,
+  webTitle            = "",
+  webUrl              = "http://www.theguardian.com/",
+  apiUrl              = "",
+  fields              = None,
+  tags                = Nil,
+  factboxes           = Nil,
+  mediaAssets         = Nil,
+  elements            = None,
+  references          = Nil,
+  isExpired           = None
+)
 
 class Snap(snapId: String,
            snapSupporting: List[Content],
            snapWebPublicationDate: DateTime,
            snapMeta: Map[String, JsValue]
-) extends Content(new ApiContentWithMeta(SnapApiContent, supporting = snapSupporting, metaData = snapMeta)) {
+            ) extends Content(new ApiContentWithMeta(SnapApiContent, supporting = snapSupporting, metaData = snapMeta)) {
 
   val snapType: Option[String] = snapMeta.get("snapType").flatMap(_.asOpt[String])
   val snapCss: Option[String] = snapMeta.get("snapCss").flatMap(_.asOpt[String])
@@ -340,14 +339,9 @@ class Snap(snapId: String,
   override lazy val webPublicationDate = snapWebPublicationDate
 }
 
-
-
 class Article(content: ApiContentWithMeta) extends Content(content) {
   lazy val body: String = delegate.safeFields.getOrElse("body","")
   lazy val contentType = "Article"
-  lazy val isReview = tones.exists(_.id == "tone/reviews")
-  lazy val isFeature = tones.exists(_.id == "tone/features")
-  lazy val isComment = tones.exists(_.id == "tone/comment")
 
   lazy val hasVideoAtTop: Boolean = Jsoup.parseBodyFragment(body).body().children().headOption
     .exists(e => e.hasClass("gu-video") && e.tagName() == "video")
@@ -357,8 +351,7 @@ class Article(content: ApiContentWithMeta) extends Content(content) {
 
   // if you change these rules make sure you update IMAGES.md (in this project)
   override def trailPicture: Option[ImageContainer] = thumbnail.find(_.imageCrops.exists(_.width >= 620))
-      .orElse(mainPicture).orElse(videos.headOption)
-
+    .orElse(mainPicture).orElse(videos.headOption)
 
   lazy val linkCounts = LinkTo.countLinks(body) + standfirst.map(LinkTo.countLinks).getOrElse(LinkCounts.None)
   override lazy val metaData: Map[String, Any] = super.metaData ++ Map(

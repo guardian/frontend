@@ -2,18 +2,19 @@
 
 @if(content.isSeries) {
     @content.series.headOption.map { series =>
-        @fragments.meta.series(series.id, series.name, List("inline"))
+        <dl class="content-meta content-meta--inline">
+            <dt class="content-meta__label">Series</dt>
+            <dd class="content-meta__item">
+                <a href="/@series.id" class="tone-colour">@series.name</a>
+            </dd>
+        </dl>
     }
 } else {
     @if(content.isFromTheObserver ) {
-
         <dl class="content-meta content-meta--inline">
             <dd class="content-meta__item">
-                <a href="http://observer.theguardian.com" class="content-meta__item tone-colour">The Observer</a>
+                <a href="http://observer.theguardian.com" class="tone-colour">The Observer</a>
             </dd>
         </dl>
     }
 }
-
-
-

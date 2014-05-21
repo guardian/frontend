@@ -1,7 +1,7 @@
 @(content: model.Content)(implicit request: RequestHeader)
 
 @* live with empty standfirst as it is used to hook things into the page with javascript *@
-<div class="article__standfirst" data-link-name="standfirst" data-component="standfirst">
+<div class="content__standfirst" data-link-name="standfirst" data-component="standfirst">
     @content.trailText.map{ t =>
         <meta itemprop="description" content="@StripHtmlTags(t)" />
     }

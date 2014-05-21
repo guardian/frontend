@@ -11,6 +11,7 @@
 
 .from-content-api {
     word-wrap: break-word;
+    @include fs-bodyCopy(3);
 }
 .from-content-api,
 .from-content-api .block-elements {
@@ -136,7 +137,7 @@
 }
 
 .from-content-api ul > li,
-.article__standfirst ul > li {
+.content__standfirst ul > li {
     @include faux-bullet-point($right-space: 4px);
 
     > p:first-child { // this stops line breaking for the following bullet point format: <ul><li><p>text</p></li></ul>

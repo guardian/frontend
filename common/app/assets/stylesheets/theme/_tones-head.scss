@@ -5,4 +5,67 @@
 @include tone-head(feature, $c-featureDefault, $c-featureAccent);
 @include tone-head(live, $c-neutral1, $c-liveAccent);
 @include tone-head(media, $c-mediaDefault, $c-mediaDefault);
-@include tone-head-background(feature, $c-featureDefault, $c-featureAccent2, #ffffff, 'white');
+
+// Tonal article styles
+@include article-header-tone(feature, $c-featureDefault, $c-featureAccent2, #ffffff, 'white');
+@include article-header-tone(live, $c-liveDefault, $c-liveAccent, #ffffff, 'white');
+
+
+.content__head--tonal {
+    background-color: #ffffff;
+    .tone-background {
+        @include rem((
+            padding-top: $gs-baseline/2
+        ));
+    }
+    .tone-background--accent {
+        @include rem((
+            padding: $gs-baseline/2 0 $gs-baseline
+        ));
+    }
+    .content__headline {
+        font-weight: 200;
+    }
+    .content__standfirst {
+        margin-bottom: 0;
+    }
+    .content__headline {
+        @include rem((
+            min-height: 60px
+        ));
+    }
+    .content-meta {
+        @include rem((
+            padding-top: $gs-baseline/4
+        ));
+    }
+    .content__section,
+    .content-meta {
+        border-top: 0 !important;
+    }
+}
+
+.tone-live .content__head--tonal {
+    .content-meta__label {
+        color: #e4845a;
+    }
+    .content__headline {
+        font-weight: normal;
+    }
+}
+
+.tone-feature--article {
+    @include mq($from: tablet) {
+        .content__main-column--article {
+            @include rem((
+                margin-top: $gs-baseline*2
+            ));
+        }
+    }
+}
+
+.tone-comment--article {
+    .tone-background {
+        background: #ffffff;
+    }
+}

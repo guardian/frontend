@@ -113,6 +113,7 @@ $c-replyText: $c-body;
     display: inline-block;
 }
 .d-discussion__show-all-comments {
+    position: relative;
     display: inline-block;
     padding-left: 55px;
     @include fs-textsans(4);
@@ -1150,5 +1151,14 @@ $c-replyText: $c-body;
 .d-comment-box--parent-visible {
     .d-comment-box__parent-comment-wrapper {
         display: block;
+    }
+}
+
+.content__repositioned-comments .content__main-column {
+    @include mq(rightCol) {
+        max-width: none;
+        @include rem((
+            padding-right: 25%
+        ));
     }
 }

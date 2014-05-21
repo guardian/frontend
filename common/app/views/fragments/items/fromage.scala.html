@@ -1,6 +1,6 @@
 @(trail: Trail, index: Int, imageAdjustOverride: Option[String] = None)(implicit request: RequestHeader, config: Config)
 
-@defining((VisualTone(trail), imageAdjustOverride.getOrElse(trail.imageAdjust))) { case (tone, imageAdjust) =>
+@defining((trail.visualTone, imageAdjustOverride.getOrElse(trail.imageAdjust))) { case (tone, imageAdjust) =>
     <div
         class="@GetClasses.forFromage(trail, imageAdjust)"
         @if(trail.isCommentable) {

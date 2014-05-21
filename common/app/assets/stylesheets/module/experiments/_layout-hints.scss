@@ -128,6 +128,36 @@ figure {
     ));
 }
 
+.media-primary.media-primary--showcase {
+    @include deport-left;
+}
+
+.tone-feature .media-primary.media-primary--showcase {
+    margin-left: 0;
+
+    .responsive-img {
+        @include mq($from: rightCol) {
+            top: -25%;
+        }
+        height: auto;
+    }
+
+    .main-caption {
+        padding-left: 0;
+    }
+
+    .u-responsive-ratio--letterbox {
+
+        @include mq($to: rightCol) {
+            padding-bottom: aspect-ratio-height(5, 3);
+        }
+
+        @include mq(1920px) {
+            padding-bottom: 768px;
+        }
+    }
+}
+
 .layout-hints {
 
     &.rescue-from-antarctica {

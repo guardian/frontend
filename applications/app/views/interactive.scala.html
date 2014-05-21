@@ -1,7 +1,7 @@
-@(interactive: Interactive, storyPackage: List[Trail], index: Int, trail: Boolean)(implicit request: RequestHeader)
+@(interactive: Interactive)(implicit request: RequestHeader)
 
 @main(interactive){ }{
 
-    @fragments.interactiveBody(interactive, storyPackage, index, trail)
+    @fragments.interactiveBody(interactive)
 
 }

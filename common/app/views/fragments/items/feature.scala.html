@@ -1,6 +1,6 @@
 @(trail: model.Trail, index: Int, containerIndex: Int, element: String = "li")(implicit request: RequestHeader)
 
-@defining((VisualTone(trail), containerIndex == 0, containerIndex == 0 && index < 3)) { case (tone, isFirstContainer, inlineImages) =>
+@defining((trail.visualTone, containerIndex == 0, containerIndex == 0 && index < 3)) { case (tone, isFirstContainer, inlineImages) =>
     <@element
         class="@GetClasses.forItem(trail, isFirstContainer)"
         @if(trail.isCommentable) {
