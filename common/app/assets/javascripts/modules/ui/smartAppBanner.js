@@ -24,24 +24,28 @@ define([
         DATA = {
             IOS : {
                 LOGO: 'http://assets.guim.co.uk/images/apps/ios-logo.png',
-                LINK: 'http://www.apple.com'
+                SCREENSHOTS: 'http://assets.guim.co.uk/images/apps/ios-screenshots.png',
+                LINK: 'http://www.apple.com',
+                STORE: 'on the App Store'
             },
             ANDROID: {
                 LOGO: 'http://assets.guim.co.uk/images/apps/android-logo.png',
-                LINK: 'http://www.google.com'
+                SCREENSHOTS: 'http://assets.guim.co.uk/images/apps/ios-screenshots.png',
+                LINK: 'http://www.google.com',
+                STORE: 'in Google Play'
             }
         },
         isAndroid = false,
         isIOS = false,
-        tmp = '<img src="{{logo}}" class="app__logo" /><div class="app__cta"><h4 class="app__heading">The Guardian app</h4>' +
+        tmp = '<img src="{{LOGO}}" class="app__logo" /><div class="app__cta"><h4 class="app__heading">The Guardian app</h4>' +
             '<p class="app__copy">Instant alerts. Offline reading.<br/>Tailored to you.</p>' +
-            '<p class="app__copy"><strong>FREE</strong> – on the App Store</p></div><a href="{{link}}" class="app__link">View</a>';
+            '<p class="app__copy"><strong>FREE</strong> – {{STORE}}</p></div><a href="{{LINK}}" class="app__link">View</a>' +
+            '<img src="{{SCREENSHOTS}}" class="app__screenshots alt="screenshots" />';
 
     function isDevice() {
         isIOS = /(iPad|iPhone|iPod)/g.test(navigator.userAgent);
         isAndroid = /Android/i.test(navigator.userAgent);
-        //return (isIOS || isAndroid);
-        return true;
+        return (isIOS || isAndroid);
     }
 
     function canShow() {
@@ -55,10 +59,7 @@ define([
         var platform = (isIOS) ? 'ios' : 'android',
             msg = new Message(platform);
 
-        msg.show(template(tmp, {
-            logo: DATA[platform.toUpperCase()].LOGO,
-            link: DATA[platform.toUpperCase()].LINK
-        }));
+        msg.show(template(tmp, DATA[platform.toUpperCase()]));
     }
 
     function init() {

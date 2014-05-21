@@ -503,6 +503,12 @@ define([
 
         showMoreTagsLink: function() {
             new MoreTags().init();
+        },
+
+        showSmartBanner: function(config) {
+            if(config.switches.smartBanner) {
+                smartAppBanner.init();
+            }
         }
     };
 
@@ -553,7 +559,7 @@ define([
             modules.startRegister(config);
             modules.repositionComments();
             modules.showMoreTagsLink();
-            smartAppBanner.init();
+            modules.showSmartBanner(config);
         }
         mediator.emit('page:common:ready', config, context);
     };

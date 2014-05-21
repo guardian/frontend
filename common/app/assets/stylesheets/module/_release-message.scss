@@ -251,4 +251,119 @@
         text-transform: uppercase;
         border: 1px solid #ffffff;
     }
+
+    .app__screenshots {
+        display: none;
+    }
+}
+
+.site-message--ios {
+    $helvetica: 'helvetica neue', helvetica, arial;
+
+    @include rem((
+        max-height: 140px
+    ));
+    overflow: hidden;
+    background: #f2f2f2;
+
+
+    .site-message__inner {
+        @include rem((
+            padding-top: $gs-baseline/2,
+            padding-bottom: $gs-baseline/2
+        ));
+        position: relative;
+    }
+
+    .site-message__close {
+        @include rem((
+            top: $gs-baseline*2,
+            left: $gs-gutter/4,
+            width: $gs-gutter,
+            height: $gs-gutter
+        ));
+        right: auto;
+
+        &:before {
+            display: block;
+            position: absolute;
+            content: 'x';
+            @include rem((
+                top: -3px,
+                left: 6px
+            ));
+            @include font($helvetica, 200, 24px);
+            color: $c-neutral2;
+        }
+
+        i {
+            display: none;
+        }
+    }
+
+    .app__logo,
+    .app__cta {
+        float: left;
+    }
+
+    .app__logo {
+        @include rem((
+            width: 60px,
+            margin-left: $gs-gutter,
+            margin-right: $gs-gutter/2
+        ));
+    }
+
+    .app__cta {
+        width: 50%;
+
+        @include mq(tablet) {
+            width: auto;
+        }
+    }
+
+    .app__heading {
+        @include font($helvetica, normal, 14px);
+        color: $c-neutral1 !important;
+    }
+
+    .app__copy {
+        margin-bottom: 0;
+        @include font($helvetica, 200, 12px, 14px);
+        color: $c-neutral1;
+
+        strong {
+            font-weight: normal;
+        }
+    }
+
+    .app__link {
+        float: right;
+        @include rem((
+            margin-top: $gs-baseline*1.8
+        ));
+        color: #1878fb;
+        @include font($helvetica, normal, 14px);
+
+        @include mq(tablet) {
+            float: left;
+            @include rem((
+                margin-left: $gs-gutter*2
+            ))
+        }
+    }
+
+    .app__screenshots {
+        display: none;
+
+        @include mq(tablet) {
+            display: block;
+            position: absolute;
+            bottom: 0;
+            @include rem((
+                right: $gs-gutter
+            ));
+            width: 28%;
+        }
+    }
 }
