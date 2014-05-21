@@ -1,10 +1,12 @@
 define([
     'common/utils/storage',
+    'common/utils/template',
     'common/modules/userPrefs',
     'common/modules/onward/history',
     'common/modules/ui/message'
 ], function(
     storage,
+    template,
     userPrefs,
     History,
     Message
@@ -19,10 +21,21 @@ define([
      */
 
     var IMPRESSION_KEY = 'gu.ads.appOnboardCount',
+        DATA = {
+            IOS : {
+                LOGO: 'http://assets.guim.co.uk/images/apps/ios-logo.png',
+                LINK: 'http://www.apple.com'
+            },
+            ANDROID: {
+                LOGO: 'http://assets.guim.co.uk/images/apps/android-logo.png',
+                LINK: 'http://www.google.com'
+            }
+        },
         isAndroid = false,
         isIOS = false,
-        template = '<h3>The Guardian app</h3><p>Instant alerts.<br/>Offline reading.<br/>Tailored to you.</p>' +
-            '<p><strong>FREE</strong> – on the App Store</p></div>';
+        tmp = '<img src="{{logo}}" class="app__logo" /><div class="app__cta"><h4 class="app__heading">The Guardian app</h4>' +
+            '<p class="app__copy">Instant alerts. Offline reading.<br/>Tailored to you.</p>' +
+            '<p class="app__copy"><strong>FREE</strong> – on the App Store</p></div><a href="{{link}}" class="app__link">View</a>';
 
     function isDevice() {
         isIOS = /(iPad|iPhone|iPod)/g.test(navigator.userAgent);
@@ -39,8 +52,13 @@ define([
     }
 
     function showMessage() {
-        var msg = new Message('appOnboard');
-        msg.show(template);
+        var platform = (isIOS) ? 'ios' : 'android',
+            msg = new Message(platform);
+
+        msg.show(template(tmp, {
+            logo: DATA[platform.toUpperCase()].LOGO,
+            link: DATA[platform.toUpperCase()].LINK
+        }));
     }
 
     function init() {

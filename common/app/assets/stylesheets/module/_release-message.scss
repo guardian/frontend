@@ -161,3 +161,94 @@
     background-color: transparent;
     border: 0;
 }
+
+/* App onboarding messages
+   ========================================================================== */
+.site-message--android {
+    @include rem((
+        max-height: 140px
+    ));
+    overflow: hidden;
+    background: #444444;
+    background-image: url('http://assets.guim.co.uk/images/apps/android-bg.png');
+    background-repeat: repeat;
+    border-top: 4px solid #87b322;
+
+    .site-message__inner {
+        position: relative;
+    }
+
+    .site-message__close {
+        @include rem((
+            top: $gs-baseline/4,
+            left: $gs-gutter/4,
+            width: $gs-gutter,
+            height: $gs-gutter
+        ));
+        right: auto;
+        background-color: $c-neutral1;
+        @include border-radius(50%);
+        @include box-shadow(0px 2px 2px $c-neutral3);
+
+        &:before {
+            display: block;
+            position: absolute;
+            content: 'x';
+            @include rem((
+                left: 6px,
+                top: 2px
+            ));
+            background-color: $c-neutral1;
+            @include font(arial, bold, 14px);
+            color: $c-neutral4;
+        }
+
+        i {
+            display: none;
+        }
+    }
+
+    .app__logo,
+    .app__cta {
+        float: left;
+    }
+
+    .app__logo {
+        @include rem((
+            margin-left: $gs-gutter,
+            margin-right: $gs-gutter/2
+        ));
+    }
+
+    .app__cta {
+        width: 50%;
+    }
+
+    .app__heading {
+        @include font(arial, bold, 14px);
+        color: #ffffff !important;
+    }
+
+    .app__copy {
+        margin-bottom: 0;
+        @include font(arial, normal, 12px, 14px);
+        color: #ffffff;
+
+        strong {
+            font-weight: bold;
+        }
+    }
+
+    .app__link {
+        float: right;
+        background-color: #37b1c6;
+        color: #ffffff;
+        @include rem((
+            margin-top: $gs-baseline,
+            padding: $gs-baseline/3 $gs-gutter
+        ));
+        @include font(arial, bold, 14px);
+        text-transform: uppercase;
+        border: 1px solid #ffffff;
+    }
+}
