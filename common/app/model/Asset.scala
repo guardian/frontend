@@ -55,3 +55,17 @@ case class VideoAsset(private val delegate: Asset, image: Option[ImageContainer]
 
   lazy val source: Option[String] = fields.get("source")
 }
+
+case class EmbedAsset(private val delegate: Asset) {
+
+  private lazy val fields: Map[String,String] = delegate.typeData
+
+  lazy val url: Option[String] = delegate.file
+  lazy val iframeUrl: Option[String] = fields.get("iframeUrl")
+  lazy val scriptName: Option[String] = fields.get("scriptName")
+  lazy val source: Option[String] = fields.get("source")
+  lazy val scriptUrl: Option[String] = fields.get("scriptUrl")
+  lazy val caption: Option[String] = fields.get("caption")
+  lazy val html: Option[String] = fields.get("html")
+  lazy val embedType: Option[String] = fields.get("embedType")
+}

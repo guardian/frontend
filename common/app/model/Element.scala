@@ -11,9 +11,6 @@ trait Element {
   lazy val isBody = delegate.relation == "body"
   lazy val isGallery = delegate.relation == "gallery"
   lazy val isThumbnail = delegate.relation == "thumbnail"
-
-  lazy val isImage = delegate.elementType == "image"
-  lazy val isVideo = delegate.elementType == "video"
 }
 
 object Element {
@@ -21,6 +18,7 @@ object Element {
     theDelegate.elementType match {
       case "image" => new ImageElement(theDelegate, elementIndex)
       case "video" => new VideoElement(theDelegate, elementIndex)
+      case "embed" => new EmbedElement(theDelegate, elementIndex)
       case _ => new Element{
         lazy val delegate = theDelegate
         lazy val index = elementIndex
@@ -62,5 +60,11 @@ trait VideoContainer extends Element {
   lazy val largestVideo: Option[VideoAsset] = videoAssets.headOption
 }
 
+trait EmbedContainer extends Element {
+
+   lazy val embedAssets: Seq[EmbedAsset] = delegate.assets.filter(_.assetType == "embed").map(EmbedAsset(_))
+}
+
 class ImageElement(val delegate: ApiElement, val index: Int) extends Element with ImageContainer
 class VideoElement(val delegate: ApiElement, val index: Int) extends Element with ImageContainer with VideoContainer
+class EmbedElement(val delegate: ApiElement, val index: Int) extends Element with EmbedContainer
