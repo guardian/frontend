@@ -138,7 +138,7 @@ define([
          * If one of these classes is detected, then the contents of that iframe is retrieved
          * and written onto the parent page.
          *
-         * Currently this is being used for sponsered logos and commercial components so they
+         * Currently this is being used for sponsored logos and commercial components so they
          * can inherit fonts.
          */
         checkForBreakout = function($slot) {

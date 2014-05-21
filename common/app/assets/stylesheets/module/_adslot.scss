@@ -43,12 +43,13 @@
         height: 50px;
     }
     @include mq(tablet) {
+        position: absolute;
+        top: 1px;
+        right: 0;
         height: 250 + $mpu-ad-label-height;
         padding: 0;
+        margin: 0;
         background-color: $c-neutral8;
-        @include rem((
-            margin-left: gs-span(8) + $gs-gutter
-        ));
     }
     @include mq(tablet, desktop) {
         @if $browser-supports-flexbox {

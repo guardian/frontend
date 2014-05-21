@@ -1,27 +1,15 @@
-.facia-slice--linkslist-and-mpu {
-    @include rem((
-        padding-top: $gs-baseline/3
-    ));
-
-    .facia-slice__item {
-        padding-bottom: 0;
-        margin-bottom: 0;
-
-        @if $browser-supports-flexbox == false {
-            &:first-child {
-                @include mq(desktop) {
-                    @include rem((
-                        width: gs-span(8)
-                    ));
-                }
-            }
-        }
+.slice--has-ad {
+    &:before {
+        display: none;
+    }
+    @include mq(tablet) {
+        min-height: (250 + $mpu-ad-label-height)*$mpu-scale-ratio;
+    }
+    @include mq(desktop) {
+        min-height: 250 + $mpu-ad-label-height;
     }
     .linkslist {
         @if $browser-supports-columns {
-            margin-left: rem($gs-gutter/2);
-            margin-right: rem($gs-gutter/2);
-
             @include mq(tablet, desktop) {
                 -webkit-column-width: rem(gs-span(3));
                 -moz-column-width: rem(gs-span(3));
@@ -45,9 +33,12 @@
                 }
             }
         }
-    }
-}
 
-.l-row__item--mpu {
-    position: relative;
+        @include mq(tablet) {
+            width: gs-span(6);
+        }
+        @include mq(desktop) {
+            width: gs-span(8);
+        }
+    }
 }

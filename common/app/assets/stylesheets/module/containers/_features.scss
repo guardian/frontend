@@ -7,11 +7,6 @@
             padding-top: 0;
         }
     }
-    .linkslist-container {
-        @include mq($to: desktop) {
-            margin-top: 0;
-        }
-    }
     .ad-slot--inline {
         margin-top: $gs-baseline;
         margin-bottom: $gs-baseline/2;
