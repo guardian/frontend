@@ -1,8 +1,9 @@
 @(front: MetaData, block: (Config, Collection), collectionsSize: Int = 1, index: Int = 1)(implicit request: RequestHeader, templateDeduping: TemplateDeduping)
+@import views.support.ForceGroupsCollection
 
 @block._1.collectionType match {
     case Some("news")                       => { @containers.news(block._2, NewsContainer(), index)(request, templateDeduping, block._1) }
-    case Some("news/auto")                  => { @containers.news(block._2, NewsContainer(), index)(request, templateDeduping, block._1) }
+    case Some("news/auto")                  => { @containers.news(ForceGroupsCollection.firstTwoBig(block._2), NewsContainer(), index)(request, templateDeduping, block._1) }
     case _ if index == 0                    => { @collectionsSize match {
         case size if size < 3               => { @containers.tag(front, block._2, NewsContainer(showMore = false), index)(request, templateDeduping, block._1) }
         case _                              => { @containers.tag(front, block._2, NewsContainer(), index)(request, templateDeduping, block._1) }
