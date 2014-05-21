@@ -28,7 +28,8 @@ define([
      */
     function Omniture(s, w) {
 
-        var storagePrefix = 'gu.analytics.',
+        var R2_STORAGE_KEY = 's_ni', // DO NOT CHANGE THIS, ITS IS SHARED WITH R2. BAD THINGS WILL HAPPEN!
+            NG_STORAGE_KEY = 'gu.analytics.referrerVars',
             config,
             that = this;
 
@@ -63,7 +64,8 @@ define([
                     tag: spec.tag,
                     time: new Date().getTime()
                 };
-                storage.session.set(storagePrefix + 'referrerVars', storeObj);
+                try { sessionStorage.setItem(R2_STORAGE_KEY, storeObj.tag); } catch(e) {}
+                storage.session.set(NG_STORAGE_KEY, storeObj);
             } else {
                 that.populateEventProperties(spec.tag);
                 // this is confusing: if s.tl() first param is "true" then it *doesn't* delay.
@@ -224,7 +226,7 @@ define([
             }
 
             /* Retrieve navigation interaction data */
-            var ni = storage.session.get('gu.analytics.referrerVars');
+            var ni = storage.session.get(NG_STORAGE_KEY);
             if (ni) {
                 var d = new Date().getTime();
                 if (d - ni.time < 60 * 1000) { // One minute
@@ -236,7 +238,8 @@ define([
                     s.eVar7 = ni.pageName;
                     s.prop37 = ni.tag;
                 }
-                storage.session.remove('gu.analytics.referrerVars');
+                storage.session.remove(R2_STORAGE_KEY);
+                storage.session.remove(NG_STORAGE_KEY);
             }
 
             s.prop75 = config.page.wordCount || 0;
