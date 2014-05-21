@@ -54,7 +54,8 @@ define([
     'common/modules/commercial/loader',
     'common/modules/onward/tonal',
     'common/modules/identity/api',
-    'common/modules/onward/more-tags'
+    'common/modules/onward/more-tags',
+    'common/modules/ui/smartAppBanner'
 ], function (
     $,
     mediator,
@@ -109,7 +110,8 @@ define([
     CommercialLoader,
     TonalComponent,
     id,
-    MoreTags
+    MoreTags,
+    smartAppBanner
 ) {
 
     var modules = {
@@ -552,6 +554,7 @@ define([
             modules.startRegister(config);
             modules.repositionComments();
             modules.showMoreTagsLink();
+            smartAppBanner.init();
         }
         mediator.emit('page:common:ready', config, context);
     };
