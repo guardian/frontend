@@ -8,22 +8,33 @@ import com.google.api.ads.dfp.axis.v201403._
 import com.google.api.ads.dfp.axis.v201403.{LineItem => DfpApiLineItem}
 import com.google.api.ads.dfp.lib.client.DfpSession
 import common.Logging
-import conf.AdminConfiguration.dfpApi
+import conf.AdminConfiguration
 
 object DfpApi extends Logging {
 
-  private lazy val session: Option[DfpSession] = for {
-    conf <- dfpApi.configObject
-  } yield {
-    val auth = new OfflineCredentials.Builder()
-      .forApi(Api.DFP)
-      .from(conf)
-      .build()
-      .generateCredential()
-    new DfpSession.Builder()
-      .from(conf)
-      .withOAuth2Credential(auth)
-      .build()
+  private lazy val session: Option[DfpSession] = try {
+    for {
+      clientId <- AdminConfiguration.dfpApi.clientId
+      clientSecret <- AdminConfiguration.dfpApi.clientSecret
+      refreshToken <- AdminConfiguration.dfpApi.refreshToken
+      appName <- AdminConfiguration.dfpApi.appName
+      networkId <- AdminConfiguration.dfpApi.networkId
+    } yield {
+      val credential = new OfflineCredentials.Builder()
+        .forApi(Api.DFP)
+        .withClientSecrets(clientId, clientSecret)
+        .withRefreshToken(refreshToken)
+        .build().generateCredential()
+      new DfpSession.Builder()
+        .withOAuth2Credential(credential)
+        .withApplicationName(appName)
+        .withNetworkCode(networkId)
+        .build()
+    }
+  } catch {
+    case e: Exception =>
+      log.error(s"Building DFP session failed: $e")
+      None
   }
 
   private lazy val dfpServices = new DfpServices()

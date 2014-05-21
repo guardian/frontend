@@ -39,32 +39,10 @@ object AdminConfiguration {
   }
 
   object dfpApi {
-
-    import scala.collection.JavaConversions._
-
-    def getPropertyTupleFor(key: String): Option[(String, String)] = {
-      val fullKey = "api.dfp." + key
-      configuration.getStringProperty(fullKey) map {
-        (fullKey, _)
-      }
-    }
-
-    lazy val properties = getPropertyTupleFor("networkCode") ::
-      getPropertyTupleFor("refreshToken") ::
-      getPropertyTupleFor("clientId") ::
-      getPropertyTupleFor("clientSecret") ::
-      getPropertyTupleFor("applicationName") ::
-      Nil
-
-    lazy val configObject: Option[MapConfiguration] = {
-      if (properties.contains(None)) {
-        None
-      } else {
-        Option(new MapConfiguration(
-          properties.foldLeft(Map[String, String]())((b, a) => b + a.get)
-        ))
-      }
-    }
+    lazy val clientId = configuration.getStringProperty("api.dfp.clientId")
+    lazy val clientSecret = configuration.getStringProperty("api.dfp.clientSecret")
+    lazy val refreshToken = configuration.getStringProperty("api.dfp.refreshToken")
+    lazy val appName = configuration.getStringProperty("api.dfp.applicationName")
+    lazy val networkId = configuration.getStringProperty("api.dfp.networkCode")
   }
-
 }
