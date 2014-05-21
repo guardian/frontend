@@ -254,7 +254,7 @@
             @include rem((
                 left: -16px
             ));
-            content: counter(li)".";
+            content: counter(li)'.';
             counter-increment: li;
             @include fs-header(1);
             color: $c-neutral3;

@@ -1,4 +1,4 @@
-@import "_tones";
+@import '_tones';
 
 @include tone-head(news, $c-newsDefault, $c-newsAccent);
 @include tone-head(comment, $c-commentDefault, $c-commentAccent);
@@ -7,12 +7,12 @@
 @include tone-head(media, $c-mediaDefault, $c-mediaDefault);
 
 // Tonal article styles
-@include article-header-tone(feature, $c-featureDefault, $c-featureAccent2, #ffffff, "white");
-@include article-header-tone(live, $c-liveDefault, $c-liveAccent, #ffffff, "white");
+@include article-header-tone(feature, $c-featureDefault, $c-featureAccent2, #ffffff, 'white');
+@include article-header-tone(live, $c-liveDefault, $c-liveAccent, #ffffff, 'white');
 
 
 .content__head--tonal {
-    background-color: #fff;
+    background-color: #ffffff;
     .tone-background {
         @include rem((
             padding-top: $gs-baseline/2
@@ -66,6 +66,6 @@
 
 .tone-comment--article {
     .tone-background {
-        background: #fff;
+        background: #ffffff;
     }
 }

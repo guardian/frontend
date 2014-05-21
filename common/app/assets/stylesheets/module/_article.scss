@@ -443,7 +443,7 @@
 .after-article {
     position: relative;
     display: block;
-    content: " ";
+    content: ' ';
 
     //This is required for football components, please do not remove
     @include mq(rightCol) {
@@ -546,7 +546,7 @@
 .breadcrumb-keyword {
 
     &:after {
-        content: ">> ";
+        content: '>> ';
         display: inline-block;
         margin-left: $gs-gutter/5;
     }
