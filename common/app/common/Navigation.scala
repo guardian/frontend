@@ -192,7 +192,7 @@ object Breadcrumbs {
       Navigation.localNav(navigation, page) match {
         case Some(sectionLinks) => {
           sectionLinks.find(_.currentFor(page)) find {
-            link => sectionLinks.exists(_ == link) && link.href != primaryKeyword.url
+            link => sectionLinks.exists(_ == link) && link.href!= primaryKeyword.url
           }
         }
         case _ => None
@@ -201,24 +201,19 @@ object Breadcrumbs {
 
     (getTopLevelNavigationItem, getLocalNavigationItem) match {
       case (Some(navItem), Some(sectionLink)) => Seq(
-        BreadcrumbItem(navItem.name.href, navItem.name.title),
-        BreadcrumbItem(sectionLink.href, sectionLink.title),
-        BreadcrumbItem(primaryKeyword.url, primaryKeyword.name)
+          BreadcrumbItem(navItem.name.href, navItem.name.title),
+          BreadcrumbItem(sectionLink.href, sectionLink.title),
+          BreadcrumbItem(primaryKeyword.url, primaryKeyword.name)
       )
-      case (None, Some(sectionLink)) => Seq(
-        BreadcrumbItem("/%s".format(page.section), page.sectionName),
-        BreadcrumbItem(sectionLink.href, sectionLink.title),
-        BreadcrumbItem(primaryKeyword.url, primaryKeyword.name)
+      case (Some(navItem), None) => Seq (
+          BreadcrumbItem(navItem.name.href, navItem.name.title),
+          BreadcrumbItem(primaryKeyword.url, primaryKeyword.name),
+          BreadcrumbItem(secondaryKeyword.url, secondaryKeyword.name)
       )
-      case (Some(navItem), None) => Seq(
-        BreadcrumbItem(navItem.name.href, navItem.name.title),
-        BreadcrumbItem("/%s".format(page.section), page.sectionName),
-        BreadcrumbItem(primaryKeyword.url, primaryKeyword.name)
-      )
-      case _ => Seq(
-        BreadcrumbItem("/%s".format(page.section), page.sectionName),
-        BreadcrumbItem(primaryKeyword.url, primaryKeyword.name),
-        BreadcrumbItem(secondaryKeyword.url, secondaryKeyword.name)
+      case _ => Seq (
+          BreadcrumbItem("/%s".format(page.section), page.sectionName),
+          BreadcrumbItem(primaryKeyword.url, primaryKeyword.name),
+          BreadcrumbItem(secondaryKeyword.url, secondaryKeyword.name)
       )
     }
   }
