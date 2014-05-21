@@ -1,0 +1,35 @@
+.container--newfeatures {
+    .container__body {
+        @include rem((
+            padding-top: $gs-baseline/3
+        ));
+        @include mq(tablet, desktop) {
+            padding-top: 0;
+        }
+    }
+    .linkslist-container {
+        @include mq($to: desktop) {
+            margin-top: 0;
+        }
+    }
+    .ad-slot--inline {
+        margin-top: $gs-baseline;
+        margin-bottom: $gs-baseline/2;
+    }
+    .container__banding:first-child .saucisson {
+        border-top-width: 0;
+    }
+}
+
+.facia-slice__item--floated-m {
+    @include mq($to: tablet) {
+        .item__media-wrapper {
+            float: left;
+            @include box-sizing(border-box);
+            width: 50%;
+            @include rem((
+                padding-right: $gs-gutter/2
+            ));
+        }
+    }
+}

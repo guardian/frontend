@@ -334,7 +334,15 @@ object Switches extends Collections {
     safeState = On, new DateMidnight().minusDays(1)
   )
 
+  // Facia Switches
+
+  val NewFeaturesContainerSwitch = Switch("Facia", "facia-new-features-container",
+    "If this switch is turned on, the new features container has the right to live.",
+    safeState = Off, sellByDate = new DateMidnight(2014, 6, 15)
+  )
+
   // Facia Tool Switches
+
   val ToolDisable = Switch("Facia Tool", "facia-tool-disable",
     "If this is switched on then the fronts tool is disabled",
     safeState = Off, sellByDate = never
@@ -462,7 +470,8 @@ object Switches extends Collections {
     GeoMostPopular,
     TagLinkingSwitch,
     ABHeaderSearchText,
-    ABHighRelevanceCommercialComponent
+    ABHighRelevanceCommercialComponent,
+    NewFeaturesContainerSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }

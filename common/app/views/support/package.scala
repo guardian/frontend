@@ -1,7 +1,7 @@
 package views.support
 
 import common._
-import conf.Switches.{ ShowAllArticleEmbedsSwitch, ArticleSlotsSwitch, TagLinkingSwitch }
+import conf.Switches.{ ShowAllArticleEmbedsSwitch, ArticleSlotsSwitch, TagLinkingSwitch, NewFeaturesContainerSwitch }
 import model._
 
 import java.net.URLEncoder._
@@ -82,6 +82,10 @@ case class CommentAndDebateContainer(showMore: Boolean = true) extends Container
 }
 case class FeaturesContainer(showMore: Boolean = true) extends Container {
   val containerType = "features"
+  val tone = "feature"
+}
+case class NewFeaturesContainer(showMore: Boolean = true) extends Container {
+  val containerType = "newfeatures"
   val tone = "feature"
 }
 case class PopularContainer(showMore: Boolean = true) extends Container {
