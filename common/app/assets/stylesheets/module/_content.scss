@@ -26,14 +26,12 @@
         @include rem((
             margin-left: $gs-gutter,
             padding-right: gs-span(4) + $gs-gutter*2
-        ))
-
+        ));
     }
     @include mq($from: leftCol) {
         @include rem((
             margin-left: gs-span(2) + $gs-gutter*2
-        ))
-
+        ));
     }
     @include mq($from: wide) {
         @include rem((
@@ -59,6 +57,14 @@
 }
 
 .content__secondary-column {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    @include rem((
+        margin-right: $gs-gutter
+    ));
+
     @include mq($to: rightCol) {
         display: none;
     }
@@ -66,12 +72,6 @@
     @include rem((
         width: gs-span(4)
     ));
-
-    position: absolute;
-    top: 0;
-    right: 0;
-    height: 100%;
-    margin-right: $gs-gutter;
 }
 
 .content__top-border {
@@ -151,13 +151,11 @@
         @include rem((
             margin-left: -(gs-span(2) + $gs-gutter)
         ));
-
     }
     @include mq($from: wide) {
         @include rem((
             margin-left: -(gs-span(3) + $gs-gutter)
         ));
-
     }
     @include mq($from: leftCol, $to: wide) {
         @include rem((
