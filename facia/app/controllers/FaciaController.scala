@@ -31,8 +31,8 @@ class FaciaController extends Controller with Logging with ExecutionContexts wit
     Cached(60)(Redirect(redirectPath))
   }
 
-  def applicationsRedirect(path: String) = Action {
-    Ok.withHeaders("X-Accel-Redirect" -> s"/applications/$path")
+  def applicationsRedirect(path: String) = Action { implicit request =>
+    InternalRedirect.internalRedirect("applications", path)
   }
 
   //Only used by dev-build for rending special urls such as lifeandstyle/home-and-garden
