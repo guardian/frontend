@@ -22,17 +22,17 @@ body {
 }
 
 body:after {
-    content: "mobile";
+    content: 'mobile';
     @include u-h;
 
     @include mq(tablet) {
-        content: "tablet";
+        content: 'tablet';
     }
     @include mq(desktop) {
-        content: "desktop";
+        content: 'desktop';
     }
     @include mq(wide) {
-        content: "wide";
+        content: 'wide';
     }
 }
 

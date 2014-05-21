@@ -13,7 +13,7 @@ define([
             fixtures.render({
                 id: 'more-tags-fixtures',
                 fixtures: [
-                        '<div class="article__keywords" data-link-name="article keywords">' +
+                        '<div class="content__keywords" data-link-name="article keywords">' +
                             '<ul class="inline-list">' +
                                 '<li class="inline-list__item">Tags:</li>' +
                                 '<li class="inline-list__item ">' +

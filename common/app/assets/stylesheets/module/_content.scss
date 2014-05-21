@@ -1,0 +1,458 @@
+.content {
+    @include rem((
+        margin-bottom: $gs-baseline*3.5
+    ));
+    @include fs-bodyCopy(3);
+}
+
+.content__main-column {
+    position: relative;
+
+    @include rem((
+        margin: 0 $gs-gutter/2
+    ));
+    @include mq($from: mobileLandscape) {
+        @include rem((
+            margin: 0 $gs-gutter
+        ));
+    }
+    @include mq($from: tablet) {
+        @include rem((
+            max-width: 620px
+        ));
+        margin: auto;
+    }
+    @include mq($from: rightCol) {
+        @include rem((
+            margin-left: $gs-gutter,
+            padding-right: gs-span(4) + $gs-gutter*2
+        ));
+    }
+    @include mq($from: leftCol) {
+        @include rem((
+            margin-left: gs-span(2) + $gs-gutter*2
+        ));
+    }
+    @include mq($from: wide) {
+        @include rem((
+            margin-left: gs-span(3) + $gs-gutter*2
+        ));
+    }
+
+    &.content__main-column--video,
+    &.content__main-column--gallery,
+    &.content__main-column--wide {
+        @include mq(rightCol) {
+            @include rem((
+                padding-right: $gs-gutter
+            ));
+            max-width: none;
+        }
+        @include mq(wide) {
+            @include rem((
+                padding-right: 100px
+            ));
+        }
+    }
+}
+
+.content__secondary-column {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    @include rem((
+        margin-right: $gs-gutter
+    ));
+
+    @include mq($to: rightCol) {
+        display: none;
+    }
+
+    @include rem((
+        width: gs-span(4)
+    ));
+}
+
+.content__head__border-top {
+    border-top: 1px dotted $c-neutral5;
+    @include rem((
+        height: $gs-baseline/2,
+        margin: 0 $gs-gutter
+    ));
+
+    @include mq($to: tablet) {
+        display: none;
+    }
+    @include mq($from:tablet, $to: rightCol) {
+        @include rem((
+            max-width: gs-span(8)
+        ));
+        margin: auto;
+    }
+}
+
+.content__head {
+    @include mq($to: tablet) {
+        border-top-style: solid;
+        border-top-width: 2px;
+        .has-localnav & {
+            border-top: 0;
+        }
+    }
+}
+
+
+.content__head__comment-count {
+    @include rem((
+        height: 16px + $gs-baseline //font-size + $gs-baseline
+    ));
+    @include mq(tablet) {
+        display: none;
+    }
+    &.content__head__comment-count--headline { // used in tonal templates
+        display: none;
+    }
+}
+
+.content__keywords {
+    @include fs-data(4);
+    @include rem((
+        margin-top: $gs-baseline,
+        margin-bottom: $gs-baseline
+    ));
+}
+
+.content__keywords--more-tags {
+    vertical-align: bottom;
+    display: inline-block;
+}
+
+.content__section {
+    @include fs-header(3);
+    @include box-sizing(border-box);
+    @include rem((
+        padding-bottom: $gs-baseline
+    ));
+    @include mq($to: tablet) {
+        border-bottom: 1px solid $c-neutral7;
+        .has-localnav & {
+            display: none;
+        }
+    }
+
+    @include mq($from: tablet) {
+        @include rem((
+            padding-bottom: ($gs-baseline/2) * 3
+        ));
+    }
+
+    @include mq($from: leftCol) {
+        float: left;
+        @include rem((
+            margin-left: -(gs-span(2) + $gs-gutter)
+        ));
+    }
+    @include mq($from: wide) {
+        @include rem((
+            margin-left: -(gs-span(3) + $gs-gutter)
+        ));
+    }
+    @include mq($from: leftCol, $to: wide) {
+        @include rem((
+            width: gs-span(2)
+        ));
+    }
+}
+
+.content__headline {
+    @include fs-headline(4);
+    @include rem((
+        padding-bottom: $gs-baseline*2,
+        padding-top: $gs-baseline/2
+    ));
+
+    @include mq(mobileLandscape) {
+        @include fs-headline(6, true);
+    }
+    @include mq(tablet) {
+        -webkit-font-smoothing: antialiased;
+        @include fs-headline(7, true);
+        @include rem((
+            padding-bottom: $gs-row-height,
+            padding-top: $gs-baseline/6
+        ));
+        border-top: 0;
+    }
+    a {
+        &,
+        &:hover,
+        &:active,
+        &:focus {
+            color: $c-neutral1;
+        }
+    }
+    em {
+        font-style: normal;
+    }
+    strong {
+        font-weight: normal;
+    }
+}
+
+.content__standfirst {
+    @include fs-headline(1);
+    @include rem((
+            margin-bottom: $gs-baseline
+    ));
+    color: $c-neutral2;
+
+    @include mq(tablet) {
+        @include font-size(18px, 22px);
+        -webkit-font-smoothing: antialiased;
+        @include rem((
+                margin-bottom: ($gs-baseline/3)*4
+        ));
+    }
+
+    > ul,
+    > ol {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+
+        > li {
+            position: relative;
+
+            + li {
+                margin-top: .6em;
+            }
+        }
+
+        + * {
+            margin-top: .6em;
+        }
+    }
+
+    > ol {
+        counter-reset: li;
+
+        >li {
+            @include rem((
+                text-indent: 18px
+            ));
+
+            @include mq(tablet) {
+                @include rem((
+                    text-indent: 20px
+                ));
+            }
+        }
+
+        > li:before {
+            position: absolute;
+            @include rem((
+                left: -16px
+            ));
+            content: counter(li)'.';
+            counter-increment: li;
+            @include fs-header(1);
+            color: $c-neutral3;
+
+            @include mq(tablet) {
+                @include fs-header(3, true);
+                @include rem((
+                    left: -20px,
+                    top: -2px
+                ));
+            }
+        }
+    }
+}
+
+.content__dateline {
+    position: relative;
+    color: $c-neutral2;
+    @include box-sizing(border-box);
+    @include fs-data(2);
+
+    i {
+        position: relative;
+        top: 1px;
+    }
+    .relative-timestamp__icon {
+        vertical-align: top;
+        @include rem((
+            top: 3px
+        ));
+    }
+
+    .content__meta-container--no-byline & {
+        border-top: 1px dotted $c-neutral5;
+        @include rem((
+            padding-top: $gs-baseline/3
+        ));
+    }
+
+    @include mq(tablet) {
+        padding-right: 0;
+        @include fs-data(3, true);
+    }
+
+    @include mq(leftCol) {
+        @include rem((
+            height: $gs-row-height,
+            padding-top: 2px,
+            padding-bottom: $gs-baseline
+        ));
+        border-top: 1px dotted $c-neutral5;
+    }
+
+    @include mq(wide) {
+        .content__dateline-time {
+            display: inline-block;
+        }
+    }
+}
+
+
+.content__meta-container .byline-img {
+    position: relative;
+    width: gs-span(1);
+    height: 60px; //Intentionally off grid
+    @include rem((
+            margin: $gs-baseline/2 0
+    ));
+    overflow: hidden;
+    @include border-radius(50%);
+    background-color: $c-neutral7;
+
+    @include mq(leftCol) {
+        width: gs-span(2);
+        height: gs-span(2); //This is intentionally square
+        margin-right: 0;
+        @include rem((
+                margin-bottom: $gs-baseline,
+        ));
+    }
+}
+
+.content__meta-container .byline-img__img {
+    position: absolute;
+    width: auto;
+    //This centres the image within its container
+    height: 110%;
+    bottom: -6px;
+    left: -15%;
+
+    @include mq(leftCol) {
+        bottom: -14px;
+    }
+}
+
+.content__meta-container {
+    min-height: gs-height(1);
+    position: relative;
+    @include rem((
+            margin-bottom: $gs-baseline
+    ));
+    border-top: 1px dotted $c-neutral5;
+    border-bottom: 1px dotted $c-neutral5;
+
+    @include mq(leftCol) {
+        position: absolute;
+        top: 0;
+        @include rem((
+                margin-left: ($a-leftCol-width + $gs-gutter)*-1,
+                margin-bottom: ($gs-baseline/3)*4,
+                width: $a-leftCol-width
+        ));
+        border-top: 0;
+        border-bottom: 0;
+    }
+
+    @include mq(wide) {
+        @include rem((
+                margin-left: (gs-span(3) + $gs-gutter)*-1,
+                width: gs-span(3)
+        ));
+    }
+}
+
+.content__meta-container.content__meta-container--showcase {
+    @include mq(leftCol) {
+        float: left;
+        position: static;
+    }
+}
+
+.content__breadcrumb {
+    @include rem((
+        padding: $gs-gutter
+    ));
+    @include mq($from: mobileLandscape) {
+        @include rem((
+            padding: $gs-gutter
+        ));
+    }
+}
+
+.content-meta {
+    @include fs-textsans(3);
+    font-weight: bold;
+    @include rem((
+        margin: 0 0 $gs-baseline/2,
+        line-height: 16px
+    ));
+
+    @include mq($from: tablet) {
+        @include rem((
+            padding-top: $gs-baseline/2
+        ));
+    }
+    .content__head & {
+        @include mq($from: tablet, $to: leftCol) {
+            border-top: 1px dotted $c-neutral5;
+        }
+
+    }
+}
+
+.content-meta__label {
+    color: $c-neutral2;
+}
+
+.content-meta__item {
+    padding: 0;
+    margin: 0;
+}
+
+.content-meta--inline {
+    margin: 0;
+
+    .content-meta__label,
+    .content-meta__item {
+        display: inline-block;
+        @include rem((
+            margin-right: $gs-gutter/10
+        ));
+    }
+
+    @include mq(tablet) {
+        @include rem((
+            margin: 0 0 $gs-baseline/2
+        ));
+    }
+
+    @include mq($to: leftCol) {
+        @include rem((
+            padding-top: $gs-baseline/2
+        ));
+    }
+
+    @include mq($to: tablet) {
+        .has-localnav & {
+            padding-top: 0;
+        }
+    }
+}

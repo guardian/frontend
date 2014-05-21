@@ -1,17 +1,17 @@
-@import "components/sass-mq/_mq";
+@import 'components/sass-mq/_mq';
 
 // Guss - https://github.com/guardian/guss
 // =============================================================================
 
-@import "components/guss-rem/_rem";
-@import "components/guss-typography/_helpers";
-@import "components/guss-typography/_font-scale";
-@import "components/guss-css3/_css3";
-@import "components/guss-layout/_columns";
-@import "components/guss-layout/_row";
+@import 'components/guss-rem/_rem';
+@import 'components/guss-typography/_helpers';
+@import 'components/guss-typography/_font-scale';
+@import 'components/guss-css3/_css3';
+@import 'components/guss-layout/_columns';
+@import 'components/guss-layout/_row';
 
 // The grid system is already imported in the _vars.scss file where it's needed
-// @import "components/guss-grid-system/_grid-system";
+// @import 'components/guss-grid-system/_grid-system';
 
 // CSS helpers
 // =============================================================================
@@ -54,7 +54,7 @@
 @mixin faux-bullet-point($color: $c-neutral3, $right-space: 2px) {
     &:before {
         display: inline-block;
-        content: "";
+        content: '';
         @include border-radius(6px);
         @include rem((
             height: 12px,
@@ -117,7 +117,7 @@
 @mixin clearfix {
     &:after,
     &:before {
-        content: "";
+        content: '';
         display: table;
     }
     &:after {
@@ -135,7 +135,7 @@
     &:before,
     &:after {
         @include box-sizing(border-box);
-        content: " ";
+        content: ' ';
         background-color: $color;
         position: absolute;
         top: 0;

@@ -113,6 +113,7 @@ $c-replyText: $c-body;
     display: inline-block;
 }
 .d-discussion__show-all-comments {
+    position: relative;
     display: inline-block;
     padding-left: 55px;
     @include fs-textsans(4);
@@ -763,7 +764,7 @@ $c-replyText: $c-body;
         &:before {
             position: absolute;
             display: block;
-            content: "";
+            content: '';
             bottom: -20px;
             left: 20px;
             width: 0;
@@ -845,7 +846,7 @@ $c-replyText: $c-body;
         &:before { // Pointer (equilateral triangle)
             top: 100%;
             border: solid transparent;
-            content: " ";
+            content: ' ';
             height: 0;
             width: 0;
             position: absolute;
@@ -862,7 +863,7 @@ $c-replyText: $c-body;
         &:after { // Mask (right-skewed parellelogram)
             @include transform(skew(-10deg));
             background-color: #ffffff;
-            content: " ";
+            content: ' ';
             @include rem((
                 height: 24px,
                 width: 24px,
@@ -924,11 +925,11 @@ $c-replyText: $c-body;
     @extend %d-badge-icon;
 }
 .d-badge--contributor:after {
-    content: "c";
+    content: 'c';
     text-indent: -1px;
 }
 .d-badge--guardian-staff:after {
-    content: "g";
+    content: 'g';
     line-height: .9;
 }
 .d-badge__label {
@@ -962,7 +963,7 @@ $c-replyText: $c-body;
     @include rem((
         margin: 0 0 -3px 20px
     ));
-    content: " ";
+    content: ' ';
     display: inline-block;
 }
 
@@ -1150,5 +1151,14 @@ $c-replyText: $c-body;
 .d-comment-box--parent-visible {
     .d-comment-box__parent-comment-wrapper {
         display: block;
+    }
+}
+
+.content__repositioned-comments .content__main-column {
+    @include mq(rightCol) {
+        max-width: none;
+        @include rem((
+            padding-right: 25%
+        ));
     }
 }

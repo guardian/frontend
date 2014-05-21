@@ -1,6 +1,6 @@
 @(trail: Trail, index: Int, containerIndex: Int, element: String = "li")(implicit request: RequestHeader, config: Config)
 
-@defining((VisualTone(trail), containerIndex == 0)) { case (tone, isFirstContainer) =>
+@defining((trail.visualTone, containerIndex == 0)) { case (tone, isFirstContainer) =>
     <@element
         class="@GetClasses.forItem(trail, isFirstContainer)"
         @if(trail.isCommentable) {
