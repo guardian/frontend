@@ -176,11 +176,11 @@
         }
 
         .article__standfirst a {
-            color: #fff;
+            color: #ffffff;
             &.u-underline {
                 border-bottom-color: lighten($accentColour, 18);
                 &:hover {
-                    border-bottom-color: #fff;
+                    border-bottom-color: #ffffff;
                 }
             }
         }

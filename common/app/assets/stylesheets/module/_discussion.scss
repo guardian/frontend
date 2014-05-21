@@ -763,7 +763,7 @@ $c-replyText: $c-body;
         &:before {
             position: absolute;
             display: block;
-            content: "";
+            content: '';
             bottom: -20px;
             left: 20px;
             width: 0;
@@ -845,7 +845,7 @@ $c-replyText: $c-body;
         &:before { // Pointer (equilateral triangle)
             top: 100%;
             border: solid transparent;
-            content: " ";
+            content: ' ';
             height: 0;
             width: 0;
             position: absolute;
@@ -862,7 +862,7 @@ $c-replyText: $c-body;
         &:after { // Mask (right-skewed parellelogram)
             @include transform(skew(-10deg));
             background-color: #ffffff;
-            content: " ";
+            content: ' ';
             @include rem((
                 height: 24px,
                 width: 24px,
@@ -924,11 +924,11 @@ $c-replyText: $c-body;
     @extend %d-badge-icon;
 }
 .d-badge--contributor:after {
-    content: "c";
+    content: 'c';
     text-indent: -1px;
 }
 .d-badge--guardian-staff:after {
-    content: "g";
+    content: 'g';
     line-height: .9;
 }
 .d-badge__label {
@@ -962,7 +962,7 @@ $c-replyText: $c-body;
     @include rem((
         margin: 0 0 -3px 20px
     ));
-    content: " ";
+    content: ' ';
     display: inline-block;
 }
 

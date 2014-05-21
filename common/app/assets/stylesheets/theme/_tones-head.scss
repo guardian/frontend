@@ -1,8 +1,8 @@
-@import "_tones";
+@import '_tones';
 
 @include tone-head(news, $c-newsDefault, $c-newsAccent);
 @include tone-head(comment, $c-commentDefault, $c-commentAccent);
 @include tone-head(feature, $c-featureDefault, $c-featureAccent);
 @include tone-head(live, $c-neutral1, $c-liveAccent);
 @include tone-head(media, $c-mediaDefault, $c-mediaDefault);
-@include tone-head-background(feature, $c-featureDefault, $c-featureAccent2, #ffffff, "white");
+@include tone-head-background(feature, $c-featureDefault, $c-featureAccent2, #ffffff, 'white');

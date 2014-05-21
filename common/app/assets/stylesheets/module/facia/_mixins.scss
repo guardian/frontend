@@ -156,7 +156,7 @@ $item-top-border-height: 2px;
 }
 @mixin vertical-item-separator {
     &:before {
-        content: "";
+        content: '';
         display: block;
         position: absolute;
         top: 0;

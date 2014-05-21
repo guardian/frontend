@@ -1,23 +1,23 @@
-@charset "UTF-8";
+@charset 'UTF-8';
 
 /* ==========================================================================
    Common head
    ========================================================================== */
 
-@import "_head.common";
+@import '_head.common';
 
 
 /* ==========================================================================
    Football head
    ========================================================================== */
 
-@import "module/_article";
-@import "module/_social";
-@import "module/football/_global";
-@import "module/football/_league-list";
-@import "module/football/_overview";
+@import 'module/_article';
+@import 'module/_social';
+@import 'module/football/_global';
+@import 'module/football/_league-list';
+@import 'module/football/_overview';
 
 // These are duplicated from global to stop FOUC
-@import "base/_tables";
-@import "module/football/_tables";
-@import "module/football/_matches";
+@import 'base/_tables';
+@import 'module/football/_tables';
+@import 'module/football/_matches';

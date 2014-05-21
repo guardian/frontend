@@ -263,7 +263,7 @@ $block-padding-right: $gs-gutter;
 .blog__meta-container {
     position: relative;
     color: #ffffff;
-    border-top: 1px dotted #E6A1AB;
+    border-top: 1px dotted #e6a1ab;
     @include rem((
         padding-bottom: $gs-baseline
     ));
@@ -334,7 +334,7 @@ $block-padding-right: $gs-gutter;
     &:before {
         $size: 12px;
         display: inline-block;
-        content: "";
+        content: '';
         background-color: #ffffff;
         @include rem((
             width: $size,
@@ -376,7 +376,7 @@ $block-padding-right: $gs-gutter;
     }
 
     .blog__meta-container {
-        border-top: 1px dotted #E6A1AB;
+        border-top: 1px dotted #e6a1ab;
         border-bottom: 0 none;
 
         .byline,
@@ -997,7 +997,7 @@ $timeline-width: 14px;
         &:before {
             display: block;
             position: absolute;
-            content: " ";
+            content: ' ';
             @include rem((
                 top: -4px,
                 left: ($timeline-width/2)*-1,
