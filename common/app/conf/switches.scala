@@ -309,7 +309,7 @@ object Switches extends Collections {
 
   val ABHighRelevanceCommercialComponent = Switch("A/B Tests", "ab-high-relevance-commercial-component",
     "If this switch is turned on, run the HighRelevanceCommercialComponent A/B test.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 5, 31)
+    safeState = Off, sellByDate = new DateMidnight(2014, 6, 5)
   )
 
   // Dummy Switches
