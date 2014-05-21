@@ -494,8 +494,7 @@ define([
         repositionComments: function() {
             mediator.on('page:common:ready', function() {
                 if(!id.isUserLoggedIn()) {
-                    $('.js-comments').insertBefore(qwery('.js-popular'));
-                    $('.discussion').addClass('discussion--lowered');
+                    $('.js-comments').appendTo(qwery('.js-repositioned-comments'));
                 }
             });
         },

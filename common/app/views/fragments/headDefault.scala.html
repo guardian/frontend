@@ -1,0 +1,31 @@
+@(content: model.Content)(implicit request: RequestHeader)
+
+<header class="content__head tone-accent-border">
+
+    <div class="gs-container">
+        <div class="content__head__border-top"></div>
+        <div class="content__main-column">
+
+            <div class="content__section">
+                <a class="tone-colour" data-link-name="article section" href="@LinkTo{/@content.section}">@Html(content.sectionName.toLowerCase)</a>
+            </div>
+
+            @fragments.meta.metaInline(content)
+
+            @if(content.delegate.isInteractive) {
+                @fragments.dateline(content.webPublicationDate)
+            }
+
+            <h1 itemprop="headline" class="content__headline js-score">@Html(content.headline)</h1>
+
+            @if(!content.delegate.isVideo && !content.delegate.isGallery) {
+                @fragments.standfirst(content)
+            }
+
+            @if(content.isCommentable) {
+                <div class="content__head__comment-count content__head__comment-count--standfirst js-comment-count"></div>
+            }
+
+        </div>
+    </div>
+</header>

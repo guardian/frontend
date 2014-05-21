@@ -11,7 +11,7 @@ public class WebDriverFactory {
 
     public static WebDriver createWebDriver() {
         FirefoxDriver firefoxDriver = new FirefoxDriver();
-        firefoxDriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        firefoxDriver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         return firefoxDriver;
     }
 }

@@ -82,7 +82,7 @@ define([
         }, this);
 
         this.placeholders.title = ko.computed(function() {
-            return this.props.title() || this.capiProps.title() || (this.placeholders.webTitle() + ' news, comment and analysis from the Guardian' + (this.placeholders.section() ? ' | ' + toTitleCase(this.placeholders.section()) : ''));
+            return this.props.title() || this.capiProps.title() || (this.placeholders.webTitle() + (this.placeholders.section() ? ' | ' + toTitleCase(this.placeholders.section()) : ''));
         }, this);
 
         this.placeholders.description  = ko.computed(function() {

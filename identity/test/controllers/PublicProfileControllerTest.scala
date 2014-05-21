@@ -59,19 +59,7 @@ class PublicProfileControllerTest extends path.FreeSpec with ShouldMatchers with
         content should include(user.publicFields.displayName.get)
       }
       "then rendered profile should include account creation date" in {
-        content should include("Joined: " + user.dates.accountCreatedDate.get.toString("d MMM yyyy"))
-      }
-      "then rendered profile should include location" in {
-        content should include(user.publicFields.location.get)
-      }
-      "then rendered profile should include about me" in {
-        content should include(user.publicFields.aboutMe.get)
-      }
-      "then rendered profile should include interests" in {
-        content should include(user.publicFields.interests.get)
-      }
-      "then rendered profile should include web page" in {
-        content should include(user.publicFields.webPage.get)
+        content should include("Member since " + user.dates.accountCreatedDate.get.toString("d MMM yyyy"))
       }
     }
 
@@ -100,19 +88,7 @@ class PublicProfileControllerTest extends path.FreeSpec with ShouldMatchers with
         content should include(user.publicFields.displayName.get)
       }
       "then rendered profile should include account creation date" in {
-        content should include("Joined: " + user.dates.accountCreatedDate.get.toString("d MMM yyyy"))
-      }
-      "then rendered profile should include location" in {
-        content should include(user.publicFields.location.get)
-      }
-      "then rendered profile should include about me" in {
-        content should include(user.publicFields.aboutMe.get)
-      }
-      "then rendered profile should include interests" in {
-        content should include(user.publicFields.interests.get)
-      }
-      "then rendered profile should include web page" in {
-        content should include(user.publicFields.webPage.get)
+        content should include("Member since " + user.dates.accountCreatedDate.get.toString("d MMM yyyy"))
       }
     }
 

@@ -300,6 +300,11 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 8, 10)
   )
 
+  val AdTransitionSwitch = Switch("Feature Switches", "ad-transition",
+    "If this switch is turned on, we use css transitions to handle loading of different sized ads.",
+    safeState = Off, sellByDate = new DateMidnight(2014, 5, 29)
+  )
+
   // A/B Tests
 
   val ABHeaderSearchText = Switch("A/B Tests", "ab-header-search-text",
@@ -309,7 +314,7 @@ object Switches extends Collections {
 
   val ABHighRelevanceCommercialComponent = Switch("A/B Tests", "ab-high-relevance-commercial-component",
     "If this switch is turned on, run the HighRelevanceCommercialComponent A/B test.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 5, 31)
+    safeState = Off, sellByDate = new DateMidnight(2014, 6, 5)
   )
 
   // Dummy Switches
@@ -448,6 +453,7 @@ object Switches extends Collections {
     RssLinkSwitch,
     EnhanceTweetsSwitch,
     WorldCupWallchartEmbedSwitch,
+    AdTransitionSwitch,
     IndiaRegionSwitch,
     MemcachedSwitch,
     IncludeBuildNumberInMemcachedKey,

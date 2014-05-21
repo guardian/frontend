@@ -23,37 +23,7 @@
                         <div class="container__border tone-@style.tone tone-accent-border"></div>
                         <div class="container__header">
                             <h2 class="container__title tone-news tone-background">
-                                @if(!Edition.editionFronts.contains(request.uri.toLowerCase)) {
-                                    @*if we are not on edition fronts we don't display dated title, *@
-                                    @*but rather the container's title with an optional link specified in facia-tool *@
-                                    @if(config.href) {
-                                        <a class="container__title__label u-text-hyphenate" data-link-name="section heading"
-                                            href="@config.href">@config.displayName</a>
-                                    } else {
-                                        <span class="container__title__label u-text-hyphenate">@title</span>
-                                    }
-                                } else {
-                                    <span class="container__title__label today">
-                                        <b class="today__dayofweek js-dayofweek">@Format(DateTime.now(), "EEEE")</b>
-                                        <span class="u-nobr today__sub">
-                                            <span class="today__dayofmonth js-dayofmonth">@Format(DateTime.now(), "d")</span>
-                                            <span class="today__month">@Format(DateTime.now(), "MMMM")</span>
-                                            <span class="today__year">@Format(DateTime.now(), "yyyy")</span>
-                                        </span>
-                                    </span>
-                                    @LatestUpdate(collection, items).map { latestUpdate =>
-                                        <span class="container__updated">
-                                            <span class="i--circle i--clock">
-                                                <span class="i i-clock-hands-white"></span>
-                                            </span>
-                                            Last updated:
-                                            <time class="js-timestamp"
-                                                datetime="@latestUpdate.toString("yyyy-MM-dd'T'HH:mm:ssZ")"
-                                                data-relativeformat="long"
-                                                data-timestamp="@latestUpdate.getMillis"><span class="timestamp__text">@Format(latestUpdate, "E, h:ma")</span></time>
-                                        </span>
-                                    }
-                                }
+                                @fragments.containers.elements.dateOrTitle(collection, items)
                             </h2>
                         </div>
                         <div class="container__body">
