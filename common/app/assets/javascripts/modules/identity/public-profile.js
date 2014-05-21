@@ -14,7 +14,7 @@ function(
         this.setOptions(opts);
     }
     component.define(ProfileDiscussions);
-    ProfileDiscussions.prototype.endpoint = '/discussion/user/:userId/:streamType.json';
+    ProfileDiscussions.prototype.endpoint = '/discussion/profile/:userId/:streamType.json';
     ProfileDiscussions.prototype.defaultOptions = {
         userId: null,
         streamType: 'discussions'
