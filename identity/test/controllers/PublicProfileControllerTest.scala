@@ -59,7 +59,7 @@ class PublicProfileControllerTest extends path.FreeSpec with ShouldMatchers with
         content should include(user.publicFields.displayName.get)
       }
       "then rendered profile should include account creation date" in {
-        content should include("Joined: " + user.dates.accountCreatedDate.get.toString("d MMM yyyy"))
+        content should include("Member since " + user.dates.accountCreatedDate.get.toString("d MMM yyyy"))
       }
     }
 
@@ -88,7 +88,7 @@ class PublicProfileControllerTest extends path.FreeSpec with ShouldMatchers with
         content should include(user.publicFields.displayName.get)
       }
       "then rendered profile should include account creation date" in {
-        content should include("Joined: " + user.dates.accountCreatedDate.get.toString("d MMM yyyy"))
+        content should include("Member since " + user.dates.accountCreatedDate.get.toString("d MMM yyyy"))
       }
     }
 
