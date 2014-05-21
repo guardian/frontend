@@ -354,7 +354,7 @@
     min-height: gs-height(1);
     position: relative;
     @include rem((
-            margin-bottom: $gs-baseline
+        margin-bottom: $gs-baseline
     ));
     border-top: 1px dotted $c-neutral5;
     border-bottom: 1px dotted $c-neutral5;
@@ -363,9 +363,9 @@
         position: absolute;
         top: 0;
         @include rem((
-                margin-left: ($a-leftCol-width + $gs-gutter)*-1,
-                margin-bottom: ($gs-baseline/3)*4,
-                width: $a-leftCol-width
+            margin-left: ($a-leftCol-width + $gs-gutter)*-1,
+            margin-bottom: ($gs-baseline/3)*4,
+            width: $a-leftCol-width
         ));
         border-top: 0;
         border-bottom: 0;
@@ -373,8 +373,8 @@
 
     @include mq(wide) {
         @include rem((
-                margin-left: (gs-span(3) + $gs-gutter)*-1,
-                width: gs-span(3)
+            margin-left: (gs-span(3) + $gs-gutter)*-1,
+            width: gs-span(3)
         ));
     }
 }
