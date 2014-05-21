@@ -15,7 +15,7 @@ trait FirstTwoBigItems extends CollectionItems {
       case x :: y :: tail =>
         setMetaFields(x, Map("group" -> "1", "imageAdjust" -> "boost")) ::
           setMetaFields(y, Map("group" -> "1")) :: tail
-      case x :: Nil => List(setMetaFields(x, Map("group" -> "1", "imageAdjust" -> "boost")))
+      case x => x.map(setMetaFields(_, Map("group" -> "1", "imageAdjust" -> "boost")))
     }
   }
 }
