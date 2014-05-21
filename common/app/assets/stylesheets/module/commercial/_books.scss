@@ -236,6 +236,9 @@ $c-commercial-books-dark: #630D4C;
             ));
         }
         @include mq(tablet) {
+            .lineitem {
+                width: 50%;
+            }
             .highitem {
                 border-bottom: 0;
                 padding-bottom: 0;
@@ -327,7 +330,7 @@ $c-commercial-books-dark: #630D4C;
             .commercial__relevance-low,
             .lineitem {
                 width: 50%;
-            }        
+            }
             .lineitem:nth-child(n+2) {
                 display: block;
             }
@@ -450,8 +453,12 @@ $c-commercial-books-dark: #630D4C;
     }
     &.commercial--high {
         @include mq($from: tablet, $to: leftCol) {
-         .lineitem:nth-child(n+2) {
-             display: none;
+            .lineitem {
+                width: 100%;
+                
+                &:nth-child(n+2) {
+                    display: none;
+                }
             }
         }
         @include mq(rightCol) {
