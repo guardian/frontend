@@ -15,6 +15,7 @@ case class DiscussionComments(
   commentCount: Int,
   topLevelCommentCount: Int,
   commenterCount: Int,
+  isClosedForRecommendation: Boolean,
   switches: Seq[Switch]
 ) extends Comments
 
@@ -30,7 +31,8 @@ object DiscussionComments {
       commentCount = (json \ "discussion" \ "commentCount").as[Int],
       topLevelCommentCount = (json \ "discussion" \ "topLevelCommentCount").as[Option[Int]] getOrElse 0,
       commenterCount =  (json \ "discussion" \ "commenterCount").as[Option[Int]] getOrElse 0,
-      switches = (json \ "switches").as[Seq[JsObject]] map {Switch(_)}
+      switches = (json \ "switches").as[Seq[JsObject]] map {Switch(_)},
+      isClosedForRecommendation = (json \ "isClosedForRecommendation").as[Option[Boolean]] getOrElse true
     )
   }
 }
@@ -74,6 +76,7 @@ object ProfileDiscussions{
         commentCount = 0,
         topLevelCommentCount = 0,
         commenterCount = 0,
+        isClosedForRecommendation = (d \ "isClosedForRecommendation").as[Boolean],
         switches = Seq()
       )
     }
