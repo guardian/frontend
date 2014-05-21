@@ -905,6 +905,10 @@ button {
     margin: 0 0 2px 0;
 }
 
+.cnf-form select{
+    padding-left: 1px;
+}
+
 .cnf-form .tools {
     padding: 10px 0;
     clear: left;
