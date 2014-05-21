@@ -1,4 +1,4 @@
-@charset "UTF-8";
+@charset 'UTF-8';
 
 .gallery {
     position: relative;
@@ -118,7 +118,7 @@ i.gallery__watermark {
         text-align: center;
     }
 
-    @include mq($and: "(orientation: portrait)") {
+    @include mq($and: '(orientation: portrait)') {
         .gallery__item--landscape .gallery__img {
             width: 100% !important;
             height: auto !important;
@@ -315,7 +315,7 @@ i.gallery__watermark {
 }
 
 .gallery__counter--current-image {
-    color: #FFFFFF;
+    color: #ffffff;
 }
 
 

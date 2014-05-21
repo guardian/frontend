@@ -7,8 +7,8 @@
 @include tone-head(media, $c-mediaDefault, $c-mediaDefault);
 
 // Tonal article styles
-@include article-header-tone(feature, $c-featureDefault, $c-featureAccent2, #fff, "white");
-@include article-header-tone(live, $c-liveDefault, $c-liveAccent, #fff, "white");
+@include article-header-tone(feature, $c-featureDefault, $c-featureAccent2, #ffffff, "white");
+@include article-header-tone(live, $c-liveDefault, $c-liveAccent, #ffffff, "white");
 
 
 .content__head--tonal {

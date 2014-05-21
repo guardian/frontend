@@ -32,6 +32,10 @@
     }
 }
 
+.identity-wrapper--stretched {
+    max-width: none;
+}
+
 .identity-section {
     border-top: 1px solid $c-neutral7;
     @include box-sizing(border-box);
@@ -72,7 +76,7 @@
 }
 
 .nav--registration .nav__item + .nav__item:before {
-    content: "\b7";
+    content: '\b7';
     margin-left: 4px;
     margin-right: 9px;
 }
@@ -162,7 +166,7 @@
     /* Indicator bar */
     &:after {
         bottom: 0;
-        content: "";
+        content: '';
         display: block;
         left: 0;
         position: absolute;
@@ -190,6 +194,27 @@
     @include rem((
         margin-right: $gs-gutter/2
     ));
+}
+
+.profile {
+    @include rem((
+        margin-left: $gs-gutter,
+        margin-right: $gs-gutter
+    ));
+}
+.profile__name {
+    @include fs-headline(3);
+    @include mq(tablet) {
+        @include fs-headline(6, true);
+    }
+}
+.profile__avatar {
+
+}
+.profile__last-seen {
+    @include fs-data(2);
+    color: $c-neutral2-contrasted;
+    font-weight: normal;
 }
 
 

@@ -1,4 +1,4 @@
-@charset "UTF-8";
+@charset 'UTF-8';
 
 /* ==========================================================================
    Non-JS Gallery Styles
@@ -66,11 +66,11 @@
 }
 
 .gallery-prev:before {
-    content: "« ";
+    content: '« ';
 }
 
 .gallery-next:after {
-    content: " »";
+    content: ' »';
 }
 
 .gallery-nav i {

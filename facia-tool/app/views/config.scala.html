@@ -104,22 +104,22 @@
                     options: $root.types,
                     value: meta.type"></select>
 
-                <label>Groups</label>
-                <select data-bind="
-                    options: $root.groups,
-                    value: meta.groups"></select>
+                <!-- ko if: meta.groups -->
+                    <label>Groups</label>
+                    <span class="cnf-form__value" data-bind="text: meta.groups"></span>
+                <!-- /ko -->
+
+                <!-- ko if: $root.switches()['facia-tool-tags'] -->
+                    <label for="showTags" >Show tags</label>
+                    <input id="showTags" type="checkbox" data-bind="checked: meta.showTags" />
+
+                    <label for="showSections" >Show sections</label>
+                    <input id="showSections" type="checkbox" data-bind="checked: meta.showSections" />
+                <!-- /ko -->
 
                 <label>No curation</label>
                 <input type="checkbox" data-bind="
                     checked: meta.uneditable" />
-
-                @defining(if(Switches.FaciaToolContainerTagsSwitch.isSwitchedOn) "" else "style=display:none") { showTags =>
-                <label @showTags for="showTags" >Show tags</label>
-                <input @showTags id="showTags" type="checkbox" data-bind="checked: meta.showTags" />
-
-                <label @showTags for="showSections" >Show sections</label>
-                <input @showTags id="showSections" type="checkbox" data-bind="checked: meta.showSections" />
-                }
 
                 <div class="tools">
                     <button class="tool" data-bind="

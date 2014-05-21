@@ -179,7 +179,6 @@ object Tags {
   val commentMappings = Seq(
     "tone/comment",
     "tone/letters",
-    "tone/profiles",
     "tone/editorials"
   )
 

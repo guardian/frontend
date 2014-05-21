@@ -90,7 +90,7 @@ $guss-columns-fallback-columns: 3 !default;
 
             &:after,
             &:before {
-                content: "";
+                content: '';
                 display: table;
             }
             &:after {
