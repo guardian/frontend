@@ -147,13 +147,15 @@ figure {
     }
 
     .u-responsive-ratio--letterbox {
+        @include transition(padding-bottom 1s);
 
         @include mq($to: rightCol) {
             padding-bottom: aspect-ratio-height(5, 3);
         }
 
-        @include mq(1920px) {
-            padding-bottom: 768px;
+        // Magic number for max height in 5:2 ratio before cropping kicks in.
+        @include mq(1680px) {
+            padding-bottom: 672px;
         }
     }
 }
