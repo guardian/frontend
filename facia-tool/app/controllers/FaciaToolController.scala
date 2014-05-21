@@ -1,5 +1,6 @@
 package controllers
 
+import util.SanitizeInput
 import frontsapi.model._
 import frontsapi.model.UpdateList
 import jobs.FrontPressJob
@@ -57,7 +58,7 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
     FaciaToolMetrics.ApiUsageCount.increment()
     val configJson: Option[JsValue] = request.body.asJson
     NoCache {
-      configJson flatMap(_.asOpt[Config]) map {
+      configJson.flatMap(_.asOpt[Config]).map(SanitizeInput.fromConfigSeo).map {
         case update: Config => {
 
           //Only update if it is a valid Config object
