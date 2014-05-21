@@ -14,12 +14,7 @@ define([
     dfp
 ) {
 
-    var adNames = ['inline1', 'inline2'],
-        newSliceTemplate =
-            '<ul class="u-unstyled l-row l-row--items-3 facia-slice facia-slice--linkslist-and-mpu">' +
-                '<li class="l-row__item l-row__item--boost-2 facia-slice__item">{{linkslist}}</li>' +
-                '<li class="l-row__item l-row__item--mpu">{{adSlot}}</li>' +
-            '</ul>';
+    var adNames = ['inline1', 'inline2'];
 
     function SliceAdverts(config) {
         this.config = _assign(this.defaultConfig, config);
@@ -27,7 +22,7 @@ define([
 
     SliceAdverts.prototype.defaultConfig = {
         containerSelector: '.container',
-        sliceSelector: '.facia-slice-wrapper--ad'
+        sliceSelector: '.slice--ad-candidate'
     };
 
     SliceAdverts.prototype.init = function() {
@@ -50,16 +45,10 @@ define([
             }
         }
 
-        adSlices.slice(0, adNames.length).forEach(function($originalSlice, index) {
-            $originalSlice
-                .removeClass('linkslist-container')
-                .addClass('facia-slice-wrapper facia-slice-wrapper--position-2')
-                .html(
-                    template(newSliceTemplate, {
-                        linkslist: $originalSlice.html(),
-                        adSlot: dfp.createAdSlot(adNames[index], 'container-inline')
-                    })
-                );
+        adSlices.slice(0, adNames.length).forEach(function($adSlice, index) {
+            $adSlice
+                .addClass('slice--has-ad')
+                .append(dfp.createAdSlot(adNames[index], 'container-inline'));
         });
 
         return adSlices;

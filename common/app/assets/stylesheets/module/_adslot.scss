@@ -1,4 +1,4 @@
-.ad-slot--dfp {
+.ad-slot {
     text-align: center;
     z-index: 1000;
 
@@ -44,13 +44,11 @@
     }
     @include mq(tablet) {
         height: 250 + $mpu-ad-label-height;
-        position: absolute;
-        @include rem((
-            right: $gs-gutter/2
-        ));
-        margin: 0;
         padding: 0;
         background-color: $c-neutral8;
+        @include rem((
+            margin-left: gs-span(8) + $gs-gutter
+        ));
     }
     @include mq(tablet, desktop) {
         @if $browser-supports-flexbox {
