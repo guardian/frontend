@@ -9,10 +9,10 @@
         <header class="article__head profile u-cf">
             <div class="profile__avatar user-avatar" data-userid="@user.id"></div>
             <div class="profile__name">@user.publicFields.displayName</div>
-            @user.dates.accountCreatedDate.map { activityDate =>
+            @user.dates.accountCreatedDate.map { accountCreatedDate =>
                 <p class="profile__last-seen">
                     <i class="i i-clock-light-grey"></i>
-                    Last seen on @activityDate.toString("d MMM yyyy")
+                    Member since @accountCreatedDate.toString("d MMM yyyy")
                 </p>
             }
         </header>

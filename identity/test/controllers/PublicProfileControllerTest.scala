@@ -61,18 +61,6 @@ class PublicProfileControllerTest extends path.FreeSpec with ShouldMatchers with
       "then rendered profile should include account creation date" in {
         content should include("Joined: " + user.dates.accountCreatedDate.get.toString("d MMM yyyy"))
       }
-      "then rendered profile should include location" in {
-        content should include(user.publicFields.location.get)
-      }
-      "then rendered profile should include about me" in {
-        content should include(user.publicFields.aboutMe.get)
-      }
-      "then rendered profile should include interests" in {
-        content should include(user.publicFields.interests.get)
-      }
-      "then rendered profile should include web page" in {
-        content should include(user.publicFields.webPage.get)
-      }
     }
 
     "with invalid user Id" - {
@@ -101,18 +89,6 @@ class PublicProfileControllerTest extends path.FreeSpec with ShouldMatchers with
       }
       "then rendered profile should include account creation date" in {
         content should include("Joined: " + user.dates.accountCreatedDate.get.toString("d MMM yyyy"))
-      }
-      "then rendered profile should include location" in {
-        content should include(user.publicFields.location.get)
-      }
-      "then rendered profile should include about me" in {
-        content should include(user.publicFields.aboutMe.get)
-      }
-      "then rendered profile should include interests" in {
-        content should include(user.publicFields.interests.get)
-      }
-      "then rendered profile should include web page" in {
-        content should include(user.publicFields.webPage.get)
       }
     }
 
