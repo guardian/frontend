@@ -27,13 +27,13 @@ class ArticleSlotTest extends FlatSpec with Matchers with BeforeAndAfterEach {
   "Slot generation" should "create slots in an article body" in Fake {
     val result = controllers.ArticleController.renderArticle(slotTest1)(TestRequest(slotTest1))
     val document = Jsoup.parse(contentAsString(result))
-    document.select(".article-body .slot") should have size 10
+    document.select(".js-article__body .slot") should have size 10
   }
 
   it should "only create pre-header slots before h2 elements" in Fake {
     val result = controllers.ArticleController.renderArticle(slotTest1)(TestRequest(slotTest1))
     val document = Jsoup.parse(contentAsString(result))
-    val elements = document.select(".article-body .slot--preh2").asScala
+    val elements = document.select(".js-article__body .slot--preh2").asScala
 
     elements should have size 5
 
@@ -47,7 +47,7 @@ class ArticleSlotTest extends FlatSpec with Matchers with BeforeAndAfterEach {
   it should "only create post-header slots after h2 elements" in Fake {
     val result = controllers.ArticleController.renderArticle(slotTest1)(TestRequest(slotTest1))
     val document = Jsoup.parse(contentAsString(result))
-    val elements = document.select(".article-body .slot--posth2").asScala
+    val elements = document.select(".js-article__body .slot--posth2").asScala
 
     elements should have size 5
 
@@ -61,7 +61,7 @@ class ArticleSlotTest extends FlatSpec with Matchers with BeforeAndAfterEach {
   it should "create block slots after block image elements" in Fake {
     val result = controllers.ArticleController.renderArticle(slotTest2)(TestRequest(slotTest2))
     val document = Jsoup.parse(contentAsString(result))
-    val elements = document.select(".article-body .slot--block").asScala
+    val elements = document.select(".js-article__body .slot--block").asScala
 
     elements should have size 1
 
@@ -76,7 +76,7 @@ class ArticleSlotTest extends FlatSpec with Matchers with BeforeAndAfterEach {
   it should "create block slots after video elements" in Fake {
     val result = controllers.ArticleController.renderArticle(slotTest3)(TestRequest(slotTest3))
     val document = Jsoup.parse(contentAsString(result))
-    val elements = document.select(".article-body .slot--block").asScala
+    val elements = document.select(".js-article__body .slot--block").asScala
 
     elements should have size 1
 
@@ -91,7 +91,7 @@ class ArticleSlotTest extends FlatSpec with Matchers with BeforeAndAfterEach {
     val result = controllers.ArticleController.renderArticle(slotTest1)(TestRequest(slotTest1))
     val document = Jsoup.parse(contentAsString(result))
     val elements = document.select(".slot--posth2, .slot--block").asScala
-    val elementSiblings = document.select(".article-body").first.children.asScala
+    val elementSiblings = document.select(".js-article__body").first.children.asScala
 
     elements should not be (empty)
 
