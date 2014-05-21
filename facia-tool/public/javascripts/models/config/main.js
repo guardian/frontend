@@ -159,7 +159,7 @@ define([
             };
         }
 
-        function containerTypeUsage() {
+        function containerUsage() {
             return _.reduce(model.collections(), function(m, col) {
                 var type = col.meta.type();
 
@@ -207,12 +207,9 @@ define([
                        .value()
                     );
 
-                    window.console.log('CONTAINER TYPE USAGE');
-                    _.each(containerTypeUsage(), function(fronts, type) {
-                        window.console.log(type + ':');
-                        _.each(fronts, function(front) {
-                            window.console.log('  ' + front);
-                        });
+                    window.console.log('CONTAINER USAGE\n');
+                    _.each(containerUsage(), function(fronts, type) {
+                        window.console.log(type + ': ' + fronts.join(',') + '\n');
                     });
                 }
             }, opts.pollingMs, opts.terminateOnFail);
