@@ -545,9 +545,9 @@
 .breadcrumb-list__item + .breadcrumb-list__item {
 
   .breadcrumb-keyword:before {
-    content: ' >>';
+    content: '>> ';
     display: inline-block;
-    margin-left: $gs-gutter/5;
+    margin-right: $gs-gutter/5;
   }
 
 }
