@@ -2,7 +2,8 @@
 @import conf.Switches._
 
 @defining((model.article, model.storyPackage, !model.article.isSport)) {  case (article, storyPackage, isDefault) =>
-<article class="content content--liveblog tone-@article.visualTone blog @if(article.isLive){is-live}" itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType" role="main">
+<article class="content content--liveblog tone-@article.visualTone blog @if(article.isLive){is-live}"
+    itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType" role="main">
 
     <header class="content__head content__head--tonal">
         @* UPPER HEADER *@

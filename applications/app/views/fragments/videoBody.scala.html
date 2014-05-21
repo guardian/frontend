@@ -2,7 +2,8 @@
 @import conf.Switches._
 
 @defining(page.video){ video =>
-<article class="content content--video tone-@video.visualTone" itemprop="mainContentOfPage" itemscope itemtype="@video.schemaType" role="main">
+<article class="content content--video tone-@video.visualTone"
+    itemprop="mainContentOfPage" itemscope itemtype="@video.schemaType" role="main">
 
     @fragments.headDefault(video)
 

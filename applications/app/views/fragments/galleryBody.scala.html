@@ -1,6 +1,7 @@
 @(gallery: Gallery, storyPackage: List[Trail], index: Int)(implicit request: RequestHeader)
 
-<div class="content content--gallery tone-@gallery.visualTone">
+<article class="content content--gallery tone-@gallery.visualTone"
+    itemprop="mainContentOfPage" itemscope itemtype="@gallery.schemaType" role="main">
 
     @fragments.headDefault(gallery)
 
@@ -59,7 +60,7 @@
             </div>
         </div>
     </div>
-</div>
+</article>
 
 @fragments.storyPackagePlaceholder(storyPackage)
 @fragments.onwardPlaceholder(gallery.visualTone)

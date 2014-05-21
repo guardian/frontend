@@ -2,7 +2,9 @@
 @import conf.Switches._
 
 @defining((model.article, model.storyPackage)) { case (article, storyPackage) =>
-<article class="content content--article @if(article.isAdvertisementFeature && !article.isSponsored){article--advertisement-feature} tone-@article.visualTone tone-@article.visualTone--article">
+<article class="content content--article @if(article.isAdvertisementFeature && !article.isSponsored){article--advertisement-feature} tone-@article.visualTone tone-@article.visualTone--article"
+    itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType" role="main">
+
     @if(article.visualTone == Tags.VisualTone.Feature) {
         @fragments.headTonal(article)
         @if(article.isFeature && article.hasShowcaseMainPicture) {
