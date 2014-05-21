@@ -36,7 +36,7 @@
             "actionsBeforeApp": ["frontend-router.deploy"]
         },
         "artifactUpload":{
-            "actionsBeforeApp": ["frontend-router.uploadArtifacts", "router.uploadArtifacts"]
+            "actionsBeforeApp": [ "router.uploadArtifacts"]
         }
     }
 }

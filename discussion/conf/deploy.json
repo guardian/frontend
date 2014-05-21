@@ -43,7 +43,7 @@
             "actionsBeforeApp": ["frontend-discussion.deploy"]
         },
         "artifactUpload":{
-            "actionsBeforeApp": ["frontend-discussion.uploadArtifacts", "discussion.uploadArtifacts"]
+            "actionsBeforeApp": ["discussion.uploadArtifacts"]
         },
         "staticFilesUpload":{
             "actionsBeforeApp": ["frontend-static.uploadStaticFiles"]

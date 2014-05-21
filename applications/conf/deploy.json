@@ -43,7 +43,7 @@
             "actionsBeforeApp": ["frontend-applications.deploy"]
         },
         "artifactUpload":{
-            "actionsBeforeApp": ["frontend-applications.uploadArtifacts", "applications.uploadArtifacts"]
+            "actionsBeforeApp": [ "applications.uploadArtifacts"]
         },
         "staticFilesUpload":{
             "actionsBeforeApp": ["frontend-static.uploadStaticFiles"]

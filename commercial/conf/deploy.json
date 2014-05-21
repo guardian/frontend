@@ -43,7 +43,7 @@
             "actionsBeforeApp": ["frontend-commercial.deploy"]
         },
         "artifactUpload":{
-            "actionsBeforeApp": ["frontend-commercial.uploadArtifacts", "commercial.uploadArtifacts"]
+            "actionsBeforeApp": ["commercial.uploadArtifacts"]
         },
         "staticFilesUpload":{
             "actionsBeforeApp": ["frontend-static.uploadStaticFiles"]

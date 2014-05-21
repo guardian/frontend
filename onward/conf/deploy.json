@@ -36,7 +36,7 @@
             "actionsBeforeApp": ["frontend-onward.deploy"]
         },
         "artifactUpload":{
-            "actionsBeforeApp": ["frontend-onward.uploadArtifacts", "onward.uploadArtifacts"]
+            "actionsBeforeApp": [ "onward.uploadArtifacts"]
         }
     }
 }

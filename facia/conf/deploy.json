@@ -43,7 +43,7 @@
             "actionsBeforeApp": ["frontend-facia.deploy"]
         },
         "artifactUpload":{
-            "actionsBeforeApp": ["frontend-facia.uploadArtifacts", "facia.uploadArtifacts"]
+            "actionsBeforeApp": ["facia.uploadArtifacts"]
         },
         "staticFilesUpload":{
             "actionsBeforeApp": ["frontend-static.uploadStaticFiles"]

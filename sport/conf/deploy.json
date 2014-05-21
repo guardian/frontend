@@ -43,7 +43,7 @@
             "actionsBeforeApp": ["frontend-sport.deploy"]
         },
         "artifactUpload":{
-            "actionsBeforeApp": ["frontend-sport.uploadArtifacts", "sport.uploadArtifacts"]
+            "actionsBeforeApp": [ "sport.uploadArtifacts"]
         },
         "staticFilesUpload":{
             "actionsBeforeApp": ["frontend-static.uploadStaticFiles"]

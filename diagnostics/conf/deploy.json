@@ -35,7 +35,7 @@
             "actionsBeforeApp": ["frontend-diagnostics.deploy"]
         },
         "artifactUpload":{
-            "actionsBeforeApp": ["frontend-diagnostics.uploadArtifacts", "diagnostics.uploadArtifacts"]
+            "actionsBeforeApp": ["diagnostics.uploadArtifacts"]
         }
     }
 }

@@ -36,7 +36,7 @@
             "actionsBeforeApp": ["frontend-image.deploy"]
         },
         "artifactUpload":{
-            "actionsBeforeApp": ["frontend-image.uploadArtifacts", "image.uploadArtifacts"]
+            "actionsBeforeApp": ["image.uploadArtifacts"]
         }
     }
 }

@@ -35,7 +35,7 @@
             "actionsBeforeApp": ["frontend-facia-tool.deploy"]
         },
         "artifactUpload":{
-            "actionsBeforeApp": ["frontend-facia-tool.uploadArtifacts", "facia-tool.uploadArtifacts"]
+            "actionsBeforeApp": ["facia-tool.uploadArtifacts"]
         }
     }
 }
