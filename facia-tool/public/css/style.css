@@ -905,8 +905,13 @@ button {
     margin: 0 0 2px 0;
 }
 
-.cnf-form select{
+.cnf-form select {
     padding-left: 1px;
+}
+
+.cnf-form select.is-placeholder,
+.cnf-form select option:first-child {
+    color: #999999;
 }
 
 .cnf-form .tools {

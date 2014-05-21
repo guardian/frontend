@@ -165,7 +165,10 @@
                     <div class="cnf-form">
                         <label>Section</label>
                         <select data-bind="
-                            optionsCaption: 'Choose...',
+                            css: {
+                                'is-placeholder': !props.section()
+                            },
+                            optionsCaption: placeholders.section,
                             options: $root.sections,
                             value: props.section"></select>
 
