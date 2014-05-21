@@ -49,8 +49,8 @@
         margin: 0;
         background-color: $c-neutral8;
     }
-    @include mq(tablet, desktop) {
-        @if $browser-supports-flexbox {
+    @if $browser-supports-flexbox {
+        @include mq(tablet, desktop) {
             // Shrink ad to fit a row item (3 grid columns on tablet)
             // 1. scale ad down to $mpu-target-width
             // 2. scale origin is the right top corner
@@ -60,8 +60,6 @@
             -webkit-transform-origin: 100% 0; // 2
             -moz-transform-origin: 100% 0%; // 2
             transform-origin: 100% 0%; // 2
-        } @else {
-            width: gs-span(3);
         }
     }
 }

@@ -17,8 +17,6 @@
             }
         } @else {
             @include mq(tablet) {
-                width: auto;
-
                 .linkslist__item {
                     width: gs-span(3);
 
