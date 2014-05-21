@@ -57,12 +57,13 @@ trait Comment {
 object Comment extends {
 
   def apply(json: JsValue, profileOpt: Option[Profile], discussionOpt: Option[Discussion]): Comment = {
+    val discussion = discussionOpt getOrElse {Discussion(json \ "discussion")}
     DefaultComment(
       id = (json \ "id").as[Int],
       body = (json \ "body").as[String],
-      responses = getResponses(json, discussionOpt orElse {Option(Discussion(json \ "discussion"))}),
+      responses = getResponses(json, Some(discussion)),
       profile = profileOpt getOrElse Profile(json),
-      discussion = discussionOpt getOrElse {Discussion(json \ "discussion")},
+      discussion = discussion,
       date = (json \ "isoDateTime").as[String].parseISODateTime,
       isHighlighted = (json \ "isHighlighted").as[Boolean],
       isBlocked = (json \ "status").as[String].contains("blocked"),
