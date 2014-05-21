@@ -119,6 +119,9 @@ trait Elements {
   def mainVideo: Option[VideoElement] = videos.find(_.isMain).headOption
   lazy val hasMainVideo: Boolean = mainVideo.flatMap(_.videoAssets.headOption).isDefined
 
+  def mainEmbed: Option[EmbedElement] = embeds.find(_.isMain).headOption
+  lazy val hasMainEmbed: Boolean = mainEmbed.flatMap(_.embedAssets.headOption).isDefined
+
   lazy val bodyImages: Seq[ImageElement] = images.filter(_.isBody)
   lazy val bodyVideos: Seq[VideoElement] = videos.filter(_.isBody)
   lazy val videoAssets: Seq[VideoAsset] = videos.flatMap(_.videoAssets)
@@ -126,12 +129,20 @@ trait Elements {
 
   def elements: Seq[Element] = Nil
 
-  protected lazy val images: Seq[ImageElement] = elements.filter(_.isImage)
-    .map(e => new ImageElement(e.delegate, e.index))
+  protected lazy val images: Seq[ImageElement] = elements.flatMap {
+    case image :ImageElement => Some(image)
+    case _ => None
+  }
 
-  protected lazy val videos: Seq[VideoElement] = elements.filter(_.isVideo)
-    .map(e => new VideoElement(e.delegate, e.index))
+  protected lazy val videos: Seq[VideoElement] = elements.flatMap {
+    case video: VideoElement => Some(video)
+    case _ => None
+  }
 
+  protected lazy val embeds: Seq[EmbedElement] = elements.flatMap {
+    case embed: EmbedElement => Some(embed)
+    case _ => None
+  }
 }
 
 trait Tags {
