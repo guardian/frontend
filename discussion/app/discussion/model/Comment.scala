@@ -103,8 +103,6 @@ object Discussion {
   lazy val empty = Discussion("", "", "", "", isClosedForComments = false, isClosedForRecommendation = false)
 
   def apply(json: JsValue): Discussion = {
-    print("\n\nDiscussion.apply\n")
-    print(json)
     Discussion(
       (json \ "key").as[String],
       (json \ "title").as[String],
