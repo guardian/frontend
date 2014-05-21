@@ -52,7 +52,7 @@
 }
 
 @mixin tone-head-comment-icon($tone, $commentIcon) {
-    .tone-#{$tone}.tone-#{$tone}--article .article__head__comment-count i {
+    .tone-#{$tone}.tone-#{$tone}--article .content__head__comment-count i {
         @extend %i-comment-#{$commentIcon};
         @if $svg-support {
             .svg & {
@@ -62,79 +62,40 @@
     }
 }
 
-@mixin tone-head-background($tone, $colour, $accentColour, $textColour, $commentIcon) {
-    .tone-#{$tone}.tone-#{$tone}--article {
-
-        .article__head__comment-count {
-            display: inline-block;
-
-            .commentcount {
+@mixin article-header-tone($tone, $colour, $accentColour, $textColour, $commentIcon) {
+    .tone-#{$tone} .content__head--tonal {
+        .content__section {
+            border-top: 1px dotted $c-neutral5;
+            @include rem((
+                padding-top: $gs-baseline/3
+            ));
+            @include mq($from: leftCol) {
+                border-top: 0;
+                @include rem((
+                    padding-top: $gs-baseline/2
+                ));
+            }
+        }
+        .content__section .tone-colour {
+            color: $colour;
+            @include mq($from: leftCol) {
                 color: $textColour;
             }
-            &.article__head__comment-count--standfirst {
-                display: none;
-            }
-            &.article__head__comment-count--headline {
-                @include mq(tablet) {
-                    display: none;
-                }
-            }
         }
-
-        @include mq($from: leftCol) {
-            &.article__zone {
-                border-top: 0 !important;
-            }
+        .content__headline,
+        .content__standfirst,
+        .content__standfirst a,
+        .content__section {
+            color: $textColour;
         }
-
-        .article__section-link {
-            @include rem((
-                padding-top: $gs-baseline/2
-            ));
-
+        .tone-background {
+            background-color: $colour;
         }
-
-        .article__section-link a {
-            color: $colour !important;
-            @include mq($from: leftCol) {
-                color: $textColour !important;
-            }
+        .tone-background--accent {
+            background-color: $accentColour;
         }
-
-        .article__columning-wrapper {
-            @include rem((
-                margin-top: $gs-baseline*2
-            ));
-            @include mq($to: tablet) {
-                margin-top: 0;
-            }
-        }
-
-        .article__head,
-        .content-meta--inline {
-            border-top: 0;
-        }
-
-        .article__head {
-            margin-top: 0;
-            padding-top: 0;
-            margin-right: 0 !important;
-        }
-
-        .article__head .content-meta {
-            @include rem((
-                padding: $gs-baseline/2 0 0 0
-            ));
-
-            margin: 0;
-        }
-
-        .article__inner--head {
-            max-width: none;
-        }
-
-        .localnav__inner {
-            border-bottom: 0;
+        .content__head__comment-count .commentcount {
+            color: $textColour;
         }
 
         .content-meta__item a {
@@ -144,68 +105,17 @@
         .content-meta__label {
             color: lighten($accentColour, 25);
         }
-
-        .tone-head--accent {
-            position: relative;
-            @include rem((
-                padding: $gs-baseline/2 0 $gs-baseline 0
-            ));
-            @include full-bleed($accentColour);
+        .content__standfirst .bullet:before {
+            background-color: lighten($accentColour, 25);
         }
-
-        .tone-head--default {
-            position: relative;
-            @include full-bleed($colour);
-        }
-
-        .tone-head--accent,
-        .tone-head--default {
-            // hack to get rid of a <1px separator line on tablet devices
-            padding-left: 1px;
-            &:before { right: 99.999%; }
-            &:after { left: 99.999%; }
-        }
-
-        .article__headline,
-        .article__standfirst {
-            color: $textColour !important;
-        }
-
-        .article__standfirst {
-            margin-bottom: 0;
-        }
-
-        .article__standfirst a {
-            color: #fff;
-            &.u-underline {
-                border-bottom-color: lighten($accentColour, 18);
-                &:hover {
-                    border-bottom-color: #fff;
-                }
+        .u-underline {
+            border-bottom-color: lighten($accentColour, 25);
+            &:hover {
+                border-bottom-color: #fff;
             }
         }
-
-        .article__standfirst .bullet:before {
-            background-color: lighten($accentColour, 18);
-        }
-
-        .article__headline {
-            font-weight: 200;
-            margin-bottom: 0;
-            @include rem((
-                padding-top: $gs-baseline/2,
-                padding-bottom: $gs-baseline*2,
-                min-height: $gs-baseline*5
-            ));
-
-            @include mq($from: tablet) {
-                @include rem((
-                    padding-bottom: $gs-baseline*3
-                ));
-
-            }
-        }
-
+    }
+    .content.tone-#{$tone} {
         .drop-cap {
             @include mq($to: tablet) {
                 color: $colour;

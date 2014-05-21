@@ -12,7 +12,21 @@
                     "/management/healthcheck"
                 ]
             }
+        },
+        "image":{
+            "type":"autoscaling",
+            "apps":[ "frontend::image" ],
+            "data":{
+                "secondsToWait":1200,
+                "port":18080,
+                "healthcheckGrace":20,
+                "bucket":"aws-frontend-artifacts",
+                "healthcheck_paths":[
+                    "/management/healthcheck"
+                ]
+            }
         }
+
     },
     "recipes":{
         "default":{
@@ -22,7 +36,7 @@
             "actionsBeforeApp": ["frontend-image.deploy"]
         },
         "artifactUpload":{
-            "actionsBeforeApp": ["frontend-image.uploadArtifacts"]
+            "actionsBeforeApp": ["frontend-image.uploadArtifacts", "image.uploadArtifacts"]
         }
     }
 }

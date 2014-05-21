@@ -1,16 +1,23 @@
 package model.commercial
 
-import common.AkkaAgent
-import scala.util.Random
+import common.{Logging, AkkaAgent}
 import scala.concurrent.duration._
+import scala.util.Random
 
-trait AdAgent[T <: Ad] extends BaseAdAgent[T] {
+trait AdAgent[T <: Ad] extends BaseAdAgent[T] with Logging {
 
   private lazy val agent = AkkaAgent[Seq[T]](Nil)
 
   def currentAds: Seq[T] = agent()
 
-  protected def updateCurrentAds(ads: Seq[T]) = agent.alter(_ => ads)(1.seconds)
+  protected def updateCurrentAds(freshAds: Seq[T]) = agent.send { oldAds =>
+    if (freshAds.nonEmpty) {
+      freshAds
+    } else {
+      log.warn("Cannot update current ads because feed is empty")
+      oldAds
+    }
+  }
 
   def stop() {
     agent.close()

@@ -3,16 +3,11 @@
 <main itemprop="mainContentOfPage" role="main">
     @Edition(request).zones.map{ zone =>
         <div class="monocolumn-wrapper">
-            @if(zone.name.title == "News") {
-                <h1 class="article__zone article__zone--bleed-out tone-news tone-border">All sections</h1>
-            }
-            @if(zone.name.title != "News") {
-                <h2 class="page-sub-header">
-                    <a href="@LinkTo(zone.name.href)" class="c-neutral1" data-link-name="zone:text">
-                        @HtmlFormat.raw(zone.name.title)
-                    </a>
-                </h2>
-            }
+            <h2 class="page-sub-header">
+                <a href="@LinkTo(zone.name.href)" class="c-neutral1" data-link-name="zone:text">
+                    @HtmlFormat.raw(zone.name.title)
+                </a>
+            </h2>
 
             <section class="component" data-link-name="@zone.name.title">
                 <ul class="nav nav--columns nav--no-horizontal-spacing u-cf">

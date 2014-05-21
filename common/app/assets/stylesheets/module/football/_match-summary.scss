@@ -11,6 +11,12 @@ $football-crest--large: 60px;
     color: $c-neutral1;
     display: block;
     position: relative;
+    .content__head & {
+        @include rem((
+            padding-top: $gs-baseline/2
+        ));
+
+    }
 }
 
 .match-summary__teams {

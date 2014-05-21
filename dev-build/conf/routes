@@ -223,12 +223,20 @@ GET        /$path<.+>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/newer           
 GET        /$path<.+>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/all                                                  controllers.AllIndexController.allOn(path, day, month, year)
 GET        /$path<.+>/all                                                                                            controllers.AllIndexController.all(path)
 
+
+# Applications
+GET         /sections                                                                                                controllers.SectionsController.renderSections()
+GET         /sections.json                                                                                           controllers.SectionsController.renderSectionsJson()
+
 # Facia
 GET         /                                                                                                        controllers.FaciaController.editionRedirect(path = "")
-GET         /$path<(culture|sport|commentisfree|business|money|rss)>                                                 controllers.FaciaController.editionRedirect(path)
+GET         /$path<(lifeandstyle/love-and-sex|lifeandstyle/home-and-garden|world/asia|business/companies)>           controllers.FaciaController.renderFrontPressSpecial(path)
+GET         /$path<(\w+|(uk|au|us))?(/(culture|sport|commentisfree|business|money|travel|rss))?>                            controllers.FaciaController.renderFrontPress(path)
 
-#Facia Press
-GET         /pressed/*path                                                                                           controllers.FaciaController.renderFrontPress(path)
+GET        /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>/trails.json                 controllers.IndexController.renderTrailsJson(path)
+GET        /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>/trails                      controllers.IndexController.renderTrails(path)
+GET        /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>.json                        controllers.IndexController.renderJson(path)
+GET        /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>                             controllers.IndexController.render(path)
 
 GET         /collection/*id/rss                                                                                      controllers.FaciaController.renderCollectionRss(id)
 GET         /collection/*id.json                                                                                     controllers.FaciaController.renderCollectionJson(id)
@@ -240,10 +248,6 @@ GET         /container/*id.json                                                 
 GET         /$path<[^/]+(/[^/]+)?>/rss                                                                               controllers.FaciaController.renderFrontRss(path)
 GET         /$path<[^/]+(/[^/]+)?>.json                                                                              controllers.FaciaController.renderFrontJson(path)
 GET         /$path<[^/]+(/[^/]+)?>                                                                                   controllers.FaciaController.renderFront(path)
-
-# Applications
-GET         /sections                                                                                                controllers.SectionsController.renderSections()
-GET         /sections.json                                                                                           controllers.SectionsController.renderSectionsJson()
 
 GET         /$path<[\w\d-]*(/[\w\d-]*)?/gallery/.*>/lightbox.json                                                    controllers.GalleryController.renderLightbox(path)
 GET         /$path<[\w\d-]*(/[\w\d-]*)?/gallery/.*>.json                                                             controllers.GalleryController.renderJson(path)

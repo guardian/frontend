@@ -1,4 +1,4 @@
-package com.gu.test.pages;
+package com.gu.test.helpers;
 
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -6,16 +6,12 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class Article {
+/**
+ * Created by TLau on 20/05/2014.
+ */
+public class WaitHelper {
 
-    private WebDriver driver;
-
-    public Article(WebDriver driver) {
-        this.driver = driver;
-    }
-
-
-    public void waitForArticleLoad(WebDriver driver) {
+    public static void waitForArticleLoad(WebDriver driver) {
         ExpectedCondition<Boolean> expectation = new ExpectedCondition<Boolean>() {
             public Boolean apply(WebDriver driver) {
                 return ((JavascriptExecutor) driver).executeScript("return document.readyState")
@@ -30,6 +26,4 @@ public class Article {
             throw new RuntimeException("Timeout waiting for Page Load Request to complete.");
         }
     }
-
-
 }

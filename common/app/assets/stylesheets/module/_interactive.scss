@@ -1,3 +1,21 @@
 .interactive {
     margin: 1em 0;
 }
+
+.content__main-column--interactive {
+    max-width: none;
+    padding-right: 0;
+    @include rem((
+        margin: 0 $gs-gutter/2
+    ));
+    @include mq(mobileLandscape) {
+        @include rem((
+            margin: 0 $gs-gutter
+        ));
+    }
+}
+
+.content--interactive .content__section {
+    float: none;
+    margin-left: 0;
+}

@@ -1,7 +1,7 @@
-@(gallery: Gallery, storyPackage: List[Trail], index: Int, trail: Boolean)(implicit request: RequestHeader)
+@(gallery: Gallery, storyPackage: List[Trail], index: Int)(implicit request: RequestHeader)
 
 @main(gallery){ }{
 
-    @fragments.galleryBody(gallery, storyPackage, index, trail)
+    @fragments.galleryBody(gallery, storyPackage, index)
 
 }

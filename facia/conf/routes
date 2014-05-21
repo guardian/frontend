@@ -21,10 +21,6 @@ GET        /collection/*id                                             controlle
 
 GET        /container/*id.json                                         controllers.FaciaController.renderContainerJson(id)
 
-# Tag combiners
-GET        /$leftSide<[^+]+>+*rightSide/rss                            controllers.IndexController.renderCombinerRss(leftSide, rightSide)
-GET        /$leftSide<[^+]+>+*rightSide                                controllers.IndexController.renderCombiner(leftSide, rightSide)
-
 # Editionalised pages
 GET        /*path/rss                                                  controllers.FaciaController.renderFrontRss(path)
 GET        /*path.json                                                 controllers.FaciaController.renderFrontJson(path)

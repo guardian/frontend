@@ -267,7 +267,7 @@
 
                         <div data-bind="
                             if: state.isOpenImage() || meta.imageSrc()">
-                            <input type="text" placeholder="Image URL, 5x3 aspect ratio, min width 620px" data-bind="
+                            <input type="text" placeholder="Image URL, eg. copied from Batch Uploader" data-bind="
                                 hasFocus: state.isOpenImage;
                                 event: {blur: save},
                                 value: provisionalImageSrc"/>

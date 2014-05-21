@@ -53,13 +53,13 @@ object GalleryController extends Controller with Logging with ExecutionContexts 
   }
 
   private def renderGallery(model: GalleryPage)(implicit request: RequestHeader) = {
-    val htmlResponse = () => views.html.gallery(model.gallery, model.storyPackage, model.index, model.trail)
-    val jsonResponse = () => views.html.fragments.galleryBody(model.gallery, model.storyPackage, model.index, model.trail)
+    val htmlResponse = () => views.html.gallery(model.gallery, model.storyPackage, model.index)
+    val jsonResponse = () => views.html.fragments.galleryBody(model.gallery, model.storyPackage, model.index)
     renderFormat(htmlResponse, jsonResponse, model.gallery, Switches.all)
   }
 
   private def renderLightboxGallery(model: GalleryPage)(implicit request: RequestHeader) = {
-    val response = () => views.html.fragments.lightboxGalleryBody(model.gallery, model.storyPackage, model.index, model.trail)
+    val response = () => views.html.fragments.lightboxGalleryBody(model.gallery, model.storyPackage, model.index)
     renderFormat(response, response, model.gallery, Switches.all)
   }
 }

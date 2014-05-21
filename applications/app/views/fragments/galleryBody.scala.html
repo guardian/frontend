@@ -1,93 +1,77 @@
-@(gallery: Gallery, storyPackage: List[Trail], index: Int, trail: Boolean)(implicit request: RequestHeader)
+@(gallery: Gallery, storyPackage: List[Trail], index: Int)(implicit request: RequestHeader)
 
-<div class="gs-container">
-    <h2 class="article__zone left-col-deport tone-@VisualTone(gallery) tone-accent-border hide-on-mobile-if-localnav">
-        <span class="left-col-deport__body" data-component="meta">
-            <a class="tone-colour" data-link-name="article section" href="/@gallery.section">@Html(gallery.sectionName.toLowerCase)</a>
-        </span>
-    </h2>
-    <div class="article-wrapper monocolumn-wrapper tone-@VisualTone(gallery)">
-        <article class="js-gallery article gallery-page" itemprop="mainContentOfPage"
-             itemscope itemtype="@gallery.schemaType" role="main">
-            <div class="article__inner article__inner--head">
-                <header class="article__head">
-                    @fragments.meta.metaInline(gallery)
-                    @fragments.headline(gallery.headline)
+<div class="content content--gallery tone-@gallery.visualTone">
 
-                    @if(gallery.isCommentable) {
-                        <div class="article__head__comment-count js-comment-count"></div>
+    @fragments.headDefault(gallery)
+
+    <div class="gs-container">
+        <div class="content__main-column content__main-column--gallery">
+
+            @fragments.contentMeta(gallery)
+
+            <!-- Lightbox JS Gallery -->
+            @fragments.galleryThumbs(gallery, showCta=true)
+
+            <!-- Non-JS Gallery / LightboxSwitch off mode -->
+            <div class="js-hidden">
+                <p class="gallery-nav">
+
+                    @if(index > 1) {
+                        <a class="gallery-prev control tone-colour" href="?index=@(index - 1)">Previous</a>
                     }
-                </header>
-            </div>
-            <div class="article__columning-wrapper">
-                <div class="article__main-column">
 
-                    @fragments.contentMeta(gallery)
+                    Image @index of @gallery.size
 
-                    <!-- Lightbox JS Gallery -->
-                    @fragments.galleryThumbs(gallery, showCta=true)
+                    @if(index < gallery.size) {
+                        <a class="gallery-next control tone-colour" href="?index=@(index + 1)">Next</a>
+                    } else {
+                        <a class="gallery-next control tone-colour" href="?index=1">Next</a>
+                    }
+                </p>
 
-                    <!-- Non-JS Gallery / LightboxSwitch off mode -->
-                    <div class="js-hidden">
-                        <p class="gallery-nav">
+                <div class="gallery-container">
+                    @gallery.largestCrops.zipWithRowInfo.map{ case(image, row) =>
+                        @if(row.rowNum == index) {
+                            <img class="maxed @if(image.width >= image.height){landscape} else {portrait}"
+                                src="@image.path"
+                                alt="@image.altText.getOrElse("")"
+                            />
 
-                            @if(index > 1) {
-                                <a class="gallery-prev control tone-colour" href="?index=@(index - 1)">Previous</a>
-                            }
-
-                            Image @index of @gallery.size
-
-                            @if(index < gallery.size) {
-                                <a class="gallery-next control tone-colour" href="?index=@(index + 1)">Next</a>
-                            } else {
-                                <a class="gallery-next control tone-colour" href="?index=1">Next</a>
-                            }
-                        </p>
-
-                        <div class="gallery-container">
-                            @gallery.largestCrops.zipWithRowInfo.map{ case(image, row) =>
-                                @if(row.rowNum == index) {
-                                    <img class="maxed @if(image.width >= image.height){landscape} else {portrait}"
-                                        src="@image.path"
-                                        alt="@image.altText.getOrElse("")"
-                                    />
-
-                                    <div class="gallery-caption">
-                                        <p class="caption">@Html(image.caption.getOrElse(""))</p>
-                                        <p class="caption-credit">@image.credit</p>
-                                    </div>
-                                }
-                            }
-                        </div>
-                    </div>
-                    <div class="article__container" data-component="body">
-                        @fragments.standfirst(gallery)
-
-                        <div class="article__keywords" data-link-name="gallery keywords">
-                            @fragments.keywordList(gallery.keywords)
-                        </div>
-                    </div>
-
-                    <div class="social-wrapper" data-component="share">
-                        @fragments.social(gallery)
-                    </div>
+                            <div class="gallery-caption">
+                                <p class="caption">@Html(image.caption.getOrElse(""))</p>
+                                <p class="caption-credit">@image.credit</p>
+                            </div>
+                        }
+                    }
                 </div>
             </div>
-        </article>
-    </div>
 
+            <div data-component="body">
+                @fragments.standfirst(gallery)
+
+                <div class="content__keywords" data-link-name="gallery keywords">
+                    @fragments.keywordList(gallery.keywords)
+                </div>
+            </div>
+
+            <div class="social-wrapper" data-component="share">
+                @fragments.social(gallery)
+            </div>
+        </div>
+    </div>
 </div>
+
 @fragments.storyPackagePlaceholder(storyPackage)
-@fragments.onwardPlaceholder(VisualTone(gallery))
+@fragments.onwardPlaceholder(gallery.visualTone)
 
 <div class="facia-container facia-container--layout-article">
-    @fragments.mostPopularPlaceholder(gallery.section, VisualTone(gallery))
+    @fragments.mostPopularPlaceholder(gallery.section, gallery.visualTone)
 </div>
 
 <div class="gallery-overlay-bg"></div>
 
 <div class="gs-container">
-    <div class="article-wrapper monocolumn-wrapper article__breadcrumb" itemscope itemtype="http://schema.org/Organization" data-link-name="gallery breadcrumbs">
+    <div class="article-wrapper monocolumn-wrapper content__breadcrumb" data-link-name="article breadcrumbs">
         @fragments.breadcrumb(gallery)
     </div>
 </div>
