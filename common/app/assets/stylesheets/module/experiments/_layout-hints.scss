@@ -150,12 +150,16 @@ figure {
         @include transition(padding-bottom 1s);
 
         @include mq($to: rightCol) {
-            padding-bottom: aspect-ratio-height(5, 3);
+            @include rem((
+                padding-bottom: aspect-ratio-height(5, 3)
+            ));
         }
 
         // Magic number for max height in 5:2 ratio before cropping kicks in.
         @include mq(1680px) {
-            padding-bottom: 672px;
+            @include rem((
+                padding-bottom: 672px
+            ));
         }
     }
 }
