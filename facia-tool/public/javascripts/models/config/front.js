@@ -70,7 +70,7 @@ define([
 
         this.placeholders.section = ko.computed(function() {
             var path = asPath(this.id()),
-                isEditionalised = vars.CONST.editions.some(function(edition) { return edition === path[0]; });
+                isEditionalised = [].concat(config.editions).some(function(edition) { return edition === path[0]; });
 
             return this.props.section() || this.capiProps.section() || (isEditionalised ? path.length === 1 ? undefined : path[1] : path[0]);
         }, this);

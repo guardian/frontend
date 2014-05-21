@@ -164,9 +164,10 @@
                 <!-- ko if: state.isOpenProps() -->
                     <div class="cnf-form">
                         <label>Section</label>
-                        <input type="text" data-bind="
-                            attr: {placeholder: placeholders.section},
-                            value: props.section"/>
+                        <select data-bind="
+                            optionsCaption: 'Choose...',
+                            options: $root.sections,
+                            value: props.section"></select>
 
                         <label>Name</label>
                         <input type="text" data-bind="
