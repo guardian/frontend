@@ -41,7 +41,7 @@
         &:before {
             @extend %i-quote-blue;
             @extend %svg-i-quote-blue;
-            content: "";
+            content: '';
             display: block;
         }
     }

@@ -42,7 +42,7 @@
         counter-reset: li;
     }
     > ol > li:before {
-        content: counter(li)".";
+        content: counter(li)'.';
         counter-increment: li;
         @include fs-header(1);
         margin-right: 4px;

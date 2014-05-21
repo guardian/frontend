@@ -1,16 +1,16 @@
-@charset "UTF-8";
+@charset 'UTF-8';
 
 /* ==========================================================================
    Common head
    ========================================================================== */
 
-@import "_head.common";
+@import '_head.common';
 
 
 /* ==========================================================================
    Identity core
    ========================================================================== */
 
-@import "base/_forms";
-@import "module/_identity";
-@import "module/_disc";
+@import 'base/_forms';
+@import 'module/_identity';
+@import 'module/_disc';

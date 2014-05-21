@@ -284,7 +284,7 @@
             @include rem((
                 left: -16px
             ));
-            content: counter(li)".";
+            content: counter(li)'.';
             counter-increment: li;
             @include fs-header(1);
             color: $c-neutral3;
@@ -803,7 +803,7 @@
 .after-article {
     position: relative;
     display: block;
-    content: " ";
+    content: ' ';
 
     //This is required for football components, please do not remove
     @include mq(rightCol) {
@@ -860,7 +860,7 @@
 .breadcrumb-keyword {
 
     &:after {
-        content: ">> ";
+        content: '» ';
         display: inline-block;
         margin-left: $gs-gutter/5;
     }

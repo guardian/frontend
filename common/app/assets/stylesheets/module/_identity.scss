@@ -76,7 +76,7 @@
 }
 
 .nav--registration .nav__item + .nav__item:before {
-    content: "\b7";
+    content: '\b7';
     margin-left: 4px;
     margin-right: 9px;
 }
@@ -166,7 +166,7 @@
     /* Indicator bar */
     &:after {
         bottom: 0;
-        content: "";
+        content: '';
         display: block;
         left: 0;
         position: absolute;

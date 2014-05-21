@@ -334,7 +334,7 @@ $block-padding-right: $gs-gutter;
     &:before {
         $size: 12px;
         display: inline-block;
-        content: "";
+        content: '';
         background-color: #ffffff;
         @include rem((
             width: $size,
@@ -997,7 +997,7 @@ $timeline-width: 14px;
         &:before {
             display: block;
             position: absolute;
-            content: " ";
+            content: ' ';
             @include rem((
                 top: -4px,
                 left: ($timeline-width/2)*-1,
