@@ -44,8 +44,16 @@ linters:
     enabled: true
     present: true
 
-  HexFormat:
-    enabled: false
+  HexLength:
+    enabled: true
+    style: long
+
+  HexNotation:
+    enabled: true
+    style: lowercase
+
+  HexValidation:
+    enabled: true
 
   IdWithExtraneousSelector:
     enabled: true
