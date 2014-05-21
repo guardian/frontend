@@ -855,13 +855,15 @@
 .breadcrumb-list__item {
     color: lighten($c-neutral2, 15%);
     @include fs-data(1);
+
 }
 
-.breadcrumb-keyword {
+.breadcrumb-list__item + .breadcrumb-list__item {
 
-    &:after {
-        content: '>> ';
-        display: inline-block;
-        margin-left: $gs-gutter/5;
-    }
+  .breadcrumb-keyword:before {
+    content: ' >>';
+    display: inline-block;
+    margin-left: $gs-gutter/5;
+  }
 }
+

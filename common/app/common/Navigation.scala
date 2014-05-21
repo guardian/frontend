@@ -1,6 +1,6 @@
 package common
 
-import model.{Section, Tag, MetaData}
+import model.{Content, Section, Tag, MetaData}
 
 case class SectionLink(zone: String, title: String, href: String,newWindow: Boolean = false) {
   def currentFor(page: MetaData): Boolean = page.url == href ||
@@ -169,6 +169,70 @@ trait Navigation  {
     SectionLink("football", "clubs", "/football/teams")
   )
 }
+
+/*
+  Option 1: Top Level Nav, Second Level Nav, PrimaryKeyword
+  Option 2: Top Level Nav, Primary Keyword, Second Primary Keyword
+  Option 3  Section, Primary KW, Second KW
+ */
+
+case class BreadcrumbItem(href: String, title: String)
+
+object Breadcrumbs {
+
+  def getBreadcrumbs(navigation: Seq[NavItem], page: Content): Seq[BreadcrumbItem] = {
+
+    val primaryKeyword = page.keywordTags.head
+    lazy val secondaryKeyword = page.keywordTags.tail.head
+
+    def getTopLevelNavigationItem: Option[NavItem] = {
+      val topLevelSelected = Navigation.topLevelItem(navigation, page)
+      navigation map {
+        navItem =>
+          if (topLevelSelected.exists(_ == navItem) && navItem.name.href != primaryKeyword.url)
+            return topLevelSelected
+      }
+      None
+    }
+
+
+    def getLocalNavigationItem: Option[SectionLink] = {
+      Navigation.localNav(navigation, page) map { sectionLinks =>
+          val sectionLink : Option[SectionLink] =  sectionLinks.find(_.currentFor(page))
+          sectionLinks map { link =>
+             if( sectionLink.exists( _ == link)  && link.href != primaryKeyword.url ) {
+                return Option(link)
+             }
+          }
+      }
+      None
+    }
+
+    (getTopLevelNavigationItem, getLocalNavigationItem) match {
+      case(Some(navItem), Some(sectionLink)) => Seq(
+        BreadcrumbItem(navItem.name.href, navItem.name.title),
+        BreadcrumbItem(sectionLink.href, sectionLink.title),
+        BreadcrumbItem(primaryKeyword.url, primaryKeyword.name.toLowerCase)
+      )
+      case(None, Some(sectionLink)) => Seq(
+        BreadcrumbItem("/%s".format(page.section), page.sectionName.toLowerCase),
+        BreadcrumbItem(sectionLink.href, sectionLink.title),
+        BreadcrumbItem(primaryKeyword.url, primaryKeyword.name.toLowerCase)
+      )
+      case(Some(navItem), None) => Seq(
+        BreadcrumbItem(navItem.name.href, navItem.name.title),
+        BreadcrumbItem("/%s".format(page.section), page.sectionName.toLowerCase),
+        BreadcrumbItem(primaryKeyword.url, primaryKeyword.name.toLowerCase)
+      )
+      case _ => Seq(
+        BreadcrumbItem("/%s".format(page.section), page.sectionName.toLowerCase),
+        BreadcrumbItem(primaryKeyword.url, primaryKeyword.name.toLowerCase),
+        BreadcrumbItem(secondaryKeyword.url, secondaryKeyword.name.toLowerCase)
+      )
+    }
+  }
+}
+
 
 // helper for the views
 object Navigation {
