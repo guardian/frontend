@@ -4,8 +4,6 @@ import com.gu.versioninfo.VersionInfo
 import sbt._
 import sbt.Keys._
 import play.Project._
-import sbtassembly.Plugin.AssemblyKeys._
-import sbtassembly.Plugin._
 import com.typesafe.sbt.SbtNativePackager._
 
 trait Prototypes {
@@ -84,39 +82,6 @@ trait Prototypes {
     (javaOptions in test) += "-DAPP_SECRET=secret"
   )
 
-  val frontendAssemblySettings = assemblySettings ++ Seq(
-    test in assembly := {},
-    jarName in assembly <<= (name) map { "frontend-%s.jar" format _ },
-    aggregate in assembly := false,
-    mainClass in assembly := Some("play.core.server.NettyServer"),
-
-    mergeStrategy in assembly <<= (mergeStrategy in assembly) { current =>
-      {
-        case s: String if s.startsWith("org/mozilla/javascript/") => MergeStrategy.first
-        case s: String if s.startsWith("org/jdom/") || s.startsWith("JDOM") => MergeStrategy.last
-        case s: String if s.startsWith("jargs/gnu/") => MergeStrategy.first
-        case s: String if s.startsWith("scala/concurrent/stm") => MergeStrategy.first
-        case s: String if s.endsWith("ServerWithStop.class") => MergeStrategy.first  // There is a scala trait and a Java interface
-
-        // Take ours, i.e. MergeStrategy.last...
-        case "logger.xml" => MergeStrategy.last
-        case "version.txt" => MergeStrategy.last
-
-        // Merge play.plugins because we need them all
-        case "play.plugins" => MergeStrategy.filterDistinctLines
-
-        // Try to be helpful...
-        case "overview.html" => MergeStrategy.discard
-        case "NOTICE" => MergeStrategy.discard
-        case "README" => MergeStrategy.discard
-        case "CHANGELOG" => MergeStrategy.discard
-        case meta if meta.startsWith("META-INF/") => MergeStrategy.discard
-
-        case other => current(other)
-      }
-    }
-  )
-
   def root() = Project("root", base = file("."))
 
   def application(applicationName: String) = {
@@ -126,7 +91,6 @@ trait Prototypes {
     .settings(frontendClientSideSettings:_*)
     .settings(frontendTestSettings:_*)
     .settings(VersionInfo.settings:_*)
-    .settings(frontendAssemblySettings:_*)
     .settings(
       libraryDependencies ++= Seq(
         "com.gu" %% "management-play" % "6.1",

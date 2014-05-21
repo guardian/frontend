@@ -1,18 +1,5 @@
 {
     "packages":{
-        "frontend-identity":{
-            "type":"autoscaling",
-            "apps":[ "frontend::identity" ],
-            "data":{
-                "secondsToWait":1200,
-                "port":18080,
-                "healthcheckGrace":20,
-                "bucket":"aws-frontend-artifacts",
-                "healthcheck_paths":[
-                    "/management/healthcheck"
-                ]
-            }
-        },
         "identity":{
             "type":"autoscaling",
             "apps":[ "frontend::identity" ],
@@ -40,10 +27,10 @@
             "depends" : ["staticFilesUpload", "artifactUpload", "deploy"]
         },
         "deploy":{
-            "actionsBeforeApp": ["frontend-identity.deploy"]
+            "actionsBeforeApp": ["identity.deploy"]
         },
         "artifactUpload":{
-            "actionsBeforeApp": ["frontend-identity.uploadArtifacts", "identity.uploadArtifacts"]
+            "actionsBeforeApp": ["identity.uploadArtifacts"]
         },
         "staticFilesUpload":{
             "actionsBeforeApp": ["frontend-static.uploadStaticFiles"]
