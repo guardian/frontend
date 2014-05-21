@@ -102,14 +102,12 @@ case class Discussion(
 object Discussion {
   lazy val empty = Discussion("", "", "", "", isClosedForComments = false, isClosedForRecommendation = false)
 
-  def apply(json: JsValue): Discussion = {
-    Discussion(
-      (json \ "key").as[String],
-      (json \ "title").as[String],
-      (json \ "apiUrl").as[String],
-      (json \ "webUrl").as[String],
-      (json \ "isClosedForComments").as[Option[Boolean]] getOrElse false,
-      (json \ "isClosedForRecommendation").as[Option[Boolean]] getOrElse false
-    )
-  }
+  def apply(json: JsValue): Discussion = Discussion(
+    (json \ "key").as[String],
+    (json \ "title").as[String],
+    (json \ "apiUrl").as[String],
+    (json \ "webUrl").as[String],
+    (json \ "isClosedForComments").as[Option[Boolean]] getOrElse false,
+    (json \ "isClosedForRecommendation").as[Option[Boolean]] getOrElse false
+  )
 }
