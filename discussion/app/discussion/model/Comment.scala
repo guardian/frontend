@@ -60,7 +60,7 @@ object Comment extends {
     DefaultComment(
       id = (json \ "id").as[Int],
       body = (json \ "body").as[String],
-      responses = getResponses(json, discussionOpt),
+      responses = getResponses(json, discussionOpt orElse {Option(Discussion(json \ "discussion"))}),
       profile = profileOpt getOrElse Profile(json),
       discussion = discussionOpt getOrElse {Discussion(json \ "discussion")},
       date = (json \ "isoDateTime").as[String].parseISODateTime,
@@ -102,12 +102,16 @@ case class Discussion(
 object Discussion {
   lazy val empty = Discussion("", "", "", "", isClosedForComments = false, isClosedForRecommendation = false)
 
-  def apply(json: JsValue): Discussion = Discussion(
-    (json \ "key").as[String],
-    (json \ "title").as[String],
-    (json \ "apiUrl").as[String],
-    (json \ "webUrl").as[String],
-    (json \ "isClosedForComments").as[Option[Boolean]] getOrElse false,
-    (json \ "isClosedForRecommendation").as[Option[Boolean]] getOrElse false
-  )
+  def apply(json: JsValue): Discussion = {
+    print("\n\nDiscussion.apply\n")
+    print(json)
+    Discussion(
+      (json \ "key").as[String],
+      (json \ "title").as[String],
+      (json \ "apiUrl").as[String],
+      (json \ "webUrl").as[String],
+      (json \ "isClosedForComments").as[Option[Boolean]] getOrElse false,
+      (json \ "isClosedForRecommendation").as[Option[Boolean]] getOrElse false
+    )
+  }
 }
