@@ -174,7 +174,7 @@ case class BreadcrumbItem(href: String, title: String)
 
 object Breadcrumbs {
 
-  def getBreadcrumbs(navigation: Seq[NavItem], page: Content): Seq[BreadcrumbItem] = {
+  def items(navigation: Seq[NavItem], page: Content): Seq[BreadcrumbItem] = {
 
     val primaryKeyword = page.keywordTags.head
     lazy val secondaryKeyword = page.keywordTags.tail.head
@@ -203,22 +203,22 @@ object Breadcrumbs {
       case (Some(navItem), Some(sectionLink)) => Seq(
         BreadcrumbItem(navItem.name.href, navItem.name.title),
         BreadcrumbItem(sectionLink.href, sectionLink.title),
-        BreadcrumbItem(primaryKeyword.url, primaryKeyword.name.toLowerCase)
+        BreadcrumbItem(primaryKeyword.url, primaryKeyword.name)
       )
       case (None, Some(sectionLink)) => Seq(
-        BreadcrumbItem("/%s".format(page.section), page.sectionName.toLowerCase),
+        BreadcrumbItem("/%s".format(page.section), page.sectionName),
         BreadcrumbItem(sectionLink.href, sectionLink.title),
-        BreadcrumbItem(primaryKeyword.url, primaryKeyword.name.toLowerCase)
+        BreadcrumbItem(primaryKeyword.url, primaryKeyword.name)
       )
       case (Some(navItem), None) => Seq(
         BreadcrumbItem(navItem.name.href, navItem.name.title),
-        BreadcrumbItem("/%s".format(page.section), page.sectionName.toLowerCase),
-        BreadcrumbItem(primaryKeyword.url, primaryKeyword.name.toLowerCase)
+        BreadcrumbItem("/%s".format(page.section), page.sectionName),
+        BreadcrumbItem(primaryKeyword.url, primaryKeyword.name)
       )
       case _ => Seq(
-        BreadcrumbItem("/%s".format(page.section), page.sectionName.toLowerCase),
-        BreadcrumbItem(primaryKeyword.url, primaryKeyword.name.toLowerCase),
-        BreadcrumbItem(secondaryKeyword.url, secondaryKeyword.name.toLowerCase)
+        BreadcrumbItem("/%s".format(page.section), page.sectionName),
+        BreadcrumbItem(primaryKeyword.url, primaryKeyword.name),
+        BreadcrumbItem(secondaryKeyword.url, secondaryKeyword.name)
       )
     }
   }

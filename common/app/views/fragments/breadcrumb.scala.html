@@ -2,11 +2,11 @@
 @import common.{Navigation, LinkTo, Edition, Breadcrumbs, BreadcrumbItem}
 
 <ul class="breadcrumb-list inline-list">
-    @defining(Breadcrumbs.getBreadcrumbs(Edition(request).navigation, content)) { breadcrumbs =>
+    @defining(Breadcrumbs.items(Edition(request).navigation, content)) { breadcrumbs =>
       @breadcrumbs.map { breadcrumb =>
           <li class="breadcrumb-list__item inline-list__item">
               <div class="breadcrumb-keyword" itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
-                  <a itemprop="url" href="@LinkTo{@breadcrumb.href}" data-link-name="@breadcrumb.href"><span itemprop="title">@Html(breadcrumb.title)</span></a>
+                  <a itemprop="url" href="@LinkTo{@breadcrumb.href}" data-link-name="@breadcrumb.href"><span itemprop="title">@Html(breadcrumb.title.toLowerCase)</span></a>
               </div>
           </li>
       }
