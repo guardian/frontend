@@ -1,18 +1,5 @@
 {
     "packages":{
-        "frontend-router":{
-            "type":"autoscaling",
-            "apps":[ "frontend::router" ],
-            "data":{
-                "secondsToWait":1200,
-                "port":18080,
-                "healthcheckGrace":20,
-                "bucket":"aws-frontend-artifacts",
-                "healthcheck_paths":[
-                    "/management/healthcheck"
-                ]
-            }
-        },
         "router":{
             "type":"autoscaling",
             "apps":[ "frontend::router" ],
@@ -33,10 +20,10 @@
             "depends" : ["artifactUpload", "deploy"]
         },
         "deploy":{
-            "actionsBeforeApp": ["frontend-router.deploy"]
+            "actionsBeforeApp": ["router.deploy"]
         },
         "artifactUpload":{
-            "actionsBeforeApp": [ "router.uploadArtifacts"]
+            "actionsBeforeApp": ["router.uploadArtifacts"]
         }
     }
 }

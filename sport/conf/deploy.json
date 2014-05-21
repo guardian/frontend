@@ -1,18 +1,5 @@
 {
     "packages":{
-        "frontend-sport":{
-            "type":"autoscaling",
-            "apps":[ "frontend::sport" ],
-            "data":{
-                "secondsToWait":1200,
-                "port":18080,
-                "healthcheckGrace":20,
-                "bucket":"aws-frontend-artifacts",
-                "healthcheck_paths":[
-                    "/management/healthcheck"
-                ]
-            }
-        },
         "sport":{
             "type":"autoscaling",
             "apps":[ "frontend::sport" ],
@@ -40,10 +27,10 @@
             "depends" : ["staticFilesUpload", "artifactUpload", "deploy"]
         },
         "deploy":{
-            "actionsBeforeApp": ["frontend-sport.deploy"]
+            "actionsBeforeApp": ["sport.deploy"]
         },
         "artifactUpload":{
-            "actionsBeforeApp": [ "sport.uploadArtifacts"]
+            "actionsBeforeApp": ["sport.uploadArtifacts"]
         },
         "staticFilesUpload":{
             "actionsBeforeApp": ["frontend-static.uploadStaticFiles"]

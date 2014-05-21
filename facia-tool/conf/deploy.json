@@ -1,18 +1,5 @@
 {
     "packages":{
-        "frontend-facia-tool":{
-            "type":"autoscaling",
-            "apps":[ "frontend::facia-tool" ],
-            "data":{
-                "secondsToWait":1200,
-                "port":18080,
-                "healthcheckGrace":20,
-                "bucket":"aws-frontend-artifacts",
-                "healthcheck_paths":[
-                    "/management/healthcheck"
-                ]
-            }
-        },
         "facia-tool":{
             "type":"autoscaling",
             "apps":[ "frontend::facia-tool" ],
@@ -32,7 +19,7 @@
             "depends" : ["artifactUpload", "deploy"]
         },
         "deploy":{
-            "actionsBeforeApp": ["frontend-facia-tool.deploy"]
+            "actionsBeforeApp": ["facia-tool.deploy"]
         },
         "artifactUpload":{
             "actionsBeforeApp": ["facia-tool.uploadArtifacts"]

@@ -1,18 +1,5 @@
 {
     "packages":{
-        "frontend-article":{
-            "type":"autoscaling",
-            "apps":[ "frontend::article" ],
-            "data":{
-                "secondsToWait":1200,
-                "port":18080,
-                "healthcheckGrace":20,
-                "bucket":"aws-frontend-artifacts",
-                "healthcheck_paths":[
-                    "/management/healthcheck"
-                ]
-            }
-        },
         "article":{
             "type":"autoscaling",
             "apps":[ "frontend::article" ],
@@ -48,7 +35,7 @@
             "depends" : ["abTestsFileUpload", "staticFilesUpload", "artifactUpload", "deploy"]
         },
         "deploy":{
-            "actionsBeforeApp": ["frontend-article.deploy"]
+            "actionsBeforeApp": ["article.deploy"]
         },
         "artifactUpload":{
             "actionsBeforeApp": ["article.uploadArtifacts"]

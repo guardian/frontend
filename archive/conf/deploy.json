@@ -1,18 +1,5 @@
 {
     "packages":{
-        "frontend-archive":{
-            "type":"autoscaling",
-            "apps":[ "frontend::archive" ],
-            "data":{
-                "secondsToWait":1200,
-                "port":18080,
-                "healthcheckGrace":20,
-                "bucket":"aws-frontend-artifacts",
-                "healthcheck_paths":[
-                    "/management/healthcheck"
-                ]
-            }
-        },
         "archive":{
             "type":"autoscaling",
             "apps":[ "frontend::archive" ],
@@ -40,7 +27,7 @@
             "depends" : ["staticFilesUpload", "artifactUpload", "deploy"]
         },
         "deploy":{
-            "actionsBeforeApp": ["frontend-archive.deploy"]
+            "actionsBeforeApp": ["archive.deploy"]
         },
         "artifactUpload":{
             "actionsBeforeApp": [ "archive.uploadArtifacts"]

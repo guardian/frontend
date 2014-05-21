@@ -1,18 +1,5 @@
 {
     "packages":{
-        "frontend-image":{
-            "type":"autoscaling",
-            "apps":[ "frontend::image" ],
-            "data":{
-                "secondsToWait":1200,
-                "port":18080,
-                "healthcheckGrace":20,
-                "bucket":"aws-frontend-artifacts",
-                "healthcheck_paths":[
-                    "/management/healthcheck"
-                ]
-            }
-        },
         "image":{
             "type":"autoscaling",
             "apps":[ "frontend::image" ],
@@ -33,7 +20,7 @@
             "depends" : ["artifactUpload", "deploy"]
         },
         "deploy":{
-            "actionsBeforeApp": ["frontend-image.deploy"]
+            "actionsBeforeApp": ["image.deploy"]
         },
         "artifactUpload":{
             "actionsBeforeApp": ["image.uploadArtifacts"]
