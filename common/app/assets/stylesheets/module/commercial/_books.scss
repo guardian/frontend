@@ -83,6 +83,9 @@ $c-commercial-books-dark: #630D4C;
         color: $c-neutral1;
         @include fs-textsans(1);
     }
+    .highitem .commercial--books__buy-now-button {
+        margin-right: -10px;
+    }
     .commercial--books__price {
         @include rem((
             margin-top: $gs-baseline/2
@@ -104,13 +107,11 @@ $c-commercial-books-dark: #630D4C;
         border: 0;
         color: #ffffff;
         text-align: center;
-        position: absolute;
-        right: 0;
+        float: right;
         @include f-header;
         @include font-size(12, 20);
         @include rem((
-            top: $comercial-comp-baseline,
-            padding: 0 $gs-gutter/2,
+             padding: 0 $gs-gutter/2,
             min-width: gs-span(1)
         ));
     }
@@ -155,9 +156,7 @@ $c-commercial-books-dark: #630D4C;
             display: inline;
         }
         .commercial--books__buy-now-button {
-            position: static;
-            right: auto;
-            top: auto;
+            float: none;
             @include rem((
                 margin-top: $comercial-comp-baseline
             ));
@@ -180,6 +179,9 @@ $c-commercial-books-dark: #630D4C;
         }
     }
     &.commercial--low {
+        .lineitem__link {
+            float: none;
+        }
         .lineitem:first-child .lineitem__img {
             display: block;
         }
@@ -367,6 +369,9 @@ $c-commercial-books-dark: #630D4C;
             }
             .commercial__foot {
                 display: none;
+            }
+            .commercial__home-link {
+                position: absolute;
             }
         }
         @include mq(faciaLeftCol) {
