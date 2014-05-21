@@ -1,7 +1,6 @@
 package conf
 
 import com.gu.conf.ConfigurationFactory
-import org.apache.commons.configuration.MapConfiguration
 import scala.slick.session.Database
 
 object AdminConfiguration {
