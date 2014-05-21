@@ -32,7 +32,7 @@ class ContentTest extends FlatSpec with Matchers with implicits.Dates {
         Nil)
     )
 
-    val content = ApiContent("foo/2012/jan/07/bar", None, None, new DateTime, "Some article",
+    val content = ApiContent("foo/2012/jan/07/bar", None, None, Some(new DateTime), "Some article",
       "http://www.guardian.co.uk/foo/2012/jan/07/bar",
       "http://content.guardianapis.com/foo/2012/jan/07/bar",
       //mediaAssets = media,
@@ -122,13 +122,13 @@ class ContentTest extends FlatSpec with Matchers with implicits.Dates {
 
   private def content(contentType:String, elements:List[ApiElement]): Content = {
     Content(
-      ApiContent("/content", None, None, DateTime.now, "webTitle", "webUrl", "apiUrl", None,
-                 List(tag(s"type/${contentType}")), Nil,Nil, Some(elements), None, Nil, None)
+      ApiContent("/content", None, None, Some(DateTime.now), "webTitle", "webUrl", "apiUrl", None,
+                 List(tag(s"type/${contentType}")), Nil,Nil, Some(elements), Nil, None)
     )
   }
 
-  private val article: ApiContent = ApiContent("/content", None, None, DateTime.now, "webTitle", "webUrl", "apiUrl", None,
-    List(tag("type/article")), Nil,Nil, None, None, Nil, None)
+  private val article: ApiContent = ApiContent("/content", None, None, Some(DateTime.now), "webTitle", "webUrl", "apiUrl", None,
+    List(tag("type/article")), Nil,Nil, None, Nil, None)
 
   private def image(  id: String,
                       relation: String,
