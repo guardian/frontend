@@ -29,10 +29,10 @@ function(
     };
     ProfileDiscussions.prototype.recommendComment = function(e) {
         var el = e.currentTarget;
-        discussionApi.recommendComment(e.currentTarget.getAttribute('data-comment-id'));
+        discussionApi.recommendComment(el.getAttribute('data-comment-id'));
         bonzo(el).addClass('disc-comment__recommend--active');
-        $('.js-disc-recommend-count', el).each(function(el) {
-            el.innerHTML = parseInt(el.innerHTML, 10)+1;
+        $('.js-disc-recommend-count', el).each(function(countEl) {
+            countEl.innerHTML = parseInt(countEl.innerHTML, 10)+1;
         });
     };
 
