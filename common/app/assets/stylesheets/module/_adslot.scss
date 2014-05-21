@@ -2,7 +2,7 @@
     text-align: center;
     z-index: 1000;
 
-    .no-js & {
+    .js-off & {
         display: none;
     }
 }
@@ -36,7 +36,6 @@
     height: 50 + $mpu-ad-label-height;
     @include rem((
         margin: $gs-baseline 0 $gs-baseline/2,
-        padding: 0 $gs-gutter/2 0
     ));
 
     @include mq(mobileLandscape) {
@@ -47,7 +46,6 @@
         top: 1px;
         right: 0;
         height: 250 + $mpu-ad-label-height;
-        padding: 0;
         margin: 0;
         background-color: $c-neutral8;
     }
