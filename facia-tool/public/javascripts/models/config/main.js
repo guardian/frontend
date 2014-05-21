@@ -44,9 +44,7 @@ define([
 
         model.pending = ko.observable();
 
-        model.types =  [''].concat(vars.CONST.types);
-
-        model.groups = [''].concat(vars.CONST.groups);
+        model.types =  _.pluck(vars.CONST.types, 'name');
 
         model.clipboard = new Group({
             parentType: 'Clipboard',
@@ -157,7 +155,7 @@ define([
                            _.reduce(collection.meta, function(acc, val, key) {
                                 var v = _.isFunction(val) ? val() : val;
                                 if(v) {
-                                    acc[key] = (key === 'groups' ? v.split(',') : v);
+                                    acc[key] = v;
                                 }
                                 return acc;
                             }, {});
