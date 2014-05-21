@@ -140,7 +140,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
     scenario("Poster image on embedded video", ArticleComponents) {
       HtmlUnit("/world/2013/sep/25/kenya-mall-attack-bodies") { browser =>
         import browser._
-        findFirst("video").getAttribute("poster") should endWith ("Westgate-shopping-centre--015.jpg?width=620&height=-&quality=95")
+        findFirst("video").getAttribute("poster") should endWith ("Westgate-shopping-centre--016.jpg?width=640&height=-&quality=95")
       }
     }
 
@@ -151,7 +151,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         import browser._
 
         Then("I should see the publication date of the article")
-        findFirst(".article__dateline").getText should be("Monday 6 August 2012 20.30 BST")
+        findFirst(".content__dateline").getText should be("Monday 6 August 2012 20.30 BST")
         findFirst("time").getAttribute("datetime") should be("2012-08-06T20:30:00+0100")
       }
     }
@@ -163,7 +163,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
       HtmlUnit("/world/2012/nov/08/syria-arms-embargo-rebel") { browser =>
         import browser._
         Then("the date should be 'Thursday 8 November 2012 00.01 GMT'")
-        findFirst(".article__dateline time").getText should be("Thursday 8 November 2012 00.01 GMT")
+        findFirst(".content__dateline time").getText should be("Thursday 8 November 2012 00.01 GMT")
       }
 
       Given("I am on an article published on '2012-11-10'")
@@ -171,7 +171,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
       HtmlUnit.US("/world/2012/nov/08/syria-arms-embargo-rebel") { browser =>
         import browser._
         Then("the date should be 'Wednesday 7 November 2012 19.01 GMT'")
-        findFirst(".article__dateline time").getText should be("Wednesday 7 November 2012 19.01 EST")
+        findFirst(".content__dateline time").getText should be("Wednesday 7 November 2012 19.01 EST")
       }
 
       Given("I am on an article published on '2012-08-19'")
@@ -179,7 +179,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
       HtmlUnit("/business/2012/aug/19/shell-spending-security-nigeria-leak") { browser =>
         import browser._
         Then("the date should be 'Sunday 19 August 2012 18.38 BST'")
-        findFirst(".article__dateline time").getText should be("Sunday 19 August 2012 18.38 BST")
+        findFirst(".content__dateline time").getText should be("Sunday 19 August 2012 18.38 BST")
       }
 
       Given("I am on an article published on '2012-08-19'")
@@ -187,7 +187,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
       HtmlUnit.US("/business/2012/aug/19/shell-spending-security-nigeria-leak") { browser =>
         import browser._
         Then("the date should be 'Sunday 19 August 2012 13.38 BST'")
-        findFirst(".article__dateline time").getText should be("Sunday 19 August 2012 13.38 EDT")
+        findFirst(".content__dateline time").getText should be("Sunday 19 August 2012 13.38 EDT")
       }
 
     }
@@ -389,7 +389,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         Then("the main picture should be hidden")
         $("[itemprop='associatedMedia primaryImageOfPage']") should have size 0
 
-        findFirst("video").getAttribute("poster") should endWith("/2013/3/26/1364309868130/Jeremy-Hunt-announcing-ch-015.jpg?width=620&height=-&quality=95")
+        findFirst("video").getAttribute("poster") should endWith("/2013/3/26/1364309869688/Jeremy-Hunt-announcing-ch-016.jpg?width=640&height=-&quality=95")
       }
     }
 
@@ -524,7 +524,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         import browser._
 
         Then("I should see links to keywords")
-        $(".article__keywords a").size should be (18)
+        $(".content__keywords a").size should be (18)
       }
     }
 
@@ -535,7 +535,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         import browser._
 
         Then("I should not see a keywords list")
-        $(".article__keywords *").size should be (0)
+        $(".content__keywords *").size should be (0)
       }
     }
 
@@ -575,7 +575,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         import browser._
 
         Then("I should see the comment tonal treatmemt")
-        $(".article-wrapper").getAttribute("class") should include ("tone-comment")
+        $(".content").getAttribute("class") should include ("tone-comment")
       }
     }
 

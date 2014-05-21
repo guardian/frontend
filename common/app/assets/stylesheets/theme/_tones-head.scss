@@ -1,4 +1,4 @@
-@import "_tones";
+@import '_tones';
 
 @include tone-head(news, $c-newsDefault, $c-newsAccent);
 @include tone-head(comment, $c-commentDefault, $c-commentAccent);
@@ -7,16 +7,21 @@
 @include tone-head(media, $c-mediaDefault, $c-mediaDefault);
 
 // Tonal article styles
-@include article-header-tone(feature, $c-featureDefault, $c-featureAccent2, #fff, "white");
-@include article-header-tone(live, $c-liveDefault, $c-liveAccent, #fff, "white");
+@include article-header-tone(feature, $c-featureDefault, $c-featureAccent2, #ffffff, 'white');
+@include article-header-tone(live, $c-liveDefault, $c-liveAccent, #ffffff, 'white');
 
 
 .content__head--tonal {
+    background-color: #ffffff;
     .tone-background {
-        padding-top: $gs-baseline/2;
+        @include rem((
+            padding-top: $gs-baseline/2
+        ));
     }
     .tone-background--accent {
-        padding: $gs-baseline/2 0 $gs-baseline;
+        @include rem((
+            padding: $gs-baseline/2 0 $gs-baseline
+        ));
     }
     .content__headline {
         font-weight: 200;
@@ -28,6 +33,15 @@
         @include rem((
             min-height: 60px
         ));
+    }
+    .content-meta {
+        @include rem((
+            padding-top: $gs-baseline/4
+        ));
+    }
+    .content__section,
+    .content-meta {
+        border-top: 0 !important;
     }
 }
 
@@ -43,13 +57,15 @@
 .tone-feature--article {
     @include mq($from: tablet) {
         .content__main-column--article {
-            margin-top: $gs-baseline*2;
+            @include rem((
+                margin-top: $gs-baseline*2
+            ));
         }
     }
 }
 
 .tone-comment--article {
     .tone-background {
-        background: #fff;
+        background: #ffffff;
     }
 }

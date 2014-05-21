@@ -1,7 +1,8 @@
 @(interactive: Interactive)(implicit request: RequestHeader)
 @import conf.Switches.DiscussionSwitch
 
-<div class="content content--interactive tone-@interactive.visualTone">
+<article class="content content--interactive tone-@interactive.visualTone"
+    itemprop="mainContentOfPage" itemscope itemtype="@interactive.schemaType" role="main">
 
     @fragments.headDefault(interactive)
 
@@ -14,4 +15,4 @@
             }
         </div>
     </div>
-</div>
+</article>

@@ -3,7 +3,7 @@
 
 @defining((page.image, page.storyPackage)) { case (image, storyPackage) =>
 
-<div class="content content--image tone-@image.visualTone">
+<article class="content content--image tone-@image.visualTone" itemprop="mainContentOfPage" itemscope itemtype="@image.schemaType" role="main">
 
     @fragments.headDefault(image)
 
@@ -31,7 +31,7 @@
         </div>
 
     </div>
-</div>
+</article>
 
 @if(DiscussionSwitch.isSwitchedOn && image.isCommentable) {
     <div class="gs-container js-comments">

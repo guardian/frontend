@@ -46,7 +46,7 @@ $block-padding-right: $gs-gutter;
 .blog__meta-container {
     position: relative;
     color: #ffffff;
-    border-top: 1px dotted #E6A1AB;
+    border-top: 1px dotted #e6a1ab;
     @include rem((
         padding-bottom: $gs-baseline
     ));
@@ -120,7 +120,7 @@ $block-padding-right: $gs-gutter;
     &:before {
         $size: 12px;
         display: inline-block;
-        content: "";
+        content: '';
         background-color: #ffffff;
         @include rem((
             width: $size,
@@ -715,7 +715,7 @@ $timeline-width: 14px;
         &:before {
             display: block;
             position: absolute;
-            content: " ";
+            content: ' ';
             @include rem((
                 top: -4px,
                 left: ($timeline-width/2)*-1,
@@ -932,17 +932,25 @@ $timeline-width: 14px;
         }
     }
 
+    &.tone-live .content__head--tonal .content__section {
+
+        @include mq($from: rightCol) {
+            border-top: 0 !important;
+            float: left;
+        }
+
+        .tone-colour {
+            // overriding tonal head style here as liveblog section breaks differently
+            @include mq($from: rightCol) {
+                color: #ffffff;
+            }
+        }
+    }
+
     .content__head__lower {
         padding-top: $gs-baseline/4;
         padding-bottom: 0;
         min-height: 54px;
-    }
-
-    .content__section {
-        @include mq(rightCol) {
-            margin-left: -($a-rightCol-width + $gs-gutter);
-            float: left;
-        }
     }
 
     .content__secondary-column {
@@ -977,11 +985,11 @@ $timeline-width: 14px;
 
 .content__main-column--liveblog .content__standfirst {
     @include rem((
-        margin-top: $gs-baseline
+        padding-top: $gs-baseline
     ));
     @include mq(rightCol) {
         @include rem((
-            margin-top: $gs-baseline*2
+            padding-top: $gs-baseline*2
         ));
     }
 

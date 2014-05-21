@@ -170,7 +170,6 @@ trait Navigation  {
   )
 }
 
-
 case class BreadcrumbItem(href: String, title: String)
 
 object Breadcrumbs {
@@ -182,44 +181,44 @@ object Breadcrumbs {
 
     def getTopLevelNavigationItem: Option[NavItem] = {
       val topLevelSelected = Navigation.topLevelItem(navigation, page)
-      navigation find  {
+      navigation find {
         navItem =>
           topLevelSelected.exists(_ == navItem) && navItem.name.href != primaryKeyword.url
       }
-   }
+    }
 
 
     def getLocalNavigationItem: Option[SectionLink] = {
       Navigation.localNav(navigation, page) match {
         case Some(sectionLinks) => {
-            sectionLinks.find( _.currentFor(page) ) find {
-               link => sectionLinks.exists( _ == link) && link.href != primaryKeyword.url
-            }
+          sectionLinks.find(_.currentFor(page)) find {
+            link => sectionLinks.exists(_ == link) && link.href != primaryKeyword.url
+          }
         }
         case _ => None
       }
     }
 
     (getTopLevelNavigationItem, getLocalNavigationItem) match {
-      case(Some(navItem), Some(sectionLink)) => Seq(
-          BreadcrumbItem(navItem.name.href, navItem.name.title),
-          BreadcrumbItem(sectionLink.href, sectionLink.title),
-          BreadcrumbItem(primaryKeyword.url, primaryKeyword.name.toLowerCase)
+      case (Some(navItem), Some(sectionLink)) => Seq(
+        BreadcrumbItem(navItem.name.href, navItem.name.title),
+        BreadcrumbItem(sectionLink.href, sectionLink.title),
+        BreadcrumbItem(primaryKeyword.url, primaryKeyword.name.toLowerCase)
       )
-      case(None, Some(sectionLink)) => Seq(
-          BreadcrumbItem("/%s".format(page.section), page.sectionName.toLowerCase),
-          BreadcrumbItem(sectionLink.href, sectionLink.title),
-          BreadcrumbItem(primaryKeyword.url, primaryKeyword.name.toLowerCase)
+      case (None, Some(sectionLink)) => Seq(
+        BreadcrumbItem("/%s".format(page.section), page.sectionName.toLowerCase),
+        BreadcrumbItem(sectionLink.href, sectionLink.title),
+        BreadcrumbItem(primaryKeyword.url, primaryKeyword.name.toLowerCase)
       )
-      case(Some(navItem), None) => Seq(
+      case (Some(navItem), None) => Seq(
         BreadcrumbItem(navItem.name.href, navItem.name.title),
         BreadcrumbItem("/%s".format(page.section), page.sectionName.toLowerCase),
         BreadcrumbItem(primaryKeyword.url, primaryKeyword.name.toLowerCase)
       )
       case _ => Seq(
-          BreadcrumbItem("/%s".format(page.section), page.sectionName.toLowerCase),
-          BreadcrumbItem(primaryKeyword.url, primaryKeyword.name.toLowerCase),
-          BreadcrumbItem(secondaryKeyword.url, secondaryKeyword.name.toLowerCase)
+        BreadcrumbItem("/%s".format(page.section), page.sectionName.toLowerCase),
+        BreadcrumbItem(primaryKeyword.url, primaryKeyword.name.toLowerCase),
+        BreadcrumbItem(secondaryKeyword.url, secondaryKeyword.name.toLowerCase)
       )
     }
   }

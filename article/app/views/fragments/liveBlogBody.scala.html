@@ -2,20 +2,25 @@
 @import conf.Switches._
 
 @defining((model.article, model.storyPackage, !model.article.isSport)) {  case (article, storyPackage, isDefault) =>
-<article class="content content--liveblog tone-@article.visualTone blog @if(article.isLive){is-live}" itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType" role="main">
+<article class="content content--liveblog tone-@article.visualTone blog @if(article.isLive){is-live}"
+    itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType" role="main">
 
     <header class="content__head content__head--tonal">
+
+        <div class="gs-container">
+            <div class="content__main-column content__main-column--wide">
+                <div class="content__section">
+                    <a class="tone-colour" data-link-name="article section" href="@LinkTo{/@article.section}">@Html(article.sectionName.toLowerCase)</a>
+                </div>
+            </div>
+        </div>
+
         @* UPPER HEADER *@
         <div class="tone-background">
             <div class="gs-container">
                 <div class="content__main-column content__main-column--liveblog">
-                    <div class="content__section">
-                        <a class="tone-colour" data-link-name="article section" href="@LinkTo{/@article.section}">@Html(article.sectionName.toLowerCase)</a>
-                    </div>
 
-                    @article.series.headOption.map { series =>
-                        @fragments.meta.series(series.id, series.name, List("inline", "live"))
-                    }
+                    @fragments.meta.metaInline(article)
 
                     <h1 itemprop="headline" class="content__headline js-score">@Html(article.headline)</h1>
                 </div>
@@ -52,9 +57,9 @@
                 @if(article.hasKeyEvents) {
                     <div class="blog__timeline blog__dropdown js-live-blog__key-events">
                         <div class="blog__timeline-container js-live-blog__timeline-container" data-component="timeline">
-                        @fragments.dropdown("Key events", "key-events", true) {
-                            <ul class="timeline js-live-blog__timeline u-unstyled"></ul>
-                        }
+                            @fragments.dropdown("Key events", "key-events", true) {
+                                <ul class="timeline js-live-blog__timeline u-unstyled"></ul>
+                            }
                         </div>
                     </div>
                 }
@@ -66,17 +71,17 @@
                     @fragments.liveFilter(article.isLive)
 
                     <div class="article-body u-cf from-content-api js-blog-blocks @if(article.isLive) {live-blog}"
-                    itemprop="@if(article.isReview) {reviewBody} else {articleBody}">
-                    @BodyCleaner(article, article.body)
+                        itemprop="@if(article.isReview) {reviewBody} else {articleBody}">
+                        @BodyCleaner(article, article.body)
                     </div>
 
                     <div class="content__keywords" data-link-name="live blog keywords">
-                    @fragments.keywordList(article.keywords)
+                        @fragments.keywordList(article.keywords)
                     </div>
                 </div>
 
                 <div class="social-wrapper" data-component="share">
-                @fragments.social(article)
+                    @fragments.social(article)
                 </div>
                 <div class="js-bottom-marker"></div>
             }
@@ -88,9 +93,9 @@
                 <aside role="complementary" class="blog__related">
                     <h3 class="blog__related__head">More on this story</h3>
                     <ul class="u-unstyled">
-                    @storyPackage.take(4).zipWithIndex.map { case (item, index) =>
-                        @fragments.collections.items.standard(item, index, 1, "blog__related__item")(request, Config.emptyConfig)
-                    }
+                        @storyPackage.take(4).zipWithIndex.map { case (item, index) =>
+                            @fragments.collections.items.standard(item, index, 1, "blog__related__item")(request, Config.emptyConfig)
+                        }
                     </ul>
                 </aside>
             }

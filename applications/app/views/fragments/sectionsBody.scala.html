@@ -4,9 +4,13 @@
     @Edition(request).zones.map{ zone =>
         <div class="monocolumn-wrapper">
             <h2 class="page-sub-header">
-                <a href="@LinkTo(zone.name.href)" class="c-neutral1" data-link-name="zone:text">
-                    @HtmlFormat.raw(zone.name.title)
-                </a>
+                @if(zone.name.title == "news") {
+                    all sections
+                } else {
+                    <a href="@LinkTo(zone.name.href)" class="c-neutral1" data-link-name="zone:text">
+                        @HtmlFormat.raw(zone.name.title)
+                    </a>
+                }
             </h2>
 
             <section class="component" data-link-name="@zone.name.title">
