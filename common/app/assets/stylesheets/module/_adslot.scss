@@ -18,18 +18,7 @@
     @include mq(desktopAd) {
         min-height: 96px;
     }
-
-//    @include transition(height 2s);
-
-    iframe {
-        @include transition(height 2s);
-    }
 }
-
-//.ad-slot__container {
-//    height: 250px;
-//    @include transition(height 2s);
-//}
 .top-banner-ad-container {
     margin: 0 auto;
 
@@ -40,13 +29,14 @@
     }
 }
 .ad-slot--top-banner-ad {
-    min-height: 0;
+    min-height: 50px;
     background-color: #f0f0f0;
     @include rem((
         padding: $gs-baseline 0
     ));
 
     @include mq(tablet) {
+        min-height: 90px;
         background-color: transparent;
     }
     @include mq(faciaLeftCol) {

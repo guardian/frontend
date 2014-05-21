@@ -37,6 +37,13 @@
     .tweet { background-image: url(@Static("images/twitter/bird.png")); }
     .svg .tweet { background-image: url(@Static("images/twitter/bird.svg")); }
     .stars, .stars:after { background-image: url(@Static("images/star-sprite.png")); }
+    @if(AdTransitionSwitch.isSWitchedOn) {
+        .ad-slot--dfp iframe {
+            -webkit-transition: height 2s;
+            -moz-transition: height 2s;
+            transition: height 2s;
+        }
+    }
 </style>
 
 @*
