@@ -68,7 +68,19 @@ $disc-respond-when: rightCol;
         vertical-align: middle;
     }
 }
-
+.disc-comment__recommend--open {
+    .disc-comment__recommend-button {
+        background-color: $c-newsDefault;
+    }
+}
+.disc-comment__recommend--active {
+    .disc-comment__recommend-count {
+        color: $c-commentDefault;
+    }
+    .disc-comment__recommend-button {
+        background-color: $c-commentDefault;
+    }
+}
 
 .disc-comment__body {
     @include rem((

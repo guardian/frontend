@@ -1,13 +1,17 @@
 define([
     'common/$',
+    'bonzo',
     'common/utils/config',
     'common/modules/component',
+    'common/modules/discussion/api',
     'lodash/objects/mapValues'
 ],
 function(
     $,
+    bonzo,
     config,
     component,
+    discussionApi,
     mapValues
 ) {
     function ProfileDiscussions(opts) {
@@ -18,6 +22,18 @@ function(
     ProfileDiscussions.prototype.defaultOptions = {
         userId: null,
         streamType: 'discussions'
+    };
+    ProfileDiscussions.prototype.ready = function() {
+        this.on('click', '.js-disc-recommend-comment', this.recommendComment);
+        $('.js-disc-recommend-comment').addClass('disc-comment__recommend--open');
+    };
+    ProfileDiscussions.prototype.recommendComment = function(e) {
+        var el = e.currentTarget;
+        discussionApi.recommendComment(e.currentTarget.getAttribute('data-comment-id'));
+        bonzo(el).addClass('disc-comment__recommend--active');
+        $('.js-disc-recommend-count', el).each(function(el) {
+            el.innerHTML = parseInt(el.innerHTML, 10)+1;
+        });
     };
 
     function getProfileDiscussions() {

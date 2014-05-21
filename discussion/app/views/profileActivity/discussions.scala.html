@@ -21,11 +21,13 @@
                                         @comment.date.toString("d MMM y HH:mm")
                                     </time>
 
-                                    <button class="disc-comment__recommend u-button-reset">
-                                        <div class="disc-comment__recommend-count">
+                                    <button
+                                        class="disc-comment__recommend u-button-reset @if(discussion.isClosedForRecommendation){js-disc-recommend-comment}"
+                                        data-comment-id="@comment.id">
+                                        <div class="disc-comment__recommend-count js-disc-recommend-count">
                                             @comment.numRecommends
                                         </div>
-                                        <div class="disc-comment__recommend-button">
+                                        <div class="disc-comment__recommend-button js-disc-recommend-button">
                                             <i class="i i-recommend"></i>
                                         </div>
                                     </button>

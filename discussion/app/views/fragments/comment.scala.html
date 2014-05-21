@@ -24,11 +24,22 @@
             </div>
         }
         <div class="d-comment__meta">
+            <span
             <span class="d-comment__avatar-wrapper">
                 <img src="@comment.profile.avatar" alt="" class="d-comment__avatar"/>
             </span>
             <div class="d-comment__meta-text">
-                <span class="d-comment__author" itemprop="author" title="@comment.profile.displayName">@comment.profile.displayName</span>
+                <span
+                    itemscope
+                    itemprop="author"
+                    itemtype="http://schema.org/Person"
+                    title="@comment.profile.displayName"
+                    class="d-comment__author">
+                    <a href="@Configuration.id.url/user/id/@comment.profile.userId" itemprop="url">
+                        <span itemprop="givenName">@comment.profile.displayName</span>
+                    </a>
+                </span>
+
                 @if(!comment.responseTo.isEmpty){  
                     <span class="i i-in-reply-arrow"></span>
                     <span class="d-comment__reply-to-author">@comment.responseTo.map(_.displayName)</span>
