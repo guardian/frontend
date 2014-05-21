@@ -84,7 +84,9 @@ $c-commercial-books-dark: #630D4C;
         @include fs-textsans(1);
     }
     .highitem .commercial--books__buy-now-button {
-        margin-right: -10px;
+        @include rem((
+            margin-right: -($gs-gutter/2)
+        ));
     }
     .commercial--books__price {
         @include rem((
@@ -111,7 +113,7 @@ $c-commercial-books-dark: #630D4C;
         @include f-header;
         @include font-size(12, 20);
         @include rem((
-             padding: 0 $gs-gutter/2,
+            padding: 0 $gs-gutter/2,
             min-width: gs-span(1)
         ));
     }
