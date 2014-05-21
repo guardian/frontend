@@ -13,7 +13,7 @@ object ModelOrResult extends Results with Logging {
 
   def apply[T](item: Option[T], response: ItemResponse)(implicit request: RequestHeader): Either[T, SimpleResult] =
     item.map(i => ItemOrRedirect(i, response))
-    .orElse(InternalRedirect(response))
+    .orElse(InternalRedirect(response).map(Right(_)))
     .getOrElse(Right(NoCache(NotFound)))
 }
 
@@ -41,28 +41,28 @@ private object ItemOrRedirect extends ItemResponses with Logging{
 
 // http://wiki.nginx.org/X-accel
 // this might have ended up at the wrong server if it has a 'funny' url
-private object InternalRedirect extends implicits.Requests {
+object InternalRedirect extends implicits.Requests {
 
   lazy val ShortUrl = """^(/p/.*)$""".r
 
-  def apply(response: ItemResponse)(implicit request: RequestHeader) = contentTypes(response)
+  def apply(response: ItemResponse)(implicit request: RequestHeader): Option[SimpleResult] = contentTypes(response)
     .orElse(response.tag.map(t => internalRedirect("facia", t.id)))
     .orElse(response.section.map(s => internalRedirect("facia", s.id)))
 
 
-  def contentTypes(response: ItemResponse)(implicit request: RequestHeader): Option[Right[Nothing, SimpleResult]] = {
+  def contentTypes(response: ItemResponse)(implicit request: RequestHeader): Option[SimpleResult] = {
     response.content.map {
       case a if a.isArticle || a.isLiveBlog => internalRedirect("type/article", a.id)
       case v if v.isVideo => internalRedirect("applications", v.id)
       case g if g.isGallery => internalRedirect("applications", g.id)
-      case unsupportedContent => Right(Redirect(unsupportedContent.webUrl, Map("view" -> Seq("classic"))))
+      case unsupportedContent => Redirect(unsupportedContent.webUrl, Map("view" -> Seq("classic")))
     }
   }
 
-  private def internalRedirect(base: String, id: String)(implicit request: RequestHeader) = request.path match {
-    case ShortUrl(_) => Right(Found(s"/$id"))
-    case _ if request.isRss => Right(Ok.withHeaders("X-Accel-Redirect" -> s"/$base/$id/rss"))
-    case _ => Right(Ok.withHeaders("X-Accel-Redirect" -> s"/$base/$id"))
+  def internalRedirect(base: String, id: String)(implicit request: RequestHeader) = request.path match {
+    case ShortUrl(_) => Found(s"/$id")
+    case _ if request.isRss => Ok.withHeaders("X-Accel-Redirect" -> s"/$base/$id/rss")
+    case _ => Ok.withHeaders("X-Accel-Redirect" -> s"/$base/$id")
   }
 
 }
