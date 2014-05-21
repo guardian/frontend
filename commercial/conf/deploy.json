@@ -1,18 +1,5 @@
 {
     "packages":{
-        "frontend-commercial":{
-            "type":"autoscaling",
-            "apps":[ "frontend::commercial" ],
-            "data":{
-                "secondsToWait":1200,
-                "port":18080,
-                "healthcheckGrace":20,
-                "bucket":"aws-frontend-artifacts",
-                "healthcheck_paths":[
-                    "/management/healthcheck"
-                ]
-            }
-        },
         "commercial":{
             "type":"autoscaling",
             "apps":[ "frontend::commercial" ],
@@ -40,10 +27,10 @@
             "depends" : ["staticFilesUpload", "artifactUpload", "deploy"]
         },
         "deploy":{
-            "actionsBeforeApp": ["frontend-commercial.deploy"]
+            "actionsBeforeApp": ["commercial.deploy"]
         },
         "artifactUpload":{
-            "actionsBeforeApp": ["frontend-commercial.uploadArtifacts", "commercial.uploadArtifacts"]
+            "actionsBeforeApp": ["commercial.uploadArtifacts"]
         },
         "staticFilesUpload":{
             "actionsBeforeApp": ["frontend-static.uploadStaticFiles"]

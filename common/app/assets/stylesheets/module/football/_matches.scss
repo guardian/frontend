@@ -123,7 +123,7 @@
     width: 100%;
 
     &:after {
-        content: "\2013";
+        content: '\2013';
     }
 }
 
@@ -136,7 +136,7 @@
 .football-match--fixture {
     .football-teams__battleline {
         &:after {
-            content: "v";
+            content: 'v';
         }
     }
 }

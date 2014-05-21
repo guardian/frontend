@@ -23,7 +23,7 @@ public class PageHelper {
     }
 
     public FrontPage goToFrontsForTracking() {
-        String frontPageURL = this.getBaseUrl() + "/uk?view=mobile";
+        String frontPageURL = "http://www.theguardian.com/uk?view=mobile";
         driver.get(frontPageURL);
         return new FrontPage(driver);
     }

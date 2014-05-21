@@ -1,5 +1,5 @@
 define(['common/$', 'bonzo'], function($, bonzo) {
-    var $rhc = $('.js-right-hand-component .js-components');
+    var $rhc = $('.js-components-container');
 
     /**
      * @param {Element|Bonzo} c

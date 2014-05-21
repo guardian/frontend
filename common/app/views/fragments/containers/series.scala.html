@@ -28,7 +28,12 @@
 
                         @config.href.map { link =>
                             <div class="container__meta">
-                                @fragments.meta.series(link, config.id)
+                                <dl class="content-meta">
+                                    <dt class="content-meta__label">Series</dt>
+                                    <dd class="content-meta__item">
+                                        <a href="/@link" class="tone-colour">@config.id</a>
+                                    </dd>
+                                </dl>
                             </div>
                         }
                     }
