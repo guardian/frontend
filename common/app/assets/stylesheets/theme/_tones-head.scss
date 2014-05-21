@@ -12,6 +12,7 @@
 
 
 .content__head--tonal {
+    background-color: #fff;
     .tone-background {
         @include rem((
             padding-top: $gs-baseline/2
@@ -32,6 +33,15 @@
         @include rem((
             min-height: 60px
         ));
+    }
+    .content-meta {
+        @include rem((
+            padding-top: $gs-baseline/4
+        ));
+    }
+    .content__section,
+    .content-meta {
+        border-top: 0 !important;
     }
 }
 

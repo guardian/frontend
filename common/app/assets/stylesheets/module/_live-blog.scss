@@ -932,17 +932,25 @@ $timeline-width: 14px;
         }
     }
 
+    &.tone-live .content__head--tonal .content__section {
+
+        @include mq($from: rightCol) {
+            border-top: 0 !important;
+            float: left;
+        }
+
+        .tone-colour {
+            // overriding tonal head style here as liveblog section breaks differently
+            @include mq($from: rightCol) {
+                color: #fff;
+            }
+        }
+    }
+
     .content__head__lower {
         padding-top: $gs-baseline/4;
         padding-bottom: 0;
         min-height: 54px;
-    }
-
-    .content__section {
-        @include mq(rightCol) {
-            margin-left: -($a-rightCol-width + $gs-gutter);
-            float: left;
-        }
     }
 
     .content__secondary-column {
@@ -977,11 +985,11 @@ $timeline-width: 14px;
 
 .content__main-column--liveblog .content__standfirst {
     @include rem((
-        margin-top: $gs-baseline
+        padding-top: $gs-baseline
     ));
     @include mq(rightCol) {
         @include rem((
-            margin-top: $gs-baseline*2
+            padding-top: $gs-baseline*2
         ));
     }
 

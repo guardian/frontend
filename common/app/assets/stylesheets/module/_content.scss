@@ -74,12 +74,12 @@
     ));
 }
 
-.content__top-border {
+.content__head__border-top {
+    border-top: 1px dotted $c-neutral5;
     @include rem((
         height: $gs-baseline/2,
         margin: 0 $gs-gutter
     ));
-    border-top: 1px dotted $c-neutral5;
 
     @include mq($to: tablet) {
         display: none;
@@ -132,18 +132,19 @@
     @include fs-header(3);
     @include box-sizing(border-box);
     @include rem((
-        margin-bottom: $gs-baseline
+        padding-bottom: $gs-baseline
     ));
-    @include mq($from: tablet) {
-        @include rem((
-            margin-bottom: ($gs-baseline/2) * 3
-        ));
-    }
-
-    .has-localnav & {
-        @include mq($to: tablet) {
+    @include mq($to: tablet) {
+        border-bottom: 1px solid $c-neutral7;
+        .has-localnav & {
             display: none;
         }
+    }
+
+    @include mq($from: tablet) {
+        @include rem((
+            padding-bottom: ($gs-baseline/2) * 3
+        ));
     }
 
     @include mq($from: leftCol) {
@@ -385,9 +386,18 @@
     }
 }
 
+.content__breadcrumb {
+    @include rem((
+        padding: $gs-gutter
+    ));
+    @include mq($from: mobileLandscape) {
+        @include rem((
+            padding: $gs-gutter
+        ));
+    }
+}
 
 .content-meta {
-    border-top: 1px dotted $c-neutral5;
     @include fs-textsans(3);
     font-weight: bold;
     @include rem((
@@ -399,6 +409,12 @@
         @include rem((
             padding-top: $gs-baseline/2
         ));
+    }
+    .content__head & {
+        @include mq($from: tablet, $to: leftCol) {
+            border-top: 1px dotted $c-neutral5;
+        }
+
     }
 }
 
@@ -432,38 +448,11 @@
         @include rem((
             padding-top: $gs-baseline/2
         ));
-        border-top: 1px dotted $c-neutral5;
     }
 
     @include mq($to: tablet) {
         .has-localnav & {
-            border-top: 0;
             padding-top: 0;
         }
-    }
-
-    @include mq($from: leftCol) {
-        border-top: 0;
-    }
-}
-
-.content-meta--live {
-    @include rem((
-        padding-bottom: $gs-baseline/4
-    ));
-
-    @include mq(rightCol) {
-        border-top: 0;
-    }
-}
-
-.content__breadcrumb {
-    @include rem((
-        padding: $gs-gutter
-    ));
-    @include mq($from: mobileLandscape) {
-        @include rem((
-            padding: $gs-gutter
-        ));
     }
 }

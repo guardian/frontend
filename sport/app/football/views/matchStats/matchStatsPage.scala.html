@@ -27,12 +27,14 @@
 <article class="content">
     <header class="content__head">
         <div class="gs-container">
-            <div class="content__top-border"></div>
+            <div class="content__head__border--top"></div>
             <div class="content__main-column">
 
                 <div class="content__section">
                     <a class="tone-colour" data-link-name="article section" href="@LinkTo {/football}">football</a>
                 </div>
+
+                <div class="content__head__border--headline"></div>
 
                 @football.views.html.fragments.matchSummary(page.theMatch, competition, responsive = true)
 
