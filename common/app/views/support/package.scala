@@ -843,6 +843,30 @@ object GetClasses {
     RenderClasses(classes:_*)
   }
 
+  def forSaucisson(trail: Trail, imageAdjust: String): String = {
+    val baseClasses: Seq[String] = Seq(
+      "saucisson",
+      s"tone-${trail.visualTone}",
+      "tone-accent-border"
+    )
+    val f: Seq[(Trail, String) => String] = Seq(
+      (trail: Trail, imageAdjust: String) =>
+        if (trail.isLive) "item--live" else "",
+      (trail: Trail, imageAdjust: String) =>
+        if (trail.trailPicture(5,3).isEmpty || imageAdjust == "hide"){
+          "saucisson--has-no-image"
+        }else{
+          "saucisson--has-image"
+        },
+      (trail: Trail, imageAdjust: String) =>
+        if (!trail.trailPicture(5,3).isEmpty) s"saucisson--imageadjust-$imageAdjust" else "",
+      (trail: Trail, imageAdjust: String) =>
+        if (trail.isCommentable) "saucisson--has-discussion" else "saucisson--has-no-discussion"
+    )
+    val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail, imageAdjust)} ++ makeSnapClasses(trail)
+    RenderClasses(classes:_*)
+  }
+
   def makeSnapClasses(trail: Trail): Seq[String] = trail match {
     case snap: Snap => "facia-snap" +: snap.snapCss.map(t => Seq(s"facia-snap--$t")).getOrElse(Seq("facia-snap--default"))
     case _  => Nil
