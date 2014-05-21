@@ -155,7 +155,10 @@ object Frontend extends Build with Prototypes {
     .dependsOn(
       facia,
       applications,
-      article
+      article,
+      sport,
+      commercial,
+      onward
     )
 
   val main = root().aggregate(
