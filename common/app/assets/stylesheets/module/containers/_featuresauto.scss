@@ -13,8 +13,10 @@
         }
     }
     .ad-slot--inline {
-        margin-top: $gs-baseline;
-        margin-bottom: $gs-baseline/2;
+        @include rem((
+            margin-top: $gs-baseline,
+            margin-bottom: $gs-baseline/2
+        ));
     }
     .container__banding:first-child .saucisson {
         border-top-width: 0;
