@@ -35,8 +35,8 @@ define([
                 STORE: 'in Google Play'
             }
         },
-        isAndroid = false,
-        isIOS = false,
+        isIOS = /(iPad|iPhone|iPod)/g.test(navigator.userAgent),
+        isAndroid = /Android/i.test(navigator.userAgent),
         visits = new History().getSize(),
         impressions = (storage.local.get(IMPRESSION_KEY)) ? parseInt(storage.local.get(IMPRESSION_KEY), 10) : 0,
         tmp = '<img src="{{LOGO}}" class="app__logo" /><div class="app__cta"><h4 class="app__heading">The Guardian app</h4>' +
@@ -45,8 +45,6 @@ define([
             '<img src="{{SCREENSHOTS}}" class="app__screenshots alt="screenshots" />';
 
     function isDevice() {
-        isIOS = /(iPad|iPhone|iPod)/g.test(navigator.userAgent);
-        isAndroid = /Android/i.test(navigator.userAgent);
         return (isIOS || isAndroid);
     }
 
