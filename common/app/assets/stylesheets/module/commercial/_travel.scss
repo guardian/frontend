@@ -367,6 +367,26 @@ $c-commercial-travel-dark: #002b6c;
                 }
             }
         }
+        @include mq(faciaLeftCol) {
+            .commercial__relevance-low {
+                width: gs-span(6);
+                
+                .lineitem {
+                    width: 50%;
+                    
+                    &:nth-child(n+2) {
+                        display: block;
+                        padding-left: 10px;
+                    }
+                }
+            }
+        }
+        @include mq($from: faciaLeftCol, $to: wide) {
+            .commercial__search {
+                bottom: 12px;
+                margin-top: 12px;
+            }            
+        }
     }
 }
 
@@ -471,6 +491,7 @@ $c-commercial-travel-dark: #002b6c;
                 .lineitem__offer .lineitem__link {
                     width: auto;
                 }
+                
                 .lineitem__image {
                     width: 100%;
                 }
@@ -491,14 +512,39 @@ $c-commercial-travel-dark: #002b6c;
         }
         @include mq(rightCol) {
             .container__body {
-                padding-left: 5px;
+                @include rem((
+                    padding-left: $gs-gutter/4
+                ));
             }
             .highitem .lineitem__offer {
-                margin-left: gs-span(3) + $gs-gutter/3;
+                @include rem((
+                    margin-left: gs-span(3) + $gs-gutter/3
+                ));
             }
             .commercial__search {
                 bottom: auto;
-                margin-top: $gs-baseline*4;
+                @include rem((
+                    margin-top: $gs-baseline*4
+                ));
+            }
+        }
+        @include mq(leftCol) {
+            .commercial__search {
+                @include rem((
+                    bottom: $gs-baseline,
+                    margin-top: $gs-baseline
+                ));
+            }
+            .commercial__relevance-high,
+            .commercial__relevance-low,
+            .commercial__relevance-low .lineitem {
+                width: 50%;
+            }
+            .commercial__relevance-low .lineitem:nth-child(n+2) {
+                display: block;
+                @include rem((
+                    padding-left: $gs-gutter/2
+                ));
             }
         }
     }
