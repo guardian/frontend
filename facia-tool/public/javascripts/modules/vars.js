@@ -12,7 +12,7 @@ define(['knockout'], function(ko) {
             {name: 'news/special'},
             {name: 'news/sport'},
             {name: 'features'},
-            {name: 'features/auto'}, # Behind FeaturesAutoContainerSwitch
+            {name: 'features/auto'}, // Behind FeaturesAutoContainerSwitch
             {name: 'features/multimedia'},
             {name: 'features/section'},
             {name: 'comment'},
