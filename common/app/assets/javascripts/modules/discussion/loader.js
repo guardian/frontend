@@ -141,13 +141,13 @@ Loader.prototype.ready = function() {
 };
 
 Loader.prototype.loadComments = function(args) {
+    args = args || {};
     var self = this,
         commentsContainer = this.getElem('commentsContainer'),
         commentsElem = this.getElem('comments'),
         loadingElem = bonzo.create('<div class="preload-msg">Loading comments…<div class="is-updating"></div></div>')[0],
         commentId = this.getCommentIdFromHash(),
         showComments = args.showLoader || commentId || window.location.hash === '#comments';
-
 
     if (args.showLoader) {
         // Comments are being loaded in the no-top-comments-available context
@@ -162,11 +162,11 @@ Loader.prototype.loadComments = function(args) {
     }
 
     this.comments = new Comments(this.context, this.mediator, {
-        initialShow: commentId ? 10 : args.amount,
         discussionId: this.getDiscussionId(),
         user: this.user,
         commentId: commentId ? commentId : null,
-        order: this.getDiscussionClosed() ? 'oldest' : 'newest'
+        order: this.getDiscussionClosed() ? 'oldest' : 'newest',
+        state: this.topComments.topCommentsAmount > 0 ? 'shut' : 'partial'
     });
 
     // Doing this makes sure there is only one redraw
@@ -178,10 +178,10 @@ Loader.prototype.loadComments = function(args) {
 
             if (showComments) {
                 // Comments are being loaded in the no-top-comments-available context
-                bonzo(self.getElem('joinDiscussion')).remove();
-                bonzo([self.comments.getElem('showMore'), self.comments.getElem('header')]).removeClass('u-h');
-            } else {
-                bonzo(self.comments.getElem('showMore')).addClass('u-h');
+                bonzo(self.getElem('joinDiscussion')).addClass('u-h');
+                bonzo(self.comments.getElem('header')).removeClass('u-h');
+                self.comments.removeState('shut');
+                self.comments.removeState('partial');
             }
 
             self.on('click', self.getElem('joinDiscussion'), function (e) {
@@ -298,7 +298,7 @@ Loader.prototype.commentPosted = function () {
 
 /* Configure DOM for viewing of comments once some have been shown */
 Loader.prototype.cleanUpOnShowComments = function () {
-    bonzo([this.comments.getElem('showMore'), this.comments.getElem('header')]).removeClass('u-h');
+    bonzo(this.comments.getElem('header')).removeClass('u-h');
     bonzo(this.getElem('joinDiscussion')).addClass('u-h');
 };
 
