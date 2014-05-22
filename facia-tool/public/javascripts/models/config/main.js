@@ -36,7 +36,7 @@ define([
 
         model.switches = ko.observable();
 
-        model.sections = [].concat(config.sections);
+        model.navSections = [].concat(config.navSections);
 
         model.collections = ko.observableArray();
 
