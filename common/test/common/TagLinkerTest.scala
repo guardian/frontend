@@ -77,7 +77,7 @@ class TagLinkerTest extends FlatSpec with Matchers {
   ))
 
   private def article(tags: ApiTag*) = new Article(ApiContentWithMeta(ApiContent("foo/2012/jan/07/bar", None, None,
-    new DateTime, "Some article",
+    Some(new DateTime), "Some article",
     "http://www.guardian.co.uk/foo/2012/jan/07/bar",
     "http://content.guardianapis.com/foo/2012/jan/07/bar",
     elements = None,

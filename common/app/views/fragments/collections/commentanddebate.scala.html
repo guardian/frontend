@@ -1,7 +1,7 @@
 @(items: Seq[Trail], style: Container, containerIndex: Int)(implicit request: RequestHeader, config: Config)
 
 <div class="facia-slice-wrapper facia-slice-wrapper--position-1">
-    <ul class="u-unstyled l-row l-row--items-3 collection">
+    <ul class="u-unstyled l-row l-row--items-3 facia-slice">
         @items.slice(0, 3).zipWithIndex.map{ case (trail, index) =>
             @fragments.collections.items.simplecomment(trail, index, containerIndex)
         }
@@ -10,7 +10,7 @@
 @defining(items.slice(3, 7)) { items =>
     @if(items.nonEmpty) {
         <div class="facia-slice-wrapper facia-slice-wrapper--position-2">
-            <ul class="u-unstyled l-row l-row--items-4 collection">
+            <ul class="u-unstyled l-row l-row--items-4 facia-slice">
                 @items.zipWithIndex.map{ case (trail, index) =>
                     @fragments.collections.items.standard(trail, index + 3, containerIndex)
                 }

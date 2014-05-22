@@ -14,7 +14,7 @@ class UrlsTest extends FlatSpec with Matchers {
 
   "Urls" should "be created relative for articles" in {
 
-    val content = ApiContent("foo/2012/jan/07/bar", None, None, new DateTime, "Some article",
+    val content = ApiContent("foo/2012/jan/07/bar", None, None, Some(new DateTime), "Some article",
       "http://www.guardian.co.uk/foo/2012/jan/07/bar",
       "http://content.guardianapis.com/foo/2012/jan/07/bar",
       tags = List(tag("type/article")),
@@ -28,7 +28,7 @@ class UrlsTest extends FlatSpec with Matchers {
 
   they should "be created relative for galleries" in {
 
-    val content = ApiContent("foo/gallery/2012/jan/07/bar", None, None, new DateTime, "Some article",
+    val content = ApiContent("foo/gallery/2012/jan/07/bar", None, None, Some(new DateTime), "Some article",
       "http://www.guardian.co.uk/foo/gallery/2012/jan/07/bar",
       "http://content.guardianapis.com/foo/gallery/2012/jan/07/bar",
       tags = List(tag("type/gallery")),
