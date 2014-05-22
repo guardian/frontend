@@ -394,8 +394,8 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 5, 30)
   )
 
-  val NewFeaturesContainerSwitch = Switch("Facia Switches", "facia-new-features-container",
-    "If this switch is turned on, the new features container has the right to live.",
+  val FeaturesAutoContainerSwitch = Switch("Facia Switches", "facia-features-auto-container",
+    "If this switch is turned on, the features auto container has the right to live.",
     safeState = Off, sellByDate = new DateMidnight(2014, 6, 15)
   )
 
@@ -471,7 +471,7 @@ object Switches extends Collections {
     TagLinkingSwitch,
     ABHeaderSearchText,
     ABHighRelevanceCommercialComponent,
-    NewFeaturesContainerSwitch
+    FeaturesAutoContainerSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
