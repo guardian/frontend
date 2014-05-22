@@ -837,9 +837,6 @@ $timeline-width: 14px;
 
     .tabs__container--multiple {
         margin-bottom: 0;
-        @include rem((
-            padding-top: $gs-baseline
-        ));
     }
 
     .tabs__tab--selected {
@@ -983,14 +980,29 @@ $timeline-width: 14px;
     }
 }
 
-.content__main-column--liveblog .content__standfirst {
-    @include rem((
-        padding-top: $gs-baseline
-    ));
-    @include mq(rightCol) {
+.content--liveblog {
+    .content__standfirst,
+    .blog__timeline,
+    .content__secondary-column {
         @include rem((
-            padding-top: $gs-baseline*2
+            padding-top: $gs-baseline
         ));
+        @include mq(rightCol) {
+            @include rem((
+                padding-top: $gs-baseline*2
+            ));
+        }
     }
+}
 
+.content--liveblog.section-football .content__head--tonal { // Football overrides
+    .tone-background {
+        background-color: #ffffff;
+    }
+    .content__section .tone-colour {
+        color: $c-liveDefault !important;
+    }
+    .content__headline {
+        color: $c-neutral1;
+    }
 }
