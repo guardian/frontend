@@ -249,7 +249,8 @@
         ));
         @include font(arial, bold, 14px);
         text-transform: uppercase;
-        border: 1px solid #ffffff;
+        border: 1px solid #333333;
+        @include box-shadow(0 0 0 1px #ffffff);
     }
 
     .app__screenshots {
@@ -340,7 +341,7 @@
     .app__link {
         float: right;
         @include rem((
-            margin-top: $gs-baseline*1.8
+            margin-top: $gs-baseline*2
         ));
         color: #1878fb;
         @include font($helvetica, normal, 14px);
