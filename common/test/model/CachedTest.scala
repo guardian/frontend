@@ -79,7 +79,7 @@ class CachedTest extends FlatSpec with Matchers with Results with implicits.Date
   }
 
   private def content(lastModified: DateTime, live: Boolean): Content = {
-    Content(ApiContent("foo/2012/jan/07/bar", None, None, new DateTime, "Some article",
+    Content(ApiContent("foo/2012/jan/07/bar", None, None, Some(new DateTime), "Some article",
       "http://www.guardian.co.uk/foo/2012/jan/07/bar",
       "http://content.guardianapis.com/foo/2012/jan/07/bar",
       elements = None,

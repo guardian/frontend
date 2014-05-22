@@ -2,7 +2,7 @@ package test
 
 import java.io.File
 import recorder.HttpRecorder
-import com.ning.http.client.{Response => NingResponse, FluentCaseInsensitiveStringsMap, Cookie}
+import com.ning.http.client.{Response => NingResponse, FluentCaseInsensitiveStringsMap}
 import play.api.libs.ws.{WS, Response}
 import play.api.Application
 import java.util
@@ -32,7 +32,7 @@ private case class Resp(getResponseBody: String) extends NingResponse {
   def getHeaders(name: String): util.List[String] = throw new NotImplementedError()
   def getHeaders: FluentCaseInsensitiveStringsMap = throw new NotImplementedError()
   def isRedirected: Boolean = throw new NotImplementedError()
-  def getCookies: util.List[Cookie] = throw new NotImplementedError()
+  def getCookies = throw new NotImplementedError()
   def hasResponseStatus: Boolean = throw new NotImplementedError()
   def hasResponseHeaders: Boolean = throw new NotImplementedError()
   def hasResponseBody: Boolean = throw new NotImplementedError()

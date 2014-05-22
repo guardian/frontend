@@ -791,7 +791,7 @@ module.exports = function (grunt) {
     grunt.registerTask('compile:js', function(app) {
         grunt.task.run(['clean:js']);
         var apps = ['common', 'ophan'];
-        if (!app) { // if no app supplied, compile all apps
+        if (!app || app === 'preview') { // if no app supplied, compile all apps ('preview' is an amalgamation of other apps)
             apps = apps.concat(Object.keys(grunt.config('requirejs')).filter(function(app) { return ['options', 'common', 'ophan'].indexOf(app) === -1; }));
         } else if (app !== 'common' && app !== 'ophan') {
             if (grunt.config('requirejs')[app]) {

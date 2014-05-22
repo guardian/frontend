@@ -32,7 +32,7 @@
         ));
 
         @include mq(tablet) {
-            @include fs-headline(4, true);
+            @include fs-headline(5, true);
             @include rem((
                 margin-bottom: $gs-baseline*1.25
             ));
@@ -125,10 +125,7 @@
 
 .fromage__standfirst {
     @include f-headline;
-    @include rem((
-        font-size: 14px,
-        line-height: 18px
-    ));
+    @include font-size(14, 18);
     color: $c-neutral2;
 
     p {

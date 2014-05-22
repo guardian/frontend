@@ -1,0 +1,56 @@
+@(trail: Trail, index: Int, imageAdjustOverride: Option[String] = None)(implicit request: RequestHeader, config: Config)
+
+@defining((trail.visualTone, imageAdjustOverride.getOrElse(trail.imageAdjust))) { case (tone, imageAdjust) =>
+    <div
+        class="@GetClasses.forSaucisson(trail, imageAdjust)"
+        @if(trail.isCommentable) {
+            @trail.discussionId.map{ id =>
+                data-discussion-id="@id"
+            }
+            data-discussion-closed="@trail.isClosedForComments"
+        }
+        data-link-name="trail | @{index + 1}"
+        @SnapData(trail)>
+
+        <div class="saucisson__container">
+            <a @LinkTo(trail).map{url=>href=@url} class="saucisson__link" data-link-name="article">
+                @if(imageAdjust != Some("hide")) {
+                    @trail.trailPicture(5,3).map{ imageContainer =>
+                        @ImgSrc.imager(imageContainer, Item620).map { imgSrc =>
+                            <div class="saucisson__media-wrapper">
+                                <div class="saucisson__image-container u-responsive-ratio@if(imageAdjust == "boost"){ js-image-upgrade inlined-image" data-src="@imgSrc}">
+                                    @if(imageAdjust == "boost") {
+                                        @Item300.bestFor(imageContainer).map{ url => <img src="@url" class="responsive-img" alt="" /> }
+                                    } else {
+                                        @Item220.bestFor(imageContainer).map{ url => <img src="@url" alt="" /> }
+                                    }
+                                </div>
+                            </div>
+                        }
+                    }
+                }
+                @fragments.items.elements.title(trail, index, 0)
+            </a>
+            @if(tone == "comment") {
+                @trail.byline.map { byLine =>
+                    <p class="saucisson__byline tone-colour">@Html(byLine)</p>
+                }
+            }
+
+            @trail match { case content:model.Content => @fragments.items.elements.tagOrSection(content) }
+
+            @trail.trailText.map { text =>
+                <div class="saucisson__standfirst">@Html(text)
+                    @trail match { case content:model.Content => @fragments.items.elements.starRating(content) }
+                </div>
+            }
+
+            @fragments.items.elements.supporting(trail.supporting, style = "fit")
+
+            @if(trail.isCommentable) {
+                @fragments.items.elements.meta(trail)
+            }
+        </div>
+
+    </div>
+}

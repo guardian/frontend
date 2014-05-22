@@ -14,8 +14,8 @@ public class FrontPage {
     }
 
     public void expandContainer(String container) {
-        String expandButton = "//section[@data-component=\"" + container + "\"]//button[@data-link-name=\"Show more | 0\"]";
-        WebElement containerExpandButton = driver.findElement(By.xpath(expandButton));
+        String expandButton = ".container--" + container + " .collection__show-more";
+        WebElement containerExpandButton = driver.findElement(By.cssSelector(expandButton));
         containerExpandButton.click();
     }
 

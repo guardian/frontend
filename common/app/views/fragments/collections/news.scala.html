@@ -75,7 +75,7 @@
             }
         }
 
-        @defining(standardItems.slice(4, 13), hugeItemsCount + veryBigItemsCount + bigItemsCount + 4) { case (items, offset) =>
+        @defining(standardItems.slice(4, 10), hugeItemsCount + veryBigItemsCount + bigItemsCount + 4) { case (items, offset) =>
             @if(items.nonEmpty) {
                 <div class="linkslist-container tone-@{style.tone}">
                     <ul class="l-columns linkslist linkslist--with-images">
@@ -93,7 +93,7 @@
             }
         }
 
-        @defining(standardItems.slice(13, 31), hugeItemsCount + veryBigItemsCount + bigItemsCount + 13) { case (items, offset) =>
+        @defining(standardItems.slice(10, 28), hugeItemsCount + veryBigItemsCount + bigItemsCount + 10) { case (items, offset) =>
             @if(items.nonEmpty) {
                 <div class="linkslist-container @if(style.showMore){js-container--show-more} tone-@{style.tone}" data-tone="@style.tone">
                     <ul class="l-columns linkslist">
