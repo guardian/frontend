@@ -32,7 +32,7 @@
         ));
 
         @include mq(tablet) {
-            @include fs-headline(4, true);
+            @include fs-headline(5, true);
             @include rem((
                 margin-bottom: $gs-baseline*1.25
             ));
