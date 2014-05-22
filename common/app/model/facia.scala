@@ -30,6 +30,10 @@ object Config {
   val emptyConfig = Config("")
 }
 
+trait CollectionItems {
+  def items: Seq[Content] = List()
+}
+
 case class Collection(curated: Seq[Content],
                       editorsPicks: Seq[Content],
                       mostViewed: Seq[Content],
@@ -38,9 +42,8 @@ case class Collection(curated: Seq[Content],
                       href: Option[String],
                       lastUpdated: Option[String],
                       updatedBy: Option[String],
-                      updatedEmail: Option[String]) extends implicits.Collections {
-
-  lazy val items: Seq[Content] = (curated ++ editorsPicks ++ mostViewed ++ results).distinctBy(_.url)
+                      updatedEmail: Option[String]) extends implicits.Collections with CollectionItems {
+  override lazy val items: Seq[Content] = (curated ++ editorsPicks ++ mostViewed ++ results).distinctBy(_.url)
 }
 
 object Collection {
