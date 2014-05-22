@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="@Static("stylesheets/commercial.css")" />
 
 @defining(("1_0", "2014-05-15")) { case (version, date) =>
-    <div class="commercial commercial--travel">
+    <div class="commercial commercial--high commercial--travel">
         <div class="facia-container__inner">
             <div class="container__title commercial__head">
                 <h3 class="commercial__title">
@@ -30,24 +30,47 @@
                     </span>
                 </a>
             </div>
-
             <div class="container__body commercial__body">
-                <ul class="lineitems">
-                    @offers.take(4).map { offer =>
-                        <li class="lineitem">
-                            <div>
+                <div class="commercial__relevance commercial__relevance-high u-cf">
+                    <div class="highitem">
+                        <h4 class="commercial__relevance-title commercial__relevance-title-high">Featured trip</h4>
+                        @offers.take(1).map { offer =>
+                            <div class="highitem__details">
                                 <a class="lineitem__link" href="@AdLink{@offer.offerUrl}" data-link-name="merchandising-travel-v@{version}_@{date}-high-@{offer.title}">
                                     <img class="lineitem__image" src="@offer.imageUrl" alt="" />
-                                    <div class="lineitem__offer">
+                                </a>
+                                <div class="lineitem__offer">
+                                    <a class="lineitem__link" href="@AdLink{@offer.offerUrl}" data-link-name="merchandising-travel-v@{version}_@{date}-high-@{offer.title}">
                                         <h4 class="lineitem__title">@offer.title</h4>
                                         <p class="lineitem__meta">@offer.durationInWords from <span class="lineitem__price">£@offer.fromPrice</span></p>
-                                    </div>
-                                </a>
-                                <p class="lineitem__description commercial--travel__item__description"><a class="lineitem__link commercial--travel__description__link" href="@AdLink{@offer.offerUrl}" data-link-name="merchandising-travel-v@{version}_@{date}-high-@{offer.title}-book-now"><i class="i i-arrow-white-down"></i>Book now</a></p>
+                                    </a>
+                                    <p class="lineitem__description commercial--travel__item__description">
+                                        <a class="lineitem__link commercial--travel__description__link" href="@AdLink{@offer.offerUrl}" data-link-name="merchandising-travel-v@{version}_@{date}-high-@{offer.title}-book-now"><i class="i i-arrow-white-down"></i>Book now</a>
+                                    </p>
+                                </div>
                             </div>
-                        </li>
-                    }
-                </ul>
+                         }
+                     </div>
+                </div>
+                <div class="commercial__relevance commercial__relevance-low u-cf">
+                    <h4 class="commercial__relevance-title commercial__relevance-title-low">You also might like</h4>
+                    <ul class="lineitems">
+                        @offers.take(2).map { offer =>
+                            <li class="lineitem">
+                                <div>
+                                    <a class="lineitem__link" href="@AdLink{@offer.offerUrl}" data-link-name="merchandising-travel-v@{version}_@{date}-high-@{offer.title}">
+                                        <img class="lineitem__image" src="@offer.imageUrl" alt="" />
+                                        <div class="lineitem__offer">
+                                            <h4 class="lineitem__title">@offer.title</h4>
+                                            <p class="lineitem__meta">@offer.durationInWords from <span class="lineitem__price">£@offer.fromPrice</span></p>
+                                        </div>
+                                    </a>
+                                    <p class="lineitem__description commercial--travel__item__description"><a class="lineitem__link commercial--travel__description__link" href="@AdLink{@offer.offerUrl}" data-link-name="merchandising-travel-v@{version}_@{date}-high-@{offer.title}-book-now"><i class="i i-arrow-white-down"></i>Book now</a></p>
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
