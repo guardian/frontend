@@ -188,7 +188,7 @@
         right: auto;
         background-color: $c-neutral1;
         @include border-radius(50%);
-        @include box-shadow(0px 2px 2px $c-neutral3);
+        @include box-shadow(0px 1px 0px $c-neutral3);
 
         &:before {
             display: block;

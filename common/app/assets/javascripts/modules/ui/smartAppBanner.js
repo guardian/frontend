@@ -25,18 +25,20 @@ define([
             IOS : {
                 LOGO: 'http://assets.guim.co.uk/images/apps/ios-logo.png',
                 SCREENSHOTS: 'http://assets.guim.co.uk/images/apps/ios-screenshots.png',
-                LINK: 'http://www.apple.com',
+                LINK: 'https://itunes.apple.com/gb/app/the-guardian/id409128287?mt=8',
                 STORE: 'on the App Store'
             },
             ANDROID: {
                 LOGO: 'http://assets.guim.co.uk/images/apps/android-logo.png',
                 SCREENSHOTS: 'http://assets.guim.co.uk/images/apps/ios-screenshots.png',
-                LINK: 'http://www.google.com',
+                LINK: 'https://play.google.com/store/apps/details?id=com.guardian',
                 STORE: 'in Google Play'
             }
         },
         isAndroid = false,
         isIOS = false,
+        visits = new History().getSize(),
+        impressions = (storage.local.get(IMPRESSION_KEY)) ? parseInt(storage.local.get(IMPRESSION_KEY), 10) : 0,
         tmp = '<img src="{{LOGO}}" class="app__logo" /><div class="app__cta"><h4 class="app__heading">The Guardian app</h4>' +
             '<p class="app__copy">Instant alerts. Offline reading.<br/>Tailored to you.</p>' +
             '<p class="app__copy"><strong>FREE</strong> – {{STORE}}</p></div><a href="{{LINK}}" class="app__link">View</a>' +
@@ -49,9 +51,6 @@ define([
     }
 
     function canShow() {
-        var visits = new History().getSize(),
-            impressions = storage.local.get(IMPRESSION_KEY) || 1;
-
         return (visits > 3 && impressions < 4);
     }
 
@@ -60,6 +59,7 @@ define([
             msg = new Message(platform);
 
         msg.show(template(tmp, DATA[platform.toUpperCase()]));
+        storage.local.set(IMPRESSION_KEY, impressions+1);
     }
 
     function init() {
