@@ -267,7 +267,13 @@ define([
         createAdSlot = function(name, type) {
             var definition = adSlotDefinitions[name];
             return template(
-                '<div id="dfp-ad--{{name}}" class="ad-slot ad-slot--dfp ad-slot--{{type}}" data-link-name="ad slot {{name}}" data-name="{{name}}" data-refresh="{{refresh}}" data-label="{{label}}"{{sizeMappings}}></div>',
+                '<div id="dfp-ad--{{name}}" ' +
+                    'class="ad-slot ad-slot--dfp ad-slot--{{type}}" ' +
+                    'data-link-name="ad slot {{name}}" ' +
+                    'data-name="{{name}}" ' +
+                    'data-refresh="{{refresh}}" ' +
+                    'data-label="{{label}}"' +
+                    '{{sizeMappings}}></div>',
                 {
                     name: name,
                     type: type,
