@@ -73,7 +73,8 @@ object Frontend extends Build with Prototypes {
     libraryDependencies ++= Seq(
       "com.typesafe.slick" %% "slick" % "1.0.0",
       "postgresql" % "postgresql" % "8.4-703.jdbc4" from "http://jdbc.postgresql.org/download/postgresql-8.4-703.jdbc4.jar",
-      "com.gu" %% "pa-client" % paVersion
+      "com.gu" %% "pa-client" % paVersion,
+      "com.google.api-ads" % "dfp-axis" % "1.27.0"
     )
   )
 
