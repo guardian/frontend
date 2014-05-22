@@ -6,7 +6,7 @@
       @breadcrumbs.map { breadcrumb =>
           <li class="breadcrumb-list__item inline-list__item">
               <div class="breadcrumb-keyword" itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
-                  <a itemprop="url" href="@LinkTo{@breadcrumb.href}" data-link-name="@breadcrumb.href"><span itemprop="title">@Html(breadcrumb.title.toLowerCase)</span></a>
+                  <a itemprop="url" href="@LinkTo{@breadcrumb.href}" data-link-name="@breadcrumb.href"><span itemprop="title">@Html(breadcrumb.title)</span></a>
               </div>
           </li>
       }
