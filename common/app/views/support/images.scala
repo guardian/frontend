@@ -43,6 +43,7 @@ object Item460 extends Profile(Some(460), None)
 object Item620 extends Profile(Some(620), None)
 object Item640 extends Profile(Some(640), None)
 object Item700 extends Profile(Some(700), None)
+object Item860 extends Profile(Some(860), None)
 object Item940 extends Profile(Some(940), None)
 
 // Just degrade the image quality without adjusting the width/height
@@ -62,6 +63,7 @@ object Profile {
     Item620,
     Item640,
     Item700,
+    Item860,
     Item940
   )
 }
