@@ -35,7 +35,7 @@ define([
                 STORE: 'in Google Play'
             }
         },
-        isIOS = /(iPad|iPhone|iPod)/g.test(navigator.userAgent),
+        isIOS = /(iPad|iPhone|iPod touch);.*CPU.*OS 7_\d/i.test(navigator.userAgent),
         isAndroid = /Android/i.test(navigator.userAgent),
         visits = new History().getSize(),
         impressions = (storage.local.get(IMPRESSION_KEY)) ? parseInt(storage.local.get(IMPRESSION_KEY), 10) : 0,
