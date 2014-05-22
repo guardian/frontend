@@ -36,13 +36,13 @@ define([
             {
                 id: 'second-and-third',
                 test: function () {
-                    $('.container:nth-child(2)').after(dfp('merchandising-high', 'commercial-component-high'));
+                    $('.container:nth-child(2)').after(dfp.createAdSlot('merchandising-high', 'commercial-component-high'));
                 }
             },
             {
                 id: 'third-and-fourth',
                 test: function () {
-                    $('.container:nth-child(3)').after(dfp('merchandising-high', 'commercial-component-high'));
+                    $('.container:nth-child(3)').after(dfp.createAdSlot('merchandising-high', 'commercial-component-high'));
                 }
             }
         ];
