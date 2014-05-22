@@ -1,6 +1,7 @@
 .ad-slot {
     text-align: center;
     z-index: 1000;
+    overflow: hidden;
 
     .js-off & {
         display: none;
@@ -101,10 +102,15 @@
     }
 }
 .ad-slot--mpu-banner-ad {
+    display: none;
     min-height: 250 + $mpu-ad-label-height;
     @include rem((
         margin-bottom: $gs-baseline*2
     ));
+
+    @include mq(rightCol) {
+        display: block;
+    }
 }
 .ad-slot--commercial-component,
 .ad-slot--commercial-component-high {
