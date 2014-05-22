@@ -304,7 +304,7 @@ case class PictureCleaner(contentImages: Seq[ImageElement]) extends HtmlCleaner 
     for {
       element <- body.getElementsByClass("element--showcase")
       asset <- findContainerFromId(element.attr("data-media-id"))
-      imagerSrc <- ImgSrc.imager(asset, Item860)
+      imagerSrc <- ImgSrc.imager(asset, Showcase)
       imgElement <- element.getElementsByTag("img")
     } {
       imgElement.wrap(s"""<div class="js-image-upgrade" data-src="$imagerSrc"></div>""")
