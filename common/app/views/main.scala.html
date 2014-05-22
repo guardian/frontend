@@ -14,7 +14,10 @@
     id="top"
     itemscope itemtype="http://schema.org/WebPage">
 
-    <div class="top-banner-ad-container top-banner-ad-container--desktop">
+    <div class="top-banner-ad-container top-banner-ad-container--desktop top-banner-ad-container--@metaData match {
+            case _: Article => {article}
+            case _          => {facia}
+        }-layout">
         @fragments.commercial.standardAd(name="top", adType="top-banner-ad", sizeMapping=Map("tabletportrait" -> Seq("728,90"), "tabletlandscape" -> Seq("728,90", "900,250"), "desktop" -> Seq("728,90", "900,250", "970,250")))
     </div>
 
