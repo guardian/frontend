@@ -38,7 +38,8 @@ define([
 
         this.capiProps = asObservableProps([
             'section',
-            'webTitle']);
+            'webTitle',
+            'description']);
 
         this.state = asObservableProps([
             'isOpen',
@@ -87,7 +88,7 @@ define([
         }, this);
 
         this.placeholders.description  = ko.computed(function() {
-            return this.props.description() || ('Latest ' + this.placeholders.webTitle() + ' news, comment and analysis from the Guardian, the world\'s leading liberal voice');
+            return this.props.description() || this.capiProps.description() || ('Latest ' + this.placeholders.webTitle() + ' news, comment and analysis from the Guardian, the world\'s leading liberal voice');
         }, this);
     }
 
@@ -153,8 +154,8 @@ define([
         vars.model.save(collection);
     };
 
-    function toTitleCase(str) {
-        return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+    function toTitleCase(s) {
+        return _.isString(s) ? s.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();}) : s;
     }
 
     function asPath(str) {
