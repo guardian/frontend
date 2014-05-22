@@ -8,6 +8,7 @@
 
 /*global phantom:true*/
 /*global window:true*/
+/*global btoa:true*/
 
 /*
 phantom args sent from app.js:
@@ -89,7 +90,7 @@ function processFile() {
 
                 var page = require( "webpage" ).create();
                 var svgdata = fs.read(  inputdir + theFile ) || "";
-                var svgdatauri = "data:image/svg+xml;utf8,";
+                var svgdatauri = "data:image/svg+xml;base64,";
                 var pngdatauri = "data:image/png;base64,";
 
                 // kill the ".svg" at the end of the filename
@@ -102,12 +103,13 @@ function processFile() {
                 var width = svgelem.getAttribute( "width" );
                 var height = svgelem.getAttribute( "height" );
 
-                svgdatauri += svgdata;
+                // get base64 of svg file
+                svgdatauri += btoa(svgdata);
 
                 //If we want to generate base64 svg css
                 if(generatesvg) {
                     // add rules to svg data css file
-                    datacssrules.push( "    %svg-" + cssprefix + filenamenoext +", .svg-" + cssprefix + filenamenoext +" { background-image: url('" + svgdatauri + "'); background-position: 0 0; background-repeat: no-repeat; }\n    .svg ." + cssprefix + filenamenoext + " { @extend %svg-" + cssprefix + filenamenoext +" !optional; }\n" );
+                    datacssrules.push( "    %svg-" + cssprefix + filenamenoext +", .svg-" + cssprefix + filenamenoext +" { background-image: url(" + svgdatauri + "); background-position: 0 0; background-repeat: no-repeat; }\n    .svg ." + cssprefix + filenamenoext + " { @extend %svg-" + cssprefix + filenamenoext +" !optional; }\n" );
                 }
 
                 // set page viewport size to svg dimensions
