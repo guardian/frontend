@@ -129,7 +129,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
         Then("I should see the article's image")
         findFirst("[itemprop='contentURL representativeOfPage']").getAttribute("src") should
-          endWith("Gunnerside-village-Swaled-009.jpg?width=620&height=-&quality=95")
+          endWith("Gunnerside-village-Swaled-007.jpg?width=300&height=-&quality=95")
 
         And("I should see the image caption")
         findFirst("[itemprop='associatedMedia image'] [itemprop=description]").getText should
