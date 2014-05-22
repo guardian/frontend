@@ -14,7 +14,6 @@ public class BasicPageNavigationTest {
     WebDriver driver;
     private PageHelper pageHelper;
     private FrontPage fronts;
-    private Article article;
 
     @Before
     public void setUp() throws Exception {
@@ -26,7 +25,7 @@ public class BasicPageNavigationTest {
 
     @Test
     public void expandCommentIsFreeSection() throws Exception{
-        fronts.expandContainer("comment");
+        fronts.expandContainer("commentanddebate");
         Boolean commentIsExpanded = driver.findElement(By.xpath("//section[@data-component=\"comment\"]//li[@data-link-name=\"trail | 8\"]")).isDisplayed();
         Assert.assertTrue("The comment section did not expand", commentIsExpanded );
     }
@@ -35,8 +34,7 @@ public class BasicPageNavigationTest {
     public void hideFeaturesContainer() throws Exception{
         String container = "features";
         fronts.hideContainer(container);
-        Assert.assertEquals(fronts.currentStateOfShowHide(container),"Show");
-
+        Assert.assertEquals("Section was not hidden", fronts.currentStateOfShowHide(container),"Show");
     }
 
 
@@ -46,10 +44,8 @@ public class BasicPageNavigationTest {
         fronts.hideContainer(container);
         driver.navigate().refresh();
         fronts.showContainer(container);
-        Assert.assertEquals(fronts.currentStateOfShowHide(container),"Hide");
-
+        Assert.assertEquals("Can't see Hide option on this section",fronts.currentStateOfShowHide(container),"Hide");
     }
-
 
     @After
     public void tearDown() throws Exception {
