@@ -3,6 +3,7 @@ define([
     'modules/authed-ajax',
     'modules/vars',
     'modules/cache',
+    'utils/internal-content-code',
     'utils/url-abs-path',
     'utils/snap'
 ],
@@ -10,6 +11,7 @@ function (
     authedAjax,
     vars,
     cache,
+    internalContentCode,
     urlAbsPath,
     snap
 ){
@@ -31,29 +33,33 @@ function (
         } else {
             fetchContentByIds([capiId])
             .done(function(result) {
+                var icc,
+                    err;
+
                 // ContentApi item
                 if (result.length === 1) {
-                    item.id(capiId);
-                    cache.put('contentApi', capiId, result[0]);
+                    icc = internalContentCode(result);
+                    item.id(icc);
+                    cache.put('contentApi', icc, result[0]);
                     populate(result[0], item);
-                    defer.resolve();
 
                 // Snap, but they're disabled
                 } else if (!vars.model.switches()['facia-tool-snaps']) {
-                    defer.resolve(true, 'Sorry, that link wasn\'t recognised. It cannot be added to a front.');
+                    err = 'Sorry, that link wasn\'t recognised. It cannot be added to a front';
 
                 // Snap, but cannot be added in live mode if it has no headline
                 } else if (vars.model.liveMode() &&
                     item.parentType !== 'Clipboard' &&
                     !item.fields.headline() &&
                     !item.meta.headline()) {
-                    defer.resolve(true, 'Sorry, snaps without headlines can\'t be added in live mode.');
+                    err = 'Sorry, snaps without headlines can\'t be added in live mode';
 
                 // Snap!
                 } else {
                     item.convertToSnap();
-                    defer.resolve();
                 }
+
+                defer[err ? 'reject' : 'resolve'](err);
             });
         }
 
@@ -83,12 +89,17 @@ function (
         fetchContentByIds(ids)
         .done(function(results){
             results.forEach(function(result) {
-                cache.put('contentApi', result.id, result);
-                _.filter(articles, function(article){
-                    return article.id() === result.id;
-                }).forEach(function(article){
-                    populate(result, article);
-                });
+                var icc = internalContentCode(result);
+
+                if(icc) {
+                    cache.put('contentApi', icc, result);
+
+                    _.filter(articles, function(article) {
+                        return article.id() === icc || article.id() === result.id; // TODO: remove 2nd clause after full transition to internal-code/content/ ids
+                    }).forEach(function(article) {
+                        populate(result, article);
+                    });
+                }
             });
 
            _.chain(articles)

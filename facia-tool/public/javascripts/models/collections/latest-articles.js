@@ -1,6 +1,7 @@
 /* global _: true */
 define([
     'modules/vars',
+    'utils/internal-content-code',
     'utils/query-params',
     'utils/url-abs-path',
     'models/collections/article',
@@ -10,6 +11,7 @@ define([
     'knockout'
 ], function (
     vars,
+    internalContentCode,
     queryParams,
     urlAbsPath,
     Article,
@@ -113,8 +115,8 @@ define([
 
                     self.flush(rawArticles.length === 0 ? '...sorry, no articles were found.' : '');
 
-                    ([].concat(rawArticles)).forEach(function(article){
-                        article.uneditable = true;
+                    ([].concat(rawArticles)).forEach(function(article) {
+                        article.id(internalContentCode(article));
                         self.articles.push(new Article(article));
                         cache.put('contentApi', article.id, article);
                     });
