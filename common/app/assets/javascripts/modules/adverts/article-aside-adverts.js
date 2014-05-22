@@ -15,7 +15,7 @@ define([
     }
 
     ArticleAsideAdverts.prototype.defaultConfig = {
-        columnSelector: '.article__secondary-column',
+        columnSelector: '.content__secondary-column',
         adSlotContainerSelector: '.js-mpu-ad-slot',
         switches: {}
     };
