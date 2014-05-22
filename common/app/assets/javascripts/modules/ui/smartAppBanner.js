@@ -39,10 +39,10 @@ define([
         isAndroid = /Android/i.test(navigator.userAgent),
         visits = new History().getSize(),
         impressions = (storage.local.get(IMPRESSION_KEY)) ? parseInt(storage.local.get(IMPRESSION_KEY), 10) : 0,
-        tmp = '<img src="{{LOGO}}" class="app__logo" /><div class="app__cta"><h4 class="app__heading">The Guardian app</h4>' +
+        tmp = '<img src="{{LOGO}}" class="app__logo" alt="Guardian App logo" /><div class="app__cta"><h4 class="app__heading">The Guardian app</h4>' +
             '<p class="app__copy">Instant alerts. Offline reading.<br/>Tailored to you.</p>' +
             '<p class="app__copy"><strong>FREE</strong> – {{STORE}}</p></div><a href="{{LINK}}" class="app__link">View</a>' +
-            '<img src="{{SCREENSHOTS}}" class="app__screenshots alt="screenshots" />';
+            '<img src="{{SCREENSHOTS}}" class="app__screenshots" alt="screenshots" />';
 
     function isDevice() {
         return (isIOS || isAndroid);
