@@ -40,6 +40,10 @@
     }
     .item__standfirst {
         display: block;
+
+        @include mq(desktop) {
+            @include fs-headline(1, true);
+        }
     }
     .item__media-wrapper {
         @include mq(tablet) {
@@ -64,11 +68,13 @@
         margin-top: 0;
     }
     .item__meta {
-        position: static;
-        @include rem((
-            margin-top: $gs-baseline,
-            margin-bottom: $gs-baseline
-        ));
+        @include mq(tablet) {
+            position: static;
+            @include rem((
+                margin-top: $gs-baseline,
+                margin-bottom: $gs-baseline
+            ));
+        }
     }
     .item__title {
         @include rem((
