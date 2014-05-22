@@ -169,7 +169,7 @@
                             css: {
                                 'is-placeholder': !props.navSection()
                             },
-                            optionsCaption: placeholders.navSection,
+                            optionsCaption: placeholders.navSection() || '...',
                             options: $root.navSections,
                             value: props.navSection"></select>
 
