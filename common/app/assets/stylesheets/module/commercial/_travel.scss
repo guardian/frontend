@@ -468,10 +468,8 @@ $c-commercial-travel-dark: #002b6c;
                     padding-right: 10px;
                 }
                 
-                .lineitem__offer {
-                    .lineitem__link {
-                        width: auto;
-                    }
+                .lineitem__offer .lineitem__link {
+                    width: auto;
                 }
                 .lineitem__image {
                     width: 100%;
