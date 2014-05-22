@@ -1,5 +1,7 @@
 @(competition: model.Competition, groupStage: _root_.football.model.Groups)(implicit request: RequestHeader)
+@import conf.Switches._
 
+@if(WorldCupWallchartEmbedSwitch.isSwitchedOn){@* This is here to remind us to remove the group link (:15) when the world cup is finished *@}
 <ul class="football-groups u-unstyled u-cf">
     @groupStage.groupTables.zipWithRowInfo.map{ case ((round, leagueTableEntries), row) =>
         @defining(groupStage.matchesList(competition, round)) { matches =>
@@ -10,6 +12,7 @@
                             <div class="football-group__table">
                                 @football.views.html.tablesList.tableView(competition, model.Group(round, leagueTableEntries),
                                     heading = round.name,
+                                    headingLink = round.name.map(competition.url+"-"+_.toLowerCase.replace(" ", "-")),
                                     striped = true,
                                     withCrests = true
                                 )
@@ -20,7 +23,7 @@
                                     @competitionMatches.map { case (competition, matches) =>
                                         @football.views.html.matchList.matchesList(matches, competition, date,
                                             linkToCompetition = false,
-                                            heading = if(info.isFirst) Option("Fixtures and results") else None
+                                            heading = if(info.isFirst) Option(("Fixtures and results", None)) else None
                                         )
                                     }
                                 }

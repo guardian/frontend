@@ -165,7 +165,11 @@
         @renderGroup(round: Round, leagueTableEntries: Seq[LeagueTableEntry], matchesList: football.model.MatchesList) = {
             <div class="group">
                 @defining(model.Group(round, leagueTableEntries)) { group =>
-                    @round.name.map{ name => <div class="group__name">@name</div>}
+                    @round.name.map{ name =>
+                        <div class="group__name">
+                            <a href="/football/world-cup-2014-@name.toLowerCase.replace(' ', '-')" target="_top">@name</a>
+                        </div>
+                    }
                     <div class="flags">
                         @group.entries.map{ entry =>
                             <div class="flag"><img src="@Configuration.staticSport.path/football/crests/120/@{entry.team.id}.png" width="26" height="15" alt="Flag for @entry.team.name" /></div>
