@@ -117,11 +117,6 @@ class ArticleSlotTest extends FlatSpec with Matchers with BeforeAndAfterEach {
 
     val adSlot = adSlots.first()
     adSlot.attr("data-name") should be("spbadge")
-
-    val containers = adSlot.select(".ad-slot__container")
-    containers.size() should be(1)
-
-    val container = containers.first()
-    container.id() should be("dfp-ad--spbadge")
+    adSlot.id() should be("dfp-ad--spbadge")
   }
 }
