@@ -21,23 +21,24 @@ define([
     findFirstById
 ) {
     function Front(opts) {
-        var self = this,
-            props = [
-                'section',
-                'webTitle',
-                'title',
-                'description',
-                'priority'];
+        var self = this;
 
         opts = opts || {};
 
         this.id = ko.observable(opts.id);
 
-        this.props  = asObservableProps(props);
+        this.props  = asObservableProps([
+            'navSection',
+            'webTitle',
+            'title',
+            'description',
+            'priority']);
 
         populateObservables(this.props,  opts);
 
-        this.capiProps = asObservableProps(props);
+        this.capiProps = asObservableProps([
+            'section',
+            'webTitle']);
 
         this.state = asObservableProps([
             'isOpen',
@@ -68,7 +69,7 @@ define([
 
         this.placeholders = {};
 
-        this.placeholders.section = ko.computed(function() {
+        this.placeholders.navSection = ko.computed(function() {
             var path = asPath(this.id()),
                 isEditionalised = [].concat(config.editions).some(function(edition) { return edition === path[0]; });
 
@@ -82,11 +83,11 @@ define([
         }, this);
 
         this.placeholders.title = ko.computed(function() {
-            return this.props.title() || this.capiProps.title() || (this.placeholders.webTitle() + ' | ' + toTitleCase(this.props.section() || this.placeholders.section()));
+            return this.props.title() || (this.placeholders.webTitle() + ' | ' + toTitleCase(this.props.navSection() || this.placeholders.navSection()));
         }, this);
 
         this.placeholders.description  = ko.computed(function() {
-            return this.props.description() || this.capiProps.description() || ('Latest ' + this.placeholders.webTitle() + ' news, comment and analysis from the Guardian, the world\'s leading liberal voice');
+            return this.props.description() || ('Latest ' + this.placeholders.webTitle() + ' news, comment and analysis from the Guardian, the world\'s leading liberal voice');
         }, this);
     }
 
