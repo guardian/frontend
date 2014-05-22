@@ -295,6 +295,12 @@ object Switches extends Collections {
     safeState = On, sellByDate = new DateMidnight(2014, 6, 30)
   )
 
+  val FaciaFirstContainerLayoutOverrideSwitch = Switch("Feature Switches", "facia-first-container-layout-override",
+    "If this switch is turned on then the first container on every facia front will have a fixed layout " +
+      "containing two slices with one big article in each one of them",
+    safeState = On, sellByDate = new DateMidnight(2014, 6, 10)
+  )
+
   val EnhanceTweetsSwitch = Switch("Feature Switches", "enhance-tweets",
     "If this switch is turned on then embedded tweets will be enhanced using Twitter's widgets.",
     safeState = Off, sellByDate = never
@@ -474,6 +480,7 @@ object Switches extends Collections {
     GzipSwitch,
     GeoMostPopular,
     TagLinkingSwitch,
+    FaciaFirstContainerLayoutOverrideSwitch,
     ABHeaderSearchText,
     ABHighRelevanceCommercialComponent,
     SmartBannerSwitch,
