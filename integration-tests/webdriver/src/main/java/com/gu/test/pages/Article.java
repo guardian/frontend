@@ -16,20 +16,20 @@ public class Article {
     }
 
 
-    public void shareViaEmail(){
+    public void shareViaEmail() {
         driver.findElement(By.cssSelector(".i-share-email")).click();
     }
 
-    public void shareOnFacebook(){
-        driver.findElement(By.cssSelector("i-share-facebook")).click();
-            }
-
-    public void shareOnTwitter(){
-        driver.findElement(By.cssSelector("i-share-twitter i")).click();
+    public void shareOnFacebook() {
+        driver.findElement(By.cssSelector(".i-share-facebook")).click();
     }
 
-    public void shareOnGooglePlus(){
-        driver.findElement(By.cssSelector("i-share-gplus i")).click();
+    public void shareOnTwitter() {
+        driver.findElement(By.cssSelector(".i-share-twitter")).click();
+    }
+
+    public void shareOnGooglePlus() {
+        driver.findElement(By.cssSelector(".i-share-gplus")).click();
     }
 
 
@@ -38,14 +38,14 @@ public class Article {
         return driver.findElement(By.cssSelector(".right-most-popular")).isDisplayed();
     }
 
-    public Article goToFirstArticleInMostPopularRight(){
+    public Article goToFirstArticleInMostPopularRight() {
 
         driver.findElement(By.cssSelector(".right-most-popular-item")).click();
         return new Article(driver);
     }
 
 
-    public String getArticleHeadline(){
+    public String getArticleHeadline() {
         return driver.findElement(By.cssSelector(".article__headline")).getText();
     }
 }
