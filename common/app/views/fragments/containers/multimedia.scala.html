@@ -30,7 +30,7 @@
                         }
                         <div class="container__body container--rolled-up-hide">
                             <div class="facia-slice-wrapper facia-slice-wrapper--position-1">
-                                <ul class="u-unstyled l-row l-row--items-3 l-row--layout-m collection">
+                                <ul class="u-unstyled l-row l-row--items-3 l-row--layout-m facia-slice">
                                     @items.take(1).zipWithIndex.map{ case (trail, index) =>
                                         @fragments.collections.items.standard(trail, index, containerIndex, "l-row__item--break-m")
                                     }
@@ -48,7 +48,7 @@
                             @defining(items.slice(3, 7)) { items =>
                                 @if(items.nonEmpty) {
                                     <div class="facia-slice-wrapper facia-slice-wrapper--position-2">
-                                        <ul class="u-unstyled l-row l-row--items-4 collection">
+                                        <ul class="u-unstyled l-row l-row--items-4 facia-slice">
                                             @items.zipWithIndex.map{ case (trail, index) =>
                                                 @fragments.collections.items.standard(trail, index + 3, containerIndex)
                                             }

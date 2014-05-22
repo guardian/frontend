@@ -33,7 +33,7 @@
             @defining(items.slice(baguetteCount + 2, baguetteCount + 6)) { items =>
                 @if(items.nonEmpty) {
                     <div class="facia-slice-wrapper">
-                        <ul class="u-unstyled l-row l-row--layout-m l-row--items-4 collection">
+                        <ul class="u-unstyled l-row l-row--layout-m l-row--items-4 facia-slice">
                             @items.zipWithIndex.map{ case (trail, index) =>
                                 @fragments.collections.items.standard(trail, baguetteCount + index + 2, containerIndex)
                             }

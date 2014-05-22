@@ -1,7 +1,7 @@
 @(items: Seq[Trail], style: Container, containerIndex: Int)(implicit request: RequestHeader, config: Config)
 
 <div class="facia-slice-wrapper">
-    <ul class="u-unstyled l-row l-row--items-4 l-row--layout-m collection">
+    <ul class="u-unstyled l-row l-row--items-4 l-row--layout-m facia-slice">
         @items.slice(0, 4).zipWithIndex.map{ case (trail, index) =>
             @fragments.collections.items.standard(trail, index + 3, containerIndex)
         }
