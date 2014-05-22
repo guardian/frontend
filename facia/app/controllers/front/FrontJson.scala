@@ -95,7 +95,7 @@ trait FrontJson extends ExecutionContexts {
   private def parseSeoData(id: String, seoJson: JsValue): SeoData = {
     val seoDataJson = SeoDataJson(
       id,
-      (seoJson \ "section").asOpt[String].filter(_.nonEmpty),
+      (seoJson \ "navSection").asOpt[String].filter(_.nonEmpty),
       (seoJson \ "webTitle").asOpt[String].filter(_.nonEmpty),
       (seoJson \ "title").asOpt[String].filter(_.nonEmpty),
       (seoJson \ "description").asOpt[String].filter(_.nonEmpty)
@@ -105,7 +105,7 @@ trait FrontJson extends ExecutionContexts {
 
     SeoData(
       id,
-      seoDataJson.section.getOrElse(seoDataFromPath.section),
+      seoDataJson.navSection.getOrElse(seoDataFromPath.navSection),
       seoDataJson.webTitle.getOrElse(seoDataFromPath.webTitle),
       seoDataJson.title,
       seoDataJson.description.orElse(seoDataFromPath.description)

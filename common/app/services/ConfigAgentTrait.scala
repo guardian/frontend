@@ -81,7 +81,7 @@ trait ConfigAgentTrait extends ExecutionContexts with Logging {
     val frontJson = (json \ "fronts" \ path).as[JsValue]
     SeoDataJson(
       path,
-      section   = (frontJson \ "section").asOpt[String].filter(_.nonEmpty),
+      navSection   = (frontJson \ "navSection").asOpt[String].filter(_.nonEmpty),
       webTitle  = (frontJson \ "webTitle").asOpt[String].filter(_.nonEmpty).map(webTitleCase),
       title  = (frontJson \ "title").asOpt[String].filter(_.nonEmpty),
       description  = (frontJson \ "description").asOpt[String].filter(_.nonEmpty)
