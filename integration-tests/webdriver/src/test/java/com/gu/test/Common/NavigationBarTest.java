@@ -15,16 +15,14 @@ import static com.gu.test.WebDriverFactory.createWebDriver;
 public class NavigationBarTest {
     WebDriver driver;
     private PageHelper pageHelper;
-    private FrontPage fronts;
     private NavigationBar navigationBar;
-    private SectionFront sectionFront;
 
     @Before
     public void setUp() throws Exception {
         driver = createWebDriver();
         pageHelper = new PageHelper(driver);
         navigationBar = new NavigationBar(driver);
-        fronts = pageHelper.goToFronts();
+        pageHelper.goToFronts();
     }
 
     @Test
@@ -36,20 +34,20 @@ public class NavigationBarTest {
 
     @Test
     public void changingFromUKtoAUEdition() throws Exception {
-        fronts = navigationBar.goToEdition("AU");
+        navigationBar.goToEdition("AU");
         Assert.assertTrue("Failure: not seeing AU fronts", driver.getCurrentUrl().contentEquals(pageHelper.getBaseUrl() + "/au"));
     }
 
     @Test
     public void goToFootballFrontsViaNavBar() throws Exception {
-        sectionFront = navigationBar.goToFootballFront();
+        navigationBar.goToFootballFront();
         Assert.assertTrue("Failure: not seeing football fronts", driver.getCurrentUrl().contentEquals(pageHelper.getBaseUrl() + "/football"));
 
     }
 
     @Test
     public void goToWorldNewsFrontsViaNavBar() throws Exception {
-        sectionFront = navigationBar.goToWorldNewsFront();
+        navigationBar.goToWorldNewsFront();
         Assert.assertTrue("Failure: not seeing world news fronts", driver.getCurrentUrl().contentEquals(pageHelper.getBaseUrl() + "/world"));
 
     }

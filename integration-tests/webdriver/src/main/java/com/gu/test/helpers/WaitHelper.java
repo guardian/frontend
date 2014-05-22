@@ -6,9 +6,6 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-/**
- * Created by TLau on 20/05/2014.
- */
 public class WaitHelper {
 
     public static void waitForArticleLoad(WebDriver driver) {

@@ -1,5 +1,6 @@
 package com.gu.test.helpers;
 
+import com.gu.test.pages.Article;
 import com.gu.test.pages.FrontPage;
 import org.openqa.selenium.WebDriver;
 
@@ -20,6 +21,11 @@ public class PageHelper {
         String frontPageURL = this.getBaseUrl() + betaSite;
         driver.get(frontPageURL);
         return new FrontPage(driver);
+    }
+
+    public Article goToArticle(String article){
+        driver.get(this.baseUrl + article);
+        return new Article(driver);
     }
 
     public FrontPage goToFrontsForTracking() {

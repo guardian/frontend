@@ -2,7 +2,7 @@
 @import conf.Switches._
 
 @defining((model.article, model.storyPackage, !model.article.isSport)) {  case (article, storyPackage, isDefault) =>
-<article class="content content--liveblog tone-@article.visualTone blog @if(article.isLive){is-live}"
+<article class="content content--liveblog tone-@article.visualTone blog @if(article.isLive){is-live} section-@article.sectionName.toLowerCase"
     itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType" role="main">
 
     <header class="content__head content__head--tonal">
@@ -50,6 +50,8 @@
 
             @fragments.standfirst(article)
 
+            <div class="js-football-tabs football-tabs content__mobile-full-width"></div>
+
             @fragments.mainMedia(article)
 
             <div class="blog__left-col">
@@ -83,6 +85,9 @@
                 <div class="social-wrapper" data-component="share">
                     @fragments.social(article)
                 </div>
+
+                <div class="after-article js-after-article"></div>
+
                 <div class="js-bottom-marker"></div>
             }
         </div>
