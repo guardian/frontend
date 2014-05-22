@@ -26,7 +26,8 @@
 
     .ad-slot--top-banner-ad {
         display: none;
-        min-height: 90 + ($gs-baseline*2);
+        @include box-sizing(border-box);
+        min-height: 90 + ($gs-baseline*2) + ($gs-row-height/2);
         @include rem((
             padding-bottom: $gs-row-height/2
         ));
@@ -34,14 +35,31 @@
         @include mq(tablet) {
             display: block;
         }
+        @include mq(faciaLeftCol) {
+            text-align: left;
+            margin: 0 auto;
+            @include rem((
+                width: gs-span(14),
+                padding-left: gs-span(2)+$gs-gutter
+            ));
+        }
+        @include mq(wide) {
+            @include rem((
+                width: gs-span(16),
+                padding-left: gs-span(3)+$gs-gutter
+            ));
+        }
     }
     .ad-slot__label {
         text-align: left;
         border-top: 0;
-        width: 728px;
         padding: 0;
-        margin: 0 auto;
         height: $gs-baseline*2;
+
+        @include mq(tablet, faciaLeftCol) {
+            width: 728px;
+            margin: 0 auto;
+        }
     }
 }
 .ad-slot--container-inline {
