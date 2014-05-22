@@ -125,6 +125,11 @@ object Switches extends Collections {
     safeState = On, sellByDate = never
   )
 
+  val SmartBannerSwitch = Switch("Advertising", "smart-banner",
+    "Display smart app banner onboarding message to iOS and Android users",
+    safeState = Off, sellByDate = new DateMidnight(2014, 6, 30)
+  )
+
   // Ad Targeting
   /*
     These switches are to control length of request to DFP
@@ -395,7 +400,7 @@ object Switches extends Collections {
   )
 
   val FeaturesAutoContainerSwitch = Switch("Facia Switches", "facia-features-auto-container",
-    "If this switch is turned on, the features auto container has the right to live.",
+    "If this switch is on, the features auto container has the right to live.",
     safeState = Off, sellByDate = new DateMidnight(2014, 6, 15)
   )
 
@@ -471,6 +476,7 @@ object Switches extends Collections {
     TagLinkingSwitch,
     ABHeaderSearchText,
     ABHighRelevanceCommercialComponent,
+    SmartBannerSwitch,
     FeaturesAutoContainerSwitch
   )
 
