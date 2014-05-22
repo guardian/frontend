@@ -1,0 +1,115 @@
+/**
+ * Saucisson object
+ *
+ * Single full width story
+ */
+
+
+/* Wrapper
+   ========================================================================== */
+
+.saucisson {
+    @include rem((
+        margin: 0 $gs-gutter/2 $gs-baseline
+    ));
+    border-top-width: 2px;
+    border-top-style: solid;
+
+    @include mq(tablet) {
+        @include rem((
+            margin-bottom: $gs-baseline*1.75
+        ));
+    }
+
+    .item__title {
+        @include fs-headline(2, $size-only: true);
+        padding-top: 0;
+        @include rem((
+            margin-bottom: $gs-baseline
+        ));
+
+        @include mq(tablet) {
+            @include fs-headline(4, true);
+            @include rem((
+                margin-bottom: $gs-baseline*1.25
+            ));
+        }
+    }
+}
+.saucisson,
+.saucisson__container {
+    @include clearfix;
+}
+.saucisson__container {
+    // used for spacing, width set if needed
+    border-top: 0 solid transparent;
+    position: relative;
+    @include rem((
+        padding-bottom: $gs-row-height - $gs-baseline/3
+    ));
+
+    @include mq(tablet) {
+        padding-bottom: 0;
+        padding-left: 66.6666666%;
+    }
+}
+
+
+/* Main elements
+   ========================================================================== */
+
+.saucisson__link {
+    color: $c-neutral1;
+    display: block;
+
+    &:hover,
+    &:focus {
+        text-decoration: none;
+
+        .item__title {
+            text-decoration: underline;
+        }
+    }
+    &:active {
+        .item__title {
+            text-decoration: none;
+        }
+    }
+    &:visited,
+    &:visited .item__title {
+        color: $c-neutral2;
+    }
+}
+.saucisson__media-wrapper {
+    @include box-sizing(border-box);
+
+    @include mq(tablet) {
+        @include rem((
+            margin-right: $gs-gutter/2,
+            padding-right: $gs-gutter/2
+        ));
+        float: left;
+        width: 200%; // Twice as big as the text bit
+        margin-left: -200%;
+    }
+}
+.saucisson__image-container {}
+
+.saucisson__standfirst {
+    @include f-headline;
+    @include rem((
+        font-size: 14px,
+        line-height: 18px
+    ));
+    color: $c-neutral2;
+
+    p {
+        margin-bottom: 0; // Some trail texts are wrapped in a paragraph
+    }
+
+    @include mq(tablet) {
+        @include rem((
+            margin-bottom: $gs-baseline + 2
+        ));
+    }
+}

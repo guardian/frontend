@@ -54,7 +54,8 @@ define([
     'common/modules/commercial/loader',
     'common/modules/onward/tonal',
     'common/modules/identity/api',
-    'common/modules/onward/more-tags'
+    'common/modules/onward/more-tags',
+    'common/modules/ui/smartAppBanner'
 ], function (
     $,
     mediator,
@@ -109,7 +110,8 @@ define([
     CommercialLoader,
     TonalComponent,
     id,
-    MoreTags
+    MoreTags,
+    smartAppBanner
 ) {
 
     var modules = {
@@ -501,6 +503,12 @@ define([
 
         showMoreTagsLink: function() {
             new MoreTags().init();
+        },
+
+        showSmartBanner: function(config) {
+            if(config.switches.smartBanner) {
+                smartAppBanner.init();
+            }
         }
     };
 
@@ -551,6 +559,7 @@ define([
             modules.startRegister(config);
             modules.repositionComments();
             modules.showMoreTagsLink();
+            modules.showSmartBanner(config);
         }
         mediator.emit('page:common:ready', config, context);
     };

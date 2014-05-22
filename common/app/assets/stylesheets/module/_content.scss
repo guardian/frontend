@@ -277,6 +277,9 @@
     color: $c-neutral2;
     @include box-sizing(border-box);
     @include fs-data(2);
+    @include rem((
+        padding-top: $gs-baseline/4
+    ));
 
     i {
         position: relative;
@@ -289,13 +292,6 @@
         ));
     }
 
-    .content__meta-container--no-byline & {
-        border-top: 1px dotted $c-neutral5;
-        @include rem((
-            padding-top: $gs-baseline/3
-        ));
-    }
-
     @include mq(tablet) {
         padding-right: 0;
         @include fs-data(3, true);
@@ -304,9 +300,11 @@
     @include mq(leftCol) {
         @include rem((
             height: $gs-row-height,
-            padding-top: 2px,
+            padding-top: $gs-baseline/6,
             padding-bottom: $gs-baseline
         ));
+    }
+    @include mq($from: leftCol) {
         border-top: 1px dotted $c-neutral5;
     }
 
@@ -323,7 +321,7 @@
     width: gs-span(1);
     height: 60px; //Intentionally off grid
     @include rem((
-            margin: $gs-baseline/2 0
+        margin: $gs-baseline/2 0
     ));
     overflow: hidden;
     @include border-radius(50%);
@@ -356,27 +354,27 @@
     min-height: gs-height(1);
     position: relative;
     @include rem((
-            margin-bottom: $gs-baseline
+        margin-bottom: $gs-baseline
     ));
-    border-top: 1px dotted $c-neutral5;
-    border-bottom: 1px dotted $c-neutral5;
+    @include mq($to: leftCol) {
+        border-top: 1px dotted $c-neutral5;
+        border-bottom: 1px dotted $c-neutral5;
+    }
 
     @include mq(leftCol) {
         position: absolute;
         top: 0;
         @include rem((
-                margin-left: ($a-leftCol-width + $gs-gutter)*-1,
-                margin-bottom: ($gs-baseline/3)*4,
-                width: $a-leftCol-width
+            margin-left: ($a-leftCol-width + $gs-gutter)*-1,
+            margin-bottom: ($gs-baseline/3)*4,
+            width: $a-leftCol-width
         ));
-        border-top: 0;
-        border-bottom: 0;
     }
 
     @include mq(wide) {
         @include rem((
-                margin-left: (gs-span(3) + $gs-gutter)*-1,
-                width: gs-span(3)
+            margin-left: (gs-span(3) + $gs-gutter)*-1,
+            width: gs-span(3)
         ));
     }
 }
@@ -470,6 +468,35 @@
         @include rem((
             margin-left: -$gs-gutter,
             margin-right: -$gs-gutter
+        ));
+    }
+}
+
+.byline {
+    margin-bottom: 0;
+    @include fs-bodyHeading(1);
+    @include rem((
+        padding-top: $gs-baseline/3,
+        line-height: 20px
+    ));
+    color: $c-neutral2;
+
+    @include mq(tablet) {
+        @include fs-bodyHeading(2, true);
+        @include rem((
+            padding-right: gs-span(2),
+            line-height: 22px
+        ));
+    }
+
+    @include mq(leftCol) {
+        margin-bottom: 0;
+        padding-right: 0;
+        border-top: 1px dotted $c-neutral5;
+        @include rem((
+            min-height: gs-height(1),
+            padding-top: $gs-baseline/6,
+            padding-bottom: $gs-baseline
         ));
     }
 }

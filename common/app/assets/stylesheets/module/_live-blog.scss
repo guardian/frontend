@@ -934,6 +934,9 @@ $timeline-width: 14px;
         @include mq($from: rightCol) {
             border-top: 0 !important;
             float: left;
+            @include rem((
+                width: gs-span(3)
+            ));
         }
 
         .tone-colour {
