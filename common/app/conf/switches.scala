@@ -339,13 +339,6 @@ object Switches extends Collections {
     safeState = On, new DateMidnight().minusDays(1)
   )
 
-  // Facia Switches
-
-  val NewFeaturesContainerSwitch = Switch("Facia", "facia-new-features-container",
-    "If this switch is turned on, the new features container has the right to live.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 6, 15)
-  )
-
   // Facia Tool Switches
 
   val ToolDisable = Switch("Facia Tool", "facia-tool-disable",
@@ -394,14 +387,21 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
+  val FaciaToolContainerTagsSwitch = Switch("Facia Tool", "facia-tool-tags",
+    "If this switch is on the container configuration will allow articles to show their tags or sections",
+    safeState = Off, sellByDate = new DateMidnight(2014, 6, 7)
+  )
+
+  // Facia Switches
+
   val NewSeoSwitch = Switch("Facia Switches", "new-seo-switch",
     "If this switch is on then the SEO elements for pages will be take from the tool, content api and generated",
     safeState = Off, sellByDate = new DateMidnight(2014, 5, 30)
   )
 
-  val FaciaToolContainerTagsSwitch = Switch("Facia Tool", "facia-tool-tags",
-    "If this switch is on the container configuration will allow articles to show their tags or sections",
-    safeState = Off, sellByDate = new DateMidnight(2014, 6, 7)
+  val FeaturesAutoContainerSwitch = Switch("Facia Switches", "facia-features-auto-container",
+    "If this switch is on, the features auto container has the right to live.",
+    safeState = Off, sellByDate = new DateMidnight(2014, 6, 15)
   )
 
   // Image Switch
@@ -477,7 +477,7 @@ object Switches extends Collections {
     ABHeaderSearchText,
     ABHighRelevanceCommercialComponent,
     SmartBannerSwitch,
-    NewFeaturesContainerSwitch
+    FeaturesAutoContainerSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }

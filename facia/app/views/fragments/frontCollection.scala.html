@@ -1,7 +1,7 @@
 @(front: MetaData, block: (Config, Collection), collectionsSize: Int = 1, index: Int = 1)(implicit request: RequestHeader, templateDeduping: TemplateDeduping)
 @import views.support.ForceGroupsCollection
 
-@import Switches.NewFeaturesContainerSwitch
+@import Switches.FeaturesAutoContainerSwitch
 
 @block._1.collectionType match {
     case Some("news")                       => { @containers.news(block._2, NewsContainer(), index)(request, templateDeduping, block._1) }
@@ -21,9 +21,9 @@
     case Some("features/section")           => { @containers.section(block._2, SectionContainer(tone = "feature"), index)(request, templateDeduping, block._1) }
     case Some("comment/section")            => { @containers.section(block._2, SectionContainer(tone = "comment"), index)(request, templateDeduping, block._1) }
     case Some("features/multimedia")        => { @containers.multimedia(block._2, MultimediaContainer(), index)(request, templateDeduping, block._1) }
-    case Some("newfeatures")                => {
-                                                @if(NewFeaturesContainerSwitch.isSwitchedOn){
-                                                    @containers.newfeatures(block._2, NewFeaturesContainer(), index)(request, templateDeduping, block._1)
+    case Some("features/auto")              => {
+                                                @if(FeaturesAutoContainerSwitch.isSwitchedOn){
+                                                    @containers.featuresauto(block._2, FeaturesAutoContainer(), index)(request, templateDeduping, block._1)
                                                 }else{
                                                     @containers.features(block._2, FeaturesContainer(), index)(request, templateDeduping, block._1)
                                                 }

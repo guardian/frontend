@@ -125,10 +125,7 @@
 
 .fromage__standfirst {
     @include f-headline;
-    @include rem((
-        font-size: 14px,
-        line-height: 18px
-    ));
+    @include font-size(14, 18);
     color: $c-neutral2;
 
     p {

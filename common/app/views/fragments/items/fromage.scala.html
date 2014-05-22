@@ -60,7 +60,6 @@
 
             @fragments.items.elements.supporting(trail.supporting, style = "fit")
 
-            @* Display meta only if there is a discussion *@
             @if(trail.isCommentable) {
                 @fragments.items.elements.meta(trail)
             }
