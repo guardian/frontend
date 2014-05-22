@@ -35,7 +35,7 @@ define([
         return (new MatchInfo(match, config.page.pageId)).fetch().then(function(resp) {
             var $nav = $.create(resp.nav).first().each(function(nav) {
                 if (match.id || $('.tabs__tab', nav).length > 2) {
-                    $('.after-header', context).append(nav);
+                    $('.js-football-tabs', context).append(nav);
                 }
             });
 

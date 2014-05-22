@@ -131,6 +131,8 @@
 .content__section {
     @include fs-header(3);
     @include box-sizing(border-box);
+    position: relative;
+    z-index: 1; // bring-to-front fix to max it clickable
     @include rem((
         padding-bottom: $gs-baseline
     ));
@@ -452,6 +454,21 @@
         .has-localnav & {
             padding-top: 0;
         }
+    }
+}
+
+.content__mobile-full-width {
+    @include mq($to: mobileLandscape) {
+        @include rem((
+            margin-left: -($gs-gutter/2),
+            margin-right: -($gs-gutter/2)
+        ));
+    }
+    @include mq($from: mobileLandscape, $to: tablet) {
+        @include rem((
+            margin-left: -$gs-gutter,
+            margin-right: -$gs-gutter
+        ));
     }
 }
 
