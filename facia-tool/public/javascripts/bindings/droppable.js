@@ -72,8 +72,15 @@ define([
                     var targetList = ko.dataFor(element),
                         targetItem = ko.dataFor(event.target),
                         id = event.dataTransfer.getData('Text'),
-                        ourQueryParams   = parseQueryParams(id, 'gu-', false, true),
-                        theirQueryParams = parseQueryParams(id, 'gu-', true),
+                        ourQueryParams   = parseQueryParams(id, {
+                            namespace: 'gu-',
+                            excludeNamespace: false,
+                            stripNamespace: true
+                        }),
+                        theirQueryParams = parseQueryParams(id, {
+                            namespace: 'gu-',
+                            excludeNamespace: true
+                        }),
                         sourceItem,
                         position,
                         newItems,
