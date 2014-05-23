@@ -25,7 +25,7 @@
     @include mq($from: rightCol) {
         @include rem((
             margin-left: $gs-gutter,
-            padding-right: gs-span(4) + $gs-gutter*2
+            margin-right: gs-span(4) + $gs-gutter*2
         ));
     }
     @include mq($from: leftCol) {
@@ -44,13 +44,13 @@
     &.content__main-column--wide {
         @include mq(rightCol) {
             @include rem((
-                padding-right: $gs-gutter
+                margin-right: $gs-gutter
             ));
             max-width: none;
         }
         @include mq(wide) {
             @include rem((
-                padding-right: 100px
+                margin-right: 100px
             ));
         }
     }
@@ -332,7 +332,7 @@
         height: gs-span(2); //This is intentionally square
         margin-right: 0;
         @include rem((
-                margin-bottom: $gs-baseline,
+            margin-bottom: $gs-baseline,
         ));
     }
 }

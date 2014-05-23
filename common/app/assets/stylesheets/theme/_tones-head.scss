@@ -8,6 +8,7 @@
 
 // Tonal article styles
 @include article-header-tone(feature, $c-featureDefault, $c-featureAccent2, #ffffff, 'white');
+@include article-header-tone(comment, $c-commentAccent, $c-commentAccent2, $c-neutral1, 'black');
 @include article-header-tone(live, $c-liveDefault, $c-liveAccent, #ffffff, 'white');
 
 
@@ -43,7 +44,16 @@
     .content-meta {
         border-top: 0 !important;
     }
+
+    .tone-background .content__main-column:after {
+        // not including clearfix here because we only want to clear at :after
+        content: '';
+        display: table;
+        clear: both;
+    }
 }
+
+
 
 .tone-live .content__head--tonal {
     .content-meta__label {
@@ -54,7 +64,8 @@
     }
 }
 
-.tone-feature--article {
+.tone-feature--article,
+.tone-comment--article {
     @include mq($from: tablet) {
         .content__main-column--article {
             @include rem((
@@ -64,8 +75,103 @@
     }
 }
 
-.tone-comment--article {
-    .tone-background {
-        background: #ffffff;
+.content__head--tonal {
+
+    .content__headline--byline {
+        padding-bottom: $gs-baseline*2;
+        min-height: none;
+    }
+
+    .content__headline--byline,
+    .byline-img {
+        display: block;
+        padding-top: 0 !important;
+        margin-top: -$gs-baseline*2;
+        @include mq(tablet) {
+            margin-top: -$gs-baseline*3;
+        }
+    }
+
+    .byline-img {
+        float: right;
+        @include rem((
+            height: $gs-baseline * 12.5
+        ));
+
+        @include mq($to: mobileLandscape) {
+            @include rem((
+                margin-left: -(gs-span(1) + $gs-gutter)
+            ));
+        }
+        @include mq(mobileLandscape) {
+            width: 0;
+            position: absolute;
+            bottom: 0;
+            @include rem((
+                height: $gs-baseline * 16.6,
+                right: gs-span(3)
+            ));
+        }
+        @include mq(tablet) {
+            height: 95%;
+            max-height: none;
+            @include rem((
+                right: gs-span(3) + $gs-gutter
+            ));
+        }
+        @include mq(rightCol) {
+            height: 110%;
+            @include rem((
+                right: gs-span(1) + $gs-gutter
+            ));
+        }
+    }
+    .byline-img__img {
+        height: 100%;
+    }
+}
+
+.content__head--byline-pic {
+    .content__headline {
+
+        @include mq(mobileLandscape) {
+            @include rem((
+                padding-right: gs-span(2)
+            ));
+        }
+        @include mq(tablet) {
+            @include rem((
+                padding-right: gs-span(2)
+            ));
+        }
+        @include mq(rightCol) {
+            @include rem((
+                padding-right: $gs-gutter*2
+            ));
+        }
+        @include mq(wide) {
+            padding-right: 0;
+        }
+    }
+    .content__head__comment-count {
+        position: absolute;
+        bottom: 0;
+    }
+}
+
+.tone-comment .content__head--tonal .content__section .tone-colour {
+    @include mq($to: leftCol) {
+        color: $c-commentDefault;
+    }
+}
+.tone-comment .content__head--tonal .content-meta__label {
+    color: $c-neutral2;
+}
+
+.tone-comment .content__headline--byline .tone-colour {
+    color: $c-neutral2;
+    &:hover {
+        text-decoration: none;
+        border-bottom: 2px solid;
     }
 }

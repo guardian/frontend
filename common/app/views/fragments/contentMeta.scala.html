@@ -9,7 +9,9 @@
 }
 
 @metaBody() = {
-    @byline(content)
+    @if(!content.hasTonalHeaderByline) {
+        byline(content)
+    }
     @fragments.meta.dateline(content.webPublicationDate, secondary=true)
     <div class="js-comment-count"></div>
     <div class="social-wrapper social-wrapper--aside" data-component="share">
@@ -31,7 +33,7 @@
         }
     }
 
-    @if(content.hasLargeContributorImage) {
+    @if(content.hasLargeContributorImage && !content.hasTonalHeaderByline) {
         <div class="media__img meta__image">
             @fragments.meta.bylineImage(content)
         </div>
