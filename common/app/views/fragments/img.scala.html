@@ -1,42 +1,52 @@
-@(img: Option[model.ImageContainer], isShowcase: Boolean = false, isFullWidth: Boolean = false)
-@import views.support.{Item620, Naked}
+@(img: Option[model.ImageContainer], isShowcase: Boolean = false, isFeature: Boolean = false)
+@import views.support.{Item300, Item620, Showcase, Naked, Profile}
 
 @img.map{ picture =>
 
-    @if(isFullWidth) {
-        @ImgSrc.imager(picture, Naked).map { imgSrc =>
-            <figure itemprop="associatedMedia image" itemscope itemtype="http://schema.org/ImageObject" data-component="image"
-                class="media-primary media-content@if(isShowcase){ media-primary--showcase}">
+    <figure itemprop="associatedMedia image" itemscope itemtype="http://schema.org/ImageObject" data-component="image"
+        class="media-primary media-content@if(isShowcase){ media-primary--showcase}">
+
+        @if(isFeature && isShowcase) {
+            @ImgSrc.imager(picture, Naked).map { imgSrc =>
+
                 <div class="js-image-upgrade u-responsive-ratio u-responsive-ratio--letterbox" data-src="@imgSrc">
-                    @image(picture, Item620)
+                    @image(picture)
                 </div>
                 <div class="gs-container">
                     <div class="content__main-column">
-                        @caption(picture, Item620)
+                        @caption(picture)
                     </div>
                 </div>
-            </figure>
+            }
+        } else {
+            @if(isShowcase) {
+                @upgrade(picture, Showcase)
+            } else {
+                @upgrade(picture, Item620)
+            }
+            @caption(picture)
         }
-    } else {
-        <figure itemprop="associatedMedia image" itemscope itemtype="http://schema.org/ImageObject" data-component="image"
-            class="media-primary media-content@if(isShowcase){ media-primary--showcase}" >
-            @image(picture, Item620)
-            @caption(picture, Item620)
-        </figure>
+    </figure>
+}
+
+@upgrade(picture: model.ImageContainer, upgradeProfile: Profile) = {
+    @ImgSrc.imager(picture, upgradeProfile).map { imgSrc =>
+        <div class="js-image-upgrade" data-src="@imgSrc">
+            @image(picture)
+        </div>
     }
 }
 
-@image(image: model.ImageContainer, imageProfile: views.support.Profile) = {
-
-    <img src="@imageProfile.bestFor(image).map(Html(_))"
+@image(picture: model.ImageContainer) = {
+    <img src="@Item300.bestFor(picture).map(Html(_))"
          class="maxed responsive-img"
          itemprop="contentURL representativeOfPage"
-         title="@imageProfile.altTextFor(image).getOrElse("")"
-         alt="@imageProfile.altTextFor(image).getOrElse("")" />
+         title="@Item300.altTextFor(picture).getOrElse("")"
+         alt="@Item300.altTextFor(picture).getOrElse("")" />
 }
 
-@caption(image: model.ImageContainer, imageProfile: views.support.Profile) = {
-  @imageProfile.captionFor(image).map { caption =>
-      <figcaption class="main-caption" itemprop="description">@Html(caption)</figcaption>
-  }
+@caption(picture: model.ImageContainer) = {
+    @Item300.captionFor(picture).map { caption =>
+        <figcaption class="main-caption" itemprop="description">@Html(caption)</figcaption>
+    }
 }

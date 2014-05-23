@@ -173,59 +173,22 @@ trait Navigation  {
 case class BreadcrumbItem(href: String, title: String)
 
 object Breadcrumbs {
-
   def items(navigation: Seq[NavItem], page: Content): Seq[BreadcrumbItem] = {
-
-    val primaryKeyword = page.keywordTags.head
-    lazy val secondaryKeyword = page.keywordTags.tail.head
-
-    def getTopLevelNavigationItem: Option[NavItem] = {
-      val topLevelSelected = Navigation.topLevelItem(navigation, page)
-      navigation find {
-        navItem =>
-          topLevelSelected.exists(_ == navItem) && navItem.name.href != primaryKeyword.url
-      }
-    }
-
-
-    def getLocalNavigationItem: Option[SectionLink] = {
-      Navigation.localNav(navigation, page) match {
-        case Some(sectionLinks) => {
-          sectionLinks.find(_.currentFor(page)) find {
-            link => sectionLinks.exists(_ == link) && link.href!= primaryKeyword.url
-          }
-        }
-        case _ => None
-      }
-    }
-
-    (getTopLevelNavigationItem, getLocalNavigationItem) match {
-      case (Some(navItem), Some(sectionLink)) => Seq(
-          BreadcrumbItem(navItem.name.href, navItem.name.breadcumbTitle),
-          BreadcrumbItem(sectionLink.href, sectionLink.breadcumbTitle),
-          BreadcrumbItem(primaryKeyword.url, primaryKeyword.name)
-      )
-      case (Some(navItem), None) => Seq (
-          BreadcrumbItem(navItem.name.href, navItem.name.breadcumbTitle),
-          BreadcrumbItem(primaryKeyword.url, primaryKeyword.name),
-          BreadcrumbItem(secondaryKeyword.url, secondaryKeyword.name)
-      )
-      case _ => Seq (
-          BreadcrumbItem("/%s".format(page.section), page.sectionName),
-          BreadcrumbItem(primaryKeyword.url, primaryKeyword.name),
-          BreadcrumbItem(secondaryKeyword.url, secondaryKeyword.name)
-      )
-    }
+    val primaryKeywod = page.keywordTags.headOption.map(k => BreadcrumbItem(k.url, k.webTitle))
+    val firstBreadcrumb = Navigation.topLevelItem(navigation, page).map(n => BreadcrumbItem(n.name.href, n.name.breadcumbTitle)).orElse(Some(BreadcrumbItem(s"/${page.section}", page.sectionName)))
+    val secondBreadcrumb = Navigation.subNav(navigation, page).map(s => BreadcrumbItem(s.href, s.breadcumbTitle)).orElse(primaryKeywod)
+    Seq(firstBreadcrumb, secondBreadcrumb, primaryKeywod).flatten.distinct
   }
 }
 
 
-// helper for the views
-object Navigation {
-  
-  def topLevelItem(navigation: Seq[NavItem], page: MetaData): Option[NavItem] = navigation.find(_.exactFor(page))
+  // helper for the views
+  object Navigation {
+
+    def topLevelItem(navigation: Seq[NavItem], page: MetaData): Option[NavItem] = navigation.find(_.exactFor(page))
     .orElse(navigation.find(_.currentFor(page)))
 
+  def subNav(navigation: Seq[NavItem], page: MetaData): Option[SectionLink] = topLevelItem(navigation, page).flatMap(_.links.find(_.currentFor(page)))
 
   def localNav(navigation: Seq[NavItem], page: MetaData): Option[Seq[SectionLink]] = topLevelItem(navigation, page)
     .map(_.links).filter(_.nonEmpty)

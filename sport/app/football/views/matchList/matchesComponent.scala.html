@@ -11,7 +11,7 @@
                     competition,
                     date,
                     matchType = matchesList.pageType,
-                    heading = if(dateRow.isFirst) Option(competition.fullName) else None,
+                    heading = if(dateRow.isFirst) Some((competition.fullName, Option(competition.url))) else None,
                     link = if(dateRow.isLast && matchRow.isLast)
                             Some(("View all "+matchesList.pageType, "/football/"+matchesList.pageType)) else None
                 )

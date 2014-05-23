@@ -169,3 +169,9 @@
         }
     }
 }
+
+.after-article .football-extras {
+    @include rem((
+        margin-top: $gs-baseline*2
+    ));
+}

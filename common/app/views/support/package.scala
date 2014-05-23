@@ -255,7 +255,7 @@ case class VideoEmbedCleaner(contentVideos: Seq[VideoElement]) extends HtmlClean
 
 case class PictureCleaner(contentImages: Seq[ImageElement]) extends HtmlCleaner with implicits.Numbers {
 
-  def clean(body: Document): Document = {
+  def cleanStandardPictures(body: Document): Document = {
     body.getElementsByTag("figure").foreach { fig =>
       if(!fig.hasClass("element-comment") && !fig.hasClass("element-witness")) {
         fig.attr("itemprop", "associatedMedia")
@@ -267,11 +267,11 @@ case class PictureCleaner(contentImages: Seq[ImageElement]) extends HtmlCleaner 
           fig.addClass("img")
           img.attr("itemprop", "contentURL")
 
-          asset.foreach { image =>
+          asset.map { image =>
             image.url.map(url => img.attr("src", ImgSrc(url, Item620).toString))
             img.attr("width", s"${image.width}")
 
-            //otherwsie we mess with aspect ratio
+            //otherwise we mess with aspect ratio
             img.removeAttr("height")
 
             fig.addClass(image.width match {
@@ -300,8 +300,30 @@ case class PictureCleaner(contentImages: Seq[ImageElement]) extends HtmlCleaner 
     body
   }
 
+  def cleanShowcasePictures(body: Document): Document = {
+    for {
+      element <- body.getElementsByClass("element--showcase")
+      asset <- findContainerFromId(element.attr("data-media-id"))
+      imagerSrc <- ImgSrc.imager(asset, Showcase)
+      imgElement <- element.getElementsByTag("img")
+    } {
+      imgElement.wrap(s"""<div class="js-image-upgrade" data-src="$imagerSrc"></div>""")
+      imgElement.addClass("responsive-img")
+    }
+
+    body
+  }
+
+  def clean(body: Document): Document = {
+    cleanShowcasePictures(cleanStandardPictures(body))
+  }
+
   def findImageFromId(id:String): Option[ImageAsset] = {
-    contentImages.find(_.id == id).flatMap(Item620.elementFor)
+    findContainerFromId(id).flatMap(Item620.elementFor)
+  }
+
+  def findContainerFromId(id:String): Option[ImageContainer] = {
+    contentImages.find(_.id == id)
   }
 }
 

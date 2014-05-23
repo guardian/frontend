@@ -7,22 +7,29 @@ $c-replyText: $c-body;
    ========================================================================== */
 
 .discussion {
+    @include rem((
+        margin-bottom: $gs-baseline*2
+    ));
     @include mq(leftCol) {
         @include rem((
-            margin-left: - ($a-leftCol-width + $gs-gutter)
+            margin-left: -($a-leftCol-width + $gs-gutter)
         ));
     }
     @include mq(wide) {
         @include rem((
-            margin-left: - ($a-leftColWide-width + $gs-gutter)
+            margin-left: -($a-leftColWide-width + $gs-gutter)
         ));
+    }
+
+    .pagination_legend {
+        display: none !important; // overriding .hide-on-mobile-inline
     }
 }
 
 .discussion--lowered {
     @include mq(leftCol) {
         @include rem((
-            margin-right: - ($a-leftCol-width + ($gs-gutter * 9))
+            margin-right: -($a-leftCol-width + ($gs-gutter * 9))
         ));
 
         .d-discussion {
@@ -31,7 +38,7 @@ $c-replyText: $c-body;
     }
     @include mq(wide) {
         @include rem((
-            margin-right: - ($a-leftColWide-width + ($gs-gutter * 9))
+            margin-right: -($a-leftColWide-width + ($gs-gutter * 9))
         ));
         .d-discussion {
             max-width: gs-span(12);
@@ -44,6 +51,26 @@ $c-replyText: $c-body;
         font-size: 14px
     ));
 }
+.d-discussion--shut {
+    .discussion-content {
+        display: none;
+    }
+}
+.show-more__container--hidden {
+    display: none;
+}
+.d-discussion--partial {
+    .d-comment--top-level:nth-of-type(n+3) {
+        display: none;
+    }
+    .d-discussion__pagination {
+        display: none;
+    }
+    .show-more__container--hidden {
+        display: block;
+    }
+}
+
 .d-discussion__comment-count {
     @include fs-textsans(4);
     min-height: $gs-baseline * 2;
@@ -1158,7 +1185,7 @@ $c-replyText: $c-body;
     @include mq(rightCol) {
         max-width: none;
         @include rem((
-            padding-right: 25%
+            margin-right: 25%
         ));
     }
 }

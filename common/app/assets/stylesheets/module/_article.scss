@@ -413,50 +413,13 @@
     position: relative;
     display: block;
     content: ' ';
+    @include rem((
+        margin-top: $gs-baseline*2
+    ));
 
     //This is required for football components, please do not remove
     @include mq(rightCol) {
         display: none;
-    }
-}
-
-.drop-cap {
-    @include mq($to: tablet) {
-        float: left;
-        display: inline-block;
-        text-transform: uppercase;
-        @include f-headline;
-        font-weight: 200;
-        @include box-sizing(border-box);
-        @include rem((
-            height: 2*get-line-height($fs-bodyCopy, 3),
-            padding-top: 1px,
-            margin-right: 4px
-        ));
-
-        .drop-cap__inner {
-            display: inline-block;
-            vertical-align: text-top;
-            @include font-size(52px, 40px);
-        }
-    }
-}
-
-.drop-cap--wide {
-    @include mq($from: tablet) {
-        float: left;
-        display: inline-block;
-        text-transform: uppercase;
-        @include f-headline;
-        font-weight: 200;
-        @include rem((
-            margin-right: 5px,
-            height: 3*get-line-height($fs-bodyCopy, 3)
-        ));
-
-        .drop-cap__inner {
-            @include font-size(84px, 68px);
-        }
     }
 }
 

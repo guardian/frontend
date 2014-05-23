@@ -18,66 +18,49 @@
         <div class="d-discussion__meta d-dicussion__meta--sorting d-meta-item">
             Comments sorted
             <select class="d-discussion__order-control">
-                <option value="oldest"@if(page.orderBy == "oldest"){ selected="selected"}>oldest</option>
-                <option value="newest"@if(page.orderBy == "newest"){ selected="selected"}>newest</option>
+                <option value="oldest" @if(page.orderBy == "oldest"){selected="selected"}>oldest</option>
+                <option value="newest" @if(page.orderBy == "newest"){selected="selected"}>newest</option>
             </select>
             first.
         </div>
     </div>
 
-    <div class="js-new-comments"></div>
-
-    <div class="show-more__container show-more__container--newer">
-        @if(page.currentPage != 1){
-        <a class="d-discussion__show-more d-discussion__show-more--newer"
-            href="@LinkTo{/discussion@if(page.orderBy == "oldest"){/oldest}/@page.id?page=@(page.currentPage - 1)}"
-            data-link-name="Show more comments"
-            data-age="newer"
-            data-page="@(page.currentPage - 1)">
-            <span class="d-discussion__show-more-button"><i class="i i-plus-white-med"></i></span>
-            <span class="d-discussion__show-more-text">Show @if(page.orderBy == "newest"){newer}else{older} comments</span>
-        </a>
-        }
-    </div>
-
     <div class="preload-msg d-discussion__loader u-h">Loading comments…<div class="is-updating"></div></div>
-    <ul class="d-thread d-thread--top-level">
-        @page.comments.map{ comment =>
-            @fragments.comment(comment, page.isClosedForRecommendation, false, isTopComments)
+    <div class="discussion-content js-discussion-content">
+        @if(!isTopComments){
+            <div class="d-discussion__pagination">
+                @page.pagination.map{ paginate => @fragments.pagination(page, paginate, Some("js-discussion-change-page")) }
+            </div>
         }
-        <li class="d-image-fade u-h"></li>
-    </ul>
 
-    <div class="show-more__container show-more__container--hidden u-h">
-        <a class="d-discussion__show-hidden d-discussion__show-more" data-link-name="Show hidden comments" data-disabled="true" title="Show comments">
-            <span class="d-discussion__show-more-button"><i class="i i-plus-white-med"></i></span>
-            <span class="d-discussion__show-more-text">Show comments</span>
-        </a>
-    </div>
+        @if(page.orderBy == "newest"){<div class="js-new-comments"></div>}
+        <ul class="d-thread d-thread--top-level">
+            @page.comments.map{ comment =>
+                @fragments.comment(comment, page.isClosedForRecommendation, false, isTopComments)
+            }
+            <li class="d-image-fade u-h"></li>
+        </ul>
+        @if(page.orderBy == "oldest"){<div class="js-new-comments"></div>}
 
-    <div class="show-more__container show-more__container--older">
-        @if(page.currentPage + 1 <= page.pages){
-        <a class="d-discussion__show-more d-discussion__show-more--older"
-            href="@LinkTo{/discussion@if(page.orderBy == "oldest"){/oldest}@page.id?page=@(page.currentPage + 1)}"
-            data-link-name="Show more comments"
-            data-age="older"
-            data-page="@(page.currentPage + 1)">
-            <span class="d-discussion__show-more-button"><i class="i i-plus-white-med"></i></span>
-            <span class="d-discussion__show-more-text">Show more comments</span>
-        </a>
+        @if(!isTopComments){
+            <div class="d-discussion__pagination">
+                @page.pagination.map{ paginate => @fragments.pagination(page, paginate, Some("js-discussion-change-page")) }
+            </div>
         }
     </div>
 
-    <div class="show-more__container show-more__container--featured u-h">
-        <a class="js-show-more-top-comments d-discussion__show-more d-discussion__show-more--featured"
-            data-link-name="Show more featured comments"    
-            data-remove="true" 
-            href="@LinkTo{/discussion@if(page.orderBy == "oldest"){/oldest}/@page.id?page=1}"
-            title="Show more featured comments">
-            <span class="d-discussion__show-more-button"><i class="i i-plus-white-med"></i></span>
-            <span class="d-discussion__show-more-text">Show more featured comments</span>
-        </a>    
-    </div>
+    @if(isTopComments){
+        <div class="show-more__container show-more__container--featured u-h">
+            <a class="js-show-more-top-comments d-discussion__show-more d-discussion__show-more--featured"
+                data-link-name="Show more featured comments"
+                data-remove="true"
+                href="@LinkTo{/discussion@if(page.orderBy == "oldest"){/oldest}/@page.id?page=1}"
+                title="Show more featured comments">
+                <span class="d-discussion__show-more-button"><i class="i i-plus-white-med"></i></span>
+                <span class="d-discussion__show-more-text">Show more featured comments</span>
+            </a>
+        </div>
+    }
 
     <script type="text/template" id="tmpl-comment-box">@fragments.commentBox()</script>
     <script type="text/template" id="tmpl-banned-user">@fragments.cannotComment()</script>

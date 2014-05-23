@@ -152,15 +152,15 @@ object Frontend extends Build with Prototypes {
 
   // this app has a very limited set.
   // it is designed to get all other services (e.g. onwards) from PROD
-  val preview = application("preview")
-    .dependsOn(
-      facia,
-      applications,
-      article,
-      sport,
-      commercial,
-      onward
-    )
+  val preview = application("preview").dependsOn(
+    withTests(common),
+    article,
+    facia,
+    applications,
+    sport,
+    commercial,
+    onward
+  )
 
   val main = root().aggregate(
     common,

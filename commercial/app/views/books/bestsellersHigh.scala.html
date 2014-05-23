@@ -2,11 +2,6 @@
 
 @import conf.Configuration
 
-@if(play.Play.isDev()) {
-    <link rel="stylesheet" href="@Static("stylesheets/head.default.css")" />
-    <link rel="stylesheet" href="@Static("stylesheets/global.css")" />
-}
-
 <style>
     .i--commercial { background-image: url(@Static("images/commercial/sprite.png")); }
 </style>
@@ -75,7 +70,7 @@
                 <div class="commercial__relevance commercial__relevance-low u-cf">
                     <h4 class="commercial__relevance-title commercial__relevance-title-low">You also might like</h4>
                     <ul class="u-unstyled lineitems">
-                        @books.take(2).map { book =>
+                        @books.drop(1).take(2).map { book =>
                         <li class="lineitem u-cf">
                             <a href="@AdLink{@book.buyUrl}" data-link-name="merchandising-bookshop-v@{version}_@{date}-high-@{book.isbn}-@{book.author}-@{book.title}-cover">
                                 @book.jacketUrl.map { url =>

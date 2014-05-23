@@ -7,7 +7,7 @@
     @block._1.collectionType match {
         case Some("news")                       => { @containers.news(block._2, NewsContainer(), index)(request, templateDeduping, block._1) }
         case Some("news/auto")                  => { @containers.news(ForceGroupsCollection.firstTwoBig(block._2), NewsContainer(), index)(request, templateDeduping, block._1) }
-        case _ if index == 0                    => { @collectionsSize match {
+        case _ if layoutOverride && index == 0  => { @collectionsSize match {
             case size if size < 3               => { @containers.tag(front, block._2, NewsContainer(showMore = false), index)(request, templateDeduping, block._1) }
             case _                              => { @containers.tag(front, block._2, NewsContainer(), index)(request, templateDeduping, block._1) }
         }}

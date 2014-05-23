@@ -1,27 +1,15 @@
-.facia-slice--linkslist-and-mpu {
-    @include rem((
-        padding-top: $gs-baseline/3
-    ));
-
-    .facia-slice__item {
-        padding-bottom: 0;
-        margin-bottom: 0;
-
-        @if $browser-supports-flexbox == false {
-            &:first-child {
-                @include mq(desktop) {
-                    @include rem((
-                        width: gs-span(8)
-                    ));
-                }
-            }
-        }
+.slice--has-ad {
+    &:before {
+        display: none;
+    }
+    @include mq(tablet) {
+        min-height: (250 + $mpu-ad-label-height)*$mpu-scale-ratio;
+    }
+    @include mq(desktop) {
+        min-height: 250 + $mpu-ad-label-height;
     }
     .linkslist {
         @if $browser-supports-columns {
-            margin-left: rem($gs-gutter/2);
-            margin-right: rem($gs-gutter/2);
-
             @include mq(tablet, desktop) {
                 -webkit-column-width: rem(gs-span(3));
                 -moz-column-width: rem(gs-span(3));
@@ -29,8 +17,6 @@
             }
         } @else {
             @include mq(tablet) {
-                width: auto;
-
                 .linkslist__item {
                     width: gs-span(3);
 
@@ -45,44 +31,12 @@
                 }
             }
         }
-    }
-}
 
-.l-row__item--mpu {
-    position: relative;
-
-    @include mq(tablet) {
-        max-height: gs-height(6);
-        min-height: $mpu-ad-label-height + $mpu-resulting-height + $mpu-align-offset;
-    }
-    @include mq(desktop) {
-        max-height: gs-height(7);
-        min-height: $mpu-ad-label-height + $mpu-original-height + $mpu-align-offset;
-    }
-
-    @if $browser-supports-flexbox {
-        @include mq(tablet, desktop) {
-            .ad-slot--dfp {
-                margin-left: 0;
-            }
-
-            // Shrink ad to fit a row item (3 grid columns on tablet)
-            // 1. scale ad down to $mpu-target-width
-            // 2. scale origin is the bottom right corner
-            .ad-slot__container {
-                -webkit-transform: scale($mpu-scale-ratio); // 1
-                -moz-transform: scale($mpu-scale-ratio); // 1
-                transform: scale($mpu-scale-ratio); // 1
-                -webkit-transform-origin: 100% 100%; // 2
-                -moz-transform-origin: 100% 100%; // 2
-                transform-origin: 100% 100%; // 2
-            }
+        @include mq(tablet) {
+            width: gs-span(6);
         }
         @include mq(desktop) {
-            min-width: gs-span(4) + $gs-gutter;
-            max-width: gs-span(4) + $gs-gutter;
+            width: gs-span(8);
         }
-    } @else {
-        width: gs-span(4);
     }
 }

@@ -1,4 +1,4 @@
-@(page: MetaData, pagination: Pagination)(implicit request: RequestHeader)
+@(page: MetaData, pagination: Pagination, actionClass: Option[String] = None)(implicit request: RequestHeader)
 @import model._
 @import common._
 
@@ -14,13 +14,13 @@
         <ol class="u-unstyled pagination__links">
             <li class="pagination__item pagination__item--next">
                 @pagination.next.map { next =>
-                    <a rel="next" href="@paginated(page.url, next)">Next</a>
+                    <a class="@actionClass" data-page="@next" rel="next" href="@paginated(page.url, next)">Next</a>
                 }.getOrElse{ Next }
             </li>
 
             <li class="pagination__item pagination__item--prev">
                 @pagination.previous.map{ prev =>
-                    <a rel="prev" href="@paginated(page.url, prev)">Previous</a>
+                    <a class="@actionClass" data-page="@prev" rel="prev" href="@paginated(page.url, prev)">Previous</a>
                 }.getOrElse{ Previous }
             </li>
 
@@ -29,7 +29,7 @@
                     @if(pageNum == pagination.currentPage) {
                         <span class="pagination__action">@pageNum</span>
                     } else {
-                        <a class="pagination__action" href="@paginated(page.url, pageNum)">@pageNum</a>
+                        <a class="pagination__action @actionClass" data-page="@pageNum" href="@paginated(page.url, pageNum)">@pageNum</a>
                     }
                 </li>
             }

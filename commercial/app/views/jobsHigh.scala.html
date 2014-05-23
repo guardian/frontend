@@ -1,13 +1,5 @@
 @(jobs: Seq[model.commercial.jobs.Job])(implicit request: RequestHeader)
 
-@if(play.Play.isDev()) {
-    <link rel="stylesheet" href="@Static("stylesheets/head.default.css")" />
-    <link rel="stylesheet" href="@Static("stylesheets/global.css")" />
-    <style>
-        .i { background-image: url(@Static("images/global/sprite.png")); }
-    </style>
-}
-
 <link rel="stylesheet" href="@Static("stylesheets/commercial.css")" />
 
 @defining("http://jobs.theguardian.com", "0_1", "2014-05-16") { case (jobsHost, version, date) =>
