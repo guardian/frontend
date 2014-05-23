@@ -1,5 +1,6 @@
 @(page: model.Page, matchesList: football.model.MatchesList, filters: Map[String, Seq[CompetitionFilter]])(implicit request: RequestHeader)
 
+@import conf.Switches
 @import football.model._
 
 @main(page, "football"){
@@ -40,7 +41,11 @@
                                                 date,
                                                 responsiveFont = true,
                                                 matchType = matchesList.pageType,
-                                                heading = Some((competition.fullName, Option(competition.url)))
+                                                heading = Some {
+                                                    Switches.WorldCupWallchartEmbedSwitch.isSwitchedOn  // this is a special case for the world cup, remove it afterwards
+                                                    if (competition.url == "world-cup-2014") (matches.headOption.flatMap(m => m.round.name).getOrElse(competition.fullName), Option(competition.url))
+                                                    else (competition.fullName, Option(competition.url)
+                                                }
                                             )
                                         </div>
                                     </div>
