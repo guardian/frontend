@@ -3,6 +3,12 @@
         margin-bottom: $gs-baseline*3.5
     ));
     @include fs-bodyCopy(3);
+
+    &:after { // clearfix
+        content: '';
+        display: block;
+        clear: both;
+    }
 }
 
 .content__main-column {
@@ -61,6 +67,7 @@
     top: 0;
     right: 0;
     height: 100%;
+    overflow: hidden; // quick hackfix for overflowing right hand components
     @include rem((
         margin-right: $gs-gutter
     ));
@@ -132,7 +139,7 @@
     @include fs-header(3);
     @include box-sizing(border-box);
     position: relative;
-    z-index: 1; // bring-to-front fix to max it clickable
+    z-index: 1; // bring-to-front fix to make it clickable
     @include rem((
         padding-bottom: $gs-baseline
     ));
@@ -378,6 +385,13 @@
             margin-left: (gs-span(3) + $gs-gutter)*-1,
             width: gs-span(3)
         ));
+    }
+}
+
+.content__meta-container--float {
+    @include mq(leftCol) {
+        float: left;
+        position: static;
     }
 }
 
