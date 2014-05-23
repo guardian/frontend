@@ -67,6 +67,7 @@
     top: 0;
     right: 0;
     height: 100%;
+    overflow: hidden; // quick hackfix for overflowing right hand components
     @include rem((
         margin-right: $gs-gutter
     ));
