@@ -16,7 +16,7 @@
                     <span class="u-h">Soulmates</span>
                 </h3>
                 <p class="commercial__explainer">The Guardian's online dating site with over 200,000 members</p>
-                <a href="@AdLink{@Configuration.commercial.soulmates_url}?INTCMP=mic_232613"
+                <a href="@AdLink{@Configuration.commercial.soulmates_url}"
                     class="commercial__buy-now-button"
                     data-link-name="merchandising-soulmates-v@{version}_@{date}-high-join-now">
                     Join now
@@ -28,7 +28,7 @@
                         <li class="lineitem">
                             <a class="lineitem__link"
                                 data-link-name="merchandising-soulmates-v@{version}_@{date}-high-profile-@{member.gender}"
-                                href="@AdLink{@member.profileUrl}?INTCMP=mic_232613">
+                                href="@AdLink{@member.profileUrl}">
                                 <img class="lineitem__image" src="@member.profilePhoto" alt="" width="80" height="100" />
                                 <h4 class="lineitem__title">@member.username</h4>
                                 <p class="lineitem__meta">@member.age, @member.location</p>
