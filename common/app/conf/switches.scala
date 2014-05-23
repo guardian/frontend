@@ -328,6 +328,11 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 6, 5)
   )
 
+  val ABMobileHideSupportingLinks = Switch("A/B Tests", "ab-mobile-hide-supporting-links",
+    "If this switch is turned on, run the MobileHideSupportingLinks A/B test.",
+    safeState = Off, sellByDate = new DateMidnight(2014, 6, 5)
+  )
+
   // Dummy Switches
 
   val IntegrationTestSwitch = Switch("Unwired Test Switch", "integration-test-switch",
@@ -483,6 +488,7 @@ object Switches extends Collections {
     FaciaFirstContainerLayoutOverrideSwitch,
     ABHeaderSearchText,
     ABHighRelevanceCommercialComponent,
+    ABMobileHideSupportingLinks,
     SmartBannerSwitch,
     FeaturesAutoContainerSwitch
   )
