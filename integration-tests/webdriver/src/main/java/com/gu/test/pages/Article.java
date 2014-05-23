@@ -39,13 +39,45 @@ public class Article {
     }
 
     public Article goToFirstArticleInMostPopularRight() {
-
-        driver.findElement(By.cssSelector(".right-most-popular-item")).click();
+        driver.findElement(By.cssSelector(".right-most-popular-item__url")).click();
         return new Article(driver);
+    }
+
+    public String getFirstArticleInMostPopularRight() {
+        return driver.findElement(By.cssSelector(".right-most-popular-item__url")).getText();
     }
 
 
     public String getArticleHeadline() {
-        return driver.findElement(By.cssSelector(".article__headline")).getText();
+        return driver.findElement(By.cssSelector(".content__headline")).getText();
+    }
+
+
+    public boolean hasRelatedContentContainer() {
+        return driver.findElement(By.cssSelector(".related")).isDisplayed();
+    }
+
+    public String getFirstRelatedArticle() {
+        return driver.findElement(By.cssSelector(".related .item__link")).getText();
+    }
+
+    public Article goToFirstRelatedArticle() {
+        driver.findElement(By.cssSelector(".related .item__link")).click();
+        return new Article(driver);
+    }
+
+    public String getFirstArticleInMostPopularBelow() {
+        return driver.findElement(By.cssSelector(".article__popular div#tabs-popular-1 .headline-list__body")).getText();
+    }
+
+    public boolean hasMostPopularBelow() {
+        return driver.findElement(By.cssSelector(".article__popular")).isDisplayed();
+    }
+
+    public Article goToFirstArticleInMostPopularBottom() {
+        driver.findElement(By.cssSelector(".article__popular div#tabs-popular-1 a")).click();
+        return new Article(driver);
     }
 }
+
+
