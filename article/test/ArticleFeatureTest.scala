@@ -1,3 +1,4 @@
+
 package test
 
 import conf.{Switches, HealthcheckPage, Configuration}
@@ -8,6 +9,7 @@ import collection.JavaConversions._
 import play.api.libs.ws.WS
 import scala.concurrent.duration._
 import scala.concurrent.Await
+import org.fluentlenium.core.filter.FilterConstructor._
 
 class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
@@ -604,6 +606,13 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
           import browser._
           Then("I should see three breadcrumbs")
           $(".breadcrumb-keyword").size() should be (3)
+
+          val link = find(".breadcrumb-keyword a", withText().contains("Culture"))
+          link.length should be > 0
+          val link2 = find(".breadcrumb-keyword a", withText().contains("Books"))
+          link2.length should be > 0
+          val link3 = find(".breadcrumb-keyword a", withText().contains("Orwell prize"))
+          link3.length should be > 0
       }
 
       Given("I am on a piece of content with a primary nav and a key woro")
@@ -611,6 +620,11 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
           import browser._
           Then("I should see three breadcrumbs")
           $(".breadcrumb-keyword").size() should be (2)
+
+          val link = find(".breadcrumb-keyword a", withText().contains("Comment"))
+          link.length should be > 0
+          val link2 = find(".breadcrumb-keyword a", withText().contains("Heritage"))
+          link2.length should be > 0
       }
 
       Given("I am on a piece of content with no primary nav and a no key words")
@@ -618,6 +632,9 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
           import browser._
           Then("I should see one breadcrumbs")
           $(".breadcrumb-keyword").size() should be (1)
+
+          val link = find(".breadcrumb-keyword a", withText().contains("Observer Ethical Awards"))
+          link.length should be > 0
       }
     }
   }
