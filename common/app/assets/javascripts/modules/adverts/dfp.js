@@ -230,12 +230,12 @@ define([
                 contentType = encodeTargetValue(conf.contentType),
                 edition     = encodeTargetValue(conf.edition),
                 keywords;
-            if (conf.keywords) {
-                keywords = conf.keywords.split(',').map(function (keyword) {
-                    return encodeTargetValue(keyword);
+            if (conf.keywordIds) {
+                keywords = conf.keywordIds.split(',').map(function (keywordId) {
+                    return keywordId.split('/')[1];
                 });
             } else {
-                keywords = '';
+                keywords = conf.pageId;
             }
 
             return defaults({
