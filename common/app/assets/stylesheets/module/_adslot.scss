@@ -33,8 +33,7 @@
     }
     .ad-slot--top-banner-ad {
         display: none;
-        @include box-sizing(border-box);
-        min-height: 90 + ($gs-baseline*2) + ($gs-row-height/2);
+        min-height: 90 + ($gs-baseline*2);
         @include rem((
             padding-bottom: $gs-row-height/2
         ));
@@ -62,13 +61,13 @@
         text-align: left;
         margin: 0 auto;
         @include rem((
-            width: gs-span(14),
+            width: gs-span(14) - (gs-span(2) + $gs-gutter),
             padding-left: gs-span(2) + $gs-gutter
         ));
     }
     @include mq(wide) {
         @include rem((
-            width: gs-span(16),
+            width: gs-span(16) - (gs-span(3) + $gs-gutter),
             padding-left: gs-span(3) + $gs-gutter
         ));
     }
@@ -89,13 +88,13 @@
     @include mq(leftCol) {
         margin: 0 auto;
         @include rem((
-            max-width: gs-span(14) + ($gs-gutter*2),
+            max-width: gs-span(14) + ($gs-gutter*2) - (gs-span(2) + ($gs-gutter*2)),
             padding-left: gs-span(2) + ($gs-gutter*2)
         ));
     }
     @include mq(wide) {
         @include rem((
-            max-width: gs-span(16) + ($gs-gutter*2),
+            max-width: gs-span(16) + ($gs-gutter*2) - (gs-span(3) + ($gs-gutter*2)),
             padding-left: gs-span(3) + ($gs-gutter*2)
         ));
     }
