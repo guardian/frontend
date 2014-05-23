@@ -56,6 +56,7 @@ define([
             bestbuy:           this.host + 'money/bestbuys.json?'           + this.userSegments + '&s=' + this.section + '&' + this.getKeywords(),
             book:              this.host + 'books/book/' + this.pageId      + '.json',
             books:             this.host + 'books/bestsellers.json?'        + this.userSegments + '&s=' + this.section + '&' + this.getKeywords(),
+            booksMedium:       this.host + 'books/bestsellers-medium.json?' + this.userSegments + '&s=' + this.section + '&' + this.getKeywords(),
             booksHigh:         this.host + 'books/bestsellers-high.json?'   + this.userSegments + '&s=' + this.section + '&' + this.getKeywords(),
             jobs:              this.host + 'jobs.json?'                     + this.userSegments + '&s=' + this.section + '&' + this.getKeywords(),
             jobsHigh:          this.host + 'jobs-high.json?'                + this.userSegments + '&s=' + this.section + '&' + this.getKeywords(),
