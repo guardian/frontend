@@ -3,6 +3,14 @@ define(['utils/url-query'], function(urlQuery) {
     return function(url, opts) {
         opts = opts || {};
 
+        /**
+         * Returns query params as an object.
+         * @param {function} predicate        Function to determine which vals get included
+         * @param {string}   namespace        Optional prefix for param keys
+         * @param {boolean}  excludeNamespace Optional whether to exclude or include namespaced params
+         * @param {boolean}  stripNamespace   Optional whether to strip namsepace from param names
+         */
+
         return _.chain(urlQuery(url).split('&'))
             .filter(function(kv) {
                 return kv; })
