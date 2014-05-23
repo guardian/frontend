@@ -22,5 +22,21 @@ object TravelOffers extends Controller {
         case offers => Cached(60)(JsonComponent(views.html.travelOffers(offers take 4)))
       }
   }
+  
+  def renderOfferHigh = Action {
+    implicit request =>
+      OffersAgent.adsTargetedAt(segment) match {
+        case Nil => NotFound
+        case offers => Cached(60)(Ok(views.html.travelOffersHigh(offers take 4)))
+      }
+  }
+
+  def listOffersHigh = Action {
+    implicit request =>
+      OffersAgent.adsTargetedAt(segment) match {
+        case Nil => JsonNotFound.apply()
+        case offers => Cached(60)(JsonComponent(views.html.travelOffersHigh(offers take 4)))
+      }
+  }
 
 }
