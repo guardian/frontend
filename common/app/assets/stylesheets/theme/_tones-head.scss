@@ -107,8 +107,8 @@
             width: 0;
             position: absolute;
             bottom: 0;
+            height: 95%;
             @include rem((
-                height: $gs-baseline * 16.6,
                 right: gs-span(3)
             ));
         }
@@ -116,7 +116,8 @@
             height: 95%;
             max-height: none;
             @include rem((
-                right: gs-span(3) + $gs-gutter
+                right: gs-span(3),
+                min-height: gs-span(2) + ($gs-gutter*2)
             ));
         }
         @include mq(rightCol) {
@@ -141,7 +142,7 @@
         }
         @include mq(tablet) {
             @include rem((
-                padding-right: gs-span(2)
+                padding-right: gs-span(2) + ($gs-gutter/2)
             ));
         }
         @include mq(rightCol) {
