@@ -16,11 +16,10 @@ define([
         this.description = 'Test user retention upon hiding the article supporting links on facia fronts';
         this.audience = 0.08;
         this.audienceOffset = 0.92;
-        this.successMeasure = '';//Click component through/revenue, and container\'s click through.';
+        this.successMeasure = 'Click through rates on front overall and clicks on news container';
         this.audienceCriteria = 'Audience to the fronts';
         this.dataLinkNames = 'Hide supporting links on mobile';
-        this.idealOutcome = '';
-        //'Click through/revenue produced by component increases, without detrimentally impacting click through on containers/';
+        this.idealOutcome = 'Ideal outcome is that click through is increased overall';
 
         this.canRun = function (config) {
             // only apply on facia fronts
