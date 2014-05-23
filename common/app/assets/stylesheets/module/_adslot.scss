@@ -33,7 +33,7 @@
     }
     .ad-slot--top-banner-ad {
         display: none;
-        min-height: 90 + ($gs-baseline*2);
+        min-height: 90 + ($gs-row-height/2);
         @include rem((
             padding-bottom: $gs-row-height/2
         ));
@@ -48,7 +48,7 @@
         text-align: left;
         border-top: 0;
         padding: 0;
-        height: $gs-baseline*2;
+        height: $gs-row-height/2;
     }
     iframe {
         -webkit-transform: translateZ(0);
