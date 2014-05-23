@@ -8,7 +8,7 @@
 
     itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType" role="main">
 
-    @if(List(Tags.VisualTone.Feature, Tags.VisualTone.Comment) contains article.visualTone) {
+    @if(article.isComment || article.isFeature) {
         @fragments.headTonal(article)
         @if(article.isFeature && article.hasShowcaseMainPicture) {
             @fragments.mainMedia(article)

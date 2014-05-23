@@ -83,7 +83,7 @@
     .content__headline--byline,
     .byline-img {
         display: block;
-        padding-top: 0 !important;
+        padding-top: 0;
         margin-top: -$gs-baseline*2;
         @include mq(tablet) {
             margin-top: -$gs-baseline*3;
@@ -158,13 +158,15 @@
     }
 }
 
-.tone-comment .content__head--tonal .content__section .tone-colour {
-    @include mq($to: leftCol) {
-        color: $c-commentDefault;
+.tone-comment .content__head--tonal {
+    .content__section .tone-colour {
+        @include mq($to: leftCol) {
+            color: $c-commentDefault;
+        }
     }
-}
-.tone-comment .content__head--tonal .content-meta__label {
-    color: $c-neutral2;
+    .content-meta__label {
+        color: $c-neutral2;
+    }
 }
 
 .tone-comment .content__headline--byline .tone-colour {
