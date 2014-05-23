@@ -49,7 +49,7 @@ developer.properties
 
 *-spec-runner.html
 
-static/requirejs
+static/hash
 static/abtests.json
 
 common/app/assets/stylesheets/theme/_commercial-icons-sprite.scss
