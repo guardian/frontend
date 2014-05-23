@@ -91,6 +91,13 @@
         padding: 0;
         height: $gs-baseline*2;
     }
+    iframe {
+        transform: translateZ(0);
+
+        -webkit-transition: height 1s;
+        -moz-transition: height 1s;
+        transition: height 1s cubic-bezier(0, 0, 0, .985);
+    }
 }
 .ad-slot--container-inline {
     height: 50 + $mpu-ad-label-height;
