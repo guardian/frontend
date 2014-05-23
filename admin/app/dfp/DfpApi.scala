@@ -48,6 +48,30 @@ object DfpApi extends Logging {
   private val slotTargetKeyId = 174447L
   private val keywordTargetKeyId = 177687L
 
+  private def fetchLineItems(lineItemService: LineItemServiceInterface, statementBuilder: StatementBuilder) = {
+
+    def fetchLineItems(soFar: Seq[DfpApiLineItem]): Seq[DfpApiLineItem] = {
+      val page = lineItemService.getLineItemsByStatement(statementBuilder.toStatement)
+      val pageResults = Option(page.getResults) map (_.toSeq) getOrElse Nil
+      val totalResultSetSize = page.getTotalResultSetSize
+
+      if (Option(statementBuilder.getOffset) exists (_ > totalResultSetSize)) {
+        soFar
+      } else {
+        statementBuilder.increaseOffsetBy(StatementBuilder.SUGGESTED_PAGE_LIMIT)
+        fetchLineItems(soFar ++ pageResults)
+      }
+    }
+
+    try {
+      fetchLineItems(Nil)
+    } catch {
+      case e: Exception =>
+        log.error(s"Exception fetching current line items: $e")
+        Nil
+    }
+  }
+
   def fetchCurrentLineItems(): Seq[LineItem] = lineItemServiceOption.fold(Seq[LineItem]()) { lineItemService =>
     val statementBuilder = new StatementBuilder()
       .where("status = :readyStatus OR status = :deliveringStatus")
@@ -56,22 +80,7 @@ object DfpApi extends Logging {
       .withBindVariableValue("readyStatus", ComputedStatus.READY.toString)
       .withBindVariableValue("deliveringStatus", ComputedStatus.DELIVERING.toString)
 
-    var totalResultSetSize = 0
-    var totalResults: Seq[DfpApiLineItem] = Nil
-
-    try {
-      do {
-        val page = lineItemService.getLineItemsByStatement(statementBuilder.toStatement)
-        val results = page.getResults
-        if (results != null) {
-          totalResultSetSize = page.getTotalResultSetSize
-          totalResults ++= results
-        }
-        statementBuilder.increaseOffsetBy(StatementBuilder.SUGGESTED_PAGE_LIMIT)
-      } while (statementBuilder.getOffset < totalResultSetSize)
-    } catch {
-      case e: Exception => log.error(s"Exception fetching current line items: $e")
-    }
+    val totalResults = fetchLineItems(lineItemService, statementBuilder)
 
     val targetingKeys = Map(keywordTargetKeyId -> "k", slotTargetKeyId -> "slot")
     val targetingValues = fetchAllKeywordTargetingValues() ++ fetchAllSlotTargetingValues()
@@ -115,37 +124,38 @@ object DfpApi extends Logging {
   }
 
   private def fetchAllTargetingValues(targetKeyId: Long): Map[Long, String] =
-    customTargetingServiceOption.fold(Map[Long, String]()) { customTargetingService =>
+    customTargetingServiceOption.fold(Map[Long, String]()) {
+      customTargetingService =>
 
-      val statementBuilder = new StatementBuilder()
-        .where("customTargetingKeyId = :targetingKeyId")
-        .orderBy("id ASC")
-        .limit(StatementBuilder.SUGGESTED_PAGE_LIMIT)
+        val statementBuilder = new StatementBuilder()
+          .where("customTargetingKeyId = :targetingKeyId")
+          .orderBy("id ASC")
+          .limit(StatementBuilder.SUGGESTED_PAGE_LIMIT)
 
-      statementBuilder.withBindVariableValue("targetingKeyId", targetKeyId)
+        statementBuilder.withBindVariableValue("targetingKeyId", targetKeyId)
 
-      var totalResultSetSize = 0
-      statementBuilder.offset(0)
+        var totalResultSetSize = 0
+        statementBuilder.offset(0)
 
-      var targetingValues: Map[Long, String] = Map()
+        var targetingValues: Map[Long, String] = Map()
 
-      try {
-        do {
-          val page = customTargetingService.getCustomTargetingValuesByStatement(statementBuilder.toStatement)
+        try {
+          do {
+            val page = customTargetingService.getCustomTargetingValuesByStatement(statementBuilder.toStatement)
 
-          val results = page.getResults
-          if (results != null) {
-            totalResultSetSize = page.getTotalResultSetSize
-            targetingValues ++= results.map(result => (result.getId.toLong, result.getName))
-          }
+            val results = page.getResults
+            if (results != null) {
+              totalResultSetSize = page.getTotalResultSetSize
+              targetingValues ++= results.map(result => (result.getId.toLong, result.getName))
+            }
 
-          statementBuilder.increaseOffsetBy(StatementBuilder.SUGGESTED_PAGE_LIMIT)
-        } while (statementBuilder.getOffset < totalResultSetSize)
-      } catch {
-        case e: Exception => log.error(s"Exception fetching custom targeting values: $e")
-      }
+            statementBuilder.increaseOffsetBy(StatementBuilder.SUGGESTED_PAGE_LIMIT)
+          } while (statementBuilder.getOffset < totalResultSetSize)
+        } catch {
+          case e: Exception => log.error(s"Exception fetching custom targeting values: $e")
+        }
 
-      targetingValues
+        targetingValues
     }
 
   private def fetchAllKeywordTargetingValues(): Map[Long, String] = fetchAllTargetingValues(keywordTargetKeyId)
