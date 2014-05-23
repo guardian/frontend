@@ -230,11 +230,7 @@ object Navigation {
   def localNav(navigation: Seq[NavItem], page: MetaData): Option[Seq[SectionLink]] = topLevelItem(navigation, page)
     .map(_.links).filter(_.nonEmpty)
 
-  def sectionOverride(page: MetaData, localNav: NavItem, currentSublink: Option[SectionLink]): String = page match {
-    case p: Tag => currentSublink.map(_.title).getOrElse(localNav.name.title)
-    case p: Section => currentSublink.map(_.title).getOrElse(localNav.name.title)
-    case _ => localNav.name.title
-  }
+  def sectionOverride(localNav: NavItem, currentSublink: Option[SectionLink]): String = currentSublink.map(_.title).getOrElse(localNav.name.title)
 }
 
 trait Zones extends Navigation {
