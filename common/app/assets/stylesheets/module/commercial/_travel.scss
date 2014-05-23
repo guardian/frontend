@@ -155,11 +155,9 @@ $c-commercial-travel-dark: #002b6c;
             .lineitem__image {
                 display: block;
             }
-            
             .lineitem__link {
                 float: left;
             }
-            
             .lineitem__offer {
                 padding-top: 0;
                 @include rem((
@@ -344,17 +342,14 @@ $c-commercial-travel-dark: #002b6c;
                     margin-left: $gs-gutter/4,
                     width: gs-span(6)
                 ));
-                
                 .lineitem__link {
                     @include rem((
                         width: gs-span(3)
                     ));
                 }
-                
                 .lineitem__image {
                     width: 100%;
                 }
-                
                 .lineitem__offer {
                     margin-left: gs-span(3) + $gs-gutter;
                 }
