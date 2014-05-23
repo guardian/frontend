@@ -14,7 +14,7 @@ case class Asset(path: String) {
   override def toString = path
 }
 
-class AssetMap(base: String, assetMap: String = "assets/assets.map") {
+class AssetMap(base: String, assetMap: String) {
   def apply(path: String): Asset = {
 
     // Avoid memoizing the asset map in Dev.
@@ -45,8 +45,8 @@ class AssetMap(base: String, assetMap: String = "assets/assets.map") {
   private lazy val memoizedAssets = assets()
 }
 
-class Assets(base: String) extends Logging {
-  val lookup = new AssetMap(base)
+class Assets(base: String, assetMap: String = "assets/assets.map") extends Logging {
+  val lookup = new AssetMap(base, assetMap)
   def apply(path: String): Asset = lookup(path)
 
   object css {
