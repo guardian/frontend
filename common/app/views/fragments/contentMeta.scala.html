@@ -10,7 +10,7 @@
 
 @metaBody() = {
     @if(!content.hasTonalHeaderByline) {
-        byline(content)
+        @byline(content)
     }
     @fragments.meta.dateline(content.webPublicationDate, secondary=true)
     <div class="js-comment-count"></div>
