@@ -231,6 +231,14 @@ $comercial-comp-baseline: 10px;
         margin-left: 90px
     ));
 }
+.commercial--high {
+    .commercial__relevance-title {
+        @include fs-bodyHeading(3);
+        @include rem((
+            margin-bottom: $gs-baseline/2
+        ));
+    }
+}
 
 /* ==========================================================================
    300x50 varient

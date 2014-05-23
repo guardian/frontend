@@ -32,7 +32,9 @@ class FaciaController extends Controller with Logging with ExecutionContexts wit
   }
 
   def applicationsRedirect(path: String) = Action { implicit request =>
-    Ok.withHeaders("X-Accel-Redirect" -> (s"/applications/$path" + (if (request.isRss) "/rss" else "")))
+    Ok.withHeaders("X-Accel-Redirect" -> (s"/applications/$path" +
+      (if (request.isRss) "/rss" else "") +
+      (if (request.queryString.nonEmpty) s"?${request.rawQueryString}" else "")))
   }
 
   //Only used by dev-build for rending special urls such as lifeandstyle/home-and-garden

@@ -29,7 +29,6 @@ define([
     ScoreBoard,
     football
 ) {
-    context = context();
 
     function renderNav(match, callback) {
         return (new MatchInfo(match, config.page.pageId)).fetch().then(function(resp) {
@@ -126,6 +125,8 @@ define([
         // We're doing this as to have one redraw
         var extras = [],
             dropdownTemplate;
+
+        context = context();
 
         page.isMatch(function(match) {
             extras[0] = { ready: false };
