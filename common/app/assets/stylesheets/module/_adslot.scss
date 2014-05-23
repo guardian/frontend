@@ -93,10 +93,7 @@
     }
     iframe {
         transform: translateZ(0);
-
-        -webkit-transition: height 1s;
-        -moz-transition: height 1s;
-        transition: height 1s cubic-bezier(0, 0, 0, .985);
+        @include transition(height 1s cubic-bezier(0, 0, 0, .985));
     }
 }
 .ad-slot--container-inline {
