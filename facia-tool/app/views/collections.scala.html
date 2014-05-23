@@ -232,7 +232,7 @@
             </div>
 
             <a class="article__lhs" target="article" data-bind="
-                attr: {href: 'http://www.theguardian.com/' + id()},
+                attr: {href: id},
                 click: open">
                 <img class="thumb" draggable="false" data-bind="
                     attr: {src: meta.imageSrc() || fields.thumbnail(), title: id}"/>
@@ -343,14 +343,13 @@
                 </a>
 
                 <a class="tool tool--small tool--small--href" target="_blank" data-bind="
-                    attr: {href: isSnap() ? meta.href() : 'http://www.theguardian.com/' + id()}">
+                    attr: {href: meta.href() || props.webUrl()}">
                     <i class="icon-share-alt"></i>
                 </a>
 
                 <div class="article_content is-empty" data-bind="if: state.isEmpty">
-                    <a target="article" class="is-empty__url" data-bind="
-                        attr: {href: 'http://www.theguardian.com/' + id()},
-                        text: id"></a>
+                    <span target="article" class="is-empty__url" data-bind="
+                        text: id"></span>
                     This content is unavailable, deleted, or has a new URL
                 </div>
 

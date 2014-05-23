@@ -25,6 +25,10 @@ function (
             item.id(snapId);
             defer.resolve();
 
+        } else if (item.meta.snapType()) {
+            item.convertToSnap();
+            defer.resolve();
+
         } else if (data) {
             item.id(capiId);
             populate(data, item);

@@ -116,7 +116,7 @@ define([
                     self.flush(rawArticles.length === 0 ? '...sorry, no articles were found.' : '');
 
                     ([].concat(rawArticles)).forEach(function(article) {
-                        article.id(internalContentCode(article));
+                        article.id = internalContentCode(article);
                         self.articles.push(new Article(article));
                         cache.put('contentApi', article.id, article);
                     });

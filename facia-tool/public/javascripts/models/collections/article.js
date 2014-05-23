@@ -1,6 +1,7 @@
 /* global _: true */
 define([
     'modules/vars',
+    'utils/url-abs-path',
     'utils/as-observable-props',
     'utils/populate-observables',
     'utils/full-trim',
@@ -14,6 +15,7 @@ define([
 ],
     function (
         vars,
+        urlAbsPath,
         asObservableProps,
         populateObservables,
         fullTrim,
@@ -40,6 +42,7 @@ define([
             this.frontPublicationTime = ko.observable();
 
             this.props = asObservableProps([
+                'webUrl',
                 'webPublicationDate']);
 
             this.fields = asObservableProps([
@@ -129,7 +132,6 @@ define([
                 contentApi.decorateItems(self.meta.supporting.items());
             }
 
-            this.sparkline();
             this.setFrontPublicationTime();
         }
 
@@ -154,7 +156,7 @@ define([
             };
         };
 
-        Article.prototype.populate = function(opts, withContent) {
+        Article.prototype.populate = function(opts, validateMe) {
             var missingProps;
 
             populateObservables(this.props,  opts);
@@ -162,8 +164,9 @@ define([
             populateObservables(this.fields, opts.fields);
             populateObservables(this.state,  opts.state);
 
-            if (withContent) {
+            if (validateMe) {
                  missingProps = [
+                    'webUrl',
                     'webPublicationDate',
                     'fields',
                     'fields.headline'
@@ -174,6 +177,7 @@ define([
                     window.console.error('ContentApi missing: "' + missingProps.join('", "') + '" for ' + this.id());
                 } else {
                     this.state.isLoaded(true);
+                    this.sparkline();
                 }
             }
         };
@@ -191,7 +195,7 @@ define([
             this.state.sparkUrl(undefined);
             if (vars.model.switches()['facia-tool-sparklines']) {
                 this.state.sparkUrl(
-                    vars.sparksBase + this.id() +
+                    vars.sparksBase + urlAbsPath(this.props.webUrl()) +
                     (this.frontPublicationDate ? '&markers=' + (this.frontPublicationDate/1000) + ':FED24C' : '')
                 );
             }
