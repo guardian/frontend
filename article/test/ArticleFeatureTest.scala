@@ -597,5 +597,28 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         $(".js-main-site-link").isEmpty should be (true)
       }
     }
+
+    scenario("Display breadcrumbs correctly") {
+      Given("I am on a piece of content with a primary nav, secondary nav and a key woro")
+      HtmlUnit("/books/2014/may/21/guardian-journalists-jonathan-freedland-ghaith-abdul-ahad-win-orwell-prize-journalism") { browser =>
+          import browser._
+          Then("I should see three breadcrumbs")
+          $(".breadcrumb-keyword").size() should be (3)
+      }
+
+      Given("I am on a piece of content with a primary nav and a key woro")
+      HtmlUnit("/commentisfree/2013/jan/07/blue-plaque-english-heritage") { browser =>
+          import browser._
+          Then("I should see three breadcrumbs")
+          $(".breadcrumb-keyword").size() should be (2)
+      }
+
+      Given("I am on a piece of content with no primary nav and a no key words")
+      HtmlUnit("/observer-ethical-awards/shortlist-2014") { browser =>
+          import browser._
+          Then("I should see one breadcrumbs")
+          $(".breadcrumb-keyword").size() should be (1)
+      }
+    }
   }
 }
