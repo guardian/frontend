@@ -3,43 +3,48 @@
 @import conf.Configuration
 
 <link rel="stylesheet" href="@Static("stylesheets/commercial.css")" />
-
-<div class="commercial commercial--masterclasses" data-component="commercial-masterclasses-high">
-    <div class="commercial__head container__title">
-        <h3 class="commercial__title">
-            <a href="@AdLink{@Configuration.commercial.masterclasses_url}">
-                <span>Guardian <span class="commercial__title__last-word">Masterclasses</span></span>
-            </a>
-        </h3>
-        <p class="commercial__explainer">courses from the guardian</p>
-    </div>
-    <div class="commercial__body container__body">
-        <ul class="lineitems">
-        @events.take(4).map { event =>
-            <li class="lineitem commercial--masterclasses__class">
-                <a class="lineitem__link commercial--masterclasses__class__link" href="@AdLink{@event.eventBriteEvent.guardianUrl}" data-link-name="merchandising-masterclasses-low-profile-@event.eventBriteEvent.name">
-                    @event.imageElement.map{ picture =>
-                        @Item300.bestFor(picture).map{ url => <img src="@url" alt="" /> }
-                    }
-                    <h4 class="commercial--masterclasses__class__title">@event.eventBriteEvent.name</h4>
-                    <p class="commercial--masterclasses__class__date">@event.eventBriteEvent.readableDate</p>
-                </a>
-                <a class="lineitem__link commercial--masterclasses__class__link__sub" href="@AdLink{@event.eventBriteEvent.guardianUrl}" data-link-name="merchandising-masterclasses-low-profile-@event.eventBriteEvent.name">
-                    <p class="commercial--masterclasses__class__meta">@event.eventBriteEvent.venue.description | @event.eventBriteEvent.displayPrice</p>
-                </a>
-                <p class="lineitem__description commercial--masterclasses__class__description">
-                    <a class="lineitem__link commercial--masterclasses__class__description__link" href="@AdLink{@event.eventBriteEvent.guardianUrl}" data-link-name="merchandising-masterclasses-low-profile-@event.eventBriteEvent.name">
-                        <i class="i i-arrow-white-down"></i>Book now
+@defining(("1_0", "2014-05-23", "high")) { case (version, date, relevance) =>
+    <div class="commercial commercial--high commercial--masterclasses" data-component="commercial-masterclasses-high">
+        <div class="facia-container__inner">
+            <div class="commercial__head container__title">
+                <h3 class="commercial__title">
+                    <a href="@AdLink{@Configuration.commercial.masterclasses_url}" data-link-name="merchandising-masterclasses-v@{version}_@{date}-@{relevance}-logo">
+                        <span>Guardian <span class="commercial__title__last-word">Masterclasses</span></span>
                     </a>
-                </p>
-            </li>
-        }
-        </ul>
+                </h3>
+                <p class="commercial__explainer">courses from the guardian</p>
+            </div>
+            <div class="commercial__body container__body">
+                <ul class="lineitems">
+                @events.take(4).map { event =>
+                    <li class="lineitem commercial--masterclasses__class">
+                        <a class="lineitem__link commercial--masterclasses__class__link" href="@AdLink{@event.eventBriteEvent.guardianUrl}" data-link-name="merchandising-masterclasses-v@{version}_@{date}-@{relevance}-profile-@event.eventBriteEvent.name">
+                            @event.imageElement.map{ picture =>
+                                @Item300.bestFor(picture).map{ url => <img src="@url" alt="" /> }
+                            }
+                            <h4 class="commercial--masterclasses__class__title">@event.eventBriteEvent.name</h4>
+                            <p class="commercial--masterclasses__class__date">@event.eventBriteEvent.readableDate</p>
+                        </a>
+                        <a class="lineitem__link commercial--masterclasses__class__link__sub" href="@AdLink{@event.eventBriteEvent.guardianUrl}" data-link-name="merchandising-masterclasses-v@{version}_@{date}-@{relevance}-profile-@event.eventBriteEvent.name">
+                            <p class="commercial--masterclasses__class__meta">@event.eventBriteEvent.venue.description | @event.eventBriteEvent.displayPrice</p>
+                        </a>
+                        <p class="lineitem__description commercial--masterclasses__class__description">
+                            <a class="lineitem__link commercial--masterclasses__class__description__link" href="@AdLink{@event.eventBriteEvent.guardianUrl}" data-link-name="merchandising-masterclasses-v@{version}_@{date}-@{relevance}-profile-@event.eventBriteEvent.name">
+                                <i class="i i-arrow-white-down"></i>Book now
+                            </a>
+                        </p>
+                    </li>
+                }
+                </ul>
+            </div>
+            <div class="commercial__foot">
+                <a class="commercial__home-link" href="@AdLink{@Configuration.commercial.masterclasses_url/masterclasses-calendar}" data-link-name="merchandising-masterclasses-v@{version}_@{date}-@{relevance}-profile-browse-all-masterclasses">View all Masterclasses
+                    <span class="commercial__home-link__cta">
+                        <span class="i i-filter-arrow-down"></span>
+                    </span>
+                </a>
+            </div>
+        </div>
     </div>
-    <div class="commercial__foot">
-        <a class="commercial__home-link" href="@AdLink{@Configuration.commercial.masterclasses_url/masterclasses-calendar}" data-link-name="merchandising-masterclasses-low-profile-browse-all-masterclasses">View all Masterclasses
-            <span class="commercial__home-link__cta">
-                <span class="i i-filter-arrow-down"></span>
-            </span></a>
-    </div>
-</div>
+}
+
