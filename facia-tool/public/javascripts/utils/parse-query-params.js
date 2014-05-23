@@ -6,9 +6,9 @@ define(['utils/url-query'], function(urlQuery) {
         /**
          * Returns query params as an object.
          * @param {function} predicate        optional fn to determine which vals get included
-         * @param {string}   namespace        Optional prefix for param keys
-         * @param {boolean}  excludeNamespace Optional whether to exclude or include prefixed keys
-         * @param {boolean}  stripNamespace   Optional whether to strip prefix from returned object's keys
+         * @param {string}   namespace        optional prefix for param keys
+         * @param {boolean}  excludeNamespace optional whether to exclude or include prefixed keys
+         * @param {boolean}  stripNamespace   optional whether to strip prefix from returned object's keys
          */
 
         return _.chain(urlQuery(url).split('&'))
