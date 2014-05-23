@@ -172,9 +172,8 @@ define([
             toggles.init(document);
             mediator.on('page:common:ready', function() {
                 toggles.reset();
+                Dropdowns.init();
             });
-
-            Dropdowns.init();
         },
 
         showRelativeDates: function () {
