@@ -1185,7 +1185,7 @@ $c-replyText: $c-body;
     @include mq(rightCol) {
         max-width: none;
         @include rem((
-            padding-right: 25%
+            margin-right: 25%
         ));
     }
 }

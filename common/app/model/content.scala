@@ -36,6 +36,13 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   lazy val keywordTags: Seq[Tag] = tags.filter(tag => !tag.isSectionTag)
 
   lazy val showInRelated: Boolean = delegate.safeFields.get("showInRelatedContent").exists(_ == "true")
+  lazy val hasSingleContributor: Boolean = {
+    (contributors.headOption, byline) match {
+      case (Some(t), Some(b)) => contributors.length == 1 && t.name == b
+      case _ => false
+    }
+  }
+  lazy val hasTonalHeaderByline: Boolean = { visualTone == Tags.VisualTone.Comment && hasSingleContributor }
 
   // read this before modifying
   // https://developers.facebook.com/docs/opengraph/howtos/maximizing-distribution-media-content#images
