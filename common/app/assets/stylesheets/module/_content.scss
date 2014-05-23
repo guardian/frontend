@@ -152,12 +152,14 @@
     @include mq($from: leftCol) {
         float: left;
         @include rem((
-            margin-left: -(gs-span(2) + $gs-gutter)
+            margin-left: -(gs-span(2) + $gs-gutter),
+            width: gs-span(2)
         ));
     }
     @include mq($from: wide) {
         @include rem((
-            margin-left: -(gs-span(3) + $gs-gutter)
+            margin-left: -(gs-span(3) + $gs-gutter),
+            width: gs-span(3)
         ));
     }
     @include mq($from: leftCol, $to: wide) {
