@@ -175,17 +175,17 @@ case class BreadcrumbItem(href: String, title: String)
 object Breadcrumbs {
   def items(navigation: Seq[NavItem], page: Content): Seq[BreadcrumbItem] = {
     val primaryKeywod = page.keywordTags.headOption.map(k => BreadcrumbItem(k.url, k.webTitle))
-    val firstBreadcrumb = Navigation.topLevelItem(navigation, page).map(n => BreadcrumbItem(n.name.href, n.name.title)).orElse(Some(BreadcrumbItem(s"/${page.section}", page.sectionName)))
+    val firstBreadcrumb = Navigation.topLevelItem(navigation, page).map(n => BreadcrumbItem(n.name.href, n.name.breadcumbTitle)).orElse(Some(BreadcrumbItem(s"/${page.section}", page.sectionName)))
     val secondBreadcrumb = Navigation.subNav(navigation, page).map(s => BreadcrumbItem(s.href, s.breadcumbTitle)).orElse(primaryKeywod)
     Seq(firstBreadcrumb, secondBreadcrumb, primaryKeywod).flatten.distinct
   }
 }
 
 
-// helper for the views
-object Navigation {
-  
-  def topLevelItem(navigation: Seq[NavItem], page: MetaData): Option[NavItem] = navigation.find(_.exactFor(page))
+  // helper for the views
+  object Navigation {
+
+    def topLevelItem(navigation: Seq[NavItem], page: MetaData): Option[NavItem] = navigation.find(_.exactFor(page))
     .orElse(navigation.find(_.currentFor(page)))
 
   def subNav(navigation: Seq[NavItem], page: MetaData): Option[SectionLink] = topLevelItem(navigation, page).flatMap(_.links.find(_.currentFor(page)))
