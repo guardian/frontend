@@ -55,7 +55,7 @@
                 <div class="commercial__relevance commercial__relevance-low u-cf">
                     <h4 class="commercial__relevance-title commercial__relevance-title-low">You also might like</h4>
                     <ul class="lineitems">
-                        @offers.take(2).map { offer =>
+                        @offers.drop(1).take(2).map { offer =>
                             <li class="lineitem">
                                 <div>
                                     <a class="lineitem__link" href="@AdLink{@offer.offerUrl}" data-link-name="merchandising-travel-v@{version}_@{date}-high-@{offer.title}">
