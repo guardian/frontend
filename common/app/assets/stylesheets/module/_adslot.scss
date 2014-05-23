@@ -180,6 +180,7 @@
 }
 .ad-slot--commercial-component,
 .ad-slot--commercial-component-high {
+    min-height: 88px;
     @include rem((
         margin-top: $gs-baseline
     ));
