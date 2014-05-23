@@ -328,9 +328,9 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 6, 5)
   )
 
-  val ABMobileHideSupportingLinks = Switch("A/B Tests", "ab-mobile-hide-supporting-links",
-    "If this switch is turned on, run the MobileHideSupportingLinks A/B test.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 6, 5)
+  val ABHideSupportingLinks = Switch("A/B Tests", "ab-hide-supporting-links",
+    "If this switch is turned on, run the HideSupportingLinks A/B test.",
+    safeState = Off, sellByDate = new DateMidnight(2014, 6, 24)
   )
 
   // Dummy Switches
@@ -488,7 +488,7 @@ object Switches extends Collections {
     FaciaFirstContainerLayoutOverrideSwitch,
     ABHeaderSearchText,
     ABHighRelevanceCommercialComponent,
-    ABMobileHideSupportingLinks,
+    ABHideSupportingLinks,
     SmartBannerSwitch,
     FeaturesAutoContainerSwitch
   )
