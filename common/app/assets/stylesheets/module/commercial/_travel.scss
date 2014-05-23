@@ -66,13 +66,13 @@ $c-commercial-travel-dark: #002b6c;
         .commercial__title__middle-word {
             color: $c-commercial-travel-light;
             @include rem((
-               margin-left: -5px
+               margin-left: -$gs-gutter/4
             ));
         }
         .commercial__title__last-word {
             color: $travelBlue;
             @include rem((
-               margin-left: -5px
+               margin-left: -$gs-gutter/4
             ));
         }
     }
@@ -135,12 +135,10 @@ $c-commercial-travel-dark: #002b6c;
             }
         }
         
-        .lineitem__image {
-            display: none;
-        }
-        
         .highitem {
-            padding-bottom: $gs-baseline;
+            @include rem((
+                padding-bottom: $gs-baseline
+            ));
             
             .lineitem__title {
                 white-space: normal;
@@ -148,6 +146,7 @@ $c-commercial-travel-dark: #002b6c;
         }
         
         .lineitem__image {
+            display: none;
             @include rem((
                 width: gs-span(2)
             ));
@@ -166,7 +165,9 @@ $c-commercial-travel-dark: #002b6c;
             
             .lineitem__offer {
                 padding-top: 0;
-                margin-left: gs-span(2) + $gs-gutter/2;
+                @include rem((
+                    margin-left: gs-span(2) + $gs-gutter/2
+                ));
                 
                 .lineitem__link {
                     float: none;
@@ -192,7 +193,9 @@ $c-commercial-travel-dark: #002b6c;
                 padding-bottom: 0;
                 
                 .lineitem__offer {
-                    margin-left: gs-span(2) + $gs-gutter*2;
+                    @include rem((
+                        margin-left: gs-span(2) + $gs-gutter*2
+                    ));
                 }
             }
             .lineitem__image {
@@ -203,6 +206,9 @@ $c-commercial-travel-dark: #002b6c;
             }
             .commercial__relevance-title-low {
                 display: block;
+                @include rem((
+                    margin-left: $gs-gutter/2
+                ));
             }
             .commercial__search {
                 @include rem((
@@ -334,15 +340,21 @@ $c-commercial-travel-dark: #002b6c;
         @include mq(desktop) {
             .commercial__search {
                 bottom: auto;
-                margin-top: $gs-baseline*4;
+                @include rem((
+                    margin-top: $gs-baseline*4
+                ));
             }
             
             .commercial__relevance-high {
-                margin-left: 5px;
-                width: gs-span(6);
+                @include rem((
+                    margin-left: $gs-gutter/4,
+                    width: gs-span(6)
+                ));
                 
                 .lineitem__link {
-                    width: gs-span(3);
+                    @include rem((
+                        width: gs-span(3)
+                    ));
                 }
                 
                 .lineitem__image {
@@ -354,8 +366,14 @@ $c-commercial-travel-dark: #002b6c;
                 }
             }
             
+            .commercial__relevance-title-low {
+                margin-left: 0;
+            }
+            
             .commercial__relevance-low {
-                width: gs-span(3);
+                @include rem((
+                    width: gs-span(3)
+                ));
                 
                 .lineitem {
                     width: 100%;
@@ -368,23 +386,32 @@ $c-commercial-travel-dark: #002b6c;
             }
         }
         @include mq(faciaLeftCol) {
+            .commercial__relevance-high {
+                margin-left: 0;
+            }
             .commercial__relevance-low {
-                width: gs-span(6);
+                @include rem((
+                    width: gs-span(6)
+                ));
                 
                 .lineitem {
                     width: 50%;
                     
                     &:nth-child(n+2) {
                         display: block;
-                        padding-left: 10px;
+                        @include rem((
+                            padding-left: $gs-gutter/2
+                        ));
                     }
                 }
             }
         }
         @include mq($from: faciaLeftCol, $to: wide) {
             .commercial__search {
-                bottom: 12px;
-                margin-top: 12px;
+                @include rem((
+                    bottom: $gs-baseline,
+                    margin-top: $gs-baseline
+                ));
             }            
         }
     }
@@ -485,11 +512,13 @@ $c-commercial-travel-dark: #002b6c;
                 .lineitem__link {
                     @include box-sizing(border-box);
                     width: 50%;
-                    padding-right: 10px;
+                    @include rem((
+                        padding-right: $gs-gutter/2
+                    ));
                 }
                 
                 .lineitem__offer .lineitem__link {
-                    width: auto;
+                    width: auto;                    
                 }
                 
                 .lineitem__image {
@@ -502,7 +531,9 @@ $c-commercial-travel-dark: #002b6c;
                 
                 .lineitem {
                     width: 100%;
-                    padding: 0 0 0 10px;
+                    @include rem((
+                        padding: 0 0 0 $gs-gutter/2
+                    ));
                     
                     &:nth-child(n+2) {
                         display: none;
@@ -517,9 +548,13 @@ $c-commercial-travel-dark: #002b6c;
                 ));
             }
             .highitem .lineitem__offer {
+                @include box-sizing(border-box);
                 @include rem((
-                    margin-left: gs-span(3) + $gs-gutter/3
+                    padding-left: $gs-gutter/2
                 ));
+                width: 50%;
+                float: right;
+                margin-left: 0;
             }
             .commercial__search {
                 bottom: auto;
@@ -529,6 +564,9 @@ $c-commercial-travel-dark: #002b6c;
             }
         }
         @include mq(leftCol) {
+            .container__body {
+                padding-left: 0;
+            }
             .commercial__search {
                 @include rem((
                     bottom: $gs-baseline,
@@ -544,6 +582,14 @@ $c-commercial-travel-dark: #002b6c;
                 display: block;
                 @include rem((
                     padding-left: $gs-gutter/2
+                ));
+            }
+        }
+        @include mq(wide) {
+            .commercial__search {
+                bottom: auto;
+                @include rem((
+                    margin-top: $gs-baseline*4
                 ));
             }
         }

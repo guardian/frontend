@@ -35,12 +35,6 @@ $c-commercial-books-dark: #630d4c;
     .commercial__title {
         margin: 0;
     }
-    .commercial__relevance-title {
-        @include fs-bodyHeading(3);
-        @include rem((
-            margin-bottom: $gs-baseline/2
-        ));
-    }
     .i-bookshop-logo--bookshop {
         @include rem((
             margin-left: -5px
