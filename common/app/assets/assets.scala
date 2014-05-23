@@ -14,15 +14,27 @@ case class Asset(path: String) {
   override def toString = path
 }
 
-class AssetMap(base: String, assetMap: String) {
+class AssetMap(base: String, assetMap: String = "assets/assets.map") {
   def apply(path: String): Asset = {
-    // Don't use hashed files in DEV
-    if (Play.current.mode == Mode.Dev) Asset(base + path) else memoizedAssets(path)
+
+    // Avoid memoizing the asset map in Dev.
+    if (Play.current.mode == Mode.Dev) {
+      assets()(path)
+    } else {
+      memoizedAssets(path)
+    }
   }
 
   private def assets(): Map[String, Asset] = {
-    val url = Play.classloader(Play.current).getResource(assetMap)
-    val json = IOUtils.toString(url)
+
+    // Use the grunt-generated asset map in Dev.
+    val json: String = if (Play.current.mode == Mode.Dev) {
+      val assetMapUri = new java.io.File(s"common/conf/" + assetMap).toURI
+      IOUtils.toString(assetMapUri)
+    } else {
+      val url = Play.classloader(Play.current).getResource(assetMap)
+      IOUtils.toString(url)
+    }
     val js: JsObject = Json.parse(json).asInstanceOf[JsObject]
 
     val paths = js.fields.toMap mapValues { _.asInstanceOf[JsString].value }
@@ -33,9 +45,8 @@ class AssetMap(base: String, assetMap: String) {
   private lazy val memoizedAssets = assets()
 }
 
-
-class Assets(base: String, assetMap: String = "assets/assets.map") extends Logging {
-  val lookup = new AssetMap(base, assetMap)
+class Assets(base: String) extends Logging {
+  val lookup = new AssetMap(base)
   def apply(path: String): Asset = lookup(path)
 
   object css {
