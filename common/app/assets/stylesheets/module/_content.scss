@@ -132,7 +132,7 @@
     @include fs-header(3);
     @include box-sizing(border-box);
     position: relative;
-    z-index: 1; // bring-to-front fix to max it clickable
+    z-index: 1; // bring-to-front fix to m1ax it clickable
     @include rem((
         padding-bottom: $gs-baseline
     ));
