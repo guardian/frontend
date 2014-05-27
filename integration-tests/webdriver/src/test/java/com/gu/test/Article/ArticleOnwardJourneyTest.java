@@ -4,10 +4,7 @@ import com.gu.test.helpers.PageHelper;
 import com.gu.test.helpers.WaitHelper;
 import com.gu.test.pages.Article;
 import com.gu.test.shared.NavigationBar;
-import org.junit.Assert;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -27,7 +24,7 @@ public class ArticleOnwardJourneyTest {
         WaitHelper.waitForArticleLoad(driver);
     }
 
-
+    @Ignore
     @Test
     public void goToFirstLinkInSidebarPopular() throws Exception {
         Assert.assertTrue("Failure: Most Popular In Right Hand Bar is Missing", testArticle.hasMostPopularRight());
@@ -42,7 +39,6 @@ public class ArticleOnwardJourneyTest {
     public void goToFirstLinkInRelatedContent() throws Exception {
         Assert.assertTrue("Failure: Related content container missing", testArticle.hasRelatedContentContainer());
         String linkText = testArticle.getFirstRelatedArticle();
-        System.out.println(linkText);
         Article relatedArticle = testArticle.goToFirstRelatedArticle();
         WaitHelper.waitForArticleLoad(driver);
         String relatedH1 = relatedArticle.getArticleHeadline();
