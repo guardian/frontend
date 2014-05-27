@@ -76,7 +76,7 @@ class FaciaController extends Controller with Logging with ExecutionContexts wit
     .filterNot{ j =>
       (j \ "id").asOpt[String].exists(_.startsWith("snap/"))
      }
-    .take(8).map{ j =>
+    .take(3).map{ j =>
       Json.obj(
         "headline" -> (j \ "safeFields" \ "headline"),
         "id" -> (j \ "id")
