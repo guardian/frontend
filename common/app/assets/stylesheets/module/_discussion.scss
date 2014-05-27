@@ -180,11 +180,10 @@ $c-replyText: $c-body;
     clear: both;
 }
 .d-comment__inner {
-    position: relative;
     @include rem((
         padding-top: $gs-baseline
     ));
-    overflow: hidden;
+    position: relative;
 }
 .d-comment--top-level {
     border-top: 1px solid $c-neutral4;
@@ -548,6 +547,47 @@ $c-replyText: $c-body;
     display: none;
     float: left;
 }
+.d-report-comment-form {
+    @include rem((
+        padding: $gs-baseline/2 $gs-gutter/2
+    ));
+    background: #ffffff;
+    border: 2px solid $c-neutral6;
+    top: 0;
+    position: absolute;
+    right: 0;
+    z-index: 3;
+}
+.d-report-comment__label,
+.d-report-comment__field {
+    @include box-sizing(border-box);
+    display: block;
+    width: 100%;
+}
+.d-report-comment__label {
+    @include rem((
+        margin-top: $gs-baseline
+    ));
+}
+.d-report-comment__field {
+    @include fs-data(4);
+    @include rem((
+        padding: $gs-baseline/2 $gs-gutter/4
+    ));
+}
+.d-report-comment__submit {
+    @include rem((
+        margin-top: $gs-baseline
+    ));
+}
+.d-report-comment__close {
+    @include rem((
+        margin-bottom: $gs-baseline/2
+    ));
+    float: right;
+    width: auto;
+}
+
 .id--signed-in .discussion--open .discussion__comments {
     // only show reply/pick actions when user is signed in and discussion is open
     .d-comment__actions__main {

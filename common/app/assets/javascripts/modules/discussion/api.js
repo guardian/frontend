@@ -96,6 +96,17 @@ Api.unPickComment = function(id) {
 };
 
 /**
+ * @param {number} id the comment ID
+ * @param {Object.<string.string>} report the report info in the form of:
+          { reason: string, emailAddress: string, categoryId: number }
+ * @return {Reqwest} a promise
+ */
+Api.reportComment = function(id, report) {
+    var endpoint = '/comment/'+ id +'/reportAbuse';
+    return Api.send(endpoint, 'post', report);
+};
+
+/**
  * The id here is optional, but you shoudl try to specify it
  * If it isn't we use profile/me, which isn't as cachable
  * @param {number=} id (optional)

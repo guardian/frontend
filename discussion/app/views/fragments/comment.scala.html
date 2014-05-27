@@ -120,7 +120,9 @@
                                     data-comment-highlighted="@comment.isHighlighted">@if(comment.isHighlighted){Unpick}else{Pick}</span>
                             </span>
                         </div>
-                        <a href="@Configuration.discussion.url/components/report-abuse/@comment.id" class="d-comment__action d-comment__action--report" target="_blank">Report</a>
+                        <div class="report-comment-container js-report-comment-container">
+                            <a href="@Configuration.discussion.url/components/report-abuse/@comment.id" class="d-comment__action d-comment__action--report js-report-comment" data-comment-id="@comment.id" target="_blank">Report</a>
+                        </div>
                     </div>
                 }
             </div>
