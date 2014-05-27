@@ -24,6 +24,7 @@ public class ArticleOnwardJourneyTest {
         driver = createWebDriver();
         pageHelper = new PageHelper(driver);
         testArticle = pageHelper.goToArticle("/film/filmblog/2014/may/20/lost-river-reviews-cannes-scorn-ryan-gosling");
+        WaitHelper.waitForArticleLoad(driver);
     }
 
 
