@@ -124,9 +124,16 @@
     @include f-textsans;
     background-color: $c-neutral8;
 
+    .content__standfirst,
+    .content__dateline,
+    .social__head,
+    .main-caption,
+    .ad-slot--paid-for-badge__header,
+    .ad-slot--paid-for-badge__label {
+        color: $c-neutral2-contrasted;
+    }
     .content__standfirst {
         @include f-headlineSans;
-        color: $c-neutral2-contrasted;
     }
 }
 
