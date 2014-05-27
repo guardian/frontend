@@ -25,13 +25,7 @@
                     </h2>
                 }
             </div>
-            @if(page.isSponsored) {
-                @fragments.commercial.badge(name="spbadge", adType="paid-for-badge", sizeMapping=Map("mobile" -> Seq("140,90")))
-            } else {
-                @if(page.isAdvertisementFeature) {
-                    @fragments.commercial.badge(name="adbadge", adType="paid-for-badge", sizeMapping=Map("mobile" -> Seq("140,90")))
-                }
-            }
+            @fragments.containers.elements.badge(page)
             <div class="container__body">
                 @fragments.contributor(page)
                 @fragments.collections.tag(collection.items, style, containerIndex)
