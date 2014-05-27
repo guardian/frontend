@@ -774,6 +774,7 @@ module.exports = function (grunt) {
 
     grunt.registerTask('default', ['compile', 'test', 'analyse']);
 
+    // Validate tasks
     grunt.registerTask('validate:css', ['sass:compile']);
     grunt.registerTask('validate:sass', ['scsslint']);
     grunt.registerTask('validate:js', function(app) {
@@ -787,11 +788,25 @@ module.exports = function (grunt) {
         }
     });
     grunt.registerTask('validate', function(app) {
-        grunt.task.run([
+        var tasks = [
             'validate:css',
-            'validate:sass',
-            'validate:js:' + (app || '')
-        ]);
+            'validate:sass'
+        ];
+        if (app) {
+            // run common and supplied app (make sure it's unique)
+            tasks = tasks.concat(
+                ['common', app]
+                    .filter(function(app, pos, self) {
+                        return self.indexOf(app) === pos;
+                    })
+                    .map(function(app) {
+                        return 'validate:js:' + app;
+                    })
+            );
+        } else {
+            tasks.push('validate:js');
+        }
+        grunt.task.run(tasks);
     });
 
     // Compile tasks
