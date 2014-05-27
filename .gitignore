@@ -49,8 +49,7 @@ developer.properties
 
 *-spec-runner.html
 
-static/hash
-static/abtests.json
+static
 
 common/app/assets/stylesheets/theme/_commercial-icons-sprite.scss
 common/app/assets/stylesheets/theme/_commercial-icons-svg.scss
