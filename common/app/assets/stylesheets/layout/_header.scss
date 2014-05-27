@@ -7,7 +7,6 @@
 
     @include mq(tablet) {
         background: $c-neutral8;
-        padding-bottom: $gs-row-height*.5;
     }
 }
 

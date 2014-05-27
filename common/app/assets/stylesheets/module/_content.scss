@@ -1,5 +1,6 @@
 .content {
     @include rem((
+        padding-top: $gs-row-height*.5,
         padding-bottom: $gs-baseline*3.5
     ));
     @include fs-bodyCopy(3);
