@@ -219,7 +219,8 @@ object Content {
           snapSupporting = (json \ "meta" \ "supporting").asOpt[List[JsValue]].getOrElse(Nil)
             .flatMap(Content.fromPressedJson),
           (json \ "webPublicationDate").asOpt[DateTime].getOrElse(DateTime.now),
-          snapMeta = snapMeta
+          snapMeta = snapMeta,
+          snapElements = parseElements(json)
         )
       )
     }
@@ -302,28 +303,34 @@ private object ArticleSchemas {
   }
 }
 
-object SnapApiContent extends ApiContent(
- id                           = "",
-  sectionId                   = None,
-  sectionName                 = None,
-  webPublicationDateOption    = Some(DateTime.now),
-  webTitle                    = "",
-  webUrl                      = "http://www.theguardian.com/",
-  apiUrl                      = "",
-  fields                      = None,
-  tags                        = Nil,
-  factboxes                   = Nil,
-  mediaAssets                 = Nil,
-  elements                    = None,
-  references                  = Nil,
-  isExpired                   = None
-)
+object SnapApiContent {
+
+  def apply(): ApiContent = ApiContent(
+    id                           = "",
+    sectionId                   = None,
+    sectionName                 = None,
+    webPublicationDateOption    = Some(DateTime.now),
+    webTitle                    = "",
+    webUrl                      = "http://www.theguardian.com/",
+    apiUrl                      = "",
+    fields                      = None,
+    tags                        = Nil,
+    factboxes                   = Nil,
+    mediaAssets                 = Nil,
+    elements                    = Option(Nil),
+    references                  = Nil,
+    isExpired                   = None
+  )
+
+  def apply(snapElements: List[ApiElement]): ApiContent = apply().copy(elements = Some(snapElements))
+}
 
 class Snap(snapId: String,
            snapSupporting: List[Content],
            snapWebPublicationDate: DateTime,
-           snapMeta: Map[String, JsValue]
-            ) extends Content(new ApiContentWithMeta(SnapApiContent, supporting = snapSupporting, metaData = snapMeta)) {
+           snapMeta: Map[String, JsValue],
+           snapElements: List[ApiElement] = Nil
+            ) extends Content(new ApiContentWithMeta(SnapApiContent(snapElements), supporting = snapSupporting, metaData = snapMeta)) {
 
   val snapType: Option[String] = snapMeta.get("snapType").flatMap(_.asOpt[String])
   val snapCss: Option[String] = snapMeta.get("snapCss").flatMap(_.asOpt[String])
