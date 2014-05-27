@@ -1,3 +1,4 @@
+
 package test
 
 import conf.{Switches, HealthcheckPage, Configuration}
@@ -8,6 +9,7 @@ import collection.JavaConversions._
 import play.api.libs.ws.WS
 import scala.concurrent.duration._
 import scala.concurrent.Await
+import org.fluentlenium.core.filter.FilterConstructor._
 
 class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
@@ -335,7 +337,8 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         adPlaceholder.getAttribute("data-name") should be("top")
         adPlaceholder.getAttribute("data-tabletportrait") should be("728,90")
         adPlaceholder.getAttribute("data-tabletlandscape") should be("728,90|900,250")
-        adPlaceholder.getAttribute("data-desktop") should be("728,90|900,250|970,250")
+        adPlaceholder.getAttribute("data-desktop") should be("728,90|900,250")
+        adPlaceholder.getAttribute("data-wide") should be("728,90|900,250|970,250")
 
         And("the placeholder has the correct class name")
         adPlaceholder.getAttribute("class") should be("ad-slot ad-slot--dfp ad-slot--top-banner-ad")
@@ -596,6 +599,44 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         import browser._
         Then("I should not see a 'Classic' link")
         $(".js-main-site-link").isEmpty should be (true)
+      }
+    }
+
+    scenario("Display breadcrumbs correctly") {
+      Given("I am on a piece of content with a primary nav, secondary nav and a key woro")
+      HtmlUnit("/books/2014/may/21/guardian-journalists-jonathan-freedland-ghaith-abdul-ahad-win-orwell-prize-journalism") { browser =>
+          import browser._
+          Then("I should see three breadcrumbs")
+          $(".breadcrumb-keyword").size() should be (3)
+
+          val link = find(".breadcrumb-keyword a", withText().contains("Culture"))
+          link.length should be > 0
+          val link2 = find(".breadcrumb-keyword a", withText().contains("Books"))
+          link2.length should be > 0
+          val link3 = find(".breadcrumb-keyword a", withText().contains("Orwell prize"))
+          link3.length should be > 0
+      }
+
+      Given("I am on a piece of content with a primary nav and a key woro")
+      HtmlUnit("/commentisfree/2013/jan/07/blue-plaque-english-heritage") { browser =>
+          import browser._
+          Then("I should see three breadcrumbs")
+          $(".breadcrumb-keyword").size() should be (2)
+
+          val link = find(".breadcrumb-keyword a", withText().contains("Comment"))
+          link.length should be > 0
+          val link2 = find(".breadcrumb-keyword a", withText().contains("Heritage"))
+          link2.length should be > 0
+      }
+
+      Given("I am on a piece of content with no primary nav and a no key words")
+      HtmlUnit("/observer-ethical-awards/shortlist-2014") { browser =>
+          import browser._
+          Then("I should see one breadcrumbs")
+          $(".breadcrumb-keyword").size() should be (1)
+
+          val link = find(".breadcrumb-keyword a", withText().contains("Observer Ethical Awards"))
+          link.length should be > 0
       }
     }
   }
