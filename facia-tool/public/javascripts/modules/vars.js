@@ -14,7 +14,6 @@ define(['knockout'], function(ko) {
             {name: 'features/auto'}, // Behind FeaturesAutoContainerSwitch
             {name: 'features/multimedia'},
             {name: 'features/section'},
-            {name: 'comment'},
             {name: 'comment/comment-and-debate'},
             {name: 'comment/section'}
         ],
