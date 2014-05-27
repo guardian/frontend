@@ -11,17 +11,24 @@
     }
 }
 
+.content .gs-container,
+.content-footer .gs-container {
+    // scoped style for now so this only applies to refactored pages
+    @include box-sizing(border-box);
+    @include rem((
+        padding: 0 $gs-gutter/2
+    ));
+    @include mq(mobileLandscape) {
+        @include rem((
+            padding: 0 $gs-gutter
+        ));
+    }
+
+}
+
 .content__main-column {
     position: relative;
 
-    @include rem((
-        margin: 0 $gs-gutter/2
-    ));
-    @include mq($from: mobileLandscape) {
-        @include rem((
-            margin: 0 $gs-gutter
-        ));
-    }
     @include mq($from: tablet) {
         @include rem((
             max-width: 620px
@@ -30,18 +37,18 @@
     }
     @include mq($from: rightCol) {
         @include rem((
-            margin-left: $gs-gutter,
-            margin-right: gs-span(4) + $gs-gutter*2
+            margin-left: 0,
+            margin-right: gs-span(4) + $gs-gutter
         ));
     }
     @include mq($from: leftCol) {
         @include rem((
-            margin-left: gs-span(2) + $gs-gutter*2
+            margin-left: gs-span(2) + $gs-gutter
         ));
     }
     @include mq($from: wide) {
         @include rem((
-            margin-left: gs-span(3) + $gs-gutter*2
+            margin-left: gs-span(3) + $gs-gutter
         ));
     }
 
@@ -49,14 +56,11 @@
     &.content__main-column--gallery,
     &.content__main-column--wide {
         @include mq(rightCol) {
-            @include rem((
-                margin-right: $gs-gutter
-            ));
             max-width: none;
         }
         @include mq(wide) {
             @include rem((
-                margin-right: 100px
+                margin-right: gs-span(1) + $gs-gutter
             ));
         }
     }
@@ -84,8 +88,7 @@
 .content__head__border-top {
     border-top: 1px dotted $c-neutral5;
     @include rem((
-        height: $gs-baseline/2,
-        margin: 0 $gs-gutter
+        height: $gs-baseline/2
     ));
 
     @include mq($to: tablet) {
