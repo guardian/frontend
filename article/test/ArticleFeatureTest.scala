@@ -334,7 +334,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         System.out.println(adPlaceholder);
 
         And("the placeholder has the correct data attributes")
-        adPlaceholder.getAttribute("data-name") should be("top")
+        adPlaceholder.getAttribute("data-name") should be("top-above-nav")
         adPlaceholder.getAttribute("data-tabletportrait") should be("728,90")
         adPlaceholder.getAttribute("data-tabletlandscape") should be("728,90|900,250")
         adPlaceholder.getAttribute("data-desktop") should be("728,90|900,250")
@@ -344,7 +344,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         adPlaceholder.getAttribute("class") should be("ad-slot ad-slot--dfp ad-slot--top-banner-ad")
 
         And("the placeholder has the correct analytics name")
-        adPlaceholder.getAttribute("data-link-name") should be("ad slot top")
+        adPlaceholder.getAttribute("data-link-name") should be("ad slot top-above-nav")
       }
 
       // put it back in the state we found it
