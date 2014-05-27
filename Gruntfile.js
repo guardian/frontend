@@ -794,7 +794,6 @@ module.exports = function (grunt) {
                         return 'validate:js:' + app;
                     })
             );
-
         } else {
             tasks.push('validate:js');
         }
