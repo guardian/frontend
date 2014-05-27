@@ -68,10 +68,6 @@ case class NewsContainer(showMore: Boolean = true) extends Container {
   val containerType = "news"
   val tone = "news"
 }
-case class CommentContainer(showMore: Boolean = true) extends Container {
-  val containerType = "comment"
-  val tone = "comment"
-}
 case class CommentAndDebateContainer(showMore: Boolean = true) extends Container {
   val containerType = "commentanddebate"
   val tone = "comment"

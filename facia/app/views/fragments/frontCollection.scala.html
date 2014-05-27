@@ -11,7 +11,6 @@
             case size if size < 3               => { @containers.tag(front, block._2, NewsContainer(showMore = false), index)(request, templateDeduping, block._1) }
             case _                              => { @containers.tag(front, block._2, NewsContainer(), index)(request, templateDeduping, block._1) }
         }}
-        case Some("comment")                    => { @containers.comment(block._2, CommentContainer(), index)(request, templateDeduping, block._1) }
         case Some("comment/comment-and-debate") => { @containers.commentanddebate(block._2, CommentAndDebateContainer(), index)(request, templateDeduping, block._1) }
         case Some("features")                   => { @containers.features(block._2, FeaturesContainer(), index)(request, templateDeduping, block._1) }
         case Some("news/most-popular")          => { @containers.popular(block._2, PopularContainer(), index)(request, block._1) }
