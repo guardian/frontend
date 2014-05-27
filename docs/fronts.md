@@ -1,5 +1,5 @@
 ## Fronts
 
-Placeholder for an architecture, support, and "SLA" doc for fronts.
+(Placeholder for fronts architecture, support, and "SLA" documentation.)
 
-[Fronts architecture](/docs/images/fronts-archirecture.png)
+![Fronts architecture](/docs/images/fronts-archirecture.png)
