@@ -122,9 +122,11 @@
 
 .article--advertisement-feature {
     @include f-textsans;
+    background-color: $c-neutral8;
 
     .content__standfirst {
         @include f-headlineSans;
+        color: $c-neutral2-contrasted;
     }
 }
 

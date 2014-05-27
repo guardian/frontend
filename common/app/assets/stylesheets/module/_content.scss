@@ -1,6 +1,6 @@
 .content {
     @include rem((
-        margin-bottom: $gs-baseline*3.5
+        padding-bottom: $gs-baseline*3.5
     ));
     @include fs-bodyCopy(3);
 
