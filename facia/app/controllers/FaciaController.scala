@@ -4,7 +4,7 @@ import common._
 import front._
 import model._
 import play.api.mvc._
-import play.api.libs.json.Json
+import play.api.libs.json.{JsObject, JsValue, Json}
 import views.support.{TemplateDeduping, NewsContainer}
 import scala.concurrent.Future
 import play.api.templates.Html
@@ -53,6 +53,44 @@ class FaciaController extends Controller with Logging with ExecutionContexts wit
       applicationsRedirect(path)
     else
       renderFrontPress(path)
+  }
+
+  def getCollections(json: JsValue): Seq[JsValue] = {
+    (json \ "collections").asOpt[Seq[Map[String, JsObject]]].getOrElse(Nil).flatMap{ c => c.values.map(getCollection) }
+  }
+
+  def getCollection(json: JsValue): JsValue = {
+    Json.obj(
+        "displayName" -> (json \ "displayName"),
+        "href" -> (json \ "href"),
+        "content" -> getContent(json)
+    )
+  }
+
+  def getContent(json: JsValue): Seq[JsValue] = {
+    val curated = (json \ "curated").asOpt[Seq[JsObject]].getOrElse(Nil)
+    val editorsPicks = (json \ "editorsPicks").asOpt[Seq[JsObject]].getOrElse(Nil)
+    val results = (json \ "results").asOpt[Seq[JsObject]].getOrElse(Nil)
+
+    (curated ++ editorsPicks ++ results)
+    .filterNot{ j =>
+      (j \ "id").asOpt[String].exists(_.startsWith("snap/"))
+     }
+    .take(8).map{ j =>
+      Json.obj(
+        "headline" -> (j \ "safeFields" \ "headline"),
+        "id" -> (j \ "id")
+      )
+    }
+  }
+
+  def renderFrontJsonLite(path: String) = MemcachedAction{ implicit request =>
+    FrontJson.getAsJsValue(path).map{ json =>
+      Cached(60)(Ok(Json.obj(
+        "webTitle" -> (json \ "seoData" \ "webTitle"),
+        "collections" -> getCollections(json)
+      )))
+    }
   }
 
   def renderFrontPress(path: String) = MemcachedAction{ implicit request =>

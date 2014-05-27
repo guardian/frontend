@@ -3,7 +3,7 @@ package controllers.front
 import model._
 import scala.concurrent.Future
 import play.api.libs.ws.{Response, WS}
-import play.api.libs.json.{JsNull, JsValue, Json}
+import play.api.libs.json.{JsObject, JsNull, JsValue, Json}
 import common.ExecutionContexts
 import model.FaciaPage
 import services.SecureS3Request
@@ -19,6 +19,17 @@ trait FrontJson extends ExecutionContexts {
   def get(path: String): Future[Option[FaciaPage]] = {
     val response = SecureS3Request.urlGet(getAddressForPath(path)).get()
     parseResponse(response)
+  }
+
+  def getAsJsValue(path: String): Future[JsValue] = {
+    val response = SecureS3Request.urlGet(getAddressForPath(path)).get()
+
+    response.map { r =>
+      r.status match {
+        case 200 => Json.parse(r.body)
+        case _   => JsObject(Nil)
+      }
+    }
   }
 
   private def parseCollection(json: JsValue): Collection = {
