@@ -434,6 +434,16 @@ module.exports = function (grunt) {
                     dest: 'common/conf/assets'
                 }]
             },
+            // assets.map must go where Play can find it from resources at runtime.
+            // Everything else goes into frontend-static bundling.
+            assetMap: {
+                files: [{
+                    expand: true,
+                    cwd: staticHashDir + 'assets',
+                    src: ['**/assets.map'],
+                    dest: 'common/conf/assets'
+                }]
+            },
             /**
              * NOTE: not using this as doesn't preserve file permissions (using shell:copyHooks instead)
              * Waiting for Grunt 0.4.3 - https://github.com/gruntjs/grunt/issues/615
@@ -450,9 +460,7 @@ module.exports = function (grunt) {
 
         hash: {
             options: {
-                // assets.map must go where Play can find it from resources at runtime.
-                // Everything else goes into frontend-static bundling.
-                mapping: 'common/conf/assets/assets.map',
+                mapping: staticHashDir + 'assets/assets.map',
                 srcBasePath: staticTargetDir,
                 destBasePath: staticHashDir,
                 flatten: false,
@@ -787,10 +795,10 @@ module.exports = function (grunt) {
     });
 
     // Compile tasks
-    grunt.registerTask('compile:images', ['generate:images', 'generate:conf']);
+    grunt.registerTask('compile:images', ['generate:images', 'hash']);
     grunt.registerTask('generate:images', ['clean:images', 'copy:images', 'shell:spriteGeneration', 'imagemin']);
 
-    grunt.registerTask('compile:css', ['generate:css', 'generate:conf']);
+    grunt.registerTask('compile:css', ['generate:css', 'hash']);
     grunt.registerTask('generate:css', ['clean:css', 'sass:compile', 'replace:cssSourceMaps', 'copy:css']);
 
     grunt.registerTask('compile:js', function(app) {
@@ -799,7 +807,7 @@ module.exports = function (grunt) {
         } else {
             grunt.task.run('generate:js');
         }
-        grunt.task.run('generate:conf');
+        grunt.task.run('hash');
     });
     grunt.registerTask('generate:js', function(app) {
         grunt.task.run(['clean:js']);
@@ -824,10 +832,10 @@ module.exports = function (grunt) {
         }
     });
 
-    grunt.registerTask('compile:fonts', ['generate:fonts', 'generate:conf']);
+    grunt.registerTask('compile:fonts', ['generate:fonts', 'hash']);
     grunt.registerTask('generate:fonts', ['clean:fonts', 'mkdir:fontsTarget', 'webfontjson']);
 
-    grunt.registerTask('compile:flash', ['generate:flash', 'generate:conf']);
+    grunt.registerTask('compile:flash', ['generate:flash', 'hash']);
     grunt.registerTask('generate:flash', ['clean:flash', 'copy:flash']);
 
     grunt.registerTask('compile', function(app) {
@@ -837,10 +845,11 @@ module.exports = function (grunt) {
             'generate:js:' + (app || ''),
             'generate:fonts',
             'generate:flash',
+            'hash',
             'generate:conf'
         ]);
     });
-    grunt.registerTask('generate:conf', ['clean:assets', 'copy:headCss', 'copy:vendor', 'hash']);
+    grunt.registerTask('generate:conf', ['clean:assets', 'copy:headCss', 'copy:vendor', 'copy:assetMap']);
 
     // Test tasks
     grunt.registerTask('test:integration', function(app) {

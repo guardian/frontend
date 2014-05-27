@@ -29,7 +29,7 @@ class AssetMap(base: String, assetMap: String) {
 
     // Use the grunt-generated asset map in Dev.
     val json: String = if (Play.current.mode == Mode.Dev) {
-      val assetMapUri = new java.io.File(s"common/conf/" + assetMap).toURI
+      val assetMapUri = new java.io.File(s"static/hash/" + assetMap).toURI
       IOUtils.toString(assetMapUri)
     } else {
       val url = Play.classloader(Play.current).getResource(assetMap)
