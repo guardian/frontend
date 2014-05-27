@@ -26,6 +26,7 @@ public class PageHelper {
 
     public Article goToArticle(String article){
         driver.get(this.baseUrl + article + adsOff);
+        WaitHelper.waitForArticleLoad(driver);
         return new Article(driver);
     }
 
@@ -41,6 +42,4 @@ public class PageHelper {
             driver.quit();
         }
     }
-
-
 }

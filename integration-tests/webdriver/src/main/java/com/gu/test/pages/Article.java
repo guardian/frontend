@@ -1,11 +1,7 @@
 package com.gu.test.pages;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.Wait;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class Article {
 
@@ -47,11 +43,9 @@ public class Article {
         return driver.findElement(By.cssSelector(".right-most-popular-item__url")).getText();
     }
 
-
     public String getArticleHeadline() {
         return driver.findElement(By.cssSelector(".content__headline")).getText();
     }
-
 
     public boolean hasRelatedContentContainer() {
         return driver.findElement(By.cssSelector(".related")).isDisplayed();
@@ -77,6 +71,14 @@ public class Article {
     public Article goToFirstArticleInMostPopularBottom() {
         driver.findElement(By.cssSelector(".article__popular div#tabs-popular-1 a")).click();
         return new Article(driver);
+    }
+
+    public boolean hasComments() {
+        return driver.findElement(By.cssSelector(".discussion-content")).isDisplayed();
+    }
+
+    public boolean hasTweets() {
+        return driver.findElement(By.cssSelector(".element-tweet")).isDisplayed();
     }
 }
 
