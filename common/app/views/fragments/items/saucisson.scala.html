@@ -1,6 +1,6 @@
 @(trail: Trail, index: Int)(implicit request: RequestHeader, config: Config)
 
-@defining((trail.visualTone)) { case (tone) =>
+@defining((trail.visualTone)) { tone =>
     <div
         class="@GetClasses.forSaucisson(trail)"
         @if(trail.isCommentable) {
