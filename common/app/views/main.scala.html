@@ -18,7 +18,7 @@
             case _: Article => {article}
             case _          => {facia}
         }-layout">
-        @fragments.commercial.standardAd(name="top", adType="top-banner-ad", sizeMapping=Map("tabletportrait" -> Seq("728,90"), "tabletlandscape" -> Seq("728,90", "900,250"), "desktop" -> Seq("728,90", "900,250"), "wide" -> Seq("728,90", "900,250", "970,250")))
+        @fragments.commercial.standardAd(name="top-above-nav", adType="top-banner-ad", sizeMapping=Map("tabletportrait" -> Seq("728,90"), "tabletlandscape" -> Seq("728,90", "900,250"), "desktop" -> Seq("728,90", "900,250"), "wide" -> Seq("728,90", "900,250", "970,250")))
     </div>
 
     @fragments.message(metaData)
@@ -27,7 +27,7 @@
 
     <div id="js-context">
         <div class="top-banner-ad-container top-banner-ad-container--mobile">
-            @fragments.commercial.standardAd(name="top-mobile", adType="top-banner-ad", sizeMapping=Map("mobile" -> Seq("300,50", "320,50")), showLabel=false)
+            @fragments.commercial.standardAd(name="top", adType="top-banner-ad", sizeMapping=Map("mobile" -> Seq("300,50", "320,50")), showLabel=false)
         </div>
 
         @fragments.localNav(metaData)
