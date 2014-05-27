@@ -76,6 +76,8 @@ trait Navigation  {
   val mls = SectionLink("football", "MLS", "MLS", "/football/mls")
   val nhl = SectionLink("sport", "NHL", "NHL", "/sport/nhl")
 
+  val worldCup = SectionLink("football", "world cup", "World Cup", "/football/world-cup-2014")
+
   //Cif
   val cif = SectionLink("commentisfree", "comment", "Comment", "/commentisfree")
   val opinion = SectionLink("commentisfree", "opinion", "Opinion", "/commentisfree")
@@ -161,6 +163,7 @@ trait Navigation  {
   val globalDevelopment = SectionLink("environment", "development", "Development", "/global-development")
 
   val footballNav = Seq(
+    worldCup,
     SectionLink("football", "live scores", "Live scores", "/football/live"),
     SectionLink("football", "tables", "Tables", "/football/tables"),
     SectionLink("football", "competitions", "Competitions", "/football/competitions"),
