@@ -7,7 +7,8 @@ import org.openqa.selenium.WebDriver;
 public class PageHelper {
     private WebDriver driver;
     protected final String baseUrl = "http://m.code.dev-theguardian.com";
-    protected final String betaSite = "/testcard#gu.prefs.switchOff=adverts";
+    protected final String betaSite = "/testcard";
+    protected final String adsOff = "#gu.prefs.switchOff=adverts";
 
     public PageHelper(WebDriver driver) {
         this.driver = driver;
@@ -18,18 +19,18 @@ public class PageHelper {
     }
 
     public FrontPage goToFronts() {
-        String frontPageURL = this.getBaseUrl() + betaSite;
+        String frontPageURL = this.getBaseUrl() + betaSite + adsOff;
         driver.get(frontPageURL);
         return new FrontPage(driver);
     }
 
     public Article goToArticle(String article){
-        driver.get(this.baseUrl + article);
+        driver.get(this.baseUrl + article + adsOff);
         return new Article(driver);
     }
 
     public FrontPage goToFrontsForTracking() {
-        String frontPageURL = "http://www.theguardian.com/uk?view=mobile#gu.prefs.switchOff=adverts";
+        String frontPageURL = "http://www.theguardian.com/uk?view=mobile" + adsOff;
         driver.get(frontPageURL);
         return new FrontPage(driver);
     }
