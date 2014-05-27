@@ -72,12 +72,12 @@ define([
                     var targetList = ko.dataFor(element),
                         targetItem = ko.dataFor(event.target),
                         id = event.dataTransfer.getData('Text'),
-                        ourQueryParams   = parseQueryParams(id, {
+                        knownQueryParams = parseQueryParams(id, {
                             namespace: 'gu-',
                             excludeNamespace: false,
                             stripNamespace: true
                         }),
-                        theirQueryParams = parseQueryParams(id, {
+                        unknownQueryParams = parseQueryParams(id, {
                             namespace: 'gu-',
                             excludeNamespace: true
                         }),
@@ -129,15 +129,15 @@ define([
                     storage.removeItem(storageKey);
 
                     if (!sourceItem || sourceItem.id !== urlAbsPath(id)) {
-                        sourceItem = {meta: ourQueryParams};
+                        sourceItem = {meta: knownQueryParams};
                         sourceList = undefined;
-                        id = id.split('?')[0] + (_.isEmpty(theirQueryParams) ? '' : '?' + _.map(theirQueryParams, function(val, key) {
+                        id = id.split('?')[0] + (_.isEmpty(unknownQueryParams) ? '' : '?' + _.map(unknownQueryParams, function(val, key) {
                             return key + (val ? '=' + val : '');
                         }).join('&'));
                     }
 
                     // Parse url from links such as http://www.google.co.uk/?param-name=http://www.theguardian.com/foobar
-                    _.each(theirQueryParams, function(val, key) {
+                    _.each(unknownQueryParams, function(val, key) {
                         // Grab the last query param val that looks like a Guardian url
                         if (key === 'url' && (val + '').match(/^http:\/\/www.theguardian.com/)) {
                             id = val;
