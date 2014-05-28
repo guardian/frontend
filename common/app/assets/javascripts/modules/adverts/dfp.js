@@ -235,7 +235,9 @@ define([
                 edition     = encodeTargetValue(conf.edition),
                 keywords;
             if (conf.keywordIds) {
-                keywords = conf.keywordIds.split(',').map(lastPart(keywordId));
+                keywords = conf.keywordIds.split(',').map(function (keywordId) {
+                    lastPart(keywordId);
+                });
             } else {
                 keywords = lastPart(conf.pageId);
             }
