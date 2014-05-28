@@ -310,6 +310,24 @@
         }
     }
 }
+.pageskin-container {
+    display: none;
+
+    @include mq(wide) {
+        display: block;
+        position: relative;
+        width: 1300px;
+        margin: 0 auto;
+    }
+}
+.ad-slot--pageskin {
+    position: absolute;
+    height: 1200px;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background: linear-gradient($c-neutral8, #ffffff);
+}
 .ad-slot__label {
     height: $mpu-ad-label-height;
     background-color: $c-neutral8;

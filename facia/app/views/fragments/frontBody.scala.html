@@ -2,6 +2,11 @@
 
 @if(faciaPage.collections.nonEmpty) {
     <div class="facia-container facia-container--layout-front @if(faciaPage.isAdvertisementFeature && !faciaPage.isSponsored){facia-container--advertisement-feature} facia-container--pageskin" data-link-name="Front" role="main">
+
+        <div class="pageskin-container">
+            <div class="ad-slot--pageskin"></div>
+        </div>
+
         @defining(faciaPage.collections.filter(_._2.items.nonEmpty)) { collections =>
             @collections.zipWithIndex.map{ case(block, index) =>
                 @fragments.frontCollection(faciaPage, block, collections.size, index)

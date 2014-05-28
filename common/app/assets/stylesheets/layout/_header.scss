@@ -7,6 +7,15 @@
 
     @include mq(tablet) {
         background: $c-neutral8;
+        border-bottom: 2px solid $c-brandBlue;
+    }
+    @include mq(wide) {
+        > * {
+            margin: 0 auto;
+            @include rem((
+                width: gs-span(12)
+            ));
+        }
     }
 }
 
