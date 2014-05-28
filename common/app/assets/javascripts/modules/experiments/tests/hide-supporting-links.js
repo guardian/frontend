@@ -38,7 +38,7 @@ define([
 
         this.variants = [
             {
-                id: 'show-all',
+                id: 'control',
                 test: function () {
                     // do nothing
                 }
@@ -52,15 +52,14 @@ define([
             {
                 id: 'show-visited',
                 test: function () {
-                    getSublinks().hide();
                     var history = new History();
 
                     getSublinks().each(function(item){
                         var trail = bonzo(item);
                         var leadSlug = trail.attr('data-lead-story-url');
 
-                        if(history.contains(leadSlug)){
-                            trail.show();
+                        if(!history.contains(leadSlug)){
+                            trail.hide();
                         }
                     });
                 }
