@@ -3,6 +3,7 @@
     position: relative;
 
     @include rem((
+        padding-top: $gs-row-height*.5,
         margin-left: $gs-gutter / 2,
         margin-right: $gs-gutter / 2
     ));

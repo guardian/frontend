@@ -3,7 +3,7 @@
 
 @defining((model.article, model.storyPackage)) { case (article, storyPackage) =>
 <article id="article"
-    class="content content--article tone-@article.visualTone tone-@article.visualTone--article section-@article.sectionName.toLowerCase
+    class="content content--article tone-@article.visualTone tone-@article.visualTone--article section-@article.sectionName.trim.toLowerCase.replaceAll("""[\s-]+""", "-")
     @if(article.isAdvertisementFeature && !article.isSponsored){article--advertisement-feature}"
 
     itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType" role="main">
