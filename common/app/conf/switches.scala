@@ -308,11 +308,6 @@ object Switches extends Collections {
 
   // A/B Tests
 
-  val ABHeaderSearchText = Switch("A/B Tests", "ab-header-search-text",
-    "If this switch is turned on then the header search box will display a label for tablet and desktop.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 6, 9)
-  )
-
   val ABHighRelevanceCommercialComponent = Switch("A/B Tests", "ab-high-relevance-commercial-component",
     "If this switch is turned on, run the HighRelevanceCommercialComponent A/B test.",
     safeState = Off, sellByDate = new DateMidnight(2014, 6, 5)
@@ -474,7 +469,6 @@ object Switches extends Collections {
     GeoMostPopular,
     TagLinkingSwitch,
     FaciaFirstContainerLayoutOverrideSwitch,
-    ABHeaderSearchText,
     ABHighRelevanceCommercialComponent,
     ABHideSupportingLinks,
     SmartBannerSwitch,
