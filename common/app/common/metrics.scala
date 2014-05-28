@@ -534,9 +534,8 @@ trait CloudWatchApplicationMetrics extends GlobalSettings {
     val systemMetrics  = this.systemMetrics
     val applicationMetrics  = this.applicationMetrics
     CloudWatch.put("ApplicationSystemMetrics", systemMetrics)
-    if (applicationMetrics.nonEmpty) {
-      CloudWatch.putWithDimensions(applicationMetricsNamespace, applicationMetrics, Seq(applicationDimension))
-    }
+    for (metrics <- applicationMetrics.grouped(20))
+      CloudWatch.putWithDimensions(applicationMetricsNamespace, metrics, Seq(applicationDimension))
   }
 
   override def onStart(app: PlayApp) {
