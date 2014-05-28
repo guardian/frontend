@@ -1,15 +1,11 @@
 define([
-    'qwery',
     'bonzo',
     'common/$',
-    'common/_',
     'common/modules/onward/history',
     'common/utils/cookies'
 ], function (
-    qwery,
     bonzo,
     $,
-    _,
     History,
     cookies
     ) {
