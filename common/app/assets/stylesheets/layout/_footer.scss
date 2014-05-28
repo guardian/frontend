@@ -29,11 +29,9 @@
    ========================================================================== */
 
 .l-footer {
-    border-top-style: solid;
-    border-top-color: transparent;
     @include rem((
+        margin-top: $gs-baseline*3,
         padding: 0 0 ($gs-baseline/3)*4,
-        border-top-width: $gs-baseline*3
     ));
     background: $c-neutral8;
 
