@@ -5,9 +5,6 @@
 $c-commercial-travel-light: #2cace7;
 $c-commercial-travel-dark: #002b6c;
 
-.l-footer {
-    border-top-width: 0 !important;
-}
 .commercial--travel {
     .lineitems {
         @include rem((
