@@ -236,7 +236,7 @@ define([
                 keywords;
             if (conf.keywordIds) {
                 keywords = conf.keywordIds.split(',').map(function (keywordId) {
-                    lastPart(keywordId);
+                    return lastPart(keywordId);
                 });
             } else {
                 keywords = lastPart(conf.pageId);
