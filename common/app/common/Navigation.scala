@@ -199,8 +199,8 @@ object Breadcrumbs {
 
   def subNav(navigation: Seq[NavItem], page: MetaData): Option[SectionLink] = topLevelItem(navigation, page).flatMap(_.links.find(_.currentFor(page)))
 
-  def localNav(navigation: Seq[NavItem], page: MetaData): Option[Seq[SectionLink]] = topLevelItem(navigation, page)
-    .map(_.links).filter(_.nonEmpty)
+  def localNav(navigation: Seq[NavItem], page: MetaData): Option[NavItem] = topLevelItem(navigation, page)
+    .filter(_.links.nonEmpty)
 
   def sectionOverride(localNav: NavItem, currentSublink: Option[SectionLink]): String = currentSublink.map(_.title).getOrElse(localNav.name.title)
 }
