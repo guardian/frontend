@@ -232,7 +232,8 @@ define([
                 keywords;
             if (conf.keywordIds) {
                 keywords = conf.keywordIds.split(',').map(function (keywordId) {
-                    return keywordId.split('/')[1];
+                    var parts = keywordId.split('/');
+                    return parts[parts.length - 1];
                 });
             } else {
                 keywords = conf.pageId;
