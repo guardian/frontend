@@ -174,3 +174,30 @@
         }
     }
 }
+
+.facia-container--pageskin.facia-container--layout-front {
+    .facia-container__inner {
+        @include mq(wide) {
+            @include rem((
+                width: gs-span(12)
+            ));
+        }
+    }
+    .container__body {
+        margin-left: 0;
+    }
+    .container__title {
+        width: auto !important;
+        margin-right: 0;
+        float: none;
+        @include rem((
+            margin-bottom: $gs-baseline
+        ));
+    }
+    .container--news .container__title {
+        display: none;
+    }
+    .container__toggle {
+        left: auto;
+    }
+}
