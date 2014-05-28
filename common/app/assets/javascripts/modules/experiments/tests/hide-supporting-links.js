@@ -37,7 +37,7 @@ define([
 
         this.canRun = function (config) {
             appConfig = config;
-            return true;
+            return config.page.isFront;
         };
 
         this.variants = [
@@ -73,20 +73,19 @@ define([
                 id: 'show-if-homepage',
                 test: function () {
                     var cookieName = 'HideSupportingLinks-show-if-homepage-' + appConfig.page.edition;
-
                     var isEditionHomepage =
                         appConfig.page.pageId == 'uk' ||
                         appConfig.page.pageId == 'us' ||
                         appConfig.page.pageId == 'au';
 
                     if (isEditionHomepage) {
-                        var minutesToLive = 180;
-                        cookies.addForMinutes(cookieName, 'true', minutesToLive);
-                    }
+                        var homepageVisited = cookies.get(cookieName);
 
-                    var homepageVisited = cookies.get(cookieName);
-                    if (!homepageVisited) {
-                        getSublinks().hide();
+                        if (!homepageVisited) {
+                            getSublinks().hide();
+                            var minutesToLive = 180;
+                            cookies.addForMinutes(cookieName, 'true', minutesToLive);
+                        }
                     }
                 }
             }

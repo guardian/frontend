@@ -53,7 +53,6 @@ define(function () {
             var expires = new Date();
             expires.setMinutes(expires.getMinutes() + minutesToLive);
             document.cookie = name + '=' + value + '; path=/; expires=' + expires.toUTCString() + '; domain=' + getShortDomain() + ';';
-
         } else {
             add(name, value);
         }
