@@ -513,6 +513,15 @@ define([
             if(config.switches.smartBanner) {
                 smartAppBanner.init();
             }
+        },
+
+        stickyPageskin: function() {
+            var $pageskin = $('.ad-slot--pageskin').first(),
+                $window = $(window),
+                contextPos = $('#js-context').offset().top;
+            mediator.on('window:scroll', function() {
+                $pageskin.css('top', Math.max(0, $window.scrollTop() - contextPos));
+            });
         }
     };
 
@@ -564,6 +573,7 @@ define([
             modules.repositionComments();
             modules.showMoreTagsLink();
             modules.showSmartBanner(config);
+            modules.stickyPageskin(config);
         }
         mediator.emit('page:common:ready', config, context);
     };

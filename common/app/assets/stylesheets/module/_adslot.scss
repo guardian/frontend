@@ -327,6 +327,7 @@
     top: 0;
     left: 0;
     background: linear-gradient($c-neutral8, #ffffff);
+    @include transition(top .5s)
 }
 .ad-slot__label {
     height: $mpu-ad-label-height;
