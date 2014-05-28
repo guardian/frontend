@@ -1,7 +1,7 @@
 @(items: Seq[Trail], style: PeopleContainer, containerIndex: Int)(implicit request: RequestHeader, config: Config)
 
 <div class="facia-slice-wrapper facia-slice-wrapper--position-1">
-    <ul class="u-unstyled l-row l-row--items-3 collection">
+    <ul class="u-unstyled l-row l-row--items-3 facia-slice">
         @items.slice(0, 3).zipWithIndex.map{ case (trail, index) =>
             @fragments.collections.items.standard(trail, index, containerIndex)
         }
@@ -10,14 +10,14 @@
 
 @defining(items.slice(3, 11)) { items =>
     @if(items.nonEmpty) {
-        <div class="linkslist-container tone-@{style.tone} facia-slice-wrapper--ad">
+        <div class="linkslist-container tone-@{style.tone} slice--ad-candidate">
             <ul class="l-columns linkslist">
                 @items.zipWithIndex.map{ case (trail, index) =>
                     @trail match {
                         case l: LiveBlog if l.isLive         => { @fragments.items.linksList.live(l, index + 3, Some("boost")) }
                         case g: Gallery                      => { @fragments.items.linksList.gallery(g, index + 3, Some("boost")) }
                         case v: Video                        => { @fragments.items.linksList.video(v, index + 3, Some("boost")) }
-                        case c if VisualTone(c) == "comment" => { @fragments.items.linksList.comment(c, index + 3, Some("boost")) }
+                        case c if c.visualTone == "comment"  => { @fragments.items.linksList.comment(c, index + 3, Some("boost")) }
                         case t                               => { @fragments.items.linksList.standard(t, index + 3, Some("boost")) }
                     }
                 }
@@ -34,7 +34,7 @@
                         case l: LiveBlog if l.isLive         => { @fragments.items.linksList.live(l, index + 11) }
                         case g: Gallery                      => { @fragments.items.linksList.gallery(g, index + 11) }
                         case v: Video                        => { @fragments.items.linksList.video(v, index + 11) }
-                        case c if VisualTone(c) == "comment" => { @fragments.items.linksList.comment(c, index + 11) }
+                        case c if c.visualTone == "comment"  => { @fragments.items.linksList.comment(c, index + 11) }
                         case t                               => { @fragments.items.linksList.standard(t, index + 11) }
                     }
                 }

@@ -8,6 +8,8 @@ GET        /assets/*path                                             dev.DevAsse
 # Travel offers
 GET        /commercial/travel/offers                                 controllers.commercial.TravelOffers.renderOffer
 GET        /commercial/travel/offers.json                            controllers.commercial.TravelOffers.listOffers
+GET        /commercial/travel/offers-high                            controllers.commercial.TravelOffers.renderOfferHigh
+GET        /commercial/travel/offers-high.json                       controllers.commercial.TravelOffers.listOffersHigh
 
 # Jobs
 GET        /commercial/jobs                                          controllers.commercial.JobAds.renderAds

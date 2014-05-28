@@ -1,0 +1,43 @@
+@(trail: Trail, index: Int)(implicit request: RequestHeader, config: Config)
+
+@defining((trail.visualTone)) { tone =>
+    <div
+        class="@GetClasses.forSaucisson(trail)"
+        @if(trail.isCommentable) {
+            @trail.discussionId.map{ id =>
+                data-discussion-id="@id"
+            }
+            data-discussion-closed="@trail.isClosedForComments"
+        }
+        data-link-name="trail | @{index + 1}"
+        @SnapData(trail)>
+
+        <div class="saucisson__container">
+            <a @LinkTo(trail).map{url=>href=@url} class="saucisson__link" data-link-name="article">
+                @fragments.items.elements.image(trail)
+                @fragments.items.elements.title(trail, index, 0)
+            </a>
+            @if(tone == "comment") {
+                @trail.byline.map { byLine =>
+                    <p class="item__byline tone-colour">@Html(byLine)</p>
+                }
+            }
+
+            @trail match { case content:model.Content => @fragments.items.elements.tagOrSection(content) }
+
+            @trail.trailText.map { text =>
+                <div class="item__standfirst">
+                    @Html(text)
+                    @trail match { case content:model.Content => @fragments.items.elements.starRating(content) }
+                </div>
+            }
+
+            @fragments.items.elements.supporting(trail.supporting, trail, style = "fit")
+
+            @if(trail.isCommentable) {
+                @fragments.items.elements.meta(trail)
+            }
+        </div>
+
+    </div>
+}

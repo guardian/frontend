@@ -68,11 +68,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
-  val GzipSwitch = Switch("Performance Switches", "gzip",
-    "If switched on then http responses will be gzipped",
-    safeState = Off, sellByDate = new DateMidnight(2014, 5, 31)
-  )
-
   val DoubleCacheTimesSwitch = Switch("Performance Switches", "double-cache-times",
     "Doubles the cache time of every endpoint. Turn on to help handle exceptional load.",
     safeState = On, sellByDate = never
@@ -123,6 +118,11 @@ object Switches extends Collections {
   val SponsoredSwitch = Switch("Advertising", "sponsored",
     "Show sponsored badges, logos, etc.",
     safeState = On, sellByDate = never
+  )
+
+  val SmartBannerSwitch = Switch("Advertising", "smart-banner",
+    "Display smart app banner onboarding message to iOS and Android users",
+    safeState = Off, sellByDate = new DateMidnight(2014, 6, 30)
   )
 
   // Ad Targeting
@@ -290,6 +290,12 @@ object Switches extends Collections {
     safeState = On, sellByDate = new DateMidnight(2014, 6, 30)
   )
 
+  val FaciaFirstContainerLayoutOverrideSwitch = Switch("Feature Switches", "facia-first-container-layout-override",
+    "If this switch is turned on then the first container on every facia front will have a fixed layout " +
+      "containing two slices with one big article in each one of them",
+    safeState = On, sellByDate = new DateMidnight(2014, 6, 10)
+  )
+
   val EnhanceTweetsSwitch = Switch("Feature Switches", "enhance-tweets",
     "If this switch is turned on then embedded tweets will be enhanced using Twitter's widgets.",
     safeState = Off, sellByDate = never
@@ -309,7 +315,12 @@ object Switches extends Collections {
 
   val ABHighRelevanceCommercialComponent = Switch("A/B Tests", "ab-high-relevance-commercial-component",
     "If this switch is turned on, run the HighRelevanceCommercialComponent A/B test.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 5, 31)
+    safeState = Off, sellByDate = new DateMidnight(2014, 6, 5)
+  )
+
+  val ABHideSupportingLinks = Switch("A/B Tests", "ab-hide-supporting-links",
+    "If this switch is turned on, run the HideSupportingLinks A/B test.",
+    safeState = Off, sellByDate = new DateMidnight(2014, 6, 24)
   )
 
   // Dummy Switches
@@ -330,6 +341,7 @@ object Switches extends Collections {
   )
 
   // Facia Tool Switches
+
   val ToolDisable = Switch("Facia Tool", "facia-tool-disable",
     "If this is switched on then the fronts tool is disabled",
     safeState = Off, sellByDate = never
@@ -376,14 +388,21 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
+  val FaciaToolContainerTagsSwitch = Switch("Facia Tool", "facia-tool-tags",
+    "If this switch is on the container configuration will allow articles to show their tags or sections",
+    safeState = Off, sellByDate = new DateMidnight(2014, 6, 7)
+  )
+
+  // Facia Switches
+
   val NewSeoSwitch = Switch("Facia Switches", "new-seo-switch",
     "If this switch is on then the SEO elements for pages will be take from the tool, content api and generated",
     safeState = Off, sellByDate = new DateMidnight(2014, 5, 30)
   )
 
-  val FaciaToolContainerTagsSwitch = Switch("Facia Tool", "facia-tool-tags",
-    "If this switch is on the container configuration will allow articles to show their tags or sections",
-    safeState = Off, sellByDate = new DateMidnight(2014, 6, 7)
+  val FeaturesAutoContainerSwitch = Switch("Facia Switches", "facia-features-auto-container",
+    "If this switch is on, the features auto container has the right to live.",
+    safeState = Off, sellByDate = new DateMidnight(2014, 6, 15)
   )
 
   // Image Switch
@@ -452,11 +471,14 @@ object Switches extends Collections {
     MemcachedSwitch,
     IncludeBuildNumberInMemcachedKey,
     NewSeoSwitch,
-    GzipSwitch,
     GeoMostPopular,
     TagLinkingSwitch,
+    FaciaFirstContainerLayoutOverrideSwitch,
     ABHeaderSearchText,
-    ABHighRelevanceCommercialComponent
+    ABHighRelevanceCommercialComponent,
+    ABHideSupportingLinks,
+    SmartBannerSwitch,
+    FeaturesAutoContainerSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }

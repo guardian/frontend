@@ -1,7 +1,7 @@
 package views.support
 
 import common._
-import conf.Switches.{ ShowAllArticleEmbedsSwitch, ArticleSlotsSwitch, TagLinkingSwitch }
+import conf.Switches.{ ShowAllArticleEmbedsSwitch, ArticleSlotsSwitch, TagLinkingSwitch, FeaturesAutoContainerSwitch }
 import model._
 
 import java.net.URLEncoder._
@@ -68,20 +68,16 @@ case class NewsContainer(showMore: Boolean = true) extends Container {
   val containerType = "news"
   val tone = "news"
 }
-case class SportContainer(showMore: Boolean = true) extends Container {
-  val containerType = "sport"
-  val tone = "news"
-}
-case class CommentContainer(showMore: Boolean = true) extends Container {
-  val containerType = "comment"
-  val tone = "comment"
-}
 case class CommentAndDebateContainer(showMore: Boolean = true) extends Container {
   val containerType = "commentanddebate"
   val tone = "comment"
 }
 case class FeaturesContainer(showMore: Boolean = true) extends Container {
   val containerType = "features"
+  val tone = "feature"
+}
+case class FeaturesAutoContainer(showMore: Boolean = true) extends Container {
+  val containerType = "featuresauto"
   val tone = "feature"
 }
 case class PopularContainer(showMore: Boolean = true) extends Container {
@@ -225,7 +221,7 @@ case class VideoEmbedCleaner(contentVideos: Seq[VideoElement]) extends HtmlClean
       val asset = findVideoFromId(mediaId)
 
       // add the poster url
-      asset.flatMap(_.image).flatMap(Item620.bestFor).map(_.toString()).foreach{ url =>
+      asset.flatMap(_.image).flatMap(Item640.bestFor).map(_.toString()).foreach{ url =>
         element.attr("poster", url)
       }
 
@@ -251,7 +247,7 @@ case class VideoEmbedCleaner(contentVideos: Seq[VideoElement]) extends HtmlClean
 
 case class PictureCleaner(contentImages: Seq[ImageElement]) extends HtmlCleaner with implicits.Numbers {
 
-  def clean(body: Document): Document = {
+  def cleanStandardPictures(body: Document): Document = {
     body.getElementsByTag("figure").foreach { fig =>
       if(!fig.hasClass("element-comment") && !fig.hasClass("element-witness")) {
         fig.attr("itemprop", "associatedMedia")
@@ -263,11 +259,11 @@ case class PictureCleaner(contentImages: Seq[ImageElement]) extends HtmlCleaner 
           fig.addClass("img")
           img.attr("itemprop", "contentURL")
 
-          asset.foreach { image =>
+          asset.map { image =>
             image.url.map(url => img.attr("src", ImgSrc(url, Item620).toString))
             img.attr("width", s"${image.width}")
 
-            //otherwsie we mess with aspect ratio
+            //otherwise we mess with aspect ratio
             img.removeAttr("height")
 
             fig.addClass(image.width match {
@@ -296,8 +292,30 @@ case class PictureCleaner(contentImages: Seq[ImageElement]) extends HtmlCleaner 
     body
   }
 
+  def cleanShowcasePictures(body: Document): Document = {
+    for {
+      element <- body.getElementsByClass("element--showcase")
+      asset <- findContainerFromId(element.attr("data-media-id"))
+      imagerSrc <- ImgSrc.imager(asset, Showcase)
+      imgElement <- element.getElementsByTag("img")
+    } {
+      imgElement.wrap(s"""<div class="js-image-upgrade" data-src="$imagerSrc"></div>""")
+      imgElement.addClass("responsive-img")
+    }
+
+    body
+  }
+
+  def clean(body: Document): Document = {
+    cleanShowcasePictures(cleanStandardPictures(body))
+  }
+
   def findImageFromId(id:String): Option[ImageAsset] = {
-    contentImages.find(_.id == id).flatMap(Item620.elementFor)
+    findContainerFromId(id).flatMap(Item620.elementFor)
+  }
+
+  def findContainerFromId(id:String): Option[ImageContainer] = {
+    contentImages.find(_.id == id)
   }
 }
 
@@ -748,45 +766,6 @@ object TableEmbedComplimentaryToP extends HtmlCleaner {
   }
 }
 
-object VisualTone {
-
-  val Comment = "comment"
-  val News = "news"
-  val Feature = "feature"
-  val Live = "live"
-
-  private val liveMappings = Seq(
-    "tone/minutebyminute"
-  )
-
-  private val commentMappings = Seq(
-    "tone/comment",
-    "tone/letters",
-    "tone/profiles",
-    "tone/editorials"
-  )
-
-  private val featureMappings = Seq(
-    "tone/features",
-    "tone/recipes",
-    "tone/interview",
-    "tone/performances",
-    "tone/extract",
-    "tone/reviews",
-    "tone/albumreview",
-    "tone/livereview",
-    "tone/childrens-user-reviews"
-  )
-
-
-  // tones are all considered to be 'News' it is the default so we do not list news tones explicitly
-  def apply(tags: Tags) = if(isLive(tags.tones)) Live else if(isComment(tags.tones)) Comment else if(isFeature(tags.tones)) Feature else News
-
-  private def isLive(tones: Seq[Tag]) = tones.exists(t => liveMappings.contains(t.id))
-  private def isComment(tones: Seq[Tag]) = tones.exists(t => commentMappings.contains(t.id))
-  private def isFeature(tones: Seq[Tag]) = tones.exists(t => featureMappings.contains(t.id))
-}
-
 object RenderOtherStatus {
   def gonePage(implicit request: RequestHeader) = model.Page(request.path, "news", "This page has been removed", "GFE:Gone")
   def apply(result: SimpleResult)(implicit request: RequestHeader) = result.header.status match {
@@ -831,7 +810,7 @@ object GetClasses {
               forceHasImage: Boolean = false): String = {
     val baseClasses: Seq[String] = Seq(
       "item",
-      s"tone-${VisualTone(trail)}"
+      s"tone-${trail.visualTone}"
     )
     val f: Seq[(Trail, Boolean, Boolean) => String] = Seq(
       (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean) => trail match {
@@ -861,7 +840,7 @@ object GetClasses {
   def forFromage(trail: Trail, imageAdjust: String): String = {
     val baseClasses: Seq[String] = Seq(
       "fromage",
-      s"tone-${VisualTone(trail)}",
+      s"tone-${trail.visualTone}",
       "tone-accent-border"
     )
     val f: Seq[(Trail, String) => String] = Seq(
@@ -879,6 +858,20 @@ object GetClasses {
         if (trail.isCommentable) "fromage--has-discussion" else "fromage--has-no-discussion"
     )
     val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail, imageAdjust)} ++ makeSnapClasses(trail)
+    RenderClasses(classes:_*)
+  }
+
+  def forSaucisson(trail: Trail): String = {
+    val baseClasses: Seq[String] = Seq(
+      "saucisson",
+      s"tone-${trail.visualTone}",
+      "tone-accent-border"
+    )
+    val f: Seq[(Trail) => String] = Seq(
+      (trail: Trail) =>
+        if (trail.isLive) "item--live" else ""
+    )
+    val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail)} ++ makeSnapClasses(trail)
     RenderClasses(classes:_*)
   }
 

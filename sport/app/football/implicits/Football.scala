@@ -137,6 +137,11 @@ trait Football extends Collections {
       "Runner-up Group" -> "Runner-up"
     )
   }
+
+  val roundLinks = Map[String, Round => Option[String]](
+    "700" -> ((round: Round) => round.name.map{ n => s"/football/world-cup-2014-${n.toLowerCase.replace(" ", "-")}" })
+  )
+  def groupTag(competitionId: String, round: Round) = roundLinks.get(competitionId).flatMap(_(round))
 }
 
 object Football extends Football

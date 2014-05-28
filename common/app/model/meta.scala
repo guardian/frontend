@@ -107,9 +107,20 @@ trait Elements {
   def mainPicture: Option[ImageContainer] = images.find(_.isMain)
 
   lazy val hasMainPicture = mainPicture.flatMap(_.imageCrops.headOption).isDefined
+  lazy val hasShowcaseMainPicture = {
+    val showcase = for {
+      main  <- mainPicture
+      image <- main.largestImage
+      role  <- image.role
+    } yield role == "showcase"
+    showcase.getOrElse(false)
+  }
 
   def mainVideo: Option[VideoElement] = videos.find(_.isMain).headOption
   lazy val hasMainVideo: Boolean = mainVideo.flatMap(_.videoAssets.headOption).isDefined
+
+  def mainEmbed: Option[EmbedElement] = embeds.find(_.isMain).headOption
+  lazy val hasMainEmbed: Boolean = mainEmbed.flatMap(_.embedAssets.headOption).isDefined
 
   lazy val bodyImages: Seq[ImageElement] = images.filter(_.isBody)
   lazy val bodyVideos: Seq[VideoElement] = videos.filter(_.isBody)
@@ -118,12 +129,20 @@ trait Elements {
 
   def elements: Seq[Element] = Nil
 
-  protected lazy val images: Seq[ImageElement] = elements.filter(_.isImage)
-    .map(e => new ImageElement(e.delegate, e.index))
+  protected lazy val images: Seq[ImageElement] = elements.flatMap {
+    case image :ImageElement => Some(image)
+    case _ => None
+  }
 
-  protected lazy val videos: Seq[VideoElement] = elements.filter(_.isVideo)
-    .map(e => new VideoElement(e.delegate, e.index))
+  protected lazy val videos: Seq[VideoElement] = elements.flatMap {
+    case video: VideoElement => Some(video)
+    case _ => None
+  }
 
+  protected lazy val embeds: Seq[EmbedElement] = elements.flatMap {
+    case embed: EmbedElement => Some(embed)
+    case _ => None
+  }
 }
 
 trait Tags {
@@ -141,4 +160,52 @@ trait Tags {
 
   def isSponsored = DfpAgent.isSponsored(keywords)
   def isAdvertisementFeature = DfpAgent.isAdvertisementFeature(keywords)
+
+  // Tones are all considered to be 'News' it is the default so we do not list news tones explicitly
+  lazy val visualTone: String =
+    if (isLiveBlog) Tags.VisualTone.Live
+    else if (isComment) Tags.VisualTone.Comment
+    else if (isFeature) Tags.VisualTone.Feature
+    else Tags.VisualTone.News
+
+  lazy val isLiveBlog: Boolean = tones.exists(t => Tags.liveMappings.contains(t.id))
+  lazy val isComment = tones.exists(t => Tags.commentMappings.contains(t.id))
+  lazy val isFeature = tones.exists(t => Tags.featureMappings.contains(t.id))
+  lazy val isReview = tones.exists(t => Tags.reviewMappings.contains(t.id))
+}
+
+object Tags {
+
+  object VisualTone {
+    val Live = "live"
+    val Comment = "comment"
+    val Feature = "feature"
+    val News = "news"
+  }
+
+  val liveMappings = Seq(
+    "tone/minutebyminute"
+  )
+
+  val commentMappings = Seq(
+    "tone/comment",
+    "tone/letters",
+    "tone/editorials"
+  )
+
+  val featureMappings = Seq(
+    "tone/features",
+    "tone/recipes",
+    "tone/interview",
+    "tone/performances",
+    "tone/extract",
+    "tone/reviews",
+    "tone/albumreview",
+    "tone/livereview",
+    "tone/childrens-user-reviews"
+  )
+
+  val reviewMappings = Seq(
+    "tone/reviews"
+  )
 }

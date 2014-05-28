@@ -80,6 +80,10 @@
     padding-bottom: aspect-ratio-height(16, 9);
 }
 
+.u-responsive-ratio--letterbox {
+    padding-bottom: aspect-ratio-height(5, 2);
+}
+
 
 /**
  * Text hyphenation

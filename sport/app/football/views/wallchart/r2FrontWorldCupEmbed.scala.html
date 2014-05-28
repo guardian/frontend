@@ -165,7 +165,11 @@
         @renderGroup(round: Round, leagueTableEntries: Seq[LeagueTableEntry], matchesList: football.model.MatchesList) = {
             <div class="group">
                 @defining(model.Group(round, leagueTableEntries)) { group =>
-                    @round.name.map{ name => <div class="group__name">@name</div>}
+                    @round.name.map{ name =>
+                        <div class="group__name">
+                            <a href="/football/world-cup-2014-@name.toLowerCase.replace(' ', '-')" target="_top">@name</a>
+                        </div>
+                    }
                     <div class="flags">
                         @group.entries.map{ entry =>
                             <div class="flag"><img src="@Configuration.staticSport.path/football/crests/120/@{entry.team.id}.png" width="26" height="15" alt="Flag for @entry.team.name" /></div>
@@ -226,7 +230,7 @@
             }
 
             case knockoutStage: _root_.football.model.KnockoutSpider => {
-                <a href="/tobedefined" class="knockout-cta">
+                <a href="http://www.theguardian.com/football/ng-interactive/2014/may/23/-sp-world-cup-2014-brazil-results-fixtures-live-scores-tables-schedule" target="_top" class="knockout-cta">
                     <img src="http://sport.guim.co.uk/football/world-cup-2014/brazil-small.png" class="knockout-cta__brazil" />View the knockout stage
                 </a>
             }

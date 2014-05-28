@@ -1,8 +1,178 @@
-@import "_tones";
+@import '_tones';
 
 @include tone-head(news, $c-newsDefault, $c-newsAccent);
 @include tone-head(comment, $c-commentDefault, $c-commentAccent);
 @include tone-head(feature, $c-featureDefault, $c-featureAccent);
 @include tone-head(live, $c-neutral1, $c-liveAccent);
 @include tone-head(media, $c-mediaDefault, $c-mediaDefault);
-@include tone-head-background(feature, $c-featureDefault, $c-featureAccent2, #ffffff, "white");
+
+// Tonal article styles
+@include article-header-tone(feature, $c-featureDefault, $c-featureAccent2, #ffffff, 'white');
+@include article-header-tone(comment, $c-commentAccent, $c-commentAccent2, $c-neutral1, 'black');
+@include article-header-tone(live, $c-liveDefault, $c-liveAccent, #ffffff, 'white');
+
+
+.content__head--tonal {
+    background-color: #ffffff;
+    .tone-background {
+        @include rem((
+            padding-top: $gs-baseline/2
+        ));
+    }
+    .tone-background--accent {
+        @include rem((
+            padding: $gs-baseline/2 0 $gs-baseline
+        ));
+    }
+    .content__headline {
+        font-weight: 200;
+    }
+    .content__standfirst {
+        margin-bottom: 0;
+    }
+    .content__headline {
+        @include rem((
+            min-height: 60px
+        ));
+    }
+    .content-meta {
+        @include rem((
+            padding-top: $gs-baseline/4
+        ));
+    }
+    .content__section,
+    .content-meta {
+        border-top: 0 !important;
+    }
+
+    .tone-background .content__main-column:after {
+        // not including clearfix here because we only want to clear at :after
+        content: '';
+        display: table;
+        clear: both;
+    }
+}
+
+.tone-live .content__head--tonal {
+    .content-meta__label {
+        color: #e4845a;
+    }
+    .content__headline {
+        font-weight: normal;
+    }
+}
+
+.tone-feature--article,
+.tone-comment--article {
+    @include mq($from: tablet) {
+        .content__main-column--article {
+            @include rem((
+                margin-top: $gs-baseline*2
+            ));
+        }
+    }
+}
+
+.content__head--tonal {
+
+    .content__headline--byline {
+        padding-bottom: $gs-baseline*2;
+        min-height: none;
+    }
+
+    .content__headline--byline,
+    .byline-img {
+        display: block;
+        padding-top: 0;
+        margin-top: -$gs-baseline*2;
+        @include mq(tablet) {
+            margin-top: -$gs-baseline*3;
+        }
+    }
+
+    .byline-img {
+        float: right;
+        @include rem((
+            height: $gs-baseline * 12.5
+        ));
+
+        @include mq($to: mobileLandscape) {
+            @include rem((
+                margin-left: -(gs-span(1) + $gs-gutter)
+            ));
+        }
+        @include mq(mobileLandscape) {
+            width: 0;
+            position: absolute;
+            bottom: 0;
+            height: 95%;
+            @include rem((
+                right: gs-span(3)
+            ));
+        }
+        @include mq(tablet) {
+            height: 95%;
+            max-height: none;
+            @include rem((
+                right: gs-span(3),
+                min-height: gs-span(2) + ($gs-gutter*2)
+            ));
+        }
+        @include mq(rightCol) {
+            height: 110%;
+            @include rem((
+                right: gs-span(1) + $gs-gutter
+            ));
+        }
+    }
+    .byline-img__img {
+        height: 100%;
+    }
+}
+
+.content__head--byline-pic {
+    .content__headline {
+
+        @include mq(mobileLandscape) {
+            @include rem((
+                padding-right: gs-span(2)
+            ));
+        }
+        @include mq(tablet) {
+            @include rem((
+                padding-right: gs-span(2) + ($gs-gutter/2)
+            ));
+        }
+        @include mq(rightCol) {
+            @include rem((
+                padding-right: $gs-gutter*2
+            ));
+        }
+        @include mq(wide) {
+            padding-right: 0;
+        }
+    }
+    .content__head__comment-count {
+        position: absolute;
+        bottom: 0;
+    }
+}
+
+.tone-comment .content__head--tonal {
+    .content__section .tone-colour {
+        @include mq($to: leftCol) {
+            color: $c-commentDefault;
+        }
+    }
+    .content-meta__label {
+        color: $c-neutral2;
+    }
+}
+
+.tone-comment .content__headline--byline .tone-colour {
+    color: $c-neutral2;
+    &:hover {
+        text-decoration: none;
+        border-bottom: 2px solid;
+    }
+}

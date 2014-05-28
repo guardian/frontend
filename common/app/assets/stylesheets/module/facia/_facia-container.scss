@@ -148,6 +148,14 @@
         }
     }
 }
+.facia-container--layout-discussion {
+    .container__title {
+        font-weight: normal;
+        a {
+            color: $c-newsDefault;
+        }
+    }
+}
 
 .facia-container--default-heading {
     .container__border,

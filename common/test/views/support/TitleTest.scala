@@ -29,7 +29,7 @@ class TitleTest extends FlatSpec with Matchers {
   }
 
   it should "should create a title for Content" in {
-    val content = ApiContent("lifeandstyle/foobar", Some("lifeandstyle"), Some("Life & Style"), new DateTime(),
+    val content = ApiContent("lifeandstyle/foobar", Some("lifeandstyle"), Some("Life & Style"), Some(new DateTime()),
       "The title", "http://www.guardian.co.uk/canonical", "http://foo.bar", elements = None)
 
     Title(Content(content))(FakeRequest("GET", "/sport/foobar")).body should be ("The title | Lifeandstyle | The Guardian")

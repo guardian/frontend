@@ -3,6 +3,7 @@ define([
     'knockout',
     'modules/vars',
     'modules/content-api',
+    'utils/strip-empty-query-params',
     'utils/as-observable-props',
     'utils/populate-observables',
     'utils/collection-guid'
@@ -10,6 +11,7 @@ define([
     ko,
     vars,
     contentApi,
+    stripEmptyQueryParams,
     asObservableProps,
     populateObservables,
     collectionGuid
@@ -22,6 +24,7 @@ define([
         this.id = opts.id || collectionGuid();
 
         this.parents = ko.observableArray();
+
         this.capiResults = ko.observableArray();
 
         this.meta   = asObservableProps([
@@ -36,20 +39,23 @@ define([
 
         populateObservables(this.meta, opts);
 
-        if (_.isArray(this.meta.groups())) {
-            this.meta.groups(this.meta.groups().join(','));
-        }
-
         this.state = asObservableProps([
             'isOpen',
             'underDrag',
             'apiQueryStatus']);
 
-        this.meta.apiQuery.subscribe(function(val) {
+        this.meta.apiQuery.subscribe(function(apiQuery) {
             if (this.state.isOpen()) {
-                this.meta.apiQuery(val.replace(/\s+/g, ''));
+                this.meta.apiQuery(apiQuery.replace(/\s+/g, ''));
                 this.checkApiQueryStatus();
             }
+        }, this);
+
+        this.meta.type.subscribe(function(type) {
+            this.meta.groups(
+                (_.find(vars.CONST.types, function(t) { return t.name === type; }) || {})
+                .groups
+            );
         }, this);
     }
 
@@ -66,6 +72,8 @@ define([
             vars.model.collections.unshift(this);
         }
         this.state.isOpen(false);
+
+        this.meta.apiQuery(stripEmptyQueryParams(this.meta.apiQuery()));
         this.state.apiQueryStatus(undefined);
         vars.model.save(this);
     };

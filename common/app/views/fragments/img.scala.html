@@ -1,15 +1,52 @@
-@(image: Option[model.ImageContainer])
-@import views.support.{ImgSrc, Item940, Item620}
+@(img: Option[model.ImageContainer], isShowcase: Boolean = false, isFeature: Boolean = false)
+@import views.support.{Item300, Item620, Showcase, Naked, Profile}
 
-@image.map{ picture =>
-    <figure itemprop="associatedMedia image" itemscope itemtype="http://schema.org/ImageObject" class="media-primary media-content" data-component="image">
-        <img src="@Item620.bestFor(picture).map(Html(_))"
-             class="maxed responsive-img"
-             itemprop="contentURL representativeOfPage"
-             title="@Item620.altTextFor(picture).getOrElse("")"
-             alt="@Item620.altTextFor(picture).getOrElse("")" />
-        @Item620.captionFor(picture).map{ caption =>
-            <figcaption class="main-caption" itemprop="description">@Html(caption)</figcaption>
+@img.map{ picture =>
+
+    <figure itemprop="associatedMedia image" itemscope itemtype="http://schema.org/ImageObject" data-component="image"
+        class="media-primary media-content@if(isShowcase){ media-primary--showcase}">
+
+        @if(isFeature && isShowcase) {
+            @ImgSrc.imager(picture, Naked).map { imgSrc =>
+
+                <div class="js-image-upgrade u-responsive-ratio u-responsive-ratio--letterbox" data-src="@imgSrc">
+                    @image(picture)
+                </div>
+                <div class="gs-container">
+                    <div class="content__main-column">
+                        @caption(picture)
+                    </div>
+                </div>
+            }
+        } else {
+            @if(isShowcase) {
+                @upgrade(picture, Showcase)
+            } else {
+                @upgrade(picture, Item620)
+            }
+            @caption(picture)
         }
     </figure>
+}
+
+@upgrade(picture: model.ImageContainer, upgradeProfile: Profile) = {
+    @ImgSrc.imager(picture, upgradeProfile).map { imgSrc =>
+        <div class="js-image-upgrade" data-src="@imgSrc">
+            @image(picture)
+        </div>
+    }
+}
+
+@image(picture: model.ImageContainer) = {
+    <img src="@Item300.bestFor(picture).map(Html(_))"
+         class="maxed responsive-img"
+         itemprop="contentURL representativeOfPage"
+         title="@Item300.altTextFor(picture).getOrElse("")"
+         alt="@Item300.altTextFor(picture).getOrElse("")" />
+}
+
+@caption(picture: model.ImageContainer) = {
+    @Item300.captionFor(picture).map { caption =>
+        <figcaption class="main-caption" itemprop="description">@Html(caption)</figcaption>
+    }
 }

@@ -1,7 +1,6 @@
 package conf
 
 import com.gu.conf.ConfigurationFactory
-
 import scala.slick.session.Database
 
 object AdminConfiguration {
@@ -38,4 +37,11 @@ object AdminConfiguration {
     lazy val key = configuration.getStringProperty("fastly.key").getOrElse(throw new RuntimeException("Fastly key not configured"))
   }
 
+  object dfpApi {
+    lazy val clientId = configuration.getStringProperty("api.dfp.clientId")
+    lazy val clientSecret = configuration.getStringProperty("api.dfp.clientSecret")
+    lazy val refreshToken = configuration.getStringProperty("api.dfp.refreshToken")
+    lazy val appName = configuration.getStringProperty("api.dfp.applicationName")
+    lazy val networkId = configuration.getStringProperty("api.dfp.networkCode")
+  }
 }

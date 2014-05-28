@@ -75,7 +75,7 @@
             }
         }
 
-        @defining(standardItems.slice(4, 13), hugeItemsCount + veryBigItemsCount + bigItemsCount + 4) { case (items, offset) =>
+        @defining(standardItems.slice(4, 10), hugeItemsCount + veryBigItemsCount + bigItemsCount + 4) { case (items, offset) =>
             @if(items.nonEmpty) {
                 <div class="linkslist-container tone-@{style.tone}">
                     <ul class="l-columns linkslist linkslist--with-images">
@@ -84,7 +84,7 @@
                                 case l: LiveBlog if l.isLive         => { @fragments.items.linksList.live(l, index + offset, Some("boost")) }
                                 case g: Gallery                      => { @fragments.items.linksList.gallery(g, index + offset, Some("boost")) }
                                 case v: Video                        => { @fragments.items.linksList.video(v, index + offset, Some("boost")) }
-                                case c if VisualTone(c) == "comment" => { @fragments.items.linksList.comment(c, index + offset, Some("boost")) }
+                                case c if c.visualTone == "comment"  => { @fragments.items.linksList.comment(c, index + offset, Some("boost")) }
                                 case t                               => { @fragments.items.linksList.standard(t, index + offset, Some("boost")) }
                             }
                         }
@@ -93,17 +93,17 @@
             }
         }
 
-        @defining(standardItems.slice(13, 31), hugeItemsCount + veryBigItemsCount + bigItemsCount + 13) { case (items, offset) =>
+        @defining(standardItems.slice(10, 28), hugeItemsCount + veryBigItemsCount + bigItemsCount + 10) { case (items, offset) =>
             @if(items.nonEmpty) {
                 <div class="linkslist-container @if(style.showMore){js-container--show-more} tone-@{style.tone}" data-tone="@style.tone">
                     <ul class="l-columns linkslist">
                         @items.zipWithIndex.map{ case (trail, index) =>
                             @trail match {
-                                case l: LiveBlog if l.isLive         => { @fragments.items.linksList.live(l, index + offset) }
-                                case g: Gallery                      => { @fragments.items.linksList.gallery(g, index + offset) }
-                                case v: Video                        => { @fragments.items.linksList.video(v, index + offset) }
-                                case c if VisualTone(c) == "comment" => { @fragments.items.linksList.comment(c, index + offset) }
-                                case t                               => { @fragments.items.linksList.standard(t, index + offset) }
+                                case l: LiveBlog if l.isLive           => { @fragments.items.linksList.live(l, index + offset) }
+                                case g: Gallery                        => { @fragments.items.linksList.gallery(g, index + offset) }
+                                case v: Video                          => { @fragments.items.linksList.video(v, index + offset) }
+                                case c if c.visualTone == "comment"    => { @fragments.items.linksList.comment(c, index + offset) }
+                                case t                                 => { @fragments.items.linksList.standard(t, index + offset) }
                             }
                         }
                     </ul>

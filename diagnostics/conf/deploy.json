@@ -1,18 +1,5 @@
 {
     "packages":{
-        "frontend-diagnostics":{
-            "type":"autoscaling",
-            "apps":[ "frontend::diagnostics" ],
-            "data":{
-                "secondsToWait":1200,
-                "port":18080,
-                "healthcheckGrace":20,
-                "bucket":"aws-frontend-artifacts",
-                "healthcheck_paths":[
-                    "/management/healthcheck"
-                ]
-            }
-        },
         "diagnostics":{
             "type":"autoscaling",
             "apps":[ "frontend::diagnostics" ],
@@ -32,10 +19,10 @@
             "depends" : ["artifactUpload", "deploy"]
         },
         "deploy":{
-            "actionsBeforeApp": ["frontend-diagnostics.deploy"]
+            "actionsBeforeApp": ["diagnostics.deploy"]
         },
         "artifactUpload":{
-            "actionsBeforeApp": ["frontend-diagnostics.uploadArtifacts", "diagnostics.uploadArtifacts"]
+            "actionsBeforeApp": ["diagnostics.uploadArtifacts"]
         }
     }
 }

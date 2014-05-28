@@ -59,10 +59,14 @@ object InternalRedirect extends implicits.Requests {
     }
   }
 
-  def internalRedirect(base: String, id: String)(implicit request: RequestHeader) = request.path match {
-    case ShortUrl(_) => Found(s"/$id")
-    case _ if request.isRss => Ok.withHeaders("X-Accel-Redirect" -> s"/$base/$id/rss")
-    case _ => Ok.withHeaders("X-Accel-Redirect" -> s"/$base/$id")
+  def internalRedirect(base: String, id: String)(implicit request: RequestHeader): SimpleResult = internalRedirect(base, id, None)
+
+  def internalRedirect(base: String, id: String, queryString: Option[String])(implicit request: RequestHeader): SimpleResult = {
+    val qs: String = queryString.getOrElse("")
+    request.path match {
+      case ShortUrl(_) => Found(s"/$id$qs")
+      case _ => Ok.withHeaders("X-Accel-Redirect" -> s"/$base/$id$qs")
+    }
   }
 
 }

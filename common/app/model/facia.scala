@@ -1,11 +1,12 @@
 package model
 
 import org.joda.time.DateTime
-import common.{ExecutionContexts, Edition}
+import common.{Logging, ExecutionContexts, Edition}
 import scala.concurrent.Future
 import com.gu.openplatform.contentapi.model.ItemResponse
 import conf.ContentApi
 import services.ConfigAgent
+import common.FaciaToolMetrics.{ContentApiSeoRequestFailure, ContentApiSeoRequestSuccess}
 
 case class Config(
                    id: String,
@@ -30,6 +31,10 @@ object Config {
   val emptyConfig = Config("")
 }
 
+trait CollectionItems {
+  def items: Seq[Content] = List()
+}
+
 case class Collection(curated: Seq[Content],
                       editorsPicks: Seq[Content],
                       mostViewed: Seq[Content],
@@ -38,9 +43,8 @@ case class Collection(curated: Seq[Content],
                       href: Option[String],
                       lastUpdated: Option[String],
                       updatedBy: Option[String],
-                      updatedEmail: Option[String]) extends implicits.Collections {
-
-  lazy val items: Seq[Content] = (curated ++ editorsPicks ++ mostViewed ++ results).distinctBy(_.url)
+                      updatedEmail: Option[String]) extends implicits.Collections with CollectionItems {
+  override lazy val items: Seq[Content] = (curated ++ editorsPicks ++ mostViewed ++ results).distinctBy(_.url)
 }
 
 object Collection {
@@ -61,7 +65,7 @@ case class SeoData(
   title: Option[String],
   description: Option[String])
 
-object SeoData extends ExecutionContexts {
+object SeoData extends ExecutionContexts with Logging {
   val editions = Edition.all.map(_.id.toLowerCase)
 
   def fromPath(path: String): SeoData = path.split('/').toList match {
@@ -117,14 +121,23 @@ object SeoData extends ExecutionContexts {
     case _ => sectionId
   }
 
-  private def getSectionOrTagWebTitle(id: String): Future[Option[ItemResponse]] =
-    ContentApi
+  private def getSectionOrTagWebTitle(id: String): Future[Option[ItemResponse]] = {
+    val contentApiResponse = ContentApi
       .item(id, Edition.defaultEdition)
       .showEditorsPicks(false)
       .pageSize(0)
       .response
-      .map(Option.apply)
-      .fallbackTo(Future.successful(None))
+
+    contentApiResponse.onSuccess { case _ =>
+      ContentApiSeoRequestSuccess.increment()
+      log.info(s"Getting SEO data from content API for $id")}
+    contentApiResponse.onFailure { case e: Exception =>
+      log.warn(s"Error getting SEO data from content API for $id: $e")
+      ContentApiSeoRequestFailure.increment()
+    }
+
+    contentApiResponse.map(Option.apply).fallbackTo(Future.successful(None))
+  }
 }
 
 object FaciaComponentName {

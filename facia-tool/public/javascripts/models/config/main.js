@@ -44,21 +44,13 @@ define([
 
         model.pending = ko.observable();
 
-        model.types =  [''].concat(vars.CONST.types);
-
-        model.groups = [''].concat(vars.CONST.groups);
+        model.types =  _.pluck(vars.CONST.types, 'name');
 
         model.clipboard = new Group({
             parentType: 'Clipboard',
             reflow: updateScrollables,
             keepCopy:  true
         });
-
-        model.orphans = ko.computed(function() {
-            return _.filter(model.collections(), function(collection) {
-                return collection.parents().length === 0;
-            });
-        }, this);
 
         model.createFront = function() {
             var front;
@@ -157,7 +149,7 @@ define([
                            _.reduce(collection.meta, function(acc, val, key) {
                                 var v = _.isFunction(val) ? val() : val;
                                 if(v) {
-                                    acc[key] = (key === 'groups' ? v.split(',') : v);
+                                    acc[key] = v;
                                 }
                                 return acc;
                             }, {});
@@ -167,8 +159,21 @@ define([
             };
         }
 
+        function containerUsage() {
+            return _.reduce(model.collections(), function(m, col) {
+                var type = col.meta.type();
+
+                if (type) {
+                    m[type] = _.uniq((m[type] || []).concat(
+                        _.map(col.parents(), function(front) { return front.id(); })
+                    ));
+                }
+                return m;
+            }, {});
+        }
+
         function bootstrap(opts) {
-            opts.openFronts = opts.openFronts|| {};
+            opts.openFronts = opts.openFronts || {};
 
             return fetchSettings(function (config, switches) {
                 if (switches['facia-tool-configuration-disable']) {
@@ -201,6 +206,11 @@ define([
                         })
                        .value()
                     );
+
+                    window.console.log('CONTAINER USAGE\n');
+                    _.each(containerUsage(), function(fronts, type) {
+                        window.console.log(type + ': ' + fronts.join(',') + '\n');
+                    });
                 }
             }, opts.pollingMs, opts.terminateOnFail);
         }

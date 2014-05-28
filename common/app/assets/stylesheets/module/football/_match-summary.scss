@@ -11,6 +11,12 @@ $football-crest--large: 60px;
     color: $c-neutral1;
     display: block;
     position: relative;
+    .content__head & {
+        @include rem((
+            padding-top: $gs-baseline/2
+        ));
+
+    }
 }
 
 .match-summary__teams {
@@ -139,13 +145,13 @@ $football-crest--large: 60px;
     width: 200%;
 
     &:after {
-        content: "\2013";
+        content: '\2013';
     }
 }
 .match-summary--fixture {
     .team__battle-line {
         &:after {
-            content: "v";
+            content: 'v';
         }
     }
 }

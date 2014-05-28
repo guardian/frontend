@@ -3,7 +3,7 @@ GEM
   specs:
     rainbow (2.0.0)
     sass (3.3.7)
-    scss-lint (0.23.1)
+    scss-lint (0.24.0)
       rainbow (~> 2.0)
       sass (~> 3.3.0)
 

@@ -34,7 +34,7 @@ define([
             return false;
         }
         $('.js-site-message-copy').html(message);
-        $('.site-message').addClass('site-message--' + this.type);
+        $('.site-message').addClass('site-message--' + this.type).addClass('site-message--' +  this.id);
         $('.site-message').removeClass('is-hidden');
         if (this.permanent) {
             $('.site-message').addClass('site-message--permanent');

@@ -29,13 +29,12 @@ define([
     ScoreBoard,
     football
 ) {
-    context = context();
 
     function renderNav(match, callback) {
         return (new MatchInfo(match, config.page.pageId)).fetch().then(function(resp) {
             var $nav = $.create(resp.nav).first().each(function(nav) {
                 if (match.id || $('.tabs__tab', nav).length > 2) {
-                    $('.after-header', context).append(nav);
+                    $('.js-football-tabs', context).append(nav);
                 }
             });
 
@@ -126,6 +125,8 @@ define([
         // We're doing this as to have one redraw
         var extras = [],
             dropdownTemplate;
+
+        context = context();
 
         page.isMatch(function(match) {
             extras[0] = { ready: false };
@@ -247,12 +248,6 @@ define([
         });
 
         // Binding
-        bean.on(context, 'click', '.table tr[data-link-to]', function(e) {
-            if (!e.target.getAttribute('href')) {
-                window.location = this.getAttribute('data-link-to');
-            }
-        });
-
         bean.on(context, 'click', '.js-show-more', function(e) {
             e.preventDefault();
             var el = e.currentTarget;
@@ -277,11 +272,20 @@ define([
             window.location = this.value;
         });
 
+        if(!config.page.isFootballWorldCup2014) {
+            bean.on(context, 'click', '.table tr[data-link-to]', function (e) {
+                if (!e.target.getAttribute('href')) {
+                    window.location = this.getAttribute('data-link-to');
+                }
+            });
+        }
+
         // World Cup content
         // config.switches.worldCupWallchartEmbed
         // Remove this content below when you remove the switch as it's specific to World Cup 2014
         if (config.page.isFootballWorldCup2014) {
             $('a').attr('target', '_top');
+
             (function() {
                 var t, h, i, resize;
 

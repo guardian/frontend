@@ -1,3 +1,4 @@
+
 package test
 
 import conf.{Switches, HealthcheckPage, Configuration}
@@ -8,6 +9,7 @@ import collection.JavaConversions._
 import play.api.libs.ws.WS
 import scala.concurrent.duration._
 import scala.concurrent.Await
+import org.fluentlenium.core.filter.FilterConstructor._
 
 class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
@@ -129,7 +131,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
         Then("I should see the article's image")
         findFirst("[itemprop='contentURL representativeOfPage']").getAttribute("src") should
-          endWith("Gunnerside-village-Swaled-009.jpg?width=620&height=-&quality=95")
+          endWith("Gunnerside-village-Swaled-007.jpg?width=300&height=-&quality=95")
 
         And("I should see the image caption")
         findFirst("[itemprop='associatedMedia image'] [itemprop=description]").getText should
@@ -140,7 +142,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
     scenario("Poster image on embedded video", ArticleComponents) {
       HtmlUnit("/world/2013/sep/25/kenya-mall-attack-bodies") { browser =>
         import browser._
-        findFirst("video").getAttribute("poster") should endWith ("Westgate-shopping-centre--015.jpg?width=620&height=-&quality=95")
+        findFirst("video").getAttribute("poster") should endWith ("Westgate-shopping-centre--016.jpg?width=640&height=-&quality=95")
       }
     }
 
@@ -151,7 +153,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         import browser._
 
         Then("I should see the publication date of the article")
-        findFirst(".article__dateline").getText should be("Monday 6 August 2012 20.30 BST")
+        findFirst(".content__dateline").getText should be("Monday 6 August 2012 20.30 BST")
         findFirst("time").getAttribute("datetime") should be("2012-08-06T20:30:00+0100")
       }
     }
@@ -163,7 +165,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
       HtmlUnit("/world/2012/nov/08/syria-arms-embargo-rebel") { browser =>
         import browser._
         Then("the date should be 'Thursday 8 November 2012 00.01 GMT'")
-        findFirst(".article__dateline time").getText should be("Thursday 8 November 2012 00.01 GMT")
+        findFirst(".content__dateline time").getText should be("Thursday 8 November 2012 00.01 GMT")
       }
 
       Given("I am on an article published on '2012-11-10'")
@@ -171,7 +173,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
       HtmlUnit.US("/world/2012/nov/08/syria-arms-embargo-rebel") { browser =>
         import browser._
         Then("the date should be 'Wednesday 7 November 2012 19.01 GMT'")
-        findFirst(".article__dateline time").getText should be("Wednesday 7 November 2012 19.01 EST")
+        findFirst(".content__dateline time").getText should be("Wednesday 7 November 2012 19.01 EST")
       }
 
       Given("I am on an article published on '2012-08-19'")
@@ -179,7 +181,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
       HtmlUnit("/business/2012/aug/19/shell-spending-security-nigeria-leak") { browser =>
         import browser._
         Then("the date should be 'Sunday 19 August 2012 18.38 BST'")
-        findFirst(".article__dateline time").getText should be("Sunday 19 August 2012 18.38 BST")
+        findFirst(".content__dateline time").getText should be("Sunday 19 August 2012 18.38 BST")
       }
 
       Given("I am on an article published on '2012-08-19'")
@@ -187,7 +189,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
       HtmlUnit.US("/business/2012/aug/19/shell-spending-security-nigeria-leak") { browser =>
         import browser._
         Then("the date should be 'Sunday 19 August 2012 13.38 BST'")
-        findFirst(".article__dateline time").getText should be("Sunday 19 August 2012 13.38 EDT")
+        findFirst(".content__dateline time").getText should be("Sunday 19 August 2012 13.38 EDT")
       }
 
     }
@@ -327,20 +329,22 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         When("the page is rendered")
 
         Then("the ad slot placeholder is rendered")
-        val adPlaceholder = $(".ad-slot--top-banner-ad").first()
+        val adPlaceholder = $(".ad-slot--top-banner-ad")
+
+        System.out.println(adPlaceholder);
 
         And("the placeholder has the correct data attributes")
-        adPlaceholder.getAttribute("data-name") should be("top")
-        adPlaceholder.getAttribute("data-label") should be("false")
-        adPlaceholder.getAttribute("data-mobile") should be("300,50|320,50")
+        adPlaceholder.getAttribute("data-name") should be("top-above-nav")
         adPlaceholder.getAttribute("data-tabletportrait") should be("728,90")
         adPlaceholder.getAttribute("data-tabletlandscape") should be("728,90|900,250")
+        adPlaceholder.getAttribute("data-desktop") should be("728,90|900,250")
+        adPlaceholder.getAttribute("data-wide") should be("728,90|900,250|970,250")
 
         And("the placeholder has the correct class name")
         adPlaceholder.getAttribute("class") should be("ad-slot ad-slot--dfp ad-slot--top-banner-ad")
 
         And("the placeholder has the correct analytics name")
-        adPlaceholder.getAttribute("data-link-name") should be("ad slot top")
+        adPlaceholder.getAttribute("data-link-name") should be("ad slot top-above-nav")
       }
 
       // put it back in the state we found it
@@ -389,7 +393,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         Then("the main picture should be hidden")
         $("[itemprop='associatedMedia primaryImageOfPage']") should have size 0
 
-        findFirst("video").getAttribute("poster") should endWith("/2013/3/26/1364309868130/Jeremy-Hunt-announcing-ch-015.jpg?width=620&height=-&quality=95")
+        findFirst("video").getAttribute("poster") should endWith("/2013/3/26/1364309869688/Jeremy-Hunt-announcing-ch-016.jpg?width=640&height=-&quality=95")
       }
     }
 
@@ -524,7 +528,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         import browser._
 
         Then("I should see links to keywords")
-        $(".article__keywords a").size should be (18)
+        $(".content__keywords a").size should be (18)
       }
     }
 
@@ -535,7 +539,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         import browser._
 
         Then("I should not see a keywords list")
-        $(".article__keywords *").size should be (0)
+        $(".content__keywords *").size should be (0)
       }
     }
 
@@ -575,7 +579,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         import browser._
 
         Then("I should see the comment tonal treatmemt")
-        $(".article-wrapper").getAttribute("class") should include ("tone-comment")
+        $(".content").getAttribute("class") should include ("tone-comment")
       }
     }
 
@@ -595,6 +599,44 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         import browser._
         Then("I should not see a 'Classic' link")
         $(".js-main-site-link").isEmpty should be (true)
+      }
+    }
+
+    scenario("Display breadcrumbs correctly") {
+      Given("I am on a piece of content with a primary nav, secondary nav and a key woro")
+      HtmlUnit("/books/2014/may/21/guardian-journalists-jonathan-freedland-ghaith-abdul-ahad-win-orwell-prize-journalism") { browser =>
+          import browser._
+          Then("I should see three breadcrumbs")
+          $(".breadcrumb-keyword").size() should be (3)
+
+          val link = find(".breadcrumb-keyword a", withText().contains("Culture"))
+          link.length should be > 0
+          val link2 = find(".breadcrumb-keyword a", withText().contains("Books"))
+          link2.length should be > 0
+          val link3 = find(".breadcrumb-keyword a", withText().contains("Orwell prize"))
+          link3.length should be > 0
+      }
+
+      Given("I am on a piece of content with a primary nav and a key woro")
+      HtmlUnit("/commentisfree/2013/jan/07/blue-plaque-english-heritage") { browser =>
+          import browser._
+          Then("I should see three breadcrumbs")
+          $(".breadcrumb-keyword").size() should be (2)
+
+          val link = find(".breadcrumb-keyword a", withText().contains("Comment"))
+          link.length should be > 0
+          val link2 = find(".breadcrumb-keyword a", withText().contains("Heritage"))
+          link2.length should be > 0
+      }
+
+      Given("I am on a piece of content with no primary nav and a no key words")
+      HtmlUnit("/observer-ethical-awards/shortlist-2014") { browser =>
+          import browser._
+          Then("I should see one breadcrumbs")
+          $(".breadcrumb-keyword").size() should be (1)
+
+          val link = find(".breadcrumb-keyword a", withText().contains("Observer Ethical Awards"))
+          link.length should be > 0
       }
     }
   }

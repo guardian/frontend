@@ -1,24 +1,21 @@
 define([
     'common/$',
     'common/utils/detect',
-    'lodash/objects/assign'
+    'lodash/objects/assign',
+    'common/modules/adverts/dfp'
 ], function (
     $,
     detect,
-    _assign
+    _assign,
+    dfp
 ) {
-
-    var adSlotTemplate =
-        '<div class="ad-slot ad-slot--dfp ad-slot--mpu-banner-ad" data-link-name="ad slot right" data-name="right" data-tabletlandscape="300,250|300,600">' +
-            '<div id="dfp-ad--right" class="ad-slot__container">' +
-        '</div>';
 
     function ArticleAsideAdverts(config) {
         this.config = _assign(this.defaultConfig, config);
     }
 
     ArticleAsideAdverts.prototype.defaultConfig = {
-        columnSelector: '.article__secondary-column',
+        columnSelector: '.content__secondary-column',
         adSlotContainerSelector: '.js-mpu-ad-slot',
         switches: {}
     };
@@ -30,7 +27,7 @@ define([
         }
 
         return $(this.config.adSlotContainerSelector)
-            .append(adSlotTemplate);
+            .append(dfp.createAdSlot('right', 'mpu-banner-ad'));
     };
 
     return ArticleAsideAdverts;

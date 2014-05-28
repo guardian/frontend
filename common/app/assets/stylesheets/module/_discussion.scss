@@ -7,22 +7,29 @@ $c-replyText: $c-body;
    ========================================================================== */
 
 .discussion {
+    @include rem((
+        margin-bottom: $gs-baseline*2
+    ));
     @include mq(leftCol) {
         @include rem((
-            margin-left: - ($a-leftCol-width + $gs-gutter)
+            margin-left: -($a-leftCol-width + $gs-gutter)
         ));
     }
     @include mq(wide) {
         @include rem((
-            margin-left: - ($a-leftColWide-width + $gs-gutter)
+            margin-left: -($a-leftColWide-width + $gs-gutter)
         ));
+    }
+
+    .pagination_legend {
+        display: none !important; // overriding .hide-on-mobile-inline
     }
 }
 
 .discussion--lowered {
     @include mq(leftCol) {
         @include rem((
-            margin-right: - ($a-leftCol-width + ($gs-gutter * 9))
+            margin-right: -($a-leftCol-width + ($gs-gutter * 9))
         ));
 
         .d-discussion {
@@ -31,7 +38,7 @@ $c-replyText: $c-body;
     }
     @include mq(wide) {
         @include rem((
-            margin-right: - ($a-leftColWide-width + ($gs-gutter * 9))
+            margin-right: -($a-leftColWide-width + ($gs-gutter * 9))
         ));
         .d-discussion {
             max-width: gs-span(12);
@@ -44,6 +51,26 @@ $c-replyText: $c-body;
         font-size: 14px
     ));
 }
+.d-discussion--shut {
+    .discussion-content {
+        display: none;
+    }
+}
+.show-more__container--hidden {
+    display: none;
+}
+.d-discussion--partial {
+    .d-comment--top-level:nth-of-type(n+3) {
+        display: none;
+    }
+    .d-discussion__pagination {
+        display: none;
+    }
+    .show-more__container--hidden {
+        display: block;
+    }
+}
+
 .d-discussion__comment-count {
     @include fs-textsans(4);
     min-height: $gs-baseline * 2;
@@ -113,6 +140,7 @@ $c-replyText: $c-body;
     display: inline-block;
 }
 .d-discussion__show-all-comments {
+    position: relative;
     display: inline-block;
     padding-left: 55px;
     @include fs-textsans(4);
@@ -763,7 +791,7 @@ $c-replyText: $c-body;
         &:before {
             position: absolute;
             display: block;
-            content: "";
+            content: '';
             bottom: -20px;
             left: 20px;
             width: 0;
@@ -845,7 +873,7 @@ $c-replyText: $c-body;
         &:before { // Pointer (equilateral triangle)
             top: 100%;
             border: solid transparent;
-            content: " ";
+            content: ' ';
             height: 0;
             width: 0;
             position: absolute;
@@ -862,7 +890,7 @@ $c-replyText: $c-body;
         &:after { // Mask (right-skewed parellelogram)
             @include transform(skew(-10deg));
             background-color: #ffffff;
-            content: " ";
+            content: ' ';
             @include rem((
                 height: 24px,
                 width: 24px,
@@ -924,11 +952,11 @@ $c-replyText: $c-body;
     @extend %d-badge-icon;
 }
 .d-badge--contributor:after {
-    content: "c";
+    content: 'c';
     text-indent: -1px;
 }
 .d-badge--guardian-staff:after {
-    content: "g";
+    content: 'g';
     line-height: .9;
 }
 .d-badge__label {
@@ -962,7 +990,7 @@ $c-replyText: $c-body;
     @include rem((
         margin: 0 0 -3px 20px
     ));
-    content: " ";
+    content: ' ';
     display: inline-block;
 }
 
@@ -1151,4 +1179,17 @@ $c-replyText: $c-body;
     .d-comment-box__parent-comment-wrapper {
         display: block;
     }
+}
+
+.content__repositioned-comments .content__main-column {
+    @include mq(rightCol) {
+        max-width: none;
+        @include rem((
+            margin-right: 25%
+        ));
+    }
+}
+
+.d-discussion__pagination .pagination {
+    width: 100%;
 }

@@ -13,8 +13,10 @@
         }
     }
     .ad-slot--inline {
-        margin-top: $gs-baseline/2;
-        margin-bottom: $gs-baseline/2;
+        @include rem((
+            margin-top: $gs-baseline/2,
+            margin-bottom: $gs-baseline/2
+        ));
     }
     .facia-slice-wrapper--position-1 {
         .item__title,

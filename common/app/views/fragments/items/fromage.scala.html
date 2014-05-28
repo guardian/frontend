@@ -1,6 +1,6 @@
 @(trail: Trail, index: Int, imageAdjustOverride: Option[String] = None)(implicit request: RequestHeader, config: Config)
 
-@defining((VisualTone(trail), imageAdjustOverride.getOrElse(trail.imageAdjust))) { case (tone, imageAdjust) =>
+@defining((trail.visualTone, imageAdjustOverride.getOrElse(trail.imageAdjust))) { case (tone, imageAdjust) =>
     <div
         class="@GetClasses.forFromage(trail, imageAdjust)"
         @if(trail.isCommentable) {
@@ -58,9 +58,8 @@
                 </div>
             }
 
-            @fragments.items.elements.supporting(trail.supporting, style = "fit")
+            @fragments.items.elements.supporting(trail.supporting, trail, style = "fit")
 
-            @* Display meta only if there is a discussion *@
             @if(trail.isCommentable) {
                 @fragments.items.elements.meta(trail)
             }

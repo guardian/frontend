@@ -32,7 +32,7 @@ class FaciaController extends Controller with Logging with ExecutionContexts wit
   }
 
   def applicationsRedirect(path: String) = Action { implicit request =>
-    InternalRedirect.internalRedirect("applications", path)
+    InternalRedirect.internalRedirect("applications", path, if (request.queryString.nonEmpty) Option(s"?${request.rawQueryString}") else None)
   }
 
   //Only used by dev-build for rending special urls such as lifeandstyle/home-and-garden

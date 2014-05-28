@@ -17,7 +17,7 @@ define([
     function GeoMostPopular(config) {
         register.begin('geo-most-popular');
         this.config = extend(this.config, config);
-        this.fetch(qwery('.mpu-context'), 'rightHtml');
+        this.fetch(qwery('.js-components-container'), 'rightHtml');
     }
 
     Component.define(GeoMostPopular);

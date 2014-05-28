@@ -54,7 +54,8 @@ define([
     'common/modules/commercial/loader',
     'common/modules/onward/tonal',
     'common/modules/identity/api',
-    'common/modules/onward/more-tags'
+    'common/modules/onward/more-tags',
+    'common/modules/ui/smartAppBanner'
 ], function (
     $,
     mediator,
@@ -109,7 +110,8 @@ define([
     CommercialLoader,
     TonalComponent,
     id,
-    MoreTags
+    MoreTags,
+    smartAppBanner
 ) {
 
     var modules = {
@@ -170,9 +172,8 @@ define([
             toggles.init(document);
             mediator.on('page:common:ready', function() {
                 toggles.reset();
+                Dropdowns.init();
             });
-
-            Dropdowns.init();
         },
 
         showRelativeDates: function () {
@@ -485,8 +486,13 @@ define([
                 var commercialComponent = new RegExp('^#' + data[0] + '=(.*)$').exec(window.location.hash),
                     slot = qwery('[data-name="' + data[1] + '"]').shift();
                 if (commercialComponent && slot) {
-                    new CommercialLoader({ config: config })
-                        .init(commercialComponent[1], slot);
+                    var loader = new CommercialLoader({ config: config }),
+                        postLoadEvents = {};
+                        postLoadEvents[commercialComponent[1]] = function() {
+                            bonzo(slot).css('display', 'block');
+                        };
+                    loader.postLoadEvents = postLoadEvents;
+                    loader.init(commercialComponent[1], slot);
                 }
             });
         },
@@ -494,14 +500,19 @@ define([
         repositionComments: function() {
             mediator.on('page:common:ready', function() {
                 if(!id.isUserLoggedIn()) {
-                    $('.js-comments').insertBefore(qwery('.js-popular'));
-                    $('.discussion').addClass('discussion--lowered');
+                    $('.js-comments').appendTo(qwery('.js-repositioned-comments'));
                 }
             });
         },
 
         showMoreTagsLink: function() {
             new MoreTags().init();
+        },
+
+        showSmartBanner: function(config) {
+            if(config.switches.smartBanner) {
+                smartAppBanner.init();
+            }
         }
     };
 
@@ -552,6 +563,7 @@ define([
             modules.startRegister(config);
             modules.repositionComments();
             modules.showMoreTagsLink();
+            modules.showSmartBanner(config);
         }
         mediator.emit('page:common:ready', config, context);
     };

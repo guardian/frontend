@@ -19,10 +19,6 @@
             display: block;
         }
     }
-    .article__head {
-        border-top: 0;
-    }
-
     @include mq($to: tablet) {
         /*.facia-container--layout-front*/ .container--first {
             .container__title,

@@ -51,7 +51,7 @@
             height: $gs-baseline*1.5;
             border-bottom: 1px solid $c-neutral3;
             bottom: $gs-baseline*2.75-2;
-            content: " ";
+            content: ' ';
             left: 0;
             position: absolute;
             width: 100%;
@@ -100,7 +100,7 @@
 
         dd:nth-child(3) {
             &:after {
-                content: "…";
+                content: '…';
                 display: block;
             }
         }
@@ -168,4 +168,10 @@
             display: none;
         }
     }
+}
+
+.after-article .football-extras {
+    @include rem((
+        margin-top: $gs-baseline*2
+    ));
 }

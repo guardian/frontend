@@ -4,7 +4,7 @@ import play.api.libs.json.JsValue
 import scala.concurrent._
 import ExecutionContext.Implicits.global
 import play.api.libs.ws.Response
-import discussion.model.{DiscussionKey, Comment}
+import discussion.model.{Discussion, Profile, DiscussionKey, Comment}
 import discussion.util.Http
 
 
@@ -18,7 +18,7 @@ trait CtaApi extends Http {
       for {
         component <- (json \ "components").as[List[JsValue]]
         comment <- (component \ "comments").as[List[JsValue]]
-      } yield Comment(comment)
+      } yield Comment(comment, None, Some(Discussion.empty))
     }
 
     getJsonOrError(ctaUrl, onError) map getComments

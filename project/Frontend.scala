@@ -9,7 +9,7 @@ object Frontend extends Build with Prototypes {
   val common = application("common").settings(
     libraryDependencies ++= Seq(
       "com.gu" %% "configuration" % "3.9",
-      "com.gu.openplatform" %% "content-api-client" % "2.9",
+      "com.gu" %% "content-api-client" % "2.18",
 
       "com.typesafe.akka" %% "akka-agent" % "2.1.0",
 
@@ -73,7 +73,8 @@ object Frontend extends Build with Prototypes {
     libraryDependencies ++= Seq(
       "com.typesafe.slick" %% "slick" % "1.0.0",
       "postgresql" % "postgresql" % "8.4-703.jdbc4" from "http://jdbc.postgresql.org/download/postgresql-8.4-703.jdbc4.jar",
-      "com.gu" %% "pa-client" % paVersion
+      "com.gu" %% "pa-client" % paVersion,
+      "com.google.api-ads" % "dfp-axis" % "1.27.0"
     )
   )
 
@@ -91,7 +92,6 @@ object Frontend extends Build with Prototypes {
       "joda-time" % "joda-time" % "1.6",
       "net.liftweb" %% "lift-json" % "2.5",
       "commons-httpclient" % "commons-httpclient" % "3.1",
-      "net.databinder.dispatch" %% "dispatch-core" % "0.11.0",
       "org.slf4j" % "slf4j-ext" % "1.7.5",
       "com.gu" %% "exact-target-client" % "2.23"
     )
@@ -143,13 +143,24 @@ object Frontend extends Build with Prototypes {
       archive,
       sport,
       discussion,
-      router,
       diagnostics,
       identity,
       admin,
       commercial,
       onward
     )
+
+  // this app has a very limited set.
+  // it is designed to get all other services (e.g. onwards) from PROD
+  val preview = application("preview").dependsOn(
+    withTests(common),
+    article,
+    facia,
+    applications,
+    sport,
+    commercial,
+    onward
+  )
 
   val main = root().aggregate(
     common,

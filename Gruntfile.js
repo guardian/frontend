@@ -5,6 +5,7 @@ module.exports = function (grunt) {
         singleRun = grunt.option('single-run') !== false,
         screenshotsDir = './screenshots',
         staticTargetDir = './static/target/',
+        staticHashDir = './static/hash/',
         testConfDir = './common/test/assets/javascripts/conf/',
         propertiesFile = (isDev) ? process.env.HOME + '/.gu/frontend.properties' : '/etc/gu/frontend.properties';
 
@@ -63,7 +64,7 @@ module.exports = function (grunt) {
             common: {
                 options: {
                     baseUrl: 'common/app/assets/javascripts',
-                    name: 'common/bootstraps/go',
+                    name: 'common/bootstraps/app',
                     out: staticTargetDir + 'javascripts/bootstraps/app.js',
                     shim: {
                         imager: {
@@ -75,7 +76,8 @@ module.exports = function (grunt) {
                         }
                     },
                     wrap: {
-                        startFile: 'common/app/assets/javascripts/components/curl/dist/curl-with-js-and-domReady/curl.js'
+                        startFile: 'common/app/assets/javascripts/components/curl/dist/curl-with-js-and-domReady/curl.js',
+                        endFile:   'common/app/assets/javascripts/bootstraps/go.js'
                     }
                 }
             },
@@ -432,6 +434,16 @@ module.exports = function (grunt) {
                     dest: 'common/conf/assets'
                 }]
             },
+            // assets.map must go where Play can find it from resources at runtime.
+            // Everything else goes into frontend-static bundling.
+            assetMap: {
+                files: [{
+                    expand: true,
+                    cwd: staticHashDir + 'assets',
+                    src: ['**/assets.map'],
+                    dest: 'common/conf/assets'
+                }]
+            },
             /**
              * NOTE: not using this as doesn't preserve file permissions (using shell:copyHooks instead)
              * Waiting for Grunt 0.4.3 - https://github.com/gruntjs/grunt/issues/615
@@ -448,11 +460,9 @@ module.exports = function (grunt) {
 
         hash: {
             options: {
-                // assets.map must go where Play can find it from resources at runtime.
-                // Everything else goes into frontend-static bundling.
-                mapping: 'common/conf/assets/assets.map',
+                mapping: staticHashDir + 'assets/assets.map',
                 srcBasePath: staticTargetDir,
-                destBasePath: staticTargetDir,
+                destBasePath: staticHashDir,
                 flatten: false,
                 hashLength: (isDev) ? 0 : 32
             },
@@ -461,7 +471,7 @@ module.exports = function (grunt) {
                 cwd: staticTargetDir,
                 src: '**/*',
                 filter: 'isFile',
-                dest: staticTargetDir,
+                dest: staticHashDir,
                 rename: function(dest, src) {
                     // remove .. when hash length is 0
                     return dest + src.split('/').slice(0, -1).join('/');
@@ -664,11 +674,11 @@ module.exports = function (grunt) {
 
         // Clean stuff up
         clean: {
-            js         : [staticTargetDir + 'javascripts'],
-            css        : [staticTargetDir + 'stylesheets'],
-            images     : [staticTargetDir + 'images'],
-            flash      : [staticTargetDir + 'flash'],
-            fonts      : [staticTargetDir + 'fonts'],
+            js         : [staticTargetDir + 'javascripts', staticHashDir + 'javascripts'],
+            css        : [staticTargetDir + 'stylesheets', staticHashDir + 'stylesheets'],
+            images     : [staticTargetDir + 'images', staticHashDir + 'images'],
+            flash      : [staticTargetDir + 'flash', staticHashDir + 'flash'],
+            fonts      : [staticTargetDir + 'fonts', staticHashDir + 'fonts'],
             // Clean any pre-commit hooks in .git/hooks directory
             hooks      : ['.git/hooks/pre-commit'],
             assets     : ['common/conf/assets'],
@@ -785,12 +795,24 @@ module.exports = function (grunt) {
     });
 
     // Compile tasks
-    grunt.registerTask('compile:images', ['clean:images', 'copy:images', 'shell:spriteGeneration', 'imagemin']);
-    grunt.registerTask('compile:css', ['clean:css', 'sass:compile', 'replace:cssSourceMaps', 'copy:css']);
+    grunt.registerTask('compile:images', ['generate:images', 'hash']);
+    grunt.registerTask('generate:images', ['clean:images', 'copy:images', 'shell:spriteGeneration', 'imagemin']);
+
+    grunt.registerTask('compile:css', ['generate:css', 'hash']);
+    grunt.registerTask('generate:css', ['clean:css', 'sass:compile', 'replace:cssSourceMaps', 'copy:css']);
+
     grunt.registerTask('compile:js', function(app) {
+        if (app) {
+            grunt.task.run('generate:js:' + app);
+        } else {
+            grunt.task.run('generate:js');
+        }
+        grunt.task.run('hash');
+    });
+    grunt.registerTask('generate:js', function(app) {
         grunt.task.run(['clean:js']);
         var apps = ['common', 'ophan'];
-        if (!app) { // if no app supplied, compile all apps
+        if (!app || app === 'preview') { // if no app supplied, compile all apps ('preview' is an amalgamation of other apps)
             apps = apps.concat(Object.keys(grunt.config('requirejs')).filter(function(app) { return ['options', 'common', 'ophan'].indexOf(app) === -1; }));
         } else if (app !== 'common' && app !== 'ophan') {
             if (grunt.config('requirejs')[app]) {
@@ -809,21 +831,25 @@ module.exports = function (grunt) {
             grunt.task.run('uglify:components');
         }
     });
-    grunt.registerTask('compile:fonts', ['clean:fonts', 'mkdir:fontsTarget', 'webfontjson']);
-    grunt.registerTask('compile:flash', ['clean:flash', 'copy:flash']);
+
+    grunt.registerTask('compile:fonts', ['generate:fonts', 'hash']);
+    grunt.registerTask('generate:fonts', ['clean:fonts', 'mkdir:fontsTarget', 'webfontjson']);
+
+    grunt.registerTask('compile:flash', ['generate:flash', 'hash']);
+    grunt.registerTask('generate:flash', ['clean:flash', 'copy:flash']);
+
     grunt.registerTask('compile', function(app) {
         grunt.task.run([
-            'compile:images',
-            'compile:css',
-            'compile:js:' + (app || ''),
-            'compile:fonts',
-            'compile:flash',
-            'clean:assets',
-            'copy:headCss',
-            'copy:vendor',
-            'hash'
+            'generate:images',
+            'generate:css',
+            'generate:js:' + (app || ''),
+            'generate:fonts',
+            'generate:flash',
+            'hash',
+            'generate:conf'
         ]);
     });
+    grunt.registerTask('generate:conf', ['clean:assets', 'copy:headCss', 'copy:vendor', 'copy:assetMap']);
 
     // Test tasks
     grunt.registerTask('test:integration', function(app) {
