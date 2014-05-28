@@ -32,6 +32,6 @@ case class FaciaPage(
 
   lazy val contentType: String = if (Edition.all.exists(edition => id.toLowerCase.endsWith(edition.id.toLowerCase))) "Network Front" else "Section"
 
-  override def isSponsored = DfpAgent.isSponsored(webTitle)
-  override def isAdvertisementFeature = DfpAgent.isSponsored(webTitle)
+  override def isSponsored = DfpAgent.isSponsored(id)
+  override def isAdvertisementFeature = DfpAgent.isAdvertisementFeature(id)
 }
