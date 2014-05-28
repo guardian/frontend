@@ -225,7 +225,11 @@ define([
             }
 
             function lastPart(keywordId) {
-                return keywordId.split('/').pop();
+                if (keywordId) {
+                    return keywordId.split('/').pop();
+                } else {
+                    return '';
+                }
             }
 
             var conf        = config.page,
@@ -234,8 +238,8 @@ define([
                 contentType = encodeTargetValue(conf.contentType),
                 edition     = encodeTargetValue(conf.edition),
                 keywords;
-            if (conf.keywordIds) {
-                keywords = conf.keywordIds.split(',').map(function (keywordId) {
+            if (conf.keywords) {
+                keywords = conf.keywords.split(',').map(function (keywordId) {
                     return lastPart(keywordId);
                 });
             } else {
