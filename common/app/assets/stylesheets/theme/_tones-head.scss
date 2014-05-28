@@ -158,21 +158,33 @@
     }
 }
 
-.tone-comment .content__head--tonal {
-    .content__section .tone-colour {
-        @include mq($to: leftCol) {
-            color: $c-commentDefault;
+.tone-comment {
+    .content__head--tonal {
+        .content__section .tone-colour {
+            @include mq($to: leftCol) {
+                color: $c-commentDefault;
+            }
+        }
+        .content-meta__label {
+            color: $c-neutral2;
+        }
+        .content__standfirst .bullet:before {
+            background-color: #b18c29;
+        }
+        .u-underline {
+            border-bottom-color: #b18c29;
+            &:hover {
+                border-bottom-color: $c-neutral1;
+            }
+        }
+
+    }
+    .content__headline--byline .tone-colour {
+        color: $c-neutral2;
+        &:hover {
+            text-decoration: none;
+            border-bottom: 2px solid;
         }
     }
-    .content-meta__label {
-        color: $c-neutral2;
-    }
-}
 
-.tone-comment .content__headline--byline .tone-colour {
-    color: $c-neutral2;
-    &:hover {
-        text-decoration: none;
-        border-bottom: 2px solid;
-    }
 }
