@@ -79,6 +79,7 @@ class FaciaController extends Controller with Logging with ExecutionContexts wit
     .take(3).map{ j =>
       Json.obj(
         "headline" -> (j \ "safeFields" \ "headline"),
+        "thumbnail" -> (j \ "safeFields" \ "thumbnail"),
         "id" -> (j \ "id")
       )
     }
