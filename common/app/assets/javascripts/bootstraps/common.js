@@ -172,9 +172,8 @@ define([
             toggles.init(document);
             mediator.on('page:common:ready', function() {
                 toggles.reset();
+                Dropdowns.init();
             });
-
-            Dropdowns.init();
         },
 
         showRelativeDates: function () {
@@ -487,8 +486,13 @@ define([
                 var commercialComponent = new RegExp('^#' + data[0] + '=(.*)$').exec(window.location.hash),
                     slot = qwery('[data-name="' + data[1] + '"]').shift();
                 if (commercialComponent && slot) {
-                    new CommercialLoader({ config: config })
-                        .init(commercialComponent[1], slot);
+                    var loader = new CommercialLoader({ config: config }),
+                        postLoadEvents = {};
+                        postLoadEvents[commercialComponent[1]] = function() {
+                            bonzo(slot).css('display', 'block');
+                        };
+                    loader.postLoadEvents = postLoadEvents;
+                    loader.init(commercialComponent[1], slot);
                 }
             });
         },

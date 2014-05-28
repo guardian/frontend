@@ -34,6 +34,55 @@
                 margin-bottom: $gs-baseline*1.25
             ));
         }
+        @include mq(desktop) {
+            @include fs-headline(5, true);
+        }
+    }
+    .item__standfirst {
+        display: block;
+
+        @include mq(desktop) {
+            @include fs-headline(1, true);
+        }
+    }
+    .item__media-wrapper {
+        @include mq(tablet) {
+            float: left;
+            @include rem((
+                width: gs-span(6),
+                margin-left: -(gs-span(6) + $gs-gutter)
+            ));
+        }
+        @include mq(desktop) {
+            @include rem((
+                width: gs-span(8),
+                margin-left: -(gs-span(8) + $gs-gutter)
+            ));
+        }
+    }
+    .item__media-wrapper,
+    .item__image-container {
+        display: block;
+    }
+    .item__image-container {
+        margin-top: 0;
+    }
+    .item__meta {
+        @include mq(tablet) {
+            position: static;
+            @include rem((
+                margin-top: $gs-baseline,
+                margin-bottom: $gs-baseline
+            ));
+        }
+    }
+    .item__title {
+        @include rem((
+            padding-top: $gs-baseline/3
+        ));
+        @include mq(tablet) {
+            padding-top: 0;
+        }
     }
 }
 .saucisson,
@@ -50,7 +99,14 @@
 
     @include mq(tablet) {
         padding-bottom: 0;
-        padding-left: 66.6666666%;
+        @include rem((
+            padding-left: gs-span(6) + $gs-gutter
+        ));
+    }
+    @include mq(desktop) {
+        @include rem((
+            padding-left: gs-span(8) + $gs-gutter
+        ));
     }
 }
 
@@ -78,35 +134,5 @@
     &:visited,
     &:visited .item__title {
         color: $c-neutral2;
-    }
-}
-.saucisson__media-wrapper {
-    @include box-sizing(border-box);
-
-    @include mq(tablet) {
-        @include rem((
-            margin-right: $gs-gutter/2,
-            padding-right: $gs-gutter/2
-        ));
-        float: left;
-        width: 200%; // Twice as big as the text bit
-        margin-left: -200%;
-    }
-}
-.saucisson__image-container {}
-
-.saucisson__standfirst {
-    @include f-headline;
-    @include font-size(14, 18);
-    color: $c-neutral2;
-
-    p {
-        margin-bottom: 0; // Some trail texts are wrapped in a paragraph
-    }
-
-    @include mq(tablet) {
-        @include rem((
-            margin-bottom: $gs-baseline + 2
-        ));
     }
 }

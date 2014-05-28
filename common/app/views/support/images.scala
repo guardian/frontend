@@ -35,6 +35,7 @@ object Contributor extends Profile(Some(140), Some(140))
 object GalleryLargeImage extends Profile(Some(1024), None)
 object GalleryLargeTrail extends Profile(Some(480), Some(288))
 object GallerySmallTrail extends Profile(Some(280), Some(168))
+object Showcase extends Profile(Some(860), None)
 object Item120 extends Profile(Some(120), None)
 object Item140 extends Profile(Some(140), None)
 object Item220 extends Profile(Some(220), None)
@@ -55,6 +56,7 @@ object Profile {
     GalleryLargeTrail,
     GallerySmallTrail,
     Naked,
+    Showcase,
     Item140,
     Item220,
     Item300,

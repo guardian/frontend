@@ -4,7 +4,7 @@
     responsiveFont: Boolean = false,
     matchType: String = "",
     linkToCompetition: Boolean = false,
-    heading: Option[String] = None,
+    heading: Option[(String, Option[String])] = None,
     link: Option[(String, String)] = None)(implicit request: RequestHeader)
 @import implicits.Football._
 
@@ -74,7 +74,13 @@
         }
     </tbody>
     <caption class="table__caption table__caption--top">
-        @heading.map{ h => <a href="@competition.url" data-link-name="view @competition.fullName" class="football-matches__heading">@h</a>}
+        @heading.map{ case(text, link) =>
+            @link.map{ href =>
+                <a href="@href" data-link-name="view @text" class="football-matches__heading">@text</a>
+            }.getOrElse{
+                <span class="football-matches__heading">@text</span>
+            }
+        }
         <span class="football-matches__date">@date.toString("E d MMMM")</span>
     </caption>
     @if(linkToCompetition && link == None){<caption class="table__caption table__caption--bottom"><a href="@competition.url@if(matchType!=""){/@matchType}" data-link-name="view @competition.fullName matches" class="full-table-link">Show more <span class="competition-name">@competition.fullName</span> @matchType</a></caption>}

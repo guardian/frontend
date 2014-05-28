@@ -1,8 +1,9 @@
 @(model: LiveBlogPage)(implicit request: RequestHeader)
 @import conf.Switches._
 
-@defining((model.article, model.storyPackage, !model.article.isSport)) {  case (article, storyPackage, isDefault) =>
-<article class="content content--liveblog tone-@article.visualTone blog @if(article.isLive){is-live} section-@article.sectionName.toLowerCase"
+@defining((model.article, model.storyPackage)) {  case (article, storyPackage) =>
+<article id="live-blog"
+    class="content content--liveblog tone-@article.visualTone blog @if(article.isLive){is-live} section-@article.sectionName.toLowerCase"
     itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType" role="main">
 
     <header class="content__head content__head--tonal">
@@ -110,24 +111,6 @@
     </div>
 </article>
 
-@if(DiscussionSwitch.isSwitchedOn && article.isCommentable) {
-<div class="gs-container">
-    <div class="content__main-column content__main-column--liveblog" data-component="discussion">
-        @fragments.discussion(article.isClosedForComments, article.shortUrlId)
-    </div>
-</div>
-}
+@fragments.contentFooter(article, storyPackage)
 
-@fragments.storyPackagePlaceholder(storyPackage)
-@fragments.onwardPlaceholder(article.visualTone)
-
-<div class="facia-container facia-container--layout-article">
-    @fragments.mostPopularPlaceholder(article.section)
-</div>
-
-<div class="gs-container">
-    <div class="content__breadcrumb" itemscope itemtype="http://schema.org/Organization" data-link-name="article breadcrumbs">
-        @fragments.breadcrumb(article)
-    </div>
-</div>
 }

@@ -68,11 +68,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
-  val GzipSwitch = Switch("Performance Switches", "gzip",
-    "If switched on then http responses will be gzipped",
-    safeState = Off, sellByDate = new DateMidnight(2014, 5, 31)
-  )
-
   val DoubleCacheTimesSwitch = Switch("Performance Switches", "double-cache-times",
     "Doubles the cache time of every endpoint. Turn on to help handle exceptional load.",
     safeState = On, sellByDate = never
@@ -311,21 +306,16 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 8, 10)
   )
 
-  val AdTransitionSwitch = Switch("Feature Switches", "ad-transition",
-    "If this switch is turned on, we use css transitions to handle loading of different sized ads.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 5, 29)
-  )
-
   // A/B Tests
-
-  val ABHeaderSearchText = Switch("A/B Tests", "ab-header-search-text",
-    "If this switch is turned on then the header search box will display a label for tablet and desktop.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 6, 9)
-  )
 
   val ABHighRelevanceCommercialComponent = Switch("A/B Tests", "ab-high-relevance-commercial-component",
     "If this switch is turned on, run the HighRelevanceCommercialComponent A/B test.",
     safeState = Off, sellByDate = new DateMidnight(2014, 6, 5)
+  )
+
+  val ABHideSupportingLinks = Switch("A/B Tests", "ab-hide-supporting-links",
+    "If this switch is turned on, run the HideSupportingLinks A/B test.",
+    safeState = Off, sellByDate = new DateMidnight(2014, 6, 24)
   )
 
   // Dummy Switches
@@ -472,17 +462,15 @@ object Switches extends Collections {
     RssLinkSwitch,
     EnhanceTweetsSwitch,
     WorldCupWallchartEmbedSwitch,
-    AdTransitionSwitch,
     IndiaRegionSwitch,
     MemcachedSwitch,
     IncludeBuildNumberInMemcachedKey,
     NewSeoSwitch,
-    GzipSwitch,
     GeoMostPopular,
     TagLinkingSwitch,
     FaciaFirstContainerLayoutOverrideSwitch,
-    ABHeaderSearchText,
     ABHighRelevanceCommercialComponent,
+    ABHideSupportingLinks,
     SmartBannerSwitch,
     FeaturesAutoContainerSwitch
   )

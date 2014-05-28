@@ -1,6 +1,9 @@
 $c-commercial-comp-neutral: #edede7;
 $comercial-comp-baseline: 10px;
 
+.l-footer {
+    margin-top: 0;
+}
 .facia-container--layout-front .commercial {
     padding: 0;
     @include mq(leftCol) {
@@ -230,6 +233,14 @@ $comercial-comp-baseline: 10px;
     @include rem((
         margin-left: 90px
     ));
+}
+.commercial--high {
+    .commercial__relevance-title {
+        @include fs-bodyHeading(3);
+        @include rem((
+            margin-bottom: $gs-baseline/2
+        ));
+    }
 }
 
 /* ==========================================================================

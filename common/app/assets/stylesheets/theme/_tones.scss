@@ -115,17 +115,7 @@
             }
         }
     }
-    .content.tone-#{$tone} {
-        .drop-cap {
-            @include mq($to: tablet) {
-                color: $colour;
-            }
-        }
-
-        .drop-cap--wide {
-            @include mq($from: tablet) {
-                color: $colour;
-            }
-        }
+    .content.tone-#{$tone} .drop-cap {
+        color: $colour;
     }
 }

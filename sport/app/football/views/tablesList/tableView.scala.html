@@ -1,5 +1,7 @@
 @(competition: model.Competition, group: Group,
-    heading: Option[String] = None, highlightTeamId: Option[String] = None, striped: Boolean = false,
+    heading: Option[String] = None,
+    headingLink: Option[String] = None,
+    highlightTeamId: Option[String] = None, striped: Boolean = false,
     responsiveFont: Boolean = false, linkToCompetition: Boolean = false,
     withCrests: Boolean = false)(implicit request: RequestHeader)
 <div class="table__container">
@@ -61,7 +63,11 @@
             }
         </tbody>
 
-        @heading.map{ h=> <caption class="table__caption table__caption--top"><a href="@competition.url">@h</a></caption>}
+        @heading.map{ h=>
+            <caption class="table__caption table__caption--top">
+                <a href="@headingLink.getOrElse(competition.url)">@h</a>
+            </caption>
+        }
         @if(linkToCompetition){<caption class="table__caption table__caption--bottom"><a href="@{competition.url + "/table"}" data-link-name="full table" class="full-table-link">View full <span class="competition-name">@competition.fullName</span> table</a></caption>}
     </table>
 </div>

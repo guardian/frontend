@@ -1,5 +1,5 @@
 @(discussionClosed: Boolean, discussionId: String)(implicit request: RequestHeader)
-<div id="comments" class="discussion discussion--@if(discussionClosed){closed} else {open}"
+<div id="comments" class="discussion discussion--@if(discussionClosed){closed} else {open} u-cf"
     data-discussion-key="@discussionId"
     data-discussion-closed="@discussionClosed">
 
@@ -12,9 +12,9 @@
     <div class="discussion__comments__container js-hidden">
         <h2 class="page-sub-header discussion__heading js-visible">All Comments</h2>
 
-        <div class="discussion__comment-box discussion__comment-box--top"></div>
+        <div class="discussion__comment-box discussion__comment-box--top u-cf"></div>
         <div class="discussion__comments"></div>
-        <div class="discussion__comment-box discussion__comment-box--bottom"></div>
+        <div class="discussion__comment-box discussion__comment-box--bottom u-cf"></div>
         <a class="d-discussion__show-all-comments js-show-discussion" href="@LinkTo{/discussion@discussionId}"
             data-is-ajax data-link-name="View all comments" rel="nofollow">
             Show all comments…

@@ -33,24 +33,6 @@
     </div>
 </article>
 
-@if(DiscussionSwitch.isSwitchedOn && image.isCommentable) {
-    <div class="gs-container js-comments">
-        <div class="content__main-column" data-component="discussion">
-        @fragments.discussion(image.isClosedForComments, image.shortUrlId)
-        </div>
-    </div>
-}
+@fragments.contentFooter(image, storyPackage)
 
-@fragments.storyPackagePlaceholder(storyPackage)
-@fragments.onwardPlaceholder(image.visualTone)
-
-<div class="facia-container facia-container--layout-article">
-    @fragments.mostPopularPlaceholder(image.section, image.visualTone)
-</div>
-
-<div class="gs-container">
-    <div class="content__breadcrumb" itemscope itemtype="http://schema.org/Organization" data-link-name="article breadcrumbs">
-        @fragments.breadcrumb(image)
-    </div>
-</div>
 }

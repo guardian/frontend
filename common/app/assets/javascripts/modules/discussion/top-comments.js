@@ -118,19 +118,19 @@ TopComments.prototype.fetch = function(parent) {
                 self.prerender();
                 self.ready();
 
-                self.mediator.emit('module:topcomments:loadcomments', { amount: 0 });
+                self.mediator.emit('module:topcomments:loadcomments');
             } else {
 
                 $('.discussion__comments--top-comments').remove();
 
                 // Render Regular Comments
-                self.mediator.emit('module:topcomments:loadcomments', { amount: 2, showLoader: true });
+                self.mediator.emit('module:topcomments:loadcomments', { showLoader: true });
             }
         },
         function () {
             // Error: Render Regular Comments
             $('.discussion__comments--top-comments').remove();
-            self.mediator.emit('module:topcomments:loadcomments', { amount: 2, showLoader: true });
+            self.mediator.emit('module:topcomments:loadcomments', { showLoader: true });
         }
     );
 };

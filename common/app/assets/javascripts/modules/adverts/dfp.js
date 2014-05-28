@@ -14,7 +14,9 @@ define([
     'lodash/arrays/flatten',
     'lodash/arrays/uniq',
     'lodash/functions/once',
-    'lodash/objects/defaults'
+    'lodash/objects/defaults',
+    'lodash/objects/pairs',
+    'common/utils/template'
 ], function (
     $,
     bonzo,
@@ -30,7 +32,9 @@ define([
     flatten,
     uniq,
     once,
-    defaults
+    defaults,
+    pairs,
+    template
 ) {
 
     /**
@@ -74,6 +78,34 @@ define([
         breakoutHash = {
             'breakout__html': '%content%',
             'breakout__script': '<script>%content%</script>'
+        },
+        adSlotDefinitions = {
+            right: {
+                sizeMappings: {
+                    tabletlandscape: '300,250|300,600'
+                }
+            },
+            inline1: {
+                sizeMappings: {
+                    mobile: '300,50',
+                    mobilelandscape: '300,50|320,50',
+                    tabletportrait: '300,250'
+                }
+            },
+            inline2: {
+                sizeMappings: {
+                    mobile: '300,50',
+                    mobilelandscape: '300,50|320,50',
+                    tabletportrait: '300,250'
+                }
+            },
+            'merchandising-high': {
+                label: false,
+                refresh: false,
+                sizeMappings: {
+                    desktop: '888,88'
+                }
+            }
         };
 
     /**
@@ -91,19 +123,14 @@ define([
         },
         addLabel = function($slot) {
             if (shouldRenderLabel($slot)) {
-                $slot.parent()
-                    .prepend('<div class="ad-slot__label">Advertisement</div>')
-                    .addClass('ad-label--showing');
+                $slot.prepend('<div class="ad-slot__label">Advertisement</div>');
             }
         },
         removeLabel = function($slot) {
-            var $slotParent = $slot.parent()
-                .removeClass('ad-label--showing');
-            $('.ad-slot__label', $slotParent[0]).remove();
+            $('.ad-slot__label', $slot).remove();
         },
         shouldRenderLabel = function ($slot) {
-            var $parent = $slot.parent();
-            return !($slot.css('display') === 'none' || $parent.hasClass('ad-label--showing') || $parent.data('label') === false);
+            return $slot.data('label') !== false && qwery('.ad-slot__label', $slot[0]).length === 0;
         },
         /**
          * Checks the contents of the ad for special classes (see breakoutHash).
@@ -111,7 +138,7 @@ define([
          * If one of these classes is detected, then the contents of that iframe is retrieved
          * and written onto the parent page.
          *
-         * Currently this is being used for sponsered logos and commercial components so they
+         * Currently this is being used for sponsored logos and commercial components so they
          * can inherit fonts.
          */
         checkForBreakout = function($slot) {
@@ -168,7 +195,7 @@ define([
             var mapping = googletag.sizeMapping();
 
             for (var breakpoint in breakpoints) {
-                var attr  = slot.getAttribute('data-' + breakpoint),
+                var attr  = slot.data(breakpoint),
                     width = breakpoints[breakpoint];
 
                 if (attr) {
@@ -197,6 +224,14 @@ define([
                 return value ? queryString.formatKeyword(value).replace(/&/g, 'and').replace(/'/g, '') : '';
             }
 
+            function lastPart(keywordId) {
+                if (keywordId) {
+                    return keywordId.split('/').pop();
+                } else {
+                    return '';
+                }
+            }
+
             var conf        = config.page,
                 section     = encodeTargetValue(conf.section),
                 series      = encodeTargetValue(conf.series),
@@ -204,11 +239,11 @@ define([
                 edition     = encodeTargetValue(conf.edition),
                 keywords;
             if (conf.keywords) {
-                keywords = conf.keywords.split(',').map(function (keyword) {
-                    return encodeTargetValue(keyword);
+                keywords = conf.keywords.split(',').map(function (keywordId) {
+                    return lastPart(keywordId);
                 });
             } else {
-                keywords = '';
+                keywords = lastPart(conf.pageId);
             }
 
             return defaults({
@@ -236,6 +271,25 @@ define([
                 adUnitSuffix += 'front';
             }
             return '/' + config.page.dfpAccountId + '/' + config.page.dfpAdUnitRoot + '/' + adUnitSuffix;
+        },
+        createAdSlot = function(name, type) {
+            var definition = adSlotDefinitions[name];
+            return template(
+                '<div id="dfp-ad--{{name}}" ' +
+                    'class="ad-slot ad-slot--dfp ad-slot--{{type}}" ' +
+                    'data-link-name="ad slot {{name}}" ' +
+                    'data-name="{{name}}" ' +
+                    'data-refresh="{{refresh}}" ' +
+                    'data-label="{{label}}"' +
+                    '{{sizeMappings}}></div>',
+                {
+                    name: name,
+                    type: type,
+                    refresh: definition.refresh !== undefined ? definition.refresh : true,
+                    label: definition.label !== undefined ? definition.label : true,
+                    sizeMappings: pairs(definition.sizeMappings).map(function(size) { return ' data-' + size[0] + '="' + size[1] + '"'; }).join('')
+                }
+            );
         };
 
     /**
@@ -262,8 +316,8 @@ define([
 
             adSlots.forEach(function($adSlot) {
 
-                var id          = $(config.adContainerClass, $adSlot[0]).attr('id'),
-                    sizeMapping = defineSlotSizes($adSlot[0]),
+                var id          = $adSlot.attr('id'),
+                    sizeMapping = defineSlotSizes($adSlot),
                     // as we're using sizeMapping, pull out all the ad sizes, as an array of arrays
                     size        = uniq(
                         flatten(sizeMapping, true, function(map) {
@@ -291,7 +345,7 @@ define([
             googletag.pubads().collapseEmptyDivs();
             googletag.enableServices();
             // as this is an single request call, only need to make a single display call (to the first ad slot)
-            googletag.display($(config.adContainerClass, adSlots.shift()).attr('id'));
+            googletag.display(adSlots.shift().attr('id'));
         },
         postDisplay = function() {
             var hasBreakpointChanged = detect.hasCrossedBreakpoint();
@@ -310,7 +364,6 @@ define([
 
         config = defaults(c || {}, {
             adSlotSelector: '.ad-slot--dfp',
-            adContainerClass: '.ad-slot__container',
             page: {},
             switches: {}
         });
@@ -355,6 +408,8 @@ define([
         buildPageTargeting: buildPageTargeting,
 
         buildAdUnit : buildAdUnit,
+
+        createAdSlot: createAdSlot,
 
         // really only useful for testing
         reset: function() {

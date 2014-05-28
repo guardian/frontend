@@ -62,18 +62,4 @@
     </div>
 </article>
 
-@fragments.storyPackagePlaceholder(storyPackage)
-@fragments.onwardPlaceholder(gallery.visualTone)
-
-<div class="facia-container facia-container--layout-article">
-    @fragments.mostPopularPlaceholder(gallery.section, gallery.visualTone)
-</div>
-
-<div class="gallery-overlay-bg"></div>
-
-<div class="gs-container">
-    <div class="content__breadcrumb" itemscope itemtype="http://schema.org/Organization" data-link-name="article breadcrumbs">
-        @fragments.breadcrumb(gallery)
-    </div>
-</div>
-
+@fragments.contentFooter(gallery, storyPackage)

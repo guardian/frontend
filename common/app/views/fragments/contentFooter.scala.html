@@ -1,0 +1,40 @@
+@(content: model.Content, storyPackage: List[Trail])(implicit request: RequestHeader)
+@import conf.Switches._
+
+<div class="content-footer">
+    @if((content.isArticle || content.isLiveBlog || content.isImageContent ) &&
+        DiscussionSwitch.isSwitchedOn && content.isCommentable) {
+        <div class="gs-container js-comments">
+            <div class="content__main-column" data-component="discussion">
+            @fragments.discussionFooter(content.isClosedForComments, content.shortUrlId)
+            </div>
+        </div>
+    }
+
+    @if(content.isArticle) {
+        <div class="facia-container facia-container--layout-article facia-container--commercial">
+            @fragments.commercial.commercialComponent(name="merchandising-high", adType="commercial-component-high", sizeMapping=Map("desktop" -> Seq("888,88")))
+        </div>
+    }
+
+    @fragments.storyPackagePlaceholder(storyPackage)
+    @fragments.onwardPlaceholder(content.visualTone)
+
+    <div class="js-repositioned-comments content__repositioned-comments"></div>
+
+    <div class="facia-container facia-container--layout-article">
+        @fragments.mostPopularPlaceholder(content.section, content.visualTone)
+    </div>
+
+    @if(content.isArticle) {
+        <div class="facia-container facia-container--layout-article facia-container--commercial">
+            @fragments.commercial.commercialComponent(name = "merchandising", adType = "commercial-component", sizeMapping = Map("mobile" -> Seq("888,88")))
+        </div>
+    }
+
+    <div class="gs-container">
+        <div class="content__main-column" data-link-name="content breadcrumbs">
+            @fragments.breadcrumb(content)
+        </div>
+    </div>
+</div>

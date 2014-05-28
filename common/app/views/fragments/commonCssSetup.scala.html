@@ -40,17 +40,6 @@
     .tweet { background-image: url(@Static("images/twitter/bird.png")); }
     .svg .tweet { background-image: url(@Static("images/twitter/bird.svg")); }
     .stars, .stars:after { background-image: url(@Static("images/star-sprite.png")); }
-    @if(AdTransitionSwitch.isSwitchedOn) {
-        .ad-slot--top-banner-ad iframe {
-            -webkit-transform: translateZ(0);
-            -moz-transform: translateZ(0);
-            transform: translateZ(0);
-
-            -webkit-transition: height 1s;
-            -moz-transition: height 1s;
-            transition: height 1s;
-        }
-    }
 </style>
 
 @*
