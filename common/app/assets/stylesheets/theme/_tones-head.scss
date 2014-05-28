@@ -11,7 +11,6 @@
 @include article-header-tone(comment, $c-commentAccent, $c-commentAccent2, $c-neutral1, 'black');
 @include article-header-tone(live, $c-liveDefault, $c-liveAccent, #ffffff, 'white');
 
-
 .content__head--tonal {
     background-color: #ffffff;
     .tone-background {
@@ -53,25 +52,8 @@
     }
 }
 
-.tone-live .content__head--tonal {
-    .content-meta__label {
-        color: #e4845a;
-    }
-    .content__headline {
-        font-weight: normal;
-    }
-}
-
-.tone-feature--article,
-.tone-comment--article {
-    @include mq($from: tablet) {
-        .content__main-column--article {
-            @include rem((
-                margin-top: $gs-baseline*2
-            ));
-        }
-    }
-}
+/* Tonal byline / contributor image
+   ========================================================================== */
 
 .content__head--tonal {
 
@@ -158,6 +140,29 @@
     }
 }
 
+/* Tone specific rules/overrides
+   ========================================================================== */
+
+.tone-live .content__head--tonal {
+    .content-meta__label {
+        color: #e4845a;
+    }
+    .content__headline {
+        font-weight: normal;
+    }
+}
+
+.tone-feature--article,
+.tone-comment--article {
+    @include mq($from: tablet) {
+        .content__main-column--article {
+            @include rem((
+                margin-top: $gs-baseline*2
+            ));
+        }
+    }
+}
+
 .tone-comment {
     .content__head--tonal {
         .content__section .tone-colour {
@@ -186,5 +191,4 @@
             border-bottom: 2px solid;
         }
     }
-
 }
