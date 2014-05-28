@@ -2,7 +2,7 @@
 
 @if(supporting.nonEmpty){
     <div class="supporting-links supporting-links--style-@style"
-        @LinkTo(leadTrail).map { url => data-lead-story-url="@url"}>
+        data-lead-story-url="@leadTrail.url">
         <h4 class="supporting__title u-h">More on this story:</h4>
         <ul class="supporting linkslist">
             @supporting.zipWithIndex.map{ case (supporting, index) =>
