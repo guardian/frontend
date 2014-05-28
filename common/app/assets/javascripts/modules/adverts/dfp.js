@@ -224,6 +224,11 @@ define([
                 return value ? queryString.formatKeyword(value).replace(/&/g, 'and').replace(/'/g, '') : '';
             }
 
+            function lastPart(keywordId) {
+                var parts = keywordId.split('/');
+                return parts[parts.length - 1];
+            }
+
             var conf        = config.page,
                 section     = encodeTargetValue(conf.section),
                 series      = encodeTargetValue(conf.series),
@@ -231,12 +236,9 @@ define([
                 edition     = encodeTargetValue(conf.edition),
                 keywords;
             if (conf.keywordIds) {
-                keywords = conf.keywordIds.split(',').map(function (keywordId) {
-                    var parts = keywordId.split('/');
-                    return parts[parts.length - 1];
-                });
+                keywords = conf.keywordIds.split(',').map(lastPart(keywordId));
             } else {
-                keywords = conf.pageId;
+                keywords = lastPart(conf.pageId);
             }
 
             return defaults({
