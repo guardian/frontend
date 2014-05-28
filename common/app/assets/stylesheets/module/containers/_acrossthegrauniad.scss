@@ -1,8 +1,6 @@
 .container--acrossthegrauniad {
     .linkslist__media-wrapper,
-    .linkslist__image-container {
-        display: none;
-    }
+    .linkslist__image-container,
     .linkslist__item + .linkslist__item {
         display: none;
     }
@@ -30,9 +28,6 @@
     .across__title__action {
         display: block;
     }
-    .across__action {
-        
-    }
 }
 
 .container--acrossthegrauniad-variant-3col1storythumb {
@@ -57,9 +52,7 @@
     }
 }
 
-
-
-@include guss-columns($base-class: '.across--columns', $column-min-width: gs-span(4) + $gs-gutter, $column-rule: 1px solid #e3e3db);
+@include guss-columns($base-class: '.across--columns', $column-min-width: gs-span(4) + $gs-gutter, $column-rule: 1px solid $c-neutral5);
 
 .across--columns__item {
     @include rem((
