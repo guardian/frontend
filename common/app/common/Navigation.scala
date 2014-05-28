@@ -194,7 +194,8 @@ object Breadcrumbs {
   object Navigation {
 
     def topLevelItem(navigation: Seq[NavItem], page: MetaData): Option[NavItem] = navigation.find(_.exactFor(page))
-    .orElse(navigation.find(_.currentFor(page)))
+    .orElse(navigation.find(_.currentFor(page))) //This includes a search on the HEAD of Tags for (page: MetaData)
+    .orElse(navigation.find(_.currentForIncludingAllTags(page))) //This is the search for ALL tags
 
   def subNav(navigation: Seq[NavItem], page: MetaData): Option[SectionLink] = topLevelItem(navigation, page).flatMap(_.links.find(_.currentFor(page)))
 
