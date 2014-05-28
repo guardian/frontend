@@ -28,11 +28,10 @@ object DfpAgent extends ExecutionContexts with Logging {
 
   private def isSponsoredType(keywordId: String, p: DfpData => String => Boolean): Boolean = {
     dfpData.fold(false) { data =>
-      p(data)(lastPart(keywordId))
+      val lastPart = keywordId.split('/').takeRight(1)(0)
+      p(data)(lastPart)
     }
   }
-
-  private def lastPart(keywordId: String) = keywordId.split('/').takeRight(1)(0)
 
   def isSponsored(content: Content): Boolean = isSponsored(content.keywords)
 
