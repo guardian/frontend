@@ -6,7 +6,7 @@
         DiscussionSwitch.isSwitchedOn && content.isCommentable) {
         <div class="gs-container js-comments">
             <div class="content__main-column" data-component="discussion">
-            @fragments.discussion(content.isClosedForComments, content.shortUrlId)
+            @fragments.discussionFooter(content.isClosedForComments, content.shortUrlId)
             </div>
         </div>
     }
