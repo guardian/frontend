@@ -6,8 +6,9 @@ case class SectionLink(zone: String, title: String, breadcumbTitle: String, href
   def currentFor(page: MetaData): Boolean = page.url == href ||
     s"/${page.section}" == href ||
     page.url == href ||
-    page.tags.exists(t => s"/${t.id}" == href) ||
     (Edition.all.exists(_.id.toLowerCase == page.id.toLowerCase) && href == "/")
+
+  def currentForIncludingAllTags(page: MetaData): Boolean = page.tags.exists(t => s"/${t.id}" == href)
 }
 
 case class Zone(name: SectionLink, sections: Seq[SectionLink])
