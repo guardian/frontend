@@ -1,15 +1,21 @@
 .facia-slice-wrapper {
     @include rem((
+        padding-top: $gs-baseline/3,
         margin-left: $gs-gutter/2 * -1,
         margin-right: $gs-gutter/2 * -1
     ));
+    @include mq(tablet, wide) {
+        padding-top: 0;
+    }
 
     + .facia-slice-wrapper {
+        padding-top: 0;
         @include rem((
             margin-top: ($gs-baseline/3)*2
         ));
     }
 }
+
 .facia-slice-wrapper--no-outer-margins {
     margin-left: 0;
     margin-right: 0;
@@ -157,15 +163,6 @@
 }
 
 @include mq(tablet) {
-    .facia-slice-wrapper:first-child {
-        .row-of-two {
-            margin-top: -2px;
-
-            .facia-slice__item + .facia-slice__item:before {
-                top: 6px;
-            }
-        }
-    }
     .row-of-two--boost-both {
         .item__title {
             @include fs-headline(3, true);
@@ -173,6 +170,7 @@
     }
     .row-of-two--boost-none {
         .item__title {
+            padding-top: 0;
             @include fs-headline(2, true);
         }
         .item--imageadjust-default {
@@ -192,6 +190,7 @@
         padding-bottom: 0;
 
         .item__title {
+            padding-top: 0;
             @include fs-headline(4, true);
         }
         .item__standfirst {
