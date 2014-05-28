@@ -26,26 +26,29 @@ object DfpAgent extends ExecutionContexts with Logging {
     }
   }
 
-  private def normalise(name: String) = name.toLowerCase.replaceAll("[+\\s]+", "-")
-
   private def isSponsoredType(keyword: String, p: DfpData => String => Boolean): Boolean = {
     dfpData.fold(false) { data =>
-      p(data)(normalise(keyword))
+      p(data)(keyword)
     }
   }
 
+  private def dfpKeyword(keyword: Tag) = keyword.id.split('/').takeRight(1)(0)
+  private def dfpKeyword(section: Section) = section.id
+
   def isSponsored(content: Content): Boolean = isSponsored(content.keywords)
 
-  def isSponsored(section: Section): Boolean = isSponsored(section.webTitle)
+  def isSponsored(section: Section): Boolean = isSponsored(dfpKeyword(section))
 
-  def isSponsored(keywords: Seq[Tag]): Boolean = keywords.exists(keyword => isSponsored(keyword.name))
+  def isSponsored(keywords: Seq[Tag]): Boolean = keywords.exists(keyword => isSponsored(dfpKeyword(keyword)))
 
   def isSponsored(keyword: String): Boolean = isSponsoredType(keyword, _.isSponsored)
 
-  def isAdvertisementFeature(section: Section): Boolean = isAdvertisementFeature(section.webTitle)
+  def isAdvertisementFeature(content: Content): Boolean = isAdvertisementFeature(content.keywords)
+
+  def isAdvertisementFeature(section: Section): Boolean = isAdvertisementFeature(dfpKeyword(section))
 
   def isAdvertisementFeature(keywords: Seq[Tag]): Boolean =
-    keywords.exists(keyword => isAdvertisementFeature(keyword.name))
+    keywords.exists(keyword => isAdvertisementFeature(dfpKeyword(keyword)))
 
   def isAdvertisementFeature(keyword: String): Boolean = isSponsoredType(keyword, _.isAdvertisementFeature)
 
