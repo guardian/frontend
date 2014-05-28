@@ -224,18 +224,20 @@ define([
                 return value ? queryString.formatKeyword(value).replace(/&/g, 'and').replace(/'/g, '') : '';
             }
 
+            function lastPart(keywordId) {
+                return keywordId.split('/').pop();
+            }
+
             var conf        = config.page,
                 section     = encodeTargetValue(conf.section),
                 series      = encodeTargetValue(conf.series),
                 contentType = encodeTargetValue(conf.contentType),
                 edition     = encodeTargetValue(conf.edition),
                 keywords;
-            if (conf.keywords) {
-                keywords = conf.keywords.split(',').map(function (keyword) {
-                    return encodeTargetValue(keyword);
-                });
+            if (conf.keywordIds) {
+                keywords = conf.keywordIds.split(',').map(lastPart(keywordId));
             } else {
-                keywords = '';
+                keywords = lastPart(conf.pageId);
             }
 
             return defaults({
