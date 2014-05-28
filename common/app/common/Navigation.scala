@@ -12,7 +12,7 @@ case class SectionLink(zone: String, title: String, breadcumbTitle: String, href
 
 case class Zone(name: SectionLink, sections: Seq[SectionLink])
 
-case class NavItem(name: SectionLink, links: Seq[SectionLink] = Nil, current: Boolean = false) {
+case class NavItem(name: SectionLink, links: Seq[SectionLink] = Nil) {
   def currentFor(page: MetaData): Boolean = name.currentFor(page) ||
     links.exists(_.currentFor(page)) || exactFor(page)
 
