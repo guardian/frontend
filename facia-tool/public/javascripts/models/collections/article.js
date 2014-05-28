@@ -70,6 +70,7 @@ define([
                 'isOpenImage',
                 'isLoaded',
                 'isEmpty',
+                'ophanUrl',
                 'sparkUrl']);
 
             this.isSnap = ko.computed(function() {
@@ -192,12 +193,14 @@ define([
         };
 
         Article.prototype.sparkline = function() {
+            var path = urlAbsPath(this.props.webUrl());
+
             this.state.sparkUrl(undefined);
             if (vars.model.switches()['facia-tool-sparklines']) {
                 this.state.sparkUrl(
-                    vars.sparksBase + urlAbsPath(this.props.webUrl()) +
-                    (this.frontPublicationDate ? '&markers=' + (this.frontPublicationDate/1000) + ':FED24C' : '')
-                );
+                    vars.sparksBase + path + (this.frontPublicationDate ? '&markers=' + (this.frontPublicationDate/1000) + ':FED24C' : ''));
+                this.state.ophanUrl(
+                    vars.CONST.ophanBase + '?path=/' + path);
             }
         };
 

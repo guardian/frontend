@@ -31,21 +31,27 @@ function (
 
         } else if (data) {
             item.id(capiId);
-            populate(data, item);
+            populate(item, data);
             defer.resolve();
 
         } else {
             fetchContentByIds([capiId])
-            .done(function(result) {
-                var icc,
+            .done(function(results) {
+                var capiItem,
+                    icc,
                     err;
 
                 // ContentApi item
-                if (result.length === 1) {
-                    icc = internalContentCode(result);
-                    item.id(icc);
-                    cache.put('contentApi', icc, result[0]);
-                    populate(result[0], item);
+                if (results.length === 1) {
+                    capiItem = results[0];
+                    icc = internalContentCode(capiItem);
+                    if (icc) {
+                        populate(item, capiItem);
+                        cache.put('contentApi', icc, capiItem);
+                        item.id(icc);
+                    } else {
+                        err = 'Sorry, that article is malformed (has no internalContentCode)';
+                    }
 
                 // Snap, but they're disabled
                 } else if (!vars.model.switches()['facia-tool-snaps']) {
@@ -84,7 +90,7 @@ function (
         articles.forEach(function(article){
             var data = cache.get('contentApi', article.id());
             if(data) {
-                populate(data, article);
+                populate(article, data);
             } else {
                 ids.push(article.id());
             }
@@ -101,7 +107,7 @@ function (
                     _.filter(articles, function(article) {
                         return article.id() === icc || article.id() === result.id; // TODO: remove 2nd clause after full transition to internal-code/content/ ids
                     }).forEach(function(article) {
-                        populate(result, article);
+                        populate(article, result);
                     });
                 }
             });
@@ -114,7 +120,7 @@ function (
         });
     }
 
-    function populate(opts, article) {
+    function populate(article, opts) {
         article.populate(opts, true);
     }
 
