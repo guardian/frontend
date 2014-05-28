@@ -9,6 +9,49 @@ import model.FaciaPage
 import services.SecureS3Request
 import conf.Configuration
 
+
+trait FrontJsonLite extends ExecutionContexts{
+  def get(json: JsValue): JsValue = {
+    Json.obj(
+      "webTitle" -> (json \ "seoData" \ "webTitle"),
+      "collections" -> getCollections(json)
+    )
+  }
+
+  private def getCollections(json: JsValue): Seq[JsValue] = {
+    (json \ "collections").asOpt[Seq[Map[String, JsObject]]].getOrElse(Nil).flatMap{ c => c.values.map(getCollection) }
+  }
+
+  private def getCollection(json: JsValue): JsValue = {
+    Json.obj(
+        "displayName" -> (json \ "displayName"),
+        "href" -> (json \ "href"),
+        "content" -> getContent(json)
+    )
+  }
+
+  private def getContent(json: JsValue): Seq[JsValue] = {
+    val curated = (json \ "curated").asOpt[Seq[JsObject]].getOrElse(Nil)
+    val editorsPicks = (json \ "editorsPicks").asOpt[Seq[JsObject]].getOrElse(Nil)
+    val results = (json \ "results").asOpt[Seq[JsObject]].getOrElse(Nil)
+
+    (curated ++ editorsPicks ++ results)
+    .filterNot{ j =>
+      (j \ "id").asOpt[String].exists(_.startsWith("snap/"))
+     }
+    .take(3).map{ j =>
+      Json.obj(
+        "headline" -> (j \ "safeFields" \ "headline"),
+        "thumbnail" -> (j \ "safeFields" \ "thumbnail"),
+        "id" -> (j \ "id")
+      )
+    }
+  }
+}
+
+object FrontJsonLite extends FrontJsonLite
+
+
 trait FrontJson extends ExecutionContexts {
 
   val stage: String = Configuration.facia.stage.toUpperCase
