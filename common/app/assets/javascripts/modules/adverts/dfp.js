@@ -225,8 +225,7 @@ define([
             }
 
             function lastPart(keywordId) {
-                var parts = keywordId.split('/');
-                return parts[parts.length - 1];
+                return keywordId.split('/').pop();
             }
 
             var conf        = config.page,
