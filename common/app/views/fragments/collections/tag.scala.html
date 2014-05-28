@@ -58,11 +58,13 @@
                     </div>
                 }
             }
-            @defining(items.slice(baguetteCount + 14, baguetteCount + 33)) { items =>
-                @if(items.nonEmpty) {
-                    <div class="linkslist-container @if(style.showMore){js-container--show-more} tone-@{style.tone}" data-tone="@style.tone">
+            @defining(items.slice(baguetteCount + 14, baguetteCount + 33)) { subItems =>
+                @if(subItems.nonEmpty) {
+                    <div class="linkslist-container @if(style.showMore){js-container--show-more} tone-@{style.tone}"
+                        @LinkTo(items(0)).map { url => data-lead-story-url="@url"}
+                        data-tone="@style.tone">
                         <ul class="l-columns linkslist">
-                            @items.zipWithIndex.map{ case (trail, index) =>
+                            @subItems.zipWithIndex.map{ case (trail, index) =>
                                 @trail match {
                                     case l: LiveBlog if l.isLive         => { @fragments.items.linksList.live(l, baguetteCount + index + 14) }
                                     case g: Gallery                      => { @fragments.items.linksList.gallery(g, baguetteCount + index + 14) }

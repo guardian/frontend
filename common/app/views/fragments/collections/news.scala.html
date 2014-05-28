@@ -75,11 +75,12 @@
             }
         }
 
-        @defining(standardItems.slice(4, 10), hugeItemsCount + veryBigItemsCount + bigItemsCount + 4) { case (items, offset) =>
-            @if(items.nonEmpty) {
-                <div class="linkslist-container tone-@{style.tone}">
+        @defining(standardItems.slice(4, 10), hugeItemsCount + veryBigItemsCount + bigItemsCount + 4) { case (subItems, offset) =>
+            @if(subItems.nonEmpty) {
+                <div class="linkslist-container tone-@{style.tone}"
+                    @LinkTo(items(0)).map { url => data-lead-story-url="@url"}>
                     <ul class="l-columns linkslist linkslist--with-images">
-                        @items.zipWithIndex.map{ case (trail, index) =>
+                        @subItems.zipWithIndex.map{ case (trail, index) =>
                             @trail match {
                                 case l: LiveBlog if l.isLive         => { @fragments.items.linksList.live(l, index + offset, Some("boost")) }
                                 case g: Gallery                      => { @fragments.items.linksList.gallery(g, index + offset, Some("boost")) }

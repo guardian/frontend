@@ -1,14 +1,22 @@
 define([
     'qwery',
-    'common/$'
+    'bonzo',
+    'common/$',
+    'common/_',
+    'common/modules/onward/history',
+    'common/utils/cookies'
 ], function (
     qwery,
-    $
+    bonzo,
+    $,
+    _,
+    History,
+    cookies
     ) {
 
     return function () {
 
-        this.id = 'ABHideSupportingLinks';
+        this.id = 'HideSupportingLinks';
         // not starting the test just yet, in now so we can style the component correctly for this spot
         this.start = '2014-05-28';
         this.expiry = '2014-06-24';
@@ -21,9 +29,15 @@ define([
         this.dataLinkNames = 'Hide supporting links on mobile';
         this.idealOutcome = 'Ideal outcome is that click through is increased overall';
 
+        var appConfig;
+
+        function getSublinks(){
+            return $('.linkslist-container[data-lead-story-url]');
+        }
+
         this.canRun = function (config) {
-            // only apply on facia fronts
-            return config.page.isFront;
+            appConfig = config;
+            return true;
         };
 
         this.variants = [
@@ -36,20 +50,44 @@ define([
             {
                 id: 'hide-all',
                 test: function () {
-                    var allLinks = $('.supporting-links--style-fit > ul a');
-                    allLinks.hide();
+                    getSublinks().hide();
                 }
             },
             {
                 id: 'show-visited',
                 test: function () {
+                    getSublinks().hide();
+                    var history = new History();
 
+                    getSublinks().each(function(item){
+                        var trail = bonzo(item);
+                        var leadSlug = trail.attr('data-lead-story-url');
+
+                        if(history.contains(leadSlug)){
+                            trail.show();
+                        }
+                    });
                 }
             },
             {
                 id: 'show-if-homepage',
                 test: function () {
+                    var cookieName = 'HideSupportingLinks-show-if-homepage-' + appConfig.page.edition;
 
+                    var isEditionHomepage =
+                        appConfig.page.pageId == 'uk' ||
+                        appConfig.page.pageId == 'us' ||
+                        appConfig.page.pageId == 'au';
+
+                    if (isEditionHomepage) {
+                        var minutesToLive = 180;
+                        cookies.addForMinutes(cookieName, 'true', minutesToLive);
+                    }
+
+                    var homepageVisited = cookies.get(cookieName);
+                    if (!homepageVisited) {
+                        getSublinks().hide();
+                    }
                 }
             }
         ];

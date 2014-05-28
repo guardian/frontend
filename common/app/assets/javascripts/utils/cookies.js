@@ -48,6 +48,17 @@ define(function () {
         document.cookie = name + '=' + value + '; path=/; expires=' + expires.toUTCString() + '; domain=' + getShortDomain() + ';';
     }
 
+    function addForMinutes(name, value, minutesToLive) {
+        if (minutesToLive) {
+            var expires = new Date();
+            expires.setMinutes(expires.getMinutes() + minutesToLive);
+            document.cookie = name + '=' + value + '; path=/; expires=' + expires.toUTCString() + '; domain=' + getShortDomain() + ';';
+
+        } else {
+            add(name, value);
+        }
+    }
+
     function getCookieValues(name) {
         var cookieVals = [],
             nameEq = name + '=',
@@ -80,6 +91,7 @@ define(function () {
         cleanUp: cleanUp,
         cleanUpDuplicates: cleanUpDuplicates,
         add: add,
+        addForMinutes: addForMinutes,
         remove: remove,
         get: get
     };
