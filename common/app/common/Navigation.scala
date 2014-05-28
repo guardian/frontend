@@ -17,6 +17,13 @@ case class NavItem(name: SectionLink, links: Seq[SectionLink] = Nil) {
   def currentFor(page: MetaData): Boolean = name.currentFor(page) ||
     links.exists(_.currentFor(page)) || exactFor(page)
 
+  def currentForIncludingAllTags(page: MetaData): Boolean = name.currentForIncludingAllTags(page) ||
+    links.exists(_.currentForIncludingAllTags(page))
+
+  def searchForCurrentSublink(page: MetaData): Option[SectionLink] =
+    links.find(_.currentFor(page))
+    .orElse(links.find(_.currentForIncludingAllTags(page)))
+
   def exactFor(page: MetaData): Boolean = page.section == name.href.dropWhile(_ == '/') || page.url == name.href
 }
 
