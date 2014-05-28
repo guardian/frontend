@@ -30,6 +30,7 @@
 
 .l-footer {
     @include rem((
+        margin-top: $gs-baseline*3,
         padding: 0 0 ($gs-baseline/3)*4,
     ));
     background: $c-neutral8;
