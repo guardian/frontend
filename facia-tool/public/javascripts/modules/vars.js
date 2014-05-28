@@ -46,6 +46,8 @@ define(['knockout'], function(ko) {
         apiBase:               '',
         apiSearchBase:         '/api/proxy',
 
+        ophanBase: 'http://dashboard.ophan.co.uk/graph/breakdown',
+
         sparksServer:          'http://sparklines.ophan.co.uk',
         sparksParams: {
             graphs: 'other:3279F1,google:65b045,guardian:376ABF',

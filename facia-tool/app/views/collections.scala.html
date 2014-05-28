@@ -325,7 +325,7 @@
             <div class="closed" data-bind="if: !state.isOpen()">
                 <a class="spark" target="ophan" title="Dark blue: Guardian. Green: Google. Light blue: Other." data-bind="
                     visible: state.sparkUrl,
-                    attr: {href: 'http://dashboard.ophan.co.uk/graph/breakdown?path=/' + id()}">
+                    attr: {href: state.ophanUrl}">
                     <img data-bind="attr: {src: state.sparkUrl}" />
                 </a>
 
