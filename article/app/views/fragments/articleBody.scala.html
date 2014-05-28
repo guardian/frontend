@@ -17,8 +17,6 @@
         @fragments.headDefault(article)
     }
 
-    @fragments.witnessCallToAction(article)
-
     <div class="gs-container">
         <div class="content__main-column content__main-column--article">
 
@@ -27,6 +25,8 @@
             @if(!(article.isFeature && article.hasShowcaseMainPicture)) {
                 @fragments.mainMedia(article)
             }
+
+            @fragments.witnessCallToAction(article)
 
             @fragments.contentMeta(article)
 
