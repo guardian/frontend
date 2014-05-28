@@ -28,7 +28,7 @@ define([
         var appConfig;
 
         function getSublinks(){
-            return $('.linkslist-container[data-lead-story-url]');
+            return $('.supporting-links[data-lead-story-url]');
         }
 
         this.canRun = function (config) {
