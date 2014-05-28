@@ -50,7 +50,7 @@ define([
                 }
             },
             {
-                id: 'show-visited',
+                id: 'show-if-visited',
                 test: function () {
                     var history = new History();
 
@@ -65,7 +65,7 @@ define([
                 }
             },
             {
-                id: 'show-if-homepage',
+                id: 'show-if-viewed',
                 test: function () {
                     var cookieName = 'HideSupportingLinks-show-if-homepage-' + appConfig.page.edition;
                     var isEditionHomepage =
