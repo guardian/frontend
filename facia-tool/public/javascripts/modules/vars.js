@@ -46,7 +46,7 @@ define(['knockout'], function(ko) {
         apiBase:               '',
         apiSearchBase:         '/api/proxy',
 
-        ophanBase: 'http://dashboard.ophan.co.uk/graph/breakdown',
+        ophanBase:             'http://dashboard.ophan.co.uk/graph/breakdown',
 
         sparksServer:          'http://sparklines.ophan.co.uk',
         sparksParams: {

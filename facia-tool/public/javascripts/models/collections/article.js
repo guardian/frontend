@@ -198,9 +198,11 @@ define([
             this.state.sparkUrl(undefined);
             if (vars.model.switches()['facia-tool-sparklines']) {
                 this.state.sparkUrl(
-                    vars.sparksBase + path + (this.frontPublicationDate ? '&markers=' + (this.frontPublicationDate/1000) + ':FED24C' : ''));
+                    vars.sparksBase + path + (this.frontPublicationDate ? '&markers=' + (this.frontPublicationDate/1000) + ':FED24C' : '')
+                );
                 this.state.ophanUrl(
-                    vars.CONST.ophanBase + '?path=/' + path);
+                    vars.CONST.ophanBase + '?path=/' + path
+                );
             }
         };
 
