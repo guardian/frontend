@@ -1,7 +1,7 @@
 @(page: VideoPage)(implicit request: RequestHeader)
 @import conf.Switches._
 
-@defining(page.video){ video =>
+@defining(page.video, page.storyPackage){ case (video, storyPackage) =>
 <article class="content content--video tone-@video.visualTone"
     itemprop="mainContentOfPage" itemscope itemtype="@video.schemaType" role="main">
 
@@ -53,18 +53,6 @@
     </div>
 </article>
 
-@fragments.storyPackagePlaceholder(page.storyPackage)
-
-@fragments.onwardPlaceholder(video.visualTone)
-
-<div class="facia-container facia-container--layout-article">
-    @fragments.mostPopularPlaceholder(video.section, video.visualTone)
-</div>
-
-<div class="gs-container">
-    <div class="content__main-column" data-link-name="article breadcrumbs">
-        @fragments.breadcrumb(video)
-    </div>
-</div>
+@fragments.contentFooter(video, storyPackage)
 
 }

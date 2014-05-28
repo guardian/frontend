@@ -68,11 +68,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
-  val GzipSwitch = Switch("Performance Switches", "gzip",
-    "If switched on then http responses will be gzipped",
-    safeState = Off, sellByDate = new DateMidnight(2014, 5, 31)
-  )
-
   val DoubleCacheTimesSwitch = Switch("Performance Switches", "double-cache-times",
     "Doubles the cache time of every endpoint. Turn on to help handle exceptional load.",
     safeState = On, sellByDate = never
@@ -311,11 +306,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 8, 10)
   )
 
-  val AdTransitionSwitch = Switch("Feature Switches", "ad-transition",
-    "If this switch is turned on, we use css transitions to handle loading of different sized ads.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 5, 29)
-  )
-
   // A/B Tests
 
   val ABHeaderSearchText = Switch("A/B Tests", "ab-header-search-text",
@@ -477,12 +467,10 @@ object Switches extends Collections {
     RssLinkSwitch,
     EnhanceTweetsSwitch,
     WorldCupWallchartEmbedSwitch,
-    AdTransitionSwitch,
     IndiaRegionSwitch,
     MemcachedSwitch,
     IncludeBuildNumberInMemcachedKey,
     NewSeoSwitch,
-    GzipSwitch,
     GeoMostPopular,
     TagLinkingSwitch,
     FaciaFirstContainerLayoutOverrideSwitch,

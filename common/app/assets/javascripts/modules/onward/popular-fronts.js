@@ -21,7 +21,6 @@ define([
     return  {
         render:  function (config, options) {
             var opts = options || {},
-                insertAfter = opts.insertAfter || $('.container').last(),
                 hasSection = config.page && config.page.section && config.page.section !== 'global';
             return ajax({
                 url: '/most-read' + (hasSection ? '/' + config.page.section : '') + '.json',
@@ -34,7 +33,7 @@ define([
                         return false;
                     }
                     bonzo(container)
-                        .insertAfter(insertAfter);
+                        .insertAfter(opts.insertAfter || $('.container, .ad-slot--commercial-component-high').last());
                     // add show more button
                     new CollectionShowMore($('.facia-slice', container)[0])
                         .addShowMore();
