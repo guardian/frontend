@@ -69,9 +69,9 @@ define([
                 test: function () {
                     var cookieName = 'HideSupportingLinks-show-if-homepage-' + appConfig.page.edition;
                     var isEditionHomepage =
-                        appConfig.page.pageId == 'uk' ||
-                        appConfig.page.pageId == 'us' ||
-                        appConfig.page.pageId == 'au';
+                        appConfig.page.pageId === 'uk' ||
+                        appConfig.page.pageId === 'us' ||
+                        appConfig.page.pageId === 'au';
 
                     if (isEditionHomepage) {
                         var homepageVisited = cookies.get(cookieName);
