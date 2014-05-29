@@ -177,6 +177,13 @@
 
 @include mq(wide) {
     .facia-container--pageskin.facia-container--layout-front {
+        .container {
+            margin-left: auto;
+            margin-right: auto;
+            @include rem((
+                width: gs-span(12) + $gs-gutter
+            ));
+        }
         .facia-container__inner {
             @include rem((
                 width: gs-span(12)
