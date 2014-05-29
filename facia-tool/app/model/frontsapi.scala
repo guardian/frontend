@@ -50,8 +50,10 @@ case class Block(
     draft = this.draft.map(sortTrailsByGroup)
   )
 
-  private def sortTrailsByGroup(trails: List[Trail]): List[Trail] =
-    trails.sortBy(_.meta.get("group").asOpt[String].map(-_.toInt).getOrElse(0))
+  private def sortTrailsByGroup(trails: List[Trail]): List[Trail] = {
+    val trailGroups = trails.groupBy(_.meta.get("group").asOpt[String].map(_.toInt).getOrElse(0))
+    trailGroups.keys.toList.sorted(Ordering.Int.reverse).flatMap(trailGroups.getOrElse(_, Nil))
+  }
 
 }
 
