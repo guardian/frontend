@@ -51,7 +51,7 @@ case class Block(
   )
 
   private def sortTrailsByGroup(trails: List[Trail]): List[Trail] = {
-    val trailGroups = trails.groupBy(_.meta.get("group").asOpt[String].map(_.toInt).getOrElse(0))
+    val trailGroups = trails.groupBy(_.meta.getOrElse(Map.empty).get("group").flatMap(_.asOpt[String]).map(_.toInt).getOrElse(0))
     trailGroups.keys.toList.sorted(Ordering.Int.reverse).flatMap(trailGroups.getOrElse(_, Nil))
   }
 
