@@ -323,6 +323,7 @@
 .ad-slot--page-skin {
     z-index: 0;
     position: absolute;
+    top: 0;
     @include transition(top .5s)
 }
 .ad-slot__label {
