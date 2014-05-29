@@ -60,8 +60,9 @@
                 <span class="d-discussion__show-more-text">Show more featured comments</span>
             </a>
         </div>
+    }else{
+        @fragments.reportComment()
     }
-
     <script type="text/template" id="tmpl-comment-box">@fragments.commentBox()</script>
     <script type="text/template" id="tmpl-banned-user">@fragments.cannotComment()</script>
     @if(blankComment != null){<script type="text/template" id="tmpl-comment">@fragments.comment(blankComment)</script>}
