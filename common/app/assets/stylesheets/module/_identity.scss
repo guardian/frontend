@@ -202,10 +202,6 @@
 }
 
 .user-profile {
-    @include rem((
-        margin-bottom: 0 $gs-gutter $gs-baseline
-    ));
-
     @include mq(tablet) {
         @include rem((
             margin-bottom: $gs-baseline*2
@@ -216,9 +212,9 @@
     @include fs-textsans(2);
     @include rem((
         margin-left: $gs-gutter*3.5,
-        margin-top: $gs-baseline
+        margin-top: $gs-baseline,
+        max-width: gs-span(6)
     ));
-    max-width: gs-span(6);
 
     @include mq(rightCol) {
         @include rem((
@@ -244,11 +240,6 @@
     @include rem((
         margin-bottom: $gs-baseline/3
     ));
-    .i {
-        @include rem((
-            width: 11px
-        ));
-    }
 }
 
 
