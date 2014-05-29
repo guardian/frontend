@@ -97,6 +97,9 @@ define([
             .toLowerCase()
             .replace(/^\/|\/$/g, '')
             .replace(/[^a-z0-9\/\-]*/g, '')
+            .split('/')
+            .slice(0,3)
+            .join('/')
         );
 
         if (!this.id()) { return; }
