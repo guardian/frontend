@@ -174,10 +174,10 @@
             color: $c-neutral2;
         }
         .content__standfirst .bullet:before {
-            background-color: #b18c29;
+            background-color: $c-commentDark;
         }
         .u-underline {
-            border-bottom-color: #b18c29;
+            border-bottom-color: $c-commentDark;
             &:hover {
                 border-bottom-color: $c-neutral1;
             }
