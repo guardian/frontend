@@ -55,7 +55,13 @@ object MasterClassAgent extends Logging with ExecutionContexts {
       masterclasses <- wrapEventbriteWithContentApi(eventBrite.filter(_.isOpen))
     } {
       log.info("Updating Masterclass agent")
-      agent send masterclasses
+      agent send { oldMasterclasses =>
+        if(masterclasses.nonEmpty) {
+          masterclasses
+        } else {
+          oldMasterclasses
+        }
+      }
     }
   }
 

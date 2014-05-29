@@ -10,7 +10,7 @@ trait BestsellersApi extends XmlAdsApi[Book] {
   final protected val switch = Switches.GuBookshopFeedsSwitch
 
   protected val category: String
-  protected val keywords: Seq[String]
+  protected val keywordIds: Seq[String]
 
   final protected val adTypeName = s"$category Bestsellers"
 
@@ -37,85 +37,83 @@ trait BestsellersApi extends XmlAdsApi[Book] {
           buyUrl = Some((book \ "bookurl").text),
           position = Some((entry \ "Position").text).map(_.toInt),
           Some(category),
-          keywords
+          keywordIds
         )
     }
   }
 }
 
-
 object GeneralBestsellersFeed extends BestsellersApi {
   protected lazy val category = "General"
-  protected val keywords = Nil
+  protected val keywordIds = Nil
   protected val path = "/Feed6.jsp"
 }
 
 
 object TravelBestsellersFeed extends BestsellersApi {
   protected lazy val category = "Travel"
-  protected val keywords = Seq("Travel", "Travel guides", "Travel writing")
+  protected val keywordIds = Seq("travel/travel", "books/travel-guides", "books/travel-writing")
   protected val path = "/Feed1.jsp"
 }
 
 
 object ScienceBestsellersFeed extends BestsellersApi {
   protected lazy val category = "Science"
-  protected val keywords = Seq("Science", "Science and nature")
+  protected val keywordIds = Seq("science/science", "books/scienceandnature")
   protected val path = "/Feed2.jsp"
 }
 
 
 object TechnologyBestsellersFeed extends BestsellersApi {
   protected lazy val category = "Technology"
-  protected val keywords = Seq("Technology")
+  protected val keywordIds = Seq("technology/technology")
   protected val path = "/Feed3.jsp"
 }
 
 
 object EnvironmentBestsellersFeed extends BestsellersApi {
   protected lazy val category = "Environment"
-  protected val keywords = Seq("Environment")
+  protected val keywordIds = Seq("environment/environment")
   protected val path = "/Feed4.jsp"
 }
 
 
 object SocietyBestsellersFeed extends BestsellersApi {
   protected lazy val category = "Society"
-  protected val keywords = Seq("Society")
+  protected val keywordIds = Seq("society/society")
   protected val path = "/Feed5.jsp"
 }
 
 
 object PoliticsBestsellersFeed extends BestsellersApi {
   protected lazy val category = "Politics"
-  protected val keywords = Seq("Politics")
+  protected val keywordIds = Seq("politics/politics")
   protected val path = "/Feed7.jsp"
 }
 
-
 object MusicFilmBestsellersFeed extends BestsellersApi {
   protected lazy val category = "Music & Film"
-  protected val keywords = Seq("Music", "Film")
+  protected val keywordIds = Seq("music/music", "film/film")
   protected val path = "/Feed8.jsp"
 }
 
 
 object SportBestsellersFeed extends BestsellersApi {
   protected lazy val category = "Sport"
-  protected val keywords = Seq("Sport", "Sport and leisure", "Football")
+  protected val keywordIds = Seq("sport/sport", "books/sportandleisure", "football/football")
   protected val path = "/Feed9.jsp"
 }
 
 
 object HomeGardenBestsellersFeed extends BestsellersApi {
   protected lazy val category = "Home & Garden"
-  protected val keywords = Seq("Homes", "House and garden", "Home improvements")
+  protected val keywordIds = Seq("lifeandstyle/homes", "books/houseandgarden", "money/homeimprovements")
   protected val path = "/Feed10.jsp"
 }
 
 
 object FoodDrinkBestsellersFeed extends BestsellersApi {
   protected lazy val category = "Food & Drink"
-  protected val keywords = Seq("Food and drink", "Restaurants", "Chefs")
+  protected val keywordIds = Seq("lifeandstyle/food-and-drink", "travel/restaurants", "lifeandstyle/chefs")
   protected val path = "/Feed11.jsp"
 }
