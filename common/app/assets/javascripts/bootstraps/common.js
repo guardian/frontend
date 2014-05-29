@@ -55,7 +55,8 @@ define([
     'common/modules/onward/tonal',
     'common/modules/identity/api',
     'common/modules/onward/more-tags',
-    'common/modules/ui/smartAppBanner'
+    'common/modules/ui/smartAppBanner',
+    'common/modules/adverts/pageskin'
 ], function (
     $,
     mediator,
@@ -111,7 +112,8 @@ define([
     TonalComponent,
     id,
     MoreTags,
-    smartAppBanner
+    smartAppBanner,
+    pageskin
 ) {
 
     var modules = {
@@ -515,13 +517,8 @@ define([
             }
         },
 
-        stickyPageskin: function() {
-            var $pageskin = $('.ad-slot--pageskin').first(),
-                $window = $(window),
-                contextPos = $('#js-context').offset().top;
-            mediator.on('window:scroll', function() {
-                $pageskin.css('top', Math.max(0, $window.scrollTop() - contextPos));
-            });
+        pageskin: function() {
+            pageskin.init();
         }
     };
 
@@ -573,7 +570,7 @@ define([
             modules.repositionComments();
             modules.showMoreTagsLink();
             modules.showSmartBanner(config);
-            modules.stickyPageskin(config);
+            modules.pageskin();
         }
         mediator.emit('page:common:ready', config, context);
     };
