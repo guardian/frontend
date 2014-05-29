@@ -43,13 +43,13 @@ class SeoDataTest extends FlatSpec with Matchers {
   }
 
   it should "handle one word" in {
-    val seoData: SeoData = SeoData.fromPath("somethinghere")
+    val seoData: SeoData = SeoData.fromPath("something-here")
 
-    seoData.id should be("somethinghere")
-    seoData.section should be ("somethinghere")
-    seoData.webTitle should be ("Somethinghere")
-    seoData.title.map(_  should include ("Somethinghere"))
-    seoData.description.get should include ("Somethinghere")
+    seoData.id should be("something-here")
+    seoData.section should be ("something-here")
+    seoData.webTitle should be ("Something Here")
+    seoData.title.map(_  should include ("Something Here"))
+    seoData.description.get should include ("Something Here")
   }
 
   it should "turn dashes into spaces" in {

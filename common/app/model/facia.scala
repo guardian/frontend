@@ -80,8 +80,8 @@ object SeoData extends ExecutionContexts with Logging {
       val webTitle: String = webTitleFromTail(name :: tail)
       SeoData(path, section, webTitle, None, descriptionFromWebTitle(webTitle))
     case oneWord :: tail =>
-      val capitalOneWorld: String = oneWord.capitalize
-      SeoData(path, oneWord, capitalOneWorld, None, descriptionFromWebTitle(capitalOneWorld))
+      val webTitleOnePart: String = webTitleFromTail(oneWord :: tail)
+      SeoData(path, oneWord, webTitleOnePart, None, descriptionFromWebTitle(webTitleOnePart))
   }
 
   def webTitleFromTail(tail: List[String]): String = tail.flatMap(_.split('-')).flatMap(_.split('/')).map(_.capitalize).mkString(" ")
