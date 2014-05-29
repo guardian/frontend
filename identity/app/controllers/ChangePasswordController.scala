@@ -78,7 +78,7 @@ class ChangePasswordController @Inject()( api: IdApiClient,
             }
             else {
               val userIsLoggedIn = authenticationService.requestPresentsAuthenticationCredentials(request)
-              NoCache(Ok(views.html.password.password_reset_confirmation(page, idRequest, idUrlBuilder, userIsLoggedIn)))
+              NoCache(Ok(views.html.password.passwordResetConfirmation(page, idRequest, idUrlBuilder, userIsLoggedIn)))
             }
         }
     }
