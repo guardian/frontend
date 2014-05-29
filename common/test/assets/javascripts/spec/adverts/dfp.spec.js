@@ -121,7 +121,8 @@ define([
                 series: 'happy times',
                 contentType: 'Article',
                 edition: 'us',
-                keywords: 'korea,ukraine'
+                keywords: 'korea,ukraine',
+                keywordIds: 's1/korea,s2/ukraine'
             };
             dfp.init({ page: page });
             window.googletag.cmd.forEach(function(func) { func(); });
