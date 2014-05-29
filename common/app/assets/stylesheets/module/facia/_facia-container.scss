@@ -177,6 +177,8 @@
 
 @include mq(wide) {
     .facia-container--pageskin.facia-container--layout-front {
+        overflow: hidden;
+
         .container {
             margin-left: auto;
             margin-right: auto;

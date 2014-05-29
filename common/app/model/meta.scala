@@ -160,6 +160,7 @@ trait Tags {
 
   def isSponsored = DfpAgent.isSponsored(keywords)
   def isAdvertisementFeature = DfpAgent.isAdvertisementFeature(keywords)
+  def hasPageskin: Boolean = true
 
   // Tones are all considered to be 'News' it is the default so we do not list news tones explicitly
   lazy val visualTone: String =

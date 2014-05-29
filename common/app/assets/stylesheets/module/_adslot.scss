@@ -321,11 +321,8 @@
     }
 }
 .ad-slot--pageskin {
+    z-index: 0;
     position: absolute;
-    height: 1200px;
-    width: 100%;
-    top: 0;
-    left: 0;
     background: linear-gradient($c-neutral8, #ffffff);
     @include transition(top .5s)
 }
