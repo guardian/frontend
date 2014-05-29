@@ -8,18 +8,18 @@ define([
     once
 ) {
 
-    var pageskinHeight = 1200,
-        $pageskin = $('.ad-slot--pageskin').first(),
+    var pageSkinHeight = 1200,
+        $pageSkin = $('.ad-slot--page-skin').first(),
         $window = $(window);
 
     return {
 
-        // creates a sticky pageskin
+        // creates a sticky page skin
         init: once(function() {
             mediator.on('window:scroll', function() {
                 var contextPos = $('#js-context').offset().top,
-                    maximumTop = $('.l-footer').offset().top - contextPos - pageskinHeight;
-                $pageskin.css('top', Math.min(Math.max(0, $window.scrollTop() - contextPos), maximumTop));
+                    maximumTop = $('.l-footer').offset().top - contextPos - pageSkinHeight;
+                $pageSkin.css('top', Math.min(Math.max(0, $window.scrollTop() - contextPos), maximumTop));
             });
         })
 

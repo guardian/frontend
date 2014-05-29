@@ -310,7 +310,7 @@
         }
     }
 }
-.pageskin-container {
+.page-skin-container {
     display: none;
 
     @include mq(wide) {
@@ -320,7 +320,7 @@
         margin: 0 auto;
     }
 }
-.ad-slot--pageskin {
+.ad-slot--page-skin {
     z-index: 0;
     position: absolute;
     background: linear-gradient($c-neutral8, #ffffff);

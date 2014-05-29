@@ -1,16 +1,16 @@
 @(index: services.IndexPage)(implicit request: RequestHeader, templateDeduping: TemplateDeduping)
 
-<div class="@RenderClasses((
+<div class="@RenderClasses(Map(
         "facia-container" -> true,
         "facia-container--layout-front" -> true,
         "facia-container--advertisement-feature}" -> (index.page.isAdvertisementFeature && !index.page.isSponsored),
-        "facia-container--pageskin" -> index.page.hasPageskin))"
+        "facia-container--page-skin" -> index.page.hasPageSkin))"
     data-link-name="Front"
     role="main">
 
-    @if(index.page.hasPageskin) {
-        <div class="pageskin-container">
-            @fragments.commercial.adSlot(name="pageskin", adType="pageskin", sizeMapping=Map("wide" -> Seq("1300,1200")), showLabel=false, refresh=false)
+    @if(index.page.hasPageSkin) {
+        <div class="page-skin-container">
+            @fragments.commercial.adSlot(name="pageskin", adType="page-skin", sizeMapping=Map("wide" -> Seq("1300,1200")), showLabel=false, refresh=false)
         </div>
     }
 

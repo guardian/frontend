@@ -56,7 +56,7 @@ define([
     'common/modules/identity/api',
     'common/modules/onward/more-tags',
     'common/modules/ui/smartAppBanner',
-    'common/modules/adverts/pageskin'
+    'common/modules/adverts/page-skin'
 ], function (
     $,
     mediator,
@@ -113,7 +113,7 @@ define([
     id,
     MoreTags,
     smartAppBanner,
-    pageskin
+    pageSkin
 ) {
 
     var modules = {
@@ -517,8 +517,8 @@ define([
             }
         },
 
-        pageskin: function() {
-            pageskin.init();
+        pageSkin: function() {
+            pageSkin.init();
         }
     };
 
@@ -570,7 +570,7 @@ define([
             modules.repositionComments();
             modules.showMoreTagsLink();
             modules.showSmartBanner(config);
-            modules.pageskin();
+            modules.pageSkin();
         }
         mediator.emit('page:common:ready', config, context);
     };

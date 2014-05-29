@@ -5,13 +5,13 @@
             "facia-container" -> true,
             "facia-container--layout-front" -> true,
             "facia-container--advertisement-feature" -> (faciaPage.isAdvertisementFeature && !faciaPage.isSponsored),
-            "facia-container--pageskin" -> faciaPage.hasPageskin))"
+            "facia-container--page-skin" -> faciaPage.hasPageSkin))"
         data-link-name="Front"
         role="main">
 
-        @if(faciaPage.hasPageskin) {
-            <div class="pageskin-container">
-                @fragments.commercial.adSlot(name="pageskin", adType="pageskin", sizeMapping=Map("wide" -> Seq("1300,1200")), showLabel=false, refresh=false)
+        @if(faciaPage.hasPageSkin) {
+            <div class="page-skin-container">
+                @fragments.commercial.adSlot(name="pageskin", adType="page-skin", sizeMapping=Map("wide" -> Seq("1300,1200")), showLabel=false, refresh=false)
             </div>
         }
 
