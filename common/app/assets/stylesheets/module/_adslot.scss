@@ -323,7 +323,6 @@
 .ad-slot--page-skin {
     z-index: 0;
     position: absolute;
-    background: linear-gradient($c-neutral8, #ffffff);
     @include transition(top .5s)
 }
 .ad-slot__label {
