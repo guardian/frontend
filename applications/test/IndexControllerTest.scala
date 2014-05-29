@@ -119,4 +119,12 @@ class IndexControllerTest extends FlatSpec with Matchers {
       result should be (tag)
     }
   }
+
+  it should "serve RSS for a section" in Fake {
+    val result = controllers.IndexController.render("film")(TestRequest("/film/rss"))
+    status(result) should be(200)
+    contentType(result) should be(Some("text/xml"))
+    contentAsString(result) should startWith("<?xml")
+  }
+
 }
