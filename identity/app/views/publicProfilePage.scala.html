@@ -5,20 +5,50 @@
 @identityMain(page, Switches.all){
 }{
 <div class="identity-wrapper monocolumn-wrapper identity-wrapper--stretched">
-    <h1 class="identity-title article__inner article__inner--head">
-        <header class="article__head profile u-cf">
-            <div class="profile__avatar user-avatar" data-userid="@user.id"></div>
-            <div class="profile__name">@user.publicFields.displayName</div>
-            @user.dates.accountCreatedDate.map { accountCreatedDate =>
-                <p class="profile__last-seen">
-                    <i class="i i-clock-light-grey"></i>
-                    Member since @accountCreatedDate.toString("d MMM yyyy")
-                </p>
-            }
-        </header>
-    </h1>
+    <div class="facia-container facia-container--layout-article facia-container--layout-identity container">
+        <div class="facia-container__inner">
 
-    <div class="js-comment-stream" data-user-id="@user.id" data-stream-type="discussions"></div>
+            <div class="user-profile u-cf">
+                <div class="identity-title identity-title--public-profile">
+                    <div class="user-profile__avatar user-avatar" data-userid="@user.id"></div>
+                    <h1 class="user-profile__name">@user.publicFields.displayName</h1>
+                    @user.publicFields.webPage.map { webPage =>
+                        <a href="@webPage" class="user-profile__web-page">
+                            <i class="i i-profile-small"></i>
+                            @webPage
+                        </a>
+                    }
+                    @user.dates.accountCreatedDate.map { accountCreatedDate =>
+                        <p class="user-profile__last-seen">
+                            <i class="i i-clock-light-grey"></i>
+                            Member since @accountCreatedDate.toString("d MMM yyyy")
+                        </p>
+                    }
+                </div>
+                @user.publicFields.aboutMe.map{ aboutMe =>
+                    <div class="user-profile__about">
+                        <p>@aboutMe</p>
+                        @user.publicFields.interests.map{ interests =>
+                            <p><b>Interests:</b> @interests</p>
+                        }
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="facia-container facia-container--layout-article container">
+        <div class="facia-container__inner">
+            <div class="container__border tone-news tone-accent-border"></div>
+            <div class="container__header">
+                <h2 class="container__title tone-news tone-background">
+                    Comment activity
+                </h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="activity-stream activity-stream--comments js-comment-stream" data-user-id="@user.id" data-stream-type="discussions"></div>
     @registrationFooter(page, idRequest, idUrlBuilder)
 </div>
 }
