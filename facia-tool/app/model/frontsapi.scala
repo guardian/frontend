@@ -161,6 +161,7 @@ trait UpdateActions extends Logging {
     getBlock(id)
     .map(insertIntoLive(update, _))
     .map(insertIntoDraft(update, _))
+    .map(_.sortByGroup)
     .map(capCollection)
     .map(putBlock(id, _, identity))
     .map(archiveUpdateBlock(id, _, updateJson, identity))
@@ -172,6 +173,7 @@ trait UpdateActions extends Logging {
     getBlock(id)
       .map(deleteFromLive(update, _))
       .map(deleteFromDraft(update, _))
+      .map(_.sortByGroup)
       .map(archiveDeleteBlock(id, _, updateJson, identity))
       .map(putBlock(id, _, identity))
   }
@@ -179,6 +181,7 @@ trait UpdateActions extends Logging {
   def updateCollectionMeta(id: String, update: CollectionMetaUpdate, identity: Identity): Option[Block] =
     getBlock(id)
       .map(updateCollectionMeta(_, update, identity))
+      .map(_.sortByGroup)
       .map(putBlock(id, _, identity))
 
   private def updateList(update: UpdateList, blocks: List[Trail]): List[Trail] = {
