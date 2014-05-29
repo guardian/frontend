@@ -43,7 +43,17 @@ case class Block(
                   displayName: Option[String],
                   href: Option[String],
                   diff: Option[JsValue]
-                  )
+                  ) {
+
+  def sortByGroup: Block = this.copy(
+    live = sortTrailsByGroup(this.live),
+    draft = this.draft.map(sortTrailsByGroup)
+  )
+
+  private def sortTrailsByGroup(trails: List[Trail]): List[Trail] =
+    trails.sortBy(_.meta.get("group").asOpt[String].map(-_.toInt).getOrElse(0))
+
+}
 
 case class Trail(
                   id: String,
