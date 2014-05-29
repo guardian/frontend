@@ -67,7 +67,7 @@ class FaciaControllerTest extends FlatSpec with Matchers with BeforeAndAfterAll 
     status(result) should be(200)
   }
 
-  it should "serve RSS for a path it knows" in Fake {
+  ignore should "serve RSS for a path it knows" in Fake {
     val fakeRequest = FakeRequest("GET", "/uk/rss")
 
     val result = FaciaController.renderFront("uk")(fakeRequest)
