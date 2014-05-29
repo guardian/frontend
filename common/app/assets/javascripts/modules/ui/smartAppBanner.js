@@ -25,13 +25,13 @@ define([
             IOS : {
                 LOGO: 'http://assets.guim.co.uk/images/apps/ios-logo.png',
                 SCREENSHOTS: 'http://assets.guim.co.uk/images/apps/ios-screenshots.png',
-                LINK: 'https://itunes.apple.com/gb/app/the-guardian/id409128287?mt=8',
+                LINK: 'http://ad-x.co.uk/API/click/guardian789057jo/web3537df56ab1f7e',
                 STORE: 'on the App Store'
             },
             ANDROID: {
                 LOGO: 'http://assets.guim.co.uk/images/apps/android-logo.png',
                 SCREENSHOTS: 'http://assets.guim.co.uk/images/apps/ios-screenshots.png',
-                LINK: 'https://play.google.com/store/apps/details?id=com.guardian',
+                LINK: 'http://ad-x.co.uk/API/click/guardian789057jo/web3537df5992e76b',
                 STORE: 'in Google Play'
             }
         },
