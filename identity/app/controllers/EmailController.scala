@@ -45,7 +45,7 @@ class EmailController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
         populateForm(request.user.getId(), request.auth, idRequest.trackingData) map {
           form =>
             checkForm(form)
-            val template = views.html.profile.email_prefs(page, idRequest, idUrlBuilder, form)
+            val template = views.html.profile.emailPrefs(page, idRequest, idUrlBuilder, form)
             if(!template.body.contains("checked"))
               logger.error("Email prefs page not rendered correctly! Form data: " + form.data)
             Ok(template)
@@ -92,7 +92,7 @@ class EmailController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
         boundForm.fold({
           case (formWithErrors) =>
             logger.trace(s"Error saving user email preference, ${formWithErrors.errors}")
-            Future.successful(Ok(views.html.profile.email_prefs(page, idRequest, idUrlBuilder, formWithErrors)))
+            Future.successful(Ok(views.html.profile.emailPrefs(page, idRequest, idUrlBuilder, formWithErrors)))
         }, {
           case (gnmMarketing, thirdPartyMarketing, format) =>
             logger.trace("Updating user email prefs")
@@ -108,7 +108,7 @@ class EmailController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
                   case (form, Error(message, description, _, context)) =>
                     form.withError(context.getOrElse(""), description)
                 }
-                Ok(views.html.profile.email_prefs(page, idRequest, idUrlBuilder, formWithErrors))
+                Ok(views.html.profile.emailPrefs(page, idRequest, idUrlBuilder, formWithErrors))
 
               case Right((statusFields, _)) => SeeOther(idUrlBuilder.buildUrl("/email-prefs", idRequest))
             }
