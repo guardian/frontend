@@ -7,6 +7,7 @@ import com.gu.openplatform.contentapi.model.ItemResponse
 import conf.ContentApi
 import services.ConfigAgent
 import common.FaciaToolMetrics.{ContentApiSeoRequestFailure, ContentApiSeoRequestSuccess}
+import dfp.DfpAgent
 
 case class Config(
                    id: String,
@@ -17,7 +18,10 @@ case class Config(
                    collectionType: Option[String],
                    showTags: Boolean = false,
                    showSections: Boolean = false
-                   )
+                   ) {
+  def isSponsored = DfpAgent.isSponsored(this)
+  def isAdvertisementFeature = DfpAgent.isAdvertisementFeature(this)
+}
 
 object Config {
   def apply(id: String): Config = Config(id, None, None, None, Nil, None)
