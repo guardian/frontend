@@ -2,7 +2,6 @@ package com.gu.test.Article;
 
 
 import com.gu.test.helpers.PageHelper;
-import com.gu.test.pages.Article;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -31,7 +30,7 @@ public class SeriesPackageTest {
 
     @Test
     public void articleHasSeriesComponent() throws Exception{
-        Assert.assertTrue("Failure: Series component not found",driver.findElement(By.cssSelector(".")).isDisplayed());
+        Assert.assertTrue("Failure: Series component not found", driver.findElement(By.cssSelector(".container--series")).isDisplayed());
     }
 
 
