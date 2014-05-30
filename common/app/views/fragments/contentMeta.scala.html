@@ -34,7 +34,7 @@
         }
     }
 
-    @if(content.hasLargeContributorImage && !content.hasTonalHeaderByline) {
+    @if(content.hasLargeContributorImage && content.contributors.length == 1 && !content.hasTonalHeaderByline) {
         <div class="media__img meta__image">
             @fragments.meta.bylineImage(content)
         </div>
