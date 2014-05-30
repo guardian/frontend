@@ -214,7 +214,7 @@ object Switches extends Collections {
 
   val ReleaseMessageSwitch = Switch("Feature Switches", "release-message",
     "If this is switched on users will be messaged that they are inside the beta release",
-    safeState = Off, sellByDate = new DateMidnight(2014, 6, 1)
+    safeState = Off, sellByDate = new DateMidnight(2014, 6, 30)
   )
 
   val GeoMostPopular = Switch("Feature Switches", "geo-most-popular",
@@ -264,7 +264,7 @@ object Switches extends Collections {
 
   val ArticleSlotsSwitch = Switch("Feature Switches", "article-slots",
     "If this switch is on, inline content slots (for stories, ads, etc) will be generated in article bodies",
-    safeState = Off, sellByDate = new DateMidnight(2014, 5, 31)
+    safeState = Off, sellByDate = new DateMidnight(2014, 7, 1)
   )
 
   val IndiaRegionSwitch = Switch("Feature Switches", "india-region",
@@ -277,7 +277,7 @@ object Switches extends Collections {
 
   val LayoutHintsSwitch = Switch("Feature Switches", "layout-hints",
     "If this switch is on, JavaScript will enable the inline-hinting css experiments",
-    safeState = Off, sellByDate = new DateMidnight(2014, 6, 1)
+    safeState = Off, sellByDate = new DateMidnight(2014, 6, 10)
   )
 
   val RssLinkSwitch = Switch("Feature Switches", "rss-link",
