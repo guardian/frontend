@@ -15,16 +15,19 @@ require([], function() {
             return 's=' + guardian.config.page.section;
         },
 
-        getKeywords: function() {
-            var keywords = guardian.config.page.keywords
-            return keywords.split(',').map(function(keyword){
-                return 'k=' + encodeURIComponent(keyword.replace(/\s/g, "-").toLowerCase());
-            }).join('&');
+        getKeywords: function () {
+            var keywordIds = guardian.config.page.keywordIds;
+            if (keywordIds) {
+                return keywordIds.split(',').map(function (keywordId) {
+                    return 'k=' + encodeURIComponent(keywordId.split('/').pop());
+                }).join('&');
+            } else {
+                return guardian.config.page.pageId.split('/').pop();
+            }
         },
 
         components: function() {
 
-            // TODO: fix these hardcoded URLs
             return {
                 masterclasses: 'http://api.nextgen.guardianapps.co.uk/commercial/masterclasses.json?' + this.getUserSegments() + '&' + this.getSection(),
                 travel:        'http://api.nextgen.guardianapps.co.uk/commercial/travel/offers.json?' + this.getUserSegments() + '&' + this.getSection() + '&' + this.getKeywords(),

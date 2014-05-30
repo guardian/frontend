@@ -15,7 +15,7 @@ case class Job(id: Int,
                recruiterLogoUrl: String,
                sectorIds: Seq[Int],
                salaryDescription: String,
-               keywords: Seq[Keyword] = Nil)
+               keywordIds: Seq[String] = Nil)
   extends Ad {
 
   val shortSalaryDescription = StringUtils.abbreviate(salaryDescription, 25).replace("...", "…")
@@ -23,7 +23,7 @@ case class Job(id: Int,
   def listingUrl = s"http://jobs.theguardian.com/job/$id"
 
   def isTargetedAt(segment: Segment): Boolean = {
-    val adKeywords = keywords.map(_.name)
+    val adKeywords = lastPart(keywordIds)
     intersects(segment.context.keywords, adKeywords)
   }
 
@@ -35,7 +35,7 @@ case class Job(id: Int,
 
 object Industries extends ExecutionContexts {
 
-  private lazy val industryKeywords = AkkaAgent(Map.empty[Int, Seq[Keyword]])
+  private lazy val industryKeywordIds = AkkaAgent(Map.empty[Int, Seq[String]])
 
   // note, these are ordered by importance
   val sectorIdIndustryMap = Map[Int, String](
@@ -70,14 +70,14 @@ object Industries extends ExecutionContexts {
     sectorIdIndustryMap map {
       case (id, name) =>
         Lookup.keyword(name) flatMap {
-          keywords => industryKeywords.alter(_.updated(id, keywords))(5.seconds)
+          keywords => industryKeywordIds.alter(_.updated(id, keywords.map(_.id)))(5.seconds)
         }
     }
   }
 
   def stop() {
-    industryKeywords.close()
+    industryKeywordIds.close()
   }
 
-  def forIndustry(id: Int) = industryKeywords().get(id).getOrElse(Nil)
+  def forIndustry(id: Int) = industryKeywordIds().get(id).getOrElse(Nil)
 }

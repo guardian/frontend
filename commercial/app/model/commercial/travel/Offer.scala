@@ -7,16 +7,15 @@ import scala.concurrent.Future
 import scala.concurrent.duration._
 import akka.util.Timeout
 import model.commercial.Segment
-import model.commercial.Keyword
 import scala.Some
 
 case class Offer(id: Int, title: String, offerUrl: String, imageUrl: String, fromPrice: String,
-                 earliestDeparture: DateTime, keywords: List[Keyword], countries: List[String], category: String,
+                 earliestDeparture: DateTime, keywordIds: List[String], countries: List[String], category: String,
                  tags: List[String], duration: String, position: Int)
   extends Ad {
 
   def isTargetedAt(segment: Segment): Boolean = {
-    val someKeywordsMatch = intersects(keywords.map(_.name), segment.context.keywords)
+    val someKeywordsMatch = intersects(lastPart(keywordIds), segment.context.keywords)
     segment.context.isInSection("travel") && someKeywordsMatch
   }
 
@@ -29,7 +28,7 @@ case class Offer(id: Int, title: String, offerUrl: String, imageUrl: String, fro
 
 object Countries extends ExecutionContexts with Logging {
 
-  private lazy val countryKeywords = AkkaAgent(Map.empty[String, Seq[Keyword]])
+  private lazy val countryKeywordIds = AkkaAgent(Map.empty[String, Seq[String]])
 
   private val defaultCountries = Seq(
     "Albania",
@@ -112,16 +111,16 @@ object Countries extends ExecutionContexts with Logging {
       countries map {
         country =>
           Lookup.keyword("\"" + country + "\"", section = Some("travel")) flatMap {
-            keywords => countryKeywords.alter(_.updated(country, keywords))
+            keywords => countryKeywordIds.alter(_.updated(country, keywords.map(_.id)))
           }
       }
     }
   }
 
   def stop() {
-    countryKeywords.close()
+    countryKeywordIds.close()
   }
 
 
-  def forCountry(name: String) = countryKeywords().get(name).getOrElse(Nil)
+  def forCountry(name: String) = countryKeywordIds().get(name).getOrElse(Nil)
 }

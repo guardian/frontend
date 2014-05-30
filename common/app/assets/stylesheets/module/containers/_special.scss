@@ -1,52 +1,19 @@
 .container--special {
-    .facia-slice-wrapper:first-child {
-        .facia-slice__item {
-            &:nth-child(-n+2) .item__link {
-                border-top-width: 0;
+    @include mq($to: tablet) {
+        .facia-slice__item:nth-child(-n+2) {
+            @include item--hide-tone-border;
+            // Force the image to be displayed
+            .item__media-wrapper,
+            .item__image-container {
+                display: block;
             }
-            @include mq(tablet) {
-                margin-top: 4px;
-
-                .item__link {
-                    border-top-width: 0;
-                }
-                .item__image-container {
-                    margin-top: 0;
-                }
-            }
-        }
-        @include mq($to: tablet) {
-            .facia-slice {
-                position: relative;
-
-                // Hide top of border between items
-                &:after {
-                    content: '';
-                    display: block;
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    right: 0;
-                    height: 4px;
-                    background: #ffffff;
-                    z-index: 1;
-                }
-            }
+            // And here we don't need two "gallery" or "video" icons
+            @include hide-icon-in-title;
         }
     }
-    @include mq($to: tablet) {
-        // Force the image to be displayed
-        .item--has-image .item__media-wrapper,
-        .item--has-image .item__image-container {
-            display: block;
-        }
-        .item--gallery .item__title--has-icon-mobile,
-        .item--video .item__title--has-icon-mobile {
-            padding-left: 0;
-    
-            .i {
-                display: none;
-            }
+    @include mq(tablet) {
+        .facia-slice-wrapper:first-child {
+            @include item--hide-tone-border;
         }
     }
 }

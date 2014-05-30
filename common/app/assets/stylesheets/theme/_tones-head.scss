@@ -11,7 +11,6 @@
 @include article-header-tone(comment, $c-commentAccent, $c-commentAccent2, $c-neutral1, 'black');
 @include article-header-tone(live, $c-liveDefault, $c-liveAccent, #ffffff, 'white');
 
-
 .content__head--tonal {
     background-color: #ffffff;
     .tone-background {
@@ -37,7 +36,7 @@
     }
     .content-meta {
         @include rem((
-            padding-top: $gs-baseline/4
+            padding-top: $gs-baseline/3
         ));
     }
     .content__section,
@@ -53,25 +52,8 @@
     }
 }
 
-.tone-live .content__head--tonal {
-    .content-meta__label {
-        color: #e4845a;
-    }
-    .content__headline {
-        font-weight: normal;
-    }
-}
-
-.tone-feature--article,
-.tone-comment--article {
-    @include mq($from: tablet) {
-        .content__main-column--article {
-            @include rem((
-                margin-top: $gs-baseline*2
-            ));
-        }
-    }
-}
+/* Tonal byline / contributor image
+   ========================================================================== */
 
 .content__head--tonal {
 
@@ -135,21 +117,13 @@
 
         @include mq(mobileLandscape) {
             @include rem((
-                padding-right: gs-span(2)
-            ));
-        }
-        @include mq(tablet) {
-            @include rem((
-                padding-right: gs-span(2) + ($gs-gutter/2)
+                padding-right: gs-span(2) + $gs-gutter
             ));
         }
         @include mq(rightCol) {
             @include rem((
                 padding-right: $gs-gutter*2
             ));
-        }
-        @include mq(wide) {
-            padding-right: 0;
         }
     }
     .content__head__comment-count {
@@ -158,21 +132,58 @@
     }
 }
 
-.tone-comment .content__head--tonal {
-    .content__section .tone-colour {
-        @include mq($to: leftCol) {
-            color: $c-commentDefault;
-        }
-    }
+/* Tone specific rules/overrides
+   ========================================================================== */
+
+.tone-live .content__head--tonal {
     .content-meta__label {
-        color: $c-neutral2;
+        color: #e4845a;
+    }
+    .content__headline {
+        font-weight: normal;
     }
 }
 
-.tone-comment .content__headline--byline .tone-colour {
-    color: $c-neutral2;
-    &:hover {
-        text-decoration: none;
-        border-bottom: 2px solid;
+.tone-feature--article,
+.tone-comment--article {
+    @include mq($from: tablet) {
+        .content__main-column--article {
+            @include rem((
+                margin-top: $gs-baseline*2
+            ));
+        }
+    }
+}
+
+.content.tone-comment {
+    .content__head--tonal {
+        .content__section .tone-colour {
+            @include mq($to: leftCol) {
+                color: $c-commentDefault;
+            }
+        }
+        .content-meta__label {
+            color: $c-neutral2;
+        }
+        .content__standfirst .bullet:before {
+            background-color: $c-commentDark;
+        }
+        .u-underline {
+            border-bottom-color: $c-commentDark;
+            &:hover {
+                border-bottom-color: $c-neutral1;
+            }
+        }
+
+    }
+    .content__headline--byline .tone-colour {
+        color: $c-neutral2;
+        &:hover {
+            text-decoration: none;
+            border-bottom: 2px solid;
+        }
+    }
+    .drop-cap {
+        color: #333333;
     }
 }

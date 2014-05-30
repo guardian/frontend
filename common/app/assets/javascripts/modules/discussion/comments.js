@@ -94,7 +94,8 @@ Comments.prototype.classes = {
     commentStaff: 'd-comment--staff',
     commentBlocked: 'd-comment--blocked',
     commentBody: 'd-comment__body',
-    commentTimestampJs: 'js-timestamp'
+    commentTimestampJs: 'js-timestamp',
+    commentReport: 'js-report-comment'
 };
 
 /** @type {Object.<string.*>} */
@@ -159,6 +160,7 @@ Comments.prototype.ready = function() {
     this.on('click', this.getClass('showReplies'), this.getMoreReplies);
     this.on('click', this.getClass('changePage'), this.changePage);
     this.on('click', this.getClass('showHidden'), this.showHiddenComments);
+    this.on('click', this.getClass('commentReport'), this.reportComment);
     this.on('change', this.getClass('orderControl'), this.setOrder);
     this.mediator.on('discussion:comment:recommend:fail', this.recommendFail.bind(this));
 
@@ -177,6 +179,12 @@ Comments.prototype.ready = function() {
     }
 
     this.emit('ready');
+
+    $('.js-report-comment-close', this.elem).each(function(close) {
+        bean.on(close, 'click', function() {
+            $('.js-report-comment-form').addClass('u-h');
+        });
+    });
 };
 
 /**
@@ -574,7 +582,32 @@ Comments.prototype.setOrder = function(e) {
     }.bind(this));
 };
 
+/**
+ * @param {Event} e
+ */
+Comments.prototype.reportComment = function(e) {
+    e.preventDefault();
+
+    var commentId = e.currentTarget.getAttribute('data-comment-id');
+
+    $('.js-report-comment-form').first().each(function(form) {
+        bean.one(form, 'submit', function(e) {
+            e.preventDefault();
+            var category = form.elements.category,
+                comment = form.elements.comment.value;
+
+            DiscussionApi.reportComment(commentId, {
+                emailAddress: form.elements.email.value,
+                categoryId: category.value,
+                reason: comment === '' ? category.options[category.selectedIndex].innerHTML : comment
+            });
+
+            bonzo(form).addClass('u-h');
+        });
+    }).appendTo(
+        $('#comment-'+ commentId +' .js-report-comment-container').first()
+    ).removeClass('u-h');
+};
+
 return Comments;
-
-
 });

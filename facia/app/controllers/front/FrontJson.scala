@@ -3,11 +3,54 @@ package controllers.front
 import model._
 import scala.concurrent.Future
 import play.api.libs.ws.{Response, WS}
-import play.api.libs.json.{JsNull, JsValue, Json}
+import play.api.libs.json.{JsObject, JsNull, JsValue, Json}
 import common.ExecutionContexts
 import model.FaciaPage
 import services.SecureS3Request
 import conf.Configuration
+
+
+trait FrontJsonLite extends ExecutionContexts{
+  def get(json: JsValue): JsValue = {
+    Json.obj(
+      "webTitle" -> (json \ "seoData" \ "webTitle"),
+      "collections" -> getCollections(json)
+    )
+  }
+
+  private def getCollections(json: JsValue): Seq[JsValue] = {
+    (json \ "collections").asOpt[Seq[Map[String, JsObject]]].getOrElse(Nil).flatMap{ c => c.values.map(getCollection) }
+  }
+
+  private def getCollection(json: JsValue): JsValue = {
+    Json.obj(
+        "displayName" -> (json \ "displayName"),
+        "href" -> (json \ "href"),
+        "content" -> getContent(json)
+    )
+  }
+
+  private def getContent(json: JsValue): Seq[JsValue] = {
+    val curated = (json \ "curated").asOpt[Seq[JsObject]].getOrElse(Nil)
+    val editorsPicks = (json \ "editorsPicks").asOpt[Seq[JsObject]].getOrElse(Nil)
+    val results = (json \ "results").asOpt[Seq[JsObject]].getOrElse(Nil)
+
+    (curated ++ editorsPicks ++ results)
+    .filterNot{ j =>
+      (j \ "id").asOpt[String].exists(_.startsWith("snap/"))
+     }
+    .take(3).map{ j =>
+      Json.obj(
+        "headline" -> (j \ "safeFields" \ "headline"),
+        "thumbnail" -> (j \ "safeFields" \ "thumbnail"),
+        "id" -> (j \ "id")
+      )
+    }
+  }
+}
+
+object FrontJsonLite extends FrontJsonLite
+
 
 trait FrontJson extends ExecutionContexts {
 
@@ -19,6 +62,17 @@ trait FrontJson extends ExecutionContexts {
   def get(path: String): Future[Option[FaciaPage]] = {
     val response = SecureS3Request.urlGet(getAddressForPath(path)).get()
     parseResponse(response)
+  }
+
+  def getAsJsValue(path: String): Future[JsValue] = {
+    val response = SecureS3Request.urlGet(getAddressForPath(path)).get()
+
+    response.map { r =>
+      r.status match {
+        case 200 => Json.parse(r.body)
+        case _   => JsObject(Nil)
+      }
+    }
   }
 
   private def parseCollection(json: JsValue): Collection = {

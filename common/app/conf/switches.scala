@@ -214,7 +214,7 @@ object Switches extends Collections {
 
   val ReleaseMessageSwitch = Switch("Feature Switches", "release-message",
     "If this is switched on users will be messaged that they are inside the beta release",
-    safeState = Off, sellByDate = new DateMidnight(2014, 6, 1)
+    safeState = Off, sellByDate = new DateMidnight(2014, 6, 30)
   )
 
   val GeoMostPopular = Switch("Feature Switches", "geo-most-popular",
@@ -259,12 +259,12 @@ object Switches extends Collections {
 
   val NetworkFrontOptIn = Switch("Feature Switches", "network-front-opt-in",
     "If this is switched on then an opt-in message will be displayed to users coming from the R2 network front",
-    safeState = Off, sellByDate = new DateMidnight(2014, 5, 31)
+    safeState = Off, sellByDate = new DateMidnight(2014, 6, 30)
   )
 
   val ArticleSlotsSwitch = Switch("Feature Switches", "article-slots",
     "If this switch is on, inline content slots (for stories, ads, etc) will be generated in article bodies",
-    safeState = Off, sellByDate = new DateMidnight(2014, 5, 31)
+    safeState = Off, sellByDate = new DateMidnight(2014, 7, 1)
   )
 
   val IndiaRegionSwitch = Switch("Feature Switches", "india-region",
@@ -277,7 +277,7 @@ object Switches extends Collections {
 
   val LayoutHintsSwitch = Switch("Feature Switches", "layout-hints",
     "If this switch is on, JavaScript will enable the inline-hinting css experiments",
-    safeState = Off, sellByDate = new DateMidnight(2014, 6, 1)
+    safeState = Off, sellByDate = new DateMidnight(2014, 6, 10)
   )
 
   val RssLinkSwitch = Switch("Feature Switches", "rss-link",
@@ -307,11 +307,6 @@ object Switches extends Collections {
   )
 
   // A/B Tests
-
-  val ABHeaderSearchText = Switch("A/B Tests", "ab-header-search-text",
-    "If this switch is turned on then the header search box will display a label for tablet and desktop.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 6, 9)
-  )
 
   val ABHighRelevanceCommercialComponent = Switch("A/B Tests", "ab-high-relevance-commercial-component",
     "If this switch is turned on, run the HighRelevanceCommercialComponent A/B test.",
@@ -397,7 +392,7 @@ object Switches extends Collections {
 
   val NewSeoSwitch = Switch("Facia Switches", "new-seo-switch",
     "If this switch is on then the SEO elements for pages will be take from the tool, content api and generated",
-    safeState = Off, sellByDate = new DateMidnight(2014, 5, 30)
+    safeState = Off, sellByDate = new DateMidnight(2014, 6, 30)
   )
 
   val FeaturesAutoContainerSwitch = Switch("Facia Switches", "facia-features-auto-container",
@@ -474,7 +469,6 @@ object Switches extends Collections {
     GeoMostPopular,
     TagLinkingSwitch,
     FaciaFirstContainerLayoutOverrideSwitch,
-    ABHeaderSearchText,
     ABHighRelevanceCommercialComponent,
     ABHideSupportingLinks,
     SmartBannerSwitch,
