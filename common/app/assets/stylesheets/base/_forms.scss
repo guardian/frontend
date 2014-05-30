@@ -23,9 +23,9 @@
 
 .form__note,
 .form-field__note {
-    font-family: $sans-serif;
+    font-family: $text-sans;
     @include rem((
-        font-size: 13px,
+        font-size: 14px,
         margin-bottom: 8px
     ));
 }
@@ -192,7 +192,7 @@
     @include box-sizing(border-box);
     color: $c-body;
     display: inline-block;
-    font-family: $sans-serif;
+    font-family: $text-sans;
     @include rem((
         font-size: 16px,
         padding: 8px 8px 7px
@@ -269,9 +269,9 @@
 .check-label,
 .radio-label {
     display: block;
-    font-family: $sans-serif;
+    font-family: $text-sans;
     @include rem((
-        font-size: 13px,
+        font-size: 14px,
         margin-bottom: $gs-baseline/3,
         padding-left: $gs-gutter
     ));
@@ -288,7 +288,7 @@
     @include rem((
         height: 13px,
         margin-left: -$gs-gutter,
-        margin-top: 3px,
+        margin-top: 2px,
         width: 13px
     ));
 
