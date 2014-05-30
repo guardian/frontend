@@ -28,3 +28,7 @@ case class FaciaPage(
   override def isSponsored = DfpAgent.isSponsored(id)
   override def isAdvertisementFeature = DfpAgent.isAdvertisementFeature(id)
 }
+
+object FaciaPage {
+  def defaultFaciaPage: FaciaPage = FaciaPage("", SeoData.empty, Nil)
+}
