@@ -3,6 +3,7 @@ package model
 import common.{Pagination, ManifestData}
 import conf.Configuration
 import dfp.DfpAgent
+import conf.Switches._
 
 trait MetaData extends Tags {
   def id: String
@@ -160,8 +161,8 @@ trait Tags {
 
   def isSponsored = DfpAgent.isSponsored(keywords)
   def isAdvertisementFeature = DfpAgent.isAdvertisementFeature(keywords)
-  // TODO: hook up to dfp
-  def hasPageSkin: Boolean = false
+  // TODO: hook up to dfp and remove switch
+  def hasPageSkin: Boolean = ForcePageSkinSwitch.isSwitchedOn
 
   // Tones are all considered to be 'News' it is the default so we do not list news tones explicitly
   lazy val visualTone: String =

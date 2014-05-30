@@ -125,6 +125,11 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 6, 30)
   )
 
+  val ForcePageSkinSwitch = Switch("Advertising", "force-page-skin",
+    "Temp switch, allows us to force the page into 'page skin' mode",
+    safeState = Off, sellByDate = new DateMidnight(2014, 6, 7)
+  )
+
   // Ad Targeting
   /*
     These switches are to control length of request to DFP
@@ -472,7 +477,8 @@ object Switches extends Collections {
     ABHighRelevanceCommercialComponent,
     ABHideSupportingLinks,
     SmartBannerSwitch,
-    FeaturesAutoContainerSwitch
+    FeaturesAutoContainerSwitch,
+    ForcePageSkinSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }

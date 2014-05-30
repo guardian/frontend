@@ -517,8 +517,8 @@ define([
             }
         },
 
-        pageSkin: function() {
-            pageSkin.init();
+        pageSkin: function(config) {
+            pageSkin.init(config);
         }
     };
 
@@ -570,7 +570,7 @@ define([
             modules.repositionComments();
             modules.showMoreTagsLink();
             modules.showSmartBanner(config);
-            modules.pageSkin();
+            modules.pageSkin(config);
         }
         mediator.emit('page:common:ready', config, context);
     };

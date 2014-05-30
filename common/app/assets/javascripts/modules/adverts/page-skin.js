@@ -15,12 +15,14 @@ define([
     return {
 
         // creates a sticky page skin
-        init: once(function() {
-            mediator.on('window:scroll', function() {
-                var contextPos = $('#js-context').offset().top,
-                    maximumTop = $('.l-footer').offset().top - contextPos - pageSkinHeight;
-                $pageSkin.css('top', Math.min(Math.max(0, $window.scrollTop() - contextPos), maximumTop));
-            });
+        init: once(function(config) {
+            if (config.page.hasPageSkin) {
+                mediator.on('window:scroll', function() {
+                    var contextPos = $('#js-context').offset().top,
+                        maximumTop = $('.l-footer').offset().top - contextPos - pageSkinHeight;
+                    $pageSkin.css('top', Math.min(Math.max(0, $window.scrollTop() - contextPos), maximumTop));
+                });
+            }
         })
 
     };
