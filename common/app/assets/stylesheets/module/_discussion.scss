@@ -1,6 +1,5 @@
 $comment-meta-breakpoint: leftCol;
 $avatarSize: 44px;
-$c-replyText: $c-body;
 
 /* ==========================================================================
    Discussion
@@ -628,7 +627,6 @@ $c-replyText: $c-body;
         ));
     }
     .d-comment__body {
-        color: $c-replyText;
         @include rem((
             margin-top: $gs-baseline/3
         ));

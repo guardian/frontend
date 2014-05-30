@@ -69,6 +69,7 @@ define([
                     this.menuListItem('Edit profile', this.config.url+'/public/edit')+
                     this.menuListItem('Email preferences', this.config.url+'/email-prefs')+
                     this.menuListItem('Change password', this.config.url+'/password/change')+
+                    this.menuListItem('Comment activity', this.config.url+'/user/id/'+ user.id)+
                     this.menuListItem('Sign out', this.config.url+'/signout')+
                 '</ul>'
             );
