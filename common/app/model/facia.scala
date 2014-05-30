@@ -142,6 +142,8 @@ object SeoData extends ExecutionContexts with Logging {
 
     contentApiResponse.map(Option.apply).fallbackTo(Future.successful(None))
   }
+
+  lazy val empty: SeoData = SeoData("", "", "", None, None)
 }
 
 object FaciaComponentName {
