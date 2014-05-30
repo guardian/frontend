@@ -16,14 +16,14 @@
         ("has-localnav", Navigation.topLevelItem(Edition(request).navigation, metaData).filter(_.links.nonEmpty).nonEmpty)))"
     itemscope itemtype="http://schema.org/WebPage">
 
+    @fragments.message(metaData)
+
     <div class="top-banner-ad-container top-banner-ad-container--desktop top-banner-ad-container--@metaData match {
             case _: Article => {article}
             case _          => {facia}
         }-layout">
         @fragments.commercial.standardAd(name="top-above-nav", adType="top-banner-ad", sizeMapping=Map("tabletportrait" -> Seq("728,90"), "tabletlandscape" -> Seq("728,90", "900,250"), "desktop" -> Seq("728,90", "900,250"), "wide" -> Seq("728,90", "900,250", "970,250")))
     </div>
-
-    @fragments.message(metaData)
 
     @fragments.header(metaData)
 
