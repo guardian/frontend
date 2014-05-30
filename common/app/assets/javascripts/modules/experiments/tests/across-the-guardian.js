@@ -1,9 +1,8 @@
 define([
     'common/utils/ajax',
     'common/$',
-    'lodash/arrays/findIndex',
     'common/utils/template'
-], function (ajax, $, findIndex, template) {
+], function (ajax, $, template) {
 
     return function () {
         this.id = 'AcrossTheGuardian';
@@ -58,21 +57,16 @@ define([
         };
 
         function renderContainer(parseCollection) {
-            function parseJson(sectionData) {
-                var tplContainer = parseCollection(sectionData);
-                $('.facia-container').append(tplContainer);
-            }
-
             ajax({
                 url: '/across-the-guardian/lite.json',
                 type: 'json',
                 crossOrigin: true
             }).then(function (sectionData) {
-                    parseJson(sectionData);
-                });
+                $('.facia-container').append(parseCollection(sectionData));
+            });
         }
 
-        function renderStory(collection, story, tplName) {
+        function renderStory(collection, story, idx, tplName) {
             if (!collection || !story) {
                 return '';
             }
@@ -82,7 +76,7 @@ define([
                 sectionName: (collection.displayName || ''),
                 story_thumb: (story.thumbnail || ''),
                 storyHref: '/' + (story.id || ''),
-                storyIdx: findIndex(collection.content, story),
+                storyIdx: idx,
                 storyTitle: (story.headline || '')
             });
         }
@@ -93,17 +87,18 @@ define([
             }
 
             return function (sectionData) {
-                var collections = sectionData.collections
+                var tplGroupedCollections = [],
+                    collections = [].concat((sectionData || {}).collections)
                     .filter(function (c) {
                         // ignore collections with no stories
                         return (!!c.content && c.content.length > 0);
                     })
                     .map(function (collection) {
                         var tplStories = collection.content
-                            .map(function (story) {
-                                return renderStory(collection, story, '3colItem');
-                            })
                             .slice(0, storiesPerCollection)
+                            .map(function (story, idx) {
+                                return renderStory(collection, story, idx, '3colItem');
+                            })
                             .join(' ');
 
                         return template(templates['3colRow'], {
@@ -114,7 +109,6 @@ define([
                     });
 
                 // group by 3
-                var tplGroupedCollections = [];
                 while (collections.length > 0) {
                     var row = template(templates['3col'], {
                         categories: collections
@@ -144,7 +138,7 @@ define([
                     var variant = '2col1story';
 
                     renderContainer(function (sectionData) {
-                        var tplItems = sectionData.collections
+                        var tplItems = [].concat((sectionData || {}).collections)
                             .filter(function (c) {
                                 // ignore collections with no stories
                                 return (!!c.content && c.content.length > 0);
@@ -156,7 +150,7 @@ define([
 
                                 // render first item from each list
                                 var story = collection.content[0];
-                                return renderStory(collection, story, '2colItems');
+                                return renderStory(collection, story, 0, '2colItems');
                             });
 
                         return template(templates.container, {
