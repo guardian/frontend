@@ -154,12 +154,12 @@ define([
         vars.model.save(collection);
     };
 
-    function toTitleCase(s) {
-        return _.isString(s) ? s.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();}) : s;
+    function toTitleCase(str) {
+        return (str + '').replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
     }
 
     function asPath(str) {
-       return (str || '').split('/');
+       return (str + '').split('/');
     }
 
     return Front;
