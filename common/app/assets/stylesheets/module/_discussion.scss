@@ -1,6 +1,5 @@
 $comment-meta-breakpoint: leftCol;
 $avatarSize: 44px;
-$c-replyText: $c-body;
 
 /* ==========================================================================
    Discussion
@@ -117,7 +116,6 @@ $c-replyText: $c-body;
     &.show-more__container--older,
     &.show-more__container--hidden,
     &.show-more__container--featured {
-        color: $c-neutral1;
         border-top: 1px dotted $c-neutral3;
     }
 }
@@ -268,7 +266,6 @@ $c-replyText: $c-body;
 .d-comment__author,
 .d-comment-box__author {
     @include fs-textsans(4);
-    color: $c-neutral1;
     font-weight: bold;
     display: block;
     overflow: hidden;
@@ -281,7 +278,6 @@ $c-replyText: $c-body;
     @include fs-textsans(1);
     text-transform: uppercase;
     display: block;
-    color: $c-neutral1;
 }
 .d-comment__author-label--staff { display: none; }
 .d-comment--staff .d-comment__author-label--staff { display: block; }
@@ -293,7 +289,6 @@ $c-replyText: $c-body;
 }
 .d-comment__reply-to-author,
 .d-comment-box__reply-to-author {
-    color: $c-neutral1;
     @include fs-textsans(4);
     display: none;
 }
@@ -330,7 +325,6 @@ $c-replyText: $c-body;
 .d-comment__pick {
     white-space: nowrap;
     @include fs-textsans(4);
-    color: $c-neutral1;
     font-weight: bold;
     @include rem((
         margin-bottom: $gs-baseline/6
@@ -357,7 +351,6 @@ $c-replyText: $c-body;
 }
 .d-comment__body {
     @include fs-textsans(4);
-    color: $c-neutral1;
     min-height: 2.5em;
     position: relative;
     z-index: 2;
@@ -628,7 +621,6 @@ $c-replyText: $c-body;
         ));
     }
     .d-comment__body {
-        color: $c-replyText;
         @include rem((
             margin-top: $gs-baseline/3
         ));
@@ -749,7 +741,6 @@ $c-replyText: $c-body;
    ========================================================================== */
 
 .discussion__heading {
-    color: $c-neutral1;
     border-top: 1px solid $c-neutral4;
     margin-bottom: 0;
     @include rem((
@@ -1203,7 +1194,6 @@ $c-replyText: $c-body;
     @include rem((
         margin-bottom: $gs-baseline/2
     ));
-    color: $c-neutral1;
     display: inline-block;
 }
 .d-comment-box__parent-comment-body {

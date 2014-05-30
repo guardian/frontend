@@ -11,7 +11,6 @@ $disc-respond-when: rightCol;
         padding-top: $gs-baseline/2
     ));
     border-top: 1px solid $c-neutral4;
-    color: $c-neutral1;
 
     @include mq($disc-respond-when) {
         &:first-of-type {
