@@ -9,8 +9,7 @@
                     "container" -> true,
                     "container--row-pattern" -> true,
                     s"container--${style.containerType}" -> true,
-                    "js-container--toggle" -> (containerIndex > 0 && title.nonEmpty),
-                    "container--first" -> (containerIndex == 0)))"
+                    "js-container--toggle" -> (containerIndex > 0 && title.nonEmpty)))"
                 data-link-name="block | @config.id"
                 data-id="@config.id"
                 data-type="@style.containerType"
@@ -37,7 +36,7 @@
                             </div>
                         }
                     }
-                    <div class="container__body container--rolled-up-hide">
+                    <div class="container__body">
                         @fragments.collections.series(items, style, containerIndex)
                     </div>
                 </div>
