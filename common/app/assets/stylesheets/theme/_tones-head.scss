@@ -117,21 +117,13 @@
 
         @include mq(mobileLandscape) {
             @include rem((
-                padding-right: gs-span(2)
-            ));
-        }
-        @include mq(tablet) {
-            @include rem((
-                padding-right: gs-span(2) + ($gs-gutter/2)
+                padding-right: gs-span(2) + $gs-gutter
             ));
         }
         @include mq(rightCol) {
             @include rem((
                 padding-right: $gs-gutter*2
             ));
-        }
-        @include mq(wide) {
-            padding-right: 0;
         }
     }
     .content__head__comment-count {
