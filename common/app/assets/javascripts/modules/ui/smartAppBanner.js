@@ -2,13 +2,11 @@ define([
     'common/utils/storage',
     'common/utils/template',
     'common/modules/userPrefs',
-    'common/modules/onward/history',
     'common/modules/ui/message'
 ], function(
     storage,
     template,
     userPrefs,
-    History,
     Message
 ){
 
@@ -37,7 +35,6 @@ define([
         },
         isIOS = /(iPad|iPhone|iPod touch);.*CPU.*OS 7_\d/i.test(navigator.userAgent),
         isAndroid = /Android/i.test(navigator.userAgent),
-        visits = new History().getSize(),
         impressions = (storage.local.get(IMPRESSION_KEY)) ? parseInt(storage.local.get(IMPRESSION_KEY), 10) : 0,
         tmp = '<img src="{{LOGO}}" class="app__logo" alt="Guardian App logo" /><div class="app__cta"><h4 class="app__heading">The Guardian app</h4>' +
             '<p class="app__copy">Instant alerts. Offline reading.<br/>Tailored to you.</p>' +
@@ -49,7 +46,7 @@ define([
     }
 
     function canShow() {
-        return (visits > 3 && impressions < 4);
+        return impressions < 4;
     }
 
     function showMessage() {
