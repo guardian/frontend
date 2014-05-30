@@ -76,6 +76,8 @@ trait Navigation  {
   val mls = SectionLink("football", "MLS", "MLS", "/football/mls")
   val nhl = SectionLink("sport", "NHL", "NHL", "/sport/nhl")
 
+  val worldCup = SectionLink("football", "world cup", "World Cup", "/football/world-cup-2014")
+
   //Cif
   val cif = SectionLink("commentisfree", "comment", "Comment", "/commentisfree")
   val opinion = SectionLink("commentisfree", "opinion", "Opinion", "/commentisfree")
@@ -161,6 +163,7 @@ trait Navigation  {
   val globalDevelopment = SectionLink("environment", "development", "Development", "/global-development")
 
   val footballNav = Seq(
+    worldCup,
     SectionLink("football", "live scores", "Live scores", "/football/live"),
     SectionLink("football", "tables", "Tables", "/football/tables"),
     SectionLink("football", "competitions", "Competitions", "/football/competitions"),
@@ -193,11 +196,7 @@ object Breadcrumbs {
   def localNav(navigation: Seq[NavItem], page: MetaData): Option[Seq[SectionLink]] = topLevelItem(navigation, page)
     .map(_.links).filter(_.nonEmpty)
 
-  def sectionOverride(page: MetaData, localNav: NavItem, currentSublink: Option[SectionLink]): String = page match {
-    case p: Tag => currentSublink.map(_.title).getOrElse(localNav.name.title)
-    case p: Section => currentSublink.map(_.title).getOrElse(localNav.name.title)
-    case _ => localNav.name.title
-  }
+  def sectionOverride(localNav: NavItem, currentSublink: Option[SectionLink]): String = currentSublink.map(_.title).getOrElse(localNav.name.title)
 }
 
 trait Zones extends Navigation {

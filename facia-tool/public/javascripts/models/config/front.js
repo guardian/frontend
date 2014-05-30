@@ -97,8 +97,12 @@ define([
 
         this.id((this.id() || '')
             .toLowerCase()
+            .replace(/\/+/g, '/')
             .replace(/^\/|\/$/g, '')
             .replace(/[^a-z0-9\/\-]*/g, '')
+            .split('/')
+            .slice(0,3)
+            .join('/')
         );
 
         if (!this.id()) { return; }

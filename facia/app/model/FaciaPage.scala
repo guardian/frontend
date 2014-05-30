@@ -3,6 +3,7 @@ package model
 import common.Edition
 import controllers.FrontPage
 import conf.Switches
+import dfp.DfpAgent
 
 case class FaciaPage(
                       id: String,
@@ -31,4 +32,7 @@ case class FaciaPage(
   )
 
   lazy val contentType: String = if (Edition.all.exists(edition => id.toLowerCase.endsWith(edition.id.toLowerCase))) "Network Front" else "Section"
+
+  override def isSponsored = DfpAgent.isSponsored(id)
+  override def isAdvertisementFeature = DfpAgent.isAdvertisementFeature(id)
 }

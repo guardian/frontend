@@ -1,11 +1,13 @@
 package model
 
 import org.joda.time.DateTime
-import common.{ExecutionContexts, Edition}
+import common.{Logging, ExecutionContexts, Edition}
 import scala.concurrent.Future
 import com.gu.openplatform.contentapi.model.ItemResponse
 import conf.ContentApi
 import services.ConfigAgent
+import common.FaciaToolMetrics.{ContentApiSeoRequestFailure, ContentApiSeoRequestSuccess}
+import dfp.DfpAgent
 
 case class Config(
                    id: String,
@@ -16,7 +18,10 @@ case class Config(
                    collectionType: Option[String],
                    showTags: Boolean = false,
                    showSections: Boolean = false
-                   )
+                   ) {
+  def isSponsored = DfpAgent.isSponsored(this)
+  def isAdvertisementFeature = DfpAgent.isAdvertisementFeature(this)
+}
 
 object Config {
   def apply(id: String): Config = Config(id, None, None, None, Nil, None)
@@ -64,7 +69,7 @@ case class SeoData(
   title: Option[String],
   description: Option[String])
 
-object SeoData extends ExecutionContexts {
+object SeoData extends ExecutionContexts with Logging {
   val editions = Edition.all.map(_.id.toLowerCase)
 
   def fromPath(path: String): SeoData = path.split('/').toList match {
@@ -79,8 +84,8 @@ object SeoData extends ExecutionContexts {
       val webTitle: String = webTitleFromTail(name :: tail)
       SeoData(path, section, webTitle, None, descriptionFromWebTitle(webTitle))
     case oneWord :: tail =>
-      val capitalOneWorld: String = oneWord.capitalize
-      SeoData(path, oneWord, capitalOneWorld, None, descriptionFromWebTitle(capitalOneWorld))
+      val webTitleOnePart: String = webTitleFromTail(oneWord :: tail)
+      SeoData(path, oneWord, webTitleOnePart, None, descriptionFromWebTitle(webTitleOnePart))
   }
 
   def webTitleFromTail(tail: List[String]): String = tail.flatMap(_.split('-')).flatMap(_.split('/')).map(_.capitalize).mkString(" ")
@@ -120,14 +125,23 @@ object SeoData extends ExecutionContexts {
     case _ => sectionId
   }
 
-  private def getSectionOrTagWebTitle(id: String): Future[Option[ItemResponse]] =
-    ContentApi
+  private def getSectionOrTagWebTitle(id: String): Future[Option[ItemResponse]] = {
+    val contentApiResponse = ContentApi
       .item(id, Edition.defaultEdition)
       .showEditorsPicks(false)
       .pageSize(0)
       .response
-      .map(Option.apply)
-      .fallbackTo(Future.successful(None))
+
+    contentApiResponse.onSuccess { case _ =>
+      ContentApiSeoRequestSuccess.increment()
+      log.info(s"Getting SEO data from content API for $id")}
+    contentApiResponse.onFailure { case e: Exception =>
+      log.warn(s"Error getting SEO data from content API for $id: $e")
+      ContentApiSeoRequestFailure.increment()
+    }
+
+    contentApiResponse.map(Option.apply).fallbackTo(Future.successful(None))
+  }
 }
 
 object FaciaComponentName {

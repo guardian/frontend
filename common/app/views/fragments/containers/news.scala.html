@@ -1,4 +1,4 @@
-@(collection: Collection, style: NewsContainer, containerIndex: Int)(implicit request: RequestHeader, templateDeduping: TemplateDeduping, config: Config)
+@(page: MetaData, collection: Collection, style: NewsContainer, containerIndex: Int)(implicit request: RequestHeader, templateDeduping: TemplateDeduping, config: Config)
 @import common.Edition
 
 @import org.joda.time.DateTime
@@ -26,6 +26,7 @@
                                 @fragments.containers.elements.dateOrTitle(collection, items)
                             </h2>
                         </div>
+                        @fragments.containers.elements.badge(page)
                         <div class="container__body">
                             @fragments.collections.news(items, style, containerIndex)
                         </div>

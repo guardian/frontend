@@ -43,7 +43,19 @@ case class Block(
                   displayName: Option[String],
                   href: Option[String],
                   diff: Option[JsValue]
-                  )
+                  ) {
+
+  def sortByGroup: Block = this.copy(
+    live = sortTrailsByGroup(this.live),
+    draft = this.draft.map(sortTrailsByGroup)
+  )
+
+  private def sortTrailsByGroup(trails: List[Trail]): List[Trail] = {
+    val trailGroups = trails.groupBy(_.meta.getOrElse(Map.empty).get("group").flatMap(_.asOpt[String]).map(_.toInt).getOrElse(0))
+    trailGroups.keys.toList.sorted(Ordering.Int.reverse).flatMap(trailGroups.getOrElse(_, Nil))
+  }
+
+}
 
 case class Trail(
                   id: String,
@@ -151,6 +163,7 @@ trait UpdateActions extends Logging {
     getBlock(id)
     .map(insertIntoLive(update, _))
     .map(insertIntoDraft(update, _))
+    .map(_.sortByGroup)
     .map(capCollection)
     .map(putBlock(id, _, identity))
     .map(archiveUpdateBlock(id, _, updateJson, identity))
@@ -162,6 +175,7 @@ trait UpdateActions extends Logging {
     getBlock(id)
       .map(deleteFromLive(update, _))
       .map(deleteFromDraft(update, _))
+      .map(_.sortByGroup)
       .map(archiveDeleteBlock(id, _, updateJson, identity))
       .map(putBlock(id, _, identity))
   }
@@ -169,6 +183,7 @@ trait UpdateActions extends Logging {
   def updateCollectionMeta(id: String, update: CollectionMetaUpdate, identity: Identity): Option[Block] =
     getBlock(id)
       .map(updateCollectionMeta(_, update, identity))
+      .map(_.sortByGroup)
       .map(putBlock(id, _, identity))
 
   private def updateList(update: UpdateList, blocks: List[Trail]): List[Trail] = {

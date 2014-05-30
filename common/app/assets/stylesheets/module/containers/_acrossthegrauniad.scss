@@ -1,0 +1,99 @@
+.container--acrossthegrauniad {
+    .linkslist__media-wrapper,
+    .linkslist__image-container,
+    .linkslist__item + .linkslist__item {
+        display: none;
+    }
+
+    @include mq(wide) {
+        .container__body {
+            padding-top: 5px; // Align with baseline of container title
+        }
+    }
+}
+
+.container--acrossthegrauniad-variant-3col1story,
+.container--acrossthegrauniad-variant-3col1storythumb,
+.container--acrossthegrauniad-variant-3col2stories {
+    .across__item {
+        overflow: hidden;
+        @include rem((
+            padding: 0 $gs-gutter/2
+        ));
+    }
+    .across__title {
+        @include fs-headline(1);
+        font-weight: bold;
+    }
+    .across__title__action {
+        display: block;
+    }
+}
+
+.container--acrossthegrauniad-variant-3col1storythumb {
+    .linkslist__media-wrapper,
+    .linkslist__image-container {
+        display: block;
+    }
+    .across__action {
+        @include rem((
+            padding-left: 98px
+        ));
+    }
+    .across__item {
+        @include rem((
+            margin-bottom: $gs-baseline/2
+        ));
+    }
+}
+.container--acrossthegrauniad-variant-3col2stories {
+    .linkslist__item + .linkslist__item {
+        display: block;
+    }
+}
+
+@include guss-columns($base-class: '.across--columns', $column-min-width: gs-span(4) + $gs-gutter, $column-rule: 1px solid $c-neutral5);
+
+.across--columns__item {
+    @include rem((
+        margin-top: $gs-baseline/4,
+        margin-bottom: get-line-height($fs-headlines, 1)
+    ));
+    @include mq(tablet) {
+        @include rem((
+            min-height: get-line-height($fs-headlines, 1)*2,
+            margin-bottom: get-font-size($fs-headlines, 1)
+        ));
+    }
+}
+
+.container--acrossthegrauniad-variant-2col1story {
+    @include mq(wide) {
+        .container__body {
+            padding-top: 2px; // Align with baseline of container title
+        }
+    }
+
+    @include rem((
+        margin-bottom: $gs-baseline*2
+    ));
+
+    .across {
+        @include f-headline;
+    }
+    .across,
+    .across__action {
+        color: $c-neutral1;
+    }
+    .across__action {
+        &:visited {
+            color: $c-neutral2;
+        }
+        &:active {
+            color: $c-neutral1;
+        }
+    }
+    .across__title {
+        font-weight: bold;
+    }
+}

@@ -44,7 +44,8 @@ $block-padding-right: $gs-gutter;
     @include mq(rightCol) {
         @include rem((
             max-width: gs-span(8),
-            margin-left: $a-rightCol-width + $gs-gutter
+            margin-left: $a-rightCol-width + $gs-gutter,
+            margin-right: 0
         ));
         max-width: none;
     }
@@ -122,7 +123,9 @@ $block-padding-right: $gs-gutter;
     }
     @include mq(rightCol) {
         float: left;
-        margin-left: -($a-rightCol-width + $gs-gutter);
+        @include rem((
+            margin-left: -($a-rightCol-width + $gs-gutter)
+        ));
     }
 }
 

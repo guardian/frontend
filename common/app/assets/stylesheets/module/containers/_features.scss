@@ -1,12 +1,4 @@
 .container--features {
-    .container__body {
-        @include rem((
-            padding-top: $gs-baseline/3
-        ));
-        @include mq(tablet, desktop) {
-            padding-top: 0;
-        }
-    }
     .ad-slot--inline {
         @include rem((
             margin-top: $gs-baseline,

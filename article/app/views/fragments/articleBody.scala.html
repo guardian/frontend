@@ -3,7 +3,7 @@
 
 @defining((model.article, model.storyPackage)) { case (article, storyPackage) =>
 <article id="article"
-    class="content content--article tone-@article.visualTone tone-@article.visualTone--article section-@article.sectionName.toLowerCase
+    class="content content--article tone-@article.visualTone tone-@article.visualTone--article section-@article.sectionName.trim.toLowerCase.replaceAll("""[\s-]+""", "-")
     @if(article.isAdvertisementFeature && !article.isSponsored){article--advertisement-feature}"
 
     itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType" role="main">
@@ -17,8 +17,6 @@
         @fragments.headDefault(article)
     }
 
-    @fragments.witnessCallToAction(article)
-
     <div class="gs-container">
         <div class="content__main-column content__main-column--article">
 
@@ -27,6 +25,8 @@
             @if(!(article.isFeature && article.hasShowcaseMainPicture)) {
                 @fragments.mainMedia(article)
             }
+
+            @fragments.witnessCallToAction(article)
 
             @fragments.contentMeta(article)
 
@@ -54,37 +54,6 @@
     </div>
 </article>
 
-@if(DiscussionSwitch.isSwitchedOn && article.isCommentable) {
-<div class="gs-container js-comments">
-    <div class="content__main-column" data-component="discussion">
-        @fragments.discussion(article.isClosedForComments, article.shortUrlId)
-    </div>
-</div>
-}
+@fragments.contentFooter(article, storyPackage)
 
-<div class="facia-container facia-container--layout-article facia-container--commercial">
-    @fragments.commercial.commercialComponent(name="merchandising-high", adType="commercial-component-high", sizeMapping=Map("desktop" -> Seq("888,88")))
-</div>
-
-@fragments.storyPackagePlaceholder(storyPackage)
-@fragments.onwardPlaceholder(article.visualTone)
-
-<div class="js-repositioned-comments content__repositioned-comments">
-
-</div>
-
-
-<div class="facia-container facia-container--layout-article">
-    @fragments.mostPopularPlaceholder(article.section, article.visualTone)
-</div>
-
-<div class="facia-container facia-container--layout-article facia-container--commercial">
-    @fragments.commercial.commercialComponent(name="merchandising", adType="commercial-component", sizeMapping=Map("mobile" -> Seq("888,88")))
-</div>
-
-<div class="gs-container">
-    <div class="content__main-column" data-link-name="article breadcrumbs">
-        @fragments.breadcrumb(article)
-    </div>
-</div>
 }

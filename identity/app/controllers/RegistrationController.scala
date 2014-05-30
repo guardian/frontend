@@ -77,10 +77,10 @@ class RegistrationController @Inject()( returnUrlVerifier : ReturnUrlVerifier,
             val authResponse = api.authBrowser(EmailPassword(email, password), trackingData)
             val response: Future[SimpleResult] = signinService.getCookies(authResponse, false) map {
               case Left(errors) =>
-                Ok(views.html.registration_confirmation(page, idRequest, idUrlBuilder, verifiedReturnUrl))
+                Ok(views.html.registrationConfirmation(page, idRequest, idUrlBuilder, verifiedReturnUrl))
 
               case Right(responseCookies) =>
-                Ok(views.html.registration_confirmation(page, idRequest, idUrlBuilder, verifiedReturnUrl)).withCookies(responseCookies:_*)
+                Ok(views.html.registrationConfirmation(page, idRequest, idUrlBuilder, verifiedReturnUrl)).withCookies(responseCookies:_*)
             }
 
             response
