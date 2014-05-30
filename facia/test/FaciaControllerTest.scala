@@ -14,7 +14,7 @@ class FaciaControllerTest extends FlatSpec with Matchers with BeforeAndAfterAll 
 
   val responsiveRequest = FakeRequest().withHeaders("host" -> "www.theguardian.com")
 
-  ignore should "200 when content type is front" in Fake {
+  "FaciaController" should "200 when content type is front" in Fake {
     val result = FaciaController.renderFront("uk")(TestRequest())
     status(result) should be(200)
   }
@@ -85,7 +85,7 @@ class FaciaControllerTest extends FlatSpec with Matchers with BeforeAndAfterAll 
   it should "serve an X-Accel-Redirect for /rss that it doesn't know about" in {
     val fakeRequest = FakeRequest("GET", "/film/rss")
 
-    val result = FaciaController.renderFrontRss("film")(fakeRequest) //Film is actually a facia front ON PROD
+    val result = FaciaController.renderFrontRss("film")(fakeRequest)
     status(result) should be(200)
     header("X-Accel-Redirect", result) should be (Some("/applications/film/rss"))
   }
@@ -93,7 +93,7 @@ class FaciaControllerTest extends FlatSpec with Matchers with BeforeAndAfterAll 
   it should "keep query params for X-Accel-Redirect" in {
     val fakeRequest = FakeRequest("GET", "/film?page=77")
 
-    val result = FaciaController.renderFront("film")(fakeRequest) //Film is actually a facia front ON PROD
+    val result = FaciaController.renderFront("film")(fakeRequest)
     status(result) should be(200)
     header("X-Accel-Redirect", result) should be (Some("/applications/film?page=77"))
   }
@@ -101,7 +101,7 @@ class FaciaControllerTest extends FlatSpec with Matchers with BeforeAndAfterAll 
   it should "keep query params for X-Accel-Redirect with RSS" in {
     val fakeRequest = FakeRequest("GET", "/film/rss?page=77")
 
-    val result = FaciaController.renderFrontRss("film")(fakeRequest) //Film is actually a facia front ON PROD
+    val result = FaciaController.renderFrontRss("film")(fakeRequest)
     status(result) should be(200)
     header("X-Accel-Redirect", result) should be (Some("/applications/film/rss?page=77"))
   }
