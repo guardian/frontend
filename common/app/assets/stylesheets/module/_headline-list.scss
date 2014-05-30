@@ -67,7 +67,7 @@
 
 .headline-list__standfirst {
     display: none;
-    @include fs-bodyCopy(1);
+    @include fs-headline(1);
     color: $c-neutral2;
 }
 
