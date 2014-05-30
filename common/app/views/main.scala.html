@@ -12,8 +12,8 @@
 <body
     id="top"
     class="@RenderClasses(Map(
-        "has-page-skin" -> metaData.hasPageSkin,
-        "has-localnav" -> Navigation.topLevelItem(Edition(request).navigation, metaData).filter(_.links.nonEmpty).nonEmpty))"
+        ("has-page-skin", metaData.hasPageSkin),
+        ("has-localnav", Navigation.topLevelItem(Edition(request).navigation, metaData).filter(_.links.nonEmpty).nonEmpty)))"
     itemscope itemtype="http://schema.org/WebPage">
 
     <div class="top-banner-ad-container top-banner-ad-container--desktop top-banner-ad-container--@metaData match {

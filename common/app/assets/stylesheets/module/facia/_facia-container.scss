@@ -93,7 +93,7 @@
                 margin-left: auto;
                 margin-right: auto;
                 @include rem((
-                        width: gs-span(12) + $gs-gutter
+                    width: gs-span(12) + $gs-gutter
                 ));
             }
             .facia-container__inner {
@@ -109,7 +109,7 @@
                 margin-right: 0;
                 float: none;
                 @include rem((
-                        margin-bottom: $gs-baseline
+                    margin-bottom: $gs-baseline
                 ));
             }
             .container--news .container__title {

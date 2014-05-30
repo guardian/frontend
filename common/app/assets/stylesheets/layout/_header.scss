@@ -13,7 +13,7 @@
         .has-page-skin & > * {
             margin: 0 auto;
             @include rem((
-                width: gs-span(12)
+                width: gs-span(12) + ($gs-gutter*2)
             ));
         }
     }
