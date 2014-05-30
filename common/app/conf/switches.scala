@@ -395,11 +395,6 @@ object Switches extends Collections {
 
   // Facia Switches
 
-  val NewSeoSwitch = Switch("Facia Switches", "new-seo-switch",
-    "If this switch is on then the SEO elements for pages will be take from the tool, content api and generated",
-    safeState = Off, sellByDate = new DateMidnight(2014, 6, 30)
-  )
-
   val FeaturesAutoContainerSwitch = Switch("Facia Switches", "facia-features-auto-container",
     "If this switch is on, the features auto container has the right to live.",
     safeState = Off, sellByDate = new DateMidnight(2014, 6, 15)
@@ -470,7 +465,6 @@ object Switches extends Collections {
     IndiaRegionSwitch,
     MemcachedSwitch,
     IncludeBuildNumberInMemcachedKey,
-    NewSeoSwitch,
     GeoMostPopular,
     TagLinkingSwitch,
     FaciaFirstContainerLayoutOverrideSwitch,
