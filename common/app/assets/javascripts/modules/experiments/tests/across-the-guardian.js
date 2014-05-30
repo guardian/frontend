@@ -20,7 +20,7 @@ define([
         this.idealOutcome = 'At least 1% increase in overall page level click through rate';
 
         this.canRun = function () {
-            return ["/uk", "/us", "/au"].indexOf(window.location.pathname) > -1;
+            return ['/uk', '/us', '/au'].indexOf(window.location.pathname) > -1;
         };
 
         var templates = {
