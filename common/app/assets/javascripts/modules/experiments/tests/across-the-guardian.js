@@ -1,9 +1,9 @@
 define([
     'common/utils/ajax',
     'common/$',
-    'common/_',
+    'lodash/arrays/findIndex',
     'common/utils/template'
-], function (ajax, $, _, template) {
+], function (ajax, $, findIndex, template) {
 
     return function () {
         this.id = 'AcrossTheGuardian';
@@ -22,11 +22,11 @@ define([
         var appConfig;
         this.canRun = function (config) {
             appConfig = config;
-            return true;
+            return ["/uk", "/us", "/au"].indexOf(window.location.pathname) > -1;
         };
 
         var templates = {
-            'container':'<section class="container container--row-pattern container--acrossthegrauniad container--acrossthegrauniad-variant-{{variant}}" data-link-name="block | across-the-guardian" data-component="across-the-guardian">' +
+            'container': '<section class="container container--row-pattern container--acrossthegrauniad container--acrossthegrauniad-variant-{{variant}}" data-link-name="block | across-the-guardian" data-component="across-the-guardian">' +
                 '    <div class="facia-container__inner">' +
                 '        <div class="container__border tone-news tone-accent-border"></div>' +
                 '        <h2 class="container__title tone-news tone-background">' +
@@ -35,27 +35,27 @@ define([
                 '        <div class="container__body">{{body}}</div>' +
                 '    </div>' +
                 '</section>',
-            '2col':'<ul class="u-unstyled across across--columns">{{items}}</ul>',
-            '3col':'<div class="facia-slice-wrapper">' +
+            '2col': '<ul class="u-unstyled across across--columns">{{items}}</ul>',
+            '3col': '<div class="facia-slice-wrapper">' +
                 '   <ul class="u-unstyled l-row l-row--items-3 facia-slice">{{categories}}</ul>' +
                 '</div>',
-            '3colRow':'<li class="l-row__item across">' +
+            '3colRow': '<li class="l-row__item across">' +
                 '   <div class="across__item">' +
-                '       <h3 class="across__title"><a href="{{section_href}}" class="across__title__action" data-link-name="{{section_name}} | section">{{section_name}}</a></h3>' +
+                '       <h3 class="across__title"><a href="{{sectionHref}}" class="across__title__action" data-link-name="{{sectionName}} | section">{{sectionName}}</a></h3>' +
                 '       <ul class="linkslist">{{stories}}' +
                 '   </div>' +
                 '</li>',
-            '3colItem':'<li class="linkslist__item">' +
-                '   <a href="{{story_href}}" class="linkslist__action across__action" data-link-name="{{section_name}} | story | {{story_idx}}">' +
+            '3colItem': '<li class="linkslist__item">' +
+                '   <a href="{{storyHref}}" class="linkslist__action across__action" data-link-name="{{sectionName}} | story | {{storyIdx}}">' +
                 '       <div class="linkslist__media-wrapper">' +
                 '           <div class="linkslist__image-container u-responsive-ratio js-image-upgrade" data-src="{{story_thumb}}"></div>' +
                 '       </div>' +
-                '       {{story_title}}' +
+                '       {{storyTitle}}' +
                 '   </a>' +
                 '</li>',
-            '2colItems':'<li class="across--columns__item">' +
-                '    <a href="{{section_href}}" class="across__title" data-link-name="{{section_name}} | section">{{section_name}}</a>:' +
-                '    <a href="{{story_href}}" class="across__action" data-link-name="{{section_name}} | story">{{story_title}}</a>' +
+            '2colItems': '<li class="across--columns__item">' +
+                '    <a href="{{sectionHref}}" class="across__title" data-link-name="{{sectionName}} | section">{{sectionName}}</a>:' +
+                '    <a href="{{storyHref}}" class="across__action" data-link-name="{{sectionName}} | story">{{storyTitle}}</a>' +
                 '</li>'
         };
 
@@ -66,21 +66,12 @@ define([
             }
 
             ajax({
-                url:'/' + appConfig.page.pageId + '/lite.json',
-                type:'json',
-                crossOrigin:true
+                url: '/across-the-guardian/lite.json',
+                type: 'json',
+                crossOrigin: true
             }).then(function (sectionData) {
                     parseJson(sectionData);
                 });
-        }
-
-        function findStoryIndex(collection, story) {
-            var storyIdx = -1;
-            for (var i = 0; i < collection.content.length; i++) {
-                var s = collection.content[i];
-                if (s.id == story.id) storyIdx = i;
-            }
-            return storyIdx
         }
 
         function renderStory(collection, story, tplName) {
@@ -89,12 +80,12 @@ define([
             }
 
             return template(templates[tplName], {
-                section_href:(collection.href || ''),
-                section_name:(collection.displayName || ''),
-                story_thumb:(story.thumbnail || ''),
-                story_href:'/' + (story.id || ''),
-                story_idx:findStoryIndex(collection, story),
-                story_title:(story.headline || '')
+                sectionHref: (collection.href || ''),
+                sectionName: (collection.displayName || ''),
+                story_thumb: (story.thumbnail || ''),
+                storyHref: '/' + (story.id || ''),
+                storyIdx: findIndex(collection.content, story),
+                storyTitle: (story.headline || '')
             });
         }
 
@@ -118,9 +109,9 @@ define([
                             .join(' ');
 
                         return template(templates['3colRow'], {
-                            stories:tplStories,
-                            section_href:'/' + (collection.href || ''),
-                            section_name:(collection.displayName || '')
+                            stories: tplStories,
+                            sectionHref: '/' + (collection.href || ''),
+                            sectionName: (collection.displayName || '')
                         });
                     });
 
@@ -128,30 +119,30 @@ define([
                 var tplGroupedCollections = [];
                 while (collections.length > 0) {
                     var row = template(templates['3col'], {
-                        categories:collections
+                        categories: collections
                             .splice(0, 3)
                             .join(' ')});
                     tplGroupedCollections.push(row);
                 }
 
                 return template(templates.container, {
-                    variant:variant,
-                    containerTitle:(sectionData.webTitle || ''),
-                    body:tplGroupedCollections.join(' ')
+                    variant: variant,
+                    containerTitle: (sectionData.webTitle || ''),
+                    body: tplGroupedCollections.join(' ')
                 });
             };
         }
 
         this.variants = [
             {
-                id:'control',
-                test:function () {
+                id: 'control',
+                test: function () {
                     // do nothing
                 }
             },
             {
-                id:'2col1story',
-                test:function () {
+                id: '2col1story',
+                test: function () {
                     var variant = '2col1story';
 
                     renderContainer(function (sectionData) {
@@ -171,29 +162,29 @@ define([
                             });
 
                         return template(templates.container, {
-                            variant:variant,
-                            containerTitle:(sectionData.webTitle || ''),
-                            body:template(templates['2col'], {
-                                items:tplItems.join(' ')})
+                            variant: variant,
+                            containerTitle: (sectionData.webTitle || ''),
+                            body: template(templates['2col'], {
+                                items: tplItems.join(' ')})
                         });
                     });
                 }
             },
             {
-                id:'3col1story',
-                test:function () {
+                id: '3col1story',
+                test: function () {
                     renderContainer(render3cols(this.id.toLowerCase()));
                 }
             },
             {
-                id:'3col1storyThumb',
-                test:function () {
+                id: '3col1storyThumb',
+                test: function () {
                     renderContainer(render3cols(this.id.toLowerCase()));
                 }
             },
             {
-                id:'3col2stories',
-                test:function () {
+                id: '3col2stories',
+                test: function () {
                     renderContainer(render3cols(this.id.toLowerCase(), 2));
                 }
             }
