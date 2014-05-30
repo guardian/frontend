@@ -392,7 +392,7 @@ object Switches extends Collections {
 
   val NewSeoSwitch = Switch("Facia Switches", "new-seo-switch",
     "If this switch is on then the SEO elements for pages will be take from the tool, content api and generated",
-    safeState = Off, sellByDate = new DateMidnight(2014, 5, 30)
+    safeState = Off, sellByDate = new DateMidnight(2014, 6, 30)
   )
 
   val FeaturesAutoContainerSwitch = Switch("Facia Switches", "facia-features-auto-container",
