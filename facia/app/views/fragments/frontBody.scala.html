@@ -1,7 +1,19 @@
 @(faciaPage: FaciaPage)(implicit request: RequestHeader, templateDeduping: TemplateDeduping)
 
 @if(faciaPage.collections.nonEmpty) {
-    <div class="facia-container facia-container--layout-front @if(faciaPage.isAdvertisementFeature && !faciaPage.isSponsored){facia-container--advertisement-feature}" data-link-name="Front" role="main">
+    <div class="@RenderClasses(Map(
+            "facia-container" -> true,
+            "facia-container--layout-front" -> true,
+            "facia-container--advertisement-feature" -> (faciaPage.isAdvertisementFeature && !faciaPage.isSponsored)))"
+        data-link-name="Front"
+        role="main">
+
+        @if(faciaPage.hasPageSkin) {
+            <div class="page-skin-container">
+                @fragments.commercial.adSlot(name="pageskin-inread", adType="page-skin", sizeMapping=Map("wide" -> Seq("1,1")), showLabel=false, refresh=false)
+            </div>
+        }
+
         @defining(faciaPage.collections.filter(_._2.items.nonEmpty)) { collections =>
             @collections.zipWithIndex.map{ case(block, index) =>
                 @fragments.frontCollection(faciaPage, block, collections.size, index)

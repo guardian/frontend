@@ -113,7 +113,6 @@
 .nav-container {
     display: none;
     clear: both;
-    border-bottom: 2px solid $c-brandBlue;
 
     @include mq(tablet) {
         display: block;
