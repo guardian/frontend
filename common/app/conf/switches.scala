@@ -318,6 +318,11 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 6, 24)
   )
 
+  val ABAcrossTheGuardian = Switch("A/B Tests", "ab-across-the-guardian",
+    "If this switch is turned on, run the AcrossTheGuardian A/B/C/D test.",
+    safeState = Off, sellByDate = new DateMidnight(2014, 6, 25)
+  )
+
   // Dummy Switches
 
   val IntegrationTestSwitch = Switch("Unwired Test Switch", "integration-test-switch",
@@ -471,6 +476,7 @@ object Switches extends Collections {
     FaciaFirstContainerLayoutOverrideSwitch,
     ABHighRelevanceCommercialComponent,
     ABHideSupportingLinks,
+    ABAcrossTheGuardian,
     SmartBannerSwitch,
     FeaturesAutoContainerSwitch
   )

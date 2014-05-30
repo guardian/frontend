@@ -4,19 +4,22 @@ define([
     'common/utils/mediator',
     'common/modules/analytics/mvt-cookie',
     'common/modules/experiments/tests/high-relevance-commercial-component',
-    'common/modules/experiments/tests/hide-supporting-links'
+    'common/modules/experiments/tests/hide-supporting-links',
+    'common/modules/experiments/tests/across-the-guardian'
 ], function (
     common,
     store,
     mediator,
     mvtCookie,
     ABHighRelevanceCommercialComponent,
-    ABHideSupportingLinks
+    ABHideSupportingLinks,
+    ABAcrossTheGuardian
     ) {
 
     var TESTS = [
             new ABHighRelevanceCommercialComponent(),
-            new ABHideSupportingLinks()
+            new ABHideSupportingLinks(),
+            new ABAcrossTheGuardian()
         ],
         participationsKey = 'gu.ab.participations';
 
