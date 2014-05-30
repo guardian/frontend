@@ -1,8 +1,6 @@
 package model
 
 import common.Edition
-import controllers.FrontPage
-import conf.Switches
 import dfp.DfpAgent
 
 case class FaciaPage(
