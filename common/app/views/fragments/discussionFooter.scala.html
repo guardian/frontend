@@ -11,15 +11,21 @@
 
     <div class="discussion__comments__container js-hidden">
         <h2 class="page-sub-header discussion__heading js-visible">All Comments</h2>
+        <button class="u-button-reset u-fauxlink js-visible discussion__show-threaded js-show-threaded">
+            View <span class="discussion__show-threaded-state">non</span> threaded
+        </button>
 
-        <div class="discussion__comment-box discussion__comment-box--top u-cf"></div>
-        <div class="discussion__comments"></div>
-        <div class="discussion__comment-box discussion__comment-box--bottom u-cf"></div>
-        <a class="d-discussion__show-all-comments js-show-discussion" href="@LinkTo{/discussion@discussionId}"
-            data-is-ajax data-link-name="View all comments" rel="nofollow">
-            Show all comments…
-            <i class="i i-show-all-comments"></i>
-            <i class="i i-arrow-blue-down"></i>
-        </a>
+        <div class="discussion-container js-discussion-container">
+            <div class="discussion__comment-box discussion__comment-box--top u-cf"></div>
+            <div class="discussion__comments"></div>
+            <div class="discussion__comment-box discussion__comment-box--bottom u-cf"></div>
+            <a class="d-discussion__show-all-comments js-show-discussion" href="@LinkTo{/discussion@discussionId}"
+                data-is-ajax data-link-name="View all comments" rel="nofollow">
+                Show all comments…
+                <i class="i i-show-all-comments"></i>
+                <i class="i i-arrow-blue-down"></i>
+            </a>
+        </div>
+        <div class="discussion__non-threaded js-discussion__non-threaded u-h"></div>
     </div>
 </div>
