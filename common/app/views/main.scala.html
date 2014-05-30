@@ -18,19 +18,26 @@
 
     @fragments.message(metaData)
 
-    <div class="top-banner-ad-container top-banner-ad-container--desktop top-banner-ad-container--@metaData match {
-            case _: Article => {article}
-            case _          => {facia}
-        }-layout">
-        @fragments.commercial.standardAd(name="top-above-nav", adType="top-banner-ad", sizeMapping=Map("tabletportrait" -> Seq("728,90"), "tabletlandscape" -> Seq("728,90", "900,250"), "desktop" -> Seq("728,90", "900,250"), "wide" -> Seq("728,90", "900,250", "970,250")))
-    </div>
+    @metaData match {
+        case c: model.Content => {
+            @if(!c.shouldHideAdverts) {
+                @fragments.commercial.topBanner(metaData)
+            }
+        }
+        case _ => { @fragments.commercial.topBanner(metaData) }
+    }
 
     @fragments.header(metaData)
 
     <div id="js-context">
-        <div class="top-banner-ad-container top-banner-ad-container--mobile">
-            @fragments.commercial.standardAd(name="top", adType="top-banner-ad", sizeMapping=Map("mobile" -> Seq("300,50", "320,50")), showLabel=false)
-        </div>
+        @metaData match {
+            case c: model.Content => {
+                @if(!c.shouldHideAdverts) {
+                    @fragments.commercial.topBannerMobile()
+                }
+            }
+            case _ => { @fragments.commercial.topBannerMobile() }
+        }
 
         @fragments.localNav(metaData)
 
