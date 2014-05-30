@@ -19,9 +19,7 @@ define([
         this.dataLinkNames = 'across-the-guardian';
         this.idealOutcome = 'At least 1% increase in overall page level click through rate';
 
-        var appConfig;
-        this.canRun = function (config) {
-            appConfig = config;
+        this.canRun = function () {
             return ["/uk", "/us", "/au"].indexOf(window.location.pathname) > -1;
         };
 
