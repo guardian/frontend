@@ -1,0 +1,3569 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1194,
+    "startIndex":1,
+    "pageSize":10,
+    "currentPage":1,
+    "pages":120,
+    "orderBy":"newest",
+    "tag":{
+      "id":"theguardian/series/pass-notes",
+      "type":"series",
+      "webTitle":"Pass notes",
+      "webUrl":"http://www.theguardian.com/theguardian/series/pass-notes",
+      "apiUrl":"http://content.guardianapis.com/theguardian/series/pass-notes",
+      "sectionId":"theguardian",
+      "sectionName":"From the Guardian",
+      "references":[]
+    },
+    "results":[{
+      "id":"business/shortcuts/2014/may/14/hunter-biden-job-board-ukraine-biggest-gas-producer-burisma",
+      "sectionId":"business",
+      "sectionName":"Business",
+      "webPublicationDate":"2014-05-14T16:03:03Z",
+      "webTitle":"Why shouldn't Hunter Biden join the board of a gas company in Ukraine?",
+      "webUrl":"http://www.theguardian.com/business/shortcuts/2014/may/14/hunter-biden-job-board-ukraine-biggest-gas-producer-burisma",
+      "apiUrl":"http://content.guardianapis.com/business/shortcuts/2014/may/14/hunter-biden-job-board-ukraine-biggest-gas-producer-burisma",
+      "fields":{
+        "newspaperPageNumber":"3",
+        "trailText":"The son of the US vice-president has been chosen to take charge of energy firm Burisma's legal unit  – a decision based purely on merit, of course",
+        "headline":"Why shouldn't Hunter Biden join the board of a gas company in Ukraine?",
+        "body":"<p><strong>Name:</strong> Hunter Biden.</p><p><strong>Age:</strong> 44.</p><p><strong>Appearance:</strong> Chip off the old block.</p><p><strong>His names rings a bell. Is he related to someone famous?</strong> He's the son of Joe Biden, the US vice&nbsp;president.</p><p><strong>What is he, sort of a wayward, ne'er-do-well playboy type? </strong>Not really. He's a graduate of Yale Law School and a former senior vice-president at MBNA America Bank.</p><p><strong>Good for him. </strong>During the Clinton administration he worked in the US Department of Commerce. He's presently a partner in an investment firm. And counsel for a national law firm. And an adjunct professor at Georgetown University.</p><p><strong>I get it: he likes to keep busy.</strong> He has even found the time to join the board of a gas company called Burisma Holdings Ltd.</p><p><strong>Never heard of it.</strong> Perhaps that's because it's a Ukrainian gas company; Ukraine's largest private gas producer, in fact. He's <a href=\"http://www.businessinsider.com/hunter-biden-joes-son-ukraine-gas-company-burisma-holdings-2014-5\" title=\"\">taking charge of the company's legal unit</a>.</p><p><strong>Isn't that a bit fishy?</strong> Why do you say that?</p><p><strong>Because he's the vice-president's son!</strong> That's a coincidence. \"This is totally based on merit,\" said Burisma's chairman, Alan Apter.</p><p><strong>He doesn't sound very Ukrainian.</strong> He's American, as is the other new board member, Devon Archer.</p><p><strong>Who?</strong> Devon Archer, who works with Hunter Biden at Rosemont Seneca partners, which is half owned by Rosemont Capital, a private equity firm founded by Archer and Christopher Heinz.</p><p><strong>Who?</strong> Christopher Heinz … John Kerry's stepson.</p><p><strong>I think Putin's propaganda people can take a long weekend; their work is being done for them. </strong>What do you mean?</p><p><strong>Hasn't Joe Biden pledged to help Ukraine become more energy independent in the wake of its troubles with Russia? </strong>Well, yes.</p><p><strong>And isn't Burisma, as a domestic producer, well positioned to profit from rising gas prices caused by the conflict? </strong>Possibly, but Hunter Biden is a salaried board member, not an investor. According to anonymous sources in <a href=\"http://online.wsj.com/news/articles/SB10001424052702303851804579560542284706288?mg=reno64-wsj&amp;url=http%3A%2F%2Fonline.wsj.com%2Farticle%2FSB10001424052702303851804579560542284706288.html\" title=\"\">the Wall Street Journal</a>, neither Rosemont Seneca nor Rosemont Capital has made any financial investment in Burisma.</p><p><strong>So it's not fishy at all? </strong>No one's saying that.</p><p><strong>Do say:</strong> \"Somebody needs to get involved in Ukraine's corporate governance, and it might as well be a clutch of rich, well-connected American dudes with weird first names.\"</p><p><strong>Don't say:</strong> \"Thanks, Dad.\"</p><!-- Guardian Watermark: internal-code/content/436892367|2014-05-14T16:53:59Z|cbabddbf11af6bcafdfb0de9e726195493fb0bf9 -->",
+        "showInRelatedContent":"true",
+        "strap":"No 3,316",
+        "lastModified":"2014-05-14T16:03:39Z",
+        "hasStoryPackage":"false",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/14/1400079788242/Joe-Biden-Hunter-Biden-006.jpg",
+        "standfirst":"The son of the US vice-president has been chosen to take charge of energy firm Burisma's legal unit  – a decision based purely on merit, of course",
+        "shortUrl":"http://gu.com/p/3p8hb",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/14/1400079788242/Joe-Biden-Hunter-Biden-006.jpg",
+        "wordcount":"349",
+        "commentable":"true",
+        "internalContentCode":"436892367",
+        "allowUgc":"false",
+        "internalOctopusCode":"9042740",
+        "isPremoderated":"false",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2014-05-15",
+        "internalPageCode":"2092700",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2014-05-21T16:03:03Z"
+      },
+      "tags":[{
+        "id":"business/energy-industry",
+        "type":"keyword",
+        "webTitle":"Energy industry",
+        "webUrl":"http://www.theguardian.com/business/energy-industry",
+        "apiUrl":"http://content.guardianapis.com/business/energy-industry",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"world/ukraine",
+        "type":"keyword",
+        "webTitle":"Ukraine",
+        "webUrl":"http://www.theguardian.com/world/ukraine",
+        "apiUrl":"http://content.guardianapis.com/world/ukraine",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/europe-news",
+        "type":"keyword",
+        "webTitle":"Europe",
+        "webUrl":"http://www.theguardian.com/world/europe-news",
+        "apiUrl":"http://content.guardianapis.com/world/europe-news",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/joebiden",
+        "type":"keyword",
+        "webTitle":"Joe Biden",
+        "webUrl":"http://www.theguardian.com/world/joebiden",
+        "apiUrl":"http://content.guardianapis.com/world/joebiden",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"theguardian/shortcuts",
+        "type":"blog",
+        "webTitle":"Shortcuts",
+        "webUrl":"http://www.theguardian.com/theguardian/shortcuts",
+        "apiUrl":"http://content.guardianapis.com/theguardian/shortcuts",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"theguardian/g2/features",
+        "type":"newspaper-book-section",
+        "webTitle":"Comment & features",
+        "webUrl":"http://www.theguardian.com/theguardian/g2/features",
+        "apiUrl":"http://content.guardianapis.com/theguardian/g2/features",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/g2",
+        "type":"newspaper-book",
+        "webTitle":"G2",
+        "webUrl":"http://www.theguardian.com/theguardian/g2",
+        "apiUrl":"http://content.guardianapis.com/theguardian/g2",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/series/pass-notes",
+        "type":"series",
+        "webTitle":"Pass notes",
+        "webUrl":"http://www.theguardian.com/theguardian/series/pass-notes",
+        "apiUrl":"http://content.guardianapis.com/theguardian/series/pass-notes",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-436895698",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/14/1400079778835/Joe-Biden-Hunter-Biden-001.jpg",
+          "typeData":{
+            "source":"ASSOCIATED PRESS",
+            "photographer":"Charles Dharapak",
+            "altText":"Joe Biden, Hunter Biden",
+            "height":"54",
+            "credit":"Charles Dharapak/ASSOCIATED PRESS",
+            "caption":"Hunter Biden, with his father, US vice president Joe Biden. Photograph: Charles Dharapak/ASSOCIATED PRESS",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/14/1400079781485/Joe-Biden-Hunter-Biden-002.jpg",
+          "typeData":{
+            "source":"ASSOCIATED PRESS",
+            "photographer":"Charles Dharapak",
+            "altText":"Joe Biden, Hunter Biden",
+            "height":"340",
+            "credit":"Charles Dharapak/ASSOCIATED PRESS",
+            "caption":"Hunter Biden, with his father, US vice president Joe Biden. Photograph: Charles Dharapak/ASSOCIATED PRESS",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/14/1400079782859/Joe-Biden-Hunter-Biden-003.jpg",
+          "typeData":{
+            "source":"ASSOCIATED PRESS",
+            "photographer":"Charles Dharapak",
+            "altText":"Joe Biden, Hunter Biden",
+            "height":"130",
+            "credit":"Charles Dharapak/ASSOCIATED PRESS",
+            "caption":"Hunter Biden, with his father, US vice president Joe Biden. Photograph: Charles Dharapak/ASSOCIATED PRESS",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/14/1400079784292/Joe-Biden-Hunter-Biden-004.jpg",
+          "typeData":{
+            "source":"ASSOCIATED PRESS",
+            "photographer":"Charles Dharapak",
+            "altText":"Joe Biden, Hunter Biden",
+            "height":"720",
+            "credit":"Charles Dharapak/ASSOCIATED PRESS",
+            "caption":"Hunter Biden, with his father, US vice president Joe Biden. Photograph: Charles Dharapak/ASSOCIATED PRESS",
+            "width":"1280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/14/1400079786309/Joe-Biden-Hunter-Biden-005.jpg",
+          "typeData":{
+            "source":"ASSOCIATED PRESS",
+            "photographer":"Charles Dharapak",
+            "altText":"Joe Biden, Hunter Biden",
+            "height":"1536",
+            "credit":"Charles Dharapak/ASSOCIATED PRESS",
+            "caption":"Hunter Biden, with his father, US vice president Joe Biden. Photograph: Charles Dharapak/ASSOCIATED PRESS",
+            "width":"2048"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/14/1400079788242/Joe-Biden-Hunter-Biden-006.jpg",
+          "typeData":{
+            "source":"ASSOCIATED PRESS",
+            "photographer":"Charles Dharapak",
+            "altText":"Joe Biden, Hunter Biden",
+            "height":"84",
+            "credit":"Charles Dharapak/ASSOCIATED PRESS",
+            "caption":"Hunter Biden, with his father, US vice president Joe Biden. Photograph: Charles Dharapak/ASSOCIATED PRESS",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/14/1400079789690/Joe-Biden-Hunter-Biden-007.jpg",
+          "typeData":{
+            "source":"ASSOCIATED PRESS",
+            "photographer":"Charles Dharapak",
+            "altText":"Joe Biden, Hunter Biden",
+            "height":"132",
+            "credit":"Charles Dharapak/ASSOCIATED PRESS",
+            "caption":"Hunter Biden, with his father, US vice president Joe Biden. Photograph: Charles Dharapak/ASSOCIATED PRESS",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/14/1400079791119/Joe-Biden-Hunter-Biden-008.jpg",
+          "typeData":{
+            "source":"ASSOCIATED PRESS",
+            "photographer":"Charles Dharapak",
+            "altText":"Joe Biden, Hunter Biden",
+            "height":"168",
+            "credit":"Charles Dharapak/ASSOCIATED PRESS",
+            "caption":"Hunter Biden, with his father, US vice president Joe Biden. Photograph: Charles Dharapak/ASSOCIATED PRESS",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/14/1400079792449/Joe-Biden-Hunter-Biden-009.jpg",
+          "typeData":{
+            "source":"ASSOCIATED PRESS",
+            "photographer":"Charles Dharapak",
+            "altText":"Joe Biden, Hunter Biden",
+            "height":"180",
+            "credit":"Charles Dharapak/ASSOCIATED PRESS",
+            "caption":"Hunter Biden, with his father, US vice president Joe Biden. Photograph: Charles Dharapak/ASSOCIATED PRESS",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/14/1400079793772/Joe-Biden-Hunter-Biden-010.jpg",
+          "typeData":{
+            "source":"ASSOCIATED PRESS",
+            "photographer":"Charles Dharapak",
+            "altText":"Joe Biden, Hunter Biden",
+            "height":"228",
+            "credit":"Charles Dharapak/ASSOCIATED PRESS",
+            "caption":"Hunter Biden, with his father, US vice president Joe Biden. Photograph: Charles Dharapak/ASSOCIATED PRESS",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/14/1400079795193/Joe-Biden-Hunter-Biden-011.jpg",
+          "typeData":{
+            "source":"ASSOCIATED PRESS",
+            "photographer":"Charles Dharapak",
+            "altText":"Joe Biden, Hunter Biden",
+            "height":"276",
+            "credit":"Charles Dharapak/ASSOCIATED PRESS",
+            "caption":"Hunter Biden, with his father, US vice president Joe Biden. Photograph: Charles Dharapak/ASSOCIATED PRESS",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/14/1400079796523/Joe-Biden-Hunter-Biden-012.jpg",
+          "typeData":{
+            "source":"ASSOCIATED PRESS",
+            "photographer":"Charles Dharapak",
+            "altText":"Joe Biden, Hunter Biden",
+            "height":"372",
+            "credit":"Charles Dharapak/ASSOCIATED PRESS",
+            "caption":"Hunter Biden, with his father, US vice president Joe Biden. Photograph: Charles Dharapak/ASSOCIATED PRESS",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/14/1400079798170/Joe-Biden-Hunter-Biden-013.jpg",
+          "typeData":{
+            "source":"ASSOCIATED PRESS",
+            "photographer":"Charles Dharapak",
+            "altText":"Joe Biden, Hunter Biden",
+            "height":"1116",
+            "credit":"Charles Dharapak/ASSOCIATED PRESS",
+            "caption":"Hunter Biden, with his father, US vice president Joe Biden. Photograph: Charles Dharapak/ASSOCIATED PRESS",
+            "width":"1860"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/14/1400079800250/Joe-Biden-Hunter-Biden-014.jpg",
+          "typeData":{
+            "source":"ASSOCIATED PRESS",
+            "photographer":"Charles Dharapak",
+            "altText":"Joe Biden, Hunter Biden",
+            "height":"1536",
+            "credit":"Charles Dharapak/ASSOCIATED PRESS",
+            "caption":"Hunter Biden, with his father, US vice president Joe Biden. Photograph: Charles Dharapak/ASSOCIATED PRESS",
+            "width":"2560"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/14/1400079795193/Joe-Biden-Hunter-Biden-011.jpg",
+          "typeData":{
+            "source":"ASSOCIATED PRESS",
+            "photographer":"Charles Dharapak",
+            "altText":"Joe Biden, Hunter Biden",
+            "height":"276",
+            "credit":"Charles Dharapak/ASSOCIATED PRESS",
+            "caption":"Hunter Biden, with his father, US vice-president Joe Biden. Photograph: Charles Dharapak/Associated Press",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-436895699",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/14/1400079788242/Joe-Biden-Hunter-Biden-006.jpg",
+          "typeData":{
+            "source":"ASSOCIATED PRESS",
+            "photographer":"Charles Dharapak",
+            "altText":"Joe Biden, Hunter Biden",
+            "height":"84",
+            "credit":"Charles Dharapak/ASSOCIATED PRESS",
+            "caption":"Hunter Biden, with his father, US vice president Joe Biden. Photograph: Charles Dharapak/ASSOCIATED PRESS",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/14/1400079796523/Joe-Biden-Hunter-Biden-012.jpg",
+          "typeData":{
+            "source":"ASSOCIATED PRESS",
+            "photographer":"Charles Dharapak",
+            "altText":"Joe Biden, Hunter Biden",
+            "height":"372",
+            "credit":"Charles Dharapak/ASSOCIATED PRESS",
+            "caption":"Hunter Biden, with his father, US vice president Joe Biden. Photograph: Charles Dharapak/ASSOCIATED PRESS",
+            "width":"620"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"music/shortcuts/2014/may/13/solange-knowles-beating-up-jay-z-lift-beyonce",
+      "sectionId":"music",
+      "sectionName":"Music",
+      "webPublicationDate":"2014-05-13T12:38:38Z",
+      "webTitle":"Who is Solange Knowles and why is she apparently beating up Jay Z?",
+      "webUrl":"http://www.theguardian.com/music/shortcuts/2014/may/13/solange-knowles-beating-up-jay-z-lift-beyonce",
+      "apiUrl":"http://content.guardianapis.com/music/shortcuts/2014/may/13/solange-knowles-beating-up-jay-z-lift-beyonce",
+      "fields":{
+        "newspaperPageNumber":"3",
+        "trailText":"<p>The internet is wild over a video that purports to show Beyoncé's hip little sister scrapping with her brother-in-law inside a hotel lift. And it's not her first celebrity feud …</p>",
+        "headline":"Who is Solange Knowles and why is she apparently beating up Jay Z?",
+        "body":"<p><strong>Name:</strong> Solange Knowles.</p><p><strong>Age:</strong> 27.</p><p><strong>Appearance:</strong> Young, beautiful, well dressed.</p><p><strong>Nice things to be. And that surname seems to ring a bell.</strong> Yes&nbsp;indeed. She is the little sister of international pop ostrich <a href=\"http://www.theguardian.com/music/beyonce\" title=\"\">Beyoncé</a> Knowles, and thus also the sister-in-law of middle-aged rap tycoon <a href=\"http://www.theguardian.com/music/jayz\" title=\"\">Jay Z</a>.</p><p><strong>Right. And what does Solange do? Or is she just a&nbsp;professional relative?</strong> Not at all. She's a singer in her own right and, it now turns out, <a href=\"http://www.theguardian.com/music/2014/may/12/solange-knowles-attacks-jay-z-hotel-tmz-video\" title=\"\">a tightly wound coil of rage</a>.</p><p><strong>Well, it must be kind of annoying when your big&nbsp;sister is already the most successful person in the world at exactly what you want to do.</strong> Yes,&nbsp;although most recently it was Jay Z she was&nbsp;annoyed with. As <a href=\"http://www.tmz.com/2014/05/12/jay-z-solange-fight-elevator-video-beyonce-met-gala/\" title=\"\">the gossip site TMZ so delightfully showed the world</a>, the three of them&nbsp;were in a lift together in a hotel last week, along with a very large man who was probably a&nbsp;bodyguard.</p><p><strong>Uh-huh.</strong> Pretty much as soon as they got in, Solange started screaming at Jay Z, attacked him&nbsp;with a hail of punches and kicks, and whacked him with a diamante clutch bag.</p><p><strong>What was she so angry about?</strong> Sadly, we don't know. All we have is silent video footage apparently from a security camera at the Standard&nbsp;Hotel in New York. What was behind the assault is currently obsessing the internet.</p><p><strong>Maybe it's just an attack of artistic differences?</strong> Could be. Solange danced with her big sister's band <a href=\"http://www.destinyschild.com\" title=\"\">Destiny's Child</a> when she was a teenager, but went solo long ago and became, according to music bloggers, a much more credible musician than Beyoncé or Jay Z.</p><p><strong>Ooh, I bet that feels good.</strong> Yes. And the fashion world loves her. Plus she has an eye for a \"hip\" collaborator and has worked with artists <a href=\"http://www.theguardian.com/music/2012/dec/08/kendrick-lamar-good-kid-maaad-city\" title=\"\">Kendrick Lamar</a> and <a href=\"http://www.theguardian.com/music/2013/dec/27/dev-hynes-solange-blood-orange-sound-of-pop-2013-interview\" title=\"\">Dev Hynes</a>, with whom she made her&nbsp;2012 single<a href=\"https://www.youtube.com/watch?v=Hy9W_mrY_Vk\" title=\"\"> Losing You</a>. It proved to be&nbsp;prophetic.</p><p><strong>How so?</strong> She <a href=\"http://www.theguardian.com/music/2013/nov/25/solange-dev-hynes-twitter-feud-beyonce\" title=\"\">publicly fell out with Hynes soon&nbsp;afterwards</a>.</p><p><strong>Ah. And would I like her music?</strong> Judge for yourself. She has a new album coming out this year.</p><p><strong>Well I never. She'll need to do something big to&nbsp;get it noticed.</strong> Good idea.</p><p><strong>Do say:</strong> \"She's the artisanal Beyoncé.\"</p><p><strong>Don't say:</strong> \"She's the musical Tyson.\"</p><p><em>• This article was amended on 13 May 2014. The original asked what Jay Z had done to warrant the alleged attack, and said Knowles got in what looks like a good clout with a clutch bag. These have been corrected.</em></p><!-- Guardian Watermark: internal-code/content/436771483|2014-05-14T16:53:59Z|a13db34b20c454a7f77263a8d727547b3481f965 -->",
+        "showInRelatedContent":"true",
+        "strap":"No 3,315",
+        "lastModified":"2014-05-14T16:20:43Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/13/1399983594248/Solange-Knowles-006.jpg",
+        "standfirst":"The internet is wild over a video that purports to show Beyoncé's hip little sister scrapping with her brother-in-law inside a hotel lift. And it's not her first celebrity feud …",
+        "shortUrl":"http://gu.com/p/3p7b5",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/13/1399983594248/Solange-Knowles-006.jpg",
+        "wordcount":"385",
+        "commentable":"true",
+        "internalContentCode":"436771483",
+        "allowUgc":"false",
+        "internalOctopusCode":"9036778",
+        "isPremoderated":"false",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2014-05-14",
+        "internalPageCode":"2091803",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2014-05-20T12:38:00Z"
+      },
+      "tags":[{
+        "id":"music/solange-knowles",
+        "type":"keyword",
+        "webTitle":"Solange Knowles",
+        "webUrl":"http://www.theguardian.com/music/solange-knowles",
+        "apiUrl":"http://content.guardianapis.com/music/solange-knowles",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"music/music",
+        "type":"keyword",
+        "webTitle":"Music",
+        "webUrl":"http://www.theguardian.com/music/music",
+        "apiUrl":"http://content.guardianapis.com/music/music",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"music/beyonce",
+        "type":"keyword",
+        "webTitle":"Beyoncé",
+        "webUrl":"http://www.theguardian.com/music/beyonce",
+        "apiUrl":"http://content.guardianapis.com/music/beyonce",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"music/jayz",
+        "type":"keyword",
+        "webTitle":"Jay Z",
+        "webUrl":"http://www.theguardian.com/music/jayz",
+        "apiUrl":"http://content.guardianapis.com/music/jayz",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"theguardian/series/pass-notes",
+        "type":"series",
+        "webTitle":"Pass notes",
+        "webUrl":"http://www.theguardian.com/theguardian/series/pass-notes",
+        "apiUrl":"http://content.guardianapis.com/theguardian/series/pass-notes",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/g2/features",
+        "type":"newspaper-book-section",
+        "webTitle":"Comment & features",
+        "webUrl":"http://www.theguardian.com/theguardian/g2/features",
+        "apiUrl":"http://content.guardianapis.com/theguardian/g2/features",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/g2",
+        "type":"newspaper-book",
+        "webTitle":"G2",
+        "webUrl":"http://www.theguardian.com/theguardian/g2",
+        "apiUrl":"http://content.guardianapis.com/theguardian/g2",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "references":[]
+      },{
+        "id":"theguardian/shortcuts",
+        "type":"blog",
+        "webTitle":"Shortcuts",
+        "webUrl":"http://www.theguardian.com/theguardian/shortcuts",
+        "apiUrl":"http://content.guardianapis.com/theguardian/shortcuts",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-436786293",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/13/1399983588253/Solange-Knowles-001.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Carlo Allegri",
+            "altText":"Solange Knowles",
+            "height":"54",
+            "credit":"Carlo Allegri/Reuters",
+            "caption":"Solange Knowles: dab hand with a diamante clutch bag. Photograph: Carlo Allegri/Reuters",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/13/1399983589270/Solange-Knowles-002.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Carlo Allegri",
+            "altText":"Solange Knowles",
+            "height":"340",
+            "credit":"Carlo Allegri/Reuters",
+            "caption":"Solange Knowles: dab hand with a diamante clutch bag. Photograph: Carlo Allegri/Reuters",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/13/1399983590271/Solange-Knowles-003.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Carlo Allegri",
+            "altText":"Solange Knowles",
+            "height":"130",
+            "credit":"Carlo Allegri/Reuters",
+            "caption":"Solange Knowles: dab hand with a diamante clutch bag. Photograph: Carlo Allegri/Reuters",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/13/1399983591321/Solange-Knowles-004.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Carlo Allegri",
+            "altText":"Solange Knowles",
+            "height":"720",
+            "credit":"Carlo Allegri/Reuters",
+            "caption":"Solange Knowles: dab hand with a diamante clutch bag. Photograph: Carlo Allegri/Reuters",
+            "width":"1280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/13/1399983592731/Solange-Knowles-005.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Carlo Allegri",
+            "altText":"Solange Knowles",
+            "height":"1536",
+            "credit":"Carlo Allegri/Reuters",
+            "caption":"Solange Knowles: dab hand with a diamante clutch bag. Photograph: Carlo Allegri/Reuters",
+            "width":"2048"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/13/1399983594248/Solange-Knowles-006.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Carlo Allegri",
+            "altText":"Solange Knowles",
+            "height":"84",
+            "credit":"Carlo Allegri/Reuters",
+            "caption":"Solange Knowles: dab hand with a diamante clutch bag. Photograph: Carlo Allegri/Reuters",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/13/1399983595204/Solange-Knowles-007.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Carlo Allegri",
+            "altText":"Solange Knowles",
+            "height":"132",
+            "credit":"Carlo Allegri/Reuters",
+            "caption":"Solange Knowles: dab hand with a diamante clutch bag. Photograph: Carlo Allegri/Reuters",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/13/1399983596240/Solange-Knowles-008.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Carlo Allegri",
+            "altText":"Solange Knowles",
+            "height":"168",
+            "credit":"Carlo Allegri/Reuters",
+            "caption":"Solange Knowles: dab hand with a diamante clutch bag. Photograph: Carlo Allegri/Reuters",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/13/1399983597193/Solange-Knowles-009.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Carlo Allegri",
+            "altText":"Solange Knowles",
+            "height":"180",
+            "credit":"Carlo Allegri/Reuters",
+            "caption":"Solange Knowles: dab hand with a diamante clutch bag. Photograph: Carlo Allegri/Reuters",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/13/1399983598166/Solange-Knowles-010.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Carlo Allegri",
+            "altText":"Solange Knowles",
+            "height":"228",
+            "credit":"Carlo Allegri/Reuters",
+            "caption":"Solange Knowles: dab hand with a diamante clutch bag. Photograph: Carlo Allegri/Reuters",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/13/1399983599241/Solange-Knowles-011.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Carlo Allegri",
+            "altText":"Solange Knowles",
+            "height":"276",
+            "credit":"Carlo Allegri/Reuters",
+            "caption":"Solange Knowles: dab hand with a diamante clutch bag. Photograph: Carlo Allegri/Reuters",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/13/1399983601179/Solange-Knowles-012.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Carlo Allegri",
+            "altText":"Solange Knowles",
+            "height":"372",
+            "credit":"Carlo Allegri/Reuters",
+            "caption":"Solange Knowles: dab hand with a diamante clutch bag. Photograph: Carlo Allegri/Reuters",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/13/1399983602315/Solange-Knowles-013.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Carlo Allegri",
+            "altText":"Solange Knowles",
+            "height":"1116",
+            "credit":"Carlo Allegri/Reuters",
+            "caption":"Solange Knowles: dab hand with a diamante clutch bag. Photograph: Carlo Allegri/Reuters",
+            "width":"1860"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/13/1399983604046/Solange-Knowles-014.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Carlo Allegri",
+            "altText":"Solange Knowles",
+            "height":"1536",
+            "credit":"Carlo Allegri/Reuters",
+            "caption":"Solange Knowles: dab hand with a diamante clutch bag. Photograph: Carlo Allegri/Reuters",
+            "width":"2560"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/13/1399983599241/Solange-Knowles-011.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Carlo Allegri",
+            "altText":"Solange Knowles",
+            "height":"276",
+            "credit":"Carlo Allegri/Reuters",
+            "caption":"Solange Knowles: lift rage. Photograph: Carlo Allegri/Reuters",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-436786294",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/13/1399983594248/Solange-Knowles-006.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Carlo Allegri",
+            "altText":"Solange Knowles",
+            "height":"84",
+            "credit":"Carlo Allegri/Reuters",
+            "caption":"Solange Knowles: dab hand with a diamante clutch bag. Photograph: Carlo Allegri/Reuters",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/13/1399983601179/Solange-Knowles-012.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "photographer":"Carlo Allegri",
+            "altText":"Solange Knowles",
+            "height":"372",
+            "credit":"Carlo Allegri/Reuters",
+            "caption":"Solange Knowles: dab hand with a diamante clutch bag. Photograph: Carlo Allegri/Reuters",
+            "width":"620"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"lifeandstyle/shortcuts/2014/may/12/noah-wyle-flood-baby-most-popular-boys-name-us",
+      "sectionId":"lifeandstyle",
+      "sectionName":"Life and style",
+      "webPublicationDate":"2014-05-12T14:33:00Z",
+      "webTitle":"Could ER's Noah Wyle have caused a flood of baby Noahs?",
+      "webUrl":"http://www.theguardian.com/lifeandstyle/shortcuts/2014/may/12/noah-wyle-flood-baby-most-popular-boys-name-us",
+      "apiUrl":"http://content.guardianapis.com/lifeandstyle/shortcuts/2014/may/12/noah-wyle-flood-baby-most-popular-boys-name-us",
+      "fields":{
+        "newspaperPageNumber":"3",
+        "trailText":"<p>Is it the Noah Wyle effect or the Russell Crowe effect? Nobody knows for sure, but Noah has replaced Jacob as the most popular baby boy's name in the US</p>",
+        "headline":"Could ER's Noah Wyle have caused a flood of baby Noahs?",
+        "body":"<p><strong>Name: </strong>Noah.</p><p><strong>Age: </strong>Zero.</p><p><strong>Appearance: </strong>Plump, asleep, vomit-covered.</p><p><strong>This would be a baby then?</strong> Yes, but not just one baby, 18,090 of them last year alone. Noah is now <a href=\"http://www.ssa.gov/OACT/babynames/#ht=2\" title=\"\">the most popular baby name in the US</a>. For boys, anyway.</p><p><strong>I thought Noah was a cool, alternative choice for parents who want to be a bit different?</strong> So did 36,180 mums and dads. It's actually been gathering popularity for a while now.</p><p><strong>Since when? </strong>Well, it came out of obscurity in the groovy part of the 1960s, bumped along with a rank in the low 200s through the80s and 90s, took a sharp upward turn in about 1995, and then made a decisive final push about five years ago.</p><p><strong>But what released this flood of Noahs? </strong>Nobody knows for sure, but I bet it's something to do with Carter.</p><p><strong>The president? </strong>No, <a href=\"https://www.youtube.com/watch?v=XywGgYqN1JA\" title=\"\">the student doctor in ER</a>.</p><p><strong>Ah yes.</strong> <strong>The rich but terribly nice one who wasn't George Clooney?</strong> That's him. And he was played by …?</p><p><strong>I give up. </strong>Noah Wyle! He was part of the original cast who made the show a huge hit from September 1994 onwards.</p><p><strong>Because of course, when you have kids you always ask yourself: \"Who played a likeable TV doctor 20 years ago?\" </strong>Your facetiousness is misplaced, as ever. Wyle could have triggered a rediscovery of the name, which soon gathered its own momentum. Names follow interesting patterns as they rise and fall in popularity.</p><p><strong>Really?</strong> Yes. Statistician Chris Franck has worked with Time magazine to create an online tool that <a href=\"http://time.com/93911/baby-name-predictor/\" title=\"\">predicts the future popularity of a name</a> by looking at similar patterns from the past. Jacob, for instance, which Noah replaced at the top, is a classic big peak, centred around 2000 and now in steady decline. Noah's summit has been flatter, but it is expected to fall away too. Meanwhile, <a href=\"http://www.theguardian.com/news/datablog/2013/aug/12/top-100-baby-names-2012-girls-boys-list#data\" title=\"\">in the UK it is currently 14th</a> and rising.</p><p><strong>Isn't there a Noah movie at the moment?</strong> <strong>Maybe people just like to name boys after forthcoming Russell Crowe characters. Was there a surge in American babies called Maximus around Gladiator? </strong>Actually, yes. A little surge, anyway. It shot up from 850th in 2000 to 311th in 2001. It's 200th now.</p><p><strong>People are weird. </strong>Especially people who have just had babies.</p><p><strong>Do say:</strong> \"Noah R! Please share nicely with Noah B. You stay out of this, Noah S.\"</p><p><strong>Don't say:</strong> \"My name is Noah, son to unimaginative parents, and I will have my vengeance, in this life or the next.\"</p><!-- Guardian Watermark: internal-code/content/436658341|2014-05-14T16:53:59Z|b766c19577ffa4f959a8bd4144904f6b22b210c6 -->",
+        "showInRelatedContent":"true",
+        "strap":"No 3,314",
+        "lastModified":"2014-05-13T17:00:45Z",
+        "hasStoryPackage":"false",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Lifeandhealth/Pix/pictures/2014/5/12/1399904656612/Noah-Wyle-as-Dr-John-Cart-004.jpg",
+        "standfirst":"Is it the Noah Wyle effect or the Russell Crowe effect? Nobody knows for sure, but Noah has replaced Jacob as the most popular baby boy's name in the US",
+        "shortUrl":"http://gu.com/p/3p6fd",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Lifeandhealth/Pix/pictures/2014/5/12/1399904656612/Noah-Wyle-as-Dr-John-Cart-004.jpg",
+        "wordcount":"403",
+        "commentable":"true",
+        "internalContentCode":"436658341",
+        "allowUgc":"false",
+        "internalOctopusCode":"9033528",
+        "isPremoderated":"false",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2014-05-13",
+        "internalPageCode":"2091190",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2014-05-19T14:33:00Z"
+      },
+      "tags":[{
+        "id":"lifeandstyle/baby-names",
+        "type":"keyword",
+        "webTitle":"Baby names",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/baby-names",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/baby-names",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"lifeandstyle/parents-and-parenting",
+        "type":"keyword",
+        "webTitle":"Parents and parenting",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/parents-and-parenting",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/parents-and-parenting",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"theguardian/series/pass-notes",
+        "type":"series",
+        "webTitle":"Pass notes",
+        "webUrl":"http://www.theguardian.com/theguardian/series/pass-notes",
+        "apiUrl":"http://content.guardianapis.com/theguardian/series/pass-notes",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/shortcuts",
+        "type":"blog",
+        "webTitle":"Shortcuts",
+        "webUrl":"http://www.theguardian.com/theguardian/shortcuts",
+        "apiUrl":"http://content.guardianapis.com/theguardian/shortcuts",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"lifeandstyle/family",
+        "type":"keyword",
+        "webTitle":"Family",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/family",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/family",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"lifeandstyle/lifeandstyle",
+        "type":"keyword",
+        "webTitle":"Life and style",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/lifeandstyle",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/lifeandstyle",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"theguardian/g2/features",
+        "type":"newspaper-book-section",
+        "webTitle":"Comment & features",
+        "webUrl":"http://www.theguardian.com/theguardian/g2/features",
+        "apiUrl":"http://content.guardianapis.com/theguardian/g2/features",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/g2",
+        "type":"newspaper-book",
+        "webTitle":"G2",
+        "webUrl":"http://www.theguardian.com/theguardian/g2",
+        "apiUrl":"http://content.guardianapis.com/theguardian/g2",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-436673142",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Lifeandhealth/Pix/pictures/2014/5/12/1399904663619/Noah-Wyle-as-Dr-John-Cart-009.jpg",
+          "typeData":{
+            "source":"Channel 4",
+            "altText":"Noah Wyle as Dr John Carter in ER",
+            "height":"276",
+            "credit":"Channel 4",
+            "caption":"Noah Wyle as Dr John Carter in ER. Photograph: Channel 4",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-436673143",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Lifeandhealth/Pix/pictures/2014/5/12/1399904656612/Noah-Wyle-as-Dr-John-Cart-004.jpg",
+          "typeData":{
+            "source":"Channel 4",
+            "altText":"Noah Wyle as Dr John Carter in ER",
+            "height":"84",
+            "credit":"Channel 4",
+            "caption":"Noah Wyle as Dr John Carter in ER. Photograph: Channel 4",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"music/shortcuts/2014/may/09/dr-dre-apple-richest-hip-hop-headphones-beats",
+      "sectionId":"music",
+      "sectionName":"Music",
+      "webPublicationDate":"2014-05-09T12:50:53Z",
+      "webTitle":"Dr Dre's Apple deal will make him the richest man in hip-hop",
+      "webUrl":"http://www.theguardian.com/music/shortcuts/2014/may/09/dr-dre-apple-richest-hip-hop-headphones-beats",
+      "apiUrl":"http://content.guardianapis.com/music/shortcuts/2014/may/09/dr-dre-apple-richest-hip-hop-headphones-beats",
+      "fields":{
+        "newspaperPageNumber":"3",
+        "trailText":"The rapper and producer has made headphones cool again. Now selling his stake in Beats Electronics will give Dre a personal fortune of $800m – nudging him ahead of P Diddy",
+        "headline":"Dr Dre's Apple deal will make him the richest man in hip-hop",
+        "body":"<p><strong>Name:</strong> Dr Dre.</p><p><strong>Age: </strong>49.</p><p><strong>Appearance: </strong>Distinguished, very well-off.</p><p><strong>What is he a doctor of?</strong> He's a rapper and record producer, real name Andre Young. The doctorate is sort of an honorary thing.</p><p><strong>I was going to say that he sounds a bit overqualified. </strong>He's doing all right: Dr Dre is about to become rap's richest man.</p><p><strong>Is he not already?</strong> The title currently belongs to P&nbsp;Diddy, who according to Forbes is worth $700m. But Dr Dre, former NWA member, Grammy-winning producer and Eminem and 50 Cent collaborator, now looks set to surpass him.</p><p><strong>Wow. I had no idea there was so much money in misogynist rhyming.</strong> There isn't quite. Dr Dre's big payday would come <a href=\"http://www.theguardian.com/technology/2014/may/09/apple-looks-set-to-buy-dr-dre-beats-electronics\" title=\"\">from the sale of his Beats headphones empire to Apple</a>.</p><p><strong>Wow. I had no idea there was so much money in headphones. </strong>If there is it's due largely to Dr Dre and his partner, Jimmy Iovine, who started Beats Electronics in 2008. They made headphones fashionable, imbuing them with a streetwise, overpriced cool that only Apple's money can buy.</p><p><strong>Roughly how much money are we talking about?</strong> With the sales of Beats Electronics and its fledging music streaming service, Beats Music, about $3.2bn</p><p><strong>Come again? </strong>It's a big number. If it goes ahead it will be Apple's largest ever acquisition.</p><p><strong>And Dr Dre will be hip-hop's first billionaire!</strong> That's what the headlines say. Pity it isn't true.</p><p><strong>Of course it is! Do the maths!</strong> If you insist: the good doctor is presently worth $550m. He co-founded Beats, but last year Carlyle Group acquired a minority shareholding for $500m. His present stake is thought to be somewhere between 20 and 25%.</p><p><strong>Which means?</strong> That after the sale – and after tax – Dre will be worth $800m; ahead of Diddy and Jay Z, but some way shy of his first billion.</p><p><strong>Well he can always play a few concerts if he needs some cash. </strong>Or he could release his long-awaited but yet-to-arrive album Detox. Some say it was shelved to prevent a lukewarm reception damaging the Beats brand.</p><p><strong>Do say: </strong>\"He reached millions with his music, and made millions with his headphones.\"</p><p><strong>Don't say: </strong>\"Doctor, I'm having a slight problem with my hearing.\"</p><!-- Guardian Watermark: internal-code/content/436454218|2014-05-14T16:53:59Z|fd7b98c800db3052dba5cec74213b24236f8bcd5 -->",
+        "showInRelatedContent":"true",
+        "strap":"No 3,313",
+        "lastModified":"2014-05-12T13:20:45Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/9/1399639514169/Dr-Dre-006.jpg",
+        "standfirst":"The rapper and producer has made headphones cool again. Now selling his stake in Beats Electronics will give Dre a personal fortune of $800m – nudging him ahead of P Diddy",
+        "shortUrl":"http://gu.com/p/3p4z3",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/9/1399639514169/Dr-Dre-006.jpg",
+        "wordcount":"353",
+        "commentable":"true",
+        "internalContentCode":"436454218",
+        "allowUgc":"false",
+        "internalOctopusCode":"9024201",
+        "isPremoderated":"false",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2014-05-12",
+        "internalPageCode":"2089965",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2014-05-16T12:50:53Z"
+      },
+      "tags":[{
+        "id":"music/drdre",
+        "type":"keyword",
+        "webTitle":"Dr Dre",
+        "webUrl":"http://www.theguardian.com/music/drdre",
+        "apiUrl":"http://content.guardianapis.com/music/drdre",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"theguardian/series/pass-notes",
+        "type":"series",
+        "webTitle":"Pass notes",
+        "webUrl":"http://www.theguardian.com/theguardian/series/pass-notes",
+        "apiUrl":"http://content.guardianapis.com/theguardian/series/pass-notes",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"technology/apple",
+        "type":"keyword",
+        "webTitle":"Apple",
+        "webUrl":"http://www.theguardian.com/technology/apple",
+        "apiUrl":"http://content.guardianapis.com/technology/apple",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/computing",
+        "type":"keyword",
+        "webTitle":"Computing",
+        "webUrl":"http://www.theguardian.com/technology/computing",
+        "apiUrl":"http://content.guardianapis.com/technology/computing",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"technology/technology",
+        "type":"keyword",
+        "webTitle":"Technology",
+        "webUrl":"http://www.theguardian.com/technology/technology",
+        "apiUrl":"http://content.guardianapis.com/technology/technology",
+        "sectionId":"technology",
+        "sectionName":"Technology",
+        "references":[]
+      },{
+        "id":"business/business",
+        "type":"keyword",
+        "webTitle":"Business",
+        "webUrl":"http://www.theguardian.com/business/business",
+        "apiUrl":"http://content.guardianapis.com/business/business",
+        "sectionId":"business",
+        "sectionName":"Business",
+        "references":[]
+      },{
+        "id":"music/hip-hop",
+        "type":"keyword",
+        "webTitle":"Hip-hop",
+        "webUrl":"http://www.theguardian.com/music/hip-hop",
+        "apiUrl":"http://content.guardianapis.com/music/hip-hop",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"music/urban",
+        "type":"keyword",
+        "webTitle":"Urban music",
+        "webUrl":"http://www.theguardian.com/music/urban",
+        "apiUrl":"http://content.guardianapis.com/music/urban",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"music/music",
+        "type":"keyword",
+        "webTitle":"Music",
+        "webUrl":"http://www.theguardian.com/music/music",
+        "apiUrl":"http://content.guardianapis.com/music/music",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"theguardian/shortcuts",
+        "type":"blog",
+        "webTitle":"Shortcuts",
+        "webUrl":"http://www.theguardian.com/theguardian/shortcuts",
+        "apiUrl":"http://content.guardianapis.com/theguardian/shortcuts",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "references":[]
+      },{
+        "id":"theguardian/g2/features",
+        "type":"newspaper-book-section",
+        "webTitle":"Comment & features",
+        "webUrl":"http://www.theguardian.com/theguardian/g2/features",
+        "apiUrl":"http://content.guardianapis.com/theguardian/g2/features",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/g2",
+        "type":"newspaper-book",
+        "webTitle":"G2",
+        "webUrl":"http://www.theguardian.com/theguardian/g2",
+        "apiUrl":"http://content.guardianapis.com/theguardian/g2",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-436455023",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/9/1399639507099/Dr-Dre-001.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Elsa",
+            "altText":"Dr Dre",
+            "height":"54",
+            "credit":"Elsa/Getty Images",
+            "caption":"Dr Dre, wearing a pair of those famous headphones. Photograph: Elsa/Getty Images",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/9/1399639508301/Dr-Dre-002.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Elsa",
+            "altText":"Dr Dre",
+            "height":"340",
+            "credit":"Elsa/Getty Images",
+            "caption":"Dr Dre, wearing a pair of those famous headphones. Photograph: Elsa/Getty Images",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/9/1399639509473/Dr-Dre-003.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Elsa",
+            "altText":"Dr Dre",
+            "height":"130",
+            "credit":"Elsa/Getty Images",
+            "caption":"Dr Dre, wearing a pair of those famous headphones. Photograph: Elsa/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/9/1399639510738/Dr-Dre-004.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Elsa",
+            "altText":"Dr Dre",
+            "height":"720",
+            "credit":"Elsa/Getty Images",
+            "caption":"Dr Dre, wearing a pair of those famous headphones. Photograph: Elsa/Getty Images",
+            "width":"1280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/9/1399639512307/Dr-Dre-005.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Elsa",
+            "altText":"Dr Dre",
+            "height":"1536",
+            "credit":"Elsa/Getty Images",
+            "caption":"Dr Dre, wearing a pair of those famous headphones. Photograph: Elsa/Getty Images",
+            "width":"2048"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/9/1399639514169/Dr-Dre-006.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Elsa",
+            "altText":"Dr Dre",
+            "height":"84",
+            "credit":"Elsa/Getty Images",
+            "caption":"Dr Dre, wearing a pair of those famous headphones. Photograph: Elsa/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/9/1399639515294/Dr-Dre-007.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Elsa",
+            "altText":"Dr Dre",
+            "height":"132",
+            "credit":"Elsa/Getty Images",
+            "caption":"Dr Dre, wearing a pair of those famous headphones. Photograph: Elsa/Getty Images",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/9/1399639516428/Dr-Dre-008.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Elsa",
+            "altText":"Dr Dre",
+            "height":"168",
+            "credit":"Elsa/Getty Images",
+            "caption":"Dr Dre, wearing a pair of those famous headphones. Photograph: Elsa/Getty Images",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/9/1399639517631/Dr-Dre-009.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Elsa",
+            "altText":"Dr Dre",
+            "height":"180",
+            "credit":"Elsa/Getty Images",
+            "caption":"Dr Dre, wearing a pair of those famous headphones. Photograph: Elsa/Getty Images",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/9/1399639518863/Dr-Dre-010.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Elsa",
+            "altText":"Dr Dre",
+            "height":"228",
+            "credit":"Elsa/Getty Images",
+            "caption":"Dr Dre, wearing a pair of those famous headphones. Photograph: Elsa/Getty Images",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/9/1399639520238/Dr-Dre-011.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Elsa",
+            "altText":"Dr Dre",
+            "height":"276",
+            "credit":"Elsa/Getty Images",
+            "caption":"Dr Dre, wearing a pair of those famous headphones. Photograph: Elsa/Getty Images",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/9/1399639521440/Dr-Dre-012.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Elsa",
+            "altText":"Dr Dre",
+            "height":"372",
+            "credit":"Elsa/Getty Images",
+            "caption":"Dr Dre, wearing a pair of those famous headphones. Photograph: Elsa/Getty Images",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/9/1399639522745/Dr-Dre-013.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Elsa",
+            "altText":"Dr Dre",
+            "height":"1116",
+            "credit":"Elsa/Getty Images",
+            "caption":"Dr Dre, wearing a pair of those famous headphones. Photograph: Elsa/Getty Images",
+            "width":"1860"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/9/1399639524592/Dr-Dre-014.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Elsa",
+            "altText":"Dr Dre",
+            "height":"1536",
+            "credit":"Elsa/Getty Images",
+            "caption":"Dr Dre, wearing a pair of those famous headphones. Photograph: Elsa/Getty Images",
+            "width":"2560"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/9/1399639520238/Dr-Dre-011.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Elsa",
+            "altText":"Dr Dre",
+            "height":"276",
+            "credit":"Elsa/Getty Images",
+            "caption":"Dr Dre, wearing a pair of those famous headphones. Photograph: Elsa/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-436455024",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/9/1399639514169/Dr-Dre-006.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Elsa",
+            "altText":"Dr Dre",
+            "height":"84",
+            "credit":"Elsa/Getty Images",
+            "caption":"Dr Dre, wearing a pair of those famous headphones. Photograph: Elsa/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/9/1399639521440/Dr-Dre-012.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Elsa",
+            "altText":"Dr Dre",
+            "height":"372",
+            "credit":"Elsa/Getty Images",
+            "caption":"Dr Dre, wearing a pair of those famous headphones. Photograph: Elsa/Getty Images",
+            "width":"620"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"world/shortcuts/2014/may/07/glocker-moms-american-mothers-guns-national-rifle-association",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2014-05-07T14:04:54Z",
+      "webTitle":"Glocker Moms: like soccer moms but with guns",
+      "webUrl":"http://www.theguardian.com/world/shortcuts/2014/may/07/glocker-moms-american-mothers-guns-national-rifle-association",
+      "apiUrl":"http://content.guardianapis.com/world/shortcuts/2014/may/07/glocker-moms-american-mothers-guns-national-rifle-association",
+      "fields":{
+        "newspaperPageNumber":"3",
+        "trailText":"<p>The National Rifle Association claims a quarter of those at its annual meeting were women. Could the gun-loving American mother be the acceptable new face of the firearms industry?</p>",
+        "headline":"Glocker Moms: like soccer moms but with guns",
+        "body":"<p><strong>Name: </strong>Glocker Moms.</p><p><strong>Age: </strong>Varies.</p><p><strong>Appearance: </strong>Terrifying.</p><p><strong>What's so scary about a suburban mother who works hard for her children?</strong> You're thinking of soccer moms. These are <a href=\"http://mediamatters.org/blog/2014/05/02/meet-the-glocker-moms/199128\" title=\"\">Glocker Moms</a>. They are basically the same, except they own a gun and hate liberals.</p><p><strong>As in Glock, the renowned Austrian handgun manufacturer? </strong>You catch on fast.</p><p><strong>This sounds to me like an American thing. </strong>Right again. The National Rifle Association (NRA) claims that a quarter of the attendees at its recent annual meeting in Indianapolis were women, up from, at best, 5-10% a decade ago. It also put a huge poster of a female gun activist on the front of the building and handed out \"I'm an NRA MOM\" badges on the door.</p><p><strong>It must be very pleased with this development.</strong> Yes, pleased. And also probably keen to make the most of it. On the one&nbsp;hand, more American women do <a href=\"http://www.gallup.com/poll/150353/self-reported-gun-ownership-highest-1993.aspx\" title=\"\">seem to be&nbsp;developing a love of guns</a>. The number of female-held gun permits in Indiana, for instance, <a href=\"http://www.indystar.com/story/life/2014/04/24/armed-gun-permits-indiana-women-percent/8095055/\" title=\"\">has risen by almost 43%</a> in the past two years, and there are certainly more pink guns, targets and holsters on the market.</p><p><strong>What sane woman wouldn't want one of those?</strong> Indeed. On the other hand, gun manufacturers, which supply much of the NRA's funding, need to appeal to women and minorities to find future growth. Plus this is a very convenient riposte to <a href=\"https://www.momsdemandaction.org/\" title=\"\">Moms Demand Action for Gun Sense in America</a>, a growing group of anti-gun activists that <a href=\"http://www.thedailybeast.com/articles/2014/04/24/the-nra-s-worst-nightmare-is-america-s-moms.html\" title=\"\">sprang up following the Sandy Hook massacre</a>.</p><p><strong>Good idea. Bad name.</strong> That's your opinion. But they are not to be trifled with, despite their peaceful nature.</p><p><strong>Why would lots of women suddenly want a&nbsp;gun&nbsp;anyway?</strong> Mostly for protection from men,&nbsp;they say. Although statistics show that women with access to firearms <a href=\"http://www.theatlantic.com/national/archive/2014/02/having-a-gun-in-the-house-doesnt-make-a-woman-safer/284022/\" title=\"\">are much more likely to become homicide victims</a> – and to a&nbsp;greater extent than male gun-owners.</p><p><strong>Perhaps it's just that they don't have quite enough guns&nbsp;yet?</strong> The US already owns vastly&nbsp;more guns&nbsp;per person, as well as having a&nbsp;higher rate&nbsp;of&nbsp;gun deaths, than any other developed country.</p><p><strong>What about giving every household their own vat of anthrax? Have they tried that? </strong>Sounds like&nbsp;a great idea.</p><p><strong>Do say:</strong> \"The <a href=\"http://abcnews.go.com/blogs/health/2013/09/19/u-s-has-more-guns-and-gun-deaths-than-any-other-country-study-finds/\" title=\"\">rate of gun deaths in the US</a> is more than 40 times higher than in the UK.\"</p><p><strong>Don't say:</strong> \"Do your homework, punk!\"</p><!-- Guardian Watermark: internal-code/content/436247786|2014-05-14T16:53:59Z|2ef20cf5d92f9d976ff2e784b595f5a8366b70a3 -->",
+        "showInRelatedContent":"true",
+        "strap":"No 3,312",
+        "lastModified":"2014-05-09T11:50:44Z",
+        "hasStoryPackage":"false",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/7/1399471438693/Woman-with-a-gun-003.jpg",
+        "standfirst":"The National Rifle Association claims a quarter of those at its annual meeting were women. Could the gun-loving American mother be the acceptable new face of the firearms industry?",
+        "shortUrl":"http://gu.com/p/3p2tm",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/7/1399471438693/Woman-with-a-gun-003.jpg",
+        "wordcount":"369",
+        "commentable":"true",
+        "internalContentCode":"436247786",
+        "allowUgc":"false",
+        "internalOctopusCode":"9013246",
+        "isPremoderated":"false",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2014-05-08",
+        "internalPageCode":"2088364",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2014-05-10T14:04:00Z"
+      },
+      "tags":[{
+        "id":"world/gun-control",
+        "type":"keyword",
+        "webTitle":"US gun control",
+        "webUrl":"http://www.theguardian.com/world/gun-control",
+        "apiUrl":"http://content.guardianapis.com/world/gun-control",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"theguardian/series/pass-notes",
+        "type":"series",
+        "webTitle":"Pass notes",
+        "webUrl":"http://www.theguardian.com/theguardian/series/pass-notes",
+        "apiUrl":"http://content.guardianapis.com/theguardian/series/pass-notes",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"theguardian/g2/features",
+        "type":"newspaper-book-section",
+        "webTitle":"Comment & features",
+        "webUrl":"http://www.theguardian.com/theguardian/g2/features",
+        "apiUrl":"http://content.guardianapis.com/theguardian/g2/features",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/g2",
+        "type":"newspaper-book",
+        "webTitle":"G2",
+        "webUrl":"http://www.theguardian.com/theguardian/g2",
+        "apiUrl":"http://content.guardianapis.com/theguardian/g2",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "references":[]
+      },{
+        "id":"theguardian/shortcuts",
+        "type":"blog",
+        "webTitle":"Shortcuts",
+        "webUrl":"http://www.theguardian.com/theguardian/shortcuts",
+        "apiUrl":"http://content.guardianapis.com/theguardian/shortcuts",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-436443754",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/7/1399471435698/Woman-with-a-gun-001.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Rich Legg",
+            "altText":"Woman with a gun",
+            "height":"54",
+            "credit":"Rich Legg/Getty Images",
+            "caption":"The number of women in the US who own a gun is growing. Photograph: Rich Legg/Getty Images",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/7/1399471437409/Woman-with-a-gun-002.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Rich Legg",
+            "altText":"Woman with a gun",
+            "height":"130",
+            "credit":"Rich Legg/Getty Images",
+            "caption":"The number of women in the US who own a gun is growing. Photograph: Rich Legg/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/7/1399471438693/Woman-with-a-gun-003.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Rich Legg",
+            "altText":"Woman with a gun",
+            "height":"84",
+            "credit":"Rich Legg/Getty Images",
+            "caption":"The number of women in the US who own a gun is growing. Photograph: Rich Legg/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/7/1399471439991/Woman-with-a-gun-004.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Rich Legg",
+            "altText":"Woman with a gun",
+            "height":"132",
+            "credit":"Rich Legg/Getty Images",
+            "caption":"The number of women in the US who own a gun is growing. Photograph: Rich Legg/Getty Images",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/7/1399471441253/Woman-with-a-gun-005.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Rich Legg",
+            "altText":"Woman with a gun",
+            "height":"168",
+            "credit":"Rich Legg/Getty Images",
+            "caption":"The number of women in the US who own a gun is growing. Photograph: Rich Legg/Getty Images",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/7/1399471442590/Woman-with-a-gun-006.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Rich Legg",
+            "altText":"Woman with a gun",
+            "height":"180",
+            "credit":"Rich Legg/Getty Images",
+            "caption":"The number of women in the US who own a gun is growing. Photograph: Rich Legg/Getty Images",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/7/1399471443890/Woman-with-a-gun-007.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Rich Legg",
+            "altText":"Woman with a gun",
+            "height":"228",
+            "credit":"Rich Legg/Getty Images",
+            "caption":"The number of women in the US who own a gun is growing. Photograph: Rich Legg/Getty Images",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/7/1399471445153/Woman-with-a-gun-008.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Rich Legg",
+            "altText":"Woman with a gun",
+            "height":"276",
+            "credit":"Rich Legg/Getty Images",
+            "caption":"The number of women in the US who own a gun is growing. Photograph: Rich Legg/Getty Images",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/7/1399471445153/Woman-with-a-gun-008.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Rich Legg",
+            "altText":"Woman with a gun",
+            "height":"276",
+            "credit":"Rich Legg/Getty Images",
+            "caption":"The number of women in the US who own a gun is growing. Photograph: Rich Legg/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-436443755",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/7/1399471438693/Woman-with-a-gun-003.jpg",
+          "typeData":{
+            "source":"Getty Images",
+            "photographer":"Rich Legg",
+            "altText":"Woman with a gun",
+            "height":"84",
+            "credit":"Rich Legg/Getty Images",
+            "caption":"The number of women in the US who own a gun is growing. Photograph: Rich Legg/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"environment/shortcuts/2014/may/06/goblin-shark-tory-minister-prehistoric-beast",
+      "sectionId":"environment",
+      "sectionName":"Environment",
+      "webPublicationDate":"2014-05-06T16:06:01Z",
+      "webTitle":"The goblin shark: a rare glimpse of something truly hideous ",
+      "webUrl":"http://www.theguardian.com/environment/shortcuts/2014/may/06/goblin-shark-tory-minister-prehistoric-beast",
+      "apiUrl":"http://content.guardianapis.com/environment/shortcuts/2014/may/06/goblin-shark-tory-minister-prehistoric-beast",
+      "fields":{
+        "newspaperPageNumber":"3",
+        "trailText":"<p>A fisherman trawling for shrimps off the coast of Florida has become one of the … err … lucky few people to have come face to face with this monster of the deep</p>",
+        "headline":"The goblin shark: a rare glimpse of something truly hideous",
+        "body":"<p><strong>Name: </strong>The goblin shark.</p><p><strong>Age: </strong>You'd have to ask it.</p><p><strong>Appearance: </strong>A kipper crossed with an ironing board, as imagined by HR Giger.</p><p><strong>The artist who created </strong><a href=\"http://www.hrgiger.com/alien.htm\" title=\"\"><strong>the monsters in the Alien&nbsp;movies</strong></a><strong>?</strong> That's the one. If you're still confused, you could look at the picture at the top of the page.</p><p><strong>I'm trying not to. That snout! Those teeth! That purple-pink skin!&nbsp;The last time I saw anything that hideous, it was standing at a dispatch box, lying about its plans to destroy the welfare state. </strong>Are you thinking about any coalition minister in particular&nbsp;here?</p><p><strong>I would be if I could tell them apart. </strong>Well, this odd-looking specimen was caught off the coast of Florida by fishermen trawling for shrimps. Who promptly threw it back in again.</p><p><strong>And that's what passes for news nowadays, is it? Fishermen Accidentally Catch Something They Don't Fancy Eating!</strong> Of course not. It only counts as news if they take photos of it.</p><p><strong>I stand corrected. Fishermen Accidentally Catch Something They Don't Fancy Eating – With Pictures!</strong> It also helps if the fish has a good backstory. The goblin shark lives at depths of several thousand feet and gets its name from <a href=\"http://australianmuseum.net.au/ichthyology-collection-goblin-shark\" title=\"\">Japanese legends</a> of dangerous creatures with long noses and red faces.</p><p><strong>Hmm.</strong> Sixty-three-year-old Carl Moore scooped up the fish on 19 April, but only reported his catch to the National Oceanic and Atmospheric Administration last week. It's more than a decade since the last goblin shark was seen in the Gulf of Mexico. \"I didn't even know what it was,\" Moore <a href=\"http://www.chron.com/news/nation-world/article/Scientists-amazed-by-accidental-Gulf-catch-of-5448545.php\" title=\"\">told the Houston Chronicle</a>. \"The guys at NOAA said I'm probably one of only 10 people who've seen one of those alive.\"</p><p><strong>Lucky he had a camera.</strong> Moore used his mobile phone – without getting too close – and reckons the shark was 18ft long. \"I didn't get the tape measure out because that thing's got some wicked teeth. They could do some damage.\"</p><p><strong>Especially if you're a smaller fish. </strong>Well, obviously. The shark's jaws can snap forward almost to the end of its snout – which, incidentally, is crammed with electrical sensors to help it find prey.</p><p><strong>Isn't nature amazing? </strong>As the last surviving member of <a href=\"http://www.fishesofaustralia.net.au/home/family/316\" title=\"\">the Mitsukurinidae family</a>, which dates back some 125m years, the goblin shark is sometimes described as a living fossil.</p><p><strong>Are you <em>sure</em> it isn't something to do with the government?</strong> Er …</p><p><strong>Do say: </strong>\"I never forget a face … \"</p><p><strong>Don't say: </strong>\"But in your case I'll make an exception.\"</p><!-- Guardian Watermark: internal-code/content/436169876|2014-05-14T16:53:59Z|1c18e2e66bcc76007cb20c200f8537e735f7dbba -->",
+        "showInRelatedContent":"true",
+        "strap":"No 3,311",
+        "lastModified":"2014-05-07T13:40:42Z",
+        "hasStoryPackage":"false",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/6/1399392280694/Goblin-sharking--004.jpg",
+        "standfirst":"A fisherman trawling for shrimps off the coast of Florida has become one of the … err … lucky few people to have come face to face with this monster of the deep",
+        "shortUrl":"http://gu.com/p/3pxpx",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/6/1399392280694/Goblin-sharking--004.jpg",
+        "wordcount":"401",
+        "commentable":"true",
+        "internalContentCode":"436169876",
+        "allowUgc":"false",
+        "internalOctopusCode":"9008807",
+        "isPremoderated":"false",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2014-05-07",
+        "internalPageCode":"2087803",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2014-05-13T16:06:01Z"
+      },
+      "tags":[{
+        "id":"environment/sharks",
+        "type":"keyword",
+        "webTitle":"Sharks",
+        "webUrl":"http://www.theguardian.com/environment/sharks",
+        "apiUrl":"http://content.guardianapis.com/environment/sharks",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"environment/marine-life",
+        "type":"keyword",
+        "webTitle":"Marine life",
+        "webUrl":"http://www.theguardian.com/environment/marine-life",
+        "apiUrl":"http://content.guardianapis.com/environment/marine-life",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"environment/wildlife",
+        "type":"keyword",
+        "webTitle":"Wildlife",
+        "webUrl":"http://www.theguardian.com/environment/wildlife",
+        "apiUrl":"http://content.guardianapis.com/environment/wildlife",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"environment/environment",
+        "type":"keyword",
+        "webTitle":"Environment",
+        "webUrl":"http://www.theguardian.com/environment/environment",
+        "apiUrl":"http://content.guardianapis.com/environment/environment",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"science/zoology",
+        "type":"keyword",
+        "webTitle":"Zoology",
+        "webUrl":"http://www.theguardian.com/science/zoology",
+        "apiUrl":"http://content.guardianapis.com/science/zoology",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"science/biology",
+        "type":"keyword",
+        "webTitle":"Biology",
+        "webUrl":"http://www.theguardian.com/science/biology",
+        "apiUrl":"http://content.guardianapis.com/science/biology",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"science/science",
+        "type":"keyword",
+        "webTitle":"Science",
+        "webUrl":"http://www.theguardian.com/science/science",
+        "apiUrl":"http://content.guardianapis.com/science/science",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"environment/fishing",
+        "type":"keyword",
+        "webTitle":"Fishing",
+        "webUrl":"http://www.theguardian.com/environment/fishing",
+        "apiUrl":"http://content.guardianapis.com/environment/fishing",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"theguardian/series/pass-notes",
+        "type":"series",
+        "webTitle":"Pass notes",
+        "webUrl":"http://www.theguardian.com/theguardian/series/pass-notes",
+        "apiUrl":"http://content.guardianapis.com/theguardian/series/pass-notes",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"environment/conservation",
+        "type":"keyword",
+        "webTitle":"Conservation",
+        "webUrl":"http://www.theguardian.com/environment/conservation",
+        "apiUrl":"http://content.guardianapis.com/environment/conservation",
+        "sectionId":"environment",
+        "sectionName":"Environment",
+        "references":[]
+      },{
+        "id":"world/animals",
+        "type":"keyword",
+        "webTitle":"Animals",
+        "webUrl":"http://www.theguardian.com/world/animals",
+        "apiUrl":"http://content.guardianapis.com/world/animals",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"theguardian/shortcuts",
+        "type":"blog",
+        "webTitle":"Shortcuts",
+        "webUrl":"http://www.theguardian.com/theguardian/shortcuts",
+        "apiUrl":"http://content.guardianapis.com/theguardian/shortcuts",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"theguardian/g2/features",
+        "type":"newspaper-book-section",
+        "webTitle":"Comment & features",
+        "webUrl":"http://www.theguardian.com/theguardian/g2/features",
+        "apiUrl":"http://content.guardianapis.com/theguardian/g2/features",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/g2",
+        "type":"newspaper-book",
+        "webTitle":"G2",
+        "webUrl":"http://www.theguardian.com/theguardian/g2",
+        "apiUrl":"http://content.guardianapis.com/theguardian/g2",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-436174049",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/6/1399390704875/Goblin-shark-004.jpg",
+          "typeData":{
+            "source":"NOAA",
+            "photographer":"Carl Moore",
+            "altText":"Goblin shark",
+            "height":"720",
+            "credit":"Carl Moore/NOAA",
+            "caption":"The goblin shark caught off the coast of Florida. Photograph: Carl Moore/NOAA",
+            "width":"1280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/6/1399390706835/Goblin-shark-005.jpg",
+          "typeData":{
+            "source":"NOAA",
+            "photographer":"Carl Moore",
+            "altText":"Goblin shark",
+            "height":"1536",
+            "credit":"Carl Moore/NOAA",
+            "caption":"The goblin shark caught off the coast of Florida. Photograph: Carl Moore/NOAA",
+            "width":"2048"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/6/1399390719120/Goblin-shark-013.jpg",
+          "typeData":{
+            "source":"NOAA",
+            "photographer":"Carl Moore",
+            "altText":"Goblin shark",
+            "height":"1116",
+            "credit":"Carl Moore/NOAA",
+            "caption":"The goblin shark caught off the coast of Florida. Photograph: Carl Moore/NOAA",
+            "width":"1860"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/6/1399390721518/Goblin-shark-014.jpg",
+          "typeData":{
+            "source":"NOAA",
+            "photographer":"Carl Moore",
+            "altText":"Goblin shark",
+            "height":"1536",
+            "credit":"Carl Moore/NOAA",
+            "caption":"The goblin shark caught off the coast of Florida. Photograph: Carl Moore/NOAA",
+            "width":"2560"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/6/1399392274373/Goblin-sharking--001.jpg",
+          "typeData":{
+            "source":"Fishes of Australia",
+            "altText":"Goblin sharking ",
+            "height":"54",
+            "credit":"Fishes of Australia",
+            "caption":"The goblin shark is sometimes referred to as a living fossil. Photograph: Fishes of Australia",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/6/1399392277729/Goblin-sharking--002.jpg",
+          "typeData":{
+            "source":"Fishes of Australia",
+            "altText":"Goblin sharking ",
+            "height":"340",
+            "credit":"Fishes of Australia",
+            "caption":"The goblin shark is sometimes referred to as a living fossil. Photograph: Fishes of Australia",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/6/1399392279268/Goblin-sharking--003.jpg",
+          "typeData":{
+            "source":"Fishes of Australia",
+            "altText":"Goblin sharking ",
+            "height":"130",
+            "credit":"Fishes of Australia",
+            "caption":"The goblin shark is sometimes referred to as a living fossil. Photograph: Fishes of Australia",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/6/1399392280694/Goblin-sharking--004.jpg",
+          "typeData":{
+            "source":"Fishes of Australia",
+            "altText":"Goblin sharking ",
+            "height":"84",
+            "credit":"Fishes of Australia",
+            "caption":"The goblin shark is sometimes referred to as a living fossil. Photograph: Fishes of Australia",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/6/1399392282168/Goblin-sharking--005.jpg",
+          "typeData":{
+            "source":"Fishes of Australia",
+            "altText":"Goblin sharking ",
+            "height":"132",
+            "credit":"Fishes of Australia",
+            "caption":"The goblin shark is sometimes referred to as a living fossil. Photograph: Fishes of Australia",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/6/1399392283568/Goblin-sharking--006.jpg",
+          "typeData":{
+            "source":"Fishes of Australia",
+            "altText":"Goblin sharking ",
+            "height":"168",
+            "credit":"Fishes of Australia",
+            "caption":"The goblin shark is sometimes referred to as a living fossil. Photograph: Fishes of Australia",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/6/1399392285023/Goblin-sharking--007.jpg",
+          "typeData":{
+            "source":"Fishes of Australia",
+            "altText":"Goblin sharking ",
+            "height":"180",
+            "credit":"Fishes of Australia",
+            "caption":"The goblin shark is sometimes referred to as a living fossil. Photograph: Fishes of Australia",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/6/1399392286448/Goblin-sharking--008.jpg",
+          "typeData":{
+            "source":"Fishes of Australia",
+            "altText":"Goblin sharking ",
+            "height":"228",
+            "credit":"Fishes of Australia",
+            "caption":"The goblin shark is sometimes referred to as a living fossil. Photograph: Fishes of Australia",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/6/1399392287921/Goblin-sharking--009.jpg",
+          "typeData":{
+            "source":"Fishes of Australia",
+            "altText":"Goblin sharking ",
+            "height":"276",
+            "credit":"Fishes of Australia",
+            "caption":"The goblin shark is sometimes referred to as a living fossil. Photograph: Fishes of Australia",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/6/1399392289375/Goblin-sharking--010.jpg",
+          "typeData":{
+            "source":"Fishes of Australia",
+            "altText":"Goblin sharking ",
+            "height":"372",
+            "credit":"Fishes of Australia",
+            "caption":"The goblin shark is sometimes referred to as a living fossil. Photograph: Fishes of Australia",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/6/1399392290939/Goblin-sharking--011.jpg",
+          "typeData":{
+            "source":"Fishes of Australia",
+            "altText":"Goblin sharking ",
+            "height":"834",
+            "credit":"Fishes of Australia",
+            "caption":"The goblin shark is sometimes referred to as a living fossil. Photograph: Fishes of Australia",
+            "width":"1390"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/6/1399392287921/Goblin-sharking--009.jpg",
+          "typeData":{
+            "source":"Fishes of Australia",
+            "altText":"Goblin sharking ",
+            "height":"276",
+            "credit":"Fishes of Australia",
+            "caption":"The goblin shark is sometimes referred to as a living fossil. Photograph: Fishes of Australia",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-436174050",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/6/1399392280694/Goblin-sharking--004.jpg",
+          "typeData":{
+            "source":"Fishes of Australia",
+            "altText":"Goblin sharking ",
+            "height":"84",
+            "credit":"Fishes of Australia",
+            "caption":"The goblin shark is sometimes referred to as a living fossil. Photograph: Fishes of Australia",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/6/1399392289375/Goblin-sharking--010.jpg",
+          "typeData":{
+            "source":"Fishes of Australia",
+            "altText":"Goblin sharking ",
+            "height":"372",
+            "credit":"Fishes of Australia",
+            "caption":"The goblin shark is sometimes referred to as a living fossil. Photograph: Fishes of Australia",
+            "width":"620"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"music/shortcuts/2014/may/05/aesop-rock-rapper-language-shakespeare-vocabulary",
+      "sectionId":"music",
+      "sectionName":"Music",
+      "webPublicationDate":"2014-05-05T13:00:00Z",
+      "webTitle":"Aesop Rock: the rapper with a wider vocabulary than Shakespeare",
+      "webUrl":"http://www.theguardian.com/music/shortcuts/2014/may/05/aesop-rock-rapper-language-shakespeare-vocabulary",
+      "apiUrl":"http://content.guardianapis.com/music/shortcuts/2014/may/05/aesop-rock-rapper-language-shakespeare-vocabulary",
+      "fields":{
+        "newspaperPageNumber":"3",
+        "trailText":"<p>Aesop Rock has the the widest vocabulary in hip-hop, according to data studies. But does it make him a good rapper?</p>",
+        "headline":"Aesop Rock: the rapper with a wider vocabulary than Shakespeare",
+        "body":"<p><strong>Name: </strong>Aesop Rock.</p><p><strong>Age: </strong>37.</p><p><strong>Appearance: </strong>Unbarbered.</p><p><strong>You mean hairy? Bearded? </strong>One may as fruitfully set to number up the bristles on a porpentine as count the many tines of meaning, yo.</p><p><strong>What? </strong>Analysis of data doth reveal that Aesop's lyrical flow is o'ertopp'd by none in breadth, e'en Shakespeare's.</p><p><strong>If I'm going to understand this, you'll need to pretend to be a normal person for a while. </strong>OK, fine. Data scientist and designer Matt Daniels has plugged the lyrics of lots of rappers into a computer, calculated how many different words each uses, and <a href=\"http://rappers.mdaniels.com.s3-website-us-east-1.amazonaws.com/\" title=\"\">plotted the results on a series of charts</a>.</p><p><strong>And? </strong>And Aesop Rock uses by far the widest range of words among the 85 rappers tested, much wider than Shakespeare's would have been in a comparable analysis of his plays. Indeed, many rappers did better than Shakespeare, including three members of the Wu-Tang clan.</p><p><strong>Wow. They've brought him the ruckus, all right.</strong> Fo sooth.</p><p><strong>Who is this Aesop Rock guy, anyway? </strong>He's a New Yorker called Ian Bavitz who has been around since the late 1990s. Depending on your point of view, he's famous for either the sophistication or the utter incomprehensibility of his lyrics.</p><p><strong>From my point of view he's not famous at all. </strong>That's another common opinion.</p><p><strong>He's a hipster rapper then? </strong>Basically, yes. He's recondite as hell.</p><p><strong>So who scored badly on the Daniels scale? I don't see Fiddy impressing many English teachers. </strong>You're right there. 50 Cent's fourth worst, just ahead of Drake. In fact there seems to be a correlation between being successful and not using too many different words. L'il Wayne, Tupac and Kanye West are all among the lowest scorers.</p><p><strong>I bet they're pretty broken up about that.</strong> Mos def. Size of vocabulary is not the same thing as quality of work, mind you. Jay-Z and Eminem are both barely average.</p><p><strong>It probably doesn't help if you sing \"My name is\" about 200 times. </strong>Perhaps that has something to do with it.</p><p><strong>Do say:</strong> \"Would you rather have a lexis or justice?\"</p><p><strong>Don't say:</strong> \"On the mic, it's my dog Will Self.\"</p><!-- Guardian Watermark: internal-code/content/436079609|2014-05-14T16:53:59Z|1b1ed9bf2b2b3e4d61b116642bbf00038a47ded1 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2014-05-07T13:02:06Z",
+        "hasStoryPackage":"false",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/5/1399294313168/Rapper-Aesop-Rock-006.jpg",
+        "standfirst":"Aesop Rock has the the widest vocabulary in hip-hop, according to one data scientist's study. But does it make him a good rapper?",
+        "shortUrl":"http://gu.com/p/3pvpq",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/5/1399294313168/Rapper-Aesop-Rock-006.jpg",
+        "wordcount":"338",
+        "commentable":"true",
+        "internalContentCode":"436079609",
+        "allowUgc":"false",
+        "internalOctopusCode":"9004485",
+        "isPremoderated":"false",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2014-05-06",
+        "internalPageCode":"2087099",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2014-05-12T13:00:00Z"
+      },
+      "tags":[{
+        "id":"music/rap",
+        "type":"keyword",
+        "webTitle":"Rap",
+        "webUrl":"http://www.theguardian.com/music/rap",
+        "apiUrl":"http://content.guardianapis.com/music/rap",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"music/hip-hop",
+        "type":"keyword",
+        "webTitle":"Hip-hop",
+        "webUrl":"http://www.theguardian.com/music/hip-hop",
+        "apiUrl":"http://content.guardianapis.com/music/hip-hop",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"music/urban",
+        "type":"keyword",
+        "webTitle":"Urban music",
+        "webUrl":"http://www.theguardian.com/music/urban",
+        "apiUrl":"http://content.guardianapis.com/music/urban",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"music/music",
+        "type":"keyword",
+        "webTitle":"Music",
+        "webUrl":"http://www.theguardian.com/music/music",
+        "apiUrl":"http://content.guardianapis.com/music/music",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"theguardian/series/pass-notes",
+        "type":"series",
+        "webTitle":"Pass notes",
+        "webUrl":"http://www.theguardian.com/theguardian/series/pass-notes",
+        "apiUrl":"http://content.guardianapis.com/theguardian/series/pass-notes",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/shortcuts",
+        "type":"blog",
+        "webTitle":"Shortcuts",
+        "webUrl":"http://www.theguardian.com/theguardian/shortcuts",
+        "apiUrl":"http://content.guardianapis.com/theguardian/shortcuts",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "references":[]
+      },{
+        "id":"theguardian/g2/features",
+        "type":"newspaper-book-section",
+        "webTitle":"Comment & features",
+        "webUrl":"http://www.theguardian.com/theguardian/g2/features",
+        "apiUrl":"http://content.guardianapis.com/theguardian/g2/features",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/g2",
+        "type":"newspaper-book",
+        "webTitle":"G2",
+        "webUrl":"http://www.theguardian.com/theguardian/g2",
+        "apiUrl":"http://content.guardianapis.com/theguardian/g2",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"science/language",
+        "type":"keyword",
+        "webTitle":"Language",
+        "webUrl":"http://www.theguardian.com/science/language",
+        "apiUrl":"http://content.guardianapis.com/science/language",
+        "sectionId":"science",
+        "sectionName":"Science",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-436084694",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/5/1399294306507/Rapper-Aesop-Rock-001.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"Rapper Aesop Rock",
+            "height":"54",
+            "credit":"Alamy",
+            "caption":"Aesop Rock: used the widest range of words among the 85 rappers tested. Photograph: Alamy",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/5/1399294307933/Rapper-Aesop-Rock-002.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"Rapper Aesop Rock",
+            "height":"340",
+            "credit":"Alamy",
+            "caption":"Aesop Rock: used the widest range of words among the 85 rappers tested. Photograph: Alamy",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/5/1399294308945/Rapper-Aesop-Rock-003.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"Rapper Aesop Rock",
+            "height":"130",
+            "credit":"Alamy",
+            "caption":"Aesop Rock: used the widest range of words among the 85 rappers tested. Photograph: Alamy",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/5/1399294310074/Rapper-Aesop-Rock-004.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"Rapper Aesop Rock",
+            "height":"720",
+            "credit":"Alamy",
+            "caption":"Aesop Rock: used the widest range of words among the 85 rappers tested. Photograph: Alamy",
+            "width":"1280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/5/1399294311589/Rapper-Aesop-Rock-005.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"Rapper Aesop Rock",
+            "height":"1536",
+            "credit":"Alamy",
+            "caption":"Aesop Rock: used the widest range of words among the 85 rappers tested. Photograph: Alamy",
+            "width":"2048"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/5/1399294313168/Rapper-Aesop-Rock-006.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"Rapper Aesop Rock",
+            "height":"84",
+            "credit":"Alamy",
+            "caption":"Aesop Rock: used the widest range of words among the 85 rappers tested. Photograph: Alamy",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/5/1399294314130/Rapper-Aesop-Rock-007.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"Rapper Aesop Rock",
+            "height":"132",
+            "credit":"Alamy",
+            "caption":"Aesop Rock: used the widest range of words among the 85 rappers tested. Photograph: Alamy",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/5/1399294315141/Rapper-Aesop-Rock-008.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"Rapper Aesop Rock",
+            "height":"168",
+            "credit":"Alamy",
+            "caption":"Aesop Rock: used the widest range of words among the 85 rappers tested. Photograph: Alamy",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/5/1399294316111/Rapper-Aesop-Rock-009.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"Rapper Aesop Rock",
+            "height":"180",
+            "credit":"Alamy",
+            "caption":"Aesop Rock: used the widest range of words among the 85 rappers tested. Photograph: Alamy",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/5/1399294317093/Rapper-Aesop-Rock-010.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"Rapper Aesop Rock",
+            "height":"228",
+            "credit":"Alamy",
+            "caption":"Aesop Rock: used the widest range of words among the 85 rappers tested. Photograph: Alamy",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/5/1399294318075/Rapper-Aesop-Rock-011.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"Rapper Aesop Rock",
+            "height":"276",
+            "credit":"Alamy",
+            "caption":"Aesop Rock: used the widest range of words among the 85 rappers tested. Photograph: Alamy",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/5/1399294319064/Rapper-Aesop-Rock-012.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"Rapper Aesop Rock",
+            "height":"372",
+            "credit":"Alamy",
+            "caption":"Aesop Rock: used the widest range of words among the 85 rappers tested. Photograph: Alamy",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/5/1399294320312/Rapper-Aesop-Rock-013.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"Rapper Aesop Rock",
+            "height":"1116",
+            "credit":"Alamy",
+            "caption":"Aesop Rock: used the widest range of words among the 85 rappers tested. Photograph: Alamy",
+            "width":"1860"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/5/1399294322119/Rapper-Aesop-Rock-014.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"Rapper Aesop Rock",
+            "height":"1536",
+            "credit":"Alamy",
+            "caption":"Aesop Rock: used the widest range of words among the 85 rappers tested. Photograph: Alamy",
+            "width":"2560"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/5/1399294318075/Rapper-Aesop-Rock-011.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"Rapper Aesop Rock",
+            "height":"276",
+            "credit":"Alamy",
+            "caption":"Aesop Rock: used the widest range of words among the 85 rappers tested. Photograph: Alamy",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-436084695",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/5/1399294313168/Rapper-Aesop-Rock-006.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"Rapper Aesop Rock",
+            "height":"84",
+            "credit":"Alamy",
+            "caption":"Aesop Rock: used the widest range of words among the 85 rappers tested. Photograph: Alamy",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/5/1399294319064/Rapper-Aesop-Rock-012.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "altText":"Rapper Aesop Rock",
+            "height":"372",
+            "credit":"Alamy",
+            "caption":"Aesop Rock: used the widest range of words among the 85 rappers tested. Photograph: Alamy",
+            "width":"620"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"education/shortcuts/2014/may/02/banter-squadron-secret-oxford-drinking-society",
+      "sectionId":"education",
+      "sectionName":"Education",
+      "webPublicationDate":"2014-05-02T12:58:00Z",
+      "webTitle":"Oxford's 'Banter Squadron' and the sorry state of tomorrow's politicians",
+      "webUrl":"http://www.theguardian.com/education/shortcuts/2014/may/02/banter-squadron-secret-oxford-drinking-society",
+      "apiUrl":"http://content.guardianapis.com/education/shortcuts/2014/may/02/banter-squadron-secret-oxford-drinking-society",
+      "fields":{
+        "trailText":"<p>Ridiculous, witless name? Check. Red trousers? Check. Likely to be running the country one day? Check</p>",
+        "headline":"Oxford's 'Banter Squadron' and the sorry state of tomorrow's politicians",
+        "body":"<p><strong>Name: </strong>The Banter Squadron.</p><p><strong>Age: </strong>Unknown.</p><p><strong>Appearance:</strong> Secretive. But probably not too hard to spot.</p><p><strong>The Banter Squadron? The Banter Squadron? That sounds like something a heinous bunch of pricks would call themselves.</strong> Go on.</p><p><strong>Maybe it's just me, but it conjures up a vision of a small gang of arrogant, self-regarding young – I'm going to go out on a limb here and say men – swanning around, stinking up the place with an air of smug overprivilege and entitlement while drinking and making each other laugh with non-witticisms they mistakenly regard as banter. </strong>And where might this place be?</p><p><strong>If I had to guess, I'd say Oxbridge. Or, if there's a difference, Westminster.</strong> Well done. They're an \"elite\" secret drinking society in Oxford. They're also known as the Red Trouser Brigade.</p><p><strong>And the hits just keep on coming. Why are we giving them newspaper and brain space?</strong> Because the president of the Oxford Union tried to secure union funds in order to sue a student newspaper after it outed him as a member.</p><p><strong>Oxford toff gets narked by Oxford thing being talked about by other Oxford thing at Oxford. Why do I care? </strong>Perhaps because it gives us a window on to the formative years of so many of the people who have governed and who are currently governing our lives.</p><p><strong>Like who?</strong> Recent former presidents of the Union include Michael Heseltine, William Hague, Damian Green, Michael Gove, Boris Johnson … I could go on.</p><p><strong>Please don't.</strong> Former members of elite drinking societies include – in the Bullingdon Club alone – John Profumo, Alan Clark, David Cameron, George Osborne, Jo and Boris Johnson … I could, again, go on.</p><p><strong>Please, again, don't. It's terrifying.</strong> Terrifying to realise from what a small pool our politicians are drawn from, or terrifying to realise what kind of forces, activities and tastes shaped them in their youth?</p><p><strong>Both. It makes me think of a nest of baby eels slithering over and over each other … </strong>And eventually knotting themselves into a slimy, glutinous, inextricable mass?</p><p><strong>Yes.</strong> If eels could wear red trousers and burn £50 notes in front of homeless people, I think you'd have it in one.</p><p><strong>Do say:</strong> \"Up the revolution!\"</p><p><strong>Don't say: </strong>\"Tony Benn, Philip Toynbee and Paul and Michael Foot were Union presidents too, you revisionist commie bastards!\"</p><!-- Guardian Watermark: internal-code/content/435891600|2014-05-14T16:53:59Z|b625323ebd943482853b688c4f8d97bba5857086 -->",
+        "showInRelatedContent":"true",
+        "strap":"No 3,309",
+        "lastModified":"2014-05-02T14:33:53Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Lifeandhealth/Pix/pictures/2014/5/2/1399041077359/Students-at-Oxford-Univer-006.jpg",
+        "standfirst":"Ridiculous, witless name? Check. Red trousers? Check. Likely to be running the country one day? Check",
+        "shortUrl":"http://gu.com/p/3zqt2",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Lifeandhealth/Pix/pictures/2014/5/2/1399041077359/Students-at-Oxford-Univer-006.jpg",
+        "wordcount":"376",
+        "commentable":"true",
+        "internalContentCode":"435891600",
+        "allowUgc":"false",
+        "internalOctopusCode":"8995594",
+        "isPremoderated":"false",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2014-05-02",
+        "internalPageCode":"2086157",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2014-05-09T12:41:00Z"
+      },
+      "tags":[{
+        "id":"education/oxforduniversity",
+        "type":"keyword",
+        "webTitle":"University of Oxford",
+        "webUrl":"http://www.theguardian.com/education/oxforduniversity",
+        "apiUrl":"http://content.guardianapis.com/education/oxforduniversity",
+        "sectionId":"education",
+        "sectionName":"Education",
+        "references":[]
+      },{
+        "id":"theguardian/series/pass-notes",
+        "type":"series",
+        "webTitle":"Pass notes",
+        "webUrl":"http://www.theguardian.com/theguardian/series/pass-notes",
+        "apiUrl":"http://content.guardianapis.com/theguardian/series/pass-notes",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/shortcuts",
+        "type":"blog",
+        "webTitle":"Shortcuts",
+        "webUrl":"http://www.theguardian.com/theguardian/shortcuts",
+        "apiUrl":"http://content.guardianapis.com/theguardian/shortcuts",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "references":[]
+      },{
+        "id":"theguardian/g2/features",
+        "type":"newspaper-book-section",
+        "webTitle":"Comment & features",
+        "webUrl":"http://www.theguardian.com/theguardian/g2/features",
+        "apiUrl":"http://content.guardianapis.com/theguardian/g2/features",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/g2",
+        "type":"newspaper-book",
+        "webTitle":"G2",
+        "webUrl":"http://www.theguardian.com/theguardian/g2",
+        "apiUrl":"http://content.guardianapis.com/theguardian/g2",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"education/students",
+        "type":"keyword",
+        "webTitle":"Students",
+        "webUrl":"http://www.theguardian.com/education/students",
+        "apiUrl":"http://content.guardianapis.com/education/students",
+        "sectionId":"education",
+        "sectionName":"Education",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-435909657",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Lifeandhealth/Pix/pictures/2014/5/2/1399041084289/Students-at-Oxford-Univer-011.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Expuesto/Nicolas Randall",
+            "altText":"Students at Oxford University",
+            "height":"276",
+            "credit":"Expuesto/Nicolas Randall/Alamy",
+            "caption":"Students at Oxford University. Photograph: Expuesto/Nicolas Randall/Alamy",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-435909658",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Lifeandhealth/Pix/pictures/2014/5/2/1399041077359/Students-at-Oxford-Univer-006.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Expuesto/Nicolas Randall",
+            "altText":"Students at Oxford University",
+            "height":"84",
+            "credit":"Expuesto/Nicolas Randall/Alamy",
+            "caption":"Students at Oxford University. Photograph: Expuesto/Nicolas Randall/Alamy",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"film/shortcuts/2014/apr/30/daisy-ridley-star-wars-episode-7-actor",
+      "sectionId":"film",
+      "sectionName":"Film",
+      "webPublicationDate":"2014-04-30T10:11:18Z",
+      "webTitle":"Daisy Ridley: everything we know about the Star Wars Episode 7 actor",
+      "webUrl":"http://www.theguardian.com/film/shortcuts/2014/apr/30/daisy-ridley-star-wars-episode-7-actor",
+      "apiUrl":"http://content.guardianapis.com/film/shortcuts/2014/apr/30/daisy-ridley-star-wars-episode-7-actor",
+      "fields":{
+        "newspaperPageNumber":"3",
+        "trailText":"<p>We don't even know her exact age – and her agent has gone very quiet. So what exactly do we know about her?</p>",
+        "headline":"Daisy Ridley: everything we know about the Star Wars Episode 7 actor",
+        "body":"<p><strong>Appearance: </strong>Young woman.</p><p><strong>Can you be more specific? </strong>Brown eyes and hair, 5ft 7in, arms, a nose.</p><p><strong>Age:</strong> Unknown.</p><p><strong>Surely she knows? </strong>She probably does, yes. But the internet can only say \"early 20s\".</p><p><strong>Why would the internet be interested?</strong> Because she has just been cast in the new Star Wars movie, Episode 7. <a href=\"http://www.theguardian.com/film/2014/apr/29/star-wars-episode-vii-cast-return-new-actors\" title=\"\">All the other actors</a> were in previous Star Wars films, or have some track record. There's <a href=\"http://www.theguardian.com/film/2011/may/08/attack-block-london-teenagers-interview\" title=\"\">John Boyega</a> off of Attack the Block. <a href=\"http://www.theguardian.com/tv-and-radio/2014/jan/18/adam-driver-girls-inside-llewyn-davis\" title=\"\">Adam Driver</a> off of Girls. Max Von Sydow off of basically everything. But Ridley is almost unknown.</p><p><strong>Almost? </strong>She did have <a href=\"http://www.imdb.com/name/nm5397459/?ref_=fn_al_nm_9\" title=\"\">a part in Silent Witness once</a>. And she was <a href=\"https://www.youtube.com/watch?v=NBUMGpBBdck\" title=\"\">in a Wylie video</a>. And a <a href=\"http://vimeo.com/63567146\" title=\"\">short film</a>, and a couple of other bits and pieces. Her showreel was removed from Vimeo shortly after the Star Wars announcement, her Twitter account has been disabled, and her agent isn't sharing anything else, although we know that she sings jazz. And that she is British.</p><p><strong>Cool! So what character is she going to play? </strong>Unknown.</p><p><strong>Stop saying that! Some people must know. </strong>Well I imagine the cast do, and JJ Abrams, the director, along with Disney, the studio, and various other people … It's just that they aren't telling us yet.</p><p><strong>The devious swine! Don't they realise how excited and yet frustrated this makes me? </strong>I suspect they do. In the meantime there is just some very ingenious speculation.</p><p><strong>Precis it for me.</strong> Well, in the black-and-white cast photograph released on Tuesday, Ridley is sitting between Harrison Ford and Carrie Fisher, which might be a clue that she will play a descendant of Han Solo and Princess Leia, who finally got together in part VI.</p><figure data-media-id='gu-image-435673504'><img src='http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/4/30/1398852574559/Harrison-Ford-Daisy-Ridle-009.jpg' alt='Harrison Ford, Daisy Ridley and  Carrie Fisher' width='460' height='276' class='gu-image'/><figcaption>Harrison Ford, Daisy Ridley and  Carrie Fisher. Photograph: Reuters</figcaption></figure><p><strong>Might, yes. Also, might not. </strong>Or there have been rumours …</p><p><strong>People on the internet making things up?</strong> Probably. Anyway, there have been rumours that Obi-Wan Kenobi might have had a daughter while he was in the process of changing from Ewan McGregor into Alec Guinness. <a href=\"http://www.jonathanarun.com/clients/actresses/item/daisy-ridley.html\" title=\"\">Ridley's agent's website</a> lists her with a London accent, and no mention of an American one, so perhaps that might be where she slots in?</p><figure data-media-id='gu-image-435673505'><img src='http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/4/30/1398853367277/Daisy-Ridley-with-Amanda--009.jpg' alt='Daisy Ridley with Amanda Henderson in a 2013 episode of Casualty' width='460' height='276' class='gu-image'/><figcaption>Daisy Ridley with Amanda Henderson in a 2013 episode of Casualty. Photograph: Alistair Heap/BBC/Alistair Heap</figcaption></figure><p><strong>Are accents inherited genetically then? Or maybe she grows up in a kind of space-England?</strong> I think you're taking this much too seriously.</p><p><strong>Do say:</strong> \"Luke, I am your great-niece.\"</p><p><strong>Don't say:</strong> \"The force is with who?\"</p><h2>More on the Star Wars casting<br /></h2><figure data-media-id='gu-image-435673506'><img src='http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/4/29/1398796027334/e667ee49-9b6b-4d69-822d-0cd028056785-460x276.jpeg' alt='Domhnall Gleeson' width='460' height='276' class='gu-image'/><figcaption>Fellow cast member Domhnall Gleeson. Photograph: Suki Dhanda for the Observer</figcaption></figure><p><br /><a href=\"http://www.theguardian.com/film/2014/apr/29/star-wars-episode-vii-cast-return-new-actors\">• Meet the cast</a><br /><a href=\"http://www.theguardian.com/film/2014/apr/30/star-wars-episode-vii-casting\">• Reaction round-up</a></p><!-- Guardian Watermark: internal-code/content/435667711|2014-05-14T16:53:59Z|267bcaeccdbfec201d38e0067ad53b38c9e294f9 -->",
+        "showInRelatedContent":"true",
+        "strap":"No 3,308",
+        "lastModified":"2014-05-07T12:33:50Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/4/30/1398851685259/Daisy-Ridley---soon-to-be-004.jpg",
+        "standfirst":"We don't even know her exact age – and her agent has gone very quiet. So what exactly do we know about her?<br /><br /><a href=\"http://www.theguardian.com/film/2014/apr/29/star-wars-episode-vii-cast-return-new-actors\">• Meet the cast</a><br /><a href=\"http://www.theguardian.com/film/2014/apr/30/star-wars-episode-vii-casting\">• Star Wars casting: reaction round-up</a>",
+        "shortUrl":"http://gu.com/p/3zzan",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/4/30/1398851685259/Daisy-Ridley---soon-to-be-004.jpg",
+        "wordcount":"383",
+        "commentable":"true",
+        "internalContentCode":"435667711",
+        "allowUgc":"false",
+        "internalOctopusCode":"8984424",
+        "isPremoderated":"false",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2014-05-01",
+        "internalPageCode":"2084504",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2014-05-07T10:11:00Z"
+      },
+      "tags":[{
+        "id":"film/star-wars-episode-vii",
+        "type":"keyword",
+        "webTitle":"Star Wars: Episode VII",
+        "webUrl":"http://www.theguardian.com/film/star-wars-episode-vii",
+        "apiUrl":"http://content.guardianapis.com/film/star-wars-episode-vii",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"theguardian/series/pass-notes",
+        "type":"series",
+        "webTitle":"Pass notes",
+        "webUrl":"http://www.theguardian.com/theguardian/series/pass-notes",
+        "apiUrl":"http://content.guardianapis.com/theguardian/series/pass-notes",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/shortcuts",
+        "type":"blog",
+        "webTitle":"Shortcuts",
+        "webUrl":"http://www.theguardian.com/theguardian/shortcuts",
+        "apiUrl":"http://content.guardianapis.com/theguardian/shortcuts",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "references":[]
+      },{
+        "id":"theguardian/g2/features",
+        "type":"newspaper-book-section",
+        "webTitle":"Comment & features",
+        "webUrl":"http://www.theguardian.com/theguardian/g2/features",
+        "apiUrl":"http://content.guardianapis.com/theguardian/g2/features",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/g2",
+        "type":"newspaper-book",
+        "webTitle":"G2",
+        "webUrl":"http://www.theguardian.com/theguardian/g2",
+        "apiUrl":"http://content.guardianapis.com/theguardian/g2",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"film/film",
+        "type":"keyword",
+        "webTitle":"Film",
+        "webUrl":"http://www.theguardian.com/film/film",
+        "apiUrl":"http://content.guardianapis.com/film/film",
+        "sectionId":"film",
+        "sectionName":"Film",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-435673501",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/4/30/1398851679349/Daisy-Ridley---soon-to-be-001.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Daisy Ridley … soon to be a star?",
+            "height":"54",
+            "credit":"PR",
+            "caption":"Daisy Ridley … soon to be a star?",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/4/30/1398851682701/Daisy-Ridley---soon-to-be-002.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Daisy Ridley … soon to be a star?",
+            "height":"340",
+            "credit":"PR",
+            "caption":"Daisy Ridley … soon to be a star?",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/4/30/1398851683997/Daisy-Ridley---soon-to-be-003.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Daisy Ridley … soon to be a star?",
+            "height":"130",
+            "credit":"PR",
+            "caption":"Daisy Ridley … soon to be a star?",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/4/30/1398851685259/Daisy-Ridley---soon-to-be-004.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Daisy Ridley … soon to be a star?",
+            "height":"84",
+            "credit":"PR",
+            "caption":"Daisy Ridley … soon to be a star?",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/4/30/1398851686517/Daisy-Ridley---soon-to-be-005.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Daisy Ridley … soon to be a star?",
+            "height":"132",
+            "credit":"PR",
+            "caption":"Daisy Ridley … soon to be a star?",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/4/30/1398851687816/Daisy-Ridley---soon-to-be-006.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Daisy Ridley … soon to be a star?",
+            "height":"168",
+            "credit":"PR",
+            "caption":"Daisy Ridley … soon to be a star?",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/4/30/1398851689080/Daisy-Ridley---soon-to-be-007.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Daisy Ridley … soon to be a star?",
+            "height":"180",
+            "credit":"PR",
+            "caption":"Daisy Ridley … soon to be a star?",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/4/30/1398851690406/Daisy-Ridley---soon-to-be-008.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Daisy Ridley … soon to be a star?",
+            "height":"228",
+            "credit":"PR",
+            "caption":"Daisy Ridley … soon to be a star?",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/4/30/1398851691776/Daisy-Ridley---soon-to-be-009.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Daisy Ridley … soon to be a star?",
+            "height":"276",
+            "credit":"PR",
+            "caption":"Daisy Ridley … soon to be a star?",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/4/30/1398851693079/Daisy-Ridley---soon-to-be-010.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Daisy Ridley … soon to be a star?",
+            "height":"372",
+            "credit":"PR",
+            "caption":"Daisy Ridley … soon to be a star?",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/4/30/1398851694535/Daisy-Ridley---soon-to-be-011.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Daisy Ridley … soon to be a star?",
+            "height":"826",
+            "credit":"PR",
+            "caption":"Daisy Ridley … soon to be a star?",
+            "width":"1378"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/4/30/1398851691776/Daisy-Ridley---soon-to-be-009.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Daisy Ridley … soon to be a star?",
+            "height":"276",
+            "credit":"PR",
+            "caption":"Daisy Ridley … soon to be a Star Wars star.",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-435673502",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/4/30/1398851685259/Daisy-Ridley---soon-to-be-004.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Daisy Ridley … soon to be a star?",
+            "height":"84",
+            "credit":"PR",
+            "caption":"Daisy Ridley … soon to be a star?",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/4/30/1398851693079/Daisy-Ridley---soon-to-be-010.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Daisy Ridley … soon to be a star?",
+            "height":"372",
+            "credit":"PR",
+            "caption":"Daisy Ridley … soon to be a star?",
+            "width":"620"
+          }
+        }]
+      },{
+        "id":"gu-image-435673504",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/4/30/1398852574559/Harrison-Ford-Daisy-Ridle-009.jpg",
+          "typeData":{
+            "source":"REUTERS",
+            "altText":"Harrison Ford, Daisy Ridley and  Carrie Fisher",
+            "height":"276",
+            "credit":"REUTERS",
+            "caption":"Harrison Ford, Daisy Ridley and  Carrie Fisher. Photograph: Reuters",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-435673505",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/4/30/1398853367277/Daisy-Ridley-with-Amanda--009.jpg",
+          "typeData":{
+            "source":"BBC/Alistair Heap",
+            "photographer":"Alistair Heap",
+            "altText":"Daisy Ridley with Amanda Henderson in a 2013 episode of Casualty",
+            "height":"276",
+            "credit":"Alistair Heap/BBC/Alistair Heap",
+            "caption":"Daisy Ridley with Amanda Henderson in a 2013 episode of Casualty. Photograph: Alistair Heap/BBC/Alistair Heap",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-435673506",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/4/29/1398796027334/e667ee49-9b6b-4d69-822d-0cd028056785-460x276.jpeg",
+          "typeData":{
+            "source":"Observer",
+            "photographer":"Suki Dhanda",
+            "altText":"Domhnall Gleeson",
+            "height":"276",
+            "credit":"Suki Dhanda/Observer",
+            "caption":"Fellow cast member Domhnall Gleeson. Photograph: Suki Dhanda for the Observer",
+            "width":"460"
+          }
+        }]
+      }],
+      "references":[]
+    },{
+      "id":"tv-and-radio/shortcuts/2014/apr/29/bear-grylls-tough-challenge-stop-making-sexist-television",
+      "sectionId":"tv-and-radio",
+      "sectionName":"Television &amp; radio",
+      "webPublicationDate":"2014-04-29T14:40:45Z",
+      "webTitle":"Bear Grylls faces a tough new challenge: stop making sexist television",
+      "webUrl":"http://www.theguardian.com/tv-and-radio/shortcuts/2014/apr/29/bear-grylls-tough-challenge-stop-making-sexist-television",
+      "apiUrl":"http://content.guardianapis.com/tv-and-radio/shortcuts/2014/apr/29/bear-grylls-tough-challenge-stop-making-sexist-television",
+      "fields":{
+        "newspaperPageNumber":"3",
+        "trailText":"The adventurer and survival expert faces criticism from women who object to the premise of his latest TV show, The Island, being 'a study in modern masculinity'",
+        "headline":"Bear Grylls faces a tough new challenge: stop making sexist television",
+        "body":"<p><strong>Name:</strong> Bear Grylls.</p><p><strong>Age: </strong>39.</p><p><strong>Appearance: </strong>Manly yet moisturised.</p><p><strong>The fearless adventurer behind the TV shows Born Survivor, Bear's Wild Weekend etc?</strong> That's&nbsp;the one.</p><p><strong>It's not his real name, is it? It sounds like a&nbsp;range&nbsp;of barbecues.</strong> Officially he's Edward Michael Grylls. He got his nickname when he was&nbsp;just a week old, and clearly decided it suited&nbsp;him.</p><p><strong>Aww. Sweet. </strong>Not really. He's more of a grizzly than a teddy. Climbed his first cliff at eight, conquered Everest at 23, <a href=\"http://www.beargrylls.com/index.php/about/about-bear/\" title=\"\">taught combat survival with the SAS</a> …</p><p><strong>I see. So why is he in the news now? Has he been&nbsp;accused of exaggerating the hardships he&nbsp;faces in his TV shows?</strong> Not <a href=\"http://www.telegraph.co.uk/news/uknews/1558242/Bear-Grylls-faked-Channel-4s-Born-Survivor.html\" title=\"\">this time</a>. This time&nbsp;he has been accused of peddling sexist twaddle. For his new Channel 4 series, <a href=\"http://www.channel4.com/programmes/the-island-with-bear-grylls\" title=\"\">The Island with Bear Grylls</a>, a dozen volunteers are dumped on a Pacific island for a month and left to feed and&nbsp;house themselves.</p><p><strong>What's so controversial about that?</strong> They're all&nbsp;men.</p><p><strong>Ah! Why?</strong> Because modern man is in crisis, or so&nbsp;Grylls reckons, and he wants to see how \"these&nbsp;guys\" will cope without their creature comforts. It's \"a study in modern masculinity\", don't you know?</p><p><strong>Are survival skills really a guy thing?</strong> Not according to bushcraft instructor Lisa Fenton, who called the idea \"fantastical and ridiculous\", or explorer Sarah Outen, who denounced the \"male-oriented bias\" of adventure TV, or Ruth England, from the Discovery Channel series Man,&nbsp;Woman, Wild, who pointed out: \"The basic&nbsp;tenets of survival are the same, regardless of your genitals.\"</p><p><strong>And what does \"Bear\" have to say for himself?</strong> \"It's nothing to do with who's the stronger sex,\" apparently, and he'd \"really love to do a study of modern women. What does it mean in the modern world to be a woman today? How can you be a strong, empowered, go-getter woman with all of the womanly qualities that are important?\"</p><p><strong>In other words? </strong>It's all a silly misunderstanding, and you girls will get a go eventually.</p><p><strong>Do say: </strong>\"Mr Grylls, you should have your own jungle-based chatshow.\"</p><p><strong>Don't say:</strong> \"We could call it Bear Talks Shit in&nbsp;the&nbsp;Woods.\"</p><!-- Guardian Watermark: internal-code/content/435599267|2014-05-14T16:53:59Z|4131c7b0759af00fcb8d15d1190525d100e328c1 -->",
+        "showInRelatedContent":"true",
+        "strap":"No 3,307",
+        "lastModified":"2014-04-30T12:50:44Z",
+        "hasStoryPackage":"false",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/4/29/1398781081798/Bear-Grylls-004.jpg",
+        "standfirst":"The adventurer and survival expert faces criticism from women who object to the premise of his latest TV show, The Island, being 'a study in modern masculinity'",
+        "shortUrl":"http://gu.com/p/3zny7",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/4/29/1398781081798/Bear-Grylls-004.jpg",
+        "wordcount":"330",
+        "commentable":"true",
+        "internalContentCode":"435599267",
+        "allowUgc":"false",
+        "internalOctopusCode":"8981342",
+        "isPremoderated":"false",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2014-04-30",
+        "internalPageCode":"2084056",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2014-05-06T14:40:45Z"
+      },
+      "tags":[{
+        "id":"tv-and-radio/reality-tv",
+        "type":"keyword",
+        "webTitle":"Reality TV",
+        "webUrl":"http://www.theguardian.com/tv-and-radio/reality-tv",
+        "apiUrl":"http://content.guardianapis.com/tv-and-radio/reality-tv",
+        "sectionId":"tv-and-radio",
+        "sectionName":"Television &amp; radio",
+        "references":[]
+      },{
+        "id":"culture/television",
+        "type":"keyword",
+        "webTitle":"Television",
+        "webUrl":"http://www.theguardian.com/culture/television",
+        "apiUrl":"http://content.guardianapis.com/culture/television",
+        "sectionId":"tv-and-radio",
+        "sectionName":"Television &amp; radio",
+        "references":[]
+      },{
+        "id":"lifeandstyle/women",
+        "type":"keyword",
+        "webTitle":"Women",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/women",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/women",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"lifeandstyle/lifeandstyle",
+        "type":"keyword",
+        "webTitle":"Life and style",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/lifeandstyle",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/lifeandstyle",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"society/equality",
+        "type":"keyword",
+        "webTitle":"Equality",
+        "webUrl":"http://www.theguardian.com/society/equality",
+        "apiUrl":"http://content.guardianapis.com/society/equality",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"society/society",
+        "type":"keyword",
+        "webTitle":"Society",
+        "webUrl":"http://www.theguardian.com/society/society",
+        "apiUrl":"http://content.guardianapis.com/society/society",
+        "sectionId":"society",
+        "sectionName":"Society",
+        "references":[]
+      },{
+        "id":"theguardian/series/pass-notes",
+        "type":"series",
+        "webTitle":"Pass notes",
+        "webUrl":"http://www.theguardian.com/theguardian/series/pass-notes",
+        "apiUrl":"http://content.guardianapis.com/theguardian/series/pass-notes",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/g2/features",
+        "type":"newspaper-book-section",
+        "webTitle":"Comment & features",
+        "webUrl":"http://www.theguardian.com/theguardian/g2/features",
+        "apiUrl":"http://content.guardianapis.com/theguardian/g2/features",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/g2",
+        "type":"newspaper-book",
+        "webTitle":"G2",
+        "webUrl":"http://www.theguardian.com/theguardian/g2",
+        "apiUrl":"http://content.guardianapis.com/theguardian/g2",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "references":[]
+      },{
+        "id":"theguardian/shortcuts",
+        "type":"blog",
+        "webTitle":"Shortcuts",
+        "webUrl":"http://www.theguardian.com/theguardian/shortcuts",
+        "apiUrl":"http://content.guardianapis.com/theguardian/shortcuts",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-435600152",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/4/29/1398781076630/Bear-Grylls-001.jpg",
+          "typeData":{
+            "source":"Jasin Boland/NBC",
+            "altText":"Bear Grylls",
+            "height":"54",
+            "credit":"Jasin Boland/NBC",
+            "caption":"Bear Grylls, who is taking a dozen men to a Pacific island to test their survival skills. Photograph: Jasin Boland/NBC",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/4/29/1398781078624/Bear-Grylls-002.jpg",
+          "typeData":{
+            "source":"Jasin Boland/NBC",
+            "altText":"Bear Grylls",
+            "height":"340",
+            "credit":"Jasin Boland/NBC",
+            "caption":"Bear Grylls, who is taking a dozen men to a Pacific island to test their survival skills. Photograph: Jasin Boland/NBC",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/4/29/1398781080217/Bear-Grylls-003.jpg",
+          "typeData":{
+            "source":"Jasin Boland/NBC",
+            "altText":"Bear Grylls",
+            "height":"130",
+            "credit":"Jasin Boland/NBC",
+            "caption":"Bear Grylls, who is taking a dozen men to a Pacific island to test their survival skills. Photograph: Jasin Boland/NBC",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/4/29/1398781081798/Bear-Grylls-004.jpg",
+          "typeData":{
+            "source":"Jasin Boland/NBC",
+            "altText":"Bear Grylls",
+            "height":"84",
+            "credit":"Jasin Boland/NBC",
+            "caption":"Bear Grylls, who is taking a dozen men to a Pacific island to test their survival skills. Photograph: Jasin Boland/NBC",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/4/29/1398781083381/Bear-Grylls-005.jpg",
+          "typeData":{
+            "source":"Jasin Boland/NBC",
+            "altText":"Bear Grylls",
+            "height":"132",
+            "credit":"Jasin Boland/NBC",
+            "caption":"Bear Grylls, who is taking a dozen men to a Pacific island to test their survival skills. Photograph: Jasin Boland/NBC",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/4/29/1398781085006/Bear-Grylls-006.jpg",
+          "typeData":{
+            "source":"Jasin Boland/NBC",
+            "altText":"Bear Grylls",
+            "height":"168",
+            "credit":"Jasin Boland/NBC",
+            "caption":"Bear Grylls, who is taking a dozen men to a Pacific island to test their survival skills. Photograph: Jasin Boland/NBC",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/4/29/1398781086631/Bear-Grylls-007.jpg",
+          "typeData":{
+            "source":"Jasin Boland/NBC",
+            "altText":"Bear Grylls",
+            "height":"180",
+            "credit":"Jasin Boland/NBC",
+            "caption":"Bear Grylls, who is taking a dozen men to a Pacific island to test their survival skills. Photograph: Jasin Boland/NBC",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/4/29/1398781088252/Bear-Grylls-008.jpg",
+          "typeData":{
+            "source":"Jasin Boland/NBC",
+            "altText":"Bear Grylls",
+            "height":"228",
+            "credit":"Jasin Boland/NBC",
+            "caption":"Bear Grylls, who is taking a dozen men to a Pacific island to test their survival skills. Photograph: Jasin Boland/NBC",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/4/29/1398781089893/Bear-Grylls-009.jpg",
+          "typeData":{
+            "source":"Jasin Boland/NBC",
+            "altText":"Bear Grylls",
+            "height":"276",
+            "credit":"Jasin Boland/NBC",
+            "caption":"Bear Grylls, who is taking a dozen men to a Pacific island to test their survival skills. Photograph: Jasin Boland/NBC",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/4/29/1398781091541/Bear-Grylls-010.jpg",
+          "typeData":{
+            "source":"Jasin Boland/NBC",
+            "altText":"Bear Grylls",
+            "height":"372",
+            "credit":"Jasin Boland/NBC",
+            "caption":"Bear Grylls, who is taking a dozen men to a Pacific island to test their survival skills. Photograph: Jasin Boland/NBC",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/4/29/1398781093352/Bear-Grylls-011.jpg",
+          "typeData":{
+            "source":"Jasin Boland/NBC",
+            "altText":"Bear Grylls",
+            "height":"1116",
+            "credit":"Jasin Boland/NBC",
+            "caption":"Bear Grylls, who is taking a dozen men to a Pacific island to test their survival skills. Photograph: Jasin Boland/NBC",
+            "width":"1860"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/4/29/1398781095611/Bear-Grylls-012.jpg",
+          "typeData":{
+            "source":"Jasin Boland/NBC",
+            "altText":"Bear Grylls",
+            "height":"1201",
+            "credit":"Jasin Boland/NBC",
+            "caption":"Bear Grylls, who is taking a dozen men to a Pacific island to test their survival skills. Photograph: Jasin Boland/NBC",
+            "width":"2002"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/4/29/1398781089893/Bear-Grylls-009.jpg",
+          "typeData":{
+            "source":"Jasin Boland/NBC",
+            "altText":"Bear Grylls",
+            "height":"276",
+            "credit":"Jasin Boland/NBC",
+            "caption":"Bear Grylls, who is taking a dozen men to a Pacific island to test their survival skills. Photograph: Jasin Boland/NBC",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-435600153",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/4/29/1398781081798/Bear-Grylls-004.jpg",
+          "typeData":{
+            "source":"Jasin Boland/NBC",
+            "altText":"Bear Grylls",
+            "height":"84",
+            "credit":"Jasin Boland/NBC",
+            "caption":"Bear Grylls, who is taking a dozen men to a Pacific island to test their survival skills. Photograph: Jasin Boland/NBC",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/4/29/1398781091541/Bear-Grylls-010.jpg",
+          "typeData":{
+            "source":"Jasin Boland/NBC",
+            "altText":"Bear Grylls",
+            "height":"372",
+            "credit":"Jasin Boland/NBC",
+            "caption":"Bear Grylls, who is taking a dozen men to a Pacific island to test their survival skills. Photograph: Jasin Boland/NBC",
+            "width":"620"
+          }
+        }]
+      }],
+      "references":[]
+    }],
+    "storyPackage":[],
+    "leadContent":[{
+      "id":"world/shortcuts/2012/may/13/pass-notes-merde",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2012-05-13T19:00:00Z",
+      "webTitle":"Pass notes, No 3,174: Merde",
+      "webUrl":"http://www.theguardian.com/world/shortcuts/2012/may/13/pass-notes-merde",
+      "apiUrl":"http://content.guardianapis.com/world/shortcuts/2012/may/13/pass-notes-merde",
+      "fields":{
+        "newspaperPageNumber":"3",
+        "trailText":"<p>The only word for an uneasy compromise, soon to be found right at the very heart of the EU</p>",
+        "headline":"Pass notes, No 3,174: Merde",
+        "body":"<p><strong>Age: </strong>Begins tomorrow.</p><p><strong>Appearance: </strong>Half-man, half-woman, all-compromise.</p><p><strong>Isn't merde a rude French word? </strong>It is. It's also a portmanteau of Merkel and Hollande, the old German chancellor and the new French president.</p><p><strong>So it's the new Merkozy? </strong>Exactly. But much less cosy than the old one.</p><p><strong>Because? </strong>Because unlike Mer and Kozy, Mer and&nbsp;De grew up on very different sides of the political tracks. She's an austerity-loving conservative and he's a stimulus-seeking socialist&nbsp;elected on the back of a pledge to renegotiate the eurozone's fiscal pact.</p><p><strong>Is that a problem? </strong>It is.</p><p><strong>Why so? </strong>Because Merkel insists that the fiscal pact is simply \"not up for debate\". She claims if they open up negotiations on the agreement, Greece will demand to renegotiate the troika package, other countries will follow suit and then everything that's ever been agreed in Europe since the 1648 Treaty of Westphalia will have to be thrown out and rewritten from scratch. At which point every town, village and remote clifftop lighthouse in Europe will be simultaneously rendered worthless, ransacked by&nbsp;looters and set on fire.</p><p><strong>Sounds like a pretty intractable position she's got there. </strong>Nah, it's more flexible than it looks.</p><p><strong>Really? </strong>Yup. Hollande's off to see Merkel tomorrow afternoon as soon as he's been sworn in and experts reckon the pair should agree a compromise in no time.</p><p><strong>How exactly? </strong>By putting the fiscal pact to one side and putting together a \"growth pact\" to run alongside it, thus allowing both to walk away from discussions with their heads held high. The key question is whether the growth pact will be – as many supporters of Hollande are hoping – built around a fiscal stimulus funded by&nbsp;further borrowing, or – as Merkel's government is insisting it will have to be – a series of measures to&nbsp;improve European competitiveness.</p><p><strong>Hold on. Isn't \"measures to improve European competitiveness\" just another term for austerity? </strong>Pretty much, yep. That'd be why the French are saying \"Merde!\".</p><p><strong>Do say: </strong>\"Merkel + Hollande = Merde ...\"</p><p><strong>Don't say: </strong>\"... so does Monti + Cameron = Moron?\"</p><!-- Guardian Watermark: internal-code/content/390006942|2014-05-14T16:53:59Z|580656b8bbb63668b5a4247239609244e7ff1939 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-07-01T04:31:22Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/11/1336758057257/merde-002.jpg",
+        "standfirst":"The only word for an uneasy compromise, soon to be found right at the very heart of the EU",
+        "shortUrl":"http://gu.com/p/37gt6",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/11/1336758057257/merde-002.jpg",
+        "wordcount":"331",
+        "commentable":"false",
+        "internalContentCode":"390006942",
+        "allowUgc":"false",
+        "internalOctopusCode":"6168663",
+        "isPremoderated":"false",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2012-05-14",
+        "internalPageCode":"1744260",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2012-05-21T12:13:51Z"
+      },
+      "tags":[{
+        "id":"world/francois-hollande",
+        "type":"keyword",
+        "webTitle":"François Hollande",
+        "webUrl":"http://www.theguardian.com/world/francois-hollande",
+        "apiUrl":"http://content.guardianapis.com/world/francois-hollande",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/angela-merkel",
+        "type":"keyword",
+        "webTitle":"Angela Merkel",
+        "webUrl":"http://www.theguardian.com/world/angela-merkel",
+        "apiUrl":"http://content.guardianapis.com/world/angela-merkel",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/eu",
+        "type":"keyword",
+        "webTitle":"European Union",
+        "webUrl":"http://www.theguardian.com/world/eu",
+        "apiUrl":"http://content.guardianapis.com/world/eu",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"theguardian/g2/features",
+        "type":"newspaper-book-section",
+        "webTitle":"Comment & features",
+        "webUrl":"http://www.theguardian.com/theguardian/g2/features",
+        "apiUrl":"http://content.guardianapis.com/theguardian/g2/features",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/g2",
+        "type":"newspaper-book",
+        "webTitle":"G2",
+        "webUrl":"http://www.theguardian.com/theguardian/g2",
+        "apiUrl":"http://content.guardianapis.com/theguardian/g2",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"theguardian/series/pass-notes",
+        "type":"series",
+        "webTitle":"Pass notes",
+        "webUrl":"http://www.theguardian.com/theguardian/series/pass-notes",
+        "apiUrl":"http://content.guardianapis.com/theguardian/series/pass-notes",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"politics/politics",
+        "type":"keyword",
+        "webTitle":"Politics",
+        "webUrl":"http://www.theguardian.com/politics/politics",
+        "apiUrl":"http://content.guardianapis.com/politics/politics",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"theguardian/shortcuts",
+        "type":"blog",
+        "webTitle":"Shortcuts",
+        "webUrl":"http://www.theguardian.com/theguardian/shortcuts",
+        "apiUrl":"http://content.guardianapis.com/theguardian/shortcuts",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-390092351",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/11/1336758055669/merde-001.jpg",
+          "typeData":{
+            "source":"Rex Features and Reuters",
+            "altText":"merde",
+            "height":"130",
+            "credit":"Rex Features and Reuters",
+            "caption":"Hollande and Merkel's sdfjghbkjdhg Photograph: Rex Features and Reuters",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/11/1336758057257/merde-002.jpg",
+          "typeData":{
+            "source":"Rex Features and Reuters",
+            "altText":"merde",
+            "height":"84",
+            "credit":"Rex Features and Reuters",
+            "caption":"Hollande and Merkel's sdfjghbkjdhg Photograph: Rex Features and Reuters",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/11/1336758058556/merde-003.jpg",
+          "typeData":{
+            "source":"Rex Features and Reuters",
+            "altText":"merde",
+            "height":"132",
+            "credit":"Rex Features and Reuters",
+            "caption":"Hollande and Merkel's sdfjghbkjdhg Photograph: Rex Features and Reuters",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/11/1336758059871/merde-004.jpg",
+          "typeData":{
+            "source":"Rex Features and Reuters",
+            "altText":"merde",
+            "height":"168",
+            "credit":"Rex Features and Reuters",
+            "caption":"Hollande and Merkel's sdfjghbkjdhg Photograph: Rex Features and Reuters",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/11/1336758061175/merde-005.jpg",
+          "typeData":{
+            "source":"Rex Features and Reuters",
+            "altText":"merde",
+            "height":"180",
+            "credit":"Rex Features and Reuters",
+            "caption":"Hollande and Merkel's sdfjghbkjdhg Photograph: Rex Features and Reuters",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/11/1336758062548/merde-006.jpg",
+          "typeData":{
+            "source":"Rex Features and Reuters",
+            "altText":"merde",
+            "height":"228",
+            "credit":"Rex Features and Reuters",
+            "caption":"Hollande and Merkel's sdfjghbkjdhg Photograph: Rex Features and Reuters",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/11/1336758063916/merde-007.jpg",
+          "typeData":{
+            "source":"Rex Features and Reuters",
+            "altText":"merde",
+            "height":"276",
+            "credit":"Rex Features and Reuters",
+            "caption":"Hollande and Merkel's sdfjghbkjdhg Photograph: Rex Features and Reuters",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/11/1336758063916/merde-007.jpg",
+          "typeData":{
+            "source":"Rex Features and Reuters",
+            "altText":"merde",
+            "height":"276",
+            "credit":"Rex Features and Reuters",
+            "caption":"Hollande and Merkel's portmanteu name is less than flattering. Photograph: Rex Features and Reuters",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-390092352",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2012/5/11/1336758057257/merde-002.jpg",
+          "typeData":{
+            "source":"Rex Features and Reuters",
+            "altText":"merde",
+            "height":"84",
+            "credit":"Rex Features and Reuters",
+            "caption":"Hollande and Merkel's sdfjghbkjdhg Photograph: Rex Features and Reuters",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    }]
+  }
+}

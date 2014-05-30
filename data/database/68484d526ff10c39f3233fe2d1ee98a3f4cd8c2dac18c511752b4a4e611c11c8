@@ -1,0 +1,2248 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"law/2014/jan/20/pakistan-drone-strike-relative-loses-gchq-court-case",
+      "sectionId":"law",
+      "sectionName":"Law",
+      "webPublicationDate":"2014-01-20T12:09:09Z",
+      "webTitle":"Pakistan drone strike relative loses GCHQ court case",
+      "webUrl":"http://www.theguardian.com/law/2014/jan/20/pakistan-drone-strike-relative-loses-gchq-court-case",
+      "apiUrl":"http://content.guardianapis.com/law/2014/jan/20/pakistan-drone-strike-relative-loses-gchq-court-case",
+      "fields":{
+        "trailText":"Judges say case would involve 'sitting in judgment' on US and block move by Noor Khan, whose father died in a 2011 attack",
+        "headline":"Pakistan drone strike relative loses GCHQ court case",
+        "body":"<p>A Pakistani man whose father died in a drone strike has failed in an attempt to hold British officials responsible for the killing.</p><p>The court of appeal ruled on Monday that considering whether GCHQ staff had passed on \"locational intelligence\" to the CIA before the attack in 2011 would involve \"sitting in judgment\" on the US.</p><p>Noor Khan, 28, lost his father, a tribal elder, to the strike on a local council meeting in North Waziristan, which had gathered to resolve a mining dispute.</p><p>\"However the claims are presented, they involve serious criticisms of the acts of a foreign state,\" the three court of appeal judges concluded. \"It is only in certain established circumstances that our courts will exceptionally sit in judgment of such acts. There are no such exceptional circumstances here.\"</p><p>The court would have to find the CIA implicitly guilty of a war crime before it could consider whether GCHQ had been involved, the court said.</p><p>Lawyers for the UK government had argued that the case should not proceed as \"a finding by our court that the notional UK operator of a drone bomb which caused a death was guilty of murder would inevitably be understood … by the US as a condemnation of the US.\"</p><p>Responding to the ruling, Kat Craig, legal director of the human rights charity Reprieve, which is supporting Khan, said: \"It is shameful that the risk of embarrassing the US has trumped British justice in this case.</p><p>\"It now appears that the UK government can get away with murder, provided it is committed alongside an ally who may be sensitive to public criticism. It is a sad day when the rights of civilian victims of drone strikes take second place to the PR concerns of the US government.\"</p><p>Khan said: \"I used to think that Britain stood for justice, but now it seems as though the government has put itself above the law.</p><p>\"However, I am still determined to get answers from the UK government about the part they have played in the death of my father. The CIA's drone programme has not only killed hundreds of civilians, but is turning people in Pakistan against the US and its allies.</p><p>\"This is why I was so upset to hear that Britain is helping the CIA to carry out these killings, and even more upset when the government refused to respond to my questions.\"</p><p>Rosa Curling from Leigh Day, which is representing Khan, said: \"The court's decision not to determine the lawfulness of our government's involvement in CIA drone strikes in Pakistan, deadly strikes which have killed many civilians over recent years including my client's father, simply to spare the US government embarrassment is not only disappointing but also deeply worrying.</p><p>\"The courts must have jurisdiction over the legality of our government's action irrespective of whether they act alongside a foreign state or not.\"</p><!-- Guardian Watermark: internal-code/content/427533283|2014-05-14T16:53:37Z|d1f8ba6cbcc221a74c6cfeee84b5cd9ae316ddab -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2014-01-20T13:30:42Z",
+        "hasStoryPackage":"true",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2014/1/20/1390219422353/Drones-003.jpg",
+        "standfirst":"Judges say case would involve 'sitting in judgment' on US and block move by Noor Khan, whose father died in a 2011 attack",
+        "shortUrl":"http://gu.com/p/3m2gp",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2014/1/20/1390219422353/Drones-003.jpg",
+        "wordcount":"468",
+        "commentable":"true",
+        "internalContentCode":"427533283",
+        "allowUgc":"false",
+        "internalOctopusCode":"8577105",
+        "isPremoderated":"false",
+        "byline":"Owen Bowcott, legal affairs correspondent",
+        "publication":"theguardian.com",
+        "internalPageCode":"2029264",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2014-01-27T12:09:09Z"
+      },
+      "tags":[{
+        "id":"law/law",
+        "type":"keyword",
+        "webTitle":"Law",
+        "webUrl":"http://www.theguardian.com/law/law",
+        "apiUrl":"http://content.guardianapis.com/law/law",
+        "sectionId":"law",
+        "sectionName":"Law",
+        "references":[]
+      },{
+        "id":"uk/gchq",
+        "type":"keyword",
+        "webTitle":"GCHQ",
+        "webUrl":"http://www.theguardian.com/uk/gchq",
+        "apiUrl":"http://content.guardianapis.com/uk/gchq",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"world/drones",
+        "type":"keyword",
+        "webTitle":"Drones",
+        "webUrl":"http://www.theguardian.com/world/drones",
+        "apiUrl":"http://content.guardianapis.com/world/drones",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/pakistan",
+        "type":"keyword",
+        "webTitle":"Pakistan",
+        "webUrl":"http://www.theguardian.com/world/pakistan",
+        "apiUrl":"http://content.guardianapis.com/world/pakistan",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"law/human-rights",
+        "type":"keyword",
+        "webTitle":"Human rights",
+        "webUrl":"http://www.theguardian.com/law/human-rights",
+        "apiUrl":"http://content.guardianapis.com/law/human-rights",
+        "sectionId":"law",
+        "sectionName":"Law",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/owenbowcott",
+        "type":"contributor",
+        "webTitle":"Owen Bowcott",
+        "webUrl":"http://www.theguardian.com/profile/owenbowcott",
+        "apiUrl":"http://content.guardianapis.com/profile/owenbowcott",
+        "bio":"<p>Owen Bowcott is legal affairs correspondent. He was formerly the Guardian's <a href=\"http://www.guardian.co.uk/world/ireland\">Ireland</a> correspondent and also worked on the foreign newsdesk</p>",
+        "rcsId":"GNL004729",
+        "r2ContributorId":"16213",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/owen_bowcott_140x140.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-427533800",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2014/1/20/1390219418089/Drones-001.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"SS Mirza",
+            "altText":"Drones",
+            "height":"54",
+            "credit":"SS Mirza/AFP/Getty Images",
+            "caption":"A Pakistani man holds a burning US flag as protesters shout slogans during an anti-drone demonstration in 2012. Photograph: SS Mirza/AFP/Getty Images",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2014/1/20/1390219420906/Drones-002.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"SS Mirza",
+            "altText":"Drones",
+            "height":"130",
+            "credit":"SS Mirza/AFP/Getty Images",
+            "caption":"A Pakistani man holds a burning US flag as protesters shout slogans during an anti-drone demonstration in 2012. Photograph: SS Mirza/AFP/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2014/1/20/1390219422353/Drones-003.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"SS Mirza",
+            "altText":"Drones",
+            "height":"84",
+            "credit":"SS Mirza/AFP/Getty Images",
+            "caption":"A Pakistani man holds a burning US flag as protesters shout slogans during an anti-drone demonstration in 2012. Photograph: SS Mirza/AFP/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2014/1/20/1390219423720/Drones-004.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"SS Mirza",
+            "altText":"Drones",
+            "height":"132",
+            "credit":"SS Mirza/AFP/Getty Images",
+            "caption":"A Pakistani man holds a burning US flag as protesters shout slogans during an anti-drone demonstration in 2012. Photograph: SS Mirza/AFP/Getty Images",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2014/1/20/1390219425003/Drones-005.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"SS Mirza",
+            "altText":"Drones",
+            "height":"168",
+            "credit":"SS Mirza/AFP/Getty Images",
+            "caption":"A Pakistani man holds a burning US flag as protesters shout slogans during an anti-drone demonstration in 2012. Photograph: SS Mirza/AFP/Getty Images",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2014/1/20/1390219426277/Drones-006.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"SS Mirza",
+            "altText":"Drones",
+            "height":"180",
+            "credit":"SS Mirza/AFP/Getty Images",
+            "caption":"A Pakistani man holds a burning US flag as protesters shout slogans during an anti-drone demonstration in 2012. Photograph: SS Mirza/AFP/Getty Images",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2014/1/20/1390219427555/Drones-007.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"SS Mirza",
+            "altText":"Drones",
+            "height":"228",
+            "credit":"SS Mirza/AFP/Getty Images",
+            "caption":"A Pakistani man holds a burning US flag as protesters shout slogans during an anti-drone demonstration in 2012. Photograph: SS Mirza/AFP/Getty Images",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2014/1/20/1390219428844/Drones-008.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"SS Mirza",
+            "altText":"Drones",
+            "height":"276",
+            "credit":"SS Mirza/AFP/Getty Images",
+            "caption":"A Pakistani man holds a burning US flag as protesters shout slogans during an anti-drone demonstration in 2012. Photograph: SS Mirza/AFP/Getty Images",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2014/1/20/1390219428844/Drones-008.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"SS Mirza",
+            "altText":"Drones",
+            "height":"276",
+            "credit":"SS Mirza/AFP/Getty Images",
+            "caption":"A Pakistani man holds a burning US flag as protesters shout slogans during an anti-drone demonstration in 2012. Photograph: SS Mirza/AFP/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-427533801",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2014/1/20/1390219422353/Drones-003.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"SS Mirza",
+            "altText":"Drones",
+            "height":"84",
+            "credit":"SS Mirza/AFP/Getty Images",
+            "caption":"A Pakistani man holds a burning US flag as protesters shout slogans during an anti-drone demonstration in 2012. Photograph: SS Mirza/AFP/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[],
+      "isExpired":"false"
+    },
+    "storyPackage":[{
+      "id":"world/2014/feb/05/us-pakistan-drone-strikes-taliban-talks",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2014-02-05T08:08:51Z",
+      "webTitle":"US scales back Pakistan drone strikes during Taliban talks, say reports",
+      "webUrl":"http://www.theguardian.com/world/2014/feb/05/us-pakistan-drone-strikes-taliban-talks",
+      "apiUrl":"http://content.guardianapis.com/world/2014/feb/05/us-pakistan-drone-strikes-taliban-talks",
+      "fields":{
+        "trailText":"Islamabad calls for restraint but senior US official denies informal agreement reached, says Washington Post",
+        "headline":"US scales back Pakistan drone strikes during Taliban talks, say reports",
+        "body":"<p>The US has cut back sharply on drone strikes in Pakistan after Islamabad  asked for restraint while it pursues peace talks with the Pakistani Taliban, the Washington Post reported on Tuesday.</p><p>The Post quoted an American official as saying: \"That's what they asked for, and we didn't tell them no.\" The newspaper said there had been a lull in drone attacks since December, the longest break since 2011.</p><p>The Post said the Obama administration indicated it would continue carrying out strikes on senior al-Qaida officials if they were to become available or to thwart any immediate threat to Americans.</p><p>Reuters was not immediately able to confirm the report.</p><p>The Post quoted a senior Obama administration official as denying an informal agreement had been reached, saying: \"The issue of whether to negotiate with the Pakistani Taliban is entirely an internal matter for Pakistan.\"</p><p>While some Pakistanis welcome the strikes, saying they kill fewer civilians and are more effective against Taliban militants than traditional military operations, others argue they still cause civilian casualties, terrify residents and violate Pakistani sovereignty.</p><p>The Pakistani prime minister, Nawaz Sharif, has said he wants the drone strikes to end.</p><p>The Post said the current US pause came after a November strike that killed Pakistani Taliban leader Hakimullah Mehsud.</p><p>That attack took place a day after Pakistan's foreign policy chief, Sartaj Aziz, was quoted as saying the US had promised not to conduct drone strikes while the government tries to engage the Taliban in peace talks.</p><p>An annual study by <a href=\"http://www.thebureauinvestigates.com/category/projects/drones/drones-pakistan/\" title=\"\">the Bureau for Investigative Journalism</a> found that CIA drone strikes against militants in Pakistan killed no more than four civilians last year, the lowest number of reported civilian deaths since the drone programme began in 2004.</p><!-- Guardian Watermark: internal-code/content/428944765|2014-05-14T16:53:37Z|e1886437af889bb879d4aabdcd208c06870d49c2 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2014-02-05T11:02:25Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/2/5/1391587194557/Drone-strike-kills-in-Pak-006.jpg",
+        "standfirst":"Islamabad calls for restraint but senior US official denies informal agreement reached, says Washington Post",
+        "shortUrl":"http://gu.com/p/3mf3y",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/2/5/1391587194557/Drone-strike-kills-in-Pak-006.jpg",
+        "wordcount":"279",
+        "commentable":"false",
+        "internalContentCode":"428944765",
+        "allowUgc":"false",
+        "internalOctopusCode":"8647160",
+        "isPremoderated":"false",
+        "byline":"Reuters in Washington",
+        "publication":"theguardian.com",
+        "internalPageCode":"2038386",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2014-02-08T08:08:51Z"
+      },
+      "tags":[{
+        "id":"world/pakistan",
+        "type":"keyword",
+        "webTitle":"Pakistan",
+        "webUrl":"http://www.theguardian.com/world/pakistan",
+        "apiUrl":"http://content.guardianapis.com/world/pakistan",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/drones",
+        "type":"keyword",
+        "webTitle":"Drones",
+        "webUrl":"http://www.theguardian.com/world/drones",
+        "apiUrl":"http://content.guardianapis.com/world/drones",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/usforeignpolicy",
+        "type":"keyword",
+        "webTitle":"US foreign policy",
+        "webUrl":"http://www.theguardian.com/world/usforeignpolicy",
+        "apiUrl":"http://content.guardianapis.com/world/usforeignpolicy",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-428945468",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/2/5/1391587187210/Drone-strike-kills-in-Pak-001.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Basit Gilani",
+            "altText":"Drone strike kills in Pakistan",
+            "height":"54",
+            "credit":"Basit Gilani/EPA",
+            "caption":"People gather at the site of a drone strike in Hangu, Pakistan, in November during which senior Taliban leaders were killed. Photograph: Basit Gilani/EPA",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/2/5/1391587188569/Drone-strike-kills-in-Pak-002.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Basit Gilani",
+            "altText":"Drone strike kills in Pakistan",
+            "height":"340",
+            "credit":"Basit Gilani/EPA",
+            "caption":"People gather at the site of a drone strike in Hangu, Pakistan, in November during which senior Taliban leaders were killed. Photograph: Basit Gilani/EPA",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/2/5/1391587189784/Drone-strike-kills-in-Pak-003.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Basit Gilani",
+            "altText":"Drone strike kills in Pakistan",
+            "height":"130",
+            "credit":"Basit Gilani/EPA",
+            "caption":"People gather at the site of a drone strike in Hangu, Pakistan, in November during which senior Taliban leaders were killed. Photograph: Basit Gilani/EPA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/2/5/1391587191090/Drone-strike-kills-in-Pak-004.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Basit Gilani",
+            "altText":"Drone strike kills in Pakistan",
+            "height":"720",
+            "credit":"Basit Gilani/EPA",
+            "caption":"People gather at the site of a drone strike in Hangu, Pakistan, in November during which senior Taliban leaders were killed. Photograph: Basit Gilani/EPA",
+            "width":"1280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/2/5/1391587192768/Drone-strike-kills-in-Pak-005.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Basit Gilani",
+            "altText":"Drone strike kills in Pakistan",
+            "height":"1536",
+            "credit":"Basit Gilani/EPA",
+            "caption":"People gather at the site of a drone strike in Hangu, Pakistan, in November during which senior Taliban leaders were killed. Photograph: Basit Gilani/EPA",
+            "width":"2048"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/2/5/1391587194557/Drone-strike-kills-in-Pak-006.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Basit Gilani",
+            "altText":"Drone strike kills in Pakistan",
+            "height":"84",
+            "credit":"Basit Gilani/EPA",
+            "caption":"People gather at the site of a drone strike in Hangu, Pakistan, in November during which senior Taliban leaders were killed. Photograph: Basit Gilani/EPA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/2/5/1391587195770/Drone-strike-kills-in-Pak-007.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Basit Gilani",
+            "altText":"Drone strike kills in Pakistan",
+            "height":"132",
+            "credit":"Basit Gilani/EPA",
+            "caption":"People gather at the site of a drone strike in Hangu, Pakistan, in November during which senior Taliban leaders were killed. Photograph: Basit Gilani/EPA",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/2/5/1391587197002/Drone-strike-kills-in-Pak-008.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Basit Gilani",
+            "altText":"Drone strike kills in Pakistan",
+            "height":"168",
+            "credit":"Basit Gilani/EPA",
+            "caption":"People gather at the site of a drone strike in Hangu, Pakistan, in November during which senior Taliban leaders were killed. Photograph: Basit Gilani/EPA",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/2/5/1391587198193/Drone-strike-kills-in-Pak-009.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Basit Gilani",
+            "altText":"Drone strike kills in Pakistan",
+            "height":"180",
+            "credit":"Basit Gilani/EPA",
+            "caption":"People gather at the site of a drone strike in Hangu, Pakistan, in November during which senior Taliban leaders were killed. Photograph: Basit Gilani/EPA",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/2/5/1391587199446/Drone-strike-kills-in-Pak-010.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Basit Gilani",
+            "altText":"Drone strike kills in Pakistan",
+            "height":"228",
+            "credit":"Basit Gilani/EPA",
+            "caption":"People gather at the site of a drone strike in Hangu, Pakistan, in November during which senior Taliban leaders were killed. Photograph: Basit Gilani/EPA",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/2/5/1391587200743/Drone-strike-kills-in-Pak-011.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Basit Gilani",
+            "altText":"Drone strike kills in Pakistan",
+            "height":"276",
+            "credit":"Basit Gilani/EPA",
+            "caption":"People gather at the site of a drone strike in Hangu, Pakistan, in November during which senior Taliban leaders were killed. Photograph: Basit Gilani/EPA",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/2/5/1391587201952/Drone-strike-kills-in-Pak-012.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Basit Gilani",
+            "altText":"Drone strike kills in Pakistan",
+            "height":"372",
+            "credit":"Basit Gilani/EPA",
+            "caption":"People gather at the site of a drone strike in Hangu, Pakistan, in November during which senior Taliban leaders were killed. Photograph: Basit Gilani/EPA",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/2/5/1391587203398/Drone-strike-kills-in-Pak-013.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Basit Gilani",
+            "altText":"Drone strike kills in Pakistan",
+            "height":"1116",
+            "credit":"Basit Gilani/EPA",
+            "caption":"People gather at the site of a drone strike in Hangu, Pakistan, in November during which senior Taliban leaders were killed. Photograph: Basit Gilani/EPA",
+            "width":"1860"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/2/5/1391587205356/Drone-strike-kills-in-Pak-014.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Basit Gilani",
+            "altText":"Drone strike kills in Pakistan",
+            "height":"1536",
+            "credit":"Basit Gilani/EPA",
+            "caption":"People gather at the site of a drone strike in Hangu, Pakistan, in November during which senior Taliban leaders were killed. Photograph: Basit Gilani/EPA",
+            "width":"2560"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/2/5/1391587200743/Drone-strike-kills-in-Pak-011.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Basit Gilani",
+            "altText":"Drone strike kills in Pakistan",
+            "height":"276",
+            "credit":"Basit Gilani/EPA",
+            "caption":"People gather at the site of a drone strike in Hangu, Pakistan, in November during which senior Taliban leaders were killed. Photograph: Basit Gilani/EPA",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-428945469",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/2/5/1391587194557/Drone-strike-kills-in-Pak-006.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Basit Gilani",
+            "altText":"Drone strike kills in Pakistan",
+            "height":"84",
+            "credit":"Basit Gilani/EPA",
+            "caption":"People gather at the site of a drone strike in Hangu, Pakistan, in November during which senior Taliban leaders were killed. Photograph: Basit Gilani/EPA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/2/5/1391587201952/Drone-strike-kills-in-Pak-012.jpg",
+          "typeData":{
+            "source":"EPA",
+            "photographer":"Basit Gilani",
+            "altText":"Drone strike kills in Pakistan",
+            "height":"372",
+            "credit":"Basit Gilani/EPA",
+            "caption":"People gather at the site of a drone strike in Hangu, Pakistan, in November during which senior Taliban leaders were killed. Photograph: Basit Gilani/EPA",
+            "width":"620"
+          }
+        }]
+      }],
+      "references":[],
+      "isExpired":"true"
+    },{
+      "id":"law/2014/jan/20/pakistan-drone-strike-relative-loses-gchq-court-case",
+      "sectionId":"law",
+      "sectionName":"Law",
+      "webPublicationDate":"2014-01-20T12:09:09Z",
+      "webTitle":"Pakistan drone strike relative loses GCHQ court case",
+      "webUrl":"http://www.theguardian.com/law/2014/jan/20/pakistan-drone-strike-relative-loses-gchq-court-case",
+      "apiUrl":"http://content.guardianapis.com/law/2014/jan/20/pakistan-drone-strike-relative-loses-gchq-court-case",
+      "fields":{
+        "trailText":"Judges say case would involve 'sitting in judgment' on US and block move by Noor Khan, whose father died in a 2011 attack",
+        "headline":"Pakistan drone strike relative loses GCHQ court case",
+        "body":"<p>A Pakistani man whose father died in a drone strike has failed in an attempt to hold British officials responsible for the killing.</p><p>The court of appeal ruled on Monday that considering whether GCHQ staff had passed on \"locational intelligence\" to the CIA before the attack in 2011 would involve \"sitting in judgment\" on the US.</p><p>Noor Khan, 28, lost his father, a tribal elder, to the strike on a local council meeting in North Waziristan, which had gathered to resolve a mining dispute.</p><p>\"However the claims are presented, they involve serious criticisms of the acts of a foreign state,\" the three court of appeal judges concluded. \"It is only in certain established circumstances that our courts will exceptionally sit in judgment of such acts. There are no such exceptional circumstances here.\"</p><p>The court would have to find the CIA implicitly guilty of a war crime before it could consider whether GCHQ had been involved, the court said.</p><p>Lawyers for the UK government had argued that the case should not proceed as \"a finding by our court that the notional UK operator of a drone bomb which caused a death was guilty of murder would inevitably be understood … by the US as a condemnation of the US.\"</p><p>Responding to the ruling, Kat Craig, legal director of the human rights charity Reprieve, which is supporting Khan, said: \"It is shameful that the risk of embarrassing the US has trumped British justice in this case.</p><p>\"It now appears that the UK government can get away with murder, provided it is committed alongside an ally who may be sensitive to public criticism. It is a sad day when the rights of civilian victims of drone strikes take second place to the PR concerns of the US government.\"</p><p>Khan said: \"I used to think that Britain stood for justice, but now it seems as though the government has put itself above the law.</p><p>\"However, I am still determined to get answers from the UK government about the part they have played in the death of my father. The CIA's drone programme has not only killed hundreds of civilians, but is turning people in Pakistan against the US and its allies.</p><p>\"This is why I was so upset to hear that Britain is helping the CIA to carry out these killings, and even more upset when the government refused to respond to my questions.\"</p><p>Rosa Curling from Leigh Day, which is representing Khan, said: \"The court's decision not to determine the lawfulness of our government's involvement in CIA drone strikes in Pakistan, deadly strikes which have killed many civilians over recent years including my client's father, simply to spare the US government embarrassment is not only disappointing but also deeply worrying.</p><p>\"The courts must have jurisdiction over the legality of our government's action irrespective of whether they act alongside a foreign state or not.\"</p><!-- Guardian Watermark: internal-code/content/427533283|2014-05-14T16:53:37Z|d1f8ba6cbcc221a74c6cfeee84b5cd9ae316ddab -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2014-01-20T13:30:42Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/About/General/2014/1/20/1390219422353/Drones-003.jpg",
+        "standfirst":"Judges say case would involve 'sitting in judgment' on US and block move by Noor Khan, whose father died in a 2011 attack",
+        "shortUrl":"http://gu.com/p/3m2gp",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2014/1/20/1390219422353/Drones-003.jpg",
+        "wordcount":"468",
+        "commentable":"true",
+        "internalContentCode":"427533283",
+        "allowUgc":"false",
+        "internalOctopusCode":"8577105",
+        "isPremoderated":"false",
+        "byline":"Owen Bowcott, legal affairs correspondent",
+        "publication":"theguardian.com",
+        "internalPageCode":"2029264",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2014-01-27T12:09:09Z"
+      },
+      "tags":[{
+        "id":"law/law",
+        "type":"keyword",
+        "webTitle":"Law",
+        "webUrl":"http://www.theguardian.com/law/law",
+        "apiUrl":"http://content.guardianapis.com/law/law",
+        "sectionId":"law",
+        "sectionName":"Law",
+        "references":[]
+      },{
+        "id":"uk/gchq",
+        "type":"keyword",
+        "webTitle":"GCHQ",
+        "webUrl":"http://www.theguardian.com/uk/gchq",
+        "apiUrl":"http://content.guardianapis.com/uk/gchq",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"world/drones",
+        "type":"keyword",
+        "webTitle":"Drones",
+        "webUrl":"http://www.theguardian.com/world/drones",
+        "apiUrl":"http://content.guardianapis.com/world/drones",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/pakistan",
+        "type":"keyword",
+        "webTitle":"Pakistan",
+        "webUrl":"http://www.theguardian.com/world/pakistan",
+        "apiUrl":"http://content.guardianapis.com/world/pakistan",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"law/human-rights",
+        "type":"keyword",
+        "webTitle":"Human rights",
+        "webUrl":"http://www.theguardian.com/law/human-rights",
+        "apiUrl":"http://content.guardianapis.com/law/human-rights",
+        "sectionId":"law",
+        "sectionName":"Law",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/owenbowcott",
+        "type":"contributor",
+        "webTitle":"Owen Bowcott",
+        "webUrl":"http://www.theguardian.com/profile/owenbowcott",
+        "apiUrl":"http://content.guardianapis.com/profile/owenbowcott",
+        "bio":"<p>Owen Bowcott is legal affairs correspondent. He was formerly the Guardian's <a href=\"http://www.guardian.co.uk/world/ireland\">Ireland</a> correspondent and also worked on the foreign newsdesk</p>",
+        "rcsId":"GNL004729",
+        "r2ContributorId":"16213",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/contributor/2007/09/28/owen_bowcott_140x140.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-427533800",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2014/1/20/1390219418089/Drones-001.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"SS Mirza",
+            "altText":"Drones",
+            "height":"54",
+            "credit":"SS Mirza/AFP/Getty Images",
+            "caption":"A Pakistani man holds a burning US flag as protesters shout slogans during an anti-drone demonstration in 2012. Photograph: SS Mirza/AFP/Getty Images",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2014/1/20/1390219420906/Drones-002.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"SS Mirza",
+            "altText":"Drones",
+            "height":"130",
+            "credit":"SS Mirza/AFP/Getty Images",
+            "caption":"A Pakistani man holds a burning US flag as protesters shout slogans during an anti-drone demonstration in 2012. Photograph: SS Mirza/AFP/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2014/1/20/1390219422353/Drones-003.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"SS Mirza",
+            "altText":"Drones",
+            "height":"84",
+            "credit":"SS Mirza/AFP/Getty Images",
+            "caption":"A Pakistani man holds a burning US flag as protesters shout slogans during an anti-drone demonstration in 2012. Photograph: SS Mirza/AFP/Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2014/1/20/1390219423720/Drones-004.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"SS Mirza",
+            "altText":"Drones",
+            "height":"132",
+            "credit":"SS Mirza/AFP/Getty Images",
+            "caption":"A Pakistani man holds a burning US flag as protesters shout slogans during an anti-drone demonstration in 2012. Photograph: SS Mirza/AFP/Getty Images",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2014/1/20/1390219425003/Drones-005.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"SS Mirza",
+            "altText":"Drones",
+            "height":"168",
+            "credit":"SS Mirza/AFP/Getty Images",
+            "caption":"A Pakistani man holds a burning US flag as protesters shout slogans during an anti-drone demonstration in 2012. Photograph: SS Mirza/AFP/Getty Images",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2014/1/20/1390219426277/Drones-006.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"SS Mirza",
+            "altText":"Drones",
+            "height":"180",
+            "credit":"SS Mirza/AFP/Getty Images",
+            "caption":"A Pakistani man holds a burning US flag as protesters shout slogans during an anti-drone demonstration in 2012. Photograph: SS Mirza/AFP/Getty Images",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2014/1/20/1390219427555/Drones-007.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"SS Mirza",
+            "altText":"Drones",
+            "height":"228",
+            "credit":"SS Mirza/AFP/Getty Images",
+            "caption":"A Pakistani man holds a burning US flag as protesters shout slogans during an anti-drone demonstration in 2012. Photograph: SS Mirza/AFP/Getty Images",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2014/1/20/1390219428844/Drones-008.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"SS Mirza",
+            "altText":"Drones",
+            "height":"276",
+            "credit":"SS Mirza/AFP/Getty Images",
+            "caption":"A Pakistani man holds a burning US flag as protesters shout slogans during an anti-drone demonstration in 2012. Photograph: SS Mirza/AFP/Getty Images",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2014/1/20/1390219428844/Drones-008.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"SS Mirza",
+            "altText":"Drones",
+            "height":"276",
+            "credit":"SS Mirza/AFP/Getty Images",
+            "caption":"A Pakistani man holds a burning US flag as protesters shout slogans during an anti-drone demonstration in 2012. Photograph: SS Mirza/AFP/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-427533801",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2014/1/20/1390219422353/Drones-003.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"SS Mirza",
+            "altText":"Drones",
+            "height":"84",
+            "credit":"SS Mirza/AFP/Getty Images",
+            "caption":"A Pakistani man holds a burning US flag as protesters shout slogans during an anti-drone demonstration in 2012. Photograph: SS Mirza/AFP/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[],
+      "isExpired":"false"
+    },{
+      "id":"world/2013/dec/31/deaths-drone-strikes-obama-policy-change",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-12-31T20:01:52Z",
+      "webTitle":"Fewer deaths from drone strikes in 2013 after Obama policy change",
+      "webUrl":"http://www.theguardian.com/world/2013/dec/31/deaths-drone-strikes-obama-policy-change",
+      "apiUrl":"http://content.guardianapis.com/world/2013/dec/31/deaths-drone-strikes-obama-policy-change",
+      "fields":{
+        "trailText":"Strikes this year are estimated to have killed up to 271 people, down from 2012 figure of between 505 and 532",
+        "headline":"Fewer deaths from drone strikes in 2013 after Obama policy change",
+        "body":"<p>President Barack Obama’s mid-year decision to wind down drone strikes has accounted for a lower number of <a href=\"http://www.theguardian.com/commentisfree/2013/dec/29/drones-us-military\">deaths resulting from such actions</a> in 2013, newly compiled data indicates.&nbsp;</p> <p>Sifting through the estimates of three non-governmental organizations, the Council on Foreign Relations scholar Micah Zenko published on Tuesday <a href=\"http://blogs.cfr.org/zenko/2013/12/31/tracking-u-s-targeted-killings/\">a tally of drone strikes in Pakistan, Yemen and Somalia</a>, the central theaters of deadly and formally undeclared counterterrorism operations run in official secrecy.&nbsp;</p> <p>While specific figures are difficult to narrow down and even harder to verify, the number of strikes, almost exclusively by drones, declined in 2013, as did the casualties they caused. Between the three countries, there were around 55 strikes this year, a substantial drop from the roughly 92 in 2012.&nbsp;In 2013 the strikes killed up to 271 people, down from an estimate of between 505 and 532 in 2012. Approximately one in every nine to 10 deaths is a civilian. The data comes from estimates compiled by the New America Foundation, the Long War Journal and the Bureau of Investigative Journalism.</p> <p>Yet attempts to correlate the decline in strikes to a decline in specific threats are blocked by secrecy, diplomatic contingency and political convenience, Zenko said.&nbsp;</p> <p>With the drawdown of the US wars in Iraq and Afghanistan, Zenko said, “there has never been more available, both dedicated US and leased, satellite bandwidth; never been more strike drones available; and there’s more people who can watch full-motion video [for targeting]. There has never been more assets available to kill people and strikes are going down. There’s been a policy decision, and I think they’ve been correct to emphasize that.”</p> <p>A number of counterterrorism scholars consider 2013 to have been a good year for terrorist groups that claim to be motivated by Islam. Daveed Gartenstein-Ross of the conservative Foundation for the Defense of Democracies <a href=\"http://www.politico.com/magazine/story/2013/12/al-qaeda-2013-101477.html\">cited a “regeneration” for al-Qaida</a> – although the regeneration Gartenstein-Ross cited occurred among “affiliate” groups of varying connection to the organization that attacked the US on 9/11, and in places mostly outside the reach of drones, such as Mali, Libya, Syria and Iraq.&nbsp;</p> <p>The exception is Somalia, where al-Shabab, <a href=\"http://www.wired.com/dangerroom/2012/02/shebab-qaida/\">an Islamist militia that formally joined al-Qaida in 2012</a>, launched a handful of terrorist attacks in the capital, Mogadishu, and a dramatic, deadly assault on Kenya’s Westgate mall in September that killed 70 people. <a href=\"http://www.theguardian.com/world/2013/oct/29/us-drone-strike-somalia-al-shabaab-expert\">The US responded with what is believed to be the only missile strike of the year</a>, apparently launched from a drone in October and leaving two dead.&nbsp;</p> <h2>'They have not opened a new front'</h2> <p>But despite the strength of groups believed to be aligned with al-Qaida, observers are yet to see an affiliated rise in either the groups’ sophistication or ability and ambition to attack the US at home. US officials and sympathetic analysts in 2013 <a href=\"http://www.nytimes.com/roomfordebate/2013/09/30/does-al-shabab-pose-a-threat-on-american-soil/a-threat-to-the-us-and-its-interests-in-east-africa\">talked more of threats to “US interests” than threats to the American people</a>.&nbsp;</p> <p>The only domestic attack in 2013 that might be considered jihadism came at the Boston marathon in April, from two brothers with no known connection to any terrorist organization. The actual threat posed by jihadist terrorism in 2013 remains the subject of fierce and unresolved debate.&nbsp;</p> <p>In May, Obama signaled a discomfort with the rise in drone strikes that have become synonymous with his stewardship of counterterrorism, <a href=\"http://www.theguardian.com/world/2013/may/23/obama-drones-guantanamo-speech-text\">during a speech at the National Defense University</a>. While Obama did not pledge to end the strikes – and indeed sharply defended them – he placed new emphasis on avoiding them.</p> <p>Zenko said the available data did not show “big changes pre-speech or post-speech”, but did indicate that the strikes had, at least temporarily, stopped proliferating.&nbsp;</p> <p>“To their credit, they have not opened a new front in Syria, Iraq or North Africa,” Zenko said.&nbsp;</p> <p>While the strikes did not end after the speech, there was an increase in <a href=\"http://www.theguardian.com/world/2013/oct/09/us-raid-al-shabaab-somalia-navy-seals\">raids, from Libya to Somalia, conducted by elite troops and the CIA</a> and aiming to capture terrorist operatives rather than kill them. Administration officials have stopped short of declaring such raids a policy shift – either because no such shift occurred or because the veil of secrecy surrounding drone strikes prevents such a declaration.</p> <p>The data also points to other patterns that cut against the Obama administration’s typical contention that the strikes kill senior terrorist leaders, the standard the president set in the president's May speech.&nbsp;In tribal Pakistan, the initial front of US drone strikes, there was a steep rise in strikes in 2010 and a continued high rate in 2011, followed by a decline in 2012 and a steeper decline in 2013. The pattern fits the rise and fall of the US troop surge in neighboring Afghanistan, suggesting that the strikes in Pakistan had more to do with protecting nearby US troops than killing al-Qaida’s top operatives.&nbsp;</p> <p>Zenko gave Obama “a lot of credit” for acknowledging the so-called “force protection” component of the Pakistan strikes in his May speech – a detail that got little media attention.&nbsp;</p> <p>“No longer was there just the nonsense of a significant, imminent threat to the homeland,” Zenko said.</p> <p>There is no comparable US troop presence in Yemen, but <a href=\"http://www.theguardian.com/world/2013/aug/12/yemen-drone-strikes-us-policy\">strikes in Yemen</a>, a relative rarity before the 2010 rise of al-Qaida’s local affiliate, swelled to more than 40 in 2012, before dropping off this year to around 26. The drop occurred despite a highly-publicized threat warning in the summer, attributed to the group, that prompted the closure of regional US diplomatic facilities and a temporary rise in strikes on Yemen.&nbsp;</p> <p>When Zenko took a closer look at local announcements of Yemen strikes by the US-sponsored security departments, he said, he found them typically attributed to reports of threats to the Yemeni military or police; generic “threat warnings”; or to US diplomats. While government statements on counterterrorism provide no guarantee of truth, those in Yemen rarely had to do with attempts on the United States.&nbsp;</p> <h2>Counterterrorism run amok?</h2> <figure class=\"element element-image\" data-media-id=\"gu-fc-b14545ce-b776-47f1-b671-6d8a0a538d9f\"> <img src=\"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/31/1388519768431/42a8baee-e4ee-4dee-b70b-a53a2c2705a0-460x276.jpeg\" alt=\"Protest against US drone attacks\" width=\"460\" height=\"276\" class=\"gu-image\" /> <figcaption>People burn a mock US flag during a protest against US drone attacks in Pakistan. Photograph: STR/EPA</figcaption> </figure> <p>As with Guant&aacute;namo Bay and bulk surveillance by the National Security Agency, drone strikes have become an international symbol of US counterterrorism efforts run amok.&nbsp;</p> <p>The new government of Pakistan has made the strikes a point of diplomatic contention with Washington, although the country's security services have facilitated them in the past. In Yemen, where the government is more openly aligned with the US on counterterrorism, anger about and fear of drones have become a cultural phenomenon, as a local activist testified to the Senate in the spring, citing parents who used threats of the drones to discipline misbehaving children.&nbsp;</p> <p>In October, the United Nations special rapporteur investigating drone strikes, Ben Emmerson, cited 33 cases in which drone strikes, mostly by the US,&nbsp;<a href=\"http://www.theguardian.com/world/2013/oct/18/drone-strikes-us-violate-law-un\">killed civilians and potentially violated international law</a>.&nbsp;</p> <p>Emmerson called on the US government to lift the veil of secrecy surrounding the strikes, which are conducted by the CIA and the military’s Joint Special Operations Command, an elite force that has even fewer requirements to brief legislators than does the CIA. Obama’s speech in May did not yield greater transparency on what the administration has called “targeted killing”.&nbsp;</p> <p>That, Zenko said, obscured an analysis of the 2013 frequency of “signature strikes”, the most notorious of US counterterrorism efforts: operations that kill not specific, known terrorists but individuals, often “military aged males”, believed to fit a pattern of terrorist behavior.&nbsp;</p> <p>“They can’t say they’re stopping signature strikes,” Zenko said, “because it acknowledges they’ve done them.”</p><!-- Guardian Watermark: internal-code/content/426031908|2014-05-14T16:53:37Z|bc797cfe0d6303672f5441d94f3ded8787ee2f5d -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-12-31T20:15:09Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/30/1388422720163/Drone-MQ-9-Reaper-003.jpg",
+        "standfirst":"<p>&bull; Strikes kill up to 271 people, down from 2012 figure</p>\n<p>&bull; President signalled policy shift in May speech</p>",
+        "shortUrl":"http://gu.com/p/3ygtp",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/30/1388422720163/Drone-MQ-9-Reaper-003.jpg",
+        "wordcount":"1235",
+        "commentable":"true",
+        "internalContentCode":"426031908",
+        "allowUgc":"false",
+        "internalComposerCode":"52c317cee4b053cde70cfbba",
+        "isPremoderated":"false",
+        "byline":"Spencer Ackerman in Washington",
+        "publication":"theguardian.com",
+        "internalPageCode":"2019841",
+        "productionOffice":"US",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2014-01-03T20:00:52Z"
+      },
+      "tags":[{
+        "id":"world/drones",
+        "type":"keyword",
+        "webTitle":"Drones",
+        "webUrl":"http://www.theguardian.com/world/drones",
+        "apiUrl":"http://content.guardianapis.com/world/drones",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/barack-obama",
+        "type":"keyword",
+        "webTitle":"Barack Obama",
+        "webUrl":"http://www.theguardian.com/world/barack-obama",
+        "apiUrl":"http://content.guardianapis.com/world/barack-obama",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/obama-administration",
+        "type":"keyword",
+        "webTitle":"Obama administration",
+        "webUrl":"http://www.theguardian.com/world/obama-administration",
+        "apiUrl":"http://content.guardianapis.com/world/obama-administration",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/usforeignpolicy",
+        "type":"keyword",
+        "webTitle":"US foreign policy",
+        "webUrl":"http://www.theguardian.com/world/usforeignpolicy",
+        "apiUrl":"http://content.guardianapis.com/world/usforeignpolicy",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/us-military",
+        "type":"keyword",
+        "webTitle":"US military",
+        "webUrl":"http://www.theguardian.com/world/us-military",
+        "apiUrl":"http://content.guardianapis.com/world/us-military",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/cia",
+        "type":"keyword",
+        "webTitle":"CIA",
+        "webUrl":"http://www.theguardian.com/world/cia",
+        "apiUrl":"http://content.guardianapis.com/world/cia",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/al-qaida",
+        "type":"keyword",
+        "webTitle":"Al-Qaida",
+        "webUrl":"http://www.theguardian.com/world/al-qaida",
+        "apiUrl":"http://content.guardianapis.com/world/al-qaida",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/pakistan",
+        "type":"keyword",
+        "webTitle":"Pakistan",
+        "webUrl":"http://www.theguardian.com/world/pakistan",
+        "apiUrl":"http://content.guardianapis.com/world/pakistan",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/yemen",
+        "type":"keyword",
+        "webTitle":"Yemen",
+        "webUrl":"http://www.theguardian.com/world/yemen",
+        "apiUrl":"http://content.guardianapis.com/world/yemen",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/somalia",
+        "type":"keyword",
+        "webTitle":"Somalia",
+        "webUrl":"http://www.theguardian.com/world/somalia",
+        "apiUrl":"http://content.guardianapis.com/world/somalia",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/middleeast",
+        "type":"keyword",
+        "webTitle":"Middle East and North Africa",
+        "webUrl":"http://www.theguardian.com/world/middleeast",
+        "apiUrl":"http://content.guardianapis.com/world/middleeast",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/spencerackerman",
+        "type":"contributor",
+        "webTitle":"Spencer Ackerman",
+        "webUrl":"http://www.theguardian.com/profile/spencerackerman",
+        "apiUrl":"http://content.guardianapis.com/profile/spencerackerman",
+        "bio":"<p>Spencer Ackerman is national security editor for Guardian US. A former senior writer for Wired, he won the 2012 National Magazine Award for Digital Reporting</p>",
+        "r2ContributorId":"22229",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/6/7/1370612137660/SpencerAckerman.png",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-fc-93142e22-0a30-4730-a4b6-23fcdadc7e77",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/30/1388422728439/Drone-MQ-9-Reaper-008.jpg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/30/1388422728439/Drone-MQ-9-Reaper-008.jpg",
+            "source":"AP",
+            "altText":"Drone MQ-9 Reaper",
+            "height":"276",
+            "credit":"AP",
+            "caption":"A drone in flight. The US carried out around 55 drone strikes this year. Photo: AP",
+            "mediaId":"gu-fc-93142e22-0a30-4730-a4b6-23fcdadc7e77",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-fc-b14545ce-b776-47f1-b671-6d8a0a538d9f",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/31/1388519768263/42a8baee-e4ee-4dee-b70b-a53a2c2705a0-220x132.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/31/1388519768263/42a8baee-e4ee-4dee-b70b-a53a2c2705a0-220x132.jpeg",
+            "source":"EPA",
+            "photographer":"STR",
+            "altText":"Protest against US drone attacks",
+            "height":"132",
+            "credit":"STR/EPA",
+            "caption":"People burn a mock US flag during a protest against US drone attacks in Pakistan. Photograph: STR/EPA",
+            "mediaId":"gu-fc-b14545ce-b776-47f1-b671-6d8a0a538d9f",
+            "picdarUrn":"GD*40437787",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/31/1388519768431/42a8baee-e4ee-4dee-b70b-a53a2c2705a0-460x276.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/31/1388519768431/42a8baee-e4ee-4dee-b70b-a53a2c2705a0-460x276.jpeg",
+            "source":"EPA",
+            "photographer":"STR",
+            "altText":"Protest against US drone attacks",
+            "height":"276",
+            "credit":"STR/EPA",
+            "caption":"People burn a mock US flag during a protest against US drone attacks in Pakistan. Photograph: STR/EPA",
+            "mediaId":"gu-fc-b14545ce-b776-47f1-b671-6d8a0a538d9f",
+            "picdarUrn":"GD*40437787",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/31/1388519768613/42a8baee-e4ee-4dee-b70b-a53a2c2705a0-540x324.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/31/1388519768613/42a8baee-e4ee-4dee-b70b-a53a2c2705a0-540x324.jpeg",
+            "source":"EPA",
+            "photographer":"STR",
+            "altText":"Protest against US drone attacks",
+            "height":"324",
+            "credit":"STR/EPA",
+            "caption":"People burn a mock US flag during a protest against US drone attacks in Pakistan. Photograph: STR/EPA",
+            "mediaId":"gu-fc-b14545ce-b776-47f1-b671-6d8a0a538d9f",
+            "picdarUrn":"GD*40437787",
+            "width":"540"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/31/1388519768757/42a8baee-e4ee-4dee-b70b-a53a2c2705a0-140x84.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/31/1388519768757/42a8baee-e4ee-4dee-b70b-a53a2c2705a0-140x84.jpeg",
+            "source":"EPA",
+            "photographer":"STR",
+            "altText":"Protest against US drone attacks",
+            "height":"84",
+            "credit":"STR/EPA",
+            "caption":"People burn a mock US flag during a protest against US drone attacks in Pakistan. Photograph: STR/EPA",
+            "mediaId":"gu-fc-b14545ce-b776-47f1-b671-6d8a0a538d9f",
+            "picdarUrn":"GD*40437787",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/31/1388519769100/42a8baee-e4ee-4dee-b70b-a53a2c2705a0-1020x612.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/31/1388519769100/42a8baee-e4ee-4dee-b70b-a53a2c2705a0-1020x612.jpeg",
+            "source":"EPA",
+            "photographer":"STR",
+            "altText":"Protest against US drone attacks",
+            "height":"612",
+            "credit":"STR/EPA",
+            "caption":"People burn a mock US flag during a protest against US drone attacks in Pakistan. Photograph: STR/EPA",
+            "mediaId":"gu-fc-b14545ce-b776-47f1-b671-6d8a0a538d9f",
+            "picdarUrn":"GD*40437787",
+            "width":"1020"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/31/1388519769423/42a8baee-e4ee-4dee-b70b-a53a2c2705a0-300x180.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/31/1388519769423/42a8baee-e4ee-4dee-b70b-a53a2c2705a0-300x180.jpeg",
+            "source":"EPA",
+            "photographer":"STR",
+            "altText":"Protest against US drone attacks",
+            "height":"180",
+            "credit":"STR/EPA",
+            "caption":"People burn a mock US flag during a protest against US drone attacks in Pakistan. Photograph: STR/EPA",
+            "mediaId":"gu-fc-b14545ce-b776-47f1-b671-6d8a0a538d9f",
+            "picdarUrn":"GD*40437787",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/31/1388519769974/42a8baee-e4ee-4dee-b70b-a53a2c2705a0-2048x1536.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/31/1388519769974/42a8baee-e4ee-4dee-b70b-a53a2c2705a0-2048x1536.jpeg",
+            "source":"EPA",
+            "photographer":"STR",
+            "altText":"Protest against US drone attacks",
+            "height":"1536",
+            "credit":"STR/EPA",
+            "caption":"People burn a mock US flag during a protest against US drone attacks in Pakistan. Photograph: STR/EPA",
+            "mediaId":"gu-fc-b14545ce-b776-47f1-b671-6d8a0a538d9f",
+            "picdarUrn":"GD*40437787",
+            "width":"2048"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/31/1388519770780/42a8baee-e4ee-4dee-b70b-a53a2c2705a0-380x228.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/31/1388519770780/42a8baee-e4ee-4dee-b70b-a53a2c2705a0-380x228.jpeg",
+            "source":"EPA",
+            "photographer":"STR",
+            "altText":"Protest against US drone attacks",
+            "height":"228",
+            "credit":"STR/EPA",
+            "caption":"People burn a mock US flag during a protest against US drone attacks in Pakistan. Photograph: STR/EPA",
+            "mediaId":"gu-fc-b14545ce-b776-47f1-b671-6d8a0a538d9f",
+            "picdarUrn":"GD*40437787",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/31/1388519770946/42a8baee-e4ee-4dee-b70b-a53a2c2705a0-620x372.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/31/1388519770946/42a8baee-e4ee-4dee-b70b-a53a2c2705a0-620x372.jpeg",
+            "source":"EPA",
+            "photographer":"STR",
+            "altText":"Protest against US drone attacks",
+            "height":"372",
+            "credit":"STR/EPA",
+            "caption":"People burn a mock US flag during a protest against US drone attacks in Pakistan. Photograph: STR/EPA",
+            "mediaId":"gu-fc-b14545ce-b776-47f1-b671-6d8a0a538d9f",
+            "picdarUrn":"GD*40437787",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/31/1388519771098/42a8baee-e4ee-4dee-b70b-a53a2c2705a0-68x68.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/31/1388519771098/42a8baee-e4ee-4dee-b70b-a53a2c2705a0-68x68.jpeg",
+            "source":"EPA",
+            "photographer":"STR",
+            "altText":"Protest against US drone attacks",
+            "height":"68",
+            "credit":"STR/EPA",
+            "caption":"People burn a mock US flag during a protest against US drone attacks in Pakistan. Photograph: STR/EPA",
+            "mediaId":"gu-fc-b14545ce-b776-47f1-b671-6d8a0a538d9f",
+            "picdarUrn":"GD*40437787",
+            "width":"68"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/31/1388519771301/42a8baee-e4ee-4dee-b70b-a53a2c2705a0-1024x768.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/31/1388519771301/42a8baee-e4ee-4dee-b70b-a53a2c2705a0-1024x768.jpeg",
+            "source":"EPA",
+            "photographer":"STR",
+            "altText":"Protest against US drone attacks",
+            "height":"768",
+            "credit":"STR/EPA",
+            "caption":"People burn a mock US flag during a protest against US drone attacks in Pakistan. Photograph: STR/EPA",
+            "mediaId":"gu-fc-b14545ce-b776-47f1-b671-6d8a0a538d9f",
+            "picdarUrn":"GD*40437787",
+            "width":"1024"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/31/1388519773591/42a8baee-e4ee-4dee-b70b-a53a2c2705a0-2060x1236.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/31/1388519773591/42a8baee-e4ee-4dee-b70b-a53a2c2705a0-2060x1236.jpeg",
+            "source":"EPA",
+            "photographer":"STR",
+            "altText":"Protest against US drone attacks",
+            "height":"1236",
+            "credit":"STR/EPA",
+            "caption":"People burn a mock US flag during a protest against US drone attacks in Pakistan. Photograph: STR/EPA",
+            "mediaId":"gu-fc-b14545ce-b776-47f1-b671-6d8a0a538d9f",
+            "picdarUrn":"GD*40437787",
+            "width":"2060"
+          }
+        }]
+      },{
+        "id":"gu-fc-3cd8ce6d-7660-4165-bc04-5fab4c345094",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/30/1388422720163/Drone-MQ-9-Reaper-003.jpg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/30/1388422720163/Drone-MQ-9-Reaper-003.jpg",
+            "source":"AP",
+            "altText":"Drone MQ-9 Reaper",
+            "height":"84",
+            "credit":"AP",
+            "caption":"The FAA is working to develop drone operational guidelines for US airspace by the end of 2015.  Photograph: AP",
+            "mediaId":"gu-fc-3cd8ce6d-7660-4165-bc04-5fab4c345094",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[],
+      "isExpired":"false"
+    },{
+      "id":"commentisfree/2013/dec/29/drones-us-military",
+      "sectionId":"commentisfree",
+      "sectionName":"Comment is free",
+      "webPublicationDate":"2013-12-29T12:30:00Z",
+      "webTitle":"I worked on the US drone program. The public should know what really goes on | Heather Linebaugh",
+      "webUrl":"http://www.theguardian.com/commentisfree/2013/dec/29/drones-us-military",
+      "apiUrl":"http://content.guardianapis.com/commentisfree/2013/dec/29/drones-us-military",
+      "fields":{
+        "trailText":"<p><strong>Heather Linebaugh:</strong> Few of the politicians who so brazenly proclaim the benefits of drones have a real clue how it actually works (and doesn't)</p>",
+        "headline":"I worked on the US drone program. The public should know what really goes on",
+        "body":"<p>Whenever I read <a href=\"http://www.theguardian.com/commentisfree/2013/dec/18/in-defence-of-drones-keep-civilians-troops-safe\">comments by politicians defending the Unmanned Aerial Vehicle Predator and Reaper program</a> – aka drones – I wish I could ask them a few questions. I'd start with: \"How many women and children have you seen incinerated by a Hellfire missile?\" And: \"How many men have you seen crawl across a field, trying to make it to the nearest compound for help while bleeding out from severed legs?\" Or even more pointedly: \"How many soldiers have you seen die on the side of a road in Afghanistan because our ever-so-accurate UAVs [unmanned aerial vehicles] were unable to detect an IED [improvised explosive device] that awaited their convoy?\" </p><p>Few of these politicians who so brazenly proclaim the benefits of drones have a real clue of what actually goes on. I, on the other hand, have seen these awful sights first hand. </p><p>I knew the names of some of the young soldiers I saw bleed to death on the side of a road. I watched dozens of military-aged males die in Afghanistan, in empty fields, along riversides, and some right outside the compound where their family was waiting for them to return home from the mosque. </p><p>The US and British militaries<a href=\"http://www.theguardian.com/commentisfree/2013/dec/18/in-defence-of-drones-keep-civilians-troops-safe\"> insist </a> that this is an expert program, but it's curious that they feel the need to deliver <a href=\"http://www.voanews.com/content/resaercher-most-civilian-drone-deaths-from-faulty-information/1622442.html\">faulty information</a>, <a href=\"http://web.law.columbia.edu/human-rights-institute/counterterrorism/drone-strikes/counting-drone-strike-deaths\">few or no statistics about civilian deaths</a> and twisted technology reports on the capabilities of our UAVs. These specific incidents are not isolated, and the civilian casualty rate<a href=\"http://www.huffingtonpost.com/2013/10/31/civilian-drone-deaths-pakistan-report_n_4180293.html\"> has not changed</a>, despite what our defense representatives might like to tell us. </p><p>What the public needs to understand is that the video provided by a drone is not usually clear enough to detect someone carrying a weapon, even on a crystal-clear day with limited cloud and perfect light. This makes it incredibly difficult for the best analysts to identify if someone has weapons for sure. One example comes to mind: \"The feed is so pixelated, what if it's a shovel, and not a weapon?\" I felt this confusion constantly, as did my fellow UAV analysts. We always wonder if we killed the right people, if we endangered the wrong people, if we destroyed an innocent civilian's life all because of a bad image or angle. </p><p>It's also important for the public to grasp that there are human beings operating and analysing intelligence these UAVs. I know because I was one of them, and nothing can prepare you for an almost daily routine of flying combat aerial surveillance missions over a war zone. UAV proponents claim that troops who do this kind of work are not affected by observing this combat because they are never directly in danger physically.</p><p>But here's the thing: I may not have been on the ground in Afghanistan, but I watched parts of the conflict in great detail on a screen for days on end. I know the feeling you experience when you see someone die. Horrifying barely covers it. And when you are exposed to it over and over again it becomes like a small video, embedded in your head, forever on repeat, causing psychological pain and suffering that many people will hopefully never experience. UAV troops are victim to not only the haunting memories of this work that they carry with them, but also the guilt of always being a little unsure of how accurate their confirmations of weapons or identification of hostile individuals were. </p><p>Of course, we are trained to not experience these feelings, and we fight it, and become bitter. Some troops seek help in mental health clinics provided by the military, but we are limited on who we can talk to and where, because of the secrecy of our missions. I find it interesting that the suicide statistics in this career field aren't reported, nor are the data on how many troops working in UAV positions are heavily medicated for depression, sleep disorders and anxiety. </p><p>Recently, the Guardian ran a commentary by Britain's <a href=\"http://www.theguardian.com/commentisfree/2013/dec/18/in-defence-of-drones-keep-civilians-troops-safe\">secretary of state for defence, Philip Hammond</a>. I wish I could talk to him about the two friends and colleagues I lost, within a year of leaving the military, to suicide. I am sure he has not been notified of that little bit of the secret UAV program, or he would surely take a closer look at the full scope of the program before defending it again. </p><p>The UAVs in the Middle East are used as a weapon, not as protection, and as long as our public remains ignorant to this, this serious threat to the sanctity of human life – at home and abroad – will continue.</p><p><em>• Editor's note: Heather Linebaugh does not possess any classified material and has honored her non-disclosure agreement since the time of her discharge. </em></p><!-- Guardian Watermark: internal-code/content/425843841|2014-05-14T16:53:37Z|43200cabbd29d939df4a94f3b51c579107658900 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2014-01-09T21:20:59Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/10/31/1383178278688/Drone-001.jpg",
+        "standfirst":"Few of the politicians who so brazenly proclaim the benefits of drones have a real clue how it actually works (and doesn't)",
+        "shortUrl":"http://gu.com/p/3yf8j",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/10/31/1383178278688/Drone-001.jpg",
+        "wordcount":"791",
+        "commentable":"true",
+        "internalContentCode":"425843841",
+        "allowUgc":"false",
+        "isPremoderated":"false",
+        "byline":"Heather Linebaugh",
+        "publication":"Guardian Weekly",
+        "internalPageCode":"2018836",
+        "productionOffice":"US",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2014-01-01T12:30:00Z"
+      },
+      "tags":[{
+        "id":"commentisfree/commentisfree",
+        "type":"blog",
+        "webTitle":"Comment is free",
+        "webUrl":"http://www.theguardian.com/commentisfree/commentisfree",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/commentisfree",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"world/drones",
+        "type":"keyword",
+        "webTitle":"Drones",
+        "webUrl":"http://www.theguardian.com/world/drones",
+        "apiUrl":"http://content.guardianapis.com/world/drones",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/us-military",
+        "type":"keyword",
+        "webTitle":"US military",
+        "webUrl":"http://www.theguardian.com/world/us-military",
+        "apiUrl":"http://content.guardianapis.com/world/us-military",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/afghanistan",
+        "type":"keyword",
+        "webTitle":"Afghanistan",
+        "webUrl":"http://www.theguardian.com/world/afghanistan",
+        "apiUrl":"http://content.guardianapis.com/world/afghanistan",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/iraq",
+        "type":"keyword",
+        "webTitle":"Iraq",
+        "webUrl":"http://www.theguardian.com/world/iraq",
+        "apiUrl":"http://content.guardianapis.com/world/iraq",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/yemen",
+        "type":"keyword",
+        "webTitle":"Yemen",
+        "webUrl":"http://www.theguardian.com/world/yemen",
+        "apiUrl":"http://content.guardianapis.com/world/yemen",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/pakistan",
+        "type":"keyword",
+        "webTitle":"Pakistan",
+        "webUrl":"http://www.theguardian.com/world/pakistan",
+        "apiUrl":"http://content.guardianapis.com/world/pakistan",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"profile/heather-linebaugh",
+        "type":"contributor",
+        "webTitle":"Heather Linebaugh",
+        "webUrl":"http://www.theguardian.com/profile/heather-linebaugh",
+        "apiUrl":"http://content.guardianapis.com/profile/heather-linebaugh",
+        "bio":"<p>Heather Linebaugh served in the United States Air Force from 2009 until March 2012. She worked in intelligence as an imagery analyst and geo-spatial analyst for the drone program during the occupations of Iraq and Afghanistan</p>",
+        "r2ContributorId":"60247",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/4/24/1366815232702/Anonymous-woman-on-grey.jpg",
+        "references":[]
+      },{
+        "id":"tone/comment",
+        "type":"tone",
+        "webTitle":"Comment",
+        "webUrl":"http://www.theguardian.com/tone/comment",
+        "apiUrl":"http://content.guardianapis.com/tone/comment",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/guardianweekly",
+        "type":"publication",
+        "webTitle":"Guardian Weekly",
+        "webUrl":"http://www.theguardian.com/weekly",
+        "apiUrl":"http://content.guardianapis.com/weekly",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-425985039",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/11/1386779322642/Hermes-450-drone-008.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "altText":"Hermes 450 drone",
+            "height":"276",
+            "credit":"AFP/Getty Images",
+            "caption":"An Elbit Systems Hermes 450 drone. Photograph: AFP/Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-425985040",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pixies/2013/10/31/1383178278688/Drone-001.jpg",
+          "typeData":{
+            "source":"AFP/Getty Images",
+            "photographer":"Massoud Hossaini",
+            "altText":"Drone",
+            "height":"84",
+            "credit":"Massoud Hossaini/AFP/Getty Images",
+            "caption":"The number of civilian fatalities in drone strikes amounts to just 3% of the total number of people killed, according to figures from Pakistan. Photograph: Massoud Hossaini/AFP/Getty Images",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[],
+      "isExpired":"false"
+    },{
+      "id":"world/2013/dec/26/us-drone-strike-kills-three-militants",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2013-12-26T17:13:33Z",
+      "webTitle":"Suspected US drone strike kills 'three foreign militants'",
+      "webUrl":"http://www.theguardian.com/world/2013/dec/26/us-drone-strike-kills-three-militants",
+      "apiUrl":"http://content.guardianapis.com/world/2013/dec/26/us-drone-strike-kills-three-militants",
+      "fields":{
+        "trailText":"Drone fired two missiles at a home in a northwestern tribal region of Pakistan&nbsp;bordering Afghanistan, Pakistani officials said",
+        "headline":"Suspected US drone strike kills 'three foreign militants'",
+        "body":"<p>A suspected American drone fired two missiles at a home in a northwestern tribal region of Pakistan&nbsp;bordering Afghanistan, killing at least three foreign militants, Pakistani intelligence officials said Thursday.</p> <p>The US authorities often target Taliban, al-Qaida and their Pakistani supporters in the country's tribal regions.</p> <p>The latest strike took place just before midnight Wednesday in the village of Qutab Khel in North Waziristan and initial reports gathered from their agents in the field suggested the slain men were Arabs, the two intelligence officials said. They spoke on condition of anonymity because they were not authorized to talk to the media.</p> <p>The American drone program is extremely unpopular in&nbsp;Pakistan&nbsp;because it is perceived as killing innocent civilians, which the US denies. Many in&nbsp;Pakistan&nbsp;also consider it an affront to their sovereignty but the US has shown no indication it is willing to halt the program.</p> <p>Angered over the strikes, supporters from cricket star-turned politician Imran Khan's Tehreek-e-Insaf party in the northwest have been protesting along a main road used to truck NATO troop supplies in and out of Afghanistan for the past month, forcing the US to stop shipments out of Afghanistan.</p> <p>Khan has urged the government of Prime Minister Nawaz Sharif to force the US to end drone attacks and block NATO supplies across the country.</p> <p>On Thursday, about 150 supporters from Khan's party on the outskirts of the southwestern city of Quetta briefly blocked trucks carrying supplies for NATO forces heading toward Afghanistan, said a senior police official Abdul Rauf. But he said police ordered them to allow the trucks to proceed.</p> <p>Trucks carrying NATO supplies pass through Quetta, the capital of southwestern Baluchistan province, before going through the Chaman border crossing &ndash; one of two routes used for supplies. The other route is further north.</p> <p>\"We briefly stopped some of the NATO trucks this morning, but now we are just holding a peaceful rally against the drone attacks,\" said Abdul Wali Shakir, a spokesman for the Jamaat-e-Islami party, which also attended the rally, demanding an end to the drone strikes.</p> <p>Drone strikes have been a source of tension between Islamabad and Washington.</p> <p>Pakistan's&nbsp;Foreign Ministry condemned the latest strike in a statement Thursday, saying such attacks were a violation of&nbsp;Pakistan's&nbsp;sovereignty and territorial integrity. \"There is an across-the-board consensus in&nbsp;Pakistan that these drone strikes must end,\" it said.</p> <p>\"Such strikes also set dangerous precedents in the inter-state relations,\" it said, adding the strikes had a negative impact on the government's efforts to bring peace and stability in&nbsp;Pakistan&nbsp;and the region.</p> <p>Islamabad and the country's political parties regularly denounce the attacks as a violation of&nbsp;Pakistan's sovereignty, although the country's government is known to have supported some of the strikes in the past. The tension has further complicated a relationship that Washington views as vital to fight al-Qaida and the Taliban, as well as negotiate peace in Afghanistan.</p> <p>The land routes through&nbsp;Pakistan&nbsp;from the southern port city of Karachi have been key to getting supplies to NATO troops in Afghanistan. They now increasingly are being used to ship equipment out of Afghanistan as the US seeks to withdraw most of its troops from the country by the end of 2014.</p><!-- Guardian Watermark: internal-code/content/425777224|2014-05-14T16:53:37Z|e380568f1cca6292868fd69ab8dd5409ac7611b1 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-12-26T17:13:32Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/26/1388077922418/ed3f59f7-f0de-4727-9b20-d89c1534d40b-140x84.jpeg",
+        "standfirst":"<p>Drone fired two missiles at a home in a northwestern tribal region of Pakistan&nbsp;bordering Afghanistan, Pakistani officials said</p>",
+        "shortUrl":"http://gu.com/p/3yetc",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/26/1388077922418/ed3f59f7-f0de-4727-9b20-d89c1534d40b-140x84.jpeg",
+        "wordcount":"524",
+        "commentable":"true",
+        "internalContentCode":"425777224",
+        "allowUgc":"false",
+        "internalComposerCode":"52bc4edfe4b09f9df01d1bf3",
+        "isPremoderated":"false",
+        "byline":"Associated Press in Islamabad",
+        "publication":"theguardian.com",
+        "internalPageCode":"2018370",
+        "productionOffice":"US",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-12-29T17:15:32Z"
+      },
+      "tags":[{
+        "id":"world/pakistan",
+        "type":"keyword",
+        "webTitle":"Pakistan",
+        "webUrl":"http://www.theguardian.com/world/pakistan",
+        "apiUrl":"http://content.guardianapis.com/world/pakistan",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/drones",
+        "type":"keyword",
+        "webTitle":"Drones",
+        "webUrl":"http://www.theguardian.com/world/drones",
+        "apiUrl":"http://content.guardianapis.com/world/drones",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/taliban",
+        "type":"keyword",
+        "webTitle":"Taliban",
+        "webUrl":"http://www.theguardian.com/world/taliban",
+        "apiUrl":"http://content.guardianapis.com/world/taliban",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/nato",
+        "type":"keyword",
+        "webTitle":"Nato",
+        "webUrl":"http://www.theguardian.com/world/nato",
+        "apiUrl":"http://content.guardianapis.com/world/nato",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/afghanistan",
+        "type":"keyword",
+        "webTitle":"Afghanistan",
+        "webUrl":"http://www.theguardian.com/world/afghanistan",
+        "apiUrl":"http://content.guardianapis.com/world/afghanistan",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-fc-ea64f90f-c9c2-4ee6-bb5a-552d9a336eb9",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/26/1388077921843/ed3f59f7-f0de-4727-9b20-d89c1534d40b-220x132.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/26/1388077921843/ed3f59f7-f0de-4727-9b20-d89c1534d40b-220x132.jpeg",
+            "source":"AFP/Getty Images",
+            "photographer":"BANARAS KHAN",
+            "altText":"Pakistan drone strike",
+            "height":"132",
+            "credit":"BANARAS KHAN/AFP/Getty Images",
+            "caption":"Activists of Jamaat-e-Islami gather on a road to block Nato supplies to Afghanistan during a protest on the outskirts of Quetta. Photo: Banaras Khan /AF/Getty",
+            "mediaId":"gu-fc-ea64f90f-c9c2-4ee6-bb5a-552d9a336eb9",
+            "picdarUrn":"GD*40444839",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/26/1388077922039/ed3f59f7-f0de-4727-9b20-d89c1534d40b-460x276.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/26/1388077922039/ed3f59f7-f0de-4727-9b20-d89c1534d40b-460x276.jpeg",
+            "source":"AFP/Getty Images",
+            "photographer":"BANARAS KHAN",
+            "altText":"Pakistan drone strike",
+            "height":"276",
+            "credit":"BANARAS KHAN/AFP/Getty Images",
+            "caption":"Activists of Jamaat-e-Islami gather on a road to block Nato supplies to Afghanistan during a protest on the outskirts of Quetta. Photo: Banaras Khan /AF/Getty",
+            "mediaId":"gu-fc-ea64f90f-c9c2-4ee6-bb5a-552d9a336eb9",
+            "picdarUrn":"GD*40444839",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/26/1388077922218/ed3f59f7-f0de-4727-9b20-d89c1534d40b-540x324.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/26/1388077922218/ed3f59f7-f0de-4727-9b20-d89c1534d40b-540x324.jpeg",
+            "source":"AFP/Getty Images",
+            "photographer":"BANARAS KHAN",
+            "altText":"Pakistan drone strike",
+            "height":"324",
+            "credit":"BANARAS KHAN/AFP/Getty Images",
+            "caption":"Activists of Jamaat-e-Islami gather on a road to block Nato supplies to Afghanistan during a protest on the outskirts of Quetta. Photo: Banaras Khan /AF/Getty",
+            "mediaId":"gu-fc-ea64f90f-c9c2-4ee6-bb5a-552d9a336eb9",
+            "picdarUrn":"GD*40444839",
+            "width":"540"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/26/1388077922418/ed3f59f7-f0de-4727-9b20-d89c1534d40b-140x84.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/26/1388077922418/ed3f59f7-f0de-4727-9b20-d89c1534d40b-140x84.jpeg",
+            "source":"AFP/Getty Images",
+            "photographer":"BANARAS KHAN",
+            "altText":"Pakistan drone strike",
+            "height":"84",
+            "credit":"BANARAS KHAN/AFP/Getty Images",
+            "caption":"Activists of Jamaat-e-Islami gather on a road to block Nato supplies to Afghanistan during a protest on the outskirts of Quetta. Photo: Banaras Khan /AF/Getty",
+            "mediaId":"gu-fc-ea64f90f-c9c2-4ee6-bb5a-552d9a336eb9",
+            "picdarUrn":"GD*40444839",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/26/1388077922599/ed3f59f7-f0de-4727-9b20-d89c1534d40b-1020x612.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/26/1388077922599/ed3f59f7-f0de-4727-9b20-d89c1534d40b-1020x612.jpeg",
+            "source":"AFP/Getty Images",
+            "photographer":"BANARAS KHAN",
+            "altText":"Pakistan drone strike",
+            "height":"612",
+            "credit":"BANARAS KHAN/AFP/Getty Images",
+            "caption":"Activists of Jamaat-e-Islami gather on a road to block Nato supplies to Afghanistan during a protest on the outskirts of Quetta. Photo: Banaras Khan /AF/Getty",
+            "mediaId":"gu-fc-ea64f90f-c9c2-4ee6-bb5a-552d9a336eb9",
+            "picdarUrn":"GD*40444839",
+            "width":"1020"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/26/1388077922854/ed3f59f7-f0de-4727-9b20-d89c1534d40b-300x180.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/26/1388077922854/ed3f59f7-f0de-4727-9b20-d89c1534d40b-300x180.jpeg",
+            "source":"AFP/Getty Images",
+            "photographer":"BANARAS KHAN",
+            "altText":"Pakistan drone strike",
+            "height":"180",
+            "credit":"BANARAS KHAN/AFP/Getty Images",
+            "caption":"Activists of Jamaat-e-Islami gather on a road to block Nato supplies to Afghanistan during a protest on the outskirts of Quetta. Photo: Banaras Khan /AF/Getty",
+            "mediaId":"gu-fc-ea64f90f-c9c2-4ee6-bb5a-552d9a336eb9",
+            "picdarUrn":"GD*40444839",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/26/1388077923458/ed3f59f7-f0de-4727-9b20-d89c1534d40b-2048x1536.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/26/1388077923458/ed3f59f7-f0de-4727-9b20-d89c1534d40b-2048x1536.jpeg",
+            "source":"AFP/Getty Images",
+            "photographer":"BANARAS KHAN",
+            "altText":"Pakistan drone strike",
+            "height":"1536",
+            "credit":"BANARAS KHAN/AFP/Getty Images",
+            "caption":"Activists of Jamaat-e-Islami gather on a road to block Nato supplies to Afghanistan during a protest on the outskirts of Quetta. Photo: Banaras Khan /AF/Getty",
+            "mediaId":"gu-fc-ea64f90f-c9c2-4ee6-bb5a-552d9a336eb9",
+            "picdarUrn":"GD*40444839",
+            "width":"2048"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/26/1388077924493/ed3f59f7-f0de-4727-9b20-d89c1534d40b-380x228.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/26/1388077924493/ed3f59f7-f0de-4727-9b20-d89c1534d40b-380x228.jpeg",
+            "source":"AFP/Getty Images",
+            "photographer":"BANARAS KHAN",
+            "altText":"Pakistan drone strike",
+            "height":"228",
+            "credit":"BANARAS KHAN/AFP/Getty Images",
+            "caption":"Activists of Jamaat-e-Islami gather on a road to block Nato supplies to Afghanistan during a protest on the outskirts of Quetta. Photo: Banaras Khan /AF/Getty",
+            "mediaId":"gu-fc-ea64f90f-c9c2-4ee6-bb5a-552d9a336eb9",
+            "picdarUrn":"GD*40444839",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/26/1388077924666/ed3f59f7-f0de-4727-9b20-d89c1534d40b-620x372.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/26/1388077924666/ed3f59f7-f0de-4727-9b20-d89c1534d40b-620x372.jpeg",
+            "source":"AFP/Getty Images",
+            "photographer":"BANARAS KHAN",
+            "altText":"Pakistan drone strike",
+            "height":"372",
+            "credit":"BANARAS KHAN/AFP/Getty Images",
+            "caption":"Activists of Jamaat-e-Islami gather on a road to block Nato supplies to Afghanistan during a protest on the outskirts of Quetta. Photo: Banaras Khan /AF/Getty",
+            "mediaId":"gu-fc-ea64f90f-c9c2-4ee6-bb5a-552d9a336eb9",
+            "picdarUrn":"GD*40444839",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/26/1388077924811/ed3f59f7-f0de-4727-9b20-d89c1534d40b-68x68.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/26/1388077924811/ed3f59f7-f0de-4727-9b20-d89c1534d40b-68x68.jpeg",
+            "source":"AFP/Getty Images",
+            "photographer":"BANARAS KHAN",
+            "altText":"Pakistan drone strike",
+            "height":"68",
+            "credit":"BANARAS KHAN/AFP/Getty Images",
+            "caption":"Activists of Jamaat-e-Islami gather on a road to block Nato supplies to Afghanistan during a protest on the outskirts of Quetta. Photo: Banaras Khan /AF/Getty",
+            "mediaId":"gu-fc-ea64f90f-c9c2-4ee6-bb5a-552d9a336eb9",
+            "picdarUrn":"GD*40444839",
+            "width":"68"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/26/1388077925124/ed3f59f7-f0de-4727-9b20-d89c1534d40b-1024x768.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/26/1388077925124/ed3f59f7-f0de-4727-9b20-d89c1534d40b-1024x768.jpeg",
+            "source":"AFP/Getty Images",
+            "photographer":"BANARAS KHAN",
+            "altText":"Pakistan drone strike",
+            "height":"768",
+            "credit":"BANARAS KHAN/AFP/Getty Images",
+            "caption":"Activists of Jamaat-e-Islami gather on a road to block Nato supplies to Afghanistan during a protest on the outskirts of Quetta. Photo: Banaras Khan /AF/Getty",
+            "mediaId":"gu-fc-ea64f90f-c9c2-4ee6-bb5a-552d9a336eb9",
+            "picdarUrn":"GD*40444839",
+            "width":"1024"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/26/1388077925817/ed3f59f7-f0de-4727-9b20-d89c1534d40b-2060x1236.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/26/1388077925817/ed3f59f7-f0de-4727-9b20-d89c1534d40b-2060x1236.jpeg",
+            "source":"AFP/Getty Images",
+            "photographer":"BANARAS KHAN",
+            "altText":"Pakistan drone strike",
+            "height":"1236",
+            "credit":"BANARAS KHAN/AFP/Getty Images",
+            "caption":"Activists of Jamaat-e-Islami gather on a road to block Nato supplies to Afghanistan during a protest on the outskirts of Quetta. Photo: Banaras Khan /AF/Getty",
+            "mediaId":"gu-fc-ea64f90f-c9c2-4ee6-bb5a-552d9a336eb9",
+            "picdarUrn":"GD*40444839",
+            "width":"2060"
+          }
+        }]
+      },{
+        "id":"gu-fc-ea64f90f-c9c2-4ee6-bb5a-552d9a336eb9",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/26/1388077921843/ed3f59f7-f0de-4727-9b20-d89c1534d40b-220x132.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/26/1388077921843/ed3f59f7-f0de-4727-9b20-d89c1534d40b-220x132.jpeg",
+            "source":"AFP/Getty Images",
+            "photographer":"BANARAS KHAN",
+            "altText":"Pakistan drone strike",
+            "height":"132",
+            "credit":"BANARAS KHAN/AFP/Getty Images",
+            "caption":"Activists of Jamaat-e-Islami Pakistan gather on a road to block NATO supply to Afghanistan during a protest on the outskirts of Quetta on December 26, 2013. Photograph: BANARAS KHAN/AFP/Getty Images",
+            "mediaId":"gu-fc-ea64f90f-c9c2-4ee6-bb5a-552d9a336eb9",
+            "picdarUrn":"GD*40444839",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/26/1388077922039/ed3f59f7-f0de-4727-9b20-d89c1534d40b-460x276.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/26/1388077922039/ed3f59f7-f0de-4727-9b20-d89c1534d40b-460x276.jpeg",
+            "source":"AFP/Getty Images",
+            "photographer":"BANARAS KHAN",
+            "altText":"Pakistan drone strike",
+            "height":"276",
+            "credit":"BANARAS KHAN/AFP/Getty Images",
+            "caption":"Activists of Jamaat-e-Islami Pakistan gather on a road to block NATO supply to Afghanistan during a protest on the outskirts of Quetta on December 26, 2013. Photograph: BANARAS KHAN/AFP/Getty Images",
+            "mediaId":"gu-fc-ea64f90f-c9c2-4ee6-bb5a-552d9a336eb9",
+            "picdarUrn":"GD*40444839",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/26/1388077922218/ed3f59f7-f0de-4727-9b20-d89c1534d40b-540x324.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/26/1388077922218/ed3f59f7-f0de-4727-9b20-d89c1534d40b-540x324.jpeg",
+            "source":"AFP/Getty Images",
+            "photographer":"BANARAS KHAN",
+            "altText":"Pakistan drone strike",
+            "height":"324",
+            "credit":"BANARAS KHAN/AFP/Getty Images",
+            "caption":"Activists of Jamaat-e-Islami Pakistan gather on a road to block NATO supply to Afghanistan during a protest on the outskirts of Quetta on December 26, 2013. Photograph: BANARAS KHAN/AFP/Getty Images",
+            "mediaId":"gu-fc-ea64f90f-c9c2-4ee6-bb5a-552d9a336eb9",
+            "picdarUrn":"GD*40444839",
+            "width":"540"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/26/1388077922418/ed3f59f7-f0de-4727-9b20-d89c1534d40b-140x84.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/26/1388077922418/ed3f59f7-f0de-4727-9b20-d89c1534d40b-140x84.jpeg",
+            "source":"AFP/Getty Images",
+            "photographer":"BANARAS KHAN",
+            "altText":"Pakistan drone strike",
+            "height":"84",
+            "credit":"BANARAS KHAN/AFP/Getty Images",
+            "caption":"Activists of Jamaat-e-Islami Pakistan gather on a road to block NATO supply to Afghanistan during a protest on the outskirts of Quetta on December 26, 2013. Photograph: BANARAS KHAN/AFP/Getty Images",
+            "mediaId":"gu-fc-ea64f90f-c9c2-4ee6-bb5a-552d9a336eb9",
+            "picdarUrn":"GD*40444839",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/26/1388077922599/ed3f59f7-f0de-4727-9b20-d89c1534d40b-1020x612.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/26/1388077922599/ed3f59f7-f0de-4727-9b20-d89c1534d40b-1020x612.jpeg",
+            "source":"AFP/Getty Images",
+            "photographer":"BANARAS KHAN",
+            "altText":"Pakistan drone strike",
+            "height":"612",
+            "credit":"BANARAS KHAN/AFP/Getty Images",
+            "caption":"Activists of Jamaat-e-Islami Pakistan gather on a road to block NATO supply to Afghanistan during a protest on the outskirts of Quetta on December 26, 2013. Photograph: BANARAS KHAN/AFP/Getty Images",
+            "mediaId":"gu-fc-ea64f90f-c9c2-4ee6-bb5a-552d9a336eb9",
+            "picdarUrn":"GD*40444839",
+            "width":"1020"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/26/1388077922854/ed3f59f7-f0de-4727-9b20-d89c1534d40b-300x180.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/26/1388077922854/ed3f59f7-f0de-4727-9b20-d89c1534d40b-300x180.jpeg",
+            "source":"AFP/Getty Images",
+            "photographer":"BANARAS KHAN",
+            "altText":"Pakistan drone strike",
+            "height":"180",
+            "credit":"BANARAS KHAN/AFP/Getty Images",
+            "caption":"Activists of Jamaat-e-Islami Pakistan gather on a road to block NATO supply to Afghanistan during a protest on the outskirts of Quetta on December 26, 2013. Photograph: BANARAS KHAN/AFP/Getty Images",
+            "mediaId":"gu-fc-ea64f90f-c9c2-4ee6-bb5a-552d9a336eb9",
+            "picdarUrn":"GD*40444839",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/26/1388077923458/ed3f59f7-f0de-4727-9b20-d89c1534d40b-2048x1536.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/26/1388077923458/ed3f59f7-f0de-4727-9b20-d89c1534d40b-2048x1536.jpeg",
+            "source":"AFP/Getty Images",
+            "photographer":"BANARAS KHAN",
+            "altText":"Pakistan drone strike",
+            "height":"1536",
+            "credit":"BANARAS KHAN/AFP/Getty Images",
+            "caption":"Activists of Jamaat-e-Islami Pakistan gather on a road to block NATO supply to Afghanistan during a protest on the outskirts of Quetta on December 26, 2013. Photograph: BANARAS KHAN/AFP/Getty Images",
+            "mediaId":"gu-fc-ea64f90f-c9c2-4ee6-bb5a-552d9a336eb9",
+            "picdarUrn":"GD*40444839",
+            "width":"2048"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/26/1388077924493/ed3f59f7-f0de-4727-9b20-d89c1534d40b-380x228.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/26/1388077924493/ed3f59f7-f0de-4727-9b20-d89c1534d40b-380x228.jpeg",
+            "source":"AFP/Getty Images",
+            "photographer":"BANARAS KHAN",
+            "altText":"Pakistan drone strike",
+            "height":"228",
+            "credit":"BANARAS KHAN/AFP/Getty Images",
+            "caption":"Activists of Jamaat-e-Islami Pakistan gather on a road to block NATO supply to Afghanistan during a protest on the outskirts of Quetta on December 26, 2013. Photograph: BANARAS KHAN/AFP/Getty Images",
+            "mediaId":"gu-fc-ea64f90f-c9c2-4ee6-bb5a-552d9a336eb9",
+            "picdarUrn":"GD*40444839",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/26/1388077924666/ed3f59f7-f0de-4727-9b20-d89c1534d40b-620x372.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/26/1388077924666/ed3f59f7-f0de-4727-9b20-d89c1534d40b-620x372.jpeg",
+            "source":"AFP/Getty Images",
+            "photographer":"BANARAS KHAN",
+            "altText":"Pakistan drone strike",
+            "height":"372",
+            "credit":"BANARAS KHAN/AFP/Getty Images",
+            "caption":"Activists of Jamaat-e-Islami Pakistan gather on a road to block NATO supply to Afghanistan during a protest on the outskirts of Quetta on December 26, 2013. Photograph: BANARAS KHAN/AFP/Getty Images",
+            "mediaId":"gu-fc-ea64f90f-c9c2-4ee6-bb5a-552d9a336eb9",
+            "picdarUrn":"GD*40444839",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/26/1388077924811/ed3f59f7-f0de-4727-9b20-d89c1534d40b-68x68.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/26/1388077924811/ed3f59f7-f0de-4727-9b20-d89c1534d40b-68x68.jpeg",
+            "source":"AFP/Getty Images",
+            "photographer":"BANARAS KHAN",
+            "altText":"Pakistan drone strike",
+            "height":"68",
+            "credit":"BANARAS KHAN/AFP/Getty Images",
+            "caption":"Activists of Jamaat-e-Islami Pakistan gather on a road to block NATO supply to Afghanistan during a protest on the outskirts of Quetta on December 26, 2013. Photograph: BANARAS KHAN/AFP/Getty Images",
+            "mediaId":"gu-fc-ea64f90f-c9c2-4ee6-bb5a-552d9a336eb9",
+            "picdarUrn":"GD*40444839",
+            "width":"68"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/26/1388077925124/ed3f59f7-f0de-4727-9b20-d89c1534d40b-1024x768.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/26/1388077925124/ed3f59f7-f0de-4727-9b20-d89c1534d40b-1024x768.jpeg",
+            "source":"AFP/Getty Images",
+            "photographer":"BANARAS KHAN",
+            "altText":"Pakistan drone strike",
+            "height":"768",
+            "credit":"BANARAS KHAN/AFP/Getty Images",
+            "caption":"Activists of Jamaat-e-Islami Pakistan gather on a road to block NATO supply to Afghanistan during a protest on the outskirts of Quetta on December 26, 2013. Photograph: BANARAS KHAN/AFP/Getty Images",
+            "mediaId":"gu-fc-ea64f90f-c9c2-4ee6-bb5a-552d9a336eb9",
+            "picdarUrn":"GD*40444839",
+            "width":"1024"
+          }
+        },{
+          "type":"image",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/26/1388077925817/ed3f59f7-f0de-4727-9b20-d89c1534d40b-2060x1236.jpeg",
+          "typeData":{
+            "secureFile":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/26/1388077925817/ed3f59f7-f0de-4727-9b20-d89c1534d40b-2060x1236.jpeg",
+            "source":"AFP/Getty Images",
+            "photographer":"BANARAS KHAN",
+            "altText":"Pakistan drone strike",
+            "height":"1236",
+            "credit":"BANARAS KHAN/AFP/Getty Images",
+            "caption":"Activists of Jamaat-e-Islami Pakistan gather on a road to block NATO supply to Afghanistan during a protest on the outskirts of Quetta on December 26, 2013. Photograph: BANARAS KHAN/AFP/Getty Images",
+            "mediaId":"gu-fc-ea64f90f-c9c2-4ee6-bb5a-552d9a336eb9",
+            "picdarUrn":"GD*40444839",
+            "width":"2060"
+          }
+        }]
+      }],
+      "references":[],
+      "isExpired":"false"
+    },{
+      "id":"commentisfree/2013/dec/20/philip-hammond-drones-truth-atrocities-pakistan-yemen-attacks",
+      "sectionId":"commentisfree",
+      "sectionName":"Comment is free",
+      "webPublicationDate":"2013-12-20T10:31:32Z",
+      "webTitle":"Philip Hammond ignores the truth about drone atrocities | Clive Stafford Smith",
+      "webUrl":"http://www.theguardian.com/commentisfree/2013/dec/20/philip-hammond-drones-truth-atrocities-pakistan-yemen-attacks",
+      "apiUrl":"http://content.guardianapis.com/commentisfree/2013/dec/20/philip-hammond-drones-truth-atrocities-pakistan-yemen-attacks",
+      "fields":{
+        "trailText":"<strong>Clive Stafford Smith: Response:</strong> Drones are killing civilians in Pakistan and Yemen, while Britain refuses to admit its co-operation with illegal US attacks",
+        "headline":"Philip Hammond ignores the truth about drone atrocities",
+        "body":"<p>The defence secretary, <a href=\"http://www.theguardian.com/commentisfree/2013/dec/18/in-defence-of-drones-keep-civilians-troops-safe\" title=\"\">Philip Hammond, would apparently like us to focus on the kinder face of the \"Remotely Piloted Air System\", known as the RPA</a>, in his article In defence of drones.</p><p>Hammond takes issue with \"the picture of devastation so often painted by [drone] activists\". But critics are not nearly as effective as the manufacturers themselves when it comes to making drones sound evil. General Atomics decided on the name Predator drone. And the Reaper surely attracts the image of the Grim Reaper, harvesting the souls of those damned with its <a href=\"http://www.theguardian.com/world/2004/mar/23/israel6\" title=\"\">Hellfire missiles</a>.</p><p>Hammond focuses almost solely on Afghanistan, where at least there has been a war for the past decade. He writes: \"This capability saves the lives of our personnel, our Afghan allies and Afghan civilians on a daily basis.\" Yet he completely ignores the most contentious use of Hellfire missiles, terrorising swaths of Pakistan and Yemen, where no war has even been declared. Indeed, Hammond's snapshot of what he calls the \"precision\" RPA is presented in the same week as the latest drone atrocity, with <a href=\"http://www.theguardian.com/world/2013/dec/12/air-strike-yemen-15-wedding-guest-killed-mistaken-al-qaida?CMP=twt_gu\" title=\"\">at least 15 Yemeni people slaughtered in what turned out to be a convoy of wedding guests</a>, not al-Qaida terrorists.</p><p>Hammond says it's wrong to suggest that \"the government's use of unmanned and remotely piloted aircraft is shrouded in secrecy\". Yet his government (with several taxpayer-funded QCs) is fighting tooth and nail <a href=\"http://www.reprieve.org.uk/press/uk_must_not_hide_drone_war_involvement/\" title=\"\">to keep secret Britain's policy for co-operating with illegal US drone attacks</a>. And neither the US nor the UK will say how many civilians they think they are killing, although we at Reprieve represent more than 150 civilian victims and families of those killed in drone strikes.</p><p>Hammond tells us that \"the most basic falsehood\" of all is the notion of automation. They are piloted, he says – albeit by a pilot drinking coffee thousands of miles from the target. Yet it is the ambition of the UK military – along with the Americans and everyone else – to develop genuinely autonomous drones. As <a href=\"http://www.gpo.gov/fdsys/pkg/CHRG-111hhrg64921/html/CHRG-111hhrg64921.htm\" title=\"\">Professor John Jackson of the US Naval War College said in testimony before the US Congress in 2010</a>, \"autonomous systems could soon be developed that are capable of making life and death decisions without direct human intervention.\" They feed in your photograph, programme it to kill you, and send it on its way.</p><p>Hammond says he wishes to \"put the myths to bed\". I hope for a more sensible debate in the new year.</p><!-- Guardian Watermark: internal-code/content/425467457|2014-05-14T16:53:37Z|60858be4c781e5f770270d1a4f2f2274b4819b4d -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2014-01-09T21:00:55Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/20/1387534884818/Predator-drone-Afghanista-003.jpg",
+        "standfirst":"Drones are killing civilians in Pakistan and Yemen, while Britain refuses to admit its co-operation with illegal US attacks",
+        "shortUrl":"http://gu.com/p/3yc9a",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/20/1387534884818/Predator-drone-Afghanista-003.jpg",
+        "wordcount":"403",
+        "commentable":"true",
+        "internalContentCode":"425467457",
+        "allowUgc":"false",
+        "internalOctopusCode":"8471789",
+        "isPremoderated":"false",
+        "byline":"Clive Stafford Smith",
+        "publication":"theguardian.com",
+        "internalPageCode":"2016667",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-12-23T10:31:32Z"
+      },
+      "tags":[{
+        "id":"commentisfree/series/response",
+        "type":"series",
+        "webTitle":"Response",
+        "webUrl":"http://www.theguardian.com/commentisfree/series/response",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/series/response",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"world/drones",
+        "type":"keyword",
+        "webTitle":"Drones",
+        "webUrl":"http://www.theguardian.com/world/drones",
+        "apiUrl":"http://content.guardianapis.com/world/drones",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"commentisfree/commentisfree",
+        "type":"blog",
+        "webTitle":"Comment is free",
+        "webUrl":"http://www.theguardian.com/commentisfree/commentisfree",
+        "apiUrl":"http://content.guardianapis.com/commentisfree/commentisfree",
+        "sectionId":"commentisfree",
+        "sectionName":"Comment is free",
+        "references":[]
+      },{
+        "id":"politics/philip-hammond",
+        "type":"keyword",
+        "webTitle":"Philip Hammond",
+        "webUrl":"http://www.theguardian.com/politics/philip-hammond",
+        "apiUrl":"http://content.guardianapis.com/politics/philip-hammond",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"politics/defence",
+        "type":"keyword",
+        "webTitle":"Defence policy",
+        "webUrl":"http://www.theguardian.com/politics/defence",
+        "apiUrl":"http://content.guardianapis.com/politics/defence",
+        "sectionId":"politics",
+        "sectionName":"Politics",
+        "references":[]
+      },{
+        "id":"world/afghanistan",
+        "type":"keyword",
+        "webTitle":"Afghanistan",
+        "webUrl":"http://www.theguardian.com/world/afghanistan",
+        "apiUrl":"http://content.guardianapis.com/world/afghanistan",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/yemen",
+        "type":"keyword",
+        "webTitle":"Yemen",
+        "webUrl":"http://www.theguardian.com/world/yemen",
+        "apiUrl":"http://content.guardianapis.com/world/yemen",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/pakistan",
+        "type":"keyword",
+        "webTitle":"Pakistan",
+        "webUrl":"http://www.theguardian.com/world/pakistan",
+        "apiUrl":"http://content.guardianapis.com/world/pakistan",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"tone/comment",
+        "type":"tone",
+        "webTitle":"Comment",
+        "webUrl":"http://www.theguardian.com/tone/comment",
+        "apiUrl":"http://content.guardianapis.com/tone/comment",
+        "references":[]
+      },{
+        "id":"profile/clivestaffordsmith",
+        "type":"contributor",
+        "webTitle":"Clive Stafford Smith",
+        "webUrl":"http://www.theguardian.com/profile/clivestaffordsmith",
+        "apiUrl":"http://content.guardianapis.com/profile/clivestaffordsmith",
+        "bio":"<p>Clive Stafford Smith is the founder of Reprieve and has spent 25 years working on behalf of defendants facing the death penalty in the US</p>",
+        "rcsId":"GNL020749",
+        "r2ContributorId":"22284",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/10/27/1288189611060/Clive-Stafford-Smith.jpg",
+        "references":[]
+      },{
+        "id":"uk/military",
+        "type":"keyword",
+        "webTitle":"Military",
+        "webUrl":"http://www.theguardian.com/uk/military",
+        "apiUrl":"http://content.guardianapis.com/uk/military",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/ministry-of-defence",
+        "type":"keyword",
+        "webTitle":"Ministry of Defence",
+        "webUrl":"http://www.theguardian.com/uk/ministry-of-defence",
+        "apiUrl":"http://content.guardianapis.com/uk/ministry-of-defence",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-425469089",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/20/1387534881548/Predator-drone-Afghanista-001.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Kirsty Wigglesworth",
+            "altText":"Predator drone Afghanistan",
+            "height":"54",
+            "credit":"Kirsty Wigglesworth/AP",
+            "caption":"A US Predator drone flying over Afghanistan. 'Critics are not nearly as effective as the manufacturers themselves when it comes to making drones sound evil.' Photograph: Kirsty Wigglesworth/AP",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/20/1387534883553/Predator-drone-Afghanista-002.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Kirsty Wigglesworth",
+            "altText":"Predator drone Afghanistan",
+            "height":"130",
+            "credit":"Kirsty Wigglesworth/AP",
+            "caption":"A US Predator drone flying over Afghanistan. 'Critics are not nearly as effective as the manufacturers themselves when it comes to making drones sound evil.' Photograph: Kirsty Wigglesworth/AP",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/20/1387534884818/Predator-drone-Afghanista-003.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Kirsty Wigglesworth",
+            "altText":"Predator drone Afghanistan",
+            "height":"84",
+            "credit":"Kirsty Wigglesworth/AP",
+            "caption":"A US Predator drone flying over Afghanistan. 'Critics are not nearly as effective as the manufacturers themselves when it comes to making drones sound evil.' Photograph: Kirsty Wigglesworth/AP",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/20/1387534886102/Predator-drone-Afghanista-004.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Kirsty Wigglesworth",
+            "altText":"Predator drone Afghanistan",
+            "height":"132",
+            "credit":"Kirsty Wigglesworth/AP",
+            "caption":"A US Predator drone flying over Afghanistan. 'Critics are not nearly as effective as the manufacturers themselves when it comes to making drones sound evil.' Photograph: Kirsty Wigglesworth/AP",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/20/1387534887380/Predator-drone-Afghanista-005.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Kirsty Wigglesworth",
+            "altText":"Predator drone Afghanistan",
+            "height":"168",
+            "credit":"Kirsty Wigglesworth/AP",
+            "caption":"A US Predator drone flying over Afghanistan. 'Critics are not nearly as effective as the manufacturers themselves when it comes to making drones sound evil.' Photograph: Kirsty Wigglesworth/AP",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/20/1387534888631/Predator-drone-Afghanista-006.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Kirsty Wigglesworth",
+            "altText":"Predator drone Afghanistan",
+            "height":"180",
+            "credit":"Kirsty Wigglesworth/AP",
+            "caption":"A US Predator drone flying over Afghanistan. 'Critics are not nearly as effective as the manufacturers themselves when it comes to making drones sound evil.' Photograph: Kirsty Wigglesworth/AP",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/20/1387534889980/Predator-drone-Afghanista-007.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Kirsty Wigglesworth",
+            "altText":"Predator drone Afghanistan",
+            "height":"228",
+            "credit":"Kirsty Wigglesworth/AP",
+            "caption":"A US Predator drone flying over Afghanistan. 'Critics are not nearly as effective as the manufacturers themselves when it comes to making drones sound evil.' Photograph: Kirsty Wigglesworth/AP",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/20/1387534891216/Predator-drone-Afghanista-008.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Kirsty Wigglesworth",
+            "altText":"Predator drone Afghanistan",
+            "height":"276",
+            "credit":"Kirsty Wigglesworth/AP",
+            "caption":"A US Predator drone flying over Afghanistan. 'Critics are not nearly as effective as the manufacturers themselves when it comes to making drones sound evil.' Photograph: Kirsty Wigglesworth/AP",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/20/1387534891216/Predator-drone-Afghanista-008.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Kirsty Wigglesworth",
+            "altText":"Predator drone Afghanistan",
+            "height":"276",
+            "credit":"Kirsty Wigglesworth/AP",
+            "caption":"A US Predator drone flying over Afghanistan. 'Critics are not nearly as effective as the manufacturers themselves when it comes to making drones sound evil.' Photograph: Kirsty Wigglesworth/AP",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-425469090",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/12/20/1387534884818/Predator-drone-Afghanista-003.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Kirsty Wigglesworth",
+            "altText":"Predator drone Afghanistan",
+            "height":"84",
+            "credit":"Kirsty Wigglesworth/AP",
+            "caption":"A US Predator drone flying over Afghanistan. 'Critics are not nearly as effective as the manufacturers themselves when it comes to making drones sound evil.' Photograph: Kirsty Wigglesworth/AP",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[],
+      "isExpired":"false"
+    }]
+  }
+}

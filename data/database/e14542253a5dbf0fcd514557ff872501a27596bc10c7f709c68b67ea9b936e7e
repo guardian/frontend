@@ -1,0 +1,903 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"travel/gallery/2012/nov/20/st-petersburg-pushkin-museum",
+      "sectionId":"travel",
+      "sectionName":"Travel",
+      "webPublicationDate":"2012-11-20T14:04:09Z",
+      "webTitle":"Celebrating artists in St Petersburg",
+      "webUrl":"http://www.theguardian.com/travel/gallery/2012/nov/20/st-petersburg-pushkin-museum",
+      "apiUrl":"http://content.guardianapis.com/travel/gallery/2012/nov/20/st-petersburg-pushkin-museum",
+      "fields":{
+        "trailText":"<p>The Russian tradition of paying tribute to its cultural heroes by turning their homes into museums has seen dozens of small apartments, flats and houses turned into shrines to such luminaries as Pushkin and Dostoevsky</p>",
+        "headline":"Celebrating artists in St Petersburg",
+        "showInRelatedContent":"true",
+        "lastModified":"2012-11-20T14:04:10Z",
+        "hasStoryPackage":"true",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/GWeekly/2012/11/20/1353416100153/Library-Desk-in-Home-of-A-009.jpg",
+        "standfirst":"The Russian tradition of paying tribute to its cultural heroes by turning their homes into museums has seen dozens of small apartments, flats and houses turned into shrines to such luminaries as Pushkin and Dostoevsky",
+        "shortUrl":"http://gu.com/p/3bpqk",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/GWeekly/2012/11/20/1353416100153/Library-Desk-in-Home-of-A-009.jpg",
+        "commentable":"false",
+        "internalContentCode":"399511406",
+        "allowUgc":"false",
+        "isPremoderated":"false",
+        "publication":"Guardian Weekly",
+        "internalPageCode":"1829783",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2012-11-23T14:04:10Z"
+      },
+      "tags":[{
+        "id":"travel/stpetersburg",
+        "type":"keyword",
+        "webTitle":"St Petersburg",
+        "webUrl":"http://www.theguardian.com/travel/stpetersburg",
+        "apiUrl":"http://content.guardianapis.com/travel/stpetersburg",
+        "sectionId":"travel",
+        "sectionName":"Travel",
+        "references":[]
+      },{
+        "id":"culture/museums",
+        "type":"keyword",
+        "webTitle":"Museums",
+        "webUrl":"http://www.theguardian.com/culture/museums",
+        "apiUrl":"http://content.guardianapis.com/culture/museums",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"travel/russia",
+        "type":"keyword",
+        "webTitle":"Russia",
+        "webUrl":"http://www.theguardian.com/travel/russia",
+        "apiUrl":"http://content.guardianapis.com/travel/russia",
+        "sectionId":"travel",
+        "sectionName":"Travel",
+        "references":[]
+      },{
+        "id":"type/gallery",
+        "type":"type",
+        "webTitle":"Gallery",
+        "webUrl":"http://www.theguardian.com/inpictures",
+        "apiUrl":"http://content.guardianapis.com/inpictures",
+        "references":[]
+      },{
+        "id":"publication/guardianweekly",
+        "type":"publication",
+        "webTitle":"Guardian Weekly",
+        "webUrl":"http://www.theguardian.com/weekly",
+        "apiUrl":"http://content.guardianapis.com/weekly",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-399701892",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/GWeekly/2012/11/20/1353416100153/Library-Desk-in-Home-of-A-009.jpg",
+          "typeData":{
+            "source":"  Massimo Listri/CORBIS",
+            "photographer":"Massimo Listri",
+            "altText":"Trail St Petersburg museums: Library Desk in Home of Aleksandr Pushkin",
+            "height":"84",
+            "credit":"Massimo Listri/  Massimo Listri/CORBIS",
+            "caption":"ca. 1980-1997, St. Petersburg, Russia --- Library Desk in Home of Aleksandr Pushkin --- Image by   Massimo Listri/CORBIS\rAleksandr Sergeyevich Pushkin\r",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-image-399699795",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":1,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/GWeekly/2012/11/20/1353414937226/Library-Desk-in-Home-of-A-005.jpg",
+          "typeData":{
+            "source":"  Massimo Listri/CORBIS",
+            "photographer":"Massimo Listri",
+            "altText":"St Petersburg museums: Library Desk in Home of Aleksandr Pushkin",
+            "height":"480",
+            "credit":"Massimo Listri/Corbis",
+            "caption":"The Pushkin Museum was established in the mid-1920s, in the 11-room flat near the city's elegant Nevsky Prospekt in which Pushkin and his family once lived. Above, the library.",
+            "width":"612"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/GWeekly/2012/11/20/1353414937226/Library-Desk-in-Home-of-A-005-thumb-8426.jpg",
+          "typeData":{
+            "source":"  Massimo Listri/CORBIS",
+            "photographer":"Massimo Listri",
+            "altText":"St Petersburg museums: Library Desk in Home of Aleksandr Pushkin",
+            "height":"68",
+            "credit":"Massimo Listri/Corbis",
+            "caption":"ca. 1980-1997, St. Petersburg, Russia --- Library Desk in Home of Aleksandr Pushkin --- Image by   Massimo Listri/CORBIS\r",
+            "width":"68"
+          }
+        }]
+      },{
+        "id":"gu-image-399699786",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":2,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/GWeekly/2012/11/20/1353414555158/Bed-room-corner-in-Alexan-001.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"RIA Novosti / Alamy",
+            "altText":"St Petersburg museums: Bed room corner in Alexander Pushkin house museum on Moika Street",
+            "height":"480",
+            "credit":"RIA Novosti/Alamy",
+            "caption":"A corner of the bedroom in the Pushkin apartment.",
+            "width":"676"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/GWeekly/2012/11/20/1353414555158/Bed-room-corner-in-Alexan-001-thumb-7209.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"RIA Novosti / Alamy",
+            "altText":"St Petersburg museums: Bed room corner in Alexander Pushkin house museum on Moika Street",
+            "height":"68",
+            "credit":"RIA Novosti/Alamy",
+            "caption":"B9ACXP Bed room corner in Alexander Pushkin house museum on Moika Street\rHouse\rPushkin\rMuseum\rBed\rRoom",
+            "width":"68"
+          }
+        }]
+      },{
+        "id":"gu-image-399510156",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":3,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/GWeekly/2012/11/16/1353063992249/Ornamental-Clock-in-Pushk-003.jpg",
+          "typeData":{
+            "source":"  Massimo Listri/CORBIS",
+            "photographer":"Massimo Listri",
+            "altText":"St Petersburg Museum: Ornamental Clock in Pushkin's House",
+            "height":"463",
+            "credit":"Massimo Listri/Corbis",
+            "caption":"A clock in the Pushkin apartment – the shrine to the poet is one of nearly 300 Pushkin memorials in Russia.",
+            "width":"400"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/GWeekly/2012/11/16/1353063992249/Ornamental-Clock-in-Pushk-003-thumb-3170.jpg",
+          "typeData":{
+            "source":"  Massimo Listri/CORBIS",
+            "photographer":"Massimo Listri",
+            "altText":"St Petersburg Museum: Ornamental Clock in Pushkin's House",
+            "height":"68",
+            "credit":"Massimo Listri/Corbis",
+            "caption":"ca. 1980-1997, St. Petersburg, Russia --- A clock found in the house of Russia's first great poet and novelist, Aleksandr Pushkin. --- ",
+            "width":"68"
+          }
+        }]
+      },{
+        "id":"gu-image-399699799",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":4,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/GWeekly/2012/11/20/1353414558845/Pushkin-sofa-002.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"RIA Novosti / Alamy",
+            "altText":"St Petersburg museums: Pushkin sofa",
+            "height":"480",
+            "credit":"RIA Novosti/Alamy",
+            "caption":"Pushkin died at 37 in a duel, and supposedly taking his last breath on the sofa pictured here. In the last few years blood marks on the sofa were tested, and, in 2010, Russian newspapers announced that they belonged to Pushkin.",
+            "width":"721"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/GWeekly/2012/11/20/1353414558845/Pushkin-sofa-002-thumb-4004.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"RIA Novosti / Alamy",
+            "altText":"St Petersburg museums: Pushkin sofa",
+            "height":"68",
+            "credit":"RIA Novosti/Alamy",
+            "caption":"B9AD7H Study at Alexander Pushkin apartment museum on Moika Street in St Petersburg Sofa on which the great Russian poet died\rbooks\rlibrary\rsecretaire",
+            "width":"68"
+          }
+        }]
+      },{
+        "id":"gu-image-399510167",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":5,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/GWeekly/2012/11/16/1353064042261/Room-in-Aleksandr-Pushkin-008.jpg",
+          "typeData":{
+            "source":"Corbis",
+            "photographer":"Massimo Listri",
+            "altText":"St Petersburg Museum: Room in Aleksandr Pushkin's House",
+            "height":"480",
+            "credit":"Massimo Listri/Corbis",
+            "caption":"The salon in Pushkin's apartment.",
+            "width":"609"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/GWeekly/2012/11/16/1353064042261/Room-in-Aleksandr-Pushkin-008-thumb-3543.jpg",
+          "typeData":{
+            "source":"Corbis",
+            "photographer":"Massimo Listri",
+            "altText":"St Petersburg Museum: Room in Aleksandr Pushkin's House",
+            "height":"68",
+            "credit":"Massimo Listri/Corbis",
+            "caption":"ca. 1980-1997, St. Petersburg, Russia --- Room in Aleksandr Pushkin's House --- Image by   Massimo Listri/CORBIS.Eastern Europe",
+            "width":"68"
+          }
+        }]
+      },{
+        "id":"gu-image-399699788",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":6,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/GWeekly/2012/11/20/1353414564144/Childrens-room-Dostoyevsk-004.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Peter Forsberg / Alamy",
+            "altText":"St Petersburg museums: Children's room Dostoyevsky house and museum St Petersburg Russia",
+            "height":"480",
+            "credit":"Peter Forsberg/Alamy",
+            "caption":"Across the Neva river is the Dostoevsky apartment, which contains a theatre and exhibition space devoted to the author's life and literary accomplishments. Above, the children's room.",
+            "width":"723"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/GWeekly/2012/11/20/1353414564144/Childrens-room-Dostoyevsk-004-thumb-2301.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Peter Forsberg / Alamy",
+            "altText":"St Petersburg museums: Children's room Dostoyevsky house and museum St Petersburg Russia",
+            "height":"68",
+            "credit":"Peter Forsberg/Alamy",
+            "caption":"BRNX9J Children's room Dostoyevsky house and museum St Petersburg Russia",
+            "width":"68"
+          }
+        }]
+      },{
+        "id":"gu-image-399699821",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":7,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/GWeekly/2012/11/20/1353414561536/Russia-Saint-Petersburg-C-003.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Hemis  / Alamy",
+            "altText":"St Petersburg museums: Russia, Saint Petersburg, Chaliapin Museum",
+            "height":"480",
+            "credit":"Hemis/Alamy",
+            "caption":"A tour of another famous apartment museum, that dedicated to Feodor Chaliapin, ends in a large music room, where recordings of the singer play as poignant reminders.",
+            "width":"717"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/GWeekly/2012/11/20/1353414561536/Russia-Saint-Petersburg-C-003-thumb-6770.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Hemis  / Alamy",
+            "altText":"St Petersburg museums: Russia, Saint Petersburg, Chaliapin Museum",
+            "height":"68",
+            "credit":"Hemis/Alamy",
+            "caption":"C1EFC9 Russia, Saint Petersburg, Chaliapin Museum\r",
+            "width":"68"
+          }
+        }]
+      },{
+        "id":"gu-image-399699792",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":8,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/GWeekly/2012/11/20/1353414940266/Fyodor-Chaliapin-in-Rimsk-006.jpg",
+          "typeData":{
+            "source":"  Gianni Dagli Orti/CORBIS",
+            "photographer":"Gianni Dagli Orti",
+            "altText":"St Petersburg museums: Fyodor Chaliapin in Rimsky-Korsakov's \"Boris Godunov\"",
+            "height":"508",
+            "credit":"Gianni Dagli Orti/Corbis",
+            "caption":"Chaliapin in 1913 in his signature role of Boris Godunov, from the Mussorgsky opera. He created his interpretation of the role while studying with composer Rachmaninov.\r\n",
+            "width":"400"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/GWeekly/2012/11/20/1353414940266/Fyodor-Chaliapin-in-Rimsk-006-thumb-4736.jpg",
+          "typeData":{
+            "source":"  Gianni Dagli Orti/CORBIS",
+            "photographer":"Gianni Dagli Orti",
+            "altText":"St Petersburg museums: Fyodor Chaliapin in Rimsky-Korsakov's \"Boris Godunov\"",
+            "height":"68",
+            "credit":"Gianni Dagli Orti/Corbis",
+            "caption":"1913 --- Fyodor Chaliapin, a Russian bass singer, in the role of Boris Godunov. --- Image by   Gianni Dagli Orti/CORBIS\r",
+            "width":"68"
+          }
+        }]
+      },{
+        "id":"gu-image-399699843",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":9,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/GWeekly/2012/11/20/1353414942878/Statue-of-Alexander-Pushk-007.jpg",
+          "typeData":{
+            "source":"  Steve Raymer/CORBIS",
+            "photographer":"Steve Raymer",
+            "altText":"St Petersburg museums: Statue of Alexander Pushkin",
+            "height":"480",
+            "credit":"Steve Raymer/Corbis",
+            "caption":"Statue of Pushkin on a bench in Alexander Park, in St Petersburg. For details on visiting the Pushkin Museum, see <a href=\"http://www.museumpushkin.ru/eng/apartment-museum-pushkin.html\">museumpushkin.ru/eng</a>.\r\n",
+            "width":"714"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/GWeekly/2012/11/20/1353414942878/Statue-of-Alexander-Pushk-007-thumb-5857.jpg",
+          "typeData":{
+            "source":"  Steve Raymer/CORBIS",
+            "photographer":"Steve Raymer",
+            "altText":"St Petersburg museums: Statue of Alexander Pushkin",
+            "height":"68",
+            "credit":"Steve Raymer/Corbis",
+            "caption":"Statue of the poet Alexander Pushkin on a bench in Alexander Park, Pushkin, Russia. --- Image by   Steve Raymer/CORBIS\r",
+            "width":"68"
+          }
+        }]
+      }],
+      "references":[],
+      "isExpired":"false"
+    },
+    "storyPackage":[{
+      "id":"world/2012/nov/20/st-petersburg-russia-apartment-museums",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2012-11-20T13:56:01Z",
+      "webTitle":"St Petersburg's homely tributes to Russia's great artists",
+      "webUrl":"http://www.theguardian.com/world/2012/nov/20/st-petersburg-russia-apartment-museums",
+      "apiUrl":"http://content.guardianapis.com/world/2012/nov/20/st-petersburg-russia-apartment-museums",
+      "fields":{
+        "trailText":"Pushkin, Dostoevsky and Chaliapin are among the Russian cultural icons whose St Petersburg dwellings have been preserved for posterity",
+        "headline":"St Petersburg's homely tributes to Russia's great artists",
+        "body":"<p>An elderly woman, trudging slowly up and down the dilapidated stairwell of a once-magnificent mansion, is the only remaining obstacle to the creation of this city's newest literary museum. If the friends and admirers of the dissident poet <a href=\"http://www.poets.org/poet.php/prmPID/4\" title=\"\">Joseph Brodsky</a> can find a way to buy the small space she still rents in what was once a communal flat within the palatial building, they hope to open a museum that will honour the writer who was forced out of the Soviet Union in 1972 and died in 1996 in New York City.</p><p>A Brodsky museum would join dozens of other small apartments, flats and houses that perpetuate the memory of St Petersburg's cultural luminaries, including <a href=\"http://en.wikipedia.org/wiki/Fyodor_Dostoyevsky\" title=\"\">Dostoevsky</a>, Pushkin, Nabokov and Rimsky-Korsakov. For now, it remains in limbo, a few small rooms, rich in ornament and detail but hauntingly empty, awaiting resurrection as a site for the enviable yet disconcerting hero worship that Russians accord their favourite artists.</p><p>Apartment museums are scattered across St Petersburg's canals and pastel-coloured palaces, and there is persistent agitation to create more of them. Desperate to protect a historic structure that once housed an apartment used by the poet and novelist Mikhail Lermontov's grandmother, activists in May agitated for a new Lermontov museum. Before former National Symphony Orchestra director Mstislav Rostropovich died in 2007, he bought up rooms that were once lived in by the young Dmtiri Shostakovich. With his wife, the legendary soprano Galina Vishnevskaya, Rostropovich created a Shostakovich museum, and tried to give it to the city of St Petersburg. There is also a Modest Mussorgsky flat, filled with period furniture and memorabilia, also created by Rostropovich, which may someday be a museum.</p><p>Although these museums are mostly notional, they speak to the passion for memorialisation in Russian society in which culture is often felt as a loss, artists as martyrs, literature as a living trauma. Unlike in the United States, where house museums struggle to find a niche in the cultural economy, the old-fashioned, low-tech, old-guard house or apartment museum is alive and well in a city of poets, painters and musicians. It serves many functions: a way to preserve old architecture, a reaction against vulgar commercial elites and the Putinisation of Russia, and a bulwark against cultural amnesia. But the Russian house museum is also a shrine, and while many cultures create shrines to their icons, the small Russian museum has its own peculiar flavour and passion.</p><p>In the beginning, there was the Pushkin apartment, commemorating the brilliant poet who clashed with the tsar, wrote masterpieces such as Eugene Onegin and Boris Godunov, and died at 37 in a shabby 1837 duel. Located near the city's elegant Nevsky Prospekt, the Pushkin apartment is one of almost 300 Pushkin memorials small and large (from modest plaques to full-sized estates) in Russia, according to a 1993 census. It is also a venerable prototype for many of St  Petersburg's lesser-known apartment museums. Its layout, the dramatic spectacle of life and death it presents to the visitor, helped establish the basic Stations of the Cross for literary museum worship in St Petersburg.</p><p>\"These are the actual steps up which Pushkin was carried after the duel,\" says museum director Galina Sedova, guiding a visitor up brightly lit stairs that connect the ground floor (with a coat room, admission booth and small museum display) to the elegant 11-room flat in which Pushkin and his family once lived. The museum was established in the mid 1920s, in the early years of the Soviet Union, in part because anti-Bolsheviks who had fled the country shamed Russian cultural leaders into honouring the poet. The museum's design and focus have been in an intimate dance with Russian cultural politics ever since.</p><p>In the early years, according to Sedova, the museum featured only seven of the original Pushkin rooms. \"It wasn't politic to emphasise the grandeur of Pushkin's lifestyle in Soviet times,\" she says.</p><p>The Soviet-era Pushkin was presented as a great Russian archetype, rather than an elite romantic figure who came from and satirised the nobility. The sexual intrigue that led to his fatal encounter with a man alleged to be his wife's lover was downplayed. \"His death was made a matter of social conditions, not an erotic duel,\" Sedova says. Little emphasis was placed on the personal possessions, the furnishings, the historic details of the apartment, which was reconstructed based on letters and contemporary accounts from Pushkin's time.</p><p>Times change, and especially since the breakup of the Soviet Union, the apartment has been more focused on recreating the ambience of Pushkin's home. But it remains resolutely a memorial, with death its main focus. A sofa on which the poet supposedly died was tested for blood, and in 2010 – with great fanfare – Russian newspapers announced that it was Pushkin's.</p><p>The apartment visit begins with the antechamber in which Pushkin's coffin rested, and ends with the study, in which he died. The study, filled with objects that the artist had held in his hands, is the sancta sanctorum of most apartment museums.</p><p>\"The idea, when you create a memorial apartment, is to make sure that the study isn't eclipsed by any of the other rooms,\" Sedova says. So the study is the richest with objects and memorabilia: a desk where he sat, an inkwell, a letter opener he often chewed, books and the sofa.Not every apartment museum is focused on the memorial aspect, but most are haunted to some degree. In the museum devoted to Alexander Blok (the \"silver age\" poet who died in 1921), a glass case with a death mask and a religious icon stands where Blok's deathbed was, and a vase of flowers is occasionally refreshed in front of it. Even if an artist didn't die in the apartment that honours him, loss and absence are often in the foreground. A visit to the apartment of <a href=\"http://uk.imdb.com/name/nm0149923/\" title=\"\">Feodor Chaliapin</a>, the world-renowned opera singer who left Russia in the early 1920s, features a painting of the singer that supposedly sustained a crack – discovered by Chaliapin's daughter at the moment the singer died in Paris in 1938. A tour of the capacious and beautifully appointed apartment ends in a large music room, where the disembodied voice of Chaliapin is heard singing, a poignant reminder of the singer's self-imposed exile during the years of Soviet repression.</p><p>\"We are trying to reimburse Chaliapin for what he had to suffer,\" says museum director Zinaida Getman. Across the Neva river, in a dense and shabbier part of town, the Dostoevsky apartment contains a theatre and an exhibition space devoted to the author's life and literary accomplishments – part of an effort to make the museum a cultural centre with relevance to young audiences. Like many apartment museums, the exhibition isn't so much about genuine artefacts connected to the author – the museum's director, Vera Biron, laments that \"we don't have many original items\" – but serves as a set of prompts to the guided tour. Labels in English give little context for what's on display – photographs, reproductions of important documents, a copy of the death mask. Instead, guides walk the visitor through a polished recitation of the author's career, his arrest, the infamous fake execution he survived before exile, his travels in Europe and his literary success. The objects are used more like illustrations in a text rather than genuine treasures.</p><p>But death returns as the focus when visitors encounter the author's study, with its orderly desk, small bookcase, an icon in the corner by the window and a large table clock, with its hands stopped at the hour of Dostoevsky's death.</p><p>Although many of the small apartment museums in Russia seem perpetually empty, Biron has struggled to make the Dostoevsky apartment a centre for the perpetual and perfervid enthusiasm for the author that animates Russians. But she is frustrated by insufficient funding, a theatre in disrepair and the occasional leak from nearby apartments – a hazard common to many museums in buildings that are still primarily residential.</p><p>\"Drunkards live in the house,\" says one Dostoevsky museum curator. There's something apt about the fact that the museum shares space in a building still inhabited by the flawed humanity that the author wrote about, and the view from a corner window takes in both a sex shop and a church. But like many apartment museums in St Petersburg, the Dostoevsky museum suffers from being a part of the residential landscape.</p><p>That is the main obstacle to opening the Shostakovich museum, according to Larisa Chirkova, who manages the space. The museum was conceived by Rostropovich to honour his friend and the Soviet Union's greatest composer, who wrote two concertos for the gifted cellist. In 2002, Rostropovich heard that the communal residents of the apartment in which Shostakovich lived as a young man might be willing to sell. After long negotiations, he managed to acquire all but two bedrooms, the kitchen and some service space, which remain in private hands. The apartment is filled with memorabilia, reproductions of scores, a piano and a reproduction of a 1936 newspaper article, Muddle Instead of Music, which opened Stalin's devastating attack on Shostakovich's modernist musical inclinations.</p><p>But despite an effort in 2006 to transfer ownership of the apartment to the city of St Petersburg and open it to the public, new regulations that would require it to have an entrance separate from the residential spaces have stalled the process.</p><p>\"It became absolutely impossible because the flat is on the fifth floor,\" says Chirkova, who remains hopeful that an alliance with a larger museum such as the Glinka House in Moscow might smooth the way.</p><p>But the regulation underscores how increased concerns about private property rights have changed the freewheeling world in which it was once possible to create a museum with little more than a passion, family support and some string pulling.</p><p>\"It is about safety, and a quiet space for the residents,\" says Yana Sedelnikova, who works with St Petersburg's Committee for Culture, which funds many of the city's small museums. Sedelnikova says the committee supports the city's apartment museums and wants to improve their visibility and visitorship, but rules are rules.</p><p>\"These are the regulations,\" she says. \"No one wants a store or a restaurant or a museum above your head. In previous years, there was no private property, so no such regulations. So it is just bad luck for the Shostakovich museum.\"</p><p>The city's culture committee, with a budget of $254m ($100m larger than the entire National Endowment for the Arts budget in the US), is relatively rich. And some museums, such as the Pushkin, receive national funding. But some museum directors complain of a funding system that \"kills initiative\". While some small museums such as the Blok apartment are subsumed under larger institutions (the State History Museum of St  Petersburg), most small museums must compete for a share of the roughly $28m in the culture committee's museum budget. And the process for applying for money can be complex and discouraging to museums that want to move quickly and innovate (the standard museum presentation in most apartment spaces is decades behind in design and the integration of technology).</p><p>By American standards, the culture committee's budget looks like nirvana. The US National Trust for Historic Preservation, for example, recently launched a \"Re-imagining Historic House Museums\" program in response to what one industry leader called the \"grave challenges\" that small museums face in the United States. But the American house museum and the Russian apartment museum are from different worlds. Part of the latter's charms is its pure sleepiness — the empty rooms, the old-fashioned or non-existent labels, the curious indifference to authenticity.</p><p>Russian apartment museums may occasionally look like American house museums, but it's a superficial resemblance. Fundamentally, American museums are about remedial education and conversion, introducing new audiences to culture and soliciting an emotional response. The lack of public funding that afflicts most of them is also their primary strength, forcing them to constantly seek new audiences and new sources of support. The Russian museum is about worship, often cult-like and insular. The difference in how these spaces are used is as vast as the difference between a megachurch and a sacred shrine.</p><p>The proposed Brodsky museum will be an interesting experiment because Brodsky left the Soviet Union to become part of the American intelligentsia. In 1985, Brodsky published a haunting essay, In a Room and a Half, which explored the pain of exile, the human toll of Soviet cruelty and the loss of parents through inexorable distance and finally death. The title of the essay refers to the rooms in which Brodsky lived with his parents, the same empty rooms that may someday be the core of the Brodsky museum.</p><p>Brodsky once said that he had \"switched empires\", and in his essay he transferred symbolic ownership of his \"room and a half\" to the world at large. Even after the breakup of the Soviet Union, Brodsky refused to return to Russia, to St Petersburg, to the rooms he had made famous. Telling his story fully will challenge basic Russian museum thinking. If done right, the organisers will reach out with a multilingual display, actively seek visitors from the multitudes who flock to the Hermitage and other grand sites and establish relationships with museums and cultural institutions beyond the literary neighbourhood in which Brodsky lived. But first, there is the old woman, who museum organisers say is holding out for $450,000. It's curious how many apartment museums begin with displacement, moving the old out so the even older can be celebrated anew. According to Chirkova of the Shostakovich museum, to create the Mussorgsky museum, Rostropovich arrived one day at the rooms of the communal flat and cajoled the residents into selling with a bottle or two of vodka.</p><p></p><p>One reason there are so many possible apartment museums, so many plaques on walls all over the city is that most artists in St Petersburg were urban nomads, moving from place to place. Dostoevsky lived in some 20 different apartments. So unlike the American house museum, which one expects to be a homestead expressing the ongoing investment and engagement of the owner, the apartment museum is both sacred and ephemeral.</p><p>The woman who climbs the stairwell of the proposed Brodsky museum is more than an inconvenience. She is part of the landscape, the ever shifting, wounded, chaotic social reality that is the ancient soil of Russian culture.</p><p><em>• This article appeared in </em><a href=\"http://www.guardian.co.uk/weekly\" title=\"\"><em>Guardian Weekly</em></a><em>, which incorporates material from the Washington Post</em></p><!-- Guardian Watermark: internal-code/content/399390848|2014-05-14T16:52:39Z|561f2d1329f3c4942a46dc08d41b185803e399c1 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-07-03T13:51:47Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/GWeekly/2012/11/16/1353065231615/Alexander-Pushkin-House-M-009.jpg",
+        "standfirst":"Pushkin, Dostoevsky and Chaliapin are among the Russian cultural icons whose St Petersburg dwellings have been preserved for posterity",
+        "shortUrl":"http://gu.com/p/3bzmj",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/GWeekly/2012/11/16/1353065231615/Alexander-Pushkin-House-M-009.jpg",
+        "wordcount":"2394",
+        "commentable":"true",
+        "internalContentCode":"399390848",
+        "allowUgc":"false",
+        "internalOctopusCode":"6858170",
+        "isPremoderated":"false",
+        "byline":"Philip Kennicott for the Washington Post",
+        "publication":"Guardian Weekly",
+        "internalPageCode":"1828945",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2012-11-26T16:50:00Z"
+      },
+      "tags":[{
+        "id":"world/russia",
+        "type":"keyword",
+        "webTitle":"Russia",
+        "webUrl":"http://www.theguardian.com/world/russia",
+        "apiUrl":"http://content.guardianapis.com/world/russia",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"travel/stpetersburg",
+        "type":"keyword",
+        "webTitle":"St Petersburg",
+        "webUrl":"http://www.theguardian.com/travel/stpetersburg",
+        "apiUrl":"http://content.guardianapis.com/travel/stpetersburg",
+        "sectionId":"travel",
+        "sectionName":"Travel",
+        "references":[]
+      },{
+        "id":"culture/museums",
+        "type":"keyword",
+        "webTitle":"Museums",
+        "webUrl":"http://www.theguardian.com/culture/museums",
+        "apiUrl":"http://content.guardianapis.com/culture/museums",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"music/opera",
+        "type":"keyword",
+        "webTitle":"Opera",
+        "webUrl":"http://www.theguardian.com/music/opera",
+        "apiUrl":"http://content.guardianapis.com/music/opera",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"culture/culture",
+        "type":"keyword",
+        "webTitle":"Culture",
+        "webUrl":"http://www.theguardian.com/culture/culture",
+        "apiUrl":"http://content.guardianapis.com/culture/culture",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"publication/guardianweekly",
+        "type":"publication",
+        "webTitle":"Guardian Weekly",
+        "webUrl":"http://www.theguardian.com/weekly",
+        "apiUrl":"http://content.guardianapis.com/weekly",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-399514400",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Travel/Pix/pictures/2012/11/16/1353067206637/Pushkins-House-St-Petersb-008.jpg",
+          "typeData":{
+            "source":"Corbis",
+            "photographer":"Massimo Listri",
+            "altText":"Pushkin's House, St Petersburg",
+            "height":"276",
+            "credit":"Massimo Listri/Corbis",
+            "caption":"The salon in Pushkin's apartment museum in St Petersburg. Photograph: Massimo Listri/Corbis",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-399514401",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/GWeekly/2012/11/16/1353065231615/Alexander-Pushkin-House-M-009.jpg",
+          "typeData":{
+            "source":"  Walter Bibikow/JAI/Corbis",
+            "photographer":"Walter Bibikow",
+            "altText":"Trail St Petersburg Museum: Alexander Pushkin House-Museum",
+            "height":"84",
+            "credit":"Walter Bibikow/  Walter Bibikow/JAI/Corbis",
+            "caption":"Pushkin house.",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[],
+      "isExpired":"false"
+    },{
+      "id":"travel/gallery/2012/nov/20/st-petersburg-pushkin-museum",
+      "sectionId":"travel",
+      "sectionName":"Travel",
+      "webPublicationDate":"2012-11-20T14:04:09Z",
+      "webTitle":"Celebrating artists in St Petersburg",
+      "webUrl":"http://www.theguardian.com/travel/gallery/2012/nov/20/st-petersburg-pushkin-museum",
+      "apiUrl":"http://content.guardianapis.com/travel/gallery/2012/nov/20/st-petersburg-pushkin-museum",
+      "fields":{
+        "trailText":"<p>The Russian tradition of paying tribute to its cultural heroes by turning their homes into museums has seen dozens of small apartments, flats and houses turned into shrines to such luminaries as Pushkin and Dostoevsky</p>",
+        "headline":"Celebrating artists in St Petersburg",
+        "showInRelatedContent":"true",
+        "lastModified":"2012-11-20T14:04:10Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/GWeekly/2012/11/20/1353416100153/Library-Desk-in-Home-of-A-009.jpg",
+        "standfirst":"The Russian tradition of paying tribute to its cultural heroes by turning their homes into museums has seen dozens of small apartments, flats and houses turned into shrines to such luminaries as Pushkin and Dostoevsky",
+        "shortUrl":"http://gu.com/p/3bpqk",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/GWeekly/2012/11/20/1353416100153/Library-Desk-in-Home-of-A-009.jpg",
+        "commentable":"false",
+        "internalContentCode":"399511406",
+        "allowUgc":"false",
+        "isPremoderated":"false",
+        "publication":"Guardian Weekly",
+        "internalPageCode":"1829783",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2012-11-23T14:04:10Z"
+      },
+      "tags":[{
+        "id":"travel/stpetersburg",
+        "type":"keyword",
+        "webTitle":"St Petersburg",
+        "webUrl":"http://www.theguardian.com/travel/stpetersburg",
+        "apiUrl":"http://content.guardianapis.com/travel/stpetersburg",
+        "sectionId":"travel",
+        "sectionName":"Travel",
+        "references":[]
+      },{
+        "id":"culture/museums",
+        "type":"keyword",
+        "webTitle":"Museums",
+        "webUrl":"http://www.theguardian.com/culture/museums",
+        "apiUrl":"http://content.guardianapis.com/culture/museums",
+        "sectionId":"culture",
+        "sectionName":"Culture",
+        "references":[]
+      },{
+        "id":"travel/russia",
+        "type":"keyword",
+        "webTitle":"Russia",
+        "webUrl":"http://www.theguardian.com/travel/russia",
+        "apiUrl":"http://content.guardianapis.com/travel/russia",
+        "sectionId":"travel",
+        "sectionName":"Travel",
+        "references":[]
+      },{
+        "id":"type/gallery",
+        "type":"type",
+        "webTitle":"Gallery",
+        "webUrl":"http://www.theguardian.com/inpictures",
+        "apiUrl":"http://content.guardianapis.com/inpictures",
+        "references":[]
+      },{
+        "id":"publication/guardianweekly",
+        "type":"publication",
+        "webTitle":"Guardian Weekly",
+        "webUrl":"http://www.theguardian.com/weekly",
+        "apiUrl":"http://content.guardianapis.com/weekly",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-399701892",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/GWeekly/2012/11/20/1353416100153/Library-Desk-in-Home-of-A-009.jpg",
+          "typeData":{
+            "source":"  Massimo Listri/CORBIS",
+            "photographer":"Massimo Listri",
+            "altText":"Trail St Petersburg museums: Library Desk in Home of Aleksandr Pushkin",
+            "height":"84",
+            "credit":"Massimo Listri/  Massimo Listri/CORBIS",
+            "caption":"ca. 1980-1997, St. Petersburg, Russia --- Library Desk in Home of Aleksandr Pushkin --- Image by   Massimo Listri/CORBIS\rAleksandr Sergeyevich Pushkin\r",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-image-399699795",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":1,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/GWeekly/2012/11/20/1353414937226/Library-Desk-in-Home-of-A-005.jpg",
+          "typeData":{
+            "source":"  Massimo Listri/CORBIS",
+            "photographer":"Massimo Listri",
+            "altText":"St Petersburg museums: Library Desk in Home of Aleksandr Pushkin",
+            "height":"480",
+            "credit":"Massimo Listri/Corbis",
+            "caption":"The Pushkin Museum was established in the mid-1920s, in the 11-room flat near the city's elegant Nevsky Prospekt in which Pushkin and his family once lived. Above, the library.",
+            "width":"612"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/GWeekly/2012/11/20/1353414937226/Library-Desk-in-Home-of-A-005-thumb-8426.jpg",
+          "typeData":{
+            "source":"  Massimo Listri/CORBIS",
+            "photographer":"Massimo Listri",
+            "altText":"St Petersburg museums: Library Desk in Home of Aleksandr Pushkin",
+            "height":"68",
+            "credit":"Massimo Listri/Corbis",
+            "caption":"ca. 1980-1997, St. Petersburg, Russia --- Library Desk in Home of Aleksandr Pushkin --- Image by   Massimo Listri/CORBIS\r",
+            "width":"68"
+          }
+        }]
+      },{
+        "id":"gu-image-399699786",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":2,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/GWeekly/2012/11/20/1353414555158/Bed-room-corner-in-Alexan-001.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"RIA Novosti / Alamy",
+            "altText":"St Petersburg museums: Bed room corner in Alexander Pushkin house museum on Moika Street",
+            "height":"480",
+            "credit":"RIA Novosti/Alamy",
+            "caption":"A corner of the bedroom in the Pushkin apartment.",
+            "width":"676"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/GWeekly/2012/11/20/1353414555158/Bed-room-corner-in-Alexan-001-thumb-7209.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"RIA Novosti / Alamy",
+            "altText":"St Petersburg museums: Bed room corner in Alexander Pushkin house museum on Moika Street",
+            "height":"68",
+            "credit":"RIA Novosti/Alamy",
+            "caption":"B9ACXP Bed room corner in Alexander Pushkin house museum on Moika Street\rHouse\rPushkin\rMuseum\rBed\rRoom",
+            "width":"68"
+          }
+        }]
+      },{
+        "id":"gu-image-399510156",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":3,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/GWeekly/2012/11/16/1353063992249/Ornamental-Clock-in-Pushk-003.jpg",
+          "typeData":{
+            "source":"  Massimo Listri/CORBIS",
+            "photographer":"Massimo Listri",
+            "altText":"St Petersburg Museum: Ornamental Clock in Pushkin's House",
+            "height":"463",
+            "credit":"Massimo Listri/Corbis",
+            "caption":"A clock in the Pushkin apartment – the shrine to the poet is one of nearly 300 Pushkin memorials in Russia.",
+            "width":"400"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/GWeekly/2012/11/16/1353063992249/Ornamental-Clock-in-Pushk-003-thumb-3170.jpg",
+          "typeData":{
+            "source":"  Massimo Listri/CORBIS",
+            "photographer":"Massimo Listri",
+            "altText":"St Petersburg Museum: Ornamental Clock in Pushkin's House",
+            "height":"68",
+            "credit":"Massimo Listri/Corbis",
+            "caption":"ca. 1980-1997, St. Petersburg, Russia --- A clock found in the house of Russia's first great poet and novelist, Aleksandr Pushkin. --- ",
+            "width":"68"
+          }
+        }]
+      },{
+        "id":"gu-image-399699799",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":4,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/GWeekly/2012/11/20/1353414558845/Pushkin-sofa-002.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"RIA Novosti / Alamy",
+            "altText":"St Petersburg museums: Pushkin sofa",
+            "height":"480",
+            "credit":"RIA Novosti/Alamy",
+            "caption":"Pushkin died at 37 in a duel, and supposedly taking his last breath on the sofa pictured here. In the last few years blood marks on the sofa were tested, and, in 2010, Russian newspapers announced that they belonged to Pushkin.",
+            "width":"721"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/GWeekly/2012/11/20/1353414558845/Pushkin-sofa-002-thumb-4004.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"RIA Novosti / Alamy",
+            "altText":"St Petersburg museums: Pushkin sofa",
+            "height":"68",
+            "credit":"RIA Novosti/Alamy",
+            "caption":"B9AD7H Study at Alexander Pushkin apartment museum on Moika Street in St Petersburg Sofa on which the great Russian poet died\rbooks\rlibrary\rsecretaire",
+            "width":"68"
+          }
+        }]
+      },{
+        "id":"gu-image-399510167",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":5,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/GWeekly/2012/11/16/1353064042261/Room-in-Aleksandr-Pushkin-008.jpg",
+          "typeData":{
+            "source":"Corbis",
+            "photographer":"Massimo Listri",
+            "altText":"St Petersburg Museum: Room in Aleksandr Pushkin's House",
+            "height":"480",
+            "credit":"Massimo Listri/Corbis",
+            "caption":"The salon in Pushkin's apartment.",
+            "width":"609"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/GWeekly/2012/11/16/1353064042261/Room-in-Aleksandr-Pushkin-008-thumb-3543.jpg",
+          "typeData":{
+            "source":"Corbis",
+            "photographer":"Massimo Listri",
+            "altText":"St Petersburg Museum: Room in Aleksandr Pushkin's House",
+            "height":"68",
+            "credit":"Massimo Listri/Corbis",
+            "caption":"ca. 1980-1997, St. Petersburg, Russia --- Room in Aleksandr Pushkin's House --- Image by   Massimo Listri/CORBIS.Eastern Europe",
+            "width":"68"
+          }
+        }]
+      },{
+        "id":"gu-image-399699788",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":6,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/GWeekly/2012/11/20/1353414564144/Childrens-room-Dostoyevsk-004.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Peter Forsberg / Alamy",
+            "altText":"St Petersburg museums: Children's room Dostoyevsky house and museum St Petersburg Russia",
+            "height":"480",
+            "credit":"Peter Forsberg/Alamy",
+            "caption":"Across the Neva river is the Dostoevsky apartment, which contains a theatre and exhibition space devoted to the author's life and literary accomplishments. Above, the children's room.",
+            "width":"723"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/GWeekly/2012/11/20/1353414564144/Childrens-room-Dostoyevsk-004-thumb-2301.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Peter Forsberg / Alamy",
+            "altText":"St Petersburg museums: Children's room Dostoyevsky house and museum St Petersburg Russia",
+            "height":"68",
+            "credit":"Peter Forsberg/Alamy",
+            "caption":"BRNX9J Children's room Dostoyevsky house and museum St Petersburg Russia",
+            "width":"68"
+          }
+        }]
+      },{
+        "id":"gu-image-399699821",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":7,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/GWeekly/2012/11/20/1353414561536/Russia-Saint-Petersburg-C-003.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Hemis  / Alamy",
+            "altText":"St Petersburg museums: Russia, Saint Petersburg, Chaliapin Museum",
+            "height":"480",
+            "credit":"Hemis/Alamy",
+            "caption":"A tour of another famous apartment museum, that dedicated to Feodor Chaliapin, ends in a large music room, where recordings of the singer play as poignant reminders.",
+            "width":"717"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/GWeekly/2012/11/20/1353414561536/Russia-Saint-Petersburg-C-003-thumb-6770.jpg",
+          "typeData":{
+            "source":"Alamy",
+            "photographer":"Hemis  / Alamy",
+            "altText":"St Petersburg museums: Russia, Saint Petersburg, Chaliapin Museum",
+            "height":"68",
+            "credit":"Hemis/Alamy",
+            "caption":"C1EFC9 Russia, Saint Petersburg, Chaliapin Museum\r",
+            "width":"68"
+          }
+        }]
+      },{
+        "id":"gu-image-399699792",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":8,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/GWeekly/2012/11/20/1353414940266/Fyodor-Chaliapin-in-Rimsk-006.jpg",
+          "typeData":{
+            "source":"  Gianni Dagli Orti/CORBIS",
+            "photographer":"Gianni Dagli Orti",
+            "altText":"St Petersburg museums: Fyodor Chaliapin in Rimsky-Korsakov's \"Boris Godunov\"",
+            "height":"508",
+            "credit":"Gianni Dagli Orti/Corbis",
+            "caption":"Chaliapin in 1913 in his signature role of Boris Godunov, from the Mussorgsky opera. He created his interpretation of the role while studying with composer Rachmaninov.\r\n",
+            "width":"400"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/GWeekly/2012/11/20/1353414940266/Fyodor-Chaliapin-in-Rimsk-006-thumb-4736.jpg",
+          "typeData":{
+            "source":"  Gianni Dagli Orti/CORBIS",
+            "photographer":"Gianni Dagli Orti",
+            "altText":"St Petersburg museums: Fyodor Chaliapin in Rimsky-Korsakov's \"Boris Godunov\"",
+            "height":"68",
+            "credit":"Gianni Dagli Orti/Corbis",
+            "caption":"1913 --- Fyodor Chaliapin, a Russian bass singer, in the role of Boris Godunov. --- Image by   Gianni Dagli Orti/CORBIS\r",
+            "width":"68"
+          }
+        }]
+      },{
+        "id":"gu-image-399699843",
+        "relation":"gallery",
+        "type":"image",
+        "galleryIndex":9,
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/GWeekly/2012/11/20/1353414942878/Statue-of-Alexander-Pushk-007.jpg",
+          "typeData":{
+            "source":"  Steve Raymer/CORBIS",
+            "photographer":"Steve Raymer",
+            "altText":"St Petersburg museums: Statue of Alexander Pushkin",
+            "height":"480",
+            "credit":"Steve Raymer/Corbis",
+            "caption":"Statue of Pushkin on a bench in Alexander Park, in St Petersburg. For details on visiting the Pushkin Museum, see <a href=\"http://www.museumpushkin.ru/eng/apartment-museum-pushkin.html\">museumpushkin.ru/eng</a>.\r\n",
+            "width":"714"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/GWeekly/2012/11/20/1353414942878/Statue-of-Alexander-Pushk-007-thumb-5857.jpg",
+          "typeData":{
+            "source":"  Steve Raymer/CORBIS",
+            "photographer":"Steve Raymer",
+            "altText":"St Petersburg museums: Statue of Alexander Pushkin",
+            "height":"68",
+            "credit":"Steve Raymer/Corbis",
+            "caption":"Statue of the poet Alexander Pushkin on a bench in Alexander Park, Pushkin, Russia. --- Image by   Steve Raymer/CORBIS\r",
+            "width":"68"
+          }
+        }]
+      }],
+      "references":[],
+      "isExpired":"false"
+    }]
+  }
+}
