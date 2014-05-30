@@ -36,7 +36,7 @@
     }
     .content-meta {
         @include rem((
-            padding-top: $gs-baseline/4
+            padding-top: $gs-baseline/3
         ));
     }
     .content__section,
@@ -155,7 +155,7 @@
     }
 }
 
-.tone-comment {
+.content.tone-comment {
     .content__head--tonal {
         .content__section .tone-colour {
             @include mq($to: leftCol) {
@@ -182,5 +182,8 @@
             text-decoration: none;
             border-bottom: 2px solid;
         }
+    }
+    .drop-cap {
+        color: #333333;
     }
 }
