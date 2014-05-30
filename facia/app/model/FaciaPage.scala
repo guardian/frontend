@@ -10,20 +10,15 @@ case class FaciaPage(
                       seoData: SeoData,
                       collections: List[(Config, Collection)]) extends MetaData {
 
-  lazy val frontPage: FrontPage = FrontPage(this)
-
-  private val isNewSeoOn: Boolean = Switches.NewSeoSwitch.isSwitchedOn
-  def oldOrNewSeo[T](oldValue: => T, newValue: => T): T = if (isNewSeoOn) newValue else oldValue
-
-  override lazy val description: Option[String] = oldOrNewSeo(frontPage.description, seoData.description)
-  override lazy val section: String = oldOrNewSeo(frontPage.section, seoData.section)
-  override lazy val analyticsName: String = oldOrNewSeo(frontPage.analyticsName, s"GFE:${seoData.webTitle.capitalize}")
-  override lazy val webTitle: String = oldOrNewSeo(frontPage.webTitle, seoData.webTitle)
+  override lazy val description: Option[String] = seoData.description
+  override lazy val section: String = seoData.section
+  override lazy val analyticsName: String = s"GFE:${seoData.webTitle.capitalize}"
+  override lazy val webTitle: String = seoData.webTitle
   override lazy val title: Option[String] = seoData.title
 
-  override lazy val metaData: Map[String, Any] = super.metaData ++ faciaPageMetaData + ("newSeo" -> isNewSeoOn.toString)
+  override lazy val metaData: Map[String, Any] = super.metaData ++ faciaPageMetaData
 
-  lazy val faciaPageMetaData: Map[String, Any] = oldOrNewSeo(frontPage.metaData, newMetaData)
+  lazy val faciaPageMetaData: Map[String, Any] = newMetaData
   lazy val newMetaData: Map[String, Any] = Map(
     "keywords" -> webTitle.capitalize,
     "content-type" -> contentType,
