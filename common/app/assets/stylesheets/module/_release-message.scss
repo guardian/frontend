@@ -1,6 +1,7 @@
 .site-message {
     background: darken($c-neutral8, 3%);
     display: block;
+    border-bottom: 1px solid $c-neutral5;
 }
 
 .site-message--modal {
