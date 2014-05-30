@@ -35,6 +35,9 @@ $disc-respond-when: rightCol;
         display: block;
     }
 }
+.disc-comment__permalink {
+    color: $c-neutral2;
+}
 .disc-comment__recommend {
     display: inline-block;
     cursor: default;
