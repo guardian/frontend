@@ -8,16 +8,16 @@ define([
     return function () {
         this.id = 'AcrossTheGuardian';
         // not starting the test just yet, in now so we can style the component correctly for this spot
-        this.start = '2014-05-29';
+        this.start = '2014-05-30';
         this.expiry = '2014-06-25';
         this.author = 'Raul Tudor';
-        this.description = 'tbc';
-        this.audience = 1;
+        this.description = 'Testing a new container that gives our users an overview of latest content across all main site sections';
+        this.audience = 0.5;
         this.audienceOffset = 0;
-        this.successMeasure = 'tbc';
-        this.audienceCriteria = 'tbc';
-        this.dataLinkNames = 'tbc';
-        this.idealOutcome = 'tbc';
+        this.successMeasure = 'Click Through Rate on Network Front. Clicks on this container and affect on others.';
+        this.audienceCriteria = 'Network Front visitors';
+        this.dataLinkNames = 'across-the-guardian';
+        this.idealOutcome = 'At least 1% increase in overall page level click through rate';
 
         var appConfig;
         this.canRun = function (config) {
@@ -26,7 +26,7 @@ define([
         };
 
         var templates = {
-            'container':'<section class="container container--row-pattern container--acrossthegrauniad container--acrossthegrauniad-variant-{{variant}}">' +
+            'container':'<section class="container container--row-pattern container--acrossthegrauniad container--acrossthegrauniad-variant-{{variant}}" data-link-name="block | across-the-guardian" data-component="across-the-guardian">' +
                 '    <div class="facia-container__inner">' +
                 '        <div class="container__border tone-news tone-accent-border"></div>' +
                 '        <h2 class="container__title tone-news tone-background">' +
@@ -41,12 +41,12 @@ define([
                 '</div>',
             '3colRow':'<li class="l-row__item across">' +
                 '   <div class="across__item">' +
-                '       <h3 class="across__title"><a href="#void" class="across__title__action">{{section_name}}</a></h3>' +
+                '       <h3 class="across__title"><a href="{{section_href}}" class="across__title__action" data-link-name="{{section_name}} | section">{{section_name}}</a></h3>' +
                 '       <ul class="linkslist">{{stories}}' +
                 '   </div>' +
                 '</li>',
             '3colItem':'<li class="linkslist__item">' +
-                '   <a href="{{story_href}}" class="linkslist__action across__action">' +
+                '   <a href="{{story_href}}" class="linkslist__action across__action" data-link-name="{{section_name}} | story | {{story_idx}}">' +
                 '       <div class="linkslist__media-wrapper">' +
                 '           <div class="linkslist__image-container u-responsive-ratio js-image-upgrade" data-src="{{story_thumb}}"></div>' +
                 '       </div>' +
@@ -54,8 +54,8 @@ define([
                 '   </a>' +
                 '</li>',
             '2colItems':'<li class="across--columns__item">' +
-                '    <a href="{{section_href}}" class="across__title">{{section_name}}</a>:' +
-                '    <a href="{{story_href}}" class="across__action">{{story_title}}</a>' +
+                '    <a href="{{section_href}}" class="across__title" data-link-name="{{section_name}} | section">{{section_name}}</a>:' +
+                '    <a href="{{story_href}}" class="across__action" data-link-name="{{section_name}} | story">{{story_title}}</a>' +
                 '</li>'
         };
 
@@ -74,6 +74,15 @@ define([
                 });
         }
 
+        function findStoryIndex(collection, story) {
+            var storyIdx = -1;
+            for (var i = 0; i < collection.content.length; i++) {
+                var s = collection.content[i];
+                if (s.id == story.id) storyIdx = i;
+            }
+            return storyIdx
+        }
+
         function renderStory(collection, story, tplName) {
             if (!collection || !story) {
                 return '';
@@ -84,6 +93,7 @@ define([
                 section_name:(collection.displayName || ''),
                 story_thumb:(story.thumbnail || ''),
                 story_href:'/' + (story.id || ''),
+                story_idx:findStoryIndex(collection, story),
                 story_title:(story.headline || '')
             });
         }
@@ -109,6 +119,7 @@ define([
 
                         return template(templates['3colRow'], {
                             stories:tplStories,
+                            section_href:'/' + (collection.href || ''),
                             section_name:(collection.displayName || '')
                         });
                     });
