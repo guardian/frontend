@@ -14,7 +14,7 @@ object MasterClassAgent extends Logging with ExecutionContexts {
   private val placeholder = {
     val masterClass1 = MasterClass(EventbriteMasterClass("1", "MasterClass A", new DateTime(),
       "http://www.theguardian.com", "Description of MasterClass A", "Live", Venue(), Ticket(1.0) :: Nil, 1,
-      "http://www.theguardian.com"), None)
+      "http://www.theguardian.com", tags = Nil), None)
     val masterClass2 = MasterClass(masterClass1.eventBriteEvent.copy(name = "MasterClass B", description = "MasterClass with multiple tickets", tickets = List(Ticket(1.0), Ticket(5.0))), None)
     val masterClass3 = MasterClass(masterClass1.eventBriteEvent.copy(name = "Guardian MasterClass C", description = "Description of MasterClass C"), None)
     Seq(masterClass1, masterClass2, masterClass3)
