@@ -21,6 +21,14 @@ New developers quick-start
 ===========================
 Frontend is a set of Play Framework 2 Scala applications.
 
+
+Coding conventions
+------------------
+Install the EditorConfig plugin in your IDE/text editor: http://editorconfig.org/#download
+
+It will read the contents of the [.editorconfig](https://github.com/guardian/frontend/blob/editorconfig/.editorconfig) file and set up your editor with the correct encoding and indentation settings for the project.
+
+
 Configuration
 -------------
 You need 2 files on your machine.
@@ -189,8 +197,3 @@ Further documentation notes and useful items can be found in `docs`.
 [sbteclipse]: https://github.com/typesafehub/sbteclipse
 [sbt-idea]: https://github.com/mpeltonen/sbt-idea
 [magenta]: https://github.com/guardian/deploy
-
-
-
-
-
