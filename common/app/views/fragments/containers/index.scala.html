@@ -7,15 +7,17 @@
     @defining(templateDeduping(15, collection.items)) { items =>
         @if(items.nonEmpty) {
             <section
-                    class="@RenderClasses(Map(
-                                "container" -> true,
-                                "container--row-pattern" -> true,
-                                s"container--${style.containerType}" -> true,
-                                "js-container--toggle" -> (containerIndex > 0 && title.nonEmpty),
-                                "container--first" -> (containerIndex == 0)))"
-                                data-link-name="all index"
-                                data-type="@style.containerType"
-                                data-component="all index">
+                class="@RenderClasses(Map(
+                    "container" -> true,
+                    "container--row-pattern" -> true,
+                    s"container--${style.containerType}" -> true,
+                    "js-container--toggle" -> (containerIndex > 0 && title.nonEmpty),
+                    ("container--sponsored", config.isSponsored),
+                    ("container--advertisement-feature", (config.isAdvertisementFeature && !config.isSponsored)),
+                    "container--first" -> (containerIndex == 0)))"
+                data-link-name="all index"
+                data-type="@style.containerType"
+                data-component="all index">
                 <div class="facia-container__inner">
                     <div class="tone-@style.tone tone-accent-border"></div>
                     <div class="container__header">

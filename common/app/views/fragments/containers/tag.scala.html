@@ -7,6 +7,8 @@
             ("container--row-pattern", true),
             ("container--news", true),
             ("container--tag", true),
+            ("container--sponsored", config.isSponsored),
+            ("container--advertisement-feature", (config.isAdvertisementFeature && !config.isSponsored)),
             ("container--first", (containerIndex == 0))))"
         data-link-name="block | @config.id"
         data-id="@config.id"
@@ -25,7 +27,6 @@
                     </h2>
                 }
             </div>
-            @fragments.containers.elements.badge(page)
             <div class="container__body">
                 @fragments.contributor(page)
                 @fragments.collections.tag(collection.items, style, containerIndex)

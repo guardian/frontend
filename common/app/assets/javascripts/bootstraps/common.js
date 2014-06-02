@@ -56,7 +56,8 @@ define([
     'common/modules/identity/api',
     'common/modules/onward/more-tags',
     'common/modules/ui/smartAppBanner',
-    'common/modules/adverts/page-skin'
+    'common/modules/adverts/page-skin',
+    'common/modules/adverts/badges'
 ], function (
     $,
     mediator,
@@ -113,7 +114,8 @@ define([
     id,
     MoreTags,
     smartAppBanner,
-    pageSkin
+    pageSkin,
+    badges
 ) {
 
     var modules = {
@@ -292,6 +294,8 @@ define([
                 new SliceAdverts(config).init();
 
                 frontCommercialComponents.init(config);
+
+                badges.init();
 
                 var options = {};
 

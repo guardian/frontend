@@ -7,6 +7,8 @@
             class="@RenderClasses(Map(
                 "container" -> true,
                 s"container--${style.containerType}" -> true,
+                ("container--sponsored", config.isSponsored),
+                ("container--advertisement-feature", (config.isAdvertisementFeature && !config.isSponsored)),
                 "container--first" -> (containerIndex == 0)))"
             data-link-name="block | @config.id"
             data-id="@config.id"

@@ -3,6 +3,7 @@
 <div class="@RenderClasses(Map(
         "facia-container" -> true,
         "facia-container--layout-front" -> true,
+        "facia-container--sponsored" -> index.page.isSponsored,
         "facia-container--advertisement-feature" -> (index.page.isAdvertisementFeature && !index.page.isSponsored)))"
     data-link-name="Front"
     role="main">

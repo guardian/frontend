@@ -105,6 +105,20 @@ define([
                 sizeMappings: {
                     desktop: '888,88'
                 }
+            },
+            spbadge: {
+                label: false,
+                refresh: false,
+                sizeMappings: {
+                    mobile: '140,90'
+                }
+            },
+            adbadge: {
+                label: false,
+                refresh: false,
+                sizeMappings: {
+                    mobile: '140,90'
+                }
             }
         };
 

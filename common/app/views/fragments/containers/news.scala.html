@@ -14,6 +14,8 @@
                         s"container--${style.containerType}" -> true,
                         s"container--tag" -> !isEdition,
                         "js-container--toggle" -> (containerIndex > 0 && title.nonEmpty),
+                        ("container--sponsored", config.isSponsored),
+                        ("container--advertisement-feature", (config.isAdvertisementFeature && !config.isSponsored)),
                         "container--first" -> (containerIndex == 0)))"
                     data-link-name="block | @config.id"
                     data-id="@config.id"
@@ -26,7 +28,6 @@
                                 @fragments.containers.elements.dateOrTitle(collection, items)
                             </h2>
                         </div>
-                        @fragments.containers.elements.badge(page)
                         <div class="container__body">
                             @fragments.collections.news(items, style, containerIndex)
                         </div>

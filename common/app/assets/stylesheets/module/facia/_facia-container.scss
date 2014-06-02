@@ -115,6 +115,9 @@
             .container--news .container__title {
                 display: none;
             }
+            .container--tag .container__title {
+                display: block;
+            }
             .container__toggle {
                 left: auto;
             }

@@ -9,6 +9,8 @@
                     "container" -> true,
                     "container--row-pattern" -> true,
                     s"container--${style.containerType}" -> true,
+                    ("container--sponsored", config.isSponsored),
+                    ("container--advertisement-feature", (config.isAdvertisementFeature && !config.isSponsored)),
                     "js-container--toggle" -> (containerIndex > 0 && title.nonEmpty)))"
                 data-link-name="block | @config.id"
                 data-id="@config.id"
