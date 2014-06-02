@@ -11,7 +11,7 @@ import conf.Configuration
 
 
 trait FrontJsonLite extends ExecutionContexts{
-  def get(json: JsValue): JsValue = {
+  def get(json: JsValue): JsObject = {
     Json.obj(
       "webTitle" -> (json \ "seoData" \ "webTitle"),
       "collections" -> getCollections(json)
