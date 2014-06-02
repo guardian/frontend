@@ -1,4 +1,4 @@
-@(collection: Collection, style: FeaturesContainer, containerIndex: Int)(implicit request: RequestHeader, templateDeduping: TemplateDeduping, config: Config)
+@(page: MetaData, collection: Collection, style: FeaturesContainer, containerIndex: Int)(implicit request: RequestHeader, templateDeduping: TemplateDeduping, config: Config)
 
 @defining((config.displayName.orElse(collection.displayName), config.href.orElse(collection.href))) { case (title, href) =>
 
@@ -30,6 +30,7 @@
                             </h2>
                         }
                     </div>
+                    @fragments.containers.elements.badge(page, config, containerIndex)
                     <div class="container__body container--rolled-up-hide">
                         @fragments.collections.features(items, style, containerIndex)
                     </div>

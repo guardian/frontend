@@ -1,9 +1,9 @@
-@(page: MetaData)
+@(page: MetaData, config: Config, containerIndex: Int)
 
-@if(page.isSponsored) {
+@if((containerIndex == 0 && page.isSponsored) || config.isSponsored) {
     @fragments.commercial.badge(name="spbadge", adType="paid-for-badge", sizeMapping=Map("mobile" -> Seq("140,90")))
 } else {
-    @if(page.isAdvertisementFeature) {
+    @if((containerIndex == 0 && page.isAdvertisementFeature) || config.isAdvertisementFeature) {
         @fragments.commercial.badge(name="adbadge", adType="paid-for-badge", sizeMapping=Map("mobile" -> Seq("140,90")))
     }
 }
