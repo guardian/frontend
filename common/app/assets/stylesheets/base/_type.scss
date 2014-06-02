@@ -7,6 +7,8 @@
 
 html {
     font-family: $serif;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
 
     // Set baseline font size to 10px
     // This is used as a baseline for rem (root ems) values
@@ -17,9 +19,9 @@ html {
     font-size: calc(1em * .625);
 }
 body {
-    color: $c-body;
+    color: $c-neutral1;
     font-size: 1.6em; // Bump font-size back up to 16px
-    line-height: 1.4;
+    line-height: 1.5;
 }
 
 
@@ -32,7 +34,6 @@ h3,
 h4,
 h5,
 h6 {
-    color: $c-neutral1;
     margin: 0;
 }
 

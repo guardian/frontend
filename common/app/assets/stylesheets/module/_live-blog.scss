@@ -237,9 +237,6 @@ $block-padding-right: $gs-gutter;
 
 .block.is-key-event {
     border-top: 2px solid $c-neutral1;
-    .block-title {
-        color: $c-neutral1;
-    }
 }
 
 .truncated-block {
@@ -716,8 +713,11 @@ $timeline-width: 14px;
         padding: $gs-baseline/6 0 $gs-baseline/2
     ));
 
+    &,
     &:hover,
+    &:visited,
     &:active {
+        color: $c-neutral1;
         text-decoration: none;
     }
 
@@ -768,7 +768,6 @@ $timeline-width: 14px;
     @include rem((
         width: gs-span(1)
     ));
-    color: $c-neutral1;
     @include fs-data(4);
     font-weight: bold;
 
@@ -790,7 +789,6 @@ $timeline-width: 14px;
 .timeline__title {
     display: table-cell;
     @include fs-textsans(3);
-    color: $c-neutral1;
     border-color: $c-neutral8;
 
     .timeline__link:hover & {

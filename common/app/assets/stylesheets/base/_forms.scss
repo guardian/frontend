@@ -175,12 +175,9 @@
 }
 
 .label {
-    color: $c-neutral1;
     cursor: pointer;
     display: block;
     @include rem((
-        font-size: 16px,
-        line-height: 24px,
         margin-bottom: 6px
     ));
 }
@@ -190,7 +187,7 @@
     border: 1px solid $c-neutral4;
     @include box-shadow(none);
     @include box-sizing(border-box);
-    color: $c-body;
+    color: $c-neutral1;
     display: inline-block;
     font-family: $text-sans;
     @include rem((

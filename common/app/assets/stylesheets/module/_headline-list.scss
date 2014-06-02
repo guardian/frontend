@@ -119,7 +119,6 @@
             padding-bottom: ($gs-baseline/3)*7
         ));
         border-top-color: $c-neutral4;
-        color: $c-neutral1;
         @include fs-headline(1);
 
         @include mq(rightCol) {
@@ -193,7 +192,6 @@
 
     .headline-list__body {
         padding-left: 0;
-        color: $c-neutral1;
         @include fs-headline(1);
     }
 
