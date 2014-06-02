@@ -102,7 +102,7 @@ function processFile() {
                 var width = svgelem.getAttribute( "width" );
                 var height = svgelem.getAttribute( "height" );
 
-                svgdatauri += svgdata;
+                svgdatauri += encodeURIComponent(svgdata);
 
                 //If we want to generate base64 svg css
                 if(generatesvg) {
