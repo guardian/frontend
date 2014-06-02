@@ -11,41 +11,37 @@ object MasterClasses extends Controller {
 
   def renderMasterclass = Action {
     implicit request =>
-      MasterClassAgent.getUpcoming match {
+      MasterClassAgent.adsTargetedAt(segment) match {
         case Nil => NotFound
-        case upcoming => {
+        case upcoming =>
           Cached(60)(Ok(views.html.masterclasses(upcoming take 4)))
-        }
       }
   }
 
   def list = Action {
     implicit request =>
-      MasterClassAgent.getUpcoming match {
+      MasterClassAgent.adsTargetedAt(segment) match {
         case Nil => JsonNotFound.apply()
-        case upcoming => {
+        case upcoming =>
           Cached(60)(JsonComponent(views.html.masterclasses(upcoming take 4)))
-        }
       }
   }
 
   def renderMasterclassHigh = Action {
     implicit request =>
-      MasterClassAgent.getUpcoming match {
+      MasterClassAgent.adsTargetedAt(segment) match {
         case Nil => NotFound
-        case upcoming => {
+        case upcoming =>
           Cached(60)(Ok(views.html.masterclassesHigh(upcoming take 4)))
-        }
       }
   }
 
   def listHigh = Action {
     implicit request =>
-      MasterClassAgent.getUpcoming match {
+      MasterClassAgent.adsTargetedAt(segment) match {
         case Nil => JsonNotFound.apply()
-        case upcoming => {
+        case upcoming =>
           Cached(60)(JsonComponent(views.html.masterclassesHigh(upcoming take 4)))
-        }
       }
   }
 

@@ -9,9 +9,16 @@ import org.jsoup.Jsoup
 import org.jsoup.nodes.{Element, Document}
 import play.api.libs.json.JsValue
 
+case class MasterClass(eventBriteEvent: EventbriteMasterClass, imageElement: Option[model.ImageElement]) extends Ad {
+
+  def isTargetedAt(segment: Segment) = eventBriteEvent.isTargetedAt(segment)
+}
+
 object EventbriteMasterClass {
   private val datePattern: DateTimeFormatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss")
   private val guardianUrlLinkText = "Full course and returns information on the Masterclasses website"
+
+  private val ignoredTags = Seq("masterclass", "short")
 
   def apply(block: JsValue): Option[EventbriteMasterClass] = {
     val id = (block \ "id").as[Long]
@@ -26,8 +33,8 @@ object EventbriteMasterClass {
     val tags = {
       for {
         rawTag <- (block \ "tags").as[String].split(",")
-        tag = rawTag.toLowerCase.trim()
-        if tag.nonEmpty && !tag.contains("masterclass")
+        tag = rawTag.toLowerCase.replace("course", "").replace("courses", "").trim()
+        if tag.nonEmpty && !ignoredTags.exists(tag.contains)
       } yield tag
     }.toSeq
 
