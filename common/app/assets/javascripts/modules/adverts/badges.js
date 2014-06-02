@@ -16,7 +16,6 @@ define([
             if ((isSponsored && hadSponsoredBadge) || (!isSponsored && hadAdvertisementFeatureBadge)) {
                 return;
             }
-            console.log($('.container__header', container));
             $('.container__header', container)
                 .after(dfp.createAdSlot((isSponsored ? 'sp' : 'ad') + 'badge', 'paid-for-badge'));
             if (isSponsored) {
