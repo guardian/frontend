@@ -1,0 +1,386 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":56700,
+    "startIndex":1,
+    "pageSize":1,
+    "currentPage":1,
+    "pages":56700,
+    "orderBy":"newest",
+    "edition":{
+      "id":"books",
+      "webTitle":"Books",
+      "webUrl":"http://www.theguardian.com/books",
+      "apiUrl":"http://content.guardianapis.com/books",
+      "code":"default"
+    },
+    "section":{
+      "id":"books",
+      "webTitle":"Books",
+      "webUrl":"http://www.theguardian.com/books",
+      "apiUrl":"http://content.guardianapis.com/books",
+      "editions":[{
+        "id":"books",
+        "webTitle":"Books",
+        "webUrl":"http://www.theguardian.com/books",
+        "apiUrl":"http://content.guardianapis.com/books",
+        "code":"default"
+      }]
+    },
+    "results":[{
+      "id":"books/2014/may/14/john-hartley-williams",
+      "sectionId":"books",
+      "sectionName":"Books",
+      "webPublicationDate":"2014-05-14T16:40:50Z",
+      "webTitle":"John Hartley Williams",
+      "webUrl":"http://www.theguardian.com/books/2014/may/14/john-hartley-williams",
+      "apiUrl":"http://content.guardianapis.com/books/2014/may/14/john-hartley-williams",
+      "fields":{
+        "trailText":"Prolific poet whose work combined technical panache with extraordinary linguistic range",
+        "headline":"John Hartley Williams",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3p8ja",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/About/General/2014/5/14/1400082662308/John-Hartley-Williams-poe-006.jpg",
+        "wordcount":"817",
+        "commentable":"true",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2014-05-20T14:01:00Z"
+      },
+      "tags":[{
+        "id":"books/poetry",
+        "type":"keyword",
+        "webTitle":"Poetry",
+        "webUrl":"http://www.theguardian.com/books/poetry",
+        "apiUrl":"http://content.guardianapis.com/books/poetry",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"books/books",
+        "type":"keyword",
+        "webTitle":"Books",
+        "webUrl":"http://www.theguardian.com/books/books",
+        "apiUrl":"http://content.guardianapis.com/books/books",
+        "sectionId":"books",
+        "sectionName":"Books",
+        "references":[]
+      },{
+        "id":"world/germany",
+        "type":"keyword",
+        "webTitle":"Germany",
+        "webUrl":"http://www.theguardian.com/world/germany",
+        "apiUrl":"http://content.guardianapis.com/world/germany",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"music/jazz",
+        "type":"keyword",
+        "webTitle":"Jazz",
+        "webUrl":"http://www.theguardian.com/music/jazz",
+        "apiUrl":"http://content.guardianapis.com/music/jazz",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"profile/john-lucas",
+        "type":"contributor",
+        "webTitle":"John Lucas",
+        "webUrl":"http://www.theguardian.com/profile/john-lucas",
+        "apiUrl":"http://content.guardianapis.com/profile/john-lucas",
+        "bio":"<p>John Lucas is a writer and critic based in London. See <a href=\"www.metafictions.wordpress.com\">www.metafictions.wordpress.com\"</a> or follow him on Twitter at <a href=\"http://www.twitter.com/johnlucas_esq\">twitter.com/johnlucas_esq</a></p>",
+        "r2ContributorId":"40138",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2010/9/16/1284635711353/johnlucas.jpg",
+        "references":[]
+      },{
+        "id":"tone/obituaries",
+        "type":"tone",
+        "webTitle":"Obituaries",
+        "webUrl":"http://www.theguardian.com/tone/obituaries",
+        "apiUrl":"http://content.guardianapis.com/tone/obituaries",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-436901188",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2014/5/14/1400082652242/John-Hartley-Williams-poe-001.jpg",
+          "typeData":{
+            "source":"Shoestring Press",
+            "photographer":"Jemimah Kuhfeld",
+            "altText":"John Hartley Williams, poet, who has died aged 72",
+            "height":"54",
+            "credit":"Jemimah Kuhfeld/Shoestring Press",
+            "caption":"John Hartley Williams co-wrote the spoof crime novel Death Comes for the Poets, with Matthew Sweeney. Photograph: Jemimah Kuhfeld/Shoestring Press",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2014/5/14/1400082654911/John-Hartley-Williams-poe-002.jpg",
+          "typeData":{
+            "source":"Shoestring Press",
+            "photographer":"Jemimah Kuhfeld",
+            "altText":"John Hartley Williams, poet, who has died aged 72",
+            "height":"340",
+            "credit":"Jemimah Kuhfeld/Shoestring Press",
+            "caption":"John Hartley Williams co-wrote the spoof crime novel Death Comes for the Poets, with Matthew Sweeney. Photograph: Jemimah Kuhfeld/Shoestring Press",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2014/5/14/1400082656542/John-Hartley-Williams-poe-003.jpg",
+          "typeData":{
+            "source":"Shoestring Press",
+            "photographer":"Jemimah Kuhfeld",
+            "altText":"John Hartley Williams, poet, who has died aged 72",
+            "height":"130",
+            "credit":"Jemimah Kuhfeld/Shoestring Press",
+            "caption":"John Hartley Williams co-wrote the spoof crime novel Death Comes for the Poets, with Matthew Sweeney. Photograph: Jemimah Kuhfeld/Shoestring Press",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2014/5/14/1400082658216/John-Hartley-Williams-poe-004.jpg",
+          "typeData":{
+            "source":"Shoestring Press",
+            "photographer":"Jemimah Kuhfeld",
+            "altText":"John Hartley Williams, poet, who has died aged 72",
+            "height":"720",
+            "credit":"Jemimah Kuhfeld/Shoestring Press",
+            "caption":"John Hartley Williams co-wrote the spoof crime novel Death Comes for the Poets, with Matthew Sweeney. Photograph: Jemimah Kuhfeld/Shoestring Press",
+            "width":"1280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2014/5/14/1400082660138/John-Hartley-Williams-poe-005.jpg",
+          "typeData":{
+            "source":"Shoestring Press",
+            "photographer":"Jemimah Kuhfeld",
+            "altText":"John Hartley Williams, poet, who has died aged 72",
+            "height":"1536",
+            "credit":"Jemimah Kuhfeld/Shoestring Press",
+            "caption":"John Hartley Williams co-wrote the spoof crime novel Death Comes for the Poets, with Matthew Sweeney. Photograph: Jemimah Kuhfeld/Shoestring Press",
+            "width":"2048"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2014/5/14/1400082662308/John-Hartley-Williams-poe-006.jpg",
+          "typeData":{
+            "source":"Shoestring Press",
+            "photographer":"Jemimah Kuhfeld",
+            "altText":"John Hartley Williams, poet, who has died aged 72",
+            "height":"84",
+            "credit":"Jemimah Kuhfeld/Shoestring Press",
+            "caption":"John Hartley Williams co-wrote the spoof crime novel Death Comes for the Poets, with Matthew Sweeney. Photograph: Jemimah Kuhfeld/Shoestring Press",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2014/5/14/1400082663907/John-Hartley-Williams-poe-007.jpg",
+          "typeData":{
+            "source":"Shoestring Press",
+            "photographer":"Jemimah Kuhfeld",
+            "altText":"John Hartley Williams, poet, who has died aged 72",
+            "height":"132",
+            "credit":"Jemimah Kuhfeld/Shoestring Press",
+            "caption":"John Hartley Williams co-wrote the spoof crime novel Death Comes for the Poets, with Matthew Sweeney. Photograph: Jemimah Kuhfeld/Shoestring Press",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2014/5/14/1400082665573/John-Hartley-Williams-poe-008.jpg",
+          "typeData":{
+            "source":"Shoestring Press",
+            "photographer":"Jemimah Kuhfeld",
+            "altText":"John Hartley Williams, poet, who has died aged 72",
+            "height":"168",
+            "credit":"Jemimah Kuhfeld/Shoestring Press",
+            "caption":"John Hartley Williams co-wrote the spoof crime novel Death Comes for the Poets, with Matthew Sweeney. Photograph: Jemimah Kuhfeld/Shoestring Press",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2014/5/14/1400082667210/John-Hartley-Williams-poe-009.jpg",
+          "typeData":{
+            "source":"Shoestring Press",
+            "photographer":"Jemimah Kuhfeld",
+            "altText":"John Hartley Williams, poet, who has died aged 72",
+            "height":"180",
+            "credit":"Jemimah Kuhfeld/Shoestring Press",
+            "caption":"John Hartley Williams co-wrote the spoof crime novel Death Comes for the Poets, with Matthew Sweeney. Photograph: Jemimah Kuhfeld/Shoestring Press",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2014/5/14/1400082668836/John-Hartley-Williams-poe-010.jpg",
+          "typeData":{
+            "source":"Shoestring Press",
+            "photographer":"Jemimah Kuhfeld",
+            "altText":"John Hartley Williams, poet, who has died aged 72",
+            "height":"228",
+            "credit":"Jemimah Kuhfeld/Shoestring Press",
+            "caption":"John Hartley Williams co-wrote the spoof crime novel Death Comes for the Poets, with Matthew Sweeney. Photograph: Jemimah Kuhfeld/Shoestring Press",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2014/5/14/1400082670432/John-Hartley-Williams-poe-011.jpg",
+          "typeData":{
+            "source":"Shoestring Press",
+            "photographer":"Jemimah Kuhfeld",
+            "altText":"John Hartley Williams, poet, who has died aged 72",
+            "height":"276",
+            "credit":"Jemimah Kuhfeld/Shoestring Press",
+            "caption":"John Hartley Williams co-wrote the spoof crime novel Death Comes for the Poets, with Matthew Sweeney. Photograph: Jemimah Kuhfeld/Shoestring Press",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2014/5/14/1400082672043/John-Hartley-Williams-poe-012.jpg",
+          "typeData":{
+            "source":"Shoestring Press",
+            "photographer":"Jemimah Kuhfeld",
+            "altText":"John Hartley Williams, poet, who has died aged 72",
+            "height":"372",
+            "credit":"Jemimah Kuhfeld/Shoestring Press",
+            "caption":"John Hartley Williams co-wrote the spoof crime novel Death Comes for the Poets, with Matthew Sweeney. Photograph: Jemimah Kuhfeld/Shoestring Press",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2014/5/14/1400082673886/John-Hartley-Williams-poe-013.jpg",
+          "typeData":{
+            "source":"Shoestring Press",
+            "photographer":"Jemimah Kuhfeld",
+            "altText":"John Hartley Williams, poet, who has died aged 72",
+            "height":"1116",
+            "credit":"Jemimah Kuhfeld/Shoestring Press",
+            "caption":"John Hartley Williams co-wrote the spoof crime novel Death Comes for the Poets, with Matthew Sweeney. Photograph: Jemimah Kuhfeld/Shoestring Press",
+            "width":"1860"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2014/5/14/1400082676211/John-Hartley-Williams-poe-014.jpg",
+          "typeData":{
+            "source":"Shoestring Press",
+            "photographer":"Jemimah Kuhfeld",
+            "altText":"John Hartley Williams, poet, who has died aged 72",
+            "height":"1536",
+            "credit":"Jemimah Kuhfeld/Shoestring Press",
+            "caption":"John Hartley Williams co-wrote the spoof crime novel Death Comes for the Poets, with Matthew Sweeney. Photograph: Jemimah Kuhfeld/Shoestring Press",
+            "width":"2560"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2014/5/14/1400082678512/John-Hartley-Williams-poe-015.jpg",
+          "typeData":{
+            "source":"Shoestring Press",
+            "photographer":"Jemimah Kuhfeld",
+            "altText":"John Hartley Williams, poet, who has died aged 72",
+            "height":"60",
+            "credit":"Jemimah Kuhfeld/Shoestring Press",
+            "caption":"John Hartley Williams co-wrote the spoof crime novel Death Comes for the Poets, with Matthew Sweeney. Photograph: Jemimah Kuhfeld/Shoestring Press",
+            "width":"90"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2014/5/14/1400082680096/John-Hartley-Williams-poe-016.jpg",
+          "typeData":{
+            "source":"Shoestring Press",
+            "photographer":"Jemimah Kuhfeld",
+            "altText":"John Hartley Williams, poet, who has died aged 72",
+            "height":"120",
+            "credit":"Jemimah Kuhfeld/Shoestring Press",
+            "caption":"John Hartley Williams co-wrote the spoof crime novel Death Comes for the Poets, with Matthew Sweeney. Photograph: Jemimah Kuhfeld/Shoestring Press",
+            "width":"180"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2014/5/14/1400082686594/John-Hartley-Williams-poe-017.jpg",
+          "typeData":{
+            "source":"Shoestring Press",
+            "photographer":"Jemimah Kuhfeld",
+            "altText":"John Hartley Williams, poet, who has died aged 72",
+            "height":"2336",
+            "credit":"Jemimah Kuhfeld/Shoestring Press",
+            "caption":"John Hartley Williams co-wrote the spoof crime novel Death Comes for the Poets, with Matthew Sweeney. Photograph: Jemimah Kuhfeld/Shoestring Press",
+            "width":"3504"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2014/5/14/1400082670432/John-Hartley-Williams-poe-011.jpg",
+          "typeData":{
+            "source":"Shoestring Press",
+            "photographer":"Jemimah Kuhfeld",
+            "altText":"John Hartley Williams, poet, who has died aged 72",
+            "height":"276",
+            "credit":"Jemimah Kuhfeld/Shoestring Press",
+            "caption":"John Hartley Williams co-wrote the spoof crime novel Death Comes for the Poets, with Matthew Sweeney. Photograph: Jemimah Kuhfeld/Shoestring Press",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-436901189",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2014/5/14/1400082662308/John-Hartley-Williams-poe-006.jpg",
+          "typeData":{
+            "source":"Shoestring Press",
+            "photographer":"Jemimah Kuhfeld",
+            "altText":"John Hartley Williams, poet, who has died aged 72",
+            "height":"84",
+            "credit":"Jemimah Kuhfeld/Shoestring Press",
+            "caption":"John Hartley Williams co-wrote the spoof crime novel Death Comes for the Poets, with Matthew Sweeney. Photograph: Jemimah Kuhfeld/Shoestring Press",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/About/General/2014/5/14/1400082672043/John-Hartley-Williams-poe-012.jpg",
+          "typeData":{
+            "source":"Shoestring Press",
+            "photographer":"Jemimah Kuhfeld",
+            "altText":"John Hartley Williams, poet, who has died aged 72",
+            "height":"372",
+            "credit":"Jemimah Kuhfeld/Shoestring Press",
+            "caption":"John Hartley Williams co-wrote the spoof crime novel Death Comes for the Poets, with Matthew Sweeney. Photograph: Jemimah Kuhfeld/Shoestring Press",
+            "width":"620"
+          }
+        }]
+      }],
+      "references":[]
+    }],
+    "storyPackage":[]
+  }
+}

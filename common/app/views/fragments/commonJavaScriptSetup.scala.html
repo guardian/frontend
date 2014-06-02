@@ -35,6 +35,18 @@
             };
         }
     }
+
+    var modules = [],
+        redefine = function(modules) {
+            modules.forEach(function(module) {
+                define.apply(null, module);
+            });
+        },
+        define = function() {
+            modules.push(arguments);
+        };
+    define.amd = true;
+
     var guardian = {
         isModernBrowser: (
             'querySelector' in document
@@ -55,6 +67,7 @@
     curl = {
         baseUrl: '@{Configuration.assets.path}javascripts',
         apiName: 'require',
+        overwriteApi: true,
         paths: {
             @curlPaths.map { case (module, path) =>
                 '@module': '@Static(path)',

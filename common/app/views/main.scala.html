@@ -10,9 +10,13 @@
     @fragments.head(metaData, projectName, head, curlPaths)
 </head>
 <body
-    @Navigation.topLevelItem(Edition(request).navigation, metaData).filter(_.links.nonEmpty).map{ localNav => class="has-localnav" }
     id="top"
+    class="@RenderClasses(Map(
+        ("has-page-skin", metaData.hasPageSkin),
+        ("has-localnav", Navigation.topLevelItem(Edition(request).navigation, metaData).filter(_.links.nonEmpty).nonEmpty)))"
     itemscope itemtype="http://schema.org/WebPage">
+
+    @fragments.message(metaData)
 
     <div class="top-banner-ad-container top-banner-ad-container--desktop top-banner-ad-container--@metaData match {
             case _: Article => {article}
@@ -20,8 +24,6 @@
         }-layout">
         @fragments.commercial.standardAd(name="top-above-nav", adType="top-banner-ad", sizeMapping=Map("tabletportrait" -> Seq("728,90"), "tabletlandscape" -> Seq("728,90", "900,250"), "desktop" -> Seq("728,90", "900,250"), "wide" -> Seq("728,90", "900,250", "970,250")))
     </div>
-
-    @fragments.message(metaData)
 
     @fragments.header(metaData)
 

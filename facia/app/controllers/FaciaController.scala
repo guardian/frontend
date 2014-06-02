@@ -32,20 +32,25 @@ class FaciaController extends Controller with Logging with ExecutionContexts wit
   }
 
   def applicationsRedirect(path: String) = Action { implicit request =>
-    Ok.withHeaders("X-Accel-Redirect" -> (s"/applications/$path" +
-      (if (request.isRss) "/rss" else "") +
-      (if (request.queryString.nonEmpty) s"?${request.rawQueryString}" else "")))
+    InternalRedirect.internalRedirect("applications", path, if (request.queryString.nonEmpty) Option(s"?${request.rawQueryString}") else None)
   }
 
   //Only used by dev-build for rending special urls such as lifeandstyle/home-and-garden
   def renderFrontPressSpecial(path: String) = renderFrontPress(path)
 
   // Needed as aliases for reverse routing
-  def renderFrontRss(id: String) = renderFront(id)
   def renderFrontJson(id: String) = renderFront(id)
   def renderCollectionRss(id: String) = renderCollection(id)
   def renderCollectionJson(id: String) = renderCollection(id)
   def renderContainerJson(id: String) = renderContainer(id)
+
+  def renderFrontRss(path: String) = {
+    log.info(s"Serving RSS Path: $path")
+    if (!ConfigAgent.getPathIds.contains(path))
+      applicationsRedirect(s"$path/rss")
+    else
+      renderFrontPress(path)
+  }
 
   def renderFront(path: String) = {
     log.info(s"Serving Path: $path")

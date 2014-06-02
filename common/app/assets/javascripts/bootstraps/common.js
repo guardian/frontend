@@ -55,7 +55,8 @@ define([
     'common/modules/onward/tonal',
     'common/modules/identity/api',
     'common/modules/onward/more-tags',
-    'common/modules/ui/smartAppBanner'
+    'common/modules/ui/smartAppBanner',
+    'common/modules/adverts/page-skin'
 ], function (
     $,
     mediator,
@@ -111,7 +112,8 @@ define([
     TonalComponent,
     id,
     MoreTags,
-    smartAppBanner
+    smartAppBanner,
+    pageSkin
 ) {
 
     var modules = {
@@ -513,6 +515,10 @@ define([
             if(config.switches.smartBanner) {
                 smartAppBanner.init();
             }
+        },
+
+        pageSkin: function(config) {
+            pageSkin.init(config);
         }
     };
 
@@ -564,6 +570,7 @@ define([
             modules.repositionComments();
             modules.showMoreTagsLink();
             modules.showSmartBanner(config);
+            modules.pageSkin(config);
         }
         mediator.emit('page:common:ready', config, context);
     };

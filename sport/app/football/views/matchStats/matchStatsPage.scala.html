@@ -59,9 +59,11 @@
                         <div class="update update-live-matches update-match-stats" data-link-name="autoupdate"></div>
                     </div>
                 }
-                <div class="match-stats">
-                @football.views.html.matchStats.matchStatsComponent(page)
-                </div>
+                @if(page.theMatch.hasStarted) {
+                    <div class="match-stats">
+                        @football.views.html.matchStats.matchStatsComponent(page)
+                    </div>
+                }
 
                 <h3 class="section-divider">Teams</h3>
                 <div class="component u-cf">

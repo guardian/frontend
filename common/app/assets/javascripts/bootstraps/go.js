@@ -1,6 +1,8 @@
-/*global guardian:true */
+/*global guardian, redefine, modules*/
+redefine(modules);
 require([
-    'common/bootstraps/app'
+    'common/bootstraps/app',
+    'domReady!'
 ], function(
     bootstrap
 ) {

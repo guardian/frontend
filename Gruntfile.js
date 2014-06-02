@@ -76,9 +76,20 @@ module.exports = function (grunt) {
                         }
                     },
                     wrap: {
-                        startFile: 'common/app/assets/javascripts/components/curl/dist/curl-with-js-and-domReady/curl.js',
-                        endFile:   'common/app/assets/javascripts/bootstraps/go.js'
+                        endFile: [
+                            'common/app/assets/javascripts/components/curl/dist/curl-with-js-and-domReady/curl.js',
+                            'common/app/assets/javascripts/bootstraps/go.js'
+                        ]
                     }
+                }
+            },
+            facia: {
+                options: {
+                    baseUrl: 'facia/app/assets/javascripts',
+                    name: 'bootstraps/facia',
+                    out: staticTargetDir + 'javascripts/bootstraps/facia.js',
+                    exclude: ['../../../../common/app/assets/javascripts/bootstraps/app'],
+                    keepBuildDir: true
                 }
             },
             ophan: {
@@ -108,15 +119,6 @@ module.exports = function (grunt) {
                     wrap: {
                         startFile: 'common/app/assets/javascripts/components/curl/dist/curl-with-js-and-domReady/curl.js'
                     }
-                }
-            },
-            facia: {
-                options: {
-                    baseUrl: 'facia/app/assets/javascripts',
-                    name: 'bootstraps/facia',
-                    out: staticTargetDir + 'javascripts/bootstraps/facia.js',
-                    exclude: ['../../../../common/app/assets/javascripts/bootstraps/app'],
-                    keepBuildDir: true
                 }
             }
         },
