@@ -57,14 +57,14 @@ object Collection {
 }
 case class SeoDataJson(
   id: String,
-  section: Option[String],
+  navSection: Option[String],
   webTitle: Option[String],   //Always short, eg, "Reviews" for "tone/reviews" id
   title: Option[String],      //Long custom title entered by editors
   description: Option[String])
 
 case class SeoData(
   id: String,
-  section: String,
+  navSection: String,
   webTitle: String,
   title: Option[String],
   description: Option[String])
@@ -102,16 +102,16 @@ object SeoData extends ExecutionContexts with Logging {
       ir <- itemResponseForPath
       sp <- seoDataFromPath
     } yield {
-      val section:  String = sc.section.orElse(ir.flatMap(getSectionFromItemResponse)).getOrElse(sp.section)
+      val navSection:  String = sc.navSection.orElse(ir.flatMap(getNavSectionFromItemResponse)).getOrElse(sp.navSection)
       val webTitle: String = sc.webTitle.orElse(ir.flatMap(getWebTitleFromItemResponse)).getOrElse(sp.webTitle)
       val title: Option[String] = sc.title
       val description: Option[String] = sc.description.orElse(SeoData.descriptionFromWebTitle(webTitle))
 
-      SeoData(path, section, webTitle, title, description)
+      SeoData(path, navSection, webTitle, title, description)
     }
   }
 
-  private def getSectionFromItemResponse(itemResponse: ItemResponse): Option[String] =
+  private def getNavSectionFromItemResponse(itemResponse: ItemResponse): Option[String] =
     itemResponse.tag.flatMap(_.sectionId)
       .orElse(itemResponse.section.map(_.id).map(removeLeadEditionFromSectionId))
 

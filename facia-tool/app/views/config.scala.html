@@ -101,6 +101,7 @@
 
                 <label>Type</label>
                 <select data-bind="
+                    optionsCaption: 'Choose...',
                     options: $root.types,
                     value: meta.type"></select>
 
@@ -163,17 +164,21 @@
             <div class="cnf-front__inner" data-bind="if: state.isOpen">
                 <!-- ko if: state.isOpenProps() -->
                     <div class="cnf-form">
-                        <label>Section</label>
-                        <input type="text" data-bind="
-                            attr: {placeholder: placeholders.section},
-                            value: props.section"/>
+                        <label>Nav section</label>
+                        <select data-bind="
+                            css: {
+                                'is-placeholder': !props.navSection()
+                            },
+                            optionsCaption: placeholders.navSection() || '...',
+                            options: $root.navSections,
+                            value: props.navSection"></select>
 
                         <label>Name</label>
                         <input type="text" data-bind="
                             attr: {placeholder: placeholders.webTitle},
                             value: props.webTitle"/>
 
-                        <label>SEO Title</label>
+                        <label>SEO title</label>
                         <textarea data-bind="
                             attr: {placeholder: placeholders.title},
                             value: props.title"></textarea>
@@ -204,7 +209,7 @@
                         <!-- /ko -->
                     </div>
 
-                    <div data-bind="with: collections">
+                    <div class="cnf-front__collections" data-bind="with: collections">
                         <div class="droppable" data-bind="
                             makeDropabble: true,
                             css: {underDrag: underDrag},
