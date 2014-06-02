@@ -37,7 +37,7 @@ $c-commercial-travel-dark: #002b6c;
     }
     .lineitem__offer {
         @include rem((
-            padding-top: $comercial-comp-baseline
+            padding-top: 2px
         ));
     }
     .lineitem__meta {
@@ -240,7 +240,6 @@ $c-commercial-travel-dark: #002b6c;
     @include mq(desktop) {
         .commercial__head {
             float: left;
-            width: 25%;
         }
         .commercial__search {
             position: relative;
@@ -261,13 +260,6 @@ $c-commercial-travel-dark: #002b6c;
         }
         .lineitem {
             width: 33%;
-        }
-    }
-    @include mq($from: desktop, $to: faciaLeftCol) {
-        .commercial__head {
-            @include rem((
-                padding-right: $gs-gutter
-            ));
         }
     }
     @include mq(leftCol) {
@@ -339,7 +331,6 @@ $c-commercial-travel-dark: #002b6c;
             }
             .commercial__relevance-high {
                 @include rem((
-                    margin-left: $gs-gutter/4,
                     width: gs-span(6)
                 ));
                 .lineitem__link {
@@ -351,7 +342,9 @@ $c-commercial-travel-dark: #002b6c;
                     width: 100%;
                 }
                 .lineitem__offer {
-                    margin-left: gs-span(3) + $gs-gutter;
+                    @include rem((
+                        margin-left: gs-span(3) + $gs-gutter
+                    ));
                 }
             }
             .commercial__relevance-title-low {

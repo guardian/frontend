@@ -13,6 +13,18 @@ $comercial-comp-baseline: 10px;
             float: left;
         }
     }
+    @include mq(desktop) {
+        .commercial__head {
+        @include rem((
+            width: gs-span(3)
+        ));
+    }
+    .commercial__body {
+        @include rem((
+            padding-left: 20px
+            ));
+        }
+    }
     &.commercial--high {
         @include mq(tablet) {
             .commercial__relevance-high,
@@ -25,20 +37,12 @@ $comercial-comp-baseline: 10px;
             }
         }
         @include mq(desktop) {
-            .commercial__head {
-                width: 25%;
-                float: left;
-                @include rem((
-                    padding-right: 14px
-                ));
-                
-                .commercial__search {
-                    display: block;
-                }
+            .commercial__head .commercial__search {
+                display: block;
             }
             .commercial__body {
                 @include rem((
-                    padding-left: 8px
+                    padding-left: 20px
                 ));
             }
             .commercial__relevance-high {
@@ -64,6 +68,7 @@ $comercial-comp-baseline: 10px;
         @include mq(faciaLeftCol) {
             .commercial__head {
                 @include rem((
+                    padding-left: $gs-gutter,
                     width: gs-span(2) + $gs-gutter
                 ));
             }
@@ -77,9 +82,6 @@ $comercial-comp-baseline: 10px;
             }
             .commercial__relevance-low {
                 @include box-sizing(border-box);
-                @include rem((
-                    padding-left: $gs-gutter/2
-                ));
             }
             .lineitem {
 
@@ -163,7 +165,9 @@ $comercial-comp-baseline: 10px;
     ));
 }
 .commercial__logo {
-    margin-bottom: $gs-baseline/2;
+    @include rem((
+        margin-bottom: $gs-baseline/2
+    ));
     float: left;
 }
 .commercial__title {
@@ -190,7 +194,9 @@ $comercial-comp-baseline: 10px;
     overflow: hidden;
 }
 .commercial__foot {
-    padding: ($gs-baseline/3)*2 0;
+    @include rem((
+        padding: ($gs-baseline/3)*2 0
+    ));
     clear: both;
     overflow: hidden;
 }
@@ -204,8 +210,10 @@ $comercial-comp-baseline: 10px;
 .commercial__search__input {
     @include box-sizing(border-box);
     width: 100%;
-    height: $gs-row-height;
-    padding: $gs-baseline/3 32px $gs-baseline/3 ($gs-baseline/3) * 2;
+    @include rem((
+        height: $gs-row-height,
+        padding: $gs-baseline/3 32px $gs-baseline/3 ($gs-baseline/3) * 2
+    ));
     @include fs-textsans(2);
     border: 0;
     float: left;
@@ -432,9 +440,11 @@ $comercial-comp-baseline: 10px;
 
 @include mq($to: tablet) {
     .commercial__head {
-        padding-left: $gs-baseline/2;
-        padding-right: $gs-baseline/2;
-        height: rem(50px);
+        @include rem((
+            padding-left: $gs-baseline/2,
+            padding-right: $gs-baseline/2,
+            height: 50px
+        ));
         overflow: hidden;
     }
     .commercial__title {
@@ -452,8 +462,10 @@ $comercial-comp-baseline: 10px;
     }
     .lineitem {
         width: 20%;
-        padding-left: 8px;
-        padding-right: 8px;
+        @include rem((
+            padding-left: 8px,
+            padding-right: 8px
+        ));
         float: left;
 
         &:nth-child(n + 4) {
@@ -498,7 +510,6 @@ $comercial-comp-baseline: 10px;
         float: left;
     }
 }
-
 
 .commercial__home-link {
     $cta-diameter: ((
