@@ -365,7 +365,7 @@ $avatarSize: 44px;
             margin: $gs-baseline $gs-gutter,
             padding-left: $gs-gutter/2
         ));
-        border-left: 3px solid rgba(200, 200, 200, .75);
+        border-left: 3px solid transparentize($c-neutral1, .75);
     }
 }
 
