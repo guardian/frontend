@@ -63,8 +63,7 @@ define([
                 type: 'json',
                 crossOrigin: true
             }).then(function (sectionData) {
-                    var containers = $('.facia-container .container');
-                    containers.last().after(parseCollection(sectionData));
+                $('.facia-container .container').last().after(parseCollection(sectionData));
                 images.upgrade();
             });
         }
