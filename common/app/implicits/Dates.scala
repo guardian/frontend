@@ -1,10 +1,15 @@
 package implicits
 
-import org.joda.time.{DateTime, DateMidnight, Days}
+import org.joda.time.{Duration => JodaDuration, DateTime, DateMidnight, Days}
 import org.scala_tools.time.Imports._
 import org.joda.time.format.ISODateTimeFormat
+import scala.concurrent.duration.Duration
 
 trait Dates {
+  implicit class RichDuration(duration: Duration) {
+    def toJoda = new JodaDuration(duration.toMillis)
+  }
+
   object Epoch {
     lazy val zero: DateMidnight = new DateMidnight(0)
     def day(dayOfEpoch: Int): DateMidnight = zero.plusDays(dayOfEpoch)
