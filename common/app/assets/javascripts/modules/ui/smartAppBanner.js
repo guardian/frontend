@@ -27,7 +27,7 @@ define([
                 STORE: 'on the App Store'
             },
             ANDROID: {
-                LOGO: 'http://assets.guim.co.uk/images/apps/android-logo.png',
+                LOGO: 'http://assets.guim.co.uk/images/apps/android-logo-2x.png',
                 SCREENSHOTS: 'http://assets.guim.co.uk/images/apps/ios-screenshots.png',
                 LINK: 'http://ad-x.co.uk/API/click/guardian789057jo/web3537df5992e76b',
                 STORE: 'in Google Play'
