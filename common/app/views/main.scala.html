@@ -9,45 +9,40 @@
 <head>
     @fragments.head(metaData, projectName, head, curlPaths)
 </head>
-<body
-    id="top"
-    class="@RenderClasses(Map(
-        ("has-page-skin", metaData.hasPageSkin),
-        ("has-localnav", Navigation.topLevelItem(Edition(request).navigation, metaData).filter(_.links.nonEmpty).nonEmpty)))"
-    itemscope itemtype="http://schema.org/WebPage">
+@defining(metaData match {
+    case c: model.Content if c.shouldHideAdverts => { false }
+    case _ => { true }
+}) { showAdverts =>
+    <body
+        id="top"
+        class="@RenderClasses(Map(
+            ("has-page-skin", metaData.hasPageSkin),
+            ("has-localnav", Navigation.topLevelItem(Edition(request).navigation, metaData).filter(_.links.nonEmpty).nonEmpty)))"
+        itemscope itemtype="http://schema.org/WebPage">
 
-    @fragments.message(metaData)
+        @fragments.message(metaData)
 
-    @metaData match {
-        case c: model.Content => {
-            @if(!c.shouldHideAdverts) {
-                @fragments.commercial.topBanner(metaData)
-            }
-        }
-        case _ => { @fragments.commercial.topBanner(metaData) }
-    }
-
-    @fragments.header(metaData)
-
-    <div id="js-context">
-        @metaData match {
-            case c: model.Content => {
-                @if(!c.shouldHideAdverts) {
-                    @fragments.commercial.topBannerMobile()
-                }
-            }
-            case _ => { @fragments.commercial.topBannerMobile() }
+        @if(showAdverts) {
+            @fragments.commercial.topBanner(metaData)
         }
 
-        @fragments.localNav(metaData)
+        @fragments.header(metaData)
 
-        @body
-    </div>
+        <div id="js-context">
+            @if(showAdverts) {
+                @fragments.commercial.topBannerMobile()
+            }
 
-    @fragments.footer(metaData)
+            @fragments.localNav(metaData)
 
-    @fragments.loadCss()
+            @body
+        </div>
 
-    @fragments.analytics(metaData)
-</body>
-</html>
+        @fragments.footer(metaData)
+
+        @fragments.loadCss()
+
+        @fragments.analytics(metaData)
+    </body>
+    </html>
+}
