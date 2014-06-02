@@ -76,6 +76,7 @@ define([
                     return sizeMapping;
                 },
                 defineSlot: sinon.spy(function() { return window.googletag; }),
+                defineOutOfPageSlot: sinon.spy(function() { return window.googletag; }),
                 addService: sinon.spy(function() { return window.googletag; }),
                 defineSizeMapping: sinon.spy(function() { return window.googletag; }),
                 setTargeting: sinon.spy(function(type, id) { return id; }),
@@ -193,8 +194,22 @@ define([
         });
 
         it('should create ad slot', function() {
-            var adSlot = dfp.createAdSlot('right', 'right-type')
+            var adSlot = dfp.createAdSlot('right', 'right-type');
             expect(adSlot).toBe('<div id="dfp-ad--right" class="ad-slot ad-slot--dfp ad-slot--right-type" data-link-name="ad slot right" data-name="right" data-refresh="true" data-label="true" data-tabletlandscape="300,250|300,600"></div>')
+        });
+
+        it('should be able to create "out of page" ad slot', function() {
+            $('.ad-slot--dfp').first().data('out-of-page', true);
+            dfp.init({
+                page: {
+                    dfpAccountId: 123456,
+                    dfpAdUnitRoot: 'theguardian.com',
+                    isFront: true,
+                    section: ''
+                }
+            });
+            window.googletag.cmd.forEach(function(func) { func(); });
+            expect(window.googletag.defineOutOfPageSlot).toHaveBeenCalledWith('/123456/theguardian.com/front', 'dfp-ad-html-slot');
         });
 
         describe('labelling', function() {
