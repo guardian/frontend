@@ -84,7 +84,9 @@ define([
         }, this);
 
         this.placeholders.title = ko.computed(function() {
-            return this.props.title() || (this.placeholders.webTitle() + ' | ' + toTitleCase(this.props.navSection() || this.placeholders.navSection()));
+            var section = this.props.navSection() || this.placeholders.navSection();
+
+            return this.props.title() || (this.placeholders.webTitle() + (section ? ' | ' + toTitleCase(section) : ''));
         }, this);
 
         this.placeholders.description  = ko.computed(function() {
