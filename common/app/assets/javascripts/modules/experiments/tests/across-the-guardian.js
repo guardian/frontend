@@ -1,8 +1,9 @@
 define([
     'common/utils/ajax',
     'common/$',
-    'common/utils/template'
-], function (ajax, $, template) {
+    'common/utils/template',
+    'common/modules/ui/images'
+], function (ajax, $, template, images) {
 
     return function () {
         this.id = 'AcrossTheGuardian';
@@ -63,6 +64,7 @@ define([
                 crossOrigin: true
             }).then(function (sectionData) {
                 $('.facia-container').append(parseCollection(sectionData));
+                images.upgrade();
             });
         }
 
