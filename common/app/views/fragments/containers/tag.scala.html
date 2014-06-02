@@ -1,37 +1,33 @@
 @(page: MetaData, collection: Collection, style: NewsContainer, containerIndex: Int, pagination: Option[Pagination] = None)(implicit request: RequestHeader, templateDeduping: TemplateDeduping, config: Config)
 
-@if(collection.items.nonEmpty) {
-    <section
-        class="@RenderClasses(Map(
-            ("container", true),
-            ("container--row-pattern", true),
-            ("container--news", true),
-            ("container--tag", true),
-            ("container--sponsored", config.isSponsored),
-            ("container--advertisement-feature", (config.isAdvertisementFeature && !config.isSponsored)),
-            ("container--first", (containerIndex == 0))))"
-        data-link-name="block | @config.id"
-        data-id="@config.id"
-        data-type="@style.containerType"
-        data-component="@FaciaComponentName(config, collection)">
-        <div class="facia-container__inner">
-            <div class="container__border tone-@style.tone tone-accent-border"></div>
-            <div class="container__header">
-                @config.displayName.orElse(collection.displayName).map { title =>
-                    <h2 class="container__title tone-@style.tone tone-background">
-                        @collection.href.map { href =>
-                            <a class="container__title__label u-text-hyphenate" data-link-name="section heading" href="@LinkTo{/@href}">@Html(title)</a>
-                        }.getOrElse{
-                            <span class="container__title__label u-text-hyphenate">@Html(title)</span>
-                        }
-                    </h2>
-                }
+@defining(config.displayName.orElse(collection.displayName)) { title =>
+
+    @if(collection.items.nonEmpty) {
+        <section
+            class="@GetClasses.forContainer(style, config, containerIndex, false, Seq("container--tag"))"
+            data-link-name="block | @config.id"
+            data-id="@config.id"
+            data-type="@style.containerType"
+            data-component="@FaciaComponentName(config, collection)">
+            <div class="facia-container__inner">
+                <div class="container__border tone-@style.tone tone-accent-border"></div>
+                <div class="container__header">
+                    @title.map { title =>
+                        <h2 class="container__title tone-@style.tone tone-background">
+                            @collection.href.map { href =>
+                                <a class="container__title__label u-text-hyphenate" data-link-name="section heading" href="@LinkTo{/@href}">@Html(title)</a>
+                            }.getOrElse{
+                                <span class="container__title__label u-text-hyphenate">@Html(title)</span>
+                            }
+                        </h2>
+                    }
+                </div>
+                <div class="container__body">
+                    @fragments.contributor(page)
+                    @fragments.collections.tag(collection.items, style, containerIndex)
+                </div>
+                @pagination.map{ paginate => @fragments.pagination(page, paginate)}
             </div>
-            <div class="container__body">
-                @fragments.contributor(page)
-                @fragments.collections.tag(collection.items, style, containerIndex)
-            </div>
-            @pagination.map{ paginate => @fragments.pagination(page, paginate)}
-        </div>
-    </section>
-}
+        </section>
+    }
+    }

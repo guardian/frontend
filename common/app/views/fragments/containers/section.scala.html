@@ -5,13 +5,7 @@
     @defining(templateDeduping(4, collection.items)) { items =>
         @if(items.nonEmpty) {
             <section
-                class="@RenderClasses(Map(
-                    "container" -> true,
-                    s"container--${style.containerType}" -> true,
-                    ("container--sponsored", config.isSponsored),
-                    ("container--advertisement-feature", (config.isAdvertisementFeature && !config.isSponsored)),
-                    "js-container--toggle" -> (containerIndex > 0 && title.nonEmpty),
-                    "container--first" -> (containerIndex == 0)))"
+                class="@GetClasses.forContainer(style, config, containerIndex, title.nonEmpty)"
                 data-link-name="block | @config.id"
                 data-id="@config.id"
                 data-type="@style.containerType"

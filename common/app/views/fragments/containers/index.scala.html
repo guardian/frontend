@@ -7,14 +7,7 @@
     @defining(templateDeduping(15, collection.items)) { items =>
         @if(items.nonEmpty) {
             <section
-                class="@RenderClasses(Map(
-                    "container" -> true,
-                    "container--row-pattern" -> true,
-                    s"container--${style.containerType}" -> true,
-                    "js-container--toggle" -> (containerIndex > 0 && title.nonEmpty),
-                    ("container--sponsored", config.isSponsored),
-                    ("container--advertisement-feature", (config.isAdvertisementFeature && !config.isSponsored)),
-                    "container--first" -> (containerIndex == 0)))"
+                class="@GetClasses.forContainer(style, config, containerIndex, title.nonEmpty)"
                 data-link-name="all index"
                 data-type="@style.containerType"
                 data-component="all index">
