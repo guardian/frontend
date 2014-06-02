@@ -35,7 +35,7 @@ define([
                         getSlotId: function() {
                             return {
                                 getDomId: function() {
-                                    return id
+                                    return id;
                                 }
                             }
                         }

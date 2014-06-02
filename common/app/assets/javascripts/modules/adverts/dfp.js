@@ -327,8 +327,8 @@ define([
                             return size[0] + '-' + size[1];
                         }
                     ),
-                    slot = googletag
-                        .defineSlot(adUnit, size, id)
+                    slot = ($adSlot.data('out-of-page')
+                            ? googletag.defineOutOfPageSlot(adUnit, id) : googletag.defineSlot(adUnit, size, id))
                         .addService(googletag.pubads())
                         .defineSizeMapping(sizeMapping)
                         .setTargeting('slot', $adSlot.data('name'));
