@@ -38,8 +38,8 @@ GET        /commercial/money/credit-cards/:creditCardType            controllers
 GET        /commercial/money/loans/:loanType                         controllers.commercial.MoneyOffers.loans(loanType)
 
 # Book offers
-GET        /commercial/books/bestsellers                             controllers.commercial.BookOffers.bestsellers(format="html", t: List[String])
-GET        /commercial/books/bestsellers.json                        controllers.commercial.BookOffers.bestsellers(format="json", t: List[String])
+GET        /commercial/books/bestsellers                             controllers.commercial.BookOffers.bestsellers(format="html")
+GET        /commercial/books/bestsellers.json                        controllers.commercial.BookOffers.bestsellers(format="json")
 GET        /commercial/books/bestsellers-high                        controllers.commercial.BookOffers.bestsellersHigh(format="html")
 GET        /commercial/books/bestsellers-high.json                   controllers.commercial.BookOffers.bestsellersHigh(format="json")
 GET        /commercial/books/book/*pageId.json                       controllers.commercial.BookOffers.singleBook(pageId, format="json")

@@ -15,6 +15,10 @@ package object commercial {
     Segment(Context(section, keywords), userSegments)
   }
 
+  def specificIds(implicit request: Request[AnyContent]) = {
+    request.queryString.getOrElse("t", Nil).reverse
+  }
+
   def noMatchingSegmentsResult(implicit request: Request[AnyContent]) = JsonComponent {
     JsObject(Nil)
   } withHeaders ("Cache-Control" -> "max-age=60")
