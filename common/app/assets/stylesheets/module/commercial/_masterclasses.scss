@@ -117,7 +117,9 @@
         float: none;
     }
     .lineitem__description {
-        margin-top: $gs-baseline/3;
+        @include rem((
+            margin-top: $gs-baseline/3
+        ));
     } 
 }
 
