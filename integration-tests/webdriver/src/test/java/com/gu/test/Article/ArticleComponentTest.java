@@ -19,7 +19,6 @@ public class ArticleComponentTest {
         testArticle = pageHelper.goToArticle("/film/filmblog/2014/may/20/lost-river-reviews-cannes-scorn-ryan-gosling");
     }
 
-    @Ignore //test failing on teamcity
     @Test
     public void articleHasMostPopularSidebar() {
         Assert.assertTrue("Failure: Related content container missing", testArticle.hasMostPopularRight());
