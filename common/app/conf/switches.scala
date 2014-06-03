@@ -46,7 +46,7 @@ object Switches extends Collections {
 
   // this is 3 months - at the end of this a decision is expected
   // and one (or both) of the 2 needs to go.
-  private lazy val profilingEvalDeadline = new DateMidnight(2014, 6, 4)
+  private lazy val profilingEvalDeadline = new DateMidnight(2014, 6, 10)
 
 
   // Load Switches
@@ -152,11 +152,11 @@ object Switches extends Collections {
 
   val ImrWorldwideSwitch = Switch("Commercial Tags", "imr-worldwide",
     "Enable the IMR Worldwide audience segment tracking.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 6, 10))
+    safeState = Off, sellByDate = profilingEvalDeadline)
 
   val EffectiveMeasureSwitch = Switch("Commercial Tags", "effective-measure",
     "Enable the Effective Measure audience segment tracking.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 6, 10))
+    safeState = Off, sellByDate = profilingEvalDeadline)
 
   // We don't foresee this service being switched off
   val ForeseeSwitch = Switch("Performance Switches", "foresee",
