@@ -52,6 +52,13 @@ class SingleEventbriteMasterClassParsingTest extends FlatSpec with Matchers {
     result.displayPrice should be ("£400.00 to £2,600.00")
   }
 
+  "MasterClass companion object" should "handle tags" in {
+    val event = Json.parse(json)
+    val tags = EventbriteMasterClass(event).get.tags
+
+    tags should be(Seq("travel", "travel writing"))
+  }
+
   "Generated masterclass object" should "have a desription text that is truncated to 250 chars" in {
     val event: JsValue = Json.parse(json)
 

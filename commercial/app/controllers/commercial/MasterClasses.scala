@@ -1,52 +1,43 @@
 package controllers.commercial
 
-import play.api.mvc._
 import common.{JsonNotFound, JsonComponent}
-import model.commercial.masterclasses.MasterClassAgent
 import model.Cached
+import model.commercial.masterclasses.{MasterClass, MasterClassAgent}
+import play.api.mvc._
 
 object MasterClasses extends Controller {
 
   implicit val codec = Codec.utf_8
 
-  def renderMasterclass = Action {
+  private def renderMasterclassAction(nilResult: RequestHeader => Result)
+                                     (result: Seq[MasterClass] => RequestHeader => SimpleResult) = Action {
     implicit request =>
-      MasterClassAgent.getUpcoming match {
-        case Nil => NotFound
-        case upcoming => {
-          Cached(60)(Ok(views.html.masterclasses(upcoming take 4)))
-        }
+      MasterClassAgent.adsTargetedAt(segment) match {
+        case Nil => nilResult(request)
+        case masterClasses =>
+          Cached(60) {
+            result(masterClasses take 4)(request)
+          }
       }
   }
 
-  def list = Action {
-    implicit request =>
-      MasterClassAgent.getUpcoming match {
-        case Nil => JsonNotFound.apply()
-        case upcoming => {
-          Cached(60)(JsonComponent(views.html.masterclasses(upcoming take 4)))
-        }
-      }
+  def renderMasterclass = renderMasterclassAction(implicit request => NotFound) {
+    masterClasses => implicit request =>
+      Ok(views.html.masterclasses(masterClasses))
   }
 
-  def renderMasterclassHigh = Action {
-    implicit request =>
-      MasterClassAgent.getUpcoming match {
-        case Nil => NotFound
-        case upcoming => {
-          Cached(60)(Ok(views.html.masterclassesHigh(upcoming take 4)))
-        }
-      }
+  def list = renderMasterclassAction(implicit request => JsonNotFound.apply()(request)) {
+    masterClasses => implicit request =>
+      JsonComponent(views.html.masterclasses(masterClasses))
   }
 
-  def listHigh = Action {
-    implicit request =>
-      MasterClassAgent.getUpcoming match {
-        case Nil => JsonNotFound.apply()
-        case upcoming => {
-          Cached(60)(JsonComponent(views.html.masterclassesHigh(upcoming take 4)))
-        }
-      }
+  def renderMasterclassHigh = renderMasterclassAction(implicit request => NotFound) {
+    masterClasses => implicit request =>
+      Ok(views.html.masterclassesHigh(masterClasses))
   }
 
+  def listHigh = renderMasterclassAction(implicit request => JsonNotFound.apply()(request)) {
+    masterClasses => implicit request =>
+      JsonComponent(views.html.masterclassesHigh(masterClasses))
+  }
 }
