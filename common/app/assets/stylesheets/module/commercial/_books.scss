@@ -166,6 +166,9 @@ $c-commercial-books-dark: #630d4c;
                 display: block;
             }
         }
+        .commercial__head {
+            float: left;
+        }
     }
     @include mq(wide) {
         .commercial__head {
@@ -202,6 +205,22 @@ $c-commercial-books-dark: #630d4c;
             }
             .commercial__foot {
                 display: none;
+            }
+        }
+    }
+    &.commercial--high {
+        .commercial__relevance-low {
+            .lineitem__img {
+                @include rem((
+                    width: 66px
+                ));
+            }
+        }
+        @include mq(tablet) {
+            .lowitem__details {
+                @include rem((
+                    margin-left: 76px
+                ));
             }
         }
     }
