@@ -190,6 +190,16 @@
     @include rem((
         margin-top: $gs-baseline
     ));
+
+    @include mq(wide) {
+        .has-page-skin & {
+            margin-left: auto;
+            margin-right: auto;
+            @include rem((
+                width: gs-span(12) + ($gs-gutter*2)
+            ));
+        }
+    }
 }
 .ad-slot--commercial-component-high {
     display: none;
