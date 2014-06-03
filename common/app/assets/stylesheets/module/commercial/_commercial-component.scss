@@ -15,13 +15,13 @@ $comercial-comp-baseline: 10px;
     }
     @include mq(desktop) {
         .commercial__head {
-        @include rem((
-            width: gs-span(3)
-        ));
-    }
-    .commercial__body {
-        @include rem((
-            padding-left: 20px
+            @include rem((
+                width: gs-span(3)
+            ));
+        }
+        .commercial__body {
+            @include rem((
+                padding-left: 20px
             ));
         }
     }
