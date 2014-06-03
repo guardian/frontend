@@ -219,11 +219,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
       }
     }
 
-    MemcachedStaleCache.cache(collectionItem.id, 1.minute, 1.hour)(response).map {
-      case CacheHit(r)    => r
-      case CacheStale(r)  => r
-      case CacheMiss(r)   => r
-    }.map(_.flatMap(_.content))
+    MemcachedStaleCache.cacheWithMetrics(collectionItem.id, 1.minute, 1.hour, FaciaToolMetrics.ContentApiCacheMetrics)(response).map(_.flatMap(_.content))
   }
 
   private def retrieveSupportingLinks(collectionItem: CollectionItem): List[CollectionItem] =
