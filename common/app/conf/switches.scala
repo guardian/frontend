@@ -46,7 +46,7 @@ object Switches extends Collections {
 
   // this is 3 months - at the end of this a decision is expected
   // and one (or both) of the 2 needs to go.
-  private lazy val profilingEvalDeadline = new DateMidnight(2014, 6, 4)
+  private lazy val profilingEvalDeadline = new DateMidnight(2014, 6, 10)
 
 
   // Load Switches
