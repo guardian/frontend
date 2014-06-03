@@ -6,15 +6,23 @@ case class SectionLink(zone: String, title: String, breadcumbTitle: String, href
   def currentFor(page: MetaData): Boolean = page.url == href ||
     s"/${page.section}" == href ||
     page.url == href ||
-    page.tags.exists(t => s"/${t.id}" == href) ||
     (Edition.all.exists(_.id.toLowerCase == page.id.toLowerCase) && href == "/")
+
+  def currentForIncludingAllTags(page: MetaData): Boolean = page.tags.exists(t => s"/${t.id}" == href)
 }
 
 case class Zone(name: SectionLink, sections: Seq[SectionLink])
 
-case class NavItem(name: SectionLink, links: Seq[SectionLink] = Nil, current: Boolean = false) {
+case class NavItem(name: SectionLink, links: Seq[SectionLink] = Nil) {
   def currentFor(page: MetaData): Boolean = name.currentFor(page) ||
     links.exists(_.currentFor(page)) || exactFor(page)
+
+  def currentForIncludingAllTags(page: MetaData): Boolean = name.currentForIncludingAllTags(page) ||
+    links.exists(_.currentForIncludingAllTags(page))
+
+  def searchForCurrentSublink(page: MetaData): Option[SectionLink] =
+    links.find(_.currentFor(page))
+    .orElse(links.find(_.currentForIncludingAllTags(page)))
 
   def exactFor(page: MetaData): Boolean = page.section == name.href.dropWhile(_ == '/') || page.url == name.href
 }
@@ -189,12 +197,13 @@ object Breadcrumbs {
   object Navigation {
 
     def topLevelItem(navigation: Seq[NavItem], page: MetaData): Option[NavItem] = navigation.find(_.exactFor(page))
-    .orElse(navigation.find(_.currentFor(page)))
+    .orElse(navigation.find(_.currentFor(page))) //This includes a search on the HEAD of Tags for (page: MetaData)
+    .orElse(navigation.find(_.currentForIncludingAllTags(page))) //This is the search for ALL tags
 
   def subNav(navigation: Seq[NavItem], page: MetaData): Option[SectionLink] = topLevelItem(navigation, page).flatMap(_.links.find(_.currentFor(page)))
 
-  def localNav(navigation: Seq[NavItem], page: MetaData): Option[Seq[SectionLink]] = topLevelItem(navigation, page)
-    .map(_.links).filter(_.nonEmpty)
+  def localNav(navigation: Seq[NavItem], page: MetaData): Option[NavItem] = topLevelItem(navigation, page)
+    .filter(_.links.nonEmpty)
 
   def sectionOverride(localNav: NavItem, currentSublink: Option[SectionLink]): String = currentSublink.map(_.title).getOrElse(localNav.name.title)
 }
