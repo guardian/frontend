@@ -16,6 +16,11 @@
     "enhancer": "0.1.1"
   },
   "devDependencies": {
+    "videojs": "~4.6.1",
+    "videojs-contrib-ads": "~0.2.0",
+    "videojs-vast": "~0.1.5"
+  },
+  "resolutions": {
     "videojs": "~4.6.1"
   }
 }

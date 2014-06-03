@@ -378,6 +378,20 @@ module.exports = function (grunt) {
             }
         },
 
+        concat: {
+            'javascript-common': {
+                //The order of this array is important!
+                src: [
+                    'common/app/assets/javascripts/components/videojs/dist/video-js/video.js',
+                    'common/app/assets/javascripts/components/videojs-contrib-ads/src/videojs.ads.js',
+                    'common/app/assets/javascripts/components/vast-client-js/vast-client.js',
+                    'common/app/assets/javascripts/components/videojs-vast/videojs.vast.js'
+                ],
+                nonull: true,
+                dest: staticTargetDir + 'javascripts/videojs/video.js'
+            }
+        },
+
         copy: {
             // 3rd party javascript applications
             'vendor': {
@@ -768,6 +782,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-imagemin');
     grunt.loadNpmTasks('grunt-hash');
     grunt.loadNpmTasks('grunt-contrib-copy');
+    grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-asset-monitor');
@@ -824,6 +839,9 @@ module.exports = function (grunt) {
             }
         }
         apps.forEach(function(app) {
+            if (grunt.config('concat')['javascript-' + app]) {
+                grunt.task.run('concat:javascript-' + app);
+            }
             if (grunt.config('copy')['javascript-' + app]) {
                 grunt.task.run('copy:javascript-' + app);
             }

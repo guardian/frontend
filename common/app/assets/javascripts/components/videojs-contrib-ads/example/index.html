@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Example Ad Integration</title>
+  <!-- Load local video.js -->
+  <link rel="stylesheet" href="../libs/video-js-4.1.0/video-js.min.css">
+  <script src="../libs/video-js-4.1.0/video.js"></script>
+  <!-- Load local ads plugin. -->
+  <link rel="stylesheet" href="../src/videojs.ads.css">
+  <script src="../src/videojs.ads.js"></script>
+  <!-- Load example ads integraiton. -->
+  <script src="example-integration.js"></script>
+</head>
+<body>
+  
+  <h1>Example Ad Integration</h1>
+  
+  <video
+    id="examplePlayer"
+    class="video-js vjs-default-skin"
+    width="640"
+    height="264"
+    poster="http://video-js.zencoder.com/oceans-clip.png"
+    controls>
+    <source src="http://video-js.zencoder.com/oceans-clip.mp4" type='video/mp4' />
+    <source src="http://video-js.zencoder.com/oceans-clip.webm" type='video/webm' />
+    <source src="http://video-js.zencoder.com/oceans-clip.ogv" type='video/ogg' />
+  </video>
+  
+  <h2>Set Src programmatically</h2>
+  
+  <form>
+    <p>
+      <label>
+        <span>src: </span>
+        <input type="url" name="src" value="http://media.w3.org/2010/05/sintel/trailer.mp4" />
+      </label>
+      <button type="submit">set src</button>
+    </p>
+  </form>
+  
+  <h2>Events</h2>
+  
+  <pre></pre>
+  
+<script>
+videojs('examplePlayer', {}, function(){
+  // initalize example ads integration for this player
+  var player = this;
+  player.exampleAds();
+  
+  var pre = document.querySelector('pre');
+  player.on('contentupdate', function(event) {
+    pre.innerHTML = '[' + (+new Date) + '] ' +
+      "contentupdate: \n" + 
+      "  oldValue: " + event.oldValue + "\n" +
+      "  newValue: " + event.newValue + "\n" +
+      pre.innerHTML;
+  });
+});
+document.querySelector('form').addEventListener('submit', function(event) {
+  event.preventDefault();
+  videojs('examplePlayer').src(document.querySelector('input[type="url"]').value);
+});
+</script>
+</body>
+</html>
