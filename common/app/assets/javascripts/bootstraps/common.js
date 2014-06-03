@@ -35,7 +35,6 @@ define([
     'common/modules/analytics/omnitureMedia',
     'common/modules/analytics/livestats',
     'common/modules/experiments/ab',
-    'common/modules/adverts/video',
     'common/modules/discussion/comment-count',
     'common/modules/gallery/lightbox',
     'common/modules/onward/history',
@@ -92,7 +91,6 @@ define([
     OmnitureMedia,
     liveStats,
     ab,
-    VideoAdvert,
     CommentCount,
     LightboxGallery,
     History,
@@ -302,24 +300,6 @@ define([
                 }
                 dfp.init(extend(config, options));
             }
-        },
-
-        loadVideoAdverts: function() {
-            mediator.on('page:common:ready', function(config, context) {
-                if (config.switches.videoAdverts && !config.page.blockVideoAds) {
-                    Array.prototype.forEach.call(context.querySelectorAll('video'), function(el) {
-                        var support = detect.getVideoFormatSupport();
-                        new VideoAdvert({
-                            el: el,
-                            support: support,
-                            config: config,
-                            context: context
-                        }).init(config.page);
-                    });
-                } else {
-                    mediator.emit('video:ads:finished', config, context);
-                }
-            });
         },
 
         cleanupCookies: function() {
@@ -554,7 +534,6 @@ define([
             modules.showToggles();
             modules.showRelativeDates();
             modules.transcludePopular();
-            modules.loadVideoAdverts(config);
             modules.initClickstream();
             modules.transcludeCommentCounts();
             modules.initLightboxGalleries();

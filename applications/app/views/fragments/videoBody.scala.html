@@ -16,7 +16,7 @@
                     <div class="u-responsive-ratio u-responsive-ratio--hd">
                         <video controls="controls" class="gu-video" @video.mainPicture.map{ img => poster="@Item620.bestFor(img)" }>
                         @video.encodings.map{ encoding =>
-                            <source src="@encoding.url" />
+                            <source src="@encoding.url" type="@encoding.format" />
                         }
 
                         @video.encodings.find(_.format == "video/mp4").map{ encoding =>

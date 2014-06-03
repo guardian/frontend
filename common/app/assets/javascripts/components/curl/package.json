@@ -1,6 +1,6 @@
 {
-	"name": "curl",
-	"version": "0.8.9",
+	"name": "curl-amd",
+	"version": "0.8.10",
 	"description": "curl.js is small, fast, extensible module loader that handles AMD, CommonJS Modules/1.1, CSS, HTML/text, and legacy scripts.",
 	"keywords": ["curl", "cujo", "amd", "loader", "module", "commonjs", "css", "html", "json"],
 	"licenses": [
@@ -30,7 +30,7 @@
 			"web": "http://hovercraftstudios.com"
 		}
 	],
-	"main": "./src/curl",
+	"main": "./dist/curl-for-ssjs/curl.js",
 	"directories": {
 		"test": "test"
 	},

@@ -8,6 +8,14 @@ domready(function () {
 })
 ```
 
+-------------------------
+## Deprecation Notice
+
+Compatibility with `IE6`, `IE7`, and `IE8` has been fully dropped. If your application requires this level of support, please use the [`0.3.0`](https://github.com/ded/domready/tree/v0.3.0) release.
+
+-------------------------
+
+
 ### Browser support
 
   * IE9+
