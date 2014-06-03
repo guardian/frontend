@@ -94,4 +94,12 @@ $disc-respond-when: rightCol;
             width: gs-span(8)
         ));
     }
+
+    blockquote {
+        @include rem((
+            margin: $gs-baseline $gs-gutter,
+            padding-left: $gs-gutter/2
+        ));
+        border-left: 3px solid transparentize($c-neutral1, .75);
+    }
 }
