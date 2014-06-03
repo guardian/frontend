@@ -45,26 +45,22 @@ define([
         }
     };
 
-    ArticleBodyAdverts.prototype.insertAd = function() {
-        this.insertAdAtP(spacefinder.getParaWithSpace(300, 350, 75));
-    };
-
     ArticleBodyAdverts.prototype.init = function() {
         var boundInit = function(){
             var breakpoint  = detect.getBreakpoint();
 
             if((/wide|desktop/).test(breakpoint)) {
-                this.insertAd();
+                this.insertAdAtP(spacefinder.getParaWithSpace(300, 350, 75));
             }
-            else if((/tablet/).test(breakpoint)) {
-                this.insertAd();
+            else if(breakpoint === 'tablet') {
+                this.insertAdAtP(spacefinder.getParaWithSpace(300, 350, 75));
                 if(window.innerWidth < 900) {
-                    this.insertAd();
+                    this.insertAdAtP(spacefinder.getParaWithSpace(300, 350, 75));
                 }
             }
-            else if((/mobile/).test(breakpoint)) {
-                this.insertAd();
-                this.insertAd();
+            else if(breakpoint === 'mobile') {
+                this.insertAdAtP(spacefinder.getParaWithSpace(150, 350, 75));
+                this.insertAdAtP(spacefinder.getParaWithSpace(150, 350, 75));
             }
         };
         deferToLoad(boundInit.bind(this));
