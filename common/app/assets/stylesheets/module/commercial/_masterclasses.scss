@@ -165,7 +165,7 @@
 
 /* fronts */
 .facia-container--layout-front .commercial--masterclasses {
-    .commercial__body {
+    .commercial__body.container__body {
         padding-left: 0;
     }
     @include mq(desktop) {
@@ -213,7 +213,27 @@
     }
     
     &.commercial--high {
+        @include mq(desktop) {
+            .commercial__relevance-high,
+            .commercial__relevance-low,
+            .lineitem {
+                width: 50%;
+            }
+            .lineitem {
+                &:nth-child(n+2) {
+                    display: block;
+                }
+            }
+            .commercial__relevance-title-low {
+                @include rem((
+                    padding-left: $gs-gutter/2
+                ));
+            }
+        }
         @include mq(faciaLeftCol) {
+            .commercial__head {
+                padding-left: 0;
+            }
             .commercial--masterclasses__class {
                 width: 50%;
             }
@@ -281,6 +301,11 @@
                 @include rem((
                     bottom: $gs-baseline,
                     left: $gs-gutter
+                ));
+            }
+            .commercial__relevance-title-low {
+                @include rem((
+                    padding-left: $gs-gutter/2
                 ));
             }
         }
