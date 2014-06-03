@@ -1,12 +1,12 @@
 package performance
 
 import org.joda.time.DateTime
-import common.ExecutionContexts
+import common.{SimpleCountMetric, ExecutionContexts}
 import implicits.Dates
-import shade.memcached.{Configuration => MemcachedConf, Codec, Memcached}
+import shade.memcached.{Configuration => MemcachedConf, Memcached}
 import conf.Configuration
 import scala.concurrent.Future
-import scala.concurrent.duration.{FiniteDuration, Duration}
+import scala.concurrent.duration.FiniteDuration
 import shade.memcached.MemcachedCodecs._
 
 sealed trait CacheResponse[A] {
@@ -19,6 +19,12 @@ case class CacheMiss[A](get: A) extends CacheResponse[A]
 
 case class StaleWrapper[A](insertedAt: DateTime, response: A)
 
+case class CacheMetrics(
+  misses: SimpleCountMetric,
+  hits: SimpleCountMetric,
+  stales: SimpleCountMetric
+)
+
 object MemcachedStaleCache extends ExecutionContexts with Dates {
   lazy val host = Configuration.memcached.host.head
   lazy val memcached = Memcached(MemcachedConf(host), actorSystem.scheduler, memcachedExecutionContext)
@@ -28,7 +34,8 @@ object MemcachedStaleCache extends ExecutionContexts with Dates {
       staleAfter: FiniteDuration,
       invalidAfter: FiniteDuration
   )(f: => Future[A]): Future[CacheResponse[A]] = {
-    require(invalidAfter gt staleAfter, "Stale after duration () must be less than or equal to ")
+    require(invalidAfter gt staleAfter, s"Stale after duration ($staleAfter) must be less than or equal to invalid " +
+      s"after duration ($invalidAfter)")
 
     implicit val staleWrapperCodec = AnyRefBinaryCodec[StaleWrapper[A]]
 
@@ -53,5 +60,22 @@ object MemcachedStaleCache extends ExecutionContexts with Dates {
       case None =>
         triggerRequest().map(CacheMiss.apply)
     }
+  }
+
+  def cacheWithMetrics[A](
+    key: String,
+    staleAfter: FiniteDuration,
+    invalidAfter: FiniteDuration,
+    metrics: CacheMetrics
+  )(f: => Future[A]) = {
+    val response = cache(key, staleAfter, invalidAfter)(f)
+
+    response onSuccess {
+      case CacheHit(_) => metrics.hits.increment()
+      case CacheMiss(_) => metrics.misses.increment()
+      case CacheStale(_) => metrics.stales.increment()
+    }
+
+    response.map(_.get)
   }
 }

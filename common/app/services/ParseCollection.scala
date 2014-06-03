@@ -11,10 +11,10 @@ import contentapi.QueryDefaults
 import scala.util.Try
 import org.joda.time.DateTime
 import performance._
-import scala.Some
 import performance.CacheHit
 import play.api.libs.ws.Response
 import play.api.libs.json.JsObject
+import scala.concurrent.duration._
 
 object Path {
   def unapply[T](uri: String) = Some(uri.split('?')(0))
@@ -61,7 +61,9 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
       collectionMeta <- getCollectionMeta(response).fallbackTo(Future.successful(CollectionMeta.empty))
       displayName    <- parseDisplayName(response).fallbackTo(Future.successful(None))
       href           <- parseHref(response).fallbackTo(Future.successful(None))
-      contentApiList <- executeContentApiQuery(config.contentApiQuery, edition)
+      contentApiList <- config.contentApiQuery.filter(_.nonEmpty)
+        .map(executeContentApiQuery(_, edition))
+        .getOrElse(Future.successful(Result(Nil, Nil, Nil, Nil)))
     } yield Collection(
       collectionList,
       contentApiList.editorsPicks,
@@ -143,7 +145,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
   }
 
   def getArticles(collectionItems: Seq[CollectionItem], edition: Edition): Future[List[Content]]
-  = getArticles(collectionItems, edition, hasParent=false)
+    = getArticles(collectionItems, edition, hasParent=false)
 
   //hasParent is here to break out of the recursive loop and make sure we only go one deep
   def getArticles(collectionItems: Seq[CollectionItem], edition: Edition, hasParent: Boolean): Future[List[Content]] = {
@@ -229,49 +231,58 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
       .map(json => CollectionItem((json \ "id").as[String], (json \ "meta").asOpt[Map[String, JsValue]], (json \ "frontPublicationDate").asOpt[DateTime]))
     ).getOrElse(Nil)
 
-  def executeContentApiQuery(s: Option[String], edition: Edition): Future[Result] = s filter(_.nonEmpty) map { queryString =>
-    val queryParams: Map[String, String] = QueryParams.get(queryString).mapValues{_.mkString("")}
-    val queryParamsWithEdition = queryParams + ("edition" -> queryParams.getOrElse("edition", Edition.defaultEdition.id))
+  def executeContentApiQuery(queryString: String, edition: Edition): Future[Result] = {
+    MemcachedStaleCache.cacheWithMetrics(
+      Digests.sha512(queryString),
+      1.minute,
+      1.hour,
+      FaciaToolMetrics.ContentApiCacheMetrics
+    ) {
+      val queryParams: Map[String, String] = QueryParams.get(queryString).mapValues {
+        _.mkString("")
+      }
+      val queryParamsWithEdition = queryParams + ("edition" -> queryParams.getOrElse("edition", Edition.defaultEdition.id))
 
-    val newSearch = queryString match {
-      case Path(Seg("search" ::  Nil)) => {
-        val search = ContentApi.search(edition)
-          .showElements("all")
-          .pageSize(20)
-        val newSearch = queryParamsWithEdition.foldLeft(search){
-          case (query, (key, value)) => query.stringParam(key, value)
-        }.showFields(showFieldsQuery)
-        newSearch.response map { r =>
-          Result(
-            curated           = Nil,
-            editorsPicks      = Nil,
-            mostViewed        = Nil,
-            contentApiResults = r.results.map(Content(_)).map(validateContent)
-          )
-        } recover executeContentApiQueryRecovery
+      val newSearch = queryString match {
+        case Path(Seg("search" :: Nil)) => {
+          val search = ContentApi.search(edition)
+            .showElements("all")
+            .pageSize(20)
+          val newSearch = queryParamsWithEdition.foldLeft(search) {
+            case (query, (key, value)) => query.stringParam(key, value)
+          }.showFields(showFieldsQuery)
+          newSearch.response map { r =>
+            Result(
+              curated = Nil,
+              editorsPicks = Nil,
+              mostViewed = Nil,
+              contentApiResults = r.results.map(Content(_)).map(validateContent)
+            )
+          } recover executeContentApiQueryRecovery
+        }
+        case Path(id) => {
+          val search = ContentApi.item(id, edition)
+            .showElements("all")
+            .showEditorsPicks(true)
+            .pageSize(20)
+          val newSearch = queryParamsWithEdition.foldLeft(search) {
+            case (query, (key, value)) => query.stringParam(key, value)
+          }.showFields(showFieldsQuery)
+          newSearch.response map { r =>
+            Result(
+              curated = Nil,
+              editorsPicks = r.editorsPicks.map(Content(_)).map(validateContent),
+              mostViewed = r.mostViewed.map(Content(_)).map(validateContent),
+              contentApiResults = r.results.map(Content(_)).map(validateContent)
+            )
+          } recover executeContentApiQueryRecovery
+        }
       }
-      case Path(id)  => {
-        val search = ContentApi.item(id, edition)
-          .showElements("all")
-          .showEditorsPicks(true)
-          .pageSize(20)
-        val newSearch = queryParamsWithEdition.foldLeft(search){
-          case (query, (key, value)) => query.stringParam(key, value)
-        }.showFields(showFieldsQuery)
-        newSearch.response map { r =>
-          Result(
-            curated           = Nil,
-            editorsPicks      = r.editorsPicks.map(Content(_)).map(validateContent),
-            mostViewed        = r.mostViewed.map(Content(_)).map(validateContent),
-            contentApiResults = r.results.map(Content(_)).map(validateContent)
-          )
-        } recover executeContentApiQueryRecovery
-      }
+
+      newSearch onFailure { case t: Throwable => log.warn("Content API Query failed: %s: %s".format(queryString, t.toString))}
+      newSearch
     }
-
-    newSearch onFailure {case t: Throwable => log.warn("Content API Query failed: %s: %s".format(queryString, t.toString))}
-    newSearch
-  } getOrElse Future.successful(Result(Nil, Nil, Nil, Nil))
+  }
 
   def validateContent(content: Content): Content = {
     Try {

@@ -32,6 +32,8 @@ object Frontend extends Build with Prototypes {
       "rome" % "rome" % "1.0",
       "org.rometools" % "rome-modules" % "1.0",
 
+      "org.bouncycastle" % "bcprov-jdk16" % "1.46",
+
       filters
     )
   )

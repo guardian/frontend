@@ -10,6 +10,7 @@ import java.util.concurrent.atomic.AtomicLong
 import com.amazonaws.services.cloudwatch.model.Dimension
 import common.FaciaToolMetrics.InvalidContentExceptionMetric
 import scala.collection.JavaConversions._
+import performance.CacheMetrics
 
 trait TimingMetricLogging extends Logging { self: TimingMetric =>
   override def measure[T](block: => T): T = {
@@ -366,6 +367,29 @@ object FaciaToolMetrics {
     "Facia SEO Request Failure count",
     "Number of times facia-tool has failed to made the request for SEO purposes of webTitle and section"
   )
+
+  object ContentApiCacheHit extends SimpleCountMetric(
+    "facia-content-api-cache",
+    "facia-content-api-cache-hit",
+    "Facia Content API Cache Hits",
+    "Number of queries to Content API that were served by Memcached"
+  )
+
+  object ContentApiCacheMiss extends SimpleCountMetric(
+    "facia-content-api-cache",
+    "facia-content-api-cache-miss",
+    "Facia Content API Cache Misses",
+    "Number of queries to Content API that had to go to origin"
+  )
+
+  object ContentApiCacheStale extends SimpleCountMetric(
+    "facia-content-api-cache",
+    "facia-content-api-cache-stale",
+    "Facia Content API Cache Stales",
+    "Number of queries to Content API that were served by Memcached but triggered an update"
+  )
+
+  val ContentApiCacheMetrics = CacheMetrics(ContentApiCacheMiss, ContentApiCacheHit, ContentApiCacheStale)
 
   val all: Seq[Metric] = Seq(
     ApiUsageCount, ProxyCount, ExpiredRequestCount,
