@@ -4,6 +4,8 @@ import com.gu.test.helpers.PageHelper;
 import com.gu.test.pages.Article;
 import org.junit.*;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.Wait;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import static com.gu.test.WebDriverFactory.createWebDriver;
 
@@ -20,9 +22,9 @@ public class ArticleComponentTest {
     }
 
 
-    @Ignore  //while fixing
     @Test
     public void articleHasMostPopularSidebar() {
+        Wait<WebDriver> wait = new WebDriverWait(driver, 30);
         Assert.assertTrue("Failure: Related content container missing", testArticle.hasMostPopularRight());
     }
 
