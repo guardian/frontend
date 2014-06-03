@@ -206,6 +206,42 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
     }
   }
 
+  private def getContentApiItemFromCollectionItem(collectionItem: CollectionItem, edition: Edition): Future[Option[com.gu.openplatform.contentapi.model.Content]] = {
+    import scala.concurrent.duration._
+
+    lazy val response = ContentApi.item(collectionItem.id, edition).showFields(showFieldsWithBodyQuery)
+      .response
+      .map(Option.apply)
+      .recover {
+      case apiError: com.gu.openplatform.contentapi.ApiError if apiError.httpStatus == 404 => {
+        log.warn(s"Content API Error: 404 for ${collectionItem.id}")
+        None
+      }
+      case apiError: com.gu.openplatform.contentapi.ApiError if apiError.httpStatus == 410 => {
+        log.warn(s"Content API Error: 410 for ${collectionItem.id}")
+        None
+      }
+      case jsonParseError: net.liftweb.json.JsonParser.ParseException => {
+        ContentApiMetrics.ContentApiJsonParseExceptionMetric.increment()
+        throw jsonParseError
+      }
+      case mappingException: net.liftweb.json.MappingException => {
+        ContentApiMetrics.ContentApiJsonMappingExceptionMetric.increment()
+        throw mappingException
+      }
+      case t: Throwable => {
+        log.warn("%s: %s".format(collectionItem.id, t.toString))
+        throw t
+      }
+    }
+
+    MemcachedStaleCache.cache(collectionItem.id, 1.minute, 1.hour)(response).map {
+      case CacheHit(r)    => r
+      case CacheStale(r)  => r
+      case CacheMiss(r)   => r
+    }.map(_.flatMap(_.content))
+  }
+
   private def retrieveSupportingLinks(collectionItem: CollectionItem): List[CollectionItem] =
     collectionItem.metaData.map(_.get("supporting").flatMap(_.asOpt[List[JsValue]]).getOrElse(Nil)
       .map(json => CollectionItem((json \ "id").as[String], (json \ "meta").asOpt[Map[String, JsValue]], (json \ "frontPublicationDate").asOpt[DateTime]))
