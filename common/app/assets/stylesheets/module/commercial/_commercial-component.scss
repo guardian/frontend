@@ -21,7 +21,7 @@ $comercial-comp-baseline: 10px;
         }
         .commercial__body {
             @include rem((
-                padding-left: 20px
+                padding-left: $gs-gutter
             ));
         }
     }
@@ -42,7 +42,7 @@ $comercial-comp-baseline: 10px;
             }
             .commercial__body {
                 @include rem((
-                    padding-left: 20px
+                    padding-left: $gs-gutter
                 ));
             }
             .commercial__relevance-high {
