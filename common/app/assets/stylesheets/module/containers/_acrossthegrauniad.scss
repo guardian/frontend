@@ -29,7 +29,7 @@
         display: block;
     }
     .linkslist__item {
-        border-top: 0px solid #000000;
+      border-top-width: 0;
     }
     .across__title {
         border-top: 1px solid $c-neutral5;
@@ -55,7 +55,7 @@
     }
     .linkslist__image-container {
         display: none;
-        @include mq($from: desktop){
+        @include mq(desktop) {
             display: block;
         }
     }
