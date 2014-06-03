@@ -25,7 +25,9 @@ object MasterClassAgent extends AdAgent[MasterClass] with ExecutionContexts {
   override def defaultAds = currentAds take 4
 
   override def adsTargetedAt(segment: Segment) = {
-    super.adsTargetedAt(segment).sortBy(_.eventBriteEvent.startDate.getMillis)
+    val targetedAds = currentAds filter (_.isTargetedAt(segment))
+    val adsToShow = (targetedAds ++ defaultAds) take 4
+    adsToShow sortBy(_.eventBriteEvent.startDate.getMillis)
   }
 
   def wrapEventbriteWithContentApi(eventbriteEvents: Seq[EventbriteMasterClass]): Future[Seq[MasterClass]] = {
@@ -48,7 +50,7 @@ object MasterClassAgent extends AdAgent[MasterClass] with ExecutionContexts {
 
     def populateKeywordIds(events: Seq[EventbriteMasterClass]):Seq[EventbriteMasterClass] = {
       val populated = events map { event =>
-        val eventKeywordIds = event.tags.flatMap(MasterClassTagsAgent.forTag).distinct
+        val eventKeywordIds = MasterClassTagsAgent.forTag(event.name)
         event.copy(keywordIds = eventKeywordIds)
       }
 
@@ -90,12 +92,13 @@ object MasterClassTagsAgent extends ExecutionContexts with Logging {
       if (currentAds == MasterClassAgent.placeholder) {
         defaultTags
       } else {
-        currentAds.flatMap(_.eventBriteEvent.tags).distinct
+        // use event title instead of tags because it's more informative
+        currentAds.map(_.eventBriteEvent.name).distinct
       }
     }
     Future.sequence {
       tags map { tag =>
-        Lookup.keyword("\"" + tag + "\"") map { keywords =>
+        Lookup.keyword(tag) map { keywords =>
           tagKeywordIds.alter(_.updated(tag, keywords.map(_.id)))(2.seconds)
         }
       }

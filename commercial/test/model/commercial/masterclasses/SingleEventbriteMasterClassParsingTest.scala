@@ -56,7 +56,7 @@ class SingleEventbriteMasterClassParsingTest extends FlatSpec with Matchers {
     val event = Json.parse(json)
     val tags = EventbriteMasterClass(event).get.tags
 
-    tags should be(Seq("travel", "travel writing", "short course"))
+    tags should be(Seq("travel", "travel writing"))
   }
 
   "Generated masterclass object" should "have a desription text that is truncated to 250 chars" in {

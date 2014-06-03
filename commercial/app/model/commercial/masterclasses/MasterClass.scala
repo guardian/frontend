@@ -33,7 +33,7 @@ object EventbriteMasterClass {
     val tags = {
       for {
         rawTag <- (block \ "tags").as[String].split(",")
-        tag = rawTag.toLowerCase.replace("course", "").replace("courses", "").trim()
+        tag = rawTag.toLowerCase.replaceAll("courses?", "").trim()
         if tag.nonEmpty && !ignoredTags.exists(tag.contains)
       } yield tag
     }.toSeq
