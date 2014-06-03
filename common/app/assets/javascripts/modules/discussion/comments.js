@@ -346,6 +346,7 @@ Comments.prototype.renderComments = function(resp) {
 Comments.prototype.showHiddenComments = function(e) {
     if (e) { e.preventDefault(); }
     this.removeState('shut');
+    this.removeState('partial');
     this.emit('first-load');
 };
 
