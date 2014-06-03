@@ -307,6 +307,22 @@
         }
         @include mq(wide) {
             clear: left;
+
+            .has-page-skin & {
+                margin-left: 50%;
+                width: auto;
+                float: none;
+                @include rem((
+                    margin-top: -$gs-row-height
+                ));
+
+                .ad-slot--paid-for-badge__link {
+                    float: right;
+                    @include rem((
+                        margin-top: get-line-height($fs-data, 3)*-1
+                    ));
+                }
+            }
         }
     }
 }
