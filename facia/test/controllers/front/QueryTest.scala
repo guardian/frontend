@@ -43,12 +43,12 @@ class QueryTest extends FlatSpec with Matchers with ScalaFutures {
 
   ignore should "return Nil for 4xx responses" in Fake {
     val query = new TestParseCollection(403)
-    whenReady(query.getCollection("uk", Config("uk", None, None, None), Uk, isWarmedUp=true)) { collection =>
+    whenReady(query.getCollection("uk", Config("uk", None, None, None), Uk)) { collection =>
       collection.items.length should be (0)
     }
 
     val query2 = new TestParseCollection(409)
-    whenReady(query2.getCollection("uk", Config("uk", None, None, None), Uk, isWarmedUp=true)) { collection =>
+    whenReady(query2.getCollection("uk", Config("uk", None, None, None), Uk)) { collection =>
       collection.items.length should be (0)
     }
   }
@@ -56,7 +56,7 @@ class QueryTest extends FlatSpec with Matchers with ScalaFutures {
   ignore should "contain an exception for 5xx responses when warmed up" in Fake {
     val query = new TestParseCollection(500)
     intercept[Exception] {
-      whenReady(query.getCollection("uk", Config("uk", None, None, None), Uk, isWarmedUp=true)){_=>}
+      whenReady(query.getCollection("uk", Config("uk", None, None, None), Uk)){_=>}
     }
   }
 
@@ -69,17 +69,17 @@ class QueryTest extends FlatSpec with Matchers with ScalaFutures {
 
   ignore should "return Nil for all other responses (3xx, 1xx)" in Fake {
     val query = new TestParseCollection(303)
-    whenReady(query.getCollection("uk", Config("uk", None, None, None), Uk, isWarmedUp=true)) { collection =>
+    whenReady(query.getCollection("uk", Config("uk", None, None, None), Uk)) { collection =>
       collection.items.length should be (0)
     }
 
     val query2 = new TestParseCollection(100)
-    whenReady(query2.getCollection("uk", Config("uk", None, None, None), Uk, isWarmedUp=true)) { collection =>
+    whenReady(query2.getCollection("uk", Config("uk", None, None, None), Uk)) { collection =>
       collection.items.length should be (0)
     }
 
     val query3 = new TestParseCollection(201)
-    whenReady(query3.getCollection("uk", Config("uk", None, None, None), Uk, isWarmedUp=true)) { collection =>
+    whenReady(query3.getCollection("uk", Config("uk", None, None, None), Uk)) { collection =>
       collection.items.length should be (0)
     }
   }
@@ -87,7 +87,7 @@ class QueryTest extends FlatSpec with Matchers with ScalaFutures {
   ignore should "return items for correct JSON" in Fake {
     val json = """{"id":"uk","live":[{"id":"world/2013/oct/10/guardian-nsa-spies"}],"lastUpdated":"2013-10-15T16:20:06.858+01:00","updatedBy":"Test","updatedEmail":"testing.test@guardian.co.uk","displayName":"Top Stories"}"""
     val query = new TestParseCollection(200, json)
-    whenReady(query.getCollection("uk", Config("uk", None, None, None), Uk, isWarmedUp=true)) { collection =>
+    whenReady(query.getCollection("uk", Config("uk", None, None, None), Uk)) { collection =>
       collection.items.length should be (1)
       collection.items.head.url should be ("/world/2013/oct/10/guardian-nsa-spies")
       collection.displayName should be (Some("Top Stories"))
