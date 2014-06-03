@@ -5,12 +5,16 @@ import common._
 import conf.{ContentApi, Configuration}
 import model.{Snap, Collection, Config, Content}
 import play.api.libs.json.Json._
-import play.api.libs.json.{JsObject, JsValue}
-import play.api.libs.ws.Response
+import play.api.libs.json.JsValue
 import scala.concurrent.Future
 import contentapi.QueryDefaults
 import scala.util.Try
 import org.joda.time.DateTime
+import performance._
+import scala.Some
+import performance.CacheHit
+import play.api.libs.ws.Response
+import play.api.libs.json.JsObject
 
 object Path {
   def unapply[T](uri: String) = Some(uri.split('?')(0))
@@ -160,30 +164,8 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
             } yield contentList :+ new Snap(collectionItem.id, supporting, collectionItem.webPublicationDate.getOrElse(DateTime.now), collectionItem.metaData.getOrElse(Map.empty))
           }
           else {
-            val response = ContentApi.item(collectionItem.id, edition).showFields(showFieldsWithBodyQuery).response
+            val content = getContentApiItemFromCollectionItem(collectionItem, edition)
 
-            val content = response.map(_.content).recover {
-              case apiError: com.gu.openplatform.contentapi.ApiError if apiError.httpStatus == 404 => {
-                log.warn(s"Content API Error: 404 for ${collectionItem.id}")
-                None
-              }
-              case apiError: com.gu.openplatform.contentapi.ApiError if apiError.httpStatus == 410 => {
-                log.warn(s"Content API Error: 410 for ${collectionItem.id}")
-                None
-              }
-              case jsonParseError: net.liftweb.json.JsonParser.ParseException => {
-                ContentApiMetrics.ContentApiJsonParseExceptionMetric.increment()
-                throw jsonParseError
-              }
-              case mappingException: net.liftweb.json.MappingException => {
-                ContentApiMetrics.ContentApiJsonMappingExceptionMetric.increment()
-                throw mappingException
-              }
-              case t: Throwable => {
-                log.warn("%s: %s".format(collectionItem.id, t.toString))
-                throw t
-              }
-            }
             supportingAsContent.onFailure {
               case t: Throwable => log.warn("Supporting links: %s: %s".format(collectionItem.id, t.toString))
             }
