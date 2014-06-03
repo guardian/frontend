@@ -18,7 +18,7 @@ object SanitizeInput {
     front.copy(
       title = front.title.map(fromString),
       webTitle = front.webTitle.map(fromString),
-      section = front.section.map(fromString),
+      navSection = front.navSection.map(fromString),
       description = front.description.map(fromString)
     )
 }

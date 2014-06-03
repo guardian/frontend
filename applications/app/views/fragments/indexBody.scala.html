@@ -1,6 +1,17 @@
 @(index: services.IndexPage)(implicit request: RequestHeader, templateDeduping: TemplateDeduping)
 
-<div data-link-name="Front" role="main" class="facia-container facia-container--layout-front @if(index.page.isAdvertisementFeature && !index.page.isSponsored){facia-container--advertisement-feature}">
+<div class="@RenderClasses(Map(
+        "facia-container" -> true,
+        "facia-container--layout-front" -> true,
+        "facia-container--advertisement-feature" -> (index.page.isAdvertisementFeature && !index.page.isSponsored)))"
+    data-link-name="Front"
+    role="main">
+
+    @if(index.page.hasPageSkin) {
+        <div class="page-skin-container">
+            @fragments.commercial.adSlot(name="pageskin", adType="page-skin", sizeMapping=Map("wide" -> Seq("1300,1200")), showLabel=false, refresh=false)
+        </div>
+    }
 
     @fragments.containers.tag(index.page, Collection(index.trails), NewsContainer(showMore = false), containerIndex = 0, pagination = index.page.pagination)(request, templateDeduping, Config(s"${index.page.id}/news/regular-stories", displayName = Some(index.page.webTitle)))
 

@@ -16,7 +16,8 @@ case class FaciaPage(
   def oldOrNewSeo[T](oldValue: => T, newValue: => T): T = if (isNewSeoOn) newValue else oldValue
 
   override lazy val description: Option[String] = oldOrNewSeo(frontPage.description, seoData.description)
-  override lazy val section: String = oldOrNewSeo(frontPage.section, seoData.section)
+  override lazy val section: String = navSection
+  lazy val navSection: String = oldOrNewSeo(frontPage.section, seoData.navSection)
   override lazy val analyticsName: String = oldOrNewSeo(frontPage.analyticsName, s"GFE:${seoData.webTitle.capitalize}")
   override lazy val webTitle: String = oldOrNewSeo(frontPage.webTitle, seoData.webTitle)
   override lazy val title: Option[String] = seoData.title

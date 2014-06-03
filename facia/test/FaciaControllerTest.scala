@@ -14,7 +14,7 @@ class FaciaControllerTest extends FlatSpec with Matchers with BeforeAndAfterAll 
 
   val responsiveRequest = FakeRequest().withHeaders("host" -> "www.theguardian.com")
 
-  ignore should "200 when content type is front" in Fake {
+  "FaciaController" should "200 when content type is front" in Fake {
     val result = FaciaController.renderFront("uk")(TestRequest())
     status(result) should be(200)
   }
@@ -65,5 +65,44 @@ class FaciaControllerTest extends FlatSpec with Matchers with BeforeAndAfterAll 
   ignore should "200 when hitting the front" in Fake {
     val result = FaciaController.renderFront("uk")(TestRequest())
     status(result) should be(200)
+  }
+
+  ignore should "serve RSS for a path it knows" in Fake {
+    val fakeRequest = FakeRequest("GET", "/uk/rss")
+
+    val result = FaciaController.renderFront("uk")(fakeRequest)
+    status(result) should be(200)
+    contentType(result) should be(Some("text/xml"))
+    contentAsString(result) should startWith("<?xml")
+  }
+
+  it should "serve an X-Accel-Redirect for something it doesn't know about" in {
+    val result = FaciaController.renderFront("film")(TestRequest()) //Film is actually a facia front ON PROD
+    status(result) should be(200)
+    header("X-Accel-Redirect", result) should be (Some("/applications/film"))
+  }
+
+  it should "serve an X-Accel-Redirect for /rss that it doesn't know about" in {
+    val fakeRequest = FakeRequest("GET", "/film/rss")
+
+    val result = FaciaController.renderFrontRss("film")(fakeRequest)
+    status(result) should be(200)
+    header("X-Accel-Redirect", result) should be (Some("/applications/film/rss"))
+  }
+
+  it should "keep query params for X-Accel-Redirect" in {
+    val fakeRequest = FakeRequest("GET", "/film?page=77")
+
+    val result = FaciaController.renderFront("film")(fakeRequest)
+    status(result) should be(200)
+    header("X-Accel-Redirect", result) should be (Some("/applications/film?page=77"))
+  }
+
+  it should "keep query params for X-Accel-Redirect with RSS" in {
+    val fakeRequest = FakeRequest("GET", "/film/rss?page=77")
+
+    val result = FaciaController.renderFrontRss("film")(fakeRequest)
+    status(result) should be(200)
+    header("X-Accel-Redirect", result) should be (Some("/applications/film/rss?page=77"))
   }
 }

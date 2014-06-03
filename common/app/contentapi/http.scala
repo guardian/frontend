@@ -33,9 +33,8 @@ class WsHttp(val httpTimingMetric: TimingMetric, val httpTimeoutMetric: SimpleCo
 
     // record metrics
     response.onSuccess {
-      case r if r.status == 404 =>
-        ContentApi404Metric.increment()
-        httpTimingMetric.recordTimeSpent(currentTimeMillis - start)
+      case r if r.status == 404 => ContentApi404Metric.increment()
+      case r if r.status == 200 => httpTimingMetric.recordTimeSpent(currentTimeMillis - start)
     }
 
     response.onFailure {

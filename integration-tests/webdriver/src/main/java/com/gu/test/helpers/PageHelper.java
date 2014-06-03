@@ -2,6 +2,7 @@ package com.gu.test.helpers;
 
 import com.gu.test.pages.Article;
 import com.gu.test.pages.FrontPage;
+import com.gu.test.pages.LiveBlog;
 import org.openqa.selenium.WebDriver;
 
 public class PageHelper {
@@ -28,6 +29,12 @@ public class PageHelper {
         driver.get(this.baseUrl + article + adsOff);
         WaitHelper.waitForArticleLoad(driver);
         return new Article(driver);
+    }
+
+    public LiveBlog goToLiveBlog(String blog) {
+        driver.get(this.baseUrl + blog);
+        WaitHelper.waitForArticleLoad(driver);
+        return new LiveBlog(driver);
     }
 
     public FrontPage goToFrontsForTracking() {

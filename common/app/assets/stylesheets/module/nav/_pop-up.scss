@@ -103,7 +103,7 @@
         right: auto;
         top: -1px;
         @include rem((
-            left: 303px,
+            left: 319px,
             width: gs-span(3)
         ));
     }
@@ -161,7 +161,7 @@
 .nav-popup--profile-docked-left {
     @include mq(tablet) {
         @include rem((
-            left: $gs-gutter/2
+            left: $gs-gutter
         ));
     }
 }

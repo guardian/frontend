@@ -22,7 +22,12 @@
         "beaconUrl": "@Configuration.debug.beaconUrl",
         "renderTime": "@{(new DateTime).toISODateTimeNoMillisString}",
         "isSSL": @Configuration.environment.secure,
-        "assetsPath": "@Configuration.assets.path"
+        "assetsPath": "@Configuration.assets.path",
+        "hasPageSkin": @item.hasPageSkin,
+        "shouldHideAdverts": @item match {
+            case c: model.Content if c.shouldHideAdverts => {true}
+            case _                                       => {false}
+        }
     },
     "switches" : { @{Html(conf.Switches.all.map{ switch =>
             s""""${JavaScriptVariableName(switch.name)}":${switch.isSwitchedOn}"""

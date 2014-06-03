@@ -1,0 +1,611 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":964,
+    "startIndex":1,
+    "pageSize":1,
+    "currentPage":1,
+    "pages":964,
+    "orderBy":"newest",
+    "tag":{
+      "id":"fashion/fashion-blog",
+      "type":"blog",
+      "webTitle":"Fashion blog",
+      "webUrl":"http://www.theguardian.com/fashion/fashion-blog",
+      "apiUrl":"http://content.guardianapis.com/fashion/fashion-blog",
+      "sectionId":"fashion",
+      "sectionName":"Fashion",
+      "references":[]
+    },
+    "results":[{
+      "id":"fashion/fashion-blog/2014/may/14/how-should-older-women-dress-for-a-job",
+      "sectionId":"fashion",
+      "sectionName":"Fashion",
+      "webPublicationDate":"2014-05-14T14:29:53Z",
+      "webTitle":"How should older women dress to get a job – and what if we break the rules?",
+      "webUrl":"http://www.theguardian.com/fashion/fashion-blog/2014/may/14/how-should-older-women-dress-for-a-job",
+      "apiUrl":"http://content.guardianapis.com/fashion/fashion-blog/2014/may/14/how-should-older-women-dress-for-a-job",
+      "fields":{
+        "trailText":"<p><strong>Invisible Woman:</strong> Employers have very definite ideas about what we should wear - not too old and not too young. But once we've got over our anger about this, we should get creative</p>",
+        "headline":"How should older women dress to get a job – and what if we break the rules?",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3p8b8",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/14/1400069307039/Angela-Ahrendts-006.jpg",
+        "wordcount":"723",
+        "commentable":"true",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2014-05-21T14:29:53Z"
+      },
+      "tags":[{
+        "id":"fashion/series/vintage-years",
+        "type":"series",
+        "webTitle":"Vintage years",
+        "webUrl":"http://www.theguardian.com/fashion/series/vintage-years",
+        "apiUrl":"http://content.guardianapis.com/fashion/series/vintage-years",
+        "sectionId":"fashion",
+        "sectionName":"Fashion",
+        "references":[]
+      },{
+        "id":"fashion/fashion-blog",
+        "type":"blog",
+        "webTitle":"Fashion blog",
+        "webUrl":"http://www.theguardian.com/fashion/fashion-blog",
+        "apiUrl":"http://content.guardianapis.com/fashion/fashion-blog",
+        "sectionId":"fashion",
+        "sectionName":"Fashion",
+        "references":[]
+      },{
+        "id":"profile/invisible-woman",
+        "type":"contributor",
+        "webTitle":"Invisible Woman",
+        "webUrl":"http://www.theguardian.com/profile/invisible-woman",
+        "apiUrl":"http://content.guardianapis.com/profile/invisible-woman",
+        "bio":"<p>Helen Walmsley-Johnson, writing under the name Invisible Woman, may have many years behind her, but she isn't ready to hang up her love of style just yet. She writes about fashion for older women</p>",
+        "r2ContributorId":"46686",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/3/19/1395232487248/HelenWalmsleyJohnson.jpg",
+        "references":[]
+      },{
+        "id":"fashion/fashion",
+        "type":"keyword",
+        "webTitle":"Fashion",
+        "webUrl":"http://www.theguardian.com/fashion/fashion",
+        "apiUrl":"http://content.guardianapis.com/fashion/fashion",
+        "sectionId":"fashion",
+        "sectionName":"Fashion",
+        "references":[]
+      },{
+        "id":"lifeandstyle/lifeandstyle",
+        "type":"keyword",
+        "webTitle":"Life and style",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/lifeandstyle",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/lifeandstyle",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"lifeandstyle/women",
+        "type":"keyword",
+        "webTitle":"Women",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/women",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/women",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"money/work-and-careers",
+        "type":"keyword",
+        "webTitle":"Work & careers",
+        "webUrl":"http://www.theguardian.com/money/work-and-careers",
+        "apiUrl":"http://content.guardianapis.com/money/work-and-careers",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"money/money",
+        "type":"keyword",
+        "webTitle":"Money",
+        "webUrl":"http://www.theguardian.com/money/money",
+        "apiUrl":"http://content.guardianapis.com/money/money",
+        "sectionId":"money",
+        "sectionName":"Money",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-436890281",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/14/1400069300268/Angela-Ahrendts-001.jpg",
+          "typeData":{
+            "source":"Bloomberg via Getty Images",
+            "altText":"Angela Ahrendts",
+            "height":"54",
+            "credit":"Bloomberg via Getty Images",
+            "caption":"Angela Ahrendts of Burberry: dressed for business. Photograph: Bloomberg via Getty Images",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/14/1400069301472/Angela-Ahrendts-002.jpg",
+          "typeData":{
+            "source":"Bloomberg via Getty Images",
+            "altText":"Angela Ahrendts",
+            "height":"340",
+            "credit":"Bloomberg via Getty Images",
+            "caption":"Angela Ahrendts of Burberry: dressed for business. Photograph: Bloomberg via Getty Images",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/14/1400069302620/Angela-Ahrendts-003.jpg",
+          "typeData":{
+            "source":"Bloomberg via Getty Images",
+            "altText":"Angela Ahrendts",
+            "height":"130",
+            "credit":"Bloomberg via Getty Images",
+            "caption":"Angela Ahrendts of Burberry: dressed for business. Photograph: Bloomberg via Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/14/1400069303800/Angela-Ahrendts-004.jpg",
+          "typeData":{
+            "source":"Bloomberg via Getty Images",
+            "altText":"Angela Ahrendts",
+            "height":"720",
+            "credit":"Bloomberg via Getty Images",
+            "caption":"Angela Ahrendts of Burberry: dressed for business. Photograph: Bloomberg via Getty Images",
+            "width":"1280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/14/1400069305357/Angela-Ahrendts-005.jpg",
+          "typeData":{
+            "source":"Bloomberg via Getty Images",
+            "altText":"Angela Ahrendts",
+            "height":"1536",
+            "credit":"Bloomberg via Getty Images",
+            "caption":"Angela Ahrendts of Burberry: dressed for business. Photograph: Bloomberg via Getty Images",
+            "width":"2048"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/14/1400069307039/Angela-Ahrendts-006.jpg",
+          "typeData":{
+            "source":"Bloomberg via Getty Images",
+            "altText":"Angela Ahrendts",
+            "height":"84",
+            "credit":"Bloomberg via Getty Images",
+            "caption":"Angela Ahrendts of Burberry: dressed for business. Photograph: Bloomberg via Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/14/1400069308201/Angela-Ahrendts-007.jpg",
+          "typeData":{
+            "source":"Bloomberg via Getty Images",
+            "altText":"Angela Ahrendts",
+            "height":"132",
+            "credit":"Bloomberg via Getty Images",
+            "caption":"Angela Ahrendts of Burberry: dressed for business. Photograph: Bloomberg via Getty Images",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/14/1400069309332/Angela-Ahrendts-008.jpg",
+          "typeData":{
+            "source":"Bloomberg via Getty Images",
+            "altText":"Angela Ahrendts",
+            "height":"168",
+            "credit":"Bloomberg via Getty Images",
+            "caption":"Angela Ahrendts of Burberry: dressed for business. Photograph: Bloomberg via Getty Images",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/14/1400069310481/Angela-Ahrendts-009.jpg",
+          "typeData":{
+            "source":"Bloomberg via Getty Images",
+            "altText":"Angela Ahrendts",
+            "height":"180",
+            "credit":"Bloomberg via Getty Images",
+            "caption":"Angela Ahrendts of Burberry: dressed for business. Photograph: Bloomberg via Getty Images",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/14/1400069311696/Angela-Ahrendts-010.jpg",
+          "typeData":{
+            "source":"Bloomberg via Getty Images",
+            "altText":"Angela Ahrendts",
+            "height":"228",
+            "credit":"Bloomberg via Getty Images",
+            "caption":"Angela Ahrendts of Burberry: dressed for business. Photograph: Bloomberg via Getty Images",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/14/1400069312884/Angela-Ahrendts-011.jpg",
+          "typeData":{
+            "source":"Bloomberg via Getty Images",
+            "altText":"Angela Ahrendts",
+            "height":"276",
+            "credit":"Bloomberg via Getty Images",
+            "caption":"Angela Ahrendts of Burberry: dressed for business. Photograph: Bloomberg via Getty Images",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/14/1400069314061/Angela-Ahrendts-012.jpg",
+          "typeData":{
+            "source":"Bloomberg via Getty Images",
+            "altText":"Angela Ahrendts",
+            "height":"372",
+            "credit":"Bloomberg via Getty Images",
+            "caption":"Angela Ahrendts of Burberry: dressed for business. Photograph: Bloomberg via Getty Images",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/14/1400069315647/Angela-Ahrendts-013.jpg",
+          "typeData":{
+            "source":"Bloomberg via Getty Images",
+            "altText":"Angela Ahrendts",
+            "height":"1116",
+            "credit":"Bloomberg via Getty Images",
+            "caption":"Angela Ahrendts of Burberry: dressed for business. Photograph: Bloomberg via Getty Images",
+            "width":"1860"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/14/1400069317717/Angela-Ahrendts-014.jpg",
+          "typeData":{
+            "source":"Bloomberg via Getty Images",
+            "altText":"Angela Ahrendts",
+            "height":"1536",
+            "credit":"Bloomberg via Getty Images",
+            "caption":"Angela Ahrendts of Burberry: dressed for business. Photograph: Bloomberg via Getty Images",
+            "width":"2560"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/14/1400069312884/Angela-Ahrendts-011.jpg",
+          "typeData":{
+            "source":"Bloomberg via Getty Images",
+            "altText":"Angela Ahrendts",
+            "height":"276",
+            "credit":"Bloomberg via Getty Images",
+            "caption":"Angela Ahrendts of Burberry: dressed for business. Photograph: Bloomberg via Getty Images",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-436890282",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/14/1400069307039/Angela-Ahrendts-006.jpg",
+          "typeData":{
+            "source":"Bloomberg via Getty Images",
+            "altText":"Angela Ahrendts",
+            "height":"84",
+            "credit":"Bloomberg via Getty Images",
+            "caption":"Angela Ahrendts of Burberry: dressed for business. Photograph: Bloomberg via Getty Images",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/5/14/1400069314061/Angela-Ahrendts-012.jpg",
+          "typeData":{
+            "source":"Bloomberg via Getty Images",
+            "altText":"Angela Ahrendts",
+            "height":"372",
+            "credit":"Bloomberg via Getty Images",
+            "caption":"Angela Ahrendts of Burberry: dressed for business. Photograph: Bloomberg via Getty Images",
+            "width":"620"
+          }
+        }]
+      }],
+      "references":[]
+    }],
+    "storyPackage":[],
+    "leadContent":[{
+      "id":"fashion/fashion-blog/2013/feb/12/london-fashion-week-rihanna-collection",
+      "sectionId":"fashion",
+      "sectionName":"Fashion",
+      "webPublicationDate":"2013-02-12T14:40:05Z",
+      "webTitle":"London fashion week: high-street brands hit the catwalk",
+      "webUrl":"http://www.theguardian.com/fashion/fashion-blog/2013/feb/12/london-fashion-week-rihanna-collection",
+      "apiUrl":"http://content.guardianapis.com/fashion/fashion-blog/2013/feb/12/london-fashion-week-rihanna-collection",
+      "fields":{
+        "trailText":"River Island is showing its first collection with Rihanna at London fashion week, while Whistles and H&amp;M will also debut collections during the coming weeks",
+        "headline":"London fashion week: high-street brands hit the catwalk",
+        "hasStoryPackage":"false",
+        "shortUrl":"http://gu.com/p/3dm6m",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Media/Columnists/Columnists/2013/2/12/1360674911020/Rihanna-005.jpg",
+        "wordcount":"450",
+        "commentable":"true",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-02-15T13:02:00Z"
+      },
+      "tags":[{
+        "id":"fashion/london-fashion-week",
+        "type":"keyword",
+        "webTitle":"London fashion week",
+        "webUrl":"http://www.theguardian.com/fashion/london-fashion-week",
+        "apiUrl":"http://content.guardianapis.com/fashion/london-fashion-week",
+        "sectionId":"fashion",
+        "sectionName":"Fashion",
+        "references":[]
+      },{
+        "id":"lifeandstyle/lifeandstyle",
+        "type":"keyword",
+        "webTitle":"Life and style",
+        "webUrl":"http://www.theguardian.com/lifeandstyle/lifeandstyle",
+        "apiUrl":"http://content.guardianapis.com/lifeandstyle/lifeandstyle",
+        "sectionId":"lifeandstyle",
+        "sectionName":"Life and style",
+        "references":[]
+      },{
+        "id":"fashion/fashion-weeks",
+        "type":"keyword",
+        "webTitle":"Fashion weeks",
+        "webUrl":"http://www.theguardian.com/fashion/fashion-weeks",
+        "apiUrl":"http://content.guardianapis.com/fashion/fashion-weeks",
+        "sectionId":"fashion",
+        "sectionName":"Fashion",
+        "references":[]
+      },{
+        "id":"fashion/fashion",
+        "type":"keyword",
+        "webTitle":"Fashion",
+        "webUrl":"http://www.theguardian.com/fashion/fashion",
+        "apiUrl":"http://content.guardianapis.com/fashion/fashion",
+        "sectionId":"fashion",
+        "sectionName":"Fashion",
+        "references":[]
+      },{
+        "id":"fashion/london-fashion-week-autumn-winter-2013",
+        "type":"keyword",
+        "webTitle":"London fashion week autumn/winter 2013",
+        "webUrl":"http://www.theguardian.com/fashion/london-fashion-week-autumn-winter-2013",
+        "apiUrl":"http://content.guardianapis.com/fashion/london-fashion-week-autumn-winter-2013",
+        "sectionId":"fashion",
+        "sectionName":"Fashion",
+        "references":[]
+      },{
+        "id":"tone/blog",
+        "type":"tone",
+        "webTitle":"Blogposts",
+        "webUrl":"http://www.theguardian.com/tone/blog",
+        "apiUrl":"http://content.guardianapis.com/tone/blog",
+        "references":[]
+      },{
+        "id":"fashion/fashion-blog",
+        "type":"blog",
+        "webTitle":"Fashion blog",
+        "webUrl":"http://www.theguardian.com/fashion/fashion-blog",
+        "apiUrl":"http://content.guardianapis.com/fashion/fashion-blog",
+        "sectionId":"fashion",
+        "sectionName":"Fashion",
+        "references":[]
+      },{
+        "id":"music/rihanna",
+        "type":"keyword",
+        "webTitle":"Rihanna",
+        "webUrl":"http://www.theguardian.com/music/rihanna",
+        "apiUrl":"http://content.guardianapis.com/music/rihanna",
+        "sectionId":"music",
+        "sectionName":"Music",
+        "references":[]
+      },{
+        "id":"tone/features",
+        "type":"tone",
+        "webTitle":"Features",
+        "webUrl":"http://www.theguardian.com/tone/features",
+        "apiUrl":"http://content.guardianapis.com/tone/features",
+        "references":[]
+      },{
+        "id":"profile/simonchilvers",
+        "type":"contributor",
+        "webTitle":"Simon Chilvers",
+        "webUrl":"http://www.theguardian.com/profile/simonchilvers",
+        "apiUrl":"http://content.guardianapis.com/profile/simonchilvers",
+        "bio":"<p>Simon Chilvers was the <a href=\"http://www.guardian.co.uk/lifeandstyle/fashion\">assistant fashion editor for the Guardian</a>. He is now men's style director of Matches fashion.</p>",
+        "r2ContributorId":"27806",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/10/17/1318855954420/simon-chilvers.jpg",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-403922603",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Media/Columnists/Columnists/2013/2/12/1360674906385/Rihanna-002.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Rihanna",
+            "height":"54",
+            "credit":"PR",
+            "caption":"Rihanna working on a collection for River Island and London Fashion Week",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Media/Columnists/Columnists/2013/2/12/1360674907828/Rihanna-003.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Rihanna",
+            "height":"340",
+            "credit":"PR",
+            "caption":"Rihanna working on a collection for River Island and London Fashion Week",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Media/Columnists/Columnists/2013/2/12/1360674909500/Rihanna-004.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Rihanna",
+            "height":"130",
+            "credit":"PR",
+            "caption":"Rihanna working on a collection for River Island and London Fashion Week",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Media/Columnists/Columnists/2013/2/12/1360674911020/Rihanna-005.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Rihanna",
+            "height":"84",
+            "credit":"PR",
+            "caption":"Rihanna working on a collection for River Island and London Fashion Week",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Media/Columnists/Columnists/2013/2/12/1360674912373/Rihanna-006.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Rihanna",
+            "height":"132",
+            "credit":"PR",
+            "caption":"Rihanna working on a collection for River Island and London Fashion Week",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Media/Columnists/Columnists/2013/2/12/1360674913761/Rihanna-007.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Rihanna",
+            "height":"168",
+            "credit":"PR",
+            "caption":"Rihanna working on a collection for River Island and London Fashion Week",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Media/Columnists/Columnists/2013/2/12/1360674915364/Rihanna-008.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Rihanna",
+            "height":"180",
+            "credit":"PR",
+            "caption":"Rihanna working on a collection for River Island and London Fashion Week",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Media/Columnists/Columnists/2013/2/12/1360674916975/Rihanna-009.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Rihanna",
+            "height":"228",
+            "credit":"PR",
+            "caption":"Rihanna working on a collection for River Island and London Fashion Week",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Media/Columnists/Columnists/2013/2/12/1360674918350/Rihanna-010.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Rihanna",
+            "height":"276",
+            "credit":"PR",
+            "caption":"Rihanna working on a collection for River Island and London Fashion Week",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Media/Columnists/Columnists/2013/2/12/1360674919845/Rihanna-011.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Rihanna",
+            "height":"372",
+            "credit":"PR",
+            "caption":"Rihanna working on a collection for River Island and London Fashion Week",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Media/Columnists/Columnists/2013/2/12/1360674918350/Rihanna-010.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Rihanna",
+            "height":"276",
+            "credit":"PR",
+            "caption":"Rihanna working on a collection for River Island and London fashion week",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-403922604",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Media/Columnists/Columnists/2013/2/12/1360674911020/Rihanna-005.jpg",
+          "typeData":{
+            "source":"PR",
+            "altText":"Rihanna",
+            "height":"84",
+            "credit":"PR",
+            "caption":"Rihanna working on a collection for River Island and London Fashion Week",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[]
+    }]
+  }
+}

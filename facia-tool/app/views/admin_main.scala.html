@@ -43,6 +43,8 @@
             define('config', function() {
                 return {
                     env: '@env.toLowerCase',
+                    editions: [@Html(Edition.all.map(_.id.toLowerCase).mkString("'","','", "'"))],
+                    navSections: [@Html(FaciaToolConfiguration.sectionsFromNav.mkString("'", "', '", "'"))],
                     email: '@identity.map(_.email).getOrElse("")'
                 }
             });
