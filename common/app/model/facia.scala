@@ -19,8 +19,12 @@ case class Config(
                    showTags: Boolean = false,
                    showSections: Boolean = false
                    ) {
+
   def isSponsored = DfpAgent.isSponsored(this)
+  def sponsoredKeyword = DfpAgent.sponsoredKeyword(this)
+
   def isAdvertisementFeature = DfpAgent.isAdvertisementFeature(this)
+  def advertisementFeatureKeyword = DfpAgent.advertisementFeatureKeyword(this)
 }
 
 object Config {

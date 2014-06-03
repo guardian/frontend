@@ -32,12 +32,16 @@ object DfpAgent extends ExecutionContexts with Logging {
     }
   }
 
-  private def isSponsoredContainer(config: Config, p: String => Boolean): Boolean = {
-    config.contentApiQuery.fold(false) { encodedQuery =>
+  private def containerSponsoredKeywords(config: Config, p: String => Boolean): Option[String] = {
+    config.contentApiQuery.flatMap { encodedQuery =>
       val query = URLDecoder.decode(encodedQuery, "utf-8")
       val tokens = query.split( """\?|&|=|\(|\)|\||\,""").map(_.replaceFirst(".*/", ""))
-      tokens exists p
+      tokens find p
     }
+  }
+
+  private def isSponsoredContainer(config: Config, p: String => Boolean): Boolean = {
+    containerSponsoredKeywords(config,p).isDefined
   }
 
   def isSponsored(content: Content): Boolean = isSponsored(content.keywords)
@@ -45,6 +49,8 @@ object DfpAgent extends ExecutionContexts with Logging {
   def isSponsored(section: Section): Boolean = isSponsored(section.id)
 
   def isSponsored(config: Config): Boolean = isSponsoredContainer(config, isSponsored)
+
+  def sponsoredKeyword(config: Config): Option[String] = containerSponsoredKeywords(config, isSponsored)
 
   def isSponsored(keywords: Seq[Tag]): Boolean = keywords.exists(keyword => isSponsored(keyword.id))
 
@@ -55,6 +61,9 @@ object DfpAgent extends ExecutionContexts with Logging {
   def isAdvertisementFeature(section: Section): Boolean = isAdvertisementFeature(section.id)
 
   def isAdvertisementFeature(config: Config): Boolean = isSponsoredContainer(config, isAdvertisementFeature)
+
+  def advertisementFeatureKeyword(config: Config): Option[String] =
+    containerSponsoredKeywords(config, isAdvertisementFeature)
 
   def isAdvertisementFeature(keywords: Seq[Tag]): Boolean =
     keywords.exists(keyword => isAdvertisementFeature(keyword.id))
