@@ -6,10 +6,10 @@
         @if(items.nonEmpty) {
             <section
                 class="@RenderClasses(Map(
-                    "container" -> true,
-                    "container--row-pattern" -> true,
-                    s"container--${style.containerType}" -> true,
-                    "js-container--toggle" -> (containerIndex > 0 && title.nonEmpty)))"
+                    ("container", true),
+                    ("container--row-pattern", true),
+                    (s"container--${style.containerType}", true),
+                    ("js-container--toggle", (containerIndex > 0 && title.nonEmpty))))"
                 data-link-name="block | @config.id"
                 data-id="@config.id"
                 data-type="@style.containerType"
