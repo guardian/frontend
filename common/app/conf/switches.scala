@@ -320,7 +320,7 @@ object Switches extends Collections {
 
   val ABHighRelevanceCommercialComponent = Switch("A/B Tests", "ab-high-relevance-commercial-component",
     "If this switch is turned on, run the HighRelevanceCommercialComponent A/B test.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 6, 5)
+    safeState = Off, sellByDate = new DateMidnight(2014, 6, 19)
   )
 
   val ABHideSupportingLinks = Switch("A/B Tests", "ab-hide-supporting-links",
