@@ -2,7 +2,7 @@
 @main(index.page, projectName = Option("facia")){  }{
     <div data-link-name="Front" role="main" class="facia-container facia-container--layout-front">
 
-        @fragments.containers.index(index.page, Collection(index.trails), NewsContainer(showMore = false), 0, index.date, nav)(request, templateDeduping, Config.emptyConfig)
+        @fragments.containers.index(Collection(index.trails), NewsContainer(showMore = false), 0, index.date, nav)(request, templateDeduping, Config.emptyConfig)
 
         <section class="no-indent-article__zone">
             @fragments.footballNav(index.page)
