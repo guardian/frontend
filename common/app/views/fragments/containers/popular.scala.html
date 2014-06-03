@@ -1,4 +1,4 @@
-@(page: MetaData, collection: Collection, style: Container, containerIndex: Int)(implicit request: RequestHeader, config: Config)
+@(collection: Collection, style: Container, containerIndex: Int)(implicit request: RequestHeader, config: Config)
 
 @defining((config.displayName.orElse(collection.displayName), config.href.orElse(collection.href))) { case (title, href) =>
 
