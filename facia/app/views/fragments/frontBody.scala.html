@@ -10,9 +10,7 @@
         role="main">
 
         @if(faciaPage.hasPageSkin) {
-            <div class="page-skin-container">
-                @fragments.commercial.adSlot(name="pageskin-inread", adType="page-skin", sizeMapping=Map("wide" -> Seq("1,1")), showLabel=false, refresh=false, outOfPage=true)
-            </div>
+            @fragments.commercial.adSlot(name="pageskin-inread", adType="page-skin", sizeMapping=Map("wide" -> Seq("1,1")), showLabel=false, refresh=false, outOfPage=true)
         }
 
         @defining(faciaPage.collections.filter(_._2.items.nonEmpty)) { collections =>

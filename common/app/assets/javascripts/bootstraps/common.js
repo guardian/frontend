@@ -56,7 +56,6 @@ define([
     'common/modules/identity/api',
     'common/modules/onward/more-tags',
     'common/modules/ui/smartAppBanner',
-    'common/modules/adverts/page-skin',
     'common/modules/adverts/badges'
 ], function (
     $,
@@ -114,7 +113,6 @@ define([
     id,
     MoreTags,
     smartAppBanner,
-    pageSkin,
     badges
 ) {
 
@@ -519,10 +517,6 @@ define([
             if(config.switches.smartBanner) {
                 smartAppBanner.init();
             }
-        },
-
-        pageSkin: function(config) {
-            pageSkin.init(config);
         }
     };
 
@@ -574,7 +568,6 @@ define([
             modules.repositionComments();
             modules.showMoreTagsLink();
             modules.showSmartBanner(config);
-            modules.pageSkin(config);
         }
         mediator.emit('page:common:ready', config, context);
     };

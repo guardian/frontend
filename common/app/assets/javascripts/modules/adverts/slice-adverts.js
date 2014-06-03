@@ -2,28 +2,29 @@ define([
     'common/$',
     'bonzo',
     'qwery',
-    'lodash/objects/assign',
+    'lodash/objects/defaults',
     'common/utils/template',
     'common/modules/adverts/dfp'
 ], function (
     $,
     bonzo,
     qwery,
-    _assign,
+    defaults,
     template,
     dfp
 ) {
 
     var adNames = ['inline1', 'inline2'];
 
-    function SliceAdverts(config) {
-        this.config = _assign(this.defaultConfig, config);
-    }
+    function SliceAdverts(c) {
 
-    SliceAdverts.prototype.defaultConfig = {
-        containerSelector: '.container',
-        sliceSelector: '.slice--ad-candidate'
-    };
+        this.config = defaults(c || {}, {
+            containerSelector: '.container',
+            sliceSelector: '.slice--ad-candidate',
+            page: {},
+            switches: {}
+        });
+    }
 
     SliceAdverts.prototype.init = function() {
         if (!this.config.switches.standardAdverts) {
@@ -36,8 +37,10 @@ define([
             containerGap = 2;
         // pull out ad slices which are have at least x containers between them
         while (index < containers.length) {
-            var $adSlice = $(this.config.sliceSelector, containers[index]);
-            if ($adSlice.length) {
+            var $adSlice = $(this.config.sliceSelector, containers[index]),
+                // don't display ad in the first container on the fronts
+                isFrontFirst = ['uk', 'us', 'au'].indexOf(this.config.page.pageId) > -1 && index === 0;
+            if ($adSlice.length && !isFrontFirst) {
                 adSlices.push($adSlice.first());
                 index += (containerGap + 1);
             } else {
