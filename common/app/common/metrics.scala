@@ -396,7 +396,8 @@ object FaciaToolMetrics {
     DraftPublishCount, ContentApiPutSuccess, ContentApiPutFailure,
     FrontPressSuccess, FrontPressFailure, FrontPressCronSuccess,
     FrontPressCronFailure, InvalidContentExceptionMetric,
-    ContentApiSeoRequestSuccess, ContentApiSeoRequestFailure
+    ContentApiSeoRequestSuccess, ContentApiSeoRequestFailure, ContentApiCacheHit,
+    ContentApiCacheMiss, ContentApiCacheStale
   ) ++ ContentApiMetrics.all ++ S3Metrics.all
 }
 

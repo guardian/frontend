@@ -35,7 +35,11 @@ object Global extends WithFilters(Gzipper)
     ("content-api-invalid-content-exceptions", FaciaToolMetrics.InvalidContentExceptionMetric.getAndReset.toDouble),
     ("s3-client-exceptions", S3Metrics.S3ClientExceptionsMetric.getAndReset.toDouble),
     ("content-api-seo-request-success", FaciaToolMetrics.ContentApiSeoRequestSuccess.getAndReset.toDouble),
-    ("content-api-seo-request-failure", FaciaToolMetrics.ContentApiSeoRequestFailure.getAndReset.toDouble)
+    ("content-api-seo-request-failure", FaciaToolMetrics.ContentApiSeoRequestFailure.getAndReset.toDouble),
+    ("content-api-memcache-hit", FaciaToolMetrics.ContentApiSeoRequestFailure.getAndReset.toDouble),
+    ("content-api-memcache-miss", FaciaToolMetrics.ContentApiSeoRequestFailure.getAndReset.toDouble),
+    ("content-api-memcache-stale", FaciaToolMetrics.ContentApiSeoRequestFailure.getAndReset.toDouble)
+
   )
 
   override def onLoadConfig(config: Configuration, path: File, classloader: ClassLoader, mode: Mode.Mode): Configuration = {
