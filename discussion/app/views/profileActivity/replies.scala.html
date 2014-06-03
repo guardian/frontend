@@ -1,0 +1,21 @@
+@(profileReplies: discussion.model.ProfileReplies)(implicit request: RequestHeader)
+
+<div class="activity-stream activity-stream--replies" itemprop itemtype="http://schema.org/UserComments">
+    @profileReplies.comments.map{ c =>
+        <div class="activity-stream__item activity-item" itemprop itemtype="http://schema.org/Comment">
+            <div class="activity-item__title">
+                <a href="@c.discussion.webUrl#">@c.discussion.title</a>
+            </div>
+
+            <div class="activity-item__content">
+                <div class="activity-item__content-meta">
+                    @profile(c.profile, Some(c.date))
+                </div>
+
+                <div class="activity-item__content-body">
+                    @comment(c, c.discussion.isClosedForRecommendation)
+                </div>
+            </div>
+        </div>
+    }
+</div>
