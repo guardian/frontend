@@ -11,7 +11,6 @@ $disc-respond-when: rightCol;
         padding-top: $gs-baseline/2
     ));
     border-top: 1px solid $c-neutral4;
-    color: $c-neutral1;
 
     @include mq($disc-respond-when) {
         &:first-of-type {
@@ -94,5 +93,13 @@ $disc-respond-when: rightCol;
         @include rem((
             width: gs-span(8)
         ));
+    }
+
+    blockquote {
+        @include rem((
+            margin: $gs-baseline $gs-gutter,
+            padding-left: $gs-gutter/2
+        ));
+        border-left: 3px solid transparentize($c-neutral1, .75);
     }
 }

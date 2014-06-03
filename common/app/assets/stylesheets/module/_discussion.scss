@@ -116,7 +116,6 @@ $avatarSize: 44px;
     &.show-more__container--older,
     &.show-more__container--hidden,
     &.show-more__container--featured {
-        color: $c-neutral1;
         border-top: 1px dotted $c-neutral3;
     }
 }
@@ -267,7 +266,6 @@ $avatarSize: 44px;
 .d-comment__author,
 .d-comment-box__author {
     @include fs-textsans(4);
-    color: $c-neutral1;
     font-weight: bold;
     display: block;
     overflow: hidden;
@@ -280,7 +278,6 @@ $avatarSize: 44px;
     @include fs-textsans(1);
     text-transform: uppercase;
     display: block;
-    color: $c-neutral1;
 }
 .d-comment__author-label--staff { display: none; }
 .d-comment--staff .d-comment__author-label--staff { display: block; }
@@ -292,7 +289,6 @@ $avatarSize: 44px;
 }
 .d-comment__reply-to-author,
 .d-comment-box__reply-to-author {
-    color: $c-neutral1;
     @include fs-textsans(4);
     display: none;
 }
@@ -329,7 +325,6 @@ $avatarSize: 44px;
 .d-comment__pick {
     white-space: nowrap;
     @include fs-textsans(4);
-    color: $c-neutral1;
     font-weight: bold;
     @include rem((
         margin-bottom: $gs-baseline/6
@@ -356,7 +351,6 @@ $avatarSize: 44px;
 }
 .d-comment__body {
     @include fs-textsans(4);
-    color: $c-neutral1;
     min-height: 2.5em;
     position: relative;
     z-index: 2;
@@ -366,12 +360,22 @@ $avatarSize: 44px;
         min-height: 3.5em;
     }
 
+    p {
+        @include rem((
+            margin-top: $gs-baseline*1.5
+        ));
+
+        &:first-child {
+            margin-top: 0;
+        }
+    }
+
     blockquote {
         @include rem((
             margin: $gs-baseline $gs-gutter,
             padding-left: $gs-gutter/2
         ));
-        border-left: 3px solid rgba(200, 200, 200, .75);
+        border-left: 3px solid transparentize($c-neutral1, .75);
     }
 }
 
@@ -747,7 +751,6 @@ $avatarSize: 44px;
    ========================================================================== */
 
 .discussion__heading {
-    color: $c-neutral1;
     border-top: 1px solid $c-neutral4;
     margin-bottom: 0;
     @include rem((
@@ -1201,7 +1204,6 @@ $avatarSize: 44px;
     @include rem((
         margin-bottom: $gs-baseline/2
     ));
-    color: $c-neutral1;
     display: inline-block;
 }
 .d-comment-box__parent-comment-body {

@@ -29,7 +29,7 @@ class SanitizeInputTest extends FlatSpec with Matchers {
 
   it should "strip tag from section" in {
     val config = createConfigWithFront(section = Option("<strip>hello<me>"))
-    SanitizeInput.fromConfigSeo(config).fronts.head._2.section.get should be ("hello")
+    SanitizeInput.fromConfigSeo(config).fronts.head._2.navSection.get should be ("hello")
   }
 
   it should "strip empty brackets regex" in {

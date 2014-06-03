@@ -115,6 +115,9 @@
             .container--news .container__title {
                 display: none;
             }
+            .container--tag .container__title {
+                display: block;
+            }
             .container__toggle {
                 left: auto;
             }
@@ -168,6 +171,7 @@
         .container__body {
             overflow: hidden;
             @include rem((
+                padding-top: $gs-baseline/4, // Top spacing at this breakpoint is removed by .facia-slice-wrapper
                 margin-left: gs-span(2) + $gs-gutter
             ));
         }
@@ -178,6 +182,9 @@
             @include rem((
                 width: $a-leftColWide-width !important
             ));
+        }
+        .container__body {
+            padding-top: 0; // Top spacing at this breakpoint is done by .facia-slice-wrapper
         }
     }
 }

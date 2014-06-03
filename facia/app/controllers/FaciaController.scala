@@ -62,7 +62,7 @@ class FaciaController extends Controller with Logging with ExecutionContexts wit
 
   def renderFrontJsonLite(path: String) = MemcachedAction{ implicit request =>
     FrontJson.getAsJsValue(path).map{ json =>
-      Cached(60)(Ok(FrontJsonLite.get(json)))
+      Cached(60)(JsonComponent(FrontJsonLite.get(json)))
     }
   }
 

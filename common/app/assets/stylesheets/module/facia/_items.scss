@@ -237,7 +237,8 @@
 .item__standfirst {
     @include f-headline;
 }
-.facia-container--advertisement-feature {
+.facia-container--advertisement-feature,
+.container--advertisement-feature {
     background-color: $c-neutral8;
 
     .linkslist__action:visited,

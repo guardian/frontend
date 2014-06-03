@@ -46,7 +46,7 @@ object Switches extends Collections {
 
   // this is 3 months - at the end of this a decision is expected
   // and one (or both) of the 2 needs to go.
-  private lazy val profilingEvalDeadline = new DateMidnight(2014, 6, 4)
+  private lazy val profilingEvalDeadline = new DateMidnight(2014, 6, 10)
 
 
   // Load Switches
@@ -215,6 +215,11 @@ object Switches extends Collections {
     safeState = Off, never
   )
 
+  val FunctionBindSwitch = Switch("Analytics", "function-bind",
+    "Enables function.prototype.bind polyfill",
+    safeState = Off, new DateMidnight(2014, 6, 6)
+  )
+
   // Feature Switches
 
   val ReleaseMessageSwitch = Switch("Feature Switches", "release-message",
@@ -321,6 +326,11 @@ object Switches extends Collections {
   val ABHideSupportingLinks = Switch("A/B Tests", "ab-hide-supporting-links",
     "If this switch is turned on, run the HideSupportingLinks A/B test.",
     safeState = Off, sellByDate = new DateMidnight(2014, 6, 24)
+  )
+
+  val ABAcrossTheGuardian = Switch("A/B Tests", "ab-across-the-guardian",
+    "If this switch is turned on, run the AcrossTheGuardian A/B/C/D test.",
+    safeState = Off, sellByDate = new DateMidnight(2014, 6, 25)
   )
 
   // Dummy Switches
@@ -470,8 +480,10 @@ object Switches extends Collections {
     FaciaFirstContainerLayoutOverrideSwitch,
     ABHighRelevanceCommercialComponent,
     ABHideSupportingLinks,
+    ABAcrossTheGuardian,
     SmartBannerSwitch,
     FeaturesAutoContainerSwitch,
+    FunctionBindSwitch,
     ForcePageSkinSwitch
   )
 

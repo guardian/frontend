@@ -36,6 +36,8 @@ define([
 
         model.switches = ko.observable();
 
+        model.navSections = [].concat(config.navSections);
+
         model.collections = ko.observableArray();
 
         model.fronts = ko.observableArray();

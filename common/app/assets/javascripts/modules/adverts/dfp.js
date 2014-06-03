@@ -105,6 +105,20 @@ define([
                 sizeMappings: {
                     desktop: '888,88'
                 }
+            },
+            spbadge: {
+                label: false,
+                refresh: false,
+                sizeMappings: {
+                    mobile: '140,90'
+                }
+            },
+            adbadge: {
+                label: false,
+                refresh: false,
+                sizeMappings: {
+                    mobile: '140,90'
+                }
             }
         };
 
@@ -327,8 +341,8 @@ define([
                             return size[0] + '-' + size[1];
                         }
                     ),
-                    slot = googletag
-                        .defineSlot(adUnit, size, id)
+                    slot = ($adSlot.data('out-of-page')
+                            ? googletag.defineOutOfPageSlot(adUnit, id) : googletag.defineSlot(adUnit, size, id))
                         .addService(googletag.pubads())
                         .defineSizeMapping(sizeMapping)
                         .setTargeting('slot', $adSlot.data('name'));

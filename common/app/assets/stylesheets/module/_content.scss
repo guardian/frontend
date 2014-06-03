@@ -3,7 +3,6 @@
         padding-top: $gs-row-height*.5,
         padding-bottom: $gs-baseline*3.5
     ));
-    @include fs-bodyCopy(3);
 
     &:after { // clearfix
         content: '';
@@ -34,24 +33,24 @@
 .content__main-column {
     position: relative;
 
-    @include mq($from: tablet) {
+    @include mq(tablet) {
         @include rem((
             max-width: 620px
         ));
         margin: auto;
     }
-    @include mq($from: rightCol) {
+    @include mq(rightCol) {
         @include rem((
             margin-left: 0,
             margin-right: gs-span(4) + $gs-gutter
         ));
     }
-    @include mq($from: leftCol) {
+    @include mq(leftCol) {
         @include rem((
             margin-left: gs-span(2) + $gs-gutter
         ));
     }
-    @include mq($from: wide) {
+    @include mq(wide) {
         @include rem((
             margin-left: gs-span(3) + $gs-gutter
         ));
@@ -111,6 +110,7 @@
     @include mq($to: tablet) {
         border-top-style: solid;
         border-top-width: 2px;
+
         .has-localnav & {
             border-top: 0;
         }
@@ -153,31 +153,32 @@
     ));
     @include mq($to: tablet) {
         border-bottom: 1px solid $c-neutral7;
+
         .has-localnav & {
             display: none;
         }
     }
 
-    @include mq($from: tablet) {
+    @include mq(tablet) {
         @include rem((
             padding-bottom: ($gs-baseline/2) * 3
         ));
     }
 
-    @include mq($from: leftCol) {
+    @include mq(leftCol) {
         float: left;
         @include rem((
             margin-left: -(gs-span(2) + $gs-gutter),
             width: gs-span(2)
         ));
     }
-    @include mq($from: wide) {
+    @include mq(wide) {
         @include rem((
             margin-left: -(gs-span(3) + $gs-gutter),
             width: gs-span(3)
         ));
     }
-    @include mq($from: leftCol, $to: wide) {
+    @include mq(leftCol, wide) {
         @include rem((
             width: gs-span(2)
         ));
@@ -222,15 +223,14 @@
 .content__standfirst {
     @include fs-headline(1);
     @include rem((
-            margin-bottom: $gs-baseline
+        margin-bottom: $gs-baseline
     ));
     color: $c-neutral2;
 
     @include mq(tablet) {
         @include font-size(18px, 22px);
-        -webkit-font-smoothing: antialiased;
         @include rem((
-                margin-bottom: ($gs-baseline/3)*4
+            margin-bottom: ($gs-baseline/3)*4
         ));
     }
 
@@ -320,8 +320,6 @@
             padding-top: $gs-baseline/6,
             padding-bottom: $gs-baseline
         ));
-    }
-    @include mq($from: leftCol) {
         border-top: 1px dotted $c-neutral5;
     }
 
@@ -349,7 +347,7 @@
         height: gs-span(2); //This is intentionally square
         margin-right: 0;
         @include rem((
-            margin-bottom: $gs-baseline,
+            margin-bottom: $gs-baseline
         ));
     }
 }
@@ -373,14 +371,14 @@
     @include rem((
         margin-bottom: $gs-baseline
     ));
-    @include mq($to: leftCol) {
-        border-top: 1px dotted $c-neutral5;
-        border-bottom: 1px dotted $c-neutral5;
-    }
+    border-top: 1px dotted $c-neutral5;
+    border-bottom: 1px dotted $c-neutral5;
 
     @include mq(leftCol) {
         position: absolute;
         top: 0;
+        border-top: 0;
+        border-bottom: 0;
         @include rem((
             margin-left: ($a-leftCol-width + $gs-gutter)*-1,
             margin-bottom: ($gs-baseline/3)*4,
@@ -410,17 +408,6 @@
     }
 }
 
-.content__breadcrumb {
-    @include rem((
-        padding: $gs-gutter
-    ));
-    @include mq($from: mobileLandscape) {
-        @include rem((
-            padding: $gs-gutter
-        ));
-    }
-}
-
 .content-meta {
     @include fs-textsans(3);
     font-weight: bold;
@@ -438,7 +425,6 @@
         @include mq($from: tablet, $to: leftCol) {
             border-top: 1px dotted $c-neutral5;
         }
-
     }
 }
 
@@ -453,6 +439,9 @@
 
 .content-meta--inline {
     margin: 0;
+    @include rem((
+        padding-top: $gs-baseline/2
+    ));
 
     .content-meta__label,
     .content-meta__item {
@@ -462,37 +451,34 @@
         ));
     }
 
-    @include mq(tablet) {
-        @include rem((
-            margin: 0 0 $gs-baseline/2
-        ));
-    }
-
-    @include mq($to: leftCol) {
-        @include rem((
-            padding-top: $gs-baseline/2
-        ));
-    }
-
     @include mq($to: tablet) {
         .has-localnav & {
             padding-top: 0;
         }
     }
+
+    @include mq(tablet) {
+        padding-top: 0;
+        @include rem((
+            margin: 0 0 $gs-baseline/2
+        ));
+    }
 }
 
 .content__mobile-full-width {
-    @include mq($to: mobileLandscape) {
-        @include rem((
-            margin-left: -($gs-gutter/2),
-            margin-right: -($gs-gutter/2)
-        ));
-    }
-    @include mq($from: mobileLandscape, $to: tablet) {
+    @include rem((
+        margin-left: -($gs-gutter/2),
+        margin-right: -($gs-gutter/2)
+    ));
+    @include mq(mobileLandscape, tablet) {
         @include rem((
             margin-left: -$gs-gutter,
             margin-right: -$gs-gutter
         ));
+    }
+    @include mq(tablet) {
+        margin-left: 0;
+        margin-right: 0;
     }
 }
 
@@ -546,7 +532,7 @@
 }
 
 .drop-cap--wide {
-    @include mq($from: tablet) {
+    @include mq(tablet) {
         float: left;
         display: inline-block;
         text-transform: uppercase;

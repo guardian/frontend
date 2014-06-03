@@ -4,13 +4,14 @@
     <div class="@RenderClasses(Map(
             "facia-container" -> true,
             "facia-container--layout-front" -> true,
+            "facia-container--sponsored" -> faciaPage.isSponsored,
             "facia-container--advertisement-feature" -> (faciaPage.isAdvertisementFeature && !faciaPage.isSponsored)))"
         data-link-name="Front"
         role="main">
 
         @if(faciaPage.hasPageSkin) {
             <div class="page-skin-container">
-                @fragments.commercial.adSlot(name="pageskin-inread", adType="page-skin", sizeMapping=Map("wide" -> Seq("1,1")), showLabel=false, refresh=false)
+                @fragments.commercial.adSlot(name="pageskin-inread", adType="page-skin", sizeMapping=Map("wide" -> Seq("1,1")), showLabel=false, refresh=false, outOfPage=true)
             </div>
         }
 
@@ -19,7 +20,7 @@
                 @fragments.frontCollection(faciaPage, block, collections.size, index)
             }
         }
-        @fragments.commercial.adSlot(name="merchandising", adType="commercial-component", sizeMapping=Map("mobile" -> Seq("888,88")), showLabel=false, refresh=false)
+        @fragments.commercial.commercialComponent(name = "merchandising", adType = "commercial-component")
     </div>
 }
 

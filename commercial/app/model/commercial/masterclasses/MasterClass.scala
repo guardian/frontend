@@ -1,18 +1,24 @@
 package model.commercial.masterclasses
 
-import org.joda.time.format.{DateTimeFormatter, DateTimeFormat}
-import org.joda.time.DateTime
-import play.api.libs.json.JsValue
-import org.jsoup.Jsoup
-import org.jsoup.nodes.{Element, Document}
+import model.commercial.lastPart
 import model.commercial.{Segment, Ad}
 import org.apache.commons.lang.StringUtils
+import org.joda.time.DateTime
+import org.joda.time.format.{DateTimeFormatter, DateTimeFormat}
+import org.jsoup.Jsoup
+import org.jsoup.nodes.{Element, Document}
+import play.api.libs.json.JsValue
+
+case class MasterClass(eventBriteEvent: EventbriteMasterClass, imageElement: Option[model.ImageElement]) extends Ad {
+
+  def isTargetedAt(segment: Segment) = eventBriteEvent.isTargetedAt(segment)
+}
 
 object EventbriteMasterClass {
   private val datePattern: DateTimeFormatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss")
   private val guardianUrlLinkText = "Full course and returns information on the Masterclasses website"
 
-//  private val guardianUrlLinkText = "Click here"
+  private val ignoredTags = Seq("masterclass", "short")
 
   def apply(block: JsValue): Option[EventbriteMasterClass] = {
     val id = (block \ "id").as[Long]
@@ -23,6 +29,14 @@ object EventbriteMasterClass {
     val description = (block \ "description").as[String]
     val status = (block \ "status").as[String]
     val capacity = (block \ "capacity").as[Int]
+
+    val tags = {
+      for {
+        rawTag <- (block \ "tags").as[String].split(",")
+        tag = rawTag.toLowerCase.replaceAll("courses?", "").trim()
+        if tag.nonEmpty && !ignoredTags.exists(tag.contains)
+      } yield tag
+    }.toSeq
 
     val tickets = (block \\ "ticket") map {
       ticket =>
@@ -46,22 +60,28 @@ object EventbriteMasterClass {
           tickets.toList,
           capacity,
           element.attr("href"),
-          paragraphs.headOption.map(_.text).getOrElse(""))
+          paragraphs.headOption.fold("")(_.text),
+          tags
+        )
     }
   }
 }
 
-case class EventbriteMasterClass(id: String,
-                       name: String,
-                       startDate: DateTime,
-                       url: String,
-                       description: String,
-                       status: String,
-                       venue: Venue,
-                       tickets: List[Ticket],
-                       capacity: Int,
-                       guardianUrl: String,
-                       firstParagraph: String = "") extends Ad {
+case class EventbriteMasterClass(
+                                  id: String,
+                                  name: String,
+                                  startDate: DateTime,
+                                  url: String,
+                                  description: String,
+                                  status: String,
+                                  venue: Venue,
+                                  tickets: List[Ticket],
+                                  capacity: Int,
+                                  guardianUrl: String,
+                                  firstParagraph: String = "",
+                                  tags: Seq[String],
+                                  keywordIds: Seq[String] = Nil
+                                  ) extends Ad {
 
   def isOpen = {status == "Live"}
 
@@ -73,13 +93,11 @@ case class EventbriteMasterClass(id: String,
     } else f"£${priceList.head}%,.2f"
   }
 
-  def isTargetedAt(segment: Segment) = segment.context.isInSection("music")
+  def isTargetedAt(segment: Segment) = (segment.context.keywords intersect lastPart(keywordIds)).nonEmpty
 
-  private val readableDateFormat = DateTimeFormat.forPattern("d MMMMM yyyy")
+  lazy val readableDate = DateTimeFormat.forPattern("d MMMMM yyyy").print(startDate)
 
-  def readableDate = readableDateFormat.print(startDate)
-
-  val truncatedFirstParagraph = StringUtils.abbreviate(firstParagraph, 250)
+  lazy val truncatedFirstParagraph = StringUtils.abbreviate(firstParagraph, 250)
 }
 
 case class Ticket(price: Double)

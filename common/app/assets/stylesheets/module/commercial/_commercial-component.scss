@@ -27,7 +27,6 @@ $comercial-comp-baseline: 10px;
     width: 100%;
     position: relative;
     background-color: $c-commercial-comp-neutral;
-    color: $c-neutral1;
     text-align: left;
     .container__border {
         border-top: 0;
@@ -146,8 +145,6 @@ $comercial-comp-baseline: 10px;
     @include box-sizing(border-box);
     position: relative;
     padding: 0;
-
-    color: $c-neutral1;
     @include fs-headline(1);
 
     &:nth-child(n + 4) {
@@ -161,7 +158,6 @@ $comercial-comp-baseline: 10px;
     }
 }
 .lineitem__title {
-    color: $c-neutral1;
     @include fs-headline(1);
     font-weight: normal;
     text-overflow: ellipsis;
@@ -170,7 +166,6 @@ $comercial-comp-baseline: 10px;
 }
 .lineitem__description,
 .lineitem__link {
-    color: $c-neutral1;
     @include fs-data(4);
 
     strong {
@@ -179,6 +174,7 @@ $comercial-comp-baseline: 10px;
     }
 }
 .lineitem__link {
+    color: $c-neutral1;
     display: block;
     float: left;
     overflow: hidden;
