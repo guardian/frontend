@@ -62,7 +62,7 @@ class QueryTest extends FlatSpec with Matchers with ScalaFutures {
 
   ignore should "contain Nil for 5xx responses when NOT warmed up" in Fake {
     val query = new TestParseCollection(501)
-    whenReady(query.getCollection("uk", Config("uk", None, None, None), Uk, isWarmedUp=false)){collection =>
+    whenReady(query.getCollection("uk", Config("uk", None, None, None), Uk)){collection =>
       collection.items.length should be (0)
     }
   }
