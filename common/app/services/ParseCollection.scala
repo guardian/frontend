@@ -11,7 +11,6 @@ import contentapi.QueryDefaults
 import scala.util.Try
 import org.joda.time.DateTime
 import performance._
-import performance.CacheHit
 import play.api.libs.ws.Response
 import play.api.libs.json.JsObject
 import scala.concurrent.duration._
