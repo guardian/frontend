@@ -12,7 +12,7 @@
                 <div class="identity-title identity-title--public-profile">
                     <div class="user-profile__avatar user-avatar" data-userid="@user.id"></div>
                     <h1 class="user-profile__name">@user.publicFields.displayName</h1>
-                    @user.publicFields.webPage.map { webPage =>
+                    @user.publicFields.webPage.filter(_ != "").map { webPage =>
                         <a href="@webPage" class="user-profile__web-page">
                             <i class="i i-profile-small"></i>
                             @webPage

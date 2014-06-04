@@ -1,40 +1,37 @@
 package model.commercial.masterclasses
 
 import common.{AkkaAgent, ExecutionContexts, Logging}
+import model.ImageElement
+import model.commercial.{Segment, AdAgent, Lookup}
 import org.joda.time.DateTime
 import scala.concurrent.Future
-import model.commercial.{MasterClass, Lookup}
-import model.ImageElement
-import play.api.Play
-import play.api.Play.current
+import scala.concurrent.duration._
 
+object MasterClassAgent extends AdAgent[MasterClass] with ExecutionContexts {
 
-object MasterClassAgent extends Logging with ExecutionContexts {
-
-  private val placeholder = {
+  val placeholder = {
     val masterClass1 = MasterClass(EventbriteMasterClass("1", "MasterClass A", new DateTime(),
       "http://www.theguardian.com", "Description of MasterClass A", "Live", Venue(), Ticket(1.0) :: Nil, 1,
-      "http://www.theguardian.com"), None)
-    val masterClass2 = MasterClass(masterClass1.eventBriteEvent.copy(name = "MasterClass B", description = "MasterClass with multiple tickets", tickets = List(Ticket(1.0), Ticket(5.0))), None)
-    val masterClass3 = MasterClass(masterClass1.eventBriteEvent.copy(name = "Guardian MasterClass C", description = "Description of MasterClass C"), None)
+      "http://www.theguardian.com", tags = Nil), None)
+    val masterClass2 = MasterClass(masterClass1.eventBriteEvent.copy(name = "MasterClass B",
+      description = "MasterClass with multiple tickets", tickets = List(Ticket(1.0), Ticket(5.0))), None)
+    val masterClass3 = MasterClass(masterClass1.eventBriteEvent.copy(name = "Guardian MasterClass C",
+      description = "Description of MasterClass C"), None)
     Seq(masterClass1, masterClass2, masterClass3)
   }
 
-  private lazy val agent = AkkaAgent[Seq[MasterClass]](Nil)
+  updateCurrentAds(placeholder)
 
-  agent send placeholder
+  override def defaultAds = currentAds take 4
 
-  def getUpcoming: Seq[MasterClass] = {
-    agent.get()
+  override def adsTargetedAt(segment: Segment) = {
+    val targetedAds = currentAds filter (_.isTargetedAt(segment))
+    val adsToShow = (targetedAds ++ defaultAds) take 4
+    adsToShow sortBy(_.eventBriteEvent.startDate.getMillis)
   }
 
   def wrapEventbriteWithContentApi(eventbriteEvents: Seq[EventbriteMasterClass]): Future[Seq[MasterClass]] = {
-    var results = eventbriteEvents
-    if (Play.isDev) {
-      results = eventbriteEvents.takeRight(10)
-    }
-
-    val seqThumbs: Seq[Future[MasterClass]] = results.map {
+    val seqThumbs: Seq[Future[MasterClass]] = eventbriteEvents.map {
       event =>
         val contentId: String = event.guardianUrl.replace("http://www.theguardian.com/", "")
         val thumbnail: Future[Option[ImageElement]] = Lookup.thumbnail(contentId)
@@ -50,23 +47,67 @@ object MasterClassAgent extends Logging with ExecutionContexts {
   }
 
   def refresh() {
+
+    def populateKeywordIds(events: Seq[EventbriteMasterClass]):Seq[EventbriteMasterClass] = {
+      val populated = events map { event =>
+        val eventKeywordIds = MasterClassTagsAgent.forTag(event.name)
+        event.copy(keywordIds = eventKeywordIds)
+      }
+
+      val unpopulated = populated.filter(_.keywordIds.isEmpty)
+      if (unpopulated.nonEmpty) {
+        val unpopulatedString = unpopulated.map { event =>
+          event.name + ": tags(" + event.tags.mkString(", ") + ")"
+        }.mkString("; ")
+        log.info(s"No keywords for these master classes: $unpopulatedString")
+      }
+
+      populated
+    }
+
     for {
       eventBrite <- EventbriteApi.loadAds()
-      masterclasses <- wrapEventbriteWithContentApi(eventBrite.filter(_.isOpen))
+      masterclasses <- wrapEventbriteWithContentApi(populateKeywordIds(eventBrite.filter(_.isOpen)))
     } {
-      log.info("Updating Masterclass agent")
-      agent send { oldMasterclasses =>
-        if(masterclasses.nonEmpty) {
-          masterclasses
-        } else {
-          oldMasterclasses
+      updateCurrentAds(masterclasses)
+    }
+  }
+}
+
+
+object MasterClassTagsAgent extends ExecutionContexts with Logging {
+
+  private lazy val tagKeywordIds = AkkaAgent(Map.empty[String, Seq[String]])
+
+  private val defaultTags = Seq(
+    "creative writing",
+    "journalism",
+    "photography",
+    "travel"
+  )
+
+  def refresh(): Future[Seq[Future[Map[String, Seq[String]]]]] = {
+    val tags = {
+      val currentAds = MasterClassAgent.currentAds
+      if (currentAds == MasterClassAgent.placeholder) {
+        defaultTags
+      } else {
+        // use event title instead of tags because it's more informative
+        currentAds.map(_.eventBriteEvent.name).distinct
+      }
+    }
+    Future.sequence {
+      tags map { tag =>
+        Lookup.keyword(tag) map { keywords =>
+          tagKeywordIds.alter(_.updated(tag, keywords.map(_.id)))(2.seconds)
         }
       }
     }
   }
 
   def stop() {
-    agent.close()
+    tagKeywordIds.close()
   }
 
+  def forTag(name: String) = tagKeywordIds().get(name).getOrElse(Nil)
 }

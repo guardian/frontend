@@ -3,6 +3,7 @@
     Description: Loads our commercial components
 */
 define([
+    'bonzo',
     'common/$',
     'common/utils/mediator',
     'common/utils/storage',
@@ -13,6 +14,7 @@ define([
     'bean',
     'common/modules/ui/tabs'
 ], function (
+    bonzo,
     $,
     mediator,
     storage,
@@ -59,8 +61,8 @@ define([
             booksHigh:         this.host + 'books/bestsellers-high.json?'   + this.userSegments + '&s=' + this.section + '&' + this.getKeywords(),
             jobs:              this.host + 'jobs.json?'                     + this.userSegments + '&s=' + this.section + '&' + this.getKeywords(),
             jobsHigh:          this.host + 'jobs-high.json?'                + this.userSegments + '&s=' + this.section + '&' + this.getKeywords(),
-            masterclasses:     this.host + 'masterclasses.json?'            + this.userSegments + '&s=' + this.section,
-            masterclassesHigh: this.host + 'masterclasses-high.json?'       + this.userSegments + '&s=' + this.section,
+            masterclasses:     this.host + 'masterclasses.json?'            + this.userSegments + '&s=' + this.section + '&' + this.getKeywords(),
+            masterclassesHigh: this.host + 'masterclasses-high.json?'       + this.userSegments + '&s=' + this.section + '&' + this.getKeywords(),
             soulmates:         this.host + 'soulmates/mixed.json?'          + this.userSegments + '&s=' + this.section,
             soulmatesHigh:     this.host + 'soulmates/mixed-high.json?'     + this.userSegments + '&s=' + this.section,
             travel:            this.host + 'travel/offers.json?'            + this.userSegments + '&s=' + this.section + '&' + this.getKeywords(),
@@ -110,7 +112,7 @@ define([
             beforeInsert: function (html) {
                 // Currently we are replacing the OmnitureToken with nothing. This will change once
                 // commercial components have properly been setup in the lovely mess that is Omniture!
-                return html.replace(/%OASToken%/g, self.oastoken).replace(/%OmnitureToken%/g, '');
+                return html ? html.replace(/%OASToken%/g, self.oastoken).replace(/%OmnitureToken%/g, '') : html;
             },
             success: function () {
                 images.upgrade(target);

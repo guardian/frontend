@@ -880,6 +880,26 @@ object GetClasses {
     case _  => Nil
   }
 
+  def forContainer(container: Container, config: Config, index: Int, hasTitle: Boolean, extraClasses: Seq[String] = Nil): String = {
+    val baseClasses = Seq(
+      "container",
+      "container--row-pattern",
+      s"container--${container.containerType}"
+    ) ++ extraClasses
+    val f: Seq[(Container, Config, Int, Boolean) => String] = Seq(
+      (container: Container, config: Config, index: Int, hasTitle: Boolean) =>
+        if (config.isSponsored) "container--sponsored" else "",
+      (container: Container, config: Config, index: Int, hasTitle: Boolean) =>
+        if (config.isAdvertisementFeature && !config.isSponsored) "container--advertisement-feature" else "",
+      (container: Container, config: Config, index: Int, hasTitle: Boolean) =>
+        if (index == 0) "container--first" else "",
+      (container: Container, config: Config, index: Int, hasTitle: Boolean) =>
+        if (index > 0 && hasTitle) "js-container--toggle" else ""
+    )
+    val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(container, config, index, hasTitle)}
+    RenderClasses(classes:_*)
+  }
+
 }
 
 object LatestUpdate {

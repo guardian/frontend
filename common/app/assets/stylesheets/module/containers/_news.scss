@@ -7,9 +7,15 @@
         }
     }
     .facia-slice-wrapper:first-child {
-        .fromage,
-        .fromage__container {
+        .fromage {
+            // Remove top tonal border
             border-top-width: 0;
+        }
+        @include mq(wide) {
+            .fromage__container {
+                // Remove top space
+                border-top-width: 0;
+            }
         }
     }
     .container__title {

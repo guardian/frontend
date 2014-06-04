@@ -262,6 +262,10 @@
                 margin-right: $gs-gutter/2
             ));
         }
+
+        .has-page-skin & .commercial--jobs__job:nth-child(n+2) {
+            display: none;
+        }
     }
 }
 /* article */

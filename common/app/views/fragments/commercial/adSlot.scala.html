@@ -1,4 +1,4 @@
-@(name: String, adType: String, sizeMapping: Map[String, Seq[String]], showLabel: Boolean = true, refresh: Boolean = true)
+@(name: String, adType: String, sizeMapping: Map[String, Seq[String]], showLabel: Boolean = true, refresh: Boolean = true, outOfPage: Boolean = false)
 
 <div
     id="dfp-ad--@name"
@@ -7,6 +7,7 @@
     data-name="@name"
     @if(!showLabel){ data-label="false" }
     @if(!refresh){ data-refresh="false" }
+    @if(outOfPage){ data-out-of-page="true" }
     @sizeMapping.map{ case(breakpoint, sizes) =>
         data-@breakpoint="@sizes.mkString("|")"
     }></div>

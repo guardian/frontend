@@ -46,7 +46,7 @@ object Switches extends Collections {
 
   // this is 3 months - at the end of this a decision is expected
   // and one (or both) of the 2 needs to go.
-  private lazy val profilingEvalDeadline = new DateMidnight(2014, 6, 4)
+  private lazy val profilingEvalDeadline = new DateMidnight(2014, 6, 10)
 
 
   // Load Switches
@@ -215,6 +215,11 @@ object Switches extends Collections {
     safeState = Off, never
   )
 
+  val FunctionBindSwitch = Switch("Analytics", "function-bind",
+    "Enables function.prototype.bind polyfill",
+    safeState = Off, new DateMidnight(2014, 6, 6)
+  )
+
   // Feature Switches
 
   val ReleaseMessageSwitch = Switch("Feature Switches", "release-message",
@@ -315,7 +320,7 @@ object Switches extends Collections {
 
   val ABHighRelevanceCommercialComponent = Switch("A/B Tests", "ab-high-relevance-commercial-component",
     "If this switch is turned on, run the HighRelevanceCommercialComponent A/B test.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 6, 5)
+    safeState = Off, sellByDate = new DateMidnight(2014, 6, 19)
   )
 
   val ABHideSupportingLinks = Switch("A/B Tests", "ab-hide-supporting-links",
@@ -400,11 +405,6 @@ object Switches extends Collections {
 
   // Facia Switches
 
-  val NewSeoSwitch = Switch("Facia Switches", "new-seo-switch",
-    "If this switch is on then the SEO elements for pages will be take from the tool, content api and generated",
-    safeState = Off, sellByDate = new DateMidnight(2014, 6, 30)
-  )
-
   val FeaturesAutoContainerSwitch = Switch("Facia Switches", "facia-features-auto-container",
     "If this switch is on, the features auto container has the right to live.",
     safeState = Off, sellByDate = new DateMidnight(2014, 6, 15)
@@ -475,7 +475,6 @@ object Switches extends Collections {
     IndiaRegionSwitch,
     MemcachedSwitch,
     IncludeBuildNumberInMemcachedKey,
-    NewSeoSwitch,
     GeoMostPopular,
     TagLinkingSwitch,
     FaciaFirstContainerLayoutOverrideSwitch,
@@ -484,6 +483,7 @@ object Switches extends Collections {
     ABAcrossTheGuardian,
     SmartBannerSwitch,
     FeaturesAutoContainerSwitch,
+    FunctionBindSwitch,
     ForcePageSkinSwitch
   )
 
