@@ -11,12 +11,13 @@ import contentapi.QueryDefaults
 import scala.util.Try
 import org.joda.time.DateTime
 import performance._
-import scala.concurrent.duration._
 import org.apache.commons.codec.digest.DigestUtils._
 import ParseCollectionJsonImplicits._
-import com.gu.openplatform.contentapi.model.{Content => ApiContent, SearchResponse, ItemResponse}
+import com.gu.openplatform.contentapi.model.{Content => ApiContent}
 import play.api.libs.ws.Response
 import play.api.libs.json.JsObject
+import scala.concurrent.duration._
+
 
 object Path {
   def unapply[T](uri: String) = Some(uri.split('?')(0))
@@ -193,8 +194,6 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
   }
 
   private def getContentApiItemFromCollectionItem(collectionItem: CollectionItem, edition: Edition): Future[Option[ApiContent]] = {
-    import scala.concurrent.duration._
-
     lazy val response = ContentApi.item(collectionItem.id, edition).showFields(showFieldsWithBodyQuery)
       .response
       .map(Option.apply)
