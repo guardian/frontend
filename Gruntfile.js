@@ -388,7 +388,7 @@ module.exports = function (grunt) {
                     'common/app/assets/javascripts/components/videojs-vast/videojs.vast.js'
                 ],
                 nonull: true,
-                dest: staticTargetDir + 'javascripts/videojs/video.js'
+                dest: staticTargetDir + 'javascripts/components/videojs/video.js'
             }
         },
 
