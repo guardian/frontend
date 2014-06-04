@@ -74,7 +74,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
       displayName    <- parseDisplayName(response).fallbackTo(Future.successful(None))
       href           <- parseHref(response).fallbackTo(Future.successful(None))
       contentApiList <- config.contentApiQuery.filter(_.nonEmpty)
-        .map(executeContentApiQuery(_, edition))
+        .map(executeContentApiQueryViaCache(_, edition))
         .getOrElse(Future.successful(Result(Nil, Nil, Nil, Nil)))
     } yield Collection(
       collectionList,
@@ -230,20 +230,24 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
       .map(json => CollectionItem((json \ "id").as[String], (json \ "meta").asOpt[Map[String, JsValue]], (json \ "frontPublicationDate").asOpt[DateTime]))
     ).getOrElse(Nil)
 
-  def executeContentApiQuery(queryString: String, edition: Edition): Future[Result] = {
+
+  def executeContentApiQueryViaCache(queryString: String, edition: Edition): Future[Result] = {
     implicit val codec = JsonCodecs.gzippedCodec[Result]
 
-    val backFillResponse = MemcachedFallback.withMemcachedFallBack(
+    MemcachedFallback.withMemcachedFallBack(
       sha256Hex(queryString),
       5.minutes
-    ) {
+    ) { executeContentApiQuery(queryString, edition) }
+  }
+
+  def executeContentApiQuery(queryString: String, edition: Edition): Future[Result] = {
       val queryParams: Map[String, String] = QueryParams.get(queryString).mapValues {
         _.mkString("")
       }
       val queryParamsWithEdition = queryParams + ("edition" -> queryParams.getOrElse("edition", Edition.defaultEdition.id))
 
-      (queryString match {
-        case Path(Seg("search" :: Nil)) => {
+      val backFillResponse: Future[Result] = (queryString match {
+        case Path(Seg("search" :: Nil)) =>
           val search = ContentApi.search(edition)
             .showElements("all")
             .pageSize(20)
@@ -258,8 +262,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
               contentApiResults = searchResponse.results
             )
           }
-        }
-        case Path(id) => {
+        case Path(id) =>
           val search = ContentApi.item(id, edition)
             .showElements("all")
             .showEditorsPicks(true)
@@ -275,9 +278,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
               contentApiResults = itemResponse.results
             )
           }
-        }
-      }) recover executeContentApiQueryRecovery
-    } 
+      }).recover(executeContentApiQueryRecovery)
 
     backFillResponse onFailure {
       case t: Throwable => log.warn("Content API Query failed: %s: %s".format(queryString, t.toString))
