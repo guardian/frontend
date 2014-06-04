@@ -82,7 +82,7 @@ define(['bonzo','qwery', 'common/_', 'common/$'], function(bonzo, qwery, _, $) {
 
     return {
         getParaWithSpace: getParaWithSpace,
-        _elemsToSpaces: _elemsToSpaces,
-        _findViableParagraphs: _findViableParagraphs
+        _elemsToSpaces: _elemsToSpaces, // exposed for unit testing
+        _findViableParagraphs: _findViableParagraphs // exposed for unit testing
     };
 });
