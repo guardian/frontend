@@ -33,6 +33,10 @@ object Seg {
 
 
 trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging {
+  implicit val apiContentCodec = JsonCodecs.gzippedCodec[Option[ApiContent]]
+  implicit val resultCodec = JsonCodecs.gzippedCodec[Result]
+  val cacheDuration: FiniteDuration = 5.minutes
+
   case class InvalidContent(id: String) extends Exception(s"Invalid Content: $id")
   val showFieldsQuery: String = FaciaDefaults.showFields
   val showFieldsWithBodyQuery: String = FaciaDefaults.showFieldsWithBody
@@ -220,9 +224,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
       }
     }
 
-    implicit val codec = JsonCodecs.gzippedCodec[Option[ApiContent]]
-
-    MemcachedFallback.withMemcachedFallBack(collectionItem.id, 5.minutes)(response.map(_.flatMap(_.content)))
+    MemcachedFallback.withMemcachedFallBack(collectionItem.id, cacheDuration)(response.map(_.flatMap(_.content)))
   }
 
   private def retrieveSupportingLinks(collectionItem: CollectionItem): List[CollectionItem] =
@@ -232,11 +234,9 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
 
 
   def executeContentApiQueryViaCache(queryString: String, edition: Edition): Future[Result] = {
-    implicit val codec = JsonCodecs.gzippedCodec[Result]
-
     MemcachedFallback.withMemcachedFallBack(
       sha256Hex(queryString),
-      5.minutes
+      cacheDuration
     ) { executeContentApiQuery(queryString, edition) }
   }
 
