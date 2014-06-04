@@ -247,7 +247,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
       }
       val queryParamsWithEdition = queryParams + ("edition" -> queryParams.getOrElse("edition", Edition.defaultEdition.id))
 
-      queryString match {
+      (queryString match {
         case Path(Seg("search" :: Nil)) => {
           val search = ContentApi.search(edition)
             .showElements("all")
@@ -281,8 +281,8 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
             )
           }
         }
-      }
-    } recover executeContentApiQueryRecovery
+      }) recover executeContentApiQueryRecovery
+    } 
 
     backFillResponse onFailure {
       case t: Throwable => log.warn("Content API Query failed: %s: %s".format(queryString, t.toString))
