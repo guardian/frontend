@@ -2,10 +2,11 @@ package controllers
 
 import model.commercial.{Context, Segment}
 import play.api.mvc._
-import common.JsonComponent
-import play.api.libs.json.JsObject
+import scala.concurrent.duration._
 
 package object commercial {
+
+  val componentMaxAge = 5.minutes
 
   def segment(implicit request: Request[AnyContent]) = {
     val params = request.queryString
@@ -14,9 +15,4 @@ package object commercial {
     val userSegments = params getOrElse("seg", Nil)
     Segment(Context(section, keywords), userSegments)
   }
-
-  def noMatchingSegmentsResult(implicit request: Request[AnyContent]) = JsonComponent {
-    JsObject(Nil)
-  } withHeaders ("Cache-Control" -> "max-age=60")
-
 }

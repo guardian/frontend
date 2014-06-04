@@ -4,6 +4,7 @@ import conf.Switches.DoubleCacheTimesSwitch
 import org.joda.time.DateTime
 import org.scala_tools.time.Imports._
 import play.api.mvc.SimpleResult
+import scala.concurrent.duration.Duration
 
 object Cached extends implicits.Dates {
 
@@ -11,6 +12,10 @@ object Cached extends implicits.Dates {
 
   def apply(seconds: Int)(result: SimpleResult): SimpleResult = {
     if (cacheableStatusCodes.exists(_ == result.header.status)) cacheHeaders(seconds, result) else result
+  }
+
+  def apply(duration: Duration)(result: SimpleResult): SimpleResult = {
+    apply(duration.toSeconds.asInstanceOf[Int])(result)
   }
 
   def apply(metaData: MetaData)(result: SimpleResult): SimpleResult = {
