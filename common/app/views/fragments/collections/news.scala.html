@@ -77,7 +77,7 @@
 
         @defining(standardItems.slice(4, 10), hugeItemsCount + veryBigItemsCount + bigItemsCount + 4) { case (items, offset) =>
             @if(items.nonEmpty) {
-                <div class="linkslist-container tone-@{style.tone} slice--ad-candidate">
+                <div class="linkslist-container tone-@{style.tone} js-slice--ad-candidate">
                     <ul class="l-columns linkslist linkslist--with-images">
                         @items.zipWithIndex.map{ case (trail, index) =>
                             @trail match {

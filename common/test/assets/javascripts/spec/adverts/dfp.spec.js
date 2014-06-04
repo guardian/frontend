@@ -79,7 +79,7 @@ define([
                 defineOutOfPageSlot: sinon.spy(function() { return window.googletag; }),
                 addService: sinon.spy(function() { return window.googletag; }),
                 defineSizeMapping: sinon.spy(function() { return window.googletag; }),
-                setTargeting: sinon.spy(function(type, id) { return id; }),
+                setTargeting: sinon.spy(function() { return window.googletag; }),
                 enableServices: sinon.spy(),
                 display: sinon.spy()
             };
@@ -121,9 +121,7 @@ define([
                 section: 'news',
                 series: 'happy times',
                 contentType: 'Article',
-                edition: 'us',
-                keywords: 'korea,ukraine',
-                keywordIds: 's1/korea,s2/ukraine'
+                edition: 'us'
             };
             dfp.init({ page: page });
             window.googletag.cmd.forEach(function(func) { func(); });
@@ -132,7 +130,6 @@ define([
                 ['edition', 'us'],
                 ['cat', 'news'],
                 ['se', 'happy-times'],
-                ['k', ['korea', 'ukraine']],
                 ['ct', 'article'],
                 ['pt', 'article'],
                 ['p', 'ng'],
@@ -180,7 +177,7 @@ define([
                 return googletag.pubads().refresh.called;
             });
             runs(function() {
-                expect(googletag.pubads().refresh).toHaveBeenCalledWith(['html-slot', 'already-labelled', 'dont-label']);
+                expect(googletag.pubads().refresh.firstCall.args[0].length).toBe(3);
             })
         });
 
@@ -195,7 +192,14 @@ define([
 
         it('should create ad slot', function() {
             var adSlot = dfp.createAdSlot('right', 'right-type');
-            expect(adSlot).toBe('<div id="dfp-ad--right" class="ad-slot ad-slot--dfp ad-slot--right-type" data-link-name="ad slot right" data-name="right" data-refresh="true" data-label="true" data-tabletlandscape="300,250|300,600"></div>')
+                expectedAdSlot = $.create(
+                    '<div id="dfp-ad--right" ' +
+                        'class="ad-slot ad-slot--dfp ad-slot--right-type" ' +
+                        'data-link-name="ad slot right" ' +
+                        'data-name="right" ' +
+                        'data-tabletlandscape="300,250|300,600">' +
+                    '</div>')[0];
+            expect(adSlot.outerHTML).toBe(expectedAdSlot.outerHTML)
         });
 
         it('should be able to create "out of page" ad slot', function() {
@@ -211,6 +215,38 @@ define([
             window.googletag.cmd.forEach(function(func) { func(); });
             expect(window.googletag.defineOutOfPageSlot).toHaveBeenCalledWith('/123456/theguardian.com/front', 'dfp-ad-html-slot');
         });
+
+        describe('keyword targeting', function() {
+
+            it('should send page level keywords', function() {
+                dfp.init({
+                    page: {
+                        keywordIds: 'world/korea,world/ukraine'
+                    }
+                });
+                window.googletag.cmd.forEach(function(func) { func(); });
+                expect(window.googletag.setTargeting).toHaveBeenCalledWith('k', ['korea', 'ukraine']);
+            });
+
+            it('should send container level keywords', function() {
+                $('.ad-slot--dfp').first().data('keywords', 'china');
+                dfp.init();
+                window.googletag.cmd.forEach(function(func) { func(); });
+                expect(window.googletag.setTargeting).toHaveBeenCalledWith('k', ['china']);
+            });
+
+            it('should use pageId if no keywords ', function() {
+                dfp.init({
+                    page: {
+                        pageId: 'world/uk'
+                    }
+                });
+                window.googletag.cmd.forEach(function(func) { func(); });
+                expect(window.googletag.setTargeting).toHaveBeenCalledWith('k', ['uk']);
+            });
+
+        });
+
 
         describe('labelling', function() {
 
