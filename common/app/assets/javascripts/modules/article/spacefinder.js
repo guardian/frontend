@@ -13,6 +13,7 @@ define(['bonzo','qwery', 'common/_'], function(bonzo, qwery, _) {
 
     var defaultRules = { // these are written for adverts
         minFromTop: 250,
+        minFromBottom: 300,
         selectors: {
             ' > h2': {minFromTop: 0, minFromBottom: 300}, // hug h2s
             ' > *:not(p):not(h2)': {minFromTop: 25, minFromBottom: 300} // require spacing for all other elements
@@ -33,9 +34,9 @@ define(['bonzo','qwery', 'common/_'], function(bonzo, qwery, _) {
         }).valueOf();
     };
 
-    function _enforceRules(slots, rules) {
+    function _enforceRules(slots, rules, bodyHeight) {
         var filtered = _(slots).filter(function(p) {
-            return p.top >= rules.minFromTop;
+            return p.top >= rules.minFromTop && p.bottom + rules.minFromBottom <= bodyHeight;
         });
         _(rules.selectors).forOwn(function(params, selector){
             var relevantElems = _(qwery(bodySelector + selector)).map(_mapElementToDimensions);
@@ -52,12 +53,13 @@ define(['bonzo','qwery', 'common/_'], function(bonzo, qwery, _) {
         rules = rules || defaultRules;
 
         // get all immediate children
-        var allElems = _(qwery(bodySelector + ' > *')).map(_mapElementToDimensions),
+        var bodyBottom = qwery(bodySelector)[0].offsetHeight,
+            allElems = _(qwery(bodySelector + ' > *')).map(_mapElementToDimensions),
             paraElems  = allElems.filter(function(el) {
                 return el.element.tagName.toLowerCase() === 'p';
             });
 
-        var slots = _enforceRules(paraElems, rules, bodySelector);
+        var slots = _enforceRules(paraElems, rules, bodyBottom);
         return slots.length > 0 ? slots[0].element : undefined;
     }
 
