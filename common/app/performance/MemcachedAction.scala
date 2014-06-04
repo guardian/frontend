@@ -21,7 +21,7 @@ import java.util.zip.{GZIPInputStream, GZIPOutputStream}
 import org.apache.commons.io.IOUtils
 
 
-case class  CachedResponse(result: SimpleResult, body: String)
+case class CachedResponse(result: SimpleResult, body: String)
 
 private[performance] trait MemcachedSupport extends ExecutionContexts with implicits.Dates {
   import play.api.libs.json._
