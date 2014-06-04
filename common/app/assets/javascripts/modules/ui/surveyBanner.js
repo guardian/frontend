@@ -29,9 +29,7 @@ define([
     }
 
     function showMessage() {
-        var msg = new Message(tpl);
-
-        msg.show(template(tpl, {}));
+        new Message('surveyBanner').show(template(tpl, {}));
     }
 
     function init() {
