@@ -31,6 +31,17 @@ object Seg {
   }
 }
 
+//Curated and editorsPicks are the same, we will get rid of either
+case class Result(
+                   curated: List[ApiContent],
+                   editorsPicks: List[ApiContent],
+                   mostViewed: List[ApiContent],
+                   contentApiResults: List[ApiContent]
+                   )
+
+object Result {
+  val empty: Result = Result(Nil, Nil, Nil, Nil)
+}
 
 trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging {
   implicit val apiContentCodec = JsonCodecs.gzippedCodec[Option[ApiContent]]
@@ -48,18 +59,6 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
 
   case class CollectionItem(id: String, metaData: Option[Map[String, JsValue]], webPublicationDate: Option[DateTime]) {
     val isSnap: Boolean = id.startsWith("snap/")
-  }
-
-  //Curated and editorsPicks are the same, we will get rid of either
-  case class Result(
-    curated: List[ApiContent],
-    editorsPicks: List[ApiContent],
-    mostViewed: List[ApiContent],
-    contentApiResults: List[ApiContent]
-  )
-
-  object Result {
-    val empty: Result = Result(Nil, Nil, Nil, Nil)
   }
 
   def requestCollection(id: String): Future[Response] = {
