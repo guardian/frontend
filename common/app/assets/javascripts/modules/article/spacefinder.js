@@ -11,20 +11,22 @@ define(['bonzo','qwery', 'common/_'], function(bonzo, qwery, _) {
         };
     }
 
+    // minAbove and minBelow are measured from the top of the paragraph element being tested
     var defaultRules = { // these are written for adverts
-        minFromTop: 250,
-        minFromBottom: 300,
+        minAbove: 250,
+        minBelow: 300,
         selectors: {
-            ' > h2': {minFromTop: 0, minFromBottom: 300}, // hug h2s
-            ' > *:not(p):not(h2)': {minFromTop: 25, minFromBottom: 300} // require spacing for all other elements
+            ' > h2': {minAbove: 0, minBelow: 250}, // hug h2s
+            ' > *:not(p):not(h2)': {minAbove: 25, minBelow: 250}, // require spacing for all other elements
+            ' .ad-slot': {minAbove: 500, minBelow: 500}
         }
     };
 
     // test one element vs another for the given rules
     var _testElem = function(para, other, rules) {
-        var isMinFromTop = para.top - other.bottom >= rules.minFromTop,
-            isMinFromBottom = other.top - para.bottom >= rules.minFromBottom;
-        return isMinFromTop || isMinFromBottom;
+        var isMinAbove = para.top - other.bottom >= rules.minAbove,
+            isMinBelow = other.top - para.bottom >= rules.minBelow;
+        return isMinAbove || isMinBelow;
     };
 
     // test one element vs an array of other elements for the given rules
@@ -36,7 +38,7 @@ define(['bonzo','qwery', 'common/_'], function(bonzo, qwery, _) {
 
     function _enforceRules(slots, rules, bodyHeight) {
         var filtered = _(slots).filter(function(p) {
-            return p.top >= rules.minFromTop && p.top + rules.minFromBottom <= bodyHeight;
+            return p.top >= rules.minAbove && p.top + rules.minBelow <= bodyHeight;
         });
         _(rules.selectors).forOwn(function(params, selector){
             var relevantElems = _(qwery(bodySelector + selector)).map(_mapElementToDimensions);

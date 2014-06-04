@@ -49,14 +49,24 @@ define([
         var boundInit = function(){
             var breakpoint  = detect.getBreakpoint();
 
+            var rules = {
+                minAbove: 250,
+                minBelow: 300,
+                selectors: {
+                    ' > h2': {minAbove: breakpoint === 'mobile' ? 20 : 0, minBelow: 250},
+                    ' > *:not(p):not(h2)': {minAbove: 25, minBelow: 250},
+                    ' .ad-slot': {minAbove: 500, minBelow: 500}
+                }
+            };
+
             if((/wide|desktop|tablet/).test(breakpoint)) {
-                this.insertAdAtP(spacefinder.getParaWithSpace());
+                this.insertAdAtP(spacefinder.getParaWithSpace(rules));
                 if(window.innerWidth < 900) {
-                    this.insertAdAtP(spacefinder.getParaWithSpace());
+                    this.insertAdAtP(spacefinder.getParaWithSpace(rules));
                 }
             } else if(breakpoint === 'mobile') {
-                this.insertAdAtP(spacefinder.getParaWithSpace());
-                this.insertAdAtP(spacefinder.getParaWithSpace());
+                this.insertAdAtP(spacefinder.getParaWithSpace(rules));
+                this.insertAdAtP(spacefinder.getParaWithSpace(rules));
             }
         };
         deferToLoad(boundInit.bind(this));
