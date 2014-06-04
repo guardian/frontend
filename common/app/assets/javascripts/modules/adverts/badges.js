@@ -25,11 +25,8 @@ define([
             } else {
                 hadAdvertisementFeatureBadge = true;
             }
-        };
-
-    return {
-
-        init: once(function() {
+        },
+        init = function() {
             $('.facia-container--sponsored, .facia-container--advertisement-feature').each(function(faciaContainer) {
                 createAdSlot(qwery('.container', faciaContainer)[0], $(faciaContainer).hasClass('facia-container--sponsored'));
             });
@@ -38,8 +35,20 @@ define([
                     createAdSlot(container, $(container).hasClass('container--sponsored'), bonzo(container).data('keywords'));
                 }
             });
-        })
+        },
+        badges = {
 
-    };
+            init: once(init),
+
+            // really only useful for testing
+            reset: function() {
+                badges.init = once(init);
+                hadSponsoredBadge = false;
+                hadAdvertisementFeatureBadge = false;
+            }
+
+        };
+
+    return badges;
 
 });
