@@ -18,6 +18,7 @@ frontend-applications.properties
 *.log
 
 .*
+!.jshintrc
 !.scss-lint.yml
 !.editorconfig
 !.bowerrc
