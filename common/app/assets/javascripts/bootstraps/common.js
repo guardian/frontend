@@ -490,6 +490,7 @@ define([
                 var commercialComponent = new RegExp('^#' + data[0] + '=(.*)$').exec(window.location.hash),
                     slot = qwery('[data-name="' + data[1] + '"]').shift();
                 if (commercialComponent && slot) {
+                    bonzo(slot).removeClass('ad-slot--dfp');
                     var loader = new CommercialLoader({ config: config }),
                         postLoadEvents = {};
                         postLoadEvents[commercialComponent[1]] = function() {
@@ -530,11 +531,11 @@ define([
                 modules.loadAnalytics(config, context);
                 modules.cleanupCookies(context);
                 modules.runAbTests(config, context);
+                modules.loadCommercialComponent(config, context);
                 modules.loadAdverts(config);
                 modules.transcludeRelated(config, context);
                 modules.transcludeOnwardContent(config, context);
                 modules.initRightHandComponent(config, context);
-                modules.loadCommercialComponent(config, context);
             }
             mediator.emit('page:common:deferred:loaded', config, context);
         });
