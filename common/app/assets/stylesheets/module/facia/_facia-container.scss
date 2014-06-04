@@ -93,7 +93,7 @@
                 margin-left: auto;
                 margin-right: auto;
                 @include rem((
-                    width: gs-span(12) + $gs-gutter
+                    width: gs-span(12) + ($gs-gutter*2)
                 ));
             }
             .facia-container__inner {
