@@ -1,11 +1,9 @@
 define([
     'common/utils/storage',
-    'common/utils/template',
     'common/modules/userPrefs',
     'common/modules/ui/message'
 ], function(
     storage,
-    template,
     userPrefs,
     Message
 ){
@@ -29,7 +27,7 @@ define([
     }
 
     function showMessage() {
-        new Message('surveyBanner').show(template(tpl, {}));
+        new Message('surveyBanner').show(tpl);
     }
 
     function init() {
