@@ -28,6 +28,12 @@
     .across__title__action {
         display: block;
     }
+    .linkslist__item {
+      border-top-width: 0;
+    }
+    .across__title {
+        border-top: 1px solid $c-neutral5;
+    }
 }
 
 .container--acrossthegrauniad-variant-3col1storythumb {
@@ -36,14 +42,22 @@
         display: block;
     }
     .across__action {
-        @include rem((
-            padding-left: 98px
-        ));
+        @include mq(desktop) {
+            @include rem((
+                padding-left: 98px
+            ));
+        }
     }
     .across__item {
         @include rem((
             margin-bottom: $gs-baseline/2
         ));
+    }
+    .linkslist__image-container {
+        display: none;
+        @include mq(desktop) {
+            display: block;
+        }
     }
 }
 .container--acrossthegrauniad-variant-3col2stories {
@@ -52,9 +66,10 @@
     }
 }
 
-@include guss-columns($base-class: '.across--columns', $column-min-width: gs-span(4) + $gs-gutter, $column-rule: 1px solid $c-neutral5);
+@include guss-columns($base-class: '.across--columns', $column-min-width: gs-span(4) + $gs-gutter, $column-rule: 0px solid $c-neutral5);
 
 .across--columns__item {
+    border-top: 1px solid $c-neutral5;
     @include rem((
         margin-top: $gs-baseline/4,
         margin-bottom: get-line-height($fs-headlines, 1)
@@ -83,8 +98,6 @@
     }
     .across__action {
         color: $c-neutral1;
-    }
-    .across__action {
         &:visited {
             color: $c-neutral2;
         }

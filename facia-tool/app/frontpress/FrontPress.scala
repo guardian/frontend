@@ -77,7 +77,7 @@ trait FrontPress extends Logging {
 
   private def retrieveFrontByPath(id: String): Future[Iterable[(Config, Collection)]] = {
     val collectionIds: List[Config] = ConfigAgent.getConfigForId(id).getOrElse(Nil)
-    val collections = collectionIds.map(config => FaciaToolCollectionParser.getCollection(config.id, config, Uk, isWarmedUp=true).map((config, _)))
+    val collections = collectionIds.map(config => FaciaToolCollectionParser.getCollection(config.id, config, Uk).map((config, _)))
     val futureSequence = Future.sequence(collections)
     futureSequence.onFailure{case t: Throwable =>
       FrontPressFailure.increment()

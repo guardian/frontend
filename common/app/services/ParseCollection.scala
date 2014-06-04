@@ -49,11 +49,11 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
     request.withRequestTimeout(2000).get()
   }
 
-  def getCollection(id: String, config: Config, edition: Edition, isWarmedUp: Boolean): Future[Collection] = {
+  def getCollection(id: String, config: Config, edition: Edition): Future[Collection] = {
     // get the running order from the apiwith
     val response = requestCollection(id)
     for {
-      collectionList <- getCuratedList(response, edition, id, isWarmedUp)
+      collectionList <- parseResponse(response, edition, id)
       collectionMeta <- getCollectionMeta(response).fallbackTo(Future.successful(CollectionMeta.empty))
       displayName    <- parseDisplayName(response).fallbackTo(Future.successful(None))
       href           <- parseHref(response).fallbackTo(Future.successful(None))
@@ -69,15 +69,6 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
       collectionMeta.updatedBy,
       collectionMeta.updatedEmail
     )
-  }
-
-  def getCuratedList(response: Future[Response], edition: Edition, id: String, isWarmedUp: Boolean): Future[List[Content]] = {
-    val curatedList: Future[List[Content]] = parseResponse(response, edition, id)
-    //Potential to fail the chain if we are warmed up
-    if (isWarmedUp)
-      curatedList
-    else
-      curatedList fallbackTo { Future.successful(Nil) }
   }
 
   private def getCollectionMeta(response: Future[Response]): Future[CollectionMeta] = {
