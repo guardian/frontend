@@ -50,6 +50,7 @@ trait Prototypes {
     // Effectively disable built in Play javascript compiler
     javascriptEntryPoints <<= (sourceDirectory in Compile) { base => (base / "assets" ** "*.none") },
     lessEntryPoints <<= (sourceDirectory in Compile) { base => (base / "assets" ** "*.none") },
+    coffeescriptEntryPoints <<= (sourceDirectory in Compile) { base => (base / "assets" ** "*.none") },
 
     templatesImport ++= Seq(
       "common._",
