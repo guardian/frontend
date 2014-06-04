@@ -36,7 +36,7 @@ define(['bonzo','qwery', 'common/_'], function(bonzo, qwery, _) {
 
     function _enforceRules(slots, rules, bodyHeight) {
         var filtered = _(slots).filter(function(p) {
-            return p.top >= rules.minFromTop && p.bottom + rules.minFromBottom <= bodyHeight;
+            return p.top >= rules.minFromTop && p.top + rules.minFromBottom <= bodyHeight;
         });
         _(rules.selectors).forOwn(function(params, selector){
             var relevantElems = _(qwery(bodySelector + selector)).map(_mapElementToDimensions);
