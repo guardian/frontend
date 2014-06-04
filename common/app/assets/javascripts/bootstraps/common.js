@@ -56,6 +56,7 @@ define([
     'common/modules/identity/api',
     'common/modules/onward/more-tags',
     'common/modules/ui/smartAppBanner',
+    'common/modules/ui/surveyBanner',
     'common/modules/adverts/badges'
 ], function (
     $,
@@ -113,6 +114,7 @@ define([
     id,
     MoreTags,
     smartAppBanner,
+    surveyBanner,
     badges
 ) {
 
@@ -518,6 +520,12 @@ define([
             if(config.switches.smartBanner) {
                 smartAppBanner.init();
             }
+        },
+
+        showSurveyBanner: function(config) {
+            if(config.switches.surveyBanner) {
+                surveyBanner.init();
+            }
         }
     };
 
@@ -569,6 +577,7 @@ define([
             modules.repositionComments();
             modules.showMoreTagsLink();
             modules.showSmartBanner(config);
+            modules.showSurveyBanner(config);
         }
         mediator.emit('page:common:ready', config, context);
     };
