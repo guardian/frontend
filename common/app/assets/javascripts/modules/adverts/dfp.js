@@ -288,11 +288,11 @@ define([
                     }));
             for (var attrName in dataAttrs) {
                 if (dataAttrs[attrName] === false) {
-                    $adSlot.data(attrName, false);
+                    $adSlot.attr('data-' + attrName, 'false');
                 }
             }
             if (keywords) {
-                $adSlot.data('keywords', keywords);
+                $adSlot.attr('data-keywords', keywords);
             }
             return $adSlot[0];
         },

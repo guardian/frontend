@@ -1,10 +1,12 @@
 define([
     'qwery',
+    'bonzo',
     'common/$',
     'common/modules/adverts/dfp',
     'lodash/functions/once'
 ], function (
     qwery,
+    bonzo,
     $,
     dfp,
     once
@@ -12,12 +14,12 @@ define([
 
     var hadSponsoredBadge = false,
         hadAdvertisementFeatureBadge = false,
-        createAdSlot = function(container, isSponsored) {
+        createAdSlot = function(container, isSponsored, keywords) {
             if ((isSponsored && hadSponsoredBadge) || (!isSponsored && hadAdvertisementFeatureBadge)) {
                 return;
             }
             $('.container__header', container)
-                .after(dfp.createAdSlot((isSponsored ? 'sp' : 'ad') + 'badge', 'paid-for-badge'));
+                .after(dfp.createAdSlot((isSponsored ? 'sp' : 'ad') + 'badge', 'paid-for-badge', keywords));
             if (isSponsored) {
                 hadSponsoredBadge = true;
             } else {
@@ -32,8 +34,8 @@ define([
                 createAdSlot(qwery('.container', faciaContainer)[0], $(faciaContainer).hasClass('facia-container--sponsored'));
             });
             $('.container--sponsored, .container--advertisement-feature').each(function(container) {
-                if (qwery('.paid-for-badge', container).length === 0) {
-                    createAdSlot(container, $(container).hasClass('container--sponsored'));
+                if (qwery('.ad-slot--paid-for-badge', container).length === 0) {
+                    createAdSlot(container, $(container).hasClass('container--sponsored'), bonzo(container).data('keywords'));
                 }
             });
         })
