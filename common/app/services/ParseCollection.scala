@@ -14,7 +14,7 @@ import performance._
 import scala.concurrent.duration._
 import org.apache.commons.codec.digest.DigestUtils._
 import ParseCollectionJsonImplicits._
-import com.gu.openplatform.contentapi.model.{Content => ContentApiContent, SearchResponse, ItemResponse}
+import com.gu.openplatform.contentapi.model.{Content => ApiContent, SearchResponse, ItemResponse}
 import play.api.libs.ws.Response
 import play.api.libs.json.JsObject
 
@@ -32,10 +32,10 @@ object Seg {
 
 //Curated and editorsPicks are the same, we will get rid of either
 case class Result(
-  curated: List[ContentApiContent],
-  editorsPicks: List[ContentApiContent],
-  mostViewed: List[ContentApiContent],
-  contentApiResults: List[ContentApiContent]
+  curated: List[ApiContent],
+  editorsPicks: List[ApiContent],
+  mostViewed: List[ApiContent],
+  contentApiResults: List[ApiContent]
 )
 
 trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging {
@@ -163,7 +163,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
             } yield contentList :+ new Snap(collectionItem.id, supporting, collectionItem.webPublicationDate.getOrElse(DateTime.now), collectionItem.metaData.getOrElse(Map.empty))
           }
           else {
-            val content = getContentApiItemFromCollectionItem(collectionItem, edition)
+            val content: Future[Option[ApiContent]] = getContentApiItemFromCollectionItem(collectionItem, edition)
 
             supportingAsContent.onFailure {
               case t: Throwable => log.warn("Supporting links: %s: %s".format(collectionItem.id, t.toString))
@@ -187,7 +187,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
     }
   }
 
-  private def getContentApiItemFromCollectionItem(collectionItem: CollectionItem, edition: Edition): Future[Option[com.gu.openplatform.contentapi.model.Content]] = {
+  private def getContentApiItemFromCollectionItem(collectionItem: CollectionItem, edition: Edition): Future[Option[ApiContent]] = {
     import scala.concurrent.duration._
 
     lazy val response = ContentApi.item(collectionItem.id, edition).showFields(showFieldsWithBodyQuery)
@@ -216,7 +216,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
       }
     }
 
-    implicit val codec = JsonCodecs.gzippedCodec[Option[ContentApiContent]]
+    implicit val codec = JsonCodecs.gzippedCodec[Option[ApiContent]]
 
     MemcachedFallback.withMemcachedFallBack(collectionItem.id, 5.minutes)(response.map(_.flatMap(_.content)))
   }
@@ -282,7 +282,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
     backFillResponse
   }
 
-  def makeContent(content: ContentApiContent): Content = validateContent(Content(content))
+  def makeContent(content: ApiContent): Content = validateContent(Content(content))
 
   def validateContent(content: Content): Content = {
     Try {
