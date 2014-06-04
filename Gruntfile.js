@@ -53,9 +53,8 @@ module.exports = function (grunt) {
                     imager:       '../../../../common/app/assets/javascripts/components/imager.js/src/strategies/container',
                     omniture:     '../../../../common/app/assets/javascripts/components/omniture/omniture',
                     fence:        '../../../../common/app/assets/javascripts/components/fence/fence',
-                    enhancer:     '../../../../common/app/assets/javascripts/components/enhancer/enhancer',
-                    'ophan/ng':   'empty:',
-                    googletag:    'empty:'
+                    enhancer:     '../../../../common/app/assets/javascripts/components/enhancer/enhancer'
+
                 },
                 optimize: 'uglify2',
                 generateSourceMaps: true,
@@ -365,6 +364,18 @@ module.exports = function (grunt) {
                     stdout: true,
                     stderr: true,
                     failOnError: true
+                }
+            },
+
+            videojs: {
+                command: 'npm install',
+                options: {
+                    stdout: true,
+                    stderr: true,
+                    failOnError: true,
+                    execOptions: {
+                        cwd: 'common/app/assets/javascripts/components/videojs'
+                    }
                 }
             }
         },
@@ -762,6 +773,12 @@ module.exports = function (grunt) {
                     }
                 ]
             }
+        },
+
+        grunt: {
+            videojs: {
+                gruntfile: 'common/app/assets/javascripts/components/videojs/Gruntfile.js'
+            }
         }
     });
 
@@ -788,6 +805,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-asset-monitor');
     grunt.loadNpmTasks('grunt-text-replace');
     grunt.loadNpmTasks('grunt-reloadlet');
+    grunt.loadNpmTasks('grunt-grunt');
 
     grunt.registerTask('default', ['compile', 'test', 'analyse']);
 
@@ -827,7 +845,7 @@ module.exports = function (grunt) {
         grunt.task.run('hash');
     });
     grunt.registerTask('generate:js', function(app) {
-        grunt.task.run(['clean:js']);
+        grunt.task.run(['clean:js', 'shell:videojs', 'grunt:videojs']);
         var apps = ['common', 'ophan'];
         if (!app || app === 'preview') { // if no app supplied, compile all apps ('preview' is an amalgamation of other apps)
             apps = apps.concat(Object.keys(grunt.config('requirejs')).filter(function(app) { return ['options', 'common', 'ophan'].indexOf(app) === -1; }));
