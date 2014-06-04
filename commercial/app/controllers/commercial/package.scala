@@ -8,7 +8,7 @@ package object commercial {
 
   val componentMaxAge = 5.minutes
 
-  def segment(implicit request: Request[AnyContent]) = {
+  def segment(implicit request: RequestHeader) = {
     val params = request.queryString
     val section = params.get("s") map (_.head)
     val keywords = params getOrElse("k", Nil)
