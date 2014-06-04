@@ -30,13 +30,6 @@ object Seg {
   }
 }
 
-//Curated and editorsPicks are the same, we will get rid of either
-case class Result(
-  curated: List[ApiContent],
-  editorsPicks: List[ApiContent],
-  mostViewed: List[ApiContent],
-  contentApiResults: List[ApiContent]
-)
 
 trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging {
   case class InvalidContent(id: String) extends Exception(s"Invalid Content: $id")
@@ -50,6 +43,18 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
 
   case class CollectionItem(id: String, metaData: Option[Map[String, JsValue]], webPublicationDate: Option[DateTime]) {
     val isSnap: Boolean = id.startsWith("snap/")
+  }
+
+  //Curated and editorsPicks are the same, we will get rid of either
+  case class Result(
+    curated: List[ApiContent],
+    editorsPicks: List[ApiContent],
+    mostViewed: List[ApiContent],
+    contentApiResults: List[ApiContent]
+  )
+
+  object Result {
+    val empty: Result = Result(Nil, Nil, Nil, Nil)
   }
 
   def requestCollection(id: String): Future[Response] = {
@@ -299,21 +304,11 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
   val executeContentApiQueryRecovery: PartialFunction[Throwable, Result] = {
     case apiError: com.gu.openplatform.contentapi.ApiError if apiError.httpStatus == 404 => {
       log.warn(s"Content API Error: 404 for ${apiError.httpMessage}")
-      Result(
-        curated           = Nil,
-        editorsPicks      = Nil,
-        mostViewed        = Nil,
-        contentApiResults = Nil
-      )
+      Result.empty
     }
     case apiError: com.gu.openplatform.contentapi.ApiError if apiError.httpStatus == 410 => {
       log.warn(s"Content API Error: 410 for ${apiError.httpMessage}")
-      Result(
-        curated           = Nil,
-        editorsPicks      = Nil,
-        mostViewed        = Nil,
-        contentApiResults = Nil
-      )
+      Result.empty
     }
     case e: Exception => {
       log.warn(s"ExecuteContentApiQueryRecovery: $e")
