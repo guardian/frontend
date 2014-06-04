@@ -1,51 +1,49 @@
 package controllers.commercial
 
-import play.api.mvc._
-import model.commercial.jobs.JobsAgent
 import common.{JsonNotFound, JsonComponent}
 import model.Cached
+import model.commercial.jobs.JobsAgent
+import performance.MemcachedAction
+import play.api.mvc._
+import scala.concurrent.Future
 
 object JobAds extends Controller {
 
   implicit val codec = Codec.utf_8
 
-  def renderAds = Action {
-    implicit request =>
+  def renderAds = MemcachedAction { implicit request =>
+    Future.successful {
       JobsAgent.adsTargetedAt(segment) match {
         case Nil => NotFound
-        case jobs => {
-          Cached(60)(Ok(views.html.jobs(jobs take 2)))
-        }
+        case jobs => Cached(componentMaxAge)(Ok(views.html.jobs(jobs take 2)))
       }
+    }
   }
 
-  def jobs = Action {
-    implicit request =>
+  def jobs = MemcachedAction { implicit request =>
+    Future.successful {
       JobsAgent.adsTargetedAt(segment) match {
         case Nil => JsonNotFound.apply()
-        case jobs => {
-          Cached(60)(JsonComponent(views.html.jobs(jobs take 2)))
-        }
+        case jobs => Cached(componentMaxAge)(JsonComponent(views.html.jobs(jobs take 2)))
       }
+    }
   }
 
-  def renderAdsHigh = Action {
-    implicit request =>
+  def renderAdsHigh = MemcachedAction { implicit request =>
+    Future.successful {
       JobsAgent.adsTargetedAt(segment) match {
         case Nil => NotFound
-        case jobs => {
-          Cached(60)(Ok(views.html.jobsHigh(jobs take 2)))
-        }
+        case jobs => Cached(componentMaxAge)(Ok(views.html.jobsHigh(jobs take 2)))
       }
+    }
   }
 
-  def jobsHigh = Action {
-    implicit request =>
+  def jobsHigh = MemcachedAction { implicit request =>
+    Future.successful {
       JobsAgent.adsTargetedAt(segment) match {
         case Nil => JsonNotFound.apply()
-        case jobs => {
-          Cached(60)(JsonComponent(views.html.jobsHigh(jobs take 2)))
-        }
+        case jobs => Cached(componentMaxAge)(JsonComponent(views.html.jobsHigh(jobs take 2)))
       }
+    }
   }
 }
