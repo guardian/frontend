@@ -3,7 +3,6 @@ define([ 'common/common',
          'bean',
          'bonzo',
          'common/modules/adverts/article-body-adverts',
-         // 'common/modules/onward/slot-controller',
          'helpers/fixtures'
     ], function(
         common,
@@ -11,7 +10,6 @@ define([ 'common/common',
         bean,
         bonzo,
         ArticleBodyAdverts,
-        // SlotController,
         fixtures
         ) {
 
@@ -46,7 +44,7 @@ define([ 'common/common',
 
             it("Should insert an inline ad container to the available slot", function() {
                 articleBodyAdverts.init();
-                expect($('.ad-slot--dfp.ad-slot--inline').length).toBe(1);
+                expect($('.ad-slot--dfp.ad-slot--inline').length).toBeGreaterThan(0);
             });
         });
     });

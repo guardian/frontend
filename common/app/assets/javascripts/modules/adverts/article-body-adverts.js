@@ -49,16 +49,12 @@ define([
         var boundInit = function(){
             var breakpoint  = detect.getBreakpoint();
 
-            if((/wide|desktop/).test(breakpoint)) {
-                this.insertAdAtP(spacefinder.getParaWithSpace(300, 350, 75));
-            }
-            else if(breakpoint === 'tablet') {
+            if((/wide|desktop|tablet/).test(breakpoint)) {
                 this.insertAdAtP(spacefinder.getParaWithSpace(300, 350, 75));
                 if(window.innerWidth < 900) {
                     this.insertAdAtP(spacefinder.getParaWithSpace(300, 350, 75));
                 }
-            }
-            else if(breakpoint === 'mobile') {
+            } else if(breakpoint === 'mobile') {
                 this.insertAdAtP(spacefinder.getParaWithSpace(150, 350, 75));
                 this.insertAdAtP(spacefinder.getParaWithSpace(150, 350, 75));
             }
