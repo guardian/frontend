@@ -50,8 +50,6 @@ object DfpAgent extends ExecutionContexts with Logging {
 
   def isSponsored(config: Config): Boolean = isSponsoredContainer(config, isSponsored)
 
-  def sponsoredKeyword(config: Config): Option[String] = containerSponsoredKeywords(config, isSponsored)
-
   def isSponsored(keywords: Seq[Tag]): Boolean = keywords.exists(keyword => isSponsored(keyword.id))
 
   def isSponsored(keywordId: String): Boolean = isSponsoredType(keywordId, _.isSponsored)
@@ -62,13 +60,16 @@ object DfpAgent extends ExecutionContexts with Logging {
 
   def isAdvertisementFeature(config: Config): Boolean = isSponsoredContainer(config, isAdvertisementFeature)
 
-  def advertisementFeatureKeyword(config: Config): Option[String] =
-    containerSponsoredKeywords(config, isAdvertisementFeature)
-
   def isAdvertisementFeature(keywords: Seq[Tag]): Boolean =
     keywords.exists(keyword => isAdvertisementFeature(keyword.id))
 
   def isAdvertisementFeature(keywordId: String): Boolean = isSponsoredType(keywordId, _.isAdvertisementFeature)
+
+  def sponsorshipKeyword(config: Config): Option[String] = {
+    containerSponsoredKeywords(config, isSponsored) orElse {
+      containerSponsoredKeywords(config, isAdvertisementFeature)
+    }
+  }
 
   def refresh() {
 

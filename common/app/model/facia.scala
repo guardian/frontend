@@ -20,11 +20,10 @@ case class Config(
                    showSections: Boolean = false
                    ) {
 
-  def isSponsored = DfpAgent.isSponsored(this)
-  def sponsoredKeyword = DfpAgent.sponsoredKeyword(this)
+  lazy val isSponsored: Boolean = DfpAgent.isSponsored(this)
+  lazy val isAdvertisementFeature: Boolean = DfpAgent.isAdvertisementFeature(this)
 
-  def isAdvertisementFeature = DfpAgent.isAdvertisementFeature(this)
-  def advertisementFeatureKeyword = DfpAgent.advertisementFeatureKeyword(this)
+  lazy val sponsorshipKeyword: Option[String] = DfpAgent.sponsorshipKeyword(this)
 }
 
 object Config {
