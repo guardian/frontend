@@ -17,8 +17,7 @@ define(['bonzo','qwery', 'common/_'], function(bonzo, qwery, _) {
         minBelow: 300,
         selectors: {
             ' > h2': {minAbove: 0, minBelow: 250}, // hug h2s
-            ' > *:not(p):not(h2)': {minAbove: 25, minBelow: 250}, // require spacing for all other elements
-            ' .ad-slot': {minAbove: 500, minBelow: 500}
+            ' > *:not(p):not(h2)': {minAbove: 25, minBelow: 250} // require spacing for all other elements
         }
     };
 
@@ -62,7 +61,7 @@ define(['bonzo','qwery', 'common/_'], function(bonzo, qwery, _) {
             });
 
         var slots = _enforceRules(paraElems, rules, bodyBottom);
-        return slots.length > 0 ? slots[0].element : undefined;
+        return slots.length ? slots[0].element : undefined;
     }
 
     return {
