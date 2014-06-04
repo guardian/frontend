@@ -32,7 +32,7 @@ object DfpAgent extends ExecutionContexts with Logging {
     }
   }
 
-  private def containerSponsoredKeywords(config: Config, p: String => Boolean): Option[String] = {
+  private def containerSponsoredKeyword(config: Config, p: String => Boolean): Option[String] = {
     config.contentApiQuery.flatMap { encodedQuery =>
       val query = URLDecoder.decode(encodedQuery, "utf-8")
       val tokens = query.split( """\?|&|=|\(|\)|\||\,""").map(_.replaceFirst(".*/", ""))
@@ -41,7 +41,7 @@ object DfpAgent extends ExecutionContexts with Logging {
   }
 
   private def isSponsoredContainer(config: Config, p: String => Boolean): Boolean = {
-    containerSponsoredKeywords(config,p).isDefined
+    containerSponsoredKeyword(config, p).isDefined
   }
 
   def isSponsored(content: Content): Boolean = isSponsored(content.keywords)
@@ -66,8 +66,8 @@ object DfpAgent extends ExecutionContexts with Logging {
   def isAdvertisementFeature(keywordId: String): Boolean = isSponsoredType(keywordId, _.isAdvertisementFeature)
 
   def sponsorshipKeyword(config: Config): Option[String] = {
-    containerSponsoredKeywords(config, isSponsored) orElse {
-      containerSponsoredKeywords(config, isAdvertisementFeature)
+    containerSponsoredKeyword(config, isSponsored) orElse {
+      containerSponsoredKeyword(config, isAdvertisementFeature)
     }
   }
 
