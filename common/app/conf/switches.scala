@@ -125,6 +125,11 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 6, 30)
   )
 
+  val SurveyBannerSwitch = Switch("Advertising", "survey-banner",
+    "Display survey banner on all devices",
+    safeState = Off, sellByDate = new DateMidnight(2014, 7, 1)
+  )
+
   val ForcePageSkinSwitch = Switch("Advertising", "force-page-skin",
     "Temp switch, allows us to force the page into 'page skin' mode",
     safeState = Off, sellByDate = new DateMidnight(2014, 6, 7)
@@ -476,6 +481,7 @@ object Switches extends Collections {
     ABHideSupportingLinks,
     ABAcrossTheGuardian,
     SmartBannerSwitch,
+    SurveyBannerSwitch,
     FeaturesAutoContainerSwitch,
     FunctionBindSwitch,
     ForcePageSkinSwitch
