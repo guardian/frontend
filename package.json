@@ -39,7 +39,8 @@
     "grunt-env": "~0.4.1",
     "grunt-scss-lint": "^0.1.7",
     "grunt-reloadlet": "~0.1.3",
-    "grunt-contrib-concat": "^0.4.0"
+    "grunt-contrib-concat": "^0.4.0",
+    "grunt-grunt": "^0.2.2"
   },
   "scripts": {
     "postinstall": "grunt hookmeup"
