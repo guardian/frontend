@@ -1,88 +1,69 @@
-define(['bonzo','qwery', 'common/_', 'common/$'], function(bonzo, qwery, _, $) {
+define(['bonzo','qwery', 'common/_'], function(bonzo, qwery, _) {
     // find spaces in articles for inserting ads and other inline content
 
+    var bodySelector = '.js-article__body';
+
     function _mapElementToDimensions(el) {
-        var dim = bonzo(el).offset();
         return {
-            top: dim.top,
-            bottom: dim.top + dim.height,
+            top: el.offsetTop,
+            bottom: el.offsetTop + el.offsetHeight,
             element: el
         };
     }
 
-    // returns an array of spaces between elements (elems arg is an array of object literals with top/bottom coords)
-    function _elemsToSpaces(elems, bottom) {
-        elems = _(elems);
-        // take the tops and bottoms of the non para elems and zip them to get
-        // the tops/bottoms of the spaces
-        var tops    = elems.pluck('top'),
-            bottoms = elems.pluck('bottom');
-        // add 0 and bodyBottom coords so we get the first and last spaces
-        bottoms.splice(0,0,0);
-        tops.push(bottom);
+    var defaultRules = { // these are written for adverts
+        minFromTop: 250,
+        selectors: {
+            ' > h2': {minFromTop: 0, minFromBottom: 300}, // hug h2s
+            ' > *:not(p):not(h2)': {minFromTop: 25, minFromBottom: 300} // require spacing for all other elements
+        }
+    };
 
-        // zip, filter out duds (from overlapping elements) and map to object literal
-        return bottoms.zip(tops.valueOf())
-            .filter(function(space) {
-                return space[0] < space[1];
-            })
-            .map(function(space) {
-                return {
-                    top: space[0],
-                    bottom: space[1],
-                    height: space[1] - space[0]
-                };
-            }).valueOf();
+    // test one element vs another for the given rules
+    var _testElem = function(para, other, rules) {
+        var isMinFromTop = para.top - other.bottom >= rules.minFromTop,
+            isMinFromBottom = other.top - para.bottom >= rules.minFromBottom;
+        return isMinFromTop || isMinFromBottom;
+    };
+
+    // test one element vs an array of other elements for the given rules
+    var _testElems = function(para, others, rules) {
+        return _(others).every(function(other) {
+            return _testElem(para, other, rules);
+        }).valueOf();
+    };
+
+    function _enforceRules(slots, rules) {
+        var filtered = _(slots).filter(function(p) {
+            return p.top >= rules.minFromTop;
+        });
+        _(rules.selectors).forOwn(function(params, selector){
+            var relevantElems = _(qwery(bodySelector + selector)).map(_mapElementToDimensions);
+
+            filtered = filtered.filter(function(slot) {
+                return _testElems(slot, relevantElems, params);
+            });
+        });
+        return filtered.valueOf();
     }
 
-    // find all elems that lie in space and filter them to viable slots
-    function _findViableParagraphs(elems, spaces, height, minTop, minTopPadding) {
-        return _(elems)
-            .map(function(para) {
-                if (para.top > minTop) { // must be >minTop after top of body
-                    var thisSpace = _(spaces).find(function(space) {
-                        var enoughSpace = space.bottom - para.top >= height,
-                            enoughPadding = para.top - space.top >= minTopPadding,
-                            containedInSpace = space.top <= para.top && space.bottom >= para.bottom;
-                        return enoughSpace && enoughPadding && containedInSpace;
-                    }).valueOf();
-                    if (thisSpace) {
-                        return {element: para.element};
-                    }
-                }
+    // getParaWithSpace returns a paragraph that satisfies the given/default rules:
+    function getParaWithSpace(rules) {
+        rules = rules || defaultRules;
 
-            })
-            .filter(function(slot) {
-                return slot !== undefined;
-            }).valueOf();
-    }
-
-    // getParaWithSpace returns a paragraph with:
-    // - at least `height` space from its top until the next non-para element
-    // - at least `minTop` from the beginning of the article
-    // - at least `minTopPadding` below the previous non-para element
-    function getParaWithSpace(height, minTop, minTopPadding) {
-        minTop = minTop || 0;
-        minTopPadding = minTopPadding || 0;
-
-        // get all immediate children (and filter by para / non-para)
-        var bodyBottom = $('.js-article__body')[0].offsetHeight,
-            allElems = _(qwery('.js-article__body > *')).map(_mapElementToDimensions),
-            nonParaElems = allElems.filter(function(el) {
-                return el.element.tagName.toLowerCase() !== 'p';
-            }),
+        // get all immediate children
+        var allElems = _(qwery(bodySelector + ' > *')).map(_mapElementToDimensions),
             paraElems  = allElems.filter(function(el) {
                 return el.element.tagName.toLowerCase() === 'p';
             });
 
-        var spaces = _elemsToSpaces(nonParaElems, bodyBottom);
-        var slots = _findViableParagraphs(paraElems, spaces, height, minTop, minTopPadding);
+        var slots = _enforceRules(paraElems, rules, bodySelector);
         return slots.length > 0 ? slots[0].element : undefined;
     }
 
     return {
         getParaWithSpace: getParaWithSpace,
-        _elemsToSpaces: _elemsToSpaces, // exposed for unit testing
-        _findViableParagraphs: _findViableParagraphs // exposed for unit testing
+        _testElem: _testElem, // exposed for unit testing
+        _testElems: _testElems // exposed for unit testing
     };
 });

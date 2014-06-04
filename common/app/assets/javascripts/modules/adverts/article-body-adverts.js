@@ -50,13 +50,13 @@ define([
             var breakpoint  = detect.getBreakpoint();
 
             if((/wide|desktop|tablet/).test(breakpoint)) {
-                this.insertAdAtP(spacefinder.getParaWithSpace(300, 350, 75));
+                this.insertAdAtP(spacefinder.getParaWithSpace());
                 if(window.innerWidth < 900) {
-                    this.insertAdAtP(spacefinder.getParaWithSpace(300, 350, 75));
+                    this.insertAdAtP(spacefinder.getParaWithSpace());
                 }
             } else if(breakpoint === 'mobile') {
-                this.insertAdAtP(spacefinder.getParaWithSpace(150, 350, 75));
-                this.insertAdAtP(spacefinder.getParaWithSpace(150, 350, 75));
+                this.insertAdAtP(spacefinder.getParaWithSpace());
+                this.insertAdAtP(spacefinder.getParaWithSpace());
             }
         };
         deferToLoad(boundInit.bind(this));
