@@ -25,7 +25,7 @@ define([
         };
 
         var templates = {
-            'container': '<section class="container container--row-pattern container--acrossthegrauniad container--acrossthegrauniad-variant-{{variant}}" data-link-name="block | across-the-guardian" data-component="across-the-guardian">' +
+            'container': '<section class="container container--acrossthegrauniad container--acrossthegrauniad-variant-{{variant}}" data-link-name="block | across-the-guardian" data-component="across-the-guardian">' +
                 '    <div class="facia-container__inner">' +
                 '        <div class="container__border tone-news tone-accent-border"></div>' +
                 '        <h2 class="container__title tone-news tone-background">' +
