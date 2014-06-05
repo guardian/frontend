@@ -1,50 +1,28 @@
 @(profileDiscussions: discussion.model.ProfileDiscussions)(implicit request: RequestHeader)
-@import conf.Configuration
 
-<div class="profile-discussions">
-@profileDiscussions.discussions.map{ discussion =>
-     <div class="facia-container facia-container--default-heading facia-container--layout-article facia-container--layout-discussion">
-        <div class="container container--row-pattern">
-            <div class="facia-container__inner">
-                <div class="container__border tone-accent-border hide-on-mobile"></div>
-                <h3 class="container__title tone-news">
-                    <a href="@discussion.discussion.webUrl" class="container__title__label u-text-hyphenate">@discussion.discussion.title</a>
-                </h3>
-                <div class="container__body">
-                    <ul class="disc-discussions u-unstyled" itemprop itemtype="http://schema.org/UserComments">
-                        @discussion.comments.map{ comment =>
-                            <li class="disc-comment u-cf" itemprop itemtype="http://schema.org/Comment">
-                                <div class="disc-comment__meta">
-                                    <time class="disc-comment__date-published"
-                                          itemprop="datePublished"
-                                          datetime="@comment.date.toString("yyyy-MM-dd'T'HH:mm:ss'Z'")"
-                                          data-timestamp="@comment.date.getMillis">
-                                        <a class="disc-comment__permalink" href="@Configuration.discussion.url/comment-permalink/@comment.id" itemprop="url">@comment.date.toString("d MMM y HH:mm")</a>
-                                    </time>
+<div class="activity-stream activity-stream--discussions" itemprop itemtype="http://schema.org/UserComments">
+@profileDiscussions.discussions.map{ disc =>
+    <div class="activity-stream__item activity-item">
+        <div class="activity-item__title">
+            <a href="@disc.discussion.webUrl#comments">@disc.discussion.title</a>
+        </div>
 
-                                    <button
-                                        class="disc-comment__recommend u-button-reset @if(discussion.isClosedForRecommendation){js-disc-recommend-comment}"
-                                        data-comment-id="@comment.id">
-                                        <div class="disc-comment__recommend-count js-disc-recommend-count">
-                                            @comment.numRecommends
-                                        </div>
-                                        <div class="disc-comment__recommend-button js-disc-recommend-button">
-                                            <i class="i i-recommend"></i>
-                                        </div>
-                                    </button>
-                                </div>
+        @disc.comments.zipWithRowInfo.map{ case (c, row) =>
+            <div class="activity-item__content @if(row.isFirst){activity-item__content--no-border}" itemprop itemtype="http://schema.org/Comment">
+                <div class="activity-item__content-meta">
+                    <time class="disc-comment__date-published"
+                          itemprop="datePublished"
+                          datetime="@c.date.toString("yyyy-MM-dd'T'HH:mm:ss'Z'")"
+                          data-timestamp="@c.date.getMillis">
+                        <a class="disc-comment__permalink" href="@Configuration.discussion.url/comment-permalink/@c.id" itemprop="url">@c.date.toString("d MMM y HH:mm")</a>
+                    </time>
+                </div>
 
-                                <div class="disc-comment__body" itemprop="text">
-                                    @withJsoup(BulletCleaner(comment.body))(
-                                        InBodyLinkCleaner("in body link")(Edition(request))
-                                    )
-                                </div>
-                            </li>
-                        }
-                    </ul>
+                <div class="activity-item__content-body">
+                    @comment(c, c.discussion.isClosedForRecommendation)
                 </div>
             </div>
-        </div>
+        }
     </div>
 }
 </div>

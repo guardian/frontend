@@ -190,6 +190,16 @@
     @include rem((
         margin-top: $gs-baseline
     ));
+
+    @include mq(wide) {
+        .has-page-skin & {
+            margin-left: auto;
+            margin-right: auto;
+            @include rem((
+                width: gs-span(12) + ($gs-gutter*2)
+            ));
+        }
+    }
 }
 .ad-slot--commercial-component-high {
     display: none;
@@ -326,21 +336,13 @@
         }
     }
 }
-.page-skin-container {
-    display: none;
-
-    @include mq(wide) {
-        display: block;
-        position: relative;
-        width: 1300px;
-        margin: 0 auto;
-    }
-}
 .ad-slot--page-skin {
-    z-index: 0;
-    position: absolute;
-    top: 0;
-    @include transition(top .5s)
+    height: 0;
+}
+@include mq(mobile, $to: wide) {
+    .has-page-skin {
+        background-image: none !important;
+    }
 }
 .ad-slot__label {
     height: $mpu-ad-label-height;

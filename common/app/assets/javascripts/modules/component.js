@@ -2,12 +2,16 @@ define([
     'bean',
     'qwery',
     'bonzo',
-    'common/utils/ajax'
+    'common/utils/ajax',
+    'lodash/objects/assign',
+    'lodash/objects/clone'
 ], function(
     bean,
     qwery,
     bonzo,
-    ajax
+    ajax,
+    assign,
+    clone
     ) {
 
     /**
@@ -321,11 +325,7 @@ define([
      * @param {Object} options
      */
     Component.prototype.setOptions = function(options) {
-        options = options || {};
-        this.options = {};
-        for (var prop in this.defaultOptions) {
-            this.options[prop] = options.hasOwnProperty(prop) ? options[prop] : this.defaultOptions[prop];
-        }
+        this.options = assign(clone(this.defaultOptions), this.options||{}, options);
     };
 
     /**

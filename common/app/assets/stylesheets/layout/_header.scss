@@ -9,14 +9,6 @@
         background: $c-neutral8;
         border-bottom: 2px solid $c-brandBlue;
     }
-    @include mq(wide) {
-        .has-page-skin & > * {
-            margin: 0 auto;
-            @include rem((
-                width: gs-span(12) + ($gs-gutter*2)
-            ));
-        }
-    }
 }
 
 .guardian-logo-wrapper {

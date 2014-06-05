@@ -3,18 +3,30 @@ package controllers.commercial
 import play.api.mvc._
 import model.{NoCache, Cached}
 import common.{ExecutionContexts, JsonComponent}
-import model.commercial.books.{BookFinder, BestsellersAgent}
+import model.commercial.books.{Book, BookFinder, BestsellersAgent}
 
-object BookOffers extends Controller with ExecutionContexts {
+
+object BookOffers extends Controller with ExecutionContexts with implicits.Collections {
 
   def bestsellers(format: String) = Action {
     implicit request =>
-      BestsellersAgent.adsTargetedAt(segment) match {
+      (BestsellersAgent.getSpecificBooks(specificIds) ++ BestsellersAgent.adsTargetedAt(segment)).distinctBy( _.isbn ).take(5) match {
         case Nil => NoCache(NotFound)
         case books if format == "json" =>
           Cached(60)(JsonComponent(views.html.books.bestsellers(books)))
         case books if format == "html" =>
           Cached(60)(Ok(views.html.books.bestsellers(books)))
+      }
+  }
+
+  def bestsellersMedium(format: String) = Action {
+    implicit request =>
+      BestsellersAgent.adsTargetedAt(segment) match {
+        case Nil => NoCache(NotFound)
+        case books if format == "json" =>
+          Cached(60)(JsonComponent(views.html.books.bestsellersMedium(books)))
+        case books if format == "html" =>
+          Cached(60)(Ok(views.html.books.bestsellersMedium(books)))
       }
   }
   

@@ -9,9 +9,7 @@
     role="main">
 
     @if(index.page.hasPageSkin) {
-        <div class="page-skin-container">
-            @fragments.commercial.adSlot(name="pageskin", adType="page-skin", sizeMapping=Map("wide" -> Seq("1300,1200")), showLabel=false, refresh=false)
-        </div>
+        @fragments.commercial.adSlot(name="pageskin", adType="page-skin", sizeMapping=Map("wide" -> Seq("1300,1200")), showLabel=false, refresh=false)
     }
 
     @fragments.containers.tag(index.page, Collection(index.trails), NewsContainer(showMore = false), containerIndex = 0, pagination = index.page.pagination)(request, templateDeduping, Config(s"${index.page.id}/news/regular-stories", displayName = Some(index.page.webTitle)))

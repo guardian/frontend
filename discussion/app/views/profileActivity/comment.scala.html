@@ -1,0 +1,22 @@
+@(comment: Comment, canRecommend: Boolean = false)(implicit request: RequestHeader)
+<div class="disc-comment u-cf">
+    <div class="disc-comment__meta u-cf">
+        <button
+            class="disc-comment__recommend u-button-reset @if(canRecommend){js-disc-recommend-comment}"
+            data-comment-id="@comment.id">
+            <div class="disc-comment__recommend-count js-disc-recommend-count" itemprop="upvoteCount">
+                @comment.numRecommends
+            </div>
+            <div class="disc-comment__recommend-button js-disc-recommend-button">
+                <i class="i i-recommend"></i>
+                <span class="u-h">Recommend</span>
+            </div>
+        </button>
+    </div>
+
+    <div class="disc-comment__body" itemprop="text">
+        @withJsoup(BulletCleaner(comment.body))(
+            InBodyLinkCleaner("in body link")(Edition(request))
+        )
+    </div>
+</div>

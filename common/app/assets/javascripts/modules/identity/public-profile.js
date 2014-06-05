@@ -1,7 +1,9 @@
 define([
     'common/$',
     'bonzo',
+    'bean',
     'common/utils/config',
+    'common/utils/context',
     'common/modules/component',
     'common/modules/discussion/api',
     'lodash/objects/mapValues'
@@ -9,25 +11,29 @@ define([
 function(
     $,
     bonzo,
+    bean,
     config,
+    context,
     component,
     discussionApi,
     mapValues
 ) {
-    function ProfileDiscussions(opts) {
+    function ActivityStream(opts) {
         this.setOptions(opts);
     }
-    component.define(ProfileDiscussions);
-    ProfileDiscussions.prototype.endpoint = '/discussion/profile/:userId/:streamType.json';
-    ProfileDiscussions.prototype.defaultOptions = {
+    component.define(ActivityStream);
+    ActivityStream.prototype.endpoint = '/discussion/profile/:userId/:streamType.json';
+    ActivityStream.prototype.componentClass = 'activity-stream';
+    ActivityStream.prototype.defaultOptions = {
         userId: null,
         streamType: 'discussions'
     };
-    ProfileDiscussions.prototype.ready = function() {
+    ActivityStream.prototype.ready = function() {
+        this.removeState('loading');
         this.on('click', '.js-disc-recommend-comment', this.recommendComment);
         $('.js-disc-recommend-comment').addClass('disc-comment__recommend--open');
     };
-    ProfileDiscussions.prototype.recommendComment = function(e) {
+    ActivityStream.prototype.recommendComment = function(e) {
         var el = e.currentTarget;
         discussionApi.recommendComment(el.getAttribute('data-comment-id'));
         bonzo(el).addClass('disc-comment__recommend--active');
@@ -35,21 +41,50 @@ function(
             countEl.innerHTML = parseInt(countEl.innerHTML, 10)+1;
         });
     };
+    ActivityStream.prototype.change = function(opts) {
+        var $el = bonzo(this.elem).empty();
+        this.setState('loading');
+        this.setOptions(opts);
+        this._fetch().then(function(resp) {
+            $.create(resp.html).each(function(el) {
+                this.elem = el;
+                $el.replaceWith(this.elem);
+            }.bind(this));
+            this.removeState('loading');
+        }.bind(this));
+    };
 
-    function getProfileDiscussions() {
-        var opts = {
+    function getActivityStream() {
+        var activityStream, opts = {
             userId: 'data-user-id',
             streamType: 'data-stream-type'
         };
-        $('.js-comment-stream').each(function(el) {
-            (new ProfileDiscussions(mapValues(opts, function(key) {
+        $('.js-activity-stream').each(function(el) {
+            (activityStream = new ActivityStream(mapValues(opts, function(key) {
                 return el.getAttribute(key);
-            }))).fetch(el);
+            }))).fetch(el).then(function() {
+                bonzo(el).removeClass('activity-stream--loading');
+            });
+        }).addClass('activity-stream--loading');
+        return activityStream;
+    }
+
+    function setupActivityStreamChanger(activityStream) {
+        bean.on(context(), 'click', '.js-activity-stream-change', function(e) {
+            var el = e.currentTarget;
+            e.preventDefault();
+
+            $('.tabs__tab--selected').removeClass('tabs__tab--selected');
+            bonzo(el).parent().addClass('tabs__tab--selected');
+
+            activityStream.change({
+                streamType: el.getAttribute('data-stream-type')
+            });
         });
     }
 
     function init() {
-        getProfileDiscussions();
+        setupActivityStreamChanger(getActivityStream());
     }
 
     return {

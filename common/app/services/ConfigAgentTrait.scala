@@ -82,14 +82,11 @@ trait ConfigAgentTrait extends ExecutionContexts with Logging {
     SeoDataJson(
       path,
       navSection   = (frontJson \ "navSection").asOpt[String].filter(_.nonEmpty),
-      webTitle  = (frontJson \ "webTitle").asOpt[String].filter(_.nonEmpty).map(webTitleCase),
+      webTitle  = (frontJson \ "webTitle").asOpt[String].filter(_.nonEmpty),
       title  = (frontJson \ "title").asOpt[String].filter(_.nonEmpty),
       description  = (frontJson \ "description").asOpt[String].filter(_.nonEmpty)
     )
   }
-
-  private def webTitleCase(webTitle: String): String = webTitle.split(' ').map(_.capitalize).mkString(" ")
-
 }
 
 object ConfigAgent extends ConfigAgentTrait
