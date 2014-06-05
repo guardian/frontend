@@ -15,10 +15,9 @@
             ));
 
             .linkslist__item {
-                @include rem((
-                    width: gs-span(3)
-                ));
-
+                &:nth-child(n) {
+                    clear: none;
+                }
                 &:nth-child(2n+1) {
                     clear: both;
                 }
