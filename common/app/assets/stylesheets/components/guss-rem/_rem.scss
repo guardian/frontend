@@ -17,8 +17,7 @@ $guss-rem-baseline: 10px !default;
 
 // Output rem units with px fallback
 // Expects $properties to be a Sass map
-// Usage: see font-size mixin below
-// or http://sassmeister.com/gist/7451284
+// Usage: http://sassmeister.com/gist/7451284
 @mixin rem($properties) {
     @each $property, $value in $properties {
         @if (type-of($value) == number and $value != 0) {

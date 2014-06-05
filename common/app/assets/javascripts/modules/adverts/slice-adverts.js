@@ -20,7 +20,7 @@ define([
 
         this.config = defaults(c || {}, {
             containerSelector: '.container',
-            sliceSelector: '.slice--ad-candidate',
+            sliceSelector: '.js-slice--ad-candidate',
             page: {},
             switches: {}
         });
