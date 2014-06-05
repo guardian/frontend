@@ -55,6 +55,19 @@
         transform: translateZ(0);
         @include transition(height 1s cubic-bezier(0, 0, 0, .985));
     }
+    @include mq(wide) {
+        .has-page-skin & {
+            .ad-slot--top-banner-ad {
+                width: 970px;
+                padding-left: 0;
+                text-align: center;
+            }
+            .ad-slot__label {
+                width: 720px;
+                margin: 0 auto;
+            }
+        }
+    }
 }
 .top-banner-ad-container--facia-layout .ad-slot--top-banner-ad {
     @include mq(faciaLeftCol) {
