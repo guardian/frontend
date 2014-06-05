@@ -1,40 +1,38 @@
 package controllers.commercial
 
-import common.JsonComponent
-import model.{NoCache, Cached}
 import model.commercial.money._
+import model.{NoCache, Cached}
 import performance.MemcachedAction
 import play.api.mvc._
+import play.api.templates.Html
 import scala.concurrent.Future
 
 object MoneyOffers extends Controller {
 
-  private def bestBuys(format: Format) = MemcachedAction { implicit request =>
+  object lowRelevance extends BestBuysRelevance {
+    override def view(bestBuys: BestBuys)(implicit request: RequestHeader): Html =
+      views.html.moneysupermarket.bestBuys(bestBuys)
+  }
+
+  object highRelevance extends BestBuysRelevance {
+    override def view(bestBuys: BestBuys)(implicit request: RequestHeader): Html =
+      views.html.moneysupermarket.bestBuysHigh(bestBuys)
+  }
+
+  private def bestBuys(relevance: BestBuysRelevance, format: Format) = MemcachedAction { implicit request =>
     Future.successful {
       BestBuysAgent.adsTargetedAt(segment) match {
-        case Some(products) =>
-          Cached(componentMaxAge) {
-            format.result(views.html.moneysupermarket.bestBuys(products))
-          }
+        case Some(products) => Cached(componentMaxAge)(format.result(relevance.view(products)))
         case None => NoCache(format.nilResult)
       }
     }
   }
-  
-  def bestBuysHigh(format: String) = Action {
-    implicit request =>
-      (BestBuysAgent.adsTargetedAt(segment), format) match {
-        case (Some(products), "json") =>
-          Cached(60)(JsonComponent(views.html.moneysupermarket.bestBuysHigh(products)))
-        case (Some(products), "html") =>
-          Cached(60)(Ok(views.html.moneysupermarket.bestBuysHigh(products)))
-        case _ => NotFound
-      }
-  }
 
-  def bestBuysHtml = bestBuys(htmlFormat)
-  def bestBuysJson = bestBuys(jsonFormat)
+  def bestBuysLowHtml = bestBuys(lowRelevance, htmlFormat)
+  def bestBuysLowJson = bestBuys(lowRelevance, jsonFormat)
 
+  def bestBuysHighHtml = bestBuys(highRelevance, htmlFormat)
+  def bestBuysHighJson = bestBuys(highRelevance, jsonFormat)
 
   def savings(savingsType: String) = MemcachedAction { implicit request =>
     Future.successful {
@@ -74,4 +72,9 @@ object MoneyOffers extends Controller {
     }
   }
 
+}
+
+
+sealed trait BestBuysRelevance {
+  def view(bestBuys: BestBuys)(implicit request: RequestHeader): Html
 }
