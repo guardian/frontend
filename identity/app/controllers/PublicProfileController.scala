@@ -19,7 +19,7 @@ class PublicProfileController @Inject()(idUrlBuilder: IdentityUrlBuilder,
   with ExecutionContexts
   with SafeLogging{
 
-  def page(url: String) = IdentityPage(url, "Public profile", "public profile")
+  def page(url: String, username: Option[String]) = IdentityPage(url, username.get +"'s public profile", "public profile")
 
   def renderProfileFromVanityUrl(vanityUrl: String) = renderPublicProfilePage(
     "/user/" + vanityUrl,
@@ -38,7 +38,7 @@ class PublicProfileController @Inject()(idUrlBuilder: IdentityUrlBuilder,
 
         case Right(user) =>
           val idRequest = idRequestParser(request)
-          Cached(60)(Ok(views.html.publicProfilePage(page(url), idRequest, idUrlBuilder, user)))
+          Cached(60)(Ok(views.html.publicProfilePage(page(url, user.publicFields.displayName), idRequest, idUrlBuilder, user)))
       }
   }
 }

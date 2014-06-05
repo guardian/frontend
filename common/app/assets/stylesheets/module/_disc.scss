@@ -1,16 +1,21 @@
+/* ==========================================================================
+   Discussion
+   ========================================================================== */
 $disc-respond-when: rightCol;
+$disc-avatar-size: 44px;
 .disc-discussions {
     margin: 0;
 }
 .disc-discussion {}
 
+/* ==========================================================================
+   Comment
+   ========================================================================== */
 .disc-comment {
     @include fs-textsans(4);
     @include rem((
-        padding-bottom: $gs-baseline/2,
-        padding-top: $gs-baseline/2
+        padding-bottom: $gs-baseline/2
     ));
-    border-top: 1px solid $c-neutral4;
 
     @include mq($disc-respond-when) {
         &:first-of-type {
@@ -30,31 +35,31 @@ $disc-respond-when: rightCol;
     }
 }
 .disc-comment__date-published {
-    @include mq($disc-respond-when) {
-        display: block;
-    }
+    @include fs-textsans(1);
+    display: block;
 }
 .disc-comment__permalink {
     color: $c-neutral2;
 }
 .disc-comment__recommend {
-    display: inline-block;
-    cursor: default;
-    float: right;
-    width: auto;
+    @include rem((
+        top: $gs-baseline/2
+    ));
 
-    @include mq($disc-respond-when) {
-        @include rem((
-            margin-top: $gs-baseline/2
-        ));
-        display: block;
-    }
+    cursor: default;
+    position: absolute;
+    right: 0;
+    width: auto;
 }
 .disc-comment__recommend-count {
     @include rem((
         margin-right: $gs-gutter/4
     ));
     display: inline-block;
+
+    .disc-comment__recommend--active & {
+        color: $c-commentDefault;
+    }
 }
 .disc-comment__recommend-button {
     @include border-radius(18px);
@@ -69,17 +74,12 @@ $disc-respond-when: rightCol;
     .i {
         vertical-align: middle;
     }
-}
-.disc-comment__recommend--open {
-    .disc-comment__recommend-button {
+
+    .disc-comment__recommend--open & {
         background-color: $c-newsDefault;
     }
-}
-.disc-comment__recommend--active {
-    .disc-comment__recommend-count {
-        color: $c-commentDefault;
-    }
-    .disc-comment__recommend-button {
+
+    .disc-comment__recommend--active & {
         background-color: $c-commentDefault;
     }
 }
@@ -89,17 +89,144 @@ $disc-respond-when: rightCol;
         margin-bottom: $gs-baseline
     ));
 
-    @include mq($disc-respond-when) {
-        @include rem((
-            width: gs-span(8)
-        ));
-    }
-
     blockquote {
         @include rem((
             margin: $gs-baseline $gs-gutter,
             padding-left: $gs-gutter/2
         ));
         border-left: 3px solid transparentize($c-neutral1, .75);
+    }
+}
+
+
+/* ==========================================================================
+   Profile
+   ========================================================================== */
+.disc-profile {
+    @include fs-textsans(4);
+}
+.disc-profile__avatar {
+    @include border-radius($gs-gutter*4);
+    @include rem((
+        height: $disc-avatar-size,
+        width: $disc-avatar-size
+    ));
+    float: left;
+    overflow: hidden;
+}
+.disc-profile__avatar-image {
+    height: 100%;
+    width: 100%;
+}
+.disc-profile__user-info {
+    @include rem((
+        padding-left: $disc-avatar-size+($gs-gutter/2)
+    ));
+}
+.disc-profile__badges {
+    @include fs-textsans(1);
+    text-transform: uppercase;
+}
+.disc-profile__date {
+    @include fs-textsans(1);
+    color: $c-neutral2-contrasted;
+}
+
+
+/* ==========================================================================
+   Activity stream
+   ========================================================================== */
+.activity-stream {
+    @include rem((
+        margin-left: $gs-gutter,
+        margin-right: $gs-gutter
+    ));
+}
+.activity-stream--loading:after {
+    @include fs-textsans(4);
+    @include rem((
+        min-height: $gs-baseline*20,
+        padding-top: $gs-baseline*2
+    ));
+    content: 'Loading comments…';
+    display: block;
+    text-align: center;
+}
+.activity-stream__item {
+    @include rem((
+        padding-bottom: $gs-baseline/2,
+        padding-top: $gs-baseline/2
+    ));
+    border-top: 1px solid $c-neutral4;
+}
+.activity-item__title {
+    @include fs-header(2);
+    @include rem((
+        margin-bottom: $gs-baseline
+    ));
+    font-weight: normal;
+
+    @include mq(leftCol) {
+        @include fs-header(1, true);
+        @include rem((
+            margin-right: $gs-gutter,
+            width: $a-leftCol-width
+        ));
+        float: left;
+        position: relative;
+        z-index: 1;
+    }
+
+    @include mq(wide) {
+        @include rem((
+            width: $a-leftColWide-width
+        ));
+    }
+}
+.activity-item__content {
+    position: relative;
+
+    @include mq(leftCol) {
+        @include rem((
+            margin-left: $a-leftCol-width+$gs-gutter
+        ));
+    }
+
+    @include mq(wide) {
+        @include rem((
+            margin-left: $a-leftColWide-width+$gs-gutter
+        ));
+    }
+}
+.activity-item__content-meta {
+    @include fs-textsans(4);
+
+    @include mq($disc-respond-when) {
+        @include rem((
+            width: gs-span(2.5)
+        ));
+        float: left;
+    }
+}
+.activity-item__content-body {
+    @include mq($disc-respond-when) {
+        @include rem((
+            margin-left: gs-span(2.5)+$gs-gutter,
+            margin-right: $gs-gutter*3
+        ));
+    }
+}
+
+.activity-stream--discussions {
+    .activity-item__content {
+        @include rem((
+            padding-top: $gs-baseline/2
+        ));
+        border-top: 1px solid $c-neutral4;
+    }
+
+    .activity-item__content--no-border {
+        border-top: 0 none;
+        padding-top: 0;
     }
 }

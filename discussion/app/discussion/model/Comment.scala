@@ -30,7 +30,7 @@ case class BlankComment() extends Comment{
   val id: Int = 0
   val body: String = ""
   val responses: Seq[Comment] = Nil
-  val profile: Profile = Profile("", "", "", isStaff = false, isContributor = false, None)
+  val profile: Profile = Profile("", "", "", "", isStaff = false, isContributor = false, None)
   val discussion: Discussion = Discussion.empty
   val date: DateTime = new DateTime()
   val isHighlighted: Boolean = false
