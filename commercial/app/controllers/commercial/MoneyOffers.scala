@@ -1,7 +1,7 @@
 package controllers.commercial
 
 import common.JsonComponent
-import model.Cached
+import model.{NoCache, Cached}
 import model.commercial.money._
 import performance.MemcachedAction
 import play.api.mvc._
@@ -9,17 +9,21 @@ import scala.concurrent.Future
 
 object MoneyOffers extends Controller {
 
-  def bestBuys(format: String) = MemcachedAction { implicit request =>
+  private def bestBuys(format: Format) = MemcachedAction { implicit request =>
     Future.successful {
-      (BestBuysAgent.adsTargetedAt(segment), format) match {
-        case (Some(products), "json") =>
-          Cached(componentMaxAge)(JsonComponent(views.html.moneysupermarket.bestBuys(products)))
-        case (Some(products), "html") =>
-          Cached(componentMaxAge)(Ok(views.html.moneysupermarket.bestBuys(products)))
-        case _ => NotFound
+      BestBuysAgent.adsTargetedAt(segment) match {
+        case Some(products) =>
+          Cached(componentMaxAge) {
+            format.result(views.html.moneysupermarket.bestBuys(products))
+          }
+        case None => NoCache(format.nilResult)
       }
     }
   }
+
+  def bestBuysHtml = bestBuys(htmlFormat)
+  def bestBuysJson = bestBuys(jsonFormat)
+
 
   def savings(savingsType: String) = MemcachedAction { implicit request =>
     Future.successful {
