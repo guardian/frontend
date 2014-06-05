@@ -3,24 +3,10 @@ package model.commercial.masterclasses
 import common.{AkkaAgent, ExecutionContexts, Logging}
 import model.ImageElement
 import model.commercial.{Segment, AdAgent, Lookup}
-import org.joda.time.DateTime
 import scala.concurrent.Future
 import scala.concurrent.duration._
 
 object MasterClassAgent extends AdAgent[MasterClass] with ExecutionContexts {
-
-  val placeholder = {
-    val masterClass1 = MasterClass(EventbriteMasterClass("1", "MasterClass A", new DateTime(),
-      "http://www.theguardian.com", "Description of MasterClass A", "Live", Venue(), Ticket(1.0) :: Nil, 1,
-      "http://www.theguardian.com", tags = Nil), None)
-    val masterClass2 = MasterClass(masterClass1.eventBriteEvent.copy(name = "MasterClass B",
-      description = "MasterClass with multiple tickets", tickets = List(Ticket(1.0), Ticket(5.0))), None)
-    val masterClass3 = MasterClass(masterClass1.eventBriteEvent.copy(name = "Guardian MasterClass C",
-      description = "Description of MasterClass C"), None)
-    Seq(masterClass1, masterClass2, masterClass3)
-  }
-
-  updateCurrentAds(placeholder)
 
   override def defaultAds = currentAds take 4
 
@@ -89,7 +75,7 @@ object MasterClassTagsAgent extends ExecutionContexts with Logging {
   def refresh(): Future[Seq[Future[Map[String, Seq[String]]]]] = {
     val tags = {
       val currentAds = MasterClassAgent.currentAds
-      if (currentAds == MasterClassAgent.placeholder) {
+      if (currentAds.isEmpty) {
         defaultTags
       } else {
         // use event title instead of tags because it's more informative
