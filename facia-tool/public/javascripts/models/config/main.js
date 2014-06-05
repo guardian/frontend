@@ -91,13 +91,7 @@ define([
                     data: JSON.stringify(serialized)
                 })
                 .then(function() {
-                    bootstrap({
-                        force: true,
-                        openFronts: _.reduce(model.fronts(), function(openFronts, front) {
-                            openFronts[front.id()] = front.state.isOpen();
-                            return openFronts;
-                        }, {})
-                    })
+                    bootstrap({ force: true })
                     .done(function() {
                         model.pending(false);
                         if (affectedCollections) {
@@ -175,8 +169,6 @@ define([
         }
 
         function bootstrap(opts) {
-            opts.openFronts = opts.openFronts || {};
-
             return fetchSettings(function (config, switches) {
                 if (switches['facia-tool-configuration-disable']) {
                     terminate('The configuration tool has been switched off.', '/');
@@ -201,10 +193,15 @@ define([
                         .unshift(model.pinnedFront() ? model.pinnedFront().id() : undefined)
                         .filter(function(id) { return id; })
                         .map(function(id) {
-                            var front = new Front(cloneWithKey(config.fronts[id], id));
+                            var newFront = new Front(cloneWithKey(config.fronts[id], id)),
+                                oldFront = findFirstById(model.fronts, id);
 
-                            front.state.isOpen(opts.openFronts[id]);
-                            return front;
+                            if (oldFront) {
+                                newFront.state.isOpen(oldFront.state.isOpen());
+                                newFront.state.isOpenProps(oldFront.state.isOpenProps());
+                            }
+
+                            return newFront;
                         })
                        .value()
                     );
