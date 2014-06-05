@@ -115,7 +115,7 @@ $guss-row-fallback-width: 940px !default;
 
             &:after,
             &:before {
-                content: '';
+                content: "";
                 display: table;
             }
             &:after {

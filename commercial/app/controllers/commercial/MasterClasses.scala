@@ -3,23 +3,26 @@ package controllers.commercial
 import common.{JsonNotFound, JsonComponent}
 import model.Cached
 import model.commercial.masterclasses.{MasterClass, MasterClassAgent}
+import performance.MemcachedAction
 import play.api.mvc._
+import scala.concurrent.Future
 
 object MasterClasses extends Controller {
 
   implicit val codec = Codec.utf_8
 
-  private def renderMasterclassAction(nilResult: RequestHeader => Result)
-                                     (result: Seq[MasterClass] => RequestHeader => SimpleResult) = Action {
-    implicit request =>
-      MasterClassAgent.adsTargetedAt(segment) match {
-        case Nil => nilResult(request)
-        case masterClasses =>
-          Cached(60) {
+  private def renderMasterclassAction(nilResult: RequestHeader => SimpleResult)
+                                     (result: Seq[MasterClass] => RequestHeader => SimpleResult) =
+    MemcachedAction { implicit request =>
+      Future.successful {
+        MasterClassAgent.adsTargetedAt(segment) match {
+          case Nil => nilResult(request)
+          case masterClasses => Cached(componentMaxAge) {
             result(masterClasses take 4)(request)
           }
+        }
       }
-  }
+    }
 
   def renderMasterclass = renderMasterclassAction(implicit request => NotFound) {
     masterClasses => implicit request =>
