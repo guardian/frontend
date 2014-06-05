@@ -321,6 +321,7 @@
 
 /* Public Profile Page
    ========================================================================== */
+
 .activity-stream {
     @include rem((
         margin-top: -$gs-baseline*2
@@ -335,5 +336,34 @@
 .facia-container--layout-identity {
     .facia-container__inner {
         margin-bottom: 0;
+    }
+}
+
+/* Edit profile Membership tab
+   ========================================================================== */
+
+.identity-wrapper.with-membership {
+    @include mq($to: desktop) {
+        .tabs__tab {
+            width: auto;
+        }
+    }
+}
+
+.id-membership-details-list {
+    @include rem((
+        padding: $gs-baseline*2 0 $gs-baseline 0*2
+    ));
+    li {
+        @include rem((
+            margin-bottom: $gs-baseline
+        ));
+
+        .membership-tab-card-details {
+            padding: 0 0 0 12px;
+        }
+        .membership-upgrade {
+            margin: 0;
+        }
     }
 }
