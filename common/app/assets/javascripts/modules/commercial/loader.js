@@ -56,6 +56,7 @@ define([
         this.userSegments       = 'seg=' + (new History().getSize() <= 1 ? 'new' : 'repeat');
         this.components         = {
             bestbuy:           this.host + 'money/bestbuys.json?'           + this.userSegments + '&s=' + this.section + '&' + this.getKeywords(),
+            bestbuyHigh:       this.host + 'money/bestbuys-high.json?'      + this.userSegments + '&s=' + this.section + '&' + this.getKeywords(),
             book:              this.host + 'books/book/' + this.pageId      + '.json',
             books:             this.host + 'books/bestsellers.json?'        + this.userSegments + '&s=' + this.section + '&' + this.getKeywords(),
             booksMedium:       this.host + 'books/bestsellers-medium.json?' + this.userSegments + '&s=' + this.section + '&' + this.getKeywords(),

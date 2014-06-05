@@ -208,6 +208,8 @@ GET         /commercial/soulmates/mixed.json                                    
 GET         /commercial/soulmates/mixed-high                                                                         controllers.commercial.SoulmateAds.renderAdsHigh
 GET         /commercial/soulmates/mixed-high.json                                                                    controllers.commercial.SoulmateAds.mixedHigh
 GET         /commercial/money/bestbuys.json                                                                          controllers.commercial.MoneyOffers.bestBuys(format="json")
+GET         /commercial/money/bestbuys-high                                                                          controllers.commercial.MoneyOffers.bestBuysHigh(format="html")
+GET         /commercial/money/bestbuys-high.json                                                                     controllers.commercial.MoneyOffers.bestBuysHigh(format="json")
 GET         /commercial/books/bestsellers                                                                            controllers.commercial.BookOffers.bestsellers(format="html")
 GET         /commercial/books/bestsellers.json                                                                       controllers.commercial.BookOffers.bestsellers(format="json")
 GET         /commercial/books/bestsellers-medium                                                                     controllers.commercial.BookOffers.bestsellersMedium(format="html")
