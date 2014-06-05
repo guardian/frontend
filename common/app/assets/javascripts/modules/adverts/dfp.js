@@ -313,7 +313,7 @@ define([
     var setListeners = function() {
             googletag.pubads().addEventListener('slotRenderEnded', function(e) {
                 if (fetchStart) {
-                    beacon.fire('/ads.gif?type=renderTime&amp;value=' + (new Date() - fetchStart) + '&amp;adSlotsCount=' + adSlots.length);
+                    beacon.fire('/ads.gif?type=renderTime&value=' + (new Date() - fetchStart) + '&adSlotsCount=' + adSlots.length);
                     fetchStart = undefined;
                 }
                 parseAd(e);
