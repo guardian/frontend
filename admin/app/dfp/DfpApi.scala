@@ -2,10 +2,8 @@ package dfp
 
 import com.google.api.ads.common.lib.auth.OfflineCredentials
 import com.google.api.ads.common.lib.auth.OfflineCredentials.Api
-import com.google.api.ads.dfp.axis.factory.DfpServices
 import com.google.api.ads.dfp.axis.utils.v201403.StatementBuilder
 import com.google.api.ads.dfp.axis.v201403._
-import com.google.api.ads.dfp.axis.v201403.{LineItem => DfpApiLineItem}
 import com.google.api.ads.dfp.lib.client.DfpSession
 import common.Logging
 import conf.AdminConfiguration
@@ -37,53 +35,35 @@ object DfpApi extends Logging {
       None
   }
 
-  private lazy val dfpServices = new DfpServices()
+  def fetchCurrentLineItems(): Seq[LineItem] = session.map { sess =>
 
-  private lazy val lineItemServiceOption: Option[LineItemServiceInterface] =
-    session.map(dfpServices.get(_, classOf[LineItemServiceInterface]))
-
-  private lazy val customTargetingServiceOption: Option[CustomTargetingServiceInterface] =
-    session.map(dfpServices.get(_, classOf[CustomTargetingServiceInterface]))
-
-  private val slotTargetKeyId = 174447L
-  private val keywordTargetKeyId = 177687L
-
-  private def fetchLineItems(lineItemService: LineItemServiceInterface, statementBuilder: StatementBuilder) = {
-
-    def fetchLineItems(soFar: Seq[DfpApiLineItem]): Seq[DfpApiLineItem] = {
-      val page = lineItemService.getLineItemsByStatement(statementBuilder.toStatement)
-      val pageResults = Option(page.getResults) map (_.toSeq) getOrElse Nil
-      val totalResultSetSize = page.getTotalResultSetSize
-
-      if (Option(statementBuilder.getOffset) exists (_ > totalResultSetSize)) {
-        soFar
-      } else {
-        statementBuilder.increaseOffsetBy(StatementBuilder.SUGGESTED_PAGE_LIMIT)
-        fetchLineItems(soFar ++ pageResults)
-      }
-    }
-
-    try {
-      fetchLineItems(Nil)
-    } catch {
-      case e: Exception =>
-        log.error(s"Exception fetching current line items: $e")
-        Nil
-    }
-  }
-
-  def fetchCurrentLineItems(): Seq[LineItem] = lineItemServiceOption.fold(Seq[LineItem]()) { lineItemService =>
-    val statementBuilder = new StatementBuilder()
+    val lineItemStatementBuilder = new StatementBuilder()
       .where("status = :readyStatus OR status = :deliveringStatus")
       .orderBy("id ASC")
       .limit(StatementBuilder.SUGGESTED_PAGE_LIMIT)
       .withBindVariableValue("readyStatus", ComputedStatus.READY.toString)
       .withBindVariableValue("deliveringStatus", ComputedStatus.DELIVERING.toString)
 
-    val totalResults = fetchLineItems(lineItemService, statementBuilder)
+    val lineItems = DfpApiWrapper.fetchLineItems(sess, lineItemStatementBuilder)
+
+    def targetingStatementBuilder(keyName: String) = new StatementBuilder()
+      .where("customTargetingKeyId = :targetingKeyId")
+      .withBindVariableValue("targetingKeyId", keyName)
+
+    val keywordTargetKeyId = DfpApiWrapper.fetchCustomTargetingKeys(sess, targetingStatementBuilder("Keywords"))(0).getId
+
+    val keywords = DfpApiWrapper.fetchCustomTargetingValues(sess, targetingStatementBuilder("Keywords")).map { v =>
+      v.getId -> v.getName
+    }.toMap
+
+    val slotTargetKeyId = DfpApiWrapper.fetchCustomTargetingKeys(sess, targetingStatementBuilder("Slot"))(0).getId
+
+    val slots = DfpApiWrapper.fetchCustomTargetingValues(sess, targetingStatementBuilder("Slot")).map { v =>
+      v.getId -> v.getName
+    }.toMap
 
     val targetingKeys = Map(keywordTargetKeyId -> "k", slotTargetKeyId -> "slot")
-    val targetingValues = fetchAllKeywordTargetingValues() ++ fetchAllSlotTargetingValues()
+    val targetingValues = keywords ++ slots
 
     def buildTargetSet(crits: CustomCriteriaSet): Option[TargetSet] = {
       val targets = crits.getChildren.flatMap { crit =>
@@ -109,7 +89,7 @@ object DfpApi extends Logging {
       }
     }
 
-    val filtered = totalResults.filter { r =>
+    val filtered = lineItems.filter { r =>
       r.getTargeting != null && r.getTargeting.getCustomTargeting != null
     }
     filtered.flatMap { r =>
@@ -121,44 +101,7 @@ object DfpApi extends Logging {
       if (targetSets.isEmpty) None
       else Some(LineItem(r.getId, targetSets))
     }
+  }.getOrElse {
+    Nil
   }
-
-  private def fetchAllTargetingValues(targetKeyId: Long): Map[Long, String] =
-    customTargetingServiceOption.fold(Map[Long, String]()) {
-      customTargetingService =>
-
-        val statementBuilder = new StatementBuilder()
-          .where("customTargetingKeyId = :targetingKeyId")
-          .orderBy("id ASC")
-          .limit(StatementBuilder.SUGGESTED_PAGE_LIMIT)
-
-        statementBuilder.withBindVariableValue("targetingKeyId", targetKeyId)
-
-        var totalResultSetSize = 0
-        statementBuilder.offset(0)
-
-        var targetingValues: Map[Long, String] = Map()
-
-        try {
-          do {
-            val page = customTargetingService.getCustomTargetingValuesByStatement(statementBuilder.toStatement)
-
-            val results = page.getResults
-            if (results != null) {
-              totalResultSetSize = page.getTotalResultSetSize
-              targetingValues ++= results.map(result => (result.getId.toLong, result.getName))
-            }
-
-            statementBuilder.increaseOffsetBy(StatementBuilder.SUGGESTED_PAGE_LIMIT)
-          } while (statementBuilder.getOffset < totalResultSetSize)
-        } catch {
-          case e: Exception => log.error(s"Exception fetching custom targeting values: $e")
-        }
-
-        targetingValues
-    }
-
-  private def fetchAllKeywordTargetingValues(): Map[Long, String] = fetchAllTargetingValues(keywordTargetKeyId)
-
-  private def fetchAllSlotTargetingValues(): Map[Long, String] = fetchAllTargetingValues(slotTargetKeyId)
 }
