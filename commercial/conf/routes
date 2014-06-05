@@ -18,10 +18,10 @@ GET        /commercial/jobs-high                                     controllers
 GET        /commercial/jobs-high.json                                controllers.commercial.JobAds.jobsHigh
 
 # Masterclasses
-GET        /commercial/masterclasses                                 controllers.commercial.MasterClasses.renderMasterclass
-GET        /commercial/masterclasses.json                            controllers.commercial.MasterClasses.list
-GET        /commercial/masterclasses-high                            controllers.commercial.MasterClasses.renderMasterclassHigh
-GET        /commercial/masterclasses-high.json                       controllers.commercial.MasterClasses.listHigh
+GET        /commercial/masterclasses                                 controllers.commercial.MasterClasses.masterclassesLowHtml
+GET        /commercial/masterclasses.json                            controllers.commercial.MasterClasses.masterclassesLowJson
+GET        /commercial/masterclasses-high                            controllers.commercial.MasterClasses.masterclassesHighHtml
+GET        /commercial/masterclasses-high.json                       controllers.commercial.MasterClasses.masterclassesHighJson
 
 # Soulmates
 GET        /commercial/soulmates/mixed                               controllers.commercial.SoulmateAds.mixedLowHtml
