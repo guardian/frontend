@@ -25,10 +25,7 @@
             @user.publicFields.aboutMe.map{ aboutMe =>
                 <div class="user-profile__about">
                     <p>@aboutMe</p>
-
-                    <h1>@user.publicFields.interests</h1>
                     @user.publicFields.interests.filter(_!="").map{ interests =>
-                        <h1>@interests</h1>
                         <p><b>Interests:</b> @interests</p>
                     }
                 </div>
