@@ -22,6 +22,18 @@ object BookOffers extends Controller with ExecutionContexts with implicits.Colle
     }
   }
 
+  def bestsellersMedium(format: String) = MemcachedAction { implicit request =>
+    Future.successful {
+      BestsellersAgent.adsTargetedAt(segment) match {
+        case Nil => NoCache(NotFound)
+        case books if format == "json" =>
+          Cached(60)(JsonComponent(views.html.books.bestsellersMedium(books)))
+        case books if format == "html" =>
+          Cached(60)(Ok(views.html.books.bestsellersMedium(books)))
+      }
+    }
+  }
+  
   def bestsellersHigh(format: String) = MemcachedAction { implicit request =>
     Future.successful {
       BestsellersAgent.adsTargetedAt(segment) match {

@@ -16,7 +16,7 @@ package object commercial {
     Segment(Context(section, keywords), userSegments)
   }
 
-  def specificIds(implicit request: Request[AnyContent]) = {
+  def specificIds(implicit request: RequestHeader) = {
     request.queryString.getOrElse("t", Nil).reverse
   }
 }

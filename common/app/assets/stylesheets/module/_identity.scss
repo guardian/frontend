@@ -35,6 +35,13 @@
     max-width: none;
 }
 
+.identity-header {
+    @include rem((
+        margin-left: $gs-gutter,
+        margin-right: $gs-gutter
+    ));
+}
+
 .identity-section {
     border-top: 1px solid $c-neutral7;
     @include box-sizing(border-box);
@@ -321,11 +328,6 @@
 
 /* Public Profile Page
    ========================================================================== */
-.activity-stream {
-    @include rem((
-        margin-top: -$gs-baseline*2
-    ));
-}
 .identity-public-profile {
     .identity-section__text {
         white-space: pre-line;
@@ -335,5 +337,11 @@
 .facia-container--layout-identity {
     .facia-container__inner {
         margin-bottom: 0;
+    }
+}
+
+.tabs--identity {
+    .tabs__tab--selected {
+        border-top-color: $c-newsAccent;
     }
 }

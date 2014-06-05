@@ -1,54 +1,50 @@
 @(page: MetaData, idRequest: services.IdentityRequest, idUrlBuilder: services.IdentityUrlBuilder, user: com.gu.identity.model.User)(implicit request: RequestHeader)
-
 @import views.html.fragments.registrationFooter
 
 @identityMain(page, Switches.all){
 }{
 <div class="identity-wrapper monocolumn-wrapper identity-wrapper--stretched">
-    <div class="facia-container facia-container--layout-article facia-container--layout-identity container">
-        <div class="facia-container__inner">
-
-            <div class="user-profile u-cf">
-                <div class="identity-title identity-title--public-profile">
-                    <div class="user-profile__avatar user-avatar" data-userid="@user.id"></div>
-                    <h1 class="user-profile__name">@user.publicFields.displayName</h1>
-                    @user.publicFields.webPage.filter(_ != "").map { webPage =>
-                        <a href="@webPage" class="user-profile__web-page">
-                            <i class="i i-profile-small"></i>
-                            @webPage
-                        </a>
-                    }
-                    @user.dates.accountCreatedDate.map { accountCreatedDate =>
-                        <p class="user-profile__last-seen">
-                            <i class="i i-clock-light-grey"></i>
-                            Member since @accountCreatedDate.toString("d MMM yyyy")
-                        </p>
-                    }
-                </div>
-                @user.publicFields.aboutMe.map{ aboutMe =>
-                    <div class="user-profile__about">
-                        <p>@aboutMe</p>
-                        @user.publicFields.interests.map{ interests =>
-                            <p><b>Interests:</b> @interests</p>
-                        }
-                    </div>
+    <div class="identity-header">
+        <div class="user-profile u-cf">
+            <div class="identity-title identity-title--public-profile">
+                <div class="user-profile__avatar user-avatar" data-userid="@user.id"></div>
+                <h1 class="user-profile__name">@user.publicFields.displayName</h1>
+                @user.publicFields.webPage.filter(_!="").map { webPage =>
+                    <a href="@webPage" class="user-profile__web-page">
+                        <i class="i i-profile-small"></i>
+                        @webPage
+                    </a>
+                }
+                @user.dates.accountCreatedDate.map { accountCreatedDate =>
+                    <p class="user-profile__last-seen">
+                        <i class="i i-clock-light-grey"></i>
+                        Member since @accountCreatedDate.toString("d MMM yyyy")
+                    </p>
                 }
             </div>
+            @user.publicFields.aboutMe.map{ aboutMe =>
+                <div class="user-profile__about">
+                    <p>@aboutMe</p>
+                    @user.publicFields.interests.filter(_!="").map{ interests =>
+                        <p><b>Interests:</b> @interests</p>
+                    }
+                </div>
+            }
+        </div>
+
+        <div class="tabs tabs--identity">
+            <ol class="tabs__container tabs__container--multiple">
+                <li class="tabs__tab tabs__tab--selected tone-colour tone-accent-border">
+                    <a href="" class="js-activity-stream-change" data-stream-type="discussions">Comment activity</a>
+                </li>
+                <li class="tabs__tab">
+                    <a href="" class="js-activity-stream-change" data-stream-type="replies">Replies to @user.publicFields.displayName</a>
+                </li>
+            </ol>
         </div>
     </div>
 
-    <div class="facia-container facia-container--layout-article container">
-        <div class="facia-container__inner">
-            <div class="container__border tone-news tone-accent-border"></div>
-            <div class="container__header">
-                <h2 class="container__title tone-news tone-background">
-                    Comment activity
-                </h2>
-            </div>
-        </div>
-    </div>
-
-    <div class="activity-stream activity-stream--comments js-comment-stream" data-user-id="@user.id" data-stream-type="discussions"></div>
+    <div class="js-activity-stream" data-user-id="@user.id" data-stream-type="discussions"></div>
     @registrationFooter(page, idRequest, idUrlBuilder)
 </div>
 }
