@@ -1,4 +1,4 @@
-define(['common/$', 'bonzo'], function($, bonzo) {
+define(['common/$', 'bonzo', 'lodash/collections/filter'], function($, bonzo, _filter) {
     var $rhc = $('.js-components-container');
 
     /**
@@ -14,14 +14,14 @@ define(['common/$', 'bonzo'], function($, bonzo) {
             .append(c)
             .each(function(el) {
                 $cs = $('.'+ classname, $rhc[0]);
-                var $inferior = bonzo($cs.map(function(el) {
-                    return importance > parseInt(el.getAttribute('data-importance'), 10) ? el : false;
-                })).first();
-
-                if ($inferior.length === 0) {
+                var inferior = _filter($cs, function(el) {
+                    return !el.hasAttribute('data-importance') ||
+                        importance > parseInt(el.getAttribute('data-importance'), 10);
+                });
+                if (inferior.length === 0) {
                     $rhc.append(el);
                 } else {
-                    $inferior.before(el);
+                    bonzo(inferior[0]).before(el);
                 }
             });
     }

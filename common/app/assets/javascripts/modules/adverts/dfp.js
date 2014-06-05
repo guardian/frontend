@@ -105,6 +105,20 @@ define([
                 sizeMappings: {
                     desktop: '888,88'
                 }
+            },
+            spbadge: {
+                label: false,
+                refresh: false,
+                sizeMappings: {
+                    mobile: '140,90'
+                }
+            },
+            adbadge: {
+                label: false,
+                refresh: false,
+                sizeMappings: {
+                    mobile: '140,90'
+                }
             }
         };
 
@@ -224,18 +238,26 @@ define([
                 return value ? queryString.formatKeyword(value).replace(/&/g, 'and').replace(/'/g, '') : '';
             }
 
+            function lastPart(keywordId) {
+                if (keywordId) {
+                    return keywordId.split('/').pop();
+                } else {
+                    return '';
+                }
+            }
+
             var conf        = config.page,
                 section     = encodeTargetValue(conf.section),
                 series      = encodeTargetValue(conf.series),
                 contentType = encodeTargetValue(conf.contentType),
                 edition     = encodeTargetValue(conf.edition),
                 keywords;
-            if (conf.keywords) {
-                keywords = conf.keywords.split(',').map(function (keyword) {
-                    return encodeTargetValue(keyword);
+            if (conf.keywordIds) {
+                keywords = conf.keywordIds.split(',').map(function (keywordId) {
+                    return lastPart(keywordId);
                 });
             } else {
-                keywords = '';
+                keywords = lastPart(conf.pageId);
             }
 
             return defaults({
@@ -319,8 +341,8 @@ define([
                             return size[0] + '-' + size[1];
                         }
                     ),
-                    slot = googletag
-                        .defineSlot(adUnit, size, id)
+                    slot = ($adSlot.data('out-of-page')
+                            ? googletag.defineOutOfPageSlot(adUnit, id) : googletag.defineSlot(adUnit, size, id))
                         .addService(googletag.pubads())
                         .defineSizeMapping(sizeMapping)
                         .setTargeting('slot', $adSlot.data('name'));

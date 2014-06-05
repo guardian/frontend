@@ -15,7 +15,7 @@ define([
         this.id = 'HighRelevanceCommercialComponent';
         // not starting the test just yet, in now so we can style the component correctly for this spot
         this.start = '2014-05-21';
-        this.expiry = '2014-06-04';
+        this.expiry = '2014-06-18';
         this.author = 'Darren Hurley';
         this.description = 'Test position of high relevance commercial component on fronts.';
         this.audience = 1;

@@ -66,6 +66,7 @@ define([
             $container.addClass('is-signed-in');
             $popup.html(
                 '<ul class="nav nav--columns" data-link-name="Sub Sections">'+
+                    this.menuListItem('Comment activity', this.config.url+'/user/id/'+ user.id)+
                     this.menuListItem('Edit profile', this.config.url+'/public/edit')+
                     this.menuListItem('Email preferences', this.config.url+'/email-prefs')+
                     this.menuListItem('Change password', this.config.url+'/password/change')+

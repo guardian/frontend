@@ -3,7 +3,7 @@ package model.commercial.books
 import model.commercial.{AdAgent, Segment, Ad}
 import common.ExecutionContexts
 import scala.concurrent.Future
-import model.commercial.{intersects, encode}
+import model.commercial.{intersects, lastPart}
 
 case class Book(title: String,
                 author: Option[String],
@@ -15,10 +15,11 @@ case class Book(title: String,
                 buyUrl: Option[String] = None,
                 position: Option[Int] = None,
                 category: Option[String] = None,
-                keywords: Seq[String] = Nil)
+                keywordIds: Seq[String] = Nil
+               )
   extends Ad {
 
-  def isTargetedAt(segment: Segment): Boolean = intersects(encode(keywords), segment.context.keywords)
+  def isTargetedAt(segment: Segment): Boolean = intersects(lastPart(keywordIds), segment.context.keywords)
 }
 
 
@@ -48,7 +49,7 @@ object BestsellersAgent extends AdAgent[Book] with ExecutionContexts {
       for (books <- allBooks) yield books take n
     }
 
-    val bookListsLoading = Future.sequence {
+    val bookListsLoading: Future[Seq[Seq[Book]]] = Future.sequence {
       feeds.foldLeft(Seq[Future[Seq[Book]]]()) {
         (soFar, feed) =>
           soFar :+ feed.loadAds().recover {

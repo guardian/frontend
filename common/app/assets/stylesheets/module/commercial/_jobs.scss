@@ -4,10 +4,6 @@
 
 /* remove top margin on the footer to make component sit on top of it as per design */
 
-.l-footer {
-    margin-top: 0 !important;
-}
-
 .commercial--jobs {
     .commercial__head {
         background-color: transparent;
@@ -199,11 +195,6 @@
             width: 25%;
             float: left;
         }
-        .commercial--jobs__sectors {
-            @include rem((
-                width: gs-span(6) + $gs-gutter/2
-            ));
-        }
         .commercial--jobs__jobs {
             @include rem((
                 width: gs-span(3)
@@ -265,6 +256,10 @@
             @include rem((
                 margin-right: $gs-gutter/2
             ));
+        }
+
+        .has-page-skin & .commercial--jobs__job:nth-child(n+2) {
+            display: none;
         }
     }
 }

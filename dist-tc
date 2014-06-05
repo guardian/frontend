@@ -33,7 +33,7 @@ mkdir "$1/target/dist/"
 mkdir -p "$1/target/dist/packages/frontend-static/"
 # Copy packages to dist directory
 cp "$1/conf/deploy.json" "$1/target/dist/"
-cp -r static/target/* "$1/target/dist/packages/frontend-static"
+cp -r static/hash/* "$1/target/dist/packages/frontend-static"
 cp -r "$PWD/static/abtests.json" "$1/target/dist/packages/frontend-abtests"
 
 # Generate folder for the application zip.

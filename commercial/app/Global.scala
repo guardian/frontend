@@ -1,10 +1,10 @@
 import common._
-import conf.Management
 import conf.Filters
+import conf.Management
 import dev.DevParametersLifecycle
 import model.commercial.books.BestsellersAgent
-import model.commercial.masterclasses.MasterClassAgent
 import model.commercial.jobs.{Industries, JobsAgent}
+import model.commercial.masterclasses.{MasterClassTagsAgent, MasterClassAgent}
 import model.commercial.money.BestBuysAgent
 import model.commercial.soulmates.SoulmatesAggregatingAgent
 import model.commercial.travel.{Countries, OffersAgent}
@@ -16,6 +16,7 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
 
   private val refreshJobs: List[RefreshJob] = List(
     SoulmatesRefresh,
+    MasterClassTagsRefresh,
     MasterclassesRefresh,
     CountriesRefresh,
     TravelOffersRefresh,
@@ -40,7 +41,10 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
     AkkaAsync {
       SoulmatesAggregatingAgent.refresh()
 
-      MasterClassAgent.refresh()
+      MasterClassTagsAgent.refresh() andThen {
+        case Success(_) => MasterClassAgent.refresh()
+        case Failure(e) => log.warn(s"Failed to refresh master class tags: ${e.getMessage}")
+      }
 
       Countries.refresh() andThen {
         case Success(_) => OffersAgent.refresh()
@@ -98,6 +102,14 @@ object SoulmatesRefresh extends RefreshJob {
   def refresh() = SoulmatesAggregatingAgent.refresh()
 
   def stopJob() = SoulmatesAggregatingAgent.stop()
+}
+
+object MasterClassTagsRefresh extends RefreshJob {
+  val name: String = "MasterClassTags"
+
+  def refresh() = MasterClassTagsAgent.refresh()
+
+  def stopJob() = MasterClassTagsAgent.stop()
 }
 
 object MasterclassesRefresh extends RefreshJob {

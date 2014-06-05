@@ -94,7 +94,8 @@ Comments.prototype.classes = {
     commentStaff: 'd-comment--staff',
     commentBlocked: 'd-comment--blocked',
     commentBody: 'd-comment__body',
-    commentTimestampJs: 'js-timestamp'
+    commentTimestampJs: 'js-timestamp',
+    commentReport: 'js-report-comment'
 };
 
 /** @type {Object.<string.*>} */
@@ -159,6 +160,7 @@ Comments.prototype.ready = function() {
     this.on('click', this.getClass('showReplies'), this.getMoreReplies);
     this.on('click', this.getClass('changePage'), this.changePage);
     this.on('click', this.getClass('showHidden'), this.showHiddenComments);
+    this.on('click', this.getClass('commentReport'), this.reportComment);
     this.on('change', this.getClass('orderControl'), this.setOrder);
     this.mediator.on('discussion:comment:recommend:fail', this.recommendFail.bind(this));
 
@@ -177,6 +179,12 @@ Comments.prototype.ready = function() {
     }
 
     this.emit('ready');
+
+    $('.js-report-comment-close', this.elem).each(function(close) {
+        bean.on(close, 'click', function() {
+            $('.js-report-comment-form').addClass('u-h');
+        });
+    });
 };
 
 /**
@@ -312,7 +320,7 @@ Comments.prototype.fetchComments = function(options) {
  */
 Comments.prototype.renderComments = function(resp) {
     var html = bonzo.create(resp.html),
-        comments = qwery(this.getClass('jsContent'), html);
+        content = qwery(this.getClass('jsContent'), html);
 
     // Stop duplication in new comments section
     qwery(this.getClass('comment'), this.getElem('newComments')).forEach(function(comment) {
@@ -322,8 +330,10 @@ Comments.prototype.renderComments = function(resp) {
         }
     });
 
-    $(this.getClass('jsContent'), this.elem).replaceWith(comments);
-    this.addMoreRepliesButtons(comments);
+    $(this.getClass('jsContent'), this.elem).replaceWith(content);
+    this.addMoreRepliesButtons(qwery(
+        this.getClass('comment'), content
+    ));
 
     if (!this.isReadOnly()) {
         RecommendComments.init(this.context);
@@ -338,6 +348,7 @@ Comments.prototype.renderComments = function(resp) {
 Comments.prototype.showHiddenComments = function(e) {
     if (e) { e.preventDefault(); }
     this.removeState('shut');
+    this.removeState('partial');
     this.emit('first-load');
 };
 
@@ -353,21 +364,20 @@ Comments.prototype.addMoreRepliesButtons = function (comments) {
             renderedReplies = qwery(self.getClass('reply'), elem);
 
         if (renderedReplies.length < replies) {
+            var numHiddenReplies = replies - renderedReplies.length,
+                showButtonHtml = '<li>'+
+                    '<span><i class="i i-plus-white-small"></i></span>'+
+                    'Show '+ numHiddenReplies +' more '+ (numHiddenReplies === 1 ? 'reply' : 'replies')+
+                '</li>';
 
-            var numHiddenReplies = replies - renderedReplies.length;
-
-            var showButton = '';
-            showButton += '<li class="' + self.getClass('showReplies', true) + '" ';
-            showButton += 'data-link-name="Show more replies" ';
-            showButton += 'data-is-ajax data-comment-id="' + elem.getAttribute('data-comment-id') + '">';
-            showButton += '<span><i class="i i-plus-white-small"></i></span>';
-            showButton += 'Show ' + numHiddenReplies + ' more ' + (numHiddenReplies === 1 ? 'reply' : 'replies');
-            showButton += '</li>';
-
-            showButton = bonzo.create(showButton);
-            bonzo(showButton).data('source-comment', elem);
-
-            bonzo(qwery('.d-thread--responses', elem)).append(showButton);
+            $.create(showButtonHtml)
+                .addClass(self.getClass('showReplies', true))
+                .data('source-comment', elem)
+                .attr({
+                    'data-link-name': 'Show more replies',
+                    'data-is-ajax': '',
+                    'data-comment-id': elem.getAttribute('data-comment-id')
+                }).appendTo($('.d-thread--responses', elem));
         }
     });
 };
@@ -574,7 +584,32 @@ Comments.prototype.setOrder = function(e) {
     }.bind(this));
 };
 
+/**
+ * @param {Event} e
+ */
+Comments.prototype.reportComment = function(e) {
+    e.preventDefault();
+
+    var commentId = e.currentTarget.getAttribute('data-comment-id');
+
+    $('.js-report-comment-form').first().each(function(form) {
+        bean.one(form, 'submit', function(e) {
+            e.preventDefault();
+            var category = form.elements.category,
+                comment = form.elements.comment.value;
+
+            DiscussionApi.reportComment(commentId, {
+                emailAddress: form.elements.email.value,
+                categoryId: category.value,
+                reason: comment === '' ? category.options[category.selectedIndex].innerHTML : comment
+            });
+
+            bonzo(form).addClass('u-h');
+        });
+    }).appendTo(
+        $('#comment-'+ commentId +' .js-report-comment-container').first()
+    ).removeClass('u-h');
+};
+
 return Comments;
-
-
 });

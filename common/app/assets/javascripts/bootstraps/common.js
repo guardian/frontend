@@ -55,7 +55,9 @@ define([
     'common/modules/onward/tonal',
     'common/modules/identity/api',
     'common/modules/onward/more-tags',
-    'common/modules/ui/smartAppBanner'
+    'common/modules/ui/smartAppBanner',
+    'common/modules/ui/surveyBanner',
+    'common/modules/adverts/badges'
 ], function (
     $,
     mediator,
@@ -111,7 +113,9 @@ define([
     TonalComponent,
     id,
     MoreTags,
-    smartAppBanner
+    smartAppBanner,
+    surveyBanner,
+    badges
 ) {
 
     var modules = {
@@ -290,6 +294,8 @@ define([
                 new SliceAdverts(config).init();
 
                 frontCommercialComponents.init(config);
+
+                badges.init();
 
                 var options = {};
 
@@ -486,8 +492,14 @@ define([
                 var commercialComponent = new RegExp('^#' + data[0] + '=(.*)$').exec(window.location.hash),
                     slot = qwery('[data-name="' + data[1] + '"]').shift();
                 if (commercialComponent && slot) {
-                    new CommercialLoader({ config: config })
-                        .init(commercialComponent[1], slot);
+                    bonzo(slot).removeClass('ad-slot--dfp');
+                    var loader = new CommercialLoader({ config: config }),
+                        postLoadEvents = {};
+                        postLoadEvents[commercialComponent[1]] = function() {
+                            bonzo(slot).css('display', 'block');
+                        };
+                    loader.postLoadEvents = postLoadEvents;
+                    loader.init(commercialComponent[1], slot);
                 }
             });
         },
@@ -508,6 +520,12 @@ define([
             if(config.switches.smartBanner) {
                 smartAppBanner.init();
             }
+        },
+
+        showSurveyBanner: function(config) {
+            if(config.switches.surveyBanner) {
+                surveyBanner.init();
+            }
         }
     };
 
@@ -521,11 +539,11 @@ define([
                 modules.loadAnalytics(config, context);
                 modules.cleanupCookies(context);
                 modules.runAbTests(config, context);
+                modules.loadCommercialComponent(config, context);
                 modules.loadAdverts(config);
                 modules.transcludeRelated(config, context);
                 modules.transcludeOnwardContent(config, context);
                 modules.initRightHandComponent(config, context);
-                modules.loadCommercialComponent(config, context);
             }
             mediator.emit('page:common:deferred:loaded', config, context);
         });
@@ -559,6 +577,7 @@ define([
             modules.repositionComments();
             modules.showMoreTagsLink();
             modules.showSmartBanner(config);
+            modules.showSurveyBanner(config);
         }
         mediator.emit('page:common:ready', config, context);
     };

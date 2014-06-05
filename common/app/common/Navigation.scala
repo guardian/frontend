@@ -6,15 +6,23 @@ case class SectionLink(zone: String, title: String, breadcumbTitle: String, href
   def currentFor(page: MetaData): Boolean = page.url == href ||
     s"/${page.section}" == href ||
     page.url == href ||
-    page.tags.exists(t => s"/${t.id}" == href) ||
     (Edition.all.exists(_.id.toLowerCase == page.id.toLowerCase) && href == "/")
+
+  def currentForIncludingAllTags(page: MetaData): Boolean = page.tags.exists(t => s"/${t.id}" == href)
 }
 
 case class Zone(name: SectionLink, sections: Seq[SectionLink])
 
-case class NavItem(name: SectionLink, links: Seq[SectionLink] = Nil, current: Boolean = false) {
+case class NavItem(name: SectionLink, links: Seq[SectionLink] = Nil) {
   def currentFor(page: MetaData): Boolean = name.currentFor(page) ||
     links.exists(_.currentFor(page)) || exactFor(page)
+
+  def currentForIncludingAllTags(page: MetaData): Boolean = name.currentForIncludingAllTags(page) ||
+    links.exists(_.currentForIncludingAllTags(page))
+
+  def searchForCurrentSublink(page: MetaData): Option[SectionLink] =
+    links.find(_.currentFor(page))
+    .orElse(links.find(_.currentForIncludingAllTags(page)))
 
   def exactFor(page: MetaData): Boolean = page.section == name.href.dropWhile(_ == '/') || page.url == name.href
 }
@@ -68,13 +76,15 @@ trait Navigation  {
   val golf = SectionLink("sport", "golf", "Golf", "/sport/golf")
   val horseracing = SectionLink("sport", "horse racing", "Horse racing", "/sport/horse-racing")
   val boxing = SectionLink("sport", "boxing", "Boxing", "/sport/boxing")
-  val formulaOne = SectionLink("sport", "formula one", "Formula one", "/sport/formula-one-2014")
+  val formulaOne = SectionLink("sport", "formula one", "Formula one", "/sport/formulaone")
 
   val nfl = SectionLink("sport", "NFL","NFL", "/sport/nfl")
   val mlb = SectionLink("sport", "MLB", "MLB", "/sport/mlb")
   val nba = SectionLink("sport", "NBA", "NBA", "/sport/nba")
   val mls = SectionLink("football", "MLS", "MLS", "/football/mls")
   val nhl = SectionLink("sport", "NHL", "NHL", "/sport/nhl")
+
+  val worldCup = SectionLink("football", "world cup", "World Cup", "/football/world-cup-2014")
 
   //Cif
   val cif = SectionLink("commentisfree", "comment", "Comment", "/commentisfree")
@@ -161,6 +171,7 @@ trait Navigation  {
   val globalDevelopment = SectionLink("environment", "development", "Development", "/global-development")
 
   val footballNav = Seq(
+    worldCup,
     SectionLink("football", "live scores", "Live scores", "/football/live"),
     SectionLink("football", "tables", "Tables", "/football/tables"),
     SectionLink("football", "competitions", "Competitions", "/football/competitions"),
@@ -173,68 +184,28 @@ trait Navigation  {
 case class BreadcrumbItem(href: String, title: String)
 
 object Breadcrumbs {
-
   def items(navigation: Seq[NavItem], page: Content): Seq[BreadcrumbItem] = {
-
-    val primaryKeyword = page.keywordTags.head
-    lazy val secondaryKeyword = page.keywordTags.tail.head
-
-    def getTopLevelNavigationItem: Option[NavItem] = {
-      val topLevelSelected = Navigation.topLevelItem(navigation, page)
-      navigation find {
-        navItem =>
-          topLevelSelected.exists(_ == navItem) && navItem.name.href != primaryKeyword.url
-      }
-    }
-
-
-    def getLocalNavigationItem: Option[SectionLink] = {
-      Navigation.localNav(navigation, page) match {
-        case Some(sectionLinks) => {
-          sectionLinks.find(_.currentFor(page)) find {
-            link => sectionLinks.exists(_ == link) && link.href!= primaryKeyword.url
-          }
-        }
-        case _ => None
-      }
-    }
-
-    (getTopLevelNavigationItem, getLocalNavigationItem) match {
-      case (Some(navItem), Some(sectionLink)) => Seq(
-          BreadcrumbItem(navItem.name.href, navItem.name.breadcumbTitle),
-          BreadcrumbItem(sectionLink.href, sectionLink.breadcumbTitle),
-          BreadcrumbItem(primaryKeyword.url, primaryKeyword.name)
-      )
-      case (Some(navItem), None) => Seq (
-          BreadcrumbItem(navItem.name.href, navItem.name.breadcumbTitle),
-          BreadcrumbItem(primaryKeyword.url, primaryKeyword.name),
-          BreadcrumbItem(secondaryKeyword.url, secondaryKeyword.name)
-      )
-      case _ => Seq (
-          BreadcrumbItem("/%s".format(page.section), page.sectionName),
-          BreadcrumbItem(primaryKeyword.url, primaryKeyword.name),
-          BreadcrumbItem(secondaryKeyword.url, secondaryKeyword.name)
-      )
-    }
+    val primaryKeywod = page.keywordTags.headOption.map(k => BreadcrumbItem(k.url, k.webTitle))
+    val firstBreadcrumb = Navigation.topLevelItem(navigation, page).map(n => BreadcrumbItem(n.name.href, n.name.breadcumbTitle)).orElse(Some(BreadcrumbItem(s"/${page.section}", page.sectionName)))
+    val secondBreadcrumb = Navigation.subNav(navigation, page).map(s => BreadcrumbItem(s.href, s.breadcumbTitle)).orElse(primaryKeywod)
+    Seq(firstBreadcrumb, secondBreadcrumb, primaryKeywod).flatten.distinct
   }
 }
 
 
-// helper for the views
-object Navigation {
-  
-  def topLevelItem(navigation: Seq[NavItem], page: MetaData): Option[NavItem] = navigation.find(_.exactFor(page))
-    .orElse(navigation.find(_.currentFor(page)))
+  // helper for the views
+  object Navigation {
 
+    def topLevelItem(navigation: Seq[NavItem], page: MetaData): Option[NavItem] = navigation.find(_.exactFor(page))
+    .orElse(navigation.find(_.currentFor(page))) //This includes a search on the HEAD of Tags for (page: MetaData)
+    .orElse(navigation.find(_.currentForIncludingAllTags(page))) //This is the search for ALL tags
 
-  def localNav(navigation: Seq[NavItem], page: MetaData): Option[Seq[SectionLink]] = topLevelItem(navigation, page)
-    .map(_.links).filter(_.nonEmpty)
+  def subNav(navigation: Seq[NavItem], page: MetaData): Option[SectionLink] = topLevelItem(navigation, page).flatMap(_.links.find(_.currentFor(page)))
 
-  def sectionOverride(page: MetaData, localNav: NavItem, currentSublink: Option[SectionLink]): String = page match {
-    case p: Tag => currentSublink.map(_.title).getOrElse(localNav.name.title)
-    case p: Section => currentSublink.map(_.title).getOrElse(localNav.name.title)
-    case _ => localNav.name.title
-  }
+  def localNav(navigation: Seq[NavItem], page: MetaData): Option[NavItem] = topLevelItem(navigation, page)
+    .filter(_.links.nonEmpty)
+
+  def sectionOverride(localNav: NavItem, currentSublink: Option[SectionLink]): String = currentSublink.map(_.title).getOrElse(localNav.name.title)
 }
 
 trait Zones extends Navigation {

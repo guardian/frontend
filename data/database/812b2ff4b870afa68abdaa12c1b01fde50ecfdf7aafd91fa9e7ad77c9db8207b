@@ -1,0 +1,117 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"world/video/2008/dec/11/guantanamo-bay",
+      "sectionId":"world",
+      "sectionName":"World news",
+      "webPublicationDate":"2008-12-11T11:23:03Z",
+      "webTitle":"Video: Inside Guant&aacute;namo",
+      "webUrl":"http://www.theguardian.com/world/video/2008/dec/11/guantanamo-bay",
+      "apiUrl":"http://content.guardianapis.com/world/video/2008/dec/11/guantanamo-bay",
+      "fields":{
+        "trailText":"<p>The US military allows the media a rare glimpse into life at the detention camp in Cuba</p>",
+        "headline":" Inside Guant&aacute;namo",
+        "showInRelatedContent":"true",
+        "lastModified":"2009-01-13T10:34:51Z",
+        "hasStoryPackage":"false",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2008/12/11/guantanamo_thumb.jpg",
+        "standfirst":"The US military allows the media a rare glimpse into life at the detention camp in Cuba<br /><br /><strong>This video is no longer available as our copyright period has expired</strong>",
+        "shortUrl":"http://gu.com/p/23e9q",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2008/12/11/guantanamo_thumb.jpg",
+        "commentable":"false",
+        "internalContentCode":"340614849",
+        "allowUgc":"false",
+        "isPremoderated":"false",
+        "publication":"theguardian.com",
+        "internalPageCode":"1132406",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2008-12-14T11:23:03Z"
+      },
+      "tags":[{
+        "id":"world/guantanamo-bay",
+        "type":"keyword",
+        "webTitle":"Guantánamo Bay",
+        "webUrl":"http://www.theguardian.com/world/guantanamo-bay",
+        "apiUrl":"http://content.guardianapis.com/world/guantanamo-bay",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/usa",
+        "type":"keyword",
+        "webTitle":"United States",
+        "webUrl":"http://www.theguardian.com/world/usa",
+        "apiUrl":"http://content.guardianapis.com/world/usa",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/world",
+        "type":"keyword",
+        "webTitle":"World news",
+        "webUrl":"http://www.theguardian.com/world/world",
+        "apiUrl":"http://content.guardianapis.com/world/world",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"world/us-politics",
+        "type":"keyword",
+        "webTitle":"US politics",
+        "webUrl":"http://www.theguardian.com/world/us-politics",
+        "apiUrl":"http://content.guardianapis.com/world/us-politics",
+        "sectionId":"world",
+        "sectionName":"World news",
+        "references":[]
+      },{
+        "id":"type/video",
+        "type":"type",
+        "webTitle":"Video",
+        "webUrl":"http://www.theguardian.com/video",
+        "apiUrl":"http://content.guardianapis.com/video",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-video-340614849",
+        "relation":"main",
+        "type":"video",
+        "assets":[{
+          "type":"video",
+          "typeData":{
+            "source":"Reuters",
+            "embeddable":"false",
+            "blockAds":"false",
+            "height":"360",
+            "durationMinutes":"2",
+            "width":"480",
+            "durationSeconds":"43"
+          }
+        }]
+      },{
+        "id":"gu-image-341612124",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2008/12/11/guantanamo_thumb.jpg",
+          "typeData":{
+            "source":"Reuters",
+            "altText":"Guantanamo",
+            "height":"84",
+            "credit":"Reuters",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[],
+      "isExpired":"true"
+    },
+    "storyPackage":[]
+  }
+}

@@ -40,6 +40,20 @@ $block-padding-right: $gs-gutter;
     }
 }
 
+.content__main-column--liveblog {
+    @include mq(rightCol) {
+        @include rem((
+            max-width: gs-span(8),
+            margin-left: $a-rightCol-width + $gs-gutter,
+            margin-right: 0
+        ));
+        max-width: none;
+    }
+    @include mq(wide) {
+        margin-right: gs-span(4) + $gs-gutter;
+    }
+}
+
 /* Header
    ========================================================================== */
 
@@ -109,7 +123,9 @@ $block-padding-right: $gs-gutter;
     }
     @include mq(rightCol) {
         float: left;
-        margin-left: -($a-rightCol-width + $gs-gutter);
+        @include rem((
+            margin-left: -($a-rightCol-width + $gs-gutter)
+        ));
     }
 }
 
@@ -221,9 +237,6 @@ $block-padding-right: $gs-gutter;
 
 .block.is-key-event {
     border-top: 2px solid $c-neutral1;
-    .block-title {
-        color: $c-neutral1;
-    }
 }
 
 .truncated-block {
@@ -700,8 +713,11 @@ $timeline-width: 14px;
         padding: $gs-baseline/6 0 $gs-baseline/2
     ));
 
+    &,
     &:hover,
+    &:visited,
     &:active {
+        color: $c-neutral1;
         text-decoration: none;
     }
 
@@ -752,7 +768,6 @@ $timeline-width: 14px;
     @include rem((
         width: gs-span(1)
     ));
-    color: $c-neutral1;
     @include fs-data(4);
     font-weight: bold;
 
@@ -774,7 +789,6 @@ $timeline-width: 14px;
 .timeline__title {
     display: table-cell;
     @include fs-textsans(3);
-    color: $c-neutral1;
     border-color: $c-neutral8;
 
     .timeline__link:hover & {
@@ -912,20 +926,6 @@ $timeline-width: 14px;
             @include rem((
                     padding-bottom: $gs-row-height + ($gs-baseline * 2)
             ));
-        }
-    }
-
-    .content__main-column--liveblog {
-        @include mq(rightCol) {
-            @include rem((
-                max-width: gs-span(8),
-                margin-left: $a-rightCol-width + ($gs-gutter*2),
-                padding-right: $gs-gutter
-            ));
-            max-width: none;
-        }
-        @include mq(wide) {
-            padding-right: gs-span(4) + ($gs-gutter*2);
         }
     }
 

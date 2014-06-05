@@ -4,7 +4,7 @@
 
 .content__main-column--interactive {
     max-width: none;
-    padding-right: 0;
+    margin-right: 0;
     @include rem((
         margin: 0 $gs-gutter/2
     ));

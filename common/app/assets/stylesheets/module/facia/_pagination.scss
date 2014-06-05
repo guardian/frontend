@@ -4,20 +4,20 @@
         margin: $gs-baseline 0
     ));
     text-align: center;
-    @include fs-data(4);
+    @include fs-textsans(4);
     border-top: 1px solid $c-neutral5;
 
     @include mq(leftCol) {
         float: right;
         @include rem((
             width: gs-span(12)
-        ))
+        ));
     }
 
     @include mq(wide) {
         @include rem((
             width: gs-span(13)
-        ))
+        ));
     }
 }
 
@@ -28,11 +28,12 @@
         float: right;
         @include rem((
             width: gs-span(4)
-        ))
+        ));
     }
 }
 
 .pagination__item {
+    color: $c-neutral3;
     display: inline-block;
 }
 
@@ -40,7 +41,7 @@
     float: right;
     text-align: right;
     @include rem((
-        width: 60px
+        width: gs-span(1)
     ));
 }
 
@@ -48,7 +49,7 @@
     float: left;
     text-align: left;
     @include rem((
-        width: 60px
+        width: gs-span(1)
     ));
 }
 
@@ -58,7 +59,11 @@
     ));
 }
 
+.pagination__action--current {
+    font-weight: bold;
+    color: $c-neutral1;
+}
+
 .pagination_legend {
     float: left;
 }
-

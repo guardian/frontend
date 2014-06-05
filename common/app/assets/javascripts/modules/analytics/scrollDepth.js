@@ -10,7 +10,7 @@ define([
         this.config = extend(this.config, config);
 
         if(this.config.isContent) {
-            this.config.contentEl = this.contentEl || document.getElementById('article');
+            this.config.contentEl = this.contentEl || document.getElementById('article') || document.getElementById('live-blog');
         }
 
         this.init();

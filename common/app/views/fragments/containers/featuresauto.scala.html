@@ -5,12 +5,7 @@
     @defining(templateDeduping(11, collection.items)) { items =>
         @if(items.nonEmpty) {
             <section
-                class="@RenderClasses(Map(
-                    "container" -> true,
-                    "container--row-pattern" -> true,
-                    s"container--${style.containerType}" -> true,
-                    "js-container--toggle" -> (containerIndex > 0 && title.nonEmpty),
-                    "container--first" -> (containerIndex == 0)))"
+                class="@GetClasses.forContainer(style, config, containerIndex, title.nonEmpty)"
                 data-link-name="block | @config.id"
                 data-id="@config.id"
                 data-type="@style.containerType"
@@ -63,7 +58,7 @@
                         <div class="container__body">
                             @defining(items.slice(4, 10)) { items =>
                                 @if(items.nonEmpty) {
-                                    <div class="linkslist-container tone-@{style.tone} facia-slice-wrapper--ad" data-tone="@style.tone">
+                                    <div class="linkslist-container tone-@{style.tone} slice--ad-candidate" data-tone="@style.tone">
                                         <ul class="l-columns linkslist">
                                             @items.zipWithIndex.map{ case (trail, index) =>
                                                 @trail match {

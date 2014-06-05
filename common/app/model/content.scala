@@ -33,9 +33,16 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   lazy val hasLargeContributorImage: Boolean = tags.filter(_.hasLargeContributorImage).nonEmpty
   lazy val isFromTheObserver: Boolean = publication == "The Observer"
   lazy val primaryKeyWordTag: Option[Tag] = tags.find(!_.isSectionTag)
-  lazy val keywordTags: Seq[Tag] = tags.filter(tag => !tag.isSectionTag)
+  lazy val keywordTags: Seq[Tag] = keywords.filter(tag => !tag.isSectionTag)
 
   lazy val showInRelated: Boolean = delegate.safeFields.get("showInRelatedContent").exists(_ == "true")
+  lazy val hasSingleContributor: Boolean = {
+    (contributors.headOption, byline) match {
+      case (Some(t), Some(b)) => contributors.length == 1 && t.name == b
+      case _ => false
+    }
+  }
+  lazy val hasTonalHeaderByline: Boolean = { visualTone == Tags.VisualTone.Comment && hasSingleContributor }
 
   // read this before modifying
   // https://developers.facebook.com/docs/opengraph/howtos/maximizing-distribution-media-content#images
@@ -212,7 +219,8 @@ object Content {
           snapSupporting = (json \ "meta" \ "supporting").asOpt[List[JsValue]].getOrElse(Nil)
             .flatMap(Content.fromPressedJson),
           (json \ "webPublicationDate").asOpt[DateTime].getOrElse(DateTime.now),
-          snapMeta = snapMeta
+          snapMeta = snapMeta,
+          snapElements = parseElements(json)
         )
       )
     }
@@ -295,28 +303,34 @@ private object ArticleSchemas {
   }
 }
 
-object SnapApiContent extends ApiContent(
- id                           = "",
-  sectionId                   = None,
-  sectionName                 = None,
-  webPublicationDateOption    = Some(DateTime.now),
-  webTitle                    = "",
-  webUrl                      = "http://www.theguardian.com/",
-  apiUrl                      = "",
-  fields                      = None,
-  tags                        = Nil,
-  factboxes                   = Nil,
-  mediaAssets                 = Nil,
-  elements                    = None,
-  references                  = Nil,
-  isExpired                   = None
-)
+object SnapApiContent {
+
+  def apply(): ApiContent = ApiContent(
+    id                           = "",
+    sectionId                   = None,
+    sectionName                 = None,
+    webPublicationDateOption    = Some(DateTime.now),
+    webTitle                    = "",
+    webUrl                      = "http://www.theguardian.com/",
+    apiUrl                      = "",
+    fields                      = None,
+    tags                        = Nil,
+    factboxes                   = Nil,
+    mediaAssets                 = Nil,
+    elements                    = Option(Nil),
+    references                  = Nil,
+    isExpired                   = None
+  )
+
+  def apply(snapElements: List[ApiElement]): ApiContent = apply().copy(elements = Some(snapElements))
+}
 
 class Snap(snapId: String,
            snapSupporting: List[Content],
            snapWebPublicationDate: DateTime,
-           snapMeta: Map[String, JsValue]
-            ) extends Content(new ApiContentWithMeta(SnapApiContent, supporting = snapSupporting, metaData = snapMeta)) {
+           snapMeta: Map[String, JsValue],
+           snapElements: List[ApiElement] = Nil
+            ) extends Content(new ApiContentWithMeta(SnapApiContent(snapElements), supporting = snapSupporting, metaData = snapMeta)) {
 
   val snapType: Option[String] = snapMeta.get("snapType").flatMap(_.asOpt[String])
   val snapCss: Option[String] = snapMeta.get("snapCss").flatMap(_.asOpt[String])

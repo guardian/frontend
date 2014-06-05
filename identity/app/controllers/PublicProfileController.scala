@@ -38,7 +38,7 @@ class PublicProfileController @Inject()(idUrlBuilder: IdentityUrlBuilder,
 
         case Right(user) =>
           val idRequest = idRequestParser(request)
-          Cached(60)(Ok(views.html.public_profile_page(page(url), idRequest, idUrlBuilder, user)))
+          Cached(60)(Ok(views.html.publicProfilePage(page(url), idRequest, idUrlBuilder, user)))
       }
   }
 }

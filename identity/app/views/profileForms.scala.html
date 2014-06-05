@@ -12,7 +12,6 @@
 @import views.html.fragments.form.{inputField, textareaField}
 @import views.html.fragments.registrationFooter
 @import views.html.fragments.socialSignin
-@import views.html.fragments.profile.{public_profile_form, account_details_form}
 
 @identityMain(page, conf.Switches.all){
 }{
@@ -32,15 +31,11 @@
 
         <div class="tabs__content">
             <div id="tabs-account-profile-1" class="tabs__pane u-cf" role="tabpanel" aria-labelledby="tabs-account-profile-1-tab" data-link-name="Public Profile" data-link-context="Identity/profile"@if(!forms.isPublicFormActive){ style="display: none;"}>
-
-                @public_profile_form(idUrlBuilder, idRequest, user, forms.publicForm, avatarUploadData, avatarUploadStatus)
-
+                @fragments.profile.publicProfileForm(idUrlBuilder, idRequest, user, forms.publicForm, avatarUploadData, avatarUploadStatus)
             </div>
 
             <div id="tabs-account-profile-2" class="tabs__pane u-cf" role="tabpanel" aria-labelledby="tabs-account-profile-2-tab" data-link-name="Account" data-link-context="Identity/profile"@if(forms.isPublicFormActive){ style="display: none;"}>
-
-                @account_details_form(idUrlBuilder, idRequest, user, forms.accountForm)
-
+                @fragments.profile.accountDetailsForm(idUrlBuilder, idRequest, user, forms.accountForm)
             </div>
         </div>
     </div>

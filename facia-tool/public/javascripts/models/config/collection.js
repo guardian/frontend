@@ -3,6 +3,7 @@ define([
     'knockout',
     'modules/vars',
     'modules/content-api',
+    'utils/strip-empty-query-params',
     'utils/as-observable-props',
     'utils/populate-observables',
     'utils/collection-guid'
@@ -10,6 +11,7 @@ define([
     ko,
     vars,
     contentApi,
+    stripEmptyQueryParams,
     asObservableProps,
     populateObservables,
     collectionGuid
@@ -70,6 +72,8 @@ define([
             vars.model.collections.unshift(this);
         }
         this.state.isOpen(false);
+
+        this.meta.apiQuery(stripEmptyQueryParams(this.meta.apiQuery()));
         this.state.apiQueryStatus(undefined);
         vars.model.save(this);
     };

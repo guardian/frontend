@@ -353,11 +353,26 @@ object FaciaToolMetrics {
     "Number of times facia/facia-tool has thrown InvalidContent exceptions"
   )
 
+  object ContentApiSeoRequestSuccess extends SimpleCountMetric(
+    "facia-front-press",
+    "facia-seo-request-success",
+    "Facia SEO Request Success count",
+    "Number of times facia-tool has successfully made the request for SEO purposes of webTitle and section"
+  )
+
+  object ContentApiSeoRequestFailure extends SimpleCountMetric(
+    "facia-front-press",
+    "facia-seo-request-failure",
+    "Facia SEO Request Failure count",
+    "Number of times facia-tool has failed to made the request for SEO purposes of webTitle and section"
+  )
+
   val all: Seq[Metric] = Seq(
     ApiUsageCount, ProxyCount, ExpiredRequestCount,
     DraftPublishCount, ContentApiPutSuccess, ContentApiPutFailure,
     FrontPressSuccess, FrontPressFailure, FrontPressCronSuccess,
-    FrontPressCronFailure, InvalidContentExceptionMetric
+    FrontPressCronFailure, InvalidContentExceptionMetric,
+    ContentApiSeoRequestSuccess, ContentApiSeoRequestFailure
   ) ++ ContentApiMetrics.all ++ S3Metrics.all
 }
 
@@ -519,9 +534,8 @@ trait CloudWatchApplicationMetrics extends GlobalSettings {
     val systemMetrics  = this.systemMetrics
     val applicationMetrics  = this.applicationMetrics
     CloudWatch.put("ApplicationSystemMetrics", systemMetrics)
-    if (applicationMetrics.nonEmpty) {
-      CloudWatch.putWithDimensions(applicationMetricsNamespace, applicationMetrics, Seq(applicationDimension))
-    }
+    for (metrics <- applicationMetrics.grouped(20))
+      CloudWatch.putWithDimensions(applicationMetricsNamespace, metrics, Seq(applicationDimension))
   }
 
   override def onStart(app: PlayApp) {

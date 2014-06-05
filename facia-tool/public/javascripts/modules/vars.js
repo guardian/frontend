@@ -8,16 +8,11 @@ define(['knockout'], function(ko) {
             {name: 'news/auto'},
             {name: 'news/most-popular'},
             {name: 'news/people'},
-            {name: 'news/section'},
             {name: 'news/special'},
-            {name: 'news/sport'},
             {name: 'features'},
             {name: 'features/auto'}, // Behind FeaturesAutoContainerSwitch
             {name: 'features/multimedia'},
-            {name: 'features/section'},
-            {name: 'comment'},
-            {name: 'comment/comment-and-debate'},
-            {name: 'comment/section'}
+            {name: 'comment/comment-and-debate'}
         ],
 
         detectPressFailureMs: 10000,
