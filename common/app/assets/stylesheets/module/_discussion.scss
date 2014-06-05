@@ -745,9 +745,9 @@ $avatarSize: 44px;
     }
     @include mq(leftCol) {
         @include rem((
-            margin-left: $a-leftCol-width + $gs-gutter,
-            padding-left: 0
+            margin-left: $a-leftCol-width + $gs-gutter
         ));
+        padding-left: 0;
     }
     @include mq(wide) {
         @include rem((
@@ -756,15 +756,14 @@ $avatarSize: 44px;
     }
 }
 .d-show-more-replies {
-
-    color: $c-newsDefault;
-    background-color: transparent;
     @include fs-textsans(1);
-    font-weight: bold;
+    background-color: transparent;
     border-top: 1px dotted $c-neutral5;
-    line-height: 40px;
+    color: $c-newsDefault;
     cursor: pointer;
-
+    font-weight: bold;
+    line-height: 40px;
+    
     &:hover {
         text-decoration: underline;
     }
