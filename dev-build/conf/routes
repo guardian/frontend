@@ -9,8 +9,9 @@ GET         /assets/internal/*file                                              
 GET         /assets/*path                                                                                            dev.DevAssetsController.at(path)
 
 # Diagnostics
-GET         /ab.gif                                                                                                  controllers.DiagnosticsController.ab
 GET         /js.gif                                                                                                  controllers.DiagnosticsController.js
+GET         /ab.gif                                                                                                  controllers.DiagnosticsController.ab
+GET         /ads.gif                                                                                                 controllers.DiagnosticsController.ads
 GET         /count/$prefix<.+>.gif                                                                                   controllers.DiagnosticsController.analytics(prefix)
 GET         /freshness/front/*timestamp                                                                              controllers.FreshnessController.freshnessFront(timestamp)
 GET         /freshness/*timestamp                                                                                    controllers.FreshnessController.freshness(timestamp)

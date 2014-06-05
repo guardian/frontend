@@ -7,6 +7,7 @@ GET        /                                controllers.Application.front
 
 GET        /js.gif                          controllers.DiagnosticsController.js
 GET        /ab.gif                          controllers.DiagnosticsController.ab
+GET        /ads.gif                         controllers.DiagnosticsController.ads
 
 GET        /count/$path<.+>.gif             controllers.DiagnosticsController.analytics(path)
 
