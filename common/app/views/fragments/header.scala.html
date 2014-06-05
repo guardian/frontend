@@ -129,8 +129,7 @@ to apply any necessary changes to non-shared code there too.
             @* Secondary nav *@
             @Navigation.localNav(navigation, page).map { localNav =>
                 @defining(localNav.searchForCurrentSublink(page)){ currentSublink =>
-                    <div class="localnav-container u-cf" data-component="navigation"
-                         @currentSublink.map{ s => itemprop="child" itemscope itemtype="http://data-vocabulary.org/Breadcrumb" }>
+                    <div class="localnav-container u-cf" data-component="navigation">
                         <div class="gs-container">
                             <ul class="nav nav--local" data-link-name="Local Navigation">
                                 @localNav.links.map { nav =>
