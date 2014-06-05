@@ -27,7 +27,7 @@ object MasterClasses extends Controller {
         MasterClassAgent.adsTargetedAt(segment) match {
           case Nil => NoCache(format.nilResult)
           case masterclasses => Cached(componentMaxAge) {
-            format.result(relevance.view(masterclasses))
+            format.result(relevance.view(masterclasses take 4))
           }
         }
       }
