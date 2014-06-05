@@ -12,7 +12,7 @@
 
 $old-ie:      false !default;
 $svg-support: true !default;
-$browser-supports-columns: true !default;
+$browser-supports-columns: true;
 $browser-supports-flexbox: true !default;
 
 
@@ -23,12 +23,6 @@ $gutter: 16px;
 $unitHeight: 36px;
 $inArticleInlineImgWidth: 114px;
 $headerHeight: 46px;
-
-
-// Guss defaults overrides
-// =============================================================================
-
-$guss-column-rule: none;
 
 @import 'components/guss-grid-system/_grid-system';
 
@@ -68,6 +62,11 @@ $mq-breakpoints: (
     // Facia layout
     faciaLeftCol: $facia-leftCol-trigger
 );
+
+// Guss defaults overrides
+// =============================================================================
+
+$guss-column-rule: none;
 
 
 // Colours

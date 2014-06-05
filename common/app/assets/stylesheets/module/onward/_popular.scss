@@ -1,6 +1,6 @@
 @include mq(rightCol) {
 
-    @include guss-columns('.headline-column', $column-min-width: 190px, $column-rule: none);
+    @include guss-columns('.headline-column', $column-min-width: 190px);
 
     .container--popular {
 

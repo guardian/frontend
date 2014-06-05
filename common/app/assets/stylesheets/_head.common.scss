@@ -31,7 +31,18 @@
 @import 'layout/_header';
 @import 'layout/_helpers';
 @include guss-row-utility;
-@include guss-columns-utility;
+@include guss-columns(
+    $base-class: $guss-columns-utility-class,
+    $css3-columns-support: false, // Because buggy in some versions of WebKit
+    $columns-fallback-width: (
+        tablet: gs-span(9),
+        desktop: gs-span(12)
+    ),
+    $columns-fallback-columns: (
+        tablet: 2,
+        desktop: 3
+    )
+);
 
 
 /* ==========================================================================

@@ -52,7 +52,7 @@
     }
 }
 
-@include guss-columns($base-class: '.across--columns', $column-min-width: gs-span(4) + $gs-gutter, $column-rule: 1px solid $c-neutral5);
+@include guss-columns($base-class: '.across--columns', $column-min-width: gs-span(4) + $gs-gutter);
 
 .across--columns__item {
     @include rem((
