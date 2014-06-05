@@ -21,6 +21,17 @@ s.linkLeaveQueryString=false;
 s.linkTrackVars="None";
 s.linkTrackEvents="None";
 
+/* Plugin Config */
+s._tpDST = {
+    2012:'3/25,10/28',
+    2013:'3/31,10/27',
+    2014:'3/30,10/26',
+    2015:'3/29,10/25',
+    2016:'3/27,10/30',
+    2017:'3/26,10/29',
+    2018:'3/25,10/28',
+    2019:'3/31,10/27'
+};
 
 /************************ DO PLUGINS SECTION ************************/
 s.usePlugins=true;
@@ -303,6 +314,23 @@ if(typeof Storage!=="undefined"&&typeof JSON!=="undefined"){s.c_rr=s.c_r;s.c_ww=
             if(!isNaN(r.cookieLifetime)&&s.getTime()>i.getTime()+r.cookieLifetime*1e3){s.setTime(i.getTime()+r.cookieLifetime*1e3)}
             if(s>i){t={expiry:s.getTime(),value:t};t=JSON.stringify(t);localStorage.setItem(e,t)}}else{sessionStorage.setItem(e,t)}}}s.c_r=c_r;s.c_w=c_w}
 */
+
+/*
+ * Plugin: getTimeParting 3.3
+ */
+s.getTimeParting=new Function("h","z",""
+    +"var s=this,od;od=new Date('1/1/2000');if(od.getDay()!=6||od.getMont"
+    +"h()!=0){return'Data Not Available';}else{var H,M,D,W,U,ds,de,tm,tt,"
+    +"da=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Sa"
+    +"turday'],d=new Date(),a=[];z=z?z:0;z=parseFloat(z);if(s._tpDST){var"
+    +" dso=s._tpDST[d.getFullYear()].split(/,/);ds=new Date(dso[0]+'/'+d."
+    +"getFullYear());de=new Date(dso[1]+'/'+d.getFullYear());if(h=='n'&&d"
+    +">ds&&d<de){z=z+1;}else if(h=='s'&&(d>de||d<ds)){z=z+1;}}d=d.getTime"
+    +"()+(d.getTimezoneOffset()*60000);d=new Date(d+(3600000*z));H=d.getH"
+    +"ours();M=d.getMinutes();M=(M<10)?'0'+M:M;D=d.getDay();U='AM';W='Wee"
+    +"kday';if(H>=12){U='PM';H=H-12;}if(H==0){H=12;}if(D==6||D==0){W='Wee"
+    +"kend';}D=da[D];tm=H+':'+M+U;tt=H+':'+((M>30)?'30':'00')+U;a=[tm,tt,"
+    +"D,W];return a;}");
 
 /*
  * Utility: inList v1.0 - find out if a value is in a list

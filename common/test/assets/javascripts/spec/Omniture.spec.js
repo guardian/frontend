@@ -16,7 +16,7 @@ define(['fixtures/config', 'analytics/omniture', 'common/common'], function(test
             };
             config.switches = {};
 
-            s = { t: function(){}, tl: function(){}, apl: function(){}, getQueryParam: function(){ return 'test'; }, getValOnce: function(){ return 'test'; } };
+            s = { t: function(){}, tl: function(){}, apl: function(){}, getQueryParam: function(){ return 'test'; }, getValOnce: function(){ return 'test'; }, getTimeParting: function(){ return ["4:03PM", "4:00PM", "Thursday", "Weekday"]; } };
             sinon.spy(s, "t");
             sinon.spy(s, "tl");
             sinon.spy(s, "apl");
