@@ -38,11 +38,11 @@ GET        /commercial/money/credit-cards/:creditCardType            controllers
 GET        /commercial/money/loans/:loanType                         controllers.commercial.MoneyOffers.loans(loanType)
 
 # Book offers
-GET        /commercial/books/bestsellers                             controllers.commercial.BookOffers.bestsellers(format="html")
-GET        /commercial/books/bestsellers.json                        controllers.commercial.BookOffers.bestsellers(format="json")
-GET        /commercial/books/bestsellers-medium                      controllers.commercial.BookOffers.bestsellersMedium(format="html")
-GET        /commercial/books/bestsellers-medium.json                 controllers.commercial.BookOffers.bestsellersMedium(format="json")
-GET        /commercial/books/bestsellers-high                        controllers.commercial.BookOffers.bestsellersHigh(format="html")
-GET        /commercial/books/bestsellers-high.json                   controllers.commercial.BookOffers.bestsellersHigh(format="json")
-GET        /commercial/books/book/*pageId.json                       controllers.commercial.BookOffers.singleBook(pageId, format="json")
-GET        /commercial/books/book/*pageId                            controllers.commercial.BookOffers.singleBook(pageId, format="html")
+GET        /commercial/books/bestsellers                             controllers.commercial.BookOffers.bestsellersLowHtml
+GET        /commercial/books/bestsellers.json                        controllers.commercial.BookOffers.bestsellersLowJson
+GET        /commercial/books/bestsellers-medium                      controllers.commercial.BookOffers.bestsellersMediumHtml
+GET        /commercial/books/bestsellers-medium.json                 controllers.commercial.BookOffers.bestsellersMediumJson
+GET        /commercial/books/bestsellers-high                        controllers.commercial.BookOffers.bestsellersHighHtml
+GET        /commercial/books/bestsellers-high.json                   controllers.commercial.BookOffers.bestsellersHighJson
+GET        /commercial/books/book/*pageId.json                       controllers.commercial.BookOffers.singleBookJson(pageId)
+GET        /commercial/books/book/*pageId                            controllers.commercial.BookOffers.singleBookHtml(pageId)
