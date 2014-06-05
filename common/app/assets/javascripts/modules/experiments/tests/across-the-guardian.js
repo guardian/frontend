@@ -19,11 +19,9 @@ define([
         this.dataLinkNames = 'across-the-guardian';
         this.idealOutcome = 'At least 1% increase in overall page level click through rate';
 
-        var edition;
+        var edition = window.location.pathname;
         this.canRun = function () {
-            var isEditionFront = ['/uk', '/us', '/au'].indexOf(window.location.pathname) > -1;
-            edition = window.location.pathname;
-            return isEditionFront;
+            return ['/uk', '/us', '/au'].indexOf(edition) > -1;
         };
 
         var templates = {
