@@ -9,6 +9,9 @@
                 data-link-name="block | @config.id"
                 data-id="@config.id"
                 data-type="@style.containerType"
+                @config.sponsorshipKeyword.map { keyword =>
+                    data-keywords="@keyword"
+                }
                 data-component="@FaciaComponentName(config, collection)">
                 <div class="facia-container__inner">
                     <div class="container__border tone-@style.tone tone-accent-border"></div>
