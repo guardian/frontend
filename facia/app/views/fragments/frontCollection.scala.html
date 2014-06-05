@@ -16,9 +16,6 @@
         case Some("news/most-popular")          => { @containers.popular(block._2, PopularContainer(), index)(request, block._1) }
         case Some("news/people")                => { @containers.people(block._2, PeopleContainer(), index)(request, templateDeduping, block._1) }
         case Some("news/special")               => { @containers.special(block._2, SpecialContainer(), index)(request, templateDeduping, block._1) }
-        case Some("news/section")               => { @containers.section(block._2, SectionContainer(), index)(request, templateDeduping, block._1) }
-        case Some("features/section")           => { @containers.section(block._2, SectionContainer(tone = "feature"), index)(request, templateDeduping, block._1) }
-        case Some("comment/section")            => { @containers.section(block._2, SectionContainer(tone = "comment"), index)(request, templateDeduping, block._1) }
         case Some("features/multimedia")        => { @containers.multimedia(block._2, MultimediaContainer(), index)(request, templateDeduping, block._1) }
         case Some("features/auto")                => {
                                                     @if(FeaturesAutoContainerSwitch.isSwitchedOn){
@@ -27,6 +24,6 @@
                                                         @containers.features(block._2, FeaturesContainer(), index)(request, templateDeduping, block._1)
                                                     }
                                                 }
-        case _                                  => { @containers.section(block._2, SectionContainer(), index)(request, templateDeduping, block._1) }
+        case _                                  => { @containers.special(block._2, SpecialContainer(), index)(request, templateDeduping, block._1) }
     }
 }

@@ -92,9 +92,6 @@ case class SpecialContainer(showMore: Boolean = true) extends Container {
   val containerType = "special"
   val tone = "news"
 }
-case class SectionContainer(showMore: Boolean = true, tone: String = "news") extends Container {
-  val containerType = "section"
-}
 case class MultimediaContainer(showMore: Boolean = true) extends Container {
   val containerType = "multimedia"
   val tone = "media"
@@ -809,7 +806,6 @@ object GetClasses {
   def forContainer(container: Container, config: Config, index: Int, hasTitle: Boolean, extraClasses: Seq[String] = Nil): String = {
     val baseClasses = Seq(
       "container",
-      "container--row-pattern",
       s"container--${container.containerType}"
     ) ++ extraClasses
     val f: Seq[(Container, Config, Int, Boolean) => String] = Seq(

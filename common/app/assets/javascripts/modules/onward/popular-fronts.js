@@ -4,7 +4,6 @@ define([
     'common/utils/ajax',
     'bonzo',
     'common/modules/ui/relativedates',
-    'common/modules/ui/collection-show-more',
     'common/modules/ui/images',
     'common/modules/discussion/comment-count'
 ], function (
@@ -13,7 +12,6 @@ define([
     ajax,
     bonzo,
     relativeDates,
-    CollectionShowMore,
     images,
     commentCount
 ) {
@@ -34,9 +32,7 @@ define([
                     }
                     bonzo(container)
                         .insertAfter(opts.insertAfter || $('.container, .ad-slot--commercial-component-high').last());
-                    // add show more button
-                    new CollectionShowMore($('.facia-slice', container)[0])
-                        .addShowMore();
+
                     commentCount.init(container);
                     // relativise timestamps
                     relativeDates.init(container);
