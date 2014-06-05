@@ -25,5 +25,6 @@ GET         /discussion/$discussionKey</?p/\w+>                                 
 GET         /discussion/$order<(oldest|newest)>/$discussionKey</?p/\w+>         controllers.DiscussionApp.comments(discussionKey: discussion.model.DiscussionKey, order: String)
 
 GET         /discussion/profile/:id/discussions.json                            controllers.DiscussionApp.profileDiscussions(id: String)
+GET         /discussion/profile/:id/replies.json                                controllers.DiscussionApp.profileReplies(id: String)
 
 GET         /open/cta/article/*discussionKey.json                               controllers.CtaController.cta(discussionKey: discussion.model.DiscussionKey)
