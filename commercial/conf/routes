@@ -24,10 +24,10 @@ GET        /commercial/masterclasses-high                            controllers
 GET        /commercial/masterclasses-high.json                       controllers.commercial.MasterClasses.listHigh
 
 # Soulmates
-GET        /commercial/soulmates/mixed                               controllers.commercial.SoulmateAds.renderAds
-GET        /commercial/soulmates/mixed.json                          controllers.commercial.SoulmateAds.mixed
-GET        /commercial/soulmates/mixed-high                          controllers.commercial.SoulmateAds.renderAdsHigh
-GET        /commercial/soulmates/mixed-high.json                     controllers.commercial.SoulmateAds.mixedHigh
+GET        /commercial/soulmates/mixed                               controllers.commercial.SoulmateAds.mixedLowHtml
+GET        /commercial/soulmates/mixed.json                          controllers.commercial.SoulmateAds.mixedLowJson
+GET        /commercial/soulmates/mixed-high                          controllers.commercial.SoulmateAds.mixedHighHtml
+GET        /commercial/soulmates/mixed-high.json                     controllers.commercial.SoulmateAds.mixedHighJson
 
 # Money offers
 GET        /commercial/money/bestbuys                                controllers.commercial.MoneyOffers.bestBuys(format="html")

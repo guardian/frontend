@@ -10,7 +10,22 @@ import scala.concurrent.Future
 
 object BookOffers extends Controller with ExecutionContexts with implicits.Collections {
 
-  private def renderBestsellers(relevance: Relevance, format: Format) =
+  object lowRelevance extends Relevance[Book] {
+    override def view(books: Seq[Book])(implicit request: RequestHeader): Html =
+      views.html.books.bestsellers(books)
+  }
+
+  object mediumRelevance extends Relevance[Book] {
+    override def view(books: Seq[Book])(implicit request: RequestHeader): Html =
+      views.html.books.bestsellersMedium(books)
+  }
+
+  object highRelevance extends Relevance[Book] {
+    override def view(books: Seq[Book])(implicit request: RequestHeader): Html =
+      views.html.books.bestsellersHigh(books)
+  }
+
+  private def renderBestsellers(relevance: Relevance[Book], format: Format) =
     MemcachedAction { implicit request =>
       Future.successful {
         (BestsellersAgent.getSpecificBooks(specificIds) ++ BestsellersAgent.adsTargetedAt(segment))
@@ -23,17 +38,14 @@ object BookOffers extends Controller with ExecutionContexts with implicits.Colle
       }
     }
 
-  def bestsellersLowJson = renderBestsellers(LowRelevance, JsonFormat)
+  def bestsellersLowJson = renderBestsellers(lowRelevance, jsonFormat)
+  def bestsellersLowHtml = renderBestsellers(lowRelevance, htmlFormat)
 
-  def bestsellersLowHtml = renderBestsellers(LowRelevance, HtmlFormat)
+  def bestsellersMediumJson = renderBestsellers(mediumRelevance, jsonFormat)
+  def bestsellersMediumHtml = renderBestsellers(mediumRelevance, htmlFormat)
 
-  def bestsellersMediumJson = renderBestsellers(MediumRelevance, JsonFormat)
-
-  def bestsellersMediumHtml = renderBestsellers(MediumRelevance, HtmlFormat)
-
-  def bestsellersHighJson = renderBestsellers(HighRelevance, JsonFormat)
-
-  def bestsellersHighHtml = renderBestsellers(HighRelevance, HtmlFormat)
+  def bestsellersHighJson = renderBestsellers(highRelevance, jsonFormat)
+  def bestsellersHighHtml = renderBestsellers(highRelevance, htmlFormat)
 
   def singleBookJson(pageId: String) = MemcachedAction { implicit request =>
     BookFinder.findByPageId(pageId) map {
@@ -52,43 +64,4 @@ object BookOffers extends Controller with ExecutionContexts with implicits.Colle
       case None => NoCache(NotFound)
     }
   }
-}
-
-
-sealed trait Relevance {
-  def view(books: Seq[Book])(implicit request: RequestHeader): Html
-}
-
-object LowRelevance extends Relevance {
-  override def view(books: Seq[Book])(implicit request: RequestHeader): Html = views.html.books.bestsellers(books)
-}
-
-object MediumRelevance extends Relevance {
-  override def view(books: Seq[Book])(implicit request: RequestHeader): Html = views.html.books.bestsellersMedium(books)
-}
-
-object HighRelevance extends Relevance {
-  override def view(books: Seq[Book])(implicit request: RequestHeader): Html = views.html.books.bestsellersHigh(books)
-}
-
-
-sealed trait Format {
-
-  def nilResult(implicit request: RequestHeader): SimpleResult
-
-  def result(view: Html)(implicit request: RequestHeader): SimpleResult
-}
-
-object HtmlFormat extends Format {
-
-  override def nilResult(implicit request: RequestHeader): SimpleResult = Results.NotFound
-
-  override def result(view: Html)(implicit request: RequestHeader): SimpleResult = Results.Ok(view)
-}
-
-object JsonFormat extends Format {
-
-  override def nilResult(implicit request: RequestHeader): SimpleResult = JsonNotFound.apply()
-
-  override def result(view: Html)(implicit request: RequestHeader): SimpleResult = JsonComponent(view)
 }

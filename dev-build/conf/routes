@@ -203,10 +203,10 @@ GET         /commercial/masterclasses                                           
 GET         /commercial/masterclasses.json                                                                           controllers.commercial.MasterClasses.list
 GET         /commercial/masterclasses-high                                                                           controllers.commercial.MasterClasses.renderMasterclassHigh
 GET         /commercial/masterclasses-high.json                                                                      controllers.commercial.MasterClasses.listHigh
-GET         /commercial/soulmates/mixed                                                                              controllers.commercial.SoulmateAds.renderAds
-GET         /commercial/soulmates/mixed.json                                                                         controllers.commercial.SoulmateAds.mixed
-GET         /commercial/soulmates/mixed-high                                                                         controllers.commercial.SoulmateAds.renderAdsHigh
-GET         /commercial/soulmates/mixed-high.json                                                                    controllers.commercial.SoulmateAds.mixedHigh
+GET         /commercial/soulmates/mixed                                                                              controllers.commercial.SoulmateAds.mixedLowHtml
+GET         /commercial/soulmates/mixed.json                                                                         controllers.commercial.SoulmateAds.mixedLowJson
+GET         /commercial/soulmates/mixed-high                                                                         controllers.commercial.SoulmateAds.mixedHighHtml
+GET         /commercial/soulmates/mixed-high.json                                                                    controllers.commercial.SoulmateAds.mixedHighJson
 GET         /commercial/money/bestbuys.json                                                                          controllers.commercial.MoneyOffers.bestBuys(format="json")
 GET         /commercial/books/bestsellers                                                                            controllers.commercial.BookOffers.bestsellersLowHtml
 GET         /commercial/books/bestsellers.json                                                                       controllers.commercial.BookOffers.bestsellersLowJson
