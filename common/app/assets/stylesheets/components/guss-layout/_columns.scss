@@ -135,6 +135,13 @@ $guss-columns-fallback-columns: 3 !default;
                                                                     $number-of-columns: $number-of-fallback-columns
                                                                 )
                         ));
+
+                        &:nth-child(n) {
+                            clear: none;
+                        }
+                        &:nth-child(#{$number-of-fallback-columns}n+1) {
+                            clear: both;
+                        }
                     }
 
                 }
@@ -153,6 +160,13 @@ $guss-columns-fallback-columns: 3 !default;
                                                             $number-of-columns: $columns-fallback-columns
                                                         )
                 ));
+
+                &:nth-child(n) {
+                    clear: none;
+                }
+                &:nth-child(#{$number-of-fallback-columns}n+1) {
+                    clear: both;
+                }
             }
         }
     }
