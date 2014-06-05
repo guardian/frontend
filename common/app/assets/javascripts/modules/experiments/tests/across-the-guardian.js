@@ -19,8 +19,9 @@ define([
         this.dataLinkNames = 'across-the-guardian';
         this.idealOutcome = 'At least 1% increase in overall page level click through rate';
 
+        var edition = window.location.pathname;
         this.canRun = function () {
-            return ['/uk', '/us', '/au'].indexOf(window.location.pathname) > -1;
+            return ['/uk', '/us', '/au'].indexOf(edition) > -1;
         };
 
         var templates = {
@@ -59,7 +60,7 @@ define([
 
         function renderContainer(parseCollection) {
             ajax({
-                url: '/across-the-guardian/lite.json',
+                url: edition + '/across-the-guardian/lite.json',
                 type: 'json',
                 crossOrigin: true
             }).then(function (sectionData) {

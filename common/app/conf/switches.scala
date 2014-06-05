@@ -125,6 +125,11 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 6, 30)
   )
 
+  val SurveyBannerSwitch = Switch("Advertising", "survey-banner",
+    "Display survey banner on all devices",
+    safeState = Off, sellByDate = new DateMidnight(2014, 7, 1)
+  )
+
   val ForcePageSkinSwitch = Switch("Advertising", "force-page-skin",
     "Temp switch, allows us to force the page into 'page skin' mode",
     safeState = Off, sellByDate = new DateMidnight(2014, 6, 7)
@@ -270,11 +275,6 @@ object Switches extends Collections {
   val NetworkFrontOptIn = Switch("Feature Switches", "network-front-opt-in",
     "If this is switched on then an opt-in message will be displayed to users coming from the R2 network front",
     safeState = Off, sellByDate = new DateMidnight(2014, 6, 30)
-  )
-
-  val ArticleSlotsSwitch = Switch("Feature Switches", "article-slots",
-    "If this switch is on, inline content slots (for stories, ads, etc) will be generated in article bodies",
-    safeState = Off, sellByDate = new DateMidnight(2014, 7, 1)
   )
 
   val IndiaRegionSwitch = Switch("Feature Switches", "india-region",
@@ -462,7 +462,6 @@ object Switches extends Collections {
     LCMortgageFeedSwitch,
     GuBookshopFeedsSwitch,
     NetworkFrontOptIn,
-    ArticleSlotsSwitch,
     ImageServerSwitch,
     FaciaToolPressSwitch,
     ShowAllArticleEmbedsSwitch,
@@ -482,6 +481,7 @@ object Switches extends Collections {
     ABHideSupportingLinks,
     ABAcrossTheGuardian,
     SmartBannerSwitch,
+    SurveyBannerSwitch,
     FeaturesAutoContainerSwitch,
     FunctionBindSwitch,
     ForcePageSkinSwitch

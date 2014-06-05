@@ -15,4 +15,8 @@ package object commercial {
     val userSegments = params getOrElse("seg", Nil)
     Segment(Context(section, keywords), userSegments)
   }
+
+  def specificIds(implicit request: Request[AnyContent]) = {
+    request.queryString.getOrElse("t", Nil).reverse
+  }
 }

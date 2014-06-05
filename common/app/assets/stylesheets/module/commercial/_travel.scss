@@ -253,7 +253,8 @@ $c-commercial-travel-dark: #002b6c;
         .commercial__body {
             @include rem((
                 padding-top: $comercial-comp-baseline
-            ));            
+            ));
+            padding-left: 0;
         }
         .lineitem {
             width: 33%;

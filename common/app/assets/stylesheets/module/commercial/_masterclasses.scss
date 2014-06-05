@@ -8,6 +8,9 @@
         background-color: transparent;
         height: auto;
         margin-bottom: 0;
+        @include rem((
+            margin-top: $comercial-comp-baseline
+        ));
         position: static;
     }
     .commercial__title {

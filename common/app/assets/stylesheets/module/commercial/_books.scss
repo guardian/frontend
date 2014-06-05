@@ -294,6 +294,9 @@ $c-commercial-books-dark: #630d4c;
         .commercial__head {
             padding-right: 0;
         }
+        .commercial__relevance-low .lineitem {
+            width: 50%;
+        }
     }
     @include mq(leftCol, $to: wide) {
         .commercial__title {

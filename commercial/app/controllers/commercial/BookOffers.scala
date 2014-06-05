@@ -1,17 +1,18 @@
 package controllers.commercial
 
 import common.{ExecutionContexts, JsonComponent}
-import model.commercial.books.{BookFinder, BestsellersAgent}
+import model.commercial.books.{Book, BookFinder, BestsellersAgent}
 import model.{NoCache, Cached}
 import performance.MemcachedAction
 import play.api.mvc._
 import scala.concurrent.Future
 
-object BookOffers extends Controller with ExecutionContexts {
+object BookOffers extends Controller with ExecutionContexts with implicits.Collections {
 
   def bestsellers(format: String) = MemcachedAction { implicit request =>
     Future.successful {
-      BestsellersAgent.adsTargetedAt(segment) match {
+      (BestsellersAgent.getSpecificBooks(specificIds) ++ BestsellersAgent.adsTargetedAt(segment))
+        .distinctBy(_.isbn).take(5) match {
         case Nil => NoCache(NotFound)
         case books if format == "json" =>
           Cached(componentMaxAge)(JsonComponent(views.html.books.bestsellers(books)))
