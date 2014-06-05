@@ -7,7 +7,7 @@ import controllers.AuthLogging
 import tools.LoadBalancer
 import play.api.libs.ws.WS
 import scala.concurrent.Future
-import conf.ContentApi
+import conf.DraftContentApi
 
 case class EndpointStatus(name: String, isOk: Boolean, messages: String*)
 object TestPassed{
@@ -64,7 +64,7 @@ object TroubleshooterController extends Controller with Logging with AuthLogging
 
   private def testOnContentApi(testPath: String, id: String): Future[EndpointStatus] = {
     val testName = "Can fetch directly from Content API"
-    val request = ContentApi.item(testPath, "UK").showFields("all")
+    val request = DraftContentApi.item(testPath, "UK").showFields("all")
     request.response.map {
       response =>
         if (response.status == "ok") {

@@ -1,6 +1,6 @@
 package feed
 
-import conf.ContentApi
+import conf.DraftContentApi
 import common._
 import services.OphanApi
 import play.api.libs.json.{JsArray, JsValue}
@@ -21,7 +21,7 @@ object MostPopularAgent extends Logging with ExecutionContexts {
     Edition.all foreach refresh
   }
 
-  def refresh(edition: Edition) = ContentApi.item("/", edition)
+  def refresh(edition: Edition) = DraftContentApi.item("/", edition)
     .showMostViewed(true)
     .response.map{ response =>
       val mostViewed = response.mostViewed map { Content(_) } take 10
@@ -60,7 +60,7 @@ object GeoMostPopularAgent extends Logging with ExecutionContexts {
         item: JsValue <- ophanResults.asOpt[JsArray].map(_.value).getOrElse(Nil)
         url <- (item \ "url").asOpt[String]
       } yield {
-        ContentApi.item(UrlToContentPath(url), Edition.defaultEdition ).response.map( _.content.map( Content(_)))
+        DraftContentApi.item(UrlToContentPath(url), Edition.defaultEdition ).response.map( _.content.map( Content(_)))
       }
 
       Future.sequence(mostRead).map { contentSeq =>
@@ -116,7 +116,7 @@ object DayMostPopularAgent extends Logging with ExecutionContexts {
         item: JsValue <- ophanResults.asOpt[JsArray].map(_.value).getOrElse(Nil)
         url <- (item \ "url").asOpt[String]
       } yield {
-        ContentApi.item(UrlToContentPath(url), Edition.defaultEdition ).response.map( _.content.map( Content(_)))
+        DraftContentApi.item(UrlToContentPath(url), Edition.defaultEdition ).response.map( _.content.map( Content(_)))
       }
 
       Future.sequence(mostRead).map { contentSeq =>
@@ -159,7 +159,7 @@ object MostPopularExpandableAgent extends Logging with ExecutionContexts {
   def refresh() {
     log.info("Refreshing most popular.")
     Edition.all foreach { edition =>
-      ContentApi.item("/", edition)
+      DraftContentApi.item("/", edition)
         .showMostViewed(true)
         .showFields("headline,trail-text,liveBloggingNow,thumbnail,hasStoryPackage,wordcount,shortUrl,body")
         .response.foreach{ response =>

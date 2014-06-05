@@ -1,6 +1,6 @@
 package test
 
-import conf.{ContentApi, Configuration}
+import conf.{DraftContentApi, Configuration}
 import java.net.URLEncoder
 import play.api.test._
 import play.api.test.Helpers._
@@ -44,9 +44,15 @@ trait TestSettings {
     val originalHttp = http
 
     verify(
-      Configuration.contentApi.elasticSearchHost,
+      Configuration.contentApi.contentApiLiveHost,
       "37f3bee67d016a9fec7959aa5bc5e53fa7fdc688f987c0dea6fa0f6af6979079",
-      "YOU ARE NOT USING THE CORRECT ELASTIC SEARCH CONTENT API HOST"
+      "YOU ARE NOT USING THE CORRECT ELASTIC SEARCH LIVE CONTENT API HOST"
+    )
+
+    verify(
+      Configuration.contentApi.contentApiDraftHost,
+      "fbfb869fb2f0e205eb16e1e0aa044f2bea204c3757997e124f8bf551b3a430e2",
+      "YOU ARE NOT USING THE CORRECT ELASTIC SEARCH DRAFT CONTENT API HOST"
     )
 
     verify(
@@ -62,7 +68,7 @@ trait TestSettings {
     }
   }
 
-  ContentApi.http = toRecorderHttp(ContentApi.http)
+  DraftContentApi.http = toRecorderHttp(DraftContentApi.http)
 }
 
 /**

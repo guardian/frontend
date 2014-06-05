@@ -16,7 +16,7 @@ object FaciaContentApiProxy extends Controller with Logging with AuthLogging wit
        "%s=%s".format(p._1, p._2.head.urlEncoded)
     }.mkString("&")
 
-    val contentApiHost = Configuration.contentApi.elasticSearchHost
+    val contentApiHost = Configuration.contentApi.contentApiDraftHost
 
     val url = s"$contentApiHost/$path?$queryString&api-key=${Configuration.contentApi.key}"
 
