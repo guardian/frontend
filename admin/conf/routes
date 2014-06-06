@@ -35,9 +35,6 @@ GET         /dev/switchboard              controllers.admin.SwitchboardControlle
 POST        /dev/switchboard              controllers.admin.SwitchboardController.save()
 
 # Analytics
-GET         /analytics/kpis               controllers.admin.AnalyticsController.kpis()
-GET         /analytics/pageviews          controllers.admin.AnalyticsController.pageviews()
-GET         /analytics/browsers           controllers.admin.AnalyticsController.browsers()
 GET         /analytics/abtests            controllers.admin.AnalyticsController.abtests()
 GET         /analytics/confidence         controllers.admin.AnalyticsConfidenceController.renderConfidence()
 
