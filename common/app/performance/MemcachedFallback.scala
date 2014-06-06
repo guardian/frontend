@@ -1,15 +1,35 @@
 package performance
 
-import common.ExecutionContexts
+import common.{Logging, ExecutionContexts}
 import implicits.Dates
 import shade.memcached.{Configuration => MemcachedConf, Codec, Memcached}
-import conf.Configuration
 import scala.concurrent.Future
 import scala.concurrent.duration.FiniteDuration
+import conf.Switches._
+import conf.Configuration
+import play.api.Play
+import Play.current
+import scala.util.Try
 
-object MemcachedFallback extends ExecutionContexts with Dates {
-  lazy val host = Configuration.memcached.host.head
-  lazy val memcached = Memcached(MemcachedConf(host), actorSystem.scheduler, memcachedExecutionContext)
+object MemcachedFallback extends ExecutionContexts with Dates with Logging {
+  private def connectToMemcached(host: String) = {
+    val tryConnect = Try {
+      Memcached(MemcachedConf(host), actorSystem.scheduler, memcachedExecutionContext)
+    }
+
+    tryConnect.failed foreach { error =>
+      log.logger.error(s"Error trying to connect to Memcached on $host", error)
+    }
+
+    tryConnect
+  }
+
+  private lazy val maybeMemcached = for {
+    host <- Configuration.memcached.host
+    memcached <- connectToMemcached(host).toOption
+  } yield memcached
+
+  private def memcached = maybeMemcached.filter(_ => MemcachedSwitch.isSwitchedOn && !Play.isTest)
 
   /** If the Future successfully completes, stores its value in Memcached for the cache duration. If the Future fails,
     * attempts to fallback to the value cached in Memcached.
@@ -19,15 +39,18 @@ object MemcachedFallback extends ExecutionContexts with Dates {
     cacheTime: FiniteDuration
   )(f: Future[A]): Future[A] = {
     f onSuccess {
-      case a => memcached.set(key, a, cacheTime)
+      case a => memcached foreach { _.set(key, a, cacheTime) }
     }
     
     f recoverWith {
-      case error: Throwable => 
-        memcached.get[A](key) map {
-          case None => throw error
-          case Some(a) => a
+      case error: Throwable =>
+        (memcached map { _.get[A](key) map {
+            case None => throw error
+            case Some(a) =>
+              log.logger.warn(s"Used Memcached value for $key to recover from Content API error", error)
+              a
         }
+      }).getOrElse(throw error)
     }
   }
 }
