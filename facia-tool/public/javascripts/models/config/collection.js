@@ -1,7 +1,8 @@
 /* global _: true */
 define([
-    'config',
     'knockout',
+    'config',
+    'priority',
     'modules/vars',
     'modules/content-api',
     'utils/strip-empty-query-params',
@@ -9,8 +10,9 @@ define([
     'utils/populate-observables',
     'utils/collection-guid'
 ], function(
-    pageConfig,
     ko,
+    pageConfig,
+    priority,
     vars,
     contentApi,
     stripEmptyQueryParams,
@@ -21,8 +23,6 @@ define([
     var checkCount = 0;
 
     function Collection(opts) {
-        var priority = pageConfig.priority === 'editorial' ? undefined  : pageConfig.priority;
-
         opts = opts || {};
 
         this.id = opts.id || collectionGuid();
@@ -49,7 +49,7 @@ define([
             'apiQueryStatus']);
 
         this.state.withinPriority = ko.computed(function() {
-            return _.some(this.parents(), function(front) {return front.props.priority() === priority; });
+            return _.some(this.parents(), function(front) {return front.props.priority() === priority(); });
         }, this);
 
         this.meta.apiQuery.subscribe(function(apiQuery) {
