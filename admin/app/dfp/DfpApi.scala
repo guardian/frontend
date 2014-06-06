@@ -10,7 +10,7 @@ import conf.AdminConfiguration
 
 object DfpApi extends Logging {
 
-  private lazy val session: Option[DfpSession] = try {
+  private lazy val dfpSession: Option[DfpSession] = try {
     for {
       clientId <- AdminConfiguration.dfpApi.clientId
       clientSecret <- AdminConfiguration.dfpApi.clientSecret
@@ -35,51 +35,50 @@ object DfpApi extends Logging {
       None
   }
 
-  def fetchCurrentLineItems(): Seq[LineItem] = session.map { sess =>
+  def fetchCurrentLineItems(): Seq[LineItem] = dfpSession.map { session =>
 
-    val lineItemStatementBuilder = new StatementBuilder()
+    val currentLineItems = new StatementBuilder()
       .where("status = :readyStatus OR status = :deliveringStatus")
       .orderBy("id ASC")
       .limit(StatementBuilder.SUGGESTED_PAGE_LIMIT)
       .withBindVariableValue("readyStatus", ComputedStatus.READY.toString)
       .withBindVariableValue("deliveringStatus", ComputedStatus.DELIVERING.toString)
 
-    val lineItems = DfpApiWrapper.fetchLineItems(sess, lineItemStatementBuilder)
+    val lineItems = DfpApiWrapper.fetchLineItems(session, currentLineItems)
 
-    def targetingStatementBuilder(keyName: String) = new StatementBuilder()
-      .where("customTargetingKeyId = :targetingKeyId")
-      .withBindVariableValue("targetingKeyId", keyName)
+    val targetingKeyDisplayNames = Seq("Keywords", "Slot")
 
-    val keywordTargetKeyId = DfpApiWrapper.fetchCustomTargetingKeys(sess, targetingStatementBuilder("Keywords"))(0).getId
+    val customTargetingKeys = new StatementBuilder()
+      .where("displayName IN (:targetingKeyIds)")
+      .withBindVariableValue("targetingKeyIds", targetingKeyDisplayNames)
 
-    val keywords = DfpApiWrapper.fetchCustomTargetingValues(sess, targetingStatementBuilder("Keywords")).map { v =>
-      v.getId -> v.getName
+    val targetingKeys = DfpApiWrapper.fetchCustomTargetingKeys(session, customTargetingKeys).map { k =>
+      k.getId -> k.getName
     }.toMap
 
-    val slotTargetKeyId = DfpApiWrapper.fetchCustomTargetingKeys(sess, targetingStatementBuilder("Slot"))(0).getId
+    def customTargetingValues = new StatementBuilder()
+      .where("customTargetingKeyId IN (:targetingKeyIds)")
+      .withBindVariableValue("targetingKeyIds", targetingKeyDisplayNames)
 
-    val slots = DfpApiWrapper.fetchCustomTargetingValues(sess, targetingStatementBuilder("Slot")).map { v =>
+    val targetingValues = DfpApiWrapper.fetchCustomTargetingValues(session, customTargetingValues).map { v =>
       v.getId -> v.getName
     }.toMap
-
-    val targetingKeys = Map(keywordTargetKeyId -> "k", slotTargetKeyId -> "slot")
-    val targetingValues = keywords ++ slots
 
     def buildTargetSet(crits: CustomCriteriaSet): Option[TargetSet] = {
       val targets = crits.getChildren.flatMap { crit =>
         buildTarget(crit.asInstanceOf[CustomCriteria])
       }.toSeq
-      if (targets.isEmpty) None
-      else Some(TargetSet(crits.getLogicalOperator.getValue, targets))
+      if (targets.isEmpty) {
+        None
+      }
+      else {
+        Some(TargetSet(crits.getLogicalOperator.getValue, targets))
+      }
     }
 
     def buildTarget(crit: CustomCriteria): Option[Target] = {
-      val id = crit.getKeyId
-      if (id == slotTargetKeyId || crit.getKeyId == keywordTargetKeyId) {
-        val keyName = targetingKeys.getOrElse(id, "*** unknown ***")
-        Some(Target(keyName, crit.getOperator.getValue, buildValueNames(crit.getValueIds)))
-      } else {
-        None
+      targetingKeys.get(crit.getKeyId) map {
+        keyName => Target(keyName, crit.getOperator.getValue, buildValueNames(crit.getValueIds))
       }
     }
 
@@ -98,8 +97,12 @@ object DfpApi extends Logging {
       val targetSets = customTargeting.getChildren.flatMap { critSet =>
         buildTargetSet(critSet.asInstanceOf[CustomCriteriaSet])
       }.toSeq
-      if (targetSets.isEmpty) None
-      else Some(LineItem(r.getId, targetSets))
+      if (targetSets.isEmpty) {
+        None
+      }
+      else {
+        Some(LineItem(r.getId, targetSets))
+      }
     }
   }.getOrElse {
     Nil
