@@ -1,42 +1,37 @@
 package controllers.commercial
 
+import model.commercial.travel.{Offer, OffersAgent}
+import model.{NoCache, Cached}
+import performance.MemcachedAction
 import play.api.mvc._
-import model.commercial.travel.OffersAgent
-import common.{JsonNotFound, JsonComponent}
-import model.Cached
+import play.api.templates.Html
+import scala.concurrent.Future
 
 object TravelOffers extends Controller {
 
-  def renderOffer = Action {
-    implicit request =>
-      OffersAgent.adsTargetedAt(segment) match {
-        case Nil => NotFound
-        case offers => Cached(60)(Ok(views.html.travelOffers(offers take 4)))
-      }
+  object lowRelevance extends Relevance[Offer] {
+    def view(offers: Seq[Offer])(implicit request: RequestHeader): Html = views.html.travelOffers(offers)
   }
 
-  def listOffers = Action {
-    implicit request =>
-      OffersAgent.adsTargetedAt(segment) match {
-        case Nil => JsonNotFound.apply()
-        case offers => Cached(60)(JsonComponent(views.html.travelOffers(offers take 4)))
-      }
-  }
-  
-  def renderOfferHigh = Action {
-    implicit request =>
-      OffersAgent.adsTargetedAt(segment) match {
-        case Nil => NotFound
-        case offers => Cached(60)(Ok(views.html.travelOffersHigh(offers take 4)))
-      }
+  object highRelevance extends Relevance[Offer] {
+    def view(offers: Seq[Offer])(implicit request: RequestHeader): Html = views.html.travelOffersHigh(offers)
   }
 
-  def listOffersHigh = Action {
-    implicit request =>
-      OffersAgent.adsTargetedAt(segment) match {
-        case Nil => JsonNotFound.apply()
-        case offers => Cached(60)(JsonComponent(views.html.travelOffersHigh(offers take 4)))
+  private def renderTravelOffers(relevance: Relevance[Offer], format: Format) =
+    MemcachedAction { implicit request =>
+      Future.successful {
+        OffersAgent.adsTargetedAt(segment) match {
+          case Nil => NoCache(format.nilResult)
+          case offers => Cached(componentMaxAge) {
+            format.result(relevance.view(offers take 4))
+          }
+        }
       }
-  }
+    }
 
+  def travelOffersLowHtml = renderTravelOffers(lowRelevance, htmlFormat)
+  def travelOffersLowJson = renderTravelOffers(lowRelevance, jsonFormat)
+
+  def travelOffersHighHtml = renderTravelOffers(highRelevance, htmlFormat)
+  def travelOffersHighJson = renderTravelOffers(highRelevance, jsonFormat)
 }
