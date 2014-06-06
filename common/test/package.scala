@@ -55,11 +55,13 @@ trait TestSettings {
       "YOU ARE NOT USING THE CORRECT ELASTIC SEARCH DRAFT CONTENT API HOST"
     )
 
-    verify(
-      Configuration.contentApi.key,
-      "a4eb3e728596c7d6ba43e3885c80afcb16bc24d22fc0215409392bac242bed96",
-      "YOU ARE NOT USING THE CORRECT CONTENT API KEY"
-    )
+    Configuration.contentApi.key.map { k =>
+        verify(
+          k,
+          "a4eb3e728596c7d6ba43e3885c80afcb16bc24d22fc0215409392bac242bed96",
+          "YOU ARE NOT USING THE CORRECT CONTENT API KEY"
+        )
+    }
 
     override def GET(url: String, headers: scala.Iterable[scala.Tuple2[java.lang.String, java.lang.String]]) = {
       recorder.load(url, headers.toMap) {

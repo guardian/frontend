@@ -67,7 +67,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val contentApiLiveHost: String = configuration.getStringProperty("content.api.live.host").getOrElse(defaultContentApi)
     lazy val contentApiDraftHost: String = configuration.getStringProperty("content.api.draft.host").getOrElse(contentApiLiveHost)
 
-    lazy val key = configuration.getMandatoryStringProperty("content.api.key")
+    lazy val key: Option[String] = configuration.getStringProperty("content.api.key")
     lazy val timeout: Int = configuration.getIntegerProperty("content.api.timeout.millis").getOrElse(2000)
 
     lazy val previewAuth: Option[Auth] = for {

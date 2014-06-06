@@ -86,7 +86,7 @@ trait ApiQueryDefaults extends QueryDefaults with implicits.Collections with Log
 trait ContentApiClient extends FutureAsyncApi with ApiQueryDefaults with DelegateHttp
 with Logging {
 
-  apiKey = Some(contentApi.key)
+  apiKey = contentApi.key
 
   override def fetch(url: String, parameters: Map[String, String]) = {
     checkQueryIsEditionalized(url, parameters)
