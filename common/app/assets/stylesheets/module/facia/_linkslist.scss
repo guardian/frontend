@@ -56,6 +56,10 @@
     &.show-more--hidden {
         display: none;
     }
+
+    @include mq($to: tablet) {
+        width: auto;
+    }
 }
 .linkslist__action {
     position: relative;
