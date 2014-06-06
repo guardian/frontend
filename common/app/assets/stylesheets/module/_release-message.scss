@@ -106,8 +106,9 @@
 }
 
 .site-message__inner {
-    padding: $gs-baseline $gs-gutter/2;
-    @include box-sizing(border-box);
+    @include rem((
+        padding: $gs-baseline 42px $gs-baseline $gs-gutter/2
+    ));
 
     @include mq(mobileLandscape) {
         padding-left: $gs-gutter;
