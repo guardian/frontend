@@ -10,7 +10,7 @@
         role="main">
 
         @if(faciaPage.hasPageSkin) {
-            @fragments.commercial.adSlot(name="pageskin-inread", adType="page-skin", sizeMapping=Map("wide" -> Seq("1,1")), showLabel=false, refresh=false, outOfPage=true)
+            @fragments.commercial.pageSkin
         }
 
         @defining(faciaPage.collections.filter(_._2.items.nonEmpty)) { collections =>
@@ -20,7 +20,7 @@
         }
 
         @if(!faciaPage.hasPageSkin) {
-            @fragments.commercial.commercialComponent(name = "merchandising", adType = "commercial-component")
+            @fragments.commercial.commercialComponent("merchandising", Seq("commercial-component"))
         }
     </div>
 }

@@ -229,15 +229,10 @@
  */
 .ad-slot--paid-for-badge {
     text-align: left;
-    border-bottom: 1px dotted $c-neutral5;
     @include rem((
         padding: 2px 0 $gs-baseline
     ));
 
-    @include mq(leftCol) {
-        border-bottom-width: 0;
-        border-top: 1px dotted $c-neutral5;
-    }
     .ad-slot--paid-for-badge__inner {
         overflow: hidden;
 
@@ -256,8 +251,10 @@
     }
     .ad-slot--paid-for-badge__header,
     .ad-slot--paid-for-badge__label {
-        color: $c-neutral2;
         margin: 0;
+    }
+    .ad-slot--paid-for-badge__header {
+        font-weight: bold;
     }
     .ad-slot--paid-for-badge__link,
     .ad-slot--paid-for-badge__help {
@@ -280,24 +277,48 @@
         ));
     }
 }
-.ad-slot--paid-for-badge--front {
-    @include clearfix;
-    position: relative;
-    min-height: 90px;
-    border-top: 0;
-    z-index: 99;
-    border-bottom-width: 0;
-
+.ad-slot--adbadge {
+    .ad-slot--paid-for-badge__header,
+    .ad-slot--paid-for-badge__label {
+        color: $c-neutral2-contrasted;
+    }
     .ad-slot--paid-for-badge__link {
-        position: relative;
-        float: right;
+        @include rem((
+            margin-top: get-line-height($fs-data, 3)*-2
+        ));
+    }
+}
+.ad-slot--spbadge {
+    .ad-slot--paid-for-badge__header,
+    .ad-slot--paid-for-badge__label {
+        color: $c-neutral2;
+    }
+    .ad-slot--paid-for-badge__link {
         @include rem((
             margin-top: get-line-height($fs-data, 3)*-1
         ));
     }
+}
+.ad-slot--paid-for-badge--article {
+    border-bottom: 1px dotted $c-neutral5;
+
+    @include mq(leftCol) {
+        border-bottom-width: 0;
+        border-top: 1px dotted $c-neutral5;
+    }
+}
+.ad-slot--paid-for-badge--front {
+    @include clearfix;
+    position: relative;
+    min-height: 90px;
+    z-index: 99;
+
+    .ad-slot--paid-for-badge__link {
+        position: relative;
+        float: right;
+    }
     @include mq(tablet) {
         margin-left: 50%;
-        width: auto;
         padding-top: 0;
         @include rem((
             margin-top: -$gs-row-height
@@ -348,12 +369,6 @@
                 ));
             }
         }
-    }
-}
-.ad-slot--adbadge {
-    .ad-slot--paid-for-badge__header,
-    .ad-slot--paid-for-badge__label {
-        color: $c-neutral2-contrasted;
     }
 }
 /**

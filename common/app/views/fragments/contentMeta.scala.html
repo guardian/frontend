@@ -27,10 +27,10 @@
     @if(!content.hasMainPicture && !content.hasMainVideo && !content.hasMainEmbed){ content__meta-container--float}">
 
     @if(content.isSponsored) {
-        @fragments.commercial.badge(name="spbadge", adType="paid-for-badge", sizeMapping=Map("mobile" -> Seq("140,90")))
+        @fragments.commercial.badge(name="spbadge")
     } else {
         @if(content.isAdvertisementFeature) {
-            @fragments.commercial.badge(name="adbadge", adType="paid-for-badge", sizeMapping=Map("mobile" -> Seq("140,90")))
+            @fragments.commercial.badge(name="adbadge")
         }
     }
 
