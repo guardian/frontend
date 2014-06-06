@@ -16,7 +16,8 @@ define([
     'lodash/functions/once',
     'lodash/objects/defaults',
     'lodash/objects/pairs',
-    'common/utils/template'
+    'common/utils/template',
+    'common/modules/analytics/beacon'
 ], function (
     $,
     bonzo,
@@ -34,7 +35,8 @@ define([
     once,
     defaults,
     pairs,
-    template
+    template,
+    beacon
 ) {
 
     /**
@@ -42,7 +44,8 @@ define([
      *
      * Create a new ad slot using the following code:
      *
-     * <div class="ad-slot__dfp AD_SLOT_CLASS" data-name="AD_SLOT_NAME" data-mobile="300,50|320,50" data-desktop="300,250" data-refresh="false" data-label="false">
+     * <div class="ad-slot__dfp AD_SLOT_CLASS" data-name="AD_SLOT_NAME" data-mobile="300,50|320,50"
+     *      data-desktop="300,250" data-refresh="false" data-label="false">
      *     <div id="SLOT_ID" class="ad-container"></div>
      * </div>
      *
@@ -66,6 +69,7 @@ define([
     var adSlots = [],
         slotsToRefresh = [],
         config = {},
+        fetchStart,
         // These should match the widths inside _vars.scss
         breakpoints = {
             mobile: 0,
@@ -307,7 +311,13 @@ define([
      * Initial commands
      */
     var setListeners = function() {
-            googletag.pubads().addEventListener('slotRenderEnded', parseAd);
+            googletag.pubads().addEventListener('slotRenderEnded', function(e) {
+                if (fetchStart) {
+                    beacon.fire('/ads.gif?type=renderTime&value=' + (new Date() - fetchStart) + '&adSlotsCount=' + adSlots.length);
+                    fetchStart = undefined;
+                }
+                parseAd(e);
+            });
         },
         setPageTargeting = function() {
             var targets = buildPageTargeting(config);
@@ -356,6 +366,8 @@ define([
             googletag.pubads().enableSingleRequest();
             googletag.pubads().collapseEmptyDivs();
             googletag.enableServices();
+            // monitor duration of rendering
+            fetchStart = new Date();
             // as this is an single request call, only need to make a single display call (to the first ad slot)
             googletag.display(adSlots.shift().attr('id'));
         },
