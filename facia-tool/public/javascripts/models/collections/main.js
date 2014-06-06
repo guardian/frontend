@@ -137,6 +137,10 @@ define([
             return queryParams().front;
         }
 
+        function getPriority() {
+            return queryParams().priority;
+        }
+
         function loadCollections(frontId) {
             model.collections(
                 ((vars.state.config.fronts[frontId] || {}).collections || [])
@@ -207,6 +211,8 @@ define([
             droppable.init();
 
             fetchSettings(function (config, switches) {
+                var priority = getPriority();
+
                 if (switches['facia-tool-disable']) {
                     terminate();
                     return;
@@ -217,9 +223,13 @@ define([
 
                 model.fronts(
                     getFront() === 'testcard' ? ['testcard'] :
-                       _.chain(_.keys(config.fronts))
+                       _.chain(config.fronts)
+                        .map(function(front, path) {
+                            return front.priority === priority ? path : undefined;
+                        })
+                        .without(undefined)
                         .without('testcard')
-                        .sortBy(function(id) { return id; })
+                        .sortBy(function(path) { return path; })
                         .value()
                 );
             }, vars.CONST.configSettingsPollMs, true)
