@@ -110,11 +110,5 @@ class ElasticSearchLiveContentApiClient extends ContentApiClient {
 }
 
 class ElasticSearchDraftContentApiClient extends ElasticSearchLiveContentApiClient {
-  override val targetUrl = getContentApiHost
-
-  private def getContentApiHost: String =
-    if (Configuration.contentApi.previewAuth.isDefined)
-      contentApi.contentApiDraftHost
-    else
-      contentApi.contentApiLiveHost
+  override val targetUrl = contentApi.contentApiDraftHost
 }
