@@ -55,6 +55,19 @@
         transform: translateZ(0);
         @include transition(height 1s cubic-bezier(0, 0, 0, .985));
     }
+    @include mq(wide) {
+        .has-page-skin & {
+            .ad-slot--top-banner-ad {
+                width: 970px;
+                padding-left: 0;
+                text-align: center;
+            }
+            .ad-slot__label {
+                width: 720px;
+                margin: 0 auto;
+            }
+        }
+    }
 }
 .top-banner-ad-container--facia-layout .ad-slot--top-banner-ad {
     @include mq(faciaLeftCol) {
@@ -190,6 +203,16 @@
     @include rem((
         margin-top: $gs-baseline
     ));
+
+    @include mq(wide) {
+        .has-page-skin & {
+            margin-left: auto;
+            margin-right: auto;
+            @include rem((
+                width: gs-span(12) + ($gs-gutter*2)
+            ));
+        }
+    }
 }
 .ad-slot--commercial-component-high {
     display: none;
@@ -307,24 +330,32 @@
         }
         @include mq(wide) {
             clear: left;
+
+            .has-page-skin & {
+                margin-left: 50%;
+                width: auto;
+                float: none;
+                @include rem((
+                    margin-top: -$gs-row-height
+                ));
+
+                .ad-slot--paid-for-badge__link {
+                    float: right;
+                    @include rem((
+                        margin-top: get-line-height($fs-data, 3)*-1
+                    ));
+                }
+            }
         }
     }
 }
-.page-skin-container {
-    display: none;
-
-    @include mq(wide) {
-        display: block;
-        position: relative;
-        width: 1300px;
-        margin: 0 auto;
-    }
-}
 .ad-slot--page-skin {
-    z-index: 0;
-    position: absolute;
-    top: 0;
-    @include transition(top .5s)
+    height: 0;
+}
+@include mq(mobile, $to: wide) {
+    .has-page-skin {
+        background-image: none !important;
+    }
 }
 .ad-slot__label {
     height: $mpu-ad-label-height;

@@ -55,7 +55,8 @@ define([
     'common/modules/identity/api',
     'common/modules/onward/more-tags',
     'common/modules/ui/smartAppBanner',
-    'common/modules/adverts/page-skin'
+    'common/modules/ui/surveyBanner',
+    'common/modules/adverts/badges'
 ], function (
     $,
     mediator,
@@ -111,7 +112,8 @@ define([
     id,
     MoreTags,
     smartAppBanner,
-    pageSkin
+    surveyBanner,
+    badges
 ) {
 
     var modules = {
@@ -291,6 +293,8 @@ define([
 
                 frontCommercialComponents.init(config);
 
+                badges.init();
+
                 var options = {};
 
                 if (!config.switches.standardAdverts) {
@@ -468,6 +472,7 @@ define([
                 var commercialComponent = new RegExp('^#' + data[0] + '=(.*)$').exec(window.location.hash),
                     slot = qwery('[data-name="' + data[1] + '"]').shift();
                 if (commercialComponent && slot) {
+                    bonzo(slot).removeClass('ad-slot--dfp');
                     var loader = new CommercialLoader({ config: config }),
                         postLoadEvents = {};
                         postLoadEvents[commercialComponent[1]] = function() {
@@ -497,8 +502,10 @@ define([
             }
         },
 
-        pageSkin: function(config) {
-            pageSkin.init(config);
+        showSurveyBanner: function(config) {
+            if(config.switches.surveyBanner) {
+                surveyBanner.init();
+            }
         }
     };
 
@@ -512,11 +519,11 @@ define([
                 modules.loadAnalytics(config, context);
                 modules.cleanupCookies(context);
                 modules.runAbTests(config, context);
+                modules.loadCommercialComponent(config, context);
                 modules.loadAdverts(config);
                 modules.transcludeRelated(config, context);
                 modules.transcludeOnwardContent(config, context);
                 modules.initRightHandComponent(config, context);
-                modules.loadCommercialComponent(config, context);
             }
             mediator.emit('page:common:deferred:loaded', config, context);
         });
@@ -549,7 +556,7 @@ define([
             modules.repositionComments();
             modules.showMoreTagsLink();
             modules.showSmartBanner(config);
-            modules.pageSkin(config);
+            modules.showSurveyBanner(config);
         }
         mediator.emit('page:common:ready', config, context);
     };

@@ -71,7 +71,6 @@ $fs-textsans: (
 @mixin f-header {
     font-family: $serifheadline;
     font-weight: 900;
-    -webkit-font-smoothing: antialiased;
 }
 @mixin fs-header($level, $size-only: false) {
     $header: nth($fs-headers, $level);
@@ -86,7 +85,6 @@ $fs-textsans: (
 @mixin f-headline {
     font-family: $serifheadline;
     font-weight: normal;
-    -webkit-font-smoothing: antialiased;
 }
 @mixin fs-headline($level, $size-only: false) {
     $headline: nth($fs-headlines, $level);
@@ -101,7 +99,6 @@ $fs-textsans: (
 @mixin f-bodyHeading {
     font-family: $serif;
     font-weight: bold;
-    -webkit-font-smoothing: subpixel-antialiased;
 }
 @mixin fs-bodyHeading($level, $size-only: false) {
     $heading: nth($fs-bodyHeadings, $level);
@@ -115,7 +112,6 @@ $fs-textsans: (
 
 @mixin f-bodyCopy {
     font-family: $serif;
-    -webkit-font-smoothing: antialiased;
 }
 @mixin fs-bodyCopy($level, $size-only: false) {
     $bodycopy: nth($fs-bodyCopy, $level);
@@ -129,7 +125,6 @@ $fs-textsans: (
 
 @mixin f-data {
     font-family: $sans-serif;
-    -webkit-font-smoothing: antialiased;
 }
 @mixin fs-data($level, $size-only: false) {
     $data: nth($fs-data, $level);
@@ -143,7 +138,6 @@ $fs-textsans: (
 
 @mixin f-textsans {
     font-family: $text-sans;
-    -webkit-font-smoothing: antialiased;
 }
 @mixin fs-textsans($level, $size-only: false) {
     $textsans: nth($fs-textsans, $level);
@@ -158,5 +152,4 @@ $fs-textsans: (
 @mixin f-headlineSans {
     font-family: $headline-sans;
     font-weight: 200;
-    -webkit-font-smoothing: antialiased;
 }

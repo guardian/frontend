@@ -19,8 +19,11 @@ case class Config(
                    showTags: Boolean = false,
                    showSections: Boolean = false
                    ) {
-  def isSponsored = DfpAgent.isSponsored(this)
-  def isAdvertisementFeature = DfpAgent.isAdvertisementFeature(this)
+
+  lazy val isSponsored: Boolean = DfpAgent.isSponsored(this)
+  lazy val isAdvertisementFeature: Boolean = DfpAgent.isAdvertisementFeature(this)
+
+  lazy val sponsorshipKeyword: Option[String] = DfpAgent.sponsorshipKeyword(this)
 }
 
 object Config {
@@ -142,6 +145,8 @@ object SeoData extends ExecutionContexts with Logging {
 
     contentApiResponse.map(Option.apply).fallbackTo(Future.successful(None))
   }
+
+  lazy val empty: SeoData = SeoData("", "", "", None, None)
 }
 
 object FaciaComponentName {

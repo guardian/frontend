@@ -1,6 +1,6 @@
 {
   "name": "guss-typography",
-  "version": "1.2.0",
+  "version": "1.4.0",
   "main": [
    "_helpers.scss",
    "_font-scale.scss"
@@ -9,6 +9,6 @@
     "CHANGELOG.md"
   ],
   "dependencies": {
-    "guss-rem": "~1.0.0"
+    "guss-rem": "~1.1.0"
   }
 }

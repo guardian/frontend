@@ -360,12 +360,22 @@ $avatarSize: 44px;
         min-height: 3.5em;
     }
 
+    p {
+        @include rem((
+            margin-top: $gs-baseline*1.5
+        ));
+
+        &:first-child {
+            margin-top: 0;
+        }
+    }
+
     blockquote {
         @include rem((
             margin: $gs-baseline $gs-gutter,
             padding-left: $gs-gutter/2
         ));
-        border-left: 3px solid rgba(200, 200, 200, .75);
+        border-left: 3px solid transparentize($c-neutral1, .75);
     }
 }
 

@@ -4,11 +4,8 @@ import com.gu.openplatform.contentapi
 import com.gu.openplatform.contentapi.model.Tag
 import common.{Edition, Logging, ExecutionContexts}
 import conf.ContentApi
-import model.commercial.masterclasses.EventbriteMasterClass
 import model.{ImageElement, Content}
 import scala.concurrent.Future
-
-case class MasterClass(eventBriteEvent: EventbriteMasterClass, imageElement: Option[model.ImageElement])
 
 object Lookup extends ExecutionContexts with Logging {
   def thumbnail(contentId: String): Future[Option[ImageElement]] = {

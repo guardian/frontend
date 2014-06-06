@@ -1,7 +1,5 @@
 package views.support
 
-import conf.Switches.ArticleSlotsSwitch
-
 import com.gu.openplatform.contentapi.model.{Tag => ApiTag, Element => ApiElement, Asset => ApiAsset}
 import model._
 import org.scalatest.{ Matchers, FlatSpec }
@@ -148,13 +146,6 @@ class TemplatesTest extends FlatSpec with Matchers {
 
   "BulletCleaner" should "format all bullets by wrapping in a span" in {
     BulletCleaner("<p>Foo bar • foo</p>") should be("<p>Foo bar <span class=\"bullet\">•</span> foo</p>")
-  }
-
-  "InlineSlotGenerator" should "insert slots" in {
-    ArticleSlotsSwitch.switchOn()
-    val body = Jsoup.parseBodyFragment(withJsoup(bodyWithoutInlines)(InlineSlotGenerator(351)).body)
-    body.select(".slot").size should be > 0
-    ArticleSlotsSwitch.switchOff()
   }
 
   "DropCap" should "add the dropcap span to the first letter of the first paragraph" in {

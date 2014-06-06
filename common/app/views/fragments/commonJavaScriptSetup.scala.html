@@ -8,7 +8,38 @@
     <script src="@Static("javascripts/components/html5shiv/dist/html5shiv.js")"></script>
 <![endif]-->
 
+<style class="initial" data-cache-name="WebEgyptian" data-cache-file-woff="@Static("fonts/WebEgyptian.woff.json")" data-cache-file-ttf="@Static("fonts/WebEgyptian.ttf.json")"></style>
+<style class="initial" data-cache-name="WebAgateSans" data-min-width="980" data-cache-file-woff="@Static("fonts/WebAgateSans.woff.json")" data-cache-file-ttf="@Static("fonts/WebAgateSans.ttf.json")"></style>
+<style class="initial" data-cache-name="TextSans" data-min-width="980" data-cache-file-woff="@Static("fonts/WebTextSans.woff.json")" data-cache-file-ttf="@Static("fonts/WebTextSans.ttf.json")"></style>
+<style class="initial" data-cache-name="WebHeadlineSans" data-min-width="980" data-advertisement-feature data-cache-file-woff="@Static("fonts/WebHeadlineSans.woff.json")" data-cache-file-ttf="@Static("fonts/WebHeadlineSans.ttf.json")"></style>
+
 <script id="gu">
+    if (!Function.prototype.bind) {
+        Function.prototype.bind = function (oThis) {
+            if (typeof this !== "function") {
+                // closest thing possible to the ECMAScript 5
+                // internal IsCallable function
+                throw new TypeError("Function.prototype.bind - what is trying to be bound is not callable");
+            }
+
+            var aArgs = Array.prototype.slice.call(arguments, 1),
+                    fToBind = this,
+                    fNOP = function () {},
+                    fBound = function () {
+                        return fToBind.apply(this instanceof fNOP && oThis
+                                        ? this
+                                        : oThis,
+                                aArgs.concat(Array.prototype.slice.call(arguments)));
+                    };
+
+            fNOP.prototype = this.prototype;
+            fBound.prototype = new fNOP();
+
+            return fBound;
+        };
+    }
+
+
     var modules = [],
         redefine = function(modules) {
             modules.forEach(function(module) {
@@ -19,6 +50,7 @@
             modules.push(arguments);
         };
     define.amd = true;
+
     var guardian = {
         isModernBrowser: (
             'querySelector' in document
@@ -65,13 +97,13 @@
 
         @if(CssFromStorageSwitch.isSwitchedOn && !play.Play.isDev()) {
             function loadCssFromStorage() {
-                var c = localStorage.getItem('gu.css.@Static("stylesheets/global.css").md5Key'), s, sc;
+                var c = localStorage.getItem('gu.css.@Static("stylesheets/global.css").md5Key'), s, head;
                 if(c) {
                     s = document.createElement('style');
-                    sc = document.getElementsByTagName('script')[0];
+                    head = document.getElementsByTagName('head')[0];
                     s.innerHTML = c;
                     s.setAttribute('data-loaded-from', 'local');
-                    sc.parentNode.insertBefore(s, sc);
+                    head.appendChild(s);
                     guardian.css.loaded = true;
                 }
             }

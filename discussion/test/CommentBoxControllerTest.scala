@@ -107,7 +107,7 @@ class CommentBoxControllerTest extends FlatSpec with Matchers {
   val typicalTom = profile("Typical Tom", canPost = true, isPremod = false)
 
   def profile(name: String, canPost: Boolean, isPremod: Boolean): Profile = {
-    Profile(name, "", name, privateFields = Some(PrivateProfileFields(canPost, isPremod, isSocial = false)))
+    Profile(name, "", "", name, privateFields = Some(PrivateProfileFields(canPost, isPremod, isSocial = false)))
   }
 
   object FakeApi extends DiscussionApi {

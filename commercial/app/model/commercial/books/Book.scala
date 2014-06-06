@@ -39,7 +39,9 @@ object BestsellersAgent extends AdAgent[Book] with ExecutionContexts {
     FoodDrinkBestsellersFeed
   )
 
-  override def adsTargetedAt(segment: Segment): Seq[Book] = super.adsTargetedAt(segment).sortBy(_.position).take(5)
+  def getSpecificBooks(specifics: Seq[String]) = currentAds.filter(specifics contains _.isbn)
+
+  override def adsTargetedAt(segment: Segment): Seq[Book] = super.adsTargetedAt(segment).sortBy(_.position).take(10)
 
   override def defaultAds: Seq[Book] = currentAds filter (_.category.exists(_ == "General"))
 

@@ -19,12 +19,13 @@ define([
         this.dataLinkNames = 'across-the-guardian';
         this.idealOutcome = 'At least 1% increase in overall page level click through rate';
 
+        var edition = window.location.pathname;
         this.canRun = function () {
-            return ['/uk', '/us', '/au'].indexOf(window.location.pathname) > -1;
+            return ['/uk', '/us', '/au'].indexOf(edition) > -1;
         };
 
         var templates = {
-            'container': '<section class="container container--row-pattern container--acrossthegrauniad container--acrossthegrauniad-variant-{{variant}}" data-link-name="block | across-the-guardian" data-component="across-the-guardian">' +
+            'container': '<section class="container container--acrossthegrauniad container--acrossthegrauniad-variant-{{variant}}" data-link-name="block | across-the-guardian" data-component="across-the-guardian">' +
                 '    <div class="facia-container__inner">' +
                 '        <div class="container__border tone-news tone-accent-border"></div>' +
                 '        <h2 class="container__title tone-news tone-background">' +
@@ -59,7 +60,7 @@ define([
 
         function renderContainer(parseCollection) {
             ajax({
-                url: '/across-the-guardian/lite.json',
+                url: edition + '/across-the-guardian/lite.json',
                 type: 'json',
                 crossOrigin: true
             }).then(function (sectionData) {
