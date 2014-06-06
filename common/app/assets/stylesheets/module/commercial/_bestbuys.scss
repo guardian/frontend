@@ -46,6 +46,9 @@ $c-money-high: #63007f;
             float: right;
             background-color: $c-money-high;
             margin-top: 0;
+            @include rem((
+                margin-left: 4px
+            ));
         }
     }
     .tabs__container {
@@ -125,7 +128,10 @@ $c-money-high: #63007f;
         @include fs-bodyHeading(1);
         
         .i-double-arrow-right-blue {
-            margin-bottom: -1px;
+            @include rem((
+                margin-left: $gs-gutter/4,
+                margin-bottom: -2px
+            ));
             height: 12px;
             background-size: contain;
         }
