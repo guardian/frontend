@@ -26,6 +26,7 @@
     </div>
 
     <script type="text/html" id="template_minimal_collection">
+      <!-- ko if: state.withinPriority -->
         <div class="cnf-collection">
             <a class="cnf-collection__name" data-bind="
                 click: toggleOpen,
@@ -41,6 +42,7 @@
                 </span>
             </span>
         </div>
+      <!-- /ko -->
     </script>
 
     <script type="text/html" id="template_collection">
@@ -136,6 +138,7 @@
     </script>
 
     <script type="text/html" id="template_front">
+      <!-- ko if: state.withinPriority -->
         <div class="cnf-front" data-bind="
             css: {open: state.isOpen}">
 
@@ -223,6 +226,7 @@
            </div>
 
         </div>
+      <!-- /ko -->
     </script>
 
 </div>

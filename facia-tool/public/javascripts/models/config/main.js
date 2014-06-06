@@ -15,7 +15,7 @@ define([
     'models/config/front',
     'models/config/collection'
 ], function(
-    config,
+    pageConfig,
     ko,
     vars,
     authedAjax,
@@ -36,7 +36,7 @@ define([
 
         model.switches = ko.observable();
 
-        model.navSections = [].concat(config.navSections);
+        model.navSections = [].concat(pageConfig.navSections);
 
         model.collections = ko.observableArray();
 
