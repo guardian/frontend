@@ -96,13 +96,13 @@
 
         @if(CssFromStorageSwitch.isSwitchedOn && !play.Play.isDev()) {
             function loadCssFromStorage() {
-                var c = localStorage.getItem('gu.css.@Static("stylesheets/global.css").md5Key'), s, sc;
+                var c = localStorage.getItem('gu.css.@Static("stylesheets/global.css").md5Key'), s, head;
                 if(c) {
                     s = document.createElement('style');
-                    sc = document.getElementsByTagName('script')[0];
+                    head = document.getElementsByTagName('head')[0];
                     s.innerHTML = c;
                     s.setAttribute('data-loaded-from', 'local');
-                    sc.parentNode.insertBefore(s, sc);
+                    head.appendChild(s);
                     guardian.css.loaded = true;
                 }
             }
