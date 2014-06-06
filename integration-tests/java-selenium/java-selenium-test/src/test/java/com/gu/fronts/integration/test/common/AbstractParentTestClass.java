@@ -1,5 +1,6 @@
 package com.gu.fronts.integration.test.common;
 
+import org.junit.After;
 import org.junit.BeforeClass;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;

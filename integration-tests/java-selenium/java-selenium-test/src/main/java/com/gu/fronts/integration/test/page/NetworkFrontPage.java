@@ -1,6 +1,6 @@
 package com.gu.fronts.integration.test.page;
 
-import static org.openqa.selenium.support.How.CLASS_NAME;
+import static org.openqa.selenium.support.How.*;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
@@ -9,8 +9,8 @@ import org.openqa.selenium.support.FindBy;
 
 public class NetworkFrontPage extends AbstractParentPage {
 
-    @FindBy(how = CLASS_NAME, using = "container__title")
-    private WebElement titleContainer;
+    @FindBy(how = CSS, using = "[test-id=date-title]")
+    private WebElement dateTitle;
 
     public NetworkFrontPage(WebDriver webDriver) {
         super(webDriver);
@@ -24,10 +24,11 @@ public class NetworkFrontPage extends AbstractParentPage {
      */
     public NetworkFrontPage isDisplayed() {
         try {
-            titleContainer.isDisplayed();
+            dateTitle.isDisplayed();
         } catch (WebDriverException e) {
             throw new RuntimeException("Page" + this.getClass().getName() + " was not properly displayed", e);
         }
         return this;
     }
 }
+
