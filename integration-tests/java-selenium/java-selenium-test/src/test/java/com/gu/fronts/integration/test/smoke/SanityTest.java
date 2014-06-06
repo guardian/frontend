@@ -7,6 +7,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.gu.fronts.integration.SpringTestConfig;
 import com.gu.fronts.integration.test.common.AbstractParentTestClass;
+import com.gu.fronts.integration.test.page.NetworkFrontPage;
 
 /**
  * This will run some sanity tests to make sure basic functionality is working properly
@@ -18,10 +19,9 @@ public class SanityTest extends AbstractParentTestClass {
     @Test
     public void networkStartPageShouldLoadProperly() {
         // Given
-        networkFrontPage().isDisplayed();
-
-        // When
+        NetworkFrontPage networkFrontPage = networkFrontPage().isDisplayed();
 
         // Then
+        //networkFrontPage.sports().isDisplayed();
     }
 }

@@ -13,7 +13,7 @@
             <span class="container__title__label u-text-hyphenate">@title</span>
         }
     } else {
-        <span class="container__title__label today">
+        <span test-id="date-title" class="container__title__label today">
             <b class="today__dayofweek js-dayofweek">@Format(DateTime.now(), "EEEE")</b>
             <span class="u-nobr today__sub">
                 <span class="today__dayofmonth js-dayofmonth">@Format(DateTime.now(), "d")</span>
