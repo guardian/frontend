@@ -207,8 +207,6 @@ define([
             droppable.init();
 
             fetchSettings(function (config, switches) {
-                var priority = pageConfig.priority === 'editorial' ? undefined  : pageConfig.priority;
-
                 if (switches['facia-tool-disable']) {
                     terminate();
                     return;
@@ -221,7 +219,7 @@ define([
                     getFront() === 'testcard' ? ['testcard'] :
                        _.chain(config.fronts)
                         .map(function(front, path) {
-                            return front.priority === priority ? path : undefined;
+                            return front.priority === vars.priority ? path : undefined;
                         })
                         .without(undefined)
                         .without('testcard')

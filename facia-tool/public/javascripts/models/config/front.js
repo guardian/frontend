@@ -2,7 +2,6 @@
 define([
     'knockout',
     'config',
-    'priority',
     'modules/vars',
     'modules/content-api',
     'models/group',
@@ -13,7 +12,6 @@ define([
 ], function(
     ko,
     pageConfig,
-    priority,
     vars,
     contentApi,
     Group,
@@ -48,7 +46,7 @@ define([
             'isOpenProps']);
 
         this.state.withinPriority = ko.computed(function() {
-            return this.props.priority() === priority();
+            return this.props.priority() === vars.priority;
         }, this);
 
         this.collections = new Group({

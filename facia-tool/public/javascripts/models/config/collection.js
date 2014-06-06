@@ -2,7 +2,6 @@
 define([
     'knockout',
     'config',
-    'priority',
     'modules/vars',
     'modules/content-api',
     'utils/strip-empty-query-params',
@@ -12,7 +11,6 @@ define([
 ], function(
     ko,
     pageConfig,
-    priority,
     vars,
     contentApi,
     stripEmptyQueryParams,
@@ -49,7 +47,7 @@ define([
             'apiQueryStatus']);
 
         this.state.withinPriority = ko.computed(function() {
-            return _.some(this.parents(), function(front) {return front.props.priority() === priority(); });
+            return _.some(this.parents(), function(front) {return front.props.priority() === vars.priority; });
         }, this);
 
         this.meta.apiQuery.subscribe(function(apiQuery) {

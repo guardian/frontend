@@ -1,5 +1,11 @@
 /* global _: true */
-define(['knockout'], function(ko) {
+define([
+    'knockout',
+    'config'
+], function(
+    ko,
+    pageConfig
+){
     var CONST = {
         editions: ['uk', 'us', 'au'],
 
@@ -68,6 +74,7 @@ define(['knockout'], function(ko) {
         model: undefined,
         sparksBase:      sparksBaseUrl(CONST.sparksParams),
         sparksBaseFront: sparksBaseUrl(CONST.sparksFrontParams),
+        priority: pageConfig.priority === 'editorial' ? undefined : pageConfig.priority,
         state: {
             config: {},
             liveMode: ko.observable(false),
@@ -76,5 +83,3 @@ define(['knockout'], function(ko) {
         }
     };
 });
-
-
