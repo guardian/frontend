@@ -10,7 +10,7 @@
         role="main">
 
         @if(faciaPage.hasPageSkin) {
-            @fragments.commercial.pageSkin
+            @fragments.commercial.pageSkin()
         }
 
         @defining(faciaPage.collections.filter(_._2.items.nonEmpty)) { collections =>

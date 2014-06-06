@@ -9,7 +9,7 @@
     role="main">
 
     @if(index.page.hasPageSkin) {
-        @fragments.commercial.pageSkin
+        @fragments.commercial.pageSkin()
     }
 
     @fragments.containers.tag(index.page, Collection(index.trails), NewsContainer(showMore = false), containerIndex = 0, pagination = index.page.pagination)(request, templateDeduping, Config(s"${index.page.id}/news/regular-stories", displayName = Some(index.page.webTitle)))
