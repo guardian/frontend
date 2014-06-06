@@ -84,7 +84,7 @@ object FrontPressJob extends Logging with implicits.Collections {
 
   def pressByPathId(path: String): Future[JsObject] = {
     FrontPress.generateJson(path).map { json =>
-      (json \ "id").asOpt[String].foreach(S3FrontsApi.putPressedJson(_, Json.stringify(json)))
+      (json \ "id").asOpt[String].foreach(S3FrontsApi.putLivePressedJson(_, Json.stringify(json)))
       json
     }
   }
