@@ -1,8 +1,8 @@
-@(name: String, adType: String, sizeMapping: Map[String, Seq[String]], showLabel: Boolean = true, refresh: Boolean = true, outOfPage: Boolean = false)
+@(name: String, adTypes: Seq[String], sizeMapping: Map[String, Seq[String]], showLabel: Boolean = true, refresh: Boolean = true, outOfPage: Boolean = false)
 
 <div
     id="dfp-ad--@name"
-    class="ad-slot ad-slot--dfp ad-slot--@adType"
+    class="ad-slot ad-slot--dfp ad-slot--@name @adTypes.map{ adType =>ad-slot--@adType}"
     data-link-name="ad slot @name"
     data-name="@name"
     @if(!showLabel){ data-label="false" }

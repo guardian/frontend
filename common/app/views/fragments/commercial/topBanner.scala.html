@@ -4,5 +4,5 @@
         case _: Article => {article}
         case _          => {facia}
     }-layout">
-    @fragments.commercial.standardAd(name="top-above-nav", adType="top-banner-ad", sizeMapping=Map("tabletportrait" -> Seq("728,90"), "tabletlandscape" -> Seq("728,90", "900,250"), "desktop" -> Seq("728,90", "900,250"), "wide" -> Seq("728,90", "900,250", "970,250")))
+    @fragments.commercial.standardAd("top-above-nav", Seq("top-banner-ad"), Map("tabletportrait" -> Seq("728,90"), "tabletlandscape" -> Seq("728,90", "900,250"), "desktop" -> Seq("728,90", "900,250"), "wide" -> Seq("728,90", "900,250", "970,250")))
 </div>
