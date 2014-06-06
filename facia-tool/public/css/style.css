@@ -67,6 +67,7 @@ a:hover {
     line-height: 30px;
     color: #000;
     font-weight: normal;
+    text-transform: capitalize;
 }
 
 .message {

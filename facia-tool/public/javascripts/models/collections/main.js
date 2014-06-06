@@ -16,7 +16,7 @@ define([
     'models/collections/article',
     'models/collections/latest-articles'
 ], function(
-    config,
+    pageConfig,
     ko,
     vars,
     fetchSettings,
@@ -87,7 +87,7 @@ define([
         };
 
         model.previewUrl = ko.computed(function() {
-            return vars.CONST.viewer + '#env=' + config.env + '&url=' + model.front() + encodeURIComponent('?view=mobile');
+            return vars.CONST.viewer + '#env=' + pageConfig.env + '&url=' + model.front() + encodeURIComponent('?view=mobile');
         });
 
         function detectPressFailure() {
@@ -135,10 +135,6 @@ define([
 
         function getFront() {
             return queryParams().front;
-        }
-
-        function getPriority() {
-            return queryParams().priority;
         }
 
         function loadCollections(frontId) {
@@ -211,7 +207,7 @@ define([
             droppable.init();
 
             fetchSettings(function (config, switches) {
-                var priority = getPriority();
+                var priority = pageConfig.priority === 'editorial' ? undefined  : pageConfig.priority;
 
                 if (switches['facia-tool-disable']) {
                     terminate();
