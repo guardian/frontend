@@ -59,6 +59,11 @@
     <meta property="@key" content="@value" />
 }
 
+@item.pagination.map{ pagination =>
+    @pagination.next.map{ next => <link rel="next" href="@LinkTo(item.url)?page=@next" /> }
+    @pagination.previous.map{ prev => <link rel="prev" href="@LinkTo(item.url)@if(prev != 1){?page=@prev}" /> }
+}
+
 @*
     this script allows you to hook up an external debugger for mobile devices
     see: http://people.apache.org/~pmuellr/weinre/docs/latest/
