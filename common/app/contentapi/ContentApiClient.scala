@@ -8,6 +8,7 @@ import org.joda.time.DateTime
 import org.scala_tools.time.Implicits._
 import conf.Configuration.contentApi
 import com.gu.openplatform.contentapi.model.ItemResponse
+import conf.Configuration
 
 trait QueryDefaults extends implicits.Collections with ExecutionContexts {
 
@@ -109,5 +110,11 @@ class ElasticSearchLiveContentApiClient extends ContentApiClient {
 }
 
 class ElasticSearchDraftContentApiClient extends ElasticSearchLiveContentApiClient {
-  override val targetUrl = contentApi.contentApiDraftHost
+  override val targetUrl = getContentApiHost
+
+  private def getContentApiHost: String =
+    if (Configuration.contentApi.previewAuth.isDefined)
+      contentApi.contentApiDraftHost
+    else
+      contentApi.contentApiLiveHost
 }
