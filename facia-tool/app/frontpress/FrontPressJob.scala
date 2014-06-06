@@ -8,8 +8,7 @@ import com.amazonaws.regions.{Regions, Region}
 import scala.collection.JavaConversions._
 import services.{ConfigAgent, S3FrontsApi}
 import play.api.libs.json.{JsObject, Json}
-import scala.concurrent.duration._
-import scala.concurrent.{Future, Await}
+import scala.concurrent.Future
 import frontpress.FrontPress
 import common.FaciaToolMetrics.{FrontPressSuccess, FrontPressFailure, FrontPressCronFailure, FrontPressCronSuccess}
 import play.api.libs.concurrent.Akka

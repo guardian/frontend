@@ -342,7 +342,7 @@ object FaciaToolMetrics {
   object FrontPressCronFailure extends SimpleCountMetric(
     "facia-front-press",
     "facia-front-press-cron-failure",
-    "Facia front press cron failue count",
+    "Facia front press cron failure count",
     "Number of times facia-tool has has a failure in pressing"
   )
 
