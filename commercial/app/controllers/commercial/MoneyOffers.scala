@@ -20,6 +20,17 @@ object MoneyOffers extends Controller {
       }
     }
   }
+  
+  def bestBuysHigh(format: String) = Action {
+    implicit request =>
+      (BestBuysAgent.adsTargetedAt(segment), format) match {
+        case (Some(products), "json") =>
+          Cached(60)(JsonComponent(views.html.moneysupermarket.bestBuysHigh(products)))
+        case (Some(products), "html") =>
+          Cached(60)(Ok(views.html.moneysupermarket.bestBuysHigh(products)))
+        case _ => NotFound
+      }
+  }
 
   def savings(savingsType: String) = MemcachedAction { implicit request =>
     Future.successful {

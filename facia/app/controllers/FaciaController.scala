@@ -40,8 +40,6 @@ class FaciaController extends Controller with Logging with ExecutionContexts wit
 
   // Needed as aliases for reverse routing
   def renderFrontJson(id: String) = renderFront(id)
-  def renderCollectionRss(id: String) = renderCollection(id)
-  def renderCollectionJson(id: String) = renderCollection(id)
   def renderContainerJson(id: String) = renderContainer(id)
 
   def renderFrontRss(path: String) = {
@@ -78,26 +76,6 @@ class FaciaController extends Controller with Logging with ExecutionContexts wit
           Ok(views.html.front(faciaPage))
       }
     }.getOrElse(Cached(60)(NotFound)))
-  }
-
-  def renderCollection(id: String) = MemcachedAction{ implicit request =>
-    log.info(s"Serving collection ID: $id")
-    getPressedCollection(id).map { collectionOption =>
-      collectionOption.map { collection =>
-        Cached(60) {
-          val config: Config = ConfigAgent.getConfig(id).getOrElse(Config(""))
-          if (request.isRss) {
-            Ok(TrailsToRss(config.displayName, collection.items)).as("text/xml; charset=utf-8")
-          } else {
-            val html = views.html.fragments.collections.standard(collection.items, NewsContainer(showMore = false), 1)(request, Config(id))
-            if (request.isJson)
-              JsonCollection(html, collection)
-            else
-              Ok(html)
-          }
-        }
-      }.getOrElse(ServiceUnavailable)
-    }
   }
 
   def renderContainer(id: String) = MemcachedAction { implicit request =>

@@ -172,9 +172,11 @@ Comments.prototype.ready = function() {
 
     if (this.options.commentId) {
         var comment = $('#comment-'+ this.options.commentId);
+        this.showHiddenComments();
         if (comment.attr('hidden')) {
             bean.fire($(this.getClass('showReplies'), comment.parent())[0], 'click');
         }
+        
         window.location.replace('#comment-'+ this.options.commentId);
     }
 

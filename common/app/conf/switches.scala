@@ -220,11 +220,6 @@ object Switches extends Collections {
     safeState = Off, never
   )
 
-  val FunctionBindSwitch = Switch("Analytics", "function-bind",
-    "Enables function.prototype.bind polyfill",
-    safeState = Off, new DateMidnight(2014, 6, 6)
-  )
-
   // Feature Switches
 
   val ReleaseMessageSwitch = Switch("Feature Switches", "release-message",
@@ -483,7 +478,6 @@ object Switches extends Collections {
     SmartBannerSwitch,
     SurveyBannerSwitch,
     FeaturesAutoContainerSwitch,
-    FunctionBindSwitch,
     ForcePageSkinSwitch
   )
 

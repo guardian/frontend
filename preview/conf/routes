@@ -144,10 +144,6 @@ GET         /$path<(\w\w)(/[\w\d-]+)?>.json                                     
 GET         /$path<(\w\w)(/[\w\d-]+)?>                                                                               controllers.FaciaController.renderFront(path)
 
 
-GET         /collection/*id/rss                                                                                      controllers.FaciaController.renderCollectionRss(id)
-GET         /collection/*id.json                                                                                     controllers.FaciaController.renderCollectionJson(id)
-GET         /collection/*id                                                                                          controllers.FaciaController.renderCollection(id)
-
 GET         /container/*id.json                                                                                      controllers.FaciaController.renderContainerJson(id)
 
 GET        /$path<.+/\d\d\d\d/\w\w\w/\d\d>                                                                           controllers.AllIndexController.on(path)
