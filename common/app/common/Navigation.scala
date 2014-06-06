@@ -212,7 +212,7 @@ trait Zones extends Navigation {
 
 
   val newsZone = Zone(news,
-    Seq(world, uk, us, australia, politics, technology, environment, media, education, society, development,
+    Seq(world, uk, us, politics, technology, environment, media, education, society, development,
       science, law, blogs, inpictures)
   )
 
