@@ -2,7 +2,7 @@ package services
 
 import common.FaciaMetrics.S3AuthorizationError
 import common._
-import conf.{DraftContentApi, Configuration}
+import conf.{LiveContentApi, Configuration}
 import model.{Snap, Collection, Config, Content}
 import play.api.libs.json.Json._
 import play.api.libs.json.{JsObject, JsValue}
@@ -151,7 +151,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
             } yield contentList :+ new Snap(collectionItem.id, supporting, collectionItem.webPublicationDate.getOrElse(DateTime.now), collectionItem.metaData.getOrElse(Map.empty))
           }
           else {
-            val response = DraftContentApi.item(collectionItem.id, edition).showFields(showFieldsWithBodyQuery).response
+            val response = LiveContentApi.item(collectionItem.id, edition).showFields(showFieldsWithBodyQuery).response
 
             val content = response.map(_.content).recover {
               case apiError: com.gu.openplatform.contentapi.ApiError if apiError.httpStatus == 404 => {
@@ -208,7 +208,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
 
     val newSearch = queryString match {
       case Path(Seg("search" ::  Nil)) => {
-        val search = DraftContentApi.search(edition)
+        val search = LiveContentApi.search(edition)
           .showElements("all")
           .pageSize(20)
         val newSearch = queryParamsWithEdition.foldLeft(search){
@@ -224,7 +224,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
         } recover executeContentApiQueryRecovery
       }
       case Path(id)  => {
-        val search = DraftContentApi.item(id, edition)
+        val search = LiveContentApi.item(id, edition)
           .showElements("all")
           .showEditorsPicks(true)
           .pageSize(20)

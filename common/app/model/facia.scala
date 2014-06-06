@@ -4,7 +4,7 @@ import org.joda.time.DateTime
 import common.{Logging, ExecutionContexts, Edition}
 import scala.concurrent.Future
 import com.gu.openplatform.contentapi.model.ItemResponse
-import conf.DraftContentApi
+import conf.LiveContentApi
 import services.ConfigAgent
 import common.FaciaToolMetrics.{ContentApiSeoRequestFailure, ContentApiSeoRequestSuccess}
 import dfp.DfpAgent
@@ -129,7 +129,7 @@ object SeoData extends ExecutionContexts with Logging {
   }
 
   private def getSectionOrTagWebTitle(id: String): Future[Option[ItemResponse]] = {
-    val contentApiResponse = DraftContentApi
+    val contentApiResponse = LiveContentApi
       .item(id, Edition.defaultEdition)
       .showEditorsPicks(false)
       .pageSize(0)

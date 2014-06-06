@@ -11,7 +11,7 @@ import pa.FootballMatch
 import implicits.{ Requests, Football }
 
 import scala.concurrent.Future
-import conf.DraftContentApi
+import conf.LiveContentApi
 import org.joda.time.{DateMidnight, Interval}
 import play.api.templates.Html
 import com.gu.management.JsonResponse
@@ -88,7 +88,7 @@ object MoreOnMatchController extends Controller with Football with Requests with
   def loadMoreOn(request: RequestHeader, theMatch: FootballMatch): Future[Seq[Content]] = {
     val matchDate = theMatch.date.toDateMidnight
 
-    DraftContentApi.search(Edition(request))
+    LiveContentApi.search(Edition(request))
       .section("football")
       .tag("tone/matchreports|football/series/squad-sheets|football/series/match-previews|football/series/saturday-clockwatch")
       .fromDate(matchDate.minusDays(2))
