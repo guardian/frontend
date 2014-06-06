@@ -132,7 +132,7 @@ object Switches extends Collections {
 
   val ForcePageSkinSwitch = Switch("Advertising", "force-page-skin",
     "Temp switch, allows us to force the page into 'page skin' mode",
-    safeState = Off, sellByDate = new DateMidnight(2014, 6, 7)
+    safeState = Off, sellByDate = new DateMidnight(2014, 6, 14)
   )
 
   // Ad Targeting
