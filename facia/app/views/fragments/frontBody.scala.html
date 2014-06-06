@@ -18,7 +18,10 @@
                 @fragments.frontCollection(faciaPage, block, collections.size, index)
             }
         }
-        @fragments.commercial.commercialComponent(name = "merchandising", adType = "commercial-component")
+
+        @if(!faciaPage.hasPageSkin) {
+            @fragments.commercial.commercialComponent(name = "merchandising", adType = "commercial-component")
+        }
     </div>
 }
 
