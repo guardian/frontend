@@ -29,7 +29,8 @@ define([
             // only apply on fronts with at least 4 containers
             return (config.page.contentType === 'Tag' || config.page.isFront) &&
                 qwery('.facia-container section.container').length >= 4 &&
-                ['desktop', 'wide'].indexOf(detect.getBreakpoint()) !== -1;
+                ['desktop', 'wide'].indexOf(detect.getBreakpoint()) !== -1 &&
+                !config.page.hasPageSkin;
         };
 
         this.variants = [
