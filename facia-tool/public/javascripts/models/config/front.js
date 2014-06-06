@@ -46,7 +46,7 @@ define([
             'isOpenProps']);
 
         this.state.withinPriority = ko.computed(function() {
-            return this.props.priority() === vars.priority;
+            return this.props.priority() === vars.priority || this.state.isOpenProps(); // last clause allows priority change
         }, this);
 
         this.collections = new Group({

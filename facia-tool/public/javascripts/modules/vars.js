@@ -23,7 +23,7 @@ define([
 
         detectPressFailureMs: 10000,
 
-        maxFronts: 100,
+        maxFronts: 200,
 
         imageCdnDomain: 'guim.co.uk',
 
