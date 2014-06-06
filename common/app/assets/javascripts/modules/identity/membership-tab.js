@@ -74,6 +74,10 @@ define(['common/$',
         return day + " " + month + " " + year;
     };
 
+    /**
+    *    If the user is a guardian member; Render the contents of the membership
+    *    tab using the response from the /user/me
+    */
     Membership.prototype.prerender = function () {
         var self = this;
 
@@ -85,11 +89,14 @@ define(['common/$',
         }).then(function (resp) {
             if (resp.tier == 'Partner' || resp.tier == 'Patron') { self.display = true; }
             self.getElem('TIER').innerHTML = resp.subscription.plan.name;
-            self.getElem('COST').innerHTML = "£" + (resp.subscription.plan.amount/100).toFixed(2);
+            self.getElem('COST').innerHTML = (resp.subscription.plan.amount/100).toFixed(2);
             self.getElem('START').innerHTML = self.formatDate(new Date(resp.subscription.start*1000));
             self.getElem('NEXT').innerHTML = self.formatDate(new Date(resp.subscription.end*1000));
             self.getElem('CC_LAST4').innerHTML = resp.subscription.card.last4;
-            self.getElem('CC_TYPE').innerHTML = resp.subscription.card.type;
+
+            $(self.getElem('CC_TYPE')).addClass('i-'+resp.subscription.card.type.toLowerCase().replace(' ', '-'));
+            self.getElem('CC_TYPE').innerHTML = resp.subscription.card.type; // Append text too for screen readers
+
             self.ready();
         }, function () {
             self.getElem('TIER').innerHTML = 'Tier not currently available';
