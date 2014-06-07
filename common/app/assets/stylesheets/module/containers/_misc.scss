@@ -8,27 +8,25 @@
     .linkslist {
         @include mq(tablet) {
             @include rem((
-                width: gs-span(6) + $gs-gutter
+                width: gs-span(5)
             ));
-
-            .linkslist__item {
-                &:nth-child(n) {
-                    clear: none;
-                }
-                &:nth-child(2n+1) {
-                    clear: both;
-                }
-            }
         }
         @include mq(desktop) {
             @include rem((
                 width: gs-span(8) + $gs-gutter
             ));
 
-            .linkslist__item {
+            &__item {
                 @include rem((
                     width: gs-span(4)
                 ));
+
+                &:nth-child(n) {
+                    clear: none;
+                }
+                &:nth-child(2n+1) {
+                    clear: both;
+                }
             }
         }
     }
