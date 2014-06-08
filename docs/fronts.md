@@ -14,13 +14,13 @@ As soon as an individual collection is edited, the Presser re-creates a `pressed
 
 ## Service Level Metrics & Alerts
 
-The metrics relate principally to the production of `pressed.json` files. Because a large number of concurrent ContentApi requests are made in order to produce each one of these, the Presser is the point in the architecture where heavy 3rd party dependency introcuces the most significant potential point of failure.    
+The metrics relate principally to the production of `pressed.json` files. Because a large number of concurrent ContentApi requests are made in order to produce each one of these, the Presser is the point in the architecture where heavy 3rd party dependency introduces the most significant potential point of failure.    
 
 ### Succesive press failures - MANUAL presser (facia-tool)
 
 * __Detail__ : immediately after a collection is edited within the Fronts Editor, the Presser is invoked to re-create the `pressed.json` files for any front containing that collection.
 
-* __Metrics__  : if the number of *consecutive* failures of the Presser to produce `pressed.json` files exceeds N, the healhcheck fails. The counter is however immediately reset by any succesful pressing. 
+* __Metrics__  : if the number of *consecutive* failures of the Presser to produce `pressed.json` files exceeds N, the healthcheck fails. The counter is however immediately reset by any successful pressing. 
 
 * __Consequence__ : Instance terminates.
 
@@ -28,7 +28,7 @@ The metrics relate principally to the production of `pressed.json` files. Becaus
 
 * __Detail__ : every three minutes, the Admin app puts the ids of every front on an SQS queue. These are pulled in bunches (of up to 10) every 10 seconds by Presser instances, and `pressed.json` files are re-created for each front.
 
-* __Metrics__  : if the number of *consecutive* failures of the Presser to produce `pressed.json` files exceeds N, the healhcheck fails. The counter is however immediately reset by any succesful pressing. 
+* __Metrics__  : if the number of *consecutive* failures of the Presser to produce `pressed.json` files exceeds N, the healthcheck fails. The counter is however immediately reset by any successful pressing. 
 
 * __Consequence__ : Instance terminates.
 
