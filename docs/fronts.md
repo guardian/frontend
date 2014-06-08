@@ -4,7 +4,7 @@
 
 ##
 
-The goal of the Fronts architecture is the production of aggregation files (`pressed.json`, one for each front) containing all the structured content required by each front. Each one is a complete snapshot of the ContentApi data, override data, and configuration metdata for every article and collection on its respective front. Each of these files serve as the single blocking call - made by the Facia app - to service a request for a front.
+The goal of the Fronts architecture is the production of aggregation files (`pressed.json`, one for each front) containing all the structured content required by each front. Each `pressed.json` file is a complete snapshot of the ContentApi data, override data, and configuration metdata for every article and collection on its respective front; each serves as the single blocking call - made by the Facia app - to service a request for that front.
 
 The global list of defined fronts - and the definitions of the collections on those fronts - is held in a single configuration file (`config.json`). This file is edited using the Configuration Editor. It is polled and referred to by each component in the architecture. 
 
@@ -14,21 +14,21 @@ As soon as an individual collection is edited, the Presser re-creates a `pressed
 
 ## Service Level Metrics & Alerts
 
-The metrics primcipally relate to the production of `pressed.json` files. A large number of concurrent ContentApi requests are made in order to produce each one of these, so this is the point in the architecture where heavy 3rd party dependency introcuces a significant potential point of failure.    
+The metrics relate principally to the production of `pressed.json` files. Because a large number of concurrent ContentApi requests are made in order to produce each one of these, the Presser is the point in the architecture where heavy 3rd party dependency introcuces the most significant potential point of failure.    
 
 ### Succesive press failures - MANUAL presser (facia-tool)
 
-* __Detail__ : immediately after a collection is edited within the Fronts Editor, the manual Presser is invoked to re-create the `pressed.json` files for any front containing that collection.
+* __Detail__ : immediately after a collection is edited within the Fronts Editor, the Presser is invoked to re-create the `pressed.json` files for any front containing that collection.
 
-* __Metrics__  : if the number of *consecutive* failures of the Presser to produce `pressed.json` files exceeds N, the healhcheck fails. The counter is immediately reset by any succesful pressing. 
+* __Metrics__  : if the number of *consecutive* failures of the Presser to produce `pressed.json` files exceeds N, the healhcheck fails. The counter is however immediately reset by any succesful pressing. 
 
 * __Consequence__ : Instance terminates.
 
 ### Succesive press failures - CRON presser (facia-press)
 
-* __Detail__ : every three minutes, the Admin app puts the ids of every front on an SQS queue. These are pulled in bunches (of up ot 10) every 10 seconds by Presser instances, and `pressed.json` files are re-created for each front.
+* __Detail__ : every three minutes, the Admin app puts the ids of every front on an SQS queue. These are pulled in bunches (of up to 10) every 10 seconds by Presser instances, and `pressed.json` files are re-created for each front.
 
-* __Metrics__  : if the number of *consecutive* failures of the Presser to produce `pressed.json` files exceeds N, the healhcheck fails. The counter is immediately reset by any succesful pressing. 
+* __Metrics__  : if the number of *consecutive* failures of the Presser to produce `pressed.json` files exceeds N, the healhcheck fails. The counter is however immediately reset by any succesful pressing. 
 
 * __Consequence__ : Instance terminates.
 
@@ -56,7 +56,7 @@ The metrics primcipally relate to the production of `pressed.json` files. A larg
 
 * __Consequence__ : (a) PagerDuty alarm; (b) a "red" alert in the UI with an option to "try again".
 
-### Pressed.json updates within 10 seconds of edit (not incl. cache time)
+### On edit, press within 10 seconds (not incl. cache time)
 
 * __Detail__ : The end-to-end process from invoking the Presser to producing a `pressed.json` file - after a collection is manually edited - should be under 10 seconds. (It typically takes about 3 seconds under normal network conditions.)
 
