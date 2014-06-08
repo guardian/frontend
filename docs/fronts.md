@@ -2,9 +2,19 @@
 
 ![Fronts architecture](/docs/images/fronts-archirecture.png)
 
+##
+
+The goal of the Fronts architecture is the production of aggregation files (`pressed.json`, one for each front) containing all the structured content required by each front. Each one is a complete snapshot of the ContentApi data, override data, and configuration metdata for every article and collection on its respective front. Each of these files serve as the single blocking call - made by the Facia app - to service a request for a front.
+
+The global list of defined fronts - and the definitions of the collections on those fronts - is held in a single configuration file (`config.json`). This file is edited using the Configuration Editor. It is polled and referred to by each component in the architecture. 
+
+The running order of articles in each collection - and various tweaks to those articles - are represented in multiple `collection.json` files. These are individually edited using the Fronts Editor. These `collection.json` files dictate which articles need to be requested from the ContentApi during the production of the `pressed.json` files.
+
+As soon as an individual collection is edited, the Presser re-creates a `pressed.json` file for each front containing that collection. Additionally, every front is periodically queued for re-pressing. The `pressed.json` files - one for each front - are stored on S3. Both preview and live versions are produced.
+
 ## Service Level Metrics & Alerts
 
-The metrics primcipally relate to the production of `pressed.json` files. Each one of these serves as a complete data aggregation for a single front. After a collection is edited within the Fronts Editor, the Presser re-creates a `pressed.json` file for each front containing that collection. Additionally, every front is periodically queued for re-pressing. The `pressed.json` files - one for each front - are stored on S3. Both preview and live versions are produced. Each one comprises all the ContentApi data, override data, and configuration metdata for every article and collection on that front. Each of these files serve as the single blocking call - made by the Facia app - to service a request for a particular front.
+The metrics primcipally relate to the production of `pressed.json` files. A large number of concurrent ContentApi requests are made in order to produce each one of these, so this is the point in the architecture where heavy 3rd party dependency introcuces a significant potential point of failure.    
 
 ### Succesive press failures - MANUAL presser (facia-tool)
 
