@@ -3,13 +3,11 @@ package conf
 import common.Assets.Assets
 import common.GuardianConfiguration
 import com.gu.management.play.RequestMetrics
-import contentapi.{ElasticSearchDraftContentApiClient, ElasticSearchLiveContentApiClient}
+import contentapi.ElasticSearchLiveContentApiClient
 import play.api.mvc.EssentialFilter
 import play.filters.gzip.GzipFilter
 
 object Configuration extends GuardianConfiguration("frontend", webappConfDirectory = "env")
-
-object DraftContentApi extends ElasticSearchDraftContentApiClient()
 
 object LiveContentApi extends ElasticSearchLiveContentApiClient()
 
