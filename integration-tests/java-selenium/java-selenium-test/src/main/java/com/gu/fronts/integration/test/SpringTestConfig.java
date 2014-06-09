@@ -17,7 +17,7 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 @ImportResource("classpath:spring-app-context.xml")
 public class SpringTestConfig {
 
-    @Bean(destroyMethod="close")
+    @Bean(destroyMethod="quit")
     public WebDriver getWebdriver() {
         return new FirefoxDriver();
     }

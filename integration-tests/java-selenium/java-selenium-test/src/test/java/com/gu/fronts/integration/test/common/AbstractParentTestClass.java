@@ -1,6 +1,6 @@
 package com.gu.fronts.integration.test.common;
 
-import static com.gu.fronts.integration.test.common.page.PageFactoryLoader.loadPage;
+import static com.gu.fronts.integration.test.common.page.PageFactoryHelper.loadPage;
 
 import org.junit.BeforeClass;
 import org.openqa.selenium.WebDriver;
