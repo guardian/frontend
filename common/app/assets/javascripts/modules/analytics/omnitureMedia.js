@@ -87,7 +87,7 @@ define([
                         break;
                 }
                 s.prop41 = type;
-                s.linkTrackVars = 'prop11,prop43,prop44,prop45,eVar11,eVar43,eVar44,eVar45,prop41,events';
+                s.linkTrackVars = 'events,eVar11,prop41,eVar43,prop43,eVar44,prop44';
                 s.linkTrackEvents = event;
                 s.events = event;
 
