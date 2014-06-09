@@ -2,8 +2,6 @@
 
 ![Fronts architecture](/docs/images/fronts-archirecture.png)
 
-##
-
 The goal of the Fronts architecture is the production of aggregation files (`pressed.json`, one for each front) containing all the structured content required by each front. Each `pressed.json` file is a complete snapshot of the ContentApi data, override data, and configuration metdata for every article and collection on its respective front; each serves as the single blocking call - made by the Facia app - to service a request for that front.
 
 The global list of defined fronts - and the definitions of the collections on those fronts - is held in a single configuration file (`config.json`). This file is edited using the Configuration Editor. It is polled and referred to by each component in the architecture. 
