@@ -8,15 +8,15 @@ The goal of the Fronts architecture is the production of aggregation files (`pre
 
 The global list of defined fronts - and the definitions of the collections on those fronts - is held in a single configuration file (`config.json`). This file is edited using the Configuration Editor. It is polled and referred to by each component in the architecture. 
 
-The running order of articles in each collection - and various tweaks to those articles - are represented in multiple `collection.json` files. These are individually edited using the Fronts Editor. These `collection.json` files dictate which articles need to be requested from the ContentApi during the production of the `pressed.json` files.
+The running order of articles in each collection - and various tweaks to those articles - are represented in multiple `collection.json` files. These are individually edited using the Fronts Editor. These `collection.json` files dictate which articles need to be requested from the ContentApi during the production of each front's `pressed.json` files.
 
 As soon as an individual collection is edited, the Presser re-creates a `pressed.json` file for each front containing that collection. Additionally, every front is periodically queued for re-pressing. The `pressed.json` files - one for each front - are stored on S3. Both preview and live versions are produced.
 
 ## Service Level Metrics & Alerts
 
-A large number of ContentApi requests are made in order to produce each front's `pressed.json` file. Due to this dependency, the Presser is the point in the architecture which experiences the most potential for failure. The metrics and alerts therefore relate proncipally to the succesful production of `pressed.json` files by the Presser.
+A large number of ContentApi requests are made in order to produce each front's `pressed.json` file. Due to this dependency, the Presser is the point in the architecture that has the most potential for failure. The metrics and alerts relate principally to its ongoing ability to produce of `pressed.json` files.
 
-Some of the metrics are to designed to identify terminally unhealthy processes. Others are indicators of problems in the broader network (notably ContentApi). Others monitor the speed at which updates travel through the Fronts architecture.
+Some of the metrics are to designed to identify terminally unhealthy processes. Others are indicators of problems in the broader network (notably ContentApi). Others monitor the speed at which updates travel through the architecture.
 
 ### Succesive press failures - MANUAL presser (facia-tool)
 
