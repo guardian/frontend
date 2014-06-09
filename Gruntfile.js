@@ -126,12 +126,15 @@ module.exports = function (grunt) {
                     name: 'bootstraps/video-player',
                     out: staticTargetDir + 'javascripts/bootstraps/video-player.js',
                     paths: {
-                        vast: 'components/vast-client-js/vast-client',
+                        vast: '../../../../common/app/public/javascripts/vendor/vast-client',
                         videojs: 'components/videojs/dist/video-js/video',
                         videojsads: 'components/videojs-contrib-ads/src/videojs.ads',
                         videojsvast: 'components/videojs-vast/videojs.vast'
                     },
                     shim: {
+                        vast: {
+                            exports: 'DMVAST'
+                        },
                         videojs: {
                             exports: 'videojs'
                         },
@@ -139,7 +142,7 @@ module.exports = function (grunt) {
                             deps: ['videojs']
                         },
                         videojsvast :{
-                             deps: ['videojs']
+                             deps: ['vast', 'videojs']
                         }
                     },
                     wrapShim: true,
@@ -414,20 +417,6 @@ module.exports = function (grunt) {
                 cwd: staticTargetDir + 'images/',
                 src: ['**/*.{png,gif,jpg}', '!favicons/windows_tile_144_b.png'],
                 dest: staticTargetDir + 'images'
-            }
-        },
-
-        concat: {
-            'javascript-common': {
-                //The order of this array is important!
-                src: [
-                    'common/app/assets/javascripts/components/videojs/dist/video-js/video.js',
-                    'common/app/assets/javascripts/components/videojs-contrib-ads/src/videojs.ads.js',
-                    'common/app/assets/javascripts/components/vast-client-js/vast-client.js',
-                    'common/app/assets/javascripts/components/videojs-vast/videojs.vast.js'
-                ],
-                nonull: true,
-                dest: staticTargetDir + 'javascripts/components/videojs/video.js'
             }
         },
 
@@ -873,10 +862,8 @@ module.exports = function (grunt) {
         grunt.task.run('hash');
     });
     grunt.registerTask('generate:js', function(app) {
-
-        grunt.task.run(['clean:js', 'shell:videojs', 'grunt:videojs']);
+        grunt.task.run(['clean:js']);
         var apps = ['common', 'ophan'];
-
         if (!app || app === 'preview') { // if no app supplied, compile all apps ('preview' is an amalgamation of other apps)
             apps = apps.concat(Object.keys(grunt.config('requirejs')).filter(function(app) { return ['options', 'common', 'ophan'].indexOf(app) === -1; }));
         } else if (app !== 'common' && app !== 'ophan') {
@@ -887,9 +874,6 @@ module.exports = function (grunt) {
             }
         }
         apps.forEach(function(app) {
-            if (grunt.config('concat')['javascript-' + app]) {
-                grunt.task.run('concat:javascript-' + app);
-            }
             if (grunt.config('copy')['javascript-' + app]) {
                 grunt.task.run('copy:javascript-' + app);
             }
@@ -899,6 +883,8 @@ module.exports = function (grunt) {
             grunt.task.run('uglify:components');
         }
     });
+
+    grunt.registerTask('generate:video', ['shell:videojs', 'grunt:videojs', 'requirejs:video', 'hash']);
 
     grunt.registerTask('compile:fonts', ['generate:fonts', 'hash']);
     grunt.registerTask('generate:fonts', ['clean:fonts', 'mkdir:fontsTarget', 'webfontjson']);

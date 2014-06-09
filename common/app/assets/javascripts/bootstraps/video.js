@@ -5,7 +5,6 @@ define([
     'common/utils/detect',
     'common/utils/mediator',
     'common/utils/config',
-    'common/modules/adverts/video',
     'common/modules/adverts/query-string',
     'common/modules/adverts/dfp'
 ], function(
@@ -14,7 +13,6 @@ define([
     detect,
     mediator,
     config,
-    VideoAdvert,
     queryString,
     dfp
 ) {

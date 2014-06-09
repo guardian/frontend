@@ -11,10 +11,5 @@ define([
     videojsvast
 ) {
 
-    window.DMVAST = vast;
-
-    videojsads();
-    videojsvast();
-
     return;
 });
