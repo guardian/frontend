@@ -1,4 +1,4 @@
-package com.gu.fronts.integration;
+package com.gu.fronts.integration.test;
 
 import static java.lang.System.getProperty;
 import static java.lang.System.setProperty;

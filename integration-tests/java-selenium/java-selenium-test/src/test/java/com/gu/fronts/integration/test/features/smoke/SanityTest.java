@@ -1,11 +1,11 @@
-package com.gu.fronts.integration.test.smoke;
+package com.gu.fronts.integration.test.features.smoke;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.gu.fronts.integration.SpringTestConfig;
+import com.gu.fronts.integration.test.SpringTestConfig;
 import com.gu.fronts.integration.test.common.AbstractParentTestClass;
 import com.gu.fronts.integration.test.page.NetworkFrontPage;
 
