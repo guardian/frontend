@@ -1,6 +1,6 @@
 @(env: String, priority: String, identity: Option[Identity])
 
-@admin_main("fronts", priority, env, isAuthed = true, identity) {
+@admin_main("fronts", env, Some(priority), isAuthed = true, identity) {
 
 <div style="display: none;" data-bind="visible: true">
 
