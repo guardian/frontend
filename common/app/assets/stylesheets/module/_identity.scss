@@ -356,7 +356,7 @@
 /* Edit profile Membership tab
    ========================================================================== */
 
-.identity-wrapper.with-membership {
+.identity-wrapper--with-membership {
     @include mq($to: desktop) {
         .tabs__tab {
             width: auto;

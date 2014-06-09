@@ -5,11 +5,13 @@
  *  forms.
  */
 define([
+    'common/$',
     'bean',
     'bonzo',
     'common/utils/url',
     'common/modules/identity/membership-tab'
 ], function(
+    $,
     bean,
     bonzo,
     url,
@@ -59,7 +61,7 @@ define([
 
                     var membershipTab = new MembershipTab();
 
-                    membershipTab.fetch(bonzo(context.querySelector(self.classes.memberShipContainer)));
+                    membershipTab.fetch($(self.classes.memberShipContainer));
 
                     bean.on(tabs, 'click', self.handleTabsClick.bind(self));
                 }

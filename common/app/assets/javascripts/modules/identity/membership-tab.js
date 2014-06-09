@@ -83,7 +83,7 @@ define(['common/$',
         var self = this;
 
         ajax({
-            url: 'https://mem.thegulocal.com/user/me/details',
+            url: 'https://membership.theguardian.com/user/me/details',
             crossOrigin: true,
             withCredentials: true,
             method: 'get'
@@ -109,9 +109,9 @@ define(['common/$',
     /** @override */
     Membership.prototype.ready = function () {
         if (this.display) {
-            $(this.context.querySelector(this.getClass('TAB_BUTTON'))).removeClass('is-hidden');
-            $(this.context.querySelector(this.getClass('TAB_CONTAINER'))).removeClass('is-hidden');
-            $(this.context.querySelector('.js-account-profile-forms')).addClass('with-membership');
+            $(this.getClass('TAB_BUTTON'), this.context).removeClass('is-hidden');
+            $(this.getClass('TAB_CONTAINER'), this.context).removeClass('is-hidden');
+            $('.js-account-profile-forms').addClass('identity-wrapper--with-membership');
         }
     };
 
