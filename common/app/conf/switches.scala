@@ -401,6 +401,11 @@ object Switches extends Collections {
     safeState = On, sellByDate = never // this is a performance related switch, not a feature switch
   )
 
+  val ParameterlessImagesSwitch = Switch("Image Server", "image-server",
+    "If this switch is on images will be served off i.guim.co.uk (dynamic image host).",
+    safeState = Off, sellByDate = new DateMidnight(2014, 7, 31)
+  )
+
   val all: List[Switch] = List(
     AutoRefreshSwitch,
     DoubleCacheTimesSwitch,
@@ -465,7 +470,8 @@ object Switches extends Collections {
     SmartBannerSwitch,
     SurveyBannerSwitch,
     FeaturesAutoContainerSwitch,
-    ForcePageSkinSwitch
+    ForcePageSkinSwitch,
+    ParameterlessImagesSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }

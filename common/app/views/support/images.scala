@@ -1,10 +1,9 @@
 package views.support
 
 import model.{ImageContainer, ImageAsset}
-import conf.Switches.{ImageServerSwitch}
+import conf.Switches.{ImageServerSwitch, ParameterlessImagesSwitch}
 import java.net.URI
 import conf.Configuration
-import play.api.templates.Html
 
 case class Profile(width: Option[Int] = None, height: Option[Int] = None, compression: Int = 95) {
 
@@ -24,9 +23,12 @@ case class Profile(width: Option[Int] = None, height: Option[Int] = None, compre
   def altTextFor(image: ImageContainer): Option[String] =
     elementFor(image).flatMap(_.altText)
 
-  val resizeString = s"width=${toResizeString(width)}&height=${toResizeString(height)}&quality=$compression"
+  def resizeString = if (ParameterlessImagesSwitch.isSwitchedOn) {
+    s"/w-${toResizeString(width)}/h-${toResizeString(height)}/q-$compression"
+  } else {
+    s"width=${toResizeString(width)}&height=${toResizeString(height)}&quality=$compression"
+  }
 
-  private def toThirdPartyResizeString(size: Option[Int]) = size.map(_.toString).getOrElse("*")
   private def toResizeString(i: Option[Int]) = i.map(_.toString).getOrElse("-")
 }
 
@@ -78,13 +80,21 @@ object ImgSrc {
     val isSupportedImage = uri.getHost == "static.guim.co.uk" && !uri.getPath.toLowerCase.endsWith(".gif")
 
     if (ImageServerSwitch.isSwitchedOn && isSupportedImage)
-      s"$imageHost${uri.getPath}?${imageType.resizeString}"
+      if (ParameterlessImagesSwitch.isSwitchedOn) {
+        s"$imageHost${imageType.resizeString}${uri.getPath}"
+      } else {
+        s"$imageHost${uri.getPath}?${imageType.resizeString}"
+      }
     else
       url
   }
 
   object Imager extends Profile(None, None) {
-    override val resizeString = s"width={width}&height=-&quality=$compression"
+    override def resizeString = if (ParameterlessImagesSwitch.isSwitchedOn) {
+      "/w-{width}/h--/q-95"
+    } else {
+      s"width={width}&height=-&quality=$compression"
+    }
   }
 
   // always, and I mean ALWAYS think carefully about the size image you use
