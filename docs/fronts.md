@@ -14,7 +14,9 @@ As soon as an individual collection is edited, the Presser re-creates a `pressed
 
 ## Service Level Metrics & Alerts
 
-The metrics relate principally to the production of `pressed.json` files. Because a large number of concurrent ContentApi requests are made in order to produce each one of these, the Presser is the point in the architecture where heavy 3rd party dependency introduces the most significant potential point of failure.    
+A large number of ContentApi requests are made in order to produce each front's `pressed.json` file. Due to this dependency, the Presser is the point in the architecture which experiences the most potential for failure. The metrics and alerts therefore relate proncipally to the succesful production of `pressed.json` files by the Presser.
+
+Some of the metrics are to designed to identify terminally unhealthy processes. Others are indicators of problems in the broader network (notably ContentApi). Others monitor the speed at which updates travel through the Fronts architecture.
 
 ### Succesive press failures - MANUAL presser (facia-tool)
 
