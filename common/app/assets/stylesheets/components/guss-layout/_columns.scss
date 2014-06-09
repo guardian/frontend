@@ -107,8 +107,6 @@ $guss-columns-fallback-columns: 3 !default;
 
             @include mq(tablet) {
                 float: left;
-                width: 100%; // Default mobile width
-                height: 100%;
             }
 
             @if type-of($columns-fallback-width) == map {
@@ -167,7 +165,7 @@ $guss-columns-fallback-columns: 3 !default;
                 &:nth-child(n) {
                     clear: none;
                 }
-                &:nth-child(#{$number-of-fallback-columns}n+1) {
+                &:nth-child(#{$columns-fallback-columns}n+1) {
                     clear: both;
                 }
             }

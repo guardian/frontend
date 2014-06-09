@@ -20,3 +20,8 @@ bower install guss-layout --save
 ## Features
 
 Low-level responsive layout patterns.
+
+## Demos
+
+- Columns: http://sassmeister.com/gist/35288593dc035ef645e1
+- Row pattern: http://sassmeister.com/gist/7986076
