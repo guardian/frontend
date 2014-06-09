@@ -4,7 +4,7 @@
 define(['common/$',
 'common/utils/ajax',
 'common/utils/config',
-'common/modules/component',], function ($, ajax, config, Component) {
+'common/modules/component'], function ($, ajax, config, Component) {
 
     function Membership (context, mediator, options) {
 
