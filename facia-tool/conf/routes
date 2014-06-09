@@ -16,11 +16,12 @@ GET           /assets/*file              controllers.Assets.at(path="/public", f
 #######################################################
 
 # Fronts
-GET           /                          controllers.FaciaToolController.collectionsEditor(priority="editorial")
-GET           /commercial                controllers.FaciaToolController.collectionsEditor(priority="commercial")
+GET           /                          controllers.FaciaToolController.priorities()
+GET           /editorial                 controllers.FaciaToolController.collectionEditor(priority="editorial")
+GET           /commercial                controllers.FaciaToolController.collectionEditor(priority="commercial")
 
-GET           /configuration             controllers.FaciaToolController.configEditor(priority="editorial")
-GET           /commercial/configuration  controllers.FaciaToolController.configEditor(priority="commercial")
+GET           /editorial/config          controllers.FaciaToolController.configEditor(priority="editorial")
+GET           /commercial/config         controllers.FaciaToolController.configEditor(priority="commercial")
 
 GET           /publish-all               controllers.FaciaToolController.publishAll()
 GET           /publish-all/comet         controllers.FaciaToolController.publishAllStream()

@@ -96,6 +96,17 @@ a:hover {
     margin: 13px 10px 0 0;
 }
 
+.front-priorities {
+    clear: both;
+    padding: 20px 0 0 20px;
+}
+
+.front-priorities--priority {
+    display: block;
+    font-size: 20px;
+    padding: 10px 0 0 0;
+}
+
 .left-col {
     -moz-box-sizing: border-box;
     box-sizing: border-box;

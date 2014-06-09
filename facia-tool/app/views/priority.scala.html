@@ -1,0 +1,10 @@
+@(env: String, priority: String, identity: Option[Identity])
+
+@admin_main("Fronts Editor", priority, env, isAuthed = true, identity) {
+
+<div class="front-priorities">
+    <a class="front-priorities--priority" href="/editorial">Editorial Fronts</a>
+    <a class="front-priorities--priority" href="/commercial">Commercial Fronts</a>
+</div>
+
+}

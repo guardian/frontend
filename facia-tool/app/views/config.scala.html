@@ -1,6 +1,6 @@
 @(env: String, priority: String, identity: Option[Identity])
 
-@admin_main("configuration", priority, env, isAuthed = true, identity) {
+@admin_main("config", priority, env, isAuthed = true, identity) {
 
 <div style="display: none;" data-bind="
     visible: true,
@@ -202,7 +202,7 @@
                         <!-- ko if: !state.isOpenProps() -->
                             <span class="linky" data-bind="click: openProps">Edit metadata</span>
                             &middot;
-                            <a data-bind="attr: {href: '/?front=' + id()}">content</a>
+                            <a data-bind="attr: {href: '/@priority?front=' + id()}">content</a>
                         <!-- /ko -->
                     </div>
 
