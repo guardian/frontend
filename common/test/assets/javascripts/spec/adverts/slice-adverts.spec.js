@@ -19,11 +19,11 @@ define([
         var fixturesConfig = {
                 id: 'slice-adverts',
                 fixtures: [
-                    '<div class="container container-first"><div class="linkslist-container slice--ad-candidate"><div class="slice"></div></div></div>',
+                    '<div class="container container-first"><div class="linkslist-container js-slice--ad-candidate"><div class="slice"></div></div></div>',
                     '<div class="container container-second"></div>',
-                    '<div class="container container-third"><div class="slice--ad-candidate"><div class="slice"></div></div></div>',
-                    '<div class="container container-fourth"><div class="slice--ad-candidate"><div class="slice"></div></div></div>',
-                    '<div class="container container-fifth"><div class="slice--ad-candidate"><div class="slice"></div></div></div>'
+                    '<div class="container container-third"><div class="js-slice--ad-candidate"><div class="slice"></div></div></div>',
+                    '<div class="container container-fourth"><div class="js-slice--ad-candidate"><div class="slice"></div></div></div>',
+                    '<div class="container container-fifth"><div class="js-slice--ad-candidate"><div class="slice"></div></div></div>'
                 ]
             },
             createSwitch = function(isOn){

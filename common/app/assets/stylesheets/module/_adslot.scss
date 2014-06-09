@@ -197,6 +197,9 @@
         display: block;
     }
 }
+/**
+ * Commercial Components
+ */
 .ad-slot--commercial-component,
 .ad-slot--commercial-component-high {
     min-height: 88px;
@@ -221,17 +224,15 @@
         display: block;
     }
 }
+/**
+ * Badges
+ */
 .ad-slot--paid-for-badge {
     text-align: left;
-    border-bottom: 1px dotted $c-neutral5;
     @include rem((
         padding: 2px 0 $gs-baseline
     ));
 
-    @include mq(leftCol) {
-        border-bottom-width: 0;
-        border-top: 1px dotted $c-neutral5;
-    }
     .ad-slot--paid-for-badge__inner {
         overflow: hidden;
 
@@ -250,12 +251,10 @@
     }
     .ad-slot--paid-for-badge__header,
     .ad-slot--paid-for-badge__label {
-        color: $c-neutral2;
         margin: 0;
-
-        .facia-container--advertisement-feature & {
-            color: $c-neutral2-contrasted;
-        }
+    }
+    .ad-slot--paid-for-badge__header {
+        font-weight: bold;
     }
     .ad-slot--paid-for-badge__link,
     .ad-slot--paid-for-badge__help {
@@ -277,78 +276,104 @@
             margin-top: $gs-baseline/3
         ));
     }
+}
+.ad-slot--adbadge {
+    .ad-slot--paid-for-badge__header,
+    .ad-slot--paid-for-badge__label {
+        color: $c-neutral2-contrasted;
+    }
+    .ad-slot--paid-for-badge__link {
+        @include rem((
+            margin-top: get-line-height($fs-data, 3)*-2
+        ));
+    }
+}
+.ad-slot--spbadge {
+    .ad-slot--paid-for-badge__header,
+    .ad-slot--paid-for-badge__label {
+        color: $c-neutral2;
+    }
+    .ad-slot--paid-for-badge__link {
+        @include rem((
+            margin-top: get-line-height($fs-data, 3)*-1
+        ));
+    }
+}
+.ad-slot--paid-for-badge--article {
+    border-bottom: 1px dotted $c-neutral5;
 
-    // badges in containers
-    .container & {
-        @include clearfix;
-        position: relative;
-        min-height: 90px;
-        border-top: 0;
-        z-index: 99;
+    @include mq(leftCol) {
         border-bottom-width: 0;
+        border-top: 1px dotted $c-neutral5;
+    }
+}
+.ad-slot--paid-for-badge--front {
+    @include clearfix;
+    position: relative;
+    min-height: 90px;
+    z-index: 99;
 
-        .ad-slot--paid-for-badge__link {
-            position: relative;
-            float: right;
+    .ad-slot--paid-for-badge__link {
+        position: relative;
+        float: right;
+    }
+    @include mq(tablet) {
+        margin-left: 50%;
+        padding-top: 0;
+        @include rem((
+            margin-top: -$gs-row-height
+        ));
+    }
+    @include mq(desktop) {
+        @include rem((
+            padding-left: $gs-gutter/2
+        ));
+    }
+    @include mq(tablet, $to: faciaLeftCol) {
+        .container--has-toggle & {
             @include rem((
-                margin-top: get-line-height($fs-data, 3)*-1
+                margin-right: gs-span(1)
             ));
         }
-        + .container__body .facia-slice-wrapper:first-child .fromage {
-            border-top-width: 2px;
+    }
+    @include mq(faciaLeftCol) {
+        padding: 0;
+        margin: 0;
+        float: left;
+        @include rem((
+            margin-top: 4px
+        ));
+
+        .ad-slot--paid-for-badge__link {
+            float: none;
+            @include rem((
+                margin-top: $gs-row-height/4
+            ));
         }
-        @include mq(tablet) {
+    }
+    @include mq(wide) {
+        clear: left;
+
+        .has-page-skin & {
             margin-left: 50%;
             width: auto;
-            padding-top: 0;
+            float: none;
             @include rem((
                 margin-top: -$gs-row-height
             ));
-        }
-        @include mq(desktop) {
-            @include rem((
-                padding-left: $gs-gutter/2
-            ));
-        }
-        @include mq(faciaLeftCol) {
-            padding: 0;
-            margin: 0;
-            float: left;
-            @include rem((
-                margin-top: 4px
-            ));
 
             .ad-slot--paid-for-badge__link {
-                float: none;
+                float: right;
                 @include rem((
-                    margin-top: $gs-row-height/4
+                    margin-top: get-line-height($fs-data, 3)*-1
                 ));
-            }
-            + .container__body .facia-slice-wrapper:first-child .fromage {
-                border-top-width: 0;
-            }
-        }
-        @include mq(wide) {
-            clear: left;
-
-            .has-page-skin & {
-                margin-left: 50%;
-                width: auto;
-                float: none;
-                @include rem((
-                    margin-top: -$gs-row-height
-                ));
-
-                .ad-slot--paid-for-badge__link {
-                    float: right;
-                    @include rem((
-                        margin-top: get-line-height($fs-data, 3)*-1
-                    ));
-                }
             }
         }
     }
 }
+/**
+ * Page Skins
+ */
 .ad-slot--page-skin {
     height: 0;
 }

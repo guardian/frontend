@@ -15,6 +15,7 @@ define([
     'lodash/arrays/uniq',
     'lodash/functions/once',
     'lodash/objects/defaults',
+    'lodash/objects/isArray',
     'lodash/objects/pairs',
     'common/utils/template'
 ], function (
@@ -33,6 +34,7 @@ define([
     uniq,
     once,
     defaults,
+    isArray,
     pairs,
     template
 ) {
@@ -238,34 +240,17 @@ define([
                 return value ? queryString.formatKeyword(value).replace(/&/g, 'and').replace(/'/g, '') : '';
             }
 
-            function lastPart(keywordId) {
-                if (keywordId) {
-                    return keywordId.split('/').pop();
-                } else {
-                    return '';
-                }
-            }
-
             var conf        = config.page,
                 section     = encodeTargetValue(conf.section),
                 series      = encodeTargetValue(conf.series),
                 contentType = encodeTargetValue(conf.contentType),
-                edition     = encodeTargetValue(conf.edition),
-                keywords;
-            if (conf.keywordIds) {
-                keywords = conf.keywordIds.split(',').map(function (keywordId) {
-                    return lastPart(keywordId);
-                });
-            } else {
-                keywords = lastPart(conf.pageId);
-            }
+                edition     = encodeTargetValue(conf.edition);
 
             return defaults({
                 url     : window.location.pathname,
                 edition : edition,
                 cat     : section,
                 se      : series,
-                k       : keywords,
                 ct      : contentType,
                 pt      : contentType,
                 p       : 'ng',
@@ -286,24 +271,38 @@ define([
             }
             return '/' + config.page.dfpAccountId + '/' + config.page.dfpAdUnitRoot + '/' + adUnitSuffix;
         },
-        createAdSlot = function(name, type) {
-            var definition = adSlotDefinitions[name];
-            return template(
-                '<div id="dfp-ad--{{name}}" ' +
-                    'class="ad-slot ad-slot--dfp ad-slot--{{type}}" ' +
-                    'data-link-name="ad slot {{name}}" ' +
-                    'data-name="{{name}}" ' +
-                    'data-refresh="{{refresh}}" ' +
-                    'data-label="{{label}}"' +
-                    '{{sizeMappings}}></div>',
-                {
-                    name: name,
-                    type: type,
+        createAdSlot = function(name, types, keywords) {
+            var definition = adSlotDefinitions[name],
+                dataAttrs = {
                     refresh: definition.refresh !== undefined ? definition.refresh : true,
-                    label: definition.label !== undefined ? definition.label : true,
-                    sizeMappings: pairs(definition.sizeMappings).map(function(size) { return ' data-' + size[0] + '="' + size[1] + '"'; }).join('')
+                    label: definition.label !== undefined ? definition.label : true
+                },
+                $adSlot = $.create(template(
+                    '<div id="dfp-ad--{{name}}" ' +
+                        'class="ad-slot ad-slot--dfp ad-slot--{{name}} {{types}}" ' +
+                        'data-link-name="ad slot {{name}}" ' +
+                        'data-name="{{name}}"' +
+                        '{{sizeMappings}}></div>',
+                    {
+                        name: name,
+                        types: (isArray(types) ? types : [types]).map(function(type) { return 'ad-slot--' + type; }).join(' '),
+                        sizeMappings: pairs(definition.sizeMappings).map(function(size) { return ' data-' + size[0] + '="' + size[1] + '"'; }).join('')
+                    }));
+            for (var attrName in dataAttrs) {
+                if (dataAttrs[attrName] === false) {
+                    $adSlot.attr('data-' + attrName, 'false');
                 }
-            );
+            }
+            if (keywords) {
+                $adSlot.attr('data-keywords', keywords);
+            }
+            return $adSlot[0];
+        },
+        getKeywords = function($adSlot, conf) {
+            return ($adSlot.data('keywords') || conf.page.keywordIds || conf.page.pageId || '')
+                .split(',').map(function (keyword) {
+                    return keyword.split('/').pop();
+                });
         };
 
     /**
@@ -345,6 +344,7 @@ define([
                             ? googletag.defineOutOfPageSlot(adUnit, id) : googletag.defineSlot(adUnit, size, id))
                         .addService(googletag.pubads())
                         .defineSizeMapping(sizeMapping)
+                        .setTargeting('k', getKeywords($adSlot, config))
                         .setTargeting('slot', $adSlot.data('name'));
 
                 // Add to the array of ads to be refreshed (when the breakpoint changes)

@@ -53,7 +53,9 @@ define([
         this.addToggle =  function () {
             // append toggle button
             $('.container__header', _$container[0]).append(_$button);
-            _$container.removeClass('js-container--toggle');
+            _$container
+                .removeClass('js-container--toggle')
+                .addClass('container--has-toggle');
             // listen to event
             bean.on(_$button[0], 'click', function() {
                 _state = (_state === 'displayed') ? 'hidden' : 'displayed';

@@ -17,8 +17,8 @@
                 if(!guardian.css.loaded) {
 
                     function injectElement(e) {
-                        var sc = document.getElementsByTagName('script')[0];
-                        sc.parentNode.insertBefore(e, sc);
+                        var head = document.getElementsByTagName('head')[0];
+                        head.appendChild(e);
                     }
 
                     function inlineCss(c) {
@@ -29,7 +29,7 @@
                     }
 
                     function storeCss(c) {
-                        Object.keys(localStorage ).forEach(function(key) {
+                        Object.keys(localStorage).forEach(function(key) {
                             if(key.match(/^gu.css./g)) { localStorage.removeItem(key); }
                         });
                         try {

@@ -8,43 +8,48 @@ GET         /assets/*path                                                       
 
 
 # Travel offers
-GET        /commercial/travel/offers                                 controllers.commercial.TravelOffers.renderOffer
-GET        /commercial/travel/offers.json                            controllers.commercial.TravelOffers.listOffers
+GET        /commercial/travel/offers                                 controllers.commercial.TravelOffers.travelOffersLowHtml
+GET        /commercial/travel/offers.json                            controllers.commercial.TravelOffers.travelOffersLowJson
+GET        /commercial/travel/offers-high                            controllers.commercial.TravelOffers.travelOffersHighHtml
+GET        /commercial/travel/offers-high.json                       controllers.commercial.TravelOffers.travelOffersHighJson
 
 # Jobs
-GET        /commercial/jobs                                          controllers.commercial.JobAds.renderAds
-GET        /commercial/jobs.json                                     controllers.commercial.JobAds.jobs
-GET        /commercial/jobs-high                                     controllers.commercial.JobAds.renderAdsHigh
-GET        /commercial/jobs-high.json                                controllers.commercial.JobAds.jobsHigh
+GET        /commercial/jobs                                          controllers.commercial.JobAds.jobsLowHtml
+GET        /commercial/jobs.json                                     controllers.commercial.JobAds.jobsLowJson
+GET        /commercial/jobs-high                                     controllers.commercial.JobAds.jobsHighHtml
+GET        /commercial/jobs-high.json                                controllers.commercial.JobAds.jobsHighJson
 
 # Masterclasses
-GET        /commercial/masterclasses                                 controllers.commercial.MasterClasses.renderMasterclass
-GET        /commercial/masterclasses.json                            controllers.commercial.MasterClasses.list
-GET        /commercial/masterclasses-high                            controllers.commercial.MasterClasses.renderMasterclassHigh
-GET        /commercial/masterclasses-high.json                       controllers.commercial.MasterClasses.listHigh
+GET        /commercial/masterclasses                                 controllers.commercial.MasterClasses.masterclassesLowHtml
+GET        /commercial/masterclasses.json                            controllers.commercial.MasterClasses.masterclassesLowJson
+GET        /commercial/masterclasses-high                            controllers.commercial.MasterClasses.masterclassesHighHtml
+GET        /commercial/masterclasses-high.json                       controllers.commercial.MasterClasses.masterclassesHighJson
 
 # Soulmates
-GET        /commercial/soulmates/mixed                               controllers.commercial.SoulmateAds.renderAds
-GET        /commercial/soulmates/mixed.json                          controllers.commercial.SoulmateAds.mixed
-GET        /commercial/soulmates/mixed-high                          controllers.commercial.SoulmateAds.renderAdsHigh
-GET        /commercial/soulmates/mixed-high.json                     controllers.commercial.SoulmateAds.mixedHigh
+GET        /commercial/soulmates/mixed                               controllers.commercial.SoulmateAds.mixedLowHtml
+GET        /commercial/soulmates/mixed.json                          controllers.commercial.SoulmateAds.mixedLowJson
+GET        /commercial/soulmates/mixed-high                          controllers.commercial.SoulmateAds.mixedHighHtml
+GET        /commercial/soulmates/mixed-high.json                     controllers.commercial.SoulmateAds.mixedHighJson
 
 # Money offers
-GET        /commercial/money/bestbuys                                controllers.commercial.MoneyOffers.bestBuys(format="html")
-GET        /commercial/money/bestbuys.json                           controllers.commercial.MoneyOffers.bestBuys(format="json")
+GET        /commercial/money/bestbuys                                controllers.commercial.MoneyOffers.bestBuysLowHtml
+GET        /commercial/money/bestbuys.json                           controllers.commercial.MoneyOffers.bestBuysLowJson
+GET        /commercial/money/bestbuys-high                           controllers.commercial.MoneyOffers.bestBuysHighHtml
+GET        /commercial/money/bestbuys-high.json                      controllers.commercial.MoneyOffers.bestBuysHighJson
 GET        /commercial/money/savings/:savingsType                    controllers.commercial.MoneyOffers.savings(savingsType)
 GET        /commercial/money/current-accounts/:currentAccountType    controllers.commercial.MoneyOffers.currentAccounts(currentAccountType)
 GET        /commercial/money/credit-cards/:creditCardType            controllers.commercial.MoneyOffers.creditCards(creditCardType)
 GET        /commercial/money/loans/:loanType                         controllers.commercial.MoneyOffers.loans(loanType)
 
 # Book offers
-GET        /commercial/books/bestsellers                             controllers.commercial.BookOffers.bestsellers(format="html")
-GET        /commercial/books/bestsellers.json                        controllers.commercial.BookOffers.bestsellers(format="json")
-GET        /commercial/books/bestsellers-high                        controllers.commercial.BookOffers.bestsellersHigh(format="html")
-GET        /commercial/books/bestsellers-high.json                   controllers.commercial.BookOffers.bestsellersHigh(format="json")
-GET        /commercial/books/book/*pageId.json                       controllers.commercial.BookOffers.singleBook(pageId, format="json")
-GET        /commercial/books/book/*pageId                            controllers.commercial.BookOffers.singleBook(pageId, format="html")
-
+GET        /commercial/books/bestsellers                             controllers.commercial.BookOffers.bestsellersLowHtml
+GET        /commercial/books/bestsellers.json                        controllers.commercial.BookOffers.bestsellersLowJson
+GET        /commercial/books/bestsellers-medium                      controllers.commercial.BookOffers.bestsellersMediumHtml
+GET        /commercial/books/bestsellers-medium.json                 controllers.commercial.BookOffers.bestsellersMediumJson
+GET        /commercial/books/bestsellers-high                        controllers.commercial.BookOffers.bestsellersHighHtml
+GET        /commercial/books/bestsellers-high.json                   controllers.commercial.BookOffers.bestsellersHighJson
+GET        /commercial/books/book/*pageId.json                       controllers.commercial.BookOffers.singleBookJson(pageId)
+GET        /commercial/books/book/*pageId                            controllers.commercial.BookOffers.singleBookHtml(pageId)
 
 # Core Navigation
 GET         /most-read                                                                                               controllers.MostPopularController.render(path = "")
@@ -143,10 +148,6 @@ GET         /$path<(\w\w)(/[\w\d-]+)?>/rss                                      
 GET         /$path<(\w\w)(/[\w\d-]+)?>.json                                                                          controllers.FaciaController.renderFrontJson(path)
 GET         /$path<(\w\w)(/[\w\d-]+)?>                                                                               controllers.FaciaController.renderFront(path)
 
-
-GET         /collection/*id/rss                                                                                      controllers.FaciaController.renderCollectionRss(id)
-GET         /collection/*id.json                                                                                     controllers.FaciaController.renderCollectionJson(id)
-GET         /collection/*id                                                                                          controllers.FaciaController.renderCollection(id)
 
 GET         /container/*id.json                                                                                      controllers.FaciaController.renderContainerJson(id)
 

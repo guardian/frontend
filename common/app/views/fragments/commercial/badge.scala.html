@@ -1,6 +1,6 @@
-@(name: String, adType: String, sizeMapping: Map[String, Seq[String]])
+@(name: String)
 @import conf.Switches._
 
 @if(SponsoredSwitch.isSwitchedOn) {
-    @fragments.commercial.adSlot(name, adType, sizeMapping, showLabel=false, refresh=false)
+    @fragments.commercial.adSlot(name, Seq("paid-for-badge", "paid-for-badge--article"), Map("mobile" -> Seq("140,90")), showLabel=false, refresh=false)
 }

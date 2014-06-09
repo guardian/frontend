@@ -9,6 +9,9 @@
                 data-link-name="block | @config.id"
                 data-id="@config.id"
                 data-type="@style.containerType"
+                @config.sponsorshipKeyword.map { keyword =>
+                    data-keywords="@keyword"
+                }
                 data-component="@FaciaComponentName(config, collection)">
                 <div class="container__banding">
                     <div class="facia-container__inner">
@@ -58,7 +61,7 @@
                         <div class="container__body">
                             @defining(items.slice(4, 10)) { items =>
                                 @if(items.nonEmpty) {
-                                    <div class="linkslist-container tone-@{style.tone} slice--ad-candidate" data-tone="@style.tone">
+                                    <div class="linkslist-container tone-@{style.tone} js-slice--ad-candidate" data-tone="@style.tone">
                                         <ul class="l-columns linkslist">
                                             @items.zipWithIndex.map{ case (trail, index) =>
                                                 @trail match {

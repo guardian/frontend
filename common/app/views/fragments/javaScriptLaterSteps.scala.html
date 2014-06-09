@@ -1,40 +1,11 @@
 @(item: model.MetaData, curlPaths: Map[String, String] = Map())(implicit request: RequestHeader)
-
 @import conf.Switches._
 @import conf.Static
 @import conf.Configuration
 
-<!--[if lt IE 9]>
-    <script src="@Static("javascripts/components/html5shiv/dist/html5shiv.js")"></script>
-<![endif]-->
+@* Scripts that should be executed after CSS is loaded *@
 
-<script id="gu">
-    @if(FunctionBindSwitch.isSwitchedOn) {
-        if (!Function.prototype.bind) {
-            Function.prototype.bind = function (oThis) {
-                if (typeof this !== "function") {
-                    // closest thing possible to the ECMAScript 5
-                    // internal IsCallable function
-                    throw new TypeError("Function.prototype.bind - what is trying to be bound is not callable");
-                }
-
-                var aArgs = Array.prototype.slice.call(arguments, 1),
-                        fToBind = this,
-                        fNOP = function () {},
-                        fBound = function () {
-                            return fToBind.apply(this instanceof fNOP && oThis
-                                            ? this
-                                            : oThis,
-                                    aArgs.concat(Array.prototype.slice.call(arguments)));
-                        };
-
-                fNOP.prototype = this.prototype;
-                fBound.prototype = new fNOP();
-
-                return fBound;
-            };
-        }
-    }
+<script>
 
     var modules = [],
         redefine = function(modules) {
@@ -47,24 +18,7 @@
         };
     define.amd = true;
 
-    var guardian = {
-        isModernBrowser: (
-            'querySelector' in document
-            && 'addEventListener' in window
-            && 'localStorage' in window
-            && 'sessionStorage' in window
-            && 'bind' in Function
-            && (
-                ('XMLHttpRequest' in window && 'withCredentials' in new XMLHttpRequest())
-                || 'XDomainRequest' in window
-            )
-        ),
-        css: {
-            loaded: false
-        },
-        config: @fragments.javaScriptConfig(item)
-    },
-    curl = {
+    var curl = {
         baseUrl: '@{Configuration.assets.path}javascripts',
         apiName: 'require',
         overwriteApi: true,
@@ -85,24 +39,8 @@
 
     (function(isModern) {
 
-        // must always be set before the Omniture file is parsed
-        window.s_account = guardian.config.page.omnitureAccount;
-
         if (!isModern) { return false; }
 
-        @if(CssFromStorageSwitch.isSwitchedOn && !play.Play.isDev()) {
-            function loadCssFromStorage() {
-                var c = localStorage.getItem('gu.css.@Static("stylesheets/global.css").md5Key'), s, sc;
-                if(c) {
-                    s = document.createElement('style');
-                    sc = document.getElementsByTagName('script')[0];
-                    s.innerHTML = c;
-                    s.setAttribute('data-loaded-from', 'local');
-                    sc.parentNode.insertBefore(s, sc);
-                    guardian.css.loaded = true;
-                }
-            }
-        }
         function loadFontsAsynchronously() {
             @if(FontSwitch.isSwitchedOff) {
                 return;
@@ -117,6 +55,7 @@
                 x.parentNode.insertBefore(f, x);
             }, 0);
         }
+
         function loadFontsFromStorage(prefs, key) {
 
             var showFonts = false,
@@ -151,19 +90,6 @@
             }
         }
 
-        @* we want to add/remove classes to HTML ASAP to avoid FOUC *@
-        var htmlClassNames = "";
-
-        @* http://modernizr.com/download/#-svg *@
-        function hasSvgSupport() {
-            var ns = {'svg': 'http://www.w3.org/2000/svg'};
-            return !!document.createElementNS && !!document.createElementNS(ns.svg, 'svg').createSVGRect;
-        }
-        if (hasSvgSupport()) {
-            htmlClassNames += " svg";
-        }
-        document.documentElement.className = document.documentElement.className.replace(/\bjs-off\b/g, '') + ' js-on ' + htmlClassNames;
-
         @* Display hinted fonts (loaded asynchronously) in these platforms: *@
         var loadsHintedFonts = /Windows/;
         @* But exclude these platforms (and load non-hinted fonts from localStorage): *@
@@ -179,10 +105,23 @@
         }
 
         @if(CssFromStorageSwitch.isSwitchedOn && !play.Play.isDev()) {
+            function loadCssFromStorage() {
+                var c = localStorage.getItem('gu.css.@Static("stylesheets/global.css").md5Key'), s, head;
+                if(c) {
+                    s = document.createElement('style');
+                    head = document.getElementsByTagName('head')[0];
+                    s.innerHTML = c;
+                    s.setAttribute('data-loaded-from', 'local');
+                    head.appendChild(s);
+                    guardian.css.loaded = true;
+                }
+            }
+
             loadCssFromStorage();
         }
 
     })(guardian.isModernBrowser);
+
 </script>
 
 <script async="async" src="@Static("javascripts/bootstraps/app.js")"></script>

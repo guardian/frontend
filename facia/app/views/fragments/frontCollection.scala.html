@@ -1,32 +1,23 @@
 @(front: MetaData, block: (Config, Collection), collectionsSize: Int = 1, index: Int = 1)(implicit request: RequestHeader, templateDeduping: TemplateDeduping)
 @import views.support.ForceGroupsCollection
 
-@import Switches.{ FeaturesAutoContainerSwitch, FaciaFirstContainerLayoutOverrideSwitch }
+@import Switches.FeaturesAutoContainerSwitch
 
-@defining(FaciaFirstContainerLayoutOverrideSwitch.isSwitchedOn) { layoutOverride =>
-    @block._1.collectionType match {
-        case Some("news")                       => { @containers.news(front, block._2, NewsContainer(), index)(request, templateDeduping, block._1) }
-        case Some("news/auto")                  => { @containers.news(front, ForceGroupsCollection.firstTwoBig(block._2), NewsContainer(), index)(request, templateDeduping, block._1) }
-        case _ if layoutOverride && index == 0  => { @collectionsSize match {
-            case size if size < 3               => { @containers.tag(front, block._2, NewsContainer(showMore = false), index)(request, templateDeduping, block._1) }
-            case _                              => { @containers.tag(front, block._2, NewsContainer(), index)(request, templateDeduping, block._1) }
-        }}
-        case Some("comment/comment-and-debate") => { @containers.commentanddebate(block._2, CommentAndDebateContainer(), index)(request, templateDeduping, block._1) }
-        case Some("features")                   => { @containers.features(block._2, FeaturesContainer(), index)(request, templateDeduping, block._1) }
-        case Some("news/most-popular")          => { @containers.popular(block._2, PopularContainer(), index)(request, block._1) }
-        case Some("news/people")                => { @containers.people(block._2, PeopleContainer(), index)(request, templateDeduping, block._1) }
-        case Some("news/special")               => { @containers.special(block._2, SpecialContainer(), index)(request, templateDeduping, block._1) }
-        case Some("news/section")               => { @containers.section(block._2, SectionContainer(), index)(request, templateDeduping, block._1) }
-        case Some("features/section")           => { @containers.section(block._2, SectionContainer(tone = "feature"), index)(request, templateDeduping, block._1) }
-        case Some("comment/section")            => { @containers.section(block._2, SectionContainer(tone = "comment"), index)(request, templateDeduping, block._1) }
-        case Some("features/multimedia")        => { @containers.multimedia(block._2, MultimediaContainer(), index)(request, templateDeduping, block._1) }
-        case Some("features/auto")                => {
-                                                    @if(FeaturesAutoContainerSwitch.isSwitchedOn){
-                                                        @containers.featuresauto(block._2, FeaturesAutoContainer(), index)(request, templateDeduping, block._1)
-                                                    }else{
-                                                        @containers.features(block._2, FeaturesContainer(), index)(request, templateDeduping, block._1)
-                                                    }
+@block._1.collectionType match {
+    case Some("news")                       => { @containers.news(front, block._2, NewsContainer(), index)(request, templateDeduping, block._1) }
+    case Some("news/auto")                  => { @containers.news(front, ForceGroupsCollection.firstTwoBig(block._2), NewsContainer(), index)(request, templateDeduping, block._1) }
+    case Some("comment/comment-and-debate") => { @containers.commentanddebate(block._2, CommentAndDebateContainer(), index)(request, templateDeduping, block._1) }
+    case Some("features")                   => { @containers.features(block._2, FeaturesContainer(), index)(request, templateDeduping, block._1) }
+    case Some("news/most-popular")          => { @containers.popular(block._2, PopularContainer(), index)(request, block._1) }
+    case Some("news/people")                => { @containers.people(block._2, PeopleContainer(), index)(request, templateDeduping, block._1) }
+    case Some("news/special")               => { @containers.special(block._2, SpecialContainer(), index)(request, templateDeduping, block._1) }
+    case Some("features/multimedia")        => { @containers.multimedia(block._2, MultimediaContainer(), index)(request, templateDeduping, block._1) }
+    case Some("features/auto")                => {
+                                                @if(FeaturesAutoContainerSwitch.isSwitchedOn){
+                                                    @containers.featuresauto(block._2, FeaturesAutoContainer(), index)(request, templateDeduping, block._1)
+                                                }else{
+                                                    @containers.features(block._2, FeaturesContainer(), index)(request, templateDeduping, block._1)
                                                 }
-        case _                                  => { @containers.section(block._2, SectionContainer(), index)(request, templateDeduping, block._1) }
-    }
+                                            }
+    case _                                  => { @containers.special(block._2, SpecialContainer(), index)(request, templateDeduping, block._1) }
 }

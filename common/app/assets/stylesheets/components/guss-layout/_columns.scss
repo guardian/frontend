@@ -98,15 +98,18 @@ $guss-columns-fallback-columns: 3 !default;
             }
         }
         #{$base-class}__item {
-            @include box-sizing(border-box);
             position: relative;
-            float: left;
-            width: 100%; // Default mobile width
-            height: 100%;
+            display: block;
             @include rem((
                 margin-left: $column-gap / 2,
                 margin-right: $column-gap / 2
             ));
+
+            @include mq(tablet) {
+                float: left;
+                width: 100%; // Default mobile width
+                height: 100%;
+            }
 
             @if type-of($columns-fallback-width) == map {
                 // Author has specified various fallbacks depending on the breakpoint.
@@ -135,6 +138,13 @@ $guss-columns-fallback-columns: 3 !default;
                                                                     $number-of-columns: $number-of-fallback-columns
                                                                 )
                         ));
+
+                        &:nth-child(n) {
+                            clear: none;
+                        }
+                        &:nth-child(#{$number-of-fallback-columns}n+1) {
+                            clear: both;
+                        }
                     }
 
                 }
@@ -153,6 +163,13 @@ $guss-columns-fallback-columns: 3 !default;
                                                             $number-of-columns: $columns-fallback-columns
                                                         )
                 ));
+
+                &:nth-child(n) {
+                    clear: none;
+                }
+                &:nth-child(#{$number-of-fallback-columns}n+1) {
+                    clear: both;
+                }
             }
         }
     }
