@@ -8,7 +8,7 @@
  *
  * Usage 1: Sass mixin
  * @include guss-columns('.classname');
- * Examples: http://sassmeister.com/gist/7987988
+ * Examples: http://sassmeister.com/gist/35288593dc035ef645e1
  *
  * Usage 2: utility class set as `$guss-columns-utility-class`
  * @include guss-columns-utility;
@@ -26,7 +26,6 @@
  */
 
 $guss-column-min-width: 300px !default;
-$guss-column-rule: 1px solid #e3e3db !default;
 $guss-column-gap: 20px !default;
 
 $guss-columns-utility-class: '.l-columns';
@@ -35,15 +34,18 @@ $guss-columns-utility-class: '.l-columns';
 // http://caniuse.com/#feat=multicolumn
 $browser-supports-columns: true !default;
 
-// Static, non-responsive width for older browsers
+// Fallback width when CSS3 columns support is disabled
 $guss-columns-fallback-width: 940px !default;
 
 // Number of columns in the non-responsive version
 $guss-columns-fallback-columns: 3 !default;
 
+@function width-of-fallback-column-item($container-width, $gap-between-columns, $number-of-columns) {
+    @return ($container-width - $gap-between-columns * ($number-of-columns - 1)) / $number-of-columns;
+}
+
 @mixin guss-columns($base-class,
                     $column-min-width: $guss-column-min-width,
-                    $column-rule: $guss-column-rule,
                     $column-gap: $guss-column-gap,
                     $columns-fallback-width: $guss-columns-fallback-width,
                     $columns-fallback-columns: $guss-columns-fallback-columns,
@@ -51,17 +53,14 @@ $guss-columns-fallback-columns: 3 !default;
     @if $css3-columns-support {
         #{$base-class} {
             -webkit-column-width: rem($column-min-width);
-            -webkit-column-rule: $column-rule;
             -webkit-column-gap: rem($column-gap);
             -webkit-column-fill: balance;
 
             -moz-column-width: rem($column-min-width);
-            -moz-column-rule: $column-rule;
             -moz-column-gap: rem($column-gap);
             -moz-column-fill: balance;
 
             column-width: rem($column-min-width);
-            column-rule: $column-rule;
             column-gap: rem($column-gap);
             column-fill: balance;
         }
@@ -78,7 +77,8 @@ $guss-columns-fallback-columns: 3 !default;
             display: inline-block;
             width: 100%;
         }
-    } @else {
+    }
+    @if not $css3-columns-support {
         #{$base-class} {
             @include rem((
                 margin-left: $column-gap / 2 * -1,
@@ -98,30 +98,77 @@ $guss-columns-fallback-columns: 3 !default;
             }
         }
         #{$base-class}__item {
-            box-sizing: border-box;
             position: relative;
-            float: left;
-            height: 100%;
+            display: block;
             @include rem((
-                width: $columns-fallback-width / $columns-fallback-columns - $column-gap,
                 margin-left: $column-gap / 2,
                 margin-right: $column-gap / 2
             ));
-            @if $column-rule != none {
-                &:nth-child(n+1):before {
-                    content: '';
-                    position: absolute;
-                    top: 0;
-                    @include rem((
-                        left: $column-gap / 2 * -1
-                    ));
-                    bottom: 0;
-                    height: 100%;
-                    width: 1px;
-                    background: nth($column-rule, 3);
+
+            @include mq(tablet) {
+                float: left;
+                width: 100%; // Default mobile width
+                height: 100%;
+            }
+
+            @if type-of($columns-fallback-width) == map {
+                // Author has specified various fallbacks depending on the breakpoint.
+                // Note: breakpoints refer to names given to screen sizes in sass-mq
+                // 
+                // @include guss-columns(
+                //     (…)
+                //     $columns-fallback-width: (
+                //         tablet: gs-span(9),
+                //         desktop: gs-span(12)
+                //     ),
+                //     $columns-fallback-columns: (
+                //         tablet: 2,
+                //         desktop: 3
+                //     )
+                // );
+                @each $breakpoint, $fallback-width in $columns-fallback-width {
+
+                    $number-of-fallback-columns: if(type-of($columns-fallback-columns) == map, map-get($columns-fallback-columns, $breakpoint), $columns-fallback-columns);
+
+                    @include mq($breakpoint) {
+                        @include rem((
+                            width: width-of-fallback-column-item(
+                                                                    $container-width: $fallback-width,
+                                                                    $gap-between-columns: $column-gap,
+                                                                    $number-of-columns: $number-of-fallback-columns
+                                                                )
+                        ));
+
+                        &:nth-child(n) {
+                            clear: none;
+                        }
+                        &:nth-child(#{$number-of-fallback-columns}n+1) {
+                            clear: both;
+                        }
+                    }
+
                 }
-                &:nth-child(#{$columns-fallback-columns}n+1):before {
-                    display: none;
+            } @else {
+                // Author specified a single fallback width, that applies to all breakpoints
+                // 
+                // @include guss-columns(
+                //     (…)
+                //     $columns-fallback-width: 290px,
+                //     $columns-fallback-columns: 3
+                // );
+                @include rem((
+                    width: width-of-fallback-column-item(
+                                                            $container-width: $columns-fallback-width,
+                                                            $gap-between-columns: $column-gap,
+                                                            $number-of-columns: $columns-fallback-columns
+                                                        )
+                ));
+
+                &:nth-child(n) {
+                    clear: none;
+                }
+                &:nth-child(#{$number-of-fallback-columns}n+1) {
+                    clear: both;
                 }
             }
         }

@@ -172,9 +172,11 @@ Comments.prototype.ready = function() {
 
     if (this.options.commentId) {
         var comment = $('#comment-'+ this.options.commentId);
+        this.showHiddenComments();
         if (comment.attr('hidden')) {
             bean.fire($(this.getClass('showReplies'), comment.parent())[0], 'click');
         }
+        
         window.location.replace('#comment-'+ this.options.commentId);
     }
 
@@ -320,7 +322,7 @@ Comments.prototype.fetchComments = function(options) {
  */
 Comments.prototype.renderComments = function(resp) {
     var html = bonzo.create(resp.html),
-        comments = qwery(this.getClass('jsContent'), html);
+        content = qwery(this.getClass('jsContent'), html);
 
     // Stop duplication in new comments section
     qwery(this.getClass('comment'), this.getElem('newComments')).forEach(function(comment) {
@@ -330,8 +332,10 @@ Comments.prototype.renderComments = function(resp) {
         }
     });
 
-    $(this.getClass('jsContent'), this.elem).replaceWith(comments);
-    this.addMoreRepliesButtons(comments);
+    $(this.getClass('jsContent'), this.elem).replaceWith(content);
+    this.addMoreRepliesButtons(qwery(
+        this.getClass('comment'), content
+    ));
 
     if (!this.isReadOnly()) {
         RecommendComments.init(this.context);
@@ -346,6 +350,7 @@ Comments.prototype.renderComments = function(resp) {
 Comments.prototype.showHiddenComments = function(e) {
     if (e) { e.preventDefault(); }
     this.removeState('shut');
+    this.removeState('partial');
     this.emit('first-load');
 };
 
@@ -361,21 +366,20 @@ Comments.prototype.addMoreRepliesButtons = function (comments) {
             renderedReplies = qwery(self.getClass('reply'), elem);
 
         if (renderedReplies.length < replies) {
+            var numHiddenReplies = replies - renderedReplies.length,
+                showButtonHtml = '<li>'+
+                    '<span><i class="i i-plus-white-small"></i></span>'+
+                    'Show '+ numHiddenReplies +' more '+ (numHiddenReplies === 1 ? 'reply' : 'replies')+
+                '</li>';
 
-            var numHiddenReplies = replies - renderedReplies.length;
-
-            var showButton = '';
-            showButton += '<li class="' + self.getClass('showReplies', true) + '" ';
-            showButton += 'data-link-name="Show more replies" ';
-            showButton += 'data-is-ajax data-comment-id="' + elem.getAttribute('data-comment-id') + '">';
-            showButton += '<span><i class="i i-plus-white-small"></i></span>';
-            showButton += 'Show ' + numHiddenReplies + ' more ' + (numHiddenReplies === 1 ? 'reply' : 'replies');
-            showButton += '</li>';
-
-            showButton = bonzo.create(showButton);
-            bonzo(showButton).data('source-comment', elem);
-
-            bonzo(qwery('.d-thread--responses', elem)).append(showButton);
+            $.create(showButtonHtml)
+                .addClass(self.getClass('showReplies', true))
+                .data('source-comment', elem)
+                .attr({
+                    'data-link-name': 'Show more replies',
+                    'data-is-ajax': '',
+                    'data-comment-id': elem.getAttribute('data-comment-id')
+                }).appendTo($('.d-thread--responses', elem));
         }
     });
 };

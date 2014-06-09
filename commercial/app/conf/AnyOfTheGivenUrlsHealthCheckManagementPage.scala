@@ -1,9 +1,10 @@
 package conf
 
-import com.gu.management.{ManagementPage, ErrorResponse, PlainTextResponse, HttpRequest}
+import com.gu.management.{JsonResponse, ManagementPage, ErrorResponse, HttpRequest}
+import net.liftweb.json.JsonDSL._
 import play.api.libs.ws.WS
-import scala.concurrent.{Await, Future}
 import scala.concurrent.duration._
+import scala.concurrent.{Await, Future}
 
 /*
  * App is considered healthy if any of the given URLs is OK.
@@ -26,7 +27,9 @@ class AnyOfTheGivenUrlsHealthCheckManagementPage(urls: String*) extends Manageme
 
     Await.result(sequenced, atMost = 10.seconds) match {
 
-      case results if results.exists(_._2 == 200) => PlainTextResponse("OK")
+      case results if results.exists(_._2 == 200) =>
+        val resultMap = results.map { case (checkedUrl, status) => checkedUrl -> status}.toMap
+        JsonResponse(resultMap)
 
       case results =>
         val message = results map {

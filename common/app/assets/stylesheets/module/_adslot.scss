@@ -55,6 +55,19 @@
         transform: translateZ(0);
         @include transition(height 1s cubic-bezier(0, 0, 0, .985));
     }
+    @include mq(wide) {
+        .has-page-skin & {
+            .ad-slot--top-banner-ad {
+                width: 970px;
+                padding-left: 0;
+                text-align: center;
+            }
+            .ad-slot__label {
+                width: 720px;
+                margin: 0 auto;
+            }
+        }
+    }
 }
 .top-banner-ad-container--facia-layout .ad-slot--top-banner-ad {
     @include mq(faciaLeftCol) {
@@ -184,12 +197,25 @@
         display: block;
     }
 }
+/**
+ * Commercial Components
+ */
 .ad-slot--commercial-component,
 .ad-slot--commercial-component-high {
     min-height: 88px;
     @include rem((
         margin-top: $gs-baseline
     ));
+
+    @include mq(wide) {
+        .has-page-skin & {
+            margin-left: auto;
+            margin-right: auto;
+            @include rem((
+                width: gs-span(12) + ($gs-gutter*2)
+            ));
+        }
+    }
 }
 .ad-slot--commercial-component-high {
     display: none;
@@ -198,17 +224,15 @@
         display: block;
     }
 }
+/**
+ * Badges
+ */
 .ad-slot--paid-for-badge {
     text-align: left;
-    border-bottom: 1px dotted $c-neutral5;
     @include rem((
         padding: 2px 0 $gs-baseline
     ));
 
-    @include mq(leftCol) {
-        border-bottom-width: 0;
-        border-top: 1px dotted $c-neutral5;
-    }
     .ad-slot--paid-for-badge__inner {
         overflow: hidden;
 
@@ -227,12 +251,10 @@
     }
     .ad-slot--paid-for-badge__header,
     .ad-slot--paid-for-badge__label {
-        color: $c-neutral2;
         margin: 0;
-
-        .facia-container--advertisement-feature & {
-            color: $c-neutral2-contrasted;
-        }
+    }
+    .ad-slot--paid-for-badge__header {
+        font-weight: bold;
     }
     .ad-slot--paid-for-badge__link,
     .ad-slot--paid-for-badge__help {
@@ -254,77 +276,111 @@
             margin-top: $gs-baseline/3
         ));
     }
+}
+.ad-slot--adbadge {
+    .ad-slot--paid-for-badge__header,
+    .ad-slot--paid-for-badge__label {
+        color: $c-neutral2-contrasted;
+    }
+    .ad-slot--paid-for-badge__link {
+        @include rem((
+            margin-top: get-line-height($fs-data, 3)*-2
+        ));
+    }
+}
+.ad-slot--spbadge {
+    .ad-slot--paid-for-badge__header,
+    .ad-slot--paid-for-badge__label {
+        color: $c-neutral2;
+    }
+    .ad-slot--paid-for-badge__link {
+        @include rem((
+            margin-top: get-line-height($fs-data, 3)*-1
+        ));
+    }
+}
+.ad-slot--paid-for-badge--article {
+    border-bottom: 1px dotted $c-neutral5;
 
-    // badges in containers
-    .container & {
-        @include clearfix;
-        position: relative;
-        min-height: 90px;
-        border-top: 0;
-        z-index: 99;
+    @include mq(leftCol) {
         border-bottom-width: 0;
+        border-top: 1px dotted $c-neutral5;
+    }
+}
+.ad-slot--paid-for-badge--front {
+    @include clearfix;
+    position: relative;
+    min-height: 90px;
+    z-index: 99;
 
-        .ad-slot--paid-for-badge__link {
-            position: relative;
-            float: right;
+    .ad-slot--paid-for-badge__link {
+        position: relative;
+        float: right;
+    }
+    @include mq(tablet) {
+        margin-left: 50%;
+        padding-top: 0;
+        @include rem((
+            margin-top: -$gs-row-height
+        ));
+    }
+    @include mq(desktop) {
+        @include rem((
+            padding-left: $gs-gutter/2
+        ));
+    }
+    @include mq(tablet, $to: faciaLeftCol) {
+        .container--has-toggle & {
             @include rem((
-                margin-top: get-line-height($fs-data, 3)*-1
+                margin-right: gs-span(1)
             ));
         }
-        + .container__body .facia-slice-wrapper:first-child .fromage {
-            border-top-width: 2px;
+    }
+    @include mq(faciaLeftCol) {
+        padding: 0;
+        margin: 0;
+        float: left;
+        @include rem((
+            margin-top: 4px
+        ));
+
+        .ad-slot--paid-for-badge__link {
+            float: none;
+            @include rem((
+                margin-top: $gs-row-height/4
+            ));
         }
-        @include mq(tablet) {
+    }
+    @include mq(wide) {
+        clear: left;
+
+        .has-page-skin & {
             margin-left: 50%;
             width: auto;
-            padding-top: 0;
+            float: none;
             @include rem((
                 margin-top: -$gs-row-height
             ));
-        }
-        @include mq(desktop) {
-            @include rem((
-                padding-left: $gs-gutter/2
-            ));
-        }
-        @include mq(faciaLeftCol) {
-            padding: 0;
-            margin: 0;
-            float: left;
-            @include rem((
-                margin-top: 4px
-            ));
 
             .ad-slot--paid-for-badge__link {
-                float: none;
+                float: right;
                 @include rem((
-                    margin-top: $gs-row-height/4
+                    margin-top: get-line-height($fs-data, 3)*-1
                 ));
             }
-            + .container__body .facia-slice-wrapper:first-child .fromage {
-                border-top-width: 0;
-            }
-        }
-        @include mq(wide) {
-            clear: left;
         }
     }
 }
-.page-skin-container {
-    display: none;
-
-    @include mq(wide) {
-        display: block;
-        position: relative;
-        width: 1300px;
-        margin: 0 auto;
-    }
-}
+/**
+ * Page Skins
+ */
 .ad-slot--page-skin {
-    z-index: 0;
-    position: absolute;
-    top: 0;
-    @include transition(top .5s)
+    height: 0;
+}
+@include mq(mobile, $to: wide) {
+    .has-page-skin {
+        background-image: none !important;
+    }
 }
 .ad-slot__label {
     height: $mpu-ad-label-height;

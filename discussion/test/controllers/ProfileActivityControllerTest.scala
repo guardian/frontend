@@ -18,7 +18,7 @@ class ProfileActivityControllerTest extends FlatSpec with Matchers {
 
     status(result) should be(200)
     contentType(result).get should be("application/json")
-    contentAsString(result) should include("class=\\\"profile-discussions\\\"")
+    contentAsString(result) should include("class=\\\"activity-stream activity-stream--discussions\\\"")
   }
 
 }

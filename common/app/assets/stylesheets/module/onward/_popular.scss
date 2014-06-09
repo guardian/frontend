@@ -1,6 +1,6 @@
 @include mq(rightCol) {
 
-    @include guss-columns('.headline-column', $column-min-width: 190px, $column-rule: none);
+    @include guss-columns('.headline-column', $column-min-width: 190px);
 
     .container--popular {
 
@@ -16,7 +16,9 @@
             max-width: 100%;
             width: 100%;
             border-top: 0;
-            padding: $gs-baseline/3 $gs-gutter/4 $gs-baseline/3 0;
+            @include rem((
+                padding: $gs-baseline/3 $gs-gutter/4 $gs-baseline/3 0
+            ));
 
             a {
                 padding: 0;
@@ -46,10 +48,12 @@
         .headline-list--large {
 
             .headline-list__item {
-                min-height: gs-height(2) + $gs-baseline;
-                padding-top: $gs-baseline/2;
-                padding-bottom: $gs-baseline/2;
-                padding-left: 50px;
+                @include rem((
+                    min-height: gs-height(2) + $gs-baseline,
+                    padding-top: $gs-baseline/2,
+                    padding-bottom: $gs-baseline/2,
+                    padding-left: 50px
+                ));
 
                 &:before {
                     left: 0;
@@ -57,9 +61,11 @@
                 }
 
                 &:first-child {
-                    min-height: gs-height(7);
+                    @include rem((
+                        min-height: gs-height(7),
+                        padding-bottom: $gs-baseline
+                    ));
                     padding-left: 0;
-                    padding-bottom: $gs-baseline;
 
                     .headline-list__count {
                         top: 10px;
@@ -70,9 +76,11 @@
 
                     .headline-list__body {
                         width: auto;
-                        min-height: $gs-row-height;
-                        padding-left: 50px;
-                        padding-bottom: 24px;
+                        @include rem((
+                            min-height: $gs-row-height,
+                            padding-left: 50px,
+                            padding-bottom: 24px
+                        ));
                         @include fs-headline(2, true);
                     }
 
@@ -107,16 +115,14 @@
 
     .container--popular {
 
-        .tabs { position: relative; }
+        .tabs {
+            position: relative;
+        }
 
         .tabs__container {
             position: absolute;
             left: 0;
             top: 0;
-        }
-
-        .tabs__content {
-            margin-left: $a-leftCol-width + $gs-gutter;
         }
 
     }
@@ -126,9 +132,21 @@
 
     .container--popular {
 
+        .tabs {
+            @include rem((
+                padding-left: $a-leftCol-width + $gs-gutter,
+            ));
+            position: relative;
+        }
+
         .tabs__container {
-            width: $a-leftCol-width;
-            padding-right: $gs-gutter;
+            @include rem((
+                width: $a-leftCol-width,
+                padding-right: $gs-gutter
+            ));
+            position: absolute;
+            left: 0;
+            top: 0;
         }
 
         .tabs__content {
@@ -142,14 +160,23 @@
 
     .container--popular {
 
+        .tabs {
+            @include rem((
+                padding-left: $a-leftColWide-width + $gs-gutter,
+            ));
+        }
+
         .tabs__container {
-            position: static;
             float: left;
-            width: $a-leftColWide-width;
+            @include rem((
+                width: $a-leftColWide-width
+            ));
         }
 
         .tabs__content {
-            width: gs-span(12);
+            @include rem((
+                width: gs-span(12)
+            ));
             float: left;
             clear: none;
             margin-left: 0;

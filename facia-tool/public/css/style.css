@@ -760,6 +760,7 @@ button {
 
 .instructions {
     font-size: 12px;
+    line-height: 14px;
     color: #999999;
 }
 
@@ -796,6 +797,10 @@ button {
     padding: 0 10px 0 10px;
 }
 
+.cnf-front__collections {
+    margin-top: 10px;
+}
+
 .cnf-collections {
     margin: 10px 0 0 0;
 }
@@ -826,9 +831,11 @@ button {
 }
 
 .cnf-collection__index {
-    color: #dbd8c9;
+    color: #666666;
     display: inline-block;
     width: 15px;
+    font-size: 12px;
+    line-height: 14px;
 }
 
 .cnf-collection__name {
@@ -883,7 +890,7 @@ button {
     float: left;
     font-size: 12px;
     color: #666666;
-    margin: 1px 0 0 0;
+    margin: 1px 0 0 6px;
 }
 
 .cnf-form input,
@@ -903,6 +910,19 @@ button {
     line-height: 14px;
     width: 300px;
     margin: 0 0 2px 0;
+}
+
+.cnf-form select {
+    padding-left: 1px;
+}
+
+.cnf-form select.is-placeholder,
+.cnf-form select option:first-child {
+    color: #999999;
+}
+
+.cnf-form input[type="checkbox"] {
+    margin-left: 4px;
 }
 
 .cnf-form .tools {

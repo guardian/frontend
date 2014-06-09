@@ -35,6 +35,13 @@
     max-width: none;
 }
 
+.identity-header {
+    @include rem((
+        margin-left: $gs-gutter,
+        margin-right: $gs-gutter
+    ));
+}
+
 .identity-section {
     border-top: 1px solid $c-neutral7;
     @include box-sizing(border-box);
@@ -327,6 +334,7 @@
         margin-top: -$gs-baseline*2
     ));
 }
+
 .identity-public-profile {
     .identity-section__text {
         white-space: pre-line;
@@ -377,5 +385,10 @@
         height: 35px;
         width: 54px;
         vertical-align: middle;
+=======
+.tabs--identity {
+    .tabs__tab--selected {
+        border-top-color: $c-newsAccent;
+>>>>>>> 3720d4963a033d2e421e34b512c0e1994d997ef3
     }
 }

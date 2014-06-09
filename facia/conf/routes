@@ -15,10 +15,6 @@ GET        /$path<(culture|sport|commentisfree|business|money|rss)>    controlle
 #Facia Press
 GET        /pressed/*path                                              controllers.FaciaController.renderFrontPress(path)
 
-GET        /collection/*id/rss                                         controllers.FaciaController.renderCollectionRss(id)
-GET        /collection/*id.json                                        controllers.FaciaController.renderCollectionJson(id)
-GET        /collection/*id                                             controllers.FaciaController.renderCollection(id)
-
 GET        /container/*id.json                                         controllers.FaciaController.renderContainerJson(id)
 
 # Editionalised pages

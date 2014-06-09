@@ -240,10 +240,16 @@ $c-soulmates-red: #d70851;
         }
     }
     @include mq(desktop) {
+        .commercial__body {
+            padding-left: 0;
+        }
         .commercial__search {
             @include rem((
                 padding-left: $gs-gutter/2
             ));
+        }
+        .commercial__head {
+            width: auto;
         }
     }
     @include mq(faciaLeftCol) {

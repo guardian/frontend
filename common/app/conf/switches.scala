@@ -46,7 +46,7 @@ object Switches extends Collections {
 
   // this is 3 months - at the end of this a decision is expected
   // and one (or both) of the 2 needs to go.
-  private lazy val profilingEvalDeadline = new DateMidnight(2014, 6, 4)
+  private lazy val profilingEvalDeadline = new DateMidnight(2014, 6, 10)
 
 
   // Load Switches
@@ -125,9 +125,14 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 6, 30)
   )
 
+  val SurveyBannerSwitch = Switch("Advertising", "survey-banner",
+    "Display survey banner on all devices",
+    safeState = Off, sellByDate = new DateMidnight(2014, 7, 1)
+  )
+
   val ForcePageSkinSwitch = Switch("Advertising", "force-page-skin",
     "Temp switch, allows us to force the page into 'page skin' mode",
-    safeState = Off, sellByDate = new DateMidnight(2014, 6, 7)
+    safeState = Off, sellByDate = new DateMidnight(2014, 6, 14)
   )
 
   // Ad Targeting
@@ -267,11 +272,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 6, 30)
   )
 
-  val ArticleSlotsSwitch = Switch("Feature Switches", "article-slots",
-    "If this switch is on, inline content slots (for stories, ads, etc) will be generated in article bodies",
-    safeState = Off, sellByDate = new DateMidnight(2014, 7, 1)
-  )
-
   val IndiaRegionSwitch = Switch("Feature Switches", "india-region",
     "If this switch is switched on then the India region will be enabled",
     safeState = Off,
@@ -295,12 +295,6 @@ object Switches extends Collections {
     safeState = On, sellByDate = new DateMidnight(2014, 6, 30)
   )
 
-  val FaciaFirstContainerLayoutOverrideSwitch = Switch("Feature Switches", "facia-first-container-layout-override",
-    "If this switch is turned on then the first container on every facia front will have a fixed layout " +
-      "containing two slices with one big article in each one of them",
-    safeState = On, sellByDate = new DateMidnight(2014, 6, 10)
-  )
-
   val EnhanceTweetsSwitch = Switch("Feature Switches", "enhance-tweets",
     "If this switch is turned on then embedded tweets will be enhanced using Twitter's widgets.",
     safeState = Off, sellByDate = never
@@ -315,7 +309,7 @@ object Switches extends Collections {
 
   val ABHighRelevanceCommercialComponent = Switch("A/B Tests", "ab-high-relevance-commercial-component",
     "If this switch is turned on, run the HighRelevanceCommercialComponent A/B test.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 6, 5)
+    safeState = Off, sellByDate = new DateMidnight(2014, 6, 19)
   )
 
   val ABHideSupportingLinks = Switch("A/B Tests", "ab-hide-supporting-links",
@@ -395,15 +389,10 @@ object Switches extends Collections {
 
   val FaciaToolContainerTagsSwitch = Switch("Facia Tool", "facia-tool-tags",
     "If this switch is on the container configuration will allow articles to show their tags or sections",
-    safeState = Off, sellByDate = new DateMidnight(2014, 6, 7)
+    safeState = Off, sellByDate = new DateMidnight(2014, 7, 7)
   )
 
   // Facia Switches
-
-  val NewSeoSwitch = Switch("Facia Switches", "new-seo-switch",
-    "If this switch is on then the SEO elements for pages will be take from the tool, content api and generated",
-    safeState = Off, sellByDate = new DateMidnight(2014, 6, 30)
-  )
 
   val FeaturesAutoContainerSwitch = Switch("Facia Switches", "facia-features-auto-container",
     "If this switch is on, the features auto container has the right to live.",
@@ -462,7 +451,6 @@ object Switches extends Collections {
     LCMortgageFeedSwitch,
     GuBookshopFeedsSwitch,
     NetworkFrontOptIn,
-    ArticleSlotsSwitch,
     ImageServerSwitch,
     FaciaToolPressSwitch,
     ShowAllArticleEmbedsSwitch,
@@ -475,14 +463,13 @@ object Switches extends Collections {
     IndiaRegionSwitch,
     MemcachedSwitch,
     IncludeBuildNumberInMemcachedKey,
-    NewSeoSwitch,
     GeoMostPopular,
     TagLinkingSwitch,
-    FaciaFirstContainerLayoutOverrideSwitch,
     ABHighRelevanceCommercialComponent,
     ABHideSupportingLinks,
     ABAcrossTheGuardian,
     SmartBannerSwitch,
+    SurveyBannerSwitch,
     FeaturesAutoContainerSwitch,
     ForcePageSkinSwitch
   )

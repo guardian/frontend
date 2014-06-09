@@ -15,13 +15,22 @@
             }
         </div>
 
-        <div class="d-discussion__meta d-dicussion__meta--sorting d-meta-item">
+        <div class="d-discussion__meta d-dicussion__meta--sorting d-meta-item js-visible">
             Comments sorted
             <select class="d-discussion__order-control">
                 <option value="oldest" @if(page.orderBy == "oldest"){selected="selected"}>oldest</option>
                 <option value="newest" @if(page.orderBy == "newest"){selected="selected"}>newest</option>
             </select>
             first.
+        </div>
+        <div class="d-discussion__meta d-dicussion__meta--sorting js-hidden">
+            Sort comments
+            @defining(if(page.orderBy == "oldest") "newest" else "oldest"){ orderTo =>
+                <span class="js-hidden">
+                    <a href="@LinkTo{/discussion/@orderTo/@page.id}">@orderTo</a>
+                </span>
+            }
+            first
         </div>
     </div>
 

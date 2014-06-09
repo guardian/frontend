@@ -62,8 +62,7 @@ case class ProfileDiscussions(
   profile: Profile,
   discussions: Seq[DiscussionComments]
 )
-
-object ProfileDiscussions{
+object ProfileDiscussions {
 
   def apply(json: JsValue): ProfileDiscussions = {
     val profile = Profile(json)
@@ -83,6 +82,24 @@ object ProfileDiscussions{
     ProfileDiscussions(
       profile = profile,
       discussions = discussions
+    )
+  }
+}
+
+case class ProfileReplies(
+  profile: Profile,
+  comments: Seq[Comment]
+)
+object ProfileReplies {
+
+  def apply(json: JsValue): ProfileReplies = {
+    val profile = Profile(json)
+    val comments = (json \ "comments").as[JsArray].value map { c =>
+      Comment(c, None, None)
+    }
+    ProfileReplies(
+      profile = profile,
+      comments = comments
     )
   }
 }

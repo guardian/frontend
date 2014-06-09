@@ -69,6 +69,33 @@ $fs-textsans: (
 @import "path/to/_font-scale.scss";
 ```
 
+## Suggested default type settings
+
+To kick start a project with scalable typography,
+here are the suggested default global type settings:
+
+```scss
+html {
+    font-family: $serif;
+    // Make type rendering look crisper
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+
+    // Set baseline font size to 10px
+    // This is used as a baseline for rem (root ems) values
+    font-size: 62.5%;
+
+    // For IE11 to do the math properly
+    // See http://bit.ly/1g4X0bX — thanks @7studio and @dawitti
+    font-size: calc(1em * .625);
+}
+body {
+    color: $c-neutral1;
+    font-size: 1.6em; // Bump font-size back up to 16px
+    line-height: 1.5;
+}
+```
+
 ## Usage
 
 Refer yourself to the matrix below, using these principles:
@@ -96,6 +123,6 @@ Provides Sass mixins and values for the Guardian typography & font scale.
 
 ![Font scale](font-scale.png)
 
-### NB
+### Nota Bene
 
 `HeadlineSans` is not currently integrated into our font scale, hence no `fs-` mixin; currently we're just using it as a replacement font in a few places.

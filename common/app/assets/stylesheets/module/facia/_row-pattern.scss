@@ -21,7 +21,7 @@
     margin-right: 0;
 }
 .facia-slice__item {
-    position: relative; // Replace .item as a relative context
+    position: relative;
 
     @include rem((
         padding-bottom: 20px,
@@ -33,7 +33,7 @@
         padding-bottom: 0;
     }
     & + .facia-slice__item {
-        @include vertical-item-separator; // Restore inter-item separator
+        @include vertical-item-separator;
     }
 
     .l-row--layout-m & {
@@ -45,59 +45,7 @@
     }
 }
 
-.container--row-pattern {
-    .item {
-        display: block;
-        margin-top: 0;
-        position: static; // Children should be relative to the row__item
-        padding-bottom: 0;
-        @include clearfix;
-
-        @include rem((
-            margin-bottom: $gs-baseline/2
-        ));
-
-        &:before {
-            // Remove inter-item separator
-            // (restored on facia-slice__item)
-            display: none;
-        }
-        // Restore top tone border on first item of each row
-        &:first-child .item__link {
-            border-top-style: solid;
-        }
-    }
-    .facia-slice {
-        margin-left: auto;
-        margin-right: auto;
-
-        @include mq(tablet) {
-            overflow: visible; // Prevents height issue in Firefox < 22
-        }
-    }
-    .item__title {
-        @include fs-headline(1, true);
-    }
-    .item__media-wrapper,
-    .item__image-container {
-        display: none;
-    }
-    .item__media-wrapper {
-        position: relative;
-    }
-    .item--has-image {
-        .item__media-wrapper,
-        .item__image-container {
-            display: block;
-
-            .js-off & {
-                display: none !important;
-            }
-        }
-    }
-}
-
-.container .l-row--items-4 {
+.l-row--items-4 {
     .item__byline {
         @include fs-headline(1, true);
     }

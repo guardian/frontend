@@ -1,57 +1,80 @@
 package controllers.commercial
 
-import play.api.mvc._
-import model.Cached
-import common.JsonComponent
 import model.commercial.money._
+import model.{NoCache, Cached}
+import performance.MemcachedAction
+import play.api.mvc._
+import play.api.templates.Html
+import scala.concurrent.Future
 
 object MoneyOffers extends Controller {
 
-  def bestBuys(format: String) = Action {
-    implicit request =>
-      (BestBuysAgent.adsTargetedAt(segment), format) match {
-        case (Some(products), "json") =>
-          Cached(60)(JsonComponent(views.html.moneysupermarket.bestBuys(products)))
-        case (Some(products), "html") =>
-          Cached(60)(Ok(views.html.moneysupermarket.bestBuys(products)))
-        case _ => NotFound
+  object lowRelevance extends BestBuysRelevance {
+    override def view(bestBuys: BestBuys)(implicit request: RequestHeader): Html =
+      views.html.moneysupermarket.bestBuys(bestBuys)
+  }
+
+  object highRelevance extends BestBuysRelevance {
+    override def view(bestBuys: BestBuys)(implicit request: RequestHeader): Html =
+      views.html.moneysupermarket.bestBuysHigh(bestBuys)
+  }
+
+  private def bestBuys(relevance: BestBuysRelevance, format: Format) = MemcachedAction { implicit request =>
+    Future.successful {
+      BestBuysAgent.adsTargetedAt(segment) match {
+        case Some(products) => Cached(componentMaxAge)(format.result(relevance.view(products)))
+        case None => NoCache(format.nilResult)
       }
-  }
-
-  def savings(savingsType: String) = Action { implicit request =>
-    SavingsPages.find(savingsType).map { page =>
-      val savings: Seq[SavingsAccount] = BestBuysAgent.adsTargetedAt(segment).flatMap(_.savings.get(savingsType)).getOrElse(Nil)
-      Cached(60)(Ok(views.html.moneysupermarket.savings.render(page, savings)))
-    }.getOrElse {
-      Cached(60)(NotFound)
     }
   }
 
-  def currentAccounts(currentAccountType: String) = Action { implicit request =>
-    CurrentAccountsPages.find(currentAccountType).map { page =>
-      val currentAccounts: Seq[CurrentAccount] = BestBuysAgent.adsTargetedAt(segment).flatMap(_.currentAccounts.get(currentAccountType)).getOrElse(Nil)
-      Cached(60)(Ok(views.html.moneysupermarket.currentAccounts.render(page, currentAccounts)))
-    }.getOrElse {
-      Cached(60)(NotFound)
+  def bestBuysLowHtml = bestBuys(lowRelevance, htmlFormat)
+  def bestBuysLowJson = bestBuys(lowRelevance, jsonFormat)
+
+  def bestBuysHighHtml = bestBuys(highRelevance, htmlFormat)
+  def bestBuysHighJson = bestBuys(highRelevance, jsonFormat)
+
+  def savings(savingsType: String) = MemcachedAction { implicit request =>
+    Future.successful {
+      SavingsPages.find(savingsType).fold(Cached(componentMaxAge)(NotFound)) { page =>
+        val savings = BestBuysAgent.adsTargetedAt(segment).flatMap(_.savings.get(savingsType)).getOrElse(Nil)
+        Cached(componentMaxAge)(Ok(views.html.moneysupermarket.savings.render(page, savings)))
+      }
     }
   }
 
-  def creditCards(creditCardType: String) = Action { implicit request =>
-    CreditCardsPages.find(creditCardType).map { page =>
-      val creditCards: Seq[CreditCard] = BestBuysAgent.adsTargetedAt(segment).flatMap(_.creditCards.get(creditCardType)).getOrElse(Nil)
-      Cached(60)(Ok(views.html.moneysupermarket.creditCards.render(page, creditCards)))
-    }.getOrElse {
-      Cached(60)(NotFound)
+  def currentAccounts(currentAccountType: String) = MemcachedAction { implicit request =>
+    Future.successful {
+      CurrentAccountsPages.find(currentAccountType).fold(Cached(componentMaxAge)(NotFound)) { page =>
+        val currentAccounts = BestBuysAgent.adsTargetedAt(segment).flatMap(_.currentAccounts.get(currentAccountType))
+          .getOrElse(Nil)
+        Cached(componentMaxAge)(Ok(views.html.moneysupermarket.currentAccounts.render(page, currentAccounts)))
+      }
     }
   }
 
-  def loans(loanType: String) = Action { implicit request =>
-    LoansPages.find(loanType).map { page =>
-      val loans: Seq[Loan] = BestBuysAgent.adsTargetedAt(segment).map(_.loans).getOrElse(Nil).filter(_.categoryName == page.category)
-      Cached(60)(Ok(views.html.moneysupermarket.loans(page, loans)))
-    }.getOrElse {
-      Cached(60)(NotFound)
+  def creditCards(creditCardType: String) = MemcachedAction { implicit request =>
+    Future.successful {
+      CreditCardsPages.find(creditCardType).fold(Cached(componentMaxAge)(NotFound)) { page =>
+        val creditCards = BestBuysAgent.adsTargetedAt(segment).flatMap(_.creditCards.get(creditCardType)).getOrElse(Nil)
+        Cached(componentMaxAge)(Ok(views.html.moneysupermarket.creditCards.render(page, creditCards)))
+      }
     }
   }
 
+  def loans(loanType: String) = MemcachedAction { implicit request =>
+    Future.successful {
+      LoansPages.find(loanType).fold(Cached(componentMaxAge)(NotFound)) { page =>
+        val loans = BestBuysAgent.adsTargetedAt(segment).map(_.loans).getOrElse(Nil).filter(_.categoryName == page
+          .category)
+        Cached(componentMaxAge)(Ok(views.html.moneysupermarket.loans(page, loans)))
+      }
+    }
+  }
+
+}
+
+
+sealed trait BestBuysRelevance {
+  def view(bestBuys: BestBuys)(implicit request: RequestHeader): Html
 }

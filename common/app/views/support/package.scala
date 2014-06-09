@@ -1,7 +1,7 @@
 package views.support
 
 import common._
-import conf.Switches.{ ShowAllArticleEmbedsSwitch, ArticleSlotsSwitch, TagLinkingSwitch, FeaturesAutoContainerSwitch }
+import conf.Switches.{ ShowAllArticleEmbedsSwitch, TagLinkingSwitch, FeaturesAutoContainerSwitch }
 import model._
 
 import java.net.URLEncoder._
@@ -91,9 +91,6 @@ case class PeopleContainer(showMore: Boolean = true) extends Container {
 case class SpecialContainer(showMore: Boolean = true) extends Container {
   val containerType = "special"
   val tone = "news"
-}
-case class SectionContainer(showMore: Boolean = true, tone: String = "news") extends Container {
-  val containerType = "section"
 }
 case class MultimediaContainer(showMore: Boolean = true) extends Container {
   val containerType = "multimedia"
@@ -433,80 +430,6 @@ object TweetCleaner extends HtmlCleaner {
         element.appendChild(userEl).appendChild(date).appendChild(body)
       }
     }
-    document
-  }
-}
-
-case class InlineSlotGenerator(articleWordCount: Int) extends HtmlCleaner {
-
-  private def isBlock(element: Element): Boolean = {
-      (element.hasClass("img") && !element.hasClass("img--inline")) ||
-       element.hasClass("embed-video-wrapper") ||
-       element.hasClass("gu-video-wrapper") ||
-       element.tagName == "video" ||
-       element.tagName == "figure"
-  }
-
-  private def getPreviousElement(element: Element): Element = {
-    if (element.previousElementSibling != null && element.previousElementSibling.tagName == "br") {
-      getPreviousElement(element.previousElementSibling)
-    } else {
-      element.previousElementSibling
-    }
-  }
-
-  private def insertSlot(paragraph: Element, document: Document) {
-    val prev = getPreviousElement(paragraph)
-    val slot = document.createElement("div")
-    paragraph.before(slot)
-
-    if (isBlock(prev)) {
-      slot.attr("class", "slot slot--block")
-    } else if (prev.tagName == "h2") {
-      slot.attr("class", "slot slot--posth2")
-      val mobileSlot = document.createElement("div")
-      mobileSlot.attr("class", "slot slot--preh2")
-      prev.before(mobileSlot)
-    } else {
-      slot.attr("class", "slot slot--text")
-    }
-  }
-
-  override def clean(document: Document): Document = {
-
-    if (ArticleSlotsSwitch.isSwitchedOn && articleWordCount > 350) {
-
-      var lastInline = -200
-
-      var offset = 0
-      val scaling = ((articleWordCount - 350) / 1500.0f) * 400.0f
-      val spacing = 850 + scaling.toInt.max(400)
-      val minFollowingText = 750
-      val children = document.select("body > *")
-
-      children.zipWithIndex.foreach { case (element, index) =>
-
-        if (element.attr("class").split(" ").contains("img--inline")) {
-          lastInline = offset
-        }
-        else if (element.tagName == "p" && lastInline + spacing < offset && !element.hasClass("img")) {
-
-          val followingTextLen = children.slice(index, children.length).takeWhile(_.tagName == "p").map(_.text.length).reduce(_ + _)
-
-          if (followingTextLen > minFollowingText) {
-            insertSlot(element, document)
-            lastInline = offset
-          }
-        }
-
-        if (element.tagName.in(Set("p","h2"))) offset += element.text.length
-      }
-
-      document.select("body .slot").zipWithIndex.foreach { case (slot, index) =>
-        slot.attr("data-link-name", s"inline slot | $index")
-      }
-    }
-
     document
   }
 }
@@ -878,6 +801,25 @@ object GetClasses {
   def makeSnapClasses(trail: Trail): Seq[String] = trail match {
     case snap: Snap => "facia-snap" +: snap.snapCss.map(t => Seq(s"facia-snap--$t")).getOrElse(Seq("facia-snap--default"))
     case _  => Nil
+  }
+
+  def forContainer(container: Container, config: Config, index: Int, hasTitle: Boolean, extraClasses: Seq[String] = Nil): String = {
+    val baseClasses = Seq(
+      "container",
+      s"container--${container.containerType}"
+    ) ++ extraClasses
+    val f: Seq[(Container, Config, Int, Boolean) => String] = Seq(
+      (container: Container, config: Config, index: Int, hasTitle: Boolean) =>
+        if (config.isSponsored) "container--sponsored" else "",
+      (container: Container, config: Config, index: Int, hasTitle: Boolean) =>
+        if (config.isAdvertisementFeature && !config.isSponsored) "container--advertisement-feature" else "",
+      (container: Container, config: Config, index: Int, hasTitle: Boolean) =>
+        if (index == 0) "container--first" else "",
+      (container: Container, config: Config, index: Int, hasTitle: Boolean) =>
+        if (index > 0 && hasTitle) "js-container--toggle" else ""
+    )
+    val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(container, config, index, hasTitle)}
+    RenderClasses(classes:_*)
   }
 
 }

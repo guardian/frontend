@@ -1,8 +1,14 @@
 {
   "name": "guss-rem",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "main": "_rem.scss",
   "ignore": [
-    "CHANGELOG.md"
-  ]
+    "CHANGELOG.md",
+    "specs",
+    "Gruntfile.js",
+    "tests.scss"
+  ],
+  "devDependencies": {
+    "bootcamp": "~1.1.4"
+  }
 }
