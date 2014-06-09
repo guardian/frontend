@@ -129,13 +129,9 @@ define([
 
             s.prop11 = config.page.sectionName || '';
             s.prop43 = 'Video';
-            s.prop44 = config.page.analyticsName;
-            s.prop45 = s.channel;
 
             s.eVar11 = s.prop11;
             s.eVar43 = s.prop43;
-            s.eVar44 = s.prop44;
-            s.eVar45 = s.prop45;
 
             var play = common.debounce(that.play, 250);
 
