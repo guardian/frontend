@@ -31,7 +31,7 @@ define(['common/$',
     * @type {string}
     * @override
     */
-    Membership.prototype.endpoint = '/membership.json';
+    Membership.prototype.endpoint = config.page.idUrl+'/membership.json';
 
     /**
     * @override
