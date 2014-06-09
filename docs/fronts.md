@@ -16,7 +16,7 @@ As soon as an individual collection is edited, the Presser re-creates a `pressed
 
 A large number of ContentApi requests are made in order to produce each front's `pressed.json` file. Due to this dependency, the Presser is the point in the architecture that has the most potential for failure. The metrics and alerts relate principally to its ongoing ability to produce of `pressed.json` files.
 
-Some of the metrics are to designed to identify terminally unhealthy processes. Others are indicators of problems in the broader network (notably ContentApi). Others monitor the speed at which updates travel through the architecture.
+Some of the metrics are to designed to identify terminally unhealthy processes. Others are informational and indicate problems in the broader network (notably ContentApi). Others monitor the speed at which updates travel through the architecture.
 
 ### Succesive press failures - MANUAL presser (facia-tool)
 
