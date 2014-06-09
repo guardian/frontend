@@ -23,7 +23,7 @@ define([
     storage.local.set(IMPRESSION_KEY, ++impressions);
 
     function canShow() {
-        return impressions >= 3;
+        return false;
     }
 
     function showMessage() {
