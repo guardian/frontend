@@ -13,7 +13,7 @@
 
     @if(content.isArticle && !content.shouldHideAdverts) {
         <div class="facia-container facia-container--layout-article facia-container--commercial">
-            @fragments.commercial.commercialComponent(name="merchandising-high", adType="commercial-component-high")
+            @fragments.commercial.commercialComponent("merchandising-high", Seq("commercial-component-high"))
         </div>
     }
 
@@ -28,7 +28,7 @@
 
     @if(content.isArticle && !content.shouldHideAdverts) {
         <div class="facia-container facia-container--layout-article facia-container--commercial">
-            @fragments.commercial.commercialComponent(name = "merchandising", adType = "commercial-component")
+            @fragments.commercial.commercialComponent("merchandising", Seq("commercial-component"))
         </div>
     }
 

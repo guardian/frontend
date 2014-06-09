@@ -1,0 +1,5 @@
+@import conf.Switches._
+
+@if(SponsoredSwitch.isSwitchedOn) {
+    @fragments.commercial.adSlot("pageskin", Seq("page-skin"), Map("wide" -> Seq("1300,1200")), showLabel=false, refresh=false)
+}

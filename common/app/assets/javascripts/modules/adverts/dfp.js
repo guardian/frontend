@@ -15,6 +15,7 @@ define([
     'lodash/arrays/uniq',
     'lodash/functions/once',
     'lodash/objects/defaults',
+    'lodash/objects/isArray',
     'lodash/objects/pairs',
     'common/utils/template'
 ], function (
@@ -33,6 +34,7 @@ define([
     uniq,
     once,
     defaults,
+    isArray,
     pairs,
     template
 ) {
@@ -269,7 +271,7 @@ define([
             }
             return '/' + config.page.dfpAccountId + '/' + config.page.dfpAdUnitRoot + '/' + adUnitSuffix;
         },
-        createAdSlot = function(name, type, keywords) {
+        createAdSlot = function(name, types, keywords) {
             var definition = adSlotDefinitions[name],
                 dataAttrs = {
                     refresh: definition.refresh !== undefined ? definition.refresh : true,
@@ -277,13 +279,13 @@ define([
                 },
                 $adSlot = $.create(template(
                     '<div id="dfp-ad--{{name}}" ' +
-                        'class="ad-slot ad-slot--dfp ad-slot--{{type}}" ' +
+                        'class="ad-slot ad-slot--dfp ad-slot--{{name}} {{types}}" ' +
                         'data-link-name="ad slot {{name}}" ' +
                         'data-name="{{name}}"' +
                         '{{sizeMappings}}></div>',
                     {
                         name: name,
-                        type: type,
+                        types: (isArray(types) ? types : [types]).map(function(type) { return 'ad-slot--' + type; }).join(' '),
                         sizeMappings: pairs(definition.sizeMappings).map(function(size) { return ' data-' + size[0] + '="' + size[1] + '"'; }).join('')
                     }));
             for (var attrName in dataAttrs) {

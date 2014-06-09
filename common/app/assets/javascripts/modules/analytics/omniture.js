@@ -135,6 +135,13 @@ define([
             s.prop10    = config.page.tones || '';
 
             s.prop13    = config.page.series || '';
+
+            /* Set Time Parting Day and Hour Combination - 0 = GMT */
+            var tpA = s.getTimeParting('n','+0');
+            s.prop20 = tpA[2] + ':' + tpA[1];
+            s.eVar20 = 'D=c20';
+
+            
             s.prop25    = config.page.blogs || '';
 
             s.prop14    = config.page.buildNumber || '';
