@@ -280,11 +280,6 @@ object Switches extends Collections {
     sellByDate = new DateMidnight(2014, 10, 30)
   )
 
-  val LayoutHintsSwitch = Switch("Feature Switches", "layout-hints",
-    "If this switch is on, JavaScript will enable the inline-hinting css experiments",
-    safeState = Off, sellByDate = new DateMidnight(2014, 6, 10)
-  )
-
   val RssLinkSwitch = Switch("Feature Switches", "rss-link",
     "If this switch is on a link to the RSS is rendered in the HTML",
     safeState = Off, sellByDate = new DateMidnight(2014, 6, 30)
@@ -456,7 +451,6 @@ object Switches extends Collections {
     ShowAllArticleEmbedsSwitch,
     FrontPressJobSwitch,
     FaciaToolContainerTagsSwitch,
-    LayoutHintsSwitch,
     RssLinkSwitch,
     EnhanceTweetsSwitch,
     WorldCupWallchartEmbedSwitch,
