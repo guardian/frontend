@@ -1,6 +1,5 @@
 package com.gu.fronts.integration.test.common;
 
-import org.junit.After;
 import org.junit.BeforeClass;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
@@ -16,18 +15,18 @@ public class AbstractParentTestClass {
     private WebDriver webDriver;
     @Value("${fronts.base.url}")
     private String frontsBaseUrl;
-    
+
     @BeforeClass
     public static void testClassSetup() {
         EnvironmentConfigurer.setupEnvironmentProperty();
     }
-    
-    protected NetworkFrontPage networkFrontPage(){
+
+    protected NetworkFrontPage openNetworkFrontPage() {
         webDriver.get(frontsBaseUrl);
         return loadPage(NetworkFrontPage.class);
     }
-    
-    protected <Page>Page loadPage(Class<Page> pageClass) {
-        return (Page)PageFactory.initElements(webDriver, pageClass);
+
+    protected <Page> Page loadPage(Class<Page> pageClass) {
+        return (Page) PageFactory.initElements(webDriver, pageClass);
     }
 }

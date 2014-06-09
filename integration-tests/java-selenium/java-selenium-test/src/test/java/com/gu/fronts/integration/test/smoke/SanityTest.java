@@ -19,9 +19,14 @@ public class SanityTest extends AbstractParentTestClass {
     @Test
     public void networkStartPageShouldLoadProperly() {
         // Given
-        NetworkFrontPage networkFrontPage = networkFrontPage().isDisplayed();
+        NetworkFrontPage networkFrontPage = openNetworkFrontPage();
+        
+        //When
+        //no actions
 
         // Then
+        networkFrontPage.isDisplayed();
+        
         //networkFrontPage.sports().isDisplayed();
     }
 }

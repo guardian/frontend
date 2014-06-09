@@ -1,5 +1,6 @@
 package com.gu.fronts.integration.test.page;
 
+import static com.gu.fronts.integration.test.page.CssSelector.TEST_ATTR_NAME;
 import static org.openqa.selenium.support.How.*;
 
 import org.openqa.selenium.WebDriver;
@@ -9,7 +10,7 @@ import org.openqa.selenium.support.FindBy;
 
 public class NetworkFrontPage extends AbstractParentPage {
 
-    @FindBy(how = CSS, using = "[test-id=date-title]")
+    @FindBy(how = CSS, using = "["+TEST_ATTR_NAME+"=network_front_date_title]")
     private WebElement dateTitle;
 
     public NetworkFrontPage(WebDriver webDriver) {
