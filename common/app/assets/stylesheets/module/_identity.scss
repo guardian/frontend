@@ -353,7 +353,7 @@
 .membership-tab__details-list {
 
     @include rem((
-        padding: $gs-baseline*2 0 $gs-baseline 0*2
+        padding: $gs-baseline*2 0 $gs-baseline*2 0
     ));
 
     li {
@@ -373,7 +373,6 @@
     }
 
     .membership-tab__card-types {
-        text-indent: -999px;
         display: inline-block;
         height: 35px;
         width: 54px;
