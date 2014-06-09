@@ -22,7 +22,7 @@ Some of the metrics are to designed to identify terminally unhealthy processes. 
 
 * __Detail__ : immediately after a collection is edited within the Fronts Editor, the Presser is invoked to re-create the `pressed.json` files for any front containing that collection.
 
-* __Metrics__  : if the number of *consecutive* failures of the Presser to produce `pressed.json` files exceeds N, the healthcheck fails. The counter is reset by any successful pressing. 
+* __Metrics__  : if the number of *consecutive* failures of the Presser to produce `pressed.json` files exceeds N, the healthcheck fails. The failure count is reset by any successful pressing. 
 
 * __Consequence__ : Instance terminates.
 
@@ -30,7 +30,7 @@ Some of the metrics are to designed to identify terminally unhealthy processes. 
 
 * __Detail__ : every three minutes, the Admin app puts the ids of every front on an SQS queue. These are pulled in bunches (of up to 10) every 10 seconds by Presser instances, and `pressed.json` files are re-created for each front.
 
-* __Metrics__  : if the number of *consecutive* failures of the Presser to produce `pressed.json` files exceeds N, the healthcheck fails. The counter is reset by any successful pressing. 
+* __Metrics__  : if the number of *consecutive* failures of the Presser to produce `pressed.json` files exceeds N, the healthcheck fails. The failure count is reset by any successful pressing. 
 
 * __Consequence__ : Instance terminates.
 
