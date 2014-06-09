@@ -1,8 +1,8 @@
-@(profileReplies: discussion.model.ProfileReplies)(implicit request: RequestHeader)
+@(profileComments: discussion.model.ProfileComments)(implicit request: RequestHeader)
 
 <div class="activity-stream activity-stream--replies" itemprop itemtype="http://schema.org/UserComments">
-    @profileReplies.comments.map{ c =>
-        <div class="activity-stream__item activity-item" itemprop itemtype="http://schema.org/Comment">
+    @profileComments.comments.zipWithRowInfo.map{ case(c, row) =>
+        <div class="activity-stream__item activity-item @if(row.isFirst){activity-item--first}" itemprop itemtype="http://schema.org/Comment">
             <div class="activity-item__title">
                 <a href="@c.discussion.webUrl#">@c.discussion.title</a>
             </div>
@@ -17,5 +17,8 @@
                 </div>
             </div>
         </div>
+    }
+    @if(profileComments.comments.isEmpty){
+        <p class="activity-stream__empty">It looks like @profileComments.profile.displayName has no comments.</p>
     }
 </div>
