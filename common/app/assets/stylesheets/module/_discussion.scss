@@ -192,7 +192,6 @@ $avatarSize: 44px;
 .d-comment__meta,
 .d-comment-box__meta {
     @include rem((
-        height: $avatarSize + ($gs-baseline/3),
         margin-bottom: ($gs-baseline/3)*2
     ));
     white-space: nowrap;
@@ -204,11 +203,13 @@ $avatarSize: 44px;
         float: left;
         height: auto;
     }
+
     @include mq(leftCol) {
         @include rem((
             width: $a-leftCol-width + $gs-gutter
         ));
     }
+
     @include mq(wide) {
         @include rem((
             width: $a-leftColWide-width + $gs-gutter
@@ -245,6 +246,20 @@ $avatarSize: 44px;
     ));
     @include border-radius(50%);
     overflow: hidden;
+
+    @include mq(tablet) {
+        @include rem((
+            width: $avatarSize*1.5,
+            height: $avatarSize*1.5
+        ));
+
+        .d-comment--response & {
+            @include rem((
+                width: $avatarSize,
+                height: $avatarSize
+            ));
+        }
+    }
 }
 .d-comment__meta-text,
 .d-comment-box__meta-text {
@@ -656,11 +671,10 @@ $avatarSize: 44px;
         display: block;
         float: none;
         width: 100%;
-
-        .d-comment__timestamp,
-        .d-comment__avatar-wrapper {
-            display: none;
-        }
+    }
+    .d-comment__timestamp,
+    .d-comment__avatar-wrapper {
+        display: none;
     }
     .i-in-reply-arrow {
         display: inline-block;
@@ -678,6 +692,24 @@ $avatarSize: 44px;
     .d-comment__reply-to-author,
     .d-comment-box__reply-to-author {
         display: inline;
+    }
+
+    @include mq(tablet) {
+        .d-comment__meta {
+            @include rem((
+                height: $gs-baseline*4
+            ));
+        }
+        .d-comment__avatar-wrapper,
+        .d-comment__timestamp {
+            display: block;
+        }
+    }
+
+    @include mq(tablet) {
+        .d-comment__avatar-wrapper {
+            float: left;
+        }
     }
 }
 .d-discussion__error {
@@ -715,6 +747,7 @@ $avatarSize: 44px;
         @include rem((
             margin-left: $a-leftCol-width + $gs-gutter
         ));
+        padding-left: 0;
     }
     @include mq(wide) {
         @include rem((
@@ -723,15 +756,14 @@ $avatarSize: 44px;
     }
 }
 .d-show-more-replies {
-
-    color: $c-newsDefault;
-    background-color: transparent;
     @include fs-textsans(1);
-    font-weight: bold;
+    background-color: transparent;
     border-top: 1px dotted $c-neutral5;
-    line-height: 40px;
+    color: $c-newsDefault;
     cursor: pointer;
-
+    font-weight: bold;
+    line-height: 40px;
+    
     &:hover {
         text-decoration: underline;
     }

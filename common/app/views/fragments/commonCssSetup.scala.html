@@ -2,6 +2,19 @@
 
 @import conf.Switches._
 
+
+@* any images in head need to go here (or they'll be relative to the page)} *@
+<style>
+    .i,.caption:before,figcaption:before,blockquote.quoted:before { background-image: url(@Static("images/global/sprite.png")); }
+    .svg .i,.svg .caption:before,.svg figcaption:before,.svg blockquote.quoted:before { background-image: none; }
+    .is-updating { background-image: url(@Static("images/auto-update-activity.gif")); }
+    .is-updating--dark { background-image: url(@Static("images/auto-update-activity-dark.gif")); }
+    .tweet { background-image: url(@Static("images/twitter/bird.png")); }
+    .svg .tweet { background-image: url(@Static("images/twitter/bird.svg")); }
+    .svg .stars, .svg .stars:after { background-image: url(@Static("images/star-sprite.svg")); }
+    .stars, .stars:after { background-image: url(@Static("images/star-sprite.png")); }
+</style>
+
 @*
   - Include all browsers [<!-->]
   - Exclude IE < 10 [(gt IE 9)]
@@ -31,17 +44,6 @@
 <!--[if (IE 9)&(!IEMobile)]>
     <link rel="stylesheet" type="text/css" href="@Static(Static.css.headIE9(projectName))" />
 <![endif]-->
-
-@* any images in head need to go here (or they'll be relative to the page)} *@
-<style>
-    .i,.caption:before,figcaption:before,blockquote.quoted:before { background-image: url(@Static("images/global/sprite.png")); }
-    .svg .i,.svg .caption:before,.svg figcaption:before,.svg blockquote.quoted:before { background-image: none; }
-    .is-updating { background-image: url(@Static("images/auto-update-activity.gif")); }
-    .is-updating--dark { background-image: url(@Static("images/auto-update-activity-dark.gif")); }
-    .tweet { background-image: url(@Static("images/twitter/bird.png")); }
-    .svg .tweet { background-image: url(@Static("images/twitter/bird.svg")); }
-    .stars, .stars:after { background-image: url(@Static("images/star-sprite.png")); }
-</style>
 
 @*
   - Include IE 9 [(IE 9)]

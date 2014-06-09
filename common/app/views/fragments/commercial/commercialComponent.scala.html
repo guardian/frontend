@@ -1,6 +1,6 @@
-@(name: String, adType: String)
+@(name: String, adTypes: Seq[String])
 @import conf.Switches._
 
 @if(CommercialComponentsSwitch.isSwitchedOn) {
-    @fragments.commercial.adSlot(name, adType, Map("mobile" -> Seq("888,88")), showLabel=false, refresh=false)
+    @fragments.commercial.adSlot(name, adTypes, Map("mobile" -> Seq("888,88")), showLabel=false, refresh=false)
 }

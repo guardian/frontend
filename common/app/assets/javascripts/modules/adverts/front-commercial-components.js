@@ -10,9 +10,9 @@ define([
 
     return {
 
-        init: once(function() {
+        init: once(function(config) {
             var $containers = $('.facia-container section.container');
-            if($containers.length < 4) {
+            if($containers.length < 4 && !config.page.hasPageSkin) {
                 return $containers.first().after(dfp.createAdSlot('merchandising-high', 'commercial-component-high'));
             }
         })

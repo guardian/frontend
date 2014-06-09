@@ -55,6 +55,11 @@ define([
             expect($container.hasClass('js-container--toggle')).toBeFalsy();
         });
 
+        it('should add "container--has-toggle" class to container', function() {
+            new ContainerDisplayToggle(container).addToggle();
+            expect($container.hasClass('container--has-toggle')).toBeTruthy();
+        });
+
         it('should delete old storage key', function() {
             var oldStorageKey = 'gu.prefs.front-trailblocks';
             window.localStorage.setItem(oldStorageKey, 'foo');

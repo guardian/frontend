@@ -683,6 +683,24 @@ module.exports = function (grunt) {
                 }
             }
         },
+        pagespeed: {
+            options: {
+                nokey: false,
+                key: 'AIzaSyAKNTuqwtrbsCLw8htzvzshxLxmeWb3i4s',
+                strategy: 'mobile',
+                locale: 'en_GB',
+                threshold: 80
+            },
+            facia: {
+                url: 'http://www.theguardian.com/uk?view=mobile'
+            },
+            article: {
+                url: 'http://www.theguardian.com/world/2014/jun/07/stephen-fry-denounces-uk-government-edward-snowden-nsa-revelations?view=mobile'
+            },
+            applications: {
+                url: 'http://www.theguardian.com/world/video/2014/jun/07/stephan-fry-surveillance-squalid-rancid-video?view=mobile'
+            }
+        },
 
         /*
          * Miscellaneous
@@ -816,13 +834,14 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-imagemin');
     grunt.loadNpmTasks('grunt-hash');
     grunt.loadNpmTasks('grunt-contrib-copy');
-    grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-asset-monitor');
     grunt.loadNpmTasks('grunt-text-replace');
     grunt.loadNpmTasks('grunt-reloadlet');
     grunt.loadNpmTasks('grunt-grunt');
+    grunt.loadNpmTasks('grunt-pagespeed');
+
 
     grunt.registerTask('default', ['compile', 'test', 'analyse']);
 
@@ -937,9 +956,15 @@ module.exports = function (grunt) {
     grunt.registerTask('test', ['jshint:common', 'test:unit:common', 'test:integration:common']);
 
     // Analyse tasks
+    grunt.registerTask('analyse:performance', function(app) {
+        if (app && !grunt.config('pagespeed')[app]) {
+            grunt.log.warn('No pagespeed config for app "' + app + '"'); return true;
+        }
+        grunt.task.run([(app) ?  'pagespeed:' + app : 'pagespeed']);
+    });
     grunt.registerTask('analyse:css', ['compile:css', 'cssmetrics:common']);
     grunt.registerTask('analyse:monitor', ['monitor:common']);
-    grunt.registerTask('analyse', ['analyse:css']);
+    grunt.registerTask('analyse', ['analyse:css', 'analyse:performance']);
 
     // Miscellaneous task
     grunt.registerTask('hookmeup', ['clean:hooks', 'shell:copyHooks']);

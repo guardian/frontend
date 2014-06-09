@@ -27,6 +27,9 @@
             <li class="tabs__tab@if(!forms.isPublicFormActive){ tabs__tab--selected tone-colour tone-accent-border}" role="tab" id="tabs-account-profile-2-tab" aria-controls="tabs-account-profile-2" aria-selected="false">
                 <a href="#tabs-account-profile-2" data-link-name="tab 2 The Guardian" data-pushstate-url="/account/edit">Account details</a>
             </li>
+            <li class="tabs__tab is-hidden js-memebership-tab-button" role="tab" id="tabs-account-profile-3-tab" aria-controls="tabs-account-profile-2" aria-selected="false">
+                <a href="#tabs-account-profile-3" data-link-name="tab 2 The Guardian" data-pushstate-url="/account/edit">Membership</a>
+            </li>
         </ol>
 
         <div class="tabs__content">
@@ -36,6 +39,10 @@
 
             <div id="tabs-account-profile-2" class="tabs__pane u-cf" role="tabpanel" aria-labelledby="tabs-account-profile-2-tab" data-link-name="Account" data-link-context="Identity/profile"@if(forms.isPublicFormActive){ style="display: none;"}>
                 @fragments.profile.accountDetailsForm(idUrlBuilder, idRequest, user, forms.accountForm)
+            </div>
+
+            <div id="tabs-account-profile-3" class="tabs__pane u-cf is-hidden js-memebership-tab-container" role="tabpanel" aria-labelledby="tabs-account-profile-2-tab" data-link-name="Account" data-link-context="Identity/profile"@if(forms.isPublicFormActive){ style="display: none;"}>
+
             </div>
         </div>
     </div>

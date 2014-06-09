@@ -51,7 +51,9 @@ define([
                     it('should add "' + config.name + '" badge to first container if page is ' + config.type, function() {
                         $('.facia-container').addClass('facia-container--' + config.type);
                         badges.init();
-                        expect($('.facia-container .container:first-child .ad-slot').first().data('name')).toBe(config.name);
+                        var $adSlot = $('.facia-container .container:first-child .ad-slot').first();
+                        expect($adSlot.data('name')).toBe(config.name);
+                        expect($adSlot.hasClass('ad-slot--paid-for-badge--front')).toBeTruthy();
                     });
 
                 });
@@ -75,7 +77,9 @@ define([
                 it('should add "' + config.name + '" badge to ' + config.type + ' container', function() {
                     $('.container').first().addClass('container--' + config.type);
                     badges.init();
-                    expect($('.facia-container .container:first-child .ad-slot').first().data('name')).toBe(config.name);
+                    var $adSlot = $('.facia-container .container:first-child .ad-slot').first();
+                    expect($adSlot.data('name')).toBe(config.name);
+                    expect($adSlot.hasClass('ad-slot--paid-for-badge--front')).toBeTruthy();
                 });
             });
 
