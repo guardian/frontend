@@ -23,7 +23,8 @@ define(['common/$',
         START: 'js-membership-start-date',
         NEXT: 'js-membership-payment-next',
         CC_LAST4: 'js-membership-card-lastfour',
-        CC_TYPE: 'js-membership-card-type'
+        CC_TYPE: 'js-membership-card-type',
+        CC_TYPE_TEXT: 'js-membership-card-text'
     };
 
     /**
@@ -95,7 +96,7 @@ define(['common/$',
             self.getElem('CC_LAST4').innerHTML = resp.subscription.card.last4;
 
             $(self.getElem('CC_TYPE')).addClass('i-'+resp.subscription.card.type.toLowerCase().replace(' ', '-'));
-            self.getElem('CC_TYPE').innerHTML = resp.subscription.card.type; // Append text too for screen readers
+            self.getElem('CC_TYPE_TEXT').innerHTML = resp.subscription.card.type; // Append text too for screen readers
 
             self.ready();
         }, function () {
