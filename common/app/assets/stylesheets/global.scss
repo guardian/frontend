@@ -84,6 +84,9 @@
    ========================================================================== */
 
 @import 'module/facia/_extends';
+@import 'module/facia/_show-more';
+@import 'module/facia/_pagination';
+
 @import 'module/containers/_features';
 @import 'module/containers/_featuresauto';
 @import 'module/containers/_special';
@@ -95,7 +98,7 @@
 @import 'module/containers/_multimedia';
 @import 'module/containers/_series';
 @import 'module/containers/_acrossthegrauniad';
-@import 'module/facia/_pagination';
+
 @import 'module/facia/snaps/_football';
 
 
