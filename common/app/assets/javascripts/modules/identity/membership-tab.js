@@ -11,7 +11,7 @@ define(['common/$',
         this.context = context || document;
         this.mediator = mediator;
         this.setOptions(options);
-    };
+    }
 
     Component.define(Membership);
 
@@ -58,21 +58,21 @@ define(['common/$',
             if(date > 20 || date < 10) {
                 switch(date%10) {
                 case 1:
-                    return d+"st";
+                    return d+'st';
                 case 2:
-                    return d+"nd";
+                    return d+'nd';
                 case 3:
-                    return d+"rd";
+                    return d+'rd';
                 }
             }
-            return d+"th";
+            return d+'th';
         }
 
         var day = ordinal(date.getDate());
         var month = months[date.getMonth()];
         var year = date.getFullYear();
 
-        return day + " " + month + " " + year;
+        return day + ' ' + month + ' ' + year;
     };
 
     /**
@@ -88,7 +88,7 @@ define(['common/$',
             withCredentials: true,
             method: 'get'
         }).then(function (resp) {
-            if (resp.tier == 'Partner' || resp.tier == 'Patron') { self.display = true; }
+            if (resp.tier === 'Partner' || resp.tier === 'Patron') { self.display = true; }
             self.getElem('TIER').innerHTML = resp.subscription.plan.name;
             self.getElem('COST').innerHTML = (resp.subscription.plan.amount/100).toFixed(2);
             self.getElem('START').innerHTML = self.formatDate(new Date(resp.subscription.start*1000));
