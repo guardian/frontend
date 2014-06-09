@@ -1,58 +1,62 @@
 /* global videojs */
 define([
     'common/$',
+    'common/utils/ajax',
     'common/utils/detect',
     'common/utils/mediator',
-    'common/modules/adverts/video'
-
+    'common/utils/config',
+    'common/modules/adverts/video',
+    'common/modules/adverts/query-string',
+    'common/modules/adverts/dfp'
 ], function(
     $,
+    ajax,
     detect,
     mediator,
-    VideoAdvert
+    config,
+    VideoAdvert,
+    queryString,
+    dfp
 ) {
 
     var modules = {
 
+        getVastUrl: function() {
+            var adUnit = dfp.buildAdUnit({ page: config.page }),
+                custParams = queryString.generateQueryString(dfp.buildPageTargeting({ page: config.page })),
+                encodedCustParams = encodeURIComponent(custParams),
+                timestamp = new Date().getTime(),
+                url = 'http://' + config.page.dfpHost + '/gampad/ads?correlator=' + timestamp + '&gdfp_req=1&env=vp&impl=s&output=' +
+                    'xml_vast2&unviewed_position_start=1&iu=' + adUnit + '&sz=400x300&scp=slot%3Dvideo&cust_params=' + encodedCustParams;
+
+            return url;
+        },
+
         initPlayer: function() {
-            require('js!videojs', function() {
-                $('video').each(function(el) {
+
+            require('bootstraps/video-player', function () {
+                $('video').each(function (el) {
                     videojs(el, {
                         controls: true,
                         autoplay: false,
                         preload: 'none'
-                    }).ready(function() {
-                        mediator.emit('video:load:advert', this);
+                    }).ready(function () {
+                        var player = this;
+                        //Init vast adverts
+                        player.ads({
+                            timeout: 3000
+                        });
+                        player.vast({
+                            url: modules.getVastUrl()
+                        });
                     });
                 });
-            });
-        },
-
-        loadVideoAdverts: function () {
-            mediator.on('page:common:ready', function (config, context) {
-                if (config.switches.videoAdverts && !config.page.blockVideoAds) {
-                    Array.prototype.forEach.call(context.querySelectorAll('video'), function (el) {
-                        var support = detect.getVideoFormatSupport();
-                        new VideoAdvert({
-                            el: el,
-                            support: support,
-                            config: config,
-                            context: context
-                        }).init(config.page);
-                    });
-                } else {
-                    mediator.emit('video:ads:finished', config, context);
-                }
             });
         }
     };
 
-    var ready = function (config, context) {
-        if (!this.initialised) {
-            this.initialised = true;
-        }
+    var ready = function () {
         modules.initPlayer();
-        mediator.emit('page:video:ready', config, context);
     };
 
     return {

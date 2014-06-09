@@ -119,6 +119,34 @@ module.exports = function (grunt) {
                         startFile: 'common/app/assets/javascripts/components/curl/dist/curl-with-js-and-domReady/curl.js'
                     }
                 }
+            },
+            video : {
+                options: {
+                    baseUrl: 'common/app/assets/javascripts',
+                    name: 'bootstraps/video-player',
+                    out: staticTargetDir + 'javascripts/bootstraps/video-player.js',
+                    paths: {
+                        vast: 'components/vast-client-js/vast-client',
+                        videojs: 'components/videojs/dist/video-js/video',
+                        videojsads: 'components/videojs-contrib-ads/src/videojs.ads',
+                        videojsvast: 'components/videojs-vast/videojs.vast'
+                    },
+                    shim: {
+                        videojs: {
+                            exports: 'videojs'
+                        },
+                        videojsads: {
+                            deps: ['videojs']
+                        },
+                        videojsvast :{
+                             deps: ['videojs']
+                        }
+                    },
+                    wrapShim: true,
+                    optimize: 'none',
+                    generateSourceMaps: true,
+                    preserveLicenseComments: false
+                }
             }
         },
 
@@ -845,8 +873,10 @@ module.exports = function (grunt) {
         grunt.task.run('hash');
     });
     grunt.registerTask('generate:js', function(app) {
+
         grunt.task.run(['clean:js', 'shell:videojs', 'grunt:videojs']);
         var apps = ['common', 'ophan'];
+
         if (!app || app === 'preview') { // if no app supplied, compile all apps ('preview' is an amalgamation of other apps)
             apps = apps.concat(Object.keys(grunt.config('requirejs')).filter(function(app) { return ['options', 'common', 'ophan'].indexOf(app) === -1; }));
         } else if (app !== 'common' && app !== 'ophan') {
