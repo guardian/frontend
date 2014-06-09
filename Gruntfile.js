@@ -881,7 +881,7 @@ module.exports = function (grunt) {
         grunt.task.run('hash');
     });
     grunt.registerTask('generate:js', function(app) {
-        grunt.task.run(['clean:js']);
+        grunt.task.run(['clean:js', 'shell:videojs', 'grunt:videojs']);
         var apps = ['common', 'ophan'];
         if (!app || app === 'preview') { // if no app supplied, compile all apps ('preview' is an amalgamation of other apps)
             apps = apps.concat(Object.keys(grunt.config('requirejs')).filter(function(app) { return ['options', 'common', 'ophan'].indexOf(app) === -1; }));
