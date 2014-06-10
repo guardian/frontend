@@ -15,7 +15,7 @@ import com.gu.fronts.integration.test.page.HeaderPage;
 /**
  * Super class for all page objects
  */
-public class AbstractParentPage {
+public abstract class AbstractParentPage {
 
     protected WebDriver webDriver;
 
@@ -61,6 +61,12 @@ public class AbstractParentPage {
                     + getErrorMessages(errors));
         }
     }
+
+    /**
+     * Page Objects need to implement this class and then call {@link #isDisplayed(WebElement...)} with the elements
+     * which need to be displayed for the page to load properly and can also, optionally, do some additional checks
+     */
+    protected abstract Object isDisplayed();
 
     private String getErrorMessages(List<String> errors) {
         return StringUtils.join(errors, ",");
