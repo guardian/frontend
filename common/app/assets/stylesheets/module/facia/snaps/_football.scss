@@ -165,6 +165,28 @@
         .match-info__venue {
             display: none;
         }
+
+        .football-match__status {
+            @include rem((
+                padding-right: $gs-gutter/5
+            ));
+        }
+        .football-match__team--home {
+            @include rem((
+                padding-right: $gs-gutter*1.25
+            ));
+        }
+        .football-match__team--away {
+            @include rem((
+                padding-left: $gs-gutter*1.25
+            ));
+        }
+
+        .table__caption--bottom {
+            position: absolute;
+            border-left: $gs-gutter/2 solid #ffffff;
+            border-right: $gs-gutter/2 solid #ffffff;
+        }
     }
 }
 
