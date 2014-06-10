@@ -8,7 +8,7 @@ define([
     config
 ) {
 
-    var revenueScienceUrl = 'http://js.revsci.net/gateway/gw.js?csid=E05516';
+    var revenueScienceUrl = '//js.revsci.net/gateway/gw.js?csid=E05516';
 
     function getSegments() {
         var segments = storage.local.get('gu.ads.audsci');
