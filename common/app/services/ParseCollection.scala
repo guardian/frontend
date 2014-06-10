@@ -98,6 +98,24 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
     (parse(r.body) \ "href").asOpt[String].filter(_.nonEmpty)
   }
 
+  private def responseToJson(response: Response): JsValue = {
+    response.status match {
+      case 200 =>
+        Try(parse(response.body)).getOrElse(JsNull)
+      case 403 =>
+        S3AuthorizationError.increment()
+        val errorString: String = s"Request failed to authenticate with S3: ${response.getAHCResponse.getUri}"
+        log.warn(errorString)
+        throw new Exception(errorString)
+      case httpResponseCode: Int if httpResponseCode >= 500 =>
+        throw new Exception("S3 returned a 5xx")
+      case _ =>
+        log.warn(s"Could not load running order: ${response.status} ${response.statusText} ${response.getAHCResponse.getUri}")
+        // NOTE: better way of handling fallback
+        JsNull
+    }
+  }
+
   private def parseResponse(response: Future[Response], edition: Edition, id: String): Future[List[Content]] = {
     response.flatMap { r =>
       r.status match {
