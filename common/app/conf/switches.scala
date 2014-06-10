@@ -401,8 +401,8 @@ object Switches extends Collections {
     safeState = On, sellByDate = never // this is a performance related switch, not a feature switch
   )
 
-  val ParameterlessImagesSwitch = Switch("Image Server", "image-server",
-    "If this switch is on images will be served off i.guim.co.uk (dynamic image host).",
+  val ParameterlessImagesSwitch = Switch("Parameterless Images Server", "parameterless-images",
+    "If this switch is on images then image resize fields (width, height, quality) will be in the url and not in parameters.",
     safeState = Off, sellByDate = new DateMidnight(2014, 7, 31)
   )
 
