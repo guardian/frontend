@@ -119,6 +119,8 @@ s.loadMediaModule = function(provider,restricted) {
     var s = this;
     s.loadModule("Media");
     s.Media.autoTrack=false;
+    s.Media.trackWhilePlaying = true;
+    s.Media.trackSeconds = 15;
     s.Media.trackVars="events,eVar7,eVar43,eVar44,prop44,eVar47,eVar48,eVar56,eVar61";
     s.Media.trackEvents="event17,event18,event21,event22,event23,event57,event63";
     s.Media.trackMilestones="25,50,75";

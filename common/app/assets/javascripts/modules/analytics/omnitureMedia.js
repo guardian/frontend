@@ -1,57 +1,49 @@
 define([
     'common/common',
+    'common/utils/config',
     'bean'
 ], function(
     common,
+    config,
     bean
     ) {
 
-    function Video(options) {
+    function OmnitureMedia(videoEl) {
 
-        var self = this,
-            config = options.config,
-            video = options.el,
-            videoType = 'content',
-            player = 'HTML5 Video',
+        var videoType = 'content',
             mediaName = config.page.webTitle,
             provider = config.page.source || '',
             restricted = config.page.blockVideoAds || '',
-            deBounced,
-            initialPlay =  {
-                advert: true,
-                content: true
-            };
+            playCount = 0;
 
         this.getDuration = function() {
-            return video.duration;
+            return videoEl.duration;
         };
 
         this.getPosition = function() {
-            return video.currentTime;
+            return videoEl.currentTime;
         };
 
         this.play = function() {
-            if (initialPlay.content === true && initialPlay.advert === true) {
-                self.execWhenDuration(function() {
-                   self.trackUserInteraction('Play', 'User clicked play', false);
-                       if(video.advertWasRequested) {
-                           self.trackUserInteraction('Advert', 'Video advert was requested', false);
-                       }
-                });
-            }
 
-            if ((videoType === 'content' && initialPlay[videoType] === true) ||
-                (videoType === 'advert' && initialPlay[videoType] === true)) {
-                    // We need to wait for the metadata before calling
-                    // s.Media.open, otherwise duration comes back as NaN
-                    self.execWhenDuration(function() {
-                        s.Media.open(mediaName, self.getDuration(), player);
-                        s.Media.play(mediaName, self.getPosition());
-                    });
+            if (playCount === 0) {
+                if (this.getDuration() > 0) {
 
-                    initialPlay[videoType] = false;
+                    this.trackUserInteraction('Play', 'User clicked play', false);
+                    if(videoEl.advertWasRequested) {
+                        this.trackUserInteraction('Advert', 'Video advert was requested', false);
+                    }
+
+                    // We need to wait before calling s.Media.open; duration could be NaN.
+                    s.Media.open(mediaName, this.getDuration(), 'HTML5 Video');
+                    s.Media.play(mediaName, this.getPosition());
+                    playCount++;
+                } else {
+                    setTimeout(this.play.bind(this), 100);
+                }
             } else {
-                s.Media.play(mediaName, self.getPosition());
+                s.Media.play(mediaName, this.getPosition());
+                playCount++;
             }
         };
 
@@ -71,34 +63,24 @@ define([
             s.Media.play(mediaName, this.getPosition());
         };
 
-        this.trackUserInteraction = function(type, name, debounce) {
-           clearTimeout(deBounced);
-           var log = function(){
-                var event;
-                switch(type){
-                    case 'Play' :
-                        event = 'event98';
-                        break;
-                    case 'Advert' :
-                        event = 'event97';
-                        break;
-                    default :
-                        event = 'event14';
-                        break;
-                }
-                s.prop41 = type;
-                s.linkTrackVars = 'prop11,prop43,prop44,prop45,eVar11,eVar43,eVar44,eVar45,prop41,events';
-                s.linkTrackEvents = event;
-                s.events = event;
-
-                s.tl(true, 'o', name);
-            };
-
-            if(debounce) {
-                deBounced = setTimeout(log, 250);
-            } else {
-                log();
+        this.trackUserInteraction = function(type, name) {
+            var event;
+            switch(type){
+                case 'Play':
+                    event = 'event98';
+                    break;
+                case 'Advert':
+                    event = 'event97';
+                    break;
+                default:
+                    event = 'event14';
+                    break;
             }
+            s.prop41 = type;
+            s.linkTrackVars = 'events,eVar11,prop41,eVar43,prop43,eVar44,prop44';
+            s.linkTrackEvents = event;
+            s.events = event;
+            s.tl(true, 'o', name);
         };
 
         this.trackVideoAdvert = function() {
@@ -111,41 +93,22 @@ define([
             s.trackVideoContent(provider, restricted);
         };
 
-        this.execWhenDuration = function(callback) {
-            var duration = this.getDuration();
-            if(duration > 0) {
-                callback();
-            } else {
-                setTimeout(function() {
-                    self.execWhenDuration(callback);
-                }, 100);
-            }
-        };
-
         this.init = function() {
-            var that = this;
-
             s.loadMediaModule(provider, restricted);
 
             s.prop11 = config.page.sectionName || '';
             s.prop43 = 'Video';
-
             s.eVar11 = s.prop11;
             s.eVar43 = s.prop43;
 
-            var play = common.debounce(that.play, 250);
-
-            bean.on(video, 'play', play);
-
-            bean.on(video, 'pause', function() { that.pause(); });
-            bean.on(video, 'seeking', function() { that.seeking(); });
-            bean.on(video, 'seeked', function() {that.seeked(); });
-            bean.on(video, 'volumechange', function() {that.trackUserInteraction('Volume', 'User Changed Volume', true); });
-
-            bean.on(video, 'play:advert', function() { that.trackVideoAdvert(); });
-            bean.on(video, 'play:content', function() { that.trackVideoContent(); });
+            bean.on(videoEl, 'play', common.debounce(this.play.bind(this), 250));
+            bean.on(videoEl, 'pause', this.pause.bind(this));
+            bean.on(videoEl, 'seeking', this.seeking.bind(this));
+            bean.on(videoEl, 'seeked', this.seeked.bind(this));
+            bean.on(videoEl, 'volumechange', common.throttle(this.trackUserInteraction.bind(this, 'Volume', 'User Changed Volume'), 250));
+            bean.on(videoEl, 'play:advert', this.trackVideoAdvert.bind(this));
+            bean.on(videoEl, 'play:content', this.trackVideoContent.bind(this));
         };
     }
-
-    return Video;
+    return OmnitureMedia;
 });

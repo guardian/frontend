@@ -244,10 +244,7 @@ define([
                 Array.prototype.forEach.call(context.getElementsByTagName('video'), function(video){
                     if (!bonzo(video).hasClass('tracking-applied')) {
                         bonzo(video).addClass('tracking-applied');
-                        new OmnitureMedia({
-                            el: video,
-                            config: config
-                        }).init();
+                        new OmnitureMedia(video).init();
                     }
                 });
             });
