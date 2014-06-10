@@ -68,7 +68,7 @@ object MostPopularController extends Controller with Logging with ExecutionConte
   def renderMostPopularReferralsJson() = Action { implicit request =>
     val mostReferred = SociallyReferredContentAgent.getReferrals.take(10)
 
-    implicit val config = Config(id = "referred-content", displayName = Some("Most Popular"))
+    implicit val config = Config(id = "referred-content", displayName = Some("Most popular"))
     val response = () => views.html.fragments.containers.series(Collection(mostReferred.take(7)), SeriesContainer(), 0)
     renderFormat(response, response, 900)
   }

@@ -12,7 +12,7 @@ define([
 
         this.id = 'DisplaySociallyReferredBurners';
         this.start = '2014-06-08';
-        this.expiry = '2014-06-24';
+        this.expiry = '2014-06-26';
         this.author = 'Nathaniel Bennett';
         this.description = 'Will display content referred from social media to users who have visited less than 10 times in the previous month';
         this.audience = 0.4;
