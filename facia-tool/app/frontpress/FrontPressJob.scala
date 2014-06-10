@@ -92,6 +92,11 @@ object FrontPressJob extends Logging with implicits.Collections {
       (json \ "id").asOpt[String].foreach(S3FrontsApi.putLivePressedJson(_, Json.stringify(json)))
       json
     }
+
+    FrontPress.generateDraftJson(path).map { json =>
+      (json \ "id").asOpt[String].foreach(S3FrontsApi.putDraftPressedJson(_, Json.stringify(json)))
+      json
+    }
   }
 
   def getConfigFromMessage(message: Message): String =
