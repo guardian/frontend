@@ -14,7 +14,7 @@ define([
 
     var nId = '1476',
         cookieName = 'cto2_guardian',
-        criteoUrl = 'http://rtax.criteo.com/delivery/rta/rta.js';
+        criteoUrl = '//rtax.criteo.com/delivery/rta/rta.js';
 
 
     function getSegments() {
