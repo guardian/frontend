@@ -40,25 +40,24 @@ object DfpApi extends Logging {
     val currentLineItems = new StatementBuilder()
       .where("status = :readyStatus OR status = :deliveringStatus")
       .orderBy("id ASC")
-      .limit(StatementBuilder.SUGGESTED_PAGE_LIMIT)
       .withBindVariableValue("readyStatus", ComputedStatus.READY.toString)
       .withBindVariableValue("deliveringStatus", ComputedStatus.DELIVERING.toString)
 
     val lineItems = DfpApiWrapper.fetchLineItems(session, currentLineItems)
 
-    val targetingKeyDisplayNames = Seq("Keywords", "Slot")
-
     val customTargetingKeys = new StatementBuilder()
-      .where("displayName IN (:targetingKeyIds)")
-      .withBindVariableValue("targetingKeyIds", targetingKeyDisplayNames)
+      .where("displayName = :keywordTargetName OR displayName = :slotTargetName")
+      .withBindVariableValue("keywordTargetName", "Keywords")
+      .withBindVariableValue("slotTargetName", "Slot")
 
     val targetingKeys = DfpApiWrapper.fetchCustomTargetingKeys(session, customTargetingKeys).map { k =>
       k.getId -> k.getName
     }.toMap
 
-    def customTargetingValues = new StatementBuilder()
-      .where("customTargetingKeyId IN (:targetingKeyIds)")
-      .withBindVariableValue("targetingKeyIds", targetingKeyDisplayNames)
+    val customTargetingValues = new StatementBuilder()
+        .where("customTargetingKeyId = :keywordTargetId OR customTargetingKeyId = :slotTargetId")
+        .withBindVariableValue("keywordTargetId", targetingKeys.head._1)
+        .withBindVariableValue("slotTargetId", targetingKeys.last._1)
 
     val targetingValues = DfpApiWrapper.fetchCustomTargetingValues(session, customTargetingValues).map { v =>
       v.getId -> v.getName
