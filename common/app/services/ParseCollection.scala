@@ -131,7 +131,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
                 (trail \ "frontPublicationDate").asOpt[DateTime])
             }
 
-            getArticles(articles, edition)
+            getArticles(LiveContentApi, articles, edition)
           } catch {
             case e: Throwable => {
               log.warn("Could not parse collection JSON for %s".format(id))
@@ -155,11 +155,13 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
     }
   }
 
-  def getArticles(collectionItems: Seq[CollectionItem], edition: Edition): Future[List[Content]]
-  = getArticles(collectionItems, edition, hasParent=false)
+  def getArticlesFromDraftContentApi(collectionItems: Seq[CollectionItem], edition: Edition) = getArticles(DraftContentApi, collectionItems, edition)
+
+  def getArticles(client: ContentApiClient, collectionItems: Seq[CollectionItem], edition: Edition): Future[List[Content]]
+  = getArticles(client, collectionItems, edition, hasParent=false)
 
   //hasParent is here to break out of the recursive loop and make sure we only go one deep
-  def getArticles(collectionItems: Seq[CollectionItem], edition: Edition, hasParent: Boolean): Future[List[Content]] = {
+  def getArticles(client: ContentApiClient, collectionItems: Seq[CollectionItem], edition: Edition, hasParent: Boolean): Future[List[Content]] = {
     if (collectionItems.isEmpty) {
       Future.successful(Nil)
     }
@@ -168,7 +170,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
         (foldListFuture, collectionItem) =>
           lazy val supportingAsContent: Future[List[Content]] = {
             lazy val supportingLinks: List[CollectionItem] = retrieveSupportingLinks(collectionItem)
-            if (!hasParent) getArticles(supportingLinks, edition, hasParent = true) else Future.successful(Nil)
+            if (!hasParent) getArticles(client, supportingLinks, edition, hasParent = true) else Future.successful(Nil)
           }
           if (collectionItem.isSnap) {
             for {
@@ -177,7 +179,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
             } yield contentList :+ new Snap(collectionItem.id, supporting, collectionItem.webPublicationDate.getOrElse(DateTime.now), collectionItem.metaData.getOrElse(Map.empty))
           }
           else {
-            val response = LiveContentApi.item(collectionItem.id, edition).showFields(showFieldsWithBodyQuery).response
+            val response = client.item(collectionItem.id, edition).showFields(showFieldsWithBodyQuery).response
 
             val content = response.map(_.content).recover {
               case apiError: com.gu.openplatform.contentapi.ApiError if apiError.httpStatus == 404 => {
