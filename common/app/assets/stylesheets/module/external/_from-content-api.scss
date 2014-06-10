@@ -11,13 +11,10 @@
 
 .from-content-api {
     word-wrap: break-word;
-    @include fs-bodyCopy(3);
+    position: relative;
 }
 .from-content-api,
 .from-content-api .block-elements {
-
-    color: $c-neutral1;
-
     > p,
     ul,
     ol,
@@ -279,7 +276,6 @@ p + video {
     }
     th {
         font-weight: 600;
-        color: $c-neutral1;
     }
     tbody tr:nth-child(odd) td {
         background-color: darken($c-neutral8, 4%);

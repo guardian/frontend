@@ -6,11 +6,16 @@
             display: block;
         }
     }
-    .facia-slice-wrapper:first-child .fromage {
-        border-top-width: 0;
-
-        @include mq(tablet, faciaLeftCol) {
-            border-top-width: 2px;
+    .facia-slice-wrapper:first-child {
+        .fromage {
+            // Remove top tonal border
+            border-top-width: 0;
+        }
+        @include mq(wide) {
+            .fromage__container {
+                // Remove top space
+                border-top-width: 0;
+            }
         }
     }
     .container__title {
@@ -26,6 +31,7 @@
     @include mq($to: tablet) {
         .l-row--items-4 {
             .facia-slice__item:nth-child(-n+2) {
+                @include item--hide-tone-border;
                 // Force the image to be displayed
                 .item__media-wrapper,
                 .item__image-container {
@@ -34,6 +40,14 @@
                 // And here we don't need two "gallery" or "video" icons
                 @include hide-icon-in-title;
             }
+        }
+        .facia-slice-wrapper:first-child .facia-slice__item:first-child {
+            @include item--hide-tone-border;
+        }
+    }
+    @include mq(tablet) {
+        .facia-slice-wrapper:first-child {
+            @include item--hide-tone-border;
         }
     }
 }

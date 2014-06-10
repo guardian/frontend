@@ -1,0 +1,38 @@
+@(profile: discussion.model.Profile, date: Option[org.joda.time.DateTime] = None)(implicit request: RequestHeader)
+@import conf.Configuration
+
+<div class="disc-profile u-cf" itemscope itemtype="http://schema.org/Person" itemprop="author">
+    <div class="disc-profile__avatar">
+        <img class="disc-profile__avatar-image" src="@profile.secureAvatar" alt="@profile.displayName's avatar" itemprop="image" />
+    </div>
+    <div class="disc-profile__user-info">
+        <div class="disc-profile__name" itemprop="givenName">
+            <a href="@Configuration.id.url/user/id/@profile.userId" itemprop="url">
+                @profile.displayName
+            </a>
+        </div>
+
+        @if(profile.isContributor || profile.isStaff){
+            <div class="disc-profile__badges">
+                @if(profile.isContributor){
+                    <span class="disc-profile__badge" title="Guardian contributor" itemprop="jobTitle">
+                        <span class="u-h">Guardian </span>contributor
+                    </span>
+                }
+                @if(profile.isStaff){
+                    <span class="disc-profile__badge" title="Guardian staff" itemprop="jobTitle">
+                        <span class="u-h">Guardian</span>staff
+                    </span>
+                }
+            </div>
+        }
+        @date.map{ d =>
+            <time class="disc-profile__date"
+                  itemprop="datePublished"
+                  datetime="@d.toString("yyyy-MM-dd'T'HH:mm:ss'Z'")"
+                  data-timestamp="@d.getMillis">
+                @d.toString("d MMM y HH:mm")
+            </time>
+        }
+    </div>
+</div>

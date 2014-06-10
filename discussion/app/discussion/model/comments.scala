@@ -62,8 +62,7 @@ case class ProfileDiscussions(
   profile: Profile,
   discussions: Seq[DiscussionComments]
 )
-
-object ProfileDiscussions{
+object ProfileDiscussions {
 
   def apply(json: JsValue): ProfileDiscussions = {
     val profile = Profile(json)

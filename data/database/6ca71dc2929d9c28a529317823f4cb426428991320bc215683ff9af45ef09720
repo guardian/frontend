@@ -1,0 +1,1083 @@
+{
+  "response":{
+    "status":"ok",
+    "userTier":"internal",
+    "total":1,
+    "content":{
+      "id":"football/2013/oct/29/arsene-wenger-arsenal-chelsea-capital-one-cup",
+      "sectionId":"football",
+      "sectionName":"Football",
+      "webPublicationDate":"2013-10-29T23:59:47Z",
+      "webTitle":"Arsène Wenger seeks instant response from Arsenal after loss to Chelsea",
+      "webUrl":"http://www.theguardian.com/football/2013/oct/29/arsene-wenger-arsenal-chelsea-capital-one-cup",
+      "apiUrl":"http://content.guardianapis.com/football/2013/oct/29/arsene-wenger-arsenal-chelsea-capital-one-cup",
+      "fields":{
+        "newspaperPageNumber":"47",
+        "trailText":"Arsène Wenger has called for calm after his side suffered their second home defeat in the space of a week, against Chelsea in the Capital One Cup",
+        "headline":"Arsène Wenger seeks instant response from Arsenal after loss to Chelsea",
+        "body":"<p>Arsène Wenger has called for calm after watching Arsenal suffer a second successive home defeat within a week and insisted that Saturday's visit of Liverpool, another side in contention for domestic honours, represents \"an opportunity\" to put things right.</p><p>Chelsea's collection of expensive fringe players prevailed comfortably here against a much-changed home lineup to progress to the Capital One Cup quarter-finals, the home side's defeat following on from Borussia Dortmund's success here in the Champions League last Tuesday. Arsenal, who top the Premier League by two points, now welcome third-placed Liverpool before the return game in Germany, and then collide with Manchester United and high-flying Southampton in a sequence of fixtures that will prove to be telling.</p><p>Asked whether the loss had cast doubts over Arsenal's strength in depth in comparison with that of the visitors, Wenger said: \"Let's not go too quick to conclusions. If you take the points we have made since 1 January, it's more than anyone else. On a longer distance, you'll see more of the quality of the team than in the last two games. It's difficult to swallow what happened to us in the last week, but the mistakes we have made are so big that they can be corrected. We have to keep the basis of our game and go into the next one.</p><p>\"In football it's always difficult to be definite. People go quickly to definite conclusions. After the first game [loss] against Aston Villa we were relegated. Today we are in a strong position in the league. Do not draw conclusions too quickly. We have [Theo] Walcott, [Lukas] Podolski and [Alex] Oxlade-Chamberlain out, players who have a big impact offensively. If you put them in, it's a completely different type of team. But it's now about how we rid ourselves of these mistakes without losing the belief in our qualities. That is what is at stake.\"</p><p>Carl Jenkinson's error had presented Chelsea with the lead and left the home side playing catch-up against a team who revel on the counter-attack. As it was, Juan Mata added a second to ensure Wenger has now gone nine games against Mourinho – with whom he enjoyed a warm handshake before and after the game – without tasting victory.</p><p>\"It's better to win, if you ask me,\" added the Frenchman. \"It's a difficult [run of games to come], but that's part of the season. We know the games. We have to respond well against Liverpool. We are in a strong position in the league and have a good opportunity at home, and we have to turn this round. Away from home we are very solid, but at home you know it's important and vital to win the big games.\"</p><!-- Guardian Watermark: internal-code/content/421243689|2014-05-14T16:53:48Z|fadb865fceaf23525ace7a31adf0dee1b167de80 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2014-01-09T17:30:55Z",
+        "hasStoryPackage":"true",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/29/1383089632270/Ars-ne-Wenger-006.jpg",
+        "standfirst":"• Wenger: Liverpool game 'an opportunity' to fix mistakes<br />• Manager pleads for patience after Capital One Cup defeat",
+        "shortUrl":"http://gu.com/p/3kx4g",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/29/1383089632270/Ars-ne-Wenger-006.jpg",
+        "wordcount":"449",
+        "commentable":"false",
+        "internalContentCode":"421243689",
+        "allowUgc":"false",
+        "internalOctopusCode":"8257552",
+        "isPremoderated":"false",
+        "byline":"Dominic Fifield at Emirates Stadium",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2013-10-30",
+        "internalPageCode":"1988836",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-01T23:59:47Z"
+      },
+      "tags":[{
+        "id":"football/arsene-wenger",
+        "type":"keyword",
+        "webTitle":"Arsène Wenger",
+        "webUrl":"http://www.theguardian.com/football/arsene-wenger",
+        "apiUrl":"http://content.guardianapis.com/football/arsene-wenger",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"football/arsenal",
+        "type":"keyword",
+        "webTitle":"Arsenal",
+        "webUrl":"http://www.theguardian.com/football/arsenal",
+        "apiUrl":"http://content.guardianapis.com/football/arsenal",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-team",
+          "id":"pa-football-team/1006"
+        }]
+      },{
+        "id":"football/capital-one-cup",
+        "type":"keyword",
+        "webTitle":"Capital One Cup",
+        "webUrl":"http://www.theguardian.com/football/capital-one-cup",
+        "apiUrl":"http://content.guardianapis.com/football/capital-one-cup",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-competition",
+          "id":"pa-football-competition/301"
+        }]
+      },{
+        "id":"football/chelsea",
+        "type":"keyword",
+        "webTitle":"Chelsea",
+        "webUrl":"http://www.theguardian.com/football/chelsea",
+        "apiUrl":"http://content.guardianapis.com/football/chelsea",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-team",
+          "id":"pa-football-team/4"
+        }]
+      },{
+        "id":"football/football",
+        "type":"keyword",
+        "webTitle":"Football",
+        "webUrl":"http://www.theguardian.com/football/football",
+        "apiUrl":"http://content.guardianapis.com/football/football",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"profile/dominicfifield",
+        "type":"contributor",
+        "webTitle":"Dominic Fifield",
+        "webUrl":"http://www.theguardian.com/profile/dominicfifield",
+        "apiUrl":"http://content.guardianapis.com/profile/dominicfifield",
+        "bio":"<p>Dominic Fifield is the Guardian's London <a href=\"http://www.guardian.co.uk/football\">football</a> correspondent</p>",
+        "rcsId":"GNL004637",
+        "r2ContributorId":"15597",
+        "bylineImageUrl":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/10/1381399399489/Dominic-Fifield-003.jpg",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/sport",
+        "type":"newspaper-book-section",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/sport",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421244428",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/29/1383089623474/Ars-ne-Wenger-001.jpg",
+          "typeData":{
+            "source":"REUTERS",
+            "photographer":"Toby Melville",
+            "altText":"Arsène Wenger",
+            "height":"54",
+            "credit":"Toby Melville/REUTERS",
+            "caption":"Arsenal's manager Arsène Wenger looks on during their Capital One Cup fourth round game against Chelsea at Emirates Stadium. Photograph: Toby Melville/REUTERS",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/29/1383089625929/Ars-ne-Wenger-002.jpg",
+          "typeData":{
+            "source":"REUTERS",
+            "photographer":"Toby Melville",
+            "altText":"Arsène Wenger",
+            "height":"340",
+            "credit":"Toby Melville/REUTERS",
+            "caption":"Arsenal's manager Arsène Wenger looks on during their Capital One Cup fourth round game against Chelsea at Emirates Stadium. Photograph: Toby Melville/REUTERS",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/29/1383089627251/Ars-ne-Wenger-003.jpg",
+          "typeData":{
+            "source":"REUTERS",
+            "photographer":"Toby Melville",
+            "altText":"Arsène Wenger",
+            "height":"130",
+            "credit":"Toby Melville/REUTERS",
+            "caption":"Arsenal's manager Arsène Wenger looks on during their Capital One Cup fourth round game against Chelsea at Emirates Stadium. Photograph: Toby Melville/REUTERS",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/29/1383089628544/Ars-ne-Wenger-004.jpg",
+          "typeData":{
+            "source":"REUTERS",
+            "photographer":"Toby Melville",
+            "altText":"Arsène Wenger",
+            "height":"720",
+            "credit":"Toby Melville/REUTERS",
+            "caption":"Arsenal's manager Arsène Wenger looks on during their Capital One Cup fourth round game against Chelsea at Emirates Stadium. Photograph: Toby Melville/REUTERS",
+            "width":"1280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/29/1383089630389/Ars-ne-Wenger-005.jpg",
+          "typeData":{
+            "source":"REUTERS",
+            "photographer":"Toby Melville",
+            "altText":"Arsène Wenger",
+            "height":"1536",
+            "credit":"Toby Melville/REUTERS",
+            "caption":"Arsenal's manager Arsène Wenger looks on during their Capital One Cup fourth round game against Chelsea at Emirates Stadium. Photograph: Toby Melville/REUTERS",
+            "width":"2048"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/29/1383089632270/Ars-ne-Wenger-006.jpg",
+          "typeData":{
+            "source":"REUTERS",
+            "photographer":"Toby Melville",
+            "altText":"Arsène Wenger",
+            "height":"84",
+            "credit":"Toby Melville/REUTERS",
+            "caption":"Arsenal's manager Arsène Wenger looks on during their Capital One Cup fourth round game against Chelsea at Emirates Stadium. Photograph: Toby Melville/REUTERS",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/29/1383089633531/Ars-ne-Wenger-007.jpg",
+          "typeData":{
+            "source":"REUTERS",
+            "photographer":"Toby Melville",
+            "altText":"Arsène Wenger",
+            "height":"132",
+            "credit":"Toby Melville/REUTERS",
+            "caption":"Arsenal's manager Arsène Wenger looks on during their Capital One Cup fourth round game against Chelsea at Emirates Stadium. Photograph: Toby Melville/REUTERS",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/29/1383089634892/Ars-ne-Wenger-008.jpg",
+          "typeData":{
+            "source":"REUTERS",
+            "photographer":"Toby Melville",
+            "altText":"Arsène Wenger",
+            "height":"168",
+            "credit":"Toby Melville/REUTERS",
+            "caption":"Arsenal's manager Arsène Wenger looks on during their Capital One Cup fourth round game against Chelsea at Emirates Stadium. Photograph: Toby Melville/REUTERS",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/29/1383089636616/Ars-ne-Wenger-009.jpg",
+          "typeData":{
+            "source":"REUTERS",
+            "photographer":"Toby Melville",
+            "altText":"Arsène Wenger",
+            "height":"180",
+            "credit":"Toby Melville/REUTERS",
+            "caption":"Arsenal's manager Arsène Wenger looks on during their Capital One Cup fourth round game against Chelsea at Emirates Stadium. Photograph: Toby Melville/REUTERS",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/29/1383089638542/Ars-ne-Wenger-010.jpg",
+          "typeData":{
+            "source":"REUTERS",
+            "photographer":"Toby Melville",
+            "altText":"Arsène Wenger",
+            "height":"228",
+            "credit":"Toby Melville/REUTERS",
+            "caption":"Arsenal's manager Arsène Wenger looks on during their Capital One Cup fourth round game against Chelsea at Emirates Stadium. Photograph: Toby Melville/REUTERS",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/29/1383089640458/Ars-ne-Wenger-011.jpg",
+          "typeData":{
+            "source":"REUTERS",
+            "photographer":"Toby Melville",
+            "altText":"Arsène Wenger",
+            "height":"276",
+            "credit":"Toby Melville/REUTERS",
+            "caption":"Arsenal's manager Arsène Wenger looks on during their Capital One Cup fourth round game against Chelsea at Emirates Stadium. Photograph: Toby Melville/REUTERS",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/29/1383089642298/Ars-ne-Wenger-012.jpg",
+          "typeData":{
+            "source":"REUTERS",
+            "photographer":"Toby Melville",
+            "altText":"Arsène Wenger",
+            "height":"372",
+            "credit":"Toby Melville/REUTERS",
+            "caption":"Arsenal's manager Arsène Wenger looks on during their Capital One Cup fourth round game against Chelsea at Emirates Stadium. Photograph: Toby Melville/REUTERS",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/29/1383089644139/Ars-ne-Wenger-013.jpg",
+          "typeData":{
+            "source":"REUTERS",
+            "photographer":"Toby Melville",
+            "altText":"Arsène Wenger",
+            "height":"1116",
+            "credit":"Toby Melville/REUTERS",
+            "caption":"Arsenal's manager Arsène Wenger looks on during their Capital One Cup fourth round game against Chelsea at Emirates Stadium. Photograph: Toby Melville/REUTERS",
+            "width":"1860"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/29/1383089646415/Ars-ne-Wenger-014.jpg",
+          "typeData":{
+            "source":"REUTERS",
+            "photographer":"Toby Melville",
+            "altText":"Arsène Wenger",
+            "height":"1536",
+            "credit":"Toby Melville/REUTERS",
+            "caption":"Arsenal's manager Arsène Wenger looks on during their Capital One Cup fourth round game against Chelsea at Emirates Stadium. Photograph: Toby Melville/REUTERS",
+            "width":"2560"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/29/1383089640458/Ars-ne-Wenger-011.jpg",
+          "typeData":{
+            "source":"REUTERS",
+            "photographer":"Toby Melville",
+            "altText":"Arsène Wenger",
+            "height":"276",
+            "credit":"Toby Melville/REUTERS",
+            "caption":"Arsenal's manager Arsène Wenger looks on during their Capital One Cup fourth round game against Chelsea at Emirates Stadium. Photograph: Toby Melville/Reuters",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421244429",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Football/Pix/pictures/2013/10/29/1383089632270/Ars-ne-Wenger-006.jpg",
+          "typeData":{
+            "source":"REUTERS",
+            "photographer":"Toby Melville",
+            "altText":"Arsène Wenger",
+            "height":"84",
+            "credit":"Toby Melville/REUTERS",
+            "caption":"Arsenal's manager Arsène Wenger looks on during their Capital One Cup fourth round game against Chelsea at Emirates Stadium. Photograph: Toby Melville/REUTERS",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[{
+        "type":"pa-football-team",
+        "id":"pa-football-team/4"
+      },{
+        "type":"pa-football-team",
+        "id":"pa-football-team/1006"
+      },{
+        "type":"pa-football-competition",
+        "id":"pa-football-competition/301"
+      }],
+      "isExpired":"false"
+    },
+    "storyPackage":[{
+      "id":"football/2013/oct/31/spartak-moscow-fans-hooligans-riot-russian-football",
+      "sectionId":"football",
+      "sectionName":"Football",
+      "webPublicationDate":"2013-10-31T16:14:13Z",
+      "webTitle":"Russian football hit with more shame as Spartak hooligans run riot",
+      "webUrl":"http://www.theguardian.com/football/2013/oct/31/spartak-moscow-fans-hooligans-riot-russian-football",
+      "apiUrl":"http://content.guardianapis.com/football/2013/oct/31/spartak-moscow-fans-hooligans-riot-russian-football",
+      "fields":{
+        "newspaperPageNumber":"59",
+        "trailText":"Russian football has been hit with yet more shame after Wednesday's game between Spartak Moscow and Shinnik Yaroslavl was marred by crowd violence",
+        "headline":"Russian football hit with more shame as Spartak hooligans run riot",
+        "body":"<video data-media-id=\"gu-video-421398386\" class=\"gu-video\" controls=\"controls\" poster=\"\">\n        <source src=\"http://cdn.theguardian.tv/mainwebsite/2013/10/31/131031RussiaFanViolence-16x9.mp4\"></source><source src=\"http://cdn.theguardian.tv/ad/2013/10/31/131031RussiaFanViolence/131031RussiaFanViolence.m3u8\"></source><source src=\"http://cdn.theguardian.tv/3gp/small/2013/10/31/131031RussiaFanViolence_3gpSml16x9.3gp\"></source>\n      </video><p>Russian football has been hit with more shame after the cup game between Spartak Moscow and Shinnik Yaroslavl was marred by crowd trouble. Police detained 78 fans.</p><p>Spartak fans threw flares and smoke bombs before the Russian Cup tie on Wednesday. Disturbances continued during the first half with the situation worsening a few minutes after the break when supporters clashed with riot police, ripping out seats and hurling them on to the pitch. Pictures also showed a fan holding a Nazi banner.</p><p>\"We believe that it was a planned provocation,\" Nikolay Trifonov, the head of the interior ministry in the Yaroslavl region, said. \"We have no complaints about the Shinnik fans, all the provocations came from Spartak fans. After the match we detained 78 people.\"</p><p>The incident follows the <a href=\"http://www.theguardian.com/football/2013/oct/30/cska-moscow-close-stadium-yaya-toure-racism-uefa-monkey\" title=\"\">Uefa sanction against Spartak's neighbours CSKA Moscow</a> who will have to play their next Champions League game in a partly closed ground after Manchester City's Yaya Touré had been racially abused.</p><p>The Yaroslavl police have opened an investigation into the violence that could lead to prison sentences of up to three years. The referee Sergey Kostevic stopped play in the 53rd minute and ordered the players into the dressing room, allowing police to restore order by bringing in a water cannon truck. The game resumed more than 20 minutes later with Spartak winning 1-0 through a Dmitri Kombarov penalty.</p><figure data-media-id='gu-image-421398886'><img src='http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/31/1383236018331/Spartak-Moscow-011.jpg' alt='Spartak Moscow' width='460' height='276' class='gu-image'/><figcaption>Spartak Moscow fans unfurled a Nazi banner during their Russian Cup game against Shinnik Yaroslavl. Photograph: Stringer/REUTERS</figcaption></figure><p>The Russian FA's disciplinary committee will hold an extraordinary meeting on Friday to discuss the issue with Russia's sports minister Vitaly Mutko, saying the football authorities should be held responsible for the unrest.</p><p>The issue could be embarrassing for Vladimir Putin, who faces ethnic tensions in Russia as it prepares to host the 2014 Winter Olympics in February and the 2018 football World Cup.</p><!-- Guardian Watermark: internal-code/content/421393317|2014-05-14T16:53:48Z|075abfc682d4316e34a5fa2a4beb26ed48cf3f06 -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2014-01-09T17:40:45Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/31/1383236009933/Spartak-Moscow-006.jpg",
+        "standfirst":"• Spartak Moscow v Shinnik Yaroslavl marred by violence<br />• Nazi banner unfurled while police clash with fans",
+        "shortUrl":"http://gu.com/p/3k2kq",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/31/1383236009933/Spartak-Moscow-006.jpg",
+        "wordcount":"286",
+        "commentable":"false",
+        "internalContentCode":"421393317",
+        "allowUgc":"false",
+        "internalOctopusCode":"8265442",
+        "isPremoderated":"false",
+        "byline":"Reuters and Guardian staff",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2013-11-01",
+        "internalPageCode":"1990007",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-03T16:14:13Z"
+      },
+      "tags":[{
+        "id":"football/spartakmoscow",
+        "type":"keyword",
+        "webTitle":"Spartak Moscow",
+        "webUrl":"http://www.theguardian.com/football/spartakmoscow",
+        "apiUrl":"http://content.guardianapis.com/football/spartakmoscow",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-team",
+          "id":"pa-football-team/6997"
+        }]
+      },{
+        "id":"football/football",
+        "type":"keyword",
+        "webTitle":"Football",
+        "webUrl":"http://www.theguardian.com/football/football",
+        "apiUrl":"http://content.guardianapis.com/football/football",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"football/world-cup-2018",
+        "type":"keyword",
+        "webTitle":"World Cup 2018",
+        "webUrl":"http://www.theguardian.com/football/world-cup-2018",
+        "apiUrl":"http://content.guardianapis.com/football/world-cup-2018",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/sport",
+        "type":"newspaper-book-section",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/sport",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421398887",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/31/1383236009933/Spartak-Moscow-006.jpg",
+          "typeData":{
+            "source":"REUTERS",
+            "photographer":"Stringer",
+            "altText":"Spartak Moscow",
+            "height":"84",
+            "credit":"Stringer/REUTERS",
+            "caption":"Spartak Moscow fans unfurled a Nazi banner during their Russian Cup game against Shinnik Yaroslavl. Photograph: Stringer/REUTERS",
+            "width":"140"
+          }
+        }]
+      },{
+        "id":"gu-image-421398886",
+        "relation":"body",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Sport/Pix/columnists/2013/10/31/1383236018331/Spartak-Moscow-011.jpg",
+          "typeData":{
+            "source":"REUTERS",
+            "photographer":"Stringer",
+            "altText":"Spartak Moscow",
+            "height":"276",
+            "credit":"Stringer/REUTERS",
+            "caption":"Spartak Moscow fans unfurled a Nazi banner during their Russian Cup game against Shinnik Yaroslavl. Photograph: Stringer/REUTERS",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-video-421398386",
+        "relation":"body",
+        "type":"video",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/31/1383238675390/Spartak-Moscow-fans-burn--001.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Str",
+            "altText":"Spartak Moscow fans burn flares and hold flag bearing a Swastika during the Russia Cup soccer match ",
+            "height":"230",
+            "credit":"Str/AP",
+            "caption":"Spartak Moscow fans burn flares and hold flag bearing a Swastika during the Russia Cup soccer match between Shinnik Yaroslavl and Spartak Moscow  Photograph: Str/AP",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/31/1383238681107/Spartak-Moscow-fans-burn--003.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Str",
+            "altText":"Spartak Moscow fans burn flares and hold flag bearing a Swastika during the Russia Cup soccer match ",
+            "height":"54",
+            "credit":"Str/AP",
+            "caption":"Spartak Moscow fans burn flares and hold flag bearing a Swastika during the Russia Cup soccer match between Shinnik Yaroslavl and Spartak Moscow  Photograph: Str/AP",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/31/1383238682880/Spartak-Moscow-fans-burn--004.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Str",
+            "altText":"Spartak Moscow fans burn flares and hold flag bearing a Swastika during the Russia Cup soccer match ",
+            "height":"340",
+            "credit":"Str/AP",
+            "caption":"Spartak Moscow fans burn flares and hold flag bearing a Swastika during the Russia Cup soccer match between Shinnik Yaroslavl and Spartak Moscow  Photograph: Str/AP",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/31/1383238684513/Spartak-Moscow-fans-burn--005.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Str",
+            "altText":"Spartak Moscow fans burn flares and hold flag bearing a Swastika during the Russia Cup soccer match ",
+            "height":"130",
+            "credit":"Str/AP",
+            "caption":"Spartak Moscow fans burn flares and hold flag bearing a Swastika during the Russia Cup soccer match between Shinnik Yaroslavl and Spartak Moscow  Photograph: Str/AP",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/31/1383238686124/Spartak-Moscow-fans-burn--006.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Str",
+            "altText":"Spartak Moscow fans burn flares and hold flag bearing a Swastika during the Russia Cup soccer match ",
+            "height":"84",
+            "credit":"Str/AP",
+            "caption":"Spartak Moscow fans burn flares and hold flag bearing a Swastika during the Russia Cup soccer match between Shinnik Yaroslavl and Spartak Moscow  Photograph: Str/AP",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/31/1383238688024/Spartak-Moscow-fans-burn--007.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Str",
+            "altText":"Spartak Moscow fans burn flares and hold flag bearing a Swastika during the Russia Cup soccer match ",
+            "height":"132",
+            "credit":"Str/AP",
+            "caption":"Spartak Moscow fans burn flares and hold flag bearing a Swastika during the Russia Cup soccer match between Shinnik Yaroslavl and Spartak Moscow  Photograph: Str/AP",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/31/1383238689693/Spartak-Moscow-fans-burn--008.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Str",
+            "altText":"Spartak Moscow fans burn flares and hold flag bearing a Swastika during the Russia Cup soccer match ",
+            "height":"168",
+            "credit":"Str/AP",
+            "caption":"Spartak Moscow fans burn flares and hold flag bearing a Swastika during the Russia Cup soccer match between Shinnik Yaroslavl and Spartak Moscow  Photograph: Str/AP",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/31/1383238691335/Spartak-Moscow-fans-burn--009.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Str",
+            "altText":"Spartak Moscow fans burn flares and hold flag bearing a Swastika during the Russia Cup soccer match ",
+            "height":"180",
+            "credit":"Str/AP",
+            "caption":"Spartak Moscow fans burn flares and hold flag bearing a Swastika during the Russia Cup soccer match between Shinnik Yaroslavl and Spartak Moscow  Photograph: Str/AP",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/31/1383238692986/Spartak-Moscow-fans-burn--010.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Str",
+            "altText":"Spartak Moscow fans burn flares and hold flag bearing a Swastika during the Russia Cup soccer match ",
+            "height":"228",
+            "credit":"Str/AP",
+            "caption":"Spartak Moscow fans burn flares and hold flag bearing a Swastika during the Russia Cup soccer match between Shinnik Yaroslavl and Spartak Moscow  Photograph: Str/AP",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/31/1383238694648/Spartak-Moscow-fans-burn--011.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Str",
+            "altText":"Spartak Moscow fans burn flares and hold flag bearing a Swastika during the Russia Cup soccer match ",
+            "height":"276",
+            "credit":"Str/AP",
+            "caption":"Spartak Moscow fans burn flares and hold flag bearing a Swastika during the Russia Cup soccer match between Shinnik Yaroslavl and Spartak Moscow  Photograph: Str/AP",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/31/1383238696368/Spartak-Moscow-fans-burn--012.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Str",
+            "altText":"Spartak Moscow fans burn flares and hold flag bearing a Swastika during the Russia Cup soccer match ",
+            "height":"372",
+            "credit":"Str/AP",
+            "caption":"Spartak Moscow fans burn flares and hold flag bearing a Swastika during the Russia Cup soccer match between Shinnik Yaroslavl and Spartak Moscow  Photograph: Str/AP",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/31/1383238698235/Spartak-Moscow-fans-burn--013.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Str",
+            "altText":"Spartak Moscow fans burn flares and hold flag bearing a Swastika during the Russia Cup soccer match ",
+            "height":"360",
+            "credit":"Str/AP",
+            "caption":"Spartak Moscow fans burn flares and hold flag bearing a Swastika during the Russia Cup soccer match between Shinnik Yaroslavl and Spartak Moscow  Photograph: Str/AP",
+            "width":"640"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/31/1383238700411/Spartak-Moscow-fans-burn--014.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Str",
+            "altText":"Spartak Moscow fans burn flares and hold flag bearing a Swastika during the Russia Cup soccer match ",
+            "height":"90",
+            "credit":"Str/AP",
+            "caption":"Spartak Moscow fans burn flares and hold flag bearing a Swastika during the Russia Cup soccer match between Shinnik Yaroslavl and Spartak Moscow  Photograph: Str/AP",
+            "width":"120"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/31/1383238702967/Spartak-Moscow-fans-burn--015.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Str",
+            "altText":"Spartak Moscow fans burn flares and hold flag bearing a Swastika during the Russia Cup soccer match ",
+            "height":"225",
+            "credit":"Str/AP",
+            "caption":"Spartak Moscow fans burn flares and hold flag bearing a Swastika during the Russia Cup soccer match between Shinnik Yaroslavl and Spartak Moscow  Photograph: Str/AP",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2013/10/31/1383238705088/Spartak-Moscow-fans-burn--016.jpg",
+          "typeData":{
+            "source":"AP",
+            "photographer":"Str",
+            "altText":"Spartak Moscow fans burn flares and hold flag bearing a Swastika during the Russia Cup soccer match ",
+            "height":"360",
+            "credit":"Str/AP",
+            "caption":"Spartak Moscow fans burn flares and hold flag bearing a Swastika during the Russia Cup soccer match between Shinnik Yaroslavl and Spartak Moscow  Photograph: Str/AP",
+            "width":"480"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/mp4",
+          "file":"http://cdn.theguardian.tv/mainwebsite/2013/10/31/131031RussiaFanViolence-16x9.mp4",
+          "typeData":{
+            "source":"SNTV",
+            "embeddable":"false",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/31/131031RussiaFanViolence_8265855.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/31/131031RussiaFanViolence_8265855.jpg",
+            "width":"480",
+            "durationSeconds":"38"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/3gpp:small",
+          "file":"http://cdn.theguardian.tv/3gp/small/2013/10/31/131031RussiaFanViolence_3gpSml16x9.3gp",
+          "typeData":{
+            "source":"SNTV",
+            "embeddable":"false",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/31/131031RussiaFanViolence_8265855.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/31/131031RussiaFanViolence_8265855.jpg",
+            "width":"480",
+            "durationSeconds":"38"
+          }
+        },{
+          "type":"video",
+          "mimeType":"video/m3u8",
+          "file":"http://cdn.theguardian.tv/ad/2013/10/31/131031RussiaFanViolence/131031RussiaFanViolence.m3u8",
+          "typeData":{
+            "source":"SNTV",
+            "embeddable":"false",
+            "blockAds":"false",
+            "thumbnailImageUrl":"http://cdn.theguardian.tv/mainwebsite/thumb/2013/10/31/131031RussiaFanViolence_8265855.jpg",
+            "height":"360",
+            "durationMinutes":"0",
+            "stillImageUrl":"http://cdn.theguardian.tv/mainwebsite/poster/2013/10/31/131031RussiaFanViolence_8265855.jpg",
+            "width":"480",
+            "durationSeconds":"38"
+          }
+        }]
+      }],
+      "references":[{
+        "type":"pa-football-team",
+        "id":"pa-football-team/6997"
+      }],
+      "isExpired":"true"
+    },{
+      "id":"uk-news/2013/oct/31/fans-lawrence-abuse-song-jailed",
+      "sectionId":"uk-news",
+      "sectionName":"UK news",
+      "webPublicationDate":"2013-10-31T01:26:40Z",
+      "webTitle":"Football fans who sang Stephen Lawrence abuse song jailed",
+      "webUrl":"http://www.theguardian.com/uk-news/2013/oct/31/fans-lawrence-abuse-song-jailed",
+      "apiUrl":"http://content.guardianapis.com/uk-news/2013/oct/31/fans-lawrence-abuse-song-jailed",
+      "fields":{
+        "newspaperPageNumber":"19",
+        "trailText":"<p>Six Charlton Athletic supporters received prison sentences for causing racially aggravated fear of violence on train</p>",
+        "headline":"Football fans who sang Stephen Lawrence abuse song jailed",
+        "body":"<p>Six football fans who chanted songs \"glorifying and idolising\" the murderer of Stephen Lawrence have been jailed.</p><p>The Charlton Athletic supporters, who had been at an FA Cup match against Fulham on 7 January last year, were jailed for their abusive behaviour on a train from Putney to Waterloo.</p><p>The men, aged between 22 and 31, were convicted of causing racially aggravated fear of violence after witnesses complained of sexual and racially motivated abuse. British Transport Police said the group chanted in support of Gary Dobson three days after he was convicted of murdering Stephen Lawrence.</p><p>Speaking after the sentencing at Blackfriars Crown Court, Baljit Ubhey, CPS London Chief Crown prosecutor, said: \"These men were singing and chanting racist abuse in praise of the convicted murderers of Stephen Lawrence. To glorify and idolise these men was disturbing and upsetting.</p><p>\"Their racially and sexually abusive language left members of the public shocked and disgusted. Witnesses said they felt intimidated and feared there was a real and significant risk of violence.</p><p>\"I would like to thank the witnesses who came forward and gave evidence to support this prosecution. I hope these convictions stand as a warning that racist and abusive behaviour will not be tolerated in our city.\"</p><p>Mick Everett, Charlton FC's head of operations, said: \"The club was shocked to hear of the rowdy, intimidating behaviour and the chanting of racist songs on a train by a handful of our supporters.</p><p>\"Their actions are totally condemned by everyone at the club and indeed, I am sure, by Charlton supporters everywhere.</p><p>\"Although this isolated incident does not reflect on the overwhelming majority of our fans, these arrests are a kick in the teeth to everyone associated with the club, who have put so much effort into our campaign over the years. The club will now look to impose additional appropriate sanctions on those involved.\"</p><p>Detective Sergeant Jane Hill, from British Transport Police, said: \"The actions of these men were both offensive and extremely intimidating to other passengers on board the train at the time. An investigation was swiftly launched to gather evidence and by working closely with Charlton Athletic FC, coupled with excellent CCTV footage, intelligence reports and statements from witnesses, we were able to move quickly to trace the men.</p><p>\"This minority blight the rail journeys of many ordinary passengers and stain the reputation of the game and the country. They also continue to cause us problems that require significant resources to contain.\"</p><p>David Bone, 23, and Daniel Clay, 31, received 18 months in prison and an eight-year football banning order.</p><p>The same eight-year match ban was imposed on Ben Boylett, 26, and Jason Butler, 31, who were also given one year in prison.</p><p>Sean Fowle and Aaron Phinbow, who are both 25, also received an eight-year ban and eight months behind bars.</p><p>Jake Embery, 22, was given a six-month suspended sentence, a four-year match ban and ordered to pay £3,000 costs.</p><!-- Guardian Watermark: internal-code/content/421334395|2014-05-14T16:53:48Z|dcfc461b15db15453c4401f4bf6243a5e22b459a -->",
+        "showInRelatedContent":"true",
+        "lastModified":"2013-10-31T01:47:43Z",
+        "hasStoryPackage":"true",
+        "score":"1.0",
+        "secureThumbnail":"https://static-secure.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383182701608/David-Bone-and-Daniel-Cla-004.jpg",
+        "standfirst":"Six Charlton Athletic supporters received prison sentences for causing racially aggravated fear of violence on train",
+        "shortUrl":"http://gu.com/p/3k24a",
+        "thumbnail":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383182701608/David-Bone-and-Daniel-Cla-004.jpg",
+        "wordcount":"477",
+        "commentable":"false",
+        "internalContentCode":"421334395",
+        "allowUgc":"false",
+        "internalOctopusCode":"8262601",
+        "isPremoderated":"false",
+        "byline":"Press Association",
+        "publication":"The Guardian",
+        "newspaperEditionDate":"2013-10-31",
+        "internalPageCode":"1989559",
+        "productionOffice":"UK",
+        "shouldHideAdverts":"false",
+        "liveBloggingNow":"false",
+        "commentCloseDate":"2013-11-03T01:26:40Z"
+      },
+      "tags":[{
+        "id":"uk/ukcrime",
+        "type":"keyword",
+        "webTitle":"Crime",
+        "webUrl":"http://www.theguardian.com/uk/ukcrime",
+        "apiUrl":"http://content.guardianapis.com/uk/ukcrime",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"uk/uk",
+        "type":"keyword",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/uk/uk",
+        "apiUrl":"http://content.guardianapis.com/uk/uk",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"football/football",
+        "type":"keyword",
+        "webTitle":"Football",
+        "webUrl":"http://www.theguardian.com/football/football",
+        "apiUrl":"http://content.guardianapis.com/football/football",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[]
+      },{
+        "id":"football/charltonathletic",
+        "type":"keyword",
+        "webTitle":"Charlton Athletic",
+        "webUrl":"http://www.theguardian.com/football/charltonathletic",
+        "apiUrl":"http://content.guardianapis.com/football/charltonathletic",
+        "sectionId":"football",
+        "sectionName":"Football",
+        "references":[{
+          "type":"pa-football-team",
+          "id":"pa-football-team/3"
+        }]
+      },{
+        "id":"sport/sport",
+        "type":"keyword",
+        "webTitle":"Sport",
+        "webUrl":"http://www.theguardian.com/sport/sport",
+        "apiUrl":"http://content.guardianapis.com/sport/sport",
+        "sectionId":"sport",
+        "sectionName":"Sport",
+        "references":[]
+      },{
+        "id":"tone/news",
+        "type":"tone",
+        "webTitle":"News",
+        "webUrl":"http://www.theguardian.com/tone/news",
+        "apiUrl":"http://content.guardianapis.com/tone/news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection/uknews",
+        "type":"newspaper-book-section",
+        "webTitle":"UK news",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection/uknews",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection/uknews",
+        "sectionId":"uk-news",
+        "sectionName":"UK news",
+        "references":[]
+      },{
+        "id":"theguardian/mainsection",
+        "type":"newspaper-book",
+        "webTitle":"Main section",
+        "webUrl":"http://www.theguardian.com/theguardian/mainsection",
+        "apiUrl":"http://content.guardianapis.com/theguardian/mainsection",
+        "sectionId":"news",
+        "sectionName":"News",
+        "references":[]
+      },{
+        "id":"type/article",
+        "type":"type",
+        "webTitle":"Article",
+        "webUrl":"http://www.theguardian.com/articles",
+        "apiUrl":"http://content.guardianapis.com/articles",
+        "references":[]
+      },{
+        "id":"publication/theguardian",
+        "type":"publication",
+        "webTitle":"The Guardian",
+        "webUrl":"http://www.theguardian.com/theguardian/all",
+        "apiUrl":"http://content.guardianapis.com/theguardian/all",
+        "sectionId":"theguardian",
+        "sectionName":"From the Guardian",
+        "references":[]
+      }],
+      "elements":[{
+        "id":"gu-image-421336793",
+        "relation":"main",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383182694766/David-Bone-and-Daniel-Cla-001.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"British Transport Police",
+            "altText":"David Bone and Daniel Clay",
+            "height":"54",
+            "credit":"British Transport Police/PA",
+            "caption":"Two of those jailed, David Bone and Daniel Clay, received 18 months in prison and an eight-year football banning order. Photograph: British Transport Police/PA",
+            "width":"54"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383182697614/David-Bone-and-Daniel-Cla-002.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"British Transport Police",
+            "altText":"David Bone and Daniel Clay",
+            "height":"340",
+            "credit":"British Transport Police/PA",
+            "caption":"Two of those jailed, David Bone and Daniel Clay, received 18 months in prison and an eight-year football banning order. Photograph: British Transport Police/PA",
+            "width":"480"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383182699747/David-Bone-and-Daniel-Cla-003.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"British Transport Police",
+            "altText":"David Bone and Daniel Clay",
+            "height":"130",
+            "credit":"British Transport Police/PA",
+            "caption":"Two of those jailed, David Bone and Daniel Clay, received 18 months in prison and an eight-year football banning order. Photograph: British Transport Police/PA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383182701608/David-Bone-and-Daniel-Cla-004.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"British Transport Police",
+            "altText":"David Bone and Daniel Clay",
+            "height":"84",
+            "credit":"British Transport Police/PA",
+            "caption":"Two of those jailed, David Bone and Daniel Clay, received 18 months in prison and an eight-year football banning order. Photograph: British Transport Police/PA",
+            "width":"140"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383182703368/David-Bone-and-Daniel-Cla-005.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"British Transport Police",
+            "altText":"David Bone and Daniel Clay",
+            "height":"132",
+            "credit":"British Transport Police/PA",
+            "caption":"Two of those jailed, David Bone and Daniel Clay, received 18 months in prison and an eight-year football banning order. Photograph: British Transport Police/PA",
+            "width":"220"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383182705615/David-Bone-and-Daniel-Cla-006.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"British Transport Police",
+            "altText":"David Bone and Daniel Clay",
+            "height":"168",
+            "credit":"British Transport Police/PA",
+            "caption":"Two of those jailed, David Bone and Daniel Clay, received 18 months in prison and an eight-year football banning order. Photograph: British Transport Police/PA",
+            "width":"280"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383182707724/David-Bone-and-Daniel-Cla-007.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"British Transport Police",
+            "altText":"David Bone and Daniel Clay",
+            "height":"180",
+            "credit":"British Transport Police/PA",
+            "caption":"Two of those jailed, David Bone and Daniel Clay, received 18 months in prison and an eight-year football banning order. Photograph: British Transport Police/PA",
+            "width":"300"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383182709545/David-Bone-and-Daniel-Cla-008.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"British Transport Police",
+            "altText":"David Bone and Daniel Clay",
+            "height":"228",
+            "credit":"British Transport Police/PA",
+            "caption":"Two of those jailed, David Bone and Daniel Clay, received 18 months in prison and an eight-year football banning order. Photograph: British Transport Police/PA",
+            "width":"380"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383182711402/David-Bone-and-Daniel-Cla-009.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"British Transport Police",
+            "altText":"David Bone and Daniel Clay",
+            "height":"276",
+            "credit":"British Transport Police/PA",
+            "caption":"Two of those jailed, David Bone and Daniel Clay, received 18 months in prison and an eight-year football banning order. Photograph: British Transport Police/PA",
+            "width":"460"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383182713047/David-Bone-and-Daniel-Cla-010.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"British Transport Police",
+            "altText":"David Bone and Daniel Clay",
+            "height":"372",
+            "credit":"British Transport Police/PA",
+            "caption":"Two of those jailed, David Bone and Daniel Clay, received 18 months in prison and an eight-year football banning order. Photograph: British Transport Police/PA",
+            "width":"620"
+          }
+        },{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383182711402/David-Bone-and-Daniel-Cla-009.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"British Transport Police",
+            "altText":"David Bone and Daniel Clay",
+            "height":"276",
+            "credit":"British Transport Police/PA",
+            "caption":"Two of those jailed, David Bone and Daniel Clay, received 18 months in prison and an eight-year football banning order. Photograph: British Transport Police/PA",
+            "width":"460"
+          }
+        }]
+      },{
+        "id":"gu-image-421336794",
+        "relation":"thumbnail",
+        "type":"image",
+        "assets":[{
+          "type":"image",
+          "mimeType":"image/jpeg",
+          "file":"http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/31/1383182701608/David-Bone-and-Daniel-Cla-004.jpg",
+          "typeData":{
+            "source":"PA",
+            "photographer":"British Transport Police",
+            "altText":"David Bone and Daniel Clay",
+            "height":"84",
+            "credit":"British Transport Police/PA",
+            "caption":"Two of those jailed, David Bone and Daniel Clay, received 18 months in prison and an eight-year football banning order. Photograph: British Transport Police/PA",
+            "width":"140"
+          }
+        }]
+      }],
+      "references":[{
+        "type":"pa-football-team",
+        "id":"pa-football-team/3"
+      }],
+      "isExpired":"false"
+    }]
+  }
+}

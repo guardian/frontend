@@ -46,6 +46,21 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
       }
     }
 
+    scenario("Include organisation metadata", ArticleComponents) {
+
+      Given("I am on an article entitled 'Liu Xiang pulls up in opening race at second consecutive Olympics'")
+      HtmlUnit("/sport/2012/aug/07/liu-xiang-injured-olympics") { browser =>
+        import browser._
+
+        Then("there should be organisation metadata")
+
+        val org = findFirst("span[itemtype='http://schema.org/Organization']")
+
+        org.findFirst("[itemprop=name]").getText should be("The Guardian")
+        org.findFirst("meta[itemprop=logo]").getAttribute("content") should be("https://static-secure.guim.co.uk/icons/social/og/gu-logo-fallback.png")
+      }
+    }
+
     scenario("Display a short description of the article", ArticleComponents) {
 
       Given("I am on an article entitled 'Putting a price on the rivers and rain diminishes us all'")
@@ -341,7 +356,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         adPlaceholder.getAttribute("data-wide") should be("728,90|900,250|970,250")
 
         And("the placeholder has the correct class name")
-        adPlaceholder.getAttribute("class") should be("ad-slot ad-slot--dfp ad-slot--top-banner-ad")
+        adPlaceholder.getAttribute("class") should be("ad-slot ad-slot--dfp ad-slot--top-above-nav ad-slot--top-banner-ad")
 
         And("the placeholder has the correct analytics name")
         adPlaceholder.getAttribute("data-link-name") should be("ad slot top-above-nav")

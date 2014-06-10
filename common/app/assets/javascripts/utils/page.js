@@ -28,6 +28,7 @@ function(
         assign(match, {
             date: config.webPublicationDateAsUrlPart(),
             teams: teams,
+            isLive: config.page.isLive,
             pageType: find([
                 ['minbymin', config.page.isLiveBlog],
                 ['report', config.hasTone('Match reports')],

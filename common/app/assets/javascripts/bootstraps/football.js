@@ -7,6 +7,7 @@ define([
     'common/utils/config',
     'common/utils/page',
     'common/utils/mediator',
+    'common/utils/detect',
     'common/modules/ui/rhc',
     'common/modules/charts/table-doughnut',
     'common/modules/sport/football/match-list-live',
@@ -22,6 +23,7 @@ define([
     config,
     page,
     mediator,
+    detect,
     rhc,
     Doughnut,
     MatchListLive,
@@ -31,7 +33,8 @@ define([
 ) {
 
     function renderNav(match, callback) {
-        return (new MatchInfo(match, config.page.pageId)).fetch().then(function(resp) {
+        var matchInfo;
+        return (matchInfo = new MatchInfo(match, config.page.pageId)).fetch().then(function(resp) {
             var $nav = $.create(resp.nav).first().each(function(nav) {
                 if (match.id || $('.tabs__tab', nav).length > 2) {
                     $('.js-football-tabs', context).append(nav);
@@ -39,7 +42,7 @@ define([
             });
 
             if (callback) {
-                callback(resp, $nav);
+                callback(resp, $nav, matchInfo.endpoint);
             } // The promise chain is broken as Reqwest doesn't allow for creating more than 1 argument.
         }, function() {
             $('.score-container', context).remove();
@@ -151,12 +154,16 @@ define([
                     $h.addClass('u-h').before(scoreContainer);
                 }
 
-                renderNav(match, function(resp, $nav) {
+                renderNav(match, function(resp, $nav, endpoint) {
                     dropdownTemplate = resp.dropdown;
                     scoreContainer.innerHTML = '';
                     scoreBoard.template = resp.matchSummary;
 
                     if(!/^\s+$/.test(scoreBoard.template)) {
+                        scoreBoard.endpoint = endpoint;
+                        scoreBoard.updateEvery = /desktop|wide/.test(detect.getBreakpoint()) ? 30 : 60;
+                        scoreBoard.autoupdated = match.isLive;
+
                         scoreBoard.render(scoreContainer);
                         scoreBoard.setState(match.pageType);
                     } else {

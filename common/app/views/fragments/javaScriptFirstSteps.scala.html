@@ -1,0 +1,84 @@
+@(item: model.MetaData, curlPaths: Map[String, String] = Map())(implicit request: RequestHeader)
+@import conf.Switches._
+@import conf.Static
+@import conf.Configuration
+
+@* Critical scripts that should execute as soon as possible, preventing layout thrashing *@
+
+<!--[if lt IE 9]>
+    <script src="@Static("javascripts/components/html5shiv/dist/html5shiv.js")"></script>
+<![endif]-->
+
+<style class="initial" data-cache-name="WebEgyptian" data-cache-file-woff="@Static("fonts/WebEgyptian.woff.json")" data-cache-file-ttf="@Static("fonts/WebEgyptian.ttf.json")"></style>
+<style class="initial" data-cache-name="WebAgateSans" data-min-width="980" data-cache-file-woff="@Static("fonts/WebAgateSans.woff.json")" data-cache-file-ttf="@Static("fonts/WebAgateSans.ttf.json")"></style>
+<style class="initial" data-cache-name="TextSans" data-min-width="980" data-cache-file-woff="@Static("fonts/WebTextSans.woff.json")" data-cache-file-ttf="@Static("fonts/WebTextSans.ttf.json")"></style>
+<style class="initial" data-cache-name="WebHeadlineSans" data-min-width="980" data-advertisement-feature data-cache-file-woff="@Static("fonts/WebHeadlineSans.woff.json")" data-cache-file-ttf="@Static("fonts/WebHeadlineSans.ttf.json")"></style>
+
+<script id="gu">
+
+    if (!Function.prototype.bind) {
+        Function.prototype.bind = function (oThis) {
+            if (typeof this !== "function") {
+                // closest thing possible to the ECMAScript 5
+                // internal IsCallable function
+                throw new TypeError("Function.prototype.bind - what is trying to be bound is not callable");
+            }
+
+            var aArgs = Array.prototype.slice.call(arguments, 1),
+                    fToBind = this,
+                    fNOP = function () {},
+                    fBound = function () {
+                        return fToBind.apply(this instanceof fNOP && oThis
+                                        ? this
+                                        : oThis,
+                                aArgs.concat(Array.prototype.slice.call(arguments)));
+                    };
+
+            fNOP.prototype = this.prototype;
+            fBound.prototype = new fNOP();
+
+            return fBound;
+        };
+    }
+
+    var guardian = {
+        isModernBrowser: (
+            'querySelector' in document
+            && 'addEventListener' in window
+            && 'localStorage' in window
+            && 'sessionStorage' in window
+            && 'bind' in Function
+            && (
+                ('XMLHttpRequest' in window && 'withCredentials' in new XMLHttpRequest())
+                || 'XDomainRequest' in window
+            )
+        ),
+        css: {
+            loaded: false
+        },
+        config: @fragments.javaScriptConfig(item)
+    };
+
+    (function(isModern) {
+
+        // must always be set before the Omniture file is parsed
+        window.s_account = guardian.config.page.omnitureAccount;
+
+        if (!isModern) { return false; }
+
+        @* we want to add/remove classes to HTML ASAP to avoid FOUC *@
+        var htmlClassNames = "";
+
+        @* http://modernizr.com/download/#-svg *@
+        function hasSvgSupport() {
+            var ns = {'svg': 'http://www.w3.org/2000/svg'};
+            return !!document.createElementNS && !!document.createElementNS(ns.svg, 'svg').createSVGRect;
+        }
+        if (hasSvgSupport()) {
+            htmlClassNames += " svg";
+        }
+        document.documentElement.className = document.documentElement.className.replace(/\bjs-off\b/g, '') + ' js-on ' + htmlClassNames;
+
+    })(guardian.isModernBrowser);
+
+</script>

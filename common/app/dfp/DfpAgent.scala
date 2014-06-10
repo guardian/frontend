@@ -2,9 +2,8 @@ package dfp
 
 import common._
 import conf.Configuration.commercial.dfpDataKey
-import model.Content
-import model.Section
-import model.Tag
+import java.net.URLDecoder
+import model.{Config, Content, Section, Tag}
 import play.api.Play.current
 import play.api.libs.functional.syntax._
 import play.api.libs.json.Json._
@@ -33,9 +32,23 @@ object DfpAgent extends ExecutionContexts with Logging {
     }
   }
 
+  private def containerSponsoredKeyword(config: Config, p: String => Boolean): Option[String] = {
+    config.contentApiQuery.flatMap { encodedQuery =>
+      val query = URLDecoder.decode(encodedQuery, "utf-8")
+      val tokens = query.split( """\?|&|=|\(|\)|\||\,""").map(_.replaceFirst(".*/", ""))
+      tokens find p
+    }
+  }
+
+  private def isSponsoredContainer(config: Config, p: String => Boolean): Boolean = {
+    containerSponsoredKeyword(config, p).isDefined
+  }
+
   def isSponsored(content: Content): Boolean = isSponsored(content.keywords)
 
   def isSponsored(section: Section): Boolean = isSponsored(section.id)
+
+  def isSponsored(config: Config): Boolean = isSponsoredContainer(config, isSponsored)
 
   def isSponsored(keywords: Seq[Tag]): Boolean = keywords.exists(keyword => isSponsored(keyword.id))
 
@@ -45,10 +58,18 @@ object DfpAgent extends ExecutionContexts with Logging {
 
   def isAdvertisementFeature(section: Section): Boolean = isAdvertisementFeature(section.id)
 
+  def isAdvertisementFeature(config: Config): Boolean = isSponsoredContainer(config, isAdvertisementFeature)
+
   def isAdvertisementFeature(keywords: Seq[Tag]): Boolean =
     keywords.exists(keyword => isAdvertisementFeature(keyword.id))
 
   def isAdvertisementFeature(keywordId: String): Boolean = isSponsoredType(keywordId, _.isAdvertisementFeature)
+
+  def sponsorshipKeyword(config: Config): Option[String] = {
+    containerSponsoredKeyword(config, isSponsored) orElse {
+      containerSponsoredKeyword(config, isAdvertisementFeature)
+    }
+  }
 
   def refresh() {
 
@@ -92,9 +113,16 @@ object DfpAgent extends ExecutionContexts with Logging {
     dfpDataAgent close()
   }
 
-  private val testDfpData = DfpData(Seq(
-    LineItem(0, Seq(TargetSet("AND", Seq(Target("slot","IS",Seq("spbadge")),Target("k","IS",Seq("media"))))))
-  ))
+  private val testDfpData = {
+    val sponsoredTargetSet =
+      TargetSet("AND", Seq(Target("slot", "IS", Seq("spbadge")), Target("k", "IS", Seq("media"))))
+    val adFeatureTargetSet =
+      TargetSet("AND", Seq(Target("slot", "IS", Seq("adbadge")), Target("k", "IS", Seq("film"))))
+    DfpData(Seq(
+      LineItem(0, Seq(sponsoredTargetSet)),
+      LineItem(1, Seq(adFeatureTargetSet))
+    ))
+  }
 }
 
 

@@ -2,15 +2,6 @@
    ========================================================================== */
 
 .js-on .has-localnav {
-    .ad-slot-top-banner-ad {
-        padding-top: 5px;
-        background-color: #eeeeee;
-
-        @include mq(tablet) {
-            padding-top: 10px;
-            background-color: #ffffff;
-        }
-    }
     h2.article__zone:only-child,
     .hide-on-mobile-if-localnav {
         display: none;

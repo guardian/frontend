@@ -9,7 +9,6 @@ define([
     'common/utils/detect',
     'common/utils/storage',
     'common/utils/to-array',
-    'common/modules/ui/collection-show-more',
     'modules/ui/snaps',
     'modules/ui/container-show-more',
     'modules/ui/container-toggle',
@@ -23,7 +22,6 @@ define([
     detect,
     storage,
     toArray,
-    CollectionShowMore,
     snaps,
     ContainerShowMore,
     ContainerToggle,
@@ -35,21 +33,15 @@ define([
             snaps.init();
         },
 
-        showCollectionShowMore: function () {
-            var collectionShowMoreAdd = function(config, context) {
+        showContainerShowMore: function () {
+            var containerShowMoreAdd = function(config, context) {
                 var c = context || document;
-                $('.container', c).each(function(container) {
-                    $('.js-collection--show-more', container).each(function(collection) {
-                        new CollectionShowMore(collection).addShowMore();
-                    });
-                });
                 $('.js-container--show-more', c).each(function(container) {
                     new ContainerShowMore(container).addShowMore();
                 });
             };
             mediator.addListeners({
-                'page:front:ready': collectionShowMoreAdd,
-                'ui:collection-show-more:add':  collectionShowMoreAdd
+                'page:front:ready': containerShowMoreAdd
             });
         },
 
@@ -82,7 +74,7 @@ define([
         if (!this.initialised) {
             this.initialised = true;
             modules.showSnaps();
-            modules.showCollectionShowMore();
+            modules.showContainerShowMore();
             modules.showContainerToggle();
             modules.upgradeMostPopularToGeo(config);
         }

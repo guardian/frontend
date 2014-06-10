@@ -24,7 +24,8 @@ trait DevParametersLifecycle extends GlobalSettings with implicits.Requests {
     "build", // used by Forsee surveys
     "google_console", // two params for dfp console
     "googfc",
-    "shortUrl" // Used by series component in onwards journeys
+    "shortUrl", // Used by series component in onwards journeys
+    "t" // specific item targetting
   )
 
   val allowedParams = CanonicalLink.significantParams ++ insignificantParams

@@ -7,15 +7,13 @@
     @defining(templateDeduping(15, collection.items)) { items =>
         @if(items.nonEmpty) {
             <section
-                    class="@RenderClasses(Map(
-                                "container" -> true,
-                                "container--row-pattern" -> true,
-                                s"container--${style.containerType}" -> true,
-                                "js-container--toggle" -> (containerIndex > 0 && title.nonEmpty),
-                                "container--first" -> (containerIndex == 0)))"
-                                data-link-name="all index"
-                                data-type="@style.containerType"
-                                data-component="all index">
+                class="@GetClasses.forContainer(style, config, containerIndex, title.nonEmpty)"
+                data-link-name="all index"
+                data-type="@style.containerType"
+                @config.sponsorshipKeyword.map { keyword =>
+                    data-keywords="@keyword"
+                }
+                data-component="all index">
                 <div class="facia-container__inner">
                     <div class="tone-@style.tone tone-accent-border"></div>
                     <div class="container__header">
@@ -30,7 +28,7 @@
                             </span>
                         </h2>
                     </div>
-                    <div class="container__body">
+                    <div class="container__body container--rolled-up-hide">
                         @fragments.collections.index(items, style, containerIndex)
                         @if(nav.isDefined) {
                             <div class="pagination u-cf">

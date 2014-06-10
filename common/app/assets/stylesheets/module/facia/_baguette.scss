@@ -1,25 +1,27 @@
 .baguette {
     @include clearfix;
 
+    .item__title {
+        @include fs-headline(4, $size-only: true);
+    }
+
+    @include mq($to: tablet) {
+        .facia-slice-wrapper:first-child & {
+            @include item--hide-tone-border;
+        }
+    }
+
     @include mq(tablet) {
         @include rem((
             margin-bottom: $gs-baseline*2 !important,
         ));
-    }
-    .item__link {
-        border-top-style: none !important;
-    }
-    .item__title {
-        @include fs-headline(4, $size-only: true);
 
-        @include mq(tablet) {
+        .item__title {
             @include fs-headline(6, $size-only: true);
             @include rem((
                 max-width: gs-span(11)
             ));
         }
-    }
-    @include mq(tablet) {
         .item__media-wrapper {
             overflow: hidden;
         }

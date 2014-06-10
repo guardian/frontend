@@ -3,40 +3,31 @@
         display: none;
     }
     @include mq(tablet) {
-        min-height: (250 + $mpu-ad-label-height)*$mpu-scale-ratio;
-    }
-    @include mq(desktop) {
         min-height: 250 + $mpu-ad-label-height;
     }
     .linkslist {
-        @if $browser-supports-columns {
-            @include mq(tablet, desktop) {
-                -webkit-column-width: rem(gs-span(3));
-                -moz-column-width: rem(gs-span(3));
-                column-width: rem(gs-span(3));
-            }
-        } @else {
-            @include mq(tablet) {
-                .linkslist__item {
-                    width: gs-span(3);
-
-                    &:nth-child(2n+1) {
-                        clear: both;
-                    }
-                }
-            }
-            @include mq(desktop) {
-                .linkslist__item {
-                    width: gs-span(4);
-                }
-            }
-        }
-
         @include mq(tablet) {
-            width: gs-span(6);
+            @include rem((
+                width: gs-span(5)
+            ));
         }
         @include mq(desktop) {
-            width: gs-span(8);
+            @include rem((
+                width: gs-span(8) + $gs-gutter
+            ));
+
+            &__item {
+                @include rem((
+                    width: gs-span(4)
+                ));
+
+                &:nth-child(n) {
+                    clear: none;
+                }
+                &:nth-child(2n+1) {
+                    clear: both;
+                }
+            }
         }
     }
 }

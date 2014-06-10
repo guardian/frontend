@@ -2,12 +2,16 @@ define([
     'bean',
     'qwery',
     'bonzo',
-    'common/utils/ajax'
+    'common/utils/ajax',
+    'lodash/objects/assign',
+    'lodash/objects/clone'
 ], function(
     bean,
     qwery,
     bonzo,
-    ajax
+    ajax,
+    assign,
+    clone
     ) {
 
     /**
@@ -120,7 +124,7 @@ define([
     Component.prototype.fetch = function(parent, key) {
         this.checkAttached();
 
-        this.responseDataKey = key || 'html';
+        this.responseDataKey = key || this.responseDataKey;
         var self = this;
 
         return this._fetch().then(function render(resp) {
@@ -186,6 +190,8 @@ define([
                 if (self.autoupdated) {
                     self.t = setTimeout(update, self.updateEvery*1000);
                 }
+            }, function() {
+                self.t = setTimeout(update, self.updateEvery*1000);
             });
         }
 
@@ -321,11 +327,7 @@ define([
      * @param {Object} options
      */
     Component.prototype.setOptions = function(options) {
-        options = options || {};
-        this.options = {};
-        for (var prop in this.defaultOptions) {
-            this.options[prop] = options.hasOwnProperty(prop) ? options[prop] : this.defaultOptions[prop];
-        }
+        this.options = assign(clone(this.defaultOptions), this.options||{}, options);
     };
 
     /**
