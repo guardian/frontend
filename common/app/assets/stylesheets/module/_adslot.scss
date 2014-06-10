@@ -272,7 +272,7 @@
     @include mq(mobile, $to: faciaLeftCol) {
         &.ad-slot--paid-for-badge--front .ad-slot--paid-for-badge__link {
             @include rem((
-                    margin-top: get-line-height($fs-data, 3)*-2
+                margin-top: get-line-height($fs-data, 3)*-2
             ));
         }
     }
@@ -285,7 +285,7 @@
     @include mq(mobile, $to: faciaLeftCol) {
         &.ad-slot--paid-for-badge--front .ad-slot--paid-for-badge__link {
             @include rem((
-                    margin-top: get-line-height($fs-data, 3)*-1
+                margin-top: get-line-height($fs-data, 3)*-1
             ));
         }
     }
