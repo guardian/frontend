@@ -86,24 +86,6 @@ object ProfileDiscussions {
   }
 }
 
-case class ProfileReplies(
-  profile: Profile,
-  comments: Seq[Comment]
-)
-object ProfileReplies {
-
-  def apply(json: JsValue): ProfileReplies = {
-    val profile = Profile(json)
-    val comments = (json \ "comments").as[JsArray].value map { c =>
-      Comment(c, None, None)
-    }
-    ProfileReplies(
-      profile = profile,
-      comments = comments
-    )
-  }
-}
-
 case class Pagination(currentPage: Int, pages: Int, pageSize: Int, orderBy: String){
   lazy val hasMore: Boolean = currentPage < pages
 }

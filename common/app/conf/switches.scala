@@ -401,6 +401,11 @@ object Switches extends Collections {
     safeState = On, sellByDate = never // this is a performance related switch, not a feature switch
   )
 
+  val ParameterlessImagesSwitch = Switch("Parameterless Images Server", "parameterless-images",
+    "If this switch is on images then image resize fields (width, height, quality) will be in the url and not in parameters.",
+    safeState = Off, sellByDate = new DateMidnight(2014, 7, 31)
+  )
+
   val all: List[Switch] = List(
     AutoRefreshSwitch,
     DoubleCacheTimesSwitch,
@@ -465,7 +470,8 @@ object Switches extends Collections {
     SmartBannerSwitch,
     SurveyBannerSwitch,
     FeaturesAutoContainerSwitch,
-    ForcePageSkinSwitch
+    ForcePageSkinSwitch,
+    ParameterlessImagesSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
