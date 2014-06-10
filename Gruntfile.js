@@ -71,6 +71,12 @@ module.exports = function (grunt) {
                         },
                         omniture: {
                             exports: 's'
+                        },
+                        pinkySwear: {
+                            exports: 'pinkySwear'
+                        },
+                        Promise: {
+                            exports: 'Promise'
                         }
                     },
                     wrap: {

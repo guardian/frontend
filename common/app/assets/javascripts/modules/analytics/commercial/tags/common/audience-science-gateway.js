@@ -1,21 +1,23 @@
 define([
-    'common/utils/config',
-    'pinkySwear'
+    'pinkySwear',
+    'lodash/functions/once',
+    'common/utils/config'
 ], function (
-    config,
-    pinkySwear
+    pinkySwear,
+    once,
+    config
 ) {
 
     var audienceScienceGatewayUrl = '//pq-direct.revsci.net/pql',
         sectionSegments = {
-            sport: ['FKSWod', '2xivTZ'],
-            football: ['FKSWod', '2xivTZ'],
-            lifeandstyle: ['TQV1_5', 'J0tykU'],
-            technology: ['9a9VRE', 'TL3gqK'],
-            fashion: ['TQV1_5', 'J0tykU'],
+            sport:                  ['FKSWod', '2xivTZ'],
+            football:               ['FKSWod', '2xivTZ'],
+            lifeandstyle:           ['TQV1_5', 'J0tykU'],
+            technology:             ['9a9VRE', 'TL3gqK'],
+            fashion:                ['TQV1_5', 'J0tykU'],
             'childrens-books-site': [],
-            news: ['eMdl6Y', 'mMYVrM'],
-            'default': ['c7Zrhu', 'Y1C40a']
+            news:                   ['eMdl6Y', 'mMYVrM'],
+            'default':              ['c7Zrhu', 'Y1C40a']
         },
         getSegmentsPromise = pinkySwear(),
         load = function() {

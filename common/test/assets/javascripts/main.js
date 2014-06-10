@@ -26,6 +26,7 @@ requirejs.config({
         imager:       '/base/common/app/assets/javascripts/components/imager.js/src/strategies/container',
         enhancer:     '/base/common/app/assets/javascripts/components/enhancer/enhancer',
         pinkySwear:   '/base/common/app/assets/javascripts/components/pinkyswear.js/pinkyswear.min',
+        Promise:      '/base/common/app/assets/javascripts/components/promiscuous/dist/promiscuous-browser',
         googletag:    'empty:'
     },
     map: {
@@ -45,6 +46,9 @@ requirejs.config({
         },
         pinkySwear: {
             exports: 'pinkySwear'
+        },
+        Promise: {
+            exports: 'Promise'
         }
     }
 });
