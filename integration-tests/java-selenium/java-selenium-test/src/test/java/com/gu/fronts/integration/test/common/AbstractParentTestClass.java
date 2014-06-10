@@ -6,9 +6,9 @@ import org.openqa.selenium.WebDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
-import com.gu.fronts.integration.test.EnvironmentConfigurer;
-import com.gu.fronts.integration.test.common.page.PageFactoryHelper;
+import com.gu.fronts.integration.test.config.EnvironmentConfigurer;
 import com.gu.fronts.integration.test.page.NetworkFrontPage;
+import com.gu.fronts.integration.test.page.util.PageFactoryHelper;
 
 public class AbstractParentTestClass {
 

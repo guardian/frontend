@@ -1,4 +1,4 @@
-package com.gu.fronts.integration.test.common.page;
+package com.gu.fronts.integration.test.page.util;
 
 import java.util.ArrayList;
 import java.util.List;

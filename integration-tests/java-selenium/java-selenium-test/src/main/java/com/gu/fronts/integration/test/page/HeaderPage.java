@@ -1,7 +1,7 @@
 package com.gu.fronts.integration.test.page;
 
-import static com.gu.fronts.integration.test.common.page.CssSelector.TEST_ATTR_NAME;
-import static com.gu.fronts.integration.test.common.page.PageElementHelper.elementIsALink;
+import static com.gu.fronts.integration.test.common.util.CssSelector.TEST_ATTR_NAME;
+import static com.gu.fronts.integration.test.page.util.PageElementHelper.elementIsALink;
 import static java.lang.String.format;
 import static org.openqa.selenium.support.How.CSS;
 
@@ -9,7 +9,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-import com.gu.fronts.integration.test.common.page.AbstractParentPage;
+import com.gu.fronts.integration.test.page.util.AbstractParentPage;
 
 public class HeaderPage extends AbstractParentPage {
 
