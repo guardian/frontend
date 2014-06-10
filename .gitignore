@@ -51,6 +51,8 @@ developer.properties
 
 static
 
+common/app/assets/stylesheets/theme/_membership-icons-sprite.scss
+common/app/assets/stylesheets/theme/_membership-icons-svg.scss
 common/app/assets/stylesheets/theme/_commercial-icons-sprite.scss
 common/app/assets/stylesheets/theme/_commercial-icons-svg.scss
 common/app/assets/stylesheets/theme/_global-icons-sprite.scss
