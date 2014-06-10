@@ -56,6 +56,7 @@ object ArticleController extends Controller with Logging with ExecutionContexts 
       .showExpired(true)
       .showTags("all")
       .showFields("all")
+      .showReferences("all")
       .response
 
     val result = response map { response =>
