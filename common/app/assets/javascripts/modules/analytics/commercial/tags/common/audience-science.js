@@ -8,7 +8,7 @@ define([
     config
 ) {
 
-    var revenueScienceUrl = 'js!http://js.revsci.net/gateway/gw.js?csid=E05516';
+    var revenueScienceUrl = 'http://js.revsci.net/gateway/gw.js?csid=E05516';
 
     function getSegments() {
         var segments = storage.local.get('gu.ads.audsci');
@@ -33,7 +33,7 @@ define([
                 cookies.cleanUp(['rsi_segs']);
             };
             // Then load audsci to get latests segments.
-            require([revenueScienceUrl], function () {
+            return require(['js!' + revenueScienceUrl + '!exports=rsi_now'], function () {
                 window.E05516.DM_tag();
             });
         }

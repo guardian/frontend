@@ -4,11 +4,11 @@ define([
     config
     ) {
 
-    var effectiveMeasureUrl = 'js!' + (document.location.protocol === 'https:' ? 'https://au-ssl' : 'http://au-cdn') + '.effectivemeasure.net/em.js';
+    var effectiveMeasureUrl = (document.location.protocol === 'https:' ? 'https://au-ssl' : 'http://au-cdn') + '.effectivemeasure.net/em.js';
 
     function load() {
         if (config.switches.effectiveMeasure) {
-            require([effectiveMeasureUrl], function () {});
+            return require(['js!' + effectiveMeasureUrl + '!exports=_EMeasure']);
         }
     }
 
