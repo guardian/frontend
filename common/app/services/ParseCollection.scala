@@ -2,13 +2,13 @@ package services
 
 import common.FaciaMetrics.S3AuthorizationError
 import common._
-import conf.{LiveContentApi, Configuration}
+import conf.{DraftContentApi, LiveContentApi, Configuration}
 import model.{Snap, Collection, Config, Content}
 import play.api.libs.json.Json._
-import play.api.libs.json.{JsObject, JsValue}
+import play.api.libs.json.{JsNull, JsObject, JsValue}
 import play.api.libs.ws.Response
 import scala.concurrent.Future
-import contentapi.QueryDefaults
+import contentapi.{ContentApiClient, QueryDefaults}
 import scala.util.Try
 import org.joda.time.DateTime
 
@@ -48,6 +48,14 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
     val request = SecureS3Request.urlGet(s3BucketLocation)
     request.withRequestTimeout(2000).get()
   }
+
+  def retrieveDraftItemsFromCollectionJson(json: JsValue): Seq[CollectionItem] =
+    (json \ "draft").asOpt[Seq[JsObject]].orElse((json \ "live").asOpt[Seq[JsObject]]).getOrElse(Nil).map { trail =>
+      CollectionItem(
+        (trail \ "id").as[String],
+        (trail \ "meta").asOpt[Map[String, JsValue]],
+        (trail \ "frontPublicationDate").asOpt[DateTime])
+    }
 
   def getCollection(id: String, config: Config, edition: Edition): Future[Collection] = {
     // get the running order from the apiwith
