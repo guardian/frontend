@@ -2,7 +2,6 @@ package com.gu.fronts.integration.test.page;
 
 import static com.gu.fronts.integration.test.common.page.CssSelector.TEST_ATTR_NAME;
 import static com.gu.fronts.integration.test.common.page.PageElementHelper.elementIsALink;
-import static com.gu.fronts.integration.test.common.page.PageFactoryHelper.loadPage;
 import static java.lang.String.format;
 import static org.openqa.selenium.support.How.CSS;
 
@@ -34,28 +33,28 @@ public class HeaderPage extends AbstractParentPage {
     }
 
     public HeaderPage isDisplayed() {
-        super.isDisplayed(false, editions, logo);
+        super.isDisplayed(editions, logo);
         return this;
     }
 
     public NetworkFrontPage clickLogo() {
         logo.click();
-        return loadPage(NetworkFrontPage.class, webDriver);
+        return loadPage(NetworkFrontPage.class);
     }
 
     public NetworkFrontPage selectUSEdition() {
         editionUS.click();
-        return loadPage(NetworkFrontPage.class, webDriver);
+        return pageFactoryHelper.loadPage(NetworkFrontPage.class, webDriver);
     }
 
     public NetworkFrontPage selectUKEdition() {
         editionUK.click();
-        return loadPage(NetworkFrontPage.class, webDriver);
+        return pageFactoryHelper.loadPage(NetworkFrontPage.class, webDriver);
     }
 
     public NetworkFrontPage selectAUEdition() {
         editionAU.click();
-        return loadPage(NetworkFrontPage.class, webDriver);
+        return pageFactoryHelper.loadPage(NetworkFrontPage.class, webDriver);
     }
 
     public HeaderPage usEditionSelected() {
@@ -75,5 +74,11 @@ public class HeaderPage extends AbstractParentPage {
             throw new AssertionError(format("%s was not selected", editionElement.getAttribute(TEST_ATTR_NAME)));
         }
         return this;
+    }
+
+    public HeaderPage usEditionPresent() {
+        super.isDisplayed(editionUS);
+        return this;
+
     }
 }

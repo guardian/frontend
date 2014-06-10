@@ -1,13 +1,12 @@
 package com.gu.fronts.integration.test.common;
 
-import static com.gu.fronts.integration.test.common.page.PageFactoryHelper.loadPage;
-
 import org.junit.BeforeClass;
 import org.openqa.selenium.WebDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
 import com.gu.fronts.integration.test.EnvironmentConfigurer;
+import com.gu.fronts.integration.test.common.page.PageFactoryHelper;
 import com.gu.fronts.integration.test.page.NetworkFrontPage;
 
 public class AbstractParentTestClass {
@@ -16,6 +15,8 @@ public class AbstractParentTestClass {
     private WebDriver webDriver;
     @Value("${fronts.base.url}")
     private String frontsBaseUrl;
+    @Autowired
+    protected PageFactoryHelper pageFactoryHelper;
 
     @BeforeClass
     public static void testClassSetup() {
@@ -24,6 +25,6 @@ public class AbstractParentTestClass {
 
     protected NetworkFrontPage openNetworkFrontPage() {
         webDriver.get(frontsBaseUrl);
-        return loadPage(NetworkFrontPage.class, webDriver);
+        return pageFactoryHelper.loadPage(NetworkFrontPage.class, webDriver);
     }
 }

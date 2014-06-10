@@ -18,8 +18,8 @@ public class NetworkFrontPage extends AbstractParentPage {
         super(webDriver);
     }
 
-    public NetworkFrontPage isDisplayed(boolean checkHeaderAndFooter) {
-        super.isDisplayed(checkHeaderAndFooter, dateTitle);
+    public NetworkFrontPage isDisplayed() {
+        super.isDisplayed(dateTitle);
         return this;
     }
 }
