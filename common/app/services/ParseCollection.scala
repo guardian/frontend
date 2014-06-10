@@ -335,5 +335,28 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
       throw e
     }
   }
+}
 
+object LiveCollections extends ParseCollection {
+  def retrieveItemsFromCollectionJson(collectionJson: JsValue): Seq[CollectionItem] =
+    (collectionJson \ "live").as[Seq[JsObject]] map { trail =>
+      CollectionItem(
+        (trail \ "id").as[String],
+        (trail \ "meta").asOpt[Map[String, JsValue]],
+        (trail \ "frontPublicationDate").asOpt[DateTime])
+    }
+
+  override val client: ContentApiClient = LiveContentApi
+}
+
+object DraftCollections extends ParseCollection {
+  def retrieveItemsFromCollectionJson(collectionJson: JsValue): Seq[CollectionItem] =
+    (collectionJson \ "draft").as[Seq[JsObject]] map { trail =>
+      CollectionItem(
+        (trail \ "id").as[String],
+        (trail \ "meta").asOpt[Map[String, JsValue]],
+        (trail \ "frontPublicationDate").asOpt[DateTime])
+    }
+
+  override val client: ContentApiClient = DraftContentApi
 }
