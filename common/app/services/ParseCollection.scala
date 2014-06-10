@@ -49,6 +49,30 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
     request.withRequestTimeout(2000).get()
   }
 
+  def getDraftCollection(id: String, config: Config, edition: Edition): Future[Collection] = {
+    val curatedItems: Future[List[Content]] =
+      requestCollection(id)
+        .map(responseToJson)
+        .map(retrieveDraftItemsFromCollectionJson)
+        .flatMap { items => getArticlesFromDraftContentApi(items, edition) }
+
+    val executeDraftContentApiQuery: Future[Result] = executeContentApiQuery(config.contentApiQuery, edition)
+
+    for {
+      curatedRequest <- curatedItems
+      executeRequest <- executeDraftContentApiQuery
+    } yield Collection(
+      curated = curatedRequest,
+      editorsPicks = executeRequest.editorsPicks,
+      mostViewed = executeRequest.mostViewed,
+      results = executeRequest.contentApiResults,
+      displayName = None,
+      href = None,
+      lastUpdated = None,
+      updatedBy = None,
+      updatedEmail = None)
+  }
+
   def retrieveDraftItemsFromCollectionJson(json: JsValue): Seq[CollectionItem] =
     (json \ "draft").asOpt[Seq[JsObject]].orElse((json \ "live").asOpt[Seq[JsObject]]).getOrElse(Nil).map { trail =>
       CollectionItem(
