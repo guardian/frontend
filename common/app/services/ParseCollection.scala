@@ -26,6 +26,9 @@ object Seg {
 
 trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging {
 
+  val client: ContentApiClient
+  def retrieveItemsFromCollectionJson(collectionJson: JsValue): Seq[CollectionItem]
+
   case class InvalidContent(id: String) extends Exception(s"Invalid Content: $id")
   val showFieldsQuery: String = FaciaDefaults.showFields
   val showFieldsWithBodyQuery: String = FaciaDefaults.showFieldsWithBody
@@ -155,7 +158,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
                 (trail \ "frontPublicationDate").asOpt[DateTime])
             }
 
-            getArticles(LiveContentApi, articles, edition)
+            getArticles(articles, edition)
           } catch {
             case e: Throwable => {
               log.warn("Could not parse collection JSON for %s".format(id))
@@ -179,13 +182,13 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
     }
   }
 
-  def getArticlesFromDraftContentApi(collectionItems: Seq[CollectionItem], edition: Edition) = getArticles(DraftContentApi, collectionItems, edition)
+  def getArticlesFromDraftContentApi(collectionItems: Seq[CollectionItem], edition: Edition) = getArticles(collectionItems, edition)
 
-  def getArticles(client: ContentApiClient, collectionItems: Seq[CollectionItem], edition: Edition): Future[List[Content]]
-  = getArticles(client, collectionItems, edition, hasParent=false)
+  def getArticles(collectionItems: Seq[CollectionItem], edition: Edition): Future[List[Content]]
+  = getArticles(collectionItems, edition, hasParent=false)
 
   //hasParent is here to break out of the recursive loop and make sure we only go one deep
-  def getArticles(client: ContentApiClient, collectionItems: Seq[CollectionItem], edition: Edition, hasParent: Boolean): Future[List[Content]] = {
+  def getArticles(collectionItems: Seq[CollectionItem], edition: Edition, hasParent: Boolean): Future[List[Content]] = {
     if (collectionItems.isEmpty) {
       Future.successful(Nil)
     }
@@ -194,7 +197,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
         (foldListFuture, collectionItem) =>
           lazy val supportingAsContent: Future[List[Content]] = {
             lazy val supportingLinks: List[CollectionItem] = retrieveSupportingLinks(collectionItem)
-            if (!hasParent) getArticles(client, supportingLinks, edition, hasParent = true) else Future.successful(Nil)
+            if (!hasParent) getArticles(supportingLinks, edition, hasParent = true) else Future.successful(Nil)
           }
           if (collectionItem.isSnap) {
             for {
