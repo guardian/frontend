@@ -54,8 +54,6 @@ module.exports = function (grunt) {
                     omniture:     '../../../../common/app/assets/javascripts/components/omniture/omniture',
                     fence:        '../../../../common/app/assets/javascripts/components/fence/fence',
                     enhancer:     '../../../../common/app/assets/javascripts/components/enhancer/enhancer',
-                    pinkySwear:   '../../../../common/app/assets/javascripts/components/pinkyswear.js/pinkyswear.min',
-                    Promise:      '../../../../common/app/assets/javascripts/components/promiscuous/dist/promiscuous-browser',
                     'ophan/ng':   'empty:',
                     googletag:    'empty:'
                 },
@@ -75,12 +73,6 @@ module.exports = function (grunt) {
                         },
                         omniture: {
                             exports: 's'
-                        },
-                        pinkySwear: {
-                            exports: 'pinkySwear'
-                        },
-                        Promise: {
-                            exports: 'Promise'
                         }
                     },
                     wrap: {

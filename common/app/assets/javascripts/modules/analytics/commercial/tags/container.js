@@ -10,13 +10,13 @@ define([
     'common/modules/analytics/commercial/tags/au/amaa',
     'common/modules/analytics/commercial/tags/au/effective-measure'
 ], function(
-    AudienceScience,
-    AudienceScienceGateway,
-    IMRWorldwide,
+    audienceScience,
+    audienceScienceGateway,
+    imrWorldwide,
     mediaMath,
     criteo,
-    Amaa,
-    EffectiveMeasure
+    amaa,
+    effectiveMeasure
 ) {
 
     function init(config) {
@@ -26,15 +26,15 @@ define([
             case 'au':
 
                 if (config.switches.amaa) {
-                    Amaa.load();
+                    amaa.load();
                 }
 
                 if (config.switches.effectiveMeasure) {
-                    EffectiveMeasure.load();
+                    effectiveMeasure.load();
                 }
 
                 if (config.switches.imrWorldwide) {
-                    IMRWorldwide.load();
+                    imrWorldwide.load();
                 }
 
                 break;
@@ -42,12 +42,12 @@ define([
             default:
 
                 if (config.switches.audienceScience) {
-                    AudienceScience.load(config.page);
-                    AudienceScienceGateway.load(config);
+                    audienceScience.load(config.page);
                 }
+                audienceScienceGateway.load();
 
                 if (config.switches.imrWorldwide) {
-                    IMRWorldwide.load();
+                    imrWorldwide.load();
                 }
 
                 break;

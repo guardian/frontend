@@ -1,46 +1,42 @@
 define([
-    'pinkySwear',
     'lodash/functions/once',
     'common/utils/config'
 ], function (
-    pinkySwear,
     once,
     config
 ) {
 
-    var audienceScienceGatewayUrl = '//pq-direct.revsci.net/pql',
-        sectionSegments = {
-            sport:                  ['FKSWod', '2xivTZ'],
-            football:               ['FKSWod', '2xivTZ'],
-            lifeandstyle:           ['TQV1_5', 'J0tykU'],
-            technology:             ['9a9VRE', 'TL3gqK'],
-            fashion:                ['TQV1_5', 'J0tykU'],
-            'childrens-books-site': [],
-            news:                   ['eMdl6Y', 'mMYVrM'],
-            'default':              ['c7Zrhu', 'Y1C40a']
+    var gatewayUrl = '//pq-direct.revsci.net/pql',
+        sectionPlacements = {
+            sport:        ['FKSWod', '2xivTZ'],
+            football:     ['FKSWod', '2xivTZ'],
+            lifeandstyle: ['TQV1_5', 'J0tykU'],
+            technology:   ['9a9VRE', 'TL3gqK'],
+            fashion:      ['TQV1_5', 'J0tykU'],
+            news:         ['eMdl6Y', 'mMYVrM'],
+            'default':    ['c7Zrhu', 'Y1C40a']
         },
-        getSegmentsPromise = pinkySwear(),
-        load = function() {
-            var segments = sectionSegments[config.page.section] || sectionSegments['default'],
-                query =
-                    [
-                        ['placementIdList', segments.join(',')],
-                        ['cb', new Date().getTime()]
-                    ].map(function(queryPart) { return queryPart.join('='); }).join('&'),
-                url = [audienceScienceGatewayUrl, '?', query].join('');
+        segments = [],
+        load = once(function() {
+            if (config.switches.audienceScience) {
+                var placements = sectionPlacements[config.page.section] || sectionPlacements['default'],
+                    query =
+                        [
+                            ['placementIdList', placements.join(',')],
+                            ['cb', new Date().getTime()]
+                        ].map(function(queryPart) { return queryPart.join('='); }).join('&'),
+                    url = [gatewayUrl, '?', query].join('');
 
-            require(['js!' + url + '!exports=asiPlacements'])
-                .then(function(asiPlacements) {
-                    var userSegments = {};
-                    for (var segment in asiPlacements) {
-                        userSegments['pq_' + segment] = asiPlacements[segment].defaults ? 'T' : '';
-                    }
-                    getSegmentsPromise(true, [userSegments]);
-                });
-
-        },
+                return require(['js!' + url + '!exports=asiPlacements'])
+                    .then(function(asiPlacements) {
+                        for (var placement in asiPlacements) {
+                            segments['pq_' + placement] = asiPlacements[placement].defaults ? 'T' : '';
+                        }
+                    });
+            }
+        }),
         getSegments = function() {
-            return getSegmentsPromise;
+            return segments;
         };
 
     return {
