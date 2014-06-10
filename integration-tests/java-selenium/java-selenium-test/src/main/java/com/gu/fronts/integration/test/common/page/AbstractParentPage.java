@@ -19,22 +19,31 @@ public class AbstractParentPage {
 
     protected WebDriver webDriver;
 
+    protected PageFactoryHelper pageFactoryHelper;
+
     public AbstractParentPage(WebDriver webDriver) {
         this.webDriver = webDriver;
+
+        // page classes are initialized by PageFactory so cant use spring autowiring
+        this.pageFactoryHelper = new PageFactoryHelper();
+    }
+
+    protected <Page> Page loadPage(Class<Page> pageClass) {
+        return pageFactoryHelper.loadPage(pageClass, webDriver);
     }
 
     public HeaderPage header() {
         if (this instanceof HeaderPage) {
             throw new RuntimeException("Cannot get header from HeaderPage as it is the header");
         }
-        return PageFactoryHelper.loadPage(HeaderPage.class, webDriver);
+        return pageFactoryHelper.loadPage(HeaderPage.class, webDriver);
     }
 
     public FooterPage footer() {
         if (this instanceof FooterPage) {
             throw new RuntimeException("Cannot get footer from FooterPage as it is the footer");
         }
-        return PageFactoryHelper.loadPage(FooterPage.class, webDriver);
+        return pageFactoryHelper.loadPage(FooterPage.class, webDriver);
     }
 
     /**
@@ -42,11 +51,7 @@ public class AbstractParentPage {
      * all provided elements are displayed and if not will throw an AssertionError with a message detailing which
      * elements are not displayed.
      */
-    protected void isDisplayed(boolean checkHeaderAndFooter, WebElement... elementsToCheck) {
-        if (checkHeaderAndFooter) {
-            header().isDisplayed();
-            footer().isDisplayed();
-        }
+    protected void isDisplayed(WebElement... elementsToCheck) {
         List<String> errors = new ArrayList<>();
         for (WebElement webElement : elementsToCheck) {
             checkElementDisplayedAndCreateError(webElement, errors);

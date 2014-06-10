@@ -23,13 +23,13 @@ public class FooterPage extends AbstractParentPage {
     }
 
     public FooterPage isDisplayed() {
-        super.isDisplayed(false, copyright, logo);
+        super.isDisplayed(copyright, logo);
         return this;
     }
     
     public NetworkFrontPage clickLogo() {
         logo.click();
-        return PageFactoryHelper.loadPage(NetworkFrontPage.class, webDriver);
+        return pageFactoryHelper.loadPage(NetworkFrontPage.class, webDriver);
     }
 
 }

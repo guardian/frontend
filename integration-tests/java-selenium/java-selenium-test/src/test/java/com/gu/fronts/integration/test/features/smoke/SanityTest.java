@@ -18,28 +18,19 @@ public class SanityTest extends AbstractParentTestClass {
 
     @Test
     public void networkStartPageShouldLoadProperly() {
-        // Given
         NetworkFrontPage networkFrontPage = openNetworkFrontPage();
-        networkFrontPage.isDisplayed(true);
+        networkFrontPage.isDisplayed();
+        networkFrontPage.footer().isDisplayed();
+        networkFrontPage.header().isDisplayed();
         
-        //When
         networkFrontPage = networkFrontPage.header().clickLogo();
-        networkFrontPage.isDisplayed(true);
+        networkFrontPage.isDisplayed();
         
-        //When
         networkFrontPage = networkFrontPage.footer().clickLogo();
-        networkFrontPage.isDisplayed(true);
+        networkFrontPage.isDisplayed();
         
-        //When
-        networkFrontPage = networkFrontPage.header().selectUSEdition();
-        networkFrontPage.header().usEditionSelected();
-        
-        //When
-        networkFrontPage = networkFrontPage.header().selectUKEdition();
         networkFrontPage.header().ukEditionSelected();
-        
-        //When
-        networkFrontPage = networkFrontPage.header().selectAUEdition();
-        networkFrontPage.header().auEditionSelected();
+        networkFrontPage.header().usEditionPresent();
+        //networkFrontPage.header().usEditionPresent();
     }
 }
