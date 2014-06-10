@@ -113,6 +113,18 @@ class FaciaController extends Controller with Logging with ExecutionContexts wit
         faciaPage.collections.find{ case (c, col) => c.id == collectionId}.map(_._2)
       })
     }.getOrElse(Future.successful(None))
+
+  def renderCollectionRss(id: String) = MemcachedAction { implicit request =>
+      log.info(s"Serving collection ID: $id")
+      getPressedCollection(id).map { collectionOption =>
+          collectionOption.map { collection =>
+              Cached(60) {
+                val config: Config = ConfigAgent.getConfig(id).getOrElse(Config(""))
+                  Ok(TrailsToRss(config.displayName, collection.items)).as("text/xml; charset=utf8")
+              }
+          }.getOrElse(ServiceUnavailable)
+      }
+  }
 }
 
 object FaciaController extends FaciaController
