@@ -5,29 +5,51 @@ Discussion is currently running under the generic [dev-build project](https://gi
 To have the have it up and running however, you will need a few things setup for ease of use.
 
 ## Nginx
-You will need to be running your stack on [Nginx](http://wiki.nginx.org/Main). [See our documentation for more information](https://github.com/guardian/frontend/blob/master/nginx/README.md).
+You will need to be running your stack on [Nginx](http://wiki.nginx.org/Main).
+[See our documentation for more information](https://github.com/guardian/frontend/blob/master/nginx/README.md).
 
-If you are unsure if you are or aren't, just make sure you are viewing the site from `http://m.thegulocal.com`.
+If you are unsure if you are or aren't, just make sure you are viewing the site from [http://m.thegulocal.com].
 
-## API locations
-As we have dependancies on both the Content API and Identity API, this can be a little precarious. Never fear, once you're up and running, it's pretty smooth sailing.
+Add the following properties to your local properties file:
 
-For consistency of data, it is generally best to keep everything pointing to our RELEASE APIs.
-
-In your local settings file, you should have the following:
-
-	# Generic
+    # Generic
     guardian.page.host=http://m.thegulocal.com
+    ajax.url=http://m.thegulocal.com
+    ajax.secureUrl=https://m.thegulocal.com
 
-    # Cross domain testing
-    ajax.url=http://api.nextgen.thegulocalapps.co.uk
+## APIs
+### Discussion API
+In `DEV` we point to the `CODE` API so as not to create content on `PROD` that would bore our readers.
 
-    # ID
-    id.apiRoot=https://id.release.dev-guardianapis.com
+### Identity API
+As the user IDs are shared between the Identity API and the Discussion API, we would need to make sure that we are using
+Identity's `CODE` API.
 
-    # Content API
+Use the following properties:
+
+    id.apiRoot=https://idapi.code.dev-theguardian.com
+    id.apiClientToken=frontend-code-client-token
+
+### Content API
+If you'd like to test things such as opening an article for comments, creating a new article with comments etc, you might
+want to change the content api host to the code environment:
+
     content.api.host=(/¯◡ ‿ ◡)/¯ ~ ┻━┻
 
-**Please Note: CODE Content API URL is tip top secret, please refer to your colleagues for it**
+If you are just looking for an article that is open to comments, you can visit `/science/grrlscientist/2012/aug/07/3` as
+it is open on `CODE` and `PROD`.
 
-Once this is done, you should be able to use the platform as though you are live.
+## Cookies
+
+Unfortunately, this is the weak link in the chain.
+
+To login, go through the normal login process. You will then be directed to the `CODE` environment for the Desktop site.
+You will need to copy the `GU_U` cookie with something like
+[this chrome extension](https://chrome.google.com/webstore/detail/editthiscookie/fngmhnnpilhplaeedifhccceomclgfbg?hl=en)
+[or this firefox extension](https://addons.mozilla.org/en-US/firefox/addon/edit-cookies/).
+
+Then create the same cookie on your `.thegulocal.com` domain.
+ 
+We should hopefully have a fix for this soon.
+ 
+Happy yapping.
