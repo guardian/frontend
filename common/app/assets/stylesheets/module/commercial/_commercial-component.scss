@@ -216,6 +216,7 @@ $comercial-comp-baseline: 10px;
     ));
     @include fs-textsans(2);
     border: 0;
+    @include border-radius(0); // Prevent rounded corners in iOS
     float: left;
     overflow: hidden;
 
