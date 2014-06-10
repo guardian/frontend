@@ -4,11 +4,11 @@ define([
     config
     ) {
 
-    var ammaUrl = 'js!//c.supert.ag/the-guardian/the-guardian/supertag-async.js';
+    var ammaUrl = '//c.supert.ag/the-guardian/the-guardian/supertag-async.js';
 
     function load() {
         if (config.switches.amaa) {
-            require([ammaUrl], function () {});
+            return require(['js!' + ammaUrl + '!exports=superT']);
         }
     }
 

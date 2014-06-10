@@ -14,7 +14,7 @@ define([
 
     var nId = '1476',
         cookieName = 'cto2_guardian',
-        criteoScript = 'http://rtax.criteo.com/delivery/rta/rta.js';
+        criteoUrl = 'http://rtax.criteo.com/delivery/rta/rta.js';
 
 
     function getSegments() {
@@ -53,15 +53,7 @@ define([
                     // turn into a query string
                     .map(function (pair) { return pair.join('='); })
                     .join('&');
-            var script = document.createElement('script');
-            script.className = 'criteo-script';
-            script.type = 'text/javascript';
-            script.src = criteoScript + '?' + params;
-            script.async = true;
-            $('head').append(script);
-            return script;
-        } else {
-            return null;
+            return require(['js!' + criteoUrl + '?' + params + '!exports=crtg_content']);
         }
     }
 
