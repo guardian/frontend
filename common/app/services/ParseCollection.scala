@@ -57,7 +57,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
       requestCollection(id)
         .map(responseToJson)
         .map(retrieveDraftItemsFromCollectionJson)
-        .flatMap { items => getArticlesFromDraftContentApi(items, edition) }
+        .flatMap { items => getArticles(items, edition) }
 
     val executeDraftContentApiQuery: Future[Result] = executeContentApiQuery(config.contentApiQuery, edition)
 
@@ -181,8 +181,6 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
       }
     }
   }
-
-  def getArticlesFromDraftContentApi(collectionItems: Seq[CollectionItem], edition: Edition) = getArticles(collectionItems, edition)
 
   def getArticles(collectionItems: Seq[CollectionItem], edition: Edition): Future[List[Content]]
   = getArticles(collectionItems, edition, hasParent=false)
