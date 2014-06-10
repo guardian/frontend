@@ -75,9 +75,35 @@ trait FrontPress extends Logging {
     }
   }
 
+  def generateDraftJson(id: String): Future[JsObject] = {
+    val futureSeoData: Future[SeoData] = SeoData.getSeoData(id)
+    futureSeoData.flatMap { seoData =>
+      retrieveDraftFrontByPath(id).map(_.map {
+        case (config, collection) =>
+          Json.obj(
+            config.id -> generateCollectionJson(config, collection)
+          )
+      })
+        .map(_.foldLeft(Json.arr()) {
+        case (l, jsObject) => l :+ jsObject
+      })
+        .map(c =>
+        Json.obj("id" -> id) ++
+          Json.obj("seoData" -> seoData) ++
+          Json.obj("collections" -> c)
+        )
+    }
+  }
+
   private def retrieveFrontByPath(id: String): Future[Iterable[(Config, Collection)]] = {
     val collectionIds: List[Config] = ConfigAgent.getConfigForId(id).getOrElse(Nil)
     val collections = collectionIds.map(config => FaciaToolCollectionParser.getCollection(config.id, config, Uk).map((config, _)))
+    Future.sequence(collections)
+  }
+
+  private def retrieveDraftFrontByPath(id: String): Future[Iterable[(Config, Collection)]] = {
+    val collectionIds: List[Config] = ConfigAgent.getConfigForId(id).getOrElse(Nil)
+    val collections = collectionIds.map(config => FaciaToolCollectionParser.getDraftCollection(config.id, config, Uk).map((config, _)))
     Future.sequence(collections)
   }
 
