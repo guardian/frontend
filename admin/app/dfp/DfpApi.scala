@@ -4,6 +4,7 @@ import com.google.api.ads.common.lib.auth.OfflineCredentials
 import com.google.api.ads.common.lib.auth.OfflineCredentials.Api
 import com.google.api.ads.dfp.axis.utils.v201403.StatementBuilder
 import com.google.api.ads.dfp.axis.v201403._
+import com.google.api.ads.dfp.axis.v201403.{LineItem => DfpApiLineItem}
 import com.google.api.ads.dfp.lib.client.DfpSession
 import common.Logging
 import conf.AdminConfiguration
@@ -35,7 +36,7 @@ object DfpApi extends Logging {
       None
   }
 
-  def fetchCurrentLineItems(): Seq[LineItem] = dfpSession.map { session =>
+  def fetchCurrentLineItems(): Seq[LineItem] = dfpSession.fold(Seq[LineItem]()) { session =>
 
     val currentLineItems = new StatementBuilder()
       .where("status = :readyStatus OR status = :deliveringStatus")
@@ -51,17 +52,26 @@ object DfpApi extends Logging {
       .withBindVariableValue("slotTargetName", "Slot")
 
     val targetingKeys = DfpApiWrapper.fetchCustomTargetingKeys(session, customTargetingKeys).map { k =>
-      k.getId -> k.getName
+      k.getId.longValue() -> k.getName
     }.toMap
 
     val customTargetingValues = new StatementBuilder()
-        .where("customTargetingKeyId = :keywordTargetId OR customTargetingKeyId = :slotTargetId")
-        .withBindVariableValue("keywordTargetId", targetingKeys.head._1)
-        .withBindVariableValue("slotTargetId", targetingKeys.last._1)
+      .where("customTargetingKeyId = :keywordTargetId OR customTargetingKeyId = :slotTargetId")
+      .withBindVariableValue("keywordTargetId", targetingKeys.head._1)
+      .withBindVariableValue("slotTargetId", targetingKeys.last._1)
 
     val targetingValues = DfpApiWrapper.fetchCustomTargetingValues(session, customTargetingValues).map { v =>
-      v.getId -> v.getName
+      v.getId.longValue() -> v.getName
     }.toMap
+
+    lineItems.filter { lineItem =>
+      lineItem.getTargeting != null && lineItem.getTargeting.getCustomTargeting != null
+    } flatMap (lineItem => addTargetSets(lineItem, targetingKeys, targetingValues))
+  }
+
+  private def addTargetSets(lineItem: DfpApiLineItem,
+                            targetingKeys: Map[Long, String],
+                            targetingValues: Map[Long, String]): Option[LineItem] = {
 
     def buildTargetSet(crits: CustomCriteriaSet): Option[TargetSet] = {
       val targets = crits.getChildren.flatMap { crit =>
@@ -69,8 +79,7 @@ object DfpApi extends Logging {
       }.toSeq
       if (targets.isEmpty) {
         None
-      }
-      else {
+      } else {
         Some(TargetSet(crits.getLogicalOperator.getValue, targets))
       }
     }
@@ -87,23 +96,21 @@ object DfpApi extends Logging {
       }
     }
 
-    val filtered = lineItems.filter { r =>
-      r.getTargeting != null && r.getTargeting.getCustomTargeting != null
+    val targetSets = lineItem.getTargeting.getCustomTargeting.getChildren.flatMap { critSet =>
+      buildTargetSet(critSet.asInstanceOf[CustomCriteriaSet])
+    }.toSeq
+    if (targetSets.isEmpty) {
+      None
+    } else {
+      Some(LineItem(lineItem.getId, targetSets))
     }
-    filtered.flatMap { r =>
-      val targeting: Targeting = r.getTargeting
-      val customTargeting: CustomCriteriaSet = targeting.getCustomTargeting
-      val targetSets = customTargeting.getChildren.flatMap { critSet =>
-        buildTargetSet(critSet.asInstanceOf[CustomCriteriaSet])
-      }.toSeq
-      if (targetSets.isEmpty) {
-        None
-      }
-      else {
-        Some(LineItem(r.getId, targetSets))
-      }
-    }
-  }.getOrElse {
-    Nil
+  }
+
+  def fetchSponsoredKeywords(lineItems: Seq[LineItem]): Seq[String] = {
+    lineItems flatMap (_.sponsoredKeywords)
+  }
+
+  def fetchAdvertisementFeatureKeywords(lineItems: Seq[LineItem]): Seq[String] = {
+    lineItems flatMap (_.advertisementFeatureKeywords)
   }
 }

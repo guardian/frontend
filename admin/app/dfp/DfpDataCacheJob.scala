@@ -40,6 +40,8 @@ object DfpDataCacheJob extends ExecutionContexts {
       if (lineItems.nonEmpty) {
         val dfpData = DfpData(lineItems)
         Store.putDfpData(stringify(toJson(dfpData)))
+        Store.putDfpSponsoredKeywords(stringify(toJson(DfpApi.fetchSponsoredKeywords(lineItems))))
+        Store.putDfpAdvertisementFeatureKeywords(stringify(toJson(DfpApi.fetchAdvertisementFeatureKeywords(lineItems))))
       }
     }
   }
