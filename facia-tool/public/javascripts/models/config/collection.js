@@ -1,6 +1,7 @@
 /* global _: true */
 define([
     'knockout',
+    'config',
     'modules/vars',
     'modules/content-api',
     'utils/strip-empty-query-params',
@@ -9,6 +10,7 @@ define([
     'utils/collection-guid'
 ], function(
     ko,
+    pageConfig,
     vars,
     contentApi,
     stripEmptyQueryParams,
@@ -43,6 +45,10 @@ define([
             'isOpen',
             'underDrag',
             'apiQueryStatus']);
+
+        this.state.withinPriority = ko.computed(function() {
+            return _.some(this.parents(), function(front) {return front.props.priority() === vars.priority; });
+        }, this);
 
         this.meta.apiQuery.subscribe(function(apiQuery) {
             if (this.state.isOpen()) {
