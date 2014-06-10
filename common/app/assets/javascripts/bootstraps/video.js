@@ -19,6 +19,26 @@ define([
 
     var modules = {
 
+        bindPrerollEvents: function(player) {
+            var events ={
+                end: function() {
+                    mediator.emit('video:preroll:end', player);
+                    player.off('play', events.play);
+                    player.off('ended', events.end);
+                    player.off('adsready', events.ready);
+                },
+                play: function() {
+                    mediator.emit('video:preroll:start', player);
+                },
+                ready: function() {
+                    mediator.emit('video:preroll:request', player);
+                    player.one('play', events.play);
+                    player.one('ended', events.end);
+                }
+            };
+            player.on('adsready', events.ready);
+        },
+
         getVastUrl: function() {
             var adUnit = dfp.buildAdUnit({ page: config.page }),
                 custParams = queryString.generateQueryString(dfp.buildPageTargeting({ page: config.page })),
@@ -40,6 +60,10 @@ define([
                         preload: 'none'
                     }).ready(function () {
                         var player = this;
+
+                        //Bind advert events
+                        modules.bindPrerollEvents(player);
+
                         //Init vast adverts
                         player.ads({
                             timeout: 3000
