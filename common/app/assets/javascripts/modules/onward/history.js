@@ -4,9 +4,15 @@
  */
 define([
     'lodash/objects/assign',
+    'lodash/collections/map',
+    'lodash/collections/sortBy',
+    'lodash/collections/filter',
     'common/utils/storage'
 ], function(
     _assign,
+    _map,
+    _sortBy,
+    _filter,
     storage
     ) {
 
@@ -58,6 +64,34 @@ define([
 
         hist.unshift(newItem);
         this.set(hist);
+    };
+
+
+    History.prototype.recentVisits = function () {
+        var sorted = _sortBy(this.get(), 'timestamp').reverse();
+
+        var curr_timestamp = 0, session_array = [], a_month_ago = new Date(Date.now());
+        a_month_ago.setMonth(a_month_ago.getMonth() - 1);
+
+        sorted.map(function (i) {
+            function diffInMins() {
+                var diff = (parseInt(curr_timestamp, 10) - parseInt(i.timestamp, 10));
+                return Math.ceil(diff / 1000 / 60);
+            }
+
+            if (diffInMins() >= 30) {
+                session_array.push(i.timestamp);
+            }
+            curr_timestamp = i.timestamp;
+        });
+        return session_array;
+    };
+
+    History.prototype.numberOfSessionsSince = function (date) {
+
+        var aMonthAgoInMillis = date.getTime(), sessions = this.recentVisits();
+        var sessionsInLastMonth = _filter(sessions, function(timestamp) { return parseInt(timestamp,10) > aMonthAgoInMillis; });
+        return sessionsInLastMonth.length;
     };
 
     return History;
