@@ -42,7 +42,7 @@ define([
             default:
 
                 if (config.switches.audienceScience) {
-                    audienceScience.load(config.page);
+                    audienceScience.load();
                 }
                 audienceScienceGateway.load();
 
