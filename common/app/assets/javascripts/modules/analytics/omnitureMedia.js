@@ -10,8 +10,7 @@ define([
 
     function OmnitureMedia(videoEl) {
 
-        var videoType = 'content',
-            mediaName = config.page.webTitle,
+        var mediaName = config.page.webTitle,
             provider = config.page.source || '',
             restricted = config.page.blockVideoAds || '',
             playCount = 0;
@@ -84,12 +83,10 @@ define([
         };
 
         this.trackVideoAdvert = function() {
-            videoType = 'advert';
             s.trackVideoAd();
         };
 
         this.trackVideoContent = function() {
-            videoType = 'content';
             s.trackVideoContent(provider, restricted);
         };
 
