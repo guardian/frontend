@@ -1,0 +1,22 @@
+{
+  "name": "promiscuous",
+  "version": "0.6.0",
+  "description": "A minimal and fast promise implementation",
+  "author": "Ruben Verborgh <ruben.verborgh@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/RubenVerborgh/promiscuous.git"
+  },
+  "bugs": {
+    "url": "https://github.com/RubenVerborgh/promiscuous/issues"
+  },
+  "main": "promiscuous.js",
+  "scripts": {
+    "test": "promises-aplus-tests test/adapter"
+  },
+  "devDependencies": {
+    "promises-aplus-tests": "2.0.x",
+    "uglify-js": "2.2.x"
+  }
+}

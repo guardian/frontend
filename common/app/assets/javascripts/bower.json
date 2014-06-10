@@ -14,6 +14,7 @@
     "reqwest": "~1.1.0",
     "domready": "~1.0.4",
     "enhancer": "0.1.1",
-    "pinkyswear.js": "timjansen/pinkyswear.js#~2.1.0"
+    "pinkyswear.js": "timjansen/pinkyswear.js#~2.1.0",
+    "promiscuous": "~0.6.0"
   }
 }
