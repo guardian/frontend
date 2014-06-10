@@ -2,7 +2,7 @@ define([
     'common/utils/config'
 ], function(
     config
-    ) {
+) {
 
     var ammaUrl = '//c.supert.ag/the-guardian/the-guardian/supertag-async.js';
 
