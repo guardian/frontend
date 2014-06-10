@@ -79,6 +79,10 @@ public class HeaderPage extends AbstractParentPage {
     public HeaderPage usEditionPresent() {
         super.isDisplayed(editionUS);
         return this;
-
+    }
+    
+    public HeaderPage auEditionPresent() {
+        super.isDisplayed(editionAU);
+        return this;
     }
 }
