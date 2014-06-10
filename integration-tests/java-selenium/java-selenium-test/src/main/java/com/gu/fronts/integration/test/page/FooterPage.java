@@ -8,7 +8,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import com.gu.fronts.integration.test.page.util.AbstractParentPage;
-import com.gu.fronts.integration.test.page.util.PageFactoryHelper;
 
 public class FooterPage extends AbstractParentPage {
 
@@ -26,7 +25,7 @@ public class FooterPage extends AbstractParentPage {
         super.isDisplayed(copyright, logo);
         return this;
     }
-    
+
     public NetworkFrontPage clickLogo() {
         logo.click();
         return pageFactoryHelper.loadPage(NetworkFrontPage.class, webDriver);
