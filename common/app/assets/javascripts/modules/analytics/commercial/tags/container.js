@@ -3,6 +3,7 @@
  */
 define([
     'common/modules/analytics/commercial/tags/common/audience-science',
+    'common/modules/analytics/commercial/tags/common/audience-science-gateway',
     'common/modules/analytics/commercial/tags/common/imrworldwide',
     'common/modules/analytics/commercial/tags/common/media-math',
     'common/modules/analytics/commercial/tags/common/criteo',
@@ -10,6 +11,7 @@ define([
     'common/modules/analytics/commercial/tags/au/effective-measure'
 ], function(
     AudienceScience,
+    AudienceScienceGateway,
     IMRWorldwide,
     mediaMath,
     criteo,
@@ -41,6 +43,7 @@ define([
 
                 if (config.switches.audienceScience) {
                     AudienceScience.load(config.page);
+                    AudienceScienceGateway.load(config);
                 }
 
                 if (config.switches.imrWorldwide) {
