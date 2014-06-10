@@ -1,5 +1,6 @@
 package com.gu.fronts.integration.test.common;
 
+import org.junit.After;
 import org.junit.BeforeClass;
 import org.openqa.selenium.WebDriver;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,11 @@ public class AbstractParentTestClass {
     @BeforeClass
     public static void testClassSetup() {
         EnvironmentConfigurer.setupEnvironmentProperty();
+    }
+    
+    @After
+    public void afterTestCase(){
+        webDriver.manage().deleteAllCookies();
     }
 
     protected NetworkFrontPage openNetworkFrontPage() {

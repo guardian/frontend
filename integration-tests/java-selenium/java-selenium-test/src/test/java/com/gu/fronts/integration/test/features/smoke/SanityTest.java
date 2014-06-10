@@ -31,6 +31,6 @@ public class SanityTest extends AbstractParentTestClass {
         
         networkFrontPage.header().ukEditionSelected();
         networkFrontPage.header().usEditionPresent();
-        //networkFrontPage.header().usEditionPresent();
+        networkFrontPage.header().auEditionPresent();
     }
 }
