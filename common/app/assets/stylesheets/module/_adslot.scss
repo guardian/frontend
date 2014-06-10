@@ -269,10 +269,12 @@
     .ad-slot--paid-for-badge__label {
         color: $c-neutral2-contrasted;
     }
-    .ad-slot--paid-for-badge__link {
-        @include rem((
-            margin-top: get-line-height($fs-data, 3)*-2
-        ));
+    @include mq(mobile, $to: faciaLeftCol) {
+        &.ad-slot--paid-for-badge--front .ad-slot--paid-for-badge__link {
+            @include rem((
+                    margin-top: get-line-height($fs-data, 3)*-2
+            ));
+        }
     }
 }
 .ad-slot--spbadge {
@@ -280,10 +282,12 @@
     .ad-slot--paid-for-badge__label {
         color: $c-neutral2;
     }
-    .ad-slot--paid-for-badge__link {
-        @include rem((
-            margin-top: get-line-height($fs-data, 3)*-1
-        ));
+    @include mq(mobile, $to: faciaLeftCol) {
+        &.ad-slot--paid-for-badge--front .ad-slot--paid-for-badge__link {
+            @include rem((
+                    margin-top: get-line-height($fs-data, 3)*-1
+            ));
+        }
     }
 }
 .ad-slot--paid-for-badge--article {
@@ -351,10 +355,22 @@
 
             .ad-slot--paid-for-badge__link {
                 float: right;
+            }
+            &.ad-slot--adbadge .ad-slot--paid-for-badge__link {
+                @include rem((
+                    margin-top: get-line-height($fs-data, 3)*-2
+                ));
+            }
+            &.ad-slot--spbadge .ad-slot--paid-for-badge__link {
                 @include rem((
                     margin-top: get-line-height($fs-data, 3)*-1
                 ));
             }
+        }
+        .has-page-skin .container--has-toggle & {
+            @include rem((
+                margin-right: gs-span(1)
+            ));
         }
     }
 }
