@@ -112,6 +112,7 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
     val block = FaciaApi.discardBlock(id, identity)
     block.foreach { b =>
       UpdateActions.archiveDiscardBlock(id, b, identity)
+      pressCollectionId(id)
     }
     NoCache(Ok)
   }
