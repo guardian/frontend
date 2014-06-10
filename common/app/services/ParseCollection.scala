@@ -56,7 +56,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
     val curatedItems: Future[List[Content]] =
       requestCollection(id)
         .map(responseToJson)
-        .map(retrieveDraftItemsFromCollectionJson)
+        .map(retrieveItemsFromCollectionJson)
         .flatMap { items => getArticles(items, edition) }
 
     val executeDraftContentApiQuery: Future[Result] = executeContentApiQuery(config.contentApiQuery, edition)
