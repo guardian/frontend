@@ -114,6 +114,7 @@ class FaciaController extends Controller with Logging with ExecutionContexts wit
       })
     }.getOrElse(Future.successful(None))
 
+  /* Google news hits this endpoint */
   def renderCollectionRss(id: String) = MemcachedAction { implicit request =>
       log.info(s"Serving collection ID: $id")
       getPressedCollection(id).map { collectionOption =>
