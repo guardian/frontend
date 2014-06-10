@@ -40,7 +40,10 @@
                                                 date,
                                                 responsiveFont = true,
                                                 matchType = matchesList.pageType,
-                                                heading = Some((competition.fullName, Option(competition.url)))
+                                                heading = Some {
+                                                    if (competition.url == "world-cup-2014") (matches.headOption.flatMap(m => m.round.name).getOrElse(competition.fullName), Option(competition.url))
+                                                    else (competition.fullName, Option(competition.url)
+                                                }
                                             )
                                         </div>
                                     </div>
