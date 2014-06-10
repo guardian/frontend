@@ -9,7 +9,7 @@ define([
     $,
     cookies,
     globalConfig,
-    _defaults
+    defaults
 ) {
 
     var nId = '1476',
@@ -35,7 +35,7 @@ define([
     }
 
     function load(config) {
-        config = _defaults(
+        config = defaults(
             config || {},
             globalConfig,
             {
