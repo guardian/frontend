@@ -1,0 +1,81 @@
+/* ==========================================================================
+   DFP bespoke component
+   ========================================================================== */
+   
+.commercial--dfp {
+    .commercial__head {
+        height: auto;
+        border: 0;
+    }
+    .commercial__title {
+        float: none;
+        margin-bottom: 0;
+        @include fs-bodyHeading(3);
+        text-transform: lowercase;
+        color: $c-brandBlue;
+    }
+    .commercial__body {
+        padding: 0;
+    }
+    .lineitems {
+        @include rem((
+            margin: 0 -($gs-gutter/2)
+        ));
+    }
+    .lineitem {
+        width: 50%;
+        float: left;
+        @include rem((
+            padding: 0 $gs-gutter/2
+        ));
+        
+        &:nth-child(n+3) {
+            display: none;
+        }
+    }
+    .lineitem__image {
+        width: 100%;
+    }
+    .lineitem__link {
+        float: none;
+    }
+    
+    .commercial--generic__item__description {
+        @include rem((
+            margin-bottom: $gs-baseline
+        ));
+    }
+
+    @include mq(tablet) {
+        .lineitem {
+            width: 33%;
+            
+            &:nth-child(3) {
+                display: block;
+            }
+        }
+    }
+    
+    @include mq(rightCol) {
+        .lineitem {
+            width: 25%;
+            
+            &:nth-child(4) {
+                display: block;
+            }
+        }        
+    }
+    
+    @include mq(leftCol) {
+        .commercial__body {
+            @include rem((
+                padding-top: $gs-baseline
+            ));
+        }
+        .commercial__home-link {
+            @include rem((
+                line-height: $gs-baseline*1.5
+            ));
+        }
+    }
+}

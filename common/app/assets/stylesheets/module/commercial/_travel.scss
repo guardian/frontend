@@ -12,7 +12,6 @@ $c-commercial-travel-dark: #002b6c;
         ));
     }
     .lineitem {
-        list-style-type: none;
         border-top: 0;
         @include box-sizing(border-box);
         float: left;
