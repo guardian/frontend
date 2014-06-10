@@ -31,11 +31,9 @@
     .table__caption--bottom {
         @include box-sizing(border-box);
         background: $c-neutral8;
-        border-left: $gs-gutter/2 solid #ffffff;
-        border-right: $gs-gutter/2 solid #ffffff;
+        border-width: 0px;
         bottom: 0;
         left: 0;
-        position: absolute;
         width: 100%;
         z-index: 2;
 
