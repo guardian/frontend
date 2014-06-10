@@ -331,7 +331,7 @@
 
 .activity-stream {
     @include rem((
-        margin-top: -$gs-baseline*2
+        margin-top: $gs-baseline
     ));
 }
 
