@@ -1,10 +1,10 @@
-@(title: String, env: String, isAuthed: Boolean = false, identity: Option[Identity] = None)(content: Html)
+@(title: String, env: String, priority: Option[String] = None, isAuthed: Boolean = false, identity: Option[Identity] = None)(content: Html)
 
 <!DOCTYPE html>
 
 <html ng-app>
     <head>
-        <title>@title</title>
+        <title>@priority @title</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <meta charset="utf-8"/>
 
@@ -43,6 +43,7 @@
             define('config', function() {
                 return {
                     env: '@env.toLowerCase',
+                    priority: '@priority',
                     editions: [@Html(Edition.all.map(_.id.toLowerCase).mkString("'","','", "'"))],
                     navSections: [@Html(FaciaToolConfiguration.sectionsFromNav.mkString("'", "', '", "'"))],
                     email: '@identity.map(_.email).getOrElse("")'
@@ -53,20 +54,17 @@
     </head>
     <body class="@if(isAuthed){is-authed}">
 
-    <img class="logo" src="@routes.Assets.at("images/logo.png")" />
+    <a href="/"><img class="logo" src="@routes.Assets.at("images/logo.png")" /></a>
 
-    <h1 class="tool-title">Fronts Editor</h1>
+    <h1 class="tool-title">@priority @title</h1>
 
     @if(Switches.ToolDisable.isSwitchedOn) {
         <span class="message message--important">Temporarily disabled. Please try again shortly.</span>
     } else {
         @if(isAuthed) {
-            <span class="message message--loading" data-bind="visible: false">loading...</span>
-
             @if(Play.isDev && Configuration.facia.stage.toLowerCase != "dev") {
                 <span class="message message--important">Editing @Configuration.facia.stage.toUpperCase!</span>
             }
-
             <a class="log-in-out" href="/logout">Logout</a>
             @content
         } else {
