@@ -27,7 +27,7 @@
             @pagination.pages.map{ pageNum =>
                 <li class="pagination__item">
                     @if(pageNum == pagination.currentPage) {
-                        <span class="pagination__action">@pageNum</span>
+                        <span class="pagination__action pagination__action--current">@pageNum</span>
                     } else {
                         <a class="pagination__action @actionClass" data-page="@pageNum" href="@paginated(page.url, pageNum)">@pageNum</a>
                     }

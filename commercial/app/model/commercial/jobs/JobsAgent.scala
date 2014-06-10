@@ -15,7 +15,7 @@ object JobsAgent extends AdAgent[Job] with ExecutionContexts with Logging {
 
   private def populateKeywords(jobs: Seq[Job]) = jobs.map {
     job =>
-      val jobKeywords = job.sectorIds.flatMap(Industries.forIndustry).distinct
-      job.copy(keywords = jobKeywords)
+      val jobKeywordIds = job.sectorIds.flatMap(Industries.forIndustry).distinct
+      job.copy(keywordIds = jobKeywordIds)
   }
 }

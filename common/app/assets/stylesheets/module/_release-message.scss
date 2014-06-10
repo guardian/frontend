@@ -1,6 +1,7 @@
 .site-message {
     background: darken($c-neutral8, 3%);
     display: block;
+    border-bottom: 1px solid $c-neutral5;
 }
 
 .site-message--modal {
@@ -105,8 +106,9 @@
 }
 
 .site-message__inner {
-    padding: $gs-baseline $gs-gutter/2;
-    @include box-sizing(border-box);
+    @include rem((
+        padding: $gs-baseline 42px $gs-baseline $gs-gutter/2
+    ));
 
     @include mq(mobileLandscape) {
         padding-left: $gs-gutter;
@@ -215,8 +217,9 @@
 
     .app__logo {
         @include rem((
-            margin-left: $gs-gutter,
-            margin-right: $gs-gutter/2
+            width: 50px,
+            margin-left: $gs-gutter*.75,
+            margin-right: $gs-gutter/4
         ));
     }
 
@@ -231,7 +234,7 @@
 
     .app__copy {
         margin-bottom: 0;
-        @include font(arial, normal, 12px, 14px);
+        @include font(arial, normal, 11px, 14px);
         color: #ffffff;
 
         strong {

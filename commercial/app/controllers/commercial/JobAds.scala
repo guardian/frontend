@@ -1,51 +1,41 @@
 package controllers.commercial
 
+import model.commercial.jobs.{Job, JobsAgent}
+import model.{NoCache, Cached}
+import performance.MemcachedAction
 import play.api.mvc._
-import model.commercial.jobs.JobsAgent
-import common.{JsonNotFound, JsonComponent}
-import model.Cached
+import play.api.templates.Html
+import scala.concurrent.Future
 
 object JobAds extends Controller {
 
   implicit val codec = Codec.utf_8
 
-  def renderAds = Action {
-    implicit request =>
-      JobsAgent.adsTargetedAt(segment) match {
-        case Nil => NotFound
-        case jobs => {
-          Cached(60)(Ok(views.html.jobs(jobs take 2)))
-        }
-      }
+  object lowRelevance extends Relevance[Job] {
+    override def view(jobs: Seq[Job])(implicit request: RequestHeader): Html =
+      views.html.jobs(jobs)
   }
 
-  def jobs = Action {
-    implicit request =>
-      JobsAgent.adsTargetedAt(segment) match {
-        case Nil => JsonNotFound.apply()
-        case jobs => {
-          Cached(60)(JsonComponent(views.html.jobs(jobs take 2)))
-        }
-      }
+  object highRelevance extends Relevance[Job] {
+    override def view(jobs: Seq[Job])(implicit request: RequestHeader): Html =
+      views.html.jobsHigh(jobs)
   }
 
-  def renderAdsHigh = Action {
-    implicit request =>
-      JobsAgent.adsTargetedAt(segment) match {
-        case Nil => NotFound
-        case jobs => {
-          Cached(60)(Ok(views.html.jobsHigh(jobs take 2)))
+  private def renderJobs(relevance: Relevance[Job], format: Format) =
+    MemcachedAction { implicit request =>
+      Future.successful {
+        JobsAgent.adsTargetedAt(segment) match {
+          case Nil => NoCache(format.nilResult)
+          case jobs => Cached(componentMaxAge) {
+            format.result(relevance.view(jobs take 2))
+          }
         }
       }
-  }
+    }
 
-  def jobsHigh = Action {
-    implicit request =>
-      JobsAgent.adsTargetedAt(segment) match {
-        case Nil => JsonNotFound.apply()
-        case jobs => {
-          Cached(60)(JsonComponent(views.html.jobsHigh(jobs take 2)))
-        }
-      }
-  }
+  def jobsLowHtml = renderJobs(lowRelevance, htmlFormat)
+  def jobsLowJson = renderJobs(lowRelevance, jsonFormat)
+
+  def jobsHighHtml = renderJobs(highRelevance, htmlFormat)
+  def jobsHighJson = renderJobs(highRelevance, jsonFormat)
 }

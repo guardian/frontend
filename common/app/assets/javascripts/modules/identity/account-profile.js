@@ -5,13 +5,17 @@
  *  forms.
  */
 define([
+    'common/$',
     'bean',
     'bonzo',
-    'common/utils/url'
+    'common/utils/url',
+    'common/modules/identity/membership-tab'
 ], function(
+    $,
     bean,
     bonzo,
-    url
+    url,
+    MembershipTab
 ) {
 
     var accountProfile = function () {
@@ -26,7 +30,8 @@ define([
             formError: '.form__error',
             changed: 'js-form-changed',
             textInput: '.text-input',
-            avatarUploadForm: '.js-avatar-upload-form'
+            avatarUploadForm: '.js-avatar-upload-form',
+            memberShipContainer: '.js-memebership-tab-container'
         };
 
         self.messages = {
@@ -53,6 +58,10 @@ define([
                     self.bindInputs(self.accountProfileForms.querySelector(self.classes.publicForm));
 
                     var tabs = self.accountProfileForms.querySelector(self.classes.tabs);
+
+                    var membershipTab = new MembershipTab();
+
+                    membershipTab.fetch($(self.classes.memberShipContainer));
 
                     bean.on(tabs, 'click', self.handleTabsClick.bind(self));
                 }

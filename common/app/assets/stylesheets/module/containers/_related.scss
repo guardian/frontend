@@ -1,12 +1,4 @@
 .related {
-    .container__body {
-        @include rem((
-            padding-top: $gs-baseline/3
-        ));
-        @include mq(tablet, desktop) {
-            padding-top: 0;
-        }
-    }
     .item__link {
         @include mq($to: tablet) {
             border-top: 1px solid $c-neutral5 !important;

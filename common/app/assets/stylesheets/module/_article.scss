@@ -121,7 +121,6 @@
 }
 
 .article--advertisement-feature {
-    @include f-textsans;
     background-color: $c-neutral8;
 
     .content__standfirst,
@@ -132,8 +131,12 @@
     .ad-slot--paid-for-badge__label {
         color: $c-neutral2-contrasted;
     }
+    .content__headline,
     .content__standfirst {
         @include f-headlineSans;
+    }
+    .from-content-api {
+        @include f-textsans;
     }
 }
 

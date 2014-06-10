@@ -1,6 +1,16 @@
 @(index: services.IndexPage)(implicit request: RequestHeader, templateDeduping: TemplateDeduping)
 
-<div data-link-name="Front" role="main" class="facia-container facia-container--layout-front @if(index.page.isAdvertisementFeature && !index.page.isSponsored){facia-container--advertisement-feature}">
+<div class="@RenderClasses(Map(
+        "facia-container" -> true,
+        "facia-container--layout-front" -> true,
+        "facia-container--sponsored" -> index.page.isSponsored,
+        "facia-container--advertisement-feature" -> (index.page.isAdvertisementFeature && !index.page.isSponsored)))"
+    data-link-name="Front"
+    role="main">
+
+    @if(index.page.hasPageSkin) {
+        @fragments.commercial.pageSkin()
+    }
 
     @fragments.containers.tag(index.page, Collection(index.trails), NewsContainer(showMore = false), containerIndex = 0, pagination = index.page.pagination)(request, templateDeduping, Config(s"${index.page.id}/news/regular-stories", displayName = Some(index.page.webTitle)))
 
@@ -8,5 +18,7 @@
         @fragments.footballNav(index.page)
     </section>
 
-    @fragments.commercial.adSlot(name="merchandising", adType="commercial-component", sizeMapping=Map("mobile" -> Seq("888,88")), showLabel=false, refresh=false)
+    @if(!index.page.hasPageSkin) {
+        @fragments.commercial.commercialComponent("merchandising", Seq("commercial-component"))
+    }
 </div>

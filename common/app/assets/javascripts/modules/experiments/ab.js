@@ -3,20 +3,23 @@ define([
     'common/utils/storage',
     'common/utils/mediator',
     'common/modules/analytics/mvt-cookie',
-    'common/modules/experiments/tests/searchText',
-    'common/modules/experiments/tests/high-relevance-commercial-component'
+    'common/modules/experiments/tests/high-relevance-commercial-component',
+    'common/modules/experiments/tests/hide-supporting-links',
+    'common/modules/experiments/tests/across-the-guardian'
 ], function (
     common,
     store,
     mediator,
     mvtCookie,
-    ABHeaderSearchText,
-    ABHighRelevanceCommercialComponent
+    ABHighRelevanceCommercialComponent,
+    ABHideSupportingLinks,
+    ABAcrossTheGuardian
     ) {
 
     var TESTS = [
-            new ABHeaderSearchText(),
-            new ABHighRelevanceCommercialComponent()
+            new ABHighRelevanceCommercialComponent(),
+            new ABHideSupportingLinks(),
+            new ABAcrossTheGuardian()
         ],
         participationsKey = 'gu.ab.participations';
 

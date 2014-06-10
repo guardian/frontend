@@ -8,7 +8,6 @@ define([
     'common/modules/article/twitter',
     'common/modules/discussion/loader',
     'common/modules/open/cta',
-    'common/modules/experiments/layoutHints',
     'common/bootstraps/liveblog'
 
 ], function (
@@ -21,7 +20,6 @@ define([
     twitter,
     DiscussionLoader,
     OpenCta,
-    Layout,
     LiveBlog
 ) {
 
@@ -64,15 +62,6 @@ define([
             });
         },
 
-        initLayoutHints: function(config) {
-            /* jshint nonew: false */
-            /* TODO - fix module constructors so we can remove the above jshint override */
-            if(config.switches.layoutHints && /\/-sp-/g.test(config.page.pageId)) {
-                new Layout(config);
-            }
-        },
-
-
         initTruncateAndTwitter: function() {
             mediator.on('page:article:ready', function() {
                 // Ensure that truncation occurs before the tweet upgrading.
@@ -89,7 +78,6 @@ define([
             modules.initDiscussion();
             modules.initOpen(config);
             modules.initFence();
-            modules.initLayoutHints(config);
             modules.initTruncateAndTwitter();
         }
         common.mediator.emit('page:article:ready', config, context);

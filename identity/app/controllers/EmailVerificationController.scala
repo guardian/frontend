@@ -37,7 +37,7 @@ class EmailVerificationController @Inject()( api: IdApiClient,
             case Right(ok) => validated
           }
           val userIsLoggedIn = authenticationService.requestPresentsAuthenticationCredentials(request)
-          Ok(views.html.email_verified(validationState, page, idRequest, idUrlBuilder, userIsLoggedIn))
+          Ok(views.html.emailVerified(validationState, page, idRequest, idUrlBuilder, userIsLoggedIn))
       }
   }
 

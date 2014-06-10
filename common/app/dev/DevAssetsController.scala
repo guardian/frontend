@@ -15,7 +15,7 @@ object DevAssetsController extends Controller with ExecutionContexts {
     }
 
     // Css maps must come from static/target
-    val resolved = if (path.endsWith(".css.map")) {
+    val resolved = if (path.endsWith(".css.map") || path.endsWith(".js.map")) {
       new File(s"static/target/$path").toURI.toURL
     } else {
       new File(s"static/hash/$path").toURI.toURL
