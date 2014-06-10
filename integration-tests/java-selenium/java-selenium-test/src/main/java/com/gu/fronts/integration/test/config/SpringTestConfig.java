@@ -1,6 +1,6 @@
-package com.gu.fronts.integration.test;
+package com.gu.fronts.integration.test.config;
 
-import static com.gu.fronts.integration.test.EnvironmentConfigurer.ENVIRONMENT_KEY;
+import static com.gu.fronts.integration.test.config.EnvironmentConfigurer.ENVIRONMENT_KEY;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;

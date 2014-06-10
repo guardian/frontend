@@ -1,4 +1,4 @@
-package com.gu.fronts.integration.test.common.page;
+package com.gu.fronts.integration.test.common.util;
 
 public class CssSelector {
 
