@@ -22,39 +22,20 @@ define([
     function init(config) {
 
         switch (config.page.edition.toLowerCase()) {
-
             case 'au':
-
-                if (config.switches.amaa) {
-                    amaa.load();
-                }
-
-                if (config.switches.effectiveMeasure) {
-                    effectiveMeasure.load();
-                }
-
-                if (config.switches.imrWorldwide) {
-                    imrWorldwide.load();
-                }
-
+                amaa.load();
+                effectiveMeasure.load();
                 break;
 
             default:
-
-                if (config.switches.audienceScience) {
-                    audienceScience.load();
-                }
+                audienceScience.load();
                 audienceScienceGateway.load();
-
-                if (config.switches.imrWorldwide) {
-                    imrWorldwide.load();
-                }
-
                 break;
         }
 
         mediaMath.load();
         criteo.load();
+        imrWorldwide.load();
     }
 
     return {
