@@ -6,7 +6,8 @@ define([
     'common/utils/config',
     'common/modules/adverts/query-string',
     'common/modules/adverts/dfp',
-    'bean'
+    'bean',
+    'bonzo'
 ], function(
     $,
     ajax,
@@ -14,8 +15,19 @@ define([
     config,
     queryString,
     dfp,
-    bean
+    bean,
+    bonzo
 ) {
+
+    var secsToNiceString = function(val) {
+        var secs = val % 60;
+        var mins = Math.floor(val / 60);
+        var hours = Math.floor(mins / 60);
+
+        return (hours ? hours+'h ' : '') +
+               (mins ? mins+'m ' : '') +
+               (secs ? secs+'s ' : '');
+    };
 
     var modules = {
 
@@ -83,15 +95,46 @@ define([
             return url;
         },
 
+        initOverlays: function(el) {
+            var title = el.getAttribute('data-title');
+            if (title) {
+                var vjs = videojs(el),
+                    vjsContainer = vjs.el(),
+                    duration = el.getAttribute('data-duration'),
+                    durationHTML = duration ? '<div class="vjs-overlay__duration">' + secsToNiceString(duration) + '</div>' : '',
+                    bigTitleHTML = '<div class="vjs-overlay__title">' + title + '</div>',
+                    bigTitleEl = bonzo(document.createElement('div'))
+                        .appendTo(vjsContainer)
+                        .addClass('vjs-overlay')
+                        .addClass('vjs-overlay--big-title')
+                        .html(bigTitleHTML + durationHTML),
+                    smallTitleEl = bonzo(document.createElement('div'))
+                        .addClass('vjs-overlay')
+                        .addClass('vjs-overlay--small-title')
+                        .html(title);
+
+                vjs.one('play', function() {
+                    bigTitleEl.remove();
+                    bigTitleEl = undefined;
+                    smallTitleEl.appendTo(vjsContainer);
+                });
+            }
+        },
+
         initPlayer: function() {
+            var self = this;
 
             require('bootstraps/video-player', function () {
                 $('video').each(function (el) {
-                    videojs(el, {
+                    var vjs = videojs(el, {
                         controls: true,
                         autoplay: false,
                         preload: 'none'
-                    }).ready(function () {
+                    });
+
+                    self.initOverlays(el);
+
+                    vjs.ready(function () {
                         var player = this;
 
                         // Bind advert and content events used by analytics. The expected order of bean events is:
@@ -111,6 +154,7 @@ define([
                             url: modules.getVastUrl()
                         });
                     });
+
                 });
             });
         }
