@@ -4,7 +4,7 @@
 @import org.joda.time.DateTime
 
 @defining(config.displayName.orElse(collection.displayName)) { title =>
-    @defining(templateDeduping(15, collection.items)) { items =>
+    @defining(templateDeduping(10, collection.items)) { items =>
         @defining(Edition.editionFronts.contains(request.uri.toLowerCase)) { isEdition =>
             @if(items.nonEmpty) {
                 <section

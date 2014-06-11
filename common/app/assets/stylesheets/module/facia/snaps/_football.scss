@@ -143,6 +143,14 @@
         .team__info {
             @include fs-headline(1, true)
         }
+
+        .table__caption--bottom {
+            position: absolute;
+            @include rem((
+                border-left: $gs-gutter/2 solid #ffffff,
+                border-right: $gs-gutter/2 solid #ffffff
+            ));
+        }
     }
 
     &.facia-snap-point--mini,
@@ -173,19 +181,21 @@
         }
         .football-match__team--home {
             @include rem((
-                padding-right: $gs-gutter*1.25
+                padding-right: $gs-gutter*0.75
             ));
         }
         .football-match__team--away {
             @include rem((
-                padding-left: $gs-gutter*1.25
+                padding-left: $gs-gutter*0.75
             ));
         }
 
         .table__caption--bottom {
             position: absolute;
-            border-left: $gs-gutter/2 solid #ffffff;
-            border-right: $gs-gutter/2 solid #ffffff;
+            @include rem((
+                border-left: $gs-gutter/2 solid #ffffff,
+                border-right: $gs-gutter/2 solid #ffffff
+            ));
         }
     }
 }

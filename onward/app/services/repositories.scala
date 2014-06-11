@@ -25,7 +25,6 @@ trait Related extends ConciergeRepository {
     val response = ContentApi.search(edition)
       .tag(tag)
       .pageSize(50)
-      .dateId("date/last7days")
       .response
 
     val trails: Future[Seq[Content]] = response.map { response =>

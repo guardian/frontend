@@ -6,6 +6,7 @@ import model.Competition
 import pa.{Round, FootballMatch}
 import implicits.Football
 import football.collections.RichList
+import conf.Switches
 
 
 trait MatchesList extends Football with RichList {
@@ -68,7 +69,12 @@ trait MatchesList extends Football with RichList {
 }
 
 trait Fixtures extends MatchesList {
-  override val baseUrl: String = "/football/fixtures"
+  override val baseUrl: String =
+    if (Switches.WorldCupWallchartEmbedSwitch.isSwitchedOn)
+      "/football/ng-interactive/2014/may/23/-sp-world-cup-2014-brazil-results-fixtures-live-scores-tables-schedule"
+    else
+      "/football/fixtures"
+
   override val pageType = "fixtures"
   // ordering for the displayed matches
   override def timeComesFirstInList(d: DateTime, other: DateTime): Boolean = d.isBefore(other)

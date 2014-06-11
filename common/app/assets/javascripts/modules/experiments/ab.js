@@ -5,7 +5,8 @@ define([
     'common/modules/analytics/mvt-cookie',
     'common/modules/experiments/tests/high-relevance-commercial-component',
     'common/modules/experiments/tests/hide-supporting-links',
-    'common/modules/experiments/tests/across-the-guardian'
+    'common/modules/experiments/tests/across-the-guardian',
+    'common/modules/experiments/tests/display-socially-referred-burners'
 ], function (
     common,
     store,
@@ -13,13 +14,15 @@ define([
     mvtCookie,
     ABHighRelevanceCommercialComponent,
     ABHideSupportingLinks,
-    ABAcrossTheGuardian
+    ABAcrossTheGuardian,
+    ABSociallyReferredContent
     ) {
 
     var TESTS = [
             new ABHighRelevanceCommercialComponent(),
             new ABHideSupportingLinks(),
-            new ABAcrossTheGuardian()
+            new ABAcrossTheGuardian(),
+            new ABSociallyReferredContent()
         ],
         participationsKey = 'gu.ab.participations';
 
