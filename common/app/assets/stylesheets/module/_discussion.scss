@@ -1280,13 +1280,10 @@ $avatarSize: 44px;
     color: $c-neutral2;
     text-align: center;
     cursor: pointer;
-    vertical-align: top;
     @include rem((
-            height: $gs-gutter,
-            line-height: $gs-gutter - 1,
-            margin-left: $gs-gutter / 4,
-            padding: 0 ($gs-gutter / 7),
-            min-width: $gs-gutter * .7
+        margin-left: $gs-gutter / 5,
+        padding: 0 5px 2px 5px,
+        min-width: 11px
     ));
     @include fs-textsans(2);
     &:hover { border-color: $c-brandBlue; }
