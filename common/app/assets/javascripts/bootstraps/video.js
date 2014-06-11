@@ -3,40 +3,73 @@ define([
     'common/$',
     'common/utils/ajax',
     'common/utils/detect',
-    'common/utils/mediator',
     'common/utils/config',
     'common/modules/adverts/query-string',
-    'common/modules/adverts/dfp'
+    'common/modules/adverts/dfp',
+    'bean'
 ], function(
     $,
     ajax,
     detect,
-    mediator,
     config,
     queryString,
-    dfp
+    dfp,
+    bean
 ) {
 
     var modules = {
 
-        bindPrerollEvents: function(player) {
-            var events ={
+        bindPrerollEvents: function(player, videoEl) {
+            var playCount = 0;
+            var events = {
                 end: function() {
-                    mediator.emit('video:preroll:end', player);
-                    player.off('play', events.play);
-                    player.off('ended', events.end);
-                    player.off('adsready', events.ready);
+                    bean.fire(videoEl, 'video:preroll:end');
+                    modules.bindContentEvents(player, videoEl);
                 },
-                play: function() {
-                    mediator.emit('video:preroll:start', player);
+                playWithDuration: function() {
+                    // Only fire the play event when the duration is known.
+                    if (playCount > 0) {
+                        bean.fire(videoEl, 'video:preroll:play');
+                        playCount = 0;
+                    } else {
+                        playCount++;
+                    }
                 },
                 ready: function() {
-                    mediator.emit('video:preroll:request', player);
-                    player.one('play', events.play);
+                    bean.fire(videoEl, 'video:preroll:ready');
+
+                    player.one('play', events.playWithDuration);
+                    player.one('durationchange', events.playWithDuration);
                     player.one('ended', events.end);
                 }
             };
-            player.on('adsready', events.ready);
+            player.one('adsready', events.ready);
+        },
+
+        bindContentEvents: function(player, videoEl) {
+            var playCount = 0;
+            var events = {
+                end: function() {
+                    bean.fire(videoEl, 'video:content:end');
+                },
+                playWithDuration: function() {
+                    // Only fire the play event when the duration is known.
+                    if (playCount > 0) {
+                        bean.fire(videoEl, 'video:content:play');
+                        playCount = 0;
+                    } else {
+                        playCount++;
+                    }
+                },
+                ready: function() {
+                    bean.fire(videoEl, 'video:content:ready');
+
+                    player.one('play', events.playWithDuration);
+                    player.one('durationchange', events.playWithDuration);
+                    player.one('ended', events.end);
+                }
+            };
+            player.one('loadstart', events.ready);
         },
 
         getVastUrl: function() {
@@ -61,10 +94,16 @@ define([
                     }).ready(function () {
                         var player = this;
 
-                        //Bind advert events
-                        modules.bindPrerollEvents(player);
+                        // Bind advert and content events used by analytics. The expected order of bean events is:
+                        // video:preroll:ready,
+                        // video:preroll:play,
+                        // video:preroll:end,
+                        // video:content:ready,
+                        // video:content:play,
+                        // video:content:end
+                        modules.bindPrerollEvents(player, el);
 
-                        //Init vast adverts
+                        // Init vast adverts.
                         player.ads({
                             timeout: 3000
                         });
