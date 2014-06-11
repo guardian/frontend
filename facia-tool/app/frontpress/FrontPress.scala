@@ -10,7 +10,7 @@ import play.api.libs.concurrent.Akka
 import play.api.libs.json.JsObject
 import com.gu.openplatform.contentapi.model.Asset
 import conf.Switches
-import services.ConfigAgent
+import services.{DraftCollections, LiveCollections, ConfigAgent}
 
 trait FrontPress extends Logging {
 
@@ -97,13 +97,13 @@ trait FrontPress extends Logging {
 
   private def retrieveFrontByPath(id: String): Future[Iterable[(Config, Collection)]] = {
     val collectionIds: List[Config] = ConfigAgent.getConfigForId(id).getOrElse(Nil)
-    val collections = collectionIds.map(config => FaciaToolCollectionParser.getCollection(config.id, config, Uk).map((config, _)))
+    val collections = collectionIds.map(config => LiveCollections.getCollection(config.id, config, Uk).map((config, _)))
     Future.sequence(collections)
   }
 
   private def retrieveDraftFrontByPath(id: String): Future[Iterable[(Config, Collection)]] = {
     val collectionIds: List[Config] = ConfigAgent.getConfigForId(id).getOrElse(Nil)
-    val collections = collectionIds.map(config => FaciaToolCollectionParser.getDraftCollection(config.id, config, Uk).map((config, _)))
+    val collections = collectionIds.map(config => DraftCollections.getCollection(config.id, config, Uk).map((config, _)))
     Future.sequence(collections)
   }
 
