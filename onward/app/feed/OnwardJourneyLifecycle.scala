@@ -47,7 +47,7 @@ trait OnwardJourneyLifecycle extends GlobalSettings {
     MostPopularExpandableAgent.stop()
     GeoMostPopularAgent.stop()
     DayMostPopularAgent.stop()
-    SociallyReferredContentAgent.stop
+    SociallyReferredContentAgent.stop()
 
     super.onStop(app)
   }

@@ -35,6 +35,7 @@ RUNNING_PID
 *.sublime-*
 
 local.sbt
+build.sbt
 
 node_modules
 screenshots
