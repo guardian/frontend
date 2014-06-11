@@ -157,6 +157,11 @@ CommentBox.prototype.ready = function() {
     this.on('click', this.getClass('show-parent'), this.setState.bind(this, 'parent-visible', false));
     this.on('click', this.getClass('hide-parent'), this.removeState.bind(this, 'parent-visible', false));
 
+    this.on('click', this.getClass('formatting-bold'), this.formatComment.bind(this, 'bold'));
+    this.on('click', this.getClass('formatting-italic'), this.formatComment.bind(this, 'italic'));
+    this.on('click', this.getClass('formatting-quote'), this.formatComment.bind(this, 'quote'));
+    this.on('click', this.getClass('formatting-link'), this.formatComment.bind(this, 'link'));
+
     this.setState(this.options.state);
 
     if (this.options.focus) {
@@ -339,6 +344,57 @@ CommentBox.prototype.cancelComment = function() {
         this.getElem('body').value = '';
         this.setFormState();
         this.removeState('expanded');
+    }
+};
+
+/**
+ *
+ * @param {String=} formatStyle
+ */
+CommentBox.prototype.formatComment = function(formatStyle) {
+
+    var commentBody = this.getElem('body');
+    var cursorPositionStart = commentBody.selectionStart;
+    var selectedText = commentBody.value.substring(commentBody.selectionStart,commentBody.selectionEnd);
+
+    var formatSelection = function(startTag,endTag) {
+        var newText = startTag + selectedText + endTag;
+
+        commentBody.value = commentBody.value.substring(0, commentBody.selectionStart)+
+            newText + commentBody.value.substring(commentBody.selectionEnd);
+
+        selectNewText(newText);
+    };
+
+    var formatSelectionLink = function() {
+        if (!/^https?:\/\//i.test(selectedText)) {
+            selectedText = 'http://'+selectedText;
+        }
+        var newText = '<a href="' + selectedText + '">' + selectedText + '</a>';
+
+        commentBody.value = commentBody.value.substring(0, commentBody.selectionStart) +
+            newText + commentBody.value.substring(commentBody.selectionEnd);
+
+        selectNewText(newText);
+    };
+
+    var selectNewText = function(newText) {
+        commentBody.setSelectionRange(cursorPositionStart,cursorPositionStart+newText.length);
+    };
+
+    switch(formatStyle) {
+        case 'bold':
+            formatSelection('<b>','</b>');
+            break;
+        case 'italic':
+            formatSelection('<i>','</i>');
+            break;
+        case 'quote':
+            formatSelection('<blockquote>','</blockquote>');
+            break;
+        case 'link':
+            formatSelectionLink();
+            break;
     }
 };
 
