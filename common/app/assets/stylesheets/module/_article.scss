@@ -257,15 +257,6 @@
             width: $a-rightCol-width
         ));
     }
-    .article__secondary-column__inner--fill-vertically {
-        top: 0;
-        bottom: 0;
-        position: absolute;
-
-        > .u-table {
-            height: 100%;
-        }
-    }
 }
 
 @include mq(gs-span(12) + $gs-gutter * 2) {
