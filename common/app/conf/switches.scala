@@ -322,8 +322,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 6, 24)
   )
 
-
-
   // Dummy Switches
 
   val IntegrationTestSwitch = Switch("Unwired Test Switch", "integration-test-switch",

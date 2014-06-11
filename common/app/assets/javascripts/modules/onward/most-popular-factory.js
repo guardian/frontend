@@ -21,13 +21,12 @@ define([
         };
 
         MostPopularFactory.prototype.renderComponent = function() {
-
             if(MostPopularFactory.showReferredContent) {
-                new SocialBurners(this.config, qwery('.js-referred', this.context));
+                new SocialBurners(this.config, qwery('.js-referred', this.context)).init();
             } else {
                 popular(this.config, this.context);
             }
         };
-        return MostPopularFactory
+        return MostPopularFactory;
     }
 );

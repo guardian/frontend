@@ -51,9 +51,9 @@ define([
     }
 
     function initialise(config) {
-        mediator.on("register:begin", begin);
-        mediator.on("register:end", end);
-        mediator.on("register:error", error);
+        mediator.on('register:begin', begin);
+        mediator.on('register:end', end);
+        mediator.on('register:error', error);
 
         deferToLoadEvent(function() {
             window.setTimeout(sendEvent(config), 5000);
