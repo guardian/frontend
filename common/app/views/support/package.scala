@@ -217,6 +217,17 @@ case class VideoEmbedCleaner(contentVideos: Seq[VideoElement]) extends HtmlClean
       val mediaId = element.attr("data-media-id")
       val asset = findVideoFromId(mediaId)
 
+      element.getElementsByTag("source").remove()
+
+      val sourceHTML: String = getVideoAssets(mediaId).map { videoAsset =>
+        (videoAsset.url, videoAsset.mimeType) match {
+          case (Some(url), Some(mimeType)) => s"""<source src="${url}" type="${mimeType}"></source>"""
+          case _ =>
+        }
+      }.mkString("")
+
+      element.append(sourceHTML)
+
       // add the poster url
       asset.flatMap(_.image).flatMap(Item640.bestFor).map(_.toString()).foreach{ url =>
         element.attr("poster", url)
@@ -237,9 +248,9 @@ case class VideoEmbedCleaner(contentVideos: Seq[VideoElement]) extends HtmlClean
     document
   }
 
-  def findVideoFromId(id:String): Option[VideoAsset] = {
-    contentVideos.filter(_.id == id).flatMap(_.videoAssets).find(_.mimeType == Some("video/mp4"))
-  }
+  def getVideoAssets(id:String): Seq[VideoAsset] = contentVideos.filter(_.id == id).flatMap(_.videoAssets)
+
+  def findVideoFromId(id:String): Option[VideoAsset] = getVideoAssets(id).find(_.mimeType == Some("video/mp4"))
 }
 
 case class PictureCleaner(contentImages: Seq[ImageElement]) extends HtmlCleaner with implicits.Numbers {
