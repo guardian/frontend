@@ -62,6 +62,14 @@ object DfpApi extends Logging {
     )
   }
 
+  def fetchAdUnitIdsThatAreTargettedByPageSkins() = dfpSession.fold(Seq[String]()) { session =>
+    val lineItems: Seq[DfpApiLineItem] = fetchCurrentLineItemsWithOutOfPageSlots()
+
+    lineItems.flatMap{item =>
+      item.getTargeting.getInventoryTargeting.getTargetedAdUnits.toList.map(_.getAdUnitId)
+    }
+  }
+
   def fetchCurrentLineItems(): Seq[LineItem] = dfpSession.fold(Seq[LineItem]()) { session =>
     val lineItems = getAllCurrentDfpLineItems()
 
