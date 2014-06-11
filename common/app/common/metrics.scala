@@ -367,12 +367,19 @@ object FaciaToolMetrics {
     "Number of times facia-tool has failed to made the request for SEO purposes of webTitle and section"
   )
 
+  object ContentApiFallbacks extends SimpleCountMetric(
+    "facia-press-content-api",
+    "facia-press-content-api-fallbacks",
+    "Facia Content API Fall Backs",
+    "Number of queries to Content API that failed and were served by Memcached"
+  )
+
   val all: Seq[Metric] = Seq(
     ApiUsageCount, ProxyCount, ExpiredRequestCount,
     DraftPublishCount, ContentApiPutSuccess, ContentApiPutFailure,
     FrontPressSuccess, FrontPressFailure, FrontPressCronSuccess,
     FrontPressCronFailure, InvalidContentExceptionMetric,
-    ContentApiSeoRequestSuccess, ContentApiSeoRequestFailure
+    ContentApiSeoRequestSuccess, ContentApiSeoRequestFailure, ContentApiFallbacks
   ) ++ ContentApiMetrics.all ++ S3Metrics.all
 }
 
