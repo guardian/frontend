@@ -565,7 +565,7 @@ define([
             modules.initLightboxGalleries();
             modules.optIn();
             modules.displayReleaseMessage(config);
-            //modules.logReadingHistory();
+            modules.logReadingHistory();
             modules.unshackleParagraphs(config, context);
             modules.initAutoSignin(config);
             modules.loadTags(config);
