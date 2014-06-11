@@ -11,6 +11,7 @@ define([
     'common/modules/analytics/commercial/tags/common/audience-science-gateway',
     'common/modules/analytics/commercial/tags/common/criteo',
     'common/modules/adverts/query-string',
+    'common/modules/adverts/userAdTargeting',
     'lodash/arrays/flatten',
     'lodash/arrays/uniq',
     'lodash/functions/once',
@@ -30,6 +31,7 @@ define([
     audienceScienceGateway,
     criteo,
     queryString,
+    userAdTargeting,
     flatten,
     uniq,
     once,
@@ -256,7 +258,8 @@ define([
                 p       : 'ng',
                 bp      : detect.getBreakpoint(),
                 a       : audienceScience.getSegments(),
-                at      : cookies.get('adtest') || ''
+                at      : cookies.get('adtest') || '',
+                gdncrm  : userAdTargeting.getUserSegments()
             }, audienceScienceGateway.getSegments(), criteo.getSegments());
         },
         buildAdUnit = function (config) {
