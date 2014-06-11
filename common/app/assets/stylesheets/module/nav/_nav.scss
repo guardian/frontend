@@ -272,39 +272,6 @@
 }
 
 
-/* Toolbar navigation
-   ========================================================================== */
-
-.nav--toolbar {
-    @extend %type-10;
-    display: none;
-    @include rem((
-        margin: 0 $gs-gutter/2 0 $gs-gutter,
-        padding: $gs-baseline 0 0
-    ));
-    @include mq(tablet) { display: block; }
-
-    .nav__item {
-        @include rem((
-            margin: $gs-baseline/3 0 0,
-            padding: $gs-baseline/3 $gs-gutter/2
-        ));
-        color: #ffffff;
-        border-right: 1px solid $c-brandLightBlue;
-
-        &:last-child { border-right: 0; }
-        &.is-active { text-decoration: underline; }
-    }
-    .nav__link,
-    .nav__link:active,
-    .nav__link:focus,
-    .nav__link:hover {
-        color: #ffffff;
-        text-decoration: none;
-    }
-}
-
-
 /* Faded link colors
    ========================================================================== */
 
