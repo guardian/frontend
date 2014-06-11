@@ -86,7 +86,7 @@ object DfpApi extends Logging {
     val adUnitTargetingQuery: StatementBuilder = new StatementBuilder()
       .where(statement)
 
-    DfpApiWrapper.fetchAdUnitTargetingObject(session, adUnitTargetingQuery)
+    DfpApiWrapper.fetchAdUnitTargetingObjects(session, adUnitTargetingQuery)
   }
 
   def normalise(lineItems: Seq[DfpApiLineItem]): Seq[LineItem] = dfpSession.fold(Seq[LineItem]()) { session =>
@@ -99,10 +99,9 @@ object DfpApi extends Logging {
       k.getId.longValue() -> k.getName
     }.toMap
 
+    val targetingKeysStatement = "('" + targetingKeys.map(_._1).mkString("', '") + "')"
     val customTargetingValues = new StatementBuilder()
-      .where("customTargetingKeyId = :targetId1 OR customTargetingKeyId = :targetId2")
-      .withBindVariableValue("targetId1", targetingKeys.head._1)
-      .withBindVariableValue("targetId2", targetingKeys.last._1)
+      .where("customTargetingKeyId IN " + targetingKeysStatement )
 
     val targetingValues = DfpApiWrapper.fetchCustomTargetingValues(session, customTargetingValues).map { v =>
       v.getId.longValue() -> v.getName

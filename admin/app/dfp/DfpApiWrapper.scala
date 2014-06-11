@@ -106,7 +106,7 @@ object DfpApiWrapper extends Logging {
 
 
 
-  def fetchAdUnitTargetingObject(session: DfpSession, statementBuilder: StatementBuilder): Seq[AdUnit] = {
+  def fetchAdUnitTargetingObjects(session: DfpSession, statementBuilder: StatementBuilder): Seq[AdUnit] = {
     val service = inventoryService(session)
     statementBuilder.limit(StatementBuilder.SUGGESTED_PAGE_LIMIT)
 
