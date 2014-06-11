@@ -16,18 +16,7 @@ class DfpApiSpec extends FlatSpec with Matchers {
     }
   }
 
-  ignore should "be able to grab all line items that target 'out of page' slots" in running(FakeApplication()) {
-    val slots: Seq[DfpApiLineItem] = DfpApi.fetchCurrentLineItemsWithOutOfPageSlots()
-
-    for (item <- slots) {
-      println(item.getId())
-    }
-
-    slots.size shouldEqual(11)
-
-  }
-
-  "DfpApi" should "get ad units targetted by page skins" in running(FakeApplication()) {
+  ignore should "get ad units targetted by page skins" in running(FakeApplication()) {
     val adUnits: Seq[String] = DfpApi.fetchAdUnitsThatAreTargettedByPageSkins()
 
     for(item <- adUnits) {
