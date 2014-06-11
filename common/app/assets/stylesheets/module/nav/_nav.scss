@@ -126,7 +126,7 @@
     overflow: hidden;
     @include rem((
         padding: $gs-baseline/2 $gs-gutter*3 $gs-baseline/2 $gs-gutter,
-        height: 45px
+        height: 44px
     ));
     @include fs-header(2);
 
