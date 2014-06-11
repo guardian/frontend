@@ -44,14 +44,24 @@ case class ProfileComments(
 ) extends Comments {
   val switches = Nil
 }
-
-object ProfileComments{
-
+object ProfileComments {
   def apply(json: JsValue): ProfileComments = {
     val profile = Profile(json)
-    val comments = (json \ "comments").as[JsArray].value map {Comment(_, Some(profile), None)}
+    val comments = (json \ "comments").as[JsArray].value map { Comment(_, Some(profile), None) }
     ProfileComments(
       profile = profile,
+      comments = comments,
+      pagination = Pagination(json)
+    )
+  }
+}
+object ProfileReplies {
+  def apply(json: JsValue): ProfileComments = {
+    val comments = (json \ "comments").as[JsArray].value map { commentJson =>
+      Comment(commentJson, Some(Profile((commentJson).as[JsObject])), None)
+    }
+    ProfileComments(
+      profile = Profile(json),
       comments = comments,
       pagination = Pagination(json)
     )

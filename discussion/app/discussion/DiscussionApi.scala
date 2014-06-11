@@ -87,7 +87,7 @@ trait DiscussionApi extends Http with ExecutionContexts with Logging {
     val apiUrl = s"$apiRoot/profile/$userId/replies?pageSize=$pageSize&page=$page&orderBy=newest&showSwitches=true"
 
     getJsonOrError(apiUrl, onError) map {
-      json => ProfileComments(json)
+      json => ProfileReplies(json)
     }
   }
 
