@@ -42,8 +42,8 @@
         .football-matches__date {
             @include rem((
                 padding: $gs-gutter/5,
-                border-top: 1px solid darken($c-neutral8, 4%)
             ));
+            border-top: 1px solid darken($c-neutral8, 4%)
         }
     }
 
