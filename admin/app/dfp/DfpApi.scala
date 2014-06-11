@@ -36,15 +36,34 @@ object DfpApi extends Logging {
       None
   }
 
-  def fetchCurrentLineItems(): Seq[LineItem] = dfpSession.fold(Seq[LineItem]()) { session =>
-
+  def getAllCurrentDfpLineItems() = dfpSession.fold(Seq[DfpApiLineItem]()) {session =>
     val currentLineItems = new StatementBuilder()
       .where("status = :readyStatus OR status = :deliveringStatus")
       .orderBy("id ASC")
       .withBindVariableValue("readyStatus", ComputedStatus.READY.toString)
       .withBindVariableValue("deliveringStatus", ComputedStatus.DELIVERING.toString)
 
-    val lineItems = DfpApiWrapper.fetchLineItems(session, currentLineItems)
+    DfpApiWrapper.fetchLineItems(session, currentLineItems)
+  }
+
+  def fetchCurrentLineItemsWithOutOfPageSlots() = dfpSession.fold(Seq[DfpApiLineItem]()) {session =>
+    def hasA1x1Pixel(placeholders: Array[CreativePlaceholder]): Boolean = {
+      val outOfPagePlaceholder: Array[CreativePlaceholder] = for {
+        placeholder <- placeholders
+        companion <- placeholder.getCompanions
+        if (companion.getSize().getHeight() == 1 && companion.getSize().getWidth() == 1)
+      } yield companion
+      outOfPagePlaceholder.nonEmpty
+    }
+
+    getAllCurrentDfpLineItems().filter(
+      item => item.getRoadblockingType == RoadblockingType.CREATIVE_SET &&
+        hasA1x1Pixel(item.getCreativePlaceholders)
+    )
+  }
+
+  def fetchCurrentLineItems(): Seq[LineItem] = dfpSession.fold(Seq[LineItem]()) { session =>
+    val lineItems = getAllCurrentDfpLineItems()
 
     val customTargetingKeys = new StatementBuilder()
       .where("displayName = :keywordTargetName OR displayName = :slotTargetName")
@@ -56,9 +75,9 @@ object DfpApi extends Logging {
     }.toMap
 
     val customTargetingValues = new StatementBuilder()
-      .where("customTargetingKeyId = :keywordTargetId OR customTargetingKeyId = :slotTargetId")
-      .withBindVariableValue("keywordTargetId", targetingKeys.head._1)
-      .withBindVariableValue("slotTargetId", targetingKeys.last._1)
+      .where("customTargetingKeyId = :targetId1 OR customTargetingKeyId = :targetId2")
+      .withBindVariableValue("targetId1", targetingKeys.head._1)
+      .withBindVariableValue("targetId2", targetingKeys.last._1)
 
     val targetingValues = DfpApiWrapper.fetchCustomTargetingValues(session, customTargetingValues).map { v =>
       v.getId.longValue() -> v.getName
