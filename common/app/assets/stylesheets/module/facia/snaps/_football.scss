@@ -28,6 +28,25 @@
         border-top: 0 none;
     }
 
+    .table__caption--top {
+        @include rem((
+            padding: $gs-gutter/5 0 0 0
+        ));
+
+        .football-matches__heading{
+            @include rem((
+                padding: $gs-gutter/5
+            ));
+        }
+
+        .football-matches__date {
+            @include rem((
+                padding: $gs-gutter/5,
+                border-top: 1px solid darken($c-neutral8, 4%)
+            ));
+        }
+    }
+
     .table__caption--bottom {
         @include box-sizing(border-box);
         background: $c-neutral8;
@@ -181,12 +200,12 @@
         }
         .football-match__team--home {
             @include rem((
-                padding-right: $gs-gutter*0.75
+                padding-right: $gs-gutter*0.5
             ));
         }
         .football-match__team--away {
             @include rem((
-                padding-left: $gs-gutter*0.75
+                padding-left: $gs-gutter*0.5
             ));
         }
 
