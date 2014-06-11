@@ -406,12 +406,11 @@
 .breadcrumb-list__item {
     color: lighten($c-neutral2, 15%);
     @include fs-data(1);
-
 }
 
 .breadcrumb-list__item + .breadcrumb-list__item {
     .breadcrumb-keyword:before {
-        content: '>> ';
+        content: '› ';
         display: inline-block;
         margin-right: $gs-gutter/5;
     }
