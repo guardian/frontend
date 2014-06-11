@@ -339,7 +339,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
 
 object LiveCollections extends ParseCollection {
   def retrieveItemsFromCollectionJson(collectionJson: JsValue): Seq[CollectionItem] =
-    (collectionJson \ "live").as[Seq[JsObject]] map { trail =>
+    (collectionJson \ "live").asOpt[Seq[JsObject]].getOrElse(Nil).map { trail =>
       CollectionItem(
         (trail \ "id").as[String],
         (trail \ "meta").asOpt[Map[String, JsValue]],
@@ -351,7 +351,7 @@ object LiveCollections extends ParseCollection {
 
 object DraftCollections extends ParseCollection {
   def retrieveItemsFromCollectionJson(collectionJson: JsValue): Seq[CollectionItem] =
-    (collectionJson \ "draft").as[Seq[JsObject]] map { trail =>
+    (collectionJson \ "draft").asOpt[Seq[JsObject]].getOrElse(Nil).map { trail =>
       CollectionItem(
         (trail \ "id").as[String],
         (trail \ "meta").asOpt[Map[String, JsValue]],
