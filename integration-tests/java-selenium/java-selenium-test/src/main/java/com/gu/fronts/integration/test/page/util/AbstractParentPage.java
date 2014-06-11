@@ -13,7 +13,7 @@ import com.gu.fronts.integration.test.page.FooterPage;
 import com.gu.fronts.integration.test.page.HeaderPage;
 
 /**
- * Super class for all page objects
+ * Super class for all page objects. Contains various utilities for loading pages, checking if elements are displayed etc
  */
 public abstract class AbstractParentPage {
 

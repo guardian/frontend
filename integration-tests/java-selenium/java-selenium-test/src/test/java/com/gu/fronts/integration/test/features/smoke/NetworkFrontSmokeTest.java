@@ -14,7 +14,9 @@ import com.gu.fronts.integration.test.page.NetworkFrontPage;
 public class NetworkFrontSmokeTest extends AbstractParentTestClass {
 
     @Test
-    public void networkStartPageShouldLoadProperly() {
+    public void networkStartPageShouldLoadProperly() throws Exception {
+        stubPressedJson();
+
         NetworkFrontPage networkFrontPage = openNetworkFrontPage();
         networkFrontPage.isDisplayed();
         networkFrontPage.footer().isDisplayed();
