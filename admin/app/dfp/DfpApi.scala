@@ -46,7 +46,7 @@ object DfpApi extends Logging {
     DfpApiWrapper.fetchLineItems(session, currentLineItems)
   }
 
-  def fetchCurrentLineItemsWithOutOfPageSlots() = dfpSession.fold(Seq[DfpApiLineItem]()) {session =>
+  private def fetchCurrentLineItemsWithOutOfPageSlots() = dfpSession.fold(Seq[DfpApiLineItem]()) {session =>
     def hasA1x1Pixel(placeholders: Array[CreativePlaceholder]): Boolean = {
       val outOfPagePlaceholder: Array[CreativePlaceholder] = for {
         placeholder <- placeholders
@@ -62,12 +62,32 @@ object DfpApi extends Logging {
     )
   }
 
-  def fetchAdUnitIdsThatAreTargettedByPageSkins() = dfpSession.fold(Seq[String]()) { session =>
+  def fetchAdUnitsThatAreTargettedByPageSkins(): Seq[String] = dfpSession.fold(Seq[String]()) { session =>
     val lineItems: Seq[DfpApiLineItem] = fetchCurrentLineItemsWithOutOfPageSlots()
 
-    lineItems.flatMap{item =>
-      item.getTargeting.getInventoryTargeting.getTargetedAdUnits.toList.map(_.getAdUnitId)
-    }
+    val allAdUnitIds: Seq[String] = lineItems.flatMap { item =>
+      item.getTargeting.getInventoryTargeting.getTargetedAdUnits.toList.map(item => item.getAdUnitId)
+    }.distinct
+
+    val adUnits: Seq[AdUnit] = getAdUnitsForTheseIds(allAdUnitIds)
+
+    // we don't serve pageskins to anything other than fronts.
+    val validAdUnits: Seq[AdUnit] = adUnits.filterNot(_.getName != "front")
+
+    validAdUnits.map(unit => {
+      def removeCustomerIdentifierFromPath(i: AdUnit) = i.getParentPath.tail
+
+      val adUnitPathElements = removeCustomerIdentifierFromPath(unit).map(_.getName) :+ unit.getName
+      adUnitPathElements.mkString(">")
+    })
+  }
+
+  def getAdUnitsForTheseIds(adUnitIds: Seq[String]): Seq[AdUnit] = dfpSession.fold(Seq[AdUnit]()) { session =>
+    val statement: String = "id IN ('" + adUnitIds.mkString("', '") + "')"
+    val adUnitTargetingQuery: StatementBuilder = new StatementBuilder()
+      .where(statement)
+
+    DfpApiWrapper.fetchAdUnitTargetingObject(session, adUnitTargetingQuery)
   }
 
   def fetchCurrentLineItems(): Seq[LineItem] = dfpSession.fold(Seq[LineItem]()) { session =>
