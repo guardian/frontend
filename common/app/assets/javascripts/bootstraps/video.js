@@ -122,7 +122,6 @@ define([
         },
 
         initPlayer: function() {
-            var self = this;
 
             require('bootstraps/video-player', function () {
                 $('video').each(function (el) {
@@ -131,8 +130,6 @@ define([
                         autoplay: false,
                         preload: 'none'
                     });
-
-                    self.initOverlays(el);
 
                     vjs.ready(function () {
                         var player = this;
