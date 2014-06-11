@@ -58,6 +58,10 @@ $vjs-control-colour: rgba(25, 25, 25, .8);
 /* VJS: CONTROL BAR
    ========================================================================== */
 
+.vjs-control-bar * {
+    outline: none; // hide focus outlines on controls
+}
+
 .vjs-control-bar {
     width: 100%;
     position: absolute;
@@ -86,6 +90,13 @@ $vjs-control-colour: rgba(25, 25, 25, .8);
 .vjs-captions-button,
 .vjs-chapters-button {
     display: none;
+}
+
+.vjs-poster {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-size: cover;
 }
 
 .vjs-play-control {
