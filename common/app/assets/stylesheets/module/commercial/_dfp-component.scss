@@ -99,8 +99,8 @@
         }
         .container__title {
             position: static;
-        }        
-    }   
+        }
+    }
 }
 
 .facia-container--layout-front .commercial--dfp {
@@ -132,8 +132,8 @@
             top: auto;
             right: auto;
             left: 0;
+            width: gs-span(2) - map-get($commercial-cta-diameter, tablet);
             @include rem((
-                width: gs-span(2) - 32,
                 line-height: 18px,
                 bottom: $gs-baseline
             ));
