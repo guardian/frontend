@@ -46,7 +46,7 @@ object DfpApi extends Logging {
     DfpApiWrapper.fetchLineItems(session, currentLineItems)
   }
 
-  private def fetchCurrentLineItemsWithOutOfPageSlots() = dfpSession.fold(Seq[DfpApiLineItem]()) {session =>
+  private def onlyWithPageSkins(lineItems: Seq[DfpApiLineItem]) = {
     def hasA1x1Pixel(placeholders: Array[CreativePlaceholder]): Boolean = {
       val outOfPagePlaceholder: Array[CreativePlaceholder] = for {
         placeholder <- placeholders
@@ -56,16 +56,15 @@ object DfpApi extends Logging {
       outOfPagePlaceholder.nonEmpty
     }
 
-    getAllCurrentDfpLineItems().filter(
+    lineItems.filter(
       item => item.getRoadblockingType == RoadblockingType.CREATIVE_SET &&
         hasA1x1Pixel(item.getCreativePlaceholders)
     )
   }
 
-  def fetchAdUnitsThatAreTargettedByPageSkins(): Seq[String] = dfpSession.fold(Seq[String]()) { session =>
-    val lineItems: Seq[DfpApiLineItem] = fetchCurrentLineItemsWithOutOfPageSlots()
+  def fetchAdUnitsThatAreTargettedByPageSkins(lineItems: Seq[DfpApiLineItem]): Seq[String] = dfpSession.fold(Seq[String]()) { session =>
 
-    val allAdUnitIds: Seq[String] = lineItems.flatMap { item =>
+    val allAdUnitIds: Seq[String] = onlyWithPageSkins(lineItems).flatMap { item =>
       item.getTargeting.getInventoryTargeting.getTargetedAdUnits.toList.map(item => item.getAdUnitId)
     }.distinct
 
@@ -90,9 +89,7 @@ object DfpApi extends Logging {
     DfpApiWrapper.fetchAdUnitTargetingObject(session, adUnitTargetingQuery)
   }
 
-  def fetchCurrentLineItems(): Seq[LineItem] = dfpSession.fold(Seq[LineItem]()) { session =>
-    val lineItems = getAllCurrentDfpLineItems()
-
+  def normalise(lineItems: Seq[DfpApiLineItem]): Seq[LineItem] = dfpSession.fold(Seq[LineItem]()) { session =>
     val customTargetingKeys = new StatementBuilder()
       .where("displayName = :keywordTargetName OR displayName = :slotTargetName")
       .withBindVariableValue("keywordTargetName", "Keywords")
