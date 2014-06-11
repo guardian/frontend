@@ -14,7 +14,8 @@
 
                 <div class="gu-video-wrapper">
                     <div class="u-responsive-ratio u-responsive-ratio--hd">
-                        <video controls="controls" class="gu-video" @video.mainPicture.map{ img => poster="@Item620.bestFor(img)" }>
+                        <video controls="controls" class="gu-video" @video.mainPicture.map{ img => poster="@Item620.bestFor(img)" }
+                                data-title="@video.headline" data-duration="@video.duration.toString()">
                         @video.encodings.map{ encoding =>
                             <source src="@encoding.url" type="@encoding.format" />
                         }
