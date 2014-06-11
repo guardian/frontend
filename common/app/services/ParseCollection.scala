@@ -118,45 +118,6 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
     }
   }
 
-  private def parseResponse(response: Future[Response], edition: Edition, id: String): Future[List[Content]] = {
-    response.flatMap { r =>
-      r.status match {
-        case 200 =>
-          try {
-            val bodyJson = parse(r.body)
-
-            // extract the articles
-            val articles: Seq[CollectionItem] = (bodyJson \ "live").as[Seq[JsObject]] map { trail =>
-              CollectionItem(
-                (trail \ "id").as[String],
-                (trail \ "meta").asOpt[Map[String, JsValue]],
-                (trail \ "frontPublicationDate").asOpt[DateTime])
-            }
-
-            getArticles(articles, edition)
-          } catch {
-            case e: Throwable => {
-              log.warn("Could not parse collection JSON for %s".format(id))
-              FaciaMetrics.JsonParsingErrorCount.increment()
-              throw e
-            }
-          }
-        case 403 => {
-          S3AuthorizationError.increment()
-          val errorString: String = s"Request failed to authenticate with S3: $id"
-          log.warn(errorString)
-          Future.failed(throw new Exception(errorString))
-        }
-        case (httpResponseCode: Int) if httpResponseCode >= 500 =>
-          Future.failed(throw new Exception("S3 returned a 5xx"))
-        case _ =>
-          log.warn(s"Could not load running order: ${r.status} ${r.statusText} $id")
-          // NOTE: better way of handling fallback
-          Future.successful(Nil)
-      }
-    }
-  }
-
   def getArticles(collectionItems: Seq[CollectionItem], edition: Edition): Future[List[Content]]
   = getArticles(collectionItems, edition, hasParent=false)
 
