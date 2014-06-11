@@ -128,6 +128,10 @@ define([
             $('.js-live-blog__timeline li:first-child .timeline__title').text('Latest post');
             $('.js-live-blog__timeline li:last-child .timeline__title').text('Opening post');
 
+            if(/mobile/.test(detect.getBreakpoint()) && config.page.keywordIds.indexOf('football/football') > 0) {
+                $('.js-live-blog__key-events .js-dropdown').removeClass('dropdown--active');
+            }
+
             if(/desktop|wide/.test(detect.getBreakpoint()) && config.page.keywordIds.indexOf('football/football') < 0) {
                 var topMarker = qwery('.js-top-marker')[0];
                 affix = new Affix({
