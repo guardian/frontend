@@ -20,17 +20,19 @@ object DfpApiWrapper extends Logging {
   def fetchLineItems(session: DfpSession, statementBuilder: StatementBuilder): Seq[DfpApiLineItem] = {
 
     val service = lineItemService(session)
+    statementBuilder.limit(StatementBuilder.SUGGESTED_PAGE_LIMIT)
 
     def fetch(soFar: Seq[DfpApiLineItem]): Seq[DfpApiLineItem] = {
       val page = service.getLineItemsByStatement(statementBuilder.toStatement)
       val pageResults = Option(page.getResults) map (_.toSeq) getOrElse Nil
       val totalResultSetSize = page.getTotalResultSetSize
+      val resultsSoFar = soFar ++ pageResults
 
-      if (Option(statementBuilder.getOffset) exists (_ > totalResultSetSize)) {
-        soFar
-      } else {
+      if (resultsSoFar.size < totalResultSetSize) {
         statementBuilder.increaseOffsetBy(StatementBuilder.SUGGESTED_PAGE_LIMIT)
-        fetch(soFar ++ pageResults)
+        fetch(resultsSoFar)
+      } else {
+        resultsSoFar
       }
     }
 
@@ -46,17 +48,19 @@ object DfpApiWrapper extends Logging {
   def fetchCustomTargetingKeys(session: DfpSession, statementBuilder: StatementBuilder): Seq[CustomTargetingKey] = {
 
     val service = customTargetingService(session)
+    statementBuilder.limit(StatementBuilder.SUGGESTED_PAGE_LIMIT)
 
     def fetch(soFar: Seq[CustomTargetingKey]): Seq[CustomTargetingKey] = {
       val page = service.getCustomTargetingKeysByStatement(statementBuilder.toStatement)
       val pageResults = Option(page.getResults) map (_.toSeq) getOrElse Nil
       val totalResultSetSize = page.getTotalResultSetSize
+      val resultsSoFar = soFar ++ pageResults
 
-      if (Option(statementBuilder.getOffset) exists (_ > totalResultSetSize)) {
-        soFar
-      } else {
+      if (resultsSoFar.size < totalResultSetSize) {
         statementBuilder.increaseOffsetBy(StatementBuilder.SUGGESTED_PAGE_LIMIT)
-        fetch(soFar ++ pageResults)
+        fetch(resultsSoFar)
+      } else {
+        resultsSoFar
       }
     }
 
@@ -72,17 +76,19 @@ object DfpApiWrapper extends Logging {
   def fetchCustomTargetingValues(session: DfpSession, statementBuilder: StatementBuilder): Seq[CustomTargetingValue] = {
 
     val service = customTargetingService(session)
+    statementBuilder.limit(StatementBuilder.SUGGESTED_PAGE_LIMIT)
 
     def fetch(soFar: Seq[CustomTargetingValue]): Seq[CustomTargetingValue] = {
       val page = service.getCustomTargetingValuesByStatement(statementBuilder.toStatement)
       val pageResults = Option(page.getResults) map (_.toSeq) getOrElse Nil
       val totalResultSetSize = page.getTotalResultSetSize
+      val resultsSoFar = soFar ++ pageResults
 
-      if (Option(statementBuilder.getOffset) exists (_ > totalResultSetSize)) {
-        soFar
-      } else {
+      if (resultsSoFar.size < totalResultSetSize) {
         statementBuilder.increaseOffsetBy(StatementBuilder.SUGGESTED_PAGE_LIMIT)
-        fetch(soFar ++ pageResults)
+        fetch(resultsSoFar)
+      } else {
+        resultsSoFar
       }
     }
 
