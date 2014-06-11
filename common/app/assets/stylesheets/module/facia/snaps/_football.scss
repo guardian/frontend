@@ -31,11 +31,9 @@
     .table__caption--bottom {
         @include box-sizing(border-box);
         background: $c-neutral8;
-        border-left: $gs-gutter/2 solid #ffffff;
-        border-right: $gs-gutter/2 solid #ffffff;
+        border-width: 0px;
         bottom: 0;
         left: 0;
-        position: absolute;
         width: 100%;
         z-index: 2;
 
@@ -166,6 +164,28 @@
 
         .match-info__venue {
             display: none;
+        }
+
+        .football-match__status {
+            @include rem((
+                padding-right: $gs-gutter/5
+            ));
+        }
+        .football-match__team--home {
+            @include rem((
+                padding-right: $gs-gutter*1.25
+            ));
+        }
+        .football-match__team--away {
+            @include rem((
+                padding-left: $gs-gutter*1.25
+            ));
+        }
+
+        .table__caption--bottom {
+            position: absolute;
+            border-left: $gs-gutter/2 solid #ffffff;
+            border-right: $gs-gutter/2 solid #ffffff;
         }
     }
 }

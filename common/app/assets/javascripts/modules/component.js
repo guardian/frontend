@@ -124,7 +124,7 @@ define([
     Component.prototype.fetch = function(parent, key) {
         this.checkAttached();
 
-        this.responseDataKey = key || 'html';
+        this.responseDataKey = key || this.responseDataKey;
         var self = this;
 
         return this._fetch().then(function render(resp) {
@@ -190,6 +190,8 @@ define([
                 if (self.autoupdated) {
                     self.t = setTimeout(update, self.updateEvery*1000);
                 }
+            }, function() {
+                self.t = setTimeout(update, self.updateEvery*1000);
             });
         }
 

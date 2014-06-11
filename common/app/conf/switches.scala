@@ -317,6 +317,11 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 6, 25)
   )
 
+  val ABDisplaySociallyReferredBurners = Switch("A/B Tests", "ab-display-socially-referred-burners",
+    "If this switch is turned on, run the DisplayReferredContent A/B test",
+    safeState = Off, sellByDate = new DateMidnight(2014, 6, 24)
+  )
+
   // Dummy Switches
 
   val IntegrationTestSwitch = Switch("Unwired Test Switch", "integration-test-switch",
@@ -467,6 +472,7 @@ object Switches extends Collections {
     ABHighRelevanceCommercialComponent,
     ABHideSupportingLinks,
     ABAcrossTheGuardian,
+    ABDisplaySociallyReferredBurners,
     SmartBannerSwitch,
     SurveyBannerSwitch,
     FeaturesAutoContainerSwitch,

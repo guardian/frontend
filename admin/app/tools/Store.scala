@@ -2,7 +2,7 @@ package tools
 
 import common.Logging
 import conf.AdminConfiguration
-import conf.Configuration.commercial.dfpDataKey
+import conf.Configuration.commercial.{dfpAdvertisementFeatureKeywordsDataKey, dfpSponsoredKeywordsDataKey}
 import services.S3
 
 trait Store extends Logging {
@@ -21,7 +21,12 @@ trait Store extends Logging {
   def getTopStories = S3.get(topStoriesKey)
   def putTopStories(config: String) { S3.putPublic(topStoriesKey, config, "application/json") }
 
-  def putDfpData(data: String) { S3.putPublic(dfpDataKey, data, "application/json;charset=utf-8") }
+  def putDfpSponsoredKeywords(keywordsJson: String) {
+    S3.putPublic(dfpSponsoredKeywordsDataKey, keywordsJson, "application/json;charset=utf-8")
+  }
+  def putDfpAdvertisementFeatureKeywords(keywordsJson: String) {
+    S3.putPublic(dfpAdvertisementFeatureKeywordsDataKey, keywordsJson, "application/json;charset=utf-8")
+  }
 }
 
 object Store extends Store

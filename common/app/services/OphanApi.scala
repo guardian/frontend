@@ -39,4 +39,6 @@ object OphanApi extends ExecutionContexts with Logging {
   def getMostPopularOnward(path: String, hours: Int, count: Int, isContent: Boolean): Future[JsValue] =
     getBody(s"onward?path=/$path&is-content=true&hours=3&count=10")
 
+  def getMostReferredFromSocialMedia(days: Int): Future[JsValue] = getBody(s"mostread?days=$days&referrer=social%20media")
+
 }

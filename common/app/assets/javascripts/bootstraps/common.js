@@ -17,7 +17,7 @@ define([
     //Modules
     'common/utils/storage',
     'common/utils/detect',
-    'common/modules/onward/popular',
+    'common/modules/onward/most-popular-factory',
     'common/modules/onward/related',
     'common/modules/onward/onward-content',
     'common/modules/ui/images',
@@ -74,7 +74,7 @@ define([
 
     storage,
     detect,
-    popular,
+    MostPopularFactory,
     Related,
     Onward,
     images,
@@ -148,10 +148,8 @@ define([
             r.renderRelatedComponent(config, context);
         },
 
-        transcludePopular: function () {
-            mediator.on('page:common:ready', function(config, context) {
-                popular(config, context);
-            });
+        transcludePopular: function (config) {
+            new MostPopularFactory(config);
         },
 
         transcludeOnwardContent: function(config, context){
@@ -539,6 +537,7 @@ define([
                 modules.loadAnalytics(config, context);
                 modules.cleanupCookies(context);
                 modules.runAbTests(config, context);
+                modules.transcludePopular(config);
                 modules.loadCommercialComponent(config, context);
                 modules.loadAdverts(config);
                 modules.transcludeRelated(config, context);
@@ -560,7 +559,6 @@ define([
             modules.initialiseNavigation(config);
             modules.showToggles();
             modules.showRelativeDates();
-            modules.transcludePopular();
             modules.loadVideoAdverts(config);
             modules.initClickstream();
             modules.transcludeCommentCounts();
