@@ -263,6 +263,7 @@ $comercial-comp-baseline: 10px;
     border-bottom: 1px solid $c-neutral4;
 }
 .lineitem {
+    list-style-type: none;
     @include box-sizing(border-box);
     position: relative;
     padding: 0;
