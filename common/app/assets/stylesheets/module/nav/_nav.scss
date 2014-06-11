@@ -160,7 +160,7 @@
         display: block;
         @include rem((
             margin: 0 ($gs-gutter - 2) 0 0,
-            padding: 5px 0 4px
+            padding: 5px 0 6px
         ));
     }
     .is-active .nav__link {
