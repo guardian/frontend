@@ -146,8 +146,10 @@
 
         .table__caption--bottom {
             position: absolute;
-            border-left: $gs-gutter/2 solid #ffffff;
-            border-right: $gs-gutter/2 solid #ffffff;
+            @include rem((
+                border-left: $gs-gutter/2 solid #ffffff,
+                border-right: $gs-gutter/2 solid #ffffff
+            ));
         }
     }
 
@@ -190,8 +192,10 @@
 
         .table__caption--bottom {
             position: absolute;
-            border-left: $gs-gutter/2 solid #ffffff;
-            border-right: $gs-gutter/2 solid #ffffff;
+            @include rem((
+                border-left: $gs-gutter/2 solid #ffffff,
+                border-right: $gs-gutter/2 solid #ffffff
+            ));
         }
     }
 }
