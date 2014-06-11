@@ -33,9 +33,14 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
   val showFieldsQuery: String = FaciaDefaults.showFields
   val showFieldsWithBodyQuery: String = FaciaDefaults.showFieldsWithBody
 
-  case class CollectionMeta(lastUpdated: Option[String], updatedBy: Option[String], updatedEmail: Option[String])
+  case class CollectionMeta(
+    lastUpdated: Option[String],
+    updatedBy: Option[String],
+    updatedEmail: Option[String],
+    displayName: Option[String],
+    href: Option[String])
   object CollectionMeta {
-    def empty: CollectionMeta = CollectionMeta(None, None, None)
+    def empty: CollectionMeta = CollectionMeta(None, None, None, None, None)
   }
 
   case class CollectionItem(id: String, metaData: Option[Map[String, JsValue]], webPublicationDate: Option[DateTime]) {
@@ -52,28 +57,30 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
     request.withRequestTimeout(2000).get()
   }
 
-  def getDraftCollection(id: String, config: Config, edition: Edition): Future[Collection] = {
-    val curatedItems: Future[List[Content]] =
-      requestCollection(id)
-        .map(responseToJson)
+  def getCollection(id: String, config: Config, edition: Edition): Future[Collection] = {
+    val collectionJson: Future[JsValue] = requestCollection(id)
+      .map(responseToJson)
+
+    val curatedItems: Future[List[Content]] = collectionJson
         .map(retrieveItemsFromCollectionJson)
         .flatMap { items => getArticles(items, edition) }
-
     val executeDraftContentApiQuery: Future[Result] = executeContentApiQuery(config.contentApiQuery, edition)
+    val collectionMetaData: Future[CollectionMeta] = collectionJson.map(getCollectionMeta)
 
     for {
       curatedRequest <- curatedItems
       executeRequest <- executeDraftContentApiQuery
+      collectionMeta <- collectionMetaData
     } yield Collection(
       curated = curatedRequest,
       editorsPicks = executeRequest.editorsPicks,
       mostViewed = executeRequest.mostViewed,
       results = executeRequest.contentApiResults,
-      displayName = None,
-      href = None,
-      lastUpdated = None,
-      updatedBy = None,
-      updatedEmail = None)
+      displayName = collectionMeta.displayName,
+      href = collectionMeta.href,
+      lastUpdated = collectionMeta.lastUpdated,
+      updatedBy = collectionMeta.updatedBy,
+      updatedEmail = collectionMeta.updatedEmail)
   }
 
   def retrieveDraftItemsFromCollectionJson(json: JsValue): Seq[CollectionItem] =
@@ -84,46 +91,14 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
         (trail \ "frontPublicationDate").asOpt[DateTime])
     }
 
-  def getCollection(id: String, config: Config, edition: Edition): Future[Collection] = {
-    // get the running order from the apiwith
-    val response = requestCollection(id)
-    for {
-      collectionList <- parseResponse(response, edition, id)
-      collectionMeta <- getCollectionMeta(response).fallbackTo(Future.successful(CollectionMeta.empty))
-      displayName    <- parseDisplayName(response).fallbackTo(Future.successful(None))
-      href           <- parseHref(response).fallbackTo(Future.successful(None))
-      contentApiList <- executeContentApiQuery(config.contentApiQuery, edition)
-    } yield Collection(
-      collectionList,
-      contentApiList.editorsPicks,
-      contentApiList.mostViewed,
-      contentApiList.contentApiResults,
-      displayName,
-      href,
-      collectionMeta.lastUpdated,
-      collectionMeta.updatedBy,
-      collectionMeta.updatedEmail
+  private def getCollectionMeta(collectionJson: JsValue): CollectionMeta =
+    CollectionMeta(
+        (collectionJson \ "lastUpdated").asOpt[String],
+        (collectionJson \ "updatedBy").asOpt[String],
+        (collectionJson \ "updatedEmail").asOpt[String],
+        (collectionJson \ "displayName").asOpt[String],
+        (collectionJson \ "href").asOpt[String]
     )
-  }
-
-  private def getCollectionMeta(response: Future[Response]): Future[CollectionMeta] = {
-    response.map { r =>
-      val bodyJson = parse(r.body)
-      CollectionMeta(
-          (bodyJson \ "lastUpdated").asOpt[String],
-          (bodyJson \ "updatedBy").asOpt[String],
-          (bodyJson \ "updatedEmail").asOpt[String]
-      )
-    }
-  }
-
-  private def parseDisplayName(response: Future[Response]): Future[Option[String]] = response.map {r =>
-    (parse(r.body) \ "displayName").asOpt[String].filter(_.nonEmpty)
-  }
-
-  private def parseHref(response: Future[Response]): Future[Option[String]] = response.map {r =>
-    (parse(r.body) \ "href").asOpt[String].filter(_.nonEmpty)
-  }
 
   private def responseToJson(response: Response): JsValue = {
     response.status match {
