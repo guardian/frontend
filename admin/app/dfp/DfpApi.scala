@@ -77,7 +77,7 @@ object DfpApi extends Logging {
       def removeCustomerIdentifierFromPath(i: AdUnit) = i.getParentPath.tail
 
       val adUnitPathElements = removeCustomerIdentifierFromPath(unit).map(_.getName) :+ unit.getName
-      adUnitPathElements.mkString(">")
+      adUnitPathElements.mkString("/")
     })
   }
 
