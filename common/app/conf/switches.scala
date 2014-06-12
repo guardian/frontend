@@ -305,6 +305,11 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 8, 10)
   )
 
+  val WorldCupArticleContainerSwitch = Switch("Feature Switches", "worldcup-article-container",
+    "If this switch is turned on world cup articles will have an extra container.",
+    safeState = Off, sellByDate = new DateMidnight(2014, 8, 10)
+  )
+
   // A/B Tests
 
   val ABHighRelevanceCommercialComponent = Switch("A/B Tests", "ab-high-relevance-commercial-component",
@@ -467,6 +472,7 @@ object Switches extends Collections {
     RssLinkSwitch,
     EnhanceTweetsSwitch,
     WorldCupWallchartEmbedSwitch,
+    WorldCupArticleContainerSwitch,
     IndiaRegionSwitch,
     MemcachedSwitch,
     IncludeBuildNumberInMemcachedKey,
