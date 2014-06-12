@@ -6,8 +6,8 @@ import play.api.libs.json.{JsArray, JsValue}
 import java.net.URI
 import scala.concurrent.Future
 import model.Content
-import conf.ContentApi
-import scala.util.{Failure, Success}
+import conf.LiveContentApi
+import scala.util.Failure
 
 object SociallyReferredContentAgent extends Logging with ExecutionContexts {
 
@@ -27,7 +27,7 @@ object SociallyReferredContentAgent extends Logging with ExecutionContexts {
           item: JsValue <- ophanResults.asOpt[JsArray].map(_.value).getOrElse(Nil)
           url <- ( item \ "url").asOpt[String]
         } yield {
-          ContentApi.item(UrlToContentPath(url), Edition.defaultEdition).response.map( _.content.map( Content(_)))
+          LiveContentApi.item(UrlToContentPath(url), Edition.defaultEdition).response.map( _.content.map( Content(_)))
         }
 
         val content: Seq[Content] = Nil
