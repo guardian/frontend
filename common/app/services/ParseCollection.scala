@@ -287,7 +287,7 @@ object LiveCollections extends ParseCollection {
 
 object DraftCollections extends ParseCollection {
   def retrieveItemsFromCollectionJson(collectionJson: JsValue): Seq[CollectionItem] =
-    (collectionJson \ "draft").asOpt[Seq[JsObject]].getOrElse(Nil).map { trail =>
+    (collectionJson \ "draft").asOpt[Seq[JsObject]].orElse((collectionJson \ "live").asOpt[Seq[JsObject]]).getOrElse(Nil).map { trail =>
       CollectionItem(
         (trail \ "id").as[String],
         (trail \ "meta").asOpt[Map[String, JsValue]],
