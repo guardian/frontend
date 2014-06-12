@@ -355,7 +355,7 @@ class Snap(snapId: String,
 class Article(content: ApiContentWithMeta) extends Content(content) {
   lazy val main: String = delegate.safeFields.getOrElse("main","")
   lazy val body: String = delegate.safeFields.getOrElse("body","")
-  lazy val contentType = "Article"
+  override lazy val contentType = "Article"
 
   lazy val hasVideoAtTop: Boolean = Jsoup.parseBodyFragment(body).body().children().headOption
     .exists(e => e.hasClass("gu-video") && e.tagName() == "video")
@@ -415,7 +415,7 @@ class Video(content: ApiContentWithMeta) extends Content(content) {
 
   lazy val duration: Int = videoAssets.headOption.map(_.duration).getOrElse(0)
 
-  lazy val contentType = "Video"
+  override lazy val contentType = "Video"
   lazy val source: Option[String] = videoAssets.headOption.flatMap(_.source)
 
   // I know its not too pretty
@@ -432,6 +432,7 @@ class Video(content: ApiContentWithMeta) extends Content(content) {
 
   override def openGraph: Map[String, Any] = super.openGraph ++ Map(
     "og:type" -> "video",
+    "og:type" -> "video",
     "og:video:type" -> "text/html",
     "og:video:url" -> webUrl,
     "video:tag" -> keywords.map(_.name).mkString(",")
@@ -447,7 +448,7 @@ class Gallery(content: ApiContentWithMeta) extends Content(content) {
   def apply(index: Int): ImageAsset = galleryImages(index).largestImage.get
 
   lazy val size = galleryImages.size
-  lazy val contentType = "Gallery"
+  override lazy val contentType = "Gallery"
   lazy val landscapes = largestCrops.filter(i => i.width > i.height).sortBy(_.index)
   lazy val portraits = largestCrops.filter(i => i.width < i.height).sortBy(_.index)
   lazy val isInPicturesSeries = tags.exists(_.id == "lifeandstyle/series/in-pictures")
@@ -484,7 +485,7 @@ object Gallery {
 }
 
 class Interactive(content: ApiContentWithMeta) extends Content(content) {
-  lazy val contentType = "Interactive"
+  override lazy val contentType = "Interactive"
   lazy val body: Option[String] = delegate.safeFields.get("body")
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
   override lazy val metaData: Map[String, Any] = super.metaData + ("content-type" -> contentType)
@@ -496,7 +497,7 @@ object Interactive {
 
 class ImageContent(content: ApiContentWithMeta) extends Content(content) {
 
-  lazy val contentType = "ImageContent"
+  override lazy val contentType = "ImageContent"
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
   override lazy val metaData: Map[String, Any] = super.metaData + ("content-type" -> contentType)
 
