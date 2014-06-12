@@ -88,7 +88,7 @@ object MostPopularController extends Controller with Logging with ExecutionConte
 
   private def lookup(edition: Edition, path: String)(implicit request: RequestHeader) = {
     log.info(s"Fetching most popular: $path for edition $edition")
-    ContentApi.item(path, edition)
+    LiveContentApi.item(path, edition)
       .tag(None)
       .showMostViewed(true)
       .response.map{response =>
