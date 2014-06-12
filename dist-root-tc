@@ -1,0 +1,25 @@
+#!/bin/bash
+
+set -o xtrace
+set -o nounset
+set -o errexit
+
+./sbt-tc "project root" compile test dist
+
+echo "Disting everything."
+
+# Remove previous Play Assembly "artifacts.zip" file
+rm -rf "everything"
+mkdir "everything"
+
+# Generate folder for the application zip.
+cp "article/target/universal/article.zip" "everything"
+cp "applications/target/universal/applications.zip" "everything"
+
+# And zip up the packet
+cd "everything"
+zip -r "artifacts.zip" .
+
+
+echo "##teamcity[publishArtifacts 'everything/artifacts.zip => .']"
+echo "Done disting."
