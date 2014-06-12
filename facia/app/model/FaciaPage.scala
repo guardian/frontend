@@ -31,11 +31,7 @@ case class FaciaPage(
 
   override def isSponsored = DfpAgent.isSponsored(id)
   override def isAdvertisementFeature = DfpAgent.isAdvertisementFeature(id)
-  override lazy val hasPageSkin = {
-    val skinned: Boolean = DfpAgent.isPageSkinned(adUnitSuffix)
-    skinned
-
-  }
+  override lazy val hasPageSkin = DfpAgent.isPageSkinned(adUnitSuffix)
 }
 
 object FaciaPage {
