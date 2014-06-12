@@ -3,9 +3,8 @@
 */
 define(['common/$',
 'common/utils/ajax',
-'bonzo',
 'common/utils/config',
-'common/modules/component'], function ($, ajax, bonzo, config, Component) {
+'common/modules/component'], function ($, ajax, config, Component) {
 
     function Membership (context, mediator, options) {
 
