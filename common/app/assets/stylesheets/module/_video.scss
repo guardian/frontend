@@ -43,24 +43,14 @@ $vjs-control-colour: rgba(25, 25, 25, .8);
     .gu-video-wrapper:hover & {
         @include icon(play-60-yellow);
     }
-    .vjs-playing & {
+    .vjs-playing &,
+    .vjs-has-started.vjs-using-native-controls & {
         display: none !important;
-    }
-}
-
-.vjs-using-native-controls {
-    .vjs-control-bar,
-    .vjs-big-play-button {
-        display: none;
     }
 }
 
 /* VJS: CONTROL BAR
    ========================================================================== */
-
-.vjs-control-bar * {
-    outline: none; // hide focus outlines on controls
-}
 
 .vjs-control-bar {
     width: 100%;
@@ -79,6 +69,12 @@ $vjs-control-colour: rgba(25, 25, 25, .8);
         bottom: 0;
         @include transition(bottom 0s);
         transition-delay: 0s;
+    }
+    .vjs-using-native-controls & {
+        display: none;
+    }
+    * {
+        outline: none; // hide focus outlines on controls
     }
 }
 
