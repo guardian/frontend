@@ -15,6 +15,10 @@
 		<level value="INFO" />
 	</logger>
 
+	<logger name="com.github.tomakehurst.wiremock">
+		<level value="ERROR" />
+	</logger>
+
 	<!-- Root Logger -->
 	<root>
 		<priority value="INFO" />

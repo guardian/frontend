@@ -1,5 +1,6 @@
 package com.gu.fronts.integration.test.common;
 
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.openqa.selenium.WebDriver;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,13 +23,24 @@ public class FrontsIntegrationTestCase {
     @Autowired
     protected CustomPageFactory pageFactoryHelper;
 
+    protected NetworkFrontPage networkFrontPage;
+
     @BeforeClass
     public static void testClassSetup() {
         EnvironmentConfigurer.setupEnvironmentProperty();
     }
 
+    @Before
+    public void cleanSlate() {
+        webDriver.manage().deleteAllCookies();
+    }
+
     protected NetworkFrontPage openNetworkFrontPage() {
         webDriver.get(frontsBaseUrl);
+        return networkFrontPage();
+    }
+
+    protected NetworkFrontPage networkFrontPage() {
         return pageFactoryHelper.initPage(webDriver, NetworkFrontPage.class);
     }
 }

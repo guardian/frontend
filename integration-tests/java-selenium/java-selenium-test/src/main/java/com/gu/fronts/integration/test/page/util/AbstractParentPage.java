@@ -20,31 +20,31 @@ public abstract class AbstractParentPage {
 
     protected WebDriver webDriver;
 
-    protected CustomPageFactory pageFactoryHelper;
+    protected CustomPageFactory pageFactory;
 
     public AbstractParentPage(WebDriver webDriver) {
         this.webDriver = webDriver;
 
         // page classes are initialized by PageFactory so cant use spring autowiring
-        this.pageFactoryHelper = new CustomPageFactory();
+        this.pageFactory = new CustomPageFactory();
     }
 
     protected <Page> Page loadPage(Class<Page> pageClass) {
-        return pageFactoryHelper.initPage(webDriver, pageClass);
+        return pageFactory.initPage(webDriver, pageClass);
     }
 
     public HeaderPage header() {
         if (this instanceof HeaderPage) {
             throw new RuntimeException("Cannot get header from HeaderPage as it is the header");
         }
-        return pageFactoryHelper.initPage(webDriver, HeaderPage.class);
+        return pageFactory.initPage(webDriver, HeaderPage.class);
     }
 
     public FooterPage footer() {
         if (this instanceof FooterPage) {
             throw new RuntimeException("Cannot get footer from FooterPage as it is the footer");
         }
-        return pageFactoryHelper.initPage(webDriver, FooterPage.class);
+        return pageFactory.initPage(webDriver, FooterPage.class);
     }
 
     /**
