@@ -4,7 +4,8 @@ set -o xtrace
 set -o nounset
 set -o errexit
 
-./sbt-tc "project root" compile test dist
+# Skip test whilst debugging.
+./sbt-tc "project root" compile dist
 
 echo "Disting everything."
 
