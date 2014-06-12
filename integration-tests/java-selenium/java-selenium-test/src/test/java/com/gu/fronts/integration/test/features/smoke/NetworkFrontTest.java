@@ -11,7 +11,7 @@ import com.gu.fronts.integration.test.page.NetworkFrontPage;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = SpringTestConfig.class)
-public class NetworkFrontSmokeTest extends StubbedIntegrationTestCase {
+public class NetworkFrontTest extends StubbedIntegrationTestCase {
 
     @Test
     public void networkStartPageShouldLoadProperly() throws Exception {

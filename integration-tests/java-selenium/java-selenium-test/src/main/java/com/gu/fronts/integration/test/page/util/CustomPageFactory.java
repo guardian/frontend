@@ -6,9 +6,11 @@ import java.lang.reflect.InvocationTargetException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.ElementLocatorFactory;
+import org.springframework.stereotype.Component;
 
 import com.gu.fronts.integration.test.fw.CustomElementLocatorFactory;
 
+@Component
 public class CustomPageFactory {
 
     /**
