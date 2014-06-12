@@ -53,6 +53,7 @@
 @import 'module/onward/_popular';
 @import 'module/_clamp';
 
+
 /* ==========================================================================
    External modules
    ========================================================================== */
@@ -83,7 +84,14 @@
    Facia
    ========================================================================== */
 
-@import 'module/facia/_extends';
+@import 'module/facia/_facia-container';
+@include facia-container--layout-article;
+@include facia-container--layout-discussion;
+@include facia-container--default-heading;
+
+@import 'module/facia/_show-more';
+@import 'module/facia/_pagination';
+
 @import 'module/containers/_features';
 @import 'module/containers/_featuresauto';
 @import 'module/containers/_special';
@@ -95,7 +103,7 @@
 @import 'module/containers/_multimedia';
 @import 'module/containers/_series';
 @import 'module/containers/_acrossthegrauniad';
-@import 'module/facia/_pagination';
+
 @import 'module/facia/snaps/_football';
 
 
@@ -103,7 +111,6 @@
    Experiments
    ========================================================================== */
 
-@import 'module/experiments/_layout-hints';
 @import 'module/experiments/_affix';
 
 /* ==========================================================================
@@ -120,3 +127,10 @@
    ========================================================================== */
 
 @import 'theme/_tones-global';
+
+
+/* ==========================================================================
+   Misc
+   ========================================================================== */
+
+@import 'module/_release-message';

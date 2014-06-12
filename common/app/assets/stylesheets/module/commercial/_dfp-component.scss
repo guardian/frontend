@@ -1,0 +1,159 @@
+/* ==========================================================================
+   DFP bespoke component
+   ========================================================================== */
+   
+.commercial--dfp {
+    .commercial__head {
+        height: auto;
+        border: 0;
+        padding-top: 0;
+        @include rem((
+            margin-top: $gs-baseline
+        ));
+    }
+    .commercial__title {
+        float: none;
+        margin-bottom: 0;
+        text-transform: lowercase;
+        color: $c-brandBlue;
+        line-height: 1;
+    }
+    .commercial__explainer {
+        color: $c-neutral1;
+        @include fs-headline(1);
+        @include rem((
+            margin: $gs-baseline 0 0
+        ));
+    }
+    .commercial__body {
+        padding: 0;
+    }
+    .lineitems {
+        @include rem((
+            margin: 0 (-$gs-gutter/2)
+        ));
+    }
+    .lineitem {
+        width: 50%;
+        float: left;
+        @include rem((
+            padding: 0 $gs-gutter/2
+        ));
+        
+        &:nth-child(n+3) {
+            display: none;
+        }
+    }
+    .lineitem__image {
+        width: 100%;
+    }
+    .lineitem__link {
+        float: none;
+    }
+    .commercial--generic__item__description {
+        @include rem((
+            margin-bottom: $gs-baseline
+        ));
+    }
+    @include mq(tablet) {
+        .lineitem {
+            width: 33%;
+            
+            &:nth-child(3) {
+                display: block;
+            }
+        }
+        .commercial__home-link {
+            position: absolute;
+            right: 0;
+            top: 0;
+        }
+    }
+    @include mq(rightCol) {
+        .lineitem {
+            width: 25%;
+            
+            &:nth-child(4) {
+                display: block;
+            }
+        }        
+    }
+}
+
+.facia-container--layout-article .commercial--dfp {
+    @include mq(leftCol) {
+        .commercial__body {
+            @include rem((
+                padding-top: $gs-baseline
+            ));
+        }
+        .commercial__home-link {
+            top: auto;
+            right: auto;
+            @include rem((
+                left: $gs-gutter,
+                width: gs-span(2) - $gs-gutter,
+                line-height: 18px,
+                bottom: $gs-baseline
+            ));
+        }
+        .container__title {
+            position: static;
+        }
+    }
+}
+
+.facia-container--layout-front .commercial--dfp {
+    @include mq(desktop) {
+        .commercial__head {
+            width: auto;
+        }
+        .commercial__body {
+            padding-left: 0;
+        }
+    }
+    @include mq(leftCol) {
+        .container__title {
+            padding: 0;
+        }
+    }
+    @include mq(faciaLeftCol) {
+        .commercial__head {
+            @include rem((
+               width: gs-span(2) + $gs-gutter
+            ));
+        }
+        .commercial__body {
+            @include rem((
+                padding-top: $gs-baseline
+            ));
+        }
+        .commercial__home-link {
+            top: auto;
+            right: auto;
+            left: 0;
+            width: gs-span(2) - map-get($commercial-cta-diameter, tablet);
+            @include rem((
+                line-height: 18px,
+                bottom: $gs-baseline
+            ));
+        }
+        .container__title {
+            position: static;
+        }
+        .facia-container__inner {
+            position: relative;
+        }
+    }
+}
+
+.facia-container--layout-article .commercial--dfp,
+.facia-container--layout-front .commercial--dfp {
+    @include mq(wide) {
+        .commercial__home-link {
+            @include rem((
+                width: gs-span(3)
+            ));
+        }
+    }    
+}

@@ -61,11 +61,11 @@
    Facia
    ========================================================================== */
 
-@import 'module/facia/_extends';
 @import 'module/facia/_items';
 @import 'module/facia/_row-pattern';
-@import 'module/facia/_facia-container';
 @import 'module/facia/_linkslist';
+@import 'module/facia/_facia-container';
+@include facia-container-head-common;
 
 
 /* ==========================================================================
@@ -88,10 +88,3 @@
    ========================================================================== */
 
 @import 'theme/_global-icons-sprite';
-
-
-/* ==========================================================================
-   Misc
-   ========================================================================== */
-
-@import 'module/_release-message';

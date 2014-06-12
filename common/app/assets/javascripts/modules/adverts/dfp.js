@@ -11,10 +11,12 @@ define([
     'common/modules/analytics/commercial/tags/common/audience-science-gateway',
     'common/modules/analytics/commercial/tags/common/criteo',
     'common/modules/adverts/query-string',
+    'common/modules/adverts/userAdTargeting',
     'lodash/arrays/flatten',
     'lodash/arrays/uniq',
     'lodash/functions/once',
     'lodash/objects/defaults',
+    'lodash/objects/isArray',
     'lodash/objects/pairs',
     'common/utils/template'
 ], function (
@@ -29,10 +31,12 @@ define([
     audienceScienceGateway,
     criteo,
     queryString,
+    userAdTargeting,
     flatten,
     uniq,
     once,
     defaults,
+    isArray,
     pairs,
     template
 ) {
@@ -254,7 +258,8 @@ define([
                 p       : 'ng',
                 bp      : detect.getBreakpoint(),
                 a       : audienceScience.getSegments(),
-                at      : cookies.get('adtest') || ''
+                at      : cookies.get('adtest') || '',
+                gdncrm  : userAdTargeting.getUserSegments()
             }, audienceScienceGateway.getSegments(), criteo.getSegments());
         },
         buildAdUnit = function (config) {
@@ -269,7 +274,7 @@ define([
             }
             return '/' + config.page.dfpAccountId + '/' + config.page.dfpAdUnitRoot + '/' + adUnitSuffix;
         },
-        createAdSlot = function(name, type, keywords) {
+        createAdSlot = function(name, types, keywords) {
             var definition = adSlotDefinitions[name],
                 dataAttrs = {
                     refresh: definition.refresh !== undefined ? definition.refresh : true,
@@ -277,13 +282,13 @@ define([
                 },
                 $adSlot = $.create(template(
                     '<div id="dfp-ad--{{name}}" ' +
-                        'class="ad-slot ad-slot--dfp ad-slot--{{type}}" ' +
+                        'class="ad-slot ad-slot--dfp ad-slot--{{name}} {{types}}" ' +
                         'data-link-name="ad slot {{name}}" ' +
                         'data-name="{{name}}"' +
                         '{{sizeMappings}}></div>',
                     {
                         name: name,
-                        type: type,
+                        types: (isArray(types) ? types : [types]).map(function(type) { return 'ad-slot--' + type; }).join(' '),
                         sizeMappings: pairs(definition.sizeMappings).map(function(size) { return ' data-' + size[0] + '="' + size[1] + '"'; }).join('')
                     }));
             for (var attrName in dataAttrs) {

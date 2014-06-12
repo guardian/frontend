@@ -9,7 +9,7 @@
     role="main">
 
     @if(index.page.hasPageSkin) {
-        @fragments.commercial.adSlot(name="pageskin", adType="page-skin", sizeMapping=Map("wide" -> Seq("1300,1200")), showLabel=false, refresh=false)
+        @fragments.commercial.pageSkin()
     }
 
     @fragments.containers.tag(index.page, Collection(index.trails), NewsContainer(showMore = false), containerIndex = 0, pagination = index.page.pagination)(request, templateDeduping, Config(s"${index.page.id}/news/regular-stories", displayName = Some(index.page.webTitle)))
@@ -18,5 +18,7 @@
         @fragments.footballNav(index.page)
     </section>
 
-    @fragments.commercial.adSlot(name="merchandising", adType="commercial-component", sizeMapping=Map("mobile" -> Seq("888,88")), showLabel=false, refresh=false)
+    @if(!index.page.hasPageSkin) {
+        @fragments.commercial.commercialComponent("merchandising", Seq("commercial-component"))
+    }
 </div>

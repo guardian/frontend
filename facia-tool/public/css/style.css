@@ -67,6 +67,7 @@ a:hover {
     line-height: 30px;
     color: #000;
     font-weight: normal;
+    text-transform: capitalize;
 }
 
 .message {
@@ -93,6 +94,17 @@ a:hover {
 .login-form {
     float: left;
     margin: 13px 10px 0 0;
+}
+
+.front-priorities {
+    clear: both;
+    padding: 20px 0 0 20px;
+}
+
+.front-priorities--priority {
+    display: block;
+    font-size: 20px;
+    padding: 10px 0 0 0;
 }
 
 .left-col {

@@ -11,7 +11,7 @@ define([
     'utils/find-first-by-id'
 ], function(
     ko,
-    config,
+    pageConfig,
     vars,
     contentApi,
     Group,
@@ -45,6 +45,10 @@ define([
             'isOpen',
             'isOpenProps']);
 
+        this.state.withinPriority = ko.computed(function() {
+            return this.props.priority() === vars.priority || this.state.isOpenProps(); // last clause allows priority change
+        }, this);
+
         this.collections = new Group({
             parent: self,
             parentType: 'Front',
@@ -72,7 +76,7 @@ define([
 
         this.placeholders.navSection = ko.computed(function() {
             var path = asPath(this.id()),
-                isEditionalised = [].concat(config.editions).some(function(edition) { return edition === path[0]; });
+                isEditionalised = [].concat(pageConfig.editions).some(function(edition) { return edition === path[0]; });
 
             return this.capiProps.section() || (isEditionalised ? path.length === 1 ? undefined : path[1] : path[0]);
         }, this);

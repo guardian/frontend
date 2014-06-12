@@ -82,8 +82,10 @@
    ========================================================================== */
 
 .gallery-launch-cta {
-    @extend %type-7;
-    line-height: 16px;
+    @include fs-bodyCopy(1);
+    @include rem((
+        line-height: 16px
+    ));
     background-color: #ffffff;
     color: $c-neutral1 !important;
     position: absolute;

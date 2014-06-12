@@ -71,6 +71,9 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   lazy val cricketMatch: Option[String] = delegate.references.find(_.`type` == "esa-cricket-match")
     .map(_.id).map(Reference(_)).map(_._2)
 
+  lazy val isbn: Option[String] = delegate.references.find(_.`type` == "isbn")
+    .map(_.id).map(Reference(_)).map(_._2)
+
   lazy val seriesMeta = {
     series.headOption.map( series =>
       Seq(("series", series.name), ("series-id", series.id))
@@ -368,13 +371,17 @@ class Article(content: ApiContentWithMeta) extends Content(content) {
     .orElse(mainPicture).orElse(videos.headOption)
 
   lazy val linkCounts = LinkTo.countLinks(body) + standfirst.map(LinkTo.countLinks).getOrElse(LinkCounts.None)
-  override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
-    ("content-type", contentType),
-    ("isLiveBlog", isLiveBlog),
-    ("inBodyInternalLinkCount", linkCounts.internal),
-    ("inBodyExternalLinkCount", linkCounts.external),
-    ("shouldHideAdverts", shouldHideAdverts)
-  )
+  override lazy val metaData: Map[String, Any] = {
+    val bookReviewIsbns = isbn.map { i: String => Map("isbn" -> i)}.getOrElse(Map())
+
+    super.metaData ++ Map(
+      ("content-type", contentType),
+      ("isLiveBlog", isLiveBlog),
+      ("inBodyInternalLinkCount", linkCounts.internal),
+      ("inBodyExternalLinkCount", linkCounts.external),
+      ("shouldHideAdverts", shouldHideAdverts)
+    ) ++ bookReviewIsbns
+  }
 
   override def openGraph: Map[String, Any] = super.openGraph ++ Map(
     ("og:type", "article"),

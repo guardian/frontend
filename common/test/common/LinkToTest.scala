@@ -6,7 +6,7 @@ import play.api.Play
 import common.editions.Uk
 import test.TestRequest
 
-class LinkToTest extends FlatSpec with Matchers {
+class LinkToTest extends FlatSpec with Matchers with implicits.FakeRequests {
 
   Play.unsafeApplication
 
@@ -49,6 +49,10 @@ class LinkToTest extends FlatSpec with Matchers {
     TestLinkTo("/football/rss", edition) should be ("http://www.foo.com/football/rss")
   }
 
+  object TestCanonicalLink extends CanonicalLink {
+    override lazy val scheme = "http"
+  }
+
   "CanonicalLink" should "be the gatekeeper for significant parameters" in {
     /*
 
@@ -69,27 +73,27 @@ class LinkToTest extends FlatSpec with Matchers {
 
     */
 
-    CanonicalLink.significantParams should be (Seq("index", "page"))
+    TestCanonicalLink.significantParams should be (Seq("index", "page"))
 
   }
 
   it should "create a simple canonical url" in {
-    CanonicalLink(TestRequest("/foo")) should be ("/foo")
+    TestCanonicalLink(TestRequest("/foo").withHost("www.somewhere.com")) should be ("http://www.somewhere.com/foo")
   }
 
   it should "ignore insignificant params" in {
-    CanonicalLink(TestRequest("/foo?view=mobile")) should be ("/foo")
+    TestCanonicalLink(TestRequest("/foo?view=mobile").withHost("www.somewhere.com")) should be ("http://www.somewhere.com/foo")
   }
 
   it should "include significant params" in {
-    CanonicalLink(TestRequest("/foo?page=3")) should be ("/foo?page=3")
-    CanonicalLink(TestRequest("/foo?index=2")) should be ("/foo?index=2")
-    CanonicalLink(TestRequest("/foo?page=3&index=1")) should be ("/foo?index=1&page=3")
-    CanonicalLink(TestRequest("/foo?page=3&random=55&index=1")) should be ("/foo?index=1&page=3")
+    TestCanonicalLink(TestRequest("/foo?page=3").withHost("www.somewhere.com")) should be ("http://www.somewhere.com/foo?page=3")
+    TestCanonicalLink(TestRequest("/foo?index=2").withHost("www.somewhere.com")) should be ("http://www.somewhere.com/foo?index=2")
+    TestCanonicalLink(TestRequest("/foo?page=3&index=1").withHost("www.somewhere.com")) should be ("http://www.somewhere.com/foo?index=1&page=3")
+    TestCanonicalLink(TestRequest("/foo?page=3&random=55&index=1").withHost("www.somewhere.com")) should be ("http://www.somewhere.com/foo?index=1&page=3")
   }
 
   it should "escape params" in {
-    CanonicalLink(TestRequest("/foo?page=http://www.theguardian.com")) should be ("/foo?page=http%3A%2F%2Fwww.theguardian.com")
+    TestCanonicalLink(TestRequest("/foo?page=http://www.theguardian.com").withHost("www.somewhere.com")) should be ("http://www.somewhere.com/foo?page=http%3A%2F%2Fwww.theguardian.com")
   }
 
 }
