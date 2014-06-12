@@ -64,7 +64,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
   object contentApi {
     val defaultContentApi: String = "http://content.guardianapis.com"
-    lazy val contentApiLiveHost: String = configuration.getStringProperty("content.api.live.host").getOrElse(defaultContentApi)
+    lazy val contentApiLiveHost: String = configuration.getStringProperty("content.api.elastic.host").getOrElse(defaultContentApi)
     lazy val contentApiDraftHost: String = configuration.getStringProperty("content.api.draft.host").getOrElse(contentApiLiveHost)
 
     lazy val key: Option[String] = configuration.getStringProperty("content.api.key")
