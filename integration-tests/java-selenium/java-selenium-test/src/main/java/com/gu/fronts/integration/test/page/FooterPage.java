@@ -28,7 +28,7 @@ public class FooterPage extends AbstractParentPage {
 
     public NetworkFrontPage clickLogo() {
         logo.click();
-        return pageFactoryHelper.loadPage(NetworkFrontPage.class, webDriver);
+        return pageFactoryHelper.loadPage(webDriver, NetworkFrontPage.class);
     }
 
 }

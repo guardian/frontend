@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 
 import com.gu.fronts.integration.test.config.EnvironmentConfigurer;
 import com.gu.fronts.integration.test.page.NetworkFrontPage;
-import com.gu.fronts.integration.test.page.util.PageFactoryHelper;
+import com.gu.fronts.integration.test.page.util.CustomPageFactory;
 
 /**
  * This is the super class of all integration test classes. It contains convenience method to get the start (network
@@ -20,7 +20,7 @@ public class FrontsIntegrationTestCase {
     @Value("${fronts.base.url}")
     private String frontsBaseUrl;
     @Autowired
-    protected PageFactoryHelper pageFactoryHelper;
+    protected CustomPageFactory pageFactoryHelper;
 
     @BeforeClass
     public static void testClassSetup() {
@@ -29,6 +29,6 @@ public class FrontsIntegrationTestCase {
 
     protected NetworkFrontPage openNetworkFrontPage() {
         webDriver.get(frontsBaseUrl);
-        return pageFactoryHelper.loadPage(NetworkFrontPage.class, webDriver);
+        return pageFactoryHelper.loadPage(webDriver, NetworkFrontPage.class);
     }
 }

@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 
 import com.gu.fronts.integration.test.config.EnvironmentConfigurer;
 import com.gu.fronts.integration.test.page.NetworkFrontPage;
-import com.gu.fronts.integration.test.page.util.PageFactoryHelper;
+import com.gu.fronts.integration.test.page.util.CustomPageFactory;
 
 public class AbstractParentTestClass {
 
@@ -17,7 +17,7 @@ public class AbstractParentTestClass {
     @Value("${fronts.base.url}")
     private String frontsBaseUrl;
     @Autowired
-    protected PageFactoryHelper pageFactoryHelper;
+    protected CustomPageFactory pageFactoryHelper;
 
     @BeforeClass
     public static void testClassSetup() {
@@ -31,6 +31,6 @@ public class AbstractParentTestClass {
 
     protected NetworkFrontPage openNetworkFrontPage() {
         webDriver.get(frontsBaseUrl);
-        return pageFactoryHelper.loadPage(NetworkFrontPage.class, webDriver);
+        return pageFactoryHelper.loadPage(webDriver, NetworkFrontPage.class);
     }
 }

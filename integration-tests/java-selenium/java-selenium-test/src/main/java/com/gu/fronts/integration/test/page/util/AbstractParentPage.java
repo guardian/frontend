@@ -13,37 +13,38 @@ import com.gu.fronts.integration.test.page.FooterPage;
 import com.gu.fronts.integration.test.page.HeaderPage;
 
 /**
- * Super class for all page objects. Contains various utilities for loading pages, checking if elements are displayed etc
+ * Super class for all page objects. Contains various utilities for loading pages, checking if elements are displayed
+ * etc
  */
 public abstract class AbstractParentPage {
 
     protected WebDriver webDriver;
 
-    protected PageFactoryHelper pageFactoryHelper;
+    protected CustomPageFactory pageFactoryHelper;
 
     public AbstractParentPage(WebDriver webDriver) {
         this.webDriver = webDriver;
 
         // page classes are initialized by PageFactory so cant use spring autowiring
-        this.pageFactoryHelper = new PageFactoryHelper();
+        this.pageFactoryHelper = new CustomPageFactory();
     }
 
     protected <Page> Page loadPage(Class<Page> pageClass) {
-        return pageFactoryHelper.loadPage(pageClass, webDriver);
+        return pageFactoryHelper.loadPage(webDriver, pageClass);
     }
 
     public HeaderPage header() {
         if (this instanceof HeaderPage) {
             throw new RuntimeException("Cannot get header from HeaderPage as it is the header");
         }
-        return pageFactoryHelper.loadPage(HeaderPage.class, webDriver);
+        return pageFactoryHelper.loadPage(webDriver, HeaderPage.class);
     }
 
     public FooterPage footer() {
         if (this instanceof FooterPage) {
             throw new RuntimeException("Cannot get footer from FooterPage as it is the footer");
         }
-        return pageFactoryHelper.loadPage(FooterPage.class, webDriver);
+        return pageFactoryHelper.loadPage(webDriver, FooterPage.class);
     }
 
     /**
