@@ -30,21 +30,21 @@ public abstract class AbstractParentPage {
     }
 
     protected <Page> Page loadPage(Class<Page> pageClass) {
-        return pageFactoryHelper.loadPage(webDriver, pageClass);
+        return pageFactoryHelper.initPage(webDriver, pageClass);
     }
 
     public HeaderPage header() {
         if (this instanceof HeaderPage) {
             throw new RuntimeException("Cannot get header from HeaderPage as it is the header");
         }
-        return pageFactoryHelper.loadPage(webDriver, HeaderPage.class);
+        return pageFactoryHelper.initPage(webDriver, HeaderPage.class);
     }
 
     public FooterPage footer() {
         if (this instanceof FooterPage) {
             throw new RuntimeException("Cannot get footer from FooterPage as it is the footer");
         }
-        return pageFactoryHelper.loadPage(webDriver, FooterPage.class);
+        return pageFactoryHelper.initPage(webDriver, FooterPage.class);
     }
 
     /**

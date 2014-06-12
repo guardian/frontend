@@ -44,17 +44,17 @@ public class HeaderPage extends AbstractParentPage {
 
     public NetworkFrontPage selectUSEdition() {
         editionUS.click();
-        return pageFactoryHelper.loadPage(webDriver, NetworkFrontPage.class);
+        return pageFactoryHelper.initPage(webDriver, NetworkFrontPage.class);
     }
 
     public NetworkFrontPage selectUKEdition() {
         editionUK.click();
-        return pageFactoryHelper.loadPage(webDriver, NetworkFrontPage.class);
+        return pageFactoryHelper.initPage(webDriver, NetworkFrontPage.class);
     }
 
     public NetworkFrontPage selectAUEdition() {
         editionAU.click();
-        return pageFactoryHelper.loadPage(webDriver, NetworkFrontPage.class);
+        return pageFactoryHelper.initPage(webDriver, NetworkFrontPage.class);
     }
 
     public HeaderPage usEditionSelected() {

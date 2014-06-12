@@ -15,7 +15,7 @@ public class CustomPageFactory {
      * Wraps {@link PageFactory#initElements(ElementLocatorFactory, Object)} and provides a custom
      * {@link ElementLocatorFactory}
      */
-    public <Page> Page loadPage(WebDriver webDriver, Class<Page> pageClass) {
+    public <Page> Page initPage(WebDriver webDriver, Class<Page> pageClass) {
         Page page = instantiatePage(webDriver, pageClass);
         PageFactory.initElements(new CustomElementLocatorFactory(webDriver), page);
         return page;

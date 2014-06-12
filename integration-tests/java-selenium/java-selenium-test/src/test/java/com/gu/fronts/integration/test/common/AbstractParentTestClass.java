@@ -31,6 +31,6 @@ public class AbstractParentTestClass {
 
     protected NetworkFrontPage openNetworkFrontPage() {
         webDriver.get(frontsBaseUrl);
-        return pageFactoryHelper.loadPage(webDriver, NetworkFrontPage.class);
+        return pageFactoryHelper.initPage(webDriver, NetworkFrontPage.class);
     }
 }
