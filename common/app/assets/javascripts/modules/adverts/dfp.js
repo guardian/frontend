@@ -263,15 +263,8 @@ define([
             }, audienceScienceGateway.getSegments(), criteo.getSegments());
         },
         buildAdUnit = function (config) {
-            var isFront      = config.page.isFront || config.page.contentType === 'Section',
-                section      = config.page.section,
-                adUnitSuffix = section;
-            if (isFront) {
-                if (section !== '') {
-                    adUnitSuffix += '/';
-                }
-                adUnitSuffix += 'front';
-            }
+            var adUnitSuffix      = config.page.adUnitSuffix
+
             return '/' + config.page.dfpAccountId + '/' + config.page.dfpAdUnitRoot + '/' + adUnitSuffix;
         },
         createAdSlot = function(name, types, keywords) {

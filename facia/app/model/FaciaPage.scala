@@ -15,16 +15,19 @@ case class FaciaPage(
   override lazy val webTitle: String = seoData.webTitle
   override lazy val title: Option[String] = seoData.title
 
-  override lazy val metaData: Map[String, Any] = super.metaData ++ faciaPageMetaData
+  override lazy val isFront = true
 
+  override lazy val metaData: Map[String, Any] = super.metaData ++ faciaPageMetaData
   lazy val faciaPageMetaData: Map[String, Any] = newMetaData
+
   lazy val newMetaData: Map[String, Any] = Map(
     "keywords" -> webTitle.capitalize,
-    "content-type" -> contentType,
-    "is-front" -> true
+    "content-type" -> contentType
   )
 
-  lazy val contentType: String = if (Edition.all.exists(edition => id.toLowerCase.endsWith(edition.id.toLowerCase))) "Network Front" else "Section"
+  val isNetworkFront: Boolean = Edition.all.exists(edition => id.toLowerCase.endsWith(edition.id.toLowerCase))
+
+  override lazy val contentType: String =   if (isNetworkFront) "Network Front" else "Section"
 
   override def isSponsored = DfpAgent.isSponsored(id)
   override def isAdvertisementFeature = DfpAgent.isAdvertisementFeature(id)
