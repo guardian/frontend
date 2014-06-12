@@ -1280,13 +1280,16 @@ $avatarSize: 44px;
     color: $c-neutral2;
     text-align: center;
     cursor: pointer;
+    @include fs-textsans(2);
     @include rem((
         margin-left: $gs-gutter / 5,
-        padding: 0 5px 2px 5px,
-        min-width: 11px
+        padding: 2px 5px 0px 5px,
+        min-width: 11px,
+        line-height: 17px
     ));
-    @include fs-textsans(2);
-    &:hover { border-color: $c-brandBlue; }
+    &:hover {
+        border-color: $c-brandBlue;
+    }
 }
 
 .content__repositioned-comments .content__main-column {
