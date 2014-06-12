@@ -84,5 +84,11 @@
         <span class="football-matches__date">@date.toString("E d MMMM")</span>
     </caption>
     @if(linkToCompetition && link == None){<caption class="table__caption table__caption--bottom"><a href="@competition.url@if(matchType!=""){/@matchType}" data-link-name="view @competition.fullName matches" class="full-table-link">Show more <span class="competition-name">@competition.fullName</span> @matchType</a></caption>}
-    @link.map{ case (text, href) => <caption class="table__caption table__caption--bottom"><a href="@href" data-link-name="view matches" class="full-table-link">@text</a></caption>}
+    @link.map{ case (text, href) =>
+        @defining(if (Switches.WorldCupWallchartEmbedSwitch.isSwitchedOn)
+          "/football/ng-interactive/2014/may/23/-sp-world-cup-2014-brazil-results-fixtures-live-scores-tables-schedule"
+        else href){ matchesHref =>
+            <caption class="table__caption table__caption--bottom"><a href="@matchesHref" data-link-name="view matches" class="full-table-link">@text</a></caption>
+        }
+    }
 </table>
