@@ -30,6 +30,8 @@ trait MetaData extends Tags {
 
   lazy val adUnitSuffix = if (isFront) section + "/front" else section
 
+  lazy val hasPageSkin = false
+
   def metaData: Map[String, Any] = Map(
     ("page-id", id),
     ("section", section),
@@ -168,8 +170,6 @@ trait Tags {
 
   def isSponsored = DfpAgent.isSponsored(keywords)
   def isAdvertisementFeature = DfpAgent.isAdvertisementFeature(keywords)
-  // TODO: hook up to dfp and remove switch
-  def hasPageSkin: Boolean = ForcePageSkinSwitch.isSwitchedOn
 
   // Tones are all considered to be 'News' it is the default so we do not list news tones explicitly
   lazy val visualTone: String =

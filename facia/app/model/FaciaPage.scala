@@ -6,7 +6,7 @@ import dfp.DfpAgent
 case class FaciaPage(
                       id: String,
                       seoData: SeoData,
-                      collections: List[(Config, Collection)]) extends MetaData {
+                      collections: List[(Config, Collection)]) extends MetaData  {
 
   override lazy val description: Option[String] = seoData.description
   override lazy val section: String = seoData.navSection
@@ -31,7 +31,11 @@ case class FaciaPage(
 
   override def isSponsored = DfpAgent.isSponsored(id)
   override def isAdvertisementFeature = DfpAgent.isAdvertisementFeature(id)
-  lazy val isPageSkinned = DfpAgent.isPageSkinned(adUnitSuffix)
+  override lazy val hasPageSkin = {
+    val skinned: Boolean = DfpAgent.isPageSkinned(adUnitSuffix)
+    skinned
+
+  }
 }
 
 object FaciaPage {
