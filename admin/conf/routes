@@ -29,6 +29,7 @@ GET         /json/proxy/*absUrl           controllers.admin.Api.json(absUrl)
 # Ophan proxying for https
 GET         /ophan/pageviews/*path        controllers.admin.OphanApiController.pageViews(path)
 GET         /ophan/pageviews              controllers.admin.OphanApiController.platformPageViews()
+GET         /ophan/ads/render-time        controllers.admin.OphanApiController.adsRenderTime()
 
 #Development endpoints
 GET         /dev/switchboard              controllers.admin.SwitchboardController.renderSwitchboard()
