@@ -215,6 +215,11 @@ object Switches extends Collections {
     safeState = Off, never
   )
 
+  val FreshnessLoggingSwitch = Switch("Diagnostics", "freshness",
+    "If this switch is on, page freshness will be logged.",
+    safeState = On, new DateMidnight(2014, 6, 30)
+  )
+
   val ScrollDepthSwitch = Switch("Analytics", "scroll-depth",
     "Enables tracking and measurement of scroll depth",
     safeState = Off, never
@@ -399,14 +404,12 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 6, 15)
   )
 
-  // Image Switch
-
   val ImageServerSwitch = Switch("Image Server", "image-server",
     "If this switch is on images will be served off i.guim.co.uk (dynamic image host).",
     safeState = On, sellByDate = never // this is a performance related switch, not a feature switch
   )
 
-  val ParameterlessImagesSwitch = Switch("Parameterless Images Server", "parameterless-images",
+  val ParameterlessImagesSwitch = Switch("Image Server", "parameterless-images",
     "If this switch is on images then image resize fields (width, height, quality) will be in the url and not in parameters.",
     safeState = Off, sellByDate = new DateMidnight(2014, 7, 31)
   )
@@ -477,7 +480,8 @@ object Switches extends Collections {
     SurveyBannerSwitch,
     FeaturesAutoContainerSwitch,
     ForcePageSkinSwitch,
-    ParameterlessImagesSwitch
+    ParameterlessImagesSwitch,
+    FreshnessLoggingSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }

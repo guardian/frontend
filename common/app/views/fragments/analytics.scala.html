@@ -1,5 +1,7 @@
 @(page: model.MetaData)( implicit request:RequestHeader)
+@import org.joda.time.DateTime
 @import conf.Configuration
+@import conf.Switches.FreshnessLoggingSwitch
 
 @*<!-- TODO temporary till after dotcom switch -->*@
 @defining(
@@ -61,6 +63,18 @@
 }
 
 @* there is currently no SSL version of the beacon *@
-@if(!Configuration.environment.secure){
-    <img src="@Configuration.debug.beaconUrl/count/pv.gif" alt="" style="display: none;" rel="nofollow"/>
+@if(!Configuration.environment.secure) {
+    <img src="@Configuration.debug.beaconUrl/count/pv.gif" alt="" style="display : none ;" rel="nofollow"/>
+
+    @if(FreshnessLoggingSwitch.isSwitchedOn) {
+        @defining(DateTime.now) { now =>
+
+            @if(Edition.isEditionFront(request)) {
+                <img src="@Configuration.debug.beaconUrl/freshness/front/@{now.getMillis}" alt="" style="display : none ;" rel="nofollow"/>
+            } else {
+                <img src="@Configuration.debug.beaconUrl/freshness/@{now.getMillis}" alt="" style="display : none ;" rel="nofollow"/>
+            }
+            <!-- @now.toString() -->
+        }
+    }
 }
