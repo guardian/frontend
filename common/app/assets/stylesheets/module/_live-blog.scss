@@ -17,6 +17,9 @@ $block-padding-right: $gs-gutter;
         right: 0;
         top: 0;
     }
+    @include mq(mobileLandscape, desktop) {
+        top: $gs-baseline/3;
+    }
     .commentcount {
         display: block;
         position: static;
@@ -70,7 +73,6 @@ $block-padding-right: $gs-gutter;
     }
 
     @include mq(rightCol) {
-        padding-bottom: 0;
         @include rem((
             min-height: gs-height(1)*1.5
         ));
@@ -83,6 +85,9 @@ $block-padding-right: $gs-gutter;
         @include fs-data(3);
         color: inherit;
         border: 0;
+        @include mq($to: mobileLandscape) {
+            padding-bottom: $gs-baseline/2;
+        }
     }
 
     .byline {
@@ -95,6 +100,10 @@ $block-padding-right: $gs-gutter;
         ));
         border-top: 0;
         color: inherit;
+
+        @include mq(mobileLandscape) {
+            margin-right: $gs-gutter * 2.5;
+        }
 
         @include mq(rightCol) {
             margin-top: 0;
