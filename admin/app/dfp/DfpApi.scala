@@ -71,7 +71,7 @@ object DfpApi extends Logging {
     val adUnits: Seq[AdUnit] = getAdUnitsForTheseIds(allAdUnitIds)
 
     // we don't serve pageskins to anything other than fronts.
-    val validAdUnits: Seq[AdUnit] = adUnits.filterNot(_.getName != "front")
+    val validAdUnits: Seq[AdUnit] = adUnits.filter(_.getName == "front")
 
     validAdUnits.map(unit => {
       def removeCustomerIdentifierFromPath(i: AdUnit) = i.getParentPath.tail
@@ -89,7 +89,7 @@ object DfpApi extends Logging {
     DfpApiWrapper.fetchAdUnitTargetingObjects(session, adUnitTargetingQuery)
   }
 
-  def normalise(lineItems: Seq[DfpApiLineItem]): Seq[LineItem] = dfpSession.fold(Seq[LineItem]()) { session =>
+  def wrapIntoDomainLineItem(lineItems: Seq[DfpApiLineItem]): Seq[LineItem] = dfpSession.fold(Seq[LineItem]()) { session =>
     val customTargetingKeys = new StatementBuilder()
       .where("displayName = :keywordTargetName OR displayName = :slotTargetName")
       .withBindVariableValue("keywordTargetName", "Keywords")
