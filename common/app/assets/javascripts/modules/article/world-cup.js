@@ -1,12 +1,10 @@
 define([
     'common/$',
-    'bonzo',
     'qwery',
     'common/modules/lazyload',
     'common/utils/mediator'
 ], function(
     $,
-    bonzo,
     qwery,
     LazyLoad,
     mediator
@@ -23,6 +21,7 @@ define([
             },
             success: function() {
                 mediator.emit('ui:images:upgrade');
+                $('.js-world-cup .js-container--show-more').addClass('u-h');
             }
         }).load();
     }
