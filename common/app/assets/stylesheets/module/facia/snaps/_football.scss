@@ -29,19 +29,22 @@
     }
 
     .table__caption--top {
+        $title-padding: $gs-baseline*(2/3);
         @include rem((
-            padding: $gs-gutter/5 0 0 0
+            padding: 0
         ));
 
         .football-matches__heading{
+            display: block;
             @include rem((
-                padding: $gs-gutter/5
+                padding: $title-padding
             ));
         }
 
         .football-matches__date {
             @include rem((
-                padding: $gs-gutter/5,
+                margin: 0,
+                padding: $title-padding,
             ));
             border-top: 1px solid darken($c-neutral8, 4%)
         }
