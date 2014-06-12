@@ -82,6 +82,10 @@
         display: none;
     }
 
+    .football-team__name {
+        text-overflow: ellipsis;
+    }
+
     .football-matches__day:last-child {
         .table__caption--bottom {
             display: table-caption;
