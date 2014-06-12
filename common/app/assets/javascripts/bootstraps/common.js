@@ -105,7 +105,7 @@ define([
     SliceAdverts,
     frontCommercialComponents,
     dfp,
-    TagContainer,
+    tagContainer,
     Foresee,
     GeoMostPopular,
     register,
@@ -433,7 +433,7 @@ define([
         loadTags : function() {
             mediator.on('page:common:ready', function(config) {
                 if (config.page.contentType !== 'Identity' && config.page.section !== 'identity') {
-                    TagContainer.init(config);
+                    tagContainer.init(config);
                 }
             });
         },
