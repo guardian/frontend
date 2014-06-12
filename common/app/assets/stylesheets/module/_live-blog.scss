@@ -18,7 +18,9 @@ $block-padding-right: $gs-gutter;
         top: 0;
     }
     @include mq(mobileLandscape, desktop) {
-        top: $gs-baseline/3;
+        @include rem((
+            top: $gs-baseline/3
+        ));
     }
     .commentcount {
         display: block;
@@ -86,7 +88,9 @@ $block-padding-right: $gs-gutter;
         color: inherit;
         border: 0;
         @include mq($to: mobileLandscape) {
-            padding-bottom: $gs-baseline/2;
+            @include rem((
+                padding-bottom: $gs-baseline/2
+            ));
         }
     }
 
@@ -102,7 +106,9 @@ $block-padding-right: $gs-gutter;
         color: inherit;
 
         @include mq(mobileLandscape) {
-            margin-right: $gs-gutter * 2.5;
+            @include rem((
+                margin-right: $gs-gutter * 2.5
+            ));
         }
 
         @include mq(rightCol) {
