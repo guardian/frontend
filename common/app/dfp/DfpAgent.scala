@@ -8,13 +8,14 @@ import play.api.{Application, GlobalSettings}
 import scala.io.Codec.UTF8
 import services.S3
 import conf.Configuration
-import Configuration.commercial.{dfpAdvertisementFeatureKeywordsDataKey, dfpSponsoredKeywordsDataKey}
+import Configuration.commercial.{dfpAdvertisementFeatureKeywordsDataKey, dfpSponsoredKeywordsDataKey, dfpPageSkinnedAdUnitsKey, dfpAdUnitRoot}
 import akka.agent.Agent
 
 trait DfpAgent {
 
   protected def sponsoredKeywords: Seq[String]
   protected def advertisementFeatureKeywords: Seq[String]
+  protected def pageskinnedAdUnits: Seq[String]
 
   private def lastPart(keywordId: String): String =  keywordId.split('/').takeRight(1)(0)
 
@@ -48,6 +49,11 @@ trait DfpAgent {
       containerSponsoredKeyword(config, isAdvertisementFeature)
     }
   }
+
+  def isPageSkinned(adUnitWithoutRoot: String) = {
+    val adUnitWithRoot: String = s"$dfpAdUnitRoot/$adUnitWithoutRoot"
+    pageskinnedAdUnits contains adUnitWithRoot
+  }
 }
 
 
@@ -55,21 +61,24 @@ object DfpAgent extends DfpAgent with ExecutionContexts {
 
   private lazy val sponsoredKeywordsAgent = AkkaAgent[Seq[String]](Nil)
   private lazy val advertisementFeatureKeywordsAgent = AkkaAgent[Seq[String]](Nil)
+  private lazy val pageskinnedAdUnitAgent = AkkaAgent[Seq[String]](Nil)
 
   protected def sponsoredKeywords: Seq[String] = sponsoredKeywordsAgent get()
 
   protected def advertisementFeatureKeywords: Seq[String] = advertisementFeatureKeywordsAgent get()
 
+  protected def pageskinnedAdUnits: Seq[String] = pageskinnedAdUnitAgent get()
+
   def refresh() {
 
-    def fetchSponsorshipKeywords(key: String): Seq[String] = {
+    def grabListFromStore(key: String): Seq[String] = {
       val json = S3.get(key)(UTF8) map parse
       json.fold(Seq[String]())(_.as[Seq[String]])
     }
 
     def update(agent: Agent[Seq[String]], key: String) = {
       agent sendOff { oldData =>
-        val freshData = fetchSponsorshipKeywords(key)
+        val freshData = grabListFromStore(key)
         if (freshData.nonEmpty) {
           freshData
         } else {
@@ -80,11 +89,13 @@ object DfpAgent extends DfpAgent with ExecutionContexts {
 
     update(sponsoredKeywordsAgent, dfpSponsoredKeywordsDataKey)
     update(advertisementFeatureKeywordsAgent, dfpAdvertisementFeatureKeywordsDataKey)
+    update(pageskinnedAdUnitAgent, dfpPageSkinnedAdUnitsKey)
   }
 
   def stop() {
     sponsoredKeywordsAgent close()
     advertisementFeatureKeywordsAgent close()
+    pageskinnedAdUnitAgent close()
   }
 }
 
