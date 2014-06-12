@@ -110,7 +110,7 @@ define(['common/$',
      *   Load the css file containing the base64 encoded sprites for the card icons
      */
     Membership.prototype.addSpriteCss = function () {
-        var spriteSheetUrl = 'https://profile.thegulocal.com/assets/stylesheets/membership-icons.css';
+        var spriteSheetUrl = config.page.idUrl+'/assets/stylesheets/membership-icons.css';
         var $head  = $('head');
         var link  = document.createElement('link');
         link.id   = 'membership-sprite';
