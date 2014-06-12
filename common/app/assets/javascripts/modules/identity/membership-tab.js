@@ -3,8 +3,9 @@
 */
 define(['common/$',
 'common/utils/ajax',
+'bonzo',
 'common/utils/config',
-'common/modules/component'], function ($, ajax, config, Component) {
+'common/modules/component'], function ($, ajax, bonzo, config, Component) {
 
     function Membership (context, mediator, options) {
 
@@ -106,9 +107,27 @@ define(['common/$',
 
     };
 
+    /**
+     *   Load the css file containing the base64 encoded sprites for the card icons
+     */
+    Membership.prototype.addSpriteCss = function () {
+        var spriteSheetUrl = 'https://profile.thegulocal.com/assets/stylesheets/membership-icons.css';
+        var $head  = $('head');
+        var link  = document.createElement('link');
+        link.id   = 'membership-sprite';
+        link.rel  = 'stylesheet';
+        link.type = 'text/css';
+        link.href = spriteSheetUrl;
+        link.media = 'all';
+        $head.append(link);
+    };
+
     /** @override */
     Membership.prototype.ready = function () {
         if (this.display) {
+
+            this.addSpriteCss();
+
             $(this.getClass('TAB_BUTTON'), this.context).removeClass('is-hidden');
             $(this.getClass('TAB_CONTAINER'), this.context).removeClass('is-hidden');
             $('.js-account-profile-forms').addClass('identity-wrapper--with-membership');
