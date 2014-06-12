@@ -6,17 +6,13 @@ define([
 
     function init() {
 
-        function padTime(time) {
-            return ('0' +  time).slice(-2);
-        };
-
-        ajax({
+        var foo = ajax({
             url: '/ophan/ads/render-time',
             type: 'json'
         }).then(
             function(data) {
 
-                var graphData = [['time', 'avg-render-time']].concat(data.buckets.reverse().map(function(bucket) {
+                var graphData = [['Time', 'Next-Gen']].concat(data.buckets.reverse().map(function(bucket) {
                     return [
                         new Date(bucket.time),
                         bucket.avgTimeToRenderEnded/1000
@@ -25,19 +21,18 @@ define([
 
                 new google.visualization.LineChart(document.getElementById('ads-render-time'))
                     .draw(google.visualization.arrayToDataTable(graphData), {
-                        title: 'Ads average render time',
                         backgroundColor: '#fff',
                         colors: ['#333'],
-                        height: 125,
-                        legend: 'none',
                         fontName: 'Georgia',
-                        titleTextStyle: {color: '#999'},
-                        vAxis: {format: '#,###s'},
-                        hAxis: {format: 'HH:mm'},
-                        trendlines: {0: {type: 'exponential', color: 'green'}}
+                        title: 'Ads average render time (secs)',
+                        titleTextStyle: {fontName: 'Georgia', color: '#222', italic: true, bold: false},
+                        vAxis: {format: '#,###'},
+                        hAxis: {format: 'HH:mm'}
                     });
             }
-        )
+        );
+
+        console.log(foo);
     };
 
     return {
