@@ -34,7 +34,9 @@
             }
 
             @if(NewNavSwitch.isSwitchedOn){
-                @fragments.nav.newNav(metaData)
+                <div class="localnav--small">
+                    @fragments.nav.newNav(metaData)
+                </div>
             } else {
                 @fragments.localNav(metaData)
             }
