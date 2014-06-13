@@ -58,7 +58,8 @@ object DfpApi extends Logging {
 
     lineItems.filter(
       item => item.getRoadblockingType == RoadblockingType.CREATIVE_SET &&
-        hasA1x1Pixel(item.getCreativePlaceholders)
+        hasA1x1Pixel(item.getCreativePlaceholders) &&
+        item.getTargeting.getInventoryTargeting.getTargetedAdUnits.size > 0
     )
   }
 
