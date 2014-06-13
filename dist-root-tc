@@ -5,22 +5,37 @@ set -o nounset
 set -o errexit
 
 # Skip test whilst debugging.
-./sbt-tc "project root" compile dist
+#./sbt-tc "project root" compile dist
 
 echo "Disting everything."
 
 # Remove previous Play Assembly "artifacts.zip" file
 rm -rf "everything"
-mkdir "everything"
 
-# Generate folder for the application zip.
-cp "article/target/universal/article.zip" "everything"
-cp "applications/target/universal/applications.zip" "everything"
+configurations="admin applications archive article commercial diagnostics discussion "\
+"facia facia-tool identity image onward router sport"
+
+for config in $configurations
+do
+    echo "Dist for $config"
+
+    # Generate folder for the application zip.
+    app_folder="everything/$config"
+
+    mkdir -p  $app_folder
+    mkdir -p "$app_folder/packages/frontend-static"
+    mkdir -p "$app_folder/packages/$config"
+
+    cp "$config/target/universal/$config.zip" "$app_folder/packages/$config/$config.zip"
+
+    pushd $app_folder
+    zip -r "../$config.zip" .
+    popd
+
+    echo "##teamcity[publishArtifacts 'everything/*.zip']"
+done
 
 # And zip up the packet
-cd "everything"
-zip -r "artifacts.zip" .
+#cd "everything"
 
-
-echo "##teamcity[publishArtifacts 'everything/artifacts.zip => .']"
 echo "Done disting."
