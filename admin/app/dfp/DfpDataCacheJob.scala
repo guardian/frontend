@@ -42,11 +42,8 @@ object DfpDataCacheJob extends ExecutionContexts {
       val dfpLineItems = DfpApi.getAllCurrentDfpLineItems()
       if (dfpLineItems.nonEmpty) {
         val lineItems = DfpApi.hydrateWithUsableValues(dfpLineItems)
-        Store.putDfpSponsoredKeywords(stringify(toJson(DfpApi.fetchSponsoredKeywords(lineItems))))
-        Store.putDfpAdvertisementFeatureKeywords(stringify(toJson(DfpApi.fetchAdvertisementFeatureKeywords(lineItems))))
-
-        Store.putDfpSponsoredSeriesTags(stringify(toJson(DfpApi.fetchSponsoredSeriesTags(lineItems))))
-        Store.putDfpAdvertisementFeatureSeriesTags(stringify(toJson(DfpApi.fetchAdvertisementFeatureSeriesTags(lineItems))))
+        Store.putDfpSponsoredTags(stringify(toJson(DfpApi.filterOutSponsoredTagsFrom(lineItems))))
+        Store.putDfpAdvertisementFeatureTags(stringify(toJson(DfpApi.filterOutAdvertisementFeatureTagsFrom(lineItems))))
 
         Store.putDfpPageSkinAdUnits(stringify(toJson(DfpApi.fetchAdUnitsThatAreTargettedByPageSkins(dfpLineItems))))
 
