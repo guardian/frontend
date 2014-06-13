@@ -1,7 +1,7 @@
 package views.support
 
 import common._
-import conf.Switches.{ ShowAllArticleEmbedsSwitch, TagLinkingSwitch, FeaturesAutoContainerSwitch }
+import conf.Switches.{ ShowAllArticleEmbedsSwitch, TagLinkingSwitch }
 import model._
 
 import java.net.URLEncoder._

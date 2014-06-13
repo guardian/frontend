@@ -401,13 +401,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 7, 7)
   )
 
-  // Facia Switches
-
-  val FeaturesAutoContainerSwitch = Switch("Facia Switches", "facia-features-auto-container",
-    "If this switch is on, the features auto container has the right to live.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 6, 15)
-  )
-
   val ImageServerSwitch = Switch("Image Server", "image-server",
     "If this switch is on images will be served off i.guim.co.uk (dynamic image host).",
     safeState = On, sellByDate = never // this is a performance related switch, not a feature switch
@@ -489,7 +482,6 @@ object Switches extends Collections {
     ABDisplaySociallyReferredBurners,
     SmartBannerSwitch,
     SurveyBannerSwitch,
-    FeaturesAutoContainerSwitch,
     ParameterlessImagesSwitch,
     FreshnessLoggingSwitch,
     LargerArticleImageSwitch
