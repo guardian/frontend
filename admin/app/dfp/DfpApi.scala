@@ -9,7 +9,6 @@ import com.google.api.ads.dfp.lib.client.DfpSession
 import common.Logging
 import conf.AdminConfiguration
 import implicits.Collections
-import scala.collection.immutable.Iterable
 
 object DfpApi extends Logging with Collections{
 
@@ -151,21 +150,11 @@ object DfpApi extends Logging with Collections{
     }
   }
 
-  def fetchSponsoredKeywords(lineItems: Seq[LineItem]): Seq[String] = {
-    lineItems flatMap (_.sponsoredKeywords)
+  def filterOutSponsoredTagsFrom(lineItems: Seq[LineItem]): Seq[String] = {
+    lineItems flatMap (_.sponsoredTags)
   }
 
-  def fetchAdvertisementFeatureKeywords(lineItems: Seq[LineItem]): Seq[String] = {
-    lineItems flatMap (_.advertisementFeatureKeywords)
+  def filterOutAdvertisementFeatureTagsFrom(lineItems: Seq[LineItem]): Seq[String] = {
+    lineItems flatMap (_.advertisementFeatureTags)
   }
-
-  def fetchSponsoredSeriesTags(lineItems: Seq[LineItem]): Seq[String] = {
-    lineItems flatMap (_.sponsoredSeriesTags)
-  }
-
-  def fetchAdvertisementFeatureSeriesTags(lineItems: Seq[LineItem]): Seq[String] = {
-    lineItems flatMap (_.advertisementFeatureSeriesTags)
-  }
-
-
 }
