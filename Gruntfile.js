@@ -794,29 +794,25 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-reloadlet');
     grunt.loadNpmTasks('grunt-pagespeed');
 
-    grunt.registerTask('default', ['compile', 'test', 'analyse']);
+    // Default task
+    grunt.registerTask('default', ['clean', 'validate', 'compile', 'test', 'analyse']);
 
+    /**
+     * Validate tasks
+     */
     grunt.registerTask('validate:css', ['sass:compile']);
     grunt.registerTask('validate:sass', ['scsslint']);
     grunt.registerTask('validate:js', function(app) {
-        if (!app) {
-            grunt.task.run('jshint');
-        } else {
-            // target exist?
-            if (grunt.config('jshint')[app]) {
-                grunt.task.run('jshint:' + app);
-            }
-        }
+        var target = (app) ? ':' + app : '';
+        grunt.task.run('jshint' + target);
     });
     grunt.registerTask('validate', function(app) {
-        grunt.task.run([
-            'validate:css',
-            'validate:sass',
-            'validate:js:' + (app || '')
-        ]);
+        grunt.task.run(['validate:css', 'validate:sass', 'validate:js:' + (app || '')]);
     });
 
-    // Compile tasks
+    /**
+     * Compile tasks
+     */
     grunt.registerTask('compile:images', ['generate:images', 'hash']);
     grunt.registerTask('generate:images', ['clean:images', 'copy:images', 'shell:spriteGeneration', 'imagemin']);
 
@@ -873,36 +869,37 @@ module.exports = function (grunt) {
     });
     grunt.registerTask('generate:conf', ['clean:assets', 'copy:headCss', 'copy:vendor', 'copy:assetMap']);
 
-    // Test tasks
+    /**
+     * Test tasks
+     */
     grunt.registerTask('test:integration', function(app) {
-        app = app || 'all';
+        var target = app || 'all';
         grunt.config('casperjsLogFile', app + '.xml');
-        grunt.task.run(['env:casperjs', 'casperjs:' + app]);
+        grunt.task.run(['env:casperjs', 'casperjs:' + target]);
     });
     grunt.registerTask('test:unit', function(app) {
+        var target = app ? ':' + app : '';
         grunt.config.set('karma.options.singleRun', (singleRun === false) ? false : true);
-        if (app) {
-            grunt.task.run('karma:' + app);
-        } else {
-            grunt.task.run('karma');
-        }
+        grunt.task.run('karma' + target);
     });
     grunt.registerTask('test', ['test:unit', 'test:integration:all']);
 
-    // Analyse tasks
+    /**
+     * Analyse tasks
+     */
     grunt.registerTask('analyse:performance', function(app) {
-        if (app && !grunt.config('pagespeed')[app]) {
-            grunt.log.warn('No pagespeed config for app "' + app + '"'); return true;
-        }
-        grunt.task.run([(app) ?  'pagespeed:' + app : 'pagespeed']);
+        var target = app ? ':' + app : '';
+        grunt.task.run('pagespeed' + target);
     });
     grunt.registerTask('analyse:css', ['compile:css', 'cssmetrics:common']);
     grunt.registerTask('analyse:monitor', ['monitor:common']);
     grunt.registerTask('analyse', ['analyse:css', 'analyse:performance']);
 
-    // Miscellaneous task
+    /**
+     * Miscellaneous tasks
+     */
     grunt.registerTask('hookmeup', ['clean:hooks', 'shell:copyHooks']);
     grunt.registerTask('snap', ['clean:screenshots', 'mkdir:screenshots', 'env:casperjs', 'casperjs:screenshot', 's3:screenshots']);
-    grunt.registerTask('emitAbTestInfo', ['shell:abTestInfo']);
+    grunt.registerTask('emitAbTestInfo', 'shell:abTestInfo');
 
 };
