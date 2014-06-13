@@ -820,8 +820,7 @@ module.exports = function (grunt) {
     grunt.registerTask('generate:css', ['sass:compile', 'replace:cssSourceMaps', 'copy:css']);
 
     grunt.registerTask('compile:js', function(app) {
-        var target = app ? ':' + app : app;
-        grunt.task.run(['generate:js' + target, 'hash']);
+        grunt.task.run(['generate:js:' + (app || ''), 'hash']);
     });
     grunt.registerTask('generate:js', function(app) {
         var target = app ? ':' + app : app;
@@ -835,10 +834,10 @@ module.exports = function (grunt) {
     });
 
     grunt.registerTask('compile:fonts', ['generate:fonts', 'hash']);
-    grunt.registerTask('generate:fonts', ['clean:fonts', 'mkdir:fontsTarget', 'webfontjson']);
+    grunt.registerTask('generate:fonts', ['webfontjson']);
 
     grunt.registerTask('compile:flash', ['generate:flash', 'hash']);
-    grunt.registerTask('generate:flash', ['clean:flash', 'copy:flash']);
+    grunt.registerTask('generate:flash', ['copy:flash']);
 
     grunt.registerTask('compile', function(app) {
         grunt.task.run([
@@ -851,7 +850,7 @@ module.exports = function (grunt) {
             'generate:conf'
         ]);
     });
-    grunt.registerTask('generate:conf', ['clean:assets', 'copy:headCss', 'copy:vendor', 'copy:assetMap']);
+    grunt.registerTask('generate:conf', ['copy:headCss', 'copy:vendor', 'copy:assetMap']);
 
     /**
      * Test tasks
