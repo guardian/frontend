@@ -41,12 +41,21 @@ public class NetworkFrontTest extends StubbedFrontsIntegrationTestCase {
     @Test
     @Category(Stubbed.class)
     public void networkStartPageShouldHaveEditionsDisplayedProperly() throws Exception {
-        stubPressedJson("/uk");
+        pressedStub.path("/uk").withResponse("NetworkStartPageSmall-pressed.json");
         networkFrontPage = openNetworkFrontPage();
 
         networkFrontPage.header().editions().isDisplayed();
         networkFrontPage.header().editions().isUkEditionSelected();
         networkFrontPage.header().editions().usUsEditionPresent();
         networkFrontPage.header().editions().isAuEditionPresent();
+    }
+    
+    //@Test
+    @Category(Stubbed.class)
+    public void networkStartPageShouldHaveDateTitleDisplayedProperly() throws Exception {
+        pressedStub.path("/uk").withResponse("NetworkStartPageSmall-pressed.json");
+        networkFrontPage = openNetworkFrontPage();
+
+        //TODO
     }
 }
