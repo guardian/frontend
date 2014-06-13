@@ -13,10 +13,16 @@
 @import views.html.fragments.registrationFooter
 @import views.html.fragments.socialSignin
 
-@tab(i: Int, name: String, url: String, hidden: Boolean = false) = {
-    <li class="tabs__tab @if(hidden){is-hidden} @if(page.id == url){tabs__tab--selected tone-colour tone-accent-border}" role="tab" id="tabs-account-profile-@i-tab" aria-selected="@(page.id == url)" aria-controls="tabs-account-profile-@i">
-        <a href="tabs-account-profile-@i" data-link-name="tab @i The Guardian" data-pushstate-url="@url">@name</a>
+@tab(i: Int, name: String, url: String, hidden: Boolean = false, optionalClass: String = "") = {
+    <li class="tabs__tab @if(hidden){is-hidden} @if(page.id == url){tabs__tab--selected tone-colour tone-accent-border} @optionalClass" role="tab" id="tabs-account-profile-@i-tab" aria-selected="@(page.id == url)" aria-controls="tabs-account-profile-@i">
+        <a href="#tabs-account-profile-@i" data-link-name="tab @i The Guardian" data-pushstate-url="@url">@name</a>
     </li>
+}
+
+@content(i: Int, url: String, optionalClass: String = "")(body: => Html) = {
+    <div@if(page.id != url){ style="display: none;"} id="tabs-account-profile-@i" class="tabs__pane u-cf @optionalClass" role="tabpanel" aria-labelledby="tabs-account-profile-@i-tab" data-link-name="Public Profile" data-link-context="Identity/profile">
+        @body
+    </div>
 }
 
 @identityMain(page, conf.Switches.all){
@@ -32,51 +38,15 @@
 
             @tab(2, "Account details", "/account/edit")
 
-            @tab(3, "Membership", "/membership/edit", hidden=true)
+            @tab(3, "Membership", "/membership/edit", hidden=true, "js-memebership-tab-button")
         </ol>
 
         <div class="tabs__content">
-            @forms.tabName match {
-                case Public => {
-                    <div id="tabs-account-profile-1" class="tabs__pane u-cf" role="tabpanel" aria-labelledby="tabs-account-profile-1-tab" data-link-name="Public Profile" data-link-context="Identity/profile">
-                        @fragments.profile.publicProfileForm(idUrlBuilder, idRequest, user, forms.publicForm, avatarUploadData, avatarUploadStatus)
-                    </div>
+            @content(1, "/public/edit")(fragments.profile.publicProfileForm(idUrlBuilder, idRequest, user, forms.publicForm, avatarUploadData, avatarUploadStatus))
 
-                    <div id="tabs-account-profile-2" class="tabs__pane u-cf" role="tabpanel" aria-labelledby="tabs-account-profile-2-tab" data-link-name="Account" data-link-context="Identity/profile" style="display: none;">
-                        @fragments.profile.accountDetailsForm(idUrlBuilder, idRequest, user, forms.accountForm)
-                    </div>
+            @content(2, "/account/edit")(fragments.profile.accountDetailsForm(idUrlBuilder, idRequest, user, forms.accountForm))
 
-                    <div id="tabs-account-profile-3" class="tabs__pane u-cf is-hidden js-memebership-tab-container" role="tabpanel" aria-labelledby="tabs-account-profile-2-tab" data-link-name="Account" data-link-context="Identity/profile" style="display: none;">
-
-                    </div>
-                }
-                case Account => {
-                    <div id="tabs-account-profile-1" class="tabs__pane u-cf" role="tabpanel" aria-labelledby="tabs-account-profile-1-tab" data-link-name="Public Profile" data-link-context="Identity/profile" style="display: none;">
-                        @fragments.profile.publicProfileForm(idUrlBuilder, idRequest, user, forms.publicForm, avatarUploadData, avatarUploadStatus)
-                    </div>
-
-                    <div id="tabs-account-profile-2" class="tabs__pane u-cf" role="tabpanel" aria-labelledby="tabs-account-profile-2-tab" data-link-name="Account" data-link-context="Identity/profile">
-                        @fragments.profile.accountDetailsForm(idUrlBuilder, idRequest, user, forms.accountForm)
-                    </div>
-
-                    <div id="tabs-account-profile-3" class="tabs__pane u-cf is-hidden js-memebership-tab-container" role="tabpanel" aria-labelledby="tabs-account-profile-2-tab" data-link-name="Account" data-link-context="Identity/profile" style="display: none;">
-
-                    </div>
-                }
-                case Membership => {
-                    <div id="tabs-account-profile-1" class="tabs__pane u-cf" role="tabpanel" aria-labelledby="tabs-account-profile-1-tab" data-link-name="Public Profile" data-link-context="Identity/profile"  style="display: none;">
-                        @fragments.profile.publicProfileForm(idUrlBuilder, idRequest, user, forms.publicForm, avatarUploadData, avatarUploadStatus)
-                    </div>
-
-                    <div id="tabs-account-profile-2" class="tabs__pane u-cf" role="tabpanel" aria-labelledby="tabs-account-profile-2-tab" data-link-name="Account" data-link-context="Identity/profile" style="display: none;">
-                        @fragments.profile.accountDetailsForm(idUrlBuilder, idRequest, user, forms.accountForm)
-                    </div>
-
-                    <div id="tabs-account-profile-3" class="tabs__pane u-cf is-hidden js-memebership-tab-container" role="tabpanel" aria-labelledby="tabs-account-profile-2-tab" data-link-name="Account" data-link-context="Identity/profile">
-
-                    </div>
-                }
-            }
+            @content(3, "/membership/edit", "js-memebership-tab-container")(Html.empty)
         </div>
     </div>
 
