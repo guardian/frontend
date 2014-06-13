@@ -7,7 +7,7 @@ import model._
 import java.net.URLEncoder._
 import org.apache.commons.lang.StringEscapeUtils
 import org.jboss.dna.common.text.Inflector
-import org.joda.time.DateTime
+import org.joda.time.{DateMidnight, DateTime}
 import org.joda.time.format.DateTimeFormat
 import org.jsoup.Jsoup
 import org.jsoup.nodes.{ Element, Document }
@@ -652,6 +652,8 @@ object Format {
     val timezone = Edition(request).timezone
     date.toString(DateTimeFormat.forPattern(pattern).withZone(timezone))
   }
+
+  def apply(date: DateMidnight, pattern: String)(implicit request: RequestHeader): String = this(date.toDateTime, pattern)(request)
 
   def apply(a: Int): String = new DecimalFormat("#,###").format(a)
 }

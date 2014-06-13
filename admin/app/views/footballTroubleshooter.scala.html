@@ -1,10 +1,11 @@
-@(env: String)
+@(env: String)(implicit request: RequestHeader)
 @import conf.AdminConfiguration.pa
 @import org.joda.time.{DateTime, DateMidnight}
+@import views.support.Format
 
 @admin_main("Football Troubleshooter", env, isAuthed = true) {
 
-@defining(new DateTime().toString("yyyyMMdd")){ today =>
+@defining(Format(new DateTime(), "yyyyMMdd")){ today =>
 
     <h1>Football Troubleshooter</h1>
 
@@ -52,9 +53,9 @@
     <p>Shows the results for completed matches. We query each competition separately for results.</p>
 
     <p>Here is the API call for results in the <strong>World Cup 2014</strong> (id 700). You can get other competition IDs
-        from the Competitions feed above and the date format is <i>YYYYMMDD</i>.</p>
+        from the Competitions feed above and the date format is <i>YYYYMMDD</i> (12 Jun is the start of the World Cup).</p>
 
-    <a href="@pa.host/api/football/competition/results/@pa.apiKey/700/@{new DateMidnight(2014, 6, 12).toString("yyyyMMdd")}">@pa.host/api/football/competition/results/@pa.apiKey/<strong>700</strong>/<strong>@{new DateTime().toString("yyyyMMdd")}</strong></a>
+    <a href="@pa.host/api/football/competition/results/@pa.apiKey/700/@Format(new DateMidnight(2014, 6, 12), "yyyyMMdd")">@pa.host/api/football/competition/results/@pa.apiKey/<strong>700</strong>/<strong>@Format(new DateMidnight(2014, 6, 12), "yyyyMMdd")</strong></a>
 
     <h2>League table</h2>
 
@@ -63,7 +64,7 @@
     <p>Here is the API call for the league table for <strong>World Cup 2014</strong> (id 700). You can get other competition IDs
         from the Competitions feed above and the date format is <i>YYYYMMDD</i>.</p>
 
-    <a href="@pa.host/api/football/competition/leagueTable/@pa.apiKey/700/@{new DateTime().toString("yyyyMMdd")}">@pa.host/api/football/competition/leagueTable/@pa.apiKey/<strong>700</strong>/<strong>@{new DateTime().toString("yyyyMMdd")}</strong></a>
+    <a href="@pa.host/api/football/competition/leagueTable/@pa.apiKey/700/@today">@pa.host/api/football/competition/leagueTable/@pa.apiKey/<strong>700</strong>/<strong>@today</strong></a>
 
     <h2>Match stats</h2>
 
