@@ -41,6 +41,9 @@ object OphanApi extends ExecutionContexts with Logging {
 
   def getMostReferredFromSocialMedia(days: Int): Future[JsValue] = getBody(s"mostread?days=$days&referrer=social%20media")
 
-  def getAdsRenderTime: Future[JsValue] = getBody(s"ads/render-time?hours=1")
+  def getAdsRenderTime(platform: String): Future[JsValue] = getBody(s"ads/render-time?platform=${platform}&hours=24")
+
+  def getAdsRenderTime(slotName: String, platform: String): Future[JsValue] =
+    getBody(s"ads/render-time?platform=${platform}&hours=24&ad-slot=$slotName")
 
 }

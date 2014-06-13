@@ -1,0 +1,13 @@
+.ad-render-time__form {
+    margin-bottom: 0;
+}
+.graph-action {
+    background: no-repeat 50% 50%;
+    padding-bottom: 200px;
+}
+.graph-loading {
+    background-image: url('/public/images/ajax-loader.gif');
+}
+.graph-failed {
+    background-image: url('/public/images/ajax-loader.gif');
+}
