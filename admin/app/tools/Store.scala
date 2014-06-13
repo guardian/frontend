@@ -2,7 +2,8 @@ package tools
 
 import common.Logging
 import conf.AdminConfiguration
-import conf.Configuration.commercial.{dfpAdvertisementFeatureKeywordsDataKey, dfpSponsoredKeywordsDataKey, dfpPageSkinnedAdUnitsKey}
+import conf.Configuration.commercial.{dfpAdvertisementFeatureKeywordsDataKey, dfpSponsoredKeywordsDataKey,
+dfpPageSkinnedAdUnitsKey, dfpLineItemsKey, dfpAdvertisementFeatureSeriesTagsDataKey, dfpSponsoredSeriesTagsDataKey}
 import services.S3
 
 trait Store extends Logging {
@@ -29,8 +30,17 @@ trait Store extends Logging {
   def putDfpAdvertisementFeatureKeywords(keywordsJson: String) {
     S3.putPublic(dfpAdvertisementFeatureKeywordsDataKey, keywordsJson, defaultJsonEncoding)
   }
+  def putDfpSponsoredSeriesTags(keywordsJson: String) {
+    S3.putPublic(dfpSponsoredSeriesTagsDataKey, keywordsJson, defaultJsonEncoding)
+  }
+  def putDfpAdvertisementFeatureSeriesTags(keywordsJson: String) {
+    S3.putPublic(dfpAdvertisementFeatureSeriesTagsDataKey, keywordsJson, defaultJsonEncoding)
+  }
   def putDfpPageSkinAdUnits(adUnitJson: String) {
     S3.putPublic(dfpPageSkinnedAdUnitsKey, adUnitJson, defaultJsonEncoding )
+  }
+  def putDfpLineItemsReport(everything: String) {
+    S3.putPublic(dfpLineItemsKey, everything, defaultJsonEncoding)
   }
 }
 
