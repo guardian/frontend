@@ -30,8 +30,7 @@
                     "football-match--fixture" -> theMatch.isFixture,
                     "football-match--result" -> theMatch.isResult
                 ))">
-                <td class="football-match__status football-match__status--@MatchStatus(theMatch.matchStatus).toString.toLowerCase table-column--sub"
-                    data>
+                <td class="football-match__status football-match__status--@MatchStatus(theMatch.matchStatus).toString.toLowerCase table-column--sub">
                     @if(theMatch.isFixture){
                         <time datetime="@theMatch.date.toString("yyyy-MM-dd'T'HH:mm:ssZ")" data-timestamp="@theMatch.date.getMillis"
                             class="js-locale-timestamp">
