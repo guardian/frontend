@@ -3,9 +3,6 @@ package services
 import common.FaciaMetrics.S3AuthorizationError
 import common._
 import conf.LiveContentApi
-import model.{Collection, Config}
-import play.api.libs.json.JsValue
-import conf.LiveContentApi
 import conf.Configuration
 import model._
 import play.api.libs.json.Json._
@@ -240,7 +237,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
 
       val backFillResponse: Future[Result] = (queryString match {
         case Path(Seg("search" :: Nil)) =>
-          val search = LiveContentApi.search(edition)
+          val search = client.search(edition)
             .showElements("all")
             .pageSize(20)
           val newSearch = queryParamsWithEdition.foldLeft(search) {
@@ -255,7 +252,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
             )
           }
         case Path(id) =>
-          val search = LiveContentApi.item(id, edition)
+          val search = client.item(id, edition)
             .showElements("all")
             .showEditorsPicks(true)
             .pageSize(20)
@@ -312,18 +309,6 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
 object LiveCollections extends ParseCollection {
   def retrieveItemsFromCollectionJson(collectionJson: JsValue): Seq[CollectionItem] =
     (collectionJson \ "live").asOpt[Seq[JsObject]].getOrElse(Nil).map { trail =>
-      CollectionItem(
-        (trail \ "id").as[String],
-        (trail \ "meta").asOpt[Map[String, JsValue]],
-        (trail \ "frontPublicationDate").asOpt[DateTime])
-    }
-
-  override val client: ContentApiClient = LiveContentApi
-}
-
-object DraftCollections extends ParseCollection {
-  def retrieveItemsFromCollectionJson(collectionJson: JsValue): Seq[CollectionItem] =
-    (collectionJson \ "draft").asOpt[Seq[JsObject]].orElse((collectionJson \ "live").asOpt[Seq[JsObject]]).getOrElse(Nil).map { trail =>
       CollectionItem(
         (trail \ "id").as[String],
         (trail \ "meta").asOpt[Map[String, JsValue]],
