@@ -64,7 +64,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
   object contentApi {
     val defaultContentApi: String = "http://content.guardianapis.com"
-    lazy val contentApiLiveHost: String = configuration.getStringProperty("content.api.live.host").getOrElse(defaultContentApi)
+    lazy val contentApiLiveHost: String = configuration.getStringProperty("content.api.elastic.host").getOrElse(defaultContentApi)
     lazy val contentApiDraftHost: String = configuration.getStringProperty("content.api.draft.host").getOrElse(contentApiLiveHost)
 
     lazy val key: Option[String] = configuration.getStringProperty("content.api.key")
@@ -98,10 +98,6 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
   object frontend {
     lazy val store = configuration.getMandatoryStringProperty("frontend.store")
-  }
-
-  object mongo {
-    lazy val connection = configuration.getMandatoryStringProperty("mongo.connection.readonly.password")
   }
 
   object site {
@@ -196,15 +192,18 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
   }
   
   object commercial {
+    lazy val dfpAdUnitRoot = configuration.getMandatoryStringProperty("guardian.page.dfpAdUnitRoot")
     lazy val books_url = configuration.getMandatoryStringProperty("commercial.books_url")
     lazy val masterclasses_url = configuration.getMandatoryStringProperty("commercial.masterclasses_url")
     lazy val soulmates_url = configuration.getMandatoryStringProperty("commercial.soulmates_url")
     lazy val travel_url = configuration.getMandatoryStringProperty("commercial.travel_url")
-    lazy val dfpDataKey = {
-      val key = s"${environment.stage.toUpperCase}/commercial/dfp-data.json"
-      log.info(s"DFP data will be loaded from $key")
-      key
-    }
+
+    lazy val dfpSponsoredKeywordsDataKey =
+      s"${environment.stage.toUpperCase}/commercial/dfp/sponsored-keywords.json"
+    lazy val dfpAdvertisementFeatureKeywordsDataKey =
+      s"${environment.stage.toUpperCase}/commercial/dfp/advertisement-feature-keywords.json"
+    lazy val dfpPageSkinnedAdUnitsKey =
+      s"${environment.stage.toUpperCase}/commercial/dfp/pageskinned-adunits.json"
   }
 
   object open {

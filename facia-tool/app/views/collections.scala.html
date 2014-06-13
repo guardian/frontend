@@ -1,6 +1,6 @@
-@(env: String, identity: Option[Identity])
+@(env: String, priority: String, identity: Option[Identity])
 
-@admin_main("Fronts editor", env, isAuthed = true, identity) {
+@admin_main("fronts", env, Some(priority), isAuthed = true, identity) {
 
 <div style="display: none;" data-bind="visible: true">
 
@@ -19,10 +19,8 @@
 
     <div class="toolbar" data-bind="visible: true" style="display: none">
 
-        <span data-bind="if: fronts().length > 1">
-            <span class="tool-label">Front</span>
-            <select class="tool-select" data-bind="options: fronts, value: front, optionsCaption: 'choose...'"></select>
-        </span>
+        <span class="tool-label">Front</span>
+        <select class="tool-select" data-bind="options: fronts, value: front, optionsCaption: 'choose...'"></select>
 
         <a class="spark" target="ophan" title="Dark blue: Guardian. Green: Google. Light blue: Other." data-bind="
             visible: frontSparkUrl,

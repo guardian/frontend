@@ -32,19 +32,22 @@
             }
         </div>
 
-        <div class="tabs tabs--identity">
-            <ol class="tabs__container tabs__container--multiple">
+        <div class="tabs tabs--identity js-visible">
+            <ol class="tabs__container">
                 <li class="tabs__tab tabs__tab--selected tone-colour tone-accent-border">
-                    <a href="" class="js-activity-stream-change" data-stream-type="discussions">Comment activity</a>
+                    <a href="" class="js-activity-stream-change" data-stream-type="discussions">Comments</a>
                 </li>
                 <li class="tabs__tab">
-                    <a href="" class="js-activity-stream-change" data-stream-type="replies">Replies to @user.publicFields.displayName</a>
+                    <a href="" class="js-activity-stream-change" data-stream-type="replies">Replies</a>
+                </li>
+                <li class="tabs__tab">
+                    <a href="" class="js-activity-stream-change" data-stream-type="picks">Featured</a>
                 </li>
             </ol>
         </div>
     </div>
 
-    <div class="js-activity-stream" data-user-id="@user.id" data-stream-type="discussions"></div>
+    <div class="js-activity-stream activity-stream-content" data-user-id="@user.id" data-stream-type="discussions"></div>
     @registrationFooter(page, idRequest, idUrlBuilder)
 </div>
 }

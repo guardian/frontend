@@ -140,7 +140,7 @@ object MemcachedAction extends Results with MemcachedSupport with implicits.Requ
   }
 }
 
-private object Zip {
+object Zip {
   def apply(b: Array[Byte]): Array[Byte] = {
     val bites = new ByteArrayOutputStream(b.length)
     val o = new GZIPOutputStream(bites)
@@ -150,6 +150,6 @@ private object Zip {
   }
 }
 
-private object Unzip {
+object Unzip {
   def apply(b: Array[Byte]): Array[Byte] = IOUtils.toByteArray(new GZIPInputStream(new ByteArrayInputStream(b)))
 }

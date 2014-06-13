@@ -16,7 +16,7 @@ define([
     'models/collections/article',
     'models/collections/latest-articles'
 ], function(
-    config,
+    pageConfig,
     ko,
     vars,
     fetchSettings,
@@ -87,7 +87,7 @@ define([
         };
 
         model.previewUrl = ko.computed(function() {
-            return vars.CONST.viewer + '#env=' + config.env + '&url=' + model.front() + encodeURIComponent('?view=mobile');
+            return vars.CONST.viewer + '#env=' + pageConfig.env + '&url=' + model.front() + encodeURIComponent('?view=mobile');
         });
 
         function detectPressFailure() {
@@ -217,9 +217,13 @@ define([
 
                 model.fronts(
                     getFront() === 'testcard' ? ['testcard'] :
-                       _.chain(_.keys(config.fronts))
+                       _.chain(config.fronts)
+                        .map(function(front, path) {
+                            return front.priority === vars.priority ? path : undefined;
+                        })
+                        .without(undefined)
                         .without('testcard')
-                        .sortBy(function(id) { return id; })
+                        .sortBy(function(path) { return path; })
                         .value()
                 );
             }, vars.CONST.configSettingsPollMs, true)

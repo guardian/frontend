@@ -6,6 +6,7 @@ import model.Competition
 import pa.{Round, FootballMatch}
 import implicits.Football
 import football.collections.RichList
+import conf.Switches
 
 
 trait MatchesList extends Football with RichList {
@@ -69,6 +70,7 @@ trait MatchesList extends Football with RichList {
 
 trait Fixtures extends MatchesList {
   override val baseUrl: String = "/football/fixtures"
+
   override val pageType = "fixtures"
   // ordering for the displayed matches
   override def timeComesFirstInList(d: DateTime, other: DateTime): Boolean = d.isBefore(other)

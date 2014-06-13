@@ -2,15 +2,18 @@ package controllers
 
 import common._
 import conf._
-import feed.{MostPopularAgent, GeoMostPopularAgent, DayMostPopularAgent}
+import feed.{SociallyReferredContentAgent, MostPopularAgent, GeoMostPopularAgent, DayMostPopularAgent}
 import model._
 import play.api.mvc.{ RequestHeader, Controller, Action }
 import scala.concurrent.Future
-import views.support.PopularContainer
+import views.support.{MostReferredContainer, SeriesContainer, TemplateDeduping, PopularContainer}
 import play.api.libs.json.{Json, JsArray}
 
 
 object MostPopularController extends Controller with Logging with ExecutionContexts {
+
+
+  implicit def getTemplateDedupingInstance: TemplateDeduping = TemplateDeduping()
 
   val page = new Page(
     "most-read",
@@ -59,6 +62,15 @@ object MostPopularController extends Controller with Logging with ExecutionConte
         "country" -> countryCode
       )
     }
+  }
+
+
+  def renderMostPopularReferralsJson() = Action { implicit request =>
+    val mostReferred = SociallyReferredContentAgent.getReferrals.take(10)
+
+    implicit val config = Config(id = "referred-content", displayName = Some("Most popular"))
+    val response = () => views.html.fragments.containers.series(Collection(mostReferred.take(7)), MostReferredContainer(), 0)
+    renderFormat(response, response, 900)
   }
 
   def renderPopularDayJson(countryCode: String) = Action { implicit request =>

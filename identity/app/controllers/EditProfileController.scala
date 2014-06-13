@@ -20,6 +20,7 @@ import actions.AuthRequest
 import services.IdentityRequest
 import model.AvatarUploadData
 import conf.Configuration
+import common.JsonComponent
 
 @Singleton
 class EditProfileController @Inject()(idUrlBuilder: IdentityUrlBuilder,
@@ -85,7 +86,13 @@ class EditProfileController @Inject()(idUrlBuilder: IdentityUrlBuilder,
            pageWithTrackingParamsFor(idRequest),
            user, forms, idRequest, idUrlBuilder,
            Some(avatarUploadDataFor(user)),
-           avatarUploadStatus))))    
+           avatarUploadStatus))))
+  }
+
+  def renderMembershipTab() = authActionWithUser { implicit request =>
+    JsonComponent(
+      "html" -> views.html.fragments.membershipTabContents()
+    )
   }
 
   private def avatarUploadDataFor(user: User) = AvatarUploadData(AvatarSigningService.sign(AvatarData(user)))

@@ -36,10 +36,12 @@
 }
 
 .identity-header {
-    @include rem((
-        margin-left: $gs-gutter,
-        margin-right: $gs-gutter
-    ));
+    @include mq(tablet) {
+        @include rem((
+            margin-left: $gs-gutter,
+            margin-right: $gs-gutter
+        ));
+    }
 }
 
 .identity-section {
@@ -218,10 +220,19 @@
 .user-profile__about {
     @include fs-textsans(2);
     @include rem((
-        margin-left: $gs-gutter*3.5,
-        margin-top: $gs-baseline,
-        max-width: gs-span(6)
+        margin-top: $gs-baseline
     ));
+    clear: both;
+
+    @include mq(tablet) {
+        @include rem((
+            margin-left: $gs-gutter*3.5,
+            margin-top: $gs-baseline,
+            max-width: gs-span(6)
+        ));
+        clear: none;
+        margin-top: 0;
+    }
 
     @include mq(rightCol) {
         @include rem((
@@ -247,6 +258,12 @@
     @include rem((
         margin-bottom: $gs-baseline/3
     ));
+    display: block;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    word-break: break-all;
 }
 
 
@@ -328,6 +345,13 @@
 
 /* Public Profile Page
    ========================================================================== */
+
+.activity-stream {
+    @include rem((
+        margin-top: $gs-baseline
+    ));
+}
+
 .identity-public-profile {
     .identity-section__text {
         white-space: pre-line;
@@ -343,5 +367,63 @@
 .tabs--identity {
     .tabs__tab--selected {
         border-top-color: $c-newsAccent;
+    }
+    .tabs__tab {
+        @include rem((
+            max-width: gs-span(3),
+            width: 33.3%
+        ));
+    }
+}
+
+.activity-stream-content {
+    border-top: 1px solid $c-neutral4;
+
+    @include mq(tablet) {
+        @include rem((
+            margin-left: $gs-gutter,
+            margin-right: $gs-gutter
+        ));
+    }
+}
+
+/* Edit profile Membership tab
+   ========================================================================== */
+
+.identity-wrapper--with-membership {
+    @include mq($to: desktop) {
+        .tabs__tab {
+            width: auto;
+        }
+    }
+}
+
+.membership-tab__details-list {
+
+    @include rem((
+        padding: $gs-baseline*2 0 $gs-baseline*2 0
+    ));
+
+    li {
+        @include rem((
+            margin-bottom: $gs-baseline
+        ));
+
+        .membership-tab__card-details {
+            @include rem((
+                padding: 0 0 0 12px
+            ));
+        }
+
+        .membership-tab__upgrade {
+            margin: 0;
+        }
+    }
+
+    .membership-tab__card-types {
+        display: inline-block;
+        height: 35px;
+        width: 54px;
+        vertical-align: middle;
     }
 }

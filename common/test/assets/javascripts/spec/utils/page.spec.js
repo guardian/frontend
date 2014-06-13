@@ -12,6 +12,7 @@ define([
             cb = sinon.spy();
             config.page.tones = '';
             config.page.series = '';
+            config.page.isLive = false;
             config.isLiveBlog = false;
         }
         beforeEach(reset);
@@ -26,7 +27,8 @@ define([
                 expect(cb.calledWith({
                     date: '2013/03/20',
                     teams: [34, 3],
-                    pageType: 'report'
+                    pageType: 'report',
+                    isLive: false
                 })).toBe(true);
             });
 
@@ -38,7 +40,8 @@ define([
                 expect(cb.calledWith({
                     date: '2013/03/20',
                     teams: [33, 1],
-                    pageType: 'minbymin'
+                    pageType: 'minbymin',
+                    isLive: false
                 })).toBe(true);
                 config.page.isLiveBlog = false;
             });
@@ -51,7 +54,8 @@ define([
                 expect(cb.calledWith({
                     date: '2013/03/20',
                     teams: [1, 2],
-                    pageType: 'preview'
+                    pageType: 'preview',
+                    isLive: false
                 })).toBe(true);
             });
 

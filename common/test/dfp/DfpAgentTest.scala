@@ -3,16 +3,36 @@ package dfp
 import model.Config
 import org.scalatest.Inspectors._
 import org.scalatest.{FlatSpec, Matchers}
-import play.api.test.FakeApplication
-import play.api.test.Helpers._
 
 class DfpAgentTest extends FlatSpec with Matchers {
+
+  private object testDfpAgent extends DfpAgent {
+    override protected def sponsoredKeywords: Seq[String] = Seq("spon-page", "media")
+    override protected def advertisementFeatureKeywords: Seq[String] = Seq("ad-feature", "film")
+    override protected def pageskinnedAdUnits: Seq[String] = Seq("theguardian.com/business/front")
+  }
 
   def apiQuery(apiQuery: String) = {
     Config("id", Some(apiQuery), None, None)
   }
 
-  "isSponsored" should "be true for a sponsored container" in running(FakeApplication()) {
+  "isAdvertisementFeature" should "be true for an advertisement feature" in {
+    testDfpAgent.isAdvertisementFeature("ad-feature") should be(true)
+  }
+
+  "isAdvertisementFeature" should "be false for a non advertisement feature" in {
+    testDfpAgent.isAdvertisementFeature("article") should be(false)
+  }
+
+  "isSponsored" should "be true for a sponsored article" in {
+    testDfpAgent.isSponsored("spon-page") should be(true)
+  }
+
+  "isSponsored" should "be false for an unsponsored article" in {
+    testDfpAgent.isSponsored("article") should be(false)
+  }
+
+  "isSponsored" should "be true for a sponsored container" in {
 
     val apiQueries = Seq(
       "search?tag=books%2Fmedia&section=money",
@@ -41,11 +61,11 @@ class DfpAgentTest extends FlatSpec with Matchers {
     )
 
     forEvery(apiQueries) { q =>
-      DfpAgent.isSponsored(apiQuery(q)) should be(true)
+      testDfpAgent.isSponsored(apiQuery(q)) should be(true)
     }
   }
 
-  "isSponsored" should "be false for a non sponsored container" in running(FakeApplication()) {
+  "isSponsored" should "be false for a non sponsored container" in {
 
     val apiQueries = Seq(
       "search?tag=type%2Fvideo&section=money",
@@ -74,11 +94,11 @@ class DfpAgentTest extends FlatSpec with Matchers {
     )
 
     forEvery(apiQueries) { q =>
-      DfpAgent.isSponsored(apiQuery(q)) should be(false)
+      testDfpAgent.isSponsored(apiQuery(q)) should be(false)
     }
   }
 
-  "isAdvertisementFeature" should "be true for an advertisement feature container" in running(FakeApplication()) {
+  "isAdvertisementFeature" should "be true for an advertisement feature container" in {
 
     val apiQueries = Seq(
       "search?tag=books%2Ffilm&section=money",
@@ -107,11 +127,11 @@ class DfpAgentTest extends FlatSpec with Matchers {
     )
 
     forEvery(apiQueries) { q =>
-      DfpAgent.isAdvertisementFeature(apiQuery(q)) should be(true)
+      testDfpAgent.isAdvertisementFeature(apiQuery(q)) should be(true)
     }
   }
 
-  "isAdvertisementFeature" should "be false for a non advertisement feature container" in running(FakeApplication()) {
+  "isAdvertisementFeature" should "be false for a non advertisement feature container" in {
 
     val apiQueries = Seq(
       "search?tag=type%2Fvideo&section=money",
@@ -140,7 +160,7 @@ class DfpAgentTest extends FlatSpec with Matchers {
     )
 
     forEvery(apiQueries) { q =>
-      DfpAgent.isAdvertisementFeature(apiQuery(q)) should be(false)
+      testDfpAgent.isAdvertisementFeature(apiQuery(q)) should be(false)
     }
   }
 }

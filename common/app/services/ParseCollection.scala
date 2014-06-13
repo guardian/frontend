@@ -2,15 +2,26 @@ package services
 
 import common.FaciaMetrics.S3AuthorizationError
 import common._
-import conf.{DraftContentApi, LiveContentApi, Configuration}
-import model.{Snap, Collection, Config, Content}
+import conf.LiveContentApi
+import model.{Collection, Config}
+import play.api.libs.json.JsValue
+import conf.LiveContentApi
+import conf.Configuration
+import model._
 import play.api.libs.json.Json._
-import play.api.libs.json.{JsNull, JsObject, JsValue}
-import play.api.libs.ws.Response
+import play.api.libs.json._
 import scala.concurrent.Future
 import contentapi.{ContentApiClient, QueryDefaults}
 import scala.util.Try
 import org.joda.time.DateTime
+import performance._
+import org.apache.commons.codec.digest.DigestUtils._
+import ParseCollectionJsonImplicits._
+import com.gu.openplatform.contentapi.model.{Content => ApiContent}
+import play.api.libs.ws.Response
+import play.api.libs.json.JsObject
+import scala.concurrent.duration._
+
 
 object Path {
   def unapply[T](uri: String) = Some(uri.split('?')(0))
@@ -24,7 +35,22 @@ object Seg {
   }
 }
 
+//Curated and editorsPicks are the same, we will get rid of either
+case class Result(
+                   curated: List[ApiContent],
+                   editorsPicks: List[ApiContent],
+                   mostViewed: List[ApiContent],
+                   contentApiResults: List[ApiContent]
+                   )
+
+object Result {
+  val empty: Result = Result(Nil, Nil, Nil, Nil)
+}
+
 trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging {
+  implicit val apiContentCodec = JsonCodecs.gzippedCodec[Option[ApiContent]]
+  implicit val resultCodec = JsonCodecs.gzippedCodec[Result]
+  val cacheDuration: FiniteDuration = 5.minutes
 
   val client: ContentApiClient
   def retrieveItemsFromCollectionJson(collectionJson: JsValue): Seq[CollectionItem]
@@ -47,9 +73,6 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
     val isSnap: Boolean = id.startsWith("snap/")
   }
 
-  //Curated and editorsPicks are the same, we will get rid of either
-  case class Result(curated: List[Content], editorsPicks: List[Content], mostViewed: List[Content], contentApiResults: List[Content])
-
   def requestCollection(id: String): Future[Response] = {
     val s3BucketLocation: String = s"${S3FrontsApi.location}/collection/$id/collection.json"
     log.info(s"loading running order configuration from: ${Configuration.frontend.store}/$s3BucketLocation")
@@ -64,7 +87,8 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
     val curatedItems: Future[List[Content]] = collectionJson
         .map(retrieveItemsFromCollectionJson)
         .flatMap { items => getArticles(items, edition) }
-    val executeDraftContentApiQuery: Future[Result] = executeContentApiQuery(config.contentApiQuery, edition)
+    val executeDraftContentApiQuery: Future[Result] =
+      config.contentApiQuery.map(executeContentApiQueryViaCache(_, edition)).getOrElse(Future.successful(Result.empty))
     val collectionMetaData: Future[CollectionMeta] = collectionJson.map(getCollectionMeta)
 
     for {
@@ -73,14 +97,15 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
       collectionMeta <- collectionMetaData
     } yield Collection(
       curated = curatedRequest,
-      editorsPicks = executeRequest.editorsPicks,
-      mostViewed = executeRequest.mostViewed,
-      results = executeRequest.contentApiResults,
+      editorsPicks = executeRequest.editorsPicks.map(makeContent),
+      mostViewed = executeRequest.mostViewed.map(makeContent),
+      results = executeRequest.contentApiResults.map(makeContent),
       displayName = collectionMeta.displayName,
       href = collectionMeta.href,
       lastUpdated = collectionMeta.lastUpdated,
       updatedBy = collectionMeta.updatedBy,
-      updatedEmail = collectionMeta.updatedEmail)
+      updatedEmail = collectionMeta.updatedEmail
+    )
   }
 
   def retrieveDraftItemsFromCollectionJson(json: JsValue): Seq[CollectionItem] =
@@ -119,7 +144,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
   }
 
   def getArticles(collectionItems: Seq[CollectionItem], edition: Edition): Future[List[Content]]
-  = getArticles(collectionItems, edition, hasParent=false)
+    = getArticles(collectionItems, edition, hasParent=false)
 
   //hasParent is here to break out of the recursive loop and make sure we only go one deep
   def getArticles(collectionItems: Seq[CollectionItem], edition: Edition, hasParent: Boolean): Future[List[Content]] = {
@@ -140,30 +165,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
             } yield contentList :+ new Snap(collectionItem.id, supporting, collectionItem.webPublicationDate.getOrElse(DateTime.now), collectionItem.metaData.getOrElse(Map.empty))
           }
           else {
-            val response = client.item(collectionItem.id, edition).showFields(showFieldsWithBodyQuery).response
-
-            val content = response.map(_.content).recover {
-              case apiError: com.gu.openplatform.contentapi.ApiError if apiError.httpStatus == 404 => {
-                log.warn(s"Content API Error: 404 for ${collectionItem.id}")
-                None
-              }
-              case apiError: com.gu.openplatform.contentapi.ApiError if apiError.httpStatus == 410 => {
-                log.warn(s"Content API Error: 410 for ${collectionItem.id}")
-                None
-              }
-              case jsonParseError: net.liftweb.json.JsonParser.ParseException => {
-                ContentApiMetrics.ContentApiJsonParseExceptionMetric.increment()
-                throw jsonParseError
-              }
-              case mappingException: net.liftweb.json.MappingException => {
-                ContentApiMetrics.ContentApiJsonMappingExceptionMetric.increment()
-                throw mappingException
-              }
-              case t: Throwable => {
-                log.warn("%s: %s".format(collectionItem.id, t.toString))
-                throw t
-              }
-            }
+            val content: Future[Option[ApiContent]] = getContentApiItemFromCollectionItem(collectionItem, edition)
             supportingAsContent.onFailure {
               case t: Throwable => log.warn("Supporting links: %s: %s".format(collectionItem.id, t.toString))
             }
@@ -186,54 +188,98 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
     }
   }
 
+  private def getContentApiItemFromCollectionItem(collectionItem: CollectionItem, edition: Edition): Future[Option[ApiContent]] = {
+    lazy val response = client.item(collectionItem.id, edition).showFields(showFieldsWithBodyQuery)
+      .response
+      .map(Option.apply)
+      .recover {
+      case apiError: com.gu.openplatform.contentapi.ApiError if apiError.httpStatus == 404 => {
+        log.warn(s"Content API Error: 404 for ${collectionItem.id}")
+        None
+      }
+      case apiError: com.gu.openplatform.contentapi.ApiError if apiError.httpStatus == 410 => {
+        log.warn(s"Content API Error: 410 for ${collectionItem.id}")
+        None
+      }
+      case jsonParseError: net.liftweb.json.JsonParser.ParseException => {
+        ContentApiMetrics.ContentApiJsonParseExceptionMetric.increment()
+        throw jsonParseError
+      }
+      case mappingException: net.liftweb.json.MappingException => {
+        ContentApiMetrics.ContentApiJsonMappingExceptionMetric.increment()
+        throw mappingException
+      }
+      case t: Throwable => {
+        log.warn("%s: %s".format(collectionItem.id, t.toString))
+        throw t
+      }
+    }
+
+    MemcachedFallback.withMemcachedFallBack(collectionItem.id, cacheDuration)(response.map(_.flatMap(_.content)))
+  }
+
   private def retrieveSupportingLinks(collectionItem: CollectionItem): List[CollectionItem] =
     collectionItem.metaData.map(_.get("supporting").flatMap(_.asOpt[List[JsValue]]).getOrElse(Nil)
       .map(json => CollectionItem((json \ "id").as[String], (json \ "meta").asOpt[Map[String, JsValue]], (json \ "frontPublicationDate").asOpt[DateTime]))
     ).getOrElse(Nil)
 
-  def executeContentApiQuery(s: Option[String], edition: Edition): Future[Result] = s filter(_.nonEmpty) map { queryString =>
-    val queryParams: Map[String, String] = QueryParams.get(queryString).mapValues{_.mkString("")}
-    val queryParamsWithEdition = queryParams + ("edition" -> queryParams.getOrElse("edition", Edition.defaultEdition.id))
 
-    val newSearch = queryString match {
-      case Path(Seg("search" ::  Nil)) => {
-        val search = LiveContentApi.search(edition)
-          .showElements("all")
-          .pageSize(20)
-        val newSearch = queryParamsWithEdition.foldLeft(search){
-          case (query, (key, value)) => query.stringParam(key, value)
-        }.showFields(showFieldsQuery)
-        newSearch.response map { r =>
-          Result(
-            curated           = Nil,
-            editorsPicks      = Nil,
-            mostViewed        = Nil,
-            contentApiResults = r.results.map(Content(_)).map(validateContent)
-          )
-        } recover executeContentApiQueryRecovery
+
+  def executeContentApiQueryViaCache(queryString: String, edition: Edition): Future[Result] = {
+    MemcachedFallback.withMemcachedFallBack(
+      sha256Hex(queryString),
+      cacheDuration
+    ) { executeContentApiQuery(queryString, edition) }
+  }
+
+  def executeContentApiQuery(queryString: String, edition: Edition): Future[Result] = {
+      val queryParams: Map[String, String] = QueryParams.get(queryString).mapValues {
+        _.mkString("")
       }
-      case Path(id)  => {
-        val search = LiveContentApi.item(id, edition)
-          .showElements("all")
-          .showEditorsPicks(true)
-          .pageSize(20)
-        val newSearch = queryParamsWithEdition.foldLeft(search){
-          case (query, (key, value)) => query.stringParam(key, value)
-        }.showFields(showFieldsQuery)
-        newSearch.response map { r =>
-          Result(
-            curated           = Nil,
-            editorsPicks      = r.editorsPicks.map(Content(_)).map(validateContent),
-            mostViewed        = r.mostViewed.map(Content(_)).map(validateContent),
-            contentApiResults = r.results.map(Content(_)).map(validateContent)
-          )
-        } recover executeContentApiQueryRecovery
-      }
+      val queryParamsWithEdition = queryParams + ("edition" -> queryParams.getOrElse("edition", Edition.defaultEdition.id))
+
+      val backFillResponse: Future[Result] = (queryString match {
+        case Path(Seg("search" :: Nil)) =>
+          val search = LiveContentApi.search(edition)
+            .showElements("all")
+            .pageSize(20)
+          val newSearch = queryParamsWithEdition.foldLeft(search) {
+            case (query, (key, value)) => query.stringParam(key, value)
+          }.showFields(showFieldsQuery)
+          newSearch.response map { searchResponse =>
+            Result(
+              curated = Nil,
+              editorsPicks = Nil,
+              mostViewed = Nil,
+              contentApiResults = searchResponse.results
+            )
+          }
+        case Path(id) =>
+          val search = LiveContentApi.item(id, edition)
+            .showElements("all")
+            .showEditorsPicks(true)
+            .pageSize(20)
+          val newSearch = queryParamsWithEdition.foldLeft(search) {
+            case (query, (key, value)) => query.stringParam(key, value)
+          }.showFields(showFieldsQuery)
+          newSearch.response map { itemResponse =>
+            Result(
+              curated = Nil,
+              editorsPicks = itemResponse.editorsPicks,
+              mostViewed = itemResponse.mostViewed,
+              contentApiResults = itemResponse.results
+            )
+          }
+      }).recover(executeContentApiQueryRecovery)
+
+    backFillResponse onFailure {
+      case t: Throwable => log.warn("Content API Query failed: %s: %s".format(queryString, t.toString))
     }
 
-    newSearch onFailure {case t: Throwable => log.warn("Content API Query failed: %s: %s".format(queryString, t.toString))}
-    newSearch
-  } getOrElse Future.successful(Result(Nil, Nil, Nil, Nil))
+    backFillResponse
+  }
+
+  def makeContent(content: ApiContent): Content = validateContent(Content(content))
 
   def validateContent(content: Content): Content = {
     Try {
@@ -250,21 +296,11 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
   val executeContentApiQueryRecovery: PartialFunction[Throwable, Result] = {
     case apiError: com.gu.openplatform.contentapi.ApiError if apiError.httpStatus == 404 => {
       log.warn(s"Content API Error: 404 for ${apiError.httpMessage}")
-      Result(
-        curated           = Nil,
-        editorsPicks      = Nil,
-        mostViewed        = Nil,
-        contentApiResults = Nil
-      )
+      Result.empty
     }
     case apiError: com.gu.openplatform.contentapi.ApiError if apiError.httpStatus == 410 => {
       log.warn(s"Content API Error: 410 for ${apiError.httpMessage}")
-      Result(
-        curated           = Nil,
-        editorsPicks      = Nil,
-        mostViewed        = Nil,
-        contentApiResults = Nil
-      )
+      Result.empty
     }
     case e: Exception => {
       log.warn(s"ExecuteContentApiQueryRecovery: $e")
@@ -294,5 +330,5 @@ object DraftCollections extends ParseCollection {
         (trail \ "frontPublicationDate").asOpt[DateTime])
     }
 
-  override val client: ContentApiClient = DraftContentApi
+  override val client: ContentApiClient = LiveContentApi
 }

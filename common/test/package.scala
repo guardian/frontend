@@ -49,12 +49,6 @@ trait TestSettings {
       "YOU ARE NOT USING THE CORRECT ELASTIC SEARCH LIVE CONTENT API HOST"
     )
 
-    verify(
-      Configuration.contentApi.contentApiDraftHost,
-      "c7e9bfe7adf05f897f2b639a25f5aac89abd3592c07028f54ea2e7ea8f639fcd",
-      "YOU ARE NOT USING THE CORRECT ELASTIC SEARCH DRAFT CONTENT API HOST"
-    )
-
     Configuration.contentApi.key.map { k =>
         verify(
           k,

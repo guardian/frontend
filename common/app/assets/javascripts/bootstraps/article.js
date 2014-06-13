@@ -8,8 +8,9 @@ define([
     'common/modules/article/twitter',
     'common/modules/discussion/loader',
     'common/modules/open/cta',
-    'common/modules/experiments/layoutHints',
-    'common/bootstraps/liveblog'
+    'common/bootstraps/liveblog',
+    'common/modules/article/world-cup',
+    'lodash/collections/contains'
 
 ], function (
     common,
@@ -21,8 +22,9 @@ define([
     twitter,
     DiscussionLoader,
     OpenCta,
-    Layout,
-    LiveBlog
+    LiveBlog,
+    worldCup,
+    _contains
 ) {
 
     var modules = {
@@ -64,21 +66,21 @@ define([
             });
         },
 
-        initLayoutHints: function(config) {
-            /* jshint nonew: false */
-            /* TODO - fix module constructors so we can remove the above jshint override */
-            if(config.switches.layoutHints && /\/-sp-/g.test(config.page.pageId)) {
-                new Layout(config);
-            }
-        },
-
-
         initTruncateAndTwitter: function() {
             mediator.on('page:article:ready', function() {
                 // Ensure that truncation occurs before the tweet upgrading.
                 truncate();
                 twitter.enhanceTweets();
             });
+        },
+
+        initWorldCup: function(config) {
+            // Only add the world cup container on pages with the world cup keyword.
+            var pageTags = config.page.keywordIds.split(',');
+
+            if (config.switches.worldcupArticleContainer && _contains(pageTags,'football/world-cup-2014')) {
+                worldCup();
+            }
         }
     };
 
@@ -89,8 +91,8 @@ define([
             modules.initDiscussion();
             modules.initOpen(config);
             modules.initFence();
-            modules.initLayoutHints(config);
             modules.initTruncateAndTwitter();
+            modules.initWorldCup(config);
         }
         common.mediator.emit('page:article:ready', config, context);
     };

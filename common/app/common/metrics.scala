@@ -367,12 +367,19 @@ object FaciaToolMetrics {
     "Number of times facia-tool has failed to made the request for SEO purposes of webTitle and section"
   )
 
+  object ContentApiFallbacks extends SimpleCountMetric(
+    "facia-press-content-api",
+    "facia-press-content-api-fallbacks",
+    "Facia Content API Fall Backs",
+    "Number of queries to Content API that failed and were served by Memcached"
+  )
+
   val all: Seq[Metric] = Seq(
     ApiUsageCount, ProxyCount, ExpiredRequestCount,
     DraftPublishCount, ContentApiPutSuccess, ContentApiPutFailure,
     FrontPressSuccess, FrontPressFailure, FrontPressCronSuccess,
     FrontPressCronFailure, InvalidContentExceptionMetric,
-    ContentApiSeoRequestSuccess, ContentApiSeoRequestFailure
+    ContentApiSeoRequestSuccess, ContentApiSeoRequestFailure, ContentApiFallbacks
   ) ++ ContentApiMetrics.all ++ S3Metrics.all
 }
 
@@ -448,15 +455,26 @@ case class SimpleCountMetric(
   val currentCount = new AtomicLong(0)
   val `type` = "counter"
 
-  def increment() {
+  def increment(): Long = {
     count.incrementAndGet()
     currentCount.incrementAndGet()
   }
+
+  def add(value: Long): Long = {
+    count.addAndGet(value)
+    currentCount.getAndAdd(value)
+  }
+
 
   def getAndReset = currentCount.getAndSet(0)
   val getValue: () => Long = count.get
 
   override def asJson: StatusMetric = super.asJson.copy(count = Some(getValue().toString))
+
+}
+
+object SimpleCountMetric {
+  def apply(group: String, name: String, title: String): SimpleCountMetric = SimpleCountMetric(group, name, title, title)
 }
 
 class FrontendTimingMetric(

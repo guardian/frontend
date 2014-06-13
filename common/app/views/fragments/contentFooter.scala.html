@@ -13,14 +13,21 @@
 
     @if(content.isArticle && !content.shouldHideAdverts) {
         <div class="facia-container facia-container--layout-article facia-container--commercial">
-            @fragments.commercial.commercialComponent(name="merchandising-high", adType="commercial-component-high")
+            @fragments.commercial.commercialComponent("merchandising-high", Seq("commercial-component-high"))
         </div>
     }
 
+
+    @fragments.referredContentPlaceholder(content.visualTone)
     @fragments.storyPackagePlaceholder(storyPackage)
     @fragments.onwardPlaceholder(content.visualTone)
 
     <div class="js-repositioned-comments content__repositioned-comments"></div>
+
+    @if(WorldCupArticleContainerSwitch.isSwitchedOn) {
+        <aside class="you-may-have-missed js-world-cup facia-container facia-container--default-heading facia-container--layout-article tone-news" role="complementary">
+        </aside>
+    }
 
     <div class="facia-container facia-container--layout-article">
         @fragments.mostPopularPlaceholder(content.section, content.visualTone)
@@ -28,7 +35,7 @@
 
     @if(content.isArticle && !content.shouldHideAdverts) {
         <div class="facia-container facia-container--layout-article facia-container--commercial">
-            @fragments.commercial.commercialComponent(name = "merchandising", adType = "commercial-component")
+            @fragments.commercial.commercialComponent("merchandising", Seq("commercial-component"))
         </div>
     }
 

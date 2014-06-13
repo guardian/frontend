@@ -12,6 +12,8 @@ GET         /assets/*path                                                       
 GET         /ab.gif                                                                                                  controllers.DiagnosticsController.ab
 GET         /js.gif                                                                                                  controllers.DiagnosticsController.js
 GET         /count/$prefix<.+>.gif                                                                                   controllers.DiagnosticsController.analytics(prefix)
+GET         /freshness/front/*timestamp                                                                              controllers.FreshnessController.freshnessFront(timestamp)
+GET         /freshness/*timestamp                                                                                    controllers.FreshnessController.freshness(timestamp)
 
 # Discussion
 GET         /discussion/comment-box.json                                                                             controllers.DiscussionApp.commentBox()
@@ -34,6 +36,7 @@ GET         /discussion/$order<(oldest|newest)>/$discussionKey</?p/\w+>         
 
 GET         /discussion/profile/:id/discussions.json                                                                 controllers.DiscussionApp.profileDiscussions(id: String)
 GET         /discussion/profile/:id/replies.json                                                                     controllers.DiscussionApp.profileReplies(id: String)
+GET         /discussion/profile/:id/picks.json                                                                       controllers.DiscussionApp.profilePicks(id: String)
 
 GET         /open/cta/article/*discussionKey.json                                                                    controllers.CtaController.cta(discussionKey: discussion.model.DiscussionKey)
 
@@ -44,6 +47,7 @@ GET         /most-read/*path.json                                               
 GET         /most-read/*path                                                                                         controllers.MostPopularController.render(path)
 GET         /most-read-geo.json                                                                                      controllers.MostPopularController.renderPopularGeoJson()
 GET         /most-read-day.json                                                                                      controllers.MostPopularController.renderPopularDayJson(countryCode)
+GET         /most-referred.json                                                                                      controllers.MostPopularController.renderMostPopularReferralsJson()
 
 GET         /top-stories                                                                                             controllers.TopStoriesController.renderTopStories()
 GET         /top-stories.json                                                                                        controllers.TopStoriesController.renderTopStoriesJson()
@@ -136,9 +140,6 @@ GET         /ophan/pageviews/*path                                              
 GET         /ophan/pageviews                                                                                         controllers.admin.OphanApiController.platformPageViews()
 GET         /dev/switchboard                                                                                         controllers.admin.SwitchboardController.renderSwitchboard()
 POST        /dev/switchboard                                                                                         controllers.admin.SwitchboardController.save()
-GET         /analytics/kpis                                                                                          controllers.admin.AnalyticsController.kpis()
-GET         /analytics/pageviews                                                                                     controllers.admin.AnalyticsController.pageviews()
-GET         /analytics/browsers                                                                                      controllers.admin.AnalyticsController.browsers()
 GET         /analytics/abtests                                                                                       controllers.admin.AnalyticsController.abtests()
 GET         /metrics/loadbalancers                                                                                   controllers.admin.DashboardController.renderDashboard()
 GET         /metrics/googlebot/404                                                                                   controllers.admin.DashboardController.renderGooglebot404s()
@@ -242,16 +243,15 @@ GET         /sections.json                                                      
 # Facia
 GET         /                                                                                                        controllers.FaciaController.editionRedirect(path = "")
 GET         /$path<(lifeandstyle/love-and-sex|lifeandstyle/home-and-garden|world/asia|business/companies)>           controllers.FaciaController.renderFrontPressSpecial(path)
-GET         /$path<(\w+|(uk|au|us))?(/(culture|sport|commentisfree|business|money|travel|rss))?>                            controllers.FaciaController.renderFrontPress(path)
+GET         /$path<(\w+|(uk|au|us))?(/(culture|sport|commentisfree|business|money|travel|rss))?>                     controllers.FaciaController.renderFrontPress(path)
 
-GET        /*path/lite.json                                                     controllers.FaciaController.renderFrontJsonLite(path)
-
-GET        /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>/trails.json                 controllers.IndexController.renderTrailsJson(path)
-GET        /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>/trails                      controllers.IndexController.renderTrails(path)
-GET        /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>.json                        controllers.IndexController.renderJson(path)
-GET        /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>                             controllers.IndexController.render(path)
+GET         /*path/lite.json                                                                                         controllers.FaciaController.renderFrontJsonLite(path)
 
 GET         /container/*id.json                                                                                      controllers.FaciaController.renderContainerJson(id)
+GET         /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>/trails.json                                                     controllers.IndexController.renderTrailsJson(path)
+GET         /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>/trails                                                          controllers.IndexController.renderTrails(path)
+GET         /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>.json                                                            controllers.IndexController.renderJson(path)
+GET         /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>                                                                 controllers.IndexController.render(path)
 
 # Editionalised pages
 GET         /$path<[^/]+(/[^/]+)?>/rss                                                                               controllers.FaciaController.renderFrontRss(path)

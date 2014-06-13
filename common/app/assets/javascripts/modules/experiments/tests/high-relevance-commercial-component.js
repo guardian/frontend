@@ -28,6 +28,7 @@ define([
         this.canRun = function (config) {
             // only apply on fronts with at least 4 containers
             return (config.page.contentType === 'Tag' || config.page.isFront) &&
+                !config.page.hasPageSkin &&
                 qwery('.facia-container section.container').length >= 4 &&
                 ['desktop', 'wide'].indexOf(detect.getBreakpoint()) !== -1;
         };
