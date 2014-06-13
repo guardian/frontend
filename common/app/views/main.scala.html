@@ -33,7 +33,11 @@
                 @fragments.commercial.topBannerMobile()
             }
 
-            @fragments.localNav(metaData)
+            @if(NewMobileNavSwitch.isSwitchedOn){
+                @fragments.nav.newNav(metaData)
+            } else {
+                @fragments.localNav(metaData)
+            }
 
             @body
         </div>
