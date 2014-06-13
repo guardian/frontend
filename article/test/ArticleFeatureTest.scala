@@ -412,6 +412,16 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
       }
     }
 
+    scenario("SEO Thumbnail") {
+      HtmlUnit("/society/2013/mar/26/failing-hospitals-nhs-jeremy-hunt") { browser =>
+        import browser._
+        Then("the main picture should be hidden")
+        $("[itemprop='associatedMedia primaryImageOfPage']") should have size 0
+
+        findFirst("meta[name=thumbnail]").getAttribute("content") should include("sys-images/Guardian/Pix/pictures/2013/3/26/1364302888446/Jeremy-Hunt-005.jpg")
+      }
+    }
+
     scenario("Show main picture if video is further down article") {
       Given("I am on an article with a video further down inside the body")
       HtmlUnit("/music/musicblog/2013/mar/28/glastonbury-2013-lineup-everybody-happy") { browser =>
