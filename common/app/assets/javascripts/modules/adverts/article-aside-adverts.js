@@ -26,7 +26,6 @@ define([
             return false;
         }
 
-
         return $(this.config.adSlotContainerSelector)
             .append(dfp.createAdSlot('right', 'mpu-banner-ad'));
     };
