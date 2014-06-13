@@ -11,10 +11,13 @@ object UploadJob extends Logging {
 
     log.info("Uploading freshness metrics")
 
+    val frontCount = frontFreshnessCount.getAndReset
+    val averageFrontFreshness = frontFreshnessTotal.getAndReset / (if (frontCount == 0) 1 else frontCount)
+
     val metrics = FreshnessMetrics.all.map{ metric =>
       s"${metric.group}-${metric.name}" -> metric.getAndReset.toDouble
     } ++ Seq(
-      "front-freshness" -> (frontFreshnessTotal.getAndReset / frontFreshnessCount.getAndReset).toDouble
+      "front-freshness" -> averageFrontFreshness.toDouble
     )
 
     // Cloudwatch will not take more than 20 metrics at a time

@@ -15,7 +15,9 @@ object Static extends Assets(Configuration.assets.path)
 
 object RequestMeasurementMetrics extends RequestMetrics.Standard
 
-object Gzipper extends GzipFilter()
+object Gzipper extends GzipFilter(
+  shouldGzip = (req, resp) => !resp.headers.get("Content-Type").exists(_.startsWith("image/"))
+)
 
 object Filters {
   lazy val common: List[EssentialFilter] = Gzipper :: RequestMeasurementMetrics.asFilters

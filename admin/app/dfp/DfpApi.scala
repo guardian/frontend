@@ -36,16 +36,61 @@ object DfpApi extends Logging {
       None
   }
 
-  def fetchCurrentLineItems(): Seq[LineItem] = dfpSession.fold(Seq[LineItem]()) { session =>
-
+  def getAllCurrentDfpLineItems() = dfpSession.fold(Seq[DfpApiLineItem]()) {session =>
     val currentLineItems = new StatementBuilder()
       .where("status = :readyStatus OR status = :deliveringStatus")
       .orderBy("id ASC")
       .withBindVariableValue("readyStatus", ComputedStatus.READY.toString)
       .withBindVariableValue("deliveringStatus", ComputedStatus.DELIVERING.toString)
 
-    val lineItems = DfpApiWrapper.fetchLineItems(session, currentLineItems)
+    DfpApiWrapper.fetchLineItems(session, currentLineItems)
+  }
 
+  private def onlyWithPageSkins(lineItems: Seq[DfpApiLineItem]) = {
+    def hasA1x1Pixel(placeholders: Array[CreativePlaceholder]): Boolean = {
+      val outOfPagePlaceholder: Array[CreativePlaceholder] = for {
+        placeholder <- placeholders
+        companion <- placeholder.getCompanions
+        if (companion.getSize().getHeight() == 1 && companion.getSize().getWidth() == 1)
+      } yield companion
+      outOfPagePlaceholder.nonEmpty
+    }
+
+    lineItems.filter(
+      item => item.getRoadblockingType == RoadblockingType.CREATIVE_SET &&
+        hasA1x1Pixel(item.getCreativePlaceholders) &&
+        item.getTargeting.getInventoryTargeting.getTargetedAdUnits.size > 0
+    )
+  }
+
+  def fetchAdUnitsThatAreTargettedByPageSkins(lineItems: Seq[DfpApiLineItem]): Seq[String] = dfpSession.fold(Seq[String]()) { session =>
+
+    val allAdUnitIds: Seq[String] = onlyWithPageSkins(lineItems).flatMap { item =>
+      item.getTargeting.getInventoryTargeting.getTargetedAdUnits.toList.map(item => item.getAdUnitId)
+    }.distinct
+
+    val adUnits: Seq[AdUnit] = getAdUnitsForTheseIds(allAdUnitIds)
+
+    // we don't serve pageskins to anything other than fronts.
+    val validAdUnits: Seq[AdUnit] = adUnits.filter(_.getName == "front")
+
+    validAdUnits.map(unit => {
+      def removeCustomerIdentifierFromPath(i: AdUnit) = i.getParentPath.tail
+
+      val adUnitPathElements = removeCustomerIdentifierFromPath(unit).map(_.getName) :+ unit.getName
+      adUnitPathElements.mkString("/")
+    })
+  }
+
+  def getAdUnitsForTheseIds(adUnitIds: Seq[String]): Seq[AdUnit] = dfpSession.fold(Seq[AdUnit]()) { session =>
+    val statement: String = "id IN ('" + adUnitIds.mkString("', '") + "')"
+    val adUnitTargetingQuery: StatementBuilder = new StatementBuilder()
+      .where(statement)
+
+    DfpApiWrapper.fetchAdUnitTargetingObjects(session, adUnitTargetingQuery)
+  }
+
+  def wrapIntoDomainLineItem(lineItems: Seq[DfpApiLineItem]): Seq[LineItem] = dfpSession.fold(Seq[LineItem]()) { session =>
     val customTargetingKeys = new StatementBuilder()
       .where("displayName = :keywordTargetName OR displayName = :slotTargetName")
       .withBindVariableValue("keywordTargetName", "Keywords")
@@ -55,10 +100,9 @@ object DfpApi extends Logging {
       k.getId.longValue() -> k.getName
     }.toMap
 
+    val targetingKeysStatement = "('" + targetingKeys.map(_._1).mkString("', '") + "')"
     val customTargetingValues = new StatementBuilder()
-      .where("customTargetingKeyId = :keywordTargetId OR customTargetingKeyId = :slotTargetId")
-      .withBindVariableValue("keywordTargetId", targetingKeys.head._1)
-      .withBindVariableValue("slotTargetId", targetingKeys.last._1)
+      .where("customTargetingKeyId IN " + targetingKeysStatement )
 
     val targetingValues = DfpApiWrapper.fetchCustomTargetingValues(session, customTargetingValues).map { v =>
       v.getId.longValue() -> v.getName

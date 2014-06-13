@@ -263,16 +263,7 @@ define([
             }, audienceScienceGateway.getSegments(), criteo.getSegments());
         },
         buildAdUnit = function (config) {
-            var isFront      = config.page.isFront || config.page.contentType === 'Section',
-                section      = config.page.section,
-                adUnitSuffix = section;
-            if (isFront) {
-                if (section !== '') {
-                    adUnitSuffix += '/';
-                }
-                adUnitSuffix += 'front';
-            }
-            return '/' + config.page.dfpAccountId + '/' + config.page.dfpAdUnitRoot + '/' + adUnitSuffix;
+            return '/' + config.page.dfpAccountId + '/' + config.page.dfpAdUnitRoot + '/' + config.page.adUnitSuffix;
         },
         createAdSlot = function(name, types, keywords) {
             var definition = adSlotDefinitions[name],
