@@ -8,7 +8,9 @@
 .local-navigation,
 .local-navigation__children {
     overflow: hidden;
-    height: 1.3em;
+    @include rem((
+        height: 1.3em
+    ));
 }
 
 .local-navigation,
@@ -38,11 +40,15 @@
     background: #dddddd;
     float: left;
     font-weight: bold;
-    margin-right: 10px;
+    @include rem((
+        margin-right: $gs-gutter/2
+    ));
 }
 .local-navigation__children {}
 .local-navigation__child {
-    margin-right: 1em;
+    @include rem((
+        margin-right: $gs-gutter/2
+    ));
     display: inline-block;
     float: left;
 }
@@ -50,12 +56,13 @@
     background: #dddddd;
 }
 
-
 .global-navigation {}
 
 .global-navigation__section {
     float: left;
-    margin-right: 1em;
+    @include rem((
+        margin-right: $gs-gutter/2
+    ));
 }
 .global-navigation__title {
     float: left;
@@ -84,7 +91,9 @@
     }
     .global-navigation {
         clear: both;
-        padding-top: 1em;
+        @include rem((
+            padding-top: 1em
+        ));
     }
     .global-navigation__child {
         float: left;
@@ -97,8 +106,10 @@
     .global-navigation__section {
         clear: both;
         float: none;
-        margin-bottom: 1em;
-        margin-right: 0;
+        @include rem((
+            margin-bottom: $gs-gutter/2,
+            margin-right: 0
+        ));
         overflow: hidden;
         border-top: 1px solid #eee;
     }
@@ -107,11 +118,15 @@
     }
     .global-navigation__children {
         display: table-cell;
-        width: 100000px;
+        @include rem((
+            width: gs-span(10)
+        ));
         max-width: 100%;
     }
     .global-navigation__child {
-        margin-top: .25em;
+        @include rem((
+            margin-top: $gs-gutter/8
+        ));
     }
 
     @include mq(tablet) {
