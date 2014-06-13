@@ -4,9 +4,9 @@
     @tableView(competition, group,
         highlightTeamId = highlightTeamId,
         heading = if (competition.url == "/football/world-cup-2014" && Switches.WorldCupWallchartEmbedSwitch.isSwitchedOn) {
-            Option(group.round.name.map(n => n).getOrElse(competition.fullName))
+            group.round.name.orElse(Some(competition.fullName))
         } else {
-            Option(competition.fullName)
+            Some(competition.fullName)
         },
         linkToCompetition = true
     )
