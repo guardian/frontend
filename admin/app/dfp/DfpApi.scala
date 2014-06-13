@@ -8,8 +8,10 @@ import com.google.api.ads.dfp.axis.v201403.{LineItem => DfpApiLineItem}
 import com.google.api.ads.dfp.lib.client.DfpSession
 import common.Logging
 import conf.AdminConfiguration
+import implicits.Collections
+import scala.collection.immutable.Iterable
 
-object DfpApi extends Logging {
+object DfpApi extends Logging with Collections{
 
   private lazy val dfpSession: Option[DfpSession] = try {
     for {
@@ -83,34 +85,33 @@ object DfpApi extends Logging {
   }
 
   def getAdUnitsForTheseIds(adUnitIds: Seq[String]): Seq[AdUnit] = dfpSession.fold(Seq[AdUnit]()) { session =>
-    val statement: String = "id IN ('" + adUnitIds.mkString("', '") + "')"
     val adUnitTargetingQuery: StatementBuilder = new StatementBuilder()
-      .where(statement)
+      .where("id IN " + adUnitIds.toStringWithRoundBrackets)
 
     DfpApiWrapper.fetchAdUnitTargetingObjects(session, adUnitTargetingQuery)
   }
 
-  def wrapIntoDomainLineItem(lineItems: Seq[DfpApiLineItem]): Seq[LineItem] = dfpSession.fold(Seq[LineItem]()) { session =>
-    val customTargetingKeys = new StatementBuilder()
-      .where("displayName = :keywordTargetName OR displayName = :slotTargetName")
-      .withBindVariableValue("keywordTargetName", "Keywords")
-      .withBindVariableValue("slotTargetName", "Slot")
+  def hydrateWithUsableValues(lineItems: Seq[DfpApiLineItem]): Seq[LineItem] = dfpSession.fold(Seq[LineItem]()) { session =>
+    val namesOfRelevantTargetingKeys: List[String] = List("Keywords", "Slot", "Series")
+    val getRelevantTargetingKeyObjects = new StatementBuilder()
+      .where("displayName IN " + namesOfRelevantTargetingKeys.toStringWithRoundBrackets)
 
-    val targetingKeys = DfpApiWrapper.fetchCustomTargetingKeys(session, customTargetingKeys).map { k =>
+    val relevantTargetingKeys = DfpApiWrapper.fetchCustomTargetingKeys(session, getRelevantTargetingKeyObjects).map { k =>
       k.getId.longValue() -> k.getName
     }.toMap
 
-    val targetingKeysStatement = "('" + targetingKeys.map(_._1).mkString("', '") + "')"
-    val customTargetingValues = new StatementBuilder()
-      .where("customTargetingKeyId IN " + targetingKeysStatement )
+    val idsOfRelevantTargetingKeys: Seq[String] = relevantTargetingKeys.map(_._1.toString).toSeq
 
-    val targetingValues = DfpApiWrapper.fetchCustomTargetingValues(session, customTargetingValues).map { v =>
+    val getAllRelevantCustomTargetingValues = new StatementBuilder()
+      .where("customTargetingKeyId IN " + idsOfRelevantTargetingKeys.toStringWithRoundBrackets)
+
+    val relevantTargetingValues = DfpApiWrapper.fetchCustomTargetingValues(session, getAllRelevantCustomTargetingValues).map { v =>
       v.getId.longValue() -> v.getName
     }.toMap
 
     lineItems.filter { lineItem =>
       lineItem.getTargeting != null && lineItem.getTargeting.getCustomTargeting != null
-    } flatMap (lineItem => addTargetSets(lineItem, targetingKeys, targetingValues))
+    } flatMap (lineItem => addTargetSets(lineItem, relevantTargetingKeys, relevantTargetingValues))
   }
 
   private def addTargetSets(lineItem: DfpApiLineItem,
@@ -157,4 +158,14 @@ object DfpApi extends Logging {
   def fetchAdvertisementFeatureKeywords(lineItems: Seq[LineItem]): Seq[String] = {
     lineItems flatMap (_.advertisementFeatureKeywords)
   }
+
+  def fetchSponsoredSeriesTags(lineItems: Seq[LineItem]): Seq[String] = {
+    lineItems flatMap (_.sponsoredSeriesTags)
+  }
+
+  def fetchAdvertisementFeatureSeriesTags(lineItems: Seq[LineItem]): Seq[String] = {
+    lineItems flatMap (_.advertisementFeatureSeriesTags)
+  }
+
+
 }

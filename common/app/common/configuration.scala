@@ -202,8 +202,14 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
       s"${environment.stage.toUpperCase}/commercial/dfp/sponsored-keywords.json"
     lazy val dfpAdvertisementFeatureKeywordsDataKey =
       s"${environment.stage.toUpperCase}/commercial/dfp/advertisement-feature-keywords.json"
+    lazy val dfpSponsoredSeriesTagsDataKey =
+      s"${environment.stage.toUpperCase}/commercial/dfp/sponsored-series-tags.json"
+    lazy val dfpAdvertisementFeatureSeriesTagsDataKey =
+      s"${environment.stage.toUpperCase}/commercial/dfp/advertisement-feature-series-tags.json"
     lazy val dfpPageSkinnedAdUnitsKey =
       s"${environment.stage.toUpperCase}/commercial/dfp/pageskinned-adunits.json"
+    lazy val dfpLineItemsKey =
+      s"${environment.stage.toUpperCase}/commercial/dfp/lineitems.json"
   }
 
   object open {
