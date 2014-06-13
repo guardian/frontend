@@ -1,17 +1,24 @@
 .render-time--ad__form {
+    padding-left: 55px;
     margin-bottom: 0;
 }
-.render-time--ad__form select {
-    margin-bottom: 0;
+.render-time--ad__form__label {
+    font-weight: bold;
+    font-size: 1.3em;
 }
+.render-time--ad__form__select {
+    margin-bottom: 0;
+    margin-left: 10px;
+}
+
 .render-time {
-    background: no-repeat 50% 50%;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    margin-bottom: 30px;
 }
-.graph-loading {
-    background-image: url('/public/images/ajax-loader.gif');
+.render-time.ajax-loading {
     padding-bottom: 200px;
 }
-.graph-failed {
-    background-image: url('/public/images/ajax-loader.gif');
+.render-time.ajax-failed {
     padding-bottom: 200px;
 }

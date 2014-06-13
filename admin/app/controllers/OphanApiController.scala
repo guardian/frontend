@@ -20,7 +20,7 @@ object OphanApiController extends Controller with ExecutionContexts {
     OphanApi.getAdsRenderTime(platform) map (body => NoCache(Ok(body) as "application/json"))
   }
 
-  def adRenderTime(platform: String, adSlot: String) = Authenticated.async { request =>
+  def adRenderTime(adSlot: String, platform: String) = Authenticated.async { request =>
     OphanApi.getAdsRenderTime(platform, adSlot) map (body => NoCache(Ok(body) as "application/json"))
   }
 

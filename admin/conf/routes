@@ -27,10 +27,10 @@ GET         /api/item/*path               controllers.admin.Api.item(path, callb
 GET         /json/proxy/*absUrl           controllers.admin.Api.json(absUrl)
 
 # Ophan proxying for https
-GET         /ophan/pageviews/*path        controllers.admin.OphanApiController.pageViews(path)
-GET         /ophan/pageviews              controllers.admin.OphanApiController.platformPageViews()
-GET         /ophan/ads/render-time        controllers.admin.OphanApiController.adsRenderTime(platform)
-GET         /ophan/ads/render-time        controllers.admin.OphanApiController.adRenderTime(platform, adSlot)
+GET         /ophan/pageviews/*path            controllers.admin.OphanApiController.pageViews(path)
+GET         /ophan/pageviews                  controllers.admin.OphanApiController.platformPageViews()
+GET         /ophan/ads/render-time            controllers.admin.OphanApiController.adsRenderTime(platform)
+GET         /ophan/ads/render-time/:adSlot    controllers.admin.OphanApiController.adRenderTime(adSlot, platform)
 
 #Development endpoints
 GET         /dev/switchboard              controllers.admin.SwitchboardController.renderSwitchboard()

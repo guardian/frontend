@@ -43,7 +43,7 @@ object OphanApi extends ExecutionContexts with Logging {
 
   def getAdsRenderTime(platform: String): Future[JsValue] = getBody(s"ads/render-time?platform=${platform}&hours=24")
 
-  def getAdsRenderTime(slotName: String, platform: String): Future[JsValue] =
+  def getAdsRenderTime(platform: String, slotName: String): Future[JsValue] =
     getBody(s"ads/render-time?platform=${platform}&hours=24&ad-slot=$slotName")
 
 }

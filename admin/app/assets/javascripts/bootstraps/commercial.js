@@ -1,11 +1,13 @@
 define([
     'qwery',
     'bean',
+    'lodash/arrays/first',
     'common/$',
     'common/utils/ajax'
 ], function(
     qwery,
     bean,
+    first,
     $,
     ajax
 ) {
@@ -15,50 +17,50 @@ define([
         var $adsRenderTime = $('.render-time--ads'),
             $adRenderTime = $('.render-time--ad');
 
-        $adsRenderTime.addClass('graph-loading');
+        $adsRenderTime
+            .removeClass('ajax-failed')
+            .addClass('ajax-loading');
         ajax({
             url: '/ophan/ads/render-time?platform=next-gen',
             type: 'json'
-        }).then(
-            function(nextGenData) {
-                ajax({
-                    url: '/ophan/ads/render-time?platform=r2',
-                    type: 'json'
-                }).then(function(r2Data) {
+        }).then(function(nextGenData) {
+            ajax({
+                url: '/ophan/ads/render-time?platform=r2',
+                type: 'json'
+            }).then(function(r2Data) {
+                var graphData = [['Time', 'Next-Gen', 'R2']].concat(nextGenData.buckets.map(function(bucket, i) {
+                    return [
+                        new Date(bucket.time),
+                        bucket.avgTimeToRenderEnded/1000,
+                        first(r2Data.buckets, {time: bucket.time}).avgTimeToRenderEnded || 0
+                    ];
+                }));
 
-                    var graphData = [['Time', 'R2', 'Next-Gen']].concat(nextGenData.buckets.map(function(bucket, i) {
-                        return [
-                            new Date(bucket.time),
-                            (r2Data.buckets[i].avgTimeToRenderEnded)/1000,
-                            bucket.avgTimeToRenderEnded/1000
-                        ];
-                    }));
+                new google.visualization.LineChart(qwery('#render-time--ads__graph')[0])
+                    .draw(google.visualization.arrayToDataTable(graphData), {
+                        fontName: 'Georgia',
+                        title: 'Average render time across all ad slots (secs)',
+                        titleTextStyle: {fontName: 'Georgia', color: '#222', italic: true, bold: false},
+                        vAxis: {format: '#,###'},
+                        hAxis: {format: 'HH:mm'}
+                    });
 
-                    new google.visualization.LineChart(qwery('#render-time--ads__graph')[0])
-                        .draw(google.visualization.arrayToDataTable(graphData), {
-                            fontName: 'Georgia',
-                            title: 'Ads\' average render time (secs)',
-                            titleTextStyle: {fontName: 'Georgia', color: '#222', italic: true, bold: false},
-                            vAxis: {format: '#,###'},
-                            hAxis: {format: 'HH:mm'}
-                        });
-
-                }).always(function() {
-                    $adsRenderTime.removeClass('graph-loading');
-                }).fail(function() {
-                    $adsRenderTime.addClass('graph-failed');
-                })
-            }
-        );
+            }).always(function() {
+                $adsRenderTime.removeClass('ajax-loading');
+            }).fail(function() {
+                $adsRenderTime.addClass('ajax-failed');
+            })
+        });
 
         function daramAdRenderTime(adSlotName) {
 
-            $adRenderTime.addClass('graph-loading');
+            $adRenderTime
+                .removeClass('ajax-failed')
+                .addClass('ajax-loading');
             ajax({
-                url: '/ophan/ads/render-time?platform=next-gen&ad-slot=' + adSlotName,
+                url: '/ophan/ads/render-time/' + adSlotName + '?platform=next-gen',
                 type: 'json'
             }).then(function(data) {
-
                 var graphData = [['Time', 'Next-Gen']].concat(data.buckets.map(function(bucket) {
                     return [
                         new Date(bucket.time),
@@ -70,19 +72,25 @@ define([
                     .draw(google.visualization.arrayToDataTable(graphData), {
                         fontName: 'Georgia',
                         legend: 'none',
-                        title: 'Ad\'s average render time (secs)',
+                        title: 'Average render time for a particular ad slot (secs)',
                         titleTextStyle: {fontName: 'Georgia', color: '#222', italic: true, bold: false},
                         vAxis: {format: '#,###'},
-                        hAxis: {format: 'HH:mm'}
+                        hAxis: {format: 'HH:mm'},
+                        trendlines: {0: {type: 'exponential', color: '#0f0'}}
                     });
             }).always(function() {
-                $adRenderTime.removeClass('graph-loading');
+                $adRenderTime.removeClass('ajax-loading');
             }).fail(function() {
-                $adRenderTime.addClass('graph-failed');
+                $adRenderTime.addClass('ajax-failed');
             })
         };
 
-        var $select = $.create('<select></select>');
+        var $select = $.create('<select></select>')
+                .addClass('render-time--ad__form__select'),
+            $label = $.create('<label></label>')
+                .addClass('render-time--ad__form__label')
+                .text('Ad slot:')
+                .append($select);
         [
             'top-above-nav',
             'top',
@@ -93,14 +101,14 @@ define([
             'merchandising'
         ].forEach(function(adSlotName, i) {
                 $.create('<option></option>')
-                    .val(adSlotName)
+                    .val('dfp-ad--' + adSlotName)
                     .text(adSlotName)
                     .attr('selected', i === 0)
                     .appendTo($select);
             });
         $.create('<form></form>')
             .addClass('render-time--ad__form')
-            .append($select)
+            .append($label)
             .prependTo(qwery('.render-time--ad')[0]);
 
         bean.on($select[0], 'change', function(e) {

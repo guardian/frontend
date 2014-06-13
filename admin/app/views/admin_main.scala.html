@@ -26,6 +26,10 @@
         <link href="@routes.Assets.at("javascripts/components/bootstrap.css/css/bootstrap.css")" rel="stylesheet" />
         <link href="@routes.Assets.at("javascripts/components/bootstrap.css/css/bootstrap-responsive.css")" rel="stylesheet" />
         <link href="@routes.Assets.at("css/admin.css")" rel="stylesheet">
+        <style>
+            .ajax-loading { background-image: url('@routes.Assets.at("images/ajax-loader.gif")'); }
+            .ajax-failed { background-image: url('@routes.Assets.at("images/ajax-failed.png")'); }
+        </style>
 
         @if(hasCharts){
             <script type="text/javascript" src="https://www.google.com/jsapi"></script>
