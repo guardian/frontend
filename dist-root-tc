@@ -6,7 +6,7 @@ set -o errexit
 
 # Skip test whilst debugging.
 ./sbt-tc "project root" compile dist
-./grunt-tc clean validate:js test:unit emitAbTestInfo
+./grunt-tc clean validate:js test:unit compile emitAbTestInfo
 
 echo "Disting everything."
 rm -rf "dist"
@@ -17,8 +17,6 @@ configurations="admin applications archive article commercial diagnostics discus
 for config in $configurations
 do
     echo "Dist for $config"
-
-    ./grunt-tc clean compile:$config
 
     # Generate folder for the application zip.
     app_folder="dist/$config"
