@@ -10,7 +10,19 @@ import play.api.libs.concurrent.Akka
 import play.api.libs.json.JsObject
 import com.gu.openplatform.contentapi.model.Asset
 import conf.Switches
-import services.{DraftCollections, LiveCollections, ConfigAgent}
+import services.{S3FrontsApi, DraftCollections, LiveCollections, ConfigAgent}
+import scala.util.{Success, Failure}
+
+case class PressCommand(ids: Set[String], live: Boolean = false, draft: Boolean = false) {
+  def withPressLive(b: Boolean = true): PressCommand = this.copy(live=b)
+  def withPressDraft(b: Boolean = true): PressCommand = this.copy(draft=b)
+}
+
+object PressCommand {
+  def forOneId(id: String): PressCommand = PressCommand(Set(id))
+}
+
+case class PressResult(liveJson: Option[Set[JsObject]], draftJson: Option[Set[JsObject]])
 
 trait FrontPress extends Logging {
 
