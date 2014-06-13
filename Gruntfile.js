@@ -875,34 +875,19 @@ module.exports = function (grunt) {
 
     // Test tasks
     grunt.registerTask('test:integration', function(app) {
-        if (!app) {
-            grunt.fail.fatal('No app specified.');
-        }
-        // does a casperjs setup exist for this app
-        grunt.config.requires(['casperjs', app]);
+        app = app || 'all';
         grunt.config('casperjsLogFile', app + '.xml');
         grunt.task.run(['env:casperjs', 'casperjs:' + app]);
     });
     grunt.registerTask('test:unit', function(app) {
-        var apps = [];
-        // have we supplied an app
-        if (app) {
-            // does a karma setup exist for this app
-            if (!grunt.config('karma')[app]) {
-                grunt.log.warn('No tests for app "' + app + '"');
-                return true;
-            }
-            apps = [app];
-        } else { // otherwise run all
-            apps = Object.keys(grunt.config('karma')).filter(function(app) { return app !== 'options'; });
-        }
         grunt.config.set('karma.options.singleRun', (singleRun === false) ? false : true);
-        apps.forEach(function(app) {
-            grunt.task.run(['karma:' + app]);
-        });
+        if (app) {
+            grunt.task.run('karma:' + app);
+        } else {
+            grunt.task.run('karma');
+        }
     });
-    // TODO - don't have common as default?
-    grunt.registerTask('test', ['jshint:common', 'test:unit:common', 'test:integration:common']);
+    grunt.registerTask('test', ['test:unit', 'test:integration:all']);
 
     // Analyse tasks
     grunt.registerTask('analyse:performance', function(app) {
