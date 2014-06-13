@@ -52,18 +52,13 @@ $c-soulmates-red: #d70851;
     }
     .commercial__body {
         @include rem((
-            padding: $gs-gutter/2 0
+            padding: 0 0 $gs-baseline
         ));
         position: relative;
     }
     .lineitems {
-        @include rem((
-            margin-top: $gs-baseline
-        ));
-
         @include mq(tablet) {
             float: left;
-            margin: 0;
         }
     }
     .lineitem {
@@ -76,12 +71,6 @@ $c-soulmates-red: #d70851;
 
         &:nth-child(n+3) {
             display: none;
-        }
-        &:nth-child(2n) .lineitem__link:before {
-            background-color: #5994dd;
-        }
-        &:nth-child(3n) .lineitem__link:before {
-            background-color: #039763;
         }
         @include mq(mobileLandscape) {
             width: 25%;
@@ -110,28 +99,6 @@ $c-soulmates-red: #d70851;
         margin: 0 auto;
         position: relative;
         float: none;
-
-        &:before {
-            content: ' ';
-            background-color: #d80457;
-            margin-left: -44px;
-            padding: 1px;
-            width: 88px;
-            height: 108px;
-            position: absolute;
-            left: 50%;
-            z-index: 1;
-            @include transform(rotate(-4deg));
-        }
-    }
-    .lineitem__image {
-        background-color: #ffffff;
-        position: relative;
-        z-index: 2;
-        @include box-shadow(2px 2px 0 0 rgba(#000000, .15));
-        @include rem((
-            padding: $gs-baseline/3 $gs-gutter/5
-        ));
     }
     .lineitem__title {
         @include fs-bodyHeading(1, $size-only: true);
@@ -259,6 +226,11 @@ $c-soulmates-red: #d70851;
                 width: gs-span(2) + $gs-gutter
             ));
         }
+        .commercial__body {
+            @include rem((
+                padding: $gs-baseline 0
+            ));
+        }
         .commercial__buy-now-button {
             left: auto;
             right: auto;
@@ -298,6 +270,11 @@ $c-soulmates-red: #d70851;
         }
         .commercial__head {
             position: static;
+        }
+        .commercial__body {
+            @include rem((
+                padding: $gs-baseline 0
+            ));
         }
         .commercial__buy-now-button {
             left: auto;
