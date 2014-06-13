@@ -1,13 +1,5 @@
 @charset 'UTF-8';
 
-/* ==========================================================================
-   Variables and mixins
-   ========================================================================== */
-
-@import '_vars';
-@import '_mixins';
-@import '_extends-only';
-
 @import 'module/commercial/_commercial-component';
 @import 'module/commercial/_dfp-component.scss';
 @import 'module/commercial/_bestbuys';

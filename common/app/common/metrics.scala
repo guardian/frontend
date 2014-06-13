@@ -460,7 +460,10 @@ case class SimpleCountMetric(
     currentCount.incrementAndGet()
   }
 
-  def add(value: Long): Long = count.addAndGet(value)
+  def add(value: Long): Long = {
+    count.addAndGet(value)
+    currentCount.getAndAdd(value)
+  }
 
 
   def getAndReset = currentCount.getAndSet(0)

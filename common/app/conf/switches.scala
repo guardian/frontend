@@ -44,9 +44,8 @@ object Switches extends Collections {
 
   private lazy val never = new DateMidnight(2100, 1, 1)
 
-  // this is 3 months - at the end of this a decision is expected
-  // and one (or both) of the 2 needs to go.
-  private lazy val profilingEvalDeadline = new DateMidnight(2014, 6, 17)
+  // Waiting for an answer from Australian office, due imminently.
+  private lazy val profilingEvalDeadline = new DateMidnight(2014, 6, 25)
 
 
   // Load Switches
@@ -132,7 +131,7 @@ object Switches extends Collections {
 
   val ForcePageSkinSwitch = Switch("Advertising", "force-page-skin",
     "Temp switch, allows us to force the page into 'page skin' mode",
-    safeState = Off, sellByDate = new DateMidnight(2014, 6, 14)
+    safeState = Off, sellByDate = new DateMidnight(2014, 6, 25)
   )
 
   // Ad Targeting
@@ -295,6 +294,11 @@ object Switches extends Collections {
     safeState = On, sellByDate = new DateMidnight(2014, 6, 30)
   )
 
+  val NewMobileNavSwitch = Switch("Feature Switches", "new-navigation",
+    "If this switch is turned on then the new navigation will be displayed on mobiles and tablets",
+    safeState = Off, sellByDate = new DateMidnight(2014, 7, 8)
+  )
+
   val EnhanceTweetsSwitch = Switch("Feature Switches", "enhance-tweets",
     "If this switch is turned on then embedded tweets will be enhanced using Twitter's widgets.",
     safeState = Off, sellByDate = never
@@ -419,6 +423,11 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 7, 31)
   )
 
+  val LargerArticleImageSwitch = Switch("Image Server", "larger-article-image",
+    "If this switch is on images then articles will get a 460px image as the low-res version.",
+    safeState = On, sellByDate = new DateMidnight(2014, 6, 20)
+  )
+
   val all: List[Switch] = List(
     AutoRefreshSwitch,
     DoubleCacheTimesSwitch,
@@ -471,6 +480,7 @@ object Switches extends Collections {
     FaciaToolContainerTagsSwitch,
     RssLinkSwitch,
     EnhanceTweetsSwitch,
+    NewMobileNavSwitch,
     WorldCupWallchartEmbedSwitch,
     WorldCupArticleContainerSwitch,
     IndiaRegionSwitch,
@@ -487,7 +497,8 @@ object Switches extends Collections {
     FeaturesAutoContainerSwitch,
     ForcePageSkinSwitch,
     ParameterlessImagesSwitch,
-    FreshnessLoggingSwitch
+    FreshnessLoggingSwitch,
+    LargerArticleImageSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }

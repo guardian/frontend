@@ -1,6 +1,6 @@
 package views.support
 
-import model.{ImageContainer, ImageAsset}
+import model.{Content, MetaData, ImageContainer, ImageAsset}
 import conf.Switches.{ImageServerSwitch, ParameterlessImagesSwitch}
 import java.net.URI
 import conf.Configuration
@@ -112,5 +112,12 @@ object ImgSrc {
     }
   }
 
+}
+
+object SeoThumbnail {
+  def apply(metadata: MetaData): Option[String] = metadata match {
+    case content: Content => content.thumbnail.flatMap(Item620.bestFor)
+    case _ => None
+  }
 }
 
