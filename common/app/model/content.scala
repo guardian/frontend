@@ -293,16 +293,12 @@ object Content {
 
 private object ArticleSchemas {
   def apply(article: Article): String = {
-    // http://schema.org/Article
+    // http://schema.org/NewsArticle
     // http://schema.org/Review
     if (article.isReview)
       "http://schema.org/Review"
-    else if (article.isBlog)
-      "http://schema.org/BlogPosting"
-    else if (article.visualTone == Tags.VisualTone.News)
-      "http://schema.org/NewsArticle"
     else
-      "http://schema.org/Article"
+      "http://schema.org/NewsArticle"
   }
 }
 
