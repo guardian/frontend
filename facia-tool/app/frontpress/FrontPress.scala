@@ -79,6 +79,35 @@ trait FrontPress extends Logging {
       json
     }
 
+  def press(pressCommand: PressCommand): Future[PressResult] = {
+    ConfigAgent.refreshAndReturn() flatMap { _ =>
+      val paths: Set[String] = for {
+        id <- pressCommand.ids
+        path <- ConfigAgent.getConfigsUsingCollectionId(id)
+      } yield path
+
+      lazy val draftPress: Future[Set[JsObject]]  = if (pressCommand.draft) Future.sequence(paths.map(pressDraftByPathId)) else Future.successful(Set.empty)
+      lazy val livePress: Future[Set[JsObject]]   = if (pressCommand.live) Future.sequence(paths.map(pressLiveByPathId)) else Future.successful(Set.empty)
+
+
+      val ftr: Future[PressResult] = for {
+        live <- livePress
+        draft <-  draftPress
+      } yield PressResult(Some(live), Some(draft))
+
+      ftr onComplete {
+        case Failure(error) =>
+          FrontPressFailure.increment()
+          log.error("Error manually pressing collection through update from tool", error)
+
+        case Success(_) =>
+          FrontPressSuccess.increment()
+      }
+
+      ftr
+    }
+  }
+
 
   def generateLiveJson(id: String): Future[JsObject] = {
     val futureSeoData: Future[SeoData] = SeoData.getSeoData(id)
