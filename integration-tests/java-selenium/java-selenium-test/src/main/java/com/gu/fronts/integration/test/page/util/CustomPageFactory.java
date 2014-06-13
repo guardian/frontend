@@ -8,7 +8,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.ElementLocatorFactory;
 import org.springframework.stereotype.Component;
 
-import com.gu.fronts.integration.test.fw.CustomElementLocatorFactory;
+import com.gu.fronts.integration.test.fw.selenium.CustomElementLocatorFactory;
 
 @Component
 public class CustomPageFactory {

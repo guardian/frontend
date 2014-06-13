@@ -1,9 +1,10 @@
 package com.gu.fronts.integration.test.page.util;
 
+import static org.apache.commons.collections.CollectionUtils.isNotEmpty;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
@@ -52,20 +53,20 @@ public abstract class AbstractParentPage {
      * all provided elements are displayed and if not will throw an AssertionError with a message detailing which
      * elements are not displayed.
      */
-    protected void isDisplayed(WebElement... elementsToCheck) {
+    protected void exists(WebElement... elementsToCheck) {
         List<String> errors = new ArrayList<>();
         for (WebElement webElement : elementsToCheck) {
-            checkElementDisplayedAndCreateError(webElement, errors);
+            checkElementExistsAndCreateError(webElement, errors);
         }
-        if (CollectionUtils.isNotEmpty(errors)) {
+        if (isNotEmpty(errors)) {
             throw new AssertionError("Page :" + this.getClass().getName() + " was not displayed properly due to: "
                     + getErrorMessages(errors));
         }
     }
 
     /**
-     * Page Objects need to implement this class and then call {@link #isDisplayed(WebElement...)} with the elements
-     * which need to be displayed for the page to load properly and can also, optionally, do some additional checks
+     * Page Objects need to implement this class and then call {@link #exists(WebElement...)} with the elements which
+     * need to be displayed for the page to load properly and can also, optionally, do some additional checks
      */
     protected abstract Object isDisplayed();
 
@@ -73,7 +74,7 @@ public abstract class AbstractParentPage {
         return StringUtils.join(errors, ",");
     }
 
-    private void checkElementDisplayedAndCreateError(WebElement webElement, List<String> errors) {
+    private void checkElementExistsAndCreateError(WebElement webElement, List<String> errors) {
         try {
             webElement.isDisplayed();
         } catch (WebDriverException e) {

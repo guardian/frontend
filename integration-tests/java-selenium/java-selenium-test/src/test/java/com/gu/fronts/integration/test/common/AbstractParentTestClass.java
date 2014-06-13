@@ -14,10 +14,10 @@ public class AbstractParentTestClass {
 
     @Autowired
     private WebDriver webDriver;
-    @Value("${fronts.base.url}")
-    private String frontsBaseUrl;
     @Autowired
     protected CustomPageFactory pageFactoryHelper;
+    @Value("${fronts.base.url}")
+    private String frontsBaseUrl;
 
     @BeforeClass
     public static void testClassSetup() {

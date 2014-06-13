@@ -3,7 +3,7 @@ package com.gu.fronts.integration.test.page;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-import com.gu.fronts.integration.test.fw.FindByTestAttribute;
+import com.gu.fronts.integration.test.fw.selenium.FindByTestAttribute;
 import com.gu.fronts.integration.test.page.util.AbstractParentPage;
 
 public class NetworkFrontPage extends AbstractParentPage {
@@ -15,7 +15,7 @@ public class NetworkFrontPage extends AbstractParentPage {
     }
 
     public NetworkFrontPage isDisplayed() {
-        super.isDisplayed(dateTitle);
+        super.exists(dateTitle);
         return this;
     }
 }

@@ -1,20 +1,17 @@
 package com.gu.fronts.integration.test.page;
 
-import static com.gu.fronts.integration.test.common.util.CssSelector.TEST_ATTR_NAME;
-import static org.openqa.selenium.support.How.CSS;
-
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 
+import com.gu.fronts.integration.test.fw.selenium.FindByTestAttribute;
 import com.gu.fronts.integration.test.page.util.AbstractParentPage;
 
 public class FooterPage extends AbstractParentPage {
 
-    @FindBy(how = CSS, using = "[" + TEST_ATTR_NAME + "=copyright]")
+    @FindByTestAttribute(using = "copyright")
     private WebElement copyright;
 
-    @FindBy(how = CSS, using = "[" + TEST_ATTR_NAME + "=logo_footer]")
+    @FindByTestAttribute(using = "logo_footer")
     private WebElement logo;
 
     public FooterPage(WebDriver webDriver) {
@@ -22,7 +19,7 @@ public class FooterPage extends AbstractParentPage {
     }
 
     public FooterPage isDisplayed() {
-        super.isDisplayed(copyright, logo);
+        super.exists(copyright, logo);
         return this;
     }
 

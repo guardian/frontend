@@ -1,27 +1,26 @@
 package com.gu.fronts.integration.test.page;
 
-import static com.gu.fronts.integration.test.common.util.CssSelector.TEST_ATTR_NAME;
 import static com.gu.fronts.integration.test.page.util.PageElementHelper.elementIsALink;
 import static java.lang.String.format;
-import static org.openqa.selenium.support.How.CSS;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 
+import com.gu.fronts.integration.test.fw.selenium.ByTestAttributeSelector;
+import com.gu.fronts.integration.test.fw.selenium.FindByTestAttribute;
 import com.gu.fronts.integration.test.page.util.AbstractParentPage;
 
 public class Editions extends AbstractParentPage {
-    @FindBy(how = CSS, using = "[" + TEST_ATTR_NAME + "=editions]")
+    @FindByTestAttribute(using = "editions")
     private WebElement editions;
 
-    @FindBy(how = CSS, using = "[" + TEST_ATTR_NAME + "=edition-US]")
+    @FindByTestAttribute(using = "edition-US")
     private WebElement editionUS;
 
-    @FindBy(how = CSS, using = "[" + TEST_ATTR_NAME + "=edition-UK]")
+    @FindByTestAttribute(using = "edition-UK")
     private WebElement editionUK;
 
-    @FindBy(how = CSS, using = "[" + TEST_ATTR_NAME + "=edition-AU]")
+    @FindByTestAttribute(using = "edition-AU")
     private WebElement editionAU;
 
     public Editions(WebDriver webDriver) {
@@ -30,10 +29,9 @@ public class Editions extends AbstractParentPage {
 
     @Override
     public Editions isDisplayed() {
-        super.isDisplayed(editions, editionUK, editionUS, editionAU);
+        super.exists(editions, editionUK, editionUS, editionAU);
         return this;
     }
-    
 
     public NetworkFrontPage selectUSEdition() {
         editionUS.click();
@@ -64,18 +62,19 @@ public class Editions extends AbstractParentPage {
 
     private Editions editionSelected(WebElement editionElement) throws AssertionError {
         if (elementIsALink(editionElement)) {
-            throw new AssertionError(format("%s was not selected", editionElement.getAttribute(TEST_ATTR_NAME)));
+            throw new AssertionError(format("%s was not selected",
+                    editionElement.getAttribute(ByTestAttributeSelector.TEST_ATTR_NAME)));
         }
         return this;
     }
 
     public Editions usUsEditionPresent() {
-        super.isDisplayed(editionUS);
+        super.exists(editionUS);
         return this;
     }
 
     public Editions isAuEditionPresent() {
-        super.isDisplayed(editionAU);
+        super.exists(editionAU);
         return this;
     }
 

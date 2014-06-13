@@ -16,12 +16,22 @@
 	</logger>
 
 	<logger name="com.github.tomakehurst.wiremock">
-		<level value="ERROR" />
+		<level value="WARN" />
+	</logger>
+
+	<!-- Do NOT set this to DEBUG as that will print out the stubbed data files 
+		and that can crash your IDE as they can be very large -->
+	<logger name="org.apache.http.wire">
+		<level value="INFO" />
+	</logger>
+	
+	<logger name="org.apache.http">
+		<level value="INFO" />
 	</logger>
 
 	<!-- Root Logger -->
 	<root>
-		<priority value="INFO" />
+		<priority value="DEBUG" />
 		<appender-ref ref="console" />
 	</root>
 

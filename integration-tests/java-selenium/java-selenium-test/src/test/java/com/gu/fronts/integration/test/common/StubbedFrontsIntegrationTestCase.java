@@ -1,19 +1,16 @@
 package com.gu.fronts.integration.test.common;
 
-import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
-import static com.github.tomakehurst.wiremock.client.WireMock.get;
-import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
-import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig;
-import static com.gu.fronts.integration.test.common.util.IoUtils.loadPressedJsonStubFile;
 import static com.gu.fronts.integration.test.config.StaticPropertyLoader.getStubServerPort;
 
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.rules.TestName;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
 import com.github.tomakehurst.wiremock.junit.WireMockClassRule;
+import com.gu.fronts.integration.test.fw.wiremock.WiremockStubPressedJsonBuilder;
 
 /**
  * as well as setting up the environment by starting WireMock server as well providing methods to automatically load
@@ -33,29 +30,20 @@ public class StubbedFrontsIntegrationTestCase extends FrontsIntegrationTestCase 
     @Rule
     public WireMockClassRule instanceRule = wireMockRule;
 
-    /**
-     * Stubs pressed.json file by using the name of the currently executing test method. For this to work this method
-     * must be called by the executing test method, or nested method, and not in any setup or teardown. Use
-     * {@link #stubPressedJsonByFileName(String)} if you instead want to stub a pressed.json by explicitly naming the
-     * resource. Also make sure that a pressed.json file is under the stubbedData folder named:
-     * [test_method_name]-pressed.json.
-     */
-    protected void stubPressedJson() {
-        stubFor(get(urlEqualTo("/aws-frontend-store/" + frontsEnv + "/frontsapi/pressed/uk/pressed.json")).willReturn(
-                aResponse().withStatus(200).withHeader("Content-Type", "application/json")
-                        .withBody(loadPressedJsonStubFile(resolveExecutingTestMethodName() + "-pressed.json"))));
-    }
-
-    private String resolveExecutingTestMethodName() {
-        return executingTest.getMethodName();
-    }
+    @Autowired
+    protected WiremockStubPressedJsonBuilder pressedStub;
 
     /**
-     * Stubs pressed.json by providing the file name. This file must be located in the stubbedData folder
+     * Convenience method for returning a Stubs pressed.json file by using the name of the currently executing test
+     * method. For this to work this method must be called by the executing test method, or nested method, before
+     * accessing the target page and not in any setup or teardown method. Use {@link WiremockStubPressedJsonBuilder} if
+     * you instead want to stub a pressed.json by explicitly naming the resource. In both cases make sure that an
+     * appropriate pressed.json file is in the classpath under the stubbedData folder (name it
+     * [test_method_name]-pressed.json if you are using this method). E.g. calling this method, with path /uk, from test
+     * method networkStartPageShouldLoad will attempt to load the stubbed file response from
+     * stubbedData/uk/networkStartPageShouldLoad-pressed.json
      */
-    protected void stubPressedJsonByFileName(String fileName) {
-        stubFor(get(urlEqualTo("/aws-frontend-store/" + frontsEnv + "/frontsapi/pressed/uk/pressed.json")).willReturn(
-                aResponse().withStatus(200).withHeader("Content-Type", "application/json")
-                        .withBody(loadPressedJsonStubFile(fileName))));
+    protected void stubPressedJson(String path) {
+        pressedStub.path(path).withResponse(executingTest.getMethodName() + "-pressed.json");
     }
 }

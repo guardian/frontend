@@ -1,17 +1,14 @@
 package com.gu.fronts.integration.test.page;
 
-import static com.gu.fronts.integration.test.common.util.CssSelector.TEST_ATTR_NAME;
-import static org.openqa.selenium.support.How.CSS;
-
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 
+import com.gu.fronts.integration.test.fw.selenium.FindByTestAttribute;
 import com.gu.fronts.integration.test.page.util.AbstractParentPage;
 
 public class HeaderPage extends AbstractParentPage {
 
-    @FindBy(how = CSS, using = "[" + TEST_ATTR_NAME + "=logo]")
+    @FindByTestAttribute(using = "logo")
     private WebElement logo;
 
     public HeaderPage(WebDriver webDriver) {
@@ -19,7 +16,7 @@ public class HeaderPage extends AbstractParentPage {
     }
 
     public HeaderPage isDisplayed() {
-        super.isDisplayed(logo);
+        super.exists(logo);
         return this;
     }
 

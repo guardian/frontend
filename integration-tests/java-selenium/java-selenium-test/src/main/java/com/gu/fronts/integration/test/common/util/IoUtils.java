@@ -6,8 +6,10 @@ import org.apache.commons.io.IOUtils;
 
 public class IoUtils {
 
-    public static String loadPressedJsonStubFile(String fileName) {
-        return loadResourceFromClassPath("stubbedData/" + fileName);
+    private static final String ROOT_STUBBED_DATA_FOLDER = "stubbedData";
+
+    public static String loadPressedJsonStubFile(String stubbedResponseFilePath, String fileName) {
+        return loadResourceFromClassPath(ROOT_STUBBED_DATA_FOLDER + stubbedResponseFilePath + "/" + fileName);
     }
 
     private static String loadResourceFromClassPath(String classPathResourcePath) {

@@ -1,4 +1,4 @@
-package com.gu.fronts.integration.test.fw;
+package com.gu.fronts.integration.test.fw.selenium;
 
 import java.lang.reflect.Field;
 
