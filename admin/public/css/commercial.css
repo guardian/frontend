@@ -1,13 +1,17 @@
-.ad-render-time__form {
+.render-time--ad__form {
     margin-bottom: 0;
 }
-.graph-action {
+.render-time--ad__form select {
+    margin-bottom: 0;
+}
+.render-time {
     background: no-repeat 50% 50%;
-    padding-bottom: 200px;
 }
 .graph-loading {
     background-image: url('/public/images/ajax-loader.gif');
+    padding-bottom: 200px;
 }
 .graph-failed {
     background-image: url('/public/images/ajax-loader.gif');
+    padding-bottom: 200px;
 }
