@@ -144,6 +144,7 @@ define([
                 page: {
                     dfpAccountId: 123456,
                     dfpAdUnitRoot: 'theguardian.com',
+                    adUnitSuffix: 'front',
                     isFront: true,
                     section: ''
                 }
@@ -257,6 +258,7 @@ define([
                 page: {
                     dfpAccountId: 123456,
                     dfpAdUnitRoot: 'theguardian.com',
+                    adUnitSuffix: 'front',
                     isFront: true,
                     section: ''
                 }

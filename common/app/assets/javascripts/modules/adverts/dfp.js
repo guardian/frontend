@@ -263,9 +263,7 @@ define([
             }, audienceScienceGateway.getSegments(), criteo.getSegments());
         },
         buildAdUnit = function (config) {
-            var adUnitSuffix      = config.page.adUnitSuffix;
-
-            return '/' + config.page.dfpAccountId + '/' + config.page.dfpAdUnitRoot + '/' + adUnitSuffix;
+            return '/' + config.page.dfpAccountId + '/' + config.page.dfpAdUnitRoot + '/' + config.page.adUnitSuffix;
         },
         createAdSlot = function(name, types, keywords) {
             var definition = adSlotDefinitions[name],
