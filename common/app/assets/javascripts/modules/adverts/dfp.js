@@ -263,7 +263,7 @@ define([
             }, audienceScienceGateway.getSegments(), criteo.getSegments());
         },
         buildAdUnit = function (config) {
-            var adUnitSuffix      = config.page.adUnitSuffix
+            var adUnitSuffix      = config.page.adUnitSuffix;
 
             return '/' + config.page.dfpAccountId + '/' + config.page.dfpAdUnitRoot + '/' + adUnitSuffix;
         },
