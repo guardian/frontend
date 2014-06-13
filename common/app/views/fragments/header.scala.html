@@ -110,7 +110,7 @@ to apply any necessary changes to non-shared code there too.
             </div>
         </div>
     </div>
-    @if(NewMobileNavSwitch.isSwitchedOff){
+    @if(NewNavSwitch.isSwitchedOff){
         @defining(Edition(request).navigation) { navigation =>
             @defining(Navigation.topLevelItem(navigation, page)) { topLevelSelected =>
                 @* Top level nav *@
