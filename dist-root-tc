@@ -6,11 +6,10 @@ set -o errexit
 
 # Skip test whilst debugging.
 ./sbt-tc "project root" compile dist
+./grunt-tc clean validate:js test:unit emitAbTestInfo
 
 echo "Disting everything."
-
-# Remove previous Play Assembly "artifacts.zip" file
-rm -rf "everything"
+rm -rf "dist"
 
 configurations="admin applications archive article commercial diagnostics discussion "\
 "facia facia-tool identity image onward router sport"
@@ -19,20 +18,24 @@ for config in $configurations
 do
     echo "Dist for $config"
 
-    # Generate folder for the application zip.
-    app_folder="everything/$config"
+    ./grunt-tc clean compile:$config
 
-    mkdir -p  $app_folder
+    # Generate folder for the application zip.
+    app_folder="dist/$config"
+
     mkdir -p "$app_folder/packages/frontend-static"
     mkdir -p "$app_folder/packages/$config"
 
-    cp "$config/target/universal/$config.zip" "$app_folder/packages/$config/$config.zip"
+    cp "$config/target/universal/$config.zip"   "$app_folder/packages/$config/$config.zip"
+    cp "$config/conf/deploy.json"               "$app_folder"
+    cp -r static/hash/*                         "$app_folder/packages/frontend-static"
+    cp static/abtests.json                      "$app_folder/packages/frontend-abtests"
 
     pushd $app_folder
     zip -r "../$config.zip" .
     popd
 
-    echo "##teamcity[publishArtifacts 'everything/*.zip']"
+    echo "##teamcity[publishArtifacts 'dist/$config.zip']"
 done
 
 # And zip up the packet
