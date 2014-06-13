@@ -814,37 +814,21 @@ module.exports = function (grunt) {
      * Compile tasks
      */
     grunt.registerTask('compile:images', ['generate:images', 'hash']);
-    grunt.registerTask('generate:images', ['clean:images', 'copy:images', 'shell:spriteGeneration', 'imagemin']);
+    grunt.registerTask('generate:images', ['copy:images', 'shell:spriteGeneration', 'imagemin']);
 
     grunt.registerTask('compile:css', ['generate:css', 'hash']);
-    grunt.registerTask('generate:css', ['clean:css', 'sass:compile', 'replace:cssSourceMaps', 'copy:css']);
+    grunt.registerTask('generate:css', ['sass:compile', 'replace:cssSourceMaps', 'copy:css']);
 
     grunt.registerTask('compile:js', function(app) {
-        if (app) {
-            grunt.task.run('generate:js:' + app);
-        } else {
-            grunt.task.run('generate:js');
-        }
-        grunt.task.run('hash');
+        var target = app ? ':' + app : app;
+        grunt.task.run(['generate:js' + target, 'hash']);
     });
     grunt.registerTask('generate:js', function(app) {
-        grunt.task.run(['clean:js']);
-        var apps = ['common', 'ophan'];
-        if (!app || app === 'preview') { // if no app supplied, compile all apps ('preview' is an amalgamation of other apps)
-            apps = apps.concat(Object.keys(grunt.config('requirejs')).filter(function(app) { return ['options', 'common', 'ophan'].indexOf(app) === -1; }));
-        } else if (app !== 'common' && app !== 'ophan') {
-            if (grunt.config('requirejs')[app]) {
-                apps.push(app);
-            } else {
-                grunt.log.warn('No compile target for app "' + app + '"');
-            }
+        var target = app ? ':' + app : app;
+        if (grunt.config('copy')['javascript-' + app]) {
+            grunt.task.run('copy:javascript-' + app);
         }
-        apps.forEach(function(app) {
-            if (grunt.config('copy')['javascript-' + app]) {
-                grunt.task.run('copy:javascript-' + app);
-            }
-            grunt.task.run('requirejs:' + app);
-        });
+        grunt.task.run('requirejs' + target);
         if (!isDev) {
             grunt.task.run('uglify:components');
         }
