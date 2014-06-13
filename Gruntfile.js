@@ -115,9 +115,6 @@ module.exports = function (grunt) {
                         omniture: {
                             exports: 's'
                         }
-                    },
-                    wrap: {
-                        startFile: 'common/app/assets/javascripts/components/curl/dist/curl-with-js-and-domReady/curl.js'
                     }
                 }
             }
@@ -398,12 +395,20 @@ module.exports = function (grunt) {
                 }]
             },
             'javascript-admin': {
-                files: [{
-                    expand: true,
-                    cwd: 'admin/public/javascripts',
-                    src: ['**/*.js'],
-                    dest: staticTargetDir + 'javascripts'
-                }]
+                files: [
+                    {
+                        expand: true,
+                        cwd: 'admin/public/javascripts',
+                        src: ['**/*.js'],
+                        dest: staticTargetDir + 'javascripts'
+                    },
+                    {
+                        expand: true,
+                        cwd: 'common/app/assets/javascripts',
+                        src: 'components/curl/dist/curl-with-js-and-domReady/curl.js',
+                        dest: staticTargetDir + 'javascripts'
+                    }
+                ]
             },
             css: {
                 files: [{

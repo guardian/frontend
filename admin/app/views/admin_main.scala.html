@@ -73,14 +73,15 @@
             var curl = {
                 baseUrl: 'assets/javascripts',
                 apiName: 'require'
-            }
-
+            };
+        </script>
+        <script type="text/javascript" src="@Static("javascripts/components/curl/dist/curl-with-js-and-domReady/curl.js")"></script>
+        <script type="text/javascript">
             var script = document.createElement('script');
             script.async = 'async';
             script.src = '@Static("javascripts/bootstraps/admin.js")';
 
             document.getElementsByTagName("head")[0].appendChild(script);
         </script>
-
     </body>
 </html>
