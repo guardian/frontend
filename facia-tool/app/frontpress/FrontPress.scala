@@ -117,6 +117,24 @@ trait FrontPress extends Logging {
     }
   }
 
+//  def generateJson(id: String): Future[PressResult] = {
+//    val futureSeoData: Future[SeoData] = SeoData.getSeoData(id)
+//
+//    val liveJson = retrieveFrontByPath(id).map(_.map {
+//      case (config, collection) =>
+//        Json.obj(
+//          config.id -> generateCollectionJson(config, collection)
+//        )
+//    }).map(_.foldLeft(Json.arr()) {
+//      case (l, jsObject) => l :+ jsObject
+//    }).map(c =>
+//      Json.obj("id" -> id) ++
+//        Json.obj("seoData" -> seoData) ++
+//        Json.obj("collections" -> c)
+//      )
+//
+//
+//  }
 
   def generateLiveJson(id: String): Future[JsObject] = {
     val futureSeoData: Future[SeoData] = SeoData.getSeoData(id)
