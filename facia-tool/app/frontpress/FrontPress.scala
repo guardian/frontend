@@ -22,7 +22,7 @@ object PressCommand {
   def forOneId(id: String): PressCommand = PressCommand(Set(id))
 }
 
-case class PressResult(liveJson: Option[Set[JsObject]], draftJson: Option[Set[JsObject]])
+case class PressResult(liveJson: Map[String, JsObject], draftJson: Map[String, JsObject])
 
 trait FrontPress extends Logging {
 
@@ -86,14 +86,23 @@ trait FrontPress extends Logging {
         path <- ConfigAgent.getConfigsUsingCollectionId(id)
       } yield path
 
-      lazy val draftPress: Future[Set[JsObject]]  = if (pressCommand.draft) Future.sequence(paths.map(pressDraftByPathId)) else Future.successful(Set.empty)
-      lazy val livePress: Future[Set[JsObject]]   = if (pressCommand.live) Future.sequence(paths.map(pressLiveByPathId)) else Future.successful(Set.empty)
+      lazy val livePress: Future[Map[String, JsObject]]  =
+        if (pressCommand.live)
+          Future.traverse(paths){ path => pressLiveByPathId(path).map{ json => path -> json} }.map(_.toMap)
+        else
+          Future.successful(Map.empty)
+
+      lazy val draftPress: Future[Map[String, JsObject]]  =
+        if (pressCommand.draft)
+          Future.traverse(paths){ path => pressDraftByPathId(path).map{ json => path -> json} }.map(_.toMap)
+        else
+          Future.successful(Map.empty)
 
 
       val ftr: Future[PressResult] = for {
         live <- livePress
         draft <-  draftPress
-      } yield PressResult(Some(live), Some(draft))
+      } yield PressResult(live, draft)
 
       ftr onComplete {
         case Failure(error) =>
