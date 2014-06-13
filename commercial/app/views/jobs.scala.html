@@ -1,7 +1,5 @@
 @(jobs: Seq[model.commercial.jobs.Job])(implicit request: RequestHeader)
 
-<link rel="stylesheet" href="@Static("stylesheets/commercial.css")" />
-
 @defining("http://jobs.theguardian.com", "0_2", "2014-04-30") { case (jobsHost, version, date) =>
     <div class="commercial commercial--jobs">
         <div class="facia-container__inner">
