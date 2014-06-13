@@ -44,9 +44,8 @@ object Switches extends Collections {
 
   private lazy val never = new DateMidnight(2100, 1, 1)
 
-  // this is 3 months - at the end of this a decision is expected
-  // and one (or both) of the 2 needs to go.
-  private lazy val profilingEvalDeadline = new DateMidnight(2014, 6, 17)
+  // Waiting for an answer from Australian office, due imminently.
+  private lazy val profilingEvalDeadline = new DateMidnight(2014, 6, 25)
 
 
   // Load Switches
@@ -132,7 +131,7 @@ object Switches extends Collections {
 
   val ForcePageSkinSwitch = Switch("Advertising", "force-page-skin",
     "Temp switch, allows us to force the page into 'page skin' mode",
-    safeState = Off, sellByDate = new DateMidnight(2014, 6, 14)
+    safeState = Off, sellByDate = new DateMidnight(2014, 6, 25)
   )
 
   // Ad Targeting
