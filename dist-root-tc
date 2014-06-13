@@ -5,7 +5,7 @@ set -o nounset
 set -o errexit
 
 # Skip test whilst debugging.
-#./sbt-tc "project root" compile dist
+./sbt-tc "project root" compile dist
 
 echo "Disting everything."
 
