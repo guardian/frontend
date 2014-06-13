@@ -15,10 +15,5 @@
     background-repeat: no-repeat;
     background-position: 50% 50%;
     margin-bottom: 30px;
-}
-.render-time.ajax-loading {
-    padding-bottom: 200px;
-}
-.render-time.ajax-failed {
-    padding-bottom: 200px;
+    min-height: 200px;
 }

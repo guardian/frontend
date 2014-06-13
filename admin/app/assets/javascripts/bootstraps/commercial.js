@@ -76,7 +76,7 @@ define([
                         titleTextStyle: {fontName: 'Georgia', color: '#222', italic: true, bold: false},
                         vAxis: {format: '#,###'},
                         hAxis: {format: 'HH:mm'},
-                        trendlines: {0: {type: 'exponential', color: '#0f0'}}
+                        trendlines: {0: {type: 'exponential', color: 'green'}}
                     });
             }).always(function() {
                 $adRenderTime.removeClass('ajax-loading');
@@ -85,12 +85,14 @@ define([
             })
         };
 
-        var $select = $.create('<select></select>')
+        var adSlot = /[?&]ad-slot=([^&]+)/.exec(document.location.search),
+            $select = $.create('<select></select>')
                 .addClass('render-time--ad__form__select'),
             $label = $.create('<label></label>')
                 .addClass('render-time--ad__form__label')
                 .text('Ad slot:')
                 .append($select);
+
         [
             'top-above-nav',
             'top',
@@ -103,7 +105,7 @@ define([
                 $.create('<option></option>')
                     .val('dfp-ad--' + adSlotName)
                     .text(adSlotName)
-                    .attr('selected', i === 0)
+                    .attr('selected', adSlot ? adSlot[1] === adSlotName : i === 0)
                     .appendTo($select);
             });
         $.create('<form></form>')
@@ -112,8 +114,10 @@ define([
             .prependTo(qwery('.render-time--ad')[0]);
 
         bean.on($select[0], 'change', function(e) {
+            var adSlot = e.target.value;
+            window.history.pushState({}, '', '?adSlot=' + adSlot);
             $('#render-time--ad__graph').html('');
-            daramAdRenderTime(e.target.value);
+            daramAdRenderTime(adSlot);
         });
 
         daramAdRenderTime($select.val());
