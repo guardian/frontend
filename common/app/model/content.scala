@@ -3,7 +3,6 @@ package model
 import com.gu.openplatform.contentapi.model.{Content => ApiContent, Element => ApiElement, Asset, Tag => ApiTag}
 import org.joda.time.DateTime
 import org.scala_tools.time.Imports._
-import common.{Sponsor, Sponsors}
 import common.{LinkCounts, LinkTo, Reference}
 import org.jsoup.Jsoup
 import org.jsoup.safety.Whitelist
@@ -53,14 +52,6 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
     mainPicture.flatMap(largest)
       .orElse(trailPicture.flatMap(largest))
       .getOrElse(facebook.imageFallback)
-  }
-
-  lazy val sponsor: Option[Sponsor] = {
-    if (isSponsored) {
-      Sponsors.find(tags.filter(_.tagType == "keyword").head.id)
-    } else {
-      None
-    }
   }
 
   lazy val shouldHideAdverts: Boolean = fields.get("shouldHideAdverts").exists(_.toBoolean)

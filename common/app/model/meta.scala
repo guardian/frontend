@@ -168,8 +168,8 @@ trait Tags {
   lazy val tones: Seq[Tag] = tagsOfType("tone")
   lazy val types: Seq[Tag] = tagsOfType("type")
 
-  def isSponsored = DfpAgent.isSponsored(keywords)
-  def isAdvertisementFeature = DfpAgent.isAdvertisementFeature(keywords)
+  def isSponsored = DfpAgent.isSponsored(tags)
+  def isAdvertisementFeature = DfpAgent.isAdvertisementFeature(tags)
 
   // Tones are all considered to be 'News' it is the default so we do not list news tones explicitly
   lazy val visualTone: String =
