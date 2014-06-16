@@ -12,7 +12,7 @@ define([], function () {
                 if (typeof targetValue === 'string') {
                     query += param + '=' + targetValue;
                 } else if(typeof targetValue === 'object') {
-                    query += param + '=' + targetValue.join('&' + param + '=');
+                    query += param + '=' + targetValue.join(',');
                 }
             }
         }

@@ -17,6 +17,9 @@ object DfpApiWrapper extends Logging {
   private def customTargetingService(session: DfpSession): CustomTargetingServiceInterface =
     dfpServices.get(session, classOf[CustomTargetingServiceInterface])
 
+  private def inventoryService(session: DfpSession): InventoryServiceInterface =
+    dfpServices.get(session, classOf[InventoryServiceInterface])
+
   def fetchLineItems(session: DfpSession, statementBuilder: StatementBuilder): Seq[DfpApiLineItem] = {
 
     val service = lineItemService(session)
@@ -97,6 +100,35 @@ object DfpApiWrapper extends Logging {
     } catch {
       case e: Exception =>
         log.error(s"Exception fetching custom targeting values: $e")
+        Nil
+    }
+  }
+
+
+
+  def fetchAdUnitTargetingObjects(session: DfpSession, statementBuilder: StatementBuilder): Seq[AdUnit] = {
+    val service = inventoryService(session)
+    statementBuilder.limit(StatementBuilder.SUGGESTED_PAGE_LIMIT)
+
+    def fetch(soFar: Seq[AdUnit]): Seq[AdUnit] = {
+      val page = service.getAdUnitsByStatement(statementBuilder.toStatement)
+      val pageResults = Option(page.getResults) map (_.toSeq) getOrElse Nil
+      val totalResultSetSize = page.getTotalResultSetSize
+      val resultsSoFar = soFar ++ pageResults
+
+      if (resultsSoFar.size < totalResultSetSize) {
+        statementBuilder.increaseOffsetBy(StatementBuilder.SUGGESTED_PAGE_LIMIT)
+        fetch(resultsSoFar)
+      } else {
+        resultsSoFar
+      }
+    }
+
+    try {
+      fetch(Nil)
+    } catch {
+      case e: Exception =>
+        log.error(s"Exception fetching custom ad units: $e")
         Nil
     }
   }

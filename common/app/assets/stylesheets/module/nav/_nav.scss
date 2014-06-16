@@ -126,9 +126,9 @@
     overflow: hidden;
     @include rem((
         padding: $gs-baseline/2 $gs-gutter*3 $gs-baseline/2 $gs-gutter,
-        height: 45px
+        height: 44px
     ));
-    @include fs-header(3);
+    @include fs-header(2);
 
     @include mq(tablet) {
         display: block;
@@ -141,7 +141,7 @@
         float: left;
     }
     .is-active .nav__link:after {
-        bottom: -6px;
+        bottom: -3px;
         left: 50%;
         border: solid transparent;
         content: ' ';
@@ -159,8 +159,8 @@
         color: $c-brandBlue;
         display: block;
         @include rem((
-            margin: 0 $gs-gutter 0 0,
-            padding: 3px 0 2px
+            margin: 0 ($gs-gutter - 2) 0 0,
+            padding: 5px 0 6px
         ));
     }
     .is-active .nav__link {
@@ -194,25 +194,21 @@
 
 .nav--local {
     display: none;
-    margin-top: -2px;
     height: auto;
     overflow: visible;
-    @include rem((
-        min-height: 45px
-    ));
+    margin-top: -2px;
 
     @include mq(tablet) {
         display: block;
     }
+
     .nav__link {
-        -webkit-font-smoothing: antialiased; // White text on dark background:
-                                             // text looks cleaner that way
         color: #ffffff;
     }
     .is-active .nav__link:after {
         border-bottom-color: transparent;
         border-top-color: $c-brandBlue;
-        bottom: -24px;
+        bottom: -19px;
     }
 }
 
@@ -221,7 +217,9 @@
     display: block;
     border-top: $gs-baseline/6 solid $c-newsAccent;
 
-    @include mq(tablet) { display: none; }
+    @include mq(tablet) {
+        display: none;
+    }
 }
 
 .localnav__cta {
@@ -268,39 +266,6 @@
 
     @include mq(mobileLandscape) {
         padding-right: $gs-gutter;
-    }
-}
-
-
-/* Toolbar navigation
-   ========================================================================== */
-
-.nav--toolbar {
-    @extend %type-10;
-    display: none;
-    @include rem((
-        margin: 0 $gs-gutter/2 0 $gs-gutter,
-        padding: $gs-baseline 0 0
-    ));
-    @include mq(tablet) { display: block; }
-
-    .nav__item {
-        @include rem((
-            margin: $gs-baseline/3 0 0,
-            padding: $gs-baseline/3 $gs-gutter/2
-        ));
-        color: #ffffff;
-        border-right: 1px solid $c-brandLightBlue;
-
-        &:last-child { border-right: 0; }
-        &.is-active { text-decoration: underline; }
-    }
-    .nav__link,
-    .nav__link:active,
-    .nav__link:focus,
-    .nav__link:hover {
-        color: #ffffff;
-        text-decoration: none;
     }
 }
 

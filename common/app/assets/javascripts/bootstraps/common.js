@@ -17,12 +17,13 @@ define([
     //Modules
     'common/utils/storage',
     'common/utils/detect',
-    'common/modules/onward/popular',
+    'common/modules/onward/most-popular-factory',
     'common/modules/onward/related',
     'common/modules/onward/onward-content',
     'common/modules/ui/images',
     'common/modules/navigation/profile',
     'common/modules/navigation/sections',
+    'common/modules/navigation/newNav',
     'common/modules/navigation/search',
     'common/modules/ui/tabs',
     'common/modules/ui/toggles',
@@ -74,12 +75,13 @@ define([
 
     storage,
     detect,
-    popular,
+    MostPopularFactory,
     Related,
     Onward,
     images,
     Profile,
     Sections,
+    NewNav,
     Search,
 
     Tabs,
@@ -143,15 +145,17 @@ define([
             search.init(header);
         },
 
+        initialiseNewNavigation: function (config) {
+            NewNav.init(config);
+        },
+
         transcludeRelated: function (config, context) {
             var r = new Related();
             r.renderRelatedComponent(config, context);
         },
 
-        transcludePopular: function () {
-            mediator.on('page:common:ready', function(config, context) {
-                popular(config, context);
-            });
+        transcludePopular: function (config) {
+            new MostPopularFactory(config);
         },
 
         transcludeOnwardContent: function(config, context){
@@ -539,6 +543,7 @@ define([
                 modules.loadAnalytics(config, context);
                 modules.cleanupCookies(context);
                 modules.runAbTests(config, context);
+                modules.transcludePopular(config);
                 modules.loadCommercialComponent(config, context);
                 modules.loadAdverts(config);
                 modules.transcludeRelated(config, context);
@@ -557,10 +562,13 @@ define([
             modules.checkIframe();
             modules.upgradeImages();
             modules.showTabs();
-            modules.initialiseNavigation(config);
+            if(config.switches.newNavigation){
+                modules.initialiseNewNavigation(config);
+            } else {
+                modules.initialiseNavigation(config);
+            }
             modules.showToggles();
             modules.showRelativeDates();
-            modules.transcludePopular();
             modules.loadVideoAdverts(config);
             modules.initClickstream();
             modules.transcludeCommentCounts();

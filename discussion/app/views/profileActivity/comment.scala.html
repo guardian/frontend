@@ -14,9 +14,19 @@
         </button>
     </div>
 
+    @comment.responseTo.map{ responseTo =>
+        <a class="disc-comment__view-discussion" href="@comment.discussion.webUrl#comment-@responseTo.commentId">
+            In response to @responseTo.displayName
+        </a>
+    }
+
     <div class="disc-comment__body" itemprop="text">
         @withJsoup(BulletCleaner(comment.body))(
             InBodyLinkCleaner("in body link")(Edition(request))
         )
     </div>
+
+    <a class="disc-comment__view-discussion" href="@comment.discussion.webUrl#comment-@comment.id">
+        View discussion
+    </a>
 </div>

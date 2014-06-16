@@ -28,6 +28,28 @@
         border-top: 0 none;
     }
 
+    .table__caption--top {
+        $title-padding: $gs-baseline*(2/3);
+        @include rem((
+            padding: 0
+        ));
+
+        .football-matches__heading {
+            display: block;
+            @include rem((
+                padding: $title-padding
+            ));
+        }
+
+        .football-matches__date {
+            @include rem((
+                margin: 0,
+                padding: $title-padding,
+            ));
+            border-top: 1px solid darken($c-neutral8, 4%);
+        }
+    }
+
     .table__caption--bottom {
         @include box-sizing(border-box);
         background: $c-neutral8;
@@ -58,6 +80,10 @@
 
     .football-team__form {
         display: none;
+    }
+
+    .football-team__name {
+        text-overflow: ellipsis;
     }
 
     .football-matches__day:last-child {
@@ -143,6 +169,14 @@
         .team__info {
             @include fs-headline(1, true)
         }
+
+        .table__caption--bottom {
+            position: absolute;
+            @include rem((
+                border-left: $gs-gutter/2 solid #ffffff,
+                border-right: $gs-gutter/2 solid #ffffff
+            ));
+        }
     }
 
     &.facia-snap-point--mini,
@@ -173,19 +207,21 @@
         }
         .football-match__team--home {
             @include rem((
-                padding-right: $gs-gutter*1.25
+                padding-right: $gs-gutter*.5
             ));
         }
         .football-match__team--away {
             @include rem((
-                padding-left: $gs-gutter*1.25
+                padding-left: $gs-gutter*.5
             ));
         }
 
         .table__caption--bottom {
             position: absolute;
-            border-left: $gs-gutter/2 solid #ffffff;
-            border-right: $gs-gutter/2 solid #ffffff;
+            @include rem((
+                border-left: $gs-gutter/2 solid #ffffff,
+                border-right: $gs-gutter/2 solid #ffffff
+            ));
         }
     }
 }

@@ -146,7 +146,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
         Then("I should see the article's image")
         findFirst("[itemprop='contentURL representativeOfPage']").getAttribute("src") should
-          endWith("Gunnerside-village-Swaled-007.jpg?width=300&height=-&quality=95")
+          include("Gunnerside-village-Swaled")
 
         And("I should see the image caption")
         findFirst("[itemprop='associatedMedia image'] [itemprop=description]").getText should
@@ -409,6 +409,16 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         $("[itemprop='associatedMedia primaryImageOfPage']") should have size 0
 
         findFirst("video").getAttribute("poster") should endWith("/2013/3/26/1364309869688/Jeremy-Hunt-announcing-ch-016.jpg?width=640&height=-&quality=95")
+      }
+    }
+
+    scenario("SEO Thumbnail") {
+      HtmlUnit("/society/2013/mar/26/failing-hospitals-nhs-jeremy-hunt") { browser =>
+        import browser._
+        Then("the main picture should be hidden")
+        $("[itemprop='associatedMedia primaryImageOfPage']") should have size 0
+
+        findFirst("meta[name=thumbnail]").getAttribute("content") should include("sys-images/Guardian/Pix/pictures/2013/3/26/1364302888446/Jeremy-Hunt-005.jpg")
       }
     }
 

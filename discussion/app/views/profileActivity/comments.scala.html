@@ -4,7 +4,7 @@
     @profileComments.comments.zipWithRowInfo.map{ case(c, row) =>
         <div class="activity-stream__item activity-item @if(row.isFirst){activity-item--first}" itemprop itemtype="http://schema.org/Comment">
             <div class="activity-item__title">
-                <a href="@c.discussion.webUrl#">@c.discussion.title</a>
+                <a href="@c.discussion.webUrl">@c.discussion.title</a>
             </div>
 
             <div class="activity-item__content">

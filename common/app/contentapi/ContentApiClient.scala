@@ -8,6 +8,7 @@ import org.joda.time.DateTime
 import org.scala_tools.time.Implicits._
 import conf.Configuration.contentApi
 import com.gu.openplatform.contentapi.model.ItemResponse
+import conf.Configuration
 
 trait QueryDefaults extends implicits.Collections with ExecutionContexts {
 
@@ -85,7 +86,7 @@ trait ApiQueryDefaults extends QueryDefaults with implicits.Collections with Log
 trait ContentApiClient extends FutureAsyncApi with ApiQueryDefaults with DelegateHttp
 with Logging {
 
-  apiKey = Some(contentApi.key)
+  apiKey = contentApi.key
 
   override def fetch(url: String, parameters: Map[String, String]) = {
     checkQueryIsEditionalized(url, parameters)
@@ -102,8 +103,8 @@ with Logging {
   private def isTagQuery(url: String) = url.endsWith("/tags")
 }
 
-class ElasticSearchContentApiClient extends ContentApiClient {
+class ElasticSearchLiveContentApiClient extends ContentApiClient {
   lazy val httpTimingMetric = ContentApiMetrics.ElasticHttpTimingMetric
   lazy val httpTimeoutMetric = ContentApiMetrics.ElasticHttpTimeoutCountMetric
-  override val targetUrl = contentApi.elasticSearchHost
+  override val targetUrl = contentApi.contentApiLiveHost
 }
