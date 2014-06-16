@@ -1,7 +1,7 @@
 package views.support
 
 import model.{Content, MetaData, ImageContainer, ImageAsset}
-import conf.Switches.{ImageServerSwitch, ParameterlessImagesSwitch}
+import conf.Switches.{ImageServerSwitch, ParameterlessImagesSwitch, SeoOptimisedContentImageSwitch}
 import java.net.URI
 import conf.Configuration
 
@@ -107,7 +107,7 @@ object ImgSrc {
   def imager(imageContainer: ImageContainer, maxWidth: Int): Option[String] = {
     // get largest profile closest to the width
     val sortedProfiles: Seq[Profile] = Profile.all.filter(_.height == None).sortBy(_.width)
-    sortedProfiles.filter(_.width.getOrElse(0) >= maxWidth).headOption.orElse(sortedProfiles.reverse.headOption).flatMap{ profile =>
+    sortedProfiles.find(_.width.getOrElse(0) >= maxWidth).orElse(sortedProfiles.reverse.headOption).flatMap{ profile =>
       imager(imageContainer, profile)
     }
   }
@@ -118,6 +118,16 @@ object SeoThumbnail {
   def apply(metadata: MetaData): Option[String] = metadata match {
     case content: Content => content.thumbnail.flatMap(Item620.bestFor)
     case _ => None
+  }
+}
+
+object SeoOptimisedContentImage extends Profile(width = Some(460)) {
+  override def bestFor(image: ImageContainer): Option[String] = if (SeoOptimisedContentImageSwitch.isSwitchedOn){
+    elementFor(image).filter(i => this.width.exists(_ == i.width)).flatMap(_.url).orElse(
+      super.bestFor(image)
+    )
+  } else {
+    super.bestFor(image)
   }
 }
 
