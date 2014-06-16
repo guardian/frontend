@@ -897,9 +897,10 @@ module.exports = function (grunt) {
             var project = filepath.split('/').shift();
             grunt.task.run('requirejs:' + project);
         }
-        if (!isDev) {
+        // TODO: decouple moving of files from hashing
+        //if (!isDev) {
             grunt.task.run('hash');
-        }
+        //}
     });
 
 };
