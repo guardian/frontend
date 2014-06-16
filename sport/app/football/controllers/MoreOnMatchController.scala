@@ -1,20 +1,18 @@
 package football.controllers
 
-import feed.Competitions
-import model.{ Trail, Cached, Content }
-import play.api.mvc.{ SimpleResult, RequestHeader, Action, Controller }
 import common._
+import conf.LiveContentApi
+import feed.Competitions
+import implicits.{Football, Requests}
+import model.{Cached, Content, Trail}
+import org.joda.time.DateMidnight
 import org.joda.time.format.DateTimeFormat
-
 import org.scala_tools.time.Imports._
 import pa.FootballMatch
-import implicits.{ Requests, Football }
+import play.api.mvc.{Action, Controller, RequestHeader, SimpleResult}
+import play.api.templates.Html
 
 import scala.concurrent.Future
-import conf.LiveContentApi
-import org.joda.time.{DateMidnight, Interval}
-import play.api.templates.Html
-import com.gu.management.JsonResponse
 
 case class Report(trail: Trail, name: String)
 
@@ -31,7 +29,7 @@ case class MatchNav(theMatch: FootballMatch, matchReport: Option[Trail],
 object MoreOnMatchController extends Controller with Football with Requests with Logging with ExecutionContexts {
   def interval(contentDate: DateMidnight) = new Interval(contentDate - 2.days, contentDate + 3.days)
 
-  private val dateFormat = DateTimeFormat.forPattern("yyyyMMdd")
+  private val dateFormat = DateTimeFormat.forPattern("yyyyMMdd").withZone(DateTimeZone.forID("Europe/London"))
 
   // note team1 & team2 are the home and away team, but we do NOT know their order
   def matchNavJson(year: String, month: String, day: String, team1: String, team2: String) = matchNav(year, month, day, team1, team2)
