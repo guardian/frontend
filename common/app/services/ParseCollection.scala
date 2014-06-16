@@ -19,6 +19,7 @@ import com.gu.openplatform.contentapi.model.{Content => ApiContent}
 import play.api.libs.ws.Response
 import play.api.libs.json.JsObject
 import scala.concurrent.duration._
+import conf.Switches.{FaciaToolCachedContentApiSwitch, FaciaToolCachedZippingContentApiSwitch}
 
 
 object Path {
@@ -46,8 +47,18 @@ object Result {
 }
 
 trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging {
-  implicit val apiContentCodec = JsonCodecs.gzippedCodec[Option[ApiContent]]
-  implicit val resultCodec = JsonCodecs.gzippedCodec[Result]
+  implicit val apiContentCodec =
+    if (FaciaToolCachedZippingContentApiSwitch.isSwitchedOn)
+      JsonCodecs.gzippedCodec[Option[ApiContent]]
+    else
+      JsonCodecs.gzippedCodec[Option[ApiContent]]
+
+  implicit val resultCodec =
+    if (FaciaToolCachedZippingContentApiSwitch.isSwitchedOn)
+      JsonCodecs.gzippedCodec[Result]
+    else
+      JsonCodecs.gzippedCodec[Result]
+
   val cacheDuration: FiniteDuration = 5.minutes
 
   case class InvalidContent(id: String) extends Exception(s"Invalid Content: $id")
