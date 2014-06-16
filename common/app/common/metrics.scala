@@ -455,15 +455,26 @@ case class SimpleCountMetric(
   val currentCount = new AtomicLong(0)
   val `type` = "counter"
 
-  def increment() {
+  def increment(): Long = {
     count.incrementAndGet()
     currentCount.incrementAndGet()
   }
+
+  def add(value: Long): Long = {
+    count.addAndGet(value)
+    currentCount.getAndAdd(value)
+  }
+
 
   def getAndReset = currentCount.getAndSet(0)
   val getValue: () => Long = count.get
 
   override def asJson: StatusMetric = super.asJson.copy(count = Some(getValue().toString))
+
+}
+
+object SimpleCountMetric {
+  def apply(group: String, name: String, title: String): SimpleCountMetric = SimpleCountMetric(group, name, title, title)
 }
 
 class FrontendTimingMetric(

@@ -256,6 +256,7 @@ define([
                 ct      : contentType,
                 pt      : contentType,
                 p       : 'ng',
+                k       : parseKeywords(conf.keywordIds || conf.pageId),
                 bp      : detect.getBreakpoint(),
                 a       : audienceScience.getSegments(),
                 at      : cookies.get('adtest') || '',
@@ -263,16 +264,7 @@ define([
             }, audienceScienceGateway.getSegments(), criteo.getSegments());
         },
         buildAdUnit = function (config) {
-            var isFront      = config.page.isFront || config.page.contentType === 'Section',
-                section      = config.page.section,
-                adUnitSuffix = section;
-            if (isFront) {
-                if (section !== '') {
-                    adUnitSuffix += '/';
-                }
-                adUnitSuffix += 'front';
-            }
-            return '/' + config.page.dfpAccountId + '/' + config.page.dfpAdUnitRoot + '/' + adUnitSuffix;
+            return '/' + config.page.dfpAccountId + '/' + config.page.dfpAdUnitRoot + '/' + config.page.adUnitSuffix;
         },
         createAdSlot = function(name, types, keywords) {
             var definition = adSlotDefinitions[name],
@@ -301,8 +293,8 @@ define([
             }
             return $adSlot[0];
         },
-        getKeywords = function($adSlot, conf) {
-            return ($adSlot.data('keywords') || conf.page.keywordIds || conf.page.pageId || '')
+        parseKeywords = function(keywords) {
+            return (keywords || '')
                 .split(',').map(function (keyword) {
                     return keyword.split('/').pop();
                 });
@@ -347,8 +339,11 @@ define([
                             ? googletag.defineOutOfPageSlot(adUnit, id) : googletag.defineSlot(adUnit, size, id))
                         .addService(googletag.pubads())
                         .defineSizeMapping(sizeMapping)
-                        .setTargeting('k', getKeywords($adSlot, config))
                         .setTargeting('slot', $adSlot.data('name'));
+
+                if ($adSlot.data('keywords')) {
+                    slot.setTargeting('k', parseKeywords($adSlot.data('keywords')));
+                }
 
                 // Add to the array of ads to be refreshed (when the breakpoint changes)
                 // only if it's `data-refresh` attribute isn't set to false.

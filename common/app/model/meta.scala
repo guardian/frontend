@@ -25,13 +25,22 @@ trait MetaData extends Tags {
   //must be one of... http://schema.org/docs/schemas.html
   def schemaType: Option[String] = None
 
+  lazy val isFront = false
+  lazy val contentType = ""
+
+  lazy val adUnitSuffix = if (isFront) section + "/front" else section
+
+  lazy val hasPageSkin = false
+
   def metaData: Map[String, Any] = Map(
-    "page-id" -> id,
-    "section" -> section,
-    "web-title" -> webTitle,
-    "build-number" -> buildNumber,
-    "analytics-name" -> analyticsName,
-    "blockVideoAds" -> false
+    ("page-id", id),
+    ("section", section),
+    ("web-title", webTitle),
+    ("build-number", buildNumber),
+    ("analytics-name", analyticsName),
+    ("blockVideoAds", false),
+    ("is-front", isFront),
+    ("ad-unit-suffix", adUnitSuffix)
   )
 
   def openGraph: Map[String, Any] = Map(
@@ -161,8 +170,6 @@ trait Tags {
 
   def isSponsored = DfpAgent.isSponsored(keywords)
   def isAdvertisementFeature = DfpAgent.isAdvertisementFeature(keywords)
-  // TODO: hook up to dfp and remove switch
-  def hasPageSkin: Boolean = ForcePageSkinSwitch.isSwitchedOn
 
   // Tones are all considered to be 'News' it is the default so we do not list news tones explicitly
   lazy val visualTone: String =

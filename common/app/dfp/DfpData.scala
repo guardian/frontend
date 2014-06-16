@@ -11,25 +11,24 @@ case class Target(name: String, op: String, values: Seq[String]) {
 
   val isAdvertisementFeatureSlot = isSlot("adbadge")
 
-  val isKeyword = isPositive("k")
+  val isTag = isPositive("k") || isPositive("se")
 }
 
 case class TargetSet(op: String, targets: Seq[Target]) {
-
-  def keywords(p: Target => Boolean): Seq[String] = {
-    if (targets exists p) {
-      targets.filter(_.isKeyword).flatMap(_.values).distinct
+  def filterTags(bySlotType: Target => Boolean) ={
+    if (targets exists bySlotType) {
+      targets.filter(_.isTag).flatMap(_.values).distinct
     } else Nil
   }
 
-  val sponsoredKeywords = keywords(_.isSponsoredSlot)
+  val sponsoredTags = filterTags(_.isSponsoredSlot)
 
-  val advertisementFeatureKeywords = keywords(_.isAdvertisementFeatureSlot)
+  val advertisementFeatureTags = filterTags(_.isAdvertisementFeatureSlot)
 }
 
 case class LineItem(id: Long, targetSets: Seq[TargetSet]) {
 
-  val sponsoredKeywords = targetSets.flatMap(_.sponsoredKeywords).distinct
+  val sponsoredTags = targetSets.flatMap(_.sponsoredTags).distinct
 
-  val advertisementFeatureKeywords = targetSets.flatMap(_.advertisementFeatureKeywords).distinct
+  val advertisementFeatureTags = targetSets.flatMap(_.advertisementFeatureTags).distinct
 }
