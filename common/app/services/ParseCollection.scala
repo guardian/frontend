@@ -49,13 +49,13 @@ object Result {
 trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging {
   implicit def apiContentCodec =
     if (FaciaToolCachedZippingContentApiSwitch.isSwitchedOn)
-      JsonCodecs.gzippedCodec[Option[ApiContent]]
+      JsonCodecs.snappyCodec[Option[ApiContent]]
     else
       JsonCodecs.nonGzippedCodec[Option[ApiContent]]
 
   implicit def resultCodec =
     if (FaciaToolCachedZippingContentApiSwitch.isSwitchedOn)
-      JsonCodecs.gzippedCodec[Result]
+      JsonCodecs.snappyCodec[Result]
     else
       JsonCodecs.nonGzippedCodec[Result]
 
