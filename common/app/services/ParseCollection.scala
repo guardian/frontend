@@ -235,7 +235,12 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
       }
     }
 
-    MemcachedFallback.withMemcachedFallBack(collectionItem.id, cacheDuration)(response.map(_.flatMap(_.content)))
+    if (FaciaToolCachedContentApiSwitch.isSwitchedOn) {
+      MemcachedFallback.withMemcachedFallBack(collectionItem.id, cacheDuration)(response.map(_.flatMap(_.content)))
+    }
+    else {
+      response.map(_.flatMap(_.content))
+    }
   }
 
   private def retrieveSupportingLinks(collectionItem: CollectionItem): List[CollectionItem] =
@@ -246,10 +251,17 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
 
 
   def executeContentApiQueryViaCache(queryString: String, edition: Edition): Future[Result] = {
-    MemcachedFallback.withMemcachedFallBack(
-      sha256Hex(queryString),
-      cacheDuration
-    ) { executeContentApiQuery(queryString, edition) }
+    if (FaciaToolCachedContentApiSwitch.isSwitchedOn) {
+      MemcachedFallback.withMemcachedFallBack(
+        sha256Hex(queryString),
+        cacheDuration
+      ) {
+        executeContentApiQuery(queryString, edition)
+      }
+    } else {
+      executeContentApiQuery(queryString, edition)
+    }
+
   }
 
   def executeContentApiQuery(queryString: String, edition: Edition): Future[Result] = {
