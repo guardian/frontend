@@ -96,7 +96,7 @@
             }
             @include mq(tablet) {
                 height: 95%;
-                max-height: none;
+                max-height: gs-height(4) + ($gs-baseline*2);
                 @include rem((
                     right: gs-span(3),
                     min-height: gs-span(2) + ($gs-gutter*2)

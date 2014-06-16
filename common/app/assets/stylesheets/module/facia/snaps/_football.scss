@@ -33,7 +33,7 @@
             padding: $gs-gutter/5 0 0 0
         ));
 
-        .football-matches__heading{
+        .football-matches__heading {
             @include rem((
                 padding: $gs-gutter/5
             ));
@@ -43,7 +43,7 @@
             @include rem((
                 padding: $gs-gutter/5,
             ));
-            border-top: 1px solid darken($c-neutral8, 4%)
+            border-top: 1px solid darken($c-neutral8, 4%);
         }
     }
 
@@ -200,12 +200,12 @@
         }
         .football-match__team--home {
             @include rem((
-                padding-right: $gs-gutter*0.5
+                padding-right: $gs-gutter*.5
             ));
         }
         .football-match__team--away {
             @include rem((
-                padding-left: $gs-gutter*0.5
+                padding-left: $gs-gutter*.5
             ));
         }
 
