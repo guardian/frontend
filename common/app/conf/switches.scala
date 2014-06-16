@@ -56,6 +56,12 @@ object Switches extends Collections {
     sellByDate = never
   )
 
+  val MemcachedFallbackSwitch = Switch("Performance Switches", "memcached-fallback",
+    "If this switch is switched on then the MemcachedFallback will be operational",
+    safeState = On,
+    sellByDate = never
+  )
+
   val IncludeBuildNumberInMemcachedKey = Switch("Performance Switches", "memcached-build-number",
     "If this switch is switched on then the MemcacheFilter will include the build number in the cache key",
     safeState = Off,
@@ -473,6 +479,7 @@ object Switches extends Collections {
     WorldCupArticleContainerSwitch,
     IndiaRegionSwitch,
     MemcachedSwitch,
+    MemcachedFallbackSwitch,
     IncludeBuildNumberInMemcachedKey,
     GeoMostPopular,
     TagLinkingSwitch,
