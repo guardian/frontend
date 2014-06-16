@@ -13,7 +13,7 @@
         @SnapData(trail)>
 
         <div class="fromage__container">
-            <a @LinkTo(trail).map{url=>href=@url} class="fromage__link" data-link-name="article">
+            <a @LinkTo(trail).map{url=>href=@url} class="fromage__link" data-link-name="article" data-test-id="article-link">
                 @if(imageAdjust != Some("hide")) {
                     @trail.trailPicture(5,3).map{ imageContainer =>
                         @ImgSrc.imager(imageContainer, Item620).map { imgSrc =>
