@@ -1,0 +1,19 @@
+.render-time--ad__form {
+    padding-left: 55px;
+    margin-bottom: 0;
+}
+.render-time--ad__form__label {
+    font-weight: bold;
+    font-size: 1.3em;
+}
+.render-time--ad__form__select {
+    margin-bottom: 0;
+    margin-left: 10px;
+}
+
+.render-time {
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    margin-bottom: 30px;
+    min-height: 200px;
+}
