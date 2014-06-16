@@ -813,21 +813,31 @@ module.exports = function (grunt) {
     /**
      * Compile tasks
      */
-    grunt.registerTask('compile:images', ['copy:images', 'shell:spriteGeneration', 'imagemin', 'hash']);
-    grunt.registerTask('compile:css', ['sass:compile', 'replace:cssSourceMaps', 'copy:css', 'hash']);
+    grunt.registerTask('compile:images', ['copy:images', 'shell:spriteGeneration', 'imagemin']);
+    grunt.registerTask('compile:css', ['sass:compile', 'replace:cssSourceMaps', 'copy:css']);
     grunt.registerTask('compile:js', function(app) {
-        var target = app ? ':' + app : app;
-        if (grunt.config('copy')['javascript-' + app]) {
-            grunt.task.run('copy:javascript-' + app);
+        var target = app ? ':' + app : '',
+            // run the javascript copy tasks
+            copyTasks = Object.keys(grunt.config('copy'))
+                .filter(function(copyTask) {
+                    return copyTask.indexOf('javascript') === 0;
+                })
+                .map(function(copyTask) {
+                    return 'copy:' + copyTask;
+                });
+        if (app) {
+            var copyTask = 'copy:javascript-' + app;
+            (copyTasks.indexOf(copyTask) > -1) && grunt.task.run(copyTask);
+        } else {
+            grunt.task.run(copyTasks);
         }
         grunt.task.run('requirejs' + target);
         if (!isDev) {
             grunt.task.run('uglify:components');
         }
-        grunt.task.run('hash');
     });
-    grunt.registerTask('compile:fonts', ['mkdir:fontsTarget', 'webfontjson', 'hash']);
-    grunt.registerTask('compile:flash', ['copy:flash', 'hash']);
+    grunt.registerTask('compile:fonts', ['mkdir:fontsTarget', 'webfontjson']);
+    grunt.registerTask('compile:flash', ['copy:flash']);
     grunt.registerTask('compile:conf', ['copy:headCss', 'copy:vendor', 'copy:assetMap']);
     grunt.registerTask('compile', function(app) {
         grunt.task.run([
@@ -836,6 +846,7 @@ module.exports = function (grunt) {
             'compile:js:' + (app || ''),
             'compile:fonts',
             'compile:flash',
+            'hash',
             'compile:conf'
         ]);
     });
