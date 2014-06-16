@@ -1,0 +1,18 @@
+@(env: String)
+
+@admin_main("Commercial", env, isAuthed = true, hasCharts = true) {
+
+    <link rel="stylesheet" type="text/css" href="@routes.Assets.at("css/commercial.css")">
+
+    <h1>Commercial</h1>
+    <h2>Ads</h2>
+
+    <div class="render-time render-time--ads">
+        <div id="render-time--ads__graph"></div>
+    </div>
+
+    <div class="render-time render-time--ad">
+        <div id="render-time--ad__graph"></div>
+    </div>
+
+}
