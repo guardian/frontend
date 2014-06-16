@@ -39,11 +39,9 @@
                     </a>
                 </span>
 
-                @comment.responseTo.map{ r =>
+                @if(!comment.responseTo.isEmpty){  
                     <span class="i i-in-reply-arrow"></span>
-                    <a href="#comment-@r.commentId">
-                        <span class="d-comment__reply-to-author">@r.displayName</span>
-                    </a>
+                    <span class="d-comment__reply-to-author">@comment.responseTo.map(_.displayName)</span>
                 }
                 @if(comment.profile.isStaff){
                     <span class="d-comment__author-label">Staff</span>
