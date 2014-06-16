@@ -97,6 +97,10 @@ $disc-avatar-size: 44px;
         border-left: 3px solid transparentize($c-neutral1, .75);
     }
 }
+.disc-comment__view-discussion {
+    @include fs-textsans(2);
+    display: inline-block;
+}
 
 
 /* ==========================================================================

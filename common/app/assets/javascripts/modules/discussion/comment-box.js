@@ -367,10 +367,14 @@ CommentBox.prototype.formatComment = function(formatStyle) {
     };
 
     var formatSelectionLink = function() {
-        if (!/^https?:\/\//i.test(selectedText)) {
-            selectedText = 'http://'+selectedText;
+        var href;
+
+        if (/^https?:\/\//i.test(selectedText)) {
+            href = selectedText;
+        } else {
+            href = 'http://';
         }
-        var newText = '<a href="' + selectedText + '">' + selectedText + '</a>';
+        var newText = '<a href="' + href + '">' + selectedText + '</a>';
 
         commentBody.value = commentBody.value.substring(0, commentBody.selectionStart) +
             newText + commentBody.value.substring(commentBody.selectionEnd);

@@ -15,7 +15,7 @@ object Api extends Controller with Logging with AuthLogging with ExecutionContex
        "%s=%s".format(p._1, p._2.head.urlEncoded)
     }.mkString("&")
 
-    val url = s"${Configuration.contentApi.elasticSearchHost}/$path?$queryString&api-key=${Configuration.contentApi.key}"
+    val url = s"${Configuration.contentApi.contentApiLiveHost}/$path?$queryString${Configuration.contentApi.key.map(key => s"&api-key=$key").getOrElse("")}"
 
     log("Proxying tag API query to: %s" format url, request)
 
@@ -25,9 +25,9 @@ object Api extends Controller with Logging with AuthLogging with ExecutionContex
   }
 
   def tag(q: String, callback: String) = Authenticated.async { request =>
-    val url = "%s/tags?format=json&page-size=50&api-key=%s&callback=%s&q=%s".format(
-      Configuration.contentApi.elasticSearchHost,
-      Configuration.contentApi.key,
+    val url = "%s/tags?format=json&page-size=50%s&callback=%s&q=%s".format(
+      Configuration.contentApi.contentApiLiveHost,
+      Configuration.contentApi.key.map(key => s"&api-key=$key").getOrElse(""),
       callback.javascriptEscaped.urlEncoded,
       q.javascriptEscaped.urlEncoded
     )
@@ -40,10 +40,10 @@ object Api extends Controller with Logging with AuthLogging with ExecutionContex
   }
 
   def item(path: String, callback: String) = Authenticated.async { request =>
-    val url = "%s/%s?format=json&page-size=1&api-key=%s&callback=%s".format(
-      Configuration.contentApi.elasticSearchHost,
+    val url = "%s/%s?format=json&page-size=1%s&callback=%s".format(
+      Configuration.contentApi.contentApiLiveHost,
       path.javascriptEscaped.urlEncoded,
-      Configuration.contentApi.key,
+      Configuration.contentApi.key.map(key => s"&api-key=$key").getOrElse(""),
       callback.javascriptEscaped.urlEncoded
     )
 

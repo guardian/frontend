@@ -144,6 +144,7 @@ define([
                 page: {
                     dfpAccountId: 123456,
                     dfpAdUnitRoot: 'theguardian.com',
+                    adUnitSuffix: 'front',
                     isFront: true,
                     section: ''
                 }
@@ -257,6 +258,7 @@ define([
                 page: {
                     dfpAccountId: 123456,
                     dfpAdUnitRoot: 'theguardian.com',
+                    adUnitSuffix: 'front',
                     isFront: true,
                     section: ''
                 }
@@ -274,11 +276,11 @@ define([
                     }
                 });
                 window.googletag.cmd.forEach(function(func) { func(); });
-                expect(window.googletag.setTargeting).toHaveBeenCalledWith('k', ['korea', 'ukraine']);
+                expect(window.googletag.pubads().setTargeting).toHaveBeenCalledWith('k', ['korea', 'ukraine']);
             });
 
             it('should send container level keywords', function() {
-                $('.ad-slot--dfp').first().data('keywords', 'china');
+                $('.ad-slot--dfp').first().data('keywords', 'country/china');
                 dfp.init();
                 window.googletag.cmd.forEach(function(func) { func(); });
                 expect(window.googletag.setTargeting).toHaveBeenCalledWith('k', ['china']);
@@ -291,7 +293,7 @@ define([
                     }
                 });
                 window.googletag.cmd.forEach(function(func) { func(); });
-                expect(window.googletag.setTargeting).toHaveBeenCalledWith('k', ['uk']);
+                expect(window.googletag.pubads().setTargeting).toHaveBeenCalledWith('k', ['uk']);
             });
 
         });

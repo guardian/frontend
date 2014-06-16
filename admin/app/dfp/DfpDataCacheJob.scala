@@ -9,10 +9,12 @@ object DfpDataCacheJob extends ExecutionContexts {
 
   def run() {
     future {
-      val lineItems = DfpApi.fetchCurrentLineItems()
-      if (lineItems.nonEmpty) {
+      val dfpLineItems = DfpApi.getAllCurrentDfpLineItems()
+      if (dfpLineItems.nonEmpty) {
+        val lineItems = DfpApi.wrapIntoDomainLineItem(dfpLineItems)
         Store.putDfpSponsoredKeywords(stringify(toJson(DfpApi.fetchSponsoredKeywords(lineItems))))
         Store.putDfpAdvertisementFeatureKeywords(stringify(toJson(DfpApi.fetchAdvertisementFeatureKeywords(lineItems))))
+        Store.putDfpPageSkinAdUnits(stringify(toJson(DfpApi.fetchAdUnitsThatAreTargettedByPageSkins(dfpLineItems))))
       }
     }
   }

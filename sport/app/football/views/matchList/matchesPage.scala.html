@@ -42,11 +42,7 @@
                                                 responsiveFont = true,
                                                 matchType = matchesList.pageType,
                                                 // this is a special case for the world cup, remove it afterwards
-                                                heading = if (competition.url == "/football/world-cup-2014" && Switches.WorldCupWallchartEmbedSwitch.isSwitchedOn) {
-                                                    Some(matches.headOption.flatMap(m => "World Cup 2014 " + m.round.name.getOrElse("")).getOrElse(competition.fullName), Option(competition.url))
-                                                } else {
-                                                    Some(competition.fullName, Option(competition.url))
-                                                }
+                                                heading = Some(competition.fullName, Option(competition.url))
                                             )
                                         </div>
                                     </div>

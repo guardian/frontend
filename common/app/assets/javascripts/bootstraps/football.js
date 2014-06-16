@@ -133,7 +133,6 @@ define([
 
         page.isMatch(function(match) {
             extras[0] = { ready: false };
-            extras[1] = { ready: false };
             if (match.pageType === 'stats') {
                 renderNav(match);
             } else {
@@ -195,6 +194,7 @@ define([
 
                     // Group table & Match day
                     page.isCompetition(function(competition) {
+                        extras[1] = { ready: false };
                         // Group table
                         if (resp.group !== '') {
                             renderTable(competition +'/'+ resp.group, extras, dropdownTemplate);
