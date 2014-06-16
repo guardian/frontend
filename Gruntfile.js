@@ -709,8 +709,8 @@ module.exports = function (grunt) {
         // Recompile on change
         watch: {
             js: {
-                files: ['common/app/{assets, public}/javascripts/**/*.js'],
-                tasks: ['compile:js'],
+                // using watch event to just compile changed project
+                files: ['*/app/{assets, public}/javascripts/**/*.js'],
                 options: {
                     spawn: false
                 }
@@ -884,5 +884,16 @@ module.exports = function (grunt) {
     grunt.registerTask('hookmeup', ['clean:hooks', 'shell:copyHooks']);
     grunt.registerTask('snap', ['clean:screenshots', 'mkdir:screenshots', 'env:casperjs', 'casperjs:screenshot', 's3:screenshots']);
     grunt.registerTask('emitAbTestInfo', 'shell:abTestInfo');
+
+    grunt.event.on('watch', function(action, filepath, target) {
+        if (target === 'js') {
+            // compile just the project
+            var project = filepath.split('/').shift();
+            grunt.task.run('requirejs:' + project);
+        }
+        if (!isDev) {
+            grunt.task.run('hash');
+        }
+    });
 
 };
