@@ -233,13 +233,13 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
         log.warn("%s: %s".format(collectionItem.id, t.toString))
         throw t
       }
-    }
+    }.map(_.flatMap(_.content))
 
     if (FaciaToolCachedContentApiSwitch.isSwitchedOn) {
-      MemcachedFallback.withMemcachedFallBack(collectionItem.id, cacheDuration)(response.map(_.flatMap(_.content)))
+      MemcachedFallback.withMemcachedFallBack(collectionItem.id, cacheDuration)(response)
     }
     else {
-      response.map(_.flatMap(_.content))
+      response
     }
   }
 
@@ -251,15 +251,16 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
 
 
   def executeContentApiQueryViaCache(queryString: String, edition: Edition): Future[Result] = {
+    lazy val contentApiQuery = executeContentApiQuery(queryString, edition)
     if (FaciaToolCachedContentApiSwitch.isSwitchedOn) {
       MemcachedFallback.withMemcachedFallBack(
         sha256Hex(queryString),
         cacheDuration
       ) {
-        executeContentApiQuery(queryString, edition)
+        contentApiQuery
       }
     } else {
-      executeContentApiQuery(queryString, edition)
+      contentApiQuery
     }
 
   }
