@@ -335,6 +335,10 @@ object Switches extends Collections {
   val ABSentry = Switch("A/B Tests", "ab-sentry",
     "If this switch is turned on, users JavaScript errors will be beaconed back to the Sentry server.",
     safeState = Off, sellByDate = new DateMidnight(2014, 6, 27)
+
+  val ABLargerMobileMpu = Switch("A/B Tests", "ab-larger-mobile-mpu",
+    "If this switch is turned on, run the LargerMobileMpu A/B test",
+    safeState = Off, sellByDate = new DateMidnight(2014, 7, 1)
   )
 
   // Dummy Switches
@@ -497,6 +501,7 @@ object Switches extends Collections {
     ABAcrossTheGuardian,
     ABDisplaySociallyReferredBurners,
     ABSentry,
+    ABLargerMobileMpu,
     SmartBannerSwitch,
     SurveyBannerSwitch,
     ParameterlessImagesSwitch,
