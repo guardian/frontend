@@ -233,16 +233,23 @@ $c-soulmates-high: $c-neutral1;
         .commercial__explainer {
             position: static;
             color: #ffffff;
-            width: gs-span(2)-$gs-gutter;
-            padding: 0 $gs-gutter;
+            @include rem((
+                width: gs-span(2)-$gs-gutter,
+                padding: 0 $gs-gutter
+            ));
+            line-height: 1;
         }
         .i-soulmates-logo-2014 {
-            width: gs-span(2)-$gs-gutter;
+            @include rem((
+                width: gs-span(2)-$gs-gutter
+            ));
             background-size: contain;
         }
         .commercial__buy-now-button {
             display: inline-block;
-            padding: $gs-baseline $gs-gutter;
+            @include rem((
+                padding: $gs-baseline $gs-gutter
+            ));
             position: relative;
         }
         .commercial__body {
@@ -286,7 +293,9 @@ $c-soulmates-high: $c-neutral1;
         }
         .commercial__head {
             position: static;
-            width: gs-span(2)+$gs-gutter !important;
+            @include rem((
+                width: gs-span(2)+$gs-gutter !important
+            ));
             margin-right: 0;
         }
         .commercial__body {
@@ -303,16 +312,23 @@ $c-soulmates-high: $c-neutral1;
         .commercial__explainer {
             position: static;
             color: #ffffff;
-            width: gs-span(2)-$gs-gutter;
-            padding: 0 $gs-gutter;
+            @include rem((
+                width: gs-span(2)-$gs-gutter,
+                padding: 0 $gs-gutter
+            ));
+            line-height: 1;
         }
         .i-soulmates-logo-2014 {
             background-size: contain;
-            width: gs-span(2)-$gs-gutter;
+            @include rem((
+                width: gs-span(2)-$gs-gutter
+            ));
         }
         .commercial__buy-now-button {
             display: inline-block;
-            padding: $gs-baseline $gs-gutter;
+            @include rem((
+                padding: $gs-baseline $gs-gutter
+            ));
             position: relative;
         }
     }
@@ -334,11 +350,15 @@ $c-soulmates-high: $c-neutral1;
     }
     @include mq(wide) {
         .commercial__head {
-            width: gs-span(3) !important;
-            margin-right: 20px;
+            @include rem((
+                width: gs-span(3) !important,
+                margin-right: $gs-gutter
+            ));
         }
         .i-soulmates-logo-2014 {
-            width: gs-span(2);
+            @include rem((
+                width: gs-span(2)
+            ));
         }
         .container__title__wrapper {
             background-size: cover;
