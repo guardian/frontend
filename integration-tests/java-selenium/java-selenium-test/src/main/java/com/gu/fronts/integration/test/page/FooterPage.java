@@ -19,7 +19,7 @@ public class FooterPage extends AbstractParentPage {
     }
 
     public FooterPage isDisplayed() {
-        super.exists(copyright, logo);
+        super.assertExists(copyright, logo);
         return this;
     }
 

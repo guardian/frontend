@@ -13,8 +13,12 @@ public class ByTestAttributeSelector extends ByCssSelector {
     public static final String TEST_ATTR_NAME = "data-test-id";
 
     public ByTestAttributeSelector(String testAttributeValue) {
-        super(new StringBuilder().append("[").append(ByTestAttributeSelector.TEST_ATTR_NAME).append("=")
-                .append(testAttributeValue).append("]").toString());
+        super(testAttributeCssSelector(testAttributeValue));
+    }
+
+    public static String testAttributeCssSelector(String testAttributeValue) {
+        return new StringBuilder().append("[").append(ByTestAttributeSelector.TEST_ATTR_NAME).append("=")
+                .append(testAttributeValue).append("]").toString();
     }
 
     public static By create(final String testAttributeValue) {

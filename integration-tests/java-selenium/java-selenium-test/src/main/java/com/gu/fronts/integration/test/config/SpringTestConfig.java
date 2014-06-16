@@ -37,8 +37,6 @@ public class SpringTestConfig {
 
     /**
      * Use this only if you have Selenium Chrome Webdriver installed
-     * 
-     * @return
      */
     @Bean(name = "chrome", destroyMethod = "quit")
     @Scope("prototype")

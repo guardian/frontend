@@ -9,7 +9,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class PageElementHelper {
 
-    private static final int CLICKABLE_WAIT = 1;
+    private static final int CLICKABLE_WAIT = 2;
 
     public static boolean elementClickable(WebElement element, WebDriver webDriver) {
         try {
@@ -20,7 +20,7 @@ public class PageElementHelper {
         }
         return true;
     }
-    
+
     public static boolean elementIsALink(WebElement element) {
         return "a".equalsIgnoreCase(element.getTagName());
     }

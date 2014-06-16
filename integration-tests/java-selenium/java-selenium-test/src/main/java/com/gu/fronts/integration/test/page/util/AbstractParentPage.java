@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
@@ -18,6 +20,8 @@ import com.gu.fronts.integration.test.page.HeaderPage;
  * etc
  */
 public abstract class AbstractParentPage {
+
+    private static Log LOG = LogFactory.getLog(AbstractParentPage.class);
 
     protected WebDriver webDriver;
 
@@ -53,7 +57,7 @@ public abstract class AbstractParentPage {
      * all provided elements are displayed and if not will throw an AssertionError with a message detailing which
      * elements are not displayed.
      */
-    protected void exists(WebElement... elementsToCheck) {
+    protected void assertExists(WebElement... elementsToCheck) {
         List<String> errors = new ArrayList<>();
         for (WebElement webElement : elementsToCheck) {
             checkElementExistsAndCreateError(webElement, errors);
@@ -65,8 +69,8 @@ public abstract class AbstractParentPage {
     }
 
     /**
-     * Page Objects need to implement this class and then call {@link #exists(WebElement...)} with the elements which
-     * need to be displayed for the page to load properly and can also, optionally, do some additional checks
+     * Page Objects need to implement this class and then call {@link #assertExists(WebElement...)} with the elements
+     * which need to be displayed for the page to load properly and can also, optionally, do some additional checks
      */
     protected abstract Object isDisplayed();
 
@@ -78,6 +82,7 @@ public abstract class AbstractParentPage {
         try {
             webElement.isDisplayed();
         } catch (WebDriverException e) {
+            LOG.debug(e);
             errors.add(e.getMessage());
         }
     }

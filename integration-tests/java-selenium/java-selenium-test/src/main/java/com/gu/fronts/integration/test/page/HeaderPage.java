@@ -16,7 +16,7 @@ public class HeaderPage extends AbstractParentPage {
     }
 
     public HeaderPage isDisplayed() {
-        super.exists(logo);
+        super.assertExists(logo);
         return this;
     }
 

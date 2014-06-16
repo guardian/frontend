@@ -7,7 +7,7 @@ import com.gu.fronts.integration.test.fw.selenium.FindByTestAttribute;
 import com.gu.fronts.integration.test.page.util.AbstractParentPage;
 
 public class NetworkFrontPage extends AbstractParentPage {
-    @FindByTestAttribute(using = "network_front_date_title")
+    @FindByTestAttribute(using = "network-front-date-title")
     private WebElement dateTitle;
 
     public NetworkFrontPage(WebDriver webDriver) {
@@ -15,7 +15,17 @@ public class NetworkFrontPage extends AbstractParentPage {
     }
 
     public NetworkFrontPage isDisplayed() {
-        super.exists(dateTitle);
+        // TODO find/create a better element which uniquely identifies the network front start page
+        assertExists(dateTitle);
         return this;
+    }
+
+    public NetworkFrontDateBox dateBox() {
+        return loadPage(NetworkFrontDateBox.class);
+    }
+
+    public AllFaciaContainersPage containers() {
+        // TODO Auto-generated method stub
+        return null;
     }
 }
