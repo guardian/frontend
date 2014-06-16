@@ -148,6 +148,9 @@ $vjs-progress-inset-bottom: 4px;
     width: 100%;
     position: absolute;
     top: $vjs-progress-inset-bottom - $vjs-progress-hitbox-height;
+    .vjs-ad-playing & {
+        display: none;
+    }
 }
 
 .vjs-progress-holder {
@@ -333,6 +336,14 @@ $vjs-progress-inset-bottom: 4px;
         @include transition(top 0s);
         transition-delay: 0s;
     }
+}
+
+.vast-blocker {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
 }
 
 .vast-skip-button {
