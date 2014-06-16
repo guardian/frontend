@@ -50,7 +50,7 @@ object Switches extends Collections {
 
   // Load Switches
 
-  val MemcachedSwitch = Switch("Performance Switches", "memcached",
+  val MemcachedSwitch = Switch("Performance Switches", "memcached-action",
     "If this switch is switched on then the MemcacheAction will be operational",
     safeState = Off,
     sellByDate = never
