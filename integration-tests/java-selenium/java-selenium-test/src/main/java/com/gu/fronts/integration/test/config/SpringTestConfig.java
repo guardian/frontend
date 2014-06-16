@@ -1,6 +1,7 @@
 package com.gu.fronts.integration.test.config;
 
 import static com.gu.fronts.integration.test.config.EnvironmentConfigurer.ENVIRONMENT_KEY;
+import static java.util.concurrent.TimeUnit.SECONDS;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -26,23 +27,29 @@ public class SpringTestConfig {
     public WebDriver getFirefoxWebdriver() {
         DesiredCapabilities desiredCap = DesiredCapabilities.firefox();
         desiredCap.setCapability("applicationCacheEnabled", false);
-        return new FirefoxDriver();
+        return setGlobalWebdriverConf(new FirefoxDriver());
+    }
+
+    private WebDriver setGlobalWebdriverConf(WebDriver webDriver) {
+        webDriver.manage().timeouts().implicitlyWait(10, SECONDS);
+        return webDriver;
     }
 
     /**
      * Use this only if you have Selenium Chrome Webdriver installed
+     * 
      * @return
      */
     @Bean(name = "chrome", destroyMethod = "quit")
     @Scope("prototype")
     @Deprecated()
     public WebDriver getChromeWebdriver() {
-//        String chromeDriverPath = this.getClass().getClassLoader().getResource("drivers/chromedriver").getPath();
-//        System.setProperty("webdriver.chrome.driver", chromeDriverPath);
+        // String chromeDriverPath = this.getClass().getClassLoader().getResource("drivers/chromedriver").getPath();
+        // System.setProperty("webdriver.chrome.driver", chromeDriverPath);
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--disable-application-cache");
         WebDriver webDriver = new ChromeDriver(options);
-        return webDriver;
+        return setGlobalWebdriverConf(webDriver);
     }
 
     @Bean
