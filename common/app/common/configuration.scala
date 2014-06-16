@@ -142,6 +142,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val domain = """^https?://(?:profile\.)?([^/:]+)""".r.unapplySeq(url).flatMap(_.headOption).getOrElse("theguardian.com")
     lazy val apiClientToken = configuration.getStringProperty("id.apiClientToken").getOrElse("")
     lazy val webappUrl = configuration.getStringProperty("id.webapp.url").getOrElse("")
+    lazy val membershipUrl = configuration.getStringProperty("id.membership.url").getOrElse("membership.theguardian.com")
   }
 
   object static {
@@ -228,7 +229,8 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
       ("secureDiscussionApiRoot", discussion.secureApiRoot),
       "discussionApiClientHeader" -> discussion.apiClientHeader,
       ("ophanJsUrl", ophan.jsLocation),
-      ("googletagJsUrl", googletag.jsLocation)
+      ("googletagJsUrl", googletag.jsLocation),
+      ("membershipUrl", id.membershipUrl)
     )
 
     lazy val pageData: Map[String, String] = {

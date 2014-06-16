@@ -95,7 +95,9 @@ object Frontend extends Build with Prototypes {
       "net.liftweb" %% "lift-json" % "2.5",
       "commons-httpclient" % "commons-httpclient" % "3.1",
       "org.slf4j" % "slf4j-ext" % "1.7.5",
-      "com.gu" %% "exact-target-client" % "2.23"
+      "com.gu" %% "exact-target-client" % "2.23",
+
+      "com.github.nscala-time" %% "nscala-time" % "1.0.0"
     )
   )
 

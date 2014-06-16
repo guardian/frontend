@@ -53,7 +53,8 @@ module.exports = function (grunt) {
                     imager:       '../../../../common/app/assets/javascripts/components/imager.js/src/strategies/container',
                     omniture:     '../../../../common/app/assets/javascripts/components/omniture/omniture',
                     fence:        '../../../../common/app/assets/javascripts/components/fence/fence',
-                    enhancer:     '../../../../common/app/assets/javascripts/components/enhancer/enhancer'
+                    enhancer:     '../../../../common/app/assets/javascripts/components/enhancer/enhancer',
+                    stripe:       '../../../../common/app/assets/javascripts/components/stripe/stripe.min'
                 },
                 optimize: 'uglify2',
                 generateSourceMaps: true,

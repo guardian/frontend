@@ -9,7 +9,7 @@ define([
     'bean',
     'bonzo',
     'common/utils/url',
-    'common/modules/identity/membership-tab'
+    'common/modules/identity/membership/membership-tab'
 ], function(
     $,
     bean,
