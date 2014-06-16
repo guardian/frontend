@@ -19,7 +19,9 @@ trait Prototypes {
     ),
     scalacOptions := Seq("-unchecked", "-optimise", "-deprecation",
       "-Xcheckinit", "-encoding", "utf8", "-feature", "-Yinline-warnings",
-      "-Xfatal-warnings")
+      "-Xfatal-warnings"
+    ),
+    doc in Compile <<= target.map(_ / "none")
   )
 
   val frontendDependencyManagementSettings = Seq(

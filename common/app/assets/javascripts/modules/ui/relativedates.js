@@ -149,6 +149,21 @@ define([
         return common.$g('.js-timestamp, .js-item__timestamp', context);
     }
 
+    function replaceLocaleTimestamps(context) {
+        var cls = 'js-locale-timestamp';
+        common.$g('.' + cls, context).each(function(el){
+            var datetime,
+                $el = bonzo(el),
+                timestamp = parseInt($el.attr('data-timestamp'), 10);
+
+            if(timestamp) {
+                datetime = new Date(timestamp);
+                el.innerHTML = pad(datetime.getHours()) + ':' + pad(datetime.getMinutes());
+                $el.removeClass(cls);
+            }
+        });
+    }
+
     function replaceValidTimestamps(context, opts) {
         opts = opts || {};
 
@@ -186,6 +201,7 @@ define([
 
     function init(context, opts) {
         replaceValidTimestamps(context, opts);
+        replaceLocaleTimestamps(context, opts);
     }
 
     return {
