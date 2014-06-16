@@ -111,16 +111,14 @@
             margin-right: 0
         ));
         overflow: hidden;
-        border-top: 1px solid #eee;
+        border-top: 1px solid $c-neutral6;
     }
     .global-navigation__title {
         float: none;
     }
     .global-navigation__children {
         display: table-cell;
-        @include rem((
-            width: gs-span(10)
-        ));
+        width: 10000px; //hack to make a cell take all the available space
         max-width: 100%;
     }
     .global-navigation__child {
