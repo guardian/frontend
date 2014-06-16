@@ -3,7 +3,7 @@ package com.gu.fronts.integration.test.fw.wiremock;
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
 import static com.github.tomakehurst.wiremock.client.WireMock.get;
 import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
-import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
+import static com.github.tomakehurst.wiremock.client.WireMock.*;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -26,8 +26,8 @@ public class WiremockStubPressedJsonBuilder {
     private static Log LOG = LogFactory.getLog(WiremockStubPressedJsonBuilder.class);
 
     // stubPath("/uk").withResponse("NetworkStartPage-pressed.json");
-    @Value("${fronts.env}")
-    protected String frontsEnv;
+//    @Value("${fronts.env}")
+//    protected String frontsEnv;
     private MappingBuilder mappingBuilder;
     private String path;
 
@@ -36,10 +36,10 @@ public class WiremockStubPressedJsonBuilder {
      * Use {@link #withResponse()} to specify the pressed.json file to be return.
      */
     public WiremockStubPressedJsonBuilder path(String path) {
-        String requestPath = "/aws-frontend-store/" + frontsEnv + "/frontsapi/pressed" + path
+        String requestPath = "/aws-frontend-store/(.*)/frontsapi/pressed" + path
                 + "/pressed.json";
         LOG.debug("Creating pressed.json stub for path: "+requestPath);
-        this.mappingBuilder = get(urlEqualTo(requestPath));
+        this.mappingBuilder = get(urlMatching(requestPath));
         this.path = path;
         return this;
     }

@@ -21,9 +21,6 @@ public class StubbedFrontsIntegrationTestCase extends FrontsIntegrationTestCase 
     @Rule
     public TestName executingTest = new TestName();
 
-    @Value("${fronts.env}")
-    protected String frontsEnv;
-
     // the following declarations makes WireMock stay up between test cases
     @ClassRule
     public static WireMockClassRule wireMockRule = new WireMockClassRule(wireMockConfig().port(getStubServerPort(7070)));

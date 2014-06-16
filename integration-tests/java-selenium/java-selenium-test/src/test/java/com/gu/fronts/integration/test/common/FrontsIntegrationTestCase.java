@@ -35,7 +35,7 @@ public class FrontsIntegrationTestCase {
     @After
     public void cleanSlate() {
         webDriver.manage().deleteAllCookies();
-        webDriver.close();
+        webDriver.quit();
     }
 
     protected NetworkFrontPage openNetworkFrontPage() {
