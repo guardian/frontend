@@ -153,6 +153,7 @@ CommentBox.prototype.ready = function() {
     bean.on(this.context, 'submit', [this.elem], this.postComment.bind(this));
     bean.on(this.context, 'change keyup', [commentBody], this.setFormState.bind(this));
     bean.on(commentBody, 'focus', this.setExpanded.bind(this)); // this isn't delegated as bean doesn't support it
+    this.on('click', this.getClass('preview'), this.previewComment);
     this.on('click', this.getClass('cancel'), this.cancelComment);
     this.on('click', this.getClass('show-parent'), this.setState.bind(this, 'parent-visible', false));
     this.on('click', this.getClass('hide-parent'), this.removeState.bind(this, 'parent-visible', false));
@@ -332,6 +333,34 @@ CommentBox.prototype.verificationEmailSuccess = function() {
 CommentBox.prototype.verificationEmailFail = function() {
     this.clearErrors();
     this.error('EMAIL_VERIFIED_FAIL');
+};
+
+/**
+ * @param {Event=} e (optional)
+ */
+CommentBox.prototype.previewComment = function() {
+    var self = this,
+        comment = {
+            body: this.getElem('body').value
+        };
+
+    e.preventDefault();
+    self.clearErrors();
+
+    if (comment.body === '') {
+        self.error('EMPTY_COMMENT_BODY');
+    }
+
+    if (comment.body.length > self.options.maxLength) {
+        self.error('COMMENT_TOO_LONG', '<b>Comments must be shorter than '+ self.options.maxLength +' characters.</b>'+
+            'Yours is currently '+ (comment.body.length-self.options.maxLength) +' characters too long.');
+    }
+
+    if (self.errors.length === 0) {
+        DiscussionApi
+            .postComment(self.getDiscussionId(), comment)
+            .then(self.success.bind(self, comment), self.fail.bind(self));
+    }
 };
 
 /**
