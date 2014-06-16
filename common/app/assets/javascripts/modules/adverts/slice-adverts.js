@@ -4,14 +4,16 @@ define([
     'qwery',
     'lodash/objects/defaults',
     'common/utils/template',
-    'common/modules/adverts/dfp'
+    'common/modules/adverts/dfp',
+    'common/modules/experiments/ab'
 ], function (
     $,
     bonzo,
     qwery,
     defaults,
     template,
-    dfp
+    dfp,
+    ab
 ) {
 
     var adNames = ['inline1', 'inline2'];
@@ -49,9 +51,19 @@ define([
         }
 
         adSlices.slice(0, adNames.length).forEach(function($adSlice, index) {
+            var adName = adNames[index],
+                $adSlot = bonzo(dfp.createAdSlot(adName, 'container-inline'));
+            console.log('*************************');
+            console.log(ab.getTestVariant('LargerMobileMpu'));
+            console.log(adName);
+            if (ab.getTestVariant('LargerMobileMpu') === '300x250' && adName === 'inline1') {
+                console.log('MANIPULATING');
+                $adSlot.removeAttr('data-mobile')
+                    .removeAttr('data-mobilelandscape');
+            }
             $adSlice
                 .addClass('slice--has-ad')
-                .append(dfp.createAdSlot(adNames[index], 'container-inline'));
+                .append($adSlot);
         });
 
         return adSlices;
