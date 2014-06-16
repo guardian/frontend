@@ -23,6 +23,7 @@ define([
     'common/modules/ui/images',
     'common/modules/navigation/profile',
     'common/modules/navigation/sections',
+    'common/modules/navigation/newNav',
     'common/modules/navigation/search',
     'common/modules/ui/tabs',
     'common/modules/ui/toggles',
@@ -80,6 +81,7 @@ define([
     images,
     Profile,
     Sections,
+    NewNav,
     Search,
 
     Tabs,
@@ -141,6 +143,10 @@ define([
 
             sections.init(document);
             search.init(header);
+        },
+
+        initialiseNewNavigation: function (config) {
+            NewNav.init(config);
         },
 
         transcludeRelated: function (config, context) {
@@ -556,7 +562,11 @@ define([
             modules.checkIframe();
             modules.upgradeImages();
             modules.showTabs();
-            modules.initialiseNavigation(config);
+            if(config.switches.newNavigation){
+                modules.initialiseNewNavigation(config);
+            } else {
+                modules.initialiseNavigation(config);
+            }
             modules.showToggles();
             modules.showRelativeDates();
             modules.loadVideoAdverts(config);
