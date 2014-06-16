@@ -411,8 +411,8 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 7, 31)
   )
 
-  val LargerArticleImageSwitch = Switch("Image Server", "larger-article-image",
-    "If this switch is on images then articles will get a 460px image as the low-res version.",
+  val SeoOptimisedContentImageSwitch = Switch("Image Server", "seo-optimised-article-image",
+    "If this switch is on images then articles will get a 460px on static.guim.co.uk image as the low-res version.",
     safeState = On, sellByDate = new DateMidnight(2014, 6, 20)
   )
 
@@ -484,7 +484,7 @@ object Switches extends Collections {
     SurveyBannerSwitch,
     ParameterlessImagesSwitch,
     FreshnessLoggingSwitch,
-    LargerArticleImageSwitch
+    SeoOptimisedContentImageSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
