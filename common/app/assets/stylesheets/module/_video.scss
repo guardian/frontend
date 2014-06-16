@@ -36,8 +36,11 @@ $vjs-control-colour: rgba(25, 25, 25, .8);
     position: absolute;
     top: 50%;
     left: 50%;
-    margin-top: -55px; // = - height/2 - controlheight/2 = - 62/2-48/2 =  -31-24 = -55
-    margin-left: -31px;
+    @include rem((
+        margin-top: -55px, // = - height/2 - controlheight/2 = - 62/2-48/2 =  -31-24 = -55
+        margin-left: -31px
+    ));
+
     cursor: pointer;
     @include icon(play-60-transparent);
     .gu-video-wrapper:hover & {
@@ -60,8 +63,10 @@ $vjs-control-colour: rgba(25, 25, 25, .8);
     color: #ffffff;
     @include fs-data(2);
     font-weight: bold;
-    height: $gs-baseline*4;
-    bottom: -48px;
+    @include rem((
+        height: $gs-baseline*4,
+        bottom: $gs-baseline*-4
+    ));
     @include transition(bottom .5s);
     transition-delay: 1s;
     .gu-video-wrapper:hover &,
@@ -98,7 +103,10 @@ $vjs-control-colour: rgba(25, 25, 25, .8);
 .vjs-play-control {
     float: left;
     cursor: pointer;
-    margin: 7px;
+    @include rem((
+        margin: 7px
+    ));
+
 
     .vjs-paused & {
         @include icon(play-32-yellow);
@@ -128,7 +136,9 @@ $vjs-control-colour: rgba(25, 25, 25, .8);
     cursor: pointer;
     float: right;
     box-sizing: border-box;
-    margin: 8px;
+    @include rem((
+        margin: 8px
+    ));
 
     @include icon(expand-white);
     &:hover {
@@ -139,6 +149,7 @@ $vjs-control-colour: rgba(25, 25, 25, .8);
 /* VJS: PROGRESS BAR
    ========================================================================== */
 
+// parameterising these as they're used in a few places
 $vjs-progress-hitbox-height: $gs-baseline;
 $vjs-progress-visual-height-resting: $gs-baseline/4;
 $vjs-progress-visual-height-hover: $gs-baseline/2;
@@ -147,7 +158,9 @@ $vjs-progress-inset-bottom: 4px;
 .vjs-progress-control {
     width: 100%;
     position: absolute;
-    top: $vjs-progress-inset-bottom - $vjs-progress-hitbox-height;
+    @include rem((
+        top: $vjs-progress-inset-bottom - $vjs-progress-hitbox-height
+    ));
     .vjs-ad-playing & {
         display: none;
     }
@@ -170,11 +183,17 @@ $vjs-progress-inset-bottom: 4px;
 .vjs-progress-holder:before,
 .vjs-seek-handle {
     position: absolute;
-    bottom: $vjs-progress-inset-bottom;
-    height: $vjs-progress-visual-height-resting;
+    @include rem((
+        bottom: $vjs-progress-inset-bottom,
+        height: $vjs-progress-visual-height-resting
+    ));
+
     @include transition(height .2s);
     .gu-video-wrapper:hover & {
-        height: $vjs-progress-visual-height-hover;
+        @include rem((
+            height: $vjs-progress-visual-height-hover
+        ));
+
     }
 }
 
@@ -200,14 +219,18 @@ $vjs-progress-inset-bottom: 4px;
 .vjs-volume-control {
 
     float: right;
-    width: $gs-gutter*5;
+    @include rem((
+        width: $gs-gutter*5,
+        margin-top: $gs-baseline * 1.5
+    ));
     position: relative;
-    margin-top: 18px;
     height: 100%;
 }
 
 .vjs-volume-bar {
-    height: $gs-baseline;
+    @include rem((
+        height: $gs-baseline
+    ));
     width: 100%;
     cursor: pointer;
 
@@ -221,8 +244,10 @@ $vjs-progress-inset-bottom: 4px;
 
 .vjs-volume-bar:before,
 .vjs-volume-level {
-    height: $gs-baseline/6;
-    top: $gs-baseline/3;
+    @include rem((
+        height: $gs-baseline/6,
+        top: $gs-baseline/3
+    ));
     position: absolute;
 }
 
@@ -235,8 +260,10 @@ $vjs-progress-inset-bottom: 4px;
 
     .vjs-volume-control:hover & {
         background-color: $c-mediaDefault;
-        height: 11px;
-        width: 2px;
+        @include rem((
+            height: 11px,
+            width: 2px
+        ));
     }
 }
 
@@ -244,9 +271,11 @@ $vjs-progress-inset-bottom: 4px;
     cursor: pointer;
     float: right;
     box-sizing: border-box;
-    width: $gs-gutter;
-    margin-right: $gs-gutter/4;
-    margin-top: $gs-baseline * (4/3);
+    @include rem((
+        width: $gs-gutter,
+        margin-right: $gs-gutter/4,
+        margin-top: $gs-baseline * (4/3)
+    ));
     text-align: left;
 
     > div {
@@ -275,11 +304,31 @@ $vjs-progress-inset-bottom: 4px;
     position: absolute;
     width: 100%;
     top: 40%;
+    display: none;
+    .vjs-error & {
+        display: block;
+    }
     > div {
-        color: #ff3838;
+        color: #ffffff;
+        @include fs-headline(2);
+        text-align: left;
+        @include box-sizing(border-box);
+        @include rem((
+            padding: $gs-baseline $gs-gutter $gs-baseline (45 + $gs-gutter*2),
+            min-height: $gs-baseline*5
+        ));
         background-color: $vjs-control-colour;
-        width: 50%;
+        width: 100%;
         margin: auto;
+        &:before {
+            @include icon(error-exclamation);
+            content: ' ';
+            display: block;
+            position: absolute;
+            left: $gs-gutter;
+            top: 50%;
+            margin-top: -22px; // half icon height for centering
+        }
     }
 }
 
@@ -294,7 +343,9 @@ $vjs-progress-inset-bottom: 4px;
 
     .vjs-overlay__title {
         text-align: left;
-        padding: $gs-gutter/2;
+        @include rem((
+            padding: $gs-gutter/2
+        ));
         @include fs-headline(3);
         @include mq(tablet) {
             @include fs-headline(4);
@@ -304,7 +355,9 @@ $vjs-progress-inset-bottom: 4px;
         }
         &:before {
             content: '';
-            margin-right: $gs-gutter/2;
+            @include rem((
+                margin-right: $gs-gutter/2
+            ));
             @include icon(video-camera-yellow);
         }
     }
@@ -313,7 +366,9 @@ $vjs-progress-inset-bottom: 4px;
         text-align: left;
         color: $c-mediaDefault;
         @include fs-headline(2);
-        padding: 0 $gs-gutter/2 $gs-baseline*2;
+        @include rem((
+            padding: 0 $gs-gutter/2 $gs-baseline*2
+        ));
     }
 }
 
@@ -321,12 +376,14 @@ $vjs-progress-inset-bottom: 4px;
     text-align: left;
     text-overflow: ellipsis;
     white-space: nowrap;
-    padding: $gs-baseline/2;
     @include fs-headline(1);
     position: absolute;
     $height: nth(nth($fs-headlines, 1), 2);
-    height: $height * 1px;
-    top: ($height + $gs-baseline) * -1;
+    @include rem((
+        height: $height * 1px,
+        padding: $gs-baseline/2,
+        top: ($height + $gs-baseline) * -1
+    ));
     left: 0;
     @include transition(top .5s);
     transition-delay: 1s;
