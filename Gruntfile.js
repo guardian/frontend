@@ -813,16 +813,9 @@ module.exports = function (grunt) {
     /**
      * Compile tasks
      */
-    grunt.registerTask('compile:images', ['generate:images', 'hash']);
-    grunt.registerTask('generate:images', ['copy:images', 'shell:spriteGeneration', 'imagemin']);
-
-    grunt.registerTask('compile:css', ['generate:css', 'hash']);
-    grunt.registerTask('generate:css', ['sass:compile', 'replace:cssSourceMaps', 'copy:css']);
-
+    grunt.registerTask('compile:images', ['copy:images', 'shell:spriteGeneration', 'imagemin', 'hash']);
+    grunt.registerTask('compile:css', ['sass:compile', 'replace:cssSourceMaps', 'copy:css', 'hash']);
     grunt.registerTask('compile:js', function(app) {
-        grunt.task.run(['generate:js:' + (app || ''), 'hash']);
-    });
-    grunt.registerTask('generate:js', function(app) {
         var target = app ? ':' + app : app;
         if (grunt.config('copy')['javascript-' + app]) {
             grunt.task.run('copy:javascript-' + app);
@@ -831,26 +824,21 @@ module.exports = function (grunt) {
         if (!isDev) {
             grunt.task.run('uglify:components');
         }
+        grunt.task.run('hash');
     });
-
-    grunt.registerTask('compile:fonts', ['generate:fonts', 'hash']);
-    grunt.registerTask('generate:fonts', ['webfontjson']);
-
-    grunt.registerTask('compile:flash', ['generate:flash', 'hash']);
-    grunt.registerTask('generate:flash', ['copy:flash']);
-
+    grunt.registerTask('compile:fonts', ['webfontjson', 'hash']);
+    grunt.registerTask('compile:flash', ['copy:flash', 'hash']);
+    grunt.registerTask('compile:conf', ['copy:headCss', 'copy:vendor', 'copy:assetMap']);
     grunt.registerTask('compile', function(app) {
         grunt.task.run([
-            'generate:images',
-            'generate:css',
-            'generate:js:' + (app || ''),
-            'generate:fonts',
-            'generate:flash',
-            'hash',
-            'generate:conf'
+            'compile:images',
+            'compile:css',
+            'compile:js:' + (app || ''),
+            'compile:fonts',
+            'compile:flash',
+            'compile:conf'
         ]);
     });
-    grunt.registerTask('generate:conf', ['copy:headCss', 'copy:vendor', 'copy:assetMap']);
 
     /**
      * Test tasks
