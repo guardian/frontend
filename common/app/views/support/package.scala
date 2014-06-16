@@ -650,7 +650,7 @@ object `package` extends Formats {
 object Format {
   def apply(date: DateTime, pattern: String)(implicit request: RequestHeader): String = {
     val timezone = Edition(request).timezone
-    date.withZone(timezone).toString(DateTimeFormat.forPattern(pattern).withZone(timezone))
+    date.toString(DateTimeFormat.forPattern(pattern).withZone(timezone))
   }
 
   def apply(a: Int): String = new DecimalFormat("#,###").format(a)
