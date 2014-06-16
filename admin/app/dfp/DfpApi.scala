@@ -66,11 +66,11 @@ object DfpApi extends Logging with Collections{
 
   def fetchAdUnitsThatAreTargettedByPageSkins(lineItems: Seq[DfpApiLineItem]): Seq[String] = dfpSession.fold(Seq[String]()) { session =>
 
-    val allAdUnitIds: Seq[String] = onlyWithPageSkins(lineItems).flatMap { item =>
+    val idsForAdUnitsWithPageSkins: Seq[String] = onlyWithPageSkins(lineItems).flatMap { item =>
       item.getTargeting.getInventoryTargeting.getTargetedAdUnits.toList.map(item => item.getAdUnitId)
     }.distinct
 
-    val adUnits: Seq[AdUnit] = getAdUnitsForTheseIds(allAdUnitIds)
+    val adUnits: Seq[AdUnit] = getAdUnitsForTheseIds(idsForAdUnitsWithPageSkins)
 
     // we don't serve pageskins to anything other than fronts.
     val validAdUnits: Seq[AdUnit] = adUnits.filter(_.getName == "front")
