@@ -827,7 +827,9 @@ module.exports = function (grunt) {
                 });
         if (app) {
             var copyTask = 'copy:javascript-' + app;
-            (copyTasks.indexOf(copyTask) > -1) && grunt.task.run(copyTask);
+            if (copyTasks.indexOf(copyTask) > -1) {
+                grunt.task.run(copyTask);
+            }
         } else {
             grunt.task.run(copyTasks);
         }
