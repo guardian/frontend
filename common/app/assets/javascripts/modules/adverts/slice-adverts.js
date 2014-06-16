@@ -53,11 +53,7 @@ define([
         adSlices.slice(0, adNames.length).forEach(function($adSlice, index) {
             var adName = adNames[index],
                 $adSlot = bonzo(dfp.createAdSlot(adName, 'container-inline'));
-            console.log('*************************');
-            console.log(ab.getTestVariant('LargerMobileMpu'));
-            console.log(adName);
             if (ab.getTestVariant('LargerMobileMpu') === '300x250' && adName === 'inline1') {
-                console.log('MANIPULATING');
                 $adSlot.removeAttr('data-mobile')
                     .removeAttr('data-mobilelandscape');
             }
