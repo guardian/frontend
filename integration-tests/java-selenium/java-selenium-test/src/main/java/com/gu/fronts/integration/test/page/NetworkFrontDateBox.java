@@ -11,10 +11,10 @@ import com.gu.fronts.integration.test.page.util.NetworkFrontDate;
 
 public class NetworkFrontDateBox extends AbstractParentPage {
 
-    @FindByTestAttribute(using = "network_front_date_title")
+    @FindByTestAttribute(using = "network-front-date-title")
     private WebElement dateTitle;
 
-    @FindByTestAttribute(using = "network_front_day_month .")
+    @FindByTestAttribute(using = "network-front-day-month")
     private WebElement dayOfMonth;
 
     public NetworkFrontDateBox(WebDriver webDriver) {

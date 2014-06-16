@@ -8,6 +8,7 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
@@ -84,6 +85,14 @@ public abstract class AbstractParentPage {
         } catch (WebDriverException e) {
             LOG.debug(e);
             errors.add(e.getMessage());
+        }
+    }
+
+    protected WebElement findElementBy(WebElement baseWebElement, By by) {
+        try {
+            return baseWebElement.findElement(by);
+        } catch (Exception e) {
+            throw new AssertionError("Could not locate element on Page :" + this.getClass().getName(), e);
         }
     }
 

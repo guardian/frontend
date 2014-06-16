@@ -35,8 +35,8 @@ public class NetworkFrontTest extends StubbedFrontsIntegrationTestCase {
         networkFrontPage = checkEditions();
 
         networkFrontPage = checkDate();
-        
-        networkFrontPage.containers().containerWithTestAttributeId("");
+
+        networkFrontPage.containers().containerWithTestAttributeId("top-stories");
 
         // not really neccessary to do this, because the test would have failed already if the stub was not properly
         // returning responses, but just to illustrate how it works

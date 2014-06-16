@@ -1,5 +1,6 @@
 package com.gu.fronts.integration.test.page;
 
+import static com.gu.fronts.integration.test.fw.selenium.ByTestAttributeSelector.testAttributeCssSelector;
 import static org.openqa.selenium.By.cssSelector;
 
 import org.openqa.selenium.WebDriver;
@@ -22,9 +23,8 @@ public class AllFaciaContainersPage extends AbstractParentPage {
         return this;
     }
 
-    public void containerWithTestAttributeId(String testId) {
-        // TODO fix the css selector
-        allFaciaContainers.findElement(cssSelector("[a=b]"));
+    public FaciaContainer containerWithTestAttributeId(String testId) {
+        return new FaciaContainer(webDriver, findElementBy(allFaciaContainers,
+                cssSelector(testAttributeCssSelector(testId))));
     }
-
 }

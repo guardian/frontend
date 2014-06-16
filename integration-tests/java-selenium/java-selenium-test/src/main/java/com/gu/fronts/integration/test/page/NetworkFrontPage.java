@@ -24,8 +24,8 @@ public class NetworkFrontPage extends AbstractParentPage {
         return loadPage(NetworkFrontDateBox.class);
     }
 
+    //TODO extract this to a Facia page super class
     public AllFaciaContainersPage containers() {
-        // TODO Auto-generated method stub
-        return null;
+        return loadPage(AllFaciaContainersPage.class);
     }
 }
