@@ -39,7 +39,7 @@ object MemcachedFallback extends ExecutionContexts with Dates with Logging {
     cacheTime: FiniteDuration
   )(f: Future[A]): Future[A] = {
     f onSuccess {
-      case a => memcached foreach { _.set(key, a, cacheTime) }
+      case a => memcached foreach { m => try { m.set(key, a, cacheTime) } catch { case e: Exception => log.warn(e.toString)} }
     }
     
     f recoverWith {
