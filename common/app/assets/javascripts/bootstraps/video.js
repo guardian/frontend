@@ -128,7 +128,7 @@ define([
                     var vjs = videojs(el, {
                         controls: true,
                         autoplay: false,
-                        preload: 'none'
+                        preload: 'metadata' // preload='none' & autoplay breaks ad loading on chrome35
                     });
 
                     vjs.ready(function () {
