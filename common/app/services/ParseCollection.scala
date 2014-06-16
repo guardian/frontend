@@ -51,13 +51,13 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
     if (FaciaToolCachedZippingContentApiSwitch.isSwitchedOn)
       JsonCodecs.gzippedCodec[Option[ApiContent]]
     else
-      JsonCodecs.gzippedCodec[Option[ApiContent]]
+      JsonCodecs.nonGzippedCodec[Option[ApiContent]]
 
   implicit def resultCodec =
     if (FaciaToolCachedZippingContentApiSwitch.isSwitchedOn)
       JsonCodecs.gzippedCodec[Result]
     else
-      JsonCodecs.gzippedCodec[Result]
+      JsonCodecs.nonGzippedCodec[Result]
 
   val cacheDuration: FiniteDuration = 5.minutes
 
