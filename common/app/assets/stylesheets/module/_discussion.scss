@@ -321,11 +321,6 @@ $avatarSize: 44px;
    ======================================================= */
 
 .d-comment__content {
-    @include mq($comment-meta-breakpoint) {
-        @include rem((
-            //margin-left: gs-span(2) + $gs-gutter
-        ));
-    }
     @include mq(leftCol) {
         @include rem((
             margin-left: $a-leftCol-width + $gs-gutter
