@@ -32,6 +32,8 @@ object Frontend extends Build with Prototypes {
       "rome" % "rome" % "1.0",
       "org.rometools" % "rome-modules" % "1.0",
 
+      "org.xerial.snappy" % "snappy-java" % "1.0.5.1",
+
       filters
     )
   )
