@@ -15,7 +15,7 @@
 
 @tab(i: Int, name: String, url: String, hidden: Boolean = false, optionalClass: String = "") = {
     <li class="tabs__tab @if(hidden){is-hidden} @if(page.id == url){tabs__tab--selected tone-colour tone-accent-border} @optionalClass" role="tab" id="tabs-account-profile-@i-tab" aria-selected="@(page.id == url)" aria-controls="tabs-account-profile-@i">
-        <a href="#tabs-account-profile-@i" data-link-name="tab @i The Guardian" data-pushstate-url="@url">@name</a>
+        <a href="@url" data-tabs-href="#tabs-account-profile-@i" data-link-name="tab @i The Guardian" data-pushstate-url="@url">@name</a>
     </li>
 }
 
