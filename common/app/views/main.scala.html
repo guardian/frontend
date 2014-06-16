@@ -5,7 +5,7 @@
    be sure to apply any necessary changes to non-shared code there too. *@
 
 <!DOCTYPE html>
-<html class="js-off id--signed-out" lang="en-GB">
+<html id="js-context" class="js-off id--signed-out" lang="en-GB">
 <head>
     @fragments.head(metaData, projectName, head, curlPaths)
 </head>
@@ -28,21 +28,19 @@
 
         @fragments.header(metaData)
 
-        <div id="js-context">
-            @if(showAdverts) {
-                @fragments.commercial.topBannerMobile()
-            }
+        @if(showAdverts) {
+            @fragments.commercial.topBannerMobile()
+        }
 
-            @if(NewNavSwitch.isSwitchedOn){
-                <div class="localnav--small">
-                    @fragments.nav.newNav(metaData)
-                </div>
-            } else {
-                @fragments.localNav(metaData)
-            }
+        @if(NewNavSwitch.isSwitchedOn){
+            <div class="localnav--small">
+                @fragments.nav.newNav(metaData)
+            </div>
+        } else {
+            @fragments.localNav(metaData)
+        }
 
-            @body
-        </div>
+        @body
 
         @fragments.footer(metaData)
 
