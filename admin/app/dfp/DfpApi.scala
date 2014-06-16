@@ -76,9 +76,9 @@ object DfpApi extends Logging with Collections{
     val validAdUnits: Seq[AdUnit] = adUnits.filter(_.getName == "front")
 
     validAdUnits.map(unit => {
-      def removeCustomerIdentifierFromPath(i: AdUnit) = i.getParentPath.tail
+      def removeDfpCustomerIdentifierFromPath(i: AdUnit) = i.getParentPath.tail
 
-      val adUnitPathElements = removeCustomerIdentifierFromPath(unit).map(_.getName) :+ unit.getName
+      val adUnitPathElements = removeDfpCustomerIdentifierFromPath(unit).map(_.getName) :+ unit.getName
       adUnitPathElements.mkString("/")
     })
   }
@@ -90,7 +90,7 @@ object DfpApi extends Logging with Collections{
     DfpApiWrapper.fetchAdUnitTargetingObjects(session, adUnitTargetingQuery)
   }
 
-  def hydrateWithUsableValues(lineItems: Seq[DfpApiLineItem]): Seq[LineItem] = dfpSession.fold(Seq[LineItem]()) { session =>
+  def hydrateWithUsefulValues(lineItems: Seq[DfpApiLineItem]): Seq[LineItem] = dfpSession.fold(Seq[LineItem]()) { session =>
     val namesOfRelevantTargetingKeys: List[String] = List("Keywords", "Slot", "Series")
     val getRelevantTargetingKeyObjects = new StatementBuilder()
       .where("displayName IN " + namesOfRelevantTargetingKeys.toStringWithRoundBrackets)

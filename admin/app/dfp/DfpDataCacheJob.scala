@@ -41,7 +41,7 @@ object DfpDataCacheJob extends ExecutionContexts {
     future {
       val dfpLineItems = DfpApi.getAllCurrentDfpLineItems()
       if (dfpLineItems.nonEmpty) {
-        val lineItems = DfpApi.hydrateWithUsableValues(dfpLineItems)
+        val lineItems = DfpApi.hydrateWithUsefulValues(dfpLineItems)
         Store.putDfpSponsoredTags(stringify(toJson(DfpApi.filterOutSponsoredTagsFrom(lineItems))))
         Store.putDfpAdvertisementFeatureTags(stringify(toJson(DfpApi.filterOutAdvertisementFeatureTagsFrom(lineItems))))
 
