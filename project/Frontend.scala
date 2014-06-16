@@ -177,6 +177,7 @@ object Frontend extends Build with Prototypes {
     identity,
     commercial,
     onward,
-    archive
+    archive,
+    preview
   )
 }
