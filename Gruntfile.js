@@ -826,7 +826,7 @@ module.exports = function (grunt) {
         }
         grunt.task.run('hash');
     });
-    grunt.registerTask('compile:fonts', ['webfontjson', 'hash']);
+    grunt.registerTask('compile:fonts', ['mkdir:fontsTarget', 'webfontjson', 'hash']);
     grunt.registerTask('compile:flash', ['copy:flash', 'hash']);
     grunt.registerTask('compile:conf', ['copy:headCss', 'copy:vendor', 'copy:assetMap']);
     grunt.registerTask('compile', function(app) {
