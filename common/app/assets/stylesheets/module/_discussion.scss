@@ -247,7 +247,7 @@ $avatarSize: 44px;
     @include border-radius(50%);
     overflow: hidden;
 
-    @include mq(tablet) {
+    @include mq($comment-meta-breakpoint, wide) {
         @include rem((
             width: $avatarSize*1.5,
             height: $avatarSize*1.5
@@ -323,7 +323,7 @@ $avatarSize: 44px;
 .d-comment__content {
     @include mq($comment-meta-breakpoint) {
         @include rem((
-            margin-left: gs-span(2) + $gs-gutter
+            //margin-left: gs-span(2) + $gs-gutter
         ));
     }
     @include mq(leftCol) {
@@ -380,8 +380,10 @@ $avatarSize: 44px;
             margin-top: $gs-baseline*1.5
         ));
 
-        &:first-child {
-            margin-top: 0;
+        @include mq($comment-meta-breakpoint, wide) {
+            &:first-child {
+                margin-top: 0;
+            }
         }
     }
 
