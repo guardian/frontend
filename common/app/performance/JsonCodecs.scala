@@ -13,4 +13,14 @@ object JsonCodecs {
       Json.parse(Unzip(data)).as[A]
     }
   }
+
+  implicit def nonGzippedCodec[A: Format] = new Codec[A] {
+    override def serialize(value: A): Array[Byte] = {
+      Json.stringify(Json.toJson(value)).getBytes("utf-8")
+    }
+
+    override def deserialize(data: Array[Byte]): A = {
+      Json.parse(data).as[A]
+    }
+  }
 }
