@@ -1,9 +1,9 @@
-@(env: String)
+@(env: String, sponsoredTags: Seq[String])
 @import conf.AdminConfiguration.pa
 @import org.joda.time.{DateTime, DateMidnight}
 
 @admin_main("Commercial reporter", env, isAuthed = true) {
 
-        <p>hello world</p>
-
+<h1>Line Items</h1>
+<p>This should show all the line items.</p>
 }

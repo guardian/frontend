@@ -21,10 +21,10 @@ object CommercialHelper extends Controller with Logging with AuthLogging {
     val advertisementTags = convertJsonToStringList(Store.getDfpAdvertisementTags()).sorted
     val pageskinnedAdUnits: Seq[String] = convertJsonToStringList(Store.getDfpPageSkinnedAdUnits()).sorted
 
-    NoCache(Ok(views.html.commercial.targets("PROD", sponsoredTags, advertisementTags, pageskinnedAdUnits)))
+    NoCache(Ok(views.html.commercialReports.targets("PROD", sponsoredTags, advertisementTags, pageskinnedAdUnits)))
   }
 
   def activeLineItems() = Authenticated { request =>
-    NoCache(Ok(views.html.commercial.pageskins("PROD")))
+    NoCache(Ok(views.html.commercialReports.lineitems("PROD")))
   }
 }
