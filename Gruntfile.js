@@ -365,7 +365,8 @@ module.exports = function (grunt) {
                     'cd tools/sprites/',
                     'node spricon.js global-icon-config.json',
                     'node spricon.js commercial-icon-config.json',
-                    'node spricon.js membership-icon-config.json'
+                    'node spricon.js membership-icon-config.json',
+                    'node spricon.js video-icon-config.json'
                 ].join('&&'),
                 options: {
                     stdout: true,

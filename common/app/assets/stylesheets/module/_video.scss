@@ -1,3 +1,6 @@
+@import 'theme/_video-icons-sprite';
+@import 'theme/_video-icons-svg';
+
 .player {
     @include rem((
         margin-bottom: $gs-row-height
