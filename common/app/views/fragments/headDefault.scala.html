@@ -16,7 +16,7 @@
                 @fragments.dateline(content.webPublicationDate)
             }
 
-            <h1 itemprop="headline" class="content__headline js-score">@Html(content.headline)</h1>
+            <h1 itemprop="headline" class="content__headline js-score" data-test-id="article-headline">@Html(content.headline)</h1>
 
             @if(!content.delegate.isVideo && !content.delegate.isGallery) {
                 @fragments.standfirst(content)
