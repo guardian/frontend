@@ -9,7 +9,9 @@ import feed.Competitions
 
 trait FootballTestData {
 
-  private val today = new org.joda.time.DateTime()
+  private val zone = DateTimeZone.forID("Europe/London")
+
+  private val today = new org.joda.time.DateTime(zone)
 
   private val team = new MatchDayTeam("1", "Team name", None, None, None, None)
 
@@ -19,7 +21,7 @@ trait FootballTestData {
 
   private val _result = Result("1234", today.toDateTime, Stage("1"), Round("1", None), "1", false, None, team, team,None, None, None)
 
-  private val matchWithReport = Result("1010", new org.joda.time.DateTime(2012, 12, 1, 15, 0), Stage("1"), Round("1", None), "", false, None,
+  private val matchWithReport = Result("1010", new org.joda.time.DateTime(2012, 12, 1, 15, 0, zone), Stage("1"), Round("1", None), "", false, None,
     MatchDayTeam("1006", "", None, None, None, None),
     MatchDayTeam("65", "", None, None, None, None),
     None, None, None)

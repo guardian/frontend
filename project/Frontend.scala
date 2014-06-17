@@ -35,7 +35,7 @@ object Frontend extends Build with Prototypes {
       filters
     )
   )
-  val paVersion = "4.10"
+  val paVersion = "5.0.0"
 
   def withTests(project: Project) = project % "test->test;compile->compile"
 
