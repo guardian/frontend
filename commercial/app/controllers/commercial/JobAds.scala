@@ -4,7 +4,6 @@ import model.commercial.jobs.{Job, JobsAgent}
 import model.{NoCache, Cached}
 import performance.MemcachedAction
 import play.api.mvc._
-import play.api.templates.Html
 import scala.concurrent.Future
 
 object JobAds extends Controller {
@@ -12,19 +11,17 @@ object JobAds extends Controller {
   implicit val codec = Codec.utf_8
 
   object lowRelevance extends Relevance[Job] {
-    override def view(jobs: Seq[Job])(implicit request: RequestHeader): Html =
-      views.html.jobs(jobs)
+    override def view(jobs: Seq[Job])(implicit request: RequestHeader) = views.html.jobs(jobs)
   }
 
   object highRelevance extends Relevance[Job] {
-    override def view(jobs: Seq[Job])(implicit request: RequestHeader): Html =
-      views.html.jobsHigh(jobs)
+    override def view(jobs: Seq[Job])(implicit request: RequestHeader) = views.html.jobsHigh(jobs)
   }
 
   private def renderJobs(relevance: Relevance[Job], format: Format) =
     MemcachedAction { implicit request =>
       Future.successful {
-        JobsAgent.adsTargetedAt(segment) match {
+        (JobsAgent.specificJobs(specificIds) ++ JobsAgent.adsTargetedAt(segment)).distinct match {
           case Nil => NoCache(format.nilResult)
           case jobs => Cached(componentMaxAge) {
             format.result(relevance.view(jobs take 2))

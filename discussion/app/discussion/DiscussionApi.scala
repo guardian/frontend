@@ -33,7 +33,6 @@ trait DiscussionApi extends Http with ExecutionContexts with Logging {
     }
   }
 
-
   def commentFor(id: Int): Future[Comment] = {
     getCommentJsonForId(id, s"$apiRoot/comment/$id?displayResponses=true&displayThreaded=true")
   }
@@ -101,6 +100,26 @@ trait DiscussionApi extends Http with ExecutionContexts with Logging {
     }
   }
 
+  def discussion(key: DiscussionKey): Future[DiscussionComments] = {
+    def onError(r: Response) =
+      s"Get back in the past"
+    val apiUrl = s"$apiRoot/discussion/$key?displayThreaded=false&pageSize=50&orderBy=newest&showSwitches=true"
+
+    getJsonOrError(apiUrl, onError) map {
+      json => DiscussionComments(json)
+    }
+  }
+
+  def comment(id: Int): Future[Comment] = {
+    def onError(r: Response) =
+      s"Get back in the past"
+    val apiUrl = s"$apiRoot/comment/$id?displayThreaded=false&displayResponses=true&showSwitches=true"
+
+    getJsonOrError(apiUrl, onError) map {
+      json => Comment(json \ "comment", None, None)
+    }
+  }
+
   private def getJsonForUri(key: DiscussionKey, apiUrl: String): Future[CommentPage] = {
     def onError(r: Response) =
       s"Discussion API: Error loading comments id: $key status: ${r.status} message: ${r.statusText}"
@@ -114,7 +133,7 @@ trait DiscussionApi extends Http with ExecutionContexts with Logging {
       s"Error loading comment id: $id status: ${r.status} message: ${r.statusText}"
 
     getJsonOrError(apiUrl, onError) map {
-      json =>  Comment(json \ "comment", None, None)
+      json => Comment(json \ "comment", None, None)
     }
   }
 

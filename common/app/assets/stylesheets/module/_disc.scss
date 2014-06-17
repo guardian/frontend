@@ -199,6 +199,9 @@ $disc-avatar-size: 44px;
         ));
     }
 }
+.activity-item__content--boosted {
+    margin-left: 0;
+}
 .activity-item__content-meta {
     @include fs-textsans(4);
 
