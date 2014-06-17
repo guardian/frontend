@@ -6,13 +6,13 @@ import org.joda.time.DateMidnight
 import model.{TeamMap, Competition, Cached, Page}
 import football.model.MatchesList
 import play.api.mvc.{Controller, RequestHeader}
-import common.JsonComponent
+import common.{Edition, JsonComponent}
 import play.api.templates.Html
 import implicits.Requests
 import pa.FootballTeam
 
 trait MatchListController extends Controller with Requests {
-  protected val datePattern = DateTimeFormat.forPattern("yyyyMMMdd")
+  protected val datePattern = DateTimeFormat.forPattern("yyyyMMMdd").withZone(Edition.defaultEdition.timezone)
   protected def createDate(year: String, month: String, day: String): DateMidnight =
     datePattern.parseDateTime(s"$year$month$day").toDateMidnight
 

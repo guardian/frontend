@@ -63,6 +63,10 @@ define([
 
                     membershipTab.fetch($(self.classes.memberShipContainer));
 
+                    $(self.classes.tabs + ' .tabs__tab a').each(function () { // enhance tab urls to work with JS tabs module
+                        this.href = this.getAttribute('data-tabs-href');
+                    });
+
                     bean.on(tabs, 'click', self.handleTabsClick.bind(self));
                 }
             }
