@@ -333,7 +333,7 @@ object Switches extends Collections {
 
   val ABSentry = Switch("A/B Tests", "ab-sentry",
     "If this switch is turned on, users JavaScript errors will be beaconed back to the Sentry server.",
-    safeState = On, sellByDate = new DateMidnight(2014, 6, 27)
+    safeState = Off, sellByDate = new DateMidnight(2014, 6, 27)
   )
 
   // Dummy Switches
