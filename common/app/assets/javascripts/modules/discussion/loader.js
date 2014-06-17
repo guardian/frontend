@@ -227,19 +227,18 @@ Loader.prototype.initUnthreaded = function() {
     });
 
     this.on('click', '.js-comment-permalink', function(e) {
-        var p = self.comments.gotoComment(e.currentTarget.getAttribute('data-comment-id'));
+        var promise = self.comments.gotoComment(e.currentTarget.getAttribute('data-comment-id'));
         e.preventDefault();
         $nonThreadedContainer.addClass('u-h');
         self.comments.showHiddenComments();
 
-        if (p) {
+        if (promise) {
             $loader.removeClass('u-h');
-            p.then(function() {
+            promise.then(function() {
                 $loader.addClass('u-h');
                 $discussionContainer.removeClass('u-h');
             });
         } else {
-
             $discussionContainer.removeClass('u-h');
         }
     });
