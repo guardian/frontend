@@ -1,6 +1,6 @@
 package com.gu.fronts.integration.test.page.util;
 
-import static com.gu.fronts.integration.test.fw.selenium.ByTestAttributeSelector.testAttributeCssSelector;
+import static com.gu.fronts.integration.test.fw.selenium.ByTestAttributeSelector.byTestAttribute;
 import static com.gu.fronts.integration.test.page.util.PageElementHelper.findElementBy;
 import static org.openqa.selenium.By.cssSelector;
 
@@ -55,7 +55,7 @@ public class CustomPageFactory {
     public <Page> Page initPage(WebDriver webDriver, Class<Page> pageClass, WebElement parentElement,
             String testAttributeId) {
         Page page = instantiatePage(webDriver, pageClass,
-                findElementBy(parentElement, cssSelector(testAttributeCssSelector(testAttributeId))));
+                findElementBy(parentElement, cssSelector(byTestAttribute(testAttributeId))));
 
         return page;
     }

@@ -1,6 +1,8 @@
 package com.gu.fronts.integration.test.page.common;
 
-import static com.gu.fronts.integration.test.fw.selenium.ByTestAttributeSelector.testAttributeCssSelector;
+import static com.gu.fronts.integration.test.fw.selenium.ByTestAttributeSelector.byTestAttribute;
+import static com.gu.fronts.integration.test.page.common.FaciaContainerArticle.ARTICLE_CONTAINER_ID;
+import static com.gu.fronts.integration.test.page.util.PageElementHelper.waitUntilVisible;
 import static org.openqa.selenium.By.cssSelector;
 
 import java.util.List;
@@ -31,7 +33,7 @@ public class FaciaContainer extends AbstractParentPage {
      */
     public FaciaContainerArticle articleAt(int index) {
         List<WebElement> containerElements = rootElement
-                .findElements(cssSelector(testAttributeCssSelector(FaciaContainerArticle.ARTICLE_CONTAINER_ID)));
+                .findElements(cssSelector(byTestAttribute(ARTICLE_CONTAINER_ID)));
         return pageFactory.initPage(webDriver, FaciaContainerArticle.class, containerElements.get(index));
     }
 
@@ -39,5 +41,16 @@ public class FaciaContainer extends AbstractParentPage {
     public FaciaContainer isDisplayed() {
         assertExists(rootElement);
         return this;
+    }
+
+    public WebElement expand() {
+        rootElement.findElement(cssSelector(byTestAttribute("show-more"))).click();
+        WebElement expandedElement = waitUntilVisible(
+                rootElement.findElement(cssSelector(byTestAttribute("show-more-news-expanded"))), 2, webDriver);
+        return expandedElement;
+    }
+
+    public WebElement getRootElement() {
+        return rootElement;
     }
 }

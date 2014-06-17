@@ -13,10 +13,10 @@ public class ByTestAttributeSelector extends ByCssSelector {
     public static final String TEST_ATTR_NAME = "data-test-id";
 
     public ByTestAttributeSelector(String testAttributeValue) {
-        super(testAttributeCssSelector(testAttributeValue));
+        super(byTestAttribute(testAttributeValue));
     }
 
-    public static String testAttributeCssSelector(String testAttributeValue) {
+    public static String byTestAttribute(String testAttributeValue) {
         return new StringBuilder().append("[").append(TEST_ATTR_NAME).append("=").append(testAttributeValue)
                 .append("]").toString();
     }

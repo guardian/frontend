@@ -35,6 +35,7 @@ public class NetworkFrontTest extends StubbedFrontsIntegrationTestCase {
         networkFrontPage = checkHeaderAndFooter();
         networkFrontPage = checkEditions();
         networkFrontPage = checkDate();
+        networkFrontPage = checkContainerExpandButton();
 
         // not really neccessary to do this, because the test would have failed anyway if the stub was not properly
         // returning responses, but just to illustrate how it works, would the need arise to verify the requests sent to
@@ -52,6 +53,8 @@ public class NetworkFrontTest extends StubbedFrontsIntegrationTestCase {
         FaciaContainer topStoriesContainer = networkFrontPage.containers().containerWithTestAttributeId("top-stories")
                 .isDisplayed();
         FaciaContainerArticle firstArticleContainer = topStoriesContainer.articleAt(0).isDisplayed();
+        
+        //get this now before clicking to the article
         String headlineLinkText = firstArticleContainer.headlineLinkText();
         Article article = firstArticleContainer.clickHeadlineLink();
         article.isDisplayed();
@@ -82,6 +85,11 @@ public class NetworkFrontTest extends StubbedFrontsIntegrationTestCase {
         networkFrontPage.header().editions().isUkEditionSelected();
         networkFrontPage.header().editions().usUsEditionPresent();
         networkFrontPage.header().editions().isAuEditionPresent();
+        return networkFrontPage;
+    }
+    
+    private NetworkFrontPage checkContainerExpandButton() {
+        networkFrontPage.containers().containerWithTestAttributeId("top-stories").expand().isDisplayed();
         return networkFrontPage;
     }
 }
