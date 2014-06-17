@@ -6,7 +6,6 @@ define(function() {
         a = document.createElement('a');
         a.href = url;
         path = a.pathname;
-        var withoutSlash = path.indexOf('/') === 0 ? path.substr(1) : path; // because IE already omits the leading slash
-        return withoutSlash.replace(/^(editorial|commercial)\//, '');
+        return path.indexOf('/') === 0 ? path.substr(1) : path; // because IE already omits the leading slash
     };
 });

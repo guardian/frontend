@@ -5,14 +5,14 @@ import play.api.mvc.{AnyContent, Action}
 import org.joda.time.DateMidnight
 import model._
 import football.model._
-import common.JsonComponent
+import common.{Edition, JsonComponent}
 
 
 object MatchDayController extends MatchListController with CompetitionLiveFilters {
 
   def liveMatchesJson() = liveMatches()
   def liveMatches(): Action[AnyContent] =
-    renderLiveMatches(DateMidnight.now)
+    renderLiveMatches(DateMidnight.now(Edition.defaultEdition.timezone))
 
   def matchesFor(year: String, month: String, day: String) =
     renderLiveMatches(createDate(year, month, day))
@@ -28,7 +28,7 @@ object MatchDayController extends MatchListController with CompetitionLiveFilter
 
   def competitionMatchesJson(competitionTag: String) = competitionMatches(competitionTag)
   def competitionMatches(competitionTag: String): Action[AnyContent] =
-    renderCompetitionMatches(competitionTag, DateMidnight.now)
+    renderCompetitionMatches(competitionTag, DateMidnight.now(Edition.defaultEdition.timezone))
 
   def competitionMatchesFor(competitionTag: String, year: String, month: String, day: String) =
     renderCompetitionMatches(competitionTag, createDate(year, month, day))

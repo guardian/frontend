@@ -198,12 +198,14 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val soulmates_url = configuration.getMandatoryStringProperty("commercial.soulmates_url")
     lazy val travel_url = configuration.getMandatoryStringProperty("commercial.travel_url")
 
-    lazy val dfpSponsoredKeywordsDataKey =
-      s"${environment.stage.toUpperCase}/commercial/dfp/sponsored-keywords.json"
-    lazy val dfpAdvertisementFeatureKeywordsDataKey =
-      s"${environment.stage.toUpperCase}/commercial/dfp/advertisement-feature-keywords.json"
+    lazy val dfpSponsoredTagsDataKey =
+      s"${environment.stage.toUpperCase}/commercial/dfp/sponsored-tags.json"
+    lazy val dfpAdvertisementFeatureTagsDataKey =
+      s"${environment.stage.toUpperCase}/commercial/dfp/advertisement-feature-tags.json"
     lazy val dfpPageSkinnedAdUnitsKey =
       s"${environment.stage.toUpperCase}/commercial/dfp/pageskinned-adunits.json"
+    lazy val dfpLineItemsKey =
+      s"${environment.stage.toUpperCase}/commercial/dfp/lineitems.json"
   }
 
   object open {

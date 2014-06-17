@@ -223,6 +223,35 @@
                 border-right: $gs-gutter/2 solid #ffffff
             ));
         }
+
+        .football-match--live,
+        .football-match--result {
+
+            .football-match__team {
+                display: block;
+                text-align: left;
+                padding: 0;
+                width: 100%;
+
+                .football-team__name {
+                    text-align: left;
+                    display: inline;
+                }
+                .team-name__long {
+                    display: none;
+                }
+                .football-team__score {
+                    display: inline;
+                    position: relative;
+                    right: 0;
+                    left: 30%;
+                }
+            }
+
+            .football-teams__battleline {
+                display: none;
+            }
+        }
     }
 }
 

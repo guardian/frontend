@@ -129,11 +129,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 7, 1)
   )
 
-  val ForcePageSkinSwitch = Switch("Advertising", "force-page-skin",
-    "Temp switch, allows us to force the page into 'page skin' mode",
-    safeState = Off, sellByDate = new DateMidnight(2014, 6, 25)
-  )
-
   // Ad Targeting
   /*
     These switches are to control length of request to DFP
@@ -294,7 +289,7 @@ object Switches extends Collections {
     safeState = On, sellByDate = new DateMidnight(2014, 6, 30)
   )
 
-  val NewMobileNavSwitch = Switch("Feature Switches", "new-navigation",
+  val NewNavSwitch = Switch("Feature Switches", "new-navigation",
     "If this switch is turned on then the new navigation will be displayed on mobiles and tablets",
     safeState = Off, sellByDate = new DateMidnight(2014, 7, 8)
   )
@@ -406,13 +401,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 7, 7)
   )
 
-  // Facia Switches
-
-  val FeaturesAutoContainerSwitch = Switch("Facia Switches", "facia-features-auto-container",
-    "If this switch is on, the features auto container has the right to live.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 6, 15)
-  )
-
   val ImageServerSwitch = Switch("Image Server", "image-server",
     "If this switch is on images will be served off i.guim.co.uk (dynamic image host).",
     safeState = On, sellByDate = never // this is a performance related switch, not a feature switch
@@ -423,9 +411,9 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 7, 31)
   )
 
-  val LargerArticleImageSwitch = Switch("Image Server", "larger-article-image",
-    "If this switch is on images then articles will get a 460px image as the low-res version.",
-    safeState = On, sellByDate = new DateMidnight(2014, 6, 20)
+  val SeoOptimisedContentImageSwitch = Switch("Image Server", "seo-optimised-article-image",
+    "If this switch is on images then articles will get a 460px on static.guim.co.uk image as the low-res version.",
+    safeState = On, sellByDate = new DateMidnight(2014, 8, 30)
   )
 
   val all: List[Switch] = List(
@@ -480,7 +468,7 @@ object Switches extends Collections {
     FaciaToolContainerTagsSwitch,
     RssLinkSwitch,
     EnhanceTweetsSwitch,
-    NewMobileNavSwitch,
+    NewNavSwitch,
     WorldCupWallchartEmbedSwitch,
     WorldCupArticleContainerSwitch,
     IndiaRegionSwitch,
@@ -494,11 +482,9 @@ object Switches extends Collections {
     ABDisplaySociallyReferredBurners,
     SmartBannerSwitch,
     SurveyBannerSwitch,
-    FeaturesAutoContainerSwitch,
-    ForcePageSkinSwitch,
     ParameterlessImagesSwitch,
     FreshnessLoggingSwitch,
-    LargerArticleImageSwitch
+    SeoOptimisedContentImageSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }

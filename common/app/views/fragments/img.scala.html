@@ -1,6 +1,5 @@
 @(img: Option[model.ImageContainer], isShowcase: Boolean = false, isFeature: Boolean = false)
-@import views.support.{Item620, Item460, Item300, Showcase, Naked, Profile, ImgSrc}
-@import conf.Switches.LargerArticleImageSwitch
+@import views.support.{ImgSrc, Item620, Naked, Profile, SeoOptimisedContentImage, Showcase}
 
 @img.map{ picture =>
 
@@ -39,19 +38,16 @@
 }
 
 @image(picture: model.ImageContainer) = {
-    @defining(if (LargerArticleImageSwitch.isSwitchedOn) Item460 else Item300) { profile =>
-        <img src="@profile.bestFor(picture).map(Html(_))"
-            class="maxed responsive-img"
-            itemprop="contentURL representativeOfPage"
-            title="@profile.altTextFor(picture).getOrElse("")"
-            alt="@profile.altTextFor(picture).getOrElse("")" />
-    }
+    <img src="@SeoOptimisedContentImage.bestFor(picture).map(Html(_))"
+        class="maxed responsive-img"
+        itemprop="contentURL representativeOfPage"
+        title="@SeoOptimisedContentImage.altTextFor(picture).getOrElse("")"
+        alt="@SeoOptimisedContentImage.altTextFor(picture).getOrElse("")" />
+
 }
 
 @caption(picture: model.ImageContainer) = {
-    @defining(if (LargerArticleImageSwitch.isSwitchedOn) Item460 else Item300) { profile =>
-        @profile.captionFor(picture).map { caption =>
-            <figcaption class="main-caption" itemprop="description">@Html(caption)</figcaption>
-        }
+    @SeoOptimisedContentImage.captionFor(picture).map { caption =>
+        <figcaption class="main-caption" itemprop="description">@Html(caption)</figcaption>
     }
 }
