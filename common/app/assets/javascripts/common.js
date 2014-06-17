@@ -14,7 +14,7 @@ define([
     deferToLoad,
     extend,
     debounce,
-    rateLimit,
+    throttle,
     toArray,
     atob,
     requestAnimationFrame
@@ -25,7 +25,7 @@ define([
         deferToLoadEvent: deferToLoad,
         extend: extend,
         debounce: debounce,
-        rateLimit: rateLimit,
+        throttle: throttle,
         toArray: toArray,
         atob: atob,
         requestAnimationFrame: requestAnimationFrame

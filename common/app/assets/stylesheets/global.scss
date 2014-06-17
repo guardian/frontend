@@ -38,6 +38,8 @@
 @import 'module/nav/_aside';
 @import 'module/_search';
 
+@import 'module/_video';
+
 @import 'module/_live-blog';
 @import 'module/_live-filter';
 @import 'module/_circular-progress';
@@ -118,8 +120,8 @@
    Icons
    ========================================================================== */
 
-@import 'theme/_global-icons-sprite';
-@import 'theme/_global-icons-svg';
+@import 'icons/_global-icons-sprite';
+@import 'icons/_global-icons-svg';
 @import 'theme/_icons';
 
 

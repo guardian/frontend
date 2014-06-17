@@ -1,5 +1,6 @@
 /*global guardian:true */
 define([
+    'qwery',
     'common/utils/mediator',
     'common/utils/ajax',
     'common/utils/detect',
@@ -23,6 +24,7 @@ define([
     'common/bootstraps/gallery',
     'common/bootstraps/identity'
 ], function (
+    qwery,
     mediator,
     ajax,
     detect,
@@ -114,7 +116,7 @@ define([
                 Article.init(config, context);
             }
 
-            if (config.page.contentType === 'Video') {
+            if (config.page.contentType === 'Video' || qwery('video').length) {
                 Video.init(config, context);
             }
 
