@@ -25,7 +25,7 @@ define([
         this._className = 'show-more--hidden';
 
         this._$button = bonzo(bonzo.create(
-            '<button class="collection__show-more tone-background" data-link-name="Show more | 0">' +
+            '<button class="collection__show-more tone-background" data-link-name="Show more | 0" data-test-id="show-more">' +
                 '<span class="collection__show-more__icon">' +
                     '<span class="i i-plus-white-mask"></span>' +
                     '<span class="i i-plus-white"></span>' +
