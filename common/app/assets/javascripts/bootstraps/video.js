@@ -32,6 +32,15 @@ define([
     var modules = {
 
         bindPrerollEvents: function(player, videoEl) {
+
+            // Bind advert and content events used by analytics. The expected order of bean events is:
+            // video:preroll:ready,
+            // video:preroll:play,
+            // video:preroll:end,
+            // video:content:ready,
+            // video:content:play,
+            // video:content:end
+
             var playCount = 0;
             var events = {
                 end: function() {
@@ -133,14 +142,6 @@ define([
 
                     vjs.ready(function () {
                         var player = this;
-
-                        // Bind advert and content events used by analytics. The expected order of bean events is:
-                        // video:preroll:ready,
-                        // video:preroll:play,
-                        // video:preroll:end,
-                        // video:content:ready,
-                        // video:content:play,
-                        // video:content:end
                         modules.bindPrerollEvents(player, el);
 
                         // Init vast adverts.
