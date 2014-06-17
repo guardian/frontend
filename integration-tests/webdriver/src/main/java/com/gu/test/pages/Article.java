@@ -1,5 +1,6 @@
 package com.gu.test.pages;
 
+import com.gu.test.helpers.WaitHelper;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
@@ -14,6 +15,8 @@ public class Article {
 
     public void shareViaEmail() {
         driver.findElement(By.cssSelector(".i-share-email")).click();
+            WaitHelper waitHelper = new WaitHelper();
+            waitHelper.waitForPageLoad(driver);
     }
 
     public void shareOnFacebook() {

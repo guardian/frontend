@@ -25,7 +25,7 @@ public class ArticleOnwardJourneyTest {
     public void goToFirstLinkInSidebarPopular() throws Exception {
         String linkText = testArticle.getFirstArticleInMostPopularRight();
         Article popularArticle = testArticle.goToFirstArticleInMostPopularRight();
-        WaitHelper.waitForArticleLoad(driver);
+            WaitHelper.waitForPageLoad(driver);
         String popularH1 = popularArticle.getArticleHeadline();
         Assert.assertTrue("Article headline did not match the top link in Most Popular", linkText.contentEquals(popularH1));
     }
@@ -34,7 +34,7 @@ public class ArticleOnwardJourneyTest {
     public void goToFirstLinkInRelatedContent() throws Exception {
         String linkText = testArticle.getFirstRelatedArticle();
         Article relatedArticle = testArticle.goToFirstRelatedArticle();
-        WaitHelper.waitForArticleLoad(driver);
+            WaitHelper.waitForPageLoad(driver);
         String relatedH1 = relatedArticle.getArticleHeadline();
         Assert.assertTrue("Article headline did not match the top link in Related Content", linkText.contentEquals(relatedH1));
     }
@@ -43,7 +43,7 @@ public class ArticleOnwardJourneyTest {
     public void goToFirstLinkInBelowArticlePopular() throws Exception {
         String linkText = testArticle.getFirstArticleInMostPopularBelow();
         Article popularBottomArticle = testArticle.goToFirstArticleInMostPopularBottom();
-        WaitHelper.waitForArticleLoad(driver);
+            WaitHelper.waitForPageLoad(driver);
         String popularH1 = popularBottomArticle.getArticleHeadline();
         Assert.assertTrue("Article headline did not match the top link in Most Popular", linkText.contentEquals(popularH1));
     }
