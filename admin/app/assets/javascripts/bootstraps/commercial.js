@@ -50,6 +50,10 @@ define([
             }).fail(function() {
                 $adsRenderTime.addClass('ajax-failed');
             })
+        }).fail(function() {
+            $adsRenderTime
+                .removeClass('ajax-loading')
+                .addClass('ajax-failed');
         });
 
         function daramAdRenderTime(adSlotName) {

@@ -413,7 +413,7 @@ object Switches extends Collections {
 
   val SeoOptimisedContentImageSwitch = Switch("Image Server", "seo-optimised-article-image",
     "If this switch is on images then articles will get a 460px on static.guim.co.uk image as the low-res version.",
-    safeState = On, sellByDate = new DateMidnight(2014, 6, 20)
+    safeState = On, sellByDate = new DateMidnight(2014, 8, 30)
   )
 
   val all: List[Switch] = List(
