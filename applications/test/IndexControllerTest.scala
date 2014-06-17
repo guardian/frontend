@@ -14,6 +14,10 @@ class IndexControllerTest extends FlatSpec with Matchers with BeforeAndAfterAll 
     MemcachedSwitch.switchOff()
   }
 
+  override def afterAll(): Unit = {
+    MemcachedSwitch.switchOn()
+  }
+
   "Index Controller" should "200 when content type is front" in Fake {
     val result = controllers.IndexController.render(section)(TestRequest(s"/$section"))
     status(result) should be(200)
