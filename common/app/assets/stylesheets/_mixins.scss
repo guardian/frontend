@@ -116,6 +116,7 @@
 @mixin icon($name) {
     @extend %i;
     @extend %i-#{$name};
+
     @if ($svg-support) {
         .svg & {
             @extend %svg-i-#{$name};
