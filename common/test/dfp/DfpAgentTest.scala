@@ -7,8 +7,9 @@ import org.scalatest.{FlatSpec, Matchers}
 class DfpAgentTest extends FlatSpec with Matchers {
 
   private object testDfpAgent extends DfpAgent {
-    override protected def sponsoredKeywords: Seq[String] = Seq("spon-page", "media")
-    override protected def advertisementFeatureKeywords: Seq[String] = Seq("ad-feature", "film")
+    override protected def sponsoredTags: Seq[String] = Seq("spon-page", "media")
+    override protected def advertisementFeatureTags: Seq[String] = Seq("ad-feature", "film")
+    override protected def pageskinnedAdUnits: Seq[String] = Seq("theguardian.com/business/front")
   }
 
   def apiQuery(apiQuery: String) = {

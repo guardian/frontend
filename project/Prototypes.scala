@@ -19,7 +19,9 @@ trait Prototypes {
     ),
     scalacOptions := Seq("-unchecked", "-optimise", "-deprecation",
       "-Xcheckinit", "-encoding", "utf8", "-feature", "-Yinline-warnings",
-      "-Xfatal-warnings")
+      "-Xfatal-warnings"
+    ),
+    doc in Compile <<= target.map(_ / "none")
   )
 
   val frontendDependencyManagementSettings = Seq(
@@ -50,6 +52,7 @@ trait Prototypes {
     // Effectively disable built in Play javascript compiler
     javascriptEntryPoints <<= (sourceDirectory in Compile) { base => (base / "assets" ** "*.none") },
     lessEntryPoints <<= (sourceDirectory in Compile) { base => (base / "assets" ** "*.none") },
+    coffeescriptEntryPoints <<= (sourceDirectory in Compile) { base => (base / "assets" ** "*.none") },
 
     templatesImport ++= Seq(
       "common._",

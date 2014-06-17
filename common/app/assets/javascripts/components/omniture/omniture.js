@@ -119,7 +119,9 @@ s.loadMediaModule = function(provider,restricted) {
     var s = this;
     s.loadModule("Media");
     s.Media.autoTrack=false;
-    s.Media.trackVars="events,prop44,eVar7,eVar43,eVar44,eVar45,eVar48,eVar61,eVar56,eVar47";
+    s.Media.trackWhilePlaying = true;
+    s.Media.trackSeconds = 15;
+    s.Media.trackVars="events,eVar7,eVar43,eVar44,prop44,eVar47,eVar48,eVar56,eVar61";
     s.Media.trackEvents="event17,event18,event21,event22,event23,event57,event63";
     s.Media.trackMilestones="25,50,75";
     s.Media.segmentByMilestones = true;
@@ -162,7 +164,7 @@ s.loadMediaModule = function(provider,restricted) {
 s.trackVideoContent = function(provider,restricted) {
     var s = this;
     s.Media.autoTrack=false;
-    s.Media.trackVars="events,prop44,eVar7,eVar11,eVar43,eVar44,eVar45,eVar48,eVar61,eVar56,eVar47";
+    s.Media.trackVars="events,eVar7,eVar11,eVar43,eVar44,prop44,eVar47,eVar48,eVar56,eVar61";
     s.Media.trackEvents="event17,event18,event21,event22,event23,event57,event63";
     s.Media.trackMilestones="25,50,75";
     s.Media.segmentByMilestones = true;
@@ -189,8 +191,8 @@ s.trackVideoContent = function(provider,restricted) {
 s.trackVideoAd = function() {
     var s = this;
     s.Media.autoTrack=false;
-    s.Media.trackVars="events,prop44,eVar7,eVar11,eVar43,eVar44,eVar45,eVar61,eVar56,eVar47";
-    s.Media.trackEvents="event64,event57,event59";
+    s.Media.trackVars="events,eVar7,eVar11,eVar43,prop44,eVar44,eVar47,eVar56,eVar61";
+    s.Media.trackEvents="event57,event59,event64";
     s.Media.segmentByMilestones = false;
     s.Media.trackUsingContextData = true;
     s.Media.contextDataMapping = {
@@ -337,7 +339,7 @@ s.apl=new Function("l","v","d","u",""
 s.split=new Function("l","d",""
     +"var i,x=0,a=new Array;while(l){i=l.indexOf(d);i=i>-1?i:l.length;a[x"
     +"++]=l.substring(0,i);l=l.substring(i+d.length);}return a");
-    
+
 /*
  * Plugin: getTimeParting 3.3
  */

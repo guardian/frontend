@@ -44,15 +44,20 @@ object Switches extends Collections {
 
   private lazy val never = new DateMidnight(2100, 1, 1)
 
-  // this is 3 months - at the end of this a decision is expected
-  // and one (or both) of the 2 needs to go.
-  private lazy val profilingEvalDeadline = new DateMidnight(2014, 6, 17)
+  // Waiting for an answer from Australian office, due imminently.
+  private lazy val profilingEvalDeadline = new DateMidnight(2014, 6, 25)
 
 
   // Load Switches
 
-  val MemcachedSwitch = Switch("Performance Switches", "memcached",
+  val MemcachedSwitch = Switch("Performance Switches", "memcached-action",
     "If this switch is switched on then the MemcacheAction will be operational",
+    safeState = On,
+    sellByDate = never
+  )
+
+  val MemcachedFallbackSwitch = Switch("Performance Switches", "memcached-fallback",
+    "If this switch is switched on then the MemcachedFallback will be operational",
     safeState = Off,
     sellByDate = never
   )
@@ -128,11 +133,6 @@ object Switches extends Collections {
   val SurveyBannerSwitch = Switch("Advertising", "survey-banner",
     "Display survey banner on all devices",
     safeState = Off, sellByDate = new DateMidnight(2014, 7, 1)
-  )
-
-  val ForcePageSkinSwitch = Switch("Advertising", "force-page-skin",
-    "Temp switch, allows us to force the page into 'page skin' mode",
-    safeState = Off, sellByDate = new DateMidnight(2014, 6, 14)
   )
 
   // Ad Targeting
@@ -215,6 +215,11 @@ object Switches extends Collections {
     safeState = Off, never
   )
 
+  val FreshnessLoggingSwitch = Switch("Diagnostics", "freshness",
+    "If this switch is on, page freshness will be logged.",
+    safeState = On, new DateMidnight(2014, 6, 30)
+  )
+
   val ScrollDepthSwitch = Switch("Analytics", "scroll-depth",
     "Enables tracking and measurement of scroll depth",
     safeState = Off, never
@@ -290,6 +295,11 @@ object Switches extends Collections {
     safeState = On, sellByDate = new DateMidnight(2014, 6, 30)
   )
 
+  val NewNavigationSwitch = Switch("Feature Switches", "new-navigation",
+    "If this switch is turned on then the new navigation will be displayed on mobiles and tablets",
+    safeState = Off, sellByDate = new DateMidnight(2014, 7, 8)
+  )
+
   val EnhanceTweetsSwitch = Switch("Feature Switches", "enhance-tweets",
     "If this switch is turned on then embedded tweets will be enhanced using Twitter's widgets.",
     safeState = Off, sellByDate = never
@@ -297,6 +307,11 @@ object Switches extends Collections {
 
   val WorldCupWallchartEmbedSwitch = Switch("Feature Switches", "worldcup-wallchart-embed",
     "If this switch is turned on JavaScript will load. It will be removed after the new Premier League session starts.",
+    safeState = Off, sellByDate = new DateMidnight(2014, 8, 10)
+  )
+
+  val WorldCupArticleContainerSwitch = Switch("Feature Switches", "worldcup-article-container",
+    "If this switch is turned on world cup articles will have an extra container.",
     safeState = Off, sellByDate = new DateMidnight(2014, 8, 10)
   )
 
@@ -320,6 +335,11 @@ object Switches extends Collections {
   val ABDisplaySociallyReferredBurners = Switch("A/B Tests", "ab-display-socially-referred-burners",
     "If this switch is turned on, run the DisplayReferredContent A/B test",
     safeState = Off, sellByDate = new DateMidnight(2014, 6, 24)
+  )
+
+  val ABSentry = Switch("A/B Tests", "ab-sentry",
+    "If this switch is turned on, users JavaScript errors will be beaconed back to the Sentry server.",
+    safeState = Off, sellByDate = new DateMidnight(2014, 6, 27)
   )
 
   // Dummy Switches
@@ -381,6 +401,16 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
+  val FaciaToolCachedContentApiSwitch = Switch("Front Press Switches", "facia-tool-cached-capi-requests",
+    "If this switch is on facia tool will cache responses from the content API and use them on failure",
+    safeState = On, sellByDate = never
+  )
+
+  val FaciaToolCachedZippingContentApiSwitch = Switch("Front Press Switches", "facia-tool-zipcached-capi-requests",
+    "If this switch is on facia tool will zip cache responses from the content API and use them on failure",
+    safeState = On, sellByDate = never
+  )
+
   // Front Press Switches
   val FrontPressJobSwitch = Switch("Front Press Switches", "front-press-job-switch",
     "If this switch is on then the jobs to push and pull from SQS will run",
@@ -392,23 +422,19 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 7, 7)
   )
 
-  // Facia Switches
-
-  val FeaturesAutoContainerSwitch = Switch("Facia Switches", "facia-features-auto-container",
-    "If this switch is on, the features auto container has the right to live.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 6, 15)
-  )
-
-  // Image Switch
-
   val ImageServerSwitch = Switch("Image Server", "image-server",
     "If this switch is on images will be served off i.guim.co.uk (dynamic image host).",
     safeState = On, sellByDate = never // this is a performance related switch, not a feature switch
   )
 
-  val ParameterlessImagesSwitch = Switch("Parameterless Images Server", "parameterless-images",
+  val ParameterlessImagesSwitch = Switch("Image Server", "parameterless-images",
     "If this switch is on images then image resize fields (width, height, quality) will be in the url and not in parameters.",
     safeState = Off, sellByDate = new DateMidnight(2014, 7, 31)
+  )
+
+  val SeoOptimisedContentImageSwitch = Switch("Image Server", "seo-optimised-article-image",
+    "If this switch is on images then articles will get a 460px on static.guim.co.uk image as the low-res version.",
+    safeState = On, sellByDate = new DateMidnight(2014, 8, 30)
   )
 
   val all: List[Switch] = List(
@@ -463,9 +489,12 @@ object Switches extends Collections {
     FaciaToolContainerTagsSwitch,
     RssLinkSwitch,
     EnhanceTweetsSwitch,
+    NewNavigationSwitch,
     WorldCupWallchartEmbedSwitch,
+    WorldCupArticleContainerSwitch,
     IndiaRegionSwitch,
     MemcachedSwitch,
+    MemcachedFallbackSwitch,
     IncludeBuildNumberInMemcachedKey,
     GeoMostPopular,
     TagLinkingSwitch,
@@ -473,11 +502,14 @@ object Switches extends Collections {
     ABHideSupportingLinks,
     ABAcrossTheGuardian,
     ABDisplaySociallyReferredBurners,
+    ABSentry,
     SmartBannerSwitch,
     SurveyBannerSwitch,
-    FeaturesAutoContainerSwitch,
-    ForcePageSkinSwitch,
-    ParameterlessImagesSwitch
+    ParameterlessImagesSwitch,
+    FreshnessLoggingSwitch,
+    SeoOptimisedContentImageSwitch,
+    FaciaToolCachedContentApiSwitch,
+    FaciaToolCachedZippingContentApiSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }

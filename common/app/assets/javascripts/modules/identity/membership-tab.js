@@ -16,6 +16,7 @@ define(['common/$',
     Component.define(Membership);
 
     Membership.prototype.classes = {
+        TAB: 'js-membership-tab',
         TAB_BUTTON: 'js-memebership-tab-button',
         TAB_CONTAINER: 'js-memebership-tab-container',
         TIER: 'js-membership-tier',
@@ -83,7 +84,7 @@ define(['common/$',
         var self = this;
 
         ajax({
-            url: 'https://membership.theguardian.com/user/me/details',
+            url: 'https://mem.thegulocal.com/user/me/details',
             crossOrigin: true,
             withCredentials: true,
             method: 'get'
@@ -106,9 +107,27 @@ define(['common/$',
 
     };
 
+    /**
+     *   Load the css file containing the base64 encoded sprites for the card icons
+     */
+    Membership.prototype.addSpriteCss = function () {
+        var spriteSheetUrl = config.page.idUrl + $(this.getClass('TAB')).data('sprite-url');
+        var $head  = $('head');
+        var link  = document.createElement('link');
+        link.id   = 'membership-sprite';
+        link.rel  = 'stylesheet';
+        link.type = 'text/css';
+        link.href = spriteSheetUrl;
+        link.media = 'all';
+        $head.append(link);
+    };
+
     /** @override */
     Membership.prototype.ready = function () {
         if (this.display) {
+
+            this.addSpriteCss();
+
             $(this.getClass('TAB_BUTTON'), this.context).removeClass('is-hidden');
             $(this.getClass('TAB_CONTAINER'), this.context).removeClass('is-hidden');
             $('.js-account-profile-forms').addClass('identity-wrapper--with-membership');

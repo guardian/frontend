@@ -1,5 +1,6 @@
 package model
 
+import common.Edition
 import org.scalatest.FlatSpec
 import org.scalatest.Matchers
 import org.joda.time.DateTime
@@ -12,13 +13,14 @@ class DateTimeTest extends FlatSpec with Matchers with implicits.Dates {
 
   "Date pimps" should "understand HTTP date time" in {
 
-    val theDate = new DateTime(2001, 5, 20, 12, 3, 4, 555)
+    val theDate = new DateTime(2001, 5, 20, 12, 3, 4, 555, Edition.defaultEdition.timezone)
     theDate.toHttpDateTimeString should be("Sun, 20 May 2001 11:03:04 GMT")
   }
 
   it should "always be in GMT" in {
 
-    val theDate = new DateTime(2001, 5, 20, 12, 3, 4, 555).withZone(DateTimeZone.forID("Asia/Yerevan"))
+    val theDate = new DateTime(2001, 5, 20, 12, 3, 4, 555, Edition.defaultEdition.timezone)
+      .withZone(DateTimeZone.forID("Asia/Yerevan"))
     theDate.toHttpDateTimeString should be("Sun, 20 May 2001 11:03:04 GMT")
   }
 }

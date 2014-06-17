@@ -1,6 +1,7 @@
 package model
 
 import com.gu.openplatform.contentapi.model.{ Content => ApiContent, MediaAsset }
+import common.Edition
 import org.joda.time.format.ISODateTimeFormat
 import scala.math.abs
 
@@ -47,8 +48,8 @@ object `package` {
 
   implicit class ISODateTimeStringNoMillis2DateTime(s: String) {
     lazy val parseISODateTime = s match {
-      case DateTimeWithMillis(_) => ISODateTimeFormat.dateTime.parseDateTime(s)
-      case _ => ISODateTimeFormat.dateTimeNoMillis.parseDateTime(s)
+      case DateTimeWithMillis(_) => ISODateTimeFormat.dateTime.withZone(Edition.defaultEdition.timezone).parseDateTime(s)
+      case _ => ISODateTimeFormat.dateTimeNoMillis.withZone(Edition.defaultEdition.timezone).parseDateTime(s)
     }
   }
 }

@@ -362,10 +362,11 @@
 }
 
 .top-nav__item--search {
+    padding-left: 0;
+
     @include mq(tablet) {
         @include rem((
             width: 92px
         ));
     }
 }
-

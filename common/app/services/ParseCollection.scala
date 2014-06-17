@@ -2,7 +2,9 @@ package services
 
 import common.FaciaMetrics.S3AuthorizationError
 import common._
-import conf.{ContentApi, Configuration}
+import conf.{LiveContentApi, Configuration}
+import model.Config
+import conf.Configuration
 import model._
 import play.api.libs.json.Json._
 import play.api.libs.json._
@@ -17,6 +19,7 @@ import com.gu.openplatform.contentapi.model.{Content => ApiContent}
 import play.api.libs.ws.Response
 import play.api.libs.json.JsObject
 import scala.concurrent.duration._
+import conf.Switches.{FaciaToolCachedContentApiSwitch, FaciaToolCachedZippingContentApiSwitch}
 
 
 object Path {
@@ -44,8 +47,18 @@ object Result {
 }
 
 trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging {
-  implicit val apiContentCodec = JsonCodecs.gzippedCodec[Option[ApiContent]]
-  implicit val resultCodec = JsonCodecs.gzippedCodec[Result]
+  implicit def apiContentCodec =
+    if (FaciaToolCachedZippingContentApiSwitch.isSwitchedOn)
+      JsonCodecs.snappyCodec[Option[ApiContent]]
+    else
+      JsonCodecs.nonGzippedCodec[Option[ApiContent]]
+
+  implicit def resultCodec =
+    if (FaciaToolCachedZippingContentApiSwitch.isSwitchedOn)
+      JsonCodecs.snappyCodec[Result]
+    else
+      JsonCodecs.nonGzippedCodec[Result]
+
   val cacheDuration: FiniteDuration = 5.minutes
 
   case class InvalidContent(id: String) extends Exception(s"Invalid Content: $id")
@@ -173,7 +186,6 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
           }
           else {
             val content: Future[Option[ApiContent]] = getContentApiItemFromCollectionItem(collectionItem, edition)
-
             supportingAsContent.onFailure {
               case t: Throwable => log.warn("Supporting links: %s: %s".format(collectionItem.id, t.toString))
             }
@@ -197,7 +209,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
   }
 
   private def getContentApiItemFromCollectionItem(collectionItem: CollectionItem, edition: Edition): Future[Option[ApiContent]] = {
-    lazy val response = ContentApi.item(collectionItem.id, edition).showFields(showFieldsWithBodyQuery)
+    lazy val response = LiveContentApi.item(collectionItem.id, edition).showFields(showFieldsWithBodyQuery)
       .response
       .map(Option.apply)
       .recover {
@@ -221,9 +233,14 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
         log.warn("%s: %s".format(collectionItem.id, t.toString))
         throw t
       }
-    }
+    }.map(_.flatMap(_.content))
 
-    MemcachedFallback.withMemcachedFallBack(collectionItem.id, cacheDuration)(response.map(_.flatMap(_.content)))
+    if (FaciaToolCachedContentApiSwitch.isSwitchedOn) {
+      MemcachedFallback.withMemcachedFallBack(collectionItem.id, cacheDuration)(response)
+    }
+    else {
+      response
+    }
   }
 
   private def retrieveSupportingLinks(collectionItem: CollectionItem): List[CollectionItem] =
@@ -232,11 +249,20 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
     ).getOrElse(Nil)
 
 
+
   def executeContentApiQueryViaCache(queryString: String, edition: Edition): Future[Result] = {
-    MemcachedFallback.withMemcachedFallBack(
-      sha256Hex(queryString),
-      cacheDuration
-    ) { executeContentApiQuery(queryString, edition) }
+    lazy val contentApiQuery = executeContentApiQuery(queryString, edition)
+    if (FaciaToolCachedContentApiSwitch.isSwitchedOn) {
+      MemcachedFallback.withMemcachedFallBack(
+        sha256Hex(queryString),
+        cacheDuration
+      ) {
+        contentApiQuery
+      }
+    } else {
+      contentApiQuery
+    }
+
   }
 
   def executeContentApiQuery(queryString: String, edition: Edition): Future[Result] = {
@@ -247,7 +273,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
 
       val backFillResponse: Future[Result] = (queryString match {
         case Path(Seg("search" :: Nil)) =>
-          val search = ContentApi.search(edition)
+          val search = LiveContentApi.search(edition)
             .showElements("all")
             .pageSize(20)
           val newSearch = queryParamsWithEdition.foldLeft(search) {
@@ -262,7 +288,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
             )
           }
         case Path(id) =>
-          val search = ContentApi.item(id, edition)
+          val search = LiveContentApi.item(id, edition)
             .showElements("all")
             .showEditorsPicks(true)
             .pageSize(20)

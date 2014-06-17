@@ -38,11 +38,14 @@
 @import 'module/nav/_aside';
 @import 'module/_search';
 
+@import 'module/_video';
+
 @import 'module/_live-blog';
 @import 'module/_live-filter';
 @import 'module/_circular-progress';
 
 @import 'module/_discussion';
+@import 'module/_disc';
 @import 'module/_interactive';
 
 @import 'module/_overlay';
@@ -117,8 +120,8 @@
    Icons
    ========================================================================== */
 
-@import 'theme/_global-icons-sprite';
-@import 'theme/_global-icons-svg';
+@import 'icons/_global-icons-sprite';
+@import 'icons/_global-icons-svg';
 @import 'theme/_icons';
 
 
@@ -134,3 +137,10 @@
    ========================================================================== */
 
 @import 'module/_release-message';
+
+
+/* ==========================================================================
+   Commercial modules
+   ========================================================================== */
+
+@import 'module/commercial/_commercial';
