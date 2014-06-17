@@ -200,7 +200,7 @@ CommentBox.prototype.postComment = function(e) {
             self.setFormState(true);
             DiscussionApi
                 .postComment(self.getDiscussionId(), comment)
-                .then(self.success.bind(self, comment), self.fail.bind(self));
+                .then(self.postCommentSuccess.bind(self, comment), self.fail.bind(self));
         }
     };
 
@@ -251,7 +251,7 @@ CommentBox.prototype.error = function(type, message) {
  * @param {Object} comment
  * @param {Object} resp
  */
-CommentBox.prototype.success = function(comment, resp) {
+CommentBox.prototype.postCommentSuccess = function(comment, resp) {
     comment.id = parseInt(resp.message, 10);
     this.getElem('body').value = '';
     this.setFormState();
@@ -279,6 +279,15 @@ CommentBox.prototype.fail = function(xhr) {
     } else {
         this.error('API_ERROR');
     }
+};
+
+/**
+ * @param {Object} comment
+ * @param {Object} resp
+ */
+CommentBox.prototype.previewCommentSuccess = function(comment, resp) {
+    this.getElem('preview-body').innerHTML = resp.commentBody;
+    this.setState('preview-visible');
 };
 
 /**
@@ -338,7 +347,7 @@ CommentBox.prototype.verificationEmailFail = function() {
 /**
  * @param {Event=} e (optional)
  */
-CommentBox.prototype.previewComment = function() {
+CommentBox.prototype.previewComment = function(e) {
     var self = this,
         comment = {
             body: this.getElem('body').value
@@ -348,6 +357,8 @@ CommentBox.prototype.previewComment = function() {
     self.clearErrors();
 
     if (comment.body === '') {
+        this.getElem('preview-body').innerHTML = '';
+        this.removeState('preview-visible');
         self.error('EMPTY_COMMENT_BODY');
     }
 
@@ -358,8 +369,8 @@ CommentBox.prototype.previewComment = function() {
 
     if (self.errors.length === 0) {
         DiscussionApi
-            .postComment(self.getDiscussionId(), comment)
-            .then(self.success.bind(self, comment), self.fail.bind(self));
+            .previewComment(comment)
+            .then(self.previewCommentSuccess.bind(self, comment), self.fail.bind(self));
     }
 };
 
@@ -370,6 +381,8 @@ CommentBox.prototype.cancelComment = function() {
     if (this.options.state === 'response') {
         this.destroy();
     } else {
+        this.getElem('preview-body').innerHTML = '';
+        this.removeState('preview-visible');
         this.getElem('body').value = '';
         this.setFormState();
         this.removeState('expanded');

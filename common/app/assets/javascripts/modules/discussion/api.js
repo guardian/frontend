@@ -73,7 +73,7 @@ Api.postComment = function(discussionId, comment) {
  * @return {Reqwest} a promise
  */
 Api.previewComment = function(comment) {
-   var endpoint = '/discussion/comment/preview';
+   var endpoint = '/comment/preview';
    return Api.send(endpoint, 'post', comment);
 }
 

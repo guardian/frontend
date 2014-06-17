@@ -1259,12 +1259,16 @@ $avatarSize: 44px;
 }
 
 .d-comment-box__preview-wrapper {
-    display:none;
+    display: none;
     .d-comment-box__preview-body {
         @include fs-textsans(1);
+        color: $c-neutral2;
         @include rem((
             margin: $gutter 0
         ));
+    }
+    .d-comment-box--preview-visible & {
+      display: block;
     }
 }
 
