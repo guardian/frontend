@@ -492,7 +492,7 @@ module.exports = function (grunt) {
                 files: [{
                     expand: true,
                     cwd: staticTargetDir + 'javascripts',
-                    src: ['**/*.js', '!bootstraps/**/*.js'],
+                    src: ['**/*.js', '!bootstraps/**/*.js', '!**/raven-js/**/*', '**/raven-js/dist/*.js'],
                     dest: staticTargetDir + 'javascripts'
                 }]
             }
