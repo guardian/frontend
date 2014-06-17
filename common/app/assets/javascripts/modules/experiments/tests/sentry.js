@@ -24,7 +24,6 @@ define([
             {
                 id: 'errors',
                 test: function () {
-                    console.log('inside test');
                     require('raven', function(raven) {
                         raven.config('http://' + config.page.sentryApiKey + '@' + config.page.sentryHost, {
                             logger: 'javascript',
@@ -41,8 +40,6 @@ define([
                                 buildNumber: config.page.buildNumber
                             }
                         }).install();
-
-                        throw new Error('testing sentry');
                     });
                 }
             }
