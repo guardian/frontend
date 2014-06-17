@@ -3,8 +3,14 @@ package com.gu.fronts.integration.test.config;
 import static com.gu.fronts.integration.test.config.EnvironmentConfigurer.ENVIRONMENT_KEY;
 import static java.util.concurrent.TimeUnit.SECONDS;
 
+import java.io.File;
+import java.io.IOException;
+
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.Dimension;
+import org.openqa.selenium.OutputType;
 import org.openqa.selenium.Point;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -36,6 +42,12 @@ public class SpringTestConfig {
         webDriver.manage().window().setPosition(new Point(0, 0));
         webDriver.manage().window().setSize(new Dimension(1280, 1024));
         webDriver.manage().timeouts().implicitlyWait(10, SECONDS);
+        File scrFile = ((TakesScreenshot) webDriver).getScreenshotAs(OutputType.FILE);
+        try {
+            FileUtils.copyFile(scrFile, new File("/tmp/selenium_screenshot.png"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         return webDriver;
     }
 
