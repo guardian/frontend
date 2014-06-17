@@ -72,15 +72,18 @@ $vjs-control-colour: rgba(25, 25, 25, .8);
     ));
     @include transition(bottom .5s);
     transition-delay: 1s;
+
     .gu-video-wrapper:hover &,
     .vjs-paused & {
         bottom: 0;
         @include transition(bottom 0s);
         transition-delay: 0s;
     }
+
     .vjs-using-native-controls & {
         display: none;
     }
+
     * {
         outline: none; // hide focus outlines on controls
     }
@@ -109,7 +112,6 @@ $vjs-control-colour: rgba(25, 25, 25, .8);
     @include rem((
         margin: 7px
     ));
-
 
     .vjs-paused & {
         @include icon(play-32-yellow);
@@ -220,7 +222,6 @@ $vjs-progress-inset-bottom: 4px;
    ========================================================================== */
 
 .vjs-volume-control {
-
     float: right;
     @include rem((
         width: $gs-gutter*5,
@@ -328,9 +329,11 @@ $vjs-progress-inset-bottom: 4px;
             content: ' ';
             display: block;
             position: absolute;
-            left: $gs-gutter;
             top: 50%;
-            margin-top: -22px; // half icon height for centering
+            @include rem((
+                left: $gs-gutter,
+                margin-top: -22px // half icon height for centering
+            ));
         }
     }
 }
@@ -390,6 +393,7 @@ $vjs-progress-inset-bottom: 4px;
     left: 0;
     @include transition(top .5s);
     transition-delay: 1s;
+
     .gu-video-wrapper:hover &,
     .vjs-paused & {
         top: 0;
