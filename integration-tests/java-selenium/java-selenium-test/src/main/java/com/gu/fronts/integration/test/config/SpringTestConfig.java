@@ -3,6 +3,8 @@ package com.gu.fronts.integration.test.config;
 import static com.gu.fronts.integration.test.config.EnvironmentConfigurer.ENVIRONMENT_KEY;
 import static java.util.concurrent.TimeUnit.SECONDS;
 
+import org.openqa.selenium.Dimension;
+import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -31,6 +33,8 @@ public class SpringTestConfig {
     }
 
     private WebDriver setGlobalWebdriverConf(WebDriver webDriver) {
+        webDriver.manage().window().setPosition(new Point(0, 0));
+        webDriver.manage().window().setSize(new Dimension(1280, 1024));
         webDriver.manage().timeouts().implicitlyWait(10, SECONDS);
         return webDriver;
     }

@@ -7,7 +7,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.rules.TestName;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 
 import com.github.tomakehurst.wiremock.junit.WireMockClassRule;
 import com.gu.fronts.integration.test.fw.wiremock.WiremockStubPressedJsonBuilder;
@@ -23,7 +22,8 @@ public class StubbedFrontsIntegrationTestCase extends FrontsIntegrationTestCase 
 
     // the following declarations makes WireMock stay up between test cases
     @ClassRule
-    public static WireMockClassRule wireMockRule = new WireMockClassRule(wireMockConfig().port(getStubServerPort(7070)));
+    public static WireMockClassRule wireMockRule = new WireMockClassRule(wireMockConfig().port(getStubServerPort(7070))
+            .enableBrowserProxying(true));
     @Rule
     public WireMockClassRule instanceRule = wireMockRule;
 
