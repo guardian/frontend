@@ -57,8 +57,14 @@ echo ''
 # NOTE this is not a REAL APP_SECRET it is just for DEV environments
 fake_secret="myKV8HQkjcaxygbDuyneHBeyFgsyyM8yCFFOxyDoT0QGuyrY7IyammSyP1VivCxS"
 
+####################################################################################
+#
+#  Australia/Sydney  -because it is too easy for devs to forget about timezones
+#
+####################################################################################
 java $FRONTEND_JVM_ARGS  \
   $DEBUG_PARAMS \
   -DAPP_SECRET=$fake_secret \
   -Dsbt.ivy.home=`dirname $0`/ivy-sbt \
+  -Duser.timezone=Australia/Sydney \
   -jar `dirname $0`/dev/sbt-launch.jar "$@"
