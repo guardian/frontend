@@ -177,8 +177,6 @@ define([
 
         var self = this;
 
-        //this.video.advertWasRequested = true;
-
         ajax({
             url: url,
             method: 'get',
