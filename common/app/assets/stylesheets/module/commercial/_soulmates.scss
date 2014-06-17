@@ -9,11 +9,16 @@ $c-soulmates-high: $c-neutral1;
         border: 0;
         position: relative;
     }
+    .container__title {
+        margin-bottom: 0;
+        padding: 0;
+    }
     .container__title__wrapper {
+        background-size: cover;
+        height: auto;
         @include rem((
-            width: gs-span(3),
-            padding-top: 32px,
-            height: $gs-baseline*4.5,
+            width: gs-span(2),
+            padding: $gs-baseline*2 0 $gs-baseline/2,
             margin: 0 0 $gs-baseline*2.5
         ));
     }
@@ -21,15 +26,16 @@ $c-soulmates-high: $c-neutral1;
         float: none;
         margin-bottom: 0;
         text-align: center;
+        line-height: 1;
     }
-    .i-soulmates-logo {
-        width: auto;
-        display: block;
+    .i-soulmates-logo-2014 {
+        width: 110px;
         background-size: contain;
     }
     @include mq(tablet) {
         .commercial__header {
             float: left;
+            margin-bottom: 0;
             @include rem((
                 width: gs-span(3)
             ));
@@ -40,7 +46,7 @@ $c-soulmates-high: $c-neutral1;
         position: absolute;
         @include fs-bodyHeading(2);
         @include rem((
-            margin: $gs-baseline 0 0
+            margin: $gs-baseline/2 0 0
         ));
     }
     .commercial__buy-now-button {
@@ -192,6 +198,18 @@ $c-soulmates-high: $c-neutral1;
             }
         }
     }
+    @include mq(wide) {
+        .commercial__explainer {
+            @include rem((
+                padding-left: $gs-gutter*2
+            ));
+        }
+        .commercial__buy-now-button {
+            @include rem((
+                margin-left: $gs-gutter
+            ));
+        }
+    }
 }
 
 /* fronts */
@@ -221,7 +239,8 @@ $c-soulmates-high: $c-neutral1;
         .commercial__head {
             position: static;
             @include rem((
-                width: gs-span(2) + $gs-gutter
+                width: gs-span(2) + $gs-gutter,
+                margin-top: 8px
             ));
         }
         .container__title__wrapper {
@@ -229,13 +248,17 @@ $c-soulmates-high: $c-neutral1;
             width: auto;
             height: auto;
             margin: 0;
+            @include rem((
+                padding-top: $gs-baseline*3
+            ));
         }
         .commercial__explainer {
             position: static;
             color: #ffffff;
             @include rem((
                 width: gs-span(2)-$gs-gutter,
-                padding: 0 $gs-gutter
+                padding: 0 $gs-gutter,
+                margin-top: $gs-baseline
             ));
             line-height: 1;
         }
@@ -261,6 +284,11 @@ $c-soulmates-high: $c-neutral1;
     @include mq(wide) {
         .container__title__wrapper {
             background-size: cover;
+        }
+        .i-soulmates-logo-2014 {
+            @include rem((
+                width: gs-span(2)
+            ));
         }
     }
 }
@@ -294,7 +322,8 @@ $c-soulmates-high: $c-neutral1;
         .commercial__head {
             position: static;
             @include rem((
-                width: gs-span(2)+$gs-gutter !important
+                width: gs-span(2)+$gs-gutter !important,
+                margin-top: 8px
             ));
             margin-right: 0;
         }
@@ -308,6 +337,9 @@ $c-soulmates-high: $c-neutral1;
             width: auto;
             height: auto;
             margin: 0;
+            @include rem((
+                padding-top: $gs-baseline*2.5
+            ));
         }
         .commercial__explainer {
             position: static;
