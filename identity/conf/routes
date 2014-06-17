@@ -19,6 +19,7 @@ GET         /user/id/:id                            @controllers.PublicProfileCo
 GET         /user/:vanityUrl                        @controllers.PublicProfileController.renderProfileFromVanityUrl(vanityUrl: String)
 GET         /public/edit                            @controllers.EditProfileController.displayPublicProfileForm
 GET         /account/edit                           @controllers.EditProfileController.displayAccountForm
+GET         /membership/edit                        @controllers.EditProfileController.displayMembershipForm
 POST        /public/edit                            @controllers.EditProfileController.submitPublicProfileForm
 POST        /account/edit                           @controllers.EditProfileController.submitAccountForm
 GET         /verify-email/:token                    @controllers.EmailVerificationController.verify(token: String)

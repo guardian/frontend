@@ -603,7 +603,7 @@ Comments.prototype.reportComment = function(e) {
             DiscussionApi.reportComment(commentId, {
                 emailAddress: form.elements.email.value,
                 categoryId: category.value,
-                reason: comment === '' ? category.options[category.selectedIndex].innerHTML : comment
+                reason: comment
             });
 
             bonzo(form).addClass('u-h');

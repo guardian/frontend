@@ -4,9 +4,8 @@ set -o xtrace
 set -o nounset
 set -o errexit
 
-# Skip test whilst debugging.
-./sbt-tc "project root" compile dist
 ./grunt-tc clean validate:js test:unit compile emitAbTestInfo
+./sbt-tc "project root" compile test dist
 
 echo "Disting everything."
 rm -rf "dist"
@@ -35,8 +34,5 @@ do
 
     echo "##teamcity[publishArtifacts 'dist/$config.zip']"
 done
-
-# And zip up the packet
-#cd "everything"
 
 echo "Done disting."
