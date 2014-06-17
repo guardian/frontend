@@ -12,6 +12,7 @@ import com.gu.openplatform.contentapi.model.Asset
 import conf.Switches
 import services.{S3FrontsApi, DraftCollections, LiveCollections, ConfigAgent}
 import scala.util.{Success, Failure}
+import conf.Switches.FaciaToolDraftPressSwitch
 
 case class PressCommand(ids: Set[String], live: Boolean = false, draft: Boolean = false) {
   def withPressLive(b: Boolean = true): PressCommand = this.copy(live=b)
@@ -93,7 +94,7 @@ trait FrontPress extends Logging {
           Future.successful(Map.empty)
 
       lazy val draftPress: Future[Map[String, JsObject]]  =
-        if (pressCommand.draft)
+        if (FaciaToolDraftPressSwitch.isSwitchedOn && pressCommand.draft)
           Future.traverse(paths){ path => pressDraftByPathId(path).map{ json => path -> json} }.map(_.toMap)
         else
           Future.successful(Map.empty)
