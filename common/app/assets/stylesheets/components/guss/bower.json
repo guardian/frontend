@@ -9,6 +9,7 @@
     "guss-grid-system": "~1",
     "guss-typography": "~1",
     "guss-layout": "~1",
-    "guss-css3": "~2"
+    "guss-css3": "~2",
+    "guss-colours": "~1"
   }
 }
