@@ -6,16 +6,16 @@ define([
 
     return function () {
         this.id = 'LargerMobileMpu';
-        this.start = '2014-06-17';
+        this.start = '2014-06-18';
         this.expiry = '2014-06-30';
         this.author = 'Darren Hurley';
         this.description = 'Increase the size of inline1 ad slot to 300x250 for mobile users';
-        this.audience = 0.2;
+        this.audience = 0.4;
         this.audienceOffset = 0;
-        this.successMeasure = 'CTR on articles and CTR on advert';
+        this.successMeasure = 'User engagement';
         this.audienceCriteria = 'Mobile users';
         this.dataLinkNames = 'larger-mobile-mpu';
-        this.idealOutcome = 'CTR on advert increases, while not detracting from user\'s overall engagement on the page';
+        this.idealOutcome = 'User engagement is unaffected by larger ads';
 
         this.canRun = function () {
             return detect.getBreakpoint() === 'mobile';
@@ -31,7 +31,15 @@ define([
                 test: function () { }
             },
             {
-                id: '300x250',
+                id: 'fronts',
+                test: function () { }
+            },
+            {
+                id: 'articles',
+                test: function () { }
+            },
+            {
+                id: 'fronts-and-articles',
                 test: function () { }
             }
         ];

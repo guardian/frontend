@@ -38,7 +38,7 @@ define([
     ArticleBodyAdverts.prototype.generateAdElement = function() {
         var adIndex = this.ads.length + 1,
             $ad = $.create(dfp.createAdSlot('inline' + adIndex, 'inline'));
-        if (ab.getTestVariant('LargerMobileMpu') === '300x250' && adIndex === 1) {
+        if (['articles', 'fronts-and-articles'].indexOf(ab.getTestVariant('LargerMobileMpu')) > -1 && adIndex === 1) {
             $ad.removeAttr('data-mobile')
                 .removeAttr('data-mobilelandscape');
         }
