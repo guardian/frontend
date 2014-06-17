@@ -2,6 +2,7 @@ package com.gu.fronts.integration.test.page.util;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -23,5 +24,18 @@ public class PageElementHelper {
 
     public static boolean elementIsALink(WebElement element) {
         return "a".equalsIgnoreCase(element.getTagName());
+    }
+
+    public static WebElement findElementBy(WebElement baseWebElement, By by) {
+        try {
+            return baseWebElement.findElement(by);
+        } catch (Exception e) {
+            throw new AssertionError("Error locating element using parent tag:" + baseWebElement.getTagName(), e);
+        }
+    }
+
+    public static WebElement getLinkFrom(WebElement rootElement) {
+        // not the most robust way to get the link but dont want to put too many test attributes on the pages
+        return rootElement.findElement(By.cssSelector("a"));
     }
 }

@@ -1,4 +1,4 @@
-package com.gu.fronts.integration.test.page;
+package com.gu.fronts.integration.test.page.nwfront;
 
 import java.util.Date;
 

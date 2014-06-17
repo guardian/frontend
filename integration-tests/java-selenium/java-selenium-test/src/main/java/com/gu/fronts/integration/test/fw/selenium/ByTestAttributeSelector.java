@@ -17,8 +17,8 @@ public class ByTestAttributeSelector extends ByCssSelector {
     }
 
     public static String testAttributeCssSelector(String testAttributeValue) {
-        return new StringBuilder().append("[").append(ByTestAttributeSelector.TEST_ATTR_NAME).append("=")
-                .append(testAttributeValue).append("]").toString();
+        return new StringBuilder().append("[").append(TEST_ATTR_NAME).append("=").append(testAttributeValue)
+                .append("]").toString();
     }
 
     public static By create(final String testAttributeValue) {

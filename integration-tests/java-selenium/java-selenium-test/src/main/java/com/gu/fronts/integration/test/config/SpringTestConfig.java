@@ -10,16 +10,17 @@ import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.Point;
+import org.openqa.selenium.Proxy;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.ImportResource;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
@@ -34,17 +35,23 @@ public class SpringTestConfig {
     public WebDriver getFirefoxWebdriver() {
         DesiredCapabilities desiredCap = DesiredCapabilities.firefox();
         desiredCap.setCapability("applicationCacheEnabled", false);
-        return setGlobalWebdriverConf(new FirefoxDriver());
+        return setGlobalWebdriverConf(new FirefoxDriver(), desiredCap);
     }
 
-    private WebDriver setGlobalWebdriverConf(WebDriver webDriver) {
+    private WebDriver setGlobalWebdriverConf(WebDriver webDriver, DesiredCapabilities desiredCap) {
         webDriver.manage().window().setPosition(new Point(0, 0));
         webDriver.manage().window().setSize(new Dimension(1600, 1024));
         webDriver.manage().timeouts().implicitlyWait(10, SECONDS);
-        //configureScreenshot(webDriver);
+
+        String PROXY = "localhost:" + StaticPropertyLoader.getStubServerPort(7070);
+        Proxy proxy = new org.openqa.selenium.Proxy();
+        proxy.setHttpProxy(PROXY).setFtpProxy(PROXY).setSslProxy(PROXY).setSocksProxy(PROXY);
+        desiredCap.setCapability(CapabilityType.PROXY, proxy);
+
         return webDriver;
     }
 
+    // experimental
     private void configureScreenshot(WebDriver webDriver) {
         File scrFile = ((TakesScreenshot) webDriver).getScreenshotAs(OutputType.FILE);
         try {
@@ -66,7 +73,9 @@ public class SpringTestConfig {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--disable-application-cache");
         WebDriver webDriver = new ChromeDriver(options);
-        return setGlobalWebdriverConf(webDriver);
+        return setGlobalWebdriverConf(webDriver, new DesiredCapabilities());// use an empty desired capabilities until
+                                                                            // we figure out how to set both chrome
+                                                                            // options and desired caps
     }
 
     @Bean

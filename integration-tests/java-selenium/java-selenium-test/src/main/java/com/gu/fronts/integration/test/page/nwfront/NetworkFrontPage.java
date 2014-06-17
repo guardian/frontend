@@ -1,9 +1,10 @@
-package com.gu.fronts.integration.test.page;
+package com.gu.fronts.integration.test.page.nwfront;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import com.gu.fronts.integration.test.fw.selenium.FindByTestAttribute;
+import com.gu.fronts.integration.test.page.common.AllFaciaContainersPage;
 import com.gu.fronts.integration.test.page.util.AbstractParentPage;
 
 public class NetworkFrontPage extends AbstractParentPage {

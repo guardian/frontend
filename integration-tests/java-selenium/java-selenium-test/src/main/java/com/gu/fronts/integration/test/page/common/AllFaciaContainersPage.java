@@ -1,7 +1,4 @@
-package com.gu.fronts.integration.test.page;
-
-import static com.gu.fronts.integration.test.fw.selenium.ByTestAttributeSelector.testAttributeCssSelector;
-import static org.openqa.selenium.By.cssSelector;
+package com.gu.fronts.integration.test.page.common;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -18,13 +15,12 @@ public class AllFaciaContainersPage extends AbstractParentPage {
     }
 
     @Override
-    protected AllFaciaContainersPage isDisplayed() {
+    public AllFaciaContainersPage isDisplayed() {
         assertExists(allFaciaContainers);
         return this;
     }
 
-    public FaciaContainer containerWithTestAttributeId(String testId) {
-        return new FaciaContainer(webDriver, findElementBy(allFaciaContainers,
-                cssSelector(testAttributeCssSelector(testId))));
+    public FaciaContainer containerWithTestAttributeId(String testAttributeId) {
+        return pageFactory.initPage(webDriver, FaciaContainer.class, allFaciaContainers, testAttributeId);
     }
 }

@@ -1,4 +1,4 @@
-package com.gu.fronts.integration.test.page;
+package com.gu.fronts.integration.test.page.common;
 
 import static com.gu.fronts.integration.test.page.util.PageElementHelper.elementIsALink;
 import static java.lang.String.format;
@@ -8,6 +8,7 @@ import org.openqa.selenium.WebElement;
 
 import com.gu.fronts.integration.test.fw.selenium.ByTestAttributeSelector;
 import com.gu.fronts.integration.test.fw.selenium.FindByTestAttribute;
+import com.gu.fronts.integration.test.page.nwfront.NetworkFrontPage;
 import com.gu.fronts.integration.test.page.util.AbstractParentPage;
 
 public class Editions extends AbstractParentPage {

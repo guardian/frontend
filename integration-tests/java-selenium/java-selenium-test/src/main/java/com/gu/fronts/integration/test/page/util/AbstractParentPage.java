@@ -13,8 +13,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 
-import com.gu.fronts.integration.test.page.FooterPage;
-import com.gu.fronts.integration.test.page.HeaderPage;
+import com.gu.fronts.integration.test.page.common.FooterPage;
+import com.gu.fronts.integration.test.page.common.HeaderPage;
 
 /**
  * Super class for all page objects. Contains various utilities for loading pages, checking if elements are displayed
@@ -73,7 +73,7 @@ public abstract class AbstractParentPage {
      * Page Objects need to implement this class and then call {@link #assertExists(WebElement...)} with the elements
      * which need to be displayed for the page to load properly and can also, optionally, do some additional checks
      */
-    protected abstract Object isDisplayed();
+    public abstract Object isDisplayed();
 
     private String getErrorMessages(List<String> errors) {
         return StringUtils.join(errors, ",");
@@ -87,13 +87,4 @@ public abstract class AbstractParentPage {
             errors.add(e.getMessage());
         }
     }
-
-    protected WebElement findElementBy(WebElement baseWebElement, By by) {
-        try {
-            return baseWebElement.findElement(by);
-        } catch (Exception e) {
-            throw new AssertionError("Could not locate element on Page :" + this.getClass().getName(), e);
-        }
-    }
-
 }

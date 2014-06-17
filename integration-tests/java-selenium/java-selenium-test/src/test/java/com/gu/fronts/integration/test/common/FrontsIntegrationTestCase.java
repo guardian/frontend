@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 
 import com.gu.fronts.integration.test.config.EnvironmentConfigurer;
-import com.gu.fronts.integration.test.page.NetworkFrontPage;
+import com.gu.fronts.integration.test.page.nwfront.NetworkFrontPage;
 import com.gu.fronts.integration.test.page.util.CustomPageFactory;
 
 /**
