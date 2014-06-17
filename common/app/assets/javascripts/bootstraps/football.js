@@ -45,8 +45,8 @@ define([
             }
 
             if (callback) {
-                    callback(resp, $nav, matchInfo.endpoint);
-                } // The promise chain is broken as Reqwest doesn't allow for creating more than 1 argument.
+                callback(resp, $nav, matchInfo.endpoint);
+            } // The promise chain is broken as Reqwest doesn't allow for creating more than 1 argument.
         }, function() {
             $('.score-container', context).remove();
             $('.js-score', context).removeClass('u-h');
