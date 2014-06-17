@@ -892,16 +892,16 @@ module.exports = function (grunt) {
     grunt.registerTask('compile:fonts', ['mkdir:fontsTarget', 'webfontjson']);
     grunt.registerTask('compile:flash', ['copy:flash']);
     grunt.registerTask('compile:conf', ['copy:headCss', 'copy:vendor', 'copy:assetMap']);
-    grunt.registerTask('compile:videojs', ['shell:videojs', 'grunt:videojs', 'requirejs:video']);
+    grunt.registerTask('compile:videojs', ['shell:videojs', 'grunt:videojs']);
     
     grunt.registerTask('compile', function(app) {
         grunt.task.run([
             'compile:images',
             'compile:css',
+            'compile:videojs',
             'compile:js:' + (app || ''),
             'compile:fonts',
             'compile:flash',
-            'compile:videojs',
             'hash',
             'compile:conf'
         ]);
