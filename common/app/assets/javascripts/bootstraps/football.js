@@ -35,15 +35,19 @@ define([
     function renderNav(match, callback) {
         var matchInfo;
         return (matchInfo = new MatchInfo(match, config.page.pageId)).fetch().then(function(resp) {
-            var $nav = $.create(resp.nav).first().each(function(nav) {
-                if (match.id || $('.tabs__tab', nav).length > 2) {
-                    $('.js-football-tabs', context).append(nav);
-                }
-            });
+            var $nav;
+            if (resp.nav && resp.nav.trim().length > 0) {
+                $nav = $.create(resp.nav).first().each(function (nav) {
+                    if (match.id || $('.tabs__tab', nav).length > 2) {
+                        $('.js-football-tabs', context).append(nav);
+                    }
+                });
+
+            }
 
             if (callback) {
-                callback(resp, $nav, matchInfo.endpoint);
-            } // The promise chain is broken as Reqwest doesn't allow for creating more than 1 argument.
+                    callback(resp, $nav, matchInfo.endpoint);
+                } // The promise chain is broken as Reqwest doesn't allow for creating more than 1 argument.
         }, function() {
             $('.score-container', context).remove();
             $('.js-score', context).removeClass('u-h');
@@ -170,7 +174,7 @@ define([
                     }
 
                     // match stats
-                    if (resp.hasStarted) {
+                    if (resp.hasStarted && $nav) {
                         var statsUrl = $('.tab--stats a', $nav).attr('href').replace(/^.*\/\/[^\/]+/, '');
 
                         $.create('<div class="match-stats__container"></div>').each(function(container) {
