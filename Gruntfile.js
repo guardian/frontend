@@ -363,10 +363,7 @@ module.exports = function (grunt) {
             spriteGeneration: {
                 command: [
                     'cd tools/sprites/',
-                    'node spricon.js global-icon-config.json',
-                    'node spricon.js commercial-icon-config.json',
-                    'node spricon.js membership-icon-config.json',
-                    'node spricon.js video-icon-config.json'
+                    'find . -name \'*.json\' -exec node spricon.js {} \\;'
                 ].join('&&'),
                 options: {
                     stdout: true,
@@ -872,7 +869,6 @@ module.exports = function (grunt) {
     grunt.registerTask('compile:css', ['sass:compile', 'replace:cssSourceMaps', 'copy:css']);
     grunt.registerTask('compile:js', function(app) {
         var target = app ? ':' + app : '',
-        // run the javascript copy tasks
             copyTasks = Object.keys(grunt.config('copy'))
                 .filter(function(copyTask) {
                     return copyTask.indexOf('javascript') === 0;
