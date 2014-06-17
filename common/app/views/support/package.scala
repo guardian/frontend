@@ -1,7 +1,7 @@
 package views.support
 
 import common._
-import conf.Switches.{ ShowAllArticleEmbedsSwitch, TagLinkingSwitch, FeaturesAutoContainerSwitch }
+import conf.Switches.{ ShowAllArticleEmbedsSwitch, TagLinkingSwitch }
 import model._
 
 import java.net.URLEncoder._
@@ -100,6 +100,11 @@ case class SeriesContainer(showMore: Boolean = true) extends Container {
   val containerType = "series"
   val tone = "news"
 }
+case class MostReferredContainer(showMore: Boolean = true) extends Container {
+  val containerType = "most-referred"
+  val tone = "news"
+}
+
 
 /**
  * Encapsulates previous and next urls

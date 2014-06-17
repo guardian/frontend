@@ -3,43 +3,51 @@ package dfp
 import common.ExecutionContexts
 import play.api.libs.json.Json._
 import scala.concurrent.future
-import play.api.libs.json._
 import tools.Store
+import play.api.libs.json.{Json, JsValue, Writes}
 
 object DfpDataCacheJob extends ExecutionContexts {
 
+
   private implicit val targetWrites = new Writes[Target] {
-    def writes(target: Target) = Json.obj(
-      "name" -> target.name,
-      "op" -> target.op,
-      "values" -> target.values
-    )
+    def writes(target: Target): JsValue = {
+      Json.obj(
+        "name" -> target.name,
+        "op" -> target.op,
+        "values" -> target.values
+      )
+    }
   }
 
   private implicit val targetSetWrites = new Writes[TargetSet] {
-    def writes(targetSet: TargetSet) = Json.obj(
-      "op" -> targetSet.op,
-      "targets" -> targetSet.targets
-    )
+    def writes(targetSet: TargetSet): JsValue = {
+      Json.obj(
+        "op" -> targetSet.op,
+        "targets" -> targetSet.targets
+      )
+    }
   }
 
-  private implicit val lineItemWrites = new Writes[LineItem] {
-    def writes(lineItem: LineItem) = Json.obj(
-      "id" -> lineItem.id,
-      "targetSets" -> lineItem.targetSets
-    )
-  }
-
-  private implicit val dfpDataWrites = new Writes[DfpData] {
-    def writes(data: DfpData) = Json.obj("lineItems" -> data.lineItems)
+  private implicit val adWrites = new Writes[LineItem] {
+    def writes(lineItem: LineItem ): JsValue = {
+      Json.obj(
+        "id" -> lineItem.id,
+        "targetSets" -> lineItem.targetSets
+      )
+    }
   }
 
   def run() {
     future {
-      val lineItems = DfpApi.fetchCurrentLineItems()
-      if (lineItems.nonEmpty) {
-        val dfpData = DfpData(lineItems)
-        Store.putDfpData(stringify(toJson(dfpData)))
+      val dfpLineItems = DfpApi.getAllCurrentDfpLineItems()
+      if (dfpLineItems.nonEmpty) {
+        val lineItems = DfpApi.hydrateWithUsefulValues(dfpLineItems)
+        Store.putDfpSponsoredTags(stringify(toJson(DfpApi.filterOutSponsoredTagsFrom(lineItems))))
+        Store.putDfpAdvertisementFeatureTags(stringify(toJson(DfpApi.filterOutAdvertisementFeatureTagsFrom(lineItems))))
+
+        Store.putDfpPageSkinAdUnits(stringify(toJson(DfpApi.fetchAdUnitsThatAreTargettedByPageSkins(dfpLineItems))))
+
+        Store.putDfpLineItemsReport(stringify(toJson(lineItems)))
       }
     }
   }

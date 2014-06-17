@@ -1,10 +1,9 @@
 package views.support
 
-import model.{ImageContainer, ImageAsset}
-import conf.Switches.{ImageServerSwitch}
+import model.{Content, MetaData, ImageContainer, ImageAsset}
+import conf.Switches.{ImageServerSwitch, ParameterlessImagesSwitch, SeoOptimisedContentImageSwitch}
 import java.net.URI
 import conf.Configuration
-import play.api.templates.Html
 
 case class Profile(width: Option[Int] = None, height: Option[Int] = None, compression: Int = 95) {
 
@@ -24,9 +23,12 @@ case class Profile(width: Option[Int] = None, height: Option[Int] = None, compre
   def altTextFor(image: ImageContainer): Option[String] =
     elementFor(image).flatMap(_.altText)
 
-  val resizeString = s"width=${toResizeString(width)}&height=${toResizeString(height)}&quality=$compression"
+  def resizeString = if (ParameterlessImagesSwitch.isSwitchedOn) {
+    s"/w-${toResizeString(width)}/h-${toResizeString(height)}/q-$compression"
+  } else {
+    s"width=${toResizeString(width)}&height=${toResizeString(height)}&quality=$compression"
+  }
 
-  private def toThirdPartyResizeString(size: Option[Int]) = size.map(_.toString).getOrElse("*")
   private def toResizeString(i: Option[Int]) = i.map(_.toString).getOrElse("-")
 }
 
@@ -78,13 +80,21 @@ object ImgSrc {
     val isSupportedImage = uri.getHost == "static.guim.co.uk" && !uri.getPath.toLowerCase.endsWith(".gif")
 
     if (ImageServerSwitch.isSwitchedOn && isSupportedImage)
-      s"$imageHost${uri.getPath}?${imageType.resizeString}"
+      if (ParameterlessImagesSwitch.isSwitchedOn) {
+        s"$imageHost${imageType.resizeString}${uri.getPath}"
+      } else {
+        s"$imageHost${uri.getPath}?${imageType.resizeString}"
+      }
     else
       url
   }
 
   object Imager extends Profile(None, None) {
-    override val resizeString = s"width={width}&height=-&quality=$compression"
+    override def resizeString = if (ParameterlessImagesSwitch.isSwitchedOn) {
+      "/w-{width}/h--/q-95"
+    } else {
+      s"width={width}&height=-&quality=$compression"
+    }
   }
 
   // always, and I mean ALWAYS think carefully about the size image you use
@@ -97,10 +107,27 @@ object ImgSrc {
   def imager(imageContainer: ImageContainer, maxWidth: Int): Option[String] = {
     // get largest profile closest to the width
     val sortedProfiles: Seq[Profile] = Profile.all.filter(_.height == None).sortBy(_.width)
-    sortedProfiles.filter(_.width.getOrElse(0) >= maxWidth).headOption.orElse(sortedProfiles.reverse.headOption).flatMap{ profile =>
+    sortedProfiles.find(_.width.getOrElse(0) >= maxWidth).orElse(sortedProfiles.reverse.headOption).flatMap{ profile =>
       imager(imageContainer, profile)
     }
   }
 
+}
+
+object SeoThumbnail {
+  def apply(metadata: MetaData): Option[String] = metadata match {
+    case content: Content => content.thumbnail.flatMap(Item620.bestFor)
+    case _ => None
+  }
+}
+
+object SeoOptimisedContentImage extends Profile(width = Some(460)) {
+  override def bestFor(image: ImageContainer): Option[String] = if (SeoOptimisedContentImageSwitch.isSwitchedOn){
+    elementFor(image).filter(i => this.width.exists(_ == i.width)).flatMap(_.url).orElse(
+      super.bestFor(image)
+    )
+  } else {
+    super.bestFor(image)
+  }
 }
 

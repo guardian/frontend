@@ -1,5 +1,9 @@
 $c-commercial-comp-neutral: #edede7;
 $comercial-comp-baseline: 10px;
+$commercial-cta-diameter: ((
+    mobile: 20px,
+    tablet: 32px,
+));
 
 .l-footer {
     margin-top: 0 !important;
@@ -216,6 +220,7 @@ $comercial-comp-baseline: 10px;
     ));
     @include fs-textsans(2);
     border: 0;
+    @include border-radius(0); // Prevent rounded corners in iOS
     float: left;
     overflow: hidden;
 
@@ -262,6 +267,7 @@ $comercial-comp-baseline: 10px;
     border-bottom: 1px solid $c-neutral4;
 }
 .lineitem {
+    list-style-type: none;
     @include box-sizing(border-box);
     position: relative;
     padding: 0;
@@ -501,37 +507,32 @@ $comercial-comp-baseline: 10px;
 }
 
 .commercial__home-link {
-    $cta-diameter: ((
-        mobile: 20px,
-        tablet: 32px,
-    ));
-
     position: relative;
     display: inline-block;
-    padding-left: map-get($cta-diameter, mobile)+5;
+    padding-left: map-get($commercial-cta-diameter, mobile)+5;
     @include f-bodyHeading;
-    @include font-size(14, map-get($cta-diameter, tablet));
+    @include font-size(14, map-get($commercial-cta-diameter, tablet));
 
     @include mq(tablet) {
-        padding-left: map-get($cta-diameter, tablet)+5;
+        padding-left: map-get($commercial-cta-diameter, tablet)+5;
     }
     .commercial__home-link__cta {
         position: absolute;
         top: 50%;
         left: 0;
-        width: map-get($cta-diameter, mobile);
-        height: map-get($cta-diameter, mobile);
+        width: map-get($commercial-cta-diameter, mobile);
+        height: map-get($commercial-cta-diameter, mobile);
         @include rem((
-            margin-top: -(map-get($cta-diameter, mobile)/2)-1
+            margin-top: -(map-get($commercial-cta-diameter, mobile)/2)-1
         ));
         background-position: center;
         background-color: $c-newsDefault;
         @include border-radius(50%);
         @include mq(tablet) {
-            width: map-get($cta-diameter, tablet);
-            height: map-get($cta-diameter, tablet);
+            width: map-get($commercial-cta-diameter, tablet);
+            height: map-get($commercial-cta-diameter, tablet);
             @include rem((
-                margin-top: -(map-get($cta-diameter, tablet)/2)
+                margin-top: -(map-get($commercial-cta-diameter, tablet)/2)
             ));
         }
     }

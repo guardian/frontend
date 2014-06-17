@@ -1,6 +1,6 @@
-@(env: String, identity: Option[Identity])
+@(env: String, priority: String, identity: Option[Identity])
 
-@admin_main("Fronts editor", env, isAuthed = true, identity) {
+@admin_main("config", env, Some(priority), isAuthed = true, identity) {
 
 <div style="display: none;" data-bind="
     visible: true,
@@ -26,10 +26,11 @@
     </div>
 
     <script type="text/html" id="template_minimal_collection">
+      <!-- ko if: state.withinPriority -->
         <div class="cnf-collection">
             <a class="cnf-collection__name" data-bind="
                 click: toggleOpen,
-                attr: {href: id, title: id},
+                attr: {href: '/' + id, title: id},
                 text: meta.displayName() || '(no title)'"></a>
 
             <span class="placements">
@@ -41,6 +42,7 @@
                 </span>
             </span>
         </div>
+      <!-- /ko -->
     </script>
 
     <script type="text/html" id="template_collection">
@@ -53,7 +55,7 @@
 
             <a class="cnf-collection__name" data-bind="
                 click: toggleOpen,
-                attr: {href: id, title: id},
+                attr: {href: '/' + id, title: id},
                 text: meta.displayName() || '(no title)'"></a>
 
             <span class="placements" data-bind="
@@ -136,6 +138,7 @@
     </script>
 
     <script type="text/html" id="template_front">
+      <!-- ko if: state.withinPriority -->
         <div class="cnf-front" data-bind="
             css: {open: state.isOpen}">
 
@@ -146,12 +149,6 @@
 
             <!-- ko if: !id() -->
                 <div class="cnf-front__inner cnf-form">
-                    <label>Type</label>
-                    <input type="radio" name="group01" data-bind="checkedValue: undefined, checked: props.priority" />
-                    <span class="radio-label">editorial</span>
-                    <input type="radio" name="group01" value="commercial" data-bind="checked: props.priority" />
-                    <span class="radio-label">commercial</span>
-
                     <label>URL path</label>
                     <input type="text" placeholder="eg. world/middleeast" data-bind="value: id"/>
 
@@ -205,7 +202,7 @@
                         <!-- ko if: !state.isOpenProps() -->
                             <span class="linky" data-bind="click: openProps">Edit metadata</span>
                             &middot;
-                            <a data-bind="attr: {href: '/?front=' + id()}">content</a>
+                            <a data-bind="attr: {href: '/@{priority}?front=' + id()}">content</a>
                         <!-- /ko -->
                     </div>
 
@@ -223,6 +220,7 @@
            </div>
 
         </div>
+      <!-- /ko -->
     </script>
 
 </div>

@@ -209,6 +209,11 @@ $c-commercial-books-dark: #630d4c;
         }
     }
     &.commercial--high {
+        .highitem__details {
+            .lineitem__link {
+                width: 100%;
+            }
+        }
         .commercial__relevance-low {
             .lineitem__img {
                 @include rem((

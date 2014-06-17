@@ -17,20 +17,25 @@ object DfpApiWrapper extends Logging {
   private def customTargetingService(session: DfpSession): CustomTargetingServiceInterface =
     dfpServices.get(session, classOf[CustomTargetingServiceInterface])
 
+  private def inventoryService(session: DfpSession): InventoryServiceInterface =
+    dfpServices.get(session, classOf[InventoryServiceInterface])
+
   def fetchLineItems(session: DfpSession, statementBuilder: StatementBuilder): Seq[DfpApiLineItem] = {
 
     val service = lineItemService(session)
+    statementBuilder.limit(StatementBuilder.SUGGESTED_PAGE_LIMIT)
 
     def fetch(soFar: Seq[DfpApiLineItem]): Seq[DfpApiLineItem] = {
       val page = service.getLineItemsByStatement(statementBuilder.toStatement)
       val pageResults = Option(page.getResults) map (_.toSeq) getOrElse Nil
       val totalResultSetSize = page.getTotalResultSetSize
+      val resultsSoFar = soFar ++ pageResults
 
-      if (Option(statementBuilder.getOffset) exists (_ > totalResultSetSize)) {
-        soFar
-      } else {
+      if (resultsSoFar.size < totalResultSetSize) {
         statementBuilder.increaseOffsetBy(StatementBuilder.SUGGESTED_PAGE_LIMIT)
-        fetch(soFar ++ pageResults)
+        fetch(resultsSoFar)
+      } else {
+        resultsSoFar
       }
     }
 
@@ -46,17 +51,19 @@ object DfpApiWrapper extends Logging {
   def fetchCustomTargetingKeys(session: DfpSession, statementBuilder: StatementBuilder): Seq[CustomTargetingKey] = {
 
     val service = customTargetingService(session)
+    statementBuilder.limit(StatementBuilder.SUGGESTED_PAGE_LIMIT)
 
     def fetch(soFar: Seq[CustomTargetingKey]): Seq[CustomTargetingKey] = {
       val page = service.getCustomTargetingKeysByStatement(statementBuilder.toStatement)
       val pageResults = Option(page.getResults) map (_.toSeq) getOrElse Nil
       val totalResultSetSize = page.getTotalResultSetSize
+      val resultsSoFar = soFar ++ pageResults
 
-      if (Option(statementBuilder.getOffset) exists (_ > totalResultSetSize)) {
-        soFar
-      } else {
+      if (resultsSoFar.size < totalResultSetSize) {
         statementBuilder.increaseOffsetBy(StatementBuilder.SUGGESTED_PAGE_LIMIT)
-        fetch(soFar ++ pageResults)
+        fetch(resultsSoFar)
+      } else {
+        resultsSoFar
       }
     }
 
@@ -72,17 +79,19 @@ object DfpApiWrapper extends Logging {
   def fetchCustomTargetingValues(session: DfpSession, statementBuilder: StatementBuilder): Seq[CustomTargetingValue] = {
 
     val service = customTargetingService(session)
+    statementBuilder.limit(StatementBuilder.SUGGESTED_PAGE_LIMIT)
 
     def fetch(soFar: Seq[CustomTargetingValue]): Seq[CustomTargetingValue] = {
       val page = service.getCustomTargetingValuesByStatement(statementBuilder.toStatement)
       val pageResults = Option(page.getResults) map (_.toSeq) getOrElse Nil
       val totalResultSetSize = page.getTotalResultSetSize
+      val resultsSoFar = soFar ++ pageResults
 
-      if (Option(statementBuilder.getOffset) exists (_ > totalResultSetSize)) {
-        soFar
-      } else {
+      if (resultsSoFar.size < totalResultSetSize) {
         statementBuilder.increaseOffsetBy(StatementBuilder.SUGGESTED_PAGE_LIMIT)
-        fetch(soFar ++ pageResults)
+        fetch(resultsSoFar)
+      } else {
+        resultsSoFar
       }
     }
 
@@ -91,6 +100,35 @@ object DfpApiWrapper extends Logging {
     } catch {
       case e: Exception =>
         log.error(s"Exception fetching custom targeting values: $e")
+        Nil
+    }
+  }
+
+
+
+  def fetchAdUnitTargetingObjects(session: DfpSession, statementBuilder: StatementBuilder): Seq[AdUnit] = {
+    val service = inventoryService(session)
+    statementBuilder.limit(StatementBuilder.SUGGESTED_PAGE_LIMIT)
+
+    def fetch(soFar: Seq[AdUnit]): Seq[AdUnit] = {
+      val page = service.getAdUnitsByStatement(statementBuilder.toStatement)
+      val pageResults = Option(page.getResults) map (_.toSeq) getOrElse Nil
+      val totalResultSetSize = page.getTotalResultSetSize
+      val resultsSoFar = soFar ++ pageResults
+
+      if (resultsSoFar.size < totalResultSetSize) {
+        statementBuilder.increaseOffsetBy(StatementBuilder.SUGGESTED_PAGE_LIMIT)
+        fetch(resultsSoFar)
+      } else {
+        resultsSoFar
+      }
+    }
+
+    try {
+      fetch(Nil)
+    } catch {
+      case e: Exception =>
+        log.error(s"Exception fetching custom ad units: $e")
         Nil
     }
   }
