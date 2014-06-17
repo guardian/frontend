@@ -17,7 +17,7 @@ trait DfpAgent {
   protected def advertisementFeatureTags: Seq[String]
   protected def pageskinnedAdUnits: Seq[String]
 
-  private def lastPart(keywordId: String): String =  keywordId.split('/').takeRight(1)(0)
+  private def lastPart(keywordId: String): String =  keywordId.split('/').last
 
   private def containerSponsoredTags(config: Config, p: String => Boolean): Option[String] = {
     config.contentApiQuery.flatMap { encodedQuery =>
@@ -31,16 +31,11 @@ trait DfpAgent {
     containerSponsoredTags(config, p).isDefined
   }
 
-  def isSponsored(content: Content): Boolean = isSponsored(content.keywords ++ content.series)
-  def isSponsored(section: Section): Boolean = isSponsored(section.id)
   def isSponsored(tags: Seq[Tag]): Boolean = tags.exists(keyword => isSponsored(keyword.id))
   def isSponsored(tagId: String): Boolean = sponsoredTags contains lastPart(tagId)
   def isSponsored(config: Config): Boolean = isSponsoredContainer(config, isSponsored)
 
-  def isAdvertisementFeature(content: Content): Boolean = isAdvertisementFeature(content.keywords ++ content.series)
-  def isAdvertisementFeature(section: Section): Boolean = isAdvertisementFeature(section.id)
-  def isAdvertisementFeature(tags: Seq[Tag]): Boolean =
-    tags.exists(keyword => isAdvertisementFeature(keyword.id))
+  def isAdvertisementFeature(tags: Seq[Tag]): Boolean = tags.exists(keyword => isAdvertisementFeature(keyword.id))
   def isAdvertisementFeature(tagId: String): Boolean = advertisementFeatureTags contains lastPart(tagId)
   def isAdvertisementFeature(config: Config): Boolean = isSponsoredContainer(config, isAdvertisementFeature)
 

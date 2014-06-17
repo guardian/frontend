@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>ads Test Suite</title>
+  <!-- Load local video.js -->
+  <link rel="stylesheet" href="../node_modules/video.js/dist/video-js.min.css" media="screen">
+  <script src="../node_modules/video.js/dist/video-js/video.js"></script>
+  <!-- Load local QUnit. -->
+  <link rel="stylesheet" href="../libs/qunit/qunit.css" media="screen">
+  <script src="../libs/qunit/qunit.js"></script>
+  <!-- Load local lib and tests. -->
+  <script src="../src/videojs.ads.js"></script>
+  <script src="videojs.ads.test.js"></script>
+</head>
+<body>
+  <div id="qunit"></div>
+  <div id="qunit-fixture">
+    <video src="http://vjs.zencdn.net/v/oceans.mp4" controls></video>
+  </div>
+</body>
+</html>

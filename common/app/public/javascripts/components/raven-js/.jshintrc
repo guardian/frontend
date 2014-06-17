@@ -1,0 +1,8 @@
+{
+    "globalstrict": true,
+    "browser": true,
+    "predef": [
+        "TraceKit",
+        "console"
+    ]
+}

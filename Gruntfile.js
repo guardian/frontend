@@ -53,9 +53,8 @@ module.exports = function (grunt) {
                     imager:       '../../../../common/app/assets/javascripts/components/imager.js/src/strategies/container',
                     omniture:     '../../../../common/app/assets/javascripts/components/omniture/omniture',
                     fence:        '../../../../common/app/assets/javascripts/components/fence/fence',
-                    enhancer:     '../../../../common/app/assets/javascripts/components/enhancer/enhancer',
-                    'ophan/ng':   'empty:',
-                    googletag:    'empty:'
+                    enhancer:     '../../../../common/app/assets/javascripts/components/enhancer/enhancer'
+
                 },
                 optimize: 'uglify2',
                 generateSourceMaps: true,
@@ -116,6 +115,37 @@ module.exports = function (grunt) {
                             exports: 's'
                         }
                     }
+                }
+            },
+            video : {
+                options: {
+                    baseUrl: 'common/app/assets/javascripts',
+                    name: 'bootstraps/video-player',
+                    out: staticTargetDir + 'javascripts/bootstraps/video-player.js',
+                    paths: {
+                        vast: '../../../../common/app/public/javascripts/vendor/vast-client',
+                        videojs: 'components/videojs/dist/video-js/video',
+                        videojsads: 'components/videojs-contrib-ads/src/videojs.ads',
+                        videojsvast: 'components/videojs-vast/videojs.vast'
+                    },
+                    shim: {
+                        vast: {
+                            exports: 'DMVAST'
+                        },
+                        videojs: {
+                            exports: 'videojs'
+                        },
+                        videojsads: {
+                            deps: ['videojs']
+                        },
+                        videojsvast :{
+                             deps: ['vast', 'videojs']
+                        }
+                    },
+                    wrapShim: true,
+                    optimize: 'none',
+                    generateSourceMaps: true,
+                    preserveLicenseComments: false
                 }
             }
         },
@@ -333,9 +363,7 @@ module.exports = function (grunt) {
             spriteGeneration: {
                 command: [
                     'cd tools/sprites/',
-                    'node spricon.js global-icon-config.json',
-                    'node spricon.js commercial-icon-config.json',
-                    'node spricon.js membership-icon-config.json'
+                    'find . -name \'*.json\' -exec node spricon.js {} \\;'
                 ].join('&&'),
                 options: {
                     stdout: true,
@@ -363,6 +391,18 @@ module.exports = function (grunt) {
                     stdout: true,
                     stderr: true,
                     failOnError: true
+                }
+            },
+
+            videojs: {
+                command: 'npm install',
+                options: {
+                    stdout: true,
+                    stderr: true,
+                    failOnError: true,
+                    execOptions: {
+                        cwd: 'common/app/assets/javascripts/components/videojs'
+                    }
                 }
             }
         },
@@ -772,6 +812,12 @@ module.exports = function (grunt) {
                     }
                 ]
             }
+        },
+
+        grunt: {
+            videojs: {
+                gruntfile: 'common/app/assets/javascripts/components/videojs/Gruntfile.js'
+            }
         }
     });
 
@@ -797,6 +843,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-asset-monitor');
     grunt.loadNpmTasks('grunt-text-replace');
     grunt.loadNpmTasks('grunt-reloadlet');
+    grunt.loadNpmTasks('grunt-grunt');
     grunt.loadNpmTasks('grunt-pagespeed');
 
     // Default task
@@ -822,7 +869,6 @@ module.exports = function (grunt) {
     grunt.registerTask('compile:css', ['sass:compile', 'replace:cssSourceMaps', 'copy:css']);
     grunt.registerTask('compile:js', function(app) {
         var target = app ? ':' + app : '',
-            // run the javascript copy tasks
             copyTasks = Object.keys(grunt.config('copy'))
                 .filter(function(copyTask) {
                     return copyTask.indexOf('javascript') === 0;
@@ -846,10 +892,13 @@ module.exports = function (grunt) {
     grunt.registerTask('compile:fonts', ['mkdir:fontsTarget', 'webfontjson']);
     grunt.registerTask('compile:flash', ['copy:flash']);
     grunt.registerTask('compile:conf', ['copy:headCss', 'copy:vendor', 'copy:assetMap']);
+    grunt.registerTask('compile:videojs', ['shell:videojs', 'grunt:videojs']);
+    
     grunt.registerTask('compile', function(app) {
         grunt.task.run([
             'compile:images',
             'compile:css',
+            'compile:videojs',
             'compile:js:' + (app || ''),
             'compile:fonts',
             'compile:flash',
