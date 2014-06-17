@@ -546,7 +546,6 @@ define([
             }
             modules.showToggles();
             modules.showRelativeDates();
-            modules.loadVideoAdverts(config);
             modules.initClickstream();
             modules.transcludeCommentCounts();
             modules.initLightboxGalleries();
