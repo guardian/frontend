@@ -156,7 +156,7 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
             PressCommand(
               updatedCollections.keySet,
               live = shouldUpdateLive,
-              draft = shouldUpdateLive || update.exists(_._2.draft)
+              draft = (updatedCollections.values.exists(_.draft.isEmpty) && shouldUpdateLive) || update.exists(_._2.draft)
             )
 
           pressCollectionIds(pressCommand)
