@@ -1,4 +1,4 @@
-package com.gu.fronts.integration.test.features;
+package com.gu.fronts.integration.test.journeys;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.getRequestedFor;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlMatching;
