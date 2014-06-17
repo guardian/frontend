@@ -150,13 +150,13 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
               UpdateActions.updateCollectionFilter(updateList.id, updateList, identity).map(updateList.id -> _)
           }.flatten.toMap
 
-          val l = update.exists(_._2.live)
+          val shouldUpdateLive: Boolean = update.exists(_._2.live)
 
           val pressCommand: PressCommand =
             PressCommand(
               updatedCollections.keySet,
-              live = l,
-              draft = l || update.exists(_._2.draft)
+              live = shouldUpdateLive,
+              draft = shouldUpdateLive || update.exists(_._2.draft)
             )
 
           pressCollectionIds(pressCommand)
