@@ -254,6 +254,8 @@ CommentBox.prototype.error = function(type, message) {
 CommentBox.prototype.postCommentSuccess = function(comment, resp) {
     comment.id = parseInt(resp.message, 10);
     this.getElem('body').value = '';
+    this.removeState('preview-visible');
+    this.getElem('preview-body').innerHTML = '';
     this.setFormState();
     this.emit('post:success', comment);
     this.mediator.emit('discussion:commentbox:post:success', comment);
@@ -306,12 +308,15 @@ CommentBox.prototype.setFormState = function(disabled) {
     disabled = typeof disabled === 'boolean' ? disabled : false;
 
     var commentBody = this.getElem('body'),
-        submitButton = this.getElem('submit');
+        submitButton = this.getElem('submit'),
+        previewSubmitButton = this.getElem('preview-submit');
 
     if (disabled || commentBody.value.length === 0) {
         submitButton.setAttribute('disabled', 'disabled');
+        previewSubmitButton.setAttribute('disabled', 'disabled');
     } else {
         submitButton.removeAttribute('disabled');
+        previewSubmitButton.removeAttribute('disabled');
     }
 };
 
