@@ -289,7 +289,7 @@ object Switches extends Collections {
     safeState = On, sellByDate = new DateMidnight(2014, 6, 30)
   )
 
-  val NewNavSwitch = Switch("Feature Switches", "new-navigation",
+  val NewNavigationSwitch = Switch("Feature Switches", "new-navigation",
     "If this switch is turned on then the new navigation will be displayed on mobiles and tablets",
     safeState = Off, sellByDate = new DateMidnight(2014, 7, 8)
   )
@@ -468,7 +468,7 @@ object Switches extends Collections {
     FaciaToolContainerTagsSwitch,
     RssLinkSwitch,
     EnhanceTweetsSwitch,
-    NewNavSwitch,
+    NewNavigationSwitch,
     WorldCupWallchartEmbedSwitch,
     WorldCupArticleContainerSwitch,
     IndiaRegionSwitch,

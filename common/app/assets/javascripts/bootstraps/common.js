@@ -23,7 +23,7 @@ define([
     'common/modules/ui/images',
     'common/modules/navigation/profile',
     'common/modules/navigation/sections',
-    'common/modules/navigation/newNav',
+    'common/modules/navigation/newNavigation',
     'common/modules/navigation/search',
     'common/modules/ui/tabs',
     'common/modules/ui/toggles',
@@ -81,7 +81,7 @@ define([
     images,
     Profile,
     Sections,
-    NewNav,
+    NewNavigation,
     Search,
 
     Tabs,
@@ -146,7 +146,7 @@ define([
         },
 
         initialiseNewNavigation: function (config) {
-            NewNav.init(config);
+            NewNavigation.init(config);
         },
 
         transcludeRelated: function (config, context) {

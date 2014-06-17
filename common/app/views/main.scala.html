@@ -32,11 +32,7 @@
             @fragments.commercial.topBannerMobile()
         }
 
-        @if(NewNavSwitch.isSwitchedOn){
-            <div class="localnav--small">
-                @fragments.nav.newNav(metaData)
-            </div>
-        } else {
+        @if(NewNavigationSwitch.isSwitchedOff){
             @fragments.localNav(metaData)
         }
 
