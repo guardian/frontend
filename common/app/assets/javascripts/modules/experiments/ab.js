@@ -3,7 +3,6 @@ define([
     'common/utils/storage',
     'common/utils/mediator',
     'common/modules/analytics/mvt-cookie',
-    'common/modules/experiments/tests/high-relevance-commercial-component',
     'common/modules/experiments/tests/hide-supporting-links',
     'common/modules/experiments/tests/across-the-guardian',
     'common/modules/experiments/tests/display-socially-referred-burners',
@@ -13,7 +12,6 @@ define([
     store,
     mediator,
     mvtCookie,
-    ABHighRelevanceCommercialComponent,
     ABHideSupportingLinks,
     ABAcrossTheGuardian,
     ABSociallyReferredContent,
@@ -21,7 +19,6 @@ define([
     ) {
 
     var TESTS = [
-            new ABHighRelevanceCommercialComponent(),
             new ABHideSupportingLinks(),
             new ABAcrossTheGuardian(),
             new ABSociallyReferredContent(),
