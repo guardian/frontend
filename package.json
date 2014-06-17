@@ -23,7 +23,7 @@
     "karma-coffee-preprocessor": "~0.1.0",
     "karma": "~0.10.4",
     "phantomjs": "~1.9.1",
-    "svgo": "~0.4.1",
+    "svgo": "0.4.3",
     "mkdirp": "~0.3.5",
     "esprima": "~1.0.4",
     "grunt-contrib-imagemin": "^0.7.0",
