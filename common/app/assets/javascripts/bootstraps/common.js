@@ -23,7 +23,7 @@ define([
     'common/modules/ui/images',
     'common/modules/navigation/profile',
     'common/modules/navigation/sections',
-    'common/modules/navigation/newNav',
+    'common/modules/navigation/newNavigation',
     'common/modules/navigation/search',
     'common/modules/ui/tabs',
     'common/modules/ui/toggles',
@@ -36,7 +36,6 @@ define([
     'common/modules/analytics/omnitureMedia',
     'common/modules/analytics/livestats',
     'common/modules/experiments/ab',
-    'common/modules/adverts/video',
     'common/modules/discussion/comment-count',
     'common/modules/gallery/lightbox',
     'common/modules/onward/history',
@@ -81,7 +80,7 @@ define([
     images,
     Profile,
     Sections,
-    NewNav,
+    NewNavigation,
     Search,
 
     Tabs,
@@ -95,7 +94,6 @@ define([
     OmnitureMedia,
     liveStats,
     ab,
-    VideoAdvert,
     CommentCount,
     LightboxGallery,
     History,
@@ -146,7 +144,7 @@ define([
         },
 
         initialiseNewNavigation: function (config) {
-            NewNav.init(config);
+            NewNavigation.init(config);
         },
 
         transcludeRelated: function (config, context) {
@@ -250,10 +248,7 @@ define([
                 Array.prototype.forEach.call(context.getElementsByTagName('video'), function(video){
                     if (!bonzo(video).hasClass('tracking-applied')) {
                         bonzo(video).addClass('tracking-applied');
-                        new OmnitureMedia({
-                            el: video,
-                            config: config
-                        }).init();
+                        new OmnitureMedia(video).init();
                     }
                 });
             });
@@ -310,24 +305,6 @@ define([
                 }
                 dfp.init(extend(config, options));
             }
-        },
-
-        loadVideoAdverts: function() {
-            mediator.on('page:common:ready', function(config, context) {
-                if (config.switches.videoAdverts && !config.page.blockVideoAds) {
-                    Array.prototype.forEach.call(context.querySelectorAll('video'), function(el) {
-                        var support = detect.getVideoFormatSupport();
-                        new VideoAdvert({
-                            el: el,
-                            support: support,
-                            config: config,
-                            context: context
-                        }).init(config.page);
-                    });
-                } else {
-                    mediator.emit('video:ads:finished', config, context);
-                }
-            });
         },
 
         cleanupCookies: function() {
@@ -569,7 +546,6 @@ define([
             }
             modules.showToggles();
             modules.showRelativeDates();
-            modules.loadVideoAdverts(config);
             modules.initClickstream();
             modules.transcludeCommentCounts();
             modules.initLightboxGalleries();

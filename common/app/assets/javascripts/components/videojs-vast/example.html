@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Video.js VAST Example</title>
+
+  <link href="http://vjs.zencdn.net/4.4.3/video-js.css" rel="stylesheet">
+  <link href="lib/videojs-contrib-ads/video.ads.css" rel="stylesheet" type="text/css">
+  <link href="videojs.vast.css" rel="stylesheet" type="text/css">
+
+  <style type="text/css">
+    #vid1 {
+      width: 75%;
+    }
+  </style>
+
+  <script src="http://vjs.zencdn.net/4.4.3/video.js"></script>
+  <script src="lib/videojs-contrib-ads/video.ads.js"></script>
+
+  <script src="lib/vast-client.js"></script>
+  <script src="videojs.vast.js"></script>
+</head>
+<body>
+  <p style="background-color:#eee; border: 1px solid #777; padding: 10px; font-size: .8em; line-height: 1.5em; font-family: Verdana, sans-serif;">This page shows you how to create, register and initialize a Video.js plugin.</p>
+
+  <video id="vid1" class="video-js vjs-default-skin" autoplay controls preload="auto"
+      poster="http://video-js.zencoder.com/oceans-clip.png"
+      data-setup='{}'
+      width='640'
+      height='400'
+      >
+    <source src="http://video-js.zencoder.com/oceans-clip.mp4" type='video/mp4'>
+    <source src="http://video-js.zencoder.com/oceans-clip.webm" type='video/webm'>
+    <source src="http://video-js.zencoder.com/oceans-clip.ogv" type='video/ogg'>
+    <p>Video Playback Not Supported</p>
+  </video>
+
+  <script>
+    var vid1 = videojs('vid1');
+
+    vid1.ads();
+    vid1.vast({
+      url: 'http://ad3.liverail.com/?LR_PUBLISHER_ID=1331&LR_CAMPAIGN_ID=229&LR_SCHEMA=vast2'
+    });
+  </script>
+
+</body>
+</html>

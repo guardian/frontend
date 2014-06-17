@@ -29,7 +29,7 @@ object MemcachedFallback extends ExecutionContexts with Dates with Logging {
     memcached <- connectToMemcached(host).toOption
   } yield memcached
 
-  private def memcached = maybeMemcached.filter(_ => MemcachedSwitch.isSwitchedOn && !Play.isTest)
+  private def memcached = maybeMemcached.filter(_ => MemcachedFallbackSwitch.isSwitchedOn && !Play.isTest)
 
   /** If the Future successfully completes, stores its value in Memcached for the cache duration. If the Future fails,
     * attempts to fallback to the value cached in Memcached.
@@ -39,7 +39,7 @@ object MemcachedFallback extends ExecutionContexts with Dates with Logging {
     cacheTime: FiniteDuration
   )(f: Future[A]): Future[A] = {
     f onSuccess {
-      case a => memcached foreach { _.set(key, a, cacheTime) }
+      case a => memcached foreach { m => try { m.set(key, a, cacheTime) } catch { case e: Exception => log.warn(e.toString)} }
     }
     
     f recoverWith {

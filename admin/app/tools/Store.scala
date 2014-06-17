@@ -4,6 +4,7 @@ import common.Logging
 import conf.AdminConfiguration
 import conf.Configuration.commercial.{dfpAdvertisementFeatureTagsDataKey, dfpSponsoredTagsDataKey, dfpPageSkinnedAdUnitsKey, dfpLineItemsKey}
 import services.S3
+import play.api.libs.json.Json
 
 trait Store extends Logging {
   lazy val configKey = AdminConfiguration.configKey
@@ -35,6 +36,11 @@ trait Store extends Logging {
   def putDfpLineItemsReport(everything: String) {
     S3.putPublic(dfpLineItemsKey, everything, defaultJsonEncoding)
   }
+
+  def getDfpSponsoredTags() = S3.get(dfpSponsoredTagsDataKey)
+  def getDfpAdvertisementTags() = S3.get(dfpAdvertisementFeatureTagsDataKey)
+  def getDfpPageSkinnedAdUnits() = S3.get(dfpPageSkinnedAdUnitsKey)
+  def getDfpLineItemsReport() = S3.get(dfpLineItemsKey)
 }
 
 object Store extends Store

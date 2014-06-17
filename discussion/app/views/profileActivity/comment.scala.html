@@ -15,7 +15,9 @@
     </div>
 
     @comment.responseTo.map{ responseTo =>
-        <a class="disc-comment__view-discussion" href="@comment.discussion.webUrl#comment-@responseTo.commentId">
+        <a data-comment-id="@comment.id"
+           class="disc-comment__view-discussion js-comment-permalink"
+           href="@comment.discussion.webUrl">
             In response to @responseTo.displayName
         </a>
     }
@@ -26,7 +28,9 @@
         )
     </div>
 
-    <a class="disc-comment__view-discussion" href="@comment.discussion.webUrl#comment-@comment.id">
+    <a data-comment-id="@comment.id"
+       class="disc-comment__view-discussion js-comment-permalink"
+       href="@comment.discussion.webUrl">
         View discussion
     </a>
 </div>

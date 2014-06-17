@@ -50,8 +50,14 @@ object Switches extends Collections {
 
   // Load Switches
 
-  val MemcachedSwitch = Switch("Performance Switches", "memcached",
+  val MemcachedSwitch = Switch("Performance Switches", "memcached-action",
     "If this switch is switched on then the MemcacheAction will be operational",
+    safeState = On,
+    sellByDate = never
+  )
+
+  val MemcachedFallbackSwitch = Switch("Performance Switches", "memcached-fallback",
+    "If this switch is switched on then the MemcachedFallback will be operational",
     safeState = Off,
     sellByDate = never
   )
@@ -289,7 +295,7 @@ object Switches extends Collections {
     safeState = On, sellByDate = new DateMidnight(2014, 6, 30)
   )
 
-  val NewNavSwitch = Switch("Feature Switches", "new-navigation",
+  val NewNavigationSwitch = Switch("Feature Switches", "new-navigation",
     "If this switch is turned on then the new navigation will be displayed on mobiles and tablets",
     safeState = Off, sellByDate = new DateMidnight(2014, 7, 8)
   )
@@ -390,6 +396,16 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
+  val FaciaToolCachedContentApiSwitch = Switch("Front Press Switches", "facia-tool-cached-capi-requests",
+    "If this switch is on facia tool will cache responses from the content API and use them on failure",
+    safeState = On, sellByDate = never
+  )
+
+  val FaciaToolCachedZippingContentApiSwitch = Switch("Front Press Switches", "facia-tool-zipcached-capi-requests",
+    "If this switch is on facia tool will zip cache responses from the content API and use them on failure",
+    safeState = On, sellByDate = never
+  )
+
   // Front Press Switches
   val FrontPressJobSwitch = Switch("Front Press Switches", "front-press-job-switch",
     "If this switch is on then the jobs to push and pull from SQS will run",
@@ -468,11 +484,12 @@ object Switches extends Collections {
     FaciaToolContainerTagsSwitch,
     RssLinkSwitch,
     EnhanceTweetsSwitch,
-    NewNavSwitch,
+    NewNavigationSwitch,
     WorldCupWallchartEmbedSwitch,
     WorldCupArticleContainerSwitch,
     IndiaRegionSwitch,
     MemcachedSwitch,
+    MemcachedFallbackSwitch,
     IncludeBuildNumberInMemcachedKey,
     GeoMostPopular,
     TagLinkingSwitch,
@@ -484,7 +501,9 @@ object Switches extends Collections {
     SurveyBannerSwitch,
     ParameterlessImagesSwitch,
     FreshnessLoggingSwitch,
-    SeoOptimisedContentImageSwitch
+    SeoOptimisedContentImageSwitch,
+    FaciaToolCachedContentApiSwitch,
+    FaciaToolCachedZippingContentApiSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
