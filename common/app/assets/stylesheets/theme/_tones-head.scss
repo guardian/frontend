@@ -91,15 +91,14 @@
                 bottom: 0;
                 height: 95%;
                 @include rem((
-                    right: gs-span(3)
+                    right: gs-span(3),
+                    max-height: gs-height(4) + ($gs-baseline*2)
                 ));
             }
             @include mq(tablet) {
                 height: 95%;
                 @include rem((
-                    right: gs-span(3),
-                    min-height: gs-span(2) + ($gs-gutter*2),
-                    max-height: gs-height(4) + ($gs-baseline*2)
+                    min-height: gs-span(2) + ($gs-gutter*2)
                 ));
             }
             @include mq(rightCol) {

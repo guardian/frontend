@@ -1,0 +1,9 @@
+{
+    "src": "../../common/app/assets/images/video/",
+    "imgDest": "../../static/target/images/video",
+    "cssDest": "../../common/app/assets/stylesheets/icons/",
+    "datasvgcss" : "_video-icons-svg.scss",
+    "urlpngcss" : "_video-icons-sprite.scss",
+    "spritepath" : "../images/video/",
+    "svg" : true
+}
