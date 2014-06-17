@@ -27,7 +27,6 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 @Configuration
 @ComponentScan({ "com.gu.fronts.integration" })
 @PropertySource(value = { "classpath:${" + ENVIRONMENT_KEY + "}-config.properties" })
-@ImportResource("classpath:spring-app-context.xml")
 public class SpringTestConfig {
 
     @Bean(name = "firefox", destroyMethod = "quit")
@@ -40,15 +39,19 @@ public class SpringTestConfig {
 
     private WebDriver setGlobalWebdriverConf(WebDriver webDriver) {
         webDriver.manage().window().setPosition(new Point(0, 0));
-        webDriver.manage().window().setSize(new Dimension(1280, 1024));
+        webDriver.manage().window().setSize(new Dimension(1600, 1024));
         webDriver.manage().timeouts().implicitlyWait(10, SECONDS);
+        //configureScreenshot(webDriver);
+        return webDriver;
+    }
+
+    private void configureScreenshot(WebDriver webDriver) {
         File scrFile = ((TakesScreenshot) webDriver).getScreenshotAs(OutputType.FILE);
         try {
             FileUtils.copyFile(scrFile, new File("/tmp/selenium_screenshot.png"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        return webDriver;
     }
 
     /**
