@@ -52,13 +52,13 @@ object Switches extends Collections {
 
   val MemcachedSwitch = Switch("Performance Switches", "memcached-action",
     "If this switch is switched on then the MemcacheAction will be operational",
-    safeState = Off,
+    safeState = On,
     sellByDate = never
   )
 
   val MemcachedFallbackSwitch = Switch("Performance Switches", "memcached-fallback",
     "If this switch is switched on then the MemcachedFallback will be operational",
-    safeState = On,
+    safeState = Off,
     sellByDate = never
   )
 
