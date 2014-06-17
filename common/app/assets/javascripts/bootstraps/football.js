@@ -42,7 +42,6 @@ define([
                         $('.js-football-tabs', context).append(nav);
                     }
                 });
-
             }
 
             if (callback) {
