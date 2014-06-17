@@ -261,6 +261,7 @@ Comments.prototype.unPickComment = function(commentId, $thisButton) {
  */
 Comments.prototype.gotoComment = function(id) {
     var comment = $('#comment-'+ id, this.elem);
+
     if (comment.length > 0) {
         window.location.replace('#comment-'+ id);
         return;
@@ -304,10 +305,11 @@ Comments.prototype.changePage = function(e) {
  * }
  */
 Comments.prototype.fetchComments = function(options) {
-    var url =
-        '/discussion/' + this.options.order + this.options.discussionId + '.json?' +
-        (options.page ? '&page=' + options.page : '') +
-        '&maxResponses=3';
+    var url = '/discussion/'+
+        (options.comment ? 'comment-permalink/' : '')+
+        this.options.order +'/'+
+        (options.comment ? options.comment : this.options.discussionId)+
+        '.json?'+ (options.page ? '&page=' + options.page : '') +'&maxResponses=3';
 
     return ajax({
         url: url,
@@ -603,7 +605,7 @@ Comments.prototype.reportComment = function(e) {
             DiscussionApi.reportComment(commentId, {
                 emailAddress: form.elements.email.value,
                 categoryId: category.value,
-                reason: comment === '' ? category.options[category.selectedIndex].innerHTML : comment
+                reason: comment
             });
 
             bonzo(form).addClass('u-h');

@@ -1,0 +1,11 @@
+{
+  "name": "guss-colours",
+  "version": "1.0.0",
+  "main": [
+    "_colours.scss",
+    "_helpers.scss"
+  ],
+  "ignore": [
+    "CHANGELOG.md"
+  ]
+}

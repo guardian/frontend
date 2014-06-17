@@ -14,7 +14,7 @@ import implicits.{ItemResponses, Dates}
 object AllIndexController extends Controller with ExecutionContexts with ItemResponses with Dates with Logging {
 
   // no need to set the zone here, it gets it from the date.
-  private val dateFormat = DateTimeFormat.forPattern("yyyy/MMM/dd")
+  private val dateFormat = DateTimeFormat.forPattern("yyyy/MMM/dd").withZone(Edition.defaultEdition.timezone)
 
   def newer(path: String, day: String, month: String, year: String) = Action.async{ implicit request =>
     val edition = Edition(request)
