@@ -28,11 +28,20 @@ $vjs-control-colour: rgba(25, 25, 25, .8);
 
 .vjs-tech {
     cursor: pointer;
+
+    .vjs-fullscreen & {
+        cursor: none;
+    }
+
+    .vjs-fullscreen.vjs-mousemoved & {
+        cursor: pointer;
+    }
 }
 
 .gu-video { // aspect ratio fix (this element gets given a fixed height by video.js)
     width: auto !important;
     height: auto !important;
+    cursor: pointer;
 }
 
 .vjs-big-play-button {
@@ -43,12 +52,13 @@ $vjs-control-colour: rgba(25, 25, 25, .8);
         margin-top: -55px, // = - height/2 - controlheight/2 = - 62/2-48/2 =  -31-24 = -55
         margin-left: -31px
     ));
-
     cursor: pointer;
     @include icon(play-60-transparent);
+
     .gu-video-wrapper:hover & {
         @include icon(play-60-yellow);
     }
+
     .vjs-playing &,
     .vjs-has-started.vjs-using-native-controls & {
         display: none !important;
@@ -59,6 +69,8 @@ $vjs-control-colour: rgba(25, 25, 25, .8);
    ========================================================================== */
 
 .vjs-control-bar {
+    cursor: default;
+    display: none;
     width: 100%;
     position: absolute;
     left: 0;
@@ -68,16 +80,25 @@ $vjs-control-colour: rgba(25, 25, 25, .8);
     font-weight: bold;
     @include rem((
         height: $gs-baseline*4,
-        bottom: $gs-baseline*-4
+        bottom: $gs-baseline*-5
     ));
-    @include transition(bottom .5s);
-    transition-delay: 1s;
+    @include transition(bottom .8s);
+    transition-delay: .2s;
 
-    .gu-video-wrapper:hover &,
+    .vjs-fullscreen & {
+        transition-delay: .5s;
+    }
+
+    .gu-video-wrapper:hover .vjs-playing:not(.vjs-fullscreen) &,
+    .gu-video-wrapper:hover .vjs-fullscreen.vjs-mousemoved &,
     .vjs-paused & {
         bottom: 0;
         @include transition(bottom 0s);
         transition-delay: 0s;
+    }
+
+    .vjs-has-started & {
+        display: block;
     }
 
     .vjs-using-native-controls & {
@@ -391,8 +412,8 @@ $vjs-progress-inset-bottom: 4px;
         top: ($height + $gs-baseline) * -1
     ));
     left: 0;
-    @include transition(top .5s);
-    transition-delay: 1s;
+    @include transition(top .8s);
+    transition-delay: .2s;
 
     .gu-video-wrapper:hover &,
     .vjs-paused & {
@@ -408,6 +429,11 @@ $vjs-progress-inset-bottom: 4px;
     position: absolute;
     left: 0;
     top: 0;
+    display: none;
+
+    .vjs-playing & {
+        display: block;
+    }
 }
 
 .vast-skip-button {

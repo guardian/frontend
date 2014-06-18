@@ -755,7 +755,7 @@ module.exports = function (grunt) {
         watch: {
             js: {
                 // using watch event to just compile changed project
-                files: ['*/app/{assets, public}/javascripts/**/*.js'],
+                files: ['*/app/{assets, public}/javascripts/**/*.js', '!**/components/**'],
                 options: {
                     spawn: false
                 }
