@@ -7,6 +7,10 @@
         display: none;
     }
 }
+
+/**
+ * Banner ads
+ */
 .top-banner-ad-container--mobile {
     background-color: #f0f0f0;
 
@@ -118,46 +122,22 @@
         }
     }
 }
+
+/**
+ * Inline ads
+ */
+.ad-slot--inline,
 .ad-slot--container-inline {
-    height: 50 + $mpu-ad-label-height;
-    @include rem((
-        margin: $gs-baseline 0 $gs-baseline/2,
-    ));
+    min-height: 50 + $mpu-ad-label-height;
 
     @include mq(mobileLandscape) {
-        height: 50px;
-    }
-    @include mq(tablet) {
-        position: absolute;
-        top: 1px;
-        right: 0;
-        height: 250 + $mpu-ad-label-height;
-        margin: 0;
-        background-color: $c-neutral8;
-    }
-}
-.ad-slot--inline {
-    height: 50 + $mpu-ad-label-height;
-    @include rem((
-        margin-bottom: $gs-baseline
-    ));
-
-    @include mq(mobileLandscape) {
-        height: 50px;
+        min-height: 50px;
     }
     @include mq(tablet) {
         height: 250px + $mpu-ad-label-height;
-        float: right;
-        @include rem((
-            margin-top: $gs-baseline/3,
-            margin-left: $gs-gutter
-        ))
     }
-}
-.ad-slot--inline,
-.ad-slot--container-inline {
     .ad-slot__label {
-        max-width: 300px;
+        width: 300px;
         margin: 0 auto;
 
         @include mq(mobileLandscape, tablet) {
@@ -173,6 +153,32 @@
         }
     }
 }
+.ad-slot--container-inline {
+    @include rem((
+        margin: $gs-baseline 0 $gs-baseline/2,
+    ));
+
+    @include mq(tablet) {
+        position: absolute;
+        top: 1px;
+        right: 0;
+        margin: 0;
+        background-color: $c-neutral8;
+    }
+}
+.ad-slot--inline {
+    @include rem((
+        margin-bottom: $gs-baseline
+    ));
+
+    @include mq(tablet) {
+        float: right;
+        @include rem((
+            margin-top: $gs-baseline/3,
+            margin-left: $gs-gutter
+        ))
+    }
+}
 .ad-slot--mpu-banner-ad {
     display: none;
     min-height: 250 + $mpu-ad-label-height;
@@ -184,6 +190,7 @@
         display: block;
     }
 }
+
 /**
  * Commercial Components
  */
@@ -211,6 +218,7 @@
         display: block;
     }
 }
+
 /**
  * Badges
  */
@@ -374,6 +382,7 @@
         }
     }
 }
+
 /**
  * Page Skins
  */
