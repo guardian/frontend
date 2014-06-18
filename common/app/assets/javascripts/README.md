@@ -20,6 +20,8 @@ We use [Bower](https://github.com/twitter/bower) to handle our JS dependencies. 
  * Listing the dependencies and their versions
  
     $ bower list
+
+NOTE: We've removed qwery from out bower.json, as we wan't it locked to a 3.x version (4.x doesn't support IE8)
     
     
 ## Analaytics and ad tags
