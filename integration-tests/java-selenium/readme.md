@@ -10,3 +10,5 @@ The goals are as following:
 * The tests should run fast. That is both subjective and relative as Selenium based tests can never be as fast as API tests. That is why there should be a limited number of tests which should test a journey rather than just a specific function or UI element.
 
 To achieve this goal the following architecture is proposed. For sake of simplicity all Frontend apps are simply called Fronts.
+
+![alt tag](https://raw.githubusercontent.com/guardian/frontend/java-selenium-test/integration-tests/java-selenium/docs/Fronts%20testing%20overview.png)
