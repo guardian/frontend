@@ -1,0 +1,14 @@
+{
+  "name": "bean",
+  "homepage": "https://github.com/fat/bean",
+  "version": "1.0.14",
+  "_release": "1.0.14",
+  "_resolution": {
+    "type": "version",
+    "tag": "v1.0.14",
+    "commit": "08754b94d64f5ff418f1a31e81712aa448a541e8"
+  },
+  "_source": "git://github.com/fat/bean.git",
+  "_target": "~1.0.4",
+  "_originalSource": "bean"
+}
