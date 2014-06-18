@@ -10,6 +10,7 @@ import conf.Configuration
 import play.api.Play
 import Play.current
 import scala.util.Try
+import common.FaciaToolMetrics.ContentApiFallbacks
 
 object MemcachedFallback extends ExecutionContexts with Dates with Logging {
   private def connectToMemcached(host: String) = {
@@ -47,6 +48,7 @@ object MemcachedFallback extends ExecutionContexts with Dates with Logging {
         (memcached map { _.get[A](key) map {
             case None => throw error
             case Some(a) =>
+              ContentApiFallbacks.increment()
               log.logger.warn(s"Used Memcached value for $key to recover from Content API error", error)
               a
         }
