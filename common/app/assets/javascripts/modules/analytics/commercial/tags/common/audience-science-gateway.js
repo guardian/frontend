@@ -20,10 +20,10 @@ define([
         load = once(function() {
             if (config.switches.audienceScience) {
                 var placements = sectionPlacements[config.page.section] || sectionPlacements['default'],
-                    query = [
-                            ['placementIdList', placements.join(',')],
-                            ['cb', new Date().getTime()]
-                        ].map(function(queryPart) { return queryPart.join('='); }).join('&'),
+                    query = urlUtil.constructQuery({
+                            placementIdList: placements.join(','),
+                            cb: new Date().getTime()
+                        }),
                     url = [gatewayUrl, '?', query].join('');
 
                 return require(['js!' + url + '!exports=asiPlacements'])
