@@ -45,9 +45,8 @@ object MoreOnMatchController extends Controller with Football with Requests with
         case _ => None
       }.getOrElse("")
 
-      related map { _ filter hasExactlyTwoTeams } map {
-        case Nil => Cached(300){JsonNotFound()}
-        case filtered => Cached(if(theMatch.isLive) 10 else 300) {
+      related map { _ filter hasExactlyTwoTeams } map { filtered =>
+        Cached(if(theMatch.isLive) 10 else 300) {
           JsonComponent(
             "nav" -> football.views.html.fragments.matchNav(populateNavModel(theMatch, filtered)),
             "matchSummary" -> football.views.html.fragments.matchSummary(theMatch, Competitions().competitionForMatch(theMatch.id), responsive = true),
@@ -135,9 +134,9 @@ object MoreOnMatchController extends Controller with Football with Requests with
 
   private def fetchRelatedMatchContent(theMatch: FootballMatch, related: Seq[Content]): (Option[Trail], Option[Trail], Option[Trail], Trail) = {
     val matchDate = theMatch.date.toDateMidnight
-    val matchReport = related.find { c => c.webPublicationDate >= matchDate && c.matchReport && !c.minByMin && !c.preview }
-    val minByMin = related.find { c => c.webPublicationDate.toDateMidnight == matchDate && c.matchReport && c.minByMin && !c.preview }
-    val preview = related.find { c => c.webPublicationDate <= matchDate && (c.preview || c.squadSheet) && !c.matchReport && !c.minByMin }
+    val matchReport = related.find { c => c.webPublicationDate.withZone(DateTimeZone.forID("Europe/London")) >= matchDate && c.matchReport && !c.minByMin && !c.preview }
+    val minByMin = related.find { c => c.webPublicationDate.withZone(DateTimeZone.forID("Europe/London")).toDateMidnight == matchDate && c.matchReport && c.minByMin && !c.preview }
+    val preview = related.find { c => c.webPublicationDate.withZone(DateTimeZone.forID("Europe/London")) <= matchDate && (c.preview || c.squadSheet) && !c.matchReport && !c.minByMin }
     val stats: Trail = theMatch
     (matchReport, minByMin, preview, stats)
   }
