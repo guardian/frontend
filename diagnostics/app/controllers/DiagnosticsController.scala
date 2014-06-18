@@ -5,7 +5,6 @@ import play.api.mvc.{ Content => _, _ }
 import model.diagnostics.javascript.JavaScript
 import model.diagnostics.abtests.AbTests
 import model.diagnostics.analytics.Analytics
-import model.diagnostics.ads.Ads
 
 object DiagnosticsController extends Controller with Logging {
 
@@ -16,11 +15,6 @@ object DiagnosticsController extends Controller with Logging {
 
   def ab = Action { implicit request =>
     AbTests.report(request.queryString)
-    OnePix()
-  }
-
-  def ads = Action { implicit request =>
-    Ads.report(request)
     OnePix()
   }
 
