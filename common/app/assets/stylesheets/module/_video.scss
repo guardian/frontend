@@ -201,7 +201,7 @@ $vjs-progress-inset-bottom: 4px;
         content: '';
         display: block;
         width: 100%;
-        background-color: $c-neutral7;
+        background-color: #000000;
     }
 }
 .vjs-load-progress,
@@ -224,7 +224,7 @@ $vjs-progress-inset-bottom: 4px;
 }
 
 .vjs-load-progress {
-    background-color: $c-neutral3;
+    background-color: #999999;
     z-index: 1;
 }
 
@@ -233,11 +233,6 @@ $vjs-progress-inset-bottom: 4px;
     z-index: 2;
 }
 
-.vjs-seek-handle {
-    background-color: #ffffff;
-    z-index: 3;
-    width: 1px;
-}
 
 /* VJS: VOLUME BAR
    ========================================================================== */
