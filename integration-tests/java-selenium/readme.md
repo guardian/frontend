@@ -21,16 +21,16 @@ How to run
 ===========
 
 Prerequisites
-=============
-Java 7
-Maven 3 (might work with Maven 2)
-Firefox 26+
-OS: Should work in Windows, Linux and Mac OS, assuming other prerequities are met)
+-------------
+* Java 7
+* Maven 3 (might work with Maven 2)
+* Firefox 26+
+* OS - Should work in Windows 7, Linux Ubuntu/Mint and Mac OS, assuming other prerequities are met)
 
 Before running the tests, the fronts application needs to be successfully started, for example by executing (from frontend root): 
-'''
+```
 ./sbt 'project dev-build' start 
-'''
+```
 
 Also you need to make sure that your /etc/gu/install_vars is pointing to TEST (STAGE=TEST)
 
@@ -38,8 +38,8 @@ Also you need to make sure that your /etc/gu/install_vars is pointing to TEST (S
 It has been tested on Linux Mint 17, Open JDK 7, Maven 3 and Firefox 26.
 
 Running the tests
-=================
+-----------------
 Simple change to the root of this module and execute
-'''
+```
 mvn clean verify
-'''
+```
