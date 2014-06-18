@@ -447,14 +447,6 @@ module.exports = function (grunt) {
                 files: [
                     {
                         expand: true,
-                        cwd: 'admin/public/javascripts',
-                        src: [
-                            'components/bootstrap.css/js/bootstrap.min.js'
-                        ],
-                        dest: staticTargetDir + 'javascripts'
-                    },
-                    {
-                        expand: true,
                         cwd: 'common/app/assets/javascripts',
                         src: 'components/curl/dist/curl-with-js-and-domReady/curl.js',
                         dest: staticTargetDir + 'javascripts'
@@ -543,7 +535,11 @@ module.exports = function (grunt) {
                 files: [{
                     expand: true,
                     cwd: staticTargetDir + 'javascripts',
-                    src: ['**/*.js', '!bootstraps/**/*.js', '!**/raven-js/**/*', '**/raven-js/dist/*.js'],
+                    src: [
+                        '**/*.js',
+                        '!components/curl/**/*.js',
+                        '!components/zxcvbn/**/*.js'
+                    ],
                     dest: staticTargetDir + 'javascripts'
                 }]
             }
