@@ -32,7 +32,7 @@ Before running the tests, the fronts application needs to be successfully starte
 ./sbt 'project dev-build' start 
 ```
 
-Also you need to make sure that your /etc/gu/install_vars is pointing to TEST (STAGE=TEST)
+Also you need to make sure that your /etc/gu/install_vars has the value STAGE=TEST
 
 
 It has been tested on Linux Mint 17, Open JDK 7, Maven 3 and Firefox 26.
