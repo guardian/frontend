@@ -3,12 +3,14 @@ define([
     'vast',
     'videojs',
     'videojsads',
-    'videojsvast'
+    'videojsvast',
+    'videojspersistvolume'
 ], function(
     vast,
     videojs,
     videojsads,
-    videojsvast
+    videojsvast,
+    videojspersistvolume
 ) {
 
     return;

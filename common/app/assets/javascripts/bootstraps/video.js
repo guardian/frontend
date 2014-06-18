@@ -177,6 +177,14 @@ define([
                         }, 500);
                     });
 
+                    // unglitching the volume on first load
+                    var vol = vjs.volume();
+                    if (vol) {
+                        vjs.volume(0);
+                        vjs.volume(vol);
+                    }
+
+                    vjs.persistvolume({namespace: 'gu.vjs'});
                 });
             });
         }
