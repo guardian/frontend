@@ -153,6 +153,20 @@ define([
                         });
                     });
 
+                    // built in vjs-user-active is buggy so using custom implementation
+                    var timeout;
+                    vjs.on('mousemove', function() {
+                        if (timeout) {
+                            clearTimeout(timeout);
+                        } else {
+                            vjs.addClass('vjs-mousemoved');
+                        }
+                        timeout = setTimeout(function() {
+                            vjs.removeClass('vjs-mousemoved');
+                            timeout = false;
+                        }, 500);
+                    });
+
                 });
             });
         }
