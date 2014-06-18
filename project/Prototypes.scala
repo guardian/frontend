@@ -69,20 +69,18 @@ trait Prototypes {
     // Use ScalaTest https://groups.google.com/d/topic/play-framework/rZBfNoGtC0M/discussion
     testOptions in Test := Nil,
 
-    // APP_SECRET system property not passed to forked?
-    sbt.Keys.fork in Test := false,
-
-    concurrentRestrictions in Global := Seq(Tags.limitAll(1)),
+    concurrentRestrictions in Global += Tags.limit(Tags.Test, 1),
 
     // Copy unit test resources https://groups.google.com/d/topic/play-framework/XD3X6R-s5Mc/discussion
     unmanagedClasspath in Test <+= (baseDirectory) map { bd => Attributed.blank(bd / "test") },
 
     libraryDependencies ++= Seq(
-      "org.scalatest" %% "scalatest" % "2.0.RC1" % "test",
+      "org.scalatest" %% "scalatest" % "2.2.0" % "test",
       "org.mockito" % "mockito-all" % "1.9.5" % "test"
     ),
 
-    (javaOptions in test) += "-DAPP_SECRET=secret"
+    javaOptions in Test += "-DAPP_SECRET=secret",
+    baseDirectory in Test := file(".")
   )
 
   def root() = Project("root", base = file("."))
