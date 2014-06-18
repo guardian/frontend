@@ -1,0 +1,13 @@
+{
+  "name": "omniture",
+  "homepage": "https://github.com/guardian/omniture",
+  "_release": "df8f4a30aa",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "df8f4a30aacfc186325ef53307811b45a9a28a15"
+  },
+  "_source": "git://github.com/guardian/omniture.git",
+  "_target": "*",
+  "_originalSource": "guardian/omniture"
+}
