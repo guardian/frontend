@@ -508,7 +508,8 @@ object Switches extends Collections {
     FreshnessLoggingSwitch,
     SeoOptimisedContentImageSwitch,
     FaciaToolCachedContentApiSwitch,
-    FaciaToolCachedZippingContentApiSwitch
+    FaciaToolCachedZippingContentApiSwitch,
+    FaciaToolDraftPressSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
