@@ -8,12 +8,12 @@ define([
     'common/modules/identity/membership/masker',
     'stripe',
     'common/utils/ajax',
-], function ($, bean, userUtil, masker, stripe, ajax) {
+    'common/utils/config'
+], function ($, bean, userUtil, masker, stripe, ajax, config) {
     'use strict';
 
-    var PUBLIC_STRIPE_KEY = 'pk_test_Qm3CGRdrV4WfGYCpm0sftR0f';
-
     function StripePaymentForm () {
+        this.PUBLIC_STRIPE_KEY = config.page.stripePublicToken;
         return this;
     }
 
@@ -303,7 +303,7 @@ define([
 
             this.addListeners();
 
-            stripe.setPublishableKey(PUBLIC_STRIPE_KEY);
+            stripe.setPublishableKey(this.PUBLIC_STRIPE_KEY);
         }
     };
 

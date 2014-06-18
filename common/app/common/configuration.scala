@@ -143,6 +143,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val apiClientToken = configuration.getStringProperty("id.apiClientToken").getOrElse("")
     lazy val webappUrl = configuration.getStringProperty("id.webapp.url").getOrElse("")
     lazy val membershipUrl = configuration.getStringProperty("id.membership.url").getOrElse("membership.theguardian.com")
+    lazy val stripePublicToken =  configuration.getStringProperty("id.membership.stripePublicToken").getOrElse("")
   }
 
   object static {
@@ -230,7 +231,8 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
       "discussionApiClientHeader" -> discussion.apiClientHeader,
       ("ophanJsUrl", ophan.jsLocation),
       ("googletagJsUrl", googletag.jsLocation),
-      ("membershipUrl", id.membershipUrl)
+      ("membershipUrl", id.membershipUrl),
+      ("stripePublicToken", id.stripePublicToken)
     )
 
     lazy val pageData: Map[String, String] = {

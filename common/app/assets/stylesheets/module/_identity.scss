@@ -461,10 +461,10 @@
         max-height: 0;
         opacity: 0;
     }
+}
 
-    .membership-tab__updated {
-        @include animation(updated 5s 1s ease-in-out forwards);
-    }
+.membership-tab__updated {
+    @include animation(updated 1s ease-in-out forwards);
 }
 
 /* Membership Keyframe animations

@@ -115,7 +115,8 @@ define(['common/$',
             self.getElem('NEXT').innerHTML = self.formatDate(new Date(resp.subscription.end*1000));
             self.getElem('CC_LAST4').innerHTML = resp.subscription.card.last4;
 
-            $(self.getElem('CC_TYPE')).addClass('i-'+resp.subscription.card.type.toLowerCase().replace(' ', '-'));
+            self.currentCardTypeClass = 'i-'+resp.subscription.card.type.toLowerCase().replace(' ', '-');
+            $(self.getElem('CC_TYPE')).addClass(self.currentCardTypeClass);
             self.getElem('CC_TYPE_TEXT').innerHTML = resp.subscription.card.type; // Append text too for screen readers
 
             self.ready();
@@ -170,6 +171,9 @@ define(['common/$',
 
                     // update cc last4 with new details
                     $(self.getElem('CC_LAST4')).text(resp.last4);
+                    $(self.getElem('CC_TYPE')).removeClass(self.currentCardTypeClass);
+                    self.currentCardTypeClass = 'i-'+resp.cardType.toLowerCase().replace(' ', '-');
+                    $(self.getElem('CC_TYPE')).addClass(self.currentCardTypeClass);
                     $(self.getElem('CC_NUM')).addClass('membership-tab__updated');
                     // append a success message
                     self.appendSuccessMessage(self.options.messages.CHANGE_CC_SUCCESS);
