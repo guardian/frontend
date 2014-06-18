@@ -20,8 +20,8 @@ class ElemMatchTest extends FunSuite with Matchers {
   }
 
   test("should fail to craete ElemMatch with no filters") {
-    evaluating {
+    an [IllegalArgumentException] should be thrownBy {
       ElemMatch("arrayPath", Nil)
-    } should produce[IllegalArgumentException]
+    }
   }
 }

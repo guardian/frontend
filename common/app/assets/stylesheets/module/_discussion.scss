@@ -1277,17 +1277,18 @@ $avatarSize: 44px;
         ));
     }
     .d-comment-box--preview-visible & {
-      display: block;
+        display: block;
     }
 }
 
 .d-comment-box__formatting-controls {
-    float: right;
-    display: none;
     @include rem((
         margin-top: - ($gs-gutter / 2)
     ));
-    @include mq($from: desktop) {
+    display: none;
+    float: right;
+
+    @include mq(tablet) {
         .d-comment-box--expanded &,
         .d-comment-box--response & {
             display: inline-block;

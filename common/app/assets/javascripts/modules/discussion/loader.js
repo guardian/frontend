@@ -202,11 +202,11 @@ Loader.prototype.initUnthreaded = function() {
     // Non threaded view
     var $discussionContainer = $('.js-discussion-container', this.elem),
         $nonThreadedContainer = $('.js-discussion__non-threaded', this.elem),
-        $loader = $('.d-discussion__loader--comments', this.elem);
+        $loader = $('.d-discussion__loader--comments', this.elem),
+        $state = $('.discussion__show-threaded-state', this.elem);
 
     this.on('click', '.js-show-threaded', function(e) {
-        var $el = bonzo(e.currentTarget),
-            $state = $('.discussion__show-threaded-state', $el[0]);
+        var $el = bonzo(e.currentTarget);
 
         $state.toggleClass('u-h');
         $nonThreadedContainer.toggleClass('u-h');
@@ -230,6 +230,7 @@ Loader.prototype.initUnthreaded = function() {
         var promise = self.comments.gotoComment(e.currentTarget.getAttribute('data-comment-id'));
         e.preventDefault();
         $nonThreadedContainer.addClass('u-h');
+        $state.removeClass('u-h');
         self.comments.showHiddenComments();
 
         if (promise) {

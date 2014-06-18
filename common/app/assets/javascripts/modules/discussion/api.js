@@ -75,7 +75,7 @@ Api.postComment = function(discussionId, comment) {
 Api.previewComment = function(comment) {
    var endpoint = '/comment/preview';
    return Api.send(endpoint, 'post', comment);
-}
+};
 
 /**
  * @param {number} id the comment ID

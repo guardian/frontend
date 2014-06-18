@@ -337,6 +337,11 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 6, 27)
   )
 
+  val ABLargerMobileMpu = Switch("A/B Tests", "ab-larger-mobile-mpu",
+    "If this switch is turned on, run the LargerMobileMpu A/B test",
+    safeState = Off, sellByDate = new DateMidnight(2014, 7, 1)
+  )
+
   // Dummy Switches
 
   val IntegrationTestSwitch = Switch("Unwired Test Switch", "integration-test-switch",
@@ -502,6 +507,7 @@ object Switches extends Collections {
     ABAcrossTheGuardian,
     ABDisplaySociallyReferredBurners,
     ABSentry,
+    ABLargerMobileMpu,
     SmartBannerSwitch,
     SurveyBannerSwitch,
     ParameterlessImagesSwitch,

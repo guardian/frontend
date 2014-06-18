@@ -26,7 +26,7 @@
                                         }
 
                                         @* remaining sub sections *@
-                                        @localNav.links.filter(_.href != currentSublink.map(_.href).getOrElse("")).map{ link =>
+                                        @Navigation.rotateByOmittingCurrent(localNav, currentSublink).map{ link =>
                                             <li class="local-navigation__child"><a class="local-navigation__action" href="@link.href">@Html(link.title)</a></li>
                                         }
                                     }
