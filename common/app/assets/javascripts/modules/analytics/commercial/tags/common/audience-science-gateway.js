@@ -1,9 +1,11 @@
 define([
     'lodash/functions/once',
-    'common/utils/config'
+    'common/utils/config',
+    'common/utils/url'
 ], function (
     once,
-    config
+    config,
+    urlUtils
 ) {
 
     var gatewayUrl = '//pq-direct.revsci.net/pql',
@@ -20,7 +22,7 @@ define([
         load = once(function() {
             if (config.switches.audienceScience) {
                 var placements = sectionPlacements[config.page.section] || sectionPlacements['default'],
-                    query = urlUtil.constructQuery({
+                    query = urlUtils.constructQuery({
                             placementIdList: placements.join(','),
                             cb: new Date().getTime()
                         }),
