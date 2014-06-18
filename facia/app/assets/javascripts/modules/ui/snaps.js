@@ -5,7 +5,7 @@ define([
     'common/utils/mediator',
     'common/utils/template',
     'common/utils/to-array',
-    'common/modules/ui/relativeDates'
+    'common/modules/ui/relativedates'
 ], function(
     $,
     bonzo,
