@@ -419,19 +419,38 @@ module.exports = function (grunt) {
         copy: {
             // 3rd party javascript applications
             'javascript-common': {
-                files: [{
-                    expand: true,
-                    cwd: 'common/app/public/javascripts',
-                    src: ['**/*.js'],
-                    dest: staticTargetDir + 'javascripts'
-                }]
+                files: [
+                    {
+                        expand: true,
+                        cwd: 'common/app/public/javascripts/components',
+                        src: [
+                            'html5shiv/dist/html5shiv.js',
+                            'raven-js/dist/raven.js',
+                            'swipe/swipe.js',
+                            'zxcvbn/index.js'
+                        ],
+                        dest: staticTargetDir + 'javascripts/components'
+                    },
+                    {
+                        expand: true,
+                        cwd: 'common/app/public/javascripts/vendor',
+                        src: [
+                            'foresee/foresee-trigger.js',
+                            'formstack-interactive/0.1/boot.js',
+                            'vast-client.js'
+                        ],
+                        dest: staticTargetDir + 'javascripts/vendor'
+                    }
+                ]
             },
             'javascript-admin': {
                 files: [
                     {
                         expand: true,
                         cwd: 'admin/public/javascripts',
-                        src: ['**/*.js'],
+                        src: [
+                            'components/bootstrap.css/js/bootstrap.min.js'
+                        ],
                         dest: staticTargetDir + 'javascripts'
                     },
                     {
