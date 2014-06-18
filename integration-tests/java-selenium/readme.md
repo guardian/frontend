@@ -11,7 +11,7 @@ The goals are as following:
 
 To achieve this goal the following architecture is proposed. For sake of simplicity all Frontend apps are simply called Fronts.
 
-![alt tag](https://raw.githubusercontent.com/guardian/frontend/java-selenium-test/integration-tests/java-selenium/docs/Fronts%20testing%20overview.png)
+![](https://raw.githubusercontent.com/guardian/frontend/java-selenium-test/integration-tests/java-selenium/docs/Fronts%20testing%20overview.png)
 
 The green elements is to illustrate that when running the tests that is the elements used and requests being made. For example, normally the pressed.json is retrieved from AWS, but for the test the configuration needs to be changed to instead point to the Wiremock Http server.
 
