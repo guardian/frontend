@@ -79,6 +79,7 @@ trait Prototypes {
       "org.mockito" % "mockito-all" % "1.9.5" % "test"
     ),
 
+    // These settings are needed for forking, which in turn is needed for concurrent restrictions.
     javaOptions in Test += "-DAPP_SECRET=secret",
     baseDirectory in Test := file(".")
   )
