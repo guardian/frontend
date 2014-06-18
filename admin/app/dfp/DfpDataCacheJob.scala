@@ -28,18 +28,28 @@ object DfpDataCacheJob extends ExecutionContexts {
     }
   }
 
-  private implicit val adWrites = new Writes[LineItem] {
+  private implicit val lineItemWrites = new Writes[LineItem] {
     def writes(lineItem: LineItem ): JsValue = {
       Json.obj(
         "id" -> lineItem.id,
+        "sponsor" -> lineItem.sponsor,
         "targetSets" -> lineItem.targetSets
+      )
+    }
+  }
+
+  private implicit val sponsorshipWrites = new Writes[Sponsorship] {
+    def writes(sponsorship: Sponsorship): JsValue = {
+      Json.obj(
+        "sponsor" -> sponsorship.sponsor,
+        "tags" -> sponsorship.tags
       )
     }
   }
 
   def run() {
     future {
-      val dfpLineItems = DfpApi.getAllCurrentDfpLineItems()
+      val dfpLineItems = DfpApi.getAllCurrentDfpLineItems
       if (dfpLineItems.nonEmpty) {
         val lineItems = DfpApi.hydrateWithUsefulValues(dfpLineItems)
         Store.putDfpSponsoredTags(stringify(toJson(DfpApi.filterOutSponsoredTagsFrom(lineItems))))
