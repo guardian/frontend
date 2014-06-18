@@ -3,26 +3,26 @@ define([
     'common/utils/storage',
     'common/utils/mediator',
     'common/modules/analytics/mvt-cookie',
-    'common/modules/experiments/tests/high-relevance-commercial-component',
     'common/modules/experiments/tests/hide-supporting-links',
     'common/modules/experiments/tests/across-the-guardian',
-    'common/modules/experiments/tests/display-socially-referred-burners'
+    'common/modules/experiments/tests/display-socially-referred-burners',
+    'common/modules/experiments/tests/sentry'
 ], function (
     common,
     store,
     mediator,
     mvtCookie,
-    ABHighRelevanceCommercialComponent,
     ABHideSupportingLinks,
     ABAcrossTheGuardian,
-    ABSociallyReferredContent
+    ABSociallyReferredContent,
+    ABSentry
     ) {
 
     var TESTS = [
-            new ABHighRelevanceCommercialComponent(),
             new ABHideSupportingLinks(),
             new ABAcrossTheGuardian(),
-            new ABSociallyReferredContent()
+            new ABSociallyReferredContent(),
+            new ABSentry()
         ],
         participationsKey = 'gu.ab.participations';
 

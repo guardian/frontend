@@ -1,3 +1,6 @@
+@import 'icons/_video-icons-sprite';
+@import 'icons/_video-icons-svg';
+
 .player {
     @include rem((
         margin-bottom: $gs-row-height
@@ -16,4 +19,423 @@
     @include rem((
         margin-bottom: ($gs-baseline/3)*4
     ));
+}
+
+/* VJS
+   ========================================================================== */
+
+$vjs-control-colour: rgba(25, 25, 25, .8);
+
+.vjs-tech {
+    cursor: pointer;
+
+    .vjs-fullscreen & {
+        cursor: none;
+    }
+
+    .vjs-fullscreen.vjs-mousemoved & {
+        cursor: pointer;
+    }
+}
+
+.gu-video { // aspect ratio fix (this element gets given a fixed height by video.js)
+    width: auto !important;
+    height: auto !important;
+    cursor: pointer;
+}
+
+.vjs-big-play-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    @include rem((
+        margin-top: -55px, // = - height/2 - controlheight/2 = - 62/2-48/2 =  -31-24 = -55
+        margin-left: -31px
+    ));
+    cursor: pointer;
+    @include icon(play-60-transparent);
+
+    .gu-video-wrapper:hover & {
+        @include icon(play-60-yellow);
+    }
+
+    .vjs-playing &,
+    .vjs-has-started.vjs-using-native-controls & {
+        display: none !important;
+    }
+}
+
+/* VJS: CONTROL BAR
+   ========================================================================== */
+
+.vjs-control-bar {
+    cursor: default;
+    display: none;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    background-color: $vjs-control-colour;
+    color: #ffffff;
+    @include fs-data(2);
+    font-weight: bold;
+    @include rem((
+        height: $gs-baseline*4,
+        bottom: $gs-baseline*-5
+    ));
+    @include transition(bottom .8s);
+    transition-delay: .2s;
+
+    .vjs-fullscreen & {
+        transition-delay: .5s;
+    }
+
+    .gu-video-wrapper:hover .vjs-playing:not(.vjs-fullscreen) &,
+    .gu-video-wrapper:hover .vjs-fullscreen.vjs-mousemoved &,
+    .vjs-paused & {
+        bottom: 0;
+        @include transition(bottom 0s);
+        transition-delay: 0s;
+    }
+
+    .vjs-has-started & {
+        display: block;
+    }
+
+    .vjs-using-native-controls & {
+        display: none;
+    }
+
+    * {
+        outline: none; // hide focus outlines on controls
+    }
+}
+
+.vjs-control-text,
+.vjs-live-controls,
+.vjs-remaining-time,
+.vjs-playback-rate,
+.vjs-subtitles-button,
+.vjs-captions-button,
+.vjs-chapters-button {
+    display: none;
+}
+
+.vjs-poster {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-size: cover;
+}
+
+.vjs-play-control {
+    float: left;
+    cursor: pointer;
+    @include rem((
+        margin: 7px
+    ));
+
+    .vjs-paused & {
+        @include icon(play-32-yellow);
+    }
+
+    .vjs-playing & {
+        @include icon(pause-32-yellow);
+    }
+}
+
+.vjs-current-time,
+.vjs-time-divider,
+.vjs-duration {
+    float: left;
+    line-height: $gs-baseline*4;
+}
+
+.vjs-time-divider {
+    padding: 0 $gs-gutter/4;
+}
+
+.vjs-duration {
+    color: $c-neutral3;
+}
+
+.vjs-fullscreen-control {
+    cursor: pointer;
+    float: right;
+    box-sizing: border-box;
+    @include rem((
+        margin: 8px
+    ));
+
+    @include icon(expand-white);
+    &:hover {
+        @include icon(expand-yellow);
+    }
+}
+
+/* VJS: PROGRESS BAR
+   ========================================================================== */
+
+// parameterising these as they're used in a few places
+$vjs-progress-hitbox-height: $gs-baseline;
+$vjs-progress-visual-height-resting: $gs-baseline/4;
+$vjs-progress-visual-height-hover: $gs-baseline/2;
+$vjs-progress-inset-bottom: 4px;
+
+.vjs-progress-control {
+    width: 100%;
+    position: absolute;
+    @include rem((
+        top: $vjs-progress-inset-bottom - $vjs-progress-hitbox-height
+    ));
+    .vjs-ad-playing & {
+        display: none;
+    }
+}
+
+.vjs-progress-holder {
+    height: $vjs-progress-hitbox-height;
+    cursor: pointer;
+    position: relative;
+
+    &:before {
+        content: '';
+        display: block;
+        width: 100%;
+        background-color: $c-neutral7;
+    }
+}
+.vjs-load-progress,
+.vjs-play-progress,
+.vjs-progress-holder:before,
+.vjs-seek-handle {
+    position: absolute;
+    @include rem((
+        bottom: $vjs-progress-inset-bottom,
+        height: $vjs-progress-visual-height-resting
+    ));
+
+    @include transition(height .2s);
+    .gu-video-wrapper:hover & {
+        @include rem((
+            height: $vjs-progress-visual-height-hover
+        ));
+
+    }
+}
+
+.vjs-load-progress {
+    background-color: $c-neutral3;
+    z-index: 1;
+}
+
+.vjs-play-progress {
+    background-color: $c-mediaDefault;
+    z-index: 2;
+}
+
+.vjs-seek-handle {
+    background-color: #ffffff;
+    z-index: 3;
+    width: 1px;
+}
+
+/* VJS: VOLUME BAR
+   ========================================================================== */
+
+.vjs-volume-control {
+    float: right;
+    @include rem((
+        width: $gs-gutter*5,
+        margin-top: $gs-baseline * 1.5
+    ));
+    position: relative;
+    height: 100%;
+}
+
+.vjs-volume-bar {
+    @include rem((
+        height: $gs-baseline
+    ));
+    width: 100%;
+    cursor: pointer;
+
+    &:before {
+        content: '';
+        display: block;
+        width: 100%;
+        background-color: $c-neutral7;
+    }
+}
+
+.vjs-volume-bar:before,
+.vjs-volume-level {
+    @include rem((
+        height: $gs-baseline/6,
+        top: $gs-baseline/3
+    ));
+    position: absolute;
+}
+
+.vjs-volume-level {
+    background-color: $c-mediaDefault;
+}
+
+.vjs-volume-handle {
+    position: absolute;
+
+    .vjs-volume-control:hover & {
+        background-color: $c-mediaDefault;
+        @include rem((
+            height: 11px,
+            width: 2px
+        ));
+    }
+}
+
+.vjs-mute-control {
+    cursor: pointer;
+    float: right;
+    box-sizing: border-box;
+    @include rem((
+        width: $gs-gutter,
+        margin-right: $gs-gutter/4,
+        margin-top: $gs-baseline * (4/3)
+    ));
+    text-align: left;
+
+    > div {
+        @include icon(volume-low-white);
+    }
+    &:hover > div {
+        @include icon(volume-low-yellow);
+    }
+
+    &.vjs-vol-0 > div {
+        @include icon(volume-mute-white);
+    }
+    &.vjs-vol-0:hover > div {
+        @include icon(volume-mute-yellow);
+    }
+
+    &.vjs-vol-3 > div {
+        @include icon(volume-high-white);
+    }
+    &.vjs-vol-3:hover > div {
+        @include icon(volume-high-yellow);
+    }
+}
+
+.vjs-error-display {
+    position: absolute;
+    width: 100%;
+    top: 40%;
+    display: none;
+    .vjs-error & {
+        display: block;
+    }
+    > div {
+        color: #ffffff;
+        @include fs-headline(2);
+        text-align: left;
+        @include box-sizing(border-box);
+        @include rem((
+            padding: $gs-baseline $gs-gutter $gs-baseline (45 + $gs-gutter*2),
+            min-height: $gs-baseline*5
+        ));
+        background-color: $vjs-control-colour;
+        width: 100%;
+        margin: auto;
+        &:before {
+            @include icon(error-exclamation);
+            content: ' ';
+            display: block;
+            position: absolute;
+            top: 50%;
+            @include rem((
+                left: $gs-gutter,
+                margin-top: -22px // half icon height for centering
+            ));
+        }
+    }
+}
+
+.vjs-overlay {
+    position: absolute;
+    width: 100%;
+    color: #ffffff;
+    background-color: $vjs-control-colour;
+}
+
+.vjs-overlay--big-title {
+
+    .vjs-overlay__title {
+        text-align: left;
+        @include rem((
+            padding: $gs-gutter/2
+        ));
+        @include fs-headline(3);
+        @include mq(tablet) {
+            @include fs-headline(4);
+        }
+        @include mq(desktop) {
+            @include fs-headline(5);
+        }
+        &:before {
+            content: '';
+            @include rem((
+                margin-right: $gs-gutter/2
+            ));
+            @include icon(video-camera-yellow);
+        }
+    }
+
+    .vjs-overlay__duration {
+        text-align: left;
+        color: $c-mediaDefault;
+        @include fs-headline(2);
+        @include rem((
+            padding: 0 $gs-gutter/2 $gs-baseline*2
+        ));
+    }
+}
+
+.vjs-overlay--small-title {
+    text-align: left;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    @include fs-headline(1);
+    position: absolute;
+    $height: nth(nth($fs-headlines, 1), 2);
+    @include rem((
+        height: $height * 1px,
+        padding: $gs-baseline/2,
+        top: ($height + $gs-baseline) * -1
+    ));
+    left: 0;
+    @include transition(top .8s);
+    transition-delay: .2s;
+
+    .gu-video-wrapper:hover &,
+    .vjs-paused & {
+        top: 0;
+        @include transition(top 0s);
+        transition-delay: 0s;
+    }
+}
+
+.vast-blocker {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: none;
+
+    .vjs-playing & {
+        display: block;
+    }
+}
+
+.vast-skip-button {
+    display: none;
 }

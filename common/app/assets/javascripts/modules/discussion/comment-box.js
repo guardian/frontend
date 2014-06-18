@@ -153,6 +153,7 @@ CommentBox.prototype.ready = function() {
     bean.on(this.context, 'submit', [this.elem], this.postComment.bind(this));
     bean.on(this.context, 'change keyup', [commentBody], this.setFormState.bind(this));
     bean.on(commentBody, 'focus', this.setExpanded.bind(this)); // this isn't delegated as bean doesn't support it
+    this.on('click', this.getClass('preview'), this.previewComment);
     this.on('click', this.getClass('cancel'), this.cancelComment);
     this.on('click', this.getClass('show-parent'), this.setState.bind(this, 'parent-visible', false));
     this.on('click', this.getClass('hide-parent'), this.removeState.bind(this, 'parent-visible', false));
@@ -199,7 +200,7 @@ CommentBox.prototype.postComment = function(e) {
             self.setFormState(true);
             DiscussionApi
                 .postComment(self.getDiscussionId(), comment)
-                .then(self.success.bind(self, comment), self.fail.bind(self));
+                .then(self.postCommentSuccess.bind(self, comment), self.fail.bind(self));
         }
     };
 
@@ -250,9 +251,11 @@ CommentBox.prototype.error = function(type, message) {
  * @param {Object} comment
  * @param {Object} resp
  */
-CommentBox.prototype.success = function(comment, resp) {
+CommentBox.prototype.postCommentSuccess = function(comment, resp) {
     comment.id = parseInt(resp.message, 10);
     this.getElem('body').value = '';
+    this.removeState('preview-visible');
+    this.getElem('preview-body').innerHTML = '';
     this.setFormState();
     this.emit('post:success', comment);
     this.mediator.emit('discussion:commentbox:post:success', comment);
@@ -281,6 +284,15 @@ CommentBox.prototype.fail = function(xhr) {
 };
 
 /**
+ * @param {Object} comment
+ * @param {Object} resp
+ */
+CommentBox.prototype.previewCommentSuccess = function(comment, resp) {
+    this.getElem('preview-body').innerHTML = resp.commentBody;
+    this.setState('preview-visible');
+};
+
+/**
  * TODO: remove the replace, get the Scala to be better
  * @return {string}
  */
@@ -296,12 +308,15 @@ CommentBox.prototype.setFormState = function(disabled) {
     disabled = typeof disabled === 'boolean' ? disabled : false;
 
     var commentBody = this.getElem('body'),
-        submitButton = this.getElem('submit');
+        submitButton = this.getElem('submit'),
+        previewSubmitButton = this.getElem('preview-submit');
 
     if (disabled || commentBody.value.length === 0) {
         submitButton.setAttribute('disabled', 'disabled');
+        previewSubmitButton.setAttribute('disabled', 'disabled');
     } else {
         submitButton.removeAttribute('disabled');
+        previewSubmitButton.removeAttribute('disabled');
     }
 };
 
@@ -337,10 +352,42 @@ CommentBox.prototype.verificationEmailFail = function() {
 /**
  * @param {Event=} e (optional)
  */
+CommentBox.prototype.previewComment = function(e) {
+    var self = this,
+        comment = {
+            body: this.getElem('body').value
+        };
+
+    e.preventDefault();
+    self.clearErrors();
+
+    if (comment.body === '') {
+        this.getElem('preview-body').innerHTML = '';
+        this.removeState('preview-visible');
+        self.error('EMPTY_COMMENT_BODY');
+    }
+
+    if (comment.body.length > self.options.maxLength) {
+        self.error('COMMENT_TOO_LONG', '<b>Comments must be shorter than '+ self.options.maxLength +' characters.</b>'+
+            'Yours is currently '+ (comment.body.length-self.options.maxLength) +' characters too long.');
+    }
+
+    if (self.errors.length === 0) {
+        DiscussionApi
+            .previewComment(comment)
+            .then(self.previewCommentSuccess.bind(self, comment), self.fail.bind(self));
+    }
+};
+
+/**
+ * @param {Event=} e (optional)
+ */
 CommentBox.prototype.cancelComment = function() {
     if (this.options.state === 'response') {
         this.destroy();
     } else {
+        this.getElem('preview-body').innerHTML = '';
+        this.removeState('preview-visible');
         this.getElem('body').value = '';
         this.setFormState();
         this.removeState('expanded');

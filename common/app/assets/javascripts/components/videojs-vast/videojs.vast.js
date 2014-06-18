@@ -15,7 +15,7 @@
   },
 
   defaults = {
-    skip: 5,
+    skip: 5 // negative disables
   },
 
   vastPlugin = function(options) {
@@ -33,6 +33,7 @@
       return;
     }
 
+    // videojs-ads triggers this when src changes
     player.on('contentupdate', function(){
       player.vast.getContent(settings.url);
     });
@@ -46,23 +47,71 @@
         if (response) {
           for (var adIdx = 0; adIdx < response.ads.length; adIdx++) {
             var ad = response.ads[adIdx];
+            player.vast.companion = undefined;
             for (var creaIdx = 0; creaIdx < ad.creatives.length; creaIdx++) {
-              var linearCreative = ad.creatives[creaIdx];
-              if (linearCreative.type !== "linear") continue;
-              
-              if (linearCreative.mediaFiles.length) {
-                player.vast.sources = player.vast.createSourceObjects(linearCreative.mediaFiles);
-                player.vastTracker = new vast.tracker(ad, linearCreative);
-                player.on('canplay', function() {this.vastTracker.load();});
-                player.on('timeupdate', function() {
-                  if (isNaN(this.vastTracker.assetDuration)) {
-                    this.vastTracker.assetDuration = this.duration();
+              var creative = ad.creatives[creaIdx], foundCreative = false, foundCompanion = false;
+              if (creative.type === "linear" && !foundCreative) {
+
+                if (creative.mediaFiles.length) {
+
+                  player.vast.sources = player.vast.createSourceObjects(creative.mediaFiles);
+
+                  if (!player.vast.sources.length) {
+                    player.trigger('adtimeout');
+                    return;
                   }
-                  this.vastTracker.setProgress(this.currentTime());
-                });
-                player.on('play', function() {this.vastTracker.setPaused(false);});
-                player.on('pause', function() {this.vastTracker.setPaused(true);});
-                break;
+
+                  player.vastTracker = new vast.tracker(ad, creative);
+
+                  var errorOccurred = false,
+                      canplayFn = function() {
+                        this.vastTracker.load();
+                      },
+                      timeupdateFn = function() {
+                        if (isNaN(this.vastTracker.assetDuration)) {
+                          this.vastTracker.assetDuration = this.duration();
+                        }
+                        this.vastTracker.setProgress(this.currentTime());
+                      },
+                      playFn = function() {
+                        this.vastTracker.setPaused(false);
+                      },
+                      pauseFn = function() {
+                        this.vastTracker.setPaused(true);
+                      },
+                      errorFn = function() {
+                        // Inform ad server we couldn't play the media file for this ad
+                        vast.util.track(ad.errorURLTemplates, {ERRORCODE: 405});
+                        errorOccurred = true;
+                        player.trigger('ended');
+                      };
+
+                  player.on('canplay', canplayFn);
+                  player.on('timeupdate', timeupdateFn);
+                  player.on('play', playFn);
+                  player.on('pause', pauseFn);
+                  player.on('error', errorFn);
+
+                  player.one('ended', function() {
+                    player.off('canplay', canplayFn);
+                    player.off('timeupdate', timeupdateFn);
+                    player.off('play', playFn);
+                    player.off('pause', pauseFn);
+                    player.off('error', errorFn);
+                    if (!errorOccurred) {
+                      this.vastTracker.complete();
+                    }
+                  });
+
+                  foundCreative = true;
+                }
+
+              } else if (creative.type === "companion" && !foundCompanion) {
+
+                player.vast.companion = creative;
+
+                foundCompanion = true;
+
               }
             }
 
@@ -91,25 +140,35 @@
       var adSources = player.vast.sources;
       player.src(adSources);
 
-      var clickthrough = vast.util.resolveURLTemplates(
-        [player.vastTracker.clickThroughURLTemplate],
-        {CONTENTPLAYHEAD: player.vastTracker.progressFormated()}
-      )[0];
+      var clickthrough;
+      if (player.vastTracker.clickThroughURLTemplate) {
+        clickthrough = vast.util.resolveURLTemplates(
+          [player.vastTracker.clickThroughURLTemplate],
+          {
+            CACHEBUSTER: Math.round(Math.random() * 1.0e+10),
+            CONTENTPLAYHEAD: player.vastTracker.progressFormated()
+          }
+        )[0];
+      }
       var blocker = document.createElement("a");
       blocker.className = "vast-blocker";
-      blocker.href = clickthrough;
+      blocker.href = clickthrough || "#";
       blocker.target = "_blank";
       blocker.onclick = function() {
         var clicktrackers = player.vastTracker.clickTrackingURLTemplate;
         if (clicktrackers) {
-          player.vastTracker.trackURLs(clicktrackers);
+          player.vastTracker.trackURLs([clicktrackers]);
         }
+        player.trigger("adclick");
       };
       player.vast.blocker = blocker;
       player.el().insertBefore(blocker, player.controlBar.el());
 
       var skipButton = document.createElement("div");
       skipButton.className = "vast-skip-button";
+      if (settings.skip < 0) {
+        skipButton.style.display = "none";
+      }
       player.vast.skipButton = skipButton;
       player.el().appendChild(skipButton);
 
@@ -150,28 +209,33 @@
       }
     };
     player.vast.createSourceObjects = function(media_files) {
-      var fileURLs = {};
+      var sourcesByFormat = {}, format, i;
       var vidFormats = ['video/mp4', 'video/webm', 'video/ogv'];
       // get a list of files with unique formats
-      for (var i = 0; i < media_files.length; i++) {
-        var file_url = media_files[i].fileURL;
-        var mime_type = media_files[i].mimeType;
+      for (i = 0; i < media_files.length; i++) {
+        format = media_files[i].mimeType;
 
-        if (vidFormats.indexOf(mime_type) >= 0) {
-          if(fileURLs[mime_type] === undefined) {
-            fileURLs[mime_type] = file_url;
-          } 
+        if (vidFormats.indexOf(format) >= 0) {
+          if(sourcesByFormat[format] === undefined) {
+            sourcesByFormat[format] = [];
+          }
+          sourcesByFormat[format].push({
+            type: format,
+            src: media_files[i].fileURL,
+            width: media_files[i].width,
+            height: media_files[i].height
+          });
         }
       }
 
+      // Create sources in preferred format order
       var sources = [];
       for (var j=0; j < vidFormats.length; j++) {
-        var format = vidFormats[j];
-        if (fileURLs[format] !== undefined) {
-          sources.push({
-            type: format,
-            src: fileURLs[format]
-          });
+        format = vidFormats[j];
+        if (sourcesByFormat[format] !== undefined) {
+          for (i = 0; i < sourcesByFormat[format].length; i++) {
+            sources.push(sourcesByFormat[format][i]);
+          }
         }
       }
       return sources;
