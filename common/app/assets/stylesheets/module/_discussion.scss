@@ -1141,7 +1141,7 @@ $avatarSize: 44px;
 .d-comment-box__preview,
 .d-comment-box__cancel {
     @include rem((
-        margin-left: $gutter
+        margin-left: $gs-gutter
     ));
 }
 .d-comment-box__reply-to,
