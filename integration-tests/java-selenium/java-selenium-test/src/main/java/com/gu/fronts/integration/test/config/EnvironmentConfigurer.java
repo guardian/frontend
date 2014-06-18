@@ -6,6 +6,7 @@ import static org.apache.commons.lang3.StringUtils.isBlank;
 
 public class EnvironmentConfigurer {
 
+    private static final String DEFAULT_ENVIRONMENT = "local";
     public static final String ENVIRONMENT_KEY = "environment";
 
     public static void setupEnvironmentProperty() {
@@ -15,7 +16,7 @@ public class EnvironmentConfigurer {
     public static String getEnvironmentProperty() {
         String alreadySetEnvProperty = getProperty(ENVIRONMENT_KEY);
         if (isBlank(alreadySetEnvProperty)) {
-            return "local";
+            return DEFAULT_ENVIRONMENT;
         } else {
             return alreadySetEnvProperty;
         }
