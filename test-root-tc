@@ -1,38 +1,9 @@
 #!/bin/bash
 
-set -o xtrace
 set -o nounset
 set -o errexit
 
-./grunt-tc clean validate:js test:unit compile emitAbTestInfo
+./grunt-tc clean validate:js test:unit compile
 ./sbt-tc "project root" test
 
-echo "Disting everything."
-rm -rf "dist"
-
-configurations="admin applications archive article commercial diagnostics discussion "\
-"facia facia-tool identity image onward preview router sport"
-
-for config in $configurations
-do
-    echo "Dist for $config"
-
-    # Generate folder for the application zip.
-    app_folder="dist/$config"
-
-    mkdir -p "$app_folder/packages/frontend-static"
-    mkdir -p "$app_folder/packages/$config"
-
-    cp "$config/target/universal/$config.zip"   "$app_folder/packages/$config/$config.zip"
-    cp "$config/conf/deploy.json"               "$app_folder"
-    cp -r static/hash/*                         "$app_folder/packages/frontend-static"
-    cp static/abtests.json                      "$app_folder/packages/frontend-abtests"
-
-    pushd $app_folder
-    zip -r "../$config.zip" .
-    popd
-
-    echo "##teamcity[publishArtifacts 'dist/$config.zip']"
-done
-
-echo "Done disting."
+echo "Tested everything."
