@@ -144,11 +144,10 @@ GET         /series/*path.json                                                  
 # Facia
 GET         /                                                                                                        controllers.preview.FaciaDraftController.editionRedirect(path = "")
 GET         /$path<(culture|sport|commentisfree|business|money|rss)>                                                 controllers.preview.FaciaDraftController.editionRedirect(path)
+GET         /$path<(\w\w)(/[\w\d-]+)?>/live                                                                          controllers.FaciaController.renderFront(path)
 GET         /$path<(\w\w)(/[\w\d-]+)?>/rss                                                                           controllers.preview.FaciaDraftController.renderFrontRss(path)
 GET         /$path<(\w\w)(/[\w\d-]+)?>.json                                                                          controllers.preview.FaciaDraftController.renderFrontJson(path)
 GET         /$path<(\w\w)(/[\w\d-]+)?>                                                                               controllers.preview.FaciaDraftController.renderFront(path)
-GET         /$path<(\w\w)(/[\w\d-]+)?>/live                                                                          controllers.FaciaController.renderFront(path)
-
 
 GET         /container/*id.json                                                                                      controllers.preview.FaciaDraftController.renderContainerJson(id)
 
