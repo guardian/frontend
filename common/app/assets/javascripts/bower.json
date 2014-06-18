@@ -18,7 +18,8 @@
   "devDependencies": {
     "videojs": "~4.6.3",
     "videojs-contrib-ads": "~0.2.0",
-    "videojs-vast": "~0.1.5"
+    "videojs-vast": "~0.1.5",
+    "videojs-persistvolume": "~0.1.0"
   },
   "resolutions": {
     "videojs": "~4.6.3"

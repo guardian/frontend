@@ -167,8 +167,14 @@ define([
                         }, 500);
                     });
 
-                    vjs.volume(0.99); // 1.0 causes the bar to look empty on load
+                    // unglitching the volume on first load
+                    var vol = vjs.volume();
+                    if (vol) {
+                        vjs.volume(0);
+                        vjs.volume(vol);
+                    }
 
+                    vjs.persistvolume({namespace: 'gu.vjs'});
                 });
             });
         }
