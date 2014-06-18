@@ -167,6 +167,8 @@ define([
                         }, 500);
                     });
 
+                    vjs.volume(0.99); // 1.0 causes the bar to look empty on load
+
                 });
             });
         }
