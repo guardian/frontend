@@ -10,7 +10,7 @@ define([
         this.expiry = '2014-06-30';
         this.author = 'Darren Hurley';
         this.description = 'Increase the size of inline1 ad slot to 300x250 for mobile users';
-        this.audience = 0.4;
+        this.audience = 0.04;
         this.audienceOffset = 0;
         this.successMeasure = 'User engagement';
         this.audienceCriteria = 'Mobile users';

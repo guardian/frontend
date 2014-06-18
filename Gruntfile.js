@@ -54,7 +54,6 @@ module.exports = function (grunt) {
                     omniture:     '../../../../common/app/assets/javascripts/components/omniture/omniture',
                     fence:        '../../../../common/app/assets/javascripts/components/fence/fence',
                     enhancer:     '../../../../common/app/assets/javascripts/components/enhancer/enhancer'
-
                 },
                 optimize: 'uglify2',
                 generateSourceMaps: true,
