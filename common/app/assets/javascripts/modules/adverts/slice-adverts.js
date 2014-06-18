@@ -54,8 +54,10 @@ define([
             var adName = adNames[index],
                 $adSlot = bonzo(dfp.createAdSlot(adName, 'container-inline'));
             if (['fronts', 'fronts-and-articles'].indexOf(ab.getTestVariant('LargerMobileMpu')) > -1 && adName === 'inline1') {
-                $adSlot.removeAttr('data-mobile')
-                    .removeAttr('data-mobilelandscape');
+                $adSlot
+                    .removeAttr('data-mobilelandscape')
+                    .removeAttr('data-tabletportrait')
+                    .data('mobile', '300,250');
             }
             $adSlice
                 .addClass('slice--has-ad')

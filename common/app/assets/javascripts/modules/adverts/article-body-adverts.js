@@ -39,8 +39,10 @@ define([
         var adIndex = this.ads.length + 1,
             $ad = $.create(dfp.createAdSlot('inline' + adIndex, 'inline'));
         if (['articles', 'fronts-and-articles'].indexOf(ab.getTestVariant('LargerMobileMpu')) > -1 && adIndex === 1) {
-            $ad.removeAttr('data-mobile')
-                .removeAttr('data-mobilelandscape');
+            $ad
+                .removeAttr('data-mobilelandscape')
+                .removeAttr('data-tabletportrait')
+                .data('mobile', '300,250');
         }
         this.ads.push($ad);
         return $ad;
