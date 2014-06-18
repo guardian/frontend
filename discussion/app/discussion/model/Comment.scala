@@ -23,7 +23,7 @@ case class DefaultComment(
   isHighlighted: Boolean,
   isBlocked: Boolean,
   override val responseTo: Option[ResponseTo],
-  numRecommends: Int, responseCount: Int
+  numRecommends: Int, responseCount: Int, webUrl: String
 ) extends Comment
 
 case class BlankComment() extends Comment{
@@ -37,6 +37,7 @@ case class BlankComment() extends Comment{
   val isBlocked: Boolean = false
   val numRecommends: Int = 0
   val responseCount: Int = 0
+  val webUrl: String = ""
 }
 
 
@@ -52,6 +53,7 @@ trait Comment {
   val responseTo: Option[ResponseTo] = None
   val numRecommends: Int
   val responseCount: Int
+  val webUrl: String
 }
 
 object Comment extends {
@@ -69,7 +71,8 @@ object Comment extends {
       isBlocked = (json \ "status").as[String].contains("blocked"),
       responseTo = (json \\ "responseTo").headOption.map(ResponseTo(_)),
       numRecommends = (json \ "numRecommends").as[Int],
-      responseCount = (json \ "metaData" \ "responseCount").asOpt[Int].getOrElse(0)
+      responseCount = (json \ "metaData" \ "responseCount").asOpt[Int].getOrElse(0),
+      webUrl = (json \ "webUrl").as[String]
     )
   }
 
