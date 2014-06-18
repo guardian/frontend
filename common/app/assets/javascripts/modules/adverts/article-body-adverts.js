@@ -1,19 +1,21 @@
 define([
     'common/modules/component',
-    'bonzo',
+    'common/$',
     'lodash/objects/assign',
     'common/utils/detect',
     'common/modules/adverts/dfp',
     'common/modules/article/spacefinder',
-    'common/utils/deferToLoad'
+    'common/utils/deferToLoad',
+    'common/modules/experiments/ab'
 ], function (
     Component,
-    bonzo,
+    $,
     extend,
     detect,
     dfp,
     spacefinder,
-    deferToLoad
+    deferToLoad,
+    ab
 ) {
 
     function ArticleBodyAdverts(config) {
@@ -28,20 +30,27 @@ define([
     ArticleBodyAdverts.prototype.config = {};
 
     ArticleBodyAdverts.prototype.destroy = function() {
-        this.ads.forEach(function(ad) {
-            bonzo(ad).remove();
+        this.ads.forEach(function($ad) {
+            $ad.remove();
         });
     };
 
     ArticleBodyAdverts.prototype.generateAdElement = function() {
-        var adEl = bonzo.create(dfp.createAdSlot('inline' + (this.ads.length+1), 'inline'));
-        this.ads.push(adEl);
-        return adEl;
+        var adIndex = this.ads.length + 1,
+            $ad = $.create(dfp.createAdSlot('inline' + adIndex, 'inline'));
+        if (['articles', 'fronts-and-articles'].indexOf(ab.getTestVariant('LargerMobileMpu')) > -1 && adIndex === 1) {
+            $ad
+                .removeAttr('data-mobilelandscape')
+                .removeAttr('data-tabletportrait')
+                .data('mobile', '300,250');
+        }
+        this.ads.push($ad);
+        return $ad;
     };
 
     ArticleBodyAdverts.prototype.insertAdAtP = function(para) {
         if (para) {
-            bonzo(this.generateAdElement()).insertBefore(para);
+            this.generateAdElement().insertBefore(para);
         }
     };
 
