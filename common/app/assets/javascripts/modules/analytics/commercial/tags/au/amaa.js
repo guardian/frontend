@@ -1,9 +1,15 @@
-define([], function() {
+define([
+    'common/utils/config'
+], function(
+    config
+) {
 
-    var ammaUrl = 'js!//c.supert.ag/the-guardian/the-guardian/supertag-async.js';
+    var ammaUrl = '//c.supert.ag/the-guardian/the-guardian/supertag-async.js';
 
     function load() {
-        require([ammaUrl], function() {});
+        if (config.switches.amaa) {
+            return require(['js!' + ammaUrl + '!exports=superT']);
+        }
     }
 
     return {

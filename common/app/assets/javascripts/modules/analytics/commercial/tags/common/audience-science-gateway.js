@@ -1,37 +1,45 @@
 define([
+    'lodash/functions/once',
     'common/utils/config'
-], function (config) {
+], function (
+    once,
+    config
+) {
 
-    var segments = {
-        'sport': ['FKSWod', '2xivTZ'],
-        'football': ['FKSWod', '2xivTZ'],
-        'lifeandstyle': ['TQV1_5', 'J0tykU'],
-        'technology': ['9a9VRE', 'TL3gqK'],
-        'fashion': ['TQV1_5', 'J0tykU'],
-        'childrens-books-site': [],
-        'news': ['eMdl6Y', 'mMYVrM'],
-        'default': ['c7Zrhu', 'Y1C40a']
-    };
+    var gatewayUrl = '//pq-direct.revsci.net/pql',
+        sectionPlacements = {
+            sport:        ['FKSWod', '2xivTZ'],
+            football:     ['6FaXJO', 'ORE2W-'],
+            lifeandstyle: ['TQV1_5', 'J0tykU', 'kLC9nW'],
+            technology:   ['9a9VRE', 'TL3gqK'],
+            fashion:      ['TQV1_5', 'J0tykU', 'kLC9nW'],
+            news:         ['eMdl6Y', 'mMYVrM'],
+            'default':    ['c7Zrhu', 'Y1C40a', 'LtKGsC', 'MTLELH']
+        },
+        segments = [],
+        load = once(function() {
+            if (config.switches.audienceScience) {
+                var placements = sectionPlacements[config.page.section] || sectionPlacements['default'],
+                    query = urlUtil.constructQuery({
+                            placementIdList: placements.join(','),
+                            cb: new Date().getTime()
+                        }),
+                    url = [gatewayUrl, '?', query].join('');
 
-    function getSegments() {
-        var result = {};
-
-        if (config.switches && config.switches.audienceScienceGateway) {
-
-            var targetedSegments = segments[config.page.section];
-            if (typeof targetedSegments === 'undefined') {
-                targetedSegments = segments['default'];
+                return require(['js!' + url + '!exports=asiPlacements'])
+                    .then(function(asiPlacements) {
+                        for (var placement in asiPlacements) {
+                            segments['pq_' + placement] = asiPlacements[placement].defaults ? 'T' : '';
+                        }
+                    });
             }
-
-            targetedSegments.forEach(function (segment) {
-                result['pq_' + segment] = '';
-            });
-        }
-
-        return result;
-    }
+        }),
+        getSegments = function() {
+            return segments;
+        };
 
     return {
+        load: load,
         getSegments: getSegments
     };
 
