@@ -23,7 +23,7 @@ public class NetworkFrontDateBox extends AbstractParentPage {
 
     @Override
     public NetworkFrontDateBox isDisplayed() {
-        assertExists(dateTitle);
+        assertExistsAndDisplayed(dateTitle);
         return this;
     }
 

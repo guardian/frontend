@@ -58,7 +58,7 @@ public abstract class AbstractParentPage {
      * all provided elements are displayed and if not will throw an AssertionError with a message detailing which
      * elements are not displayed.
      */
-    protected void assertExists(WebElement... elementsToCheck) {
+    protected void assertExistsAndDisplayed(WebElement... elementsToCheck) {
         List<String> errors = new ArrayList<>();
         for (WebElement webElement : elementsToCheck) {
             checkElementExistsAndCreateError(webElement, errors);
@@ -70,7 +70,7 @@ public abstract class AbstractParentPage {
     }
 
     /**
-     * Page Objects need to implement this class and then call {@link #assertExists(WebElement...)} with the elements
+     * Page Objects need to implement this class and then call {@link #assertExistsAndDisplayed(WebElement...)} with the elements
      * which need to be displayed for the page to load properly and can also, optionally, do some additional checks
      */
     public abstract Object isDisplayed();

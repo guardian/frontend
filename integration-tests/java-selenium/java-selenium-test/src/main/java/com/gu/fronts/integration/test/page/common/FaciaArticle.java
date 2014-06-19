@@ -14,19 +14,19 @@ import com.gu.fronts.integration.test.page.util.CustomPageFactory;
  * finding the relative article using using the test attribute value {@link #ARTICLE_CONTAINER_ID} and then
  * {@link CustomPageFactory#initPage(WebDriver, Class, WebElement)} using the found WebElement
  */
-public class FaciaContainerArticle extends AbstractParentPage {
+public class FaciaArticle extends AbstractParentPage {
 
     private WebElement rootElement;
     public static final String ARTICLE_CONTAINER_ID = "article-container";
 
-    public FaciaContainerArticle(WebDriver webDriver, WebElement containerTopElement) {
+    public FaciaArticle(WebDriver webDriver, WebElement containerTopElement) {
         super(webDriver);
         this.rootElement = containerTopElement;
     }
 
     @Override
-    public FaciaContainerArticle isDisplayed() {
-        assertExists(rootElement);
+    public FaciaArticle isDisplayed() {
+        assertExistsAndDisplayed(rootElement);
         return this;
     }
 

@@ -30,7 +30,7 @@ public class Editions extends AbstractParentPage {
 
     @Override
     public Editions isDisplayed() {
-        super.assertExists(editions, editionUK, editionUS, editionAU);
+        super.assertExistsAndDisplayed(editions, editionUK, editionUS, editionAU);
         return this;
     }
 
@@ -69,13 +69,13 @@ public class Editions extends AbstractParentPage {
         return this;
     }
 
-    public Editions usUsEditionPresent() {
-        super.assertExists(editionUS);
+    public Editions isUsEditionPresent() {
+        super.assertExistsAndDisplayed(editionUS);
         return this;
     }
 
     public Editions isAuEditionPresent() {
-        super.assertExists(editionAU);
+        super.assertExistsAndDisplayed(editionAU);
         return this;
     }
 

@@ -14,6 +14,7 @@ import org.openqa.selenium.support.pagefactory.ElementLocatorFactory;
 import org.springframework.stereotype.Component;
 
 import com.gu.fronts.integration.test.fw.selenium.CustomElementLocatorFactory;
+import com.gu.fronts.integration.test.fw.selenium.CustomFieldDecorator;
 
 @Component
 public class CustomPageFactory {
@@ -24,7 +25,7 @@ public class CustomPageFactory {
      */
     public <Page> Page initPage(WebDriver webDriver, Class<Page> pageClass) {
         Page page = instantiatePage(webDriver, pageClass);
-        PageFactory.initElements(new CustomElementLocatorFactory(webDriver), page);
+        PageFactory.initElements(new CustomFieldDecorator(new CustomElementLocatorFactory(webDriver)), page);
         return page;
     }
 

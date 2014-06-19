@@ -16,7 +16,7 @@ public class AllFaciaContainersPage extends AbstractParentPage {
 
     @Override
     public AllFaciaContainersPage isDisplayed() {
-        assertExists(allFaciaContainers);
+        assertExistsAndDisplayed(allFaciaContainers);
         return this;
     }
 

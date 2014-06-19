@@ -18,7 +18,7 @@ public class Article extends AbstractParentPage {
 
     @Override
     public Article isDisplayed() {
-        assertExists(rootElement, headline);
+        assertExistsAndDisplayed(rootElement, headline);
         return this;
     }
 
