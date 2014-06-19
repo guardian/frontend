@@ -5,22 +5,26 @@
     <link rel="stylesheet" type="text/css" href="@routes.Assets.at("css/commercial.css")">
 
     <h1>Commercial</h1>
-    <h2>Ads</h2>
 
-    <ul class="nav nav-pills">
-        <li class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                Time
-                <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu">
-                <li><a href="?hours=1">1 hour</a></li>
-                <li><a href="?hours=8">8 hours</a></li>
-                <li><a href="?hours=24">24 hours</a></li>
-                <li><a href="?hours=48">48 hours</a></li>
+    <div class="navbar ad-render-filter">
+        <div class="navbar-inner">
+            <div class="brand">Filter by:</div>
+            <ul class="nav">
+                <li class="dropdown ad-render-filter__time">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        Time
+                        <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="?hours=1">1 hour</a></li>
+                        <li><a href="?hours=8">8 hours</a></li>
+                        <li><a href="?hours=24">24 hours</a></li>
+                        <li><a href="?hours=48">48 hours</a></li>
+                    </ul>
+                </li>
             </ul>
-        </li>
-    </ul>
+        </div>
+    </div>
 
     <div class="render-time render-time--ads">
         <div id="render-time--ads__graph"></div>
