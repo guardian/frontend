@@ -9,7 +9,7 @@ import scala.collection.JavaConversions._
 import services.{ConfigAgent, S3FrontsApi}
 import play.api.libs.json.{JsObject, Json}
 import scala.concurrent.Future
-import frontpress.FrontPress
+import frontpress.{PressResult, PressCommand, FrontPress}
 import common.FaciaToolMetrics.{FrontPressSuccess, FrontPressFailure, FrontPressCronFailure, FrontPressCronSuccess}
 import play.api.libs.concurrent.Akka
 import scala.util.{Failure, Success}
@@ -34,7 +34,7 @@ object FrontPressJob extends Logging with implicits.Collections {
         try {
           val receiveMessageResult = client.receiveMessage(new ReceiveMessageRequest(queueUrl).withMaxNumberOfMessages(10))
           Future.traverse(receiveMessageResult.getMessages.map(getConfigFromMessage).distinct) { path =>
-            val f = pressByPathId(path)
+            val f = FrontPress.press(PressCommand.forOneId(path).withPressLive().withPressDraft())
             f onComplete {
               case Success(_) =>
                 deleteMessage(receiveMessageResult, queueUrl)
