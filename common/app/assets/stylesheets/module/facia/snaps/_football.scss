@@ -1,26 +1,28 @@
 .facia-snap--football {
     // Dealing with the double embedding of snaps
     overflow: hidden;
-    .facia-snap--football {
-        overflow: visible;
-    }
+    padding: 0;
 
     // Generic
     &.facia-snap-embed {
         @include rem((
-            border-left-width: $gs-gutter/2,
-            border-right-width: $gs-gutter/2
+            margin: 0 $gs-gutter/2
         ));
         background: #ffffff;
     }
 
     // Matches and tables
     // =============================================================================
-    .c-football-matches,
     .c-football-table {
         // this works as a min-height
         height: $gs-baseline*14;
         overflow: visible;
+    }
+
+    .c-football-matches {
+        height: $gs-baseline*14;
+        overflow: hidden;
+        position: relative;
     }
 
     .table,
@@ -58,6 +60,9 @@
         left: 0;
         width: 100%;
         z-index: 2;
+        position: absolute;
+        margin: 0;
+        padding: 10px 0;
 
         .full-table-link {
             @include rem((
@@ -169,14 +174,6 @@
         .team__info {
             @include fs-headline(1, true)
         }
-
-        .table__caption--bottom {
-            position: absolute;
-            @include rem((
-                border-left: $gs-gutter/2 solid #ffffff,
-                border-right: $gs-gutter/2 solid #ffffff
-            ));
-        }
     }
 
     &.facia-snap-point--mini,
@@ -213,14 +210,6 @@
         .football-match__team--away {
             @include rem((
                 padding-left: $gs-gutter*.5
-            ));
-        }
-
-        .table__caption--bottom {
-            position: absolute;
-            @include rem((
-                border-left: $gs-gutter/2 solid #ffffff,
-                border-right: $gs-gutter/2 solid #ffffff
             ));
         }
 
