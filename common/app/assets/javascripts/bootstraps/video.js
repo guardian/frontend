@@ -19,6 +19,8 @@ define([
     bonzo
 ) {
 
+    var autoplay = config.page.contentType === 'Video' && /desktop|wide/.test(detect.getBreakpoint());
+
     var secsToNiceString = function(val) {
         var secs = val % 60;
         var mins = Math.floor(val / 60);
@@ -62,6 +64,10 @@ define([
                     player.one('play', events.playWithDuration);
                     player.one('durationchange', events.playWithDuration);
                     player.one('ended', events.end);
+
+                    if (autoplay) {
+                        player.play();
+                    }
                 }
             };
             player.one('adsready', events.ready);
@@ -88,6 +94,10 @@ define([
                     player.one('play', events.playWithDuration);
                     player.one('durationchange', events.playWithDuration);
                     player.one('ended', events.end);
+
+                    if (autoplay) {
+                        player.play();
+                    }
                 }
             };
             player.one('loadstart', events.ready);
@@ -102,6 +112,28 @@ define([
                     'xml_vast2&unviewed_position_start=1&iu=' + adUnit + '&sz=400x300&scp=slot%3Dvideo&cust_params=' + encodedCustParams;
 
             return url;
+        },
+
+        countDown: function() {
+            var tmp = '<div class="vjs-ads-overlay js-ads-overlay">Your video will start in <span class="vjs-ads-overlay__remaining js-remaining-time"></span>' +
+                      ' seconds <span class="vjs-ads-overlay__label">Advertisement</span></div>',
+                events =  {
+                    destroy: function() {
+                        $('.js-ads-overlay', this.el()).remove();
+                        this.off('timeupdate', events.update);
+                        this.off('ended', events.destroy);
+                    },
+                    update: function() {
+                        $('.js-remaining-time', this.el()).text(parseInt(this.duration() - this.currentTime(), 10).toFixed());
+                    },
+                    init: function() {
+                        this.on('timeupdate', events.update.bind(this));
+                        this.one('ended', events.destroy.bind(this));
+                        $(this.el()).append($.create(tmp));
+                    }
+                };
+
+            this.one('firstplay', events.init.bind(this));
         },
 
         initOverlays: function(el) {
@@ -133,6 +165,9 @@ define([
         initPlayer: function() {
 
             require('bootstraps/video-player', function () {
+
+                videojs.plugin('adCountDown', modules.countDown);
+
                 $('video').each(function (el) {
                     var vjs = videojs(el, {
                         controls: true,
@@ -142,7 +177,10 @@ define([
 
                     vjs.ready(function () {
                         var player = this;
+
                         modules.bindPrerollEvents(player, el);
+
+                        player.adCountDown();
 
                         // Init vast adverts.
                         player.ads({
@@ -167,6 +205,14 @@ define([
                         }, 500);
                     });
 
+                    // unglitching the volume on first load
+                    var vol = vjs.volume();
+                    if (vol) {
+                        vjs.volume(0);
+                        vjs.volume(vol);
+                    }
+
+                    vjs.persistvolume({namespace: 'gu.vjs'});
                 });
             });
         }

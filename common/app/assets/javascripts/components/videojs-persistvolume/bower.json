@@ -1,0 +1,26 @@
+{
+  "name": "videojs-persistvolume",
+  "version": "0.1.0",
+  "homepage": "https://github.com/theonion/videojs-persistvolume",
+  "authors": [
+    "Sean Bloomfield <sbloomfield@theonion.com>"
+  ],
+  "description": "A plugin for Video.js that saves user's volume setting using localStorage, but falls back to cookies if necessary.",
+  "main": "videojs.persistvolume.js",
+  "keywords": [
+    "video",
+    "videojs",
+    "volume"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "videojs": "~4.4.2"
+  }
+}

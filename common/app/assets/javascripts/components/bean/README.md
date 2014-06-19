@@ -90,7 +90,7 @@ bean.on(element, 'click', fn);          // 3
 
 // later:
 bean.fire(element, 'click.ded');        // trigger 2
-bean.fire(element, 'click.fat');        // trigger 3
+bean.fire(element, 'click.fat');        // trigger 1
 bean.off(element, 'click');             // remove 1, 2 & 3
 
 // fire() & off() match multiple namespaces with AND, not OR:

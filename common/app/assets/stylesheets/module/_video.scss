@@ -25,6 +25,7 @@
    ========================================================================== */
 
 $vjs-control-colour: rgba(25, 25, 25, .8);
+$vjs-control-height: $gs-baseline*4;
 
 .vjs-tech {
     cursor: pointer;
@@ -45,18 +46,44 @@ $vjs-control-colour: rgba(25, 25, 25, .8);
 }
 
 .vjs-big-play-button {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    @include rem((
-        margin-top: -55px, // = - height/2 - controlheight/2 = - 62/2-48/2 =  -31-24 = -55
-        margin-left: -31px
-    ));
     cursor: pointer;
-    @include icon(play-60-transparent);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    @include box-sizing(border-box);
+    text-align: center;
 
-    .gu-video-wrapper:hover & {
-        @include icon(play-60-yellow);
+    .vjs-has-started & {
+        @include rem((
+            padding-bottom: $vjs-control-height
+        ));
+    }
+
+    &:after {
+        display: inline-block;
+        vertical-align: middle;
+        height: 100%;
+        content: '';
+    }
+
+    > span {
+        display: inline-block;
+        vertical-align: middle;
+        @include icon(play-60-transparent);
+        @include background-size(100%);
+        height: 0 !important;
+        // % widths and margins are relative to parent element width
+        width: 12% !important;
+        padding-bottom: 12.5%; // +0.5% stops clipping
+        @include rem((
+            max-width: $gs-baseline*7.5
+        ));
+
+        .gu-video-wrapper:hover & {
+            @include icon(play-60-yellow);
+        }
     }
 
     .vjs-playing &,
@@ -79,7 +106,7 @@ $vjs-control-colour: rgba(25, 25, 25, .8);
     @include fs-data(2);
     font-weight: bold;
     @include rem((
-        height: $gs-baseline*4,
+        height: $vjs-control-height,
         bottom: $gs-baseline*-5
     ));
     @include transition(bottom .8s);
@@ -177,8 +204,7 @@ $vjs-control-colour: rgba(25, 25, 25, .8);
 
 // parameterising these as they're used in a few places
 $vjs-progress-hitbox-height: $gs-baseline;
-$vjs-progress-visual-height-resting: $gs-baseline/4;
-$vjs-progress-visual-height-hover: $gs-baseline/2;
+$vjs-progress-visual-height-resting: $gs-baseline/2;
 $vjs-progress-inset-bottom: 4px;
 
 .vjs-progress-control {
@@ -201,9 +227,10 @@ $vjs-progress-inset-bottom: 4px;
         content: '';
         display: block;
         width: 100%;
-        background-color: $c-neutral7;
+        background-color: #000000;
     }
 }
+
 .vjs-load-progress,
 .vjs-play-progress,
 .vjs-progress-holder:before,
@@ -213,18 +240,10 @@ $vjs-progress-inset-bottom: 4px;
         bottom: $vjs-progress-inset-bottom,
         height: $vjs-progress-visual-height-resting
     ));
-
-    @include transition(height .2s);
-    .gu-video-wrapper:hover & {
-        @include rem((
-            height: $vjs-progress-visual-height-hover
-        ));
-
-    }
 }
 
 .vjs-load-progress {
-    background-color: $c-neutral3;
+    background-color: #999999;
     z-index: 1;
 }
 
@@ -233,11 +252,6 @@ $vjs-progress-inset-bottom: 4px;
     z-index: 2;
 }
 
-.vjs-seek-handle {
-    background-color: #ffffff;
-    z-index: 3;
-    width: 1px;
-}
 
 /* VJS: VOLUME BAR
    ========================================================================== */
@@ -324,6 +338,9 @@ $vjs-progress-inset-bottom: 4px;
         @include icon(volume-high-yellow);
     }
 }
+
+/* VJS: OVERLAYS
+   ========================================================================== */
 
 .vjs-error-display {
     position: absolute;
@@ -438,4 +455,35 @@ $vjs-progress-inset-bottom: 4px;
 
 .vast-skip-button {
     display: none;
+}
+
+/* VJS: AD OVERLAY
+   ========================================================================== */
+.vjs-ads-overlay {
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    left: 0;
+    width: 100%;
+    @include rem((
+        height: $gs-baseline*2,
+        padding: $gs-baseline/3 0 0 $gs-gutter/4
+    ));
+    background-color: rgba($c-neutral1, .8);
+    border-top: 1px solid $c-neutral2;
+    color: #ffffff;
+    text-align: left;
+    @include fs-textsans(1);
+
+    @include mq(tablet) {
+        @include fs-textsans(2, true);
+    }
+}
+
+.vjs-ads-overlay__label {
+    position: absolute;
+    @include rem((
+        top: $gs-baseline/3,
+        right: $gs-gutter/2
+    ));
 }
