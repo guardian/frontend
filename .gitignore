@@ -21,6 +21,7 @@ frontend-applications.properties
 .idea
 .sass-cache
 .tm_properties
+.vagrant
 
 log
 logs
