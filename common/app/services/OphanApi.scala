@@ -52,7 +52,6 @@ object OphanApi extends ExecutionContexts with Logging {
         k + "=" + v.mkString(",")
       }
       .mkString("&")
-    println(query)
     getBody(s"ads/render-time?$query", 5000)
   }
 
