@@ -21,15 +21,6 @@ public class ArticleOnwardJourneyTest {
                 .goToArticle("/commentisfree/2014/jun/06/britain-fight-europe-beaches-d-day-eu-heroic-conflict");
     }
 
-    @Test
-    public void goToFirstLinkInSidebarPopular() throws Exception {
-        String articleLink = testArticle.getFirstArticleInMostPopularRight();
-        Article popularArticle = testArticle.goToFirstArticleInMostPopularRight();
-        WaitHelper.waitForArticleLoad(driver);
-        String articleURL = popularArticle.getCurrentURL();
-        Assert.assertTrue("Article headline did not match the top link in Most Popular",
-                articleURL.contentEquals(articleLink));
-    }
 
     @Test
     public void goToFirstLinkInRelatedContent() throws Exception {
