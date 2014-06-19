@@ -66,39 +66,6 @@ object FrontPressJob extends Logging with implicits.Collections {
     )
   }
 
-  def pressByCollectionIds(ids: Set[String]): Future[Set[JsObject]] = {
-    ConfigAgent.refreshAndReturn() flatMap { _ =>
-      val paths: Set[String] = for {
-        id <- ids
-        path <- ConfigAgent.getConfigsUsingCollectionId(id)
-      } yield path
-      val ftr = Future.sequence(paths.map(pressByPathId))
-
-      ftr onComplete {
-        case Failure(error) =>
-          FrontPressFailure.increment()
-          log.error("Error manually pressing collection through update from tool", error)
-
-        case Success(_) =>
-          FrontPressSuccess.increment()
-      }
-
-      ftr
-    }
-  }
-
-  def pressByPathId(path: String): Future[JsObject] = {
-    FrontPress.generateLiveJson(path).map { json =>
-      (json \ "id").asOpt[String].foreach(S3FrontsApi.putLivePressedJson(_, Json.stringify(json)))
-      json
-    }
-
-    FrontPress.generateDraftJson(path).map { json =>
-      (json \ "id").asOpt[String].foreach(S3FrontsApi.putDraftPressedJson(_, Json.stringify(json)))
-      json
-    }
-  }
-
   def getConfigFromMessage(message: Message): String =
     (Json.parse(message.getBody) \ "Message").as[String]
 }
