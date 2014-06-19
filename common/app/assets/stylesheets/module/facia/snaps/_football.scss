@@ -55,7 +55,7 @@
     .table__caption--bottom {
         @include box-sizing(border-box);
         background: $c-neutral8;
-        border-width: 0px;
+        border-width: 0;
         bottom: 0;
         left: 0;
         width: 100%;
@@ -63,7 +63,7 @@
         position: absolute;
         margin: 0;
         @include rem((
-            padding: $gs-gutter/2 0
+            padding: 10px 0
         ));
 
         .full-table-link {
