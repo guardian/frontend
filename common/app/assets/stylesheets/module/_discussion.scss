@@ -153,7 +153,7 @@ $avatarSize: 44px;
 }
 .d-discussion__show-all-comments {
     position: relative;
-    display: inline-block;
+    display: none;
     padding-left: 55px;
     @include fs-textsans(4);
     @include rem((
@@ -168,6 +168,9 @@ $avatarSize: 44px;
     }
     .i-arrow-blue-down {
         margin-left: ($gs-baseline/3)*2;
+    }
+    &.d-discussion__show-all-comments-visible {
+        display:inline-block;
     }
 }
 .d-discussion--not-staff .d-staff-required {
