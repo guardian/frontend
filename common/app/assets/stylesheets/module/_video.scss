@@ -54,6 +54,7 @@ $vjs-control-height: $gs-baseline*4;
     height: 100%;
     @include box-sizing(border-box);
     text-align: center;
+
     .vjs-has-started & {
         @include rem((
             padding-bottom: $vjs-control-height
