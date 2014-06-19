@@ -1,0 +1,29 @@
+@(env: String)
+
+@admin_main("Commercial", env, isAuthed = true, hasCharts = true) {
+
+    <link rel="stylesheet" type="text/css" href="@routes.Assets.at("css/commercial.css")">
+
+    <h1>Commercial</h1>
+    <h2>Ads</h2>
+
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Brand</a>
+            </div>
+            <div class="collapse navbar-collapse">
+                <button type="button" class="btn btn-default navbar-btn">Sign in</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="render-time render-time--ads">
+        <div id="render-time--ads__graph"></div>
+    </div>
+
+    <div class="render-time render-time--ad">
+        <div id="render-time--ad__graph"></div>
+    </div>
+
+}
