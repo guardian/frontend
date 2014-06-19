@@ -97,5 +97,4 @@ GET         /admin/football/fronts/match/:matchId                               
 GET         /admin/football/api/squad/:teamId                                                  controllers.admin.PlayerController.squad(teamId: String)
 
 # Commercial reports
-GET         /commercial/tags        controllers.admin.CommercialHelper.targets()
 GET         /commercial/pageskins   controllers.admin.CommercialHelper.activeLineItems()

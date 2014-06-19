@@ -1,4 +1,4 @@
-@(env: String)
+@(env: String, sponsoredTags: Seq[dfp.Sponsorship], advertisementTags: Seq[dfp.Sponsorship], pageSkinnedAdUnits: Seq[String])
 
 @admin_main("Commercial", env, isAuthed = true, hasCharts = true) {
 
@@ -6,6 +6,7 @@
 
     <h1>Commercial</h1>
 
+    <h3>Ad Slots Render Times</h3>
     <div class="navbar ad-render-filter">
         <div class="navbar-inner">
             <div class="brand">Filter by:</div>
@@ -16,22 +17,39 @@
                         <b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a href="?hours=1">1 hour</a></li>
-                        <li><a href="?hours=8">8 hours</a></li>
-                        <li><a href="?hours=24">24 hours</a></li>
-                        <li><a href="?hours=48">48 hours</a></li>
+                        @Seq(1, 8, 24, 36, 48 ).map { hours =>
+                            <li><a href="?hours=@hours">@hours hour@if(hours > 1){s}</a></li>
+                        }
                     </ul>
                 </li>
             </ul>
         </div>
     </div>
-
     <div class="render-time render-time--ads">
         <div id="render-time--ads__graph"></div>
     </div>
-
     <div class="render-time render-time--ad">
         <div id="render-time--ad__graph"></div>
     </div>
 
+    <h3>Sponsored Tags</h3>
+    <ol>
+        @for(tag <- sponsoredTags) {
+            <li>@{tag.tags.mkString(", ")}@{tag.sponsor.map(sponsor => <small>[sponsored by <b>@sponsor</b>]</small>)}</li>
+        }
+    </ol>
+
+    <h3>Advertisement Feature Tags</h3>
+    <ol>
+        @for(tag <- advertisementTags) {
+            <li>@{tag.tags.mkString(", ")}@{tag.sponsor.map(sponsor => <small>[sponsored by <b>@sponsor</b>]</small>)}</li>
+        }
+    </ol>
+
+    <h3>Pageskinned Ad Units</h3>
+    <ol>
+        @for(adunit <- pageSkinnedAdUnits) {
+            <li>@adunit</li>
+        }
+    </ol>
 }
