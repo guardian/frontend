@@ -39,12 +39,12 @@
                             <ul class="global-navigation">
                                 @navigation.filter(_.name.href != topLevelSelected.map(_.name.href).getOrElse("")).map { nav =>
                                     <li class="global-navigation__section">
-                                        <a href="@nav.name.href" class="global-navigation__title">@Html(nav.name.title)</a>
+                                        <a href="@LinkTo{@nav.name.href}" class="global-navigation__title">@Html(nav.name.title)</a>
                                         @if(nav.links.nonEmpty) {
                                             <ul class="global-navigation__children">
                                                 @nav.links.map{ link =>
                                                     <li class="global-navigation__child">
-                                                        <a class="global-navigation__action" href="@link.href">@Html(link.title)</a>
+                                                        <a class="global-navigation__action" href="@LinkTo{@link.href}">@Html(link.title)</a>
                                                     </li>
                                                 }
                                             </ul>
