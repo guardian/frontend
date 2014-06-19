@@ -19,6 +19,8 @@ define([
     bonzo
 ) {
 
+    var autoplay = config.page.contentType === 'Video' && /desktop|wide/.test(detect.getBreakpoint());
+
     var secsToNiceString = function(val) {
         var secs = val % 60;
         var mins = Math.floor(val / 60);
@@ -62,6 +64,10 @@ define([
                     player.one('play', events.playWithDuration);
                     player.one('durationchange', events.playWithDuration);
                     player.one('ended', events.end);
+
+                    if (autoplay) {
+                        player.play();
+                    }
                 }
             };
             player.one('adsready', events.ready);
@@ -88,6 +94,10 @@ define([
                     player.one('play', events.playWithDuration);
                     player.one('durationchange', events.playWithDuration);
                     player.one('ended', events.end);
+
+                    if (autoplay) {
+                        player.play();
+                    }
                 }
             };
             player.one('loadstart', events.ready);
@@ -167,6 +177,14 @@ define([
                         }, 500);
                     });
 
+                    // unglitching the volume on first load
+                    var vol = vjs.volume();
+                    if (vol) {
+                        vjs.volume(0);
+                        vjs.volume(vol);
+                    }
+
+                    vjs.persistvolume({namespace: 'gu.vjs'});
                 });
             });
         }

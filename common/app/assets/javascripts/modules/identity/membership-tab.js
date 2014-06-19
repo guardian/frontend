@@ -84,7 +84,7 @@ define(['common/$',
         var self = this;
 
         ajax({
-            url: 'https://mem.thegulocal.com/user/me/details',
+            url: 'https://membership.theguardian.com/user/me/details',
             crossOrigin: true,
             withCredentials: true,
             method: 'get'

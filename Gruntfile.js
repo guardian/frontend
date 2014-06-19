@@ -54,7 +54,6 @@ module.exports = function (grunt) {
                     omniture:     '../../../../common/app/assets/javascripts/components/omniture/omniture',
                     fence:        '../../../../common/app/assets/javascripts/components/fence/fence',
                     enhancer:     '../../../../common/app/assets/javascripts/components/enhancer/enhancer'
-
                 },
                 optimize: 'uglify2',
                 generateSourceMaps: true,
@@ -126,7 +125,8 @@ module.exports = function (grunt) {
                         vast: '../../../../common/app/public/javascripts/vendor/vast-client',
                         videojs: 'components/videojs/dist/video-js/video',
                         videojsads: 'components/videojs-contrib-ads/src/videojs.ads',
-                        videojsvast: 'components/videojs-vast/videojs.vast'
+                        videojsvast: 'components/videojs-vast/videojs.vast',
+                        videojspersistvolume: 'components/videojs-persistvolume/videojs.persistvolume'
                     },
                     shim: {
                         vast: {
