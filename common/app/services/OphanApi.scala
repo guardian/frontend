@@ -41,10 +41,19 @@ object OphanApi extends ExecutionContexts with Logging {
 
   def getMostReferredFromSocialMedia(days: Int): Future[JsValue] = getBody(s"mostread?days=$days&referrer=social%20media")
 
-  def getAdsRenderTime(platform: String): Future[JsValue] =
-    getBody(s"ads/render-time?platform=${platform}&hours=24", 5000)
+  val validQueryKeys = Seq("platform", "hours", "ad-slot")
 
-  def getAdsRenderTime(platform: String, slotName: String): Future[JsValue] =
-    getBody(s"ads/render-time?platform=${platform}&hours=24&ad-slot=$slotName", 5000)
+  def getAdsRenderTime(params: Map[String, Seq[String]]): Future[JsValue] = {
+    val query: String = params
+      .filter { case(k, v) =>
+        validQueryKeys.contains(k)
+      }
+      .map { case (k, v) =>
+        k + "=" + v.mkString(",")
+      }
+      .mkString("&")
+    println(query)
+    getBody(s"ads/render-time?$query", 5000)
+  }
 
 }

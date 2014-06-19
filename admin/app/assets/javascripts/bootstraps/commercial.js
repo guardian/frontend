@@ -12,6 +12,10 @@ define([
     ajax
 ) {
 
+    function getQuery() {
+        return window.location.search.substring(1);
+    };
+
     function init() {
 
         var $adsRenderTime = $('.render-time--ads'),
@@ -58,7 +62,7 @@ define([
                 .addClass('ajax-failed');
         });
 
-        function daramAdRenderTime(adSlotName) {
+        function darawAdRenderTime(adSlotName) {
 
             $adRenderTime
                 .removeClass('ajax-failed')
@@ -120,12 +124,12 @@ define([
 
         bean.on($select[0], 'change', function(e) {
             var adSlot = e.target.value;
-            window.history.pushState({}, '', '?ad-slot=' + adSlot);
+            window.history.pushState({}, '', '?ad-slot=' + adSlot + '&' + getQuery());
             $('#render-time--ad__graph').html('');
             daramAdRenderTime(adSlot);
         });
 
-        daramAdRenderTime($select.val());
+        darawAdRenderTime($select.val());
 
     };
 
