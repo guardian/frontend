@@ -233,7 +233,8 @@ $vjs-progress-inset-bottom: 4px;
 
 .vjs-load-progress,
 .vjs-play-progress,
-.vjs-progress-holder:before {
+.vjs-progress-holder:before,
+.vjs-seek-handle {
     position: absolute;
     @include rem((
         bottom: $vjs-progress-inset-bottom,
