@@ -10,6 +10,7 @@ import scala.concurrent.Future
 import play.api.templates.Html
 import performance.MemcachedAction
 import services.ConfigAgent
+import common.FaciaMetrics.FaciaToApplicationRedirectMetric
 
 
 class FaciaController extends Controller with Logging with ExecutionContexts with implicits.Collections with implicits.Requests {
