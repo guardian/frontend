@@ -8,6 +8,7 @@ The goals are as following:
 * The tests should be self-contained, meaning there should be as little as possible, preferably, no external dependencies and the tests should be able to run in any environment (assuming the prerequisites are met). There is an exception to this, see below.
 * The tests should not be fragile. This is partly achieved by the point above, of having the tests self contained, and by using Selenium best practices such as using test specific attributes on the rendered HTML and rely on the DOM structure as little as possible (as that changes a lot)
 * The tests should run fast. That is both subjective and relative as Selenium based tests can never be as fast as API tests. That is why there should be a limited number of tests which should test a journey rather than just a specific function or UI element.
+* A separate test suite will be run periodically against the PROD environment and is a live environment in the sense that nothing is stubbed. This is for tests specifically made for a live PROD environment.
 
 To achieve this goal the following architecture is proposed. For sake of simplicity all Frontend apps are simply called Fronts.
 
