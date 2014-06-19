@@ -128,7 +128,7 @@ define(['common/$',
     };
 
     /**
-     *   Load the css file containing the base64 encoded sprites for the card icons..
+     *   Load the css file containing the base64 encoded sprites for the card icons
      */
     Membership.prototype.addSpriteCss = function () {
         var spriteSheetUrl = $(this.getClass('TAB')).data('sprite-url');
