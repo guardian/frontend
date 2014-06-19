@@ -32,15 +32,6 @@ public class ArticleOnwardJourneyTest {
                 articleURL.contentEquals(articleLink));
     }
 
-    @Test
-    public void goToFirstLinkInBelowArticlePopular() throws Exception {
-        String articleLink = testArticle.getFirstArticleInMostPopularBelow();
-        Article popularBottomArticle = testArticle.goToFirstArticleInMostPopularBottom();
-        WaitHelper.waitForArticleLoad(driver);
-        String articleURL = popularBottomArticle.getCurrentURL();
-        Assert.assertTrue("Article headline did not match the top link in Most Popular",
-                articleLink.contentEquals(articleURL));
-    }
 
     @After
     public void tearDown() throws Exception {
