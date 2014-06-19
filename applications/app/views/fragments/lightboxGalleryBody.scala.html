@@ -5,7 +5,7 @@
     <ul class="gallery__images u-unstyled">
         @gallery.largestCrops.zipWithRowInfo.map{ case(image, row) =>
             <li class="js-gallery-item-@row.rowNum gallery__item @if(image.width > image.height){gallery__item--landscape} else {gallery__item--portrait}"
-                data-index="@row.rowNum">
+                data-index="@row.rowNum" data-test-id="gallery-image-item">
                     <figure itemprop="associatedMedia" itemtype="http://schema.org/ImageObject" itemscope>
                         <img class="gallery__img"
                              src="@image.url.map(ImgSrc(_, GallerySmallTrail)).map(Html(_))"
@@ -51,7 +51,7 @@
     </button>
 
     <button class="gallery__nav gallery__nav--next js-gallery-next"
-       data-link-name="Gallery Next"
+       data-link-name="Gallery Next" data-test-id="gallery-next"
        data-is-ajax="true">
           <span class="gallery__arrow-cta gallery__arrow-cta--right">
              <i class="i i-gallery-arrow"></i>
