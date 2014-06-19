@@ -37,7 +37,7 @@ class TestParseCollection(httpStatusCode: Int, responseString: String = "{}") ex
 
   override def requestCollection(id: String) = Future.successful(response)
   override def retrieveItemsFromCollectionJson(collectionJson: JsValue): Seq[CollectionItem] = ???
-  override val client: ContentApiClient = _
+  override val client: ContentApiClient = ???
 }
 
 class QueryTest extends FlatSpec with Matchers with ScalaFutures {
