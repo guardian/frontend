@@ -14,8 +14,8 @@ $theme: default;
 $c-navigation-background: #407dbc !default;
 $c-navigation-action: guss-colour(neutral-1) !default;
 
-$c-local-navigation-background: $c-navigation-background !default;
-$c-local-navigation-action: #ffffff !default;
+$c-local-navigation-background: guss-colour(neutral-7) !default;
+$c-local-navigation-action: guss-colour(neutral-1) !default;
 
 $c-local-navigation-parent-background: #ffffff !default;
 
@@ -99,6 +99,14 @@ $new-navigation-h-space-between-items: get-font-size($fs-headers, 1) !default;
         height: gs-height(1),
         line-height: gs-height(1)
     ));
+    a {
+        &,
+        &:hover,
+        &:active,
+        &:focus {
+            text-decoration: none;
+        }
+    }
 }
 .new-navigation__inner {
     position: relative;
@@ -144,8 +152,8 @@ $new-navigation-h-space-between-items: get-font-size($fs-headers, 1) !default;
     color: $c-navigation-action;
 }
 .local-navigation__parent {
-    display: table-cell;
     position: relative;
+    display: table-cell;
     color: $c-local-navigation-current;
     text-decoration: none;
     background: $c-local-navigation-parent-background;
@@ -154,15 +162,7 @@ $new-navigation-h-space-between-items: get-font-size($fs-headers, 1) !default;
         padding-left: $gs-gutter/2,
         margin-left: -$gs-gutter/2
     ));
-    &:after {
-        content: '';
-        position: absolute;
-        display: block;
-        top: 0;
-        right: 1px;
-        left: -1px;
-        border-top: $c-local-navigation-current-border;
-    }
+
     @include mq(mobileLandscape) {
         @include rem((
             padding-left: $gs-gutter,
@@ -176,12 +176,10 @@ $new-navigation-h-space-between-items: get-font-size($fs-headers, 1) !default;
 .local-navigation__action {
     color: $c-local-navigation-action;
     text-decoration: none;
-    position: relative;
 
     .local-navigation__child--current & {
         background: $c-local-navigation-current-background;
         color: $c-local-navigation-current;
-
         @include rem((
             padding-right: $new-navigation-h-space-between-items
         ));
@@ -237,6 +235,32 @@ $new-navigation-h-space-between-items: get-font-size($fs-headers, 1) !default;
 .global-navigation__action {
     float: left;
 }
+.new-navigation__top-hat {
+    display: block;
+    position: relative;
+    width: 100%;
+    height: 0;
+
+    &:after {
+        content: '';
+        position: absolute;
+        display: block;
+        top: 0;
+        right: 0;
+        left: 0;
+        border-top: $c-local-navigation-current-border;
+
+        .local-navigation__parent & {
+            @include rem((
+                left: -$gs-gutter,
+                right: -$new-navigation-h-space-between-items
+            ))
+        }
+        .new-navigation--expanded .local-navigation__child & {
+            display: none;
+        }
+    }
+}
 
 
 /* State: collapsed
@@ -252,6 +276,10 @@ $new-navigation-h-space-between-items: get-font-size($fs-headers, 1) !default;
     .new-navigation__scroll {
         overflow-x: scroll;
         -webkit-overflow-scrolling: touch;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
     }
 
     &,
@@ -285,17 +313,6 @@ $new-navigation-h-space-between-items: get-font-size($fs-headers, 1) !default;
         }
         &:last-child {
             padding-right: 0;
-        }
-        .local-navigation__action {
-            &:after {
-                content: '';
-                position: absolute;
-                display: block;
-                top: 0;
-                right: 1px;
-                left: -1px;
-                border-top: $c-local-navigation-current-border;
-            }
         }
     }
     .global-navigation {
@@ -432,6 +449,12 @@ $new-navigation-h-space-between-items: get-font-size($fs-headers, 1) !default;
             padding-right: $gs-gutter/2
         ));
     }
+    .local-navigation__child:last-child {
+        // Add space below the local nav (only if there is one)
+        @include rem((
+            padding-bottom: $gs-baseline
+        ));
+    }
     .local-navigation__child,
     .global-navigation__child {
         float: left;
@@ -557,19 +580,18 @@ $new-navigation-h-space-between-items: get-font-size($fs-headers, 1) !default;
     position: absolute;
     right: 0;
     top: 0;
-    min-width: 1em;
     @include box-sizing(border-box);
+    @include font-size(16, gs-height(1));
     @include rem((
         min-width: $new-navigation-toggler-width,
         padding-left: $gs-gutter/4,
-        padding-right: $gs-gutter/4
+        padding-right: $gs-gutter/4,
     ));
     background: $c-navigation-toggle-background;
     -moz-background-clip: padding-box;
     -webkit-background-clip: padding-box;
     background-clip: padding-box;
     text-align: center;
-    font-size: 36px;
     border-left: 2px solid $c-navigation-toggle-shadow;
 
     &,
@@ -588,14 +610,7 @@ $new-navigation-h-space-between-items: get-font-size($fs-headers, 1) !default;
         ));
     }
 }
-.new-navigation__toggle-label {
-    position: relative;
-    line-height: 1;
-    @include rem((
-        font-size: 16px,
-        top: -5px
-    ));
-}
+.new-navigation__toggle-label {}
 .new-navigation__toggle-label__extra {
     display: none;
 
@@ -603,14 +618,10 @@ $new-navigation-h-space-between-items: get-font-size($fs-headers, 1) !default;
         display: inline;
     }
 }
-.new-navigation__toggle-label--close {
+.new-navigation__toggle-label--close,
+.new-navigation--expanded .new-navigation__toggle-label--open {
     display: none;
 }
-.new-navigation--expanded {
-    .new-navigation__toggle-label--open {
-        display: none;
-    }
-    .new-navigation__toggle-label--close {
-        display: inline;
-    }
+.new-navigation--expanded .new-navigation__toggle-label--close {
+    display: inline;
 }
