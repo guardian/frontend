@@ -5,6 +5,7 @@ import util.Requests._
 import play.api.mvc.Controller
 import config.UpdateManager
 import play.api.libs.json.Json
+import frontpress.CollectionPressing._
 
 object CreateCollectionResponse {
   implicit val jsonFormat = Json.format[CreateCollectionResponse]
@@ -17,7 +18,9 @@ object CollectionController extends Controller {
     request.body.read[Collection] match {
       case Some(collection) =>
         val identity = Identity(request).get
-        Ok(Json.toJson(CreateCollectionResponse(UpdateManager.addCollection(collection, identity))))
+        val collectionId = UpdateManager.addCollection(collection, identity)
+        pressAndNotify(collectionId)
+        Ok(Json.toJson(CreateCollectionResponse(collectionId)))
 
       case None => BadRequest
     }
@@ -28,6 +31,7 @@ object CollectionController extends Controller {
       case Some(collection) =>
         val identity = Identity(request).get
         UpdateManager.updateCollection(collectionId, collection, identity)
+        pressAndNotify(collectionId)
         Ok
 
       case None => BadRequest

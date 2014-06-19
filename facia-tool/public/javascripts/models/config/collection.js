@@ -74,14 +74,19 @@ define([
     };
 
     Collection.prototype.save = function() {
-        if (vars.model.collections.indexOf(this) < 0) {
-            vars.model.collections.unshift(this);
-        }
         this.state.isOpen(false);
-
         this.meta.apiQuery(stripEmptyQueryParams(this.meta.apiQuery()));
         this.state.apiQueryStatus(undefined);
-        vars.model.save(this);
+
+        if (vars.model.collections.indexOf(this) === -1) {
+            vars.model.collections.unshift(this);
+
+            /** Creating a collection */
+            // BUT are we also creating a front?
+            throw 'Create collection not yet implemented';
+        } else {
+            throw 'Update collection not yet implemented';
+        }
     };
 
     Collection.prototype.checkApiQueryStatus = function() {

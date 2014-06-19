@@ -6,30 +6,15 @@ import frontsapi.model.UpdateList
 import play.api.mvc.{AnyContent, Action, Controller}
 import play.api.libs.json._
 import common.{FaciaToolMetrics, ExecutionContexts, Logging}
-import conf.{Switches, Configuration}
+import conf.Configuration
 import tools.FaciaApi
-import services.{ContentApiRefresh, ConfigAgent, ContentApiWrite, S3FrontsApi}
-import play.api.libs.ws.Response
-import scala.concurrent.Future
-import conf.Switches.ContentApiPutSwitch
+import services.{ContentApiRefresh, ConfigAgent, S3FrontsApi}
 import model.{NoCache, Cached}
 import scala.util.{Failure, Success}
 import play.api.libs.Comet
 import frontpress.{FrontPress, PressCommand}
 
 object FaciaToolController extends Controller with Logging with ExecutionContexts {
-  implicit val collectionRead = Json.reads[Collection]
-  implicit val frontRead = Json.reads[Front]
-  implicit val configRead = Json.reads[Config]
-  implicit val collectionWrite = Json.writes[Collection]
-  implicit val frontWrite= Json.writes[Front]
-  implicit val configWrite = Json.writes[Config]
-
-  implicit val updateListRead = Json.reads[UpdateList]
-  implicit val collectionMetaRead = Json.reads[CollectionMetaUpdate]
-  implicit val trailWrite = Json.writes[Trail]
-  implicit val blockWrite = Json.writes[Block]
-
   def priorities() = ExpiringAuthentication { request =>
     val identity = Identity(request).get
     Cached(60) { Ok(views.html.priority(Configuration.environment.stage, "", Option(identity))) }

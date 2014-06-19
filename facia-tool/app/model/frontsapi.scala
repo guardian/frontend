@@ -50,6 +50,20 @@ case class Config(
   collections: Map[String, Collection]
 )
 
+object Trail {
+  implicit val jsonFormat = Json.format[Trail]
+}
+
+case class Trail(
+  id: String,
+  frontPublicationDate: Option[DateTime],
+  meta: Option[Map[String, JsValue]]
+)
+
+object Block {
+  implicit val jsonFormat = Json.format[Block]
+}
+
 case class Block(
                   name: Option[String],
                   live: List[Trail],
@@ -74,14 +88,24 @@ case class Block(
 
 }
 
-case class Trail(
-                  id: String,
-                  frontPublicationDate: Option[DateTime],
-                  meta: Option[Map[String, JsValue]]
-                  )
+object UpdateList {
+  implicit val jsonFormat = Json.format[UpdateList]
+}
 
+case class UpdateList(
+  id: String,
+  item: String,
+  position: Option[String],
+  after: Option[Boolean],
+  itemMeta: Option[Map[String, JsValue]],
+  live: Boolean,
+  draft: Boolean
+)
 
-case class UpdateList(id: String, item: String, position: Option[String], after: Option[Boolean], itemMeta: Option[Map[String, JsValue]], live: Boolean, draft: Boolean)
+object CollectionMetaUpdate {
+  implicit val jsonFormat = Json.format[CollectionMetaUpdate]
+}
+
 case class CollectionMetaUpdate(
   displayName: Option[String],
   href: Option[String]

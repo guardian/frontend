@@ -5,6 +5,7 @@ import play.api.mvc.Controller
 import util.Requests._
 import play.api.libs.json.Json
 import config.UpdateManager
+import frontpress.CollectionPressing.pressAndNotify
 
 object CreateFront {
   implicit val jsonFormat = Json.format[CreateFront]
@@ -20,19 +21,14 @@ case class CreateFront(
   initialCollection: Collection
 )
 
-object CreateFrontResponse {
-  implicit val jsonFormat = Json.format[CreateFrontResponse]
-}
-
-case class CreateFrontResponse(id: String)
-
 object FrontController extends Controller {
   def create = AjaxExpiringAuthentication { request =>
     request.body.read[CreateFront] match {
       case Some(createFrontRequest) =>
         val identity = Identity(request).get
-        val id = UpdateManager.createFront(createFrontRequest, identity)
-        Ok(Json.toJson(CreateFrontResponse(id)))
+        val newCollectionId = UpdateManager.createFront(createFrontRequest, identity)
+        pressAndNotify(newCollectionId)
+        Ok
 
       case None => BadRequest
     }
