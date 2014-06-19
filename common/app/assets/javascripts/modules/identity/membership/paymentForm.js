@@ -112,8 +112,8 @@ define([
             $creditCardExpiryYearElement = this.getElement('CREDIT_CARD_EXPIRY_YEAR'),
             $formElement = $(this.context);
 
-        bean.on($creditCardNumberElement[0], 'keyup blur', function () {
-            masker(' ', 4).bind(this)();
+        bean.on($creditCardNumberElement[0], 'keyup blur', function (e) {
+            masker(' ', 4).bind(this)(e);
             stripePaymentFormClass.displayCardTypeImage($creditCardNumberElement);
         });
 
