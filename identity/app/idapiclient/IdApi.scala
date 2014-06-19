@@ -76,9 +76,9 @@ abstract class IdApi(val apiRootUrl: String, http: Http, jsonBodyParser: JsonBod
    * data to save to a subdocument in the user's record
    * The path param provides the subdocument to be saved to e.g. prefs.myApp
    */
-  def updateUser(userId: String, auth: Auth, trackingData: TrackingData, path: String, data: JValue): Future[Response[JValue]] = {
+  def updateUser(userId: String, auth: Auth, trackingData: TrackingData, path: String, data: JValue): Future[Response[User]] = {
     val pathParts = path.split('.').toList
-    post(urlJoin("user" :: userId :: pathParts : _*), Some(auth), Some(trackingData), Some(write(data))) map extract(jsonField(pathParts.head))
+    post(urlJoin("user" :: userId :: pathParts : _*), Some(auth), Some(trackingData), Some(write(data))) map extractUser
   }
 
   def updateUser(user: User, auth: Auth, trackingData: TrackingData): Future[Response[User]] =
