@@ -1,8 +1,8 @@
-@(article: Article)
+@(article: Article)(implicit request: RequestHeader)
 
 @if(article.hasMainEmbed) {
     <div class="media-primary">
-        @Html(article.main)
+        @BodyCleaner(article, article.main)
     </div>
 } else {
     @if(!article.hasVideoAtTop) {

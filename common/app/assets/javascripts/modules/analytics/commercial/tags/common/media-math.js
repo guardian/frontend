@@ -4,8 +4,8 @@ define([
     'lodash/objects/pairs'
 ], function(
     defaultConfig,
-    _defaults,
-    _pairs
+    defaults,
+    pairs
 ) {
 
     var mediaMathBaseUrl = '//pixel.mathtag.com/event/img?mt_id=328671&mt_adid=114751',
@@ -25,7 +25,7 @@ define([
 
     return {
         load: function(config) {
-            config = _defaults(
+            config = defaults(
                 config || {},
                 defaultConfig,
                 {
@@ -40,7 +40,7 @@ define([
             }
 
             var page = config.page,
-                tags = _pairs({
+                tags = pairs({
                     v1: (page.host ? page.host : '') + '/' + page.pageId,
                     v2: page.section,
                     v3: extractSearchTerm(config.referrer),

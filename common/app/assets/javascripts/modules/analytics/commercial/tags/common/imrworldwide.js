@@ -1,8 +1,20 @@
-define([], function() {
+define([
+    'common/utils/config'
+], function(
+    config
+) {
 
     function load() {
-        var d = new Image(1, 1);
-        d.src = ['//secure-uk.imrworldwide.com/cgi-bin/m?ci=uk-305078h&cg=0&cc=1&si=', encodeURI(window.location.href), '&rp=', encodeURI(document.referrer), '&ts=compact&rnd=', (new Date()).getTime()].join('');
+        if (config.switches.imrWorldwide) {
+            var img = new Image();
+            img.src = [
+                '//secure-uk.imrworldwide.com/cgi-bin/m?ci=uk-305078h&cg=0&cc=1&ts=compact',
+                '&si=', encodeURI(window.location.href),
+                '&rp=', encodeURI(document.referrer),
+                '&rnd=', (new Date()).getTime()
+            ].join('');
+            return img;
+        }
     }
 
     return {

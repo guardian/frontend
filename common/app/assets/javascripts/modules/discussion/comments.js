@@ -602,11 +602,13 @@ Comments.prototype.reportComment = function(e) {
             var category = form.elements.category,
                 comment = form.elements.comment.value;
 
-            DiscussionApi.reportComment(commentId, {
-                emailAddress: form.elements.email.value,
-                categoryId: category.value,
-                reason: comment
-            });
+            if (category.value !== '0') {
+                DiscussionApi.reportComment(commentId, {
+                    emailAddress: form.elements.email.value,
+                    categoryId: category.value,
+                    reason: comment
+                });
+            }
 
             bonzo(form).addClass('u-h');
         });
