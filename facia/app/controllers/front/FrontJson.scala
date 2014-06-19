@@ -171,8 +171,3 @@ trait FrontJson extends ExecutionContexts {
 object FrontJsonLive extends FrontJson {
   val bucketLocation: String = s"$stage/frontsapi/pressed/live"
 }
-
-object FrontJsonDraft extends FrontJson {
-  val bucketLocation: String = s"$stage/frontsapi/pressed/draft"
-}
-
