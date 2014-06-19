@@ -252,6 +252,10 @@ $new-navigation-h-space-between-items: get-font-size($fs-headers, 1) !default;
     .new-navigation__scroll {
         overflow-x: scroll;
         -webkit-overflow-scrolling: touch;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
     }
 
     &,
