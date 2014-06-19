@@ -403,7 +403,7 @@ object Switches extends Collections {
 
   val FaciaToolDraftPressSwitch = Switch("Front Press Switches", "facia-tool-press-draft-front",
     "If this switch is on facia tool will press draft fronts on each change",
-    safeState = On, sellByDate = never
+    safeState = Off, sellByDate = never
   )
 
   val FaciaToolCachedContentApiSwitch = Switch("Front Press Switches", "facia-tool-cached-capi-requests",
