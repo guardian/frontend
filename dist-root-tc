@@ -23,7 +23,7 @@ do
     mkdir -p "$app_folder/packages/frontend-static"
     mkdir -p "$app_folder/packages/$config"
 
-    cp "$config/target/universal/$config.zip"   "$app_folder/packages/$config/$config.zip"
+    mv "$config/target/universal/$config.zip"   "$app_folder/packages/$config/$config.zip"
     cp "$config/conf/deploy.json"               "$app_folder"
     cp -r static/hash/*                         "$app_folder/packages/frontend-static"
     cp static/abtests.json                      "$app_folder/packages/frontend-abtests"
@@ -31,6 +31,8 @@ do
     pushd $app_folder
     zip -r "../$config.zip" .
     popd
+
+    rm -rf $app_folder
 
     echo "##teamcity[publishArtifacts 'dist/$config.zip']"
 done

@@ -47,7 +47,7 @@
         'input invalid '                                                 + // form elements
         'touchstart touchmove touchend touchcancel '                     + // touch
         'gesturestart gesturechange gestureend '                         + // gesture
-        'textinput'                                                      + // TextEvent
+        'textinput '                                                     + // TextEvent
         'readystatechange pageshow pagehide popstate '                   + // window
         'hashchange offline online '                                     + // window
         'afterprint beforeprint '                                        + // printing

@@ -418,30 +418,33 @@ module.exports = function (grunt) {
 
         copy: {
             // 3rd party javascript applications
-            'vendor': {
-                files: [{
-                    expand: true,
-                    cwd: 'common/app/public/javascripts/vendor',
-                    src: ['**/foresee/**'],
-                    dest: staticTargetDir + 'javascripts/vendor'
-                }]
-            },
             'javascript-common': {
-                files: [{
-                    expand: true,
-                    cwd: 'common/app/public/javascripts',
-                    src: ['**/*.js'],
-                    dest: staticTargetDir + 'javascripts'
-                }]
-            },
-            'javascript-admin': {
                 files: [
                     {
                         expand: true,
-                        cwd: 'admin/public/javascripts',
-                        src: ['**/*.js'],
-                        dest: staticTargetDir + 'javascripts'
+                        cwd: 'common/app/public/javascripts/components',
+                        src: [
+                            'html5shiv/dist/html5shiv.js',
+                            'raven-js/dist/raven.js',
+                            'swipe/swipe.js',
+                            'zxcvbn/index.js'
+                        ],
+                        dest: staticTargetDir + 'javascripts/components'
                     },
+                    {
+                        expand: true,
+                        cwd: 'common/app/public/javascripts/vendor',
+                        src: [
+                            'foresee/foresee-trigger.js',
+                            'formstack-interactive/0.1/boot.js',
+                            'vast-client.js'
+                        ],
+                        dest: staticTargetDir + 'javascripts/vendor'
+                    }
+                ]
+            },
+            'javascript-admin': {
+                files: [
                     {
                         expand: true,
                         cwd: 'common/app/assets/javascripts',
@@ -532,7 +535,11 @@ module.exports = function (grunt) {
                 files: [{
                     expand: true,
                     cwd: staticTargetDir + 'javascripts',
-                    src: ['**/*.js', '!bootstraps/**/*.js', '!**/raven-js/**/*', '**/raven-js/dist/*.js'],
+                    src: [
+                        '**/*.js',
+                        '!components/curl/**/*.js',
+                        '!components/zxcvbn/**/*.js'
+                    ],
                     dest: staticTargetDir + 'javascripts'
                 }]
             }
@@ -762,7 +769,7 @@ module.exports = function (grunt) {
             },
             css: {
                 files: ['common/app/assets/stylesheets/**/*.scss'],
-                tasks: ['compile:css'],
+                tasks: ['compile:css', 'hash'],
                 options: {
                     spawn: false
                 }
@@ -867,45 +874,35 @@ module.exports = function (grunt) {
      */
     grunt.registerTask('compile:images', ['copy:images', 'shell:spriteGeneration', 'imagemin']);
     grunt.registerTask('compile:css', ['sass:compile', 'replace:cssSourceMaps', 'copy:css']);
-    grunt.registerTask('compile:js', function(app) {
-        var target = app ? ':' + app : '',
-            copyTasks = Object.keys(grunt.config('copy'))
+    grunt.registerTask('compile:js', function() {
+        // pull out copy targets that start with 'javascript-'
+        var tasks = Object.keys(grunt.config('copy'))
                 .filter(function(copyTask) {
                     return copyTask.indexOf('javascript') === 0;
                 })
                 .map(function(copyTask) {
                     return 'copy:' + copyTask;
                 });
-        if (app) {
-            var copyTask = 'copy:javascript-' + app;
-            if (copyTasks.indexOf(copyTask) > -1) {
-                grunt.task.run(copyTask);
-            }
-        } else {
-            grunt.task.run(copyTasks);
-        }
-        grunt.task.run('requirejs' + target);
+        tasks.push('requirejs');
+        grunt.task.run(tasks);
         if (!isDev) {
             grunt.task.run('uglify:components');
         }
     });
     grunt.registerTask('compile:fonts', ['mkdir:fontsTarget', 'webfontjson']);
     grunt.registerTask('compile:flash', ['copy:flash']);
-    grunt.registerTask('compile:conf', ['copy:headCss', 'copy:vendor', 'copy:assetMap']);
+    grunt.registerTask('compile:conf', ['copy:headCss', 'copy:assetMap']);
     grunt.registerTask('compile:videojs', ['shell:videojs', 'grunt:videojs']);
-    
-    grunt.registerTask('compile', function(app) {
-        grunt.task.run([
-            'compile:images',
-            'compile:css',
-            'compile:videojs',
-            'compile:js:' + (app || ''),
-            'compile:fonts',
-            'compile:flash',
-            'hash',
-            'compile:conf'
-        ]);
-    });
+    grunt.registerTask('compile', [
+        'compile:images',
+        'compile:css',
+        'compile:videojs',
+        'compile:js',
+        'compile:fonts',
+        'compile:flash',
+        'hash',
+        'compile:conf'
+    ]);
 
     /**
      * Test tasks
@@ -945,11 +942,9 @@ module.exports = function (grunt) {
             // compile just the project
             var project = filepath.split('/').shift();
             grunt.task.run('requirejs:' + project);
-        }
-        // TODO: decouple moving of files from hashing
-        //if (!isDev) {
+            // TODO: decouple moving of files from hashing
             grunt.task.run('hash');
-        //}
+        }
     });
 
 };

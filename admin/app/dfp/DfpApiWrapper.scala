@@ -14,6 +14,9 @@ object DfpApiWrapper extends Logging {
   private def lineItemService(session: DfpSession): LineItemServiceInterface =
     dfpServices.get(session, classOf[LineItemServiceInterface])
 
+  private def customFieldService(session: DfpSession): CustomFieldServiceInterface =
+    dfpServices.get(session, classOf[CustomFieldServiceInterface])
+
   private def customTargetingService(session: DfpSession): CustomTargetingServiceInterface =
     dfpServices.get(session, classOf[CustomTargetingServiceInterface])
 
@@ -44,6 +47,34 @@ object DfpApiWrapper extends Logging {
     } catch {
       case e: Exception =>
         log.error(s"Exception fetching line items: $e")
+        Nil
+    }
+  }
+
+  def fetchCustomFields(session: DfpSession, statementBuilder: StatementBuilder): Seq[CustomField] = {
+
+    val service = customFieldService(session)
+    statementBuilder.limit(StatementBuilder.SUGGESTED_PAGE_LIMIT)
+
+    def fetch(soFar: Seq[CustomField]): Seq[CustomField] = {
+      val page = service.getCustomFieldsByStatement(statementBuilder.toStatement)
+      val pageResults = Option(page.getResults) map (_.toSeq) getOrElse Nil
+      val totalResultSetSize = page.getTotalResultSetSize
+      val resultsSoFar = soFar ++ pageResults
+
+      if (resultsSoFar.size < totalResultSetSize) {
+        statementBuilder.increaseOffsetBy(StatementBuilder.SUGGESTED_PAGE_LIMIT)
+        fetch(resultsSoFar)
+      } else {
+        resultsSoFar
+      }
+    }
+
+    try {
+      fetch(Nil)
+    } catch {
+      case e: Exception =>
+        log.error(s"Exception fetching custom fields: $e")
         Nil
     }
   }
