@@ -11,7 +11,7 @@
                             <div class="local-navigation">
                                 @* current top link (if any) *@
                                 @topLevelSelected.map {section =>
-                                    <a class="local-navigation__parent" href="@section.name.href">@section.name.title</a>
+                                    <a class="local-navigation__parent" href="@section.name.href"><span class="new-navigation__top-hat"></span>@section.name.title</a>
                                 }
 
                                 @* second level nav *@
@@ -22,6 +22,7 @@
                                             @* current second level link (if any) *@
                                             @currentSublink.map {s =>
                                                 <li class="local-navigation__child local-navigation__child--current">
+                                                    <span class="new-navigation__top-hat"></span>
                                                     <a class="local-navigation__action" href="@s.href">@s.title</a>
                                                 </li>
                                             }
