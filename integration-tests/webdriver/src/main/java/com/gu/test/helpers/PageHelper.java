@@ -18,19 +18,19 @@ public class PageHelper {
     }
 
     public FrontPage goToFronts() {
-            String frontPageURL = this.getBaseUrl() + betaSite;
+        String frontPageURL = this.getBaseUrl() + betaSite;
         driver.get(frontPageURL);
         return new FrontPage(driver);
     }
 
-    public Article goToArticle(String article){
-            driver.get(this.baseUrl + article);
+    public Article goToArticle(String article) {
+        driver.get(this.baseUrl + article);
         WaitHelper.waitForArticleLoad(driver);
         return new Article(driver);
     }
 
     public FrontPage goToFrontsForTracking() {
-            String frontPageURL = "http://www.theguardian.com/uk?view=mobile";
+        String frontPageURL = "http://www.theguardian.com/uk?view=mobile";
         driver.get(frontPageURL);
         return new FrontPage(driver);
     }
