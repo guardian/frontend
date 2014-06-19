@@ -21,7 +21,8 @@ We use [Bower](https://github.com/twitter/bower) to handle our JS dependencies. 
  
     $ bower list
 
-NOTE: We've removed qwery from out bower.json, as we wan't it locked to a 3.x version (4.x doesn't support IE8)
+NOTE: We're locking down Qwery to the last 3.x version, as 4 doesn't support <= IE8, i.e. DO NOT UPGRADE QWERY PAST
+VERSION 3
     
     
 ## Analaytics and ad tags
