@@ -54,7 +54,6 @@ module.exports = function (grunt) {
                     omniture:     '../../../../common/app/assets/javascripts/components/omniture/omniture',
                     fence:        '../../../../common/app/assets/javascripts/components/fence/fence',
                     enhancer:     '../../../../common/app/assets/javascripts/components/enhancer/enhancer'
-
                 },
                 optimize: 'uglify2',
                 generateSourceMaps: true,
@@ -126,7 +125,8 @@ module.exports = function (grunt) {
                         vast: '../../../../common/app/public/javascripts/vendor/vast-client',
                         videojs: 'components/videojs/dist/video-js/video',
                         videojsads: 'components/videojs-contrib-ads/src/videojs.ads',
-                        videojsvast: 'components/videojs-vast/videojs.vast'
+                        videojsvast: 'components/videojs-vast/videojs.vast',
+                        videojspersistvolume: 'components/videojs-persistvolume/videojs.persistvolume'
                     },
                     shim: {
                         vast: {
@@ -762,7 +762,7 @@ module.exports = function (grunt) {
             },
             css: {
                 files: ['common/app/assets/stylesheets/**/*.scss'],
-                tasks: ['compile:css'],
+                tasks: ['compile:css', 'hash'],
                 options: {
                     spawn: false
                 }
@@ -893,7 +893,7 @@ module.exports = function (grunt) {
     grunt.registerTask('compile:flash', ['copy:flash']);
     grunt.registerTask('compile:conf', ['copy:headCss', 'copy:vendor', 'copy:assetMap']);
     grunt.registerTask('compile:videojs', ['shell:videojs', 'grunt:videojs']);
-    
+
     grunt.registerTask('compile', function(app) {
         grunt.task.run([
             'compile:images',
@@ -945,11 +945,9 @@ module.exports = function (grunt) {
             // compile just the project
             var project = filepath.split('/').shift();
             grunt.task.run('requirejs:' + project);
-        }
-        // TODO: decouple moving of files from hashing
-        //if (!isDev) {
+            // TODO: decouple moving of files from hashing
             grunt.task.run('hash');
-        //}
+        }
     });
 
 };

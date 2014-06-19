@@ -1,41 +1,42 @@
 define([
     'common/utils/cookies',
-    'common/utils/storage'
+    'common/utils/storage',
+    'common/utils/config'
 ], function(
-    Cookies,
-    storage
+    cookies,
+    storage,
+    config
 ) {
 
-    var revenueScienceUrl = 'js!http://js.revsci.net/gateway/gw.js?csid=E05516';
+    var revenueScienceUrl = '//js.revsci.net/gateway/gw.js?csid=E05516';
 
     function getSegments() {
         var segments = storage.local.get('gu.ads.audsci');
         return (segments) ? segments.slice(0, 40) : [];
     }
 
-    function load(config) {
-        // Audience Science calls these functions on window.
-        window.DM_prepClient = function(csid, client) {
-            client.DM_addEncToLoc('siteName', '');
-            client.DM_addEncToLoc('comFolder', '');
-            client.DM_addEncToLoc('mobile', true);
+    function load() {
+        if (config.switches.audienceScience) {
+            // Audience Science calls these functions on window.
+            window.DM_prepClient = function (csid, client) {
+                client.DM_addEncToLoc('siteName', '');
+                client.DM_addEncToLoc('comFolder', '');
+                client.DM_addEncToLoc('mobile', true);
 
-            if(config.audienceScienceData) {
-                for(var i = 0, j = config.audienceScienceData.length; i<j; ++i) {
-                    var item = config.audienceScienceData[i];
+                config.page.audienceScienceData.forEach(function (item) {
                     client.DM_addEncToLoc(item.name, item.value);
-                }
-            }
-        };
-        window.DM_onSegsAvailable = function(segments) {
-            storage.local.set('gu.ads.audsci', processSegments(segments));
-            // Kill any legacy cookies
-            Cookies.cleanUp(['rsi_segs']);
-        };
-        // Then load audsci to get latests segments.
-        require([revenueScienceUrl], function() {
-            window.E05516.DM_tag();
-        });
+                });
+            };
+            window.DM_onSegsAvailable = function (segments) {
+                storage.local.set('gu.ads.audsci', processSegments(segments));
+                // Kill any legacy cookies
+                cookies.cleanUp(['rsi_segs']);
+            };
+            // Then load audsci to get latests segments.
+            return require(['js!' + revenueScienceUrl + '!exports=rsi_now'], function () {
+                window.E05516.DM_tag();
+            });
+        }
     }
 
     // This is replicating what Audience Science do when they set a cookie.
