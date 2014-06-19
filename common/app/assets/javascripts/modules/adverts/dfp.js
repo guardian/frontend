@@ -46,7 +46,8 @@ define([
      *
      * Create a new ad slot using the following code:
      *
-     * <div class="ad-slot__dfp AD_SLOT_CLASS" data-name="AD_SLOT_NAME" data-mobile="300,50|320,50" data-desktop="300,250" data-refresh="false" data-label="false">
+     * <div class="ad-slot__dfp AD_SLOT_CLASS" data-name="AD_SLOT_NAME" data-mobile="300,50|320,50"
+     *      data-desktop="300,250" data-refresh="false" data-label="false">
      *     <div id="SLOT_ID" class="ad-container"></div>
      * </div>
      *
@@ -256,6 +257,7 @@ define([
                 ct      : contentType,
                 pt      : contentType,
                 p       : 'ng',
+                k       : parseKeywords(conf.keywordIds || conf.pageId),
                 bp      : detect.getBreakpoint(),
                 a       : audienceScience.getSegments(),
                 at      : cookies.get('adtest') || '',
@@ -292,8 +294,8 @@ define([
             }
             return $adSlot[0];
         },
-        getKeywords = function($adSlot, conf) {
-            return ($adSlot.data('keywords') || conf.page.keywordIds || conf.page.pageId || '')
+        parseKeywords = function(keywords) {
+            return (keywords || '')
                 .split(',').map(function (keyword) {
                     return keyword.split('/').pop();
                 });
@@ -338,8 +340,11 @@ define([
                             ? googletag.defineOutOfPageSlot(adUnit, id) : googletag.defineSlot(adUnit, size, id))
                         .addService(googletag.pubads())
                         .defineSizeMapping(sizeMapping)
-                        .setTargeting('k', getKeywords($adSlot, config))
                         .setTargeting('slot', $adSlot.data('name'));
+
+                if ($adSlot.data('keywords')) {
+                    slot.setTargeting('k', parseKeywords($adSlot.data('keywords')));
+                }
 
                 // Add to the array of ads to be refreshed (when the breakpoint changes)
                 // only if it's `data-refresh` attribute isn't set to false.

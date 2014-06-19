@@ -1,8 +1,10 @@
 define([
+    'bonzo',
     'common/$',
     'lodash/functions/once',
     'common/modules/adverts/dfp'
 ], function (
+    bonzo,
     $,
     once,
     dfp
@@ -11,9 +13,14 @@ define([
     return {
 
         init: once(function(config) {
-            var $containers = $('.facia-container section.container');
-            if($containers.length < 4 && !config.page.hasPageSkin) {
-                return $containers.first().after(dfp.createAdSlot('merchandising-high', 'commercial-component-high'));
+            if (config.page.isFront && !config.page.hasPageSkin) {
+                var $adSlot = bonzo(dfp.createAdSlot('merchandising-high', 'commercial-component-high')),
+                    $containers = $('.container');
+                if ($containers.length < 4) {
+                    return $adSlot.insertAfter($containers[0]);
+                } else {
+                    return $adSlot.insertAfter($containers[2]);
+                }
             }
         })
 

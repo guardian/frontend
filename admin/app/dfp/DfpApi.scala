@@ -8,8 +8,9 @@ import com.google.api.ads.dfp.axis.v201403.{LineItem => DfpApiLineItem}
 import com.google.api.ads.dfp.lib.client.DfpSession
 import common.Logging
 import conf.AdminConfiguration
+import implicits.Collections
 
-object DfpApi extends Logging {
+object DfpApi extends Logging with Collections{
 
   private lazy val dfpSession: Option[DfpSession] = try {
     for {
@@ -65,52 +66,51 @@ object DfpApi extends Logging {
 
   def fetchAdUnitsThatAreTargettedByPageSkins(lineItems: Seq[DfpApiLineItem]): Seq[String] = dfpSession.fold(Seq[String]()) { session =>
 
-    val allAdUnitIds: Seq[String] = onlyWithPageSkins(lineItems).flatMap { item =>
+    val idsForAdUnitsWithPageSkins: Seq[String] = onlyWithPageSkins(lineItems).flatMap { item =>
       item.getTargeting.getInventoryTargeting.getTargetedAdUnits.toList.map(item => item.getAdUnitId)
     }.distinct
 
-    val adUnits: Seq[AdUnit] = getAdUnitsForTheseIds(allAdUnitIds)
+    val adUnits: Seq[AdUnit] = getAdUnitsForTheseIds(idsForAdUnitsWithPageSkins)
 
     // we don't serve pageskins to anything other than fronts.
     val validAdUnits: Seq[AdUnit] = adUnits.filter(_.getName == "front")
 
     validAdUnits.map(unit => {
-      def removeCustomerIdentifierFromPath(i: AdUnit) = i.getParentPath.tail
+      def removeDfpCustomerIdentifierFromPath(i: AdUnit) = i.getParentPath.tail
 
-      val adUnitPathElements = removeCustomerIdentifierFromPath(unit).map(_.getName) :+ unit.getName
+      val adUnitPathElements = removeDfpCustomerIdentifierFromPath(unit).map(_.getName) :+ unit.getName
       adUnitPathElements.mkString("/")
     })
   }
 
   def getAdUnitsForTheseIds(adUnitIds: Seq[String]): Seq[AdUnit] = dfpSession.fold(Seq[AdUnit]()) { session =>
-    val statement: String = "id IN ('" + adUnitIds.mkString("', '") + "')"
     val adUnitTargetingQuery: StatementBuilder = new StatementBuilder()
-      .where(statement)
+      .where("id IN " + adUnitIds.toStringWithRoundBrackets)
 
     DfpApiWrapper.fetchAdUnitTargetingObjects(session, adUnitTargetingQuery)
   }
 
-  def wrapIntoDomainLineItem(lineItems: Seq[DfpApiLineItem]): Seq[LineItem] = dfpSession.fold(Seq[LineItem]()) { session =>
-    val customTargetingKeys = new StatementBuilder()
-      .where("displayName = :keywordTargetName OR displayName = :slotTargetName")
-      .withBindVariableValue("keywordTargetName", "Keywords")
-      .withBindVariableValue("slotTargetName", "Slot")
+  def hydrateWithUsefulValues(lineItems: Seq[DfpApiLineItem]): Seq[LineItem] = dfpSession.fold(Seq[LineItem]()) { session =>
+    val namesOfRelevantTargetingKeys: List[String] = List("Keywords", "Slot", "Series")
+    val getRelevantTargetingKeyObjects = new StatementBuilder()
+      .where("displayName IN " + namesOfRelevantTargetingKeys.toStringWithRoundBrackets)
 
-    val targetingKeys = DfpApiWrapper.fetchCustomTargetingKeys(session, customTargetingKeys).map { k =>
+    val relevantTargetingKeys = DfpApiWrapper.fetchCustomTargetingKeys(session, getRelevantTargetingKeyObjects).map { k =>
       k.getId.longValue() -> k.getName
     }.toMap
 
-    val targetingKeysStatement = "('" + targetingKeys.map(_._1).mkString("', '") + "')"
-    val customTargetingValues = new StatementBuilder()
-      .where("customTargetingKeyId IN " + targetingKeysStatement )
+    val idsOfRelevantTargetingKeys: Seq[String] = relevantTargetingKeys.map(_._1.toString).toSeq
 
-    val targetingValues = DfpApiWrapper.fetchCustomTargetingValues(session, customTargetingValues).map { v =>
+    val getAllRelevantCustomTargetingValues = new StatementBuilder()
+      .where("customTargetingKeyId IN " + idsOfRelevantTargetingKeys.toStringWithRoundBrackets)
+
+    val relevantTargetingValues = DfpApiWrapper.fetchCustomTargetingValues(session, getAllRelevantCustomTargetingValues).map { v =>
       v.getId.longValue() -> v.getName
     }.toMap
 
     lineItems.filter { lineItem =>
       lineItem.getTargeting != null && lineItem.getTargeting.getCustomTargeting != null
-    } flatMap (lineItem => addTargetSets(lineItem, targetingKeys, targetingValues))
+    } flatMap (lineItem => addTargetSets(lineItem, relevantTargetingKeys, relevantTargetingValues))
   }
 
   private def addTargetSets(lineItem: DfpApiLineItem,
@@ -150,11 +150,11 @@ object DfpApi extends Logging {
     }
   }
 
-  def fetchSponsoredKeywords(lineItems: Seq[LineItem]): Seq[String] = {
-    lineItems flatMap (_.sponsoredKeywords)
+  def filterOutSponsoredTagsFrom(lineItems: Seq[LineItem]): Seq[String] = {
+    lineItems flatMap (_.sponsoredTags)
   }
 
-  def fetchAdvertisementFeatureKeywords(lineItems: Seq[LineItem]): Seq[String] = {
-    lineItems flatMap (_.advertisementFeatureKeywords)
+  def filterOutAdvertisementFeatureTagsFrom(lineItems: Seq[LineItem]): Seq[String] = {
+    lineItems flatMap (_.advertisementFeatureTags)
   }
 }

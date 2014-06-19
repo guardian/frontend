@@ -46,7 +46,7 @@ define([
         var conf = options.config.page || {};
 
         this.pageId             = conf.pageId;
-        this.keywords           = conf.keywords || '';
+        this.keywordIds         = conf.keywordIds || '';
         this.section            = conf.section;
         this.host               = conf.ajaxUrl + '/commercial/';
         this.desktopUserVariant = conf.ab_commercialInArticleDesktop || '';
@@ -95,10 +95,14 @@ define([
 
     Component.define(Loader);
 
-    Loader.prototype.getKeywords = function() {
-        return this.keywords.split(',').map(function(keyword){
-           return 'k=' + encodeURIComponent(keyword.replace(/\s/g, '-').toLowerCase());
-        }).join('&');
+    Loader.prototype.getKeywords = function () {
+        if (this.keywordIds) {
+            return this.keywordIds.split(',').map(function (keywordId) {
+                return 'k=' + encodeURIComponent(keywordId.split('/').pop());
+            }).join('&');
+        } else {
+            return this.pageId.split('/').pop();
+        }
     };
 
     /**

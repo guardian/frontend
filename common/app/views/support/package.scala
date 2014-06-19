@@ -1,13 +1,13 @@
 package views.support
 
 import common._
-import conf.Switches.{ ShowAllArticleEmbedsSwitch, TagLinkingSwitch, FeaturesAutoContainerSwitch }
+import conf.Switches.{ ShowAllArticleEmbedsSwitch, TagLinkingSwitch }
 import model._
 
 import java.net.URLEncoder._
 import org.apache.commons.lang.StringEscapeUtils
 import org.jboss.dna.common.text.Inflector
-import org.joda.time.DateTime
+import org.joda.time.{DateMidnight, DateTime}
 import org.joda.time.format.DateTimeFormat
 import org.jsoup.Jsoup
 import org.jsoup.nodes.{ Element, Document }
@@ -222,6 +222,17 @@ case class VideoEmbedCleaner(contentVideos: Seq[VideoElement]) extends HtmlClean
       val mediaId = element.attr("data-media-id")
       val asset = findVideoFromId(mediaId)
 
+      element.getElementsByTag("source").remove()
+
+      val sourceHTML: String = getVideoAssets(mediaId).map { videoAsset =>
+        (videoAsset.url, videoAsset.mimeType) match {
+          case (Some(url), Some(mimeType)) => s"""<source src="${url}" type="${mimeType}"></source>"""
+          case _ =>
+        }
+      }.mkString("")
+
+      element.append(sourceHTML)
+
       // add the poster url
       asset.flatMap(_.image).flatMap(Item640.bestFor).map(_.toString()).foreach{ url =>
         element.attr("poster", url)
@@ -242,9 +253,9 @@ case class VideoEmbedCleaner(contentVideos: Seq[VideoElement]) extends HtmlClean
     document
   }
 
-  def findVideoFromId(id:String): Option[VideoAsset] = {
-    contentVideos.filter(_.id == id).flatMap(_.videoAssets).find(_.mimeType == Some("video/mp4"))
-  }
+  def getVideoAssets(id:String): Seq[VideoAsset] = contentVideos.filter(_.id == id).flatMap(_.videoAssets)
+
+  def findVideoFromId(id:String): Option[VideoAsset] = getVideoAssets(id).find(_.mimeType == Some("video/mp4"))
 }
 
 case class PictureCleaner(contentImages: Seq[ImageElement]) extends HtmlCleaner with implicits.Numbers {
@@ -652,6 +663,8 @@ object Format {
     val timezone = Edition(request).timezone
     date.toString(DateTimeFormat.forPattern(pattern).withZone(timezone))
   }
+
+  def apply(date: DateMidnight, pattern: String)(implicit request: RequestHeader): String = this(date.toDateTime, pattern)(request)
 
   def apply(a: Int): String = new DecimalFormat("#,###").format(a)
 }

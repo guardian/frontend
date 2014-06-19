@@ -11,7 +11,8 @@ define([
     'common/modules/discussion/api',
     'common/modules/discussion/comments',
     'common/modules/discussion/top-comments',
-    'common/modules/discussion/comment-box'
+    'common/modules/discussion/comment-box',
+    'common/modules/discussion/activity-stream'
 ], function(
     $,
     ajax,
@@ -25,14 +26,15 @@ define([
     DiscussionApi,
     Comments,
     TopComments,
-    CommentBox
+    CommentBox,
+    ActivityStream
 ) {
 
 /**
  * We have a few rendering hacks in here
  * We'll move the rendering to the play app once we
  * have the discussion stack up that can read cookies
- * This is true for the comment-box / sigin / closed discussion
+ * This is true for the comment-box / signin / closed discussion
  * And also the premod / banned state of the user
  * @constructor
  * @extends Component
@@ -145,7 +147,11 @@ Loader.prototype.loadComments = function(args) {
     var self = this,
         commentsContainer = this.getElem('commentsContainer'),
         commentsElem = this.getElem('comments'),
-        loadingElem = bonzo.create('<div class="preload-msg">Loading comments…<div class="is-updating"></div></div>')[0],
+        loadingElem = bonzo.create(
+            '<div class="preload-msg d-discussion__loader--comments">'+
+                'Loading comments…'+
+                '<div class="is-updating"></div>'+
+            '</div>')[0],
         commentId = this.getCommentIdFromHash(),
         showComments = args.showLoader || commentId || window.location.hash === '#comments';
 
@@ -155,7 +161,7 @@ Loader.prototype.loadComments = function(args) {
     }
 
     bonzo(self.topLoadingElem).addClass('u-h');
-    bonzo(loadingElem).insertAfter(commentsElem);
+    bonzo(loadingElem).insertAfter(commentsContainer);
 
     if (commentId) {
         this.mediator.emit('discussion:seen:comment-permalink');
@@ -173,7 +179,7 @@ Loader.prototype.loadComments = function(args) {
     // Within comments there is adding of reply buttons etc
     this.comments.fetch(commentsElem)
         .then(function killLoadingMessage() {
-            bonzo(loadingElem).remove();
+            bonzo(loadingElem).addClass('u-h');
             self.renderCommentBar(self.user);
 
             if (showComments) {
@@ -187,7 +193,56 @@ Loader.prototype.loadComments = function(args) {
                 self.cleanUpOnShowComments();
             });
             bonzo(commentsContainer).removeClass('js-hidden');
+            self.initUnthreaded();
         }).fail(self.loadingError.bind(self));
+};
+
+Loader.prototype.initUnthreaded = function() {
+    var self = this;
+    // Non threaded view
+    var $discussionContainer = $('.js-discussion-container', this.elem),
+        $nonThreadedContainer = $('.js-discussion__non-threaded', this.elem),
+        $loader = $('.d-discussion__loader--comments', this.elem),
+        $state = $('.discussion__show-threaded-state', this.elem);
+
+    this.on('click', '.js-show-threaded', function(e) {
+        var $el = bonzo(e.currentTarget);
+
+        $state.toggleClass('u-h');
+        $nonThreadedContainer.toggleClass('u-h');
+        $discussionContainer.toggleClass('u-h');
+
+        if (!$el.data('loaded')) {
+            var activityStream = new ActivityStream();
+
+            $el.data('loaded', true);
+            $loader.removeClass('u-h');
+            activityStream.endpoint = '/discussion/non-threaded'+ this.getDiscussionId() + '.json';
+            activityStream
+                .fetch($nonThreadedContainer[0])
+                .then(function() {
+                    $loader.addClass('u-h');
+                });
+        }
+    });
+
+    this.on('click', '.js-comment-permalink', function(e) {
+        var promise = self.comments.gotoComment(e.currentTarget.getAttribute('data-comment-id'));
+        e.preventDefault();
+        $nonThreadedContainer.addClass('u-h');
+        $state.removeClass('u-h');
+        self.comments.showHiddenComments();
+
+        if (promise) {
+            $loader.removeClass('u-h');
+            promise.then(function() {
+                $loader.addClass('u-h');
+                $discussionContainer.removeClass('u-h');
+            });
+        } else {
+            $discussionContainer.removeClass('u-h');
+        }
+    });
 };
 
 /** @return {Reqwest|null} */

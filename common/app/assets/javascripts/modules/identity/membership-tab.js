@@ -16,6 +16,7 @@ define(['common/$',
     Component.define(Membership);
 
     Membership.prototype.classes = {
+        TAB: 'js-membership-tab',
         TAB_BUTTON: 'js-memebership-tab-button',
         TAB_CONTAINER: 'js-memebership-tab-container',
         TIER: 'js-membership-tier',
@@ -110,7 +111,7 @@ define(['common/$',
      *   Load the css file containing the base64 encoded sprites for the card icons
      */
     Membership.prototype.addSpriteCss = function () {
-        var spriteSheetUrl = config.page.idUrl+'/assets/stylesheets/membership-icons.css';
+        var spriteSheetUrl = config.page.idUrl + $(this.getClass('TAB')).data('sprite-url');
         var $head  = $('head');
         var link  = document.createElement('link');
         link.id   = 'membership-sprite';

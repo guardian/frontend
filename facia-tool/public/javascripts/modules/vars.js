@@ -16,7 +16,7 @@ define([
             {name: 'news/people'},
             {name: 'news/special'},
             {name: 'features'},
-            {name: 'features/auto'}, // Behind FeaturesAutoContainerSwitch
+            {name: 'features/auto'},
             {name: 'features/multimedia'},
             {name: 'comment/comment-and-debate'}
         ],

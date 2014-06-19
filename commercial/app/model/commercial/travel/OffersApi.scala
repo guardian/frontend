@@ -17,14 +17,14 @@ object OffersApi extends XmlAdsApi[Offer] {
 
   private val dateFormat = DateTimeFormat.forPattern("dd-MMM-yyyy")
 
-  private def buildOffer(id: Int, node: Node): Offer = {
+  private def buildOffer(node: Node): Offer = {
 
     def textValue(nodeName: String): String = (node \ nodeName).text.trim()
 
     def textValues(nodeName: String): List[String] = (node \ nodeName).map(_.text.trim()).toList
 
     Offer(
-      id,
+      textValue("prodId").toInt,
       textValue("prodName"),
       textValue("prodUrl"),
       textValue("prodImage"),
@@ -39,9 +39,5 @@ object OffersApi extends XmlAdsApi[Offer] {
     )
   }
 
-  def parse(xml: Elem): Seq[Offer] = {
-    (xml \\ "offer").zipWithIndex map {
-      case (offerXml, idx) => buildOffer(idx, offerXml)
-    }
-  }
+  def parse(xml: Elem): Seq[Offer] = (xml \\ "offer") map buildOffer
 }

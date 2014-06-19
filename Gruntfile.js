@@ -53,9 +53,7 @@ module.exports = function (grunt) {
                     imager:       '../../../../common/app/assets/javascripts/components/imager.js/src/strategies/container',
                     omniture:     '../../../../common/app/assets/javascripts/components/omniture/omniture',
                     fence:        '../../../../common/app/assets/javascripts/components/fence/fence',
-                    enhancer:     '../../../../common/app/assets/javascripts/components/enhancer/enhancer',
-                    'ophan/ng':   'empty:',
-                    googletag:    'empty:'
+                    enhancer:     '../../../../common/app/assets/javascripts/components/enhancer/enhancer'
                 },
                 optimize: 'uglify2',
                 generateSourceMaps: true,
@@ -115,10 +113,39 @@ module.exports = function (grunt) {
                         omniture: {
                             exports: 's'
                         }
-                    },
-                    wrap: {
-                        startFile: 'common/app/assets/javascripts/components/curl/dist/curl-with-js-and-domReady/curl.js'
                     }
+                }
+            },
+            video : {
+                options: {
+                    baseUrl: 'common/app/assets/javascripts',
+                    name: 'bootstraps/video-player',
+                    out: staticTargetDir + 'javascripts/bootstraps/video-player.js',
+                    paths: {
+                        vast: '../../../../common/app/public/javascripts/vendor/vast-client',
+                        videojs: 'components/videojs/dist/video-js/video',
+                        videojsads: 'components/videojs-contrib-ads/src/videojs.ads',
+                        videojsvast: 'components/videojs-vast/videojs.vast',
+                        videojspersistvolume: 'components/videojs-persistvolume/videojs.persistvolume'
+                    },
+                    shim: {
+                        vast: {
+                            exports: 'DMVAST'
+                        },
+                        videojs: {
+                            exports: 'videojs'
+                        },
+                        videojsads: {
+                            deps: ['videojs']
+                        },
+                        videojsvast :{
+                             deps: ['vast', 'videojs']
+                        }
+                    },
+                    wrapShim: true,
+                    optimize: 'none',
+                    generateSourceMaps: true,
+                    preserveLicenseComments: false
                 }
             }
         },
@@ -336,9 +363,7 @@ module.exports = function (grunt) {
             spriteGeneration: {
                 command: [
                     'cd tools/sprites/',
-                    'node spricon.js global-icon-config.json',
-                    'node spricon.js commercial-icon-config.json',
-                    'node spricon.js membership-icon-config.json'
+                    'find . -name \'*.json\' -exec node spricon.js {} \\;'
                 ].join('&&'),
                 options: {
                     stdout: true,
@@ -366,6 +391,18 @@ module.exports = function (grunt) {
                     stdout: true,
                     stderr: true,
                     failOnError: true
+                }
+            },
+
+            videojs: {
+                command: 'npm install',
+                options: {
+                    stdout: true,
+                    stderr: true,
+                    failOnError: true,
+                    execOptions: {
+                        cwd: 'common/app/assets/javascripts/components/videojs'
+                    }
                 }
             }
         },
@@ -398,12 +435,20 @@ module.exports = function (grunt) {
                 }]
             },
             'javascript-admin': {
-                files: [{
-                    expand: true,
-                    cwd: 'admin/public/javascripts',
-                    src: ['**/*.js'],
-                    dest: staticTargetDir + 'javascripts'
-                }]
+                files: [
+                    {
+                        expand: true,
+                        cwd: 'admin/public/javascripts',
+                        src: ['**/*.js'],
+                        dest: staticTargetDir + 'javascripts'
+                    },
+                    {
+                        expand: true,
+                        cwd: 'common/app/assets/javascripts',
+                        src: 'components/curl/dist/curl-with-js-and-domReady/curl.js',
+                        dest: staticTargetDir + 'javascripts'
+                    }
+                ]
             },
             css: {
                 files: [{
@@ -487,7 +532,7 @@ module.exports = function (grunt) {
                 files: [{
                     expand: true,
                     cwd: staticTargetDir + 'javascripts',
-                    src: ['**/*.js', '!bootstraps/**/*.js'],
+                    src: ['**/*.js', '!bootstraps/**/*.js', '!**/raven-js/**/*', '**/raven-js/dist/*.js'],
                     dest: staticTargetDir + 'javascripts'
                 }]
             }
@@ -709,8 +754,8 @@ module.exports = function (grunt) {
         // Recompile on change
         watch: {
             js: {
-                files: ['common/app/{assets, public}/javascripts/**/*.js'],
-                tasks: ['compile:js'],
+                // using watch event to just compile changed project
+                files: ['*/app/{assets, public}/javascripts/**/*.js', '!**/components/**'],
                 options: {
                     spawn: false
                 }
@@ -767,6 +812,12 @@ module.exports = function (grunt) {
                     }
                 ]
             }
+        },
+
+        grunt: {
+            videojs: {
+                gruntfile: 'common/app/assets/javascripts/components/videojs/Gruntfile.js'
+            }
         }
     });
 
@@ -792,132 +843,113 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-asset-monitor');
     grunt.loadNpmTasks('grunt-text-replace');
     grunt.loadNpmTasks('grunt-reloadlet');
+    grunt.loadNpmTasks('grunt-grunt');
     grunt.loadNpmTasks('grunt-pagespeed');
 
-    grunt.registerTask('default', ['compile', 'test', 'analyse']);
+    // Default task
+    grunt.registerTask('default', ['clean', 'validate', 'compile', 'test', 'analyse']);
 
+    /**
+     * Validate tasks
+     */
     grunt.registerTask('validate:css', ['sass:compile']);
     grunt.registerTask('validate:sass', ['scsslint']);
     grunt.registerTask('validate:js', function(app) {
-        if (!app) {
-            grunt.task.run('jshint');
-        } else {
-            // target exist?
-            if (grunt.config('jshint')[app]) {
-                grunt.task.run('jshint:' + app);
-            }
-        }
+        var target = (app) ? ':' + app : '';
+        grunt.task.run('jshint' + target);
     });
     grunt.registerTask('validate', function(app) {
-        grunt.task.run([
-            'validate:css',
-            'validate:sass',
-            'validate:js:' + (app || '')
-        ]);
+        grunt.task.run(['validate:css', 'validate:sass', 'validate:js:' + (app || '')]);
     });
 
-    // Compile tasks
-    grunt.registerTask('compile:images', ['generate:images', 'hash']);
-    grunt.registerTask('generate:images', ['clean:images', 'copy:images', 'shell:spriteGeneration', 'imagemin']);
-
-    grunt.registerTask('compile:css', ['generate:css', 'hash']);
-    grunt.registerTask('generate:css', ['clean:css', 'sass:compile', 'replace:cssSourceMaps', 'copy:css']);
-
+    /**
+     * Compile tasks
+     */
+    grunt.registerTask('compile:images', ['copy:images', 'shell:spriteGeneration', 'imagemin']);
+    grunt.registerTask('compile:css', ['sass:compile', 'replace:cssSourceMaps', 'copy:css']);
     grunt.registerTask('compile:js', function(app) {
+        var target = app ? ':' + app : '',
+            copyTasks = Object.keys(grunt.config('copy'))
+                .filter(function(copyTask) {
+                    return copyTask.indexOf('javascript') === 0;
+                })
+                .map(function(copyTask) {
+                    return 'copy:' + copyTask;
+                });
         if (app) {
-            grunt.task.run('generate:js:' + app);
+            var copyTask = 'copy:javascript-' + app;
+            if (copyTasks.indexOf(copyTask) > -1) {
+                grunt.task.run(copyTask);
+            }
         } else {
-            grunt.task.run('generate:js');
+            grunt.task.run(copyTasks);
         }
-        grunt.task.run('hash');
-    });
-    grunt.registerTask('generate:js', function(app) {
-        grunt.task.run(['clean:js']);
-        var apps = ['common', 'ophan'];
-        if (!app || app === 'preview') { // if no app supplied, compile all apps ('preview' is an amalgamation of other apps)
-            apps = apps.concat(Object.keys(grunt.config('requirejs')).filter(function(app) { return ['options', 'common', 'ophan'].indexOf(app) === -1; }));
-        } else if (app !== 'common' && app !== 'ophan') {
-            if (grunt.config('requirejs')[app]) {
-                apps.push(app);
-            } else {
-                grunt.log.warn('No compile target for app "' + app + '"');
-            }
-        }
-        apps.forEach(function(app) {
-            if (grunt.config('copy')['javascript-' + app]) {
-                grunt.task.run('copy:javascript-' + app);
-            }
-            grunt.task.run('requirejs:' + app);
-        });
+        grunt.task.run('requirejs' + target);
         if (!isDev) {
             grunt.task.run('uglify:components');
         }
     });
-
-    grunt.registerTask('compile:fonts', ['generate:fonts', 'hash']);
-    grunt.registerTask('generate:fonts', ['clean:fonts', 'mkdir:fontsTarget', 'webfontjson']);
-
-    grunt.registerTask('compile:flash', ['generate:flash', 'hash']);
-    grunt.registerTask('generate:flash', ['clean:flash', 'copy:flash']);
-
+    grunt.registerTask('compile:fonts', ['mkdir:fontsTarget', 'webfontjson']);
+    grunt.registerTask('compile:flash', ['copy:flash']);
+    grunt.registerTask('compile:conf', ['copy:headCss', 'copy:vendor', 'copy:assetMap']);
+    grunt.registerTask('compile:videojs', ['shell:videojs', 'grunt:videojs']);
+    
     grunt.registerTask('compile', function(app) {
         grunt.task.run([
-            'generate:images',
-            'generate:css',
-            'generate:js:' + (app || ''),
-            'generate:fonts',
-            'generate:flash',
+            'compile:images',
+            'compile:css',
+            'compile:videojs',
+            'compile:js:' + (app || ''),
+            'compile:fonts',
+            'compile:flash',
             'hash',
-            'generate:conf'
+            'compile:conf'
         ]);
     });
-    grunt.registerTask('generate:conf', ['clean:assets', 'copy:headCss', 'copy:vendor', 'copy:assetMap']);
 
-    // Test tasks
+    /**
+     * Test tasks
+     */
     grunt.registerTask('test:integration', function(app) {
-        if (!app) {
-            grunt.fail.fatal('No app specified.');
-        }
-        // does a casperjs setup exist for this app
-        grunt.config.requires(['casperjs', app]);
+        var target = app || 'all';
         grunt.config('casperjsLogFile', app + '.xml');
-        grunt.task.run(['env:casperjs', 'casperjs:' + app]);
+        grunt.task.run(['env:casperjs', 'casperjs:' + target]);
     });
     grunt.registerTask('test:unit', function(app) {
-        var apps = [];
-        // have we supplied an app
-        if (app) {
-            // does a karma setup exist for this app
-            if (!grunt.config('karma')[app]) {
-                grunt.log.warn('No tests for app "' + app + '"');
-                return true;
-            }
-            apps = [app];
-        } else { // otherwise run all
-            apps = Object.keys(grunt.config('karma')).filter(function(app) { return app !== 'options'; });
-        }
+        var target = app ? ':' + app : '';
         grunt.config.set('karma.options.singleRun', (singleRun === false) ? false : true);
-        apps.forEach(function(app) {
-            grunt.task.run(['karma:' + app]);
-        });
+        grunt.task.run('karma' + target);
     });
-    // TODO - don't have common as default?
-    grunt.registerTask('test', ['jshint:common', 'test:unit:common', 'test:integration:common']);
+    grunt.registerTask('test', ['test:unit', 'test:integration:all']);
 
-    // Analyse tasks
+    /**
+     * Analyse tasks
+     */
     grunt.registerTask('analyse:performance', function(app) {
-        if (app && !grunt.config('pagespeed')[app]) {
-            grunt.log.warn('No pagespeed config for app "' + app + '"'); return true;
-        }
-        grunt.task.run([(app) ?  'pagespeed:' + app : 'pagespeed']);
+        var target = app ? ':' + app : '';
+        grunt.task.run('pagespeed' + target);
     });
     grunt.registerTask('analyse:css', ['compile:css', 'cssmetrics:common']);
     grunt.registerTask('analyse:monitor', ['monitor:common']);
     grunt.registerTask('analyse', ['analyse:css', 'analyse:performance']);
 
-    // Miscellaneous task
+    /**
+     * Miscellaneous tasks
+     */
     grunt.registerTask('hookmeup', ['clean:hooks', 'shell:copyHooks']);
     grunt.registerTask('snap', ['clean:screenshots', 'mkdir:screenshots', 'env:casperjs', 'casperjs:screenshot', 's3:screenshots']);
-    grunt.registerTask('emitAbTestInfo', ['shell:abTestInfo']);
+    grunt.registerTask('emitAbTestInfo', 'shell:abTestInfo');
+
+    grunt.event.on('watch', function(action, filepath, target) {
+        if (target === 'js') {
+            // compile just the project
+            var project = filepath.split('/').shift();
+            grunt.task.run('requirejs:' + project);
+        }
+        // TODO: decouple moving of files from hashing
+        //if (!isDev) {
+            grunt.task.run('hash');
+        //}
+    });
 
 };
