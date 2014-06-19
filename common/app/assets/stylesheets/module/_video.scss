@@ -204,8 +204,7 @@ $vjs-control-height: $gs-baseline*4;
 
 // parameterising these as they're used in a few places
 $vjs-progress-hitbox-height: $gs-baseline;
-$vjs-progress-visual-height-resting: $gs-baseline/4;
-$vjs-progress-visual-height-hover: $gs-baseline/2;
+$vjs-progress-visual-height-resting: $gs-baseline/2;
 $vjs-progress-inset-bottom: 4px;
 
 .vjs-progress-control {
@@ -231,6 +230,7 @@ $vjs-progress-inset-bottom: 4px;
         background-color: #000000;
     }
 }
+
 .vjs-load-progress,
 .vjs-play-progress,
 .vjs-progress-holder:before,
@@ -240,14 +240,6 @@ $vjs-progress-inset-bottom: 4px;
         bottom: $vjs-progress-inset-bottom,
         height: $vjs-progress-visual-height-resting
     ));
-
-    @include transition(height .2s);
-    .gu-video-wrapper:hover & {
-        @include rem((
-            height: $vjs-progress-visual-height-hover
-        ));
-
-    }
 }
 
 .vjs-load-progress {
@@ -346,6 +338,9 @@ $vjs-progress-inset-bottom: 4px;
         @include icon(volume-high-yellow);
     }
 }
+
+/* VJS: OVERLAYS
+   ========================================================================== */
 
 .vjs-error-display {
     position: absolute;
@@ -460,4 +455,35 @@ $vjs-progress-inset-bottom: 4px;
 
 .vast-skip-button {
     display: none;
+}
+
+/* VJS: AD OVERLAY
+   ========================================================================== */
+.vjs-ads-overlay {
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    left: 0;
+    width: 100%;
+    @include rem((
+        height: $gs-baseline*2,
+        padding: $gs-baseline/3 0 0 $gs-gutter/4
+    ));
+    background-color: rgba($c-neutral1, .8);
+    border-top: 1px solid $c-neutral2;
+    color: #ffffff;
+    text-align: left;
+    @include fs-textsans(1);
+
+    @include mq(tablet) {
+        @include fs-textsans(2, true);
+    }
+}
+
+.vjs-ads-overlay__label {
+    position: absolute;
+    @include rem((
+        top: $gs-baseline/3,
+        right: $gs-gutter/2
+    ));
 }

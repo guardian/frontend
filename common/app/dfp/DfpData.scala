@@ -14,6 +14,7 @@ case class Target(name: String, op: String, values: Seq[String]) {
   val isTag = isPositive("k") || isPositive("se")
 }
 
+
 case class TargetSet(op: String, targets: Seq[Target]) {
   def filterTags(bySlotType: Target => Boolean) ={
     if (targets exists bySlotType) {
@@ -26,9 +27,16 @@ case class TargetSet(op: String, targets: Seq[Target]) {
   val advertisementFeatureTags = filterTags(_.isAdvertisementFeatureSlot)
 }
 
-case class LineItem(id: Long, targetSets: Seq[TargetSet]) {
+
+case class LineItem(id: Long, sponsor: Option[String], targetSets: Seq[TargetSet]) {
 
   val sponsoredTags = targetSets.flatMap(_.sponsoredTags).distinct
 
   val advertisementFeatureTags = targetSets.flatMap(_.advertisementFeatureTags).distinct
+}
+
+
+case class Sponsorship(tags: Seq[String], sponsor: Option[String]) {
+
+  def hasTag(tagId: String): Boolean = tags contains (tagId.split('/').last)
 }

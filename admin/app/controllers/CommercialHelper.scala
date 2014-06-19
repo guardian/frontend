@@ -1,24 +1,28 @@
 package controllers.admin
 
-import play.api.mvc.Controller
 import common.Logging
-import conf.Configuration
-import model.NoCache
 import controllers.AuthLogging
+import dfp._
+import model.NoCache
+import play.api.libs.json.Json
+import play.api.mvc.Controller
 import tools.Store
-import play.api.libs.json.{JsValue, Json}
-
 
 object CommercialHelper extends Controller with Logging with AuthLogging {
 
+  private def jsValueMaybe(json: Option[String]) = json map Json.parse
+
   def convertJsonToStringList(json: Option[String]) = {
-    val jsValueMaybe: Option[JsValue] = json.map(Json.parse(_))
-    jsValueMaybe.fold(Seq[String]())(_.as[Seq[String]])
+    jsValueMaybe(json).fold(Seq[String]())(_.as[Seq[String]])
+  }
+
+  def convertJsonToSponsorshipList(json: Option[String]) = {
+    jsValueMaybe(json).fold(Seq[Sponsorship]())(_.as[Seq[Sponsorship]])
   }
 
   def targets() = Authenticated { request =>
-    val sponsoredTags = convertJsonToStringList(Store.getDfpSponsoredTags()).sorted
-    val advertisementTags = convertJsonToStringList(Store.getDfpAdvertisementTags()).sorted
+    val sponsoredTags = convertJsonToSponsorshipList(Store.getDfpSponsoredTags()).sortBy(_.tags.head)
+    val advertisementTags = convertJsonToSponsorshipList(Store.getDfpAdvertisementTags()).sortBy(_.tags.head)
     val pageskinnedAdUnits: Seq[String] = convertJsonToStringList(Store.getDfpPageSkinnedAdUnits()).sorted
 
     NoCache(Ok(views.html.commercialReports.targets("PROD", sponsoredTags, advertisementTags, pageskinnedAdUnits)))
