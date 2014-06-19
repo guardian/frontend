@@ -461,3 +461,34 @@ $vjs-progress-inset-bottom: 4px;
 .vast-skip-button {
     display: none;
 }
+
+/* VJS: AD OVERLAY
+   ========================================================================== */
+.vjs-ads-overlay {
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    left: 0;
+    width: 100%;
+    @include rem((
+        height: $gs-baseline*2,
+        padding: $gs-baseline/3 0 0 $gs-gutter/4
+    ));
+    background-color: rgba($c-neutral1, .8);
+    border-top: 1px solid $c-neutral2;
+    color: #ffffff;
+    text-align: left;
+    @include fs-textsans(1);
+
+    @include mq(tablet) {
+        @include fs-textsans(2, true);
+    }
+}
+
+.vjs-ads-overlay__label {
+    position: absolute;
+    @include rem((
+        top: $gs-baseline/3,
+        right: $gs-gutter/2
+    ));
+}

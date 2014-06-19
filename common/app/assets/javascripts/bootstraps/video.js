@@ -114,6 +114,28 @@ define([
             return url;
         },
 
+        countDown: function() {
+            var tmp = '<div class="vjs-ads-overlay js-ads-overlay">Your video will start in <span class="vjs-ads-overlay__remaining js-remaining-time"></span>' +
+                      ' seconds <span class="vjs-ads-overlay__label">Advertisement</span></div>',
+                events =  {
+                    destroy: function() {
+                        $('.js-ads-overlay', this.el()).remove();
+                        this.off('timeupdate', events.update);
+                        this.off('ended', events.destroy);
+                    },
+                    update: function() {
+                        $('.js-remaining-time', this.el()).text(parseInt(this.duration() - this.currentTime(), 10).toFixed());
+                    },
+                    init: function() {
+                        this.on('timeupdate', events.update.bind(this));
+                        this.one('ended', events.destroy.bind(this));
+                        $(this.el()).append($.create(tmp));
+                    }
+                };
+
+            this.one('firstplay', events.init.bind(this));
+        },
+
         initOverlays: function(el) {
             var title = el.getAttribute('data-title');
             if (title) {
@@ -143,6 +165,9 @@ define([
         initPlayer: function() {
 
             require('bootstraps/video-player', function () {
+
+                videojs.plugin('adCountDown', modules.countDown);
+
                 $('video').each(function (el) {
                     var vjs = videojs(el, {
                         controls: true,
@@ -152,7 +177,10 @@ define([
 
                     vjs.ready(function () {
                         var player = this;
+
                         modules.bindPrerollEvents(player, el);
+
+                        player.adCountDown();
 
                         // Init vast adverts.
                         player.ads({
