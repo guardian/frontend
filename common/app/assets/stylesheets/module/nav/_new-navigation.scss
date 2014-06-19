@@ -581,7 +581,7 @@ $new-navigation-h-space-between-items: get-font-size($fs-headers, 1) !default;
     right: 0;
     top: 0;
     @include box-sizing(border-box);
-    @include font-size(16, gs-height(1));
+    font-weight: 900;
     @include rem((
         min-width: $new-navigation-toggler-width,
         padding-left: $gs-gutter/4,
@@ -600,6 +600,10 @@ $new-navigation-h-space-between-items: get-font-size($fs-headers, 1) !default;
     &:active {
         color: $c-navigation-toggle-icon;
         text-decoration: none;
+    }
+
+    .new-navigation--expanded & {
+        border-left: 0;
     }
 
     @include mq(tablet) {
