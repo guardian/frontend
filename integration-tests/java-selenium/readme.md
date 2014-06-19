@@ -10,7 +10,8 @@ The goals are as following:
 * The tests should run fast. That is both subjective and relative as Selenium based tests can never be as fast as API tests. That is why there should be a limited number of tests which should test a journey rather than just a specific function or UI element.
 * A separate test suite will be run periodically against the PROD environment and is a live environment in the sense that nothing is stubbed. This is for tests specifically made for a live PROD environment.
 
-To achieve this goal the following architecture is proposed. For sake of simplicity all Frontend apps are simply called Fronts.
+
+To achieve these goal the following architecture is proposed. For sake of simplicity all Frontend apps are simply called Fronts.
 
 ![](https://raw.githubusercontent.com/guardian/frontend/java-selenium-test/integration-tests/java-selenium/docs/Fronts%20testing%20overview.png)
 
