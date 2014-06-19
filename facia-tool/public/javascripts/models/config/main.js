@@ -102,6 +102,7 @@ define([
             }
         };
 
+        /** TODO delete this and manage it entirely server side */
         function pressCollection(collection) {
             return authedAjax.request({
                 url: vars.CONST.apiBase + '/collection/update/' + collection.id,

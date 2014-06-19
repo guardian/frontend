@@ -3,44 +3,52 @@
 # ~~~~
 
 # authentication endpoints
-GET           /login                     controllers.Login.login
-POST          /login                     controllers.Login.loginPost
-GET           /openIDCallback            controllers.Login.openIDCallback
-GET           /logout                    controllers.Login.logout
+GET         /login                           controllers.Login.login
+POST        /login                           controllers.Login.loginPost
+GET         /openIDCallback                  controllers.Login.openIDCallback
+GET         /logout                          controllers.Login.logout
 
 # static files
-GET           /assets/*file              controllers.Assets.at(path="/public", file)
+GET         /assets/*file                    controllers.Assets.at(path="/public", file)
 
 ##################### NOTE ############################
 #all endpoints below this line should be authenticated#
 #######################################################
 
 # Fronts
-GET           /                          controllers.FaciaToolController.priorities()
-GET           /editorial                 controllers.FaciaToolController.collectionEditor(priority="editorial")
-GET           /commercial                controllers.FaciaToolController.collectionEditor(priority="commercial")
+GET         /                                controllers.FaciaToolController.priorities()
+GET         /editorial                       controllers.FaciaToolController.collectionEditor(priority="editorial")
+GET         /commercial                      controllers.FaciaToolController.collectionEditor(priority="commercial")
 
-GET           /editorial/config          controllers.FaciaToolController.configEditor(priority="editorial")
-GET           /commercial/config         controllers.FaciaToolController.configEditor(priority="commercial")
+GET         /editorial/config                controllers.FaciaToolController.configEditor(priority="editorial")
+GET         /commercial/config               controllers.FaciaToolController.configEditor(priority="commercial")
 
-GET           /publish-all               controllers.FaciaToolController.publishAll()
-GET           /publish-all/comet         controllers.FaciaToolController.publishAllStream()
+GET         /publish-all                     controllers.FaciaToolController.publishAll()
+GET         /publish-all/comet               controllers.FaciaToolController.publishAllStream()
 
-POST          /collection/publish/*id    controllers.FaciaToolController.publishCollection(id)
-POST          /collection/discard/*id    controllers.FaciaToolController.discardCollection(id)
-POST          /collection/update/*id     controllers.FaciaToolController.updateCollection(id)
+POST        /collection/publish/*id          controllers.FaciaToolController.publishCollection(id)
+POST        /collection/discard/*id          controllers.FaciaToolController.discardCollection(id)
+POST        /collection/update/*id           controllers.FaciaToolController.updateCollection(id)
 
-GET           /front/lastmodified/*path  controllers.FaciaToolController.getLastModified(path)
+GET         /front/lastmodified/*path        controllers.FaciaToolController.getLastModified(path)
 
-GET           /collection/*id            controllers.FaciaToolController.readBlock(id)
-POST          /edits                     controllers.FaciaToolController.collectionEdits
-GET           /collection                controllers.FaciaToolController.listCollections
-GET           /config                    controllers.FaciaToolController.getConfig
-POST          /config                    controllers.FaciaToolController.updateConfig
+GET         /collection/*id                  controllers.FaciaToolController.readBlock(id)
+POST        /edits                           controllers.FaciaToolController.collectionEdits
+GET         /collection                      controllers.FaciaToolController.listCollections
+GET         /config                          controllers.FaciaToolController.getConfig
+POST        /config                          controllers.FaciaToolController.updateConfig
 
-POST          /collectionmeta/*id        controllers.FaciaToolController.updateCollectionMeta(id)
+POST        /collectionmeta/*id              controllers.FaciaToolController.updateCollectionMeta(id)
 
 # endpoints for proxying https
-GET           /switches                  controllers.SwitchesProxy.getSwitches()
-GET           /api/proxy/*path           controllers.FaciaContentApiProxy.proxy(path)
-GET           /json/proxy/*absUrl        controllers.FaciaContentApiProxy.json(absUrl)
+GET         /switches                        controllers.SwitchesProxy.getSwitches()
+GET         /api/proxy/*path                 controllers.FaciaContentApiProxy.proxy(path)
+GET         /json/proxy/*absUrl              controllers.FaciaContentApiProxy.json(absUrl)
+
+# Updating config
+
+POST        /config/fronts                   controllers.FrontController.create()
+POST        /config/fronts/*path             controllers.FrontController.update(path)
+
+POST        /config/collections              controllers.CollectionController.create()
+POST        /config/collections/*id          controllers.CollectionController.update(id)

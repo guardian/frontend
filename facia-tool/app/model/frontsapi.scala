@@ -8,10 +8,9 @@ import scala.util.{Success, Failure, Try}
 import common.Logging
 import conf.Configuration
 
-case class Config(
-  fronts: Map[String, Front],
-  collections: Map[String, Collection]
-)
+object Front {
+  implicit val jsonFormat = Json.format[Front]
+}
 
 case class Front(
                   collections: List[String],
@@ -21,6 +20,13 @@ case class Front(
                   description: Option[String],
                   priority: Option[String]
                   )
+
+object Collection {
+  implicit val jsonFormat = Json.format[Collection]
+
+  /** TODO emulate the current IDs as generated in the JavaScript */
+  def nextId = java.util.UUID.randomUUID().toString
+}
 
 case class Collection(
                   displayName: Option[String],
@@ -32,6 +38,17 @@ case class Collection(
                   showTags: Option[Boolean],
                   showSections: Option[Boolean]
                   )
+
+object Config {
+  implicit val jsonFormat = Json.format[Config]
+
+  def empty = Config(Map.empty, Map.empty)
+}
+
+case class Config(
+  fronts: Map[String, Front],
+  collections: Map[String, Collection]
+)
 
 case class Block(
                   name: Option[String],
