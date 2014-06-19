@@ -116,14 +116,6 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
     )
   }
 
-  def retrieveDraftItemsFromCollectionJson(json: JsValue): Seq[CollectionItem] =
-    (json \ "draft").asOpt[Seq[JsObject]].orElse((json \ "live").asOpt[Seq[JsObject]]).getOrElse(Nil).map { trail =>
-      CollectionItem(
-        (trail \ "id").as[String],
-        (trail \ "meta").asOpt[Map[String, JsValue]],
-        (trail \ "frontPublicationDate").asOpt[DateTime])
-    }
-
   private def getCollectionMeta(collectionJson: JsValue): CollectionMeta =
     CollectionMeta(
         (collectionJson \ "lastUpdated").asOpt[String],
