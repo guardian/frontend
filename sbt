@@ -26,7 +26,7 @@ done
 os=$(uname)
 
 if [ "$os" == "Darwin" ]; then
-    physical_mem=$(top -l 1 | grep PhysMem | awk '{print ($2+$6)*1024}')
+    physical_mem=$(sysctl hw.memsize | cut -d' ' -f2 | grep . | awk '{print $1 / 1024}')
 else
     physical_mem=$(grep MemTotal /proc/meminfo | awk '{print $2}')
 fi
