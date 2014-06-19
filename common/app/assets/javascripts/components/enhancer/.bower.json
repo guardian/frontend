@@ -1,0 +1,14 @@
+{
+  "name": "enhancer",
+  "homepage": "https://github.com/guardian/enhancer",
+  "version": "0.1.1",
+  "_release": "0.1.1",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.1.1",
+    "commit": "bcc252733b8bdad1be497969b60717d3439e99a4"
+  },
+  "_source": "git://github.com/guardian/enhancer.git",
+  "_target": "0.1.1",
+  "_originalSource": "enhancer"
+}

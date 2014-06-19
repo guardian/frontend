@@ -8,7 +8,7 @@
                 ("container", true),
                 (s"container--${style.containerType}", true),
                 ("container--first" -> (containerIndex == 0))))"
-            data-link-name="block | @config.id"
+            data-link-name="@FaciaComponentName(config, collection)"
             data-id="@config.id"
             data-type="@style.containerType"
             @config.sponsorshipKeyword.map { keyword =>

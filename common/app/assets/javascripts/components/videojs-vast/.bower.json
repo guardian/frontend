@@ -1,0 +1,43 @@
+{
+  "name": "videojs-vast-plugin",
+  "version": "0.1.6",
+  "homepage": "https://github.com/theonion/videojs-vast-plugin",
+  "authors": [
+    "Shaker Islam <sislam@theonion.com>",
+    "Chris Sinchok <csinchok@theonion.com>",
+    "Sean Bloomfield <sbloomfield@theonion.com>"
+  ],
+  "description": "A VAST plugin for VideoJS",
+  "main": "videojs.vast.js",
+  "keywords": [
+    "videojs",
+    "video",
+    "vast",
+    "ads"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "spec",
+    "Gruntfile.js",
+    "lib"
+  ],
+  "dependencies": {
+    "videojs": "4.4.3",
+    "vast-client-js": "1.1.2",
+    "videojs-contrib-ads": "https://github.com/videojs/videojs-contrib-ads/archive/f8fa6b22148142cb7e96963034126891c4797b96.zip"
+  },
+  "_release": "0.1.6",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.1.6",
+    "commit": "6c5e3ad4544e7e821fd6dadd3fd0bc3e9ad28fdc"
+  },
+  "_source": "git://github.com/theonion/videojs-vast-plugin.git",
+  "_target": "~0.1.5",
+  "_originalSource": "videojs-vast"
+}
