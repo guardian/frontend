@@ -5,26 +5,62 @@
 /* Configuration
    ========================================================================== */
 
-$c-navigation-background: mix(guss-colour(guardian-brand), #ffffff, 85%);
-$c-navigation-action: guss-colour(neutral-1);
+$new-navigation-toggler-width: 36px !default;
+$new-navigation-toggler-width-full: 130px !default;
 
-$c-local-navigation-background: guss-colour(neutral-7);
-$c-local-navigation-action: guss-colour(neutral-1);
+$theme: default;
+// $theme: grey-and-dark-blue;
 
-$c-local-navigation-parent-background: $c-navigation-background;
+$c-navigation-background: #407dbc !default;
+$c-navigation-action: guss-colour(neutral-1) !default;
 
-$c-local-navigation-current-background: $c-local-navigation-parent-background;
-$c-local-navigation-child-current: #ffffff;
+$c-local-navigation-background: $c-navigation-background !default;
+$c-local-navigation-action: #ffffff !default;
 
-$c-global-navigation-background: mix(guss-colour(tone-news-2), guss-colour(tone-news-1));
-$c-global-navigation-action: guss-colour(neutral-2);
-$c-global-navigation-border: guss-colour(neutral-5);
+$c-local-navigation-parent-background: #ffffff !default;
 
-$c-navigation-toggle-background: mix(guss-colour(tone-news-2), guss-colour(tone-news-1), 33%);
-$c-navigation-toggle-icon: #ffffff;
-$c-navigation-toggle-shadow: rgba(#000000, .3);
+$c-local-navigation-current-background: $c-local-navigation-parent-background !default;
+$c-local-navigation-current: guss-colour(neutral-1) !default;
+$c-local-navigation-current-border: 2px solid guss-colour(tone-news-2) !default;
 
-$new-navigation-h-space-between-items: get-font-size($fs-headers, 1);
+$c-global-navigation-background: $c-navigation-background !default;
+$c-global-navigation-action: #ffffff !default;
+$c-global-navigation-border: guss-colour(neutral-5) !default;
+
+$c-navigation-separator: 1px solid #ffffff !default;
+
+$c-navigation-toggle-background: guss-colour(guardian-brand) !default;
+$c-navigation-toggle-icon: #ffffff !default;
+$c-navigation-toggle-shadow: rgba(#000000, .333333) !default;
+
+$new-navigation-h-space-between-items: get-font-size($fs-headers, 1) !default;
+
+@if $theme == grey-and-dark-blue {
+    $c-navigation-background: mix(guss-colour(guardian-brand), #ffffff, 100%) !global;
+    $c-navigation-action: guss-colour(neutral-1) !global;
+
+    $c-local-navigation-background: guss-colour(neutral-7) !global;
+    $c-local-navigation-action: guss-colour(neutral-1) !global;
+
+    $c-local-navigation-parent-background: $c-navigation-background !global;
+
+    $c-local-navigation-current-background: $c-local-navigation-parent-background !global;
+    $c-local-navigation-current: #ffffff !global;
+    $c-local-navigation-current-border: 0;
+
+    $c-global-navigation-background: #407dbc !global;
+    $c-global-navigation-action: guss-colour(neutral-2) !global;
+    $c-global-navigation-border: guss-colour(neutral-5) !global;
+
+    $c-navigation-separator: 0 !global;
+
+    $c-navigation-toggle-background: guss-colour(guardian-brand) !global;
+    $c-navigation-toggle-icon: #ffffff !global;
+    $c-navigation-toggle-shadow: rgba(#000000, .333333) !global;
+
+    $new-navigation-h-space-between-items: get-font-size($fs-headers, 1) !global;
+}
+
 
 
 /* Overrides (to be incorporated into the global CSS when killing the old nav)
@@ -56,6 +92,9 @@ $new-navigation-h-space-between-items: get-font-size($fs-headers, 1);
     clear: both;
     background: $c-navigation-background;
     @include fs-header(1);
+    @if $theme == default {
+        font-weight: bold;
+    }
     @include rem((
         height: gs-height(1),
         line-height: gs-height(1)
@@ -63,6 +102,8 @@ $new-navigation-h-space-between-items: get-font-size($fs-headers, 1);
 }
 .new-navigation__inner {
     position: relative;
+}
+.new-navigation__scroll {
     @include rem((
         padding-left: $gs-gutter/2,
         padding-right: $gs-gutter/2
@@ -75,6 +116,8 @@ $new-navigation-h-space-between-items: get-font-size($fs-headers, 1);
         ));
     }
 }
+
+
 .local-navigation,
 .local-navigation__children,
 .global-navigation,
@@ -84,7 +127,15 @@ $new-navigation-h-space-between-items: get-font-size($fs-headers, 1);
     padding: 0;
 }
 .local-navigation {
-    float: left;
+    @include rem((
+        min-height: gs-height(1),
+        margin-left: -$gs-gutter/2
+    ));
+    @include mq(mobileLandscape) {
+        @include rem((
+            margin-left: -$gs-gutter
+        ));
+    }
 }
 .local-navigation__parent,
 .local-navigation__action,
@@ -93,18 +144,25 @@ $new-navigation-h-space-between-items: get-font-size($fs-headers, 1);
     color: $c-navigation-action;
 }
 .local-navigation__parent {
-    float: left;
+    display: table-cell;
     position: relative;
-    color: #ffffff;
+    color: $c-local-navigation-current;
     text-decoration: none;
     background: $c-local-navigation-parent-background;
-
     @include rem((
         padding-right: $new-navigation-h-space-between-items,
         padding-left: $gs-gutter/2,
         margin-left: -$gs-gutter/2
     ));
-
+    &:after {
+        content: '';
+        position: absolute;
+        display: block;
+        top: 0;
+        right: 1px;
+        left: -1px;
+        border-top: $c-local-navigation-current-border;
+    }
     @include mq(mobileLandscape) {
         @include rem((
             padding-left: $gs-gutter,
@@ -118,10 +176,12 @@ $new-navigation-h-space-between-items: get-font-size($fs-headers, 1);
 .local-navigation__action {
     color: $c-local-navigation-action;
     text-decoration: none;
+    position: relative;
 
     .local-navigation__child--current & {
         background: $c-local-navigation-current-background;
-        color: $c-local-navigation-child-current;
+        color: $c-local-navigation-current;
+
         @include rem((
             padding-right: $new-navigation-h-space-between-items
         ));
@@ -185,6 +245,15 @@ $new-navigation-h-space-between-items: get-font-size($fs-headers, 1);
 .new-navigation--collapsed {
     overflow: hidden;
 
+    .new-navigation__container {
+        display: table-cell;
+        vertical-align: top;
+    }
+    .new-navigation__scroll {
+        overflow-x: scroll;
+        -webkit-overflow-scrolling: touch;
+    }
+
     &,
     .local-navigation,
     .local-navigation__children {
@@ -194,6 +263,7 @@ $new-navigation-h-space-between-items: get-font-size($fs-headers, 1);
     }
     .local-navigation__children {
         overflow: hidden;
+        display: table-cell;
     }
     .local-navigation__child,
     .global-navigation__section {
@@ -206,7 +276,7 @@ $new-navigation-h-space-between-items: get-font-size($fs-headers, 1);
     .local-navigation__child:first-child,
     .global-navigation__section:first-child {
         @include rem((
-            padding-left: $new-navigation-h-space-between-items,
+            padding-left: $new-navigation-h-space-between-items
         ));
     }
     .local-navigation__child--current {
@@ -216,11 +286,23 @@ $new-navigation-h-space-between-items: get-font-size($fs-headers, 1);
         &:last-child {
             padding-right: 0;
         }
+        .local-navigation__action {
+            &:after {
+                content: '';
+                position: absolute;
+                display: block;
+                top: 0;
+                right: 1px;
+                left: -1px;
+                border-top: $c-local-navigation-current-border;
+            }
+        }
     }
     .global-navigation {
         overflow: hidden;
         position: relative;
         background: $c-global-navigation-background;
+        border-left: $c-navigation-separator;
 
         @include mq(desktop) {
             @include rem((
@@ -228,10 +310,34 @@ $new-navigation-h-space-between-items: get-font-size($fs-headers, 1);
             ));
         }
     }
-
     .global-navigation__title,
     .global-navigation__action {
         color: #ffffff;
+    }
+    .global-navigation__section:last-child {
+        @include rem((
+            padding-right: $new-navigation-toggler-width + $gs-gutter
+        ));
+
+        @include mq(tablet) {
+            @include rem((
+                padding-right: $new-navigation-toggler-width-full + $gs-gutter
+            ));
+        }
+    }
+
+    &.new-navigation--has-no-local-navigation {
+        .global-navigation {
+            border-left: 0;
+            @include rem((
+                margin-left: -$gs-gutter
+            ));
+        }
+        .global-navigation__section:first-child {
+            @include rem((
+                padding-left: $gs-gutter
+            ));
+        }
     }
 }
 
@@ -257,6 +363,20 @@ $new-navigation-h-space-between-items: get-font-size($fs-headers, 1);
             padding-left: $gs-gutter/2,
             padding-right: $gs-gutter/2
         ));
+
+        // Prevent 1px from bleeding on the right side of the page
+        &:before {
+            content: '';
+            display: block;
+            position: absolute;
+            top: 0;
+            right: 0;
+            left: 0;
+            @include rem((
+                height: gs-height(1)
+            ));
+            background: $c-navigation-background;
+        }
 
         @include mq(mobileLandscape) {
             @include rem((
@@ -285,6 +405,7 @@ $new-navigation-h-space-between-items: get-font-size($fs-headers, 1);
             padding-left: $gs-gutter/2,
             margin-left: -$gs-gutter/2
         ));
+
         @include mq(mobileLandscape) {
             @include rem((
                 padding-left: $gs-gutter,
@@ -321,11 +442,11 @@ $new-navigation-h-space-between-items: get-font-size($fs-headers, 1);
             padding-left: $gs-gutter/2,
             padding-right: $gs-gutter/2
         ));
-        
+
         &:nth-child(2n+1) {
             clear: both;
         }
-        
+
         @include mq(mobileLandscape) {
             width: 33.3333333333%;
             &:nth-child(n) {
@@ -439,6 +560,7 @@ $new-navigation-h-space-between-items: get-font-size($fs-headers, 1);
     min-width: 1em;
     @include box-sizing(border-box);
     @include rem((
+        min-width: $new-navigation-toggler-width,
         padding-left: $gs-gutter/4,
         padding-right: $gs-gutter/4
     ));
@@ -458,15 +580,11 @@ $new-navigation-h-space-between-items: get-font-size($fs-headers, 1);
         text-decoration: none;
     }
 
-    @include mq(desktop) {
+    @include mq(tablet) {
         @include rem((
+            min-width: $new-navigation-toggler-width-full,
             padding-left: $gs-gutter/2,
             padding-right: $gs-gutter/2
-        ));
-    }
-    @include mq(desktop) {
-        @include rem((
-            right: $gs-gutter
         ));
     }
 }
