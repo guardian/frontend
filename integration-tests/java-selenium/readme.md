@@ -24,10 +24,10 @@ How to run
 
 Prerequisites
 -------------
-* Java 7
+* Java 7 (will not work with Java 8)
 * Maven 3 (might work with Maven 2)
 * Firefox 26+
-* OS - Should work in Windows 7, Linux Ubuntu/Mint and Mac OS, assuming other prerequities are met)
+* OS - Should work in Windows 7, Linux Ubuntu/Mint and Mac OS, assuming other prerequities are met). For Mac OS X make sure that you have JAVA_HOME property set to a Java 7 installation, otherwise Maven may not pick it up properly, even if you have it installed. E.g. add "export JAVA_HOME="/usr”” to your .bash_profile"
 
 Before running the tests, the fronts application needs to be successfully started, for example by executing (from frontend root): 
 ```
@@ -41,7 +41,8 @@ It has been tested on Linux Mint 17, Open JDK 7, Maven 3 and Firefox 26.
 
 Running the tests
 -----------------
-Simple change to the root of this module and execute
+Simply change to the root of this frontend and execute
 ```
+cd integration-tests/java-selenium/
 mvn clean verify
 ```
