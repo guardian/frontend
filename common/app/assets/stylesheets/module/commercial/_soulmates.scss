@@ -47,9 +47,10 @@ $c-soulmates-high: $c-neutral1;
     .commercial__explainer {
         color: $c-soulmates-high;
         position: absolute;
+        bottom: 0;
         @include fs-header(1);
         @include rem((
-            margin: $comercial-comp-baseline 0 0
+            margin: $gs-baseline 0 0
         ));
     }
     .commercial__buy-now-button {
@@ -60,7 +61,7 @@ $c-soulmates-high: $c-neutral1;
     }
     .commercial__body {
         @include rem((
-            padding: 0 0 $gs-baseline
+            padding: $gs-baseline 0
         ));
         position: relative;
     }
