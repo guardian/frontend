@@ -11,7 +11,7 @@
                             <div class="local-navigation">
                                 @* current top link (if any) *@
                                 @topLevelSelected.map {section =>
-                                    <a class="local-navigation__parent" href="@section.name.href"><span class="new-navigation__top-hat"></span>@section.name.title</a>
+                                    <a class="local-navigation__parent" href="@LinkTo{@section.name.href}"><span class="new-navigation__top-hat"></span>@section.name.title</a>
                                 }
 
                                 @* second level nav *@
@@ -23,13 +23,13 @@
                                             @currentSublink.map {s =>
                                                 <li class="local-navigation__child local-navigation__child--current">
                                                     <span class="new-navigation__top-hat"></span>
-                                                    <a class="local-navigation__action" href="@s.href">@s.title</a>
+                                                    <a class="local-navigation__action" href="@LinkTo{@s.href}">@s.title</a>
                                                 </li>
                                             }
 
                                             @* remaining sub sections *@
                                             @Navigation.rotateByOmittingCurrent(localNav, currentSublink).map{ link =>
-                                                <li class="local-navigation__child"><a class="local-navigation__action" href="@link.href">@Html(link.title)</a></li>
+                                                <li class="local-navigation__child"><a class="local-navigation__action" href="@LinkTo{@link.href}">@Html(link.title)</a></li>
                                             }
                                         }
                                     </ul>
