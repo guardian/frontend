@@ -33,8 +33,8 @@ define([
                         var r2Bucket = where(r2Buckets, {time: bucket.time});
                         return [
                             new Date(bucket.time),
-                            bucket.avgTimeToRenderEnded/1000,
-                            r2Bucket.length ? r2Bucket.shift().avgTimeToRenderEnded/1000 : 0
+                            Math.max(bucket.avgTimeToRenderEnded/1000, 0),
+                            r2Bucket.length ? Math.max(r2Bucket.shift().avgTimeToRenderEnded/1000, 0) : 0
                         ];
                     }));
 
@@ -70,7 +70,7 @@ define([
                 var graphData = [['Time', 'Next-Gen']].concat(data.buckets.map(function(bucket) {
                     return [
                         new Date(bucket.time),
-                        bucket.avgTimeToRenderEnded/1000
+                        Math.max(bucket.avgTimeToRenderEnded/1000, 0)
                     ];
                 }));
 
