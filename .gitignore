@@ -20,6 +20,7 @@ frontend-applications.properties
 .DS_Store
 .idea
 .sass-cache
+.tm_properties
 
 log
 logs
