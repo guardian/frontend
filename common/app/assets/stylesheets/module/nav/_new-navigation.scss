@@ -9,7 +9,7 @@ $new-navigation-toggler-width: 36px !default;
 $new-navigation-toggler-width-full: 130px !default;
 
 $theme: default;
-// $theme: grey-and-dark-blue;
+$theme: grey-and-dark-blue;
 
 $c-navigation-background: #407dbc !default;
 $c-navigation-action: guss-colour(neutral-1) !default;
@@ -25,7 +25,7 @@ $c-local-navigation-current-border: 2px solid guss-colour(tone-news-2) !default;
 
 $c-global-navigation-background: $c-navigation-background !default;
 $c-global-navigation-action: #ffffff !default;
-$c-global-navigation-border: guss-colour(neutral-5) !default;
+$c-global-navigation-border: rgba(#ffffff, .3) !default;
 
 $c-navigation-separator: 1px solid #ffffff !default;
 
@@ -35,22 +35,24 @@ $c-navigation-toggle-shadow: rgba(#000000, .333333) !default;
 
 $new-navigation-h-space-between-items: get-font-size($fs-headers, 1) !default;
 
+$c-new-navigation-signposting-action: guss-colour(neutral-1) !default;
+
 @if $theme == grey-and-dark-blue {
-    $c-navigation-background: mix(guss-colour(guardian-brand), #ffffff, 100%) !global;
+    $c-navigation-background: mix(guss-colour(guardian-brand), #407dbc, 0%) !global;
     $c-navigation-action: guss-colour(neutral-1) !global;
 
     $c-local-navigation-background: guss-colour(neutral-7) !global;
     $c-local-navigation-action: guss-colour(neutral-1) !global;
 
-    $c-local-navigation-parent-background: $c-navigation-background !global;
+    $c-local-navigation-parent-background: mix(guss-colour(guardian-brand), #407dbc, 50%) !global;
 
     $c-local-navigation-current-background: $c-local-navigation-parent-background !global;
     $c-local-navigation-current: #ffffff !global;
-    $c-local-navigation-current-border: 0;
+    $c-local-navigation-current-border: 0 !global;
 
     $c-global-navigation-background: #407dbc !global;
     $c-global-navigation-action: guss-colour(neutral-2) !global;
-    $c-global-navigation-border: guss-colour(neutral-5) !global;
+    $c-global-navigation-border: rgba(#ffffff, .3) !global;
 
     $c-navigation-separator: 0 !global;
 
@@ -110,6 +112,7 @@ $new-navigation-h-space-between-items: get-font-size($fs-headers, 1) !default;
 }
 .new-navigation__inner {
     position: relative;
+    background: $c-global-navigation-background;
 }
 .new-navigation__scroll {
     @include rem((
@@ -146,10 +149,12 @@ $new-navigation-h-space-between-items: get-font-size($fs-headers, 1) !default;
     }
 }
 .local-navigation__parent,
-.local-navigation__action,
-.global-navigation__action,
-.global-navigation__title, {
+.local-navigation__action {
     color: $c-navigation-action;
+}
+.global-navigation__action,
+.global-navigation__title {
+    color: #ffffff;
 }
 .local-navigation__parent {
     position: relative;
@@ -172,6 +177,7 @@ $new-navigation-h-space-between-items: get-font-size($fs-headers, 1) !default;
 }
 .local-navigation__children {
     background: $c-local-navigation-background;
+    font-weight: normal;
 }
 .local-navigation__action {
     color: $c-local-navigation-action;
@@ -209,12 +215,12 @@ $new-navigation-h-space-between-items: get-font-size($fs-headers, 1) !default;
     display: table-cell;
 }
 .global-navigation {
-    background: #ffffff;
 }
 .local-navigation__child,
 .global-navigation__section {
     white-space: nowrap;
     display: table-cell;
+    position: relative;
 }
 .global-navigation__section--current {
     @include rem((
@@ -366,7 +372,7 @@ $new-navigation-h-space-between-items: get-font-size($fs-headers, 1) !default;
     z-index: 2;
 
     .new-navigation__inner {
-        background: #ffffff;
+
     }
     .local-navigation__children {
         clear: both;
@@ -410,6 +416,13 @@ $new-navigation-h-space-between-items: get-font-size($fs-headers, 1) !default;
         float: none;
         display: block;
     }
+    .local-navigation__action {
+        @include rem((
+            font-size: 14px,
+            line-height: 28px
+        ));
+        font-weight: normal;
+    }
     .local-navigation__parent {
         @include mq(tablet) {
             @include rem((
@@ -438,7 +451,8 @@ $new-navigation-h-space-between-items: get-font-size($fs-headers, 1) !default;
         clear: both;
         @include clearfix;
         @include rem((
-            padding-top: $gs-baseline
+            padding-top: $gs-baseline,
+            line-height: 28px
         ));
     }
     .local-navigation__children {
@@ -486,12 +500,16 @@ $new-navigation-h-space-between-items: get-font-size($fs-headers, 1) !default;
         float: none;
         margin-right: 0;
         @include rem((
-            margin-bottom: $gs-baseline*2
+            margin-bottom: $gs-baseline*.75
         ));
         overflow: hidden;
     }
     .global-navigation__title {
         border-top: 1px solid $c-global-navigation-border;
+        @include rem((
+            line-height: 24px,
+            padding-bottom: 3px
+        ));
     }
     .global-navigation__title,
     .global-navigation__action,
@@ -573,6 +591,18 @@ $new-navigation-h-space-between-items: get-font-size($fs-headers, 1) !default;
 }
 
 
+/* Home button
+   ========================================================================== */
+.i-home {
+    display: inline-block;
+    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAgCAYAAAAIXrg4AAAAi0lEQVR42u2WwQ2AMAgAGcERHKEjOAojOFI3whEcwQ1QanwYHmgKxgeX8OSuH5LCU5gZ+WQ7poAjIp/4znrM4CUv7dWaRSK98lHJvSKy2AQ2tVvuHpEFfk/1l2vQks/cDxqH5ALqQ/KlXbs6pJCIkjtHgIPJQAY+CIBBBjKQgZ8EKDBA1y+OAgIk7h02tXtYwgpPngAAAABJRU5ErkJggg==
+') no-repeat 0 0;
+    @include background-size(cover);
+    @include rem((
+        width: 12px,
+        height: 16px
+    ));
+}
 /* Toggle button
    ========================================================================== */
 
@@ -603,7 +633,7 @@ $new-navigation-h-space-between-items: get-font-size($fs-headers, 1) !default;
     }
 
     .new-navigation--expanded & {
-        border-left: 0;
+        border-left-color: transparent;
     }
 
     @include mq(tablet) {
@@ -628,4 +658,146 @@ $new-navigation-h-space-between-items: get-font-size($fs-headers, 1) !default;
 }
 .new-navigation--expanded .new-navigation__toggle-label--close {
     display: inline;
+}
+
+.honest-burger {
+    width: 8px;
+    height: 18px;
+    display: block;
+    overflow: hidden;
+    margin-top: 1px;
+
+    .new-navigation--expanded & {
+        display: none;
+    }
+}
+.honest-burger i {
+    border-top: 2px solid rgba(#ffffff, .9);
+    display: block;
+    margin-top: 3px;
+}
+
+.new-navigation__toggle--has-icon {
+    @include rem((
+        min-width: 48px,
+        padding-left: 16px,
+        padding-right: 8px
+    ));
+
+
+    @include mq(tablet) {
+        @include rem((
+            min-width: $new-navigation-toggler-width-full
+        ));
+    }
+
+}
+.new-navigation__toggle-burger {
+    position: absolute;
+    left: 0;
+    @include rem((
+        top: 8px
+    ));
+}
+.new-navigation__toggle-arrow {
+    position: absolute;
+    @include rem((
+        left: 7px,
+        top: 16px
+    ));
+    @include mq(tablet) {
+        @include rem((
+            left: 12px
+        ));
+    }
+}
+.arrow-box {
+    border: solid transparent;
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+    border-color: rgba(255, 255, 255, 0);
+    border-top-color: #ffffff;
+    @include rem((
+        border-width: 4px,
+        margin-left: -4px
+    ));
+
+    .new-navigation--expanded & {
+        @include rotate(180deg);
+        @include rem((
+            top: 11px
+        ));
+    }
+}
+
+
+/* Variant A: no local navigation / with signposting
+   ========================================================================== */
+
+.new-navigation--hide-local-navigation {
+    &.new-navigation--collapsed {
+        .local-navigation {
+            display: none;
+        }
+        .global-navigation {
+            border-left: 0;
+            @include rem((
+                margin-left: -$new-navigation-h-space-between-items
+            ));
+        }
+    }
+}
+
+.new-navigation__signposting {
+    @include f-header;
+    border-bottom: 1px solid guss-colour(neutral-5);
+    @include rem((
+        padding-left: $gs-gutter/2,
+        line-height: gs-height(1)
+    ));
+    @include mq(mobileLandscape) {
+        @include rem((
+            padding-left: $gs-gutter
+        ));
+    }
+}
+.signposting__action {
+    color: $c-new-navigation-signposting-action;
+}
+.signposting__action,
+.signposting__separator {
+    @include rem((
+        margin-right: $new-navigation-h-space-between-items/2
+    ));
+}
+
+.global-navigation__children {
+    @include mq($to: tablet) {
+        &.global-navigation__children--collapsed {
+            display: none;
+        }
+        &.global-navigation__children--expanded {
+            display: block;
+        }
+    }
+}
+.global-navigation__toggle-children {
+    position: absolute;
+    right: 0;
+    display: block;
+    font-family: $sans-serif;
+    @include rem((
+        font-size: 12px,
+        line-height: 20px,
+        padding-left: $gs-gutter,
+        padding-bottom: 8px
+    ));
+    font-weight: 300;
+    color: rgba(#ffffff, .5);
+
+    @include mq(tablet) {
+        display: none;
+    }
 }
