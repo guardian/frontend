@@ -55,7 +55,7 @@ object FrontJsonLite extends FrontJsonLite
 trait FrontJson extends ExecutionContexts {
 
   val stage: String = Configuration.facia.stage.toUpperCase
-  val bucketLocation: String = s"$stage/frontsapi/pressed"
+  val bucketLocation: String
 
   private def getAddressForPath(path: String): String = s"$bucketLocation/$path/pressed.json"
 
@@ -168,4 +168,6 @@ trait FrontJson extends ExecutionContexts {
 
 }
 
-object FrontJson extends FrontJson
+object FrontJsonLive extends FrontJson {
+  val bucketLocation: String = s"$stage/frontsapi/pressed/live"
+}

@@ -401,6 +401,11 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
+  val FaciaToolDraftPressSwitch = Switch("Front Press Switches", "facia-tool-press-draft-front",
+    "If this switch is on facia tool will press draft fronts on each change",
+    safeState = Off, sellByDate = never
+  )
+
   val FaciaToolCachedContentApiSwitch = Switch("Front Press Switches", "facia-tool-cached-capi-requests",
     "If this switch is on facia tool will cache responses from the content API and use them on failure",
     safeState = On, sellByDate = never
@@ -509,7 +514,8 @@ object Switches extends Collections {
     FreshnessLoggingSwitch,
     SeoOptimisedContentImageSwitch,
     FaciaToolCachedContentApiSwitch,
-    FaciaToolCachedZippingContentApiSwitch
+    FaciaToolCachedZippingContentApiSwitch,
+    FaciaToolDraftPressSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }

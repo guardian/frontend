@@ -12,6 +12,8 @@ import org.scalatest.mock.MockitoSugar
 import org.mockito.Mockito._
 import play.api.libs.ws.Response
 import services.ParseCollection
+import contentapi.ContentApiClient
+import play.api.libs.json.JsValue
 
 class CustomException(message: String) extends Exception(message)
 
@@ -34,6 +36,8 @@ class TestParseCollection(httpStatusCode: Int, responseString: String = "{}") ex
   when(response.body) thenReturn responseString
 
   override def requestCollection(id: String) = Future.successful(response)
+  override def retrieveItemsFromCollectionJson(collectionJson: JsValue): Seq[CollectionItem] = ???
+  override val client: ContentApiClient = ???
 }
 
 class QueryTest extends FlatSpec with Matchers with ScalaFutures {
