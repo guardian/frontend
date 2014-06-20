@@ -121,19 +121,16 @@ trait FrontPress extends Logging {
   def generateLiveJson(id: String): Future[JsObject] = {
     val futureSeoData: Future[SeoData] = SeoData.getSeoData(id)
     futureSeoData.flatMap { seoData =>
-        retrieveFrontByPath(id).map(_.map {
-          case (config, collection) =>
+        retrieveFrontByPath(id)
+          .map(_.map { case (config, collection) =>
             Json.obj(
               config.id -> generateCollectionJson(config, collection)
-            )
-        })
-          .map(_.foldLeft(Json.arr()) {
-          case (l, jsObject) => l :+ jsObject
-        })
+            )})
+          .map(_.foldLeft(Json.arr()) { case (l, jsObject) => l :+ jsObject})
           .map(c =>
-          Json.obj("id" -> id) ++
-            Json.obj("seoData" -> seoData) ++
-            Json.obj("collections" -> c)
+            Json.obj("id" -> id) ++
+              Json.obj("seoData" -> seoData) ++
+              Json.obj("collections" -> c)
           )
     }
   }
@@ -141,19 +138,16 @@ trait FrontPress extends Logging {
   def generateDraftJson(id: String): Future[JsObject] = {
     val futureSeoData: Future[SeoData] = SeoData.getSeoData(id)
     futureSeoData.flatMap { seoData =>
-      retrieveDraftFrontByPath(id).map(_.map {
-        case (config, collection) =>
+      retrieveDraftFrontByPath(id)
+        .map(_.map { case (config, collection) =>
           Json.obj(
             config.id -> generateCollectionJson(config, collection)
-          )
-      })
-        .map(_.foldLeft(Json.arr()) {
-        case (l, jsObject) => l :+ jsObject
-      })
+          )})
+        .map(_.foldLeft(Json.arr()) { case (l, jsObject) => l :+ jsObject})
         .map(c =>
-        Json.obj("id" -> id) ++
-          Json.obj("seoData" -> seoData) ++
-          Json.obj("collections" -> c)
+          Json.obj("id" -> id) ++
+            Json.obj("seoData" -> seoData) ++
+            Json.obj("collections" -> c)
         )
     }
   }
