@@ -43,8 +43,7 @@ public class NetworkFrontTest extends StubbedFrontsIntegrationTestCase {
         networkFrontPage = checkContainerExpandButton();
 
         // not really neccessary to do this, because the test would have failed anyway if the stub was not properly
-        // returning responses, but just to illustrate how it works, would the need arise to verify the requests sent to
-        // the stubs. The below, for example, checks that a request has been made to the AWS stub with the uk path in it
+        // returning responses, but just to illustrate how it works
         verify(getRequestedFor(urlMatching(".*/uk/.*")));
     }
 
