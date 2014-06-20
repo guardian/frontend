@@ -68,6 +68,13 @@ trait FrontPress extends Logging {
   import play.api.Play.current
   private lazy implicit val frontPressContext = Akka.system.dispatchers.lookup("play.akka.actor.front-press")
 
+  def pressByPathId(path: String): Future[JsValue] = {
+    val live: Future[JsObject] = pressLiveByPathId(path)
+    if (FaciaToolDraftPressSwitch.isSwitchedOn)
+      live.onComplete{ case _ => pressDraftByPathId(path) }
+    live
+  }
+
   private def pressDraftByPathId(path: String): Future[JsObject] =
     FrontPress.generateDraftJson(path).map { json =>
       (json \ "id").asOpt[String].foreach(S3FrontsApi.putDraftPressedJson(_, Json.stringify(json)))
