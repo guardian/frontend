@@ -6,32 +6,10 @@ import org.openqa.selenium.WebDriver;
 public class Article {
 
     private WebDriver driver;
+    private static final String COMPONENT_POPULAR_BELOW = ".article__popular div#tabs-popular-1 a";
 
     public Article(WebDriver driver) {
         this.driver = driver;
-    }
-
-
-    public void shareViaEmail() {
-        driver.findElement(By.cssSelector(".i-share-email")).click();
-    }
-
-    public void shareOnFacebook() {
-        driver.findElement(By.cssSelector(".i-share-facebook")).click();
-    }
-
-    public void shareOnTwitter() {
-        driver.findElement(By.cssSelector(".i-share-twitter")).click();
-    }
-
-    public void shareOnGooglePlus() {
-        driver.findElement(By.cssSelector(".i-share-gplus")).click();
-    }
-
-
-    public boolean hasMostPopularRight() {
-
-        return driver.findElement(By.cssSelector(".right-most-popular")).isDisplayed();
     }
 
     public Article goToFirstArticleInMostPopularRight() {
@@ -40,19 +18,19 @@ public class Article {
     }
 
     public String getFirstArticleInMostPopularRight() {
-        return driver.findElement(By.cssSelector(".right-most-popular-item__url")).getText();
+        return driver.findElement(By.cssSelector(".right-most-popular-item__url")).getAttribute("href");
     }
 
-    public String getArticleHeadline() {
-        return driver.findElement(By.cssSelector(".content__headline")).getText();
+    public String getCurrentURL() {
+        return driver.getCurrentUrl();
     }
 
     public boolean hasRelatedContentContainer() {
         return driver.findElement(By.cssSelector(".related")).isDisplayed();
     }
 
-    public String getFirstRelatedArticle() {
-        return driver.findElement(By.cssSelector(".related .item__link")).getText();
+    public String getFirstRelatedArticleHref() {
+        return driver.findElement(By.cssSelector(".related .item__link")).getAttribute("href");
     }
 
     public Article goToFirstRelatedArticle() {
@@ -61,7 +39,7 @@ public class Article {
     }
 
     public String getFirstArticleInMostPopularBelow() {
-        return driver.findElement(By.cssSelector(".article__popular div#tabs-popular-1 .headline-list__body")).getText();
+        return driver.findElement(By.cssSelector(COMPONENT_POPULAR_BELOW)).getAttribute("href");
     }
 
     public boolean hasMostPopularBelow() {
@@ -69,7 +47,7 @@ public class Article {
     }
 
     public Article goToFirstArticleInMostPopularBottom() {
-        driver.findElement(By.cssSelector(".article__popular div#tabs-popular-1 a")).click();
+        driver.findElement(By.cssSelector(COMPONENT_POPULAR_BELOW)).click();
         return new Article(driver);
     }
 
