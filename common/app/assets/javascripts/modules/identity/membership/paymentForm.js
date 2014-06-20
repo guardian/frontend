@@ -98,13 +98,11 @@ define([
                 var errorObj,
                     errorMessage;
 
-                try {
-                    errorObj = error.response && JSON.parse(error.response);
-                    errorMessage = self.getErrorMessage(errorObj);
-                    if (errorMessage) {
-                        self.handleErrors([errorMessage]);
-                    }
-                } catch (e) {}
+                errorObj = error.response && JSON.parse(error.response);
+                errorMessage = self.getErrorMessage(errorObj);
+                if (errorMessage) {
+                    self.handleErrors([errorMessage]);
+                }
 
                 self.stopLoader();
             });
@@ -156,8 +154,9 @@ define([
                 errorString += element + '\n';
             });
 
-            $paymentErrorsElement.removeClass(this.config.classes.HIDE);
-            $paymentErrorsElement.html(errorString);
+            $paymentErrorsElement
+                .removeClass(this.config.classes.HIDE)
+                .html(errorString);
 
             $formSubmitButton.attr('disabled', true);
         } else {
@@ -172,8 +171,8 @@ define([
         return stripe.cardType(cardNumber).toLowerCase().replace(' ', '-');
     };
 
-    StripePaymentForm.prototype.displayCardTypeImage = function ($creditCardNumberElement) {
-        var cardType = this.getCardType($creditCardNumberElement.val()),
+    StripePaymentForm.prototype.displayCardTypeImage = function (creditCardNumber) {
+        var cardType = this.getCardType(creditCardNumber),
             $creditCardImageElement = this.getElement('CREDIT_CARD_IMAGE');
 
         $creditCardImageElement[0].className = $creditCardImageElement[0].className.replace(/\bi-\S*/gi, '');
@@ -193,7 +192,7 @@ define([
             var $creditCardNumberElement = $(e.target);
 
             masker(' ', 4).bind(this)(e);
-            self.displayCardTypeImage($creditCardNumberElement);
+            self.displayCardTypeImage($creditCardNumberElement.val());
 
             if (e.type === 'blur') {
                 var validationResult = self.validateCardNumber($creditCardNumberElement);
@@ -264,7 +263,8 @@ define([
     /**
      *
      * @param $creditCardNumberElement
-     * @returns {{isValid: *, errorMessage: (config/stripeErrorMessages.card_error.incorrect_number|*), $element: *}}
+     * @returns Object
+     * {{isValid: *, errorMessage: (config/stripeErrorMessages.card_error.incorrect_number|*), $element: *}}
      */
     StripePaymentForm.prototype.validateCardNumber = function ($creditCardNumberElement) {
 
@@ -280,7 +280,8 @@ define([
     /**
      *
      * @param $cvcElement
-     * @returns {{isValid: *, errorMessage: (config/stripeErrorMessages.card_error.incorrect_cvc|*), $element: *}}
+     * @returns Object
+     * {{isValid: *, errorMessage: (config/stripeErrorMessages.card_error.incorrect_cvc|*), $element: *}}
      */
     StripePaymentForm.prototype.validateCVC = function ($cvcElement) {
 
@@ -307,7 +308,8 @@ define([
 
     /**
      *
-     * @returns {{isValid: boolean, errorMessage: (config/stripeErrorMessages.card_error.invalid_expiry|*), $element: *}}
+     * @returns Object
+     * {{isValid: boolean, errorMessage: (config/stripeErrorMessages.card_error.invalid_expiry|*), $element: *}}
      */
     StripePaymentForm.prototype.validateExpiry = function () {
 
@@ -341,7 +343,8 @@ define([
 
     /**
      *
-     * @returns {{isValid: boolean, errors: Array}}
+     * @returns Object
+     * {{isValid: boolean, errors: Array}}
      */
     StripePaymentForm.prototype.isFormValid = function () {
 
@@ -445,7 +448,7 @@ define([
         this.context = context || document.querySelector('.' + this.config.classes.STRIPE_FORM);
 
         if (!this.context.className.match(this.config.classes.STRIPE_FORM)) {
-            this.context = this.context.querySelector('.' + this.config.classes.STRIPE_FORM);
+            this.context = $('.' + this.config.classes.STRIPE_FORM, this.context)[0];
         }
 
         if (this.context) {
