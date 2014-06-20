@@ -315,6 +315,11 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 8, 10)
   )
 
+  val ProfileCommentsSearchSwitch = Switch("Feature Switches", "profile-comments-search",
+    "If this switch is on, you will be able to search for a user's comments.",
+    safeState = Off, sellByDate = new DateMidnight(2014, 7, 31)
+  )
+
   // A/B Tests
 
   val ABHideSupportingLinks = Switch("A/B Tests", "ab-hide-supporting-links",
@@ -492,6 +497,7 @@ object Switches extends Collections {
     NewNavigationSwitch,
     WorldCupWallchartEmbedSwitch,
     WorldCupArticleContainerSwitch,
+    ProfileCommentsSearchSwitch,
     IndiaRegionSwitch,
     MemcachedSwitch,
     MemcachedFallbackSwitch,

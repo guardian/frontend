@@ -241,3 +241,22 @@ $disc-avatar-size: 44px;
         padding-top: 0;
     }
 }
+
+.activity-stream-search {
+    @include rem((
+        margin-top: $gs-baseline/2
+    ));
+}
+.activity-stream-search__q {
+    @include fs-textsans(2);
+    @include rem((
+        padding-left: $gs-gutter/2
+    ));
+    border: 0 none;
+    color: $c-neutral2-contrasted;
+    vertical-align: text-bottom;
+    width: 80%;
+    &:focus {
+        outline: none;
+    }
+}
