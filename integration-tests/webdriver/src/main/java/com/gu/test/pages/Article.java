@@ -43,7 +43,7 @@ public class Article {
     }
 
     public boolean hasMostPopularBelow() {
-        return driver.findElement(By.cssSelector(".article__popular")).isDisplayed();
+        return driver.findElement(By.cssSelector(COMPONENT_POPULAR_BELOW)).isDisplayed();
     }
 
     public Article goToFirstArticleInMostPopularBottom() {
