@@ -1,0 +1,10 @@
+language: node_js
+node_js:
+  - "0.10"
+notifications:
+  email:
+    - dustin@dustindiaz.com
+before_script:
+  - node make/tests.js &
+
+script: phantomjs ./phantom.js

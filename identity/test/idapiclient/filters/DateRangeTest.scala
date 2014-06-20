@@ -29,8 +29,8 @@ class DateRangeTest extends FunSuite with Matchers {
   }
 
   test("fails if given neither from nor to date") {
-    evaluating {
+    an [IllegalArgumentException] should be thrownBy {
       DateRange(None, field, None)
-    } should produce[IllegalArgumentException]
+    }
   }
 }

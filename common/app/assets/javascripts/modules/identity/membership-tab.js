@@ -84,7 +84,7 @@ define(['common/$',
         var self = this;
 
         ajax({
-            url: 'https://mem.thegulocal.com/user/me/details',
+            url: 'https://membership.theguardian.com/user/me/details',
             crossOrigin: true,
             withCredentials: true,
             method: 'get'
@@ -111,7 +111,7 @@ define(['common/$',
      *   Load the css file containing the base64 encoded sprites for the card icons
      */
     Membership.prototype.addSpriteCss = function () {
-        var spriteSheetUrl = config.page.idUrl + $(this.getClass('TAB')).data('sprite-url');
+        var spriteSheetUrl = $(this.getClass('TAB')).data('sprite-url');
         var $head  = $('head');
         var link  = document.createElement('link');
         link.id   = 'membership-sprite';

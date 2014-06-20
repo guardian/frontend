@@ -10,6 +10,7 @@ import scala.concurrent.Future
 import play.api.templates.Html
 import performance.MemcachedAction
 import services.ConfigAgent
+import common.FaciaMetrics.FaciaToApplicationRedirectMetric
 
 
 class FaciaController extends Controller with Logging with ExecutionContexts with implicits.Collections with implicits.Requests {
@@ -32,6 +33,7 @@ class FaciaController extends Controller with Logging with ExecutionContexts wit
   }
 
   def applicationsRedirect(path: String) = Action { implicit request =>
+    FaciaToApplicationRedirectMetric.increment()
     InternalRedirect.internalRedirect("applications", path, if (request.queryString.nonEmpty) Option(s"?${request.rawQueryString}") else None)
   }
 

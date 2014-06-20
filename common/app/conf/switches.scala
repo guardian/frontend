@@ -317,11 +317,6 @@ object Switches extends Collections {
 
   // A/B Tests
 
-  val ABHighRelevanceCommercialComponent = Switch("A/B Tests", "ab-high-relevance-commercial-component",
-    "If this switch is turned on, run the HighRelevanceCommercialComponent A/B test.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 6, 19)
-  )
-
   val ABHideSupportingLinks = Switch("A/B Tests", "ab-hide-supporting-links",
     "If this switch is turned on, run the HideSupportingLinks A/B test.",
     safeState = Off, sellByDate = new DateMidnight(2014, 6, 24)
@@ -335,6 +330,16 @@ object Switches extends Collections {
   val ABDisplaySociallyReferredBurners = Switch("A/B Tests", "ab-display-socially-referred-burners",
     "If this switch is turned on, run the DisplayReferredContent A/B test",
     safeState = Off, sellByDate = new DateMidnight(2014, 6, 24)
+  )
+
+  val ABSentry = Switch("A/B Tests", "ab-sentry",
+    "If this switch is turned on, users JavaScript errors will be beaconed back to the Sentry server.",
+    safeState = Off, sellByDate = new DateMidnight(2014, 6, 27)
+  )
+
+  val ABLargerMobileMpu = Switch("A/B Tests", "ab-larger-mobile-mpu",
+    "If this switch is turned on, run the LargerMobileMpu A/B test",
+    safeState = Off, sellByDate = new DateMidnight(2014, 7, 1)
   )
 
   // Dummy Switches
@@ -493,10 +498,11 @@ object Switches extends Collections {
     IncludeBuildNumberInMemcachedKey,
     GeoMostPopular,
     TagLinkingSwitch,
-    ABHighRelevanceCommercialComponent,
     ABHideSupportingLinks,
     ABAcrossTheGuardian,
     ABDisplaySociallyReferredBurners,
+    ABSentry,
+    ABLargerMobileMpu,
     SmartBannerSwitch,
     SurveyBannerSwitch,
     ParameterlessImagesSwitch,

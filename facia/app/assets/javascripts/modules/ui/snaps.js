@@ -4,14 +4,16 @@ define([
     'common/utils/ajax',
     'common/utils/mediator',
     'common/utils/template',
-    'common/utils/to-array'
+    'common/utils/to-array',
+    'common/modules/ui/relativedates'
 ], function(
     $,
     bonzo,
     ajax,
     mediator,
     template,
-    toArray
+    toArray,
+    relativeDates
 ) {
 
     function init() {
@@ -71,6 +73,7 @@ define([
             $.create(asJson ? resp.html : resp).each(function(html) {
                 bonzo(el).html(html);
             });
+            relativeDates.init(el);
         });
     }
 

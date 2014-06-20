@@ -267,10 +267,18 @@ object FaciaMetrics {
     "Number of requests to S3 by facia that have resulted in a 403"
   )
 
+  object FaciaToApplicationRedirectMetric extends SimpleCountMetric(
+    "facia-front",
+    "facia-applications-redirects",
+    "Facia to Applications X-Accel-Redirect count",
+    "Number of requests to facia that have been redirected to Applications via X-Accel-Redirect"
+  )
+
   val all: Seq[Metric] = Seq(
     JsonParsingErrorCount,
     S3AuthorizationError,
-    InvalidContentExceptionMetric
+    InvalidContentExceptionMetric,
+    FaciaToApplicationRedirectMetric
   )
 }
 
@@ -367,11 +375,11 @@ object FaciaToolMetrics {
     "Number of times facia-tool has failed to made the request for SEO purposes of webTitle and section"
   )
 
-  object ContentApiFallbacks extends SimpleCountMetric(
+  object MemcachedFallbackMetric extends SimpleCountMetric(
     "facia-press-content-api",
-    "facia-press-content-api-fallbacks",
-    "Facia Content API Fall Backs",
-    "Number of queries to Content API that failed and were served by Memcached"
+    "facia-press-memcached-fallbacks",
+    "Facia Tool Memcached Fall Backs",
+    "Number of times the Memcached Fallback was used"
   )
 
   val all: Seq[Metric] = Seq(
@@ -379,7 +387,7 @@ object FaciaToolMetrics {
     DraftPublishCount, ContentApiPutSuccess, ContentApiPutFailure,
     FrontPressSuccess, FrontPressFailure, FrontPressCronSuccess,
     FrontPressCronFailure, InvalidContentExceptionMetric,
-    ContentApiSeoRequestSuccess, ContentApiSeoRequestFailure, ContentApiFallbacks
+    ContentApiSeoRequestSuccess, ContentApiSeoRequestFailure, MemcachedFallbackMetric
   ) ++ ContentApiMetrics.all ++ S3Metrics.all
 }
 

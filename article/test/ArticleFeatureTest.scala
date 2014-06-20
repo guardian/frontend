@@ -351,9 +351,8 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         And("the placeholder has the correct data attributes")
         adPlaceholder.getAttribute("data-name") should be("top-above-nav")
         adPlaceholder.getAttribute("data-tabletportrait") should be("728,90")
-        adPlaceholder.getAttribute("data-tabletlandscape") should be("728,90|900,250")
-        adPlaceholder.getAttribute("data-desktop") should be("728,90|900,250")
-        adPlaceholder.getAttribute("data-wide") should be("728,90|900,250|970,250")
+        adPlaceholder.getAttribute("data-tabletlandscape") should be("728,90|940,230|900,250")
+        adPlaceholder.getAttribute("data-wide") should be("728,90|940,230|900,250|970,250")
 
         And("the placeholder has the correct class name")
         adPlaceholder.getAttribute("class") should be("ad-slot ad-slot--dfp ad-slot--top-above-nav ad-slot--top-banner-ad")
@@ -589,7 +588,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
       }
     }
 
-    scenario("Health check"){
+    ignore("Health check"){
       HtmlUnit("/world/2013/sep/15/obama-rouhani-united-nations-meeting") { browser =>
         Await.result(WS.url("http://localhost:9000/_cdn_healthcheck").get(), 10.seconds).status should be (503)
         HealthcheckPage.get(com.gu.management.HttpRequest(com.gu.management.GET, "/management/healthcheck", "http://localhost:10808", Map.empty))

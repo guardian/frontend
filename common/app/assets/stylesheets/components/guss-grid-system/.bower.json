@@ -1,0 +1,21 @@
+{
+  "name": "guss-grid-system",
+  "version": "1.0.2",
+  "main": "_grid-system.scss",
+  "ignore": [
+    "CHANGELOG.md"
+  ],
+  "dependencies": {
+    "guss-rem": "~1"
+  },
+  "homepage": "https://github.com/guardian/guss-grid-system",
+  "_release": "1.0.2",
+  "_resolution": {
+    "type": "version",
+    "tag": "v1.0.2",
+    "commit": "43394b7a812b298956982458851067e7af66e3a8"
+  },
+  "_source": "git://github.com/guardian/guss-grid-system.git",
+  "_target": "~1",
+  "_originalSource": "guss-grid-system"
+}
