@@ -225,9 +225,13 @@
 .ad-slot--sponsored__link {
     float: right;
 }
-.ad-slot--sponsored__header,
+.ad-slot--sponsored__header {
+    @include f-headlineSans;
+    @include font-size(16, 20);
+}
 .ad-slot--sponsored__text {
-    @include fs-data(5);
+    @include f-textsans;
+    @include font-size(14, 18);
 }
 .ad-slot--sponsored__header {
     clear: both;
