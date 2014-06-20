@@ -17,7 +17,7 @@ object MasterClassAgent extends AdAgent[MasterClass] with ExecutionContexts {
   }
 
   def specificClasses(eventBriteIdStrings: Seq[String]): Seq[MasterClass] = {
-    val eventBriteIds = eventBriteIdStrings map (_.toInt)
+    val eventBriteIds = eventBriteIdStrings map (_.toLong)
     currentAds filter (masterclass => eventBriteIds contains masterclass.eventBriteEvent.id)
   }
 
