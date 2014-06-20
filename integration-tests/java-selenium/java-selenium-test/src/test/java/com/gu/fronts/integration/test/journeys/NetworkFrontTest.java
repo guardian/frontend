@@ -91,6 +91,8 @@ public class NetworkFrontTest extends StubbedFrontsIntegrationTestCase {
         assertTrue("Displayed image did not change after clicking Next Picture",
                 !displayedImageBefore.equals(displayedImageAfter));
 
+        networkFrontPage = galleryOverlay.close();
+        networkFrontPage.isDisplayed();
     }
 
     private NetworkFrontPage checkHeaderAndFooter() {

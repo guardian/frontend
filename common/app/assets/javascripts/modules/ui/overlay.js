@@ -16,7 +16,7 @@ define([
             template = '<div class="overlay">' +
                        '  <div class="overlay__header u-cf">' +
                        '    <div class="overlay__toolbar u-cf"></div>' +
-                       '    <button class="overlay__cta overlay__cta--close js-overlay-close" data-link-name="Close overlay">' +
+                       '    <button class="overlay__cta overlay__cta--close js-overlay-close" data-link-name="Close overlay" data-test-id="close-overlay">' +
                        '      <i class="i i-close-icon"></i>' +
                        '    </button>' +
                        '  </div>' +
