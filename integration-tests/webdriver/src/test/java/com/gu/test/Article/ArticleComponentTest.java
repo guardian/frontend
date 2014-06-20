@@ -16,23 +16,20 @@ public class ArticleComponentTest {
     public void setUp() throws Exception {
         driver = createWebDriver();
         pageHelper = new PageHelper(driver);
-        testArticle = pageHelper.goToArticle("/film/filmblog/2014/may/20/lost-river-reviews-cannes-scorn-ryan-gosling");
-    }
-
-    @Ignore //test failing on teamcity
-    @Test
-    public void articleHasMostPopularSidebar() {
-        Assert.assertTrue("Failure: Related content container missing", testArticle.hasMostPopularRight());
+        testArticle = pageHelper
+                .goToArticle("/film/filmblog/2014/may/20/lost-river-reviews-cannes-scorn-ryan-gosling");
     }
 
     @Test
     public void articleHasPopularContainerBelow() {
-        Assert.assertTrue("Failure: Most Popular In Bottom Hand Bar is Missing", testArticle.hasMostPopularBelow());
+        Assert.assertTrue("Failure: Most Popular In Bottom Hand Bar is Missing",
+                testArticle.hasMostPopularBelow());
     }
 
     @Test
     public void articleHasRelatedContentContainer() {
-        Assert.assertTrue("Failure: Related content container missing", testArticle.hasRelatedContentContainer());
+        Assert.assertTrue("Failure: Related content container missing",
+                testArticle.hasRelatedContentContainer());
     }
 
     @Test

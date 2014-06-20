@@ -42,7 +42,7 @@ public class UserTrackingTest {
         cap.setCapability(CapabilityType.PROXY, proxy);
         driver = new FirefoxDriver(cap);
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-        return  driver;
+        return driver;
     }
 
     @Test
