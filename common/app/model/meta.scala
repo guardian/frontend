@@ -30,7 +30,7 @@ trait MetaData extends Tags {
 
   lazy val adUnitSuffix = {
     val isSectionFront = id == section
-    if (isSectionFront) section + "/front" else section
+    if (isSectionFront) s"$section/front" else section
   }
 
   lazy val hasPageSkin = false
