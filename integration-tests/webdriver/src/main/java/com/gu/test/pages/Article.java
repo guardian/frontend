@@ -29,22 +29,6 @@ public class Article {
         return new Article(driver);
     }
 
-<<<<<<< HEAD
-=======
-    public String getFirstArticleInMostPopularBelow() {
-        return driver.findElement(By.cssSelector(COMPONENT_POPULAR_BELOW)).getAttribute("href");
-    }
-
-    public boolean hasMostPopularBelow() {
-        return driver.findElement(By.cssSelector(COMPONENT_POPULAR_BELOW)).isDisplayed();
-    }
-
-    public Article goToFirstArticleInMostPopularBottom() {
-        driver.findElement(By.cssSelector(COMPONENT_POPULAR_BELOW)).click();
-        return new Article(driver);
-    }
->>>>>>> c031d5b07915f9fab81c5181c4ac59c5a171e481
-
     public boolean hasComments() {
         return driver.findElement(By.cssSelector(".discussion-content")).isDisplayed();
     }
