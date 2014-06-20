@@ -34,7 +34,7 @@ object FrontPressJob extends Logging with implicits.Collections {
         try {
           val receiveMessageResult = client.receiveMessage(new ReceiveMessageRequest(queueUrl).withMaxNumberOfMessages(10))
           Future.traverse(receiveMessageResult.getMessages.map(getConfigFromMessage).distinct) { path =>
-            val f = FrontPress.press(PressCommand.forOneId(path).withPressLive().withPressDraft())
+            val f = FrontPress.pressByPathId(path)
             f onComplete {
               case Success(_) =>
                 deleteMessage(receiveMessageResult, queueUrl)
