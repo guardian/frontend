@@ -182,9 +182,9 @@ define(['common/$',
             bean.on(self.getElem('CC_CHANGE_FORM_CONT'), 'animationend webkitAnimationEnd oanimationend MSAnimationEnd', function () {
                 var $elem = bonzo(this);
                 if ($elem.hasClass(self.getClass('ANIM_OPEN', true))) {
-                    $elem.removeClass(self.getClass('ANIM_OPEN', true)).addClass(self.getClass('ANIM_OPENED', true))
+                    $elem.removeClass(self.getClass('ANIM_OPEN', true)).addClass(self.getClass('ANIM_OPENED', true));
                 } else {
-                    $elem.removeClass(self.getClass('ANIM_CLOSE', true)).addClass(self.getClass('ANIM_CLOSED', true))
+                    $elem.removeClass(self.getClass('ANIM_CLOSE', true)).addClass(self.getClass('ANIM_CLOSED', true));
                 }
             });
 
