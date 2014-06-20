@@ -6,20 +6,11 @@ import org.openqa.selenium.WebDriver;
 public class Article {
 
     private WebDriver driver;
-    private static final String COMPONENT_POPULAR_BELOW = ".article__popular div#tabs-popular-1 a";
 
     public Article(WebDriver driver) {
         this.driver = driver;
     }
 
-    public Article goToFirstArticleInMostPopularRight() {
-        driver.findElement(By.cssSelector(".right-most-popular-item__url")).click();
-        return new Article(driver);
-    }
-
-    public String getFirstArticleInMostPopularRight() {
-        return driver.findElement(By.cssSelector(".right-most-popular-item__url")).getAttribute("href");
-    }
 
     public String getCurrentURL() {
         return driver.getCurrentUrl();
@@ -38,18 +29,6 @@ public class Article {
         return new Article(driver);
     }
 
-    public String getFirstArticleInMostPopularBelow() {
-        return driver.findElement(By.cssSelector(COMPONENT_POPULAR_BELOW)).getAttribute("href");
-    }
-
-    public boolean hasMostPopularBelow() {
-        return driver.findElement(By.cssSelector(COMPONENT_POPULAR_BELOW)).isDisplayed();
-    }
-
-    public Article goToFirstArticleInMostPopularBottom() {
-        driver.findElement(By.cssSelector(COMPONENT_POPULAR_BELOW)).click();
-        return new Article(driver);
-    }
 
     public boolean hasComments() {
         return driver.findElement(By.cssSelector(".discussion-content")).isDisplayed();
