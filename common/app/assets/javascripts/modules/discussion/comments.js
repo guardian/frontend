@@ -78,7 +78,6 @@ Comments.prototype.classes = {
     showMoreOlder: 'd-discussion__show-more--older',
     showMoreLoading: 'd-discussion__show-more-loading',
     showHidden: 'd-discussion__show-hidden',
-    showAllComments: 'd-discussion__show-all-comments',
     reply: 'd-comment--response',
     showReplies: 'd-show-more-replies',
     header: 'd-discussion__header',
@@ -149,10 +148,6 @@ Comments.prototype.prerender = function() {
             this.removeState('not-staff');
             this.setState('is-staff');
         }
-    }
-
-    if(commentCount>2) {
-        $(this.getClass('showAllComments')).addClass('d-discussion__show-all-comments-visible');
     }
 
     if (this.options.state) {
