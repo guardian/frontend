@@ -1,5 +1,5 @@
 define([
-    'common/$',
+    'common/utils/$',
     'common/utils/config',
     'common/modules/onward/most-popular-factory',
     'common/modules/onward/history'

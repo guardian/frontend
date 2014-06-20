@@ -7,6 +7,8 @@ module.exports = function (grunt) {
         staticTargetDir = './static/target/',
         staticHashDir = './static/hash/',
         testConfDir = './common/test/assets/javascripts/conf/',
+        tmpDir = './tmp',
+        tmpCoreJsDir = tmpDir+'/javascripts',
         propertiesFile = (isDev) ? process.env.HOME + '/.gu/frontend.properties' : '/etc/gu/frontend.properties';
 
     if (isDev) {
@@ -44,13 +46,13 @@ module.exports = function (grunt) {
                 paths: {
                     common:       '../../../../common/app/assets/javascripts',
                     bean:         '../../../../common/app/assets/javascripts/components/bean/bean',
-                    bonzo:        '../../../../common/app/assets/javascripts/components/bonzo/src/bonzo',
+                    bonzo:        '../../../../common/app/assets/javascripts/components/bonzo/bonzo',
                     domReady:     '../../../../common/app/assets/javascripts/components/domready/ready',
                     EventEmitter: '../../../../common/app/assets/javascripts/components/eventEmitter/EventEmitter',
-                    qwery:        '../../../../common/app/assets/javascripts/components/qwery/mobile/qwery-mobile',
-                    reqwest:      '../../../../common/app/assets/javascripts/components/reqwest/src/reqwest',
-                    lodash:       '../../../../common/app/assets/javascripts/components/lodash-amd/modern',
-                    imager:       '../../../../common/app/assets/javascripts/components/imager.js/src/strategies/container',
+                    qwery:        '../../../../common/app/assets/javascripts/components/qwery/qwery-mobile',
+                    reqwest:      '../../../../common/app/assets/javascripts/components/reqwest/reqwest',
+                    lodash:       '../../../../common/app/assets/javascripts/components/lodash-amd',
+                    imager:       '../../../../common/app/assets/javascripts/components/imager.js/container',
                     omniture:     '../../../../common/app/assets/javascripts/components/omniture/omniture',
                     fence:        '../../../../common/app/assets/javascripts/components/fence/fence',
                     enhancer:     '../../../../common/app/assets/javascripts/components/enhancer/enhancer'
@@ -62,23 +64,23 @@ module.exports = function (grunt) {
             common: {
                 options: {
                     baseUrl: 'common/app/assets/javascripts',
-                    name: 'common/bootstraps/app',
-                    out: staticTargetDir + 'javascripts/bootstraps/app.js',
+                    dir: tmpCoreJsDir,
+                    keepBuildDir: false,
                     shim: {
                         imager: {
-                            deps: ['components/imager.js/src/imager'],
+                            deps: ['components/imager.js/imager'],
                             exports: 'Imager'
                         },
                         omniture: {
                             exports: 's'
                         }
                     },
-                    wrap: {
-                        endFile: [
-                            'common/app/assets/javascripts/components/curl/dist/curl-with-js-and-domReady/curl.js',
-                            'common/app/assets/javascripts/bootstraps/go.js'
-                        ]
-                    }
+                    modules: [{
+                        name: 'utils'
+                    }, {
+                        name: 'app',
+                        exclude: ['utils']
+                    }]
                 }
             },
             facia: {
@@ -96,7 +98,7 @@ module.exports = function (grunt) {
                     name: 'common/bootstraps/ophan',
                     out: staticTargetDir + 'javascripts/bootstraps/ophan.js',
                     wrap: {
-                        startFile: 'common/app/assets/javascripts/components/curl/dist/curl/curl.js'
+                        startFile: 'common/app/assets/javascripts/components/curl/curl.js'
                     }
                 }
             },
@@ -107,7 +109,7 @@ module.exports = function (grunt) {
                     out: staticTargetDir + 'javascripts/bootstraps/admin.js',
                     shim: {
                         imager: {
-                            deps: ['common/components/imager.js/src/imager'],
+                            deps: ['common/components/imager.js/imager'],
                             exports: 'Imager'
                         },
                         omniture: {
@@ -123,8 +125,8 @@ module.exports = function (grunt) {
                     out: staticTargetDir + 'javascripts/bootstraps/video-player.js',
                     paths: {
                         vast: '../../../../common/app/public/javascripts/vendor/vast-client',
-                        videojs: 'components/videojs/dist/video-js/video',
-                        videojsads: 'components/videojs-contrib-ads/src/videojs.ads',
+                        videojs: 'components/videojs/video',
+                        videojsads: 'components/videojs-contrib-ads/videojs.ads',
                         videojsvast: 'components/videojs-vast/videojs.vast',
                         videojspersistvolume: 'components/videojs-persistvolume/videojs.persistvolume'
                     },
@@ -427,7 +429,8 @@ module.exports = function (grunt) {
                             'html5shiv/dist/html5shiv.js',
                             'raven-js/dist/raven.js',
                             'swipe/swipe.js',
-                            'zxcvbn/index.js'
+                            'zxcvbn/index.js',
+                            'curl/curl-domReady.js'
                         ],
                         dest: staticTargetDir + 'javascripts/components'
                     },
@@ -440,6 +443,17 @@ module.exports = function (grunt) {
                             'vast-client.js'
                         ],
                         dest: staticTargetDir + 'javascripts/vendor'
+                    },
+                    {
+                        expand: true,
+                        cwd: tmpCoreJsDir,
+                        src: [
+                            'utils.js',
+                            'utils.js.map',
+                            'app.js',
+                            'app.js.map'
+                        ],
+                        dest: staticTargetDir + 'javascripts'
                     }
                 ]
             },
@@ -448,7 +462,7 @@ module.exports = function (grunt) {
                     {
                         expand: true,
                         cwd: 'common/app/assets/javascripts',
-                        src: 'components/curl/dist/curl-with-js-and-domReady/curl.js',
+                        src: 'components/curl/curl-domReady.js',
                         dest: staticTargetDir + 'javascripts'
                     }
                 ]
@@ -747,7 +761,7 @@ module.exports = function (grunt) {
 
         // Clean stuff up
         clean: {
-            js         : [staticTargetDir + 'javascripts', staticHashDir + 'javascripts'],
+            js         : [staticTargetDir + 'javascripts', staticHashDir + 'javascripts', tmpCoreJsDir],
             css        : [staticTargetDir + 'stylesheets', staticHashDir + 'stylesheets'],
             images     : [staticTargetDir + 'images', staticHashDir + 'images'],
             flash      : [staticTargetDir + 'flash', staticHashDir + 'flash'],
@@ -883,7 +897,7 @@ module.exports = function (grunt) {
                 .map(function(copyTask) {
                     return 'copy:' + copyTask;
                 });
-        tasks.push('requirejs');
+        tasks.unshift('requirejs');
         grunt.task.run(tasks);
         if (!isDev) {
             grunt.task.run('uglify:components');

@@ -1,6 +1,6 @@
 /*global s_i_guardian:true */
 define([
-    'common/common',
+    'common/utils/common',
     'common/utils/detect',
     'common/modules/experiments/ab',
     'common/utils/storage',

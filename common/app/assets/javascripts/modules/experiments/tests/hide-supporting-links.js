@@ -1,6 +1,6 @@
 define([
     'bonzo',
-    'common/$',
+    'common/utils/$',
     'common/modules/onward/history',
     'common/utils/cookies'
 ], function (

@@ -1,4 +1,4 @@
-define(['common/common', 'bonzo', 'common/utils/ajax', 'common/modules/onward/popular'], function(common, bonzo, ajax, popular) {
+define(['common/utils/common', 'bonzo', 'common/utils/ajax', 'common/modules/onward/popular'], function(common, bonzo, ajax, popular) {
 
     describe("Popular", function() {
         var popularLoadedCallback,

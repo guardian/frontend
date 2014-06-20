@@ -1,6 +1,6 @@
 define([
     'common/modules/component',
-    'common/$',
+    'common/utils/$',
     'lodash/objects/assign',
     'common/utils/detect',
     'common/modules/adverts/dfp',

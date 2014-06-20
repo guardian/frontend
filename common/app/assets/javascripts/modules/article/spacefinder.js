@@ -1,4 +1,4 @@
-define(['bonzo','qwery', 'common/_'], function(bonzo, qwery, _) {
+define(['bonzo','qwery', 'common/utils/_'], function(bonzo, qwery, _) {
     // find spaces in articles for inserting ads and other inline content
 
     var bodySelector = '.js-article__body';

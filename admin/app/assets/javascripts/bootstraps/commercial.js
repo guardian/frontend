@@ -2,7 +2,7 @@ define([
     'qwery',
     'bean',
     'lodash/collections/where',
-    'common/$',
+    'common/utils/$',
     'common/utils/ajax'
 ], function(
     qwery,

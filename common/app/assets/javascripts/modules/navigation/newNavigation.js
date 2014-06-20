@@ -1,6 +1,6 @@
 define([
     'qwery',
-    'common/$',
+    'common/utils/$',
     'bean'
 ], function (
     qwery,

@@ -2,7 +2,7 @@
 /* TODO - fix module constructors so we can remove the above jshint override */
 define([
     //Commmon libraries
-    'common/$',
+    'common/utils/$',
     'common/utils/mediator',
     'common/utils/deferToLoad',
     'common/utils/ajax',

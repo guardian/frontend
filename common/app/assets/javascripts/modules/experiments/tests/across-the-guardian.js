@@ -1,6 +1,6 @@
 define([
     'common/utils/ajax',
-    'common/$',
+    'common/utils/$',
     'common/utils/template',
     'common/modules/ui/images'
 ], function (ajax, $, template, images) {

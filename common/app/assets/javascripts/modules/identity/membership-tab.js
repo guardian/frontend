@@ -1,7 +1,7 @@
 /*
 * If user is a member, display a membership tab on edit profile page
 */
-define(['common/$',
+define(['common/utils/$',
 'common/utils/ajax',
 'common/utils/config',
 'common/modules/component'], function ($, ajax, config, Component) {

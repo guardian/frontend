@@ -1,5 +1,5 @@
 define([
-    'common/$',
+    'common/utils/$',
     'bonzo',
     'qwery',
     'bean',
