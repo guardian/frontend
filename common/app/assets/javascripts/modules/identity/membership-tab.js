@@ -111,7 +111,7 @@ define(['common/$',
      *   Load the css file containing the base64 encoded sprites for the card icons
      */
     Membership.prototype.addSpriteCss = function () {
-        var spriteSheetUrl = config.page.idUrl + $(this.getClass('TAB')).data('sprite-url');
+        var spriteSheetUrl = $(this.getClass('TAB')).data('sprite-url');
         var $head  = $('head');
         var link  = document.createElement('link');
         link.id   = 'membership-sprite';
