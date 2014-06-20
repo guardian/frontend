@@ -44,7 +44,6 @@ define(['common/$',
         ANIM_OPENED: 'membership-tab__change-cc-form-cont--open',
         ANIM_CLOSE: 'membership-tab__change-cc-form-cont--to-closed',
         ANIM_CLOSED: 'membership-tab__change-cc-form-cont--closed'
-
     };
 
     /**

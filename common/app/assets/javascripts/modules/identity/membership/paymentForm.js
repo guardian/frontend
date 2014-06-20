@@ -1,6 +1,3 @@
-/**
- * Created by cfinch on 16/06/2014.
- */
 define([
     'common/$',
     'bean',
@@ -86,14 +83,17 @@ define([
             var token = response.id;
 
             ajax({
-                url: 'https://mem.thegulocal.com/subscription/update',
+                url: config.page.membershipUrl + '/subscription/update',
                 crossOrigin: true,
                 withCredentials: true,
                 method: 'post',
                 data: {
                     stripeToken: token
                 }
-            }).then(self.successCallback, function fail (error) {
+            }).then(function success () {
+                self.stopLoader();
+                self.successCallback.bind(this)(arguments);
+            }, function fail (error) {
 
                 var errorObj,
                     errorMessage;

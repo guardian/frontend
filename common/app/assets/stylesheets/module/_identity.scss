@@ -503,7 +503,7 @@
     }
 }
 
-/* Stripe credit card types..
+/* Stripe credit card types
    ========================================================================== */
 
 $small-card: 32px;
@@ -520,14 +520,6 @@ $large-card: 35px;
     width: 54px;
     height: $large-card;
 }
-
-//.credit-card--inline-block {
-//    visibility: visible;
-//    vertical-align: middle;
-//    position: static;
-//    display: inline-block;
-//    margin-right: $gutter / 2;
-//}
 
 @include mq(tablet){
     .membership-tab__card-types--in-field {
