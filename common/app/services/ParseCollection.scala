@@ -2,14 +2,13 @@ package services
 
 import common.FaciaMetrics.S3AuthorizationError
 import common._
-import conf.{LiveContentApi, Configuration}
-import model.Config
+import conf.LiveContentApi
 import conf.Configuration
 import model._
 import play.api.libs.json.Json._
 import play.api.libs.json._
 import scala.concurrent.Future
-import contentapi.QueryDefaults
+import contentapi.{ContentApiClient, QueryDefaults}
 import scala.util.Try
 import org.joda.time.DateTime
 import performance._
@@ -61,13 +60,21 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
 
   val cacheDuration: FiniteDuration = 5.minutes
 
+  val client: ContentApiClient
+  def retrieveItemsFromCollectionJson(collectionJson: JsValue): Seq[CollectionItem]
+
   case class InvalidContent(id: String) extends Exception(s"Invalid Content: $id")
   val showFieldsQuery: String = FaciaDefaults.showFields
   val showFieldsWithBodyQuery: String = FaciaDefaults.showFieldsWithBody
 
-  case class CollectionMeta(lastUpdated: Option[String], updatedBy: Option[String], updatedEmail: Option[String])
+  case class CollectionMeta(
+    lastUpdated: Option[String],
+    updatedBy: Option[String],
+    updatedEmail: Option[String],
+    displayName: Option[String],
+    href: Option[String])
   object CollectionMeta {
-    def empty: CollectionMeta = CollectionMeta(None, None, None)
+    def empty: CollectionMeta = CollectionMeta(None, None, None, None, None)
   }
 
   case class CollectionItem(id: String, metaData: Option[Map[String, JsValue]], webPublicationDate: Option[DateTime]) {
@@ -82,84 +89,57 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
   }
 
   def getCollection(id: String, config: Config, edition: Edition): Future[Collection] = {
-    // get the running order from the apiwith
-    val response = requestCollection(id)
+    val collectionJson: Future[JsValue] = requestCollection(id)
+      .map(responseToJson)
+
+    val curatedItems: Future[List[Content]] = collectionJson
+        .map(retrieveItemsFromCollectionJson)
+        .flatMap { items => getArticles(items, edition) }
+    val executeDraftContentApiQuery: Future[Result] =
+      config.contentApiQuery.map(executeContentApiQueryViaCache(_, edition)).getOrElse(Future.successful(Result.empty))
+    val collectionMetaData: Future[CollectionMeta] = collectionJson.map(getCollectionMeta)
+
     for {
-      collectionList <- parseResponse(response, edition, id)
-      collectionMeta <- getCollectionMeta(response).fallbackTo(Future.successful(CollectionMeta.empty))
-      displayName    <- parseDisplayName(response).fallbackTo(Future.successful(None))
-      href           <- parseHref(response).fallbackTo(Future.successful(None))
-      contentApiList <- config.contentApiQuery.filter(_.nonEmpty)
-        .map(executeContentApiQueryViaCache(_, edition))
-        .getOrElse(Future.successful(Result(Nil, Nil, Nil, Nil)))
+      curatedRequest <- curatedItems
+      executeRequest <- executeDraftContentApiQuery
+      collectionMeta <- collectionMetaData
     } yield Collection(
-      collectionList,
-      contentApiList.editorsPicks.map(makeContent),
-      contentApiList.mostViewed.map(makeContent),
-      contentApiList.contentApiResults.map(makeContent),
-      displayName,
-      href,
-      collectionMeta.lastUpdated,
-      collectionMeta.updatedBy,
-      collectionMeta.updatedEmail
+      curated = curatedRequest,
+      editorsPicks = executeRequest.editorsPicks.map(makeContent),
+      mostViewed = executeRequest.mostViewed.map(makeContent),
+      results = executeRequest.contentApiResults.map(makeContent),
+      displayName = collectionMeta.displayName,
+      href = collectionMeta.href,
+      lastUpdated = collectionMeta.lastUpdated,
+      updatedBy = collectionMeta.updatedBy,
+      updatedEmail = collectionMeta.updatedEmail
     )
   }
 
-  private def getCollectionMeta(response: Future[Response]): Future[CollectionMeta] = {
-    response.map { r =>
-      val bodyJson = parse(r.body)
-      CollectionMeta(
-          (bodyJson \ "lastUpdated").asOpt[String],
-          (bodyJson \ "updatedBy").asOpt[String],
-          (bodyJson \ "updatedEmail").asOpt[String]
-      )
-    }
-  }
+  private def getCollectionMeta(collectionJson: JsValue): CollectionMeta =
+    CollectionMeta(
+        (collectionJson \ "lastUpdated").asOpt[String],
+        (collectionJson \ "updatedBy").asOpt[String],
+        (collectionJson \ "updatedEmail").asOpt[String],
+        (collectionJson \ "displayName").asOpt[String],
+        (collectionJson \ "href").asOpt[String]
+    )
 
-  private def parseDisplayName(response: Future[Response]): Future[Option[String]] = response.map {r =>
-    (parse(r.body) \ "displayName").asOpt[String].filter(_.nonEmpty)
-  }
-
-  private def parseHref(response: Future[Response]): Future[Option[String]] = response.map {r =>
-    (parse(r.body) \ "href").asOpt[String].filter(_.nonEmpty)
-  }
-
-  private def parseResponse(response: Future[Response], edition: Edition, id: String): Future[List[Content]] = {
-    response.flatMap { r =>
-      r.status match {
-        case 200 =>
-          try {
-            val bodyJson = parse(r.body)
-
-            // extract the articles
-            val articles: Seq[CollectionItem] = (bodyJson \ "live").as[Seq[JsObject]] map { trail =>
-              CollectionItem(
-                (trail \ "id").as[String],
-                (trail \ "meta").asOpt[Map[String, JsValue]],
-                (trail \ "frontPublicationDate").asOpt[DateTime])
-            }
-
-            getArticles(articles, edition)
-          } catch {
-            case e: Throwable => {
-              log.warn("Could not parse collection JSON for %s".format(id))
-              FaciaMetrics.JsonParsingErrorCount.increment()
-              throw e
-            }
-          }
-        case 403 => {
-          S3AuthorizationError.increment()
-          val errorString: String = s"Request failed to authenticate with S3: $id"
-          log.warn(errorString)
-          Future.failed(throw new Exception(errorString))
-        }
-        case (httpResponseCode: Int) if httpResponseCode >= 500 =>
-          Future.failed(throw new Exception("S3 returned a 5xx"))
-        case _ =>
-          log.warn(s"Could not load running order: ${r.status} ${r.statusText} $id")
-          // NOTE: better way of handling fallback
-          Future.successful(Nil)
-      }
+  private def responseToJson(response: Response): JsValue = {
+    response.status match {
+      case 200 =>
+        Try(parse(response.body)).getOrElse(JsNull)
+      case 403 =>
+        S3AuthorizationError.increment()
+        val errorString: String = s"Request failed to authenticate with S3: ${response.getAHCResponse.getUri}"
+        log.warn(errorString)
+        throw new Exception(errorString)
+      case httpResponseCode: Int if httpResponseCode >= 500 =>
+        throw new Exception("S3 returned a 5xx")
+      case _ =>
+        log.warn(s"Could not load running order: ${response.status} ${response.statusText} ${response.getAHCResponse.getUri}")
+        // NOTE: better way of handling fallback
+        JsNull
     }
   }
 
@@ -209,7 +189,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
   }
 
   private def getContentApiItemFromCollectionItem(collectionItem: CollectionItem, edition: Edition): Future[Option[ApiContent]] = {
-    lazy val response = LiveContentApi.item(collectionItem.id, edition).showFields(showFieldsWithBodyQuery)
+    lazy val response = client.item(collectionItem.id, edition).showFields(showFieldsWithBodyQuery)
       .response
       .map(Option.apply)
       .recover {
@@ -273,7 +253,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
 
       val backFillResponse: Future[Result] = (queryString match {
         case Path(Seg("search" :: Nil)) =>
-          val search = LiveContentApi.search(edition)
+          val search = client.search(edition)
             .showElements("all")
             .pageSize(20)
           val newSearch = queryParamsWithEdition.foldLeft(search) {
@@ -288,7 +268,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
             )
           }
         case Path(id) =>
-          val search = LiveContentApi.item(id, edition)
+          val search = client.item(id, edition)
             .showElements("all")
             .showEditorsPicks(true)
             .pageSize(20)
@@ -340,5 +320,16 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
       throw e
     }
   }
+}
 
+object LiveCollections extends ParseCollection {
+  def retrieveItemsFromCollectionJson(collectionJson: JsValue): Seq[CollectionItem] =
+    (collectionJson \ "live").asOpt[Seq[JsObject]].getOrElse(Nil).map { trail =>
+      CollectionItem(
+        (trail \ "id").as[String],
+        (trail \ "meta").asOpt[Map[String, JsValue]],
+        (trail \ "frontPublicationDate").asOpt[DateTime])
+    }
+
+  override val client: ContentApiClient = LiveContentApi
 }
