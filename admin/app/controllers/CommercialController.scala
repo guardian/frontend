@@ -2,7 +2,7 @@ package controllers.admin
 
 import play.api.mvc.Controller
 import common.Logging
-import model.NoCache
+import model.{AdReports, NoCache}
 import controllers.AuthLogging
 import conf.Configuration
 import tools.Store
@@ -22,8 +22,8 @@ object CommercialController extends Controller with Logging with AuthLogging {
   }
 
   def renderCommercial = Authenticated { implicit request =>
-    val sponsoredTags = convertJsonToSponsorshipList(Store.getDfpSponsoredTags()).sortBy(_.tags.head)
-    val advertisementTags = convertJsonToSponsorshipList(Store.getDfpAdvertisementTags()).sortBy(_.tags.head)
+    val sponsoredTags = AdReports.getSponsoredTags
+    val advertisementTags = AdReports.getAdvertisementTags
     val pageskinnedAdUnits: Seq[String] = convertJsonToStringList(Store.getDfpPageSkinnedAdUnits()).sorted
 
     NoCache(Ok(views.html.commercial(Configuration.environment.stage, sponsoredTags, advertisementTags, pageskinnedAdUnits)))

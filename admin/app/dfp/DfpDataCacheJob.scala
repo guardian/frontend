@@ -5,6 +5,7 @@ import play.api.libs.json.Json._
 import scala.concurrent.future
 import tools.Store
 import play.api.libs.json.{Json, JsValue, Writes}
+import model.AdReports
 
 object DfpDataCacheJob extends ExecutionContexts {
 
@@ -52,8 +53,14 @@ object DfpDataCacheJob extends ExecutionContexts {
       val dfpLineItems = DfpApi.getAllCurrentDfpLineItems
       if (dfpLineItems.nonEmpty) {
         val lineItems = DfpApi.hydrateWithUsefulValues(dfpLineItems)
-        Store.putDfpSponsoredTags(stringify(toJson(DfpApi.filterOutSponsoredTagsFrom(lineItems))))
-        Store.putDfpAdvertisementFeatureTags(stringify(toJson(DfpApi.filterOutAdvertisementFeatureTagsFrom(lineItems))))
+
+        val sponsoredTags: Seq[Sponsorship] = DfpApi.filterOutSponsoredTagsFrom(lineItems)
+        Store.putDfpSponsoredTags(stringify(toJson(sponsoredTags)))
+        AdReports.updateSponsoredTags(sponsoredTags)
+
+        val advertisementTags: Seq[Sponsorship] = DfpApi.filterOutAdvertisementFeatureTagsFrom(lineItems)
+        Store.putDfpAdvertisementFeatureTags(stringify(toJson(advertisementTags)))
+        AdReports.updateAdvertisementTags(advertisementTags)
 
         Store.putDfpPageSkinAdUnits(stringify(toJson(DfpApi.fetchAdUnitsThatAreTargettedByPageSkins(dfpLineItems))))
 
