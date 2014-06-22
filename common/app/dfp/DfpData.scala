@@ -1,5 +1,9 @@
 package dfp
 
+import org.joda.time.DateTime
+import implicits.Dates
+import play.api.libs.json.{Json, JsValue, Writes}
+
 
 case class Target(name: String, op: String, values: Seq[String]) {
 
@@ -41,7 +45,30 @@ case class Sponsorship(tags: Seq[String], sponsor: Option[String]) {
   def hasTag(tagId: String): Boolean = tags contains (tagId.split('/').last)
 }
 
-case class SponsorshipReport(updatedTimeStamp: String, sponsorships: Seq[Sponsorship])
+case class SponsorshipReport(updatedTimeStamp: String, sponsorships: Seq[Sponsorship]) {
+  private implicit val sponsorshipWrites = new Writes[Sponsorship] {
+    def writes(sponsorship: Sponsorship): JsValue = {
+      Json.obj(
+        "sponsor" -> sponsorship.sponsor,
+        "tags" -> sponsorship.tags
+      )
+    }
+  }
+
+  private implicit val sponsorshipReportWrites = new Writes[SponsorshipReport] {
+    def writes(sponsorshipReport: SponsorshipReport): JsValue = {
+      Json.obj(
+        "updatedTimeStamp" -> sponsorshipReport.updatedTimeStamp,
+        "sponsorships" -> sponsorshipReport.sponsorships
+      )
+    }
+  }
+
+  def toJson() = {
+    Json.toJson(this)
+  }
+
+}
 
 object SponsorshipReportParser {
   import play.api.libs.json._

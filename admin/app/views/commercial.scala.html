@@ -1,4 +1,4 @@
-@(env: String, sponsoredTags: model.Report, advertisementTags: model.Report, pageSkinnedAdUnits: Seq[String])
+@(env: String, sponsoredTags: dfp.SponsorshipReport, advertisementTags: dfp.SponsorshipReport, pageSkinnedAdUnits: Seq[String])
 
 @admin_main("Commercial", env, isAuthed = true, hasCharts = true) {
 
@@ -33,7 +33,7 @@
     </div>
 
     <h3>Sponsored Tags</h3>
-    <p>Last updated: @sponsoredTags.timestamp</p>
+    <p>Last updated: @sponsoredTags.updatedTimeStamp</p>
     <ol>
         @for(tag <- sponsoredTags.sponsorships) {
             <li>@{tag.tags.mkString(", ")}@{tag.sponsor.map(sponsor => <small>[sponsored by <b>@sponsor</b>]</small>)}</li>
@@ -41,7 +41,7 @@
     </ol>
 
     <h3>Advertisement Feature Tags</h3>
-    <p>Last updated: @advertisementTags.timestamp</p>
+    <p>Last updated: @advertisementTags.updatedTimeStamp</p>
 
     <ol>
         @for(tag <- advertisementTags.sponsorships) {
