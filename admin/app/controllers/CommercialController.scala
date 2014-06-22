@@ -7,7 +7,9 @@ import controllers.AuthLogging
 import conf.Configuration
 import tools.Store
 import play.api.libs.json.Json
-import dfp.Sponsorship
+import dfp.{SponsorshipReport, Sponsorship}
+import implicits.Dates
+import org.joda.time.DateTime
 
 object CommercialController extends Controller with Logging with AuthLogging {
 
