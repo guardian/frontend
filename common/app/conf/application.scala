@@ -20,14 +20,14 @@ object Gzipper extends GzipFilter(
   shouldGzip = (req, resp) => !resp.headers.get("Content-Type").exists(_.startsWith("image/"))
 )
 
-object  CorsVaryHeadersFilter extends Filter with ExecutionContexts {
+object  JsonVaryHeadersFilter extends Filter with ExecutionContexts with implicits.Requests {
 
   private val varyFields = List("Origin", "Accept")
   private val defaultVaryFields = varyFields.mkString(",")
 
   override def apply(nextFilter: (RequestHeader) => Future[SimpleResult])(request: RequestHeader): Future[SimpleResult] = {
     nextFilter(request).map{ result =>
-      if (isCrossOriginResponse(result)) {
+      if (request.isJson) {
         import result.header.headers
         // Accept-Encoding Vary field will be set by Gzipper
         val vary = headers.get("Vary").fold(defaultVaryFields)(v => (v :: varyFields).mkString(","))
@@ -37,12 +37,10 @@ object  CorsVaryHeadersFilter extends Filter with ExecutionContexts {
       }
     }
   }
-
-  private def isCrossOriginResponse(r: SimpleResult) = r.header.headers.contains("Access-Control-Allow-Headers")
 }
 
 object Filters {
                                      // NOTE - order is important here, Gzipper AFTER CorsVaryHeaders
-                                     // which effectively means "CorsVaryHeaders goes around Gzipper"
-  lazy val common: List[EssentialFilter] =  CorsVaryHeadersFilter :: Gzipper :: RequestMeasurementMetrics.asFilters
+                                     // which effectively means "JsonVaryHeaders goes around Gzipper"
+  lazy val common: List[EssentialFilter] =  JsonVaryHeadersFilter :: Gzipper :: RequestMeasurementMetrics.asFilters
 }
