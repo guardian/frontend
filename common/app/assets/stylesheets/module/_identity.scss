@@ -517,10 +517,12 @@ $large-card: 35px;
 
 .membership-tab__card-types--in-field {
     position: absolute;
-    right: 2px;
-    top: 2px;
-    width: 54px;
-    height: $large-card;
+    @include rem((
+        right: 2px,
+        top: 2px,
+        width: 54px,
+        height: $large-card
+    ));
 }
 
 @include mq(tablet){
