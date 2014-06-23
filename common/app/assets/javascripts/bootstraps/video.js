@@ -149,17 +149,13 @@ define([
 
                         modules.bindPrerollEvents(player, el);
 
-                        // no prerolls on firefox or opera until we fix the flash fallback
-                        var buggyEnvironment = window.navigator.userAgent.match(/(Opera|Firefox)/i);
-                        if (!buggyEnvironment) {
-                            player.adCountDown();
-                            player.ads({
-                                timeout: 3000
-                            });
-                            player.vast({
-                                url: modules.getVastUrl()
-                            });
-                        }
+                        player.adCountDown();
+                        player.ads({
+                            timeout: 3000
+                        });
+                        player.vast({
+                            url: modules.getVastUrl()
+                        });
                     });
 
                     // built in vjs-user-active is buggy so using custom implementation
