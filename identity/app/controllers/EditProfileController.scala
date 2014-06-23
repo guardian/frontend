@@ -7,7 +7,7 @@ import idapiclient.IdApiClient
 import play.api.mvc.{AnyContent, Request, Controller}
 import common.ExecutionContexts
 import utils.SafeLogging
-import model.{AvatarData, NoCache, IdentityPage}
+import model._
 import play.filters.csrf.{CSRFCheck, CSRFAddToken}
 import form._
 import scala.concurrent.Future
@@ -18,7 +18,6 @@ import conf.Switches._
 import play.api.libs.ws.WS
 import actions.AuthRequest
 import services.IdentityRequest
-import model.AvatarUploadData
 import conf.Configuration
 import common.JsonComponent
 
@@ -92,9 +91,9 @@ class EditProfileController @Inject()(idUrlBuilder: IdentityUrlBuilder,
   }
 
   def renderMembershipTab() = authActionWithUser { implicit request =>
-    JsonComponent(
+    Cached(60)(JsonComponent(
       "html" -> views.html.fragments.membershipTabContents()
-    )
+    ))
   }
 
   private def avatarUploadDataFor(user: User) = AvatarUploadData(AvatarSigningService.sign(AvatarData(user)))

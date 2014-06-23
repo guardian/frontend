@@ -5,8 +5,6 @@ import org.joda.time.DateTime
 import org.scalatest.FlatSpec
 import org.scalatest.Matchers
 import play.api.Play
-import play.api.mvc.Request
-import play.api.test.FakeHeaders
 
 class UrlsTest extends FlatSpec with Matchers {
 
@@ -42,28 +40,6 @@ class UrlsTest extends FlatSpec with Matchers {
 
   they should "be created relative for tags" in {
     Tag(tag("foo/bar")).url should be("/foo/bar")
-  }
-
-  case class FakeRequest(private val _headers: Map[String, Seq[String]]) extends Request[String] {
-    def uri = ""
-
-    def path = ""
-
-    def method = ""
-
-    def queryString = Map.empty[String, Seq[String]]
-
-    def headers = FakeHeaders(_headers.toSeq)
-
-    def body = ""
-
-    def remoteAddress = ""
-
-    def id: Long = 0L
-
-    def tags: Map[String,String] = Map.empty
-
-    def version: String = ""
   }
 
   private def tag(id: String, name: String = "") = ApiTag(

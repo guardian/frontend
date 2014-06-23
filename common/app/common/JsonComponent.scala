@@ -60,9 +60,11 @@ object JsonComponent extends Results with implicits.Requests {
     ))
   }
 
+  // Note we are not setting Vary headers here as they get set in CorsVaryHeadersFilter
+  // otherwise they get overwritten by the Gzip Filter
   private def resultFor(request: RequestHeader, json: String): SimpleResult = jsonp(request, json)
     .orElse(cors(request, json))
-    .getOrElse(Ok(json).as(JSON)).withHeaders("Vary" -> "Accept, Origin")
+    .getOrElse(Ok(json).as(JSON))
 
   private def cors(request: RequestHeader, json: String) = request.headers.get("Origin").map { origin =>
       Cors(Ok(json).as(JSON).withHeaders("Access-Control-Allow-Headers" -> "GET,POST,X-Requested-With"))(request)
