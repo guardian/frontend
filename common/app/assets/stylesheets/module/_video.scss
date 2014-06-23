@@ -43,6 +43,7 @@ $vjs-control-height: $gs-baseline*4;
     width: auto !important;
     height: auto !important;
     cursor: pointer;
+    position: relative;
 }
 
 .vjs-big-play-button {
@@ -152,6 +153,8 @@ $vjs-control-height: $gs-baseline*4;
     height: 100%;
     position: absolute;
     background-size: cover;
+    top: 0;
+    left: 0;
 }
 
 .vjs-play-control {
