@@ -215,6 +215,7 @@ $new-navigation-h-space-between-items: get-font-size($fs-headers, 1) !default;
 .global-navigation__section {
     white-space: nowrap;
     display: table-cell;
+    position: relative;
 }
 .global-navigation__section--current {
     @include rem((
@@ -628,4 +629,36 @@ $new-navigation-h-space-between-items: get-font-size($fs-headers, 1) !default;
 }
 .new-navigation--expanded .new-navigation__toggle-label--close {
     display: inline;
+}
+
+.global-navigation__children {
+    @include mq($to: tablet) {
+        &.global-navigation__children--collapsed {
+            display: none;
+        }
+        &.global-navigation__children--expanded {
+            display: block;
+        }
+    }
+}
+.global-navigation__toggle-children {
+    position: absolute;
+    right: 0;
+    display: none;
+    font-family: $sans-serif;
+    @include rem((
+        font-size: 12px,
+        line-height: 20px,
+        padding-left: $gs-gutter,
+        padding-bottom: 6px
+    ));
+    font-weight: 300;
+
+    @include mq(tablet) {
+        display: none;
+    }
+
+    .new-navigation--expanded & {
+        display: block;
+    }
 }
