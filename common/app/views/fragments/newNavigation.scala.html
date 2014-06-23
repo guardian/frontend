@@ -9,9 +9,21 @@
                     <div class="new-navigation__scroll">
                         <div class="new-navigation__container">
                             <div class="local-navigation">
+                                <a class="local-navigation__parent local-navigation__parent--home" href="@LinkTo("/")">
+                                    <span class="new-navigation__top-hat"></span>
+                                    home
+                                </a>
                                 @* current top link (if any) *@
-                                @topLevelSelected.map {section =>
-                                    <a class="local-navigation__parent" href="@LinkTo(section.name.href)"><span class="new-navigation__top-hat"></span>@section.name.title</a>
+                                    @topLevelSelected.map {section =>
+                                    <span class="local-navigation__separator@if(section.name.title == "home"){ new-navigation--collapsed__hide}">
+                                        <span class="local-navigation__separator__inner">
+                                            ›
+                                        </span>
+                                    </span>
+                                    <a class="local-navigation__parent@if(section.name.title == "home"){ new-navigation--collapsed__hide}" href="@LinkTo(section.name.href)">
+                                        <span class="new-navigation__top-hat"></span>
+                                        @section.name.title
+                                    </a>
                                 }
 
                                 @* second level nav *@
@@ -22,7 +34,13 @@
                                             @* current second level link (if any) *@
                                             @currentSublink.map {s =>
                                                 <li class="local-navigation__child local-navigation__child--current">
+
                                                     <span class="new-navigation__top-hat"></span>
+                                                    <span class="local-navigation__separator">
+                                                        <span class="local-navigation__separator__inner">
+                                                            ›
+                                                        </span>
+                                                    </span>
                                                     <a class="local-navigation__action" href="@LinkTo(s.href)">@s.title</a>
                                                 </li>
                                             }
@@ -39,7 +57,7 @@
                         <div class="new-navigation__container">
                             <ul class="global-navigation">
                                 @navigation.filter(_.name.href != topLevelSelected.map(_.name.href).getOrElse("")).map { nav =>
-                                    <li class="global-navigation__section">
+                                    <li class="global-navigation__section@if(nav.name.title == "home"){ new-navigation--collapsed__hide}">
                                         <a href="@LinkTo(nav.name.href)" class="global-navigation__title">@Html(nav.name.title)</a>
                                         @if(nav.links.nonEmpty) {
                                             <ul class="global-navigation__children">
