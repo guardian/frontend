@@ -84,4 +84,48 @@ class TransformationsSpec extends FlatSpec with ShouldMatchers {
   it should "not remove fronts that contain collections" in {
     Transformations.prune(validConfigFixture).fronts should have size 1
   }
+
+  "updateCollection" should "add the collection's ID to specified fronts that do not contain it" in {
+    val frontIds = List("one", "two", "three")
+
+    val updatedConfig = Transformations.updateCollection(frontIds, "foo", emptyCollectionFixture)(Config.empty.copy(
+      fronts = frontIds.map(_ -> emptyFrontFixture).toMap
+    ))
+
+    val expectedFront = emptyFrontFixture.copy(collections = List("foo"))
+
+    for (frontId <- frontIds) {
+      updatedConfig.fronts.get(frontId) shouldEqual Some(expectedFront)
+    }
+  }
+
+  it should "append to the end of the list of collection IDs" in {
+    val updatedConfig = Transformations.updateCollection(List("bar"), "foo", emptyCollectionFixture)(Config.empty.copy(
+      fronts = Map("bar" -> emptyFrontFixture.copy(collections = List("one", "two"))),
+      collections = Map(
+        "one" -> emptyCollectionFixture,
+        "two" -> emptyCollectionFixture
+      )
+    ))
+
+    updatedConfig.fronts.get("bar").map(_.collections) shouldEqual Some(List(
+      "one",
+      "two",
+      "foo"
+    ))
+  }
+
+  it should "not modify fronts that already contain the id" in {
+    val frontIds = List("one", "two", "three")
+
+    val frontWithCollection = emptyFrontFixture.copy(collections = List("foo"))
+
+    val initialConfig = Config.empty.copy(
+      fronts = frontIds.map(_ -> frontWithCollection).toMap
+    )
+
+    val updatedConfig = Transformations.updateCollection(frontIds, "foo", emptyCollectionFixture)(initialConfig)
+
+    updatedConfig.fronts shouldEqual initialConfig.fronts
+  }
 }

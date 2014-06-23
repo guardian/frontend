@@ -36,7 +36,20 @@ object Transformations {
     config.copy(fronts = config.fronts + (frontId -> front))
   }
 
-  def addOrCreateCollection(collectionId: String, collection: Collection)(config: Config): Config = {
-    config.copy(collections = config.collections + (collectionId -> collection))
+  def updateCollection(
+      frontIds: List[String],
+      collectionId: String,
+      collection: Collection
+  )(config: Config): Config = {
+    val updatedFronts = frontIds flatMap { frontId =>
+      config.fronts.get(frontId) map { front =>
+        frontId -> front.copy(collections = (front.collections ++ List(collectionId)).distinct)
+      }
+    }
+
+    config.copy(
+      fronts = config.fronts ++ updatedFronts,
+      collections = config.collections + (collectionId -> collection)
+    )
   }
 }

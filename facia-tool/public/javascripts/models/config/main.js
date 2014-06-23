@@ -13,7 +13,8 @@ define([
     'models/group',
     'models/config/droppable',
     'models/config/front',
-    'models/config/collection'
+    'models/config/collection',
+    'models/config/persistence'
 ], function(
     pageConfig,
     ko,
@@ -28,10 +29,10 @@ define([
     Group,
     droppable,
     Front,
-    Collection
+    Collection,
+    persistence
 ) {
     return function() {
-
         var model = vars.model = {};
 
         model.switches = ko.observable();
@@ -141,6 +142,14 @@ define([
 
         this.init = function() {
             droppable.init();
+
+            persistence.registerCallback(function () {
+                bootstrap({
+                    force: true
+                }).done(function () {
+                    vars.model.pending(false);
+                })
+            });
 
             bootstrap({
                 pollingMs: vars.CONST.configSettingsPollMs,

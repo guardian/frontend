@@ -7,6 +7,15 @@ import config.UpdateManager
 import play.api.libs.json.Json
 import frontpress.CollectionPressing._
 
+object CollectionRequest {
+  implicit val jsonFormat = Json.format[CollectionRequest]
+}
+
+case class CollectionRequest(
+  frontIds: List[String],
+  collection: Collection
+)
+
 object CreateCollectionResponse {
   implicit val jsonFormat = Json.format[CreateCollectionResponse]
 }
@@ -15,10 +24,10 @@ case class CreateCollectionResponse(id: String)
 
 object CollectionController extends Controller {
   def create = AjaxExpiringAuthentication { request =>
-    request.body.read[Collection] match {
-      case Some(collection) =>
+    request.body.read[CollectionRequest] match {
+      case Some(CollectionRequest(frontIds, collection)) =>
         val identity = Identity(request).get
-        val collectionId = UpdateManager.addCollection(collection, identity)
+        val collectionId = UpdateManager.addCollection(frontIds, collection, identity)
         pressAndNotify(collectionId)
         Ok(Json.toJson(CreateCollectionResponse(collectionId)))
 
@@ -27,10 +36,10 @@ object CollectionController extends Controller {
   }
 
   def update(collectionId: String) = AjaxExpiringAuthentication { request =>
-    request.body.read[Collection] match {
-      case Some(collection) =>
+    request.body.read[CollectionRequest] match {
+      case Some(CollectionRequest(frontIds, collection)) =>
         val identity = Identity(request).get
-        UpdateManager.updateCollection(collectionId, collection, identity)
+        UpdateManager.updateCollection(collectionId, frontIds, collection, identity)
         pressAndNotify(collectionId)
         Ok
 

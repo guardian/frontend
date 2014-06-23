@@ -2,34 +2,36 @@
 define([
     'knockout',
     'config',
+    'models/config/persistence',
     'modules/vars',
     'modules/content-api',
     'utils/strip-empty-query-params',
     'utils/as-observable-props',
     'utils/populate-observables',
-    'utils/collection-guid'
+    'utils/identity'
 ], function(
     ko,
     pageConfig,
+    persistence,
     vars,
     contentApi,
     stripEmptyQueryParams,
     asObservableProps,
     populateObservables,
-    collectionGuid
+    identity
 ) {
     var checkCount = 0;
 
     function Collection(opts) {
         opts = opts || {};
 
-        this.id = opts.id || collectionGuid();
+        this.id = opts.id;
 
         this.parents = ko.observableArray();
 
         this.capiResults = ko.observableArray();
 
-        this.meta   = asObservableProps([
+        this.meta = asObservableProps([
             'displayName',
             'href',
             'groups',
@@ -73,6 +75,25 @@ define([
         this.state.isOpen(false);
     };
 
+    Collection.prototype.isInitialCollection = function () {
+        var parents = this.parents();
+
+        if (parents.length == 1) {
+            var siblings = parents[0].collections.items();
+
+            return siblings.length == 1 && siblings[0] == this;
+        } else {
+            return false;
+        }
+    };
+
+    /** IDs of fronts to which the collection belongs */
+    Collection.prototype.frontIds = function () {
+        return _.chain(this.parents()).map(function (front) {
+            return front.id();
+        }).filter(identity).value();
+    };
+
     Collection.prototype.save = function() {
         this.state.isOpen(false);
         this.meta.apiQuery(stripEmptyQueryParams(this.meta.apiQuery()));
@@ -80,12 +101,16 @@ define([
 
         if (vars.model.collections.indexOf(this) === -1) {
             vars.model.collections.unshift(this);
+        }
 
-            /** Creating a collection */
-            // BUT are we also creating a front?
-            throw 'Create collection not yet implemented';
+        if (!this.id) {
+            if (this.isInitialCollection()) {
+                persistence.front.create(this.parents()[0], this);
+            } else {
+                persistence.collection.create(this);
+            }
         } else {
-            throw 'Update collection not yet implemented';
+            persistence.collection.update(this);
         }
     };
 
@@ -116,11 +141,6 @@ define([
                 self.state.apiQueryStatus(results.length ? 'valid' : 'invalid');
             }
         });
-    };
-
-    Collection.prototype.discard = function() {
-        vars.model.collections.remove(this);
-        vars.model.save(this);
     };
 
     return Collection;

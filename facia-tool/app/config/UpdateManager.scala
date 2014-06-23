@@ -40,13 +40,13 @@ object UpdateManager {
     transformConfig(Transformations.updateFront(id, newVersion), identity)
   }
 
-  def addCollection(collection: Collection, identity: Identity) = {
+  def addCollection(frontIds: List[String], collection: Collection, identity: Identity) = {
     val newCollectionId = Collection.nextId
-    transformConfig(Transformations.addOrCreateCollection(newCollectionId, collection), identity)
+    transformConfig(Transformations.updateCollection(frontIds, newCollectionId, collection), identity)
     newCollectionId
   }
 
-  def updateCollection(id: String, collection: Collection, identity: Identity) {
-    transformConfig(Transformations.addOrCreateCollection(id, collection), identity)
+  def updateCollection(id: String, frontIds: List[String], collection: Collection, identity: Identity) {
+    transformConfig(Transformations.updateCollection(frontIds, id, collection), identity)
   }
 }
