@@ -48,7 +48,7 @@ class PublicProfileControllerTest extends path.FreeSpec with ShouldMatchers with
     when(api.user(userId)) thenReturn Future.successful(Right(user))
 
     "with valid user Id" - {
-      val result = controller.renderProfileFromId(userId)(request)
+      val result = controller.renderProfileFromId(userId, "discussions")(request)
 
       "then should return status 200" in {
         status(result) should be(200)
@@ -64,7 +64,7 @@ class PublicProfileControllerTest extends path.FreeSpec with ShouldMatchers with
     }
 
     "with invalid user Id" - {
-      val result = controller.renderProfileFromId("notAUser")(request)
+      val result = controller.renderProfileFromId("notAUser", "discussions")(request)
 
       "then the status should be 404" in {
         status(result) should be(404)
@@ -77,7 +77,7 @@ class PublicProfileControllerTest extends path.FreeSpec with ShouldMatchers with
     when(api.userFromVanityUrl(vanityUrl)) thenReturn Future.successful(Right(user))
 
     "with valid user Id" - {
-      val result = controller.renderProfileFromVanityUrl(vanityUrl)(request)
+      val result = controller.renderProfileFromVanityUrl(vanityUrl, "discussions")(request)
 
       "then should return status 200" in {
         status(result) should be(200)
@@ -93,7 +93,7 @@ class PublicProfileControllerTest extends path.FreeSpec with ShouldMatchers with
     }
 
     "with invalid user Id" - {
-      val result = controller.renderProfileFromVanityUrl("notAUser")(request)
+      val result = controller.renderProfileFromVanityUrl("notAUser", "discussions")(request)
 
       "then the status should be 404" in {
         status(result) should be(404)
