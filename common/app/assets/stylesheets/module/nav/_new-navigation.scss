@@ -41,10 +41,10 @@ $c-new-navigation-signposting-action: guss-colour(neutral-1) !default;
     $c-navigation-background: mix(guss-colour(guardian-brand), #407dbc, 0%) !global;
     $c-navigation-action: guss-colour(neutral-1) !global;
 
-    $c-local-navigation-background: guss-colour(neutral-7) !global;
-    $c-local-navigation-action: guss-colour(neutral-1) !global;
+    $c-local-navigation-background: rgba(#ffffff, .15) !global;
+    $c-local-navigation-action: #ffffff !global;
 
-    $c-local-navigation-parent-background: mix(guss-colour(guardian-brand), #407dbc, 50%) !global;
+    $c-local-navigation-parent-background: mix(guss-colour(guardian-brand), #407dbc, 75%) !global;
 
     $c-local-navigation-current-background: $c-local-navigation-parent-background !global;
     $c-local-navigation-current: #ffffff !global;
@@ -370,6 +370,7 @@ $c-new-navigation-signposting-action: guss-colour(neutral-1) !default;
 
 .new-navigation--expanded {
     z-index: 2;
+    height: auto;
 
     .new-navigation__inner {
 
@@ -379,13 +380,17 @@ $c-new-navigation-signposting-action: guss-colour(neutral-1) !default;
     }
     .local-navigation {
         overflow: hidden;
-        background: $c-local-navigation-background;
         @include rem((
             margin-right: -$gs-gutter/2,
             margin-left: -$gs-gutter/2,
             padding-left: $gs-gutter/2,
             padding-right: $gs-gutter/2
         ));
+        background: $c-local-navigation-background;
+
+        @include mq(tablet) {
+            background: none;
+        }
 
         // Prevent 1px from bleeding on the right side of the page
         &:before {
@@ -451,9 +456,21 @@ $c-new-navigation-signposting-action: guss-colour(neutral-1) !default;
         clear: both;
         @include clearfix;
         @include rem((
-            padding-top: $gs-baseline,
             line-height: 28px
         ));
+        @include mq(mobileLandscape) {
+            @include rem((
+                margin-left: -$gs-gutter,
+                margin-right: -$gs-gutter,
+                padding-left: $gs-gutter,
+                padding-right: $gs-gutter
+            ));
+        }
+        @include mq(tablet) {
+            @include rem((
+                margin-top: $gs-baseline
+            ));
+        }
     }
     .local-navigation__children {
         @include rem((
@@ -462,6 +479,12 @@ $c-new-navigation-signposting-action: guss-colour(neutral-1) !default;
             padding-left: $gs-gutter/2,
             padding-right: $gs-gutter/2
         ));
+        @include mq(tablet) {
+            padding-left: 0;
+            padding-right: 0;
+            margin-left: 0;
+            margin-right: 0;
+        }
     }
     .local-navigation__child:last-child {
         // Add space below the local nav (only if there is one)
@@ -499,17 +522,41 @@ $c-new-navigation-signposting-action: guss-colour(neutral-1) !default;
         clear: both;
         float: none;
         margin-right: 0;
-        @include rem((
-            margin-bottom: $gs-baseline*.75
-        ));
         overflow: hidden;
+        @include rem((
+            margin-left: -$gs-gutter/2,
+            margin-right: -$gs-gutter/2
+        ));
+
+        @include mq(mobileLandscape) {
+            @include rem((
+                margin-right: -$gs-gutter,
+                margin-left: -$gs-gutter
+            ));
+        }
+        @include mq(tablet) {
+            margin-left: 0;
+            margin-right: 0;
+        }
     }
     .global-navigation__title {
         border-top: 1px solid $c-global-navigation-border;
         @include rem((
-            line-height: 24px,
-            padding-bottom: 3px
+            line-height: $gs-baseline*2,
+            padding-bottom: $gs-baseline,
+            padding-left: $gs-gutter/2,
+            padding-right: $gs-gutter/2
         ));
+        @include mq(mobileLandscape) {
+            @include rem((
+                padding-left: $gs-gutter,
+                padding-right: $gs-gutter
+            ));
+        }
+        @include mq(tablet) {
+            padding-left: 0;
+            padding-right: 0;
+        }
     }
     .global-navigation__title,
     .global-navigation__action,
@@ -518,22 +565,37 @@ $c-new-navigation-signposting-action: guss-colour(neutral-1) !default;
         display: block;
     }
     .global-navigation__children {
+        overflow: hidden;
+        background: $c-local-navigation-background;
         @include rem((
             margin-left: -$gs-gutter/2,
-            margin-right: -$gs-gutter/2
+            margin-right: -$gs-gutter/2,
+            padding-left: $gs-gutter/2,
+            padding-right: $gs-gutter/2,
+            padding-bottom: $gs-baseline*.75
         ));
+        @include mq(mobileLandscape) {
+            @include rem((
+                padding-left: $gs-gutter,
+                padding-right: $gs-gutter
+            ));
+        }
+        @include mq(tablet) {
+            padding-left: 0;
+            padding-right: 0;
+            margin-left: 0;
+            margin-right: 0;
+        }
     }
 
     @include mq(tablet) {
-        .global-navigation {
-            @include rem((
-                margin-left: -$gs-gutter/2,
-                margin-right: -$gs-gutter/2
-            ));
-        }
         .global-navigation__children {
             margin-left: 0;
             margin-right: 0;
+            box-shadow: $gs-gutter/4 0 0 $c-local-navigation-background, -$gs-gutter/4 0 0  $c-local-navigation-background;
+            @include rem((
+                margin-bottom: $gs-baseline
+            ));
         }
         .global-navigation__section {
             @include box-sizing(border-box);
