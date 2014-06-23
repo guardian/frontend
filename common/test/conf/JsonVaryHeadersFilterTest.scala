@@ -9,13 +9,13 @@ import scala.concurrent.duration._
 import scala.concurrent.{Await, Future}
 
 
-class CorsVaryHeadersFilterTest extends FlatSpec with Matchers {
+class JsonVaryHeadersFilterTest extends FlatSpec with Matchers {
 
-  private val header = TestRequest()
+  private val header = TestRequest("/foo.json")
 
-  "CorsVaryHeadersFilter" should "add appropriate Vary headers for CORS requests" in {
+  "CorsVaryHeadersFilter" should "add appropriate Vary headers for Json requests" in {
     val upstreamResult = buildResult("Access-Control-Allow-Headers" -> "something")
-    val result = Await.result(CorsVaryHeadersFilter(r => upstreamResult)(header), 5.seconds)
+    val result = Await.result(JsonVaryHeadersFilter(r => upstreamResult)(header), 5.seconds)
     result.header.headers.get("Vary") should be (Some("Origin,Accept"))
   }
 
@@ -24,13 +24,13 @@ class CorsVaryHeadersFilterTest extends FlatSpec with Matchers {
       "Access-Control-Allow-Headers" -> "something",
       "Vary" -> "Accept-Encoding"
     )
-    val result = Await.result(CorsVaryHeadersFilter(r => upstreamResult)(header), 5.seconds)
+    val result = Await.result(JsonVaryHeadersFilter(r => upstreamResult)(header), 5.seconds)
     result.header.headers.get("Vary") should be (Some("Accept-Encoding,Origin,Accept"))
   }
 
-  it should "not append the headers if it is not a CORS request" in {
+  it should "not append the headers if it is not a Json request" in {
     val upstreamResult = buildResult("Vary" -> "Accept-Encoding")
-    val result = Await.result(CorsVaryHeadersFilter(r => upstreamResult)(header), 5.seconds)
+    val result = Await.result(JsonVaryHeadersFilter(r => upstreamResult)(TestRequest("/foo")), 5.seconds)
     result.header.headers.get("Vary") should be (Some("Accept-Encoding"))
   }
 

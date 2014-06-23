@@ -75,14 +75,20 @@ object DfpAgent extends DfpAgent with ExecutionContexts {
 
   def refresh() {
 
-    def json(key: String) = S3.get(key)(UTF8) map parse
+    def stringFromS3(key: String) = S3.get(key)(UTF8)
+    def json(key: String) =  stringFromS3(key) map parse
 
     def grabListFromStore(key: String): Seq[String] = {
       json(key).fold(Seq[String]())(_.as[Seq[String]])
     }
 
     def grabSponsorshipsFromStore(key: String): Seq[Sponsorship] = {
-      json(key).fold(Seq[Sponsorship]())(_.as[Seq[Sponsorship]])
+      val reportOption: Option[SponsorshipReport] = for {
+        jsonString <- stringFromS3(key)
+        report <- SponsorshipReportParser(jsonString)
+      } yield report
+      
+      reportOption.fold(Seq[Sponsorship]())(_.sponsorships)
     }
 
     def update[T](agent: Agent[Seq[T]], freshData: Seq[T]) = {
