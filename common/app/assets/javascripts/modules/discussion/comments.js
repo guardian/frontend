@@ -589,6 +589,7 @@ Comments.prototype.setOrder = function(e) {
     return this.fetchComments({
         page: 1
     }).then(function() {
+        this.showHiddenComments();
         this.loaded();
     }.bind(this));
 };
