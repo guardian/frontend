@@ -42,6 +42,13 @@ object Frontend extends Build with Prototypes {
   def withTests(project: Project) = project % "test->test;compile->compile"
 
   val commonWithTests = withTests(common)
+  
+  val sanityTest = application("sanity-tests").settings(
+    libraryDependencies ++= Seq(
+      "org.hamcrest" % "hamcrest-core" % "1.3",
+      "org.hamcrest" % "hamcrest-library" % "1.3"
+    )
+  )
 
   val facia = application("facia").dependsOn(commonWithTests).aggregate(common)
   val article = application("article").dependsOn(commonWithTests).aggregate(common)
