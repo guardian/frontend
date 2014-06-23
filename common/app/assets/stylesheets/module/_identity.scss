@@ -436,7 +436,9 @@
         ));
         float: right;
         box-sizing: border-box;
-        &:hover {
+        &:hover,
+        &:active,
+        &:focus {
             text-decoration: none;
         }
     }
