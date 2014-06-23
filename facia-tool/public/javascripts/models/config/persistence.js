@@ -11,12 +11,10 @@ define([
     var onUpdateCallbacks = [];
 
     var postUpdate = function (opts) {
-        console.log(opts);
-
         vars.model.pending(true);
 
         authedAjax.request(_.extend({
-            type: "POST"
+            type: 'POST'
         }, opts)).then(function () {
             _.each(onUpdateCallbacks, function (callback) {
                 callback();
@@ -64,7 +62,7 @@ define([
         collection: {
             create: function (collection) {
                 postUpdate({
-                    url: "/config/collections",
+                    url: '/config/collections',
                     data: JSON.stringify({
                         frontIds: collection.frontIds(),
                         collection: serializeCollection(collection)
@@ -74,7 +72,7 @@ define([
 
             update: function (collection) {
                 postUpdate({
-                    url: "/config/collections/" + collection.id,
+                    url: '/config/collections/' + collection.id,
                     data: JSON.stringify({
                         frontIds: collection.frontIds(),
                         collection: serializeCollection(collection)
@@ -88,10 +86,10 @@ define([
                 var serialized = serializeFront(front);
 
                 /** We instead pass through the initial collection as a separate parameter */
-                delete serialized["collections"];
+                delete serialized.collections;
 
                 postUpdate({
-                    url: "/config/fronts",
+                    url: '/config/fronts',
                     data: JSON.stringify(_.extend({
                         initialCollection: serializeCollection(collection)
                     }, serialized))
@@ -100,7 +98,7 @@ define([
 
             update: function (front) {
                 postUpdate({
-                    url: "/config/fronts/" + front.id(),
+                    url: '/config/fronts/' + front.id(),
                     data: JSON.stringify(serializeFront(front))
                 });
             }

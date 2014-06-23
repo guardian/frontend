@@ -148,7 +148,7 @@ define([
                     force: true
                 }).done(function () {
                     vars.model.pending(false);
-                })
+                });
             });
 
             bootstrap({

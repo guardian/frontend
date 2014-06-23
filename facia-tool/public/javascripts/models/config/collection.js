@@ -78,10 +78,10 @@ define([
     Collection.prototype.isInitialCollection = function () {
         var parents = this.parents();
 
-        if (parents.length == 1) {
+        if (parents.length === 1) {
             var siblings = parents[0].collections.items();
 
-            return siblings.length == 1 && siblings[0] == this;
+            return siblings.length === 1 && siblings[0] === this;
         } else {
             return false;
         }
