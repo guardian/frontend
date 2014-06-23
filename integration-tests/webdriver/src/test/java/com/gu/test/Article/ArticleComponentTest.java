@@ -20,11 +20,6 @@ public class ArticleComponentTest {
                 .goToArticle("/film/filmblog/2014/may/20/lost-river-reviews-cannes-scorn-ryan-gosling");
     }
 
-    @Test
-    public void articleHasPopularContainerBelow() {
-        Assert.assertTrue("Failure: Most Popular In Bottom Hand Bar is Missing",
-                testArticle.hasMostPopularBelow());
-    }
 
     @Test
     public void articleHasRelatedContentContainer() {

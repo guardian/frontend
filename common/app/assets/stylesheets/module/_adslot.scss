@@ -135,6 +135,7 @@
     }
     @include mq(tablet) {
         height: 250px + $mpu-ad-label-height;
+        width: 300px;
     }
     .ad-slot__label {
         width: 300px;
@@ -189,6 +190,51 @@
     @include mq(rightCol) {
         display: block;
     }
+}
+.ad-slot--sponsored,
+.ad-slot--sponsored__header {
+    border-top: 1px solid $c-neutral5;
+    @include rem((
+        padding-top: $gs-baseline/4
+    ));
+}
+.ad-slot--sponsored {
+    text-align: left;
+    overflow: hidden;
+}
+.ad-slot--sponsored__label,
+.ad-slot--sponsored__header,
+.ad-slot--sponsored__image,
+.ad-slot--sponsored__text {
+    @include rem((
+        padding-left: $gs-gutter/2,
+        padding-right: $gs-gutter/2
+    ));
+}
+.ad-slot--sponsored__label,
+.ad-slot--sponsored__text {
+    color: $c-neutral2;
+}
+.ad-slot--sponsored__label {
+    float: left;
+    @include fs-data(3);
+}
+.ad-slot--sponsored__image {
+    float: left;
+}
+.ad-slot--sponsored__link {
+    float: right;
+}
+.ad-slot--sponsored__header {
+    @include f-headlineSans;
+    @include font-size(16, 20);
+}
+.ad-slot--sponsored__text {
+    @include f-textsans;
+    @include font-size(14, 18);
+}
+.ad-slot--sponsored__header {
+    clear: both;
 }
 
 /**
