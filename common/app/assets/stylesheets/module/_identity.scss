@@ -422,8 +422,10 @@
 
     .membership-tab__card-types {
         display: inline-block;
-        @include rem((height: 35px));
-        width: 54px;
+        @include rem((
+            height: 35px,
+            width: 54px
+        ));
         vertical-align: middle;
     }
 }
@@ -446,7 +448,7 @@
 
     &.membership-tab__change-cc-form-cont--to-open {
         display: block;
-        @include animation(mem-tab-to-open 0.25s ease-in-out forwards);
+        @include animation(mem-tab-to-open .25s ease-in-out forwards);
     }
     &.membership-tab__change-cc-form-cont--open {
         display: block;
@@ -456,7 +458,7 @@
 
     &.membership-tab__change-cc-form-cont--to-closed {
         display: block;
-        @include animation(mem-tab-to-closed 0.25s ease-in-out forwards);
+        @include animation(mem-tab-to-closed .25s ease-in-out forwards);
     }
     &.membership-tab__change-cc-form-cont--closed {
         display: none;
@@ -472,7 +474,7 @@
 /* Membership Keyframe animations
    ========================================================================== */
 
-@include keyframes("mem-tab-to-open") {
+@include keyframes('mem-tab-to-open') {
     0% {
         max-height: 0;
         opacity: 0;
@@ -483,7 +485,7 @@
     }
 }
 
-@include keyframes("mem-tab-to-closed") {
+@include keyframes('mem-tab-to-closed') {
     0% {
         @include rem((max-height: 350px));
         opacity: 1;
@@ -494,14 +496,14 @@
     }
 }
 
-@include keyframes("updated") {
+@include keyframes('updated') {
     0% {
         background-color: $c-brandLightBlue;
-        colour: #FFFFFF;
+        color: #ffffff;
     }
     100% {
-        background-color: #FFFFFF;
-        colour: #333333;
+        background-color: #ffffff;
+        color: #ffffff;
     }
 }
 
@@ -525,7 +527,7 @@ $large-card: 35px;
     ));
 }
 
-@include mq(tablet){
+@include mq(tablet) {
     .membership-tab__card-types--in-field {
         width: 49px !important;
         height: $small-card !important;
