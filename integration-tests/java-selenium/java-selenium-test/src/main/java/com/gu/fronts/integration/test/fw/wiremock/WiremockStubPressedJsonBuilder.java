@@ -42,7 +42,7 @@ public class WiremockStubPressedJsonBuilder {
      * Use {@link #withResponse()} to specify the pressed.json file to be return.
      */
     public WiremockStubPressedJsonBuilder path(String path) {
-        String requestPath = "/aws-frontend-store/(.*)/frontsapi/pressed" + path + "/pressed.json";
+        String requestPath = "/aws-frontend-store/(.*)/frontsapi/pressed/(.*)" + path + "/pressed.json";
         LOG.debug("Creating pressed.json stub for path: " + requestPath);
         this.mappingBuilder = get(urlMatching(requestPath));
         this.path = path;
