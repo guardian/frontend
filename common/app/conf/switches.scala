@@ -44,10 +44,6 @@ object Switches extends Collections {
 
   private lazy val never = new DateMidnight(2100, 1, 1)
 
-  // Waiting for an answer from Australian office, due imminently.
-  private lazy val profilingEvalDeadline = new DateMidnight(2014, 6, 25)
-
-
   // Load Switches
 
   val MemcachedSwitch = Switch("Performance Switches", "memcached-action",
@@ -157,11 +153,11 @@ object Switches extends Collections {
 
   val ImrWorldwideSwitch = Switch("Commercial Tags", "imr-worldwide",
     "Enable the IMR Worldwide audience segment tracking.",
-    safeState = Off, sellByDate = profilingEvalDeadline)
+    safeState = Off, sellByDate = never)
 
   val EffectiveMeasureSwitch = Switch("Commercial Tags", "effective-measure",
     "Enable the Effective Measure audience segment tracking.",
-    safeState = Off, sellByDate = profilingEvalDeadline)
+    safeState = Off, sellByDate = never)
 
   // We don't foresee this service being switched off
   val ForeseeSwitch = Switch("Performance Switches", "foresee",
@@ -315,6 +311,11 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 8, 10)
   )
 
+  val ProfileCommentsSearchSwitch = Switch("Feature Switches", "profile-comments-search",
+    "If this switch is on, you will be able to search for a user's comments.",
+    safeState = Off, sellByDate = new DateMidnight(2014, 7, 31)
+  )
+
   // A/B Tests
 
   val ABHideSupportingLinks = Switch("A/B Tests", "ab-hide-supporting-links",
@@ -398,6 +399,11 @@ object Switches extends Collections {
 
   val FaciaToolPressSwitch = Switch("Front Press Switches", "facia-tool-press-front",
     "If this switch is on facia tool will press fronts on each change",
+    safeState = Off, sellByDate = never
+  )
+
+  val FaciaToolDraftPressSwitch = Switch("Front Press Switches", "facia-tool-press-draft-front",
+    "If this switch is on facia tool will press draft fronts on each change",
     safeState = Off, sellByDate = never
   )
 
@@ -492,6 +498,7 @@ object Switches extends Collections {
     NewNavigationSwitch,
     WorldCupWallchartEmbedSwitch,
     WorldCupArticleContainerSwitch,
+    ProfileCommentsSearchSwitch,
     IndiaRegionSwitch,
     MemcachedSwitch,
     MemcachedFallbackSwitch,
@@ -509,7 +516,8 @@ object Switches extends Collections {
     FreshnessLoggingSwitch,
     SeoOptimisedContentImageSwitch,
     FaciaToolCachedContentApiSwitch,
-    FaciaToolCachedZippingContentApiSwitch
+    FaciaToolCachedZippingContentApiSwitch,
+    FaciaToolDraftPressSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }

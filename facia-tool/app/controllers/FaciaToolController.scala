@@ -3,7 +3,6 @@ package controllers
 import util.SanitizeInput
 import frontsapi.model._
 import frontsapi.model.UpdateList
-import jobs.FrontPressJob
 import play.api.mvc.{AnyContent, Action, Controller}
 import play.api.libs.json._
 import common.{FaciaToolMetrics, ExecutionContexts, Logging}
@@ -16,6 +15,7 @@ import conf.Switches.ContentApiPutSwitch
 import model.{NoCache, Cached}
 import scala.util.{Failure, Success}
 import play.api.libs.Comet
+import frontpress.{FrontPress, PressCommand}
 
 object FaciaToolController extends Controller with Logging with ExecutionContexts {
   implicit val collectionRead = Json.reads[Collection]
@@ -106,7 +106,7 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
     val block = FaciaApi.publishBlock(id, identity)
     block.foreach{ b =>
       UpdateActions.archivePublishBlock(id, b, identity)
-      pressCollectionId(id)
+      pressCollectionId(PressCommand.forOneId(id).withPressDraft().withPressLive())
     }
     notifyContentApi(id)
     NoCache(Ok)
@@ -117,6 +117,7 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
     val block = FaciaApi.discardBlock(id, identity)
     block.foreach { b =>
       UpdateActions.archiveDiscardBlock(id, b, identity)
+      pressCollectionId(PressCommand.forOneId(id).withPressDraft())
     }
     NoCache(Ok)
   }
@@ -149,7 +150,17 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
               UpdateActions.updateCollectionFilter(updateList.id, updateList, identity).map(updateList.id -> _)
           }.flatten.toMap
 
-          pressCollectionIds(updatedCollections.keySet)
+          val shouldUpdateLive: Boolean = update.exists(_._2.live)
+
+          val pressCommand: PressCommand =
+            PressCommand(
+              updatedCollections.keySet,
+              live = shouldUpdateLive,
+              draft = (updatedCollections.values.exists(_.draft.isEmpty) && shouldUpdateLive) || update.exists(_._2.draft)
+            )
+
+          pressCollectionIds(pressCommand)
+
           updatedCollections.keys.foreach(notifyContentApi)
 
           if (updatedCollections.nonEmpty)
@@ -161,7 +172,7 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
   }
 
   def updateCollection(id: String) = AjaxExpiringAuthentication { request =>
-    pressCollectionId(id)
+    pressCollectionId(PressCommand.forOneId(id).withPressDraft().withPressLive())
     notifyContentApi(id)
     NoCache(Ok)
   }
@@ -172,10 +183,10 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
         .map {config => ContentApiWrite.writeToContentapi(config)}
     else None
 
-  def pressCollectionId(id: String): Unit = pressCollectionIds(Set(id))
-  def pressCollectionIds(ids: Set[String]): Unit =
+  def pressCollectionId(pressCommand: PressCommand): Unit = pressCollectionIds(pressCommand)
+  def pressCollectionIds(pressCommand: PressCommand): Unit =
     if (Switches.FaciaToolPressSwitch.isSwitchedOn) {
-      FrontPressJob.pressByCollectionIds(ids)
+      FrontPress.press(pressCommand)
     }
 
   def getLastModified(path: String) = AjaxExpiringAuthentication { request =>

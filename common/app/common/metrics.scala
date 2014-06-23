@@ -267,10 +267,18 @@ object FaciaMetrics {
     "Number of requests to S3 by facia that have resulted in a 403"
   )
 
+  object FaciaToApplicationRedirectMetric extends SimpleCountMetric(
+    "facia-front",
+    "facia-applications-redirects",
+    "Facia to Applications X-Accel-Redirect count",
+    "Number of requests to facia that have been redirected to Applications via X-Accel-Redirect"
+  )
+
   val all: Seq[Metric] = Seq(
     JsonParsingErrorCount,
     S3AuthorizationError,
-    InvalidContentExceptionMetric
+    InvalidContentExceptionMetric,
+    FaciaToApplicationRedirectMetric
   )
 }
 

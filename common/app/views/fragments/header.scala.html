@@ -124,7 +124,7 @@ to apply any necessary changes to non-shared code there too.
                         <ul class="nav nav--global" data-link-name="Sections">
                             @navigation.map { nav =>
                                 <li class="nav__item @if(topLevelSelected.exists(_ == nav)) {is-active}">
-                                    <a href="@LinkTo {@nav.name.href}"  data-link-name="@nav.name.href" class="nav__link">
+                                    <a href="@LinkTo {@nav.name.href}" data-link-name="@nav.name.href" class="nav__link">
                                         @Html(nav.name.title)
                                     </a>
                                 </li>

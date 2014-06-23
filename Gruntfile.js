@@ -53,7 +53,8 @@ module.exports = function (grunt) {
                     imager:       '../../../../common/app/assets/javascripts/components/imager.js/src/strategies/container',
                     omniture:     '../../../../common/app/assets/javascripts/components/omniture/omniture',
                     fence:        '../../../../common/app/assets/javascripts/components/fence/fence',
-                    enhancer:     '../../../../common/app/assets/javascripts/components/enhancer/enhancer'
+                    enhancer:     '../../../../common/app/assets/javascripts/components/enhancer/enhancer',
+                    stripe:       '../../../../common/app/assets/javascripts/components/stripe/stripe.min'
                 },
                 optimize: 'uglify2',
                 generateSourceMaps: true,
@@ -86,6 +87,15 @@ module.exports = function (grunt) {
                     baseUrl: 'facia/app/assets/javascripts',
                     name: 'bootstraps/facia',
                     out: staticTargetDir + 'javascripts/bootstraps/facia.js',
+                    exclude: ['../../../../common/app/assets/javascripts/bootstraps/app'],
+                    keepBuildDir: true
+                }
+            },
+            identity: {
+                options: {
+                    baseUrl: 'identity/app/assets/javascripts',
+                    name: 'bootstraps/membership',
+                    out: staticTargetDir + 'javascripts/bootstraps/membership.js',
                     exclude: ['../../../../common/app/assets/javascripts/bootstraps/app'],
                     keepBuildDir: true
                 }
@@ -536,7 +546,7 @@ module.exports = function (grunt) {
                     expand: true,
                     cwd: staticTargetDir + 'javascripts',
                     src: [
-                        '**/*.js',
+                        '{components,vendor}/**/*.js',
                         '!components/curl/**/*.js',
                         '!components/zxcvbn/**/*.js'
                     ],
