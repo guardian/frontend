@@ -735,22 +735,24 @@ $c-new-navigation-signposting-action: guss-colour(neutral-1) !default;
 .global-navigation__toggle-children {
     position: absolute;
     right: 0;
-    display: none;
+    display: block;
     font-family: $sans-serif;
     @include rem((
         font-size: 12px,
         line-height: 20px,
         padding-left: $gs-gutter,
+        padding-right: $gs-gutter/2,
         padding-bottom: 6px
     ));
     font-weight: 300;
+    color: #fffff;
 
     @include mq(tablet) {
         display: none;
     }
 
-    .new-navigation--expanded & {
-        display: block;
+    .new-navigation--collapsed & {
+        display: none;
     }
 }
 

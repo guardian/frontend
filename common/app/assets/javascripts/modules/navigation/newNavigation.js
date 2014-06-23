@@ -34,7 +34,7 @@ define([
                     e.preventDefault();
 
                     var expandLink = bonzo(elem);
-                    var subLinksContainer = bonzo( qwery('.global-navigation__children', expandLink.parent()[0])[0] );
+                    var subLinksContainer = bonzo(qwery('.global-navigation__children', expandLink.parent()[0])[0]);
 
                     if (subLinksContainer.hasClass('global-navigation__children--collapsed')) {
                         subLinksContainer
@@ -51,7 +51,7 @@ define([
             }
             function accordionAddLinks(){
                 if(qwery('.js-accordion').length > 0){
-                    bonzo(qwery('.js-accordion .global-navigation__section .global-navigation__children'))
+                    $('.js-accordion .global-navigation__section .global-navigation__children')
                         .addClass('global-navigation__children--collapsed');
 
                     qwery('.js-accordion .global-navigation__section').forEach(function(elem){
