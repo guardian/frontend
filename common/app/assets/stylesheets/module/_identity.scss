@@ -430,8 +430,10 @@
     }
 
     .membership-tab__update-button {
-        min-width: 120px;
-        width: 120px;
+        @include rem((
+            min-width: 120px,
+            width: 120px
+        ));
         float: right;
         box-sizing: border-box;
         &:hover {
