@@ -78,6 +78,7 @@ Comments.prototype.classes = {
     showMoreOlder: 'd-discussion__show-more--older',
     showMoreLoading: 'd-discussion__show-more-loading',
     showHidden: 'd-discussion__show-hidden',
+    showAllComments: 'd-discussion__show-all-comments',
     reply: 'd-comment--response',
     showReplies: 'd-show-more-replies',
     header: 'd-discussion__header',
@@ -148,6 +149,10 @@ Comments.prototype.prerender = function() {
             this.removeState('not-staff');
             this.setState('is-staff');
         }
+    }
+
+    if(commentCount>2) {
+        $(this.getClass('showAllComments')).addClass('d-discussion__show-all-comments-visible');
     }
 
     if (this.options.state) {
@@ -261,6 +266,7 @@ Comments.prototype.unPickComment = function(commentId, $thisButton) {
  */
 Comments.prototype.gotoComment = function(id) {
     var comment = $('#comment-'+ id, this.elem);
+
     if (comment.length > 0) {
         window.location.replace('#comment-'+ id);
         return;
@@ -304,10 +310,11 @@ Comments.prototype.changePage = function(e) {
  * }
  */
 Comments.prototype.fetchComments = function(options) {
-    var url =
-        '/discussion/' + this.options.order + this.options.discussionId + '.json?' +
-        (options.page ? '&page=' + options.page : '') +
-        '&maxResponses=3';
+    var url = '/discussion/'+
+        (options.comment ? 'comment-permalink/' : '')+
+        this.options.order +'/'+
+        (options.comment ? options.comment : this.options.discussionId)+
+        '.json?'+ (options.page ? '&page=' + options.page : '') +'&maxResponses=3';
 
     return ajax({
         url: url,
@@ -600,11 +607,13 @@ Comments.prototype.reportComment = function(e) {
             var category = form.elements.category,
                 comment = form.elements.comment.value;
 
-            DiscussionApi.reportComment(commentId, {
-                emailAddress: form.elements.email.value,
-                categoryId: category.value,
-                reason: comment === '' ? category.options[category.selectedIndex].innerHTML : comment
-            });
+            if (category.value !== '0') {
+                DiscussionApi.reportComment(commentId, {
+                    emailAddress: form.elements.email.value,
+                    categoryId: category.value,
+                    reason: comment
+                });
+            }
 
             bonzo(form).addClass('u-h');
         });

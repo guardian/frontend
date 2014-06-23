@@ -16,6 +16,11 @@ object MasterClassAgent extends AdAgent[MasterClass] with ExecutionContexts {
     adsToShow sortBy(_.eventBriteEvent.startDate.getMillis)
   }
 
+  def specificClasses(eventBriteIdStrings: Seq[String]): Seq[MasterClass] = {
+    val eventBriteIds = eventBriteIdStrings map (_.toLong)
+    currentAds filter (masterclass => eventBriteIds contains masterclass.eventBriteEvent.id)
+  }
+
   def wrapEventbriteWithContentApi(eventbriteEvents: Seq[EventbriteMasterClass]): Future[Seq[MasterClass]] = {
     val seqThumbs: Seq[Future[MasterClass]] = eventbriteEvents.map {
       event =>

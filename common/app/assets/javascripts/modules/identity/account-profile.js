@@ -8,14 +8,12 @@ define([
     'common/$',
     'bean',
     'bonzo',
-    'common/utils/url',
-    'common/modules/identity/membership-tab'
+    'common/utils/url'
 ], function(
     $,
     bean,
     bonzo,
-    url,
-    MembershipTab
+    url
 ) {
 
     var accountProfile = function () {
@@ -59,9 +57,14 @@ define([
 
                     var tabs = self.accountProfileForms.querySelector(self.classes.tabs);
 
-                    var membershipTab = new MembershipTab();
+                    require(['bootstraps/membership'], function (MembershipTab) {
+                        self.membershipTab = new MembershipTab();
+                        self.membershipTab.fetch($(self.classes.memberShipContainer));
+                    });
 
-                    membershipTab.fetch($(self.classes.memberShipContainer));
+                    $(self.classes.tabs + ' .tabs__tab a').each(function () { // enhance tab urls to work with JS tabs module
+                        this.href = this.getAttribute('data-tabs-href');
+                    });
 
                     bean.on(tabs, 'click', self.handleTabsClick.bind(self));
                 }

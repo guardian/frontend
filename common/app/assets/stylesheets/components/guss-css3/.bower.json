@@ -1,0 +1,18 @@
+{
+  "name": "guss-css3",
+  "version": "2.1.0",
+  "main": "_css3.scss",
+  "ignore": [
+    "CHANGELOG.md"
+  ],
+  "homepage": "https://github.com/guardian/guss-css3",
+  "_release": "2.1.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "v2.1.0",
+    "commit": "a85902f2b7b615e9ac873332cfca7639d051c409"
+  },
+  "_source": "git://github.com/guardian/guss-css3.git",
+  "_target": "~2",
+  "_originalSource": "guss-css3"
+}

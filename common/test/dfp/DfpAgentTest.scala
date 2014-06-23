@@ -7,8 +7,17 @@ import org.scalatest.{FlatSpec, Matchers}
 class DfpAgentTest extends FlatSpec with Matchers {
 
   private object testDfpAgent extends DfpAgent {
-    override protected def sponsoredTags: Seq[String] = Seq("spon-page", "media")
-    override protected def advertisementFeatureTags: Seq[String] = Seq("ad-feature", "film")
+
+    override protected def sponsoredTags: Seq[Sponsorship] = Seq(
+      Sponsorship(Seq("spon-page"), Some("spon")),
+      Sponsorship(Seq("media"), None)
+    )
+
+    override protected def advertisementFeatureTags: Seq[Sponsorship] = Seq(
+      Sponsorship(Seq("ad-feature"), Some("spon2")),
+      Sponsorship(Seq("film"), None)
+    )
+
     override protected def pageskinnedAdUnits: Seq[String] = Seq("theguardian.com/business/front")
   }
 
@@ -162,5 +171,21 @@ class DfpAgentTest extends FlatSpec with Matchers {
     forEvery(apiQueries) { q =>
       testDfpAgent.isAdvertisementFeature(apiQuery(q)) should be(false)
     }
+  }
+
+  "getSponsor" should "have some value for a sponsored tag with a specified sponsor" in {
+    testDfpAgent.getSponsor("spon-page") should be(Some("spon"))
+  }
+
+  "getSponsor" should "have some value for an advertisement feature tag with a specified sponsor" in {
+    testDfpAgent.getSponsor("ad-feature") should be(Some("spon2"))
+  }
+
+  "getSponsor" should "have no value for an advertisement feature tag without a specified sponsor" in {
+    testDfpAgent.getSponsor("film") should be(None)
+  }
+
+  "getSponsor" should "have no value for an unsponsored tag" in {
+    testDfpAgent.getSponsor("culture") should be(None)
   }
 }

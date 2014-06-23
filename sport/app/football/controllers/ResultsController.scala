@@ -1,5 +1,6 @@
 package football.controllers
 
+import common.Edition
 import feed.Competitions
 import play.api.mvc.{AnyContent, Action}
 import org.joda.time.DateMidnight
@@ -17,7 +18,7 @@ object ResultsController extends MatchListController with CompetitionResultFilte
 
   def allResultsJson() = allResults()
   def allResults(): Action[AnyContent] =
-    renderAllResults(DateMidnight.now)
+    renderAllResults(DateMidnight.now(Edition.defaultEdition.timezone))
 
   private def renderAllResults(date: DateMidnight) = Action { implicit request =>
     val results = new ResultsList(date, Competitions())
@@ -27,7 +28,7 @@ object ResultsController extends MatchListController with CompetitionResultFilte
 
   def tagResultsJson(tag: String) = tagResults(tag)
   def tagResults(tag: String): Action[AnyContent] =
-    renderTagResults(DateMidnight.now, tag)
+    renderTagResults(DateMidnight.now(Edition.defaultEdition.timezone), tag)
 
   def tagResultsForJson(year: String, month: String, day: String, tag: String) = tagResultsFor(year, month, day, tag)
   def tagResultsFor(year: String, month: String, day: String, tag: String): Action[AnyContent] =

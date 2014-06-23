@@ -39,9 +39,11 @@
                     </a>
                 </span>
 
-                @if(!comment.responseTo.isEmpty){  
+                @comment.responseTo.map{ r =>
                     <span class="i i-in-reply-arrow"></span>
-                    <span class="d-comment__reply-to-author">@comment.responseTo.map(_.displayName)</span>
+                    <a href="#comment-@r.commentId">
+                        <span class="d-comment__reply-to-author">@r.displayName</span>
+                    </a>
                 }
                 @if(comment.profile.isStaff){
                     <span class="d-comment__author-label">Staff</span>
@@ -77,7 +79,11 @@
                     </span>
                 </div>
             }
-            <div class="d-comment__main">
+            @if(comment.isBlocked){
+                <div class="d-comment__main d-comment__main-removed">
+            }else{
+                <div class="d-comment__main">
+            }
                 @if(!isResponse) {
                     <div class="d-comment__pick @if(!comment.isHighlighted || comment.isBlocked){u-h}" title="Guardian pick">
                         <i class="i i-gupickasterisk"></i>Guardian Pick
@@ -86,8 +92,8 @@
 
                 <div class="d-comment__body" itemprop="text">
                     @if(comment.isBlocked){
-                        This comment was removed by a moderator because it didn't abide by our <a href="http://www.theguardian.com/community-standards" data-link-name="community standards">community standards</a>.
-                        Replies may also be deleted. For more detail see <a href="http://www.theguardian.com/community-faqs" data-link-name="FAQs">our FAQs</a>.
+                        <div class="d-comment__comment-removed">This comment was removed by a moderator because it didn't abide by our <a href="http://www.theguardian.com/community-standards" data-link-name="community standards">community standards</a>.
+                        Replies may also be deleted. For more detail see <a href="http://www.theguardian.com/community-faqs" data-link-name="FAQs">our FAQs</a>.</div>
                     }else{
                         @withJsoup(BulletCleaner(comment.body))(
                             InBodyLinkCleaner("in body link")(Edition(request))

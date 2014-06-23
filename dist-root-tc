@@ -4,9 +4,8 @@ set -o xtrace
 set -o nounset
 set -o errexit
 
-# Skip test whilst debugging.
-./sbt-tc "project root" compile dist
 ./grunt-tc clean validate:js test:unit compile emitAbTestInfo
+./sbt-tc "project root" compile test dist
 
 echo "Disting everything."
 rm -rf "dist"
@@ -24,7 +23,7 @@ do
     mkdir -p "$app_folder/packages/frontend-static"
     mkdir -p "$app_folder/packages/$config"
 
-    cp "$config/target/universal/$config.zip"   "$app_folder/packages/$config/$config.zip"
+    mv "$config/target/universal/$config.zip"   "$app_folder/packages/$config/$config.zip"
     cp "$config/conf/deploy.json"               "$app_folder"
     cp -r static/hash/*                         "$app_folder/packages/frontend-static"
     cp static/abtests.json                      "$app_folder/packages/frontend-abtests"
@@ -33,10 +32,9 @@ do
     zip -r "../$config.zip" .
     popd
 
+    rm -rf $app_folder
+
     echo "##teamcity[publishArtifacts 'dist/$config.zip']"
 done
-
-# And zip up the packet
-#cd "everything"
 
 echo "Done disting."

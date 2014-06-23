@@ -8,6 +8,11 @@ object OffersAgent extends AdAgent[Offer] with Logging with ExecutionContexts {
   // most popular Travel Offers
   override def defaultAds = currentAds.sortBy(_.position).take(4)
 
+  def specificTravelOffers(offerIdStrings: Seq[String]): Seq[Offer] = {
+    val offerIds = offerIdStrings map (_.toInt)
+    currentAds filter (offer => offerIds contains offer.id)
+  }
+
   def refresh() = {
     for {offers <- OffersApi.loadAds()}
     yield updateCurrentAds(populateKeywords(offers))

@@ -1,5 +1,0 @@
-package frontpress
-
-import services.ParseCollection
-
-object FaciaToolCollectionParser extends ParseCollection

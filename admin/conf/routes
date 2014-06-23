@@ -27,10 +27,9 @@ GET         /api/item/*path               controllers.admin.Api.item(path, callb
 GET         /json/proxy/*absUrl           controllers.admin.Api.json(absUrl)
 
 # Ophan proxying for https
-GET         /ophan/pageviews/*path            controllers.admin.OphanApiController.pageViews(path)
-GET         /ophan/pageviews                  controllers.admin.OphanApiController.platformPageViews()
-GET         /ophan/ads/render-time            controllers.admin.OphanApiController.adsRenderTime(platform)
-GET         /ophan/ads/render-time/:adSlot    controllers.admin.OphanApiController.adRenderTime(adSlot, platform)
+GET         /ophan/pageviews/*path        controllers.admin.OphanApiController.pageViews(path)
+GET         /ophan/pageviews              controllers.admin.OphanApiController.platformPageViews()
+GET         /ophan/ads/render-time        controllers.admin.OphanApiController.adsRenderTime()
 
 #Development endpoints
 GET         /dev/switchboard              controllers.admin.SwitchboardController.renderSwitchboard()
@@ -96,3 +95,6 @@ GET         /admin/football/fronts/matches/:competitionId/:team1Id/:team2Id     
 GET         /admin/football/fronts/match/:matchId                                              controllers.admin.FrontsController.bigMatchSpecial(matchId)
 
 GET         /admin/football/api/squad/:teamId                                                  controllers.admin.PlayerController.squad(teamId: String)
+
+# Commercial reports
+GET         /commercial/pageskins   controllers.admin.CommercialHelper.activeLineItems()

@@ -16,7 +16,7 @@
             options = {
                 config: {
                     page: {
-                        keywords: 'a,b,c',
+                        keywordIds: 's/a,s/b,s/c',
                         section: 's',
                         ajaxUrl: '',
                         ab_commercialInArticleDesktop: 'inline'

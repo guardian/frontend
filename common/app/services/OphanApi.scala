@@ -9,14 +9,14 @@ import play.api.libs.ws.WS
 
 object OphanApi extends ExecutionContexts with Logging {
 
-  private def getBody(path: String): Future[JsValue] = {
+  private def getBody(path: String, timeout: Int = ophanApi.timeout): Future[JsValue] = {
     (for {
       host <- ophanApi.host
       key <- ophanApi.key
     } yield {
       val url = s"$host/$path&api-key=$key"
       log.info("Making request to Ophan API: " + url)
-      WS.url(url) withRequestTimeout ophanApi.timeout get() map (_.json)
+      WS.url(url) withRequestTimeout timeout get() map (_.json)
     }) getOrElse {
       log.error("Ophan host or key not configured")
       Future.successful(JsObject(Nil))
@@ -41,9 +41,18 @@ object OphanApi extends ExecutionContexts with Logging {
 
   def getMostReferredFromSocialMedia(days: Int): Future[JsValue] = getBody(s"mostread?days=$days&referrer=social%20media")
 
-  def getAdsRenderTime(platform: String): Future[JsValue] = getBody(s"ads/render-time?platform=${platform}&hours=24")
+  val validQueryKeys = Seq("platform", "hours", "ad-slot")
 
-  def getAdsRenderTime(platform: String, slotName: String): Future[JsValue] =
-    getBody(s"ads/render-time?platform=${platform}&hours=24&ad-slot=$slotName")
+  def getAdsRenderTime(params: Map[String, Seq[String]]): Future[JsValue] = {
+    val query: String = params
+      .filter { case(k, v) =>
+        validQueryKeys.contains(k)
+      }
+      .map { case (k, v) =>
+        k + "=" + v.mkString(",")
+      }
+      .mkString("&")
+    getBody(s"ads/render-time?$query", 5000)
+  }
 
 }

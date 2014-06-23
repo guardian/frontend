@@ -28,7 +28,10 @@ trait MetaData extends Tags {
   lazy val isFront = false
   lazy val contentType = ""
 
-  lazy val adUnitSuffix = if (isFront) section + "/front" else section
+  lazy val adUnitSuffix = {
+    val isSectionFront = id == section
+    if (isSectionFront) s"$section/front" else section
+  }
 
   lazy val hasPageSkin = false
 
@@ -168,8 +171,8 @@ trait Tags {
   lazy val tones: Seq[Tag] = tagsOfType("tone")
   lazy val types: Seq[Tag] = tagsOfType("type")
 
-  def isSponsored = DfpAgent.isSponsored(keywords)
-  def isAdvertisementFeature = DfpAgent.isAdvertisementFeature(keywords)
+  def isSponsored = DfpAgent.isSponsored(tags)
+  def isAdvertisementFeature = DfpAgent.isAdvertisementFeature(tags)
 
   // Tones are all considered to be 'News' it is the default so we do not list news tones explicitly
   lazy val visualTone: String =

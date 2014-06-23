@@ -16,12 +16,12 @@
         </div>
 
         <div class="d-discussion__meta d-dicussion__meta--sorting d-meta-item js-visible">
-            Comments sorted
+            View
             <select class="d-discussion__order-control">
                 <option value="oldest" @if(page.orderBy == "oldest"){selected="selected"}>oldest</option>
                 <option value="newest" @if(page.orderBy == "newest"){selected="selected"}>newest</option>
             </select>
-            first.
+            first
         </div>
         <div class="d-discussion__meta d-dicussion__meta--sorting js-hidden">
             Sort comments
@@ -52,7 +52,7 @@
         @if(page.orderBy == "oldest"){<div class="js-new-comments"></div>}
 
         @if(!isTopComments){
-            <div class="d-discussion__pagination">
+            <div class="d-discussion__pagination u-cf">
                 @page.pagination.map{ paginate => @fragments.pagination(page, paginate, Some("js-discussion-change-page")) }
             </div>
         }

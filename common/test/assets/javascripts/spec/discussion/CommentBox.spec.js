@@ -57,6 +57,10 @@ define([
                             '<textarea name="body" class="textarea d-comment-box__body" placeholder="Join the discussion…"></textarea>'+
                             '<button type="submit" class="submit-input d-comment-box__submit">Post comment</button>'+
                         '</div>'+
+                        '<div class="d-comment-box__preview-wrapper">'+
+                            '<div class="d-comment-box__preview-body"></div>'+
+                            '<button type="submit" class="submit-input d-comment-box__submit d-comment-box__preview-submit">Post your comment</button>'+
+                        '</div>'+
                     '</form>'
                 ]
             },

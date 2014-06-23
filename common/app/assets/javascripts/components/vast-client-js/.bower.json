@@ -1,0 +1,32 @@
+{
+  "name": "vast-client-js",
+  "author": [
+    "Olivier Poitrey <rs@dailymotion.com>"
+  ],
+  "version": "1.1.2",
+  "main": "vast-client.js",
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/rs/vast-client-js/raw/master/LICENSE"
+    }
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "components",
+    "src",
+    "test",
+    "package.json"
+  ],
+  "homepage": "https://github.com/dailymotion/vast-client-js",
+  "_release": "1.1.2",
+  "_resolution": {
+    "type": "version",
+    "tag": "1.1.2",
+    "commit": "9e8d6e799b6a6b20e64fa62e564ee1aa6957b072"
+  },
+  "_source": "git://github.com/dailymotion/vast-client-js.git",
+  "_target": "1.1.2",
+  "_originalSource": "vast-client-js"
+}

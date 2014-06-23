@@ -66,6 +66,8 @@ curl.js with jQuery, dojo, or underscore.
 What's New?
 =======
 
+* 0.8.10
+	* Add moduleType and main properties to bower.json and package.json.
 * 0.8.9
 	* Protect more API functions in plugins and loaders from closure compiler's
 	aggressive obfuscation.
@@ -83,35 +85,6 @@ What's New?
 	* Cram plugins: plugins are now responsible for resolving url/filepath.
 	* Cram plugins: legacy loader no longer fails to add a .js extension
 	  when there are dots in the file name.
-* 0.8.4
-	* data-curl-run now only supports scripts, not modules, and is
-	  documented in the bootstrapping section of the wiki.
-	  There are now fewer conflicts when defining a
-	  main module in the curl config, as a result.
-* 0.8.3
-	* Export legacy-loaded modules with normal AMD/CommonJS module ids
-	  (thanks @mmacaula!)
-	* Build curl/debug into curl/dist/debug/curl.js correctly.
-* 0.8.2
-	* Run compile.sh from anywhere (thanks @webpro!)
-	* Restore quotes to cram text plugin output (thanks @gehan!)
-	* Correctly bake-in the locale module in the kitchen-sink dist build.
-* 0.8.1
-	* Adds a build-time (cram) plugin for the new legacy loader.
-* 0.8.0
-	* Adds new curl/loader/legacy module loader that provides similar
-	  functionality to RequireJS's "shim config".
-	* Adds dontAddFileExt config option functionality to js! plugin and
-	  curl/loader/legacy module loader.
-	* Fixes configuration context mixups. Modules will get their package's
-	  config unless they are loaded explicitly via a plugin and that
-	  plugin has a custom configuration.
-	* Paths can now be objects like packages and can have all of the same
-	  properties, except `main`, i.e. `location` (or `path`), `config`, `name`.
-	* Fixes an issue in node on windows wherein C: was seen as a web protocol.
-	* Updates READMEs in the plugin and loader folders.
-	* Drops dojo 1.6 compatibility in the "kitchen sink" distribution.
-	* Adds new dojo 1.8 distribution.
 
 ----------------------------------------
 
@@ -533,8 +506,8 @@ curl.config({
 		},
 		anotherPlainOldJsFile: {
 			location: 'js/anotherPlainOldJsFile.js',
-			config: { 
-				loader: 'curl/loader/legacy', 
+			config: {
+				loader: 'curl/loader/legacy',
 				exports: 'anotherGlobal',
 				requires: [ 'plainOldJsFile1' ]
 			}
