@@ -1,9 +1,11 @@
 define([
+    'common/utils/storage',
     'qwery',
     'common/$',
     'bean',
     'bonzo'
 ], function (
+    store,
     qwery,
     $,
     bean,
@@ -29,26 +31,66 @@ define([
 
         initAccordion: function(){
             function accordionToggle(){
-                bean.on(qwery('.new-navigation')[0], 'click touchstart', '.global-navigation__toggle-children', function (e) {
-                    var elem = e.currentTarget;
-                    e.preventDefault();
+                var storageKey = 'gu.prototypes.expandedMenuItems';
+                var navContainer = qwery('.new-navigation')[0];
+                var toggleButtons = qwery('.global-navigation__toggle-children', navContainer);
 
-                    var expandLink = bonzo(elem);
-                    var subLinksContainer = bonzo(qwery('.global-navigation__children', expandLink.parent()[0])[0]);
+                function toggleSubLinks(button){
+                    var expandBtn = bonzo(button);
+                    var subLinksContainer = bonzo(qwery('.global-navigation__children', expandBtn.parent()[0])[0]);
 
                     if (subLinksContainer.hasClass('global-navigation__children--collapsed')) {
                         subLinksContainer
                             .removeClass('global-navigation__children--collapsed')
                             .addClass('global-navigation__children--expanded');
-                        expandLink.html('less');
+                        expandBtn.html('less');
+                        saveSelection(button, true);
                     } else {
                         subLinksContainer
                             .removeClass('global-navigation__children--expanded')
                             .addClass('global-navigation__children--collapsed');
-                        expandLink.html('more');
+                        expandBtn.html('more');
+                        saveSelection(button, false);
                     }
+                }
+
+                function expandFromPreviousSession(toggleButtons){
+                    var expandedItems = store.local.get(storageKey) || [];
+                    expandedItems.forEach(function(idx){
+                        toggleSubLinks(toggleButtons[idx]);
+                    });
+                }
+                
+                function saveSelection(expandBtn, isExpanded){
+                    var expandedItems = store.local.get(storageKey) || [];
+                    var btnIdx = toggleButtons.indexOf(expandBtn);
+
+                    var storedIdx = expandedItems.indexOf(btnIdx);
+                    if(isExpanded){
+                        if (storedIdx == -1) {
+                            // add to storage
+                            expandedItems.push(btnIdx);
+                            store.local.set(storageKey, expandedItems);
+                        }
+                    }
+                    else {
+                        // remove from storage
+                        if (storedIdx > -1) {
+                            expandedItems.splice(storedIdx, 1);
+                            store.local.set(storageKey, expandedItems);
+                        }
+                    }
+                }
+                
+                expandFromPreviousSession(toggleButtons);//
+
+                bean.on(navContainer, 'click touchstart', '.global-navigation__toggle-children', function (e) {
+                    var elem = e.currentTarget;
+                    e.preventDefault();
+                    toggleSubLinks(elem);
                 });
             }
+
             function accordionAddLinks(){
                 if(qwery('.js-accordion').length > 0){
                     $('.js-accordion .global-navigation__section .global-navigation__children')
