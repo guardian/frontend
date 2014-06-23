@@ -300,6 +300,11 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 7, 8)
   )
 
+  val NewNavAccordionSwitch = Switch("Feature Switches", "new-nav-accordion",
+    "If this switch is turned on then the new navigation accordion variant will be displayed on mobiles and tablets",
+    safeState = Off, sellByDate = new DateMidnight(2014, 7, 8)
+  )
+
   val EnhanceTweetsSwitch = Switch("Feature Switches", "enhance-tweets",
     "If this switch is turned on then embedded tweets will be enhanced using Twitter's widgets.",
     safeState = Off, sellByDate = never
@@ -495,6 +500,7 @@ object Switches extends Collections {
     RssLinkSwitch,
     EnhanceTweetsSwitch,
     NewNavigationSwitch,
+    NewNavAccordionSwitch,
     WorldCupWallchartEmbedSwitch,
     WorldCupArticleContainerSwitch,
     IndiaRegionSwitch,
