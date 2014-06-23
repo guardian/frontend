@@ -37,7 +37,8 @@
 
         <a class="tool preview" target="preview" data-bind="
             attr: {href: previewUrl},
-            visible: front">View Live</a>
+            text: 'View ' + (liveMode() ? 'Live' : 'Draft'),
+            visible: front"></a>
     </div>
 
     <div class="left-col">

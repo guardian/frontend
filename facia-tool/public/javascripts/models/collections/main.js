@@ -87,7 +87,10 @@ define([
         };
 
         model.previewUrl = ko.computed(function() {
-            return vars.CONST.viewer + '#env=' + pageConfig.env + '&url=' + model.front() + encodeURIComponent('?view=mobile');
+            return vars.CONST.viewer +
+                '#env=' + pageConfig.env +
+                '&mode=' + (model.liveMode() ? 'live' : 'draft' ) +
+                '&url=' + model.front() + encodeURIComponent('?view=mobile');
         });
 
         function detectPressFailure() {
