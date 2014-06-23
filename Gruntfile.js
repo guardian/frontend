@@ -91,6 +91,15 @@ module.exports = function (grunt) {
                     keepBuildDir: true
                 }
             },
+            identity: {
+                options: {
+                    baseUrl: 'identity/app/assets/javascripts',
+                    name: 'bootstraps/membership',
+                    out: staticTargetDir + 'javascripts/bootstraps/membership.js',
+                    exclude: ['../../../../common/app/assets/javascripts/bootstraps/app'],
+                    keepBuildDir: true
+                }
+            },
             ophan: {
                 options: {
                     baseUrl: 'common/app/assets/javascripts',

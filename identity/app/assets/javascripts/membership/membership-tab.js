@@ -7,7 +7,7 @@ define(['common/$',
 'common/utils/ajax',
 'common/utils/config',
 'common/modules/component',
-'common/modules/identity/membership/paymentForm'], function ($, bean, bonzo, ajax, config, Component, PaymentForm) {
+'membership/paymentForm'], function ($, bean, bonzo, ajax, config, Component, PaymentForm) {
 
     function Membership (context, mediator, options) {
 

@@ -2,11 +2,11 @@ define([
     'common/$',
     'bean',
     'common/modules/identity/api',
-    'common/modules/identity/membership/masker',
+    'membership/masker',
     'stripe',
     'common/utils/ajax',
     'common/utils/config',
-    'common/modules/identity/membership/stripeErrorMessages'
+    'membership/stripeErrorMessages'
 ], function ($, bean, userUtil, masker, stripe, ajax, config, stripeErrorMessages) {
     'use strict';
 
