@@ -328,11 +328,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 6, 25)
   )
 
-  val ABDisplaySociallyReferredBurners = Switch("A/B Tests", "ab-display-socially-referred-burners",
-    "If this switch is turned on, run the DisplayReferredContent A/B test",
-    safeState = Off, sellByDate = new DateMidnight(2014, 6, 24)
-  )
-
   val ABSentry = Switch("A/B Tests", "ab-sentry",
     "If this switch is turned on, users JavaScript errors will be beaconed back to the Sentry server.",
     safeState = Off, sellByDate = new DateMidnight(2014, 6, 27)
@@ -507,7 +502,6 @@ object Switches extends Collections {
     TagLinkingSwitch,
     ABHideSupportingLinks,
     ABAcrossTheGuardian,
-    ABDisplaySociallyReferredBurners,
     ABSentry,
     ABLargerMobileMpu,
     SmartBannerSwitch,
