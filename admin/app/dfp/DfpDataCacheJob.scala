@@ -5,9 +5,11 @@ import play.api.libs.json.Json._
 import scala.concurrent.future
 import tools.Store
 import play.api.libs.json.{Json, JsValue, Writes}
+import model.AdReports
+import org.joda.time.DateTime
+import implicits.Dates
 
-object DfpDataCacheJob extends ExecutionContexts {
-
+object DfpDataCacheJob extends ExecutionContexts with Dates{
 
   private implicit val targetWrites = new Writes[Target] {
     def writes(target: Target): JsValue = {
@@ -38,22 +40,18 @@ object DfpDataCacheJob extends ExecutionContexts {
     }
   }
 
-  private implicit val sponsorshipWrites = new Writes[Sponsorship] {
-    def writes(sponsorship: Sponsorship): JsValue = {
-      Json.obj(
-        "sponsor" -> sponsorship.sponsor,
-        "tags" -> sponsorship.tags
-      )
-    }
-  }
-
   def run() {
     future {
       val dfpLineItems = DfpApi.getAllCurrentDfpLineItems
       if (dfpLineItems.nonEmpty) {
+        val now = DateTime.now().toHttpDateTimeString
         val lineItems = DfpApi.hydrateWithUsefulValues(dfpLineItems)
-        Store.putDfpSponsoredTags(stringify(toJson(DfpApi.filterOutSponsoredTagsFrom(lineItems))))
-        Store.putDfpAdvertisementFeatureTags(stringify(toJson(DfpApi.filterOutAdvertisementFeatureTagsFrom(lineItems))))
+
+        val sponsoredTags: Seq[Sponsorship] = DfpApi.filterOutSponsoredTagsFrom(lineItems)
+        Store.putDfpSponsoredTags(stringify(SponsorshipReport(now, sponsoredTags).toJson))
+
+        val advertisementTags: Seq[Sponsorship] = DfpApi.filterOutAdvertisementFeatureTagsFrom(lineItems)
+        Store.putDfpAdvertisementFeatureTags(stringify(SponsorshipReport(now, advertisementTags).toJson))
 
         Store.putDfpPageSkinAdUnits(stringify(toJson(DfpApi.fetchAdUnitsThatAreTargettedByPageSkins(dfpLineItems))))
 

@@ -1,13 +1,70 @@
-$c-navigation-background: guss-colour(guardian-brand);
-$c-navigation-action: guss-colour(neutral-1);
+/* ==========================================================================
+   Navigation
+   ========================================================================== */
 
-$c-local-navigation-child-current: guss-colour(guardian-brand-light);
+/* Configuration
+   ========================================================================== */
 
-$c-global-navigation-background: mix(guss-colour(tone-news-2), guss-colour(tone-news-1));
-$c-global-navigation-action: guss-colour(neutral-2);
-$c-global-navigation-border: guss-colour(neutral-6);
+$new-navigation-toggler-width: 36px !default;
+$new-navigation-toggler-width-full: 130px !default;
 
-$new-navigation-h-space-between-items: get-font-size($fs-headers, 1);
+$theme: default;
+// $theme: grey-and-dark-blue;
+
+$c-navigation-background: #407dbc !default;
+$c-navigation-action: guss-colour(neutral-1) !default;
+
+$c-local-navigation-background: guss-colour(neutral-7) !default;
+$c-local-navigation-action: guss-colour(neutral-1) !default;
+
+$c-local-navigation-parent-background: #ffffff !default;
+
+$c-local-navigation-current-background: $c-local-navigation-parent-background !default;
+$c-local-navigation-current: guss-colour(neutral-1) !default;
+$c-local-navigation-current-border: 2px solid guss-colour(tone-news-2) !default;
+
+$c-global-navigation-background: $c-navigation-background !default;
+$c-global-navigation-action: #ffffff !default;
+$c-global-navigation-border: guss-colour(neutral-5) !default;
+
+$c-navigation-separator: 1px solid #ffffff !default;
+
+$c-navigation-toggle-background: guss-colour(guardian-brand) !default;
+$c-navigation-toggle-icon: #ffffff !default;
+$c-navigation-toggle-shadow: rgba(#000000, .333333) !default;
+
+$new-navigation-h-space-between-items: get-font-size($fs-headers, 1) !default;
+
+@if $theme == grey-and-dark-blue {
+    $c-navigation-background: mix(guss-colour(guardian-brand), #ffffff, 100%) !global;
+    $c-navigation-action: guss-colour(neutral-1) !global;
+
+    $c-local-navigation-background: guss-colour(neutral-7) !global;
+    $c-local-navigation-action: guss-colour(neutral-1) !global;
+
+    $c-local-navigation-parent-background: $c-navigation-background !global;
+
+    $c-local-navigation-current-background: $c-local-navigation-parent-background !global;
+    $c-local-navigation-current: #ffffff !global;
+    $c-local-navigation-current-border: 0;
+
+    $c-global-navigation-background: #407dbc !global;
+    $c-global-navigation-action: guss-colour(neutral-2) !global;
+    $c-global-navigation-border: guss-colour(neutral-5) !global;
+
+    $c-navigation-separator: 0 !global;
+
+    $c-navigation-toggle-background: guss-colour(guardian-brand) !global;
+    $c-navigation-toggle-icon: #ffffff !global;
+    $c-navigation-toggle-shadow: rgba(#000000, .333333) !global;
+
+    $new-navigation-h-space-between-items: get-font-size($fs-headers, 1) !global;
+}
+
+
+
+/* Overrides (to be incorporated into the global CSS when killing the old nav)
+   ========================================================================== */
 
 .has-new-navigation {
     .l-header {
@@ -25,17 +82,36 @@ $new-navigation-h-space-between-items: get-font-size($fs-headers, 1);
     }
 }
 
+
+/* Styles common to all states
+   ========================================================================== */
+
 .new-navigation {
+    position: relative;
+    z-index: 1;
     clear: both;
     background: $c-navigation-background;
     @include fs-header(1);
+    @if $theme == default {
+        font-weight: bold;
+    }
     @include rem((
         height: gs-height(1),
         line-height: gs-height(1)
     ));
+    a {
+        &,
+        &:hover,
+        &:active,
+        &:focus {
+            text-decoration: none;
+        }
+    }
 }
 .new-navigation__inner {
     position: relative;
+}
+.new-navigation__scroll {
     @include rem((
         padding-left: $gs-gutter/2,
         padding-right: $gs-gutter/2
@@ -49,6 +125,7 @@ $new-navigation-h-space-between-items: get-font-size($fs-headers, 1);
     }
 }
 
+
 .local-navigation,
 .local-navigation__children,
 .global-navigation,
@@ -57,62 +134,91 @@ $new-navigation-h-space-between-items: get-font-size($fs-headers, 1);
     margin: 0;
     padding: 0;
 }
-
-.local-navigation,
-.global-navigation__children {
-    float: left;
+.local-navigation {
+    @include rem((
+        min-height: gs-height(1),
+        margin-left: -$gs-gutter/2
+    ));
+    @include mq(mobileLandscape) {
+        @include rem((
+            margin-left: -$gs-gutter
+        ));
+    }
 }
-
 .local-navigation__parent,
 .local-navigation__action,
 .global-navigation__action,
 .global-navigation__title, {
     color: $c-navigation-action;
 }
-
 .local-navigation__parent {
-    float: left;
-    @include rem((
-        margin-right: $new-navigation-h-space-between-items
-    ));
-    color: #ffffff;
+    position: relative;
+    display: table-cell;
+    color: $c-local-navigation-current;
     text-decoration: none;
-}
-.local-navigation__children {}
-.local-navigation__child {
-    float: left;
+    background: $c-local-navigation-parent-background;
     @include rem((
-        margin-right: $new-navigation-h-space-between-items
+        padding-right: $new-navigation-h-space-between-items,
+        padding-left: $gs-gutter/2,
+        margin-left: -$gs-gutter/2
     ));
 
-    &:last-child {
-        margin-right: 0;
+    @include mq(mobileLandscape) {
+        @include rem((
+            padding-left: $gs-gutter,
+            margin-left: -$gs-gutter
+        ));
     }
 }
+.local-navigation__children {
+    background: $c-local-navigation-background;
+}
 .local-navigation__action {
-    color: #ffffff;
+    color: $c-local-navigation-action;
     text-decoration: none;
 
     .local-navigation__child--current & {
-        color: $c-local-navigation-child-current;
+        background: $c-local-navigation-current-background;
+        color: $c-local-navigation-current;
+        @include rem((
+            padding-right: $new-navigation-h-space-between-items
+        ));
+
+        &:before {
+            content: '›';
+            display: inline-block;
+            font-size: 26px;
+            @include rem((
+                margin-right: $new-navigation-h-space-between-items
+            ));
+            line-height: 1;
+            bottom: -2px;
+            position: relative;
+        }
     }
 }
-
 .local-navigation__parent,
 .local-navigation__action,
 .global-navigation__title,
 .global-navigation__action {
-    float: left;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
-
+.local-navigation__parent,
+.local-navigation__action {
+    display: table-cell;
+}
 .global-navigation {
     background: #ffffff;
 }
-
+.local-navigation__child,
 .global-navigation__section {
-    float: left;
+    white-space: nowrap;
+    display: table-cell;
+}
+.global-navigation__section--current {
     @include rem((
-        margin-right: $new-navigation-h-space-between-items
+        margin-right: $gs-gutter/2
     ));
 }
 .global-navigation__title {
@@ -121,53 +227,144 @@ $new-navigation-h-space-between-items: get-font-size($fs-headers, 1);
 .global-navigation__children {
     display: none;
     @include rem((
-        font-size: 14px
+        font-size: 14px,
     ));
+    line-height: 2;
     font-weight: normal;
 }
 .global-navigation__action {
     float: left;
 }
+.new-navigation__top-hat {
+    display: block;
+    position: relative;
+    width: 100%;
+    height: 0;
+
+    &:after {
+        content: '';
+        position: absolute;
+        display: block;
+        top: 0;
+        right: 0;
+        left: 0;
+        border-top: $c-local-navigation-current-border;
+
+        .local-navigation__parent & {
+            @include rem((
+                left: -$gs-gutter,
+                right: -$new-navigation-h-space-between-items
+            ))
+        }
+        .new-navigation--expanded .local-navigation__child & {
+            display: none;
+        }
+    }
+}
+
+
+/* State: collapsed
+   ========================================================================== */
 
 .new-navigation--collapsed {
+    overflow: hidden;
+
+    .new-navigation__container {
+        display: table-cell;
+        vertical-align: top;
+    }
+    .new-navigation__scroll {
+        overflow-x: scroll;
+        -webkit-overflow-scrolling: touch;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
+    }
+
     &,
     .local-navigation,
     .local-navigation__children {
-        overflow: hidden;
         @include rem((
             height: gs-height(1)
         ));
     }
-    .new-navigation__container + .new-navigation__container {
+    .local-navigation__children {
+        overflow: hidden;
+        display: table-cell;
+    }
+    .local-navigation__child,
+    .global-navigation__section {
+        white-space: nowrap;
+        display: table-cell;
+        @include rem((
+            padding-right: $new-navigation-h-space-between-items
+        ));
+    }
+    .local-navigation__child:first-child,
+    .global-navigation__section:first-child {
+        @include rem((
+            padding-left: $new-navigation-h-space-between-items
+        ));
+    }
+    .local-navigation__child--current {
+        &:first-child {
+            padding-left: 0;
+        }
+        &:last-child {
+            padding-right: 0;
+        }
+    }
+    .global-navigation {
         overflow: hidden;
         position: relative;
         background: $c-global-navigation-background;
-        @include rem((
-            padding-left: $new-navigation-h-space-between-items,
-            right: -$gs-gutter/2,
-            padding-right: $gs-gutter/2
-        ));
-        @include mq(mobileLandscape) {
-            @include rem((
-                right: -$gs-gutter,
-                padding-right: $gs-gutter
-            ));
-        }
+        border-left: $c-navigation-separator;
+
         @include mq(desktop) {
-            padding-right: 0;
             @include rem((
                 border-right: $gs-gutter solid $c-navigation-background
             ));
         }
     }
-
     .global-navigation__title,
     .global-navigation__action {
         color: #ffffff;
     }
+    .global-navigation__section:last-child {
+        @include rem((
+            padding-right: $new-navigation-toggler-width + $gs-gutter
+        ));
+
+        @include mq(tablet) {
+            @include rem((
+                padding-right: $new-navigation-toggler-width-full + $gs-gutter
+            ));
+        }
+    }
+
+    &.new-navigation--has-no-local-navigation {
+        .global-navigation {
+            border-left: 0;
+            @include rem((
+                margin-left: -$gs-gutter
+            ));
+        }
+        .global-navigation__section:first-child {
+            @include rem((
+                padding-left: $gs-gutter
+            ));
+        }
+    }
 }
 
+
+/* State: expanded
+   ========================================================================== */
+
 .new-navigation--expanded {
+    z-index: 2;
+
     .new-navigation__inner {
         background: #ffffff;
     }
@@ -176,13 +373,27 @@ $new-navigation-h-space-between-items: get-font-size($fs-headers, 1);
     }
     .local-navigation {
         overflow: hidden;
-        background: $c-navigation-background;
+        background: $c-local-navigation-background;
         @include rem((
             margin-right: -$gs-gutter/2,
             margin-left: -$gs-gutter/2,
             padding-left: $gs-gutter/2,
             padding-right: $gs-gutter/2
         ));
+
+        // Prevent 1px from bleeding on the right side of the page
+        &:before {
+            content: '';
+            display: block;
+            position: absolute;
+            top: 0;
+            right: 0;
+            left: 0;
+            @include rem((
+                height: gs-height(1)
+            ));
+            background: $c-navigation-background;
+        }
 
         @include mq(mobileLandscape) {
             @include rem((
@@ -194,31 +405,88 @@ $new-navigation-h-space-between-items: get-font-size($fs-headers, 1);
         }
     }
     .local-navigation,
-    .local-navigation__parent {
+    .local-navigation__parent,
+    .local-navigation__action {
         float: none;
         display: block;
     }
+    .local-navigation__parent {
+        @include mq(tablet) {
+            @include rem((
+                margin-right: -$gs-gutter
+            ));
+        }
+    }
+    .local-navigation__child--current .local-navigation__action {
+        @include rem((
+            padding-left: $gs-gutter/2,
+            margin-left: -$gs-gutter/2
+        ));
+
+        @include mq(mobileLandscape) {
+            @include rem((
+                padding-left: $gs-gutter,
+                margin-left: -$gs-gutter
+            ));
+        }
+
+        &:before {
+            display: none;
+        }
+    }
     .global-navigation {
         clear: both;
-        overflow: hidden;
+        @include clearfix;
         @include rem((
             padding-top: $gs-baseline
         ));
     }
+    .local-navigation__children {
+        @include rem((
+            margin-left: -$gs-gutter,
+            margin-right: -$gs-gutter,
+            padding-left: $gs-gutter/2,
+            padding-right: $gs-gutter/2
+        ));
+    }
+    .local-navigation__child:last-child {
+        // Add space below the local nav (only if there is one)
+        @include rem((
+            padding-bottom: $gs-baseline
+        ));
+    }
+    .local-navigation__child,
     .global-navigation__child {
         float: left;
         width: 50%;
+        padding-right: 0;
+        @include box-sizing(border-box);
+        @include rem((
+            padding-left: $gs-gutter/2,
+            padding-right: $gs-gutter/2
+        ));
 
         &:nth-child(2n+1) {
             clear: both;
         }
+
+        @include mq(mobileLandscape) {
+            width: 33.3333333333%;
+            &:nth-child(n) {
+                clear: none;
+            }
+            &:nth-child(3n+1) {
+                clear: both;
+            }
+        }
     }
     .global-navigation__section {
+        display: block;
         clear: both;
         float: none;
         margin-right: 0;
         @include rem((
-            margin-bottom: gs-height(1)
+            margin-bottom: $gs-baseline*2
         ));
         overflow: hidden;
     }
@@ -226,14 +494,16 @@ $new-navigation-h-space-between-items: get-font-size($fs-headers, 1);
         border-top: 1px solid $c-global-navigation-border;
     }
     .global-navigation__title,
-    .global-navigation__action {
+    .global-navigation__action,
+    .global-navigation__children {
         float: none;
         display: block;
     }
     .global-navigation__children {
-        display: table-cell;
-        width: 10000px;
-        max-width: 100%;
+        @include rem((
+            margin-left: -$gs-gutter/2,
+            margin-right: -$gs-gutter/2
+        ));
     }
 
     @include mq(tablet) {
@@ -243,27 +513,19 @@ $new-navigation-h-space-between-items: get-font-size($fs-headers, 1);
                 margin-right: -$gs-gutter/2
             ));
         }
+        .global-navigation__children {
+            margin-left: 0;
+            margin-right: 0;
+        }
         .global-navigation__section {
             @include box-sizing(border-box);
             float: left;
-            clear: none;
-            width: 33%;
             @include rem((
                 padding-left: $gs-gutter/2,
                 padding-right: $gs-gutter/2
             ));
-
-            &:nth-child(3n+1) {
-                clear: both;
-            }
         }
-        .global-navigation__child {
-            width: auto;
-            display: block;
-            float: none;
-        }
-    }
-    @include mq(desktop) {
+        .local-navigation__child,
         .global-navigation__section {
             width: 25%;
 
@@ -274,8 +536,16 @@ $new-navigation-h-space-between-items: get-font-size($fs-headers, 1);
                 clear: both;
             }
         }
+        .global-navigation__child {
+            width: auto;
+            display: block;
+            float: none;
+            padding-left: 0;
+            padding-right: 0;
+        }
     }
-    @include mq(wide) {
+    @include mq(desktop) {
+        .local-navigation__child,
         .global-navigation__section {
             width: 20%;
 
@@ -287,28 +557,75 @@ $new-navigation-h-space-between-items: get-font-size($fs-headers, 1);
             }
         }
     }
+    @include mq(wide) {
+        .local-navigation__child,
+        .global-navigation__section {
+            width: 16.666666667%;
+
+            &:nth-child(n) {
+                clear: none;
+            }
+            &:nth-child(6n+1) {
+                clear: both;
+            }
+        }
+    }
 }
+
+
+/* Toggle button
+   ========================================================================== */
 
 .new-navigation__toggle {
     position: absolute;
-    width: 1em;
     right: 0;
     top: 0;
-    background: $c-neutral1;
+    @include box-sizing(border-box);
+    font-weight: 900;
+    @include rem((
+        min-width: $new-navigation-toggler-width,
+        padding-left: $gs-gutter/4,
+        padding-right: $gs-gutter/4,
+    ));
+    background: $c-navigation-toggle-background;
+    -moz-background-clip: padding-box;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
     text-align: center;
-    font-size: 40px;
+    border-left: 2px solid $c-navigation-toggle-shadow;
 
     &,
     &:hover,
     &:focus,
     &:active {
-        color: #ffffff;
+        color: $c-navigation-toggle-icon;
         text-decoration: none;
     }
 
-    @include mq(desktop) {
+    .new-navigation--expanded & {
+        border-left: 0;
+    }
+
+    @include mq(tablet) {
         @include rem((
-            right: $gs-gutter
+            min-width: $new-navigation-toggler-width-full,
+            padding-left: $gs-gutter/2,
+            padding-right: $gs-gutter/2
         ));
     }
+}
+.new-navigation__toggle-label {}
+.new-navigation__toggle-label__extra {
+    display: none;
+
+    @include mq(tablet) {
+        display: inline;
+    }
+}
+.new-navigation__toggle-label--close,
+.new-navigation--expanded .new-navigation__toggle-label--open {
+    display: none;
+}
+.new-navigation--expanded .new-navigation__toggle-label--close {
+    display: inline;
 }

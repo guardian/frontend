@@ -13,9 +13,11 @@ import services.ConfigAgent
 import common.FaciaMetrics.FaciaToApplicationRedirectMetric
 
 
-class FaciaController extends Controller with Logging with ExecutionContexts with implicits.Collections with implicits.Requests {
+trait FaciaController extends Controller with Logging with ExecutionContexts with implicits.Collections with implicits.Requests {
 
   val EditionalisedKey = """^\w\w(/.*)?$""".r
+
+  val frontJson: FrontJson
 
   implicit def getTemplateDedupingInstance: TemplateDeduping = TemplateDeduping()
 
@@ -61,13 +63,13 @@ class FaciaController extends Controller with Logging with ExecutionContexts wit
   }
 
   def renderFrontJsonLite(path: String) = MemcachedAction{ implicit request =>
-    FrontJson.getAsJsValue(path).map{ json =>
+    frontJson.getAsJsValue(path).map{ json =>
       Cached(60)(JsonComponent(FrontJsonLite.get(json)))
     }
   }
 
   def renderFrontPress(path: String) = MemcachedAction{ implicit request =>
-    FrontJson.get(path).map(_.map{ faciaPage =>
+    frontJson.get(path).map(_.map{ faciaPage =>
       Cached(faciaPage) {
         if (request.isRss)
           Ok(TrailsToRss(faciaPage, faciaPage.collections.map(_._2).flatMap(_.items).toSeq.distinctBy(_.id)))
@@ -111,7 +113,7 @@ class FaciaController extends Controller with Logging with ExecutionContexts wit
 
   private def getPressedCollection(collectionId: String): Future[Option[Collection]] =
     ConfigAgent.getConfigsUsingCollectionId(collectionId).headOption.map { path =>
-      FrontJson.get(path).map(_.flatMap{ faciaPage =>
+      frontJson.get(path).map(_.flatMap{ faciaPage =>
         faciaPage.collections.find{ case (c, col) => c.id == collectionId}.map(_._2)
       })
     }.getOrElse(Future.successful(None))
@@ -130,4 +132,6 @@ class FaciaController extends Controller with Logging with ExecutionContexts wit
   }
 }
 
-object FaciaController extends FaciaController
+object FaciaController extends FaciaController {
+  val frontJson: FrontJson = FrontJsonLive
+}

@@ -8,7 +8,8 @@ import org.openqa.selenium.WebDriver;
 public class NavigationBar {
 
     private WebDriver driver;
-    public NavigationBar(WebDriver driver){
+
+    public NavigationBar(WebDriver driver) {
         this.driver = driver;
     }
 
@@ -18,34 +19,34 @@ public class NavigationBar {
         return new FrontPage(driver);
     }
 
-    private SectionFront goToSection(String section){
+    private SectionFront goToSection(String section) {
         driver.findElement(By.cssSelector("[data-link-name=\"/" + section + "\"]")).click();
         return new SectionFront(driver, section);
     }
 
-    public SectionFront goToWorldNewsFront(){
+    public SectionFront goToWorldNewsFront() {
         return goToSection("world");
     }
 
-    public SectionFront goToUKSportFront(){
+    public SectionFront goToUKSportFront() {
         return goToSection("uk/sport");
     }
-    public SectionFront goToFootballFront(){
+
+    public SectionFront goToFootballFront() {
         return goToSection("football");
     }
-    public SectionFront goToUKCommentFront(){
+
+    public SectionFront goToUKCommentFront() {
         return goToSection("uk/commentisfree");
     }
 
-    public SectionFront goToUKCultureFront(){
+    public SectionFront goToUKCultureFront() {
         return goToSection("uk/culture");
     }
 
-    public SectionFront goToLifeFront(){
+    public SectionFront goToLifeFront() {
         return goToSection("lifeandstyle");
     }
-
-
 
 
 }

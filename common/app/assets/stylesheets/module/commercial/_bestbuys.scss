@@ -53,6 +53,8 @@ $c-money-high: #63007f;
     }
     .tabs__container {
         background-color: $c-commercial-comp-neutral;
+        padding-top: 0;
+        padding-left: 0;
     }
     .tabs__content {
         padding: 0;
@@ -153,6 +155,11 @@ $c-money-high: #63007f;
         }
     }
     @include mq(tablet) {
+        .tabs__container {
+            @include rem((
+                padding-left: $gs-gutter
+            ));
+        }
         .tabs__tab a,
         .tabs__tab .tab__link {
             @include rem((
