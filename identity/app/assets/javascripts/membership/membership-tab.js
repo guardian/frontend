@@ -2,14 +2,24 @@
 * If user is a member, display a membership tab on edit profile page
 */
 define(['common/$',
+'bean',
+'bonzo',
 'common/utils/ajax',
 'common/utils/config',
-'common/modules/component'], function ($, ajax, config, Component) {
+'common/modules/component',
+'membership/paymentForm'], function ($, bean, bonzo, ajax, config, Component, PaymentForm) {
 
     function Membership (context, mediator, options) {
 
         this.context = context || document;
         this.mediator = mediator;
+
+        options = options || {};
+
+        options.messages = {
+            CHANGE_CC_SUCCESS: 'Your card details have been updated'
+        };
+
         this.setOptions(options);
     }
 
@@ -23,9 +33,17 @@ define(['common/$',
         COST: 'js-membership-payment-cost',
         START: 'js-membership-start-date',
         NEXT: 'js-membership-payment-next',
+        CC_NUM: 'js-membership-card-details',
         CC_LAST4: 'js-membership-card-lastfour',
         CC_TYPE: 'js-membership-card-type',
-        CC_TYPE_TEXT: 'js-membership-card-text'
+        CC_TYPE_TEXT: 'js-membership-card-text',
+        CC_CHANGE_BUTTON: 'js-membership-change-cc-open',
+        CC_CHANGE_FORM_CONT: 'js-membership-change-cc-form-cont',
+        CC_CHANGE_FORM: 'js-membership-change-cc-form',
+        ANIM_OPEN: 'membership-tab__change-cc-form-cont--to-open',
+        ANIM_OPENED: 'membership-tab__change-cc-form-cont--open',
+        ANIM_CLOSE: 'membership-tab__change-cc-form-cont--to-closed',
+        ANIM_CLOSED: 'membership-tab__change-cc-form-cont--closed'
     };
 
     /**
@@ -84,7 +102,7 @@ define(['common/$',
         var self = this;
 
         ajax({
-            url: 'https://membership.theguardian.com/user/me/details',
+            url: config.page.membershipUrl + '/user/me/details',
             crossOrigin: true,
             withCredentials: true,
             method: 'get'
@@ -96,7 +114,8 @@ define(['common/$',
             self.getElem('NEXT').innerHTML = self.formatDate(new Date(resp.subscription.end*1000));
             self.getElem('CC_LAST4').innerHTML = resp.subscription.card.last4;
 
-            $(self.getElem('CC_TYPE')).addClass('i-'+resp.subscription.card.type.toLowerCase().replace(' ', '-'));
+            self.currentCardTypeClass = 'i-'+resp.subscription.card.type.toLowerCase().replace(' ', '-');
+            $(self.getElem('CC_TYPE')).addClass(self.currentCardTypeClass);
             self.getElem('CC_TYPE_TEXT').innerHTML = resp.subscription.card.type; // Append text too for screen readers
 
             self.ready();
@@ -111,7 +130,7 @@ define(['common/$',
      *   Load the css file containing the base64 encoded sprites for the card icons
      */
     Membership.prototype.addSpriteCss = function () {
-        var spriteSheetUrl = config.page.idUrl + $(this.getClass('TAB')).data('sprite-url');
+        var spriteSheetUrl = $(this.getClass('TAB')).data('sprite-url');
         var $head  = $('head');
         var link  = document.createElement('link');
         link.id   = 'membership-sprite';
@@ -122,15 +141,53 @@ define(['common/$',
         $head.append(link);
     };
 
+    Membership.prototype.appendSuccessMessage = function (message) {
+        if (this.$successMessageElem) {
+            this.$successMessageElem.text(message);
+        } else {
+            this.$successMessageElem = bonzo(bonzo.create('<div>')).addClass('form__success').text(message).prependTo(this.getClass('TAB_CONTAINER'));
+        }
+    };
+
     /** @override */
     Membership.prototype.ready = function () {
-        if (this.display) {
+        var self = this;
+        if (self.display) {
 
-            this.addSpriteCss();
+            self.addSpriteCss();
 
-            $(this.getClass('TAB_BUTTON'), this.context).removeClass('is-hidden');
-            $(this.getClass('TAB_CONTAINER'), this.context).removeClass('is-hidden');
+            $(self.getClass('TAB_BUTTON'), self.context).removeClass('is-hidden');
+            $(self.getClass('TAB_CONTAINER'), self.context).removeClass('is-hidden');
             $('.js-account-profile-forms').addClass('identity-wrapper--with-membership');
+
+            bean.on(self.getElem('CC_CHANGE_BUTTON'), 'click', function () {
+                $(self.getClass('CC_CHANGE_FORM_CONT')).addClass(self.getClass('ANIM_OPEN', true));
+                $(self.getClass('CC_CHANGE_BUTTON'), self.context).addClass('is-hidden');
+
+                new PaymentForm().init(self.getElem('CC_CHANGE_FORM_CONT'), function (resp) {
+                    // hide form
+                    $(self.getElem('CC_CHANGE_FORM_CONT')).addClass(self.getClass('ANIM_CLOSE', true));
+
+                    // update cc last4 with new details
+                    $(self.getElem('CC_LAST4')).text(resp.last4);
+                    $(self.getElem('CC_TYPE')).removeClass(self.currentCardTypeClass);
+                    self.currentCardTypeClass = 'i-'+resp.cardType.toLowerCase().replace(' ', '-');
+                    $(self.getElem('CC_TYPE')).addClass(self.currentCardTypeClass);
+                    $(self.getElem('CC_NUM')).addClass('membership-tab__updated');
+                    // append a success message
+                    self.appendSuccessMessage(self.options.messages.CHANGE_CC_SUCCESS);
+                });
+            });
+
+            bean.on(self.getElem('CC_CHANGE_FORM_CONT'), 'animationend webkitAnimationEnd oanimationend MSAnimationEnd', function () {
+                var $elem = bonzo(this);
+                if ($elem.hasClass(self.getClass('ANIM_OPEN', true))) {
+                    $elem.removeClass(self.getClass('ANIM_OPEN', true)).addClass(self.getClass('ANIM_OPENED', true));
+                } else {
+                    $elem.removeClass(self.getClass('ANIM_CLOSE', true)).addClass(self.getClass('ANIM_CLOSED', true));
+                }
+            });
+
         }
     };
 

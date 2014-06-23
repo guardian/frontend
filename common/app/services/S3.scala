@@ -106,8 +106,11 @@ object S3FrontsApi extends S3 {
   val namespace = "frontsapi"
   lazy val location = s"$stage/$namespace"
 
-  def getPressedKeyForPath(path: String): String =
-    s"$location/pressed/$path/pressed.json"
+  def getLivePressedKeyForPath(path: String): String =
+    s"$location/pressed/live/$path/pressed.json"
+
+  def getDraftPressedKeyForPath(path: String): String =
+    s"$location/pressed/draft/$path/pressed.json"
 
   def getSchema = get(s"$location/schema.json")
   def getMasterConfig: Option[String] = get(s"$location/config/config.json")
@@ -144,11 +147,14 @@ object S3FrontsApi extends S3 {
   def getConfigIds(prefix: String): List[String] = getListing(prefix, "/config.json")
   def getCollectionIds(prefix: String): List[String] = getListing(prefix, "/collection.json")
 
-  def putPressedJson(path: String, json: String) =
-    putPrivate(getPressedKeyForPath(path), json, "application/json")
+  def putLivePressedJson(path: String, json: String) =
+    putPrivate(getLivePressedKeyForPath(path), json, "application/json")
+
+  def putDraftPressedJson(path: String, json: String) =
+    putPrivate(getDraftPressedKeyForPath(path), json, "application/json")
 
   def getPressedLastModified(path: String): Option[String] =
-    getLastModified(getPressedKeyForPath(path)).map(_.toString)
+    getLastModified(getLivePressedKeyForPath(path)).map(_.toString)
 }
 
 trait SecureS3Request extends implicits.Dates with Logging {
