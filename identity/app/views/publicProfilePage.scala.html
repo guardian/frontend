@@ -48,7 +48,7 @@
                         </li>
                     </ol>
                 </div>
-                @*if(ProfileCommentsSearchSwitch.isSwitchedOn) {*@
+                @if(ProfileCommentsSearchSwitch.isSwitchedOn) {
                     <form action="@link/search" class="activity-stream-search js-activity-stream-search">
                         <label for="activity-stream-search" class="activity-stream-search__label">
                             <i class="i i-search"></i>
@@ -58,7 +58,7 @@
                             <input type="text" name="q" placeholder="Search" id="activity-stream-search" class="activity-stream-search__q" autocomplete="off" required />
                         </div>
                     </form>
-                @*}*@
+                }
             }
         </div>
     </div>
