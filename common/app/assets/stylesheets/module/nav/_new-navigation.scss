@@ -408,10 +408,6 @@ $c-new-navigation-signposting-action: guss-colour(neutral-1) !default;
         ));
         background: $c-local-navigation-background;
 
-        @include mq(tablet) {
-            background: none;
-        }
-
         // Prevent 1px from bleeding on the right side of the page
         &:before {
             content: '';
