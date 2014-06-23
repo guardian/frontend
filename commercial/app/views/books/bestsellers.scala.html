@@ -49,6 +49,7 @@
                         @if(book.author) {
                             <p class="lineitem__meta" itemprop="author">By @book.author</p>
                         }
+                            <meta itemprop="isbn" content="@{book.isbn}" />
                             <p class="commercial--books__price" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
                             @book.price.map { price =>
                                 <span class="commercial--books__price__rrp">RRP &pound;@("%.2f".format(price))</span>
