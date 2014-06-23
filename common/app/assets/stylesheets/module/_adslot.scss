@@ -1,5 +1,4 @@
 .ad-slot {
-    text-align: center;
     z-index: 1000;
     overflow: hidden;
 
@@ -12,6 +11,7 @@
  * Banner ads
  */
 .top-banner-ad-container--mobile {
+    text-align: center;
     background-color: #f0f0f0;
 
     .ad-slot--top-banner-ad {
@@ -74,8 +74,10 @@
     }
 }
 .top-banner-ad-container--facia-layout .ad-slot--top-banner-ad {
+    @include mq(mobile, $to: faciaLeftCol) {
+        text-align: center;
+    }
     @include mq(faciaLeftCol) {
-        text-align: left;
         margin: 0 auto;
         @include rem((
             width: gs-span(14) - (gs-span(2) + $gs-gutter),
@@ -96,8 +98,10 @@
     }
 }
 .top-banner-ad-container--article-layout .ad-slot--top-banner-ad {
+    @include mq(mobile, $to: rightCol) {
+        text-align: center;
+    }
     @include mq(rightCol) {
-        text-align: left;
         @include rem((
             margin: 0 0 0 $gs-gutter,
         ));
@@ -145,7 +149,6 @@
             position: absolute;
             width: 50%;
             height: 50px;
-            text-align: left;
             z-index: -1;
             @include rem((
                 padding-left: 2px,
@@ -199,7 +202,6 @@
     ));
 }
 .ad-slot--sponsored {
-    text-align: left;
     overflow: hidden;
 }
 .ad-slot--sponsored__label,
@@ -269,7 +271,6 @@
  * Badges
  */
 .ad-slot--paid-for-badge {
-    text-align: left;
     @include rem((
         padding: 2px 0 $gs-baseline
     ));
