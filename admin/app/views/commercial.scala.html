@@ -1,4 +1,4 @@
-@(env: String, sponsoredTags: dfp.SponsorshipReport, advertisementTags: dfp.SponsorshipReport, pageSkinnedAdUnits: Seq[String])
+@(env: String, sponsoredTags: dfp.SponsorshipReport, advertisementTags: dfp.SponsorshipReport, pageSkinnedAdUnits: dfp.PageSkinSponsorshipReport)
 
 @admin_main("Commercial", env, isAuthed = true, hasCharts = true) {
 
@@ -50,9 +50,17 @@
     </ol>
 
     <h3>Pageskinned Ad Units</h3>
+    <p>Last updated: @pageSkinnedAdUnits.updatedTimeStamp</p>
+
     <ol>
-        @for(adunit <- pageSkinnedAdUnits) {
-            <li>@adunit</li>
+        @for(sponsorship <- pageSkinnedAdUnits.sponsorships) {
+            <li>@sponsorship.lineItemName (@sponsorship.lineItemId)
+            <ul>
+                @for(adunit <- sponsorship.adUnits) {
+                <li>@adunit</li>
+                }
+            </ul>
+            </li>
         }
     </ol>
 }
