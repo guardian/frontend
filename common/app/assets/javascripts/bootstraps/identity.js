@@ -106,7 +106,7 @@ define([
         accountProfile: function() {
             var accountProfile = new AccountProfile();
             mediator.on('page:identity:ready', function(config, context) {
-                accountProfile.init(context);
+                accountProfile.init(context, config);
             });
         }
     };

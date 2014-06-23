@@ -568,6 +568,9 @@ module.exports = function (grunt) {
             },
             facia: {
                 configFile: testConfDir + 'facia.js'
+            },
+            membership: {
+                configFile: testConfDir + 'membership.js'
             }
         },
 

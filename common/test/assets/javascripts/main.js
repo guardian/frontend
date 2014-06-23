@@ -25,7 +25,8 @@ requirejs.config({
         lodash:       '/base/common/app/assets/javascripts/components/lodash-amd/modern',
         imager:       '/base/common/app/assets/javascripts/components/imager.js/src/strategies/container',
         enhancer:     '/base/common/app/assets/javascripts/components/enhancer/enhancer',
-        googletag:    'empty:'
+        googletag:    'empty:',
+        stripe:       '/base/common/app/assets/javascripts/components/stripe/stripe.min'
     },
     map: {
         '*': {
