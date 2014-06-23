@@ -52,7 +52,7 @@
         @if(page.orderBy == "oldest"){<div class="js-new-comments"></div>}
 
         @if(!isTopComments){
-            <div class="d-discussion__pagination">
+            <div class="d-discussion__pagination u-cf">
                 @page.pagination.map{ paginate => @fragments.pagination(page, paginate, Some("js-discussion-change-page")) }
             </div>
         }
