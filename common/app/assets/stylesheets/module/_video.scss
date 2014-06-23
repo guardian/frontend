@@ -21,6 +21,10 @@
     ));
 }
 
+.element-video {
+    position: relative;
+}
+
 /* VJS
    ========================================================================== */
 
@@ -43,7 +47,6 @@ $vjs-control-height: $gs-baseline*4;
     width: auto !important;
     height: auto !important;
     cursor: pointer;
-    position: relative;
 }
 
 .vjs-big-play-button {
