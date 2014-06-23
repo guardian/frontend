@@ -318,11 +318,6 @@ object Switches extends Collections {
 
   // A/B Tests
 
-  val ABHideSupportingLinks = Switch("A/B Tests", "ab-hide-supporting-links",
-    "If this switch is turned on, run the HideSupportingLinks A/B test.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 6, 24)
-  )
-
   val ABAcrossTheGuardian = Switch("A/B Tests", "ab-across-the-guardian",
     "If this switch is turned on, run the AcrossTheGuardian A/B/C/D test.",
     safeState = Off, sellByDate = new DateMidnight(2014, 6, 25)
