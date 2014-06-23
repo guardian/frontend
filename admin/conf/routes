@@ -95,6 +95,3 @@ GET         /admin/football/fronts/matches/:competitionId/:team1Id/:team2Id     
 GET         /admin/football/fronts/match/:matchId                                              controllers.admin.FrontsController.bigMatchSpecial(matchId)
 
 GET         /admin/football/api/squad/:teamId                                                  controllers.admin.PlayerController.squad(teamId: String)
-
-# Commercial reports
-GET         /commercial/pageskins   controllers.admin.CommercialHelper.activeLineItems()
