@@ -500,7 +500,6 @@ object Switches extends Collections {
     IncludeBuildNumberInMemcachedKey,
     GeoMostPopular,
     TagLinkingSwitch,
-    ABHideSupportingLinks,
     ABAcrossTheGuardian,
     ABSentry,
     ABLargerMobileMpu,
