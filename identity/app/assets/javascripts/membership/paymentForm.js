@@ -92,7 +92,7 @@ define([
                 }
             }).then(function success () {
                 self.stopLoader();
-                self.successCallback.bind(this)(arguments);
+                self.successCallback.apply(this, arguments);
             }, function fail (error) {
 
                 var errorObj,

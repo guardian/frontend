@@ -428,6 +428,16 @@
         ));
         vertical-align: middle;
     }
+
+    .membership-tab__update-button {
+        min-width: 120px;
+        width: 120px;
+        float: right;
+        box-sizing: border-box;
+        &:hover {
+            text-decoration: none;
+        }
+    }
 }
 
 .membership-tab__change-cc-form-cont {
@@ -503,7 +513,7 @@
     }
     100% {
         background-color: #ffffff;
-        color: #ffffff;
+        color: inherit;
     }
 }
 
