@@ -63,6 +63,10 @@ $c-soulmates-high: $c-neutral1;
         border: 0;
         color: #ffffff;
         @include fs-headline(1, $size-only: true);
+        
+        .search__submit__cta {
+            background-color: #68b8cb;
+        }
     }
     .commercial__body {
         @include rem((
@@ -285,7 +289,7 @@ $c-soulmates-high: $c-neutral1;
         .commercial__buy-now-button {
             display: inline-block;
             @include rem((
-                padding: $gs-baseline $gs-gutter $gs-baseline $gs-gutter*1.5
+                padding: $gs-baseline 25px $gs-baseline $gs-gutter*1.5
             ));
             position: relative;
         }
@@ -400,7 +404,7 @@ $c-soulmates-high: $c-neutral1;
         .commercial__buy-now-button {
             display: inline-block;
             @include rem((
-                padding: $gs-baseline $gs-gutter $gs-baseline $gs-gutter*1.5
+                padding: $gs-baseline 25px $gs-baseline $gs-gutter*1.5
             ));
             position: relative;
         }
