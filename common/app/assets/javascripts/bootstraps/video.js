@@ -157,7 +157,12 @@ define([
                             url: modules.getVastUrl()
                         });
 
-                        player.loadingSpinner.contentEl().innerHTML = '<div class="loading-wrapper"><div class="loading-dots"></div></div>';
+                        player.loadingSpinner.contentEl().innerHTML =
+                            '<div class="loading-wrapper">' +
+                                '<div class="loading-dot"></div>' +
+                                '<div class="loading-dot"></div>' +
+                                '<div class="loading-dot"></div>' +
+                            '</div>';
 
                     });
 

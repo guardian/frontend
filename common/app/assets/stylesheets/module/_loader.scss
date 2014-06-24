@@ -5,57 +5,38 @@
 $loader-dot-size-small: 5px;
 $loader-dot-size-large: 15px;
 $loader-dot-spacing: 17px;
-$loader-centering-margin: ($loader-dot-size-large - $loader-dot-size-small) / 2;
+$loader-dot-margin-small: ($loader-dot-spacing - $loader-dot-size-small) / 2;
+$loader-dot-margin-large: ($loader-dot-spacing - $loader-dot-size-large) / 2;
 
 @include keyframes(pulsate) {
     25% {
         width: $loader-dot-size-large;
         height: $loader-dot-size-large;
-        margin: 0;
+        margin: $loader-dot-margin-large;
     }
     50% {
         width: $loader-dot-size-small;
         height: $loader-dot-size-small;
-        margin: $loader-centering-margin;
+        margin: $loader-dot-margin-small;
     }
 }
 
 .loading-wrapper {
     position: relative;
-    width: 100px;
 }
 
-.loading-dots,
-.loading-wrapper:before,
-.loading-wrapper:after {
+.loading-dot {
     background-color: $c-neutral2;
     border-radius: 100px;
     width: $loader-dot-size-small;
     height: $loader-dot-size-small;
-    margin: $loader-centering-margin;
+    margin: $loader-dot-margin-small;
     display: block;
-    position: absolute;
     @include animation(pulsate 2s ease-in-out infinite);
     border: 1px solid lighten($c-neutral2, 15%);
+    float: left;
 }
 
-.loading-wrapper:before,
-.loading-wrapper:after {
-    content: '';
-    display: block;
-}
-
-.loading-wrapper:before {
-    left: 0;
-    @include animation-delay(0s);
-}
-
-.loading-dots {
-    left: $loader-dot-spacing;
-    @include animation-delay(.33s);
-}
-
-.loading-wrapper:after {
-    left: $loader-dot-spacing*2;
-    @include animation-delay(.66s);
-}
+.loading-dot:nth-child(1) { @include animation-delay(0s); }
+.loading-dot:nth-child(2) { @include animation-delay(.33s); }
+.loading-dot:nth-child(3) { @include animation-delay(.66s); }
