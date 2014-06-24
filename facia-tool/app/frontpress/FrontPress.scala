@@ -14,7 +14,6 @@ import conf.Switches.FaciaToolDraftPressSwitch
 import scala.util.Failure
 import scala.util.Success
 import com.gu.openplatform.contentapi.model.Asset
-import frontpress.PressResult
 import model.Tag
 import play.api.libs.json.JsObject
 
