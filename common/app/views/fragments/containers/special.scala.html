@@ -21,7 +21,7 @@
                         @title.map { title =>
                             <h2 class="container__title tone-@style.tone tone-background">
                                 @href.map { href =>
-                                    <a class="container__title__label u-text-hyphenate" data-link-name="section heading" href="@LinkTo{/@href}">@Html(title)</a>
+                                    <a class="container__title__label u-text-hyphenate" data-link-name="section heading" href="@LinkTo{/@href}" data-test-id="@FaciaComponentName(config, collection)headerlink">@Html(title)</a>
                                 }.getOrElse{
                                     <span class="container__title__label u-text-hyphenate">@Html(title)</span>
                                 }
