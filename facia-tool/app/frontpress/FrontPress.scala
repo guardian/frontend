@@ -128,22 +128,10 @@ trait FrontPress extends Logging {
         else
           Future.successful(Map.empty)
 
-
-      val ftr: Future[PressResult] = for {
+      for {
         live <- livePress
         draft <-  draftPress
       } yield PressResult(live, draft)
-
-      ftr onComplete {
-        case Failure(error) =>
-          FrontPressFailure.increment()
-          log.error("Error manually pressing collection through update from tool", error)
-
-        case Success(_) =>
-          FrontPressSuccess.increment()
-      }
-
-      ftr
     }
   }
 
