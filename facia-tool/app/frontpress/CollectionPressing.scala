@@ -1,6 +1,5 @@
 package frontpress
 
-import jobs.FrontPressJob
 import scala.concurrent.Future
 import conf.Switches._
 import play.api.libs.ws.Response
@@ -14,14 +13,13 @@ object CollectionPressing {
         .map {config => ContentApiWrite.writeToContentapi(config)}
     else None
 
-  def pressCollectionId(id: String): Unit = pressCollectionIds(Set(id))
-  def pressCollectionIds(ids: Set[String]): Unit =
+  def pressCollectionIds(pressCommand: PressCommand): Unit =
     if (Switches.FaciaToolPressSwitch.isSwitchedOn) {
-      FrontPressJob.pressByCollectionIds(ids)
+      FrontPress.press(pressCommand)
     }
 
   def pressAndNotify(id: String) {
-    pressCollectionId(id)
+    pressCollectionIds(PressCommand(Set(id), live = true, draft = true))
     notifyContentApi(id)
   }
 }

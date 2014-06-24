@@ -1,18 +1,22 @@
 package controllers
 
+import play.api.libs.ws.Response
 import util.SanitizeInput
 import frontsapi.model._
 import frontsapi.model.UpdateList
 import play.api.mvc.{AnyContent, Action, Controller}
 import play.api.libs.json._
 import common.{FaciaToolMetrics, ExecutionContexts, Logging}
-import conf.Configuration
+import conf.{Switches, Configuration}
+import Switches.ContentApiPutSwitch
 import tools.FaciaApi
-import services.{ContentApiRefresh, ConfigAgent, S3FrontsApi}
+import services.{ContentApiWrite, ContentApiRefresh, ConfigAgent, S3FrontsApi}
 import model.{NoCache, Cached}
+import scala.concurrent.Future
 import scala.util.{Failure, Success}
 import play.api.libs.Comet
-import frontpress.{FrontPress, PressCommand}
+import frontpress.PressCommand
+import frontpress.CollectionPressing.pressCollectionIds
 
 object FaciaToolController extends Controller with Logging with ExecutionContexts {
   def priorities() = ExpiringAuthentication { request =>
@@ -91,7 +95,7 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
     val block = FaciaApi.publishBlock(id, identity)
     block.foreach{ b =>
       UpdateActions.archivePublishBlock(id, b, identity)
-      pressCollectionId(PressCommand.forOneId(id).withPressDraft().withPressLive())
+      pressCollectionIds(PressCommand.forOneId(id).withPressDraft().withPressLive())
     }
     notifyContentApi(id)
     NoCache(Ok)
@@ -102,7 +106,7 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
     val block = FaciaApi.discardBlock(id, identity)
     block.foreach { b =>
       UpdateActions.archiveDiscardBlock(id, b, identity)
-      pressCollectionId(PressCommand.forOneId(id).withPressDraft())
+      pressCollectionIds(PressCommand.forOneId(id).withPressDraft())
     }
     NoCache(Ok)
   }
@@ -157,7 +161,7 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
   }
 
   def updateCollection(id: String) = AjaxExpiringAuthentication { request =>
-    pressCollectionId(PressCommand.forOneId(id).withPressDraft().withPressLive())
+    pressCollectionIds(PressCommand.forOneId(id).withPressDraft().withPressLive())
     notifyContentApi(id)
     NoCache(Ok)
   }
@@ -167,12 +171,6 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
       ConfigAgent.getConfig(id)
         .map {config => ContentApiWrite.writeToContentapi(config)}
     else None
-
-  def pressCollectionId(pressCommand: PressCommand): Unit = pressCollectionIds(pressCommand)
-  def pressCollectionIds(pressCommand: PressCommand): Unit =
-    if (Switches.FaciaToolPressSwitch.isSwitchedOn) {
-      FrontPress.press(pressCommand)
-    }
 
   def getLastModified(path: String) = AjaxExpiringAuthentication { request =>
     val now: Option[String] = S3FrontsApi.getPressedLastModified(path)
