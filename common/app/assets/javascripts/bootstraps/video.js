@@ -156,6 +156,9 @@ define([
                         player.vast({
                             url: modules.getVastUrl()
                         });
+
+                        player.loadingSpinner.contentEl().innerHTML = '<div class="loading-wrapper"><div class="loading-dots"></div></div>';
+
                     });
 
                     // built in vjs-user-active is buggy so using custom implementation
