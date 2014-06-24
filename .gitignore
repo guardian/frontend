@@ -56,3 +56,11 @@ static
 common/app/assets/stylesheets/icons/*
 
 ivy-sbt
+
+# Eclipse #
+.project
+.classpath
+.settings/
+.metadata
+.classpath
+.springBeans

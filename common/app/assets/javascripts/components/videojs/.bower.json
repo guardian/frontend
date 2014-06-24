@@ -13,13 +13,12 @@
     "player"
   ],
   "homepage": "https://github.com/guardian/video.js",
-  "_release": "0fdc3519b7",
+  "_release": "1272601954",
   "_resolution": {
-    "type": "branch",
-    "branch": "master",
-    "commit": "0fdc3519b70026859c0d4af0df92f7dd7fc3c3a2"
+    "type": "commit",
+    "commit": "1272601954b4931ffb70c096f7fa183aebefe1fe"
   },
   "_source": "git://github.com/guardian/video.js.git",
-  "_target": "master",
-  "_originalSource": "guardian/video.js"
+  "_target": "1272601954b4931ffb70c096f7fa183aebefe1fe",
+  "_originalSource": "git://github.com/guardian/video.js.git"
 }
