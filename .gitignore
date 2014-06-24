@@ -65,3 +65,4 @@ ivy-sbt
 .metadata
 .classpath
 .springBeans
+.cache
