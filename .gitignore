@@ -20,6 +20,8 @@ frontend-applications.properties
 .DS_Store
 .idea
 .sass-cache
+.tm_properties
+.vagrant
 
 log
 logs
@@ -54,3 +56,11 @@ static
 common/app/assets/stylesheets/icons/*
 
 ivy-sbt
+
+# Eclipse #
+.project
+.classpath
+.settings/
+.metadata
+.classpath
+.springBeans

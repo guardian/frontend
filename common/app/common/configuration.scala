@@ -142,6 +142,8 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val domain = """^https?://(?:profile\.)?([^/:]+)""".r.unapplySeq(url).flatMap(_.headOption).getOrElse("theguardian.com")
     lazy val apiClientToken = configuration.getStringProperty("id.apiClientToken").getOrElse("")
     lazy val webappUrl = configuration.getStringProperty("id.webapp.url").getOrElse("")
+    lazy val membershipUrl = configuration.getStringProperty("id.membership.url").getOrElse("membership.theguardian.com")
+    lazy val stripePublicToken =  configuration.getStringProperty("id.membership.stripePublicToken").getOrElse("")
   }
 
   object static {
@@ -199,9 +201,9 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val travel_url = configuration.getMandatoryStringProperty("commercial.travel_url")
 
     lazy val dfpSponsoredTagsDataKey =
-      s"${environment.stage.toUpperCase}/commercial/dfp/sponsored-tags.json"
+      s"${environment.stage.toUpperCase}/commercial/dfp/sponsored-tags-v2.json"
     lazy val dfpAdvertisementFeatureTagsDataKey =
-      s"${environment.stage.toUpperCase}/commercial/dfp/advertisement-feature-tags.json"
+      s"${environment.stage.toUpperCase}/commercial/dfp/advertisement-feature-tags-v2.json"
     lazy val dfpPageSkinnedAdUnitsKey =
       s"${environment.stage.toUpperCase}/commercial/dfp/pageskinned-adunits.json"
     lazy val dfpLineItemsKey =
@@ -228,7 +230,9 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
       ("secureDiscussionApiRoot", discussion.secureApiRoot),
       "discussionApiClientHeader" -> discussion.apiClientHeader,
       ("ophanJsUrl", ophan.jsLocation),
-      ("googletagJsUrl", googletag.jsLocation)
+      ("googletagJsUrl", googletag.jsLocation),
+      ("membershipUrl", id.membershipUrl),
+      ("stripePublicToken", id.stripePublicToken)
     )
 
     lazy val pageData: Map[String, String] = {

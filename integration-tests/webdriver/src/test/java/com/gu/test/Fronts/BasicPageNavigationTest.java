@@ -24,27 +24,27 @@ public class BasicPageNavigationTest {
     }
 
     @Test
-    public void expandCommentIsFreeSection() throws Exception{
+    public void expandCommentIsFreeSection() throws Exception {
         fronts.expandContainer("commentanddebate");
         Boolean commentIsExpanded = driver.findElement(By.xpath("//section[@data-component=\"comment\"]//li[@data-link-name=\"trail | 8\"]")).isDisplayed();
-        Assert.assertTrue("The comment section did not expand", commentIsExpanded );
+        Assert.assertTrue("The comment section did not expand", commentIsExpanded);
     }
 
     @Test
-    public void hideFeaturesContainer() throws Exception{
+    public void hideFeaturesContainer() throws Exception {
         String container = "features";
         fronts.hideContainer(container);
-        Assert.assertEquals("Section was not hidden", fronts.currentStateOfShowHide(container),"Show");
+        Assert.assertEquals("Section was not hidden", fronts.currentStateOfShowHide(container), "Show");
     }
 
 
     @Test
-    public void showPeopleContainer() throws Exception{
+    public void showPeopleContainer() throws Exception {
         String container = "people";
         fronts.hideContainer(container);
         driver.navigate().refresh();
         fronts.showContainer(container);
-        Assert.assertEquals("Can't see Hide option on this section",fronts.currentStateOfShowHide(container),"Hide");
+        Assert.assertEquals("Can't see Hide option on this section", fronts.currentStateOfShowHide(container), "Hide");
     }
 
     @After

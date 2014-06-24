@@ -7,7 +7,7 @@ import utils.RemoteAddress
 
 @Singleton
 class IdRequestParser @Inject()(returnUrlVerifier: ReturnUrlVerifier) extends RemoteAddress {
-  def apply(request: RequestHeader) = {
+  def apply(request: RequestHeader): IdentityRequest = {
     val returnUrl = returnUrlVerifier.getVerifiedReturnUrl(request)
     val ip = clientIp(request)
     IdentityRequest(

@@ -35,6 +35,7 @@ GET         /discussion/$order<(oldest|newest)>/$discussionKey</?p/\w+>.json    
 GET         /discussion/$discussionKey</?p/\w+>                                                                      controllers.DiscussionApp.comments(discussionKey: discussion.model.DiscussionKey, order: String = "newest")
 GET         /discussion/$order<(oldest|newest)>/$discussionKey</?p/\w+>                                              controllers.DiscussionApp.comments(discussionKey: discussion.model.DiscussionKey, order: String)
 
+GET         /discussion/profile/:id/search/:q.json                                                                   controllers.DiscussionApp.profileSearch(id: String, q: String)
 GET         /discussion/profile/:id/discussions.json                                                                 controllers.DiscussionApp.profileDiscussions(id: String)
 GET         /discussion/profile/:id/replies.json                                                                     controllers.DiscussionApp.profileReplies(id: String)
 GET         /discussion/profile/:id/picks.json                                                                       controllers.DiscussionApp.profilePicks(id: String)
@@ -49,7 +50,6 @@ GET         /most-read/*path.json                                               
 GET         /most-read/*path                                                                                         controllers.MostPopularController.render(path)
 GET         /most-read-geo.json                                                                                      controllers.MostPopularController.renderPopularGeoJson()
 GET         /most-read-day.json                                                                                      controllers.MostPopularController.renderPopularDayJson(countryCode)
-GET         /most-referred.json                                                                                      controllers.MostPopularController.renderMostPopularReferralsJson()
 
 GET         /top-stories                                                                                             controllers.TopStoriesController.renderTopStories()
 GET         /top-stories.json                                                                                        controllers.TopStoriesController.renderTopStoriesJson()
@@ -245,7 +245,7 @@ GET         /sections.json                                                      
 # Facia
 GET         /                                                                                                        controllers.FaciaController.editionRedirect(path = "")
 GET         /$path<(lifeandstyle/love-and-sex|lifeandstyle/home-and-garden|world/asia|business/companies)>           controllers.FaciaController.renderFrontPressSpecial(path)
-GET         /$path<(\w+|(uk|au|us))?(/(culture|sport|commentisfree|business|money|travel|rss))?>                     controllers.FaciaController.renderFrontPress(path)
+GET         /$path<(uk|au|us)(/(culture|sport|commentisfree|business|money|travel|rss))?>                            controllers.FaciaController.renderFrontPress(path)
 
 GET         /*path/lite.json                                                                                         controllers.FaciaController.renderFrontJsonLite(path)
 

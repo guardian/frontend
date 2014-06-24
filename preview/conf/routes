@@ -142,14 +142,13 @@ GET         /series/*path.json                                                  
 
 
 # Facia
-GET         /                                                                                                        controllers.FaciaController.editionRedirect(path = "")
-GET         /$path<(culture|sport|commentisfree|business|money|rss)>                                                 controllers.FaciaController.editionRedirect(path)
-GET         /$path<(\w\w)(/[\w\d-]+)?>/rss                                                                           controllers.FaciaController.renderFrontRss(path)
-GET         /$path<(\w\w)(/[\w\d-]+)?>.json                                                                          controllers.FaciaController.renderFrontJson(path)
-GET         /$path<(\w\w)(/[\w\d-]+)?>                                                                               controllers.FaciaController.renderFront(path)
+GET         /                                                                                                        controllers.preview.FaciaDraftController.editionRedirect(path = "")
+GET         /$path<(culture|sport|commentisfree|business|money|rss)>                                                 controllers.preview.FaciaDraftController.editionRedirect(path)
+GET         /$path<(\w\w)(/[\w\d-]+)?>/rss                                                                           controllers.preview.FaciaDraftController.renderFrontRss(path)
+GET         /$path<(\w\w)(/[\w\d-]+)?>.json                                                                          controllers.preview.FaciaDraftController.renderFrontJson(path)
+GET         /$path<(\w\w)(/[\w\d-]+)?>                                                                               controllers.preview.FaciaDraftController.renderFront(path)
 
-
-GET         /container/*id.json                                                                                      controllers.FaciaController.renderContainerJson(id)
+GET         /container/*id.json                                                                                      controllers.preview.FaciaDraftController.renderContainerJson(id)
 
 GET        /$path<.+/\d\d\d\d/\w\w\w/\d\d>                                                                           controllers.AllIndexController.on(path)
 GET        /$path<.+>/latest                                                                                         controllers.LatestIndexController.latest(path)

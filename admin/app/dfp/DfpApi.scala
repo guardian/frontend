@@ -3,8 +3,7 @@ package dfp
 import com.google.api.ads.common.lib.auth.OfflineCredentials
 import com.google.api.ads.common.lib.auth.OfflineCredentials.Api
 import com.google.api.ads.dfp.axis.utils.v201403.StatementBuilder
-import com.google.api.ads.dfp.axis.v201403._
-import com.google.api.ads.dfp.axis.v201403.{LineItem => DfpApiLineItem}
+import com.google.api.ads.dfp.axis.v201403.{LineItem => DfpApiLineItem, _}
 import com.google.api.ads.dfp.lib.client.DfpSession
 import common.Logging
 import conf.AdminConfiguration
@@ -37,7 +36,7 @@ object DfpApi extends Logging with Collections{
       None
   }
 
-  def getAllCurrentDfpLineItems() = dfpSession.fold(Seq[DfpApiLineItem]()) {session =>
+  def getAllCurrentDfpLineItems = dfpSession.fold(Seq[DfpApiLineItem]()) { session =>
     val currentLineItems = new StatementBuilder()
       .where("status = :readyStatus OR status = :deliveringStatus")
       .orderBy("id ASC")
@@ -52,7 +51,7 @@ object DfpApi extends Logging with Collections{
       val outOfPagePlaceholder: Array[CreativePlaceholder] = for {
         placeholder <- placeholders
         companion <- placeholder.getCompanions
-        if (companion.getSize().getHeight() == 1 && companion.getSize().getWidth() == 1)
+        if companion.getSize.getHeight == 1 && companion.getSize.getWidth == 1
       } yield companion
       outOfPagePlaceholder.nonEmpty
     }
@@ -108,14 +107,40 @@ object DfpApi extends Logging with Collections{
       v.getId.longValue() -> v.getName
     }.toMap
 
-    lineItems.filter { lineItem =>
-      lineItem.getTargeting != null && lineItem.getTargeting.getCustomTargeting != null
-    } flatMap (lineItem => addTargetSets(lineItem, relevantTargetingKeys, relevantTargetingValues))
+    val sponsorFieldId: Option[Long] = {
+      val sponsorField = DfpApiWrapper.fetchCustomFields(session,
+        new StatementBuilder().where("name = :name").withBindVariableValue("name", "Sponsor")).headOption
+      sponsorField map (_.getId)
+    }
+
+    for {
+      lineItem <- lineItems
+      targeting <- Option(lineItem.getTargeting)
+      customTargeting <- Option(targeting.getCustomTargeting)
+      currTargetSets = targetSets(lineItem, relevantTargetingKeys, relevantTargetingValues)
+      if currTargetSets.nonEmpty
+    } yield {
+      LineItem(lineItem.getId, sponsor(lineItem, sponsorFieldId), currTargetSets)
+    }
   }
 
-  private def addTargetSets(lineItem: DfpApiLineItem,
+  private def sponsor(lineItem: DfpApiLineItem, optSponsorFieldId: Option[Long]) = {
+    for {
+      sponsorFieldId <- optSponsorFieldId
+      customFieldValues <- Option(lineItem.getCustomFieldValues)
+      sponsor <- customFieldValues.collect {
+        case fieldValue: CustomFieldValue
+          if fieldValue.getCustomFieldId == sponsorFieldId =>
+          fieldValue.getValue.asInstanceOf[TextValue].getValue
+      }.headOption
+    } yield {
+      sponsor
+    }
+  }
+
+  private def targetSets(lineItem: DfpApiLineItem,
                             targetingKeys: Map[Long, String],
-                            targetingValues: Map[Long, String]): Option[LineItem] = {
+                            targetingValues: Map[Long, String]): Seq[TargetSet] = {
 
     def buildTargetSet(crits: CustomCriteriaSet): Option[TargetSet] = {
       val targets = crits.getChildren.flatMap { crit =>
@@ -140,21 +165,27 @@ object DfpApi extends Logging with Collections{
       }
     }
 
-    val targetSets = lineItem.getTargeting.getCustomTargeting.getChildren.flatMap { critSet =>
+    lineItem.getTargeting.getCustomTargeting.getChildren.flatMap { critSet =>
       buildTargetSet(critSet.asInstanceOf[CustomCriteriaSet])
     }.toSeq
-    if (targetSets.isEmpty) {
-      None
-    } else {
-      Some(LineItem(lineItem.getId, targetSets))
+  }
+
+  private def sponsorshipTags(lineItems: Seq[LineItem])(tags: LineItem => Seq[String]): Seq[Sponsorship] = {
+    val sponsorships = for {
+      lineItem <- lineItems
+      currTags = tags(lineItem)
+      if currTags.nonEmpty
+    } yield {
+      Sponsorship(currTags, lineItem.sponsor)
     }
+    sponsorships.distinct
   }
 
-  def filterOutSponsoredTagsFrom(lineItems: Seq[LineItem]): Seq[String] = {
-    lineItems flatMap (_.sponsoredTags)
+  def filterOutSponsoredTagsFrom(lineItems: Seq[LineItem]): Seq[Sponsorship] = {
+    sponsorshipTags(lineItems)(_.sponsoredTags)
   }
 
-  def filterOutAdvertisementFeatureTagsFrom(lineItems: Seq[LineItem]): Seq[String] = {
-    lineItems flatMap (_.advertisementFeatureTags)
+  def filterOutAdvertisementFeatureTagsFrom(lineItems: Seq[LineItem]): Seq[Sponsorship] = {
+    sponsorshipTags(lineItems)(_.advertisementFeatureTags)
   }
 }

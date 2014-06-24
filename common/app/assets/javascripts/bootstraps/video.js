@@ -6,8 +6,7 @@ define([
     'common/utils/config',
     'common/modules/adverts/query-string',
     'common/modules/adverts/dfp',
-    'bean',
-    'bonzo'
+    'bean'
 ], function(
     $,
     ajax,
@@ -15,21 +14,10 @@ define([
     config,
     queryString,
     dfp,
-    bean,
-    bonzo
+    bean
 ) {
 
     var autoplay = config.page.contentType === 'Video' && /desktop|wide/.test(detect.getBreakpoint());
-
-    var secsToNiceString = function(val) {
-        var secs = val % 60;
-        var mins = Math.floor(val / 60);
-        var hours = Math.floor(mins / 60);
-
-        return (hours ? hours+'h ' : '') +
-               (mins ? mins+'m ' : '') +
-               (secs ? secs+'s ' : '');
-    };
 
     var modules = {
 
@@ -114,35 +102,41 @@ define([
             return url;
         },
 
-        initOverlays: function(el) {
-            var title = el.getAttribute('data-title');
-            if (title) {
-                var vjs = videojs(el),
-                    vjsContainer = vjs.el(),
-                    duration = el.getAttribute('data-duration'),
-                    durationHTML = duration ? '<div class="vjs-overlay__duration">' + secsToNiceString(duration) + '</div>' : '',
-                    bigTitleHTML = '<div class="vjs-overlay__title">' + title + '</div>',
-                    bigTitleEl = bonzo(document.createElement('div'))
-                        .appendTo(vjsContainer)
-                        .addClass('vjs-overlay')
-                        .addClass('vjs-overlay--big-title')
-                        .html(bigTitleHTML + durationHTML),
-                    smallTitleEl = bonzo(document.createElement('div'))
-                        .addClass('vjs-overlay')
-                        .addClass('vjs-overlay--small-title')
-                        .html(title);
-
-                vjs.one('play', function() {
-                    bigTitleEl.remove();
-                    bigTitleEl = undefined;
-                    smallTitleEl.appendTo(vjsContainer);
-                });
-            }
+        countDown: function() {
+            var player = this,
+                tmp = '<div class="vjs-ads-overlay js-ads-overlay">Your video will start in <span class="vjs-ads-overlay__remaining js-remaining-time"></span>' +
+                      ' seconds <span class="vjs-ads-overlay__label">Advertisement</span></div>',
+                events =  {
+                    destroy: function() {
+                        if(this.hasAdCountdown) {
+                            $('.js-ads-overlay', this.el()).remove();
+                            this.off('timeupdate', events.update);
+                            this.off('ended', events.destroy);
+                        }
+                    },
+                    update: function() {
+                        $('.js-remaining-time', this.el()).text(parseInt(this.duration() - this.currentTime(), 10).toFixed());
+                    },
+                    init: function() {
+                        this.on('timeupdate', events.update.bind(this));
+                        this.one('ended', events.destroy.bind(this));
+                        this.one('adtimeout', events.destroy.bind(this));
+                        $(this.el()).append($.create(tmp));
+                        this.hasAdCountdown = true;
+                    }
+                };
+            this.hasAdCountdown = false;
+            this.one('readyforpreroll', function() {
+                player.one('firstplay', events.init.bind(player));
+            });
         },
 
         initPlayer: function() {
 
             require('bootstraps/video-player', function () {
+
+                videojs.plugin('adCountDown', modules.countDown);
+
                 $('video').each(function (el) {
                     var vjs = videojs(el, {
                         controls: true,
@@ -152,9 +146,10 @@ define([
 
                     vjs.ready(function () {
                         var player = this;
+
                         modules.bindPrerollEvents(player, el);
 
-                        // Init vast adverts.
+                        player.adCountDown();
                         player.ads({
                             timeout: 3000
                         });
