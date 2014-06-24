@@ -39,6 +39,12 @@ object Global extends WithFilters(Gzipper)
     ("content-api-fallbacks", FaciaToolMetrics.MemcachedFallbackMetric.getAndReset.toDouble)
   )
 
+  private def getTotalPressSuccessCount: Long =
+    FaciaToolMetrics.FrontPressLiveSuccess.getValue() + FaciaToolMetrics.FrontPressDraftSuccess.getValue()
+
+  private def getTotalPressFailureCount: Long =
+    FaciaToolMetrics.FrontPressLiveFailure.getValue() + FaciaToolMetrics.FrontPressDraftFailure.getValue()
+
   override def onLoadConfig(config: Configuration, path: File, classloader: ClassLoader, mode: Mode.Mode): Configuration = {
     val newConfig: Configuration = if (mode == Mode.Dev) config ++ devConfig else config
     super.onLoadConfig(newConfig, path, classloader, mode)
