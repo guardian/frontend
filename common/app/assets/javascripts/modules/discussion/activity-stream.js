@@ -13,11 +13,12 @@ define([
         this.setOptions(opts);
     }
     component.define(ActivityStream);
-    ActivityStream.prototype.endpoint = '/discussion/profile/:userId/:streamType.json';
+    ActivityStream.prototype.endpoint = '/discussion/profile/:userId/:streamType.json?page=:page';
     ActivityStream.prototype.componentClass = 'activity-stream';
     ActivityStream.prototype.defaultOptions = {
-        userId: null,
-        streamType: 'discussions'
+        page: 1,
+        streamType: 'discussions',
+        userId: null
     };
     ActivityStream.prototype.ready = function() {
         this.removeState('loading');
@@ -36,7 +37,7 @@ define([
         var $el = bonzo(this.elem).empty();
         this.setState('loading');
         this.setOptions(opts);
-        this._fetch().then(function(resp) {
+        return this._fetch().then(function(resp) {
             $.create(resp.html).each(function(el) {
                 this.elem = el;
                 $el.replaceWith(this.elem);

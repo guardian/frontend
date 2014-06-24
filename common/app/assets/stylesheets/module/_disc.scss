@@ -228,6 +228,13 @@ $disc-avatar-size: 44px;
     ));
     text-align: center;
 }
+.activity-stream__pagination {
+    border: 0 none;
+
+    .pagination_legend {
+        display: none !important;
+    }
+}
 .activity-stream--discussions {
     .activity-item__content {
         @include rem((
@@ -238,6 +245,7 @@ $disc-avatar-size: 44px;
 
     .activity-item__content--no-border {
         border-top: 0 none;
+        margin-top: 0;
         padding-top: 0;
     }
 }
