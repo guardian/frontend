@@ -34,7 +34,7 @@ Before running the tests, the fronts application needs to be successfully starte
 ./sbt 'project dev-build' start 
 ```
 
-Also you need to make sure that your /etc/gu/install_vars has the value STAGE=TEST
+Also you need to make sure that your /etc/gu/install_vars (or ~.gu/frontend.properties) has the value STAGE=TEST. This is to make sure the TEST.properties is being picked up rather than the DEV.properties. Finally make sure to run grunt compile as there have been changes in some Javascript files which need to be recompiled.
 
 
 It has been tested on Linux Mint 17, Open JDK 7, Maven 3 and Firefox 26.
