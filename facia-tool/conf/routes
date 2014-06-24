@@ -36,7 +36,6 @@ GET           /collection/*id            controllers.FaciaToolController.readBlo
 POST          /edits                     controllers.FaciaToolController.collectionEdits
 GET           /collection                controllers.FaciaToolController.listCollections
 GET           /config                    controllers.FaciaToolController.getConfig
-POST          /config                    controllers.FaciaToolController.updateConfig
 
 POST          /collectionmeta/*id        controllers.FaciaToolController.updateCollectionMeta(id)
 
@@ -44,3 +43,11 @@ POST          /collectionmeta/*id        controllers.FaciaToolController.updateC
 GET           /switches                  controllers.SwitchesProxy.getSwitches()
 GET           /api/proxy/*path           controllers.FaciaContentApiProxy.proxy(path)
 GET           /json/proxy/*absUrl        controllers.FaciaContentApiProxy.json(absUrl)
+
+# Updating config
+
+POST          /config/fronts             controllers.FrontController.create()
+POST          /config/fronts/*path       controllers.FrontController.update(path)
+
+POST          /config/collections        controllers.CollectionController.create()
+POST          /config/collections/*id    controllers.CollectionController.update(id)
