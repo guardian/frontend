@@ -29,8 +29,8 @@ trait AdsApi[F, T <: Ad] extends ExecutionContexts with Logging {
 
   private def recordLoad(duration: Long) {
     val feedName = adTypeName.toLowerCase.replaceAll("\\s+", "-")
-    val key = s"commercial-$feedName-load-time"
-    CloudWatch.put("CommercialComponents", Map(s"$key" -> duration.toDouble))
+    val key = s"$feedName-feed-load-time"
+    CloudWatch.put("Commercial", Map(s"$key" -> duration.toDouble))
   }
 
   def loadAds(): Future[Seq[T]] = doIfSwitchedOn {
