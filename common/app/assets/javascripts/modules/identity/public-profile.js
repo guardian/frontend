@@ -60,17 +60,6 @@ function(
         });
     }
 
-    function setupActivityStreamPagination(activityStream) {
-        bean.on(context(), 'click', '.js-activity-stream-page-change', function(e) {
-            var page = e.currentTarget.getAttribute('data-page');
-            e.preventDefault();
-
-            activityStream.change({
-                page: page
-            });
-        });
-    }
-
     function setupActivityStreamSearch(activityStream) {
         bean.on(context(), 'submit', '.js-activity-stream-search', function(e) {
             e.preventDefault();
@@ -86,7 +75,6 @@ function(
         getActivityStream(function(activityStream) {
             setupActivityStreamChanger(activityStream);
             setupActivityStreamSearch(activityStream);
-            setupActivityStreamPagination(activityStream);
         });
     }
 

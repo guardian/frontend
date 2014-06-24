@@ -1,5 +1,5 @@
-@(discussion: DiscussionComments)(implicit request: RequestHeader)
+@(page: Page, discussion: DiscussionComments)(implicit request: RequestHeader)
 
 <div class="c-non-threaded-comments">
-    @commentsList(discussion)
+    @commentsList(page, discussion)
 </div>

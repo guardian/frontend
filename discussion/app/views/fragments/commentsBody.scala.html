@@ -2,6 +2,7 @@
 
 <div
     class="d-discussion d-discussion--not-staff@if(!page.isClosedForRecommendation){ d-discussion--recommendations-open}"
+    data-comment-count="@page.commentCount"
     @page.switches.map{ switch =>
         data-@switch.name="@switch.state"
     }>
