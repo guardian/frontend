@@ -73,21 +73,7 @@ define(['common/$',
                         'November',
                         'December'];
 
-        function ordinal (d) {
-            if(date > 20 || date < 10) {
-                switch(date%10) {
-                case 1:
-                    return d+'st';
-                case 2:
-                    return d+'nd';
-                case 3:
-                    return d+'rd';
-                }
-            }
-            return d+'th';
-        }
-
-        var day = ordinal(date.getDate());
+        var day = date.getDate();
         var month = months[date.getMonth()];
         var year = date.getFullYear();
 
@@ -184,6 +170,21 @@ define(['common/$',
             $(self.getClass('TAB_CONTAINER'), self.context).removeClass('is-hidden');
             $('.js-account-profile-forms').addClass('identity-wrapper--with-membership');
 
+            self.paymentForm = new PaymentForm().init(self.getElem('CC_CHANGE_FORM_CONT'), function (resp) {
+                // hide form
+                self.changeCCFormIsOpen = false;
+                self.closeFormAndUpdate.bind(self)();
+
+                // update cc last4 with new details
+                $(self.getElem('CC_LAST4')).text(resp.last4);
+                $(self.getElem('CC_TYPE')).removeClass(self.currentCardTypeClass);
+                self.currentCardTypeClass = 'i-'+resp.cardType.toLowerCase().replace(' ', '-');
+                $(self.getElem('CC_TYPE')).addClass(self.currentCardTypeClass);
+                $(self.getElem('CC_NUM')).addClass('membership-tab__updated');
+                // append a success message
+                self.appendSuccessMessage(self.options.messages.CHANGE_CC_SUCCESS);
+            });
+
             bean.on(self.getElem('CC_CHANGE_BUTTON'), 'click', function () {
                 self.form = self.form || {
                     $cont: $(self.getClass('CC_CHANGE_FORM_CONT')),
@@ -194,27 +195,10 @@ define(['common/$',
                     self.changeCCFormIsOpen = true;
                     self.openFormAndUpdate.bind(self)();
                     self.removeSuccessMessage();
-
-                    new PaymentForm().init(self.getElem('CC_CHANGE_FORM_CONT'), function (resp) {
-                        // hide form
-                        self.changeCCFormIsOpen = false;
-                        self.closeFormAndUpdate.bind(self)();
-
-                        // update cc last4 with new details
-                        $(self.getElem('CC_LAST4')).text(resp.last4);
-                        $(self.getElem('CC_TYPE')).removeClass(self.currentCardTypeClass);
-                        self.currentCardTypeClass = 'i-'+resp.cardType.toLowerCase().replace(' ', '-');
-                        $(self.getElem('CC_TYPE')).addClass(self.currentCardTypeClass);
-                        $(self.getElem('CC_NUM')).addClass('membership-tab__updated');
-                        // append a success message
-                        self.appendSuccessMessage(self.options.messages.CHANGE_CC_SUCCESS);
-                    });
                 } else { // close
                     self.changeCCFormIsOpen = false;
                     self.closeFormAndUpdate.bind(self)();
                 }
-
-
             });
 
             bean.on(self.getElem('CC_CHANGE_FORM_CONT'), 'animationend webkitAnimationEnd oanimationend MSAnimationEnd', function () {

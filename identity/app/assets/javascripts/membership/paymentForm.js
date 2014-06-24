@@ -443,6 +443,7 @@ define([
     };
 
     StripePaymentForm.prototype.reset = function () {
+        this.getElement('CREDIT_CARD_IMAGE')[0].className = this.getElement('CREDIT_CARD_IMAGE')[0].className.replace(/\bi-\S*/gi, '');
         this.getElement('CREDIT_CARD_NUMBER').val('');
         this.getElement('CREDIT_CARD_CVC').val('');
         this.getElement('CREDIT_CARD_EXPIRY_MONTH')[0].selectedIndex = 0;
