@@ -151,6 +151,27 @@ define(['common/$',
         }
     };
 
+    Membership.prototype.removeSuccessMessage = function () {
+        if (this.$successMessageElem) {
+            this.$successMessageElem.remove();
+            delete this.$successMessageElem;
+        }
+    };
+
+    Membership.prototype.openFormAndUpdate = function () {
+        var self = this;
+        self.form.$cont.removeClass(self.getClass('ANIM_CLOSE', true) + ' ' + self.getClass('ANIM_CLOSED', true)).addClass(self.getClass('ANIM_OPEN', true));
+        self.form.$button.addClass('membership-tab__update-button--muted')
+            .text('Cancel');
+    };
+
+    Membership.prototype.closeFormAndUpdate = function () {
+        var self = this;
+        self.form.$cont.removeClass(self.getClass('ANIM_OPEN', true) + ' ' + self.getClass('ANIM_OPENED', true)).addClass(self.getClass('ANIM_CLOSE', true));
+        self.form.$button.removeClass('membership-tab__update-button--muted')
+            .text('Change');
+    };
+
     /** @override */
     Membership.prototype.ready = function () {
         var self = this;
@@ -164,30 +185,44 @@ define(['common/$',
             $('.js-account-profile-forms').addClass('identity-wrapper--with-membership');
 
             bean.on(self.getElem('CC_CHANGE_BUTTON'), 'click', function () {
-                $(self.getClass('CC_CHANGE_FORM_CONT')).addClass(self.getClass('ANIM_OPEN', true));
-                $(self.getClass('CC_CHANGE_BUTTON'), self.context).addClass('is-hidden');
+                self.form = self.form || {
+                    $cont: $(self.getClass('CC_CHANGE_FORM_CONT')),
+                    $button: $(self.getClass('CC_CHANGE_BUTTON'), self.context)
+                };
 
-                new PaymentForm().init(self.getElem('CC_CHANGE_FORM_CONT'), function (resp) {
-                    // hide form
-                    $(self.getElem('CC_CHANGE_FORM_CONT')).addClass(self.getClass('ANIM_CLOSE', true));
+                if (!self.changeCCFormIsOpen) { // open
+                    self.changeCCFormIsOpen = true;
+                    self.openFormAndUpdate.bind(self)();
+                    self.removeSuccessMessage();
 
-                    // update cc last4 with new details
-                    $(self.getElem('CC_LAST4')).text(resp.last4);
-                    $(self.getElem('CC_TYPE')).removeClass(self.currentCardTypeClass);
-                    self.currentCardTypeClass = 'i-'+resp.cardType.toLowerCase().replace(' ', '-');
-                    $(self.getElem('CC_TYPE')).addClass(self.currentCardTypeClass);
-                    $(self.getElem('CC_NUM')).addClass('membership-tab__updated');
-                    // append a success message
-                    self.appendSuccessMessage(self.options.messages.CHANGE_CC_SUCCESS);
-                });
+                    new PaymentForm().init(self.getElem('CC_CHANGE_FORM_CONT'), function (resp) {
+                        // hide form
+                        self.changeCCFormIsOpen = false;
+                        self.closeFormAndUpdate.bind(self)();
+
+                        // update cc last4 with new details
+                        $(self.getElem('CC_LAST4')).text(resp.last4);
+                        $(self.getElem('CC_TYPE')).removeClass(self.currentCardTypeClass);
+                        self.currentCardTypeClass = 'i-'+resp.cardType.toLowerCase().replace(' ', '-');
+                        $(self.getElem('CC_TYPE')).addClass(self.currentCardTypeClass);
+                        $(self.getElem('CC_NUM')).addClass('membership-tab__updated');
+                        // append a success message
+                        self.appendSuccessMessage(self.options.messages.CHANGE_CC_SUCCESS);
+                    });
+                } else { // close
+                    self.changeCCFormIsOpen = false;
+                    self.closeFormAndUpdate.bind(self)();
+                }
+
+
             });
 
             bean.on(self.getElem('CC_CHANGE_FORM_CONT'), 'animationend webkitAnimationEnd oanimationend MSAnimationEnd', function () {
                 var $elem = bonzo(this);
                 if ($elem.hasClass(self.getClass('ANIM_OPEN', true))) {
-                    $elem.removeClass(self.getClass('ANIM_OPEN', true)).addClass(self.getClass('ANIM_OPENED', true));
+                    $elem.removeClass(self.getClass('ANIM_OPEN', true) + ' ' + self.getClass('ANIM_CLOSE', true) + ' ' + self.getClass('ANIM_CLOSED', true)).addClass(self.getClass('ANIM_OPENED', true));
                 } else {
-                    $elem.removeClass(self.getClass('ANIM_CLOSE', true)).addClass(self.getClass('ANIM_CLOSED', true));
+                    $elem.removeClass(self.getClass('ANIM_CLOSE', true) + ' ' + self.getClass('ANIM_OPEN', true) + ' ' + self.getClass('ANIM_OPENED', true)).addClass(self.getClass('ANIM_CLOSED', true));
                 }
             });
 

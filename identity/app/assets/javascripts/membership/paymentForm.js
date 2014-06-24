@@ -92,6 +92,7 @@ define([
                 }
             }).then(function success () {
                 self.stopLoader();
+                self.reset();
                 self.successCallback.apply(this, arguments);
             }, function fail (error) {
 
@@ -439,6 +440,13 @@ define([
 
     StripePaymentForm.prototype.stopLoader = function () {
         this.getElement('UPDATING').css('display', 'none');
+    };
+
+    StripePaymentForm.prototype.reset = function () {
+        this.getElement('CREDIT_CARD_NUMBER').val('');
+        this.getElement('CREDIT_CARD_CVC').val('');
+        this.getElement('CREDIT_CARD_EXPIRY_MONTH')[0].selectedIndex = 0;
+        this.getElement('CREDIT_CARD_EXPIRY_YEAR')[0].selectedIndex = 0;
     };
 
     StripePaymentForm.prototype.init = function (context, successCallback) {

@@ -442,6 +442,17 @@
             text-decoration: none;
         }
     }
+
+    .membership-tab__update-button--muted {
+        @extend .u-fauxlink;
+        background: none;
+        &:hover,
+        &:active,
+        &:focus {
+            background: none;
+            text-decoration: underline;
+        }
+    }
 }
 
 .membership-tab__change-cc-form-cont {
