@@ -444,7 +444,6 @@
     }
 
     .membership-tab__update-button--muted {
-        @extend .u-fauxlink;
         background: none;
         &:hover,
         &:active,
