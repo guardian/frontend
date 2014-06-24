@@ -28,10 +28,7 @@ trait MetaData extends Tags {
   lazy val isFront = false
   lazy val contentType = ""
 
-  lazy val adUnitSuffix = {
-    val isSectionFront = id == section
-    if (isSectionFront) s"$section/front" else section
-  }
+  lazy val adUnitSuffix = keywords.head.id
 
   lazy val hasPageSkin = false
 
