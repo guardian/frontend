@@ -693,10 +693,7 @@ module.exports = function (grunt) {
             common: {
                 src: [
                     staticTargetDir + 'javascripts/bootstraps/*.js',
-                    staticTargetDir + 'stylesheets/*.css',
-                    // ignore hashed files
-                    '!' + '**/*.<%= Array(1 + hash.options.hashLength).join("?") %>.js',
-                    '!' + '**/*.<%= Array(1 + hash.options.hashLength).join("?") %>.css'
+                    staticTargetDir + 'stylesheets/*.css'
                 ],
                 options: {
                     credentials: propertiesFile
