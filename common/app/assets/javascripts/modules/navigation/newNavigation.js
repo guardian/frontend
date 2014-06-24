@@ -67,7 +67,7 @@ define([
 
                     var storedIdx = expandedItems.indexOf(btnIdx);
                     if(isExpanded){
-                        if (storedIdx == -1) {
+                        if (storedIdx === -1) {
                             // add to storage
                             expandedItems.push(btnIdx);
                             store.local.set(storageKey, expandedItems);
