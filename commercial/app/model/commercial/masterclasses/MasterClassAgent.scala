@@ -16,9 +16,14 @@ object MasterClassAgent extends AdAgent[MasterClass] with ExecutionContexts {
     adsToShow sortBy(_.eventBriteEvent.startDate.getMillis)
   }
 
-  def specificClasses(eventBriteIdStrings: Seq[String]): Seq[MasterClass] = {
-    val eventBriteIds = eventBriteIdStrings map (_.toLong)
-    currentAds filter (masterclass => eventBriteIds contains masterclass.eventBriteEvent.id)
+  def specificClasses(eventBriteIds: Seq[String]): Seq[MasterClass] = {
+    for {
+      masterclass <- currentAds
+      eventId <- eventBriteIds
+      if masterclass.eventBriteEvent.id == eventId
+    } yield {
+      masterclass
+    }
   }
 
   def wrapEventbriteWithContentApi(eventbriteEvents: Seq[EventbriteMasterClass]): Future[Seq[MasterClass]] = {
@@ -41,7 +46,18 @@ object MasterClassAgent extends AdAgent[MasterClass] with ExecutionContexts {
 
     def populateKeywordIds(events: Seq[EventbriteMasterClass]):Seq[EventbriteMasterClass] = {
       val populated = events map { event =>
-        val eventKeywordIds = MasterClassTagsAgent.forTag(event.name)
+
+        val keywordIdsFromTitle = MasterClassTagsAgent.forTag(event.name)
+
+        val keywordIdsFromTags = (event.tags flatMap MasterClassTagsAgent.forTag).distinct
+
+        val eventKeywordIds = {
+          if (keywordIdsFromTitle.nonEmpty) {
+            keywordIdsFromTitle
+          } else {
+            keywordIdsFromTags
+          }
+        }
         event.copy(keywordIds = eventKeywordIds)
       }
 
@@ -100,5 +116,5 @@ object MasterClassTagsAgent extends ExecutionContexts with Logging {
     tagKeywordIds.close()
   }
 
-  def forTag(name: String) = tagKeywordIds().get(name).getOrElse(Nil)
+  def forTag(name: String) = tagKeywordIds().getOrElse(name, Nil)
 }
