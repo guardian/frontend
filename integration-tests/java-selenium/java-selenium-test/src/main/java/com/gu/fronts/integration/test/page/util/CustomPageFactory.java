@@ -5,7 +5,6 @@ import static com.gu.fronts.integration.test.page.util.PageElementHelper.findEle
 import static org.openqa.selenium.By.cssSelector;
 
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -30,7 +29,7 @@ public class CustomPageFactory {
     }
 
     /**
-     * Copy of {@link PageFactory#instantiatePage} as it is private and cannot be re-used
+     * Shameless Copy of {@link PageFactory#instantiatePage} as it is private
      */
     private static <T> T instantiatePage(WebDriver driver, Class<T> pageClassToProxy) {
         try {
@@ -40,18 +39,15 @@ public class CustomPageFactory {
             } catch (NoSuchMethodException e) {
                 return pageClassToProxy.newInstance();
             }
-        } catch (InstantiationException e) {
-            throw new RuntimeException(e);
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException(e);
-        } catch (InvocationTargetException e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
     /**
-     * Special page factory method which finds an element, starting from the provided parent element, then instantiate a
-     * Page Object with only the found element. No other WebElements will be set or initialized
+     * Special page factory method which finds an element by provided test attribute id, starting from the provided
+     * parent element, then instantiate a Page Object with only the found element. No other WebElements will be set or
+     * initialised unless explicitly done so in the constructor of that page object.
      */
     public <Page> Page initPage(WebDriver webDriver, Class<Page> pageClass, WebElement parentElement,
             String testAttributeId) {

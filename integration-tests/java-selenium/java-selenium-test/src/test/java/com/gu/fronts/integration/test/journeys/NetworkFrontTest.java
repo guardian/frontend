@@ -4,6 +4,7 @@ import static com.github.tomakehurst.wiremock.client.WireMock.getRequestedFor;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlMatching;
 import static com.github.tomakehurst.wiremock.client.WireMock.verify;
 import static com.gu.fronts.integration.test.page.nwfront.NetworkFrontPage.IN_PICTURES_CONTAINER_ID;
+import static com.gu.fronts.integration.test.page.nwfront.NetworkFrontPage.SPORT_CONTAINER_ID;
 import static com.gu.fronts.integration.test.page.nwfront.NetworkFrontPage.TOP_STORIES_CONTAINER_ID;
 import static com.gu.fronts.integration.test.util.CalendarUtil.todayDayOfWeek;
 import static com.gu.fronts.integration.test.util.CalendarUtil.todayYearMonthDay;
@@ -35,12 +36,18 @@ public class NetworkFrontTest extends StubbedFrontsIntegrationTestCase {
     @Category(Stubbed.class)
     public void networkStartPageBasicJourney() throws Exception {
         pressedStub.path("/uk").withResponse("NetworkStartPage-pressed.json");
+        pressedStub.path("/uk/sport").withResponse("sports-pressed-small.json");
 
         networkFrontPage = openNetworkFrontPage().isDisplayed();
         networkFrontPage = checkHeaderAndFooter();
         networkFrontPage = checkEditions();
         networkFrontPage = checkDate();
         networkFrontPage = checkContainerExpandButton();
+
+        FaciaContainer sportsContainer = networkFrontPage.containers().containerWithId(SPORT_CONTAINER_ID)
+                .isDisplayed();
+        FaciaContainer standaloneSports = sportsContainer.clickHeader();
+        standaloneSports.isDisplayed();
 
         // not really neccessary to do this, because the test would have failed anyway if the stub was not properly
         // returning responses, but just to illustrate how it works
@@ -54,8 +61,8 @@ public class NetworkFrontTest extends StubbedFrontsIntegrationTestCase {
         networkFrontPage = openNetworkFrontPage();
         networkFrontPage = networkFrontPage.isDisplayed();
 
-        FaciaContainer topStoriesContainer = networkFrontPage.containers()
-                .containerWithTestAttributeId(TOP_STORIES_CONTAINER_ID).isDisplayed();
+        FaciaContainer topStoriesContainer = networkFrontPage.containers().containerWithId(TOP_STORIES_CONTAINER_ID)
+                .isDisplayed();
         FaciaArticle firstArticleContainer = topStoriesContainer.articleAt(0).isDisplayed();
 
         // get this now before clicking to the article
@@ -73,8 +80,8 @@ public class NetworkFrontTest extends StubbedFrontsIntegrationTestCase {
         pressedStub.path("/uk").withResponse("NetworkStartPage-pressed.json");
         networkFrontPage = openNetworkFrontPage();
 
-        FaciaContainer inPicturesContainer = networkFrontPage.containers()
-                .containerWithTestAttributeId(IN_PICTURES_CONTAINER_ID).isDisplayed();
+        FaciaContainer inPicturesContainer = networkFrontPage.containers().containerWithId(IN_PICTURES_CONTAINER_ID)
+                .isDisplayed();
         FaciaGalleryItem galleryItem = inPicturesContainer.galleryAt(0).isDisplayed();
         GalleryOverlay galleryOverlay = galleryItem.clickPicture().isDisplayed();
         // make sure we are still on the network front page
@@ -121,7 +128,7 @@ public class NetworkFrontTest extends StubbedFrontsIntegrationTestCase {
     }
 
     private NetworkFrontPage checkContainerExpandButton() {
-        networkFrontPage.containers().containerWithTestAttributeId(TOP_STORIES_CONTAINER_ID).expand().isDisplayed();
+        networkFrontPage.containers().containerWithId(TOP_STORIES_CONTAINER_ID).expand().isDisplayed();
         return networkFrontPage;
     }
 }

@@ -20,7 +20,7 @@ public class AllFaciaContainersPage extends AbstractParentPage {
         return this;
     }
 
-    public FaciaContainer containerWithTestAttributeId(String testAttributeId) {
+    public FaciaContainer containerWithId(String testAttributeId) {
         return pageFactory.initPage(webDriver, FaciaContainer.class, allFaciaContainers, testAttributeId);
     }
 }

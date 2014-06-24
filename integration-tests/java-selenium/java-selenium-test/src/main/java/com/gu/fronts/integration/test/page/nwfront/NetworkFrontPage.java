@@ -10,6 +10,7 @@ import com.gu.fronts.integration.test.page.util.AbstractParentPage;
 public class NetworkFrontPage extends AbstractParentPage {
     public static final String IN_PICTURES_CONTAINER_ID = "in-pictures";
     public static final String TOP_STORIES_CONTAINER_ID = "top-stories";
+    public static final String SPORT_CONTAINER_ID = "sport";
     
     @FindByTestAttribute(using = "network-front-date-title")
     private WebElement dateTitle;
