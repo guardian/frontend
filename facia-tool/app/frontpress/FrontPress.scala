@@ -114,8 +114,17 @@ trait FrontPress extends Logging {
           Future.successful(Map.empty)
 
       lazy val draftPress: Future[Map[String, JsObject]]  =
-        if (FaciaToolDraftPressSwitch.isSwitchedOn && pressCommand.draft)
-          Future.traverse(paths){ path => pressDraftByPathId(path).map{ json => path -> json} }.map(_.toMap)
+        if (FaciaToolDraftPressSwitch.isSwitchedOn && pressCommand.draft) {
+          val fut = Future.traverse(paths){ path => pressDraftByPathId(path).map{ json => path -> json} }.map(_.toMap)
+          fut.onComplete {
+            case Failure(error) =>
+              FrontPressDraftFailure.increment()
+              log.error("Error manually pressing live collection through update from tool", error)
+            case Success(_) =>
+              FrontPressDraftSuccess.increment()
+          }
+          fut
+        }
         else
           Future.successful(Map.empty)
 
