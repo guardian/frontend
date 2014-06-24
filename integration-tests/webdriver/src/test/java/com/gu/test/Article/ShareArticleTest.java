@@ -9,48 +9,51 @@ import org.openqa.selenium.WebDriver;
 import static com.gu.test.WebDriverFactory.createWebDriver;
 
 public class ShareArticleTest {
-        WebDriver driver;
-        private PageHelper pageHelper;
-        private Article testArticle;
+    WebDriver driver;
+    private PageHelper pageHelper;
+    private Article testArticle;
 
-        @Before
-        public void setUp() throws Exception {
-                driver = createWebDriver();
-                pageHelper = new PageHelper(driver);
-                testArticle = pageHelper
-                        .goToArticle("/commentisfree/2014/may/30/an-open-letter-to-all-my-male-friends");
-        }
+    @Before
+    public void setUp() throws Exception {
+        driver = createWebDriver();
+        pageHelper = new PageHelper(driver);
+        testArticle = pageHelper
+                .goToArticle("/commentisfree/2014/may/30/an-open-letter-to-all-my-male-friends");
+    }
 
-        @Ignore //to do
-        @Test
-        public void shareViaEmail() throws Exception {
-                testArticle.shareViaEmail();
-                //assert that it clicks through to something, tricky one this.
-        }
+    @Ignore //to do
+    @Test
+    public void shareViaEmail() throws Exception {
+        testArticle.shareViaEmail();
+        //assert that it clicks through to something, tricky one this.
+    }
 
-        @Ignore  //while fixing
-        @Test
-        public void shareViaFacebook() throws Exception {
-                testArticle.shareOnFacebook();
-                Assert.assertTrue(driver.findElement(By.cssSelector(".fb_content")).isDisplayed());
-        }
+    @Ignore //to fix
 
-        @Ignore  //while fixing
-        @Test
-        public void shareViaTwitter() throws Exception {
-                testArticle.shareOnTwitter();
-                Assert.assertTrue(driver.findElement(By.cssSelector(".tfw")).isDisplayed());
-        }
+    @Test
+    public void shareViaFacebook() throws Exception {
+        testArticle.shareOnFacebook();
+        Assert.assertTrue(driver.findElement(By.cssSelector(".fb_content")).isDisplayed());
+    }
 
-        @Ignore  //while fixing
-        @Test
-        public void shareOnGooglePlus() throws Exception {
-                testArticle.shareOnGooglePlus();
-                Assert.assertTrue(driver.findElement(By.cssSelector(".google-header-bar")).isDisplayed());
-        }
+    @Ignore //to fix
 
-        @After
-        public void tearDown() throws Exception {
-                pageHelper.endTest();
-        }
+    @Test
+    public void shareViaTwitter() throws Exception {
+        testArticle.shareOnTwitter();
+        Assert.assertTrue(driver.findElement(By.cssSelector(".tfw")).isDisplayed());
+    }
+
+    @Ignore //to fix
+
+    @Test
+    public void shareOnGooglePlus() throws Exception {
+        testArticle.shareOnGooglePlus();
+        Assert.assertTrue(driver.findElement(By.cssSelector(".google-header-bar")).isDisplayed());
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        pageHelper.endTest();
+    }
 }

@@ -1,5 +1,6 @@
 package com.gu.test.Article;
 
+import com.gu.test.Config;
 import com.gu.test.helpers.PageHelper;
 import com.gu.test.pages.Article;
 import org.junit.After;
@@ -14,12 +15,13 @@ public class ArticleCommentTest {
     WebDriver driver;
     private PageHelper pageHelper;
     private Article testArticle;
+    private String ARTICLE_WITH_COMMENTS = new Config().getArticleWithComments();
 
     @Before
     public void setUp() throws Exception {
         driver = createWebDriver();
         pageHelper = new PageHelper(driver);
-        testArticle = pageHelper.goToArticle("/science/grrlscientist/2012/aug/07/3");
+        testArticle = pageHelper.goToArticle(ARTICLE_WITH_COMMENTS);
     }
 
     @Test

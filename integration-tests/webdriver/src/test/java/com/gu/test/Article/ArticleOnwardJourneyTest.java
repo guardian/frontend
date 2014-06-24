@@ -1,5 +1,6 @@
 package com.gu.test.Article;
 
+import com.gu.test.Config;
 import com.gu.test.helpers.PageHelper;
 import com.gu.test.helpers.WaitHelper;
 import com.gu.test.pages.Article;
@@ -12,40 +13,40 @@ public class ArticleOnwardJourneyTest {
     WebDriver driver;
     private PageHelper pageHelper;
     private Article testArticle;
+    private String ARTICLE_WITH_SERIES = new Config().getArticleWithSeries();
 
     @Before
     public void setUp() throws Exception {
         driver = createWebDriver();
         pageHelper = new PageHelper(driver);
-        testArticle = pageHelper.goToArticle("/film/filmblog/2014/may/20/lost-river-reviews-cannes-scorn-ryan-gosling");
+        testArticle = pageHelper.goToArticle(ARTICLE_WITH_SERIES);
     }
 
-    @Ignore  //while fixing
     @Test
     public void goToFirstLinkInSidebarPopular() throws Exception {
-        String linkText = testArticle.getFirstArticleInMostPopularRight();
+        String articleLink = testArticle.getFirstArticleInMostPopularRight();
         Article popularArticle = testArticle.goToFirstArticleInMostPopularRight();
-            WaitHelper.waitForPageLoad(driver);
-        String popularH1 = popularArticle.getArticleHeadline();
-        Assert.assertTrue("Article headline did not match the top link in Most Popular", linkText.contentEquals(popularH1));
+        WaitHelper.waitForPageLoad(driver);
+        String popularArticleCurrentURL = popularArticle.getCurrentURL();
+        Assert.assertTrue("Article URL did not match the top link in Most Popular", articleLink.contentEquals(popularArticleCurrentURL));
     }
 
     @Test
     public void goToFirstLinkInRelatedContent() throws Exception {
-        String linkText = testArticle.getFirstRelatedArticle();
+        String articleLink = testArticle.getFirstRelatedArticle();
         Article relatedArticle = testArticle.goToFirstRelatedArticle();
-            WaitHelper.waitForPageLoad(driver);
-        String relatedH1 = relatedArticle.getArticleHeadline();
-        Assert.assertTrue("Article headline did not match the top link in Related Content", linkText.contentEquals(relatedH1));
+        WaitHelper.waitForPageLoad(driver);
+        String relatedArticleCurrentURL = relatedArticle.getCurrentURL();
+        Assert.assertTrue("Article URL did not match the top link in Related Content", articleLink.contentEquals(relatedArticleCurrentURL));
     }
 
     @Test
     public void goToFirstLinkInBelowArticlePopular() throws Exception {
-        String linkText = testArticle.getFirstArticleInMostPopularBelow();
+        String articleLink = testArticle.getFirstArticleInMostPopularBelow();
         Article popularBottomArticle = testArticle.goToFirstArticleInMostPopularBottom();
-            WaitHelper.waitForPageLoad(driver);
-        String popularH1 = popularBottomArticle.getArticleHeadline();
-        Assert.assertTrue("Article headline did not match the top link in Most Popular", linkText.contentEquals(popularH1));
+        WaitHelper.waitForPageLoad(driver);
+        String popularArticleCurrentURL = popularBottomArticle.getCurrentURL();
+        Assert.assertTrue("Article headline did not match the top link in Most Popular", articleLink.contentEquals(popularArticleCurrentURL));
     }
 
 

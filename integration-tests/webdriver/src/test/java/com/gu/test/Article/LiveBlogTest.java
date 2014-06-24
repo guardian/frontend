@@ -1,5 +1,6 @@
 package com.gu.test.Article;
 
+import com.gu.test.Config;
 import com.gu.test.helpers.PageHelper;
 import com.gu.test.pages.LiveBlog;
 import org.junit.*;
@@ -11,21 +12,20 @@ public class LiveBlogTest {
     WebDriver driver;
     private PageHelper pageHelper;
     private LiveBlog testBlog;
+    private String ARTICLE_WITH_LIVEBLOG = new Config().getArticleLiveBlog();
 
     @Before
     public void setUp() throws Exception {
         driver = createWebDriver();
         pageHelper = new PageHelper(driver);
-        testBlog = pageHelper.goToLiveBlog("/world/2014/may/20/oscar-pistorius-mental-health-tests-trial-murder");
+        testBlog = pageHelper.goToLiveBlog(ARTICLE_WITH_LIVEBLOG);
     }
 
-    @Ignore //FAILING 
     @Test
     public void blogHasTruncation() {
         Assert.assertTrue("Failure: Truncated Block is displayed ", testBlog.hasTruncation());
     }
 
-    @Ignore //Failing tests.
     @Test
     public void blogViewAllUpdates() {
         testBlog.viewAllUpdates();

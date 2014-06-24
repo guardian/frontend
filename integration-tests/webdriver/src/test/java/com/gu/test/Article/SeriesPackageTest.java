@@ -1,6 +1,7 @@
 package com.gu.test.Article;
 
 
+import com.gu.test.Config;
 import com.gu.test.helpers.PageHelper;
 import org.junit.After;
 import org.junit.Assert;
@@ -14,12 +15,13 @@ import static com.gu.test.WebDriverFactory.createWebDriver;
 public class SeriesPackageTest {
     WebDriver driver;
     private PageHelper pageHelper;
+    private String seriesArticle = new Config().getArticleWithSeries();
 
     @Before
     public void setUp() throws Exception {
         driver = createWebDriver();
         pageHelper = new PageHelper(driver);
-        pageHelper.goToArticle("/lifeandstyle/womens-blog/2014/may/16/too-many-women-touched-grabbed-groped-without-consent");
+        pageHelper.goToArticle(seriesArticle);
     }
 
     @Test
@@ -29,7 +31,7 @@ public class SeriesPackageTest {
     }
 
     @Test
-    public void articleHasSeriesComponent() throws Exception{
+    public void articleHasSeriesComponent() throws Exception {
         Assert.assertTrue("Failure: Series component not found", driver.findElement(By.cssSelector(".container--series")).isDisplayed());
     }
 

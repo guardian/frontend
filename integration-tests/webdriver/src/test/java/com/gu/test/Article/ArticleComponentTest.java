@@ -1,11 +1,10 @@
 package com.gu.test.Article;
 
+import com.gu.test.Config;
 import com.gu.test.helpers.PageHelper;
 import com.gu.test.pages.Article;
 import org.junit.*;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.Wait;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import static com.gu.test.WebDriverFactory.createWebDriver;
 
@@ -13,19 +12,18 @@ public class ArticleComponentTest {
     WebDriver driver;
     private PageHelper pageHelper;
     private Article testArticle;
+    private String ARTICLE_WITH_TWEETS = new Config().getArticleWithTweets();
 
     @Before
     public void setUp() throws Exception {
         driver = createWebDriver();
         pageHelper = new PageHelper(driver);
-        testArticle = pageHelper.goToArticle("/film/filmblog/2014/may/20/lost-river-reviews-cannes-scorn-ryan-gosling");
+        testArticle = pageHelper.goToArticle(ARTICLE_WITH_TWEETS);
     }
 
 
-    @Ignore //for quick green while troubleshooting.
     @Test
     public void articleHasMostPopularSidebar() {
-        Wait<WebDriver> wait = new WebDriverWait(driver, 30);
         Assert.assertTrue("Failure: Related content container missing", testArticle.hasMostPopularRight());
     }
 
