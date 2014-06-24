@@ -6,6 +6,7 @@ define([
     'common/utils/config',
     'common/modules/adverts/query-string',
     'common/modules/adverts/dfp',
+    'lodash/functions/throttle',
     'bean'
 ], function(
     $,
@@ -14,23 +15,48 @@ define([
     config,
     queryString,
     dfp,
+    _throttle,
     bean
 ) {
 
     var autoplay = config.page.contentType === 'Video' && /desktop|wide/.test(detect.getBreakpoint());
+    var QUARTILES = [25, 50, 75];
+    // Advert and content events used by analytics. The expected order of bean events is:
+    var EVENTS = [
+        'video:preroll:ready',
+        'video:preroll:play',
+        'video:preroll:end',
+        'video:content:ready',
+        'video:content:play',
+        'video:content:end'
+    ];
 
     var modules = {
 
+        ophanRecord: function(playerEl) {
+            var id = playerEl.getAttribute('data-media-id');
+            return function(event) {
+                require('ophan/ng', function (ophan) {
+                    ophan.record({
+                        'video': {
+                            id: id,
+                            eventType: event.type
+                        }
+                    });
+                });
+            };
+        },
+
+        initOphanTracking: function(playerEl) {
+            modules.ophanRecord = modules.ophanRecord(playerEl);
+            EVENTS.concat(QUARTILES.map(function(q) {
+                return 'video:play:' + q;
+            })).forEach(function(event) {
+                bean.one(playerEl, event, modules.ophanRecord);
+            });
+        },
+
         bindPrerollEvents: function(player, videoEl) {
-
-            // Bind advert and content events used by analytics. The expected order of bean events is:
-            // video:preroll:ready,
-            // video:preroll:play,
-            // video:preroll:end,
-            // video:content:ready,
-            // video:content:play,
-            // video:content:end
-
             var playCount = 0;
             var events = {
                 end: function() {
@@ -59,9 +85,14 @@ define([
                 }
             };
             player.one('adsready', events.ready);
+
+            //If no preroll avaliable or preroll fails, still init content tracking
+            player.one('adtimeout', function() {
+                modules.bindContentEvents(player, videoEl, true);
+            });
         },
 
-        bindContentEvents: function(player, videoEl) {
+        bindContentEvents: function(player, videoEl, instant) {
             var playCount = 0;
             var events = {
                 end: function() {
@@ -69,18 +100,30 @@ define([
                 },
                 playWithDuration: function() {
                     // Only fire the play event when the duration is known.
-                    if (playCount > 0) {
+                    if (playCount > 0 || player.duration()) {
                         bean.fire(videoEl, 'video:content:play');
                         playCount = 0;
                     } else {
                         playCount++;
                     }
                 },
+                timeupdate: function() {
+                    var progress = Math.round(parseInt(player.currentTime()/player.duration()*100, 10));
+                    QUARTILES.reverse().some(function(quart) {
+                        if (progress >= quart) {
+                            bean.fire(videoEl, 'video:play:' + quart);
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    });
+                },
                 ready: function() {
                     bean.fire(videoEl, 'video:content:ready');
 
                     player.one('play', events.playWithDuration);
                     player.one('durationchange', events.playWithDuration);
+                    player.on('timeupdate', _throttle(events.timeupdate, 1000));
                     player.one('ended', events.end);
 
                     if (autoplay) {
@@ -88,7 +131,12 @@ define([
                     }
                 }
             };
-            player.one('loadstart', events.ready);
+            
+            if(instant) {
+                events.ready();
+            } else {
+                player.one('loadstart', events.ready);
+            }
         },
 
         getVastUrl: function() {
@@ -147,8 +195,10 @@ define([
                     vjs.ready(function () {
                         var player = this;
 
+                        modules.initOphanTracking(el);
                         modules.bindPrerollEvents(player, el);
 
+                        // Init plugins
                         player.adCountDown();
 
                         // Init vast adverts.
