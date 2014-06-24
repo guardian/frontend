@@ -113,10 +113,10 @@ trait DiscussionApi extends Http with ExecutionContexts with Logging {
     }
   }
 
-  def discussion(key: DiscussionKey): Future[DiscussionComments] = {
+  def discussion(key: DiscussionKey, page: String): Future[DiscussionComments] = {
     def onError(r: Response) =
       s"Discussion API: Error loading discussion: $key. status: ${r.status}, message: ${r.statusText}, response: ${r.body}"
-    val apiUrl = s"$apiRoot/discussion/$key?displayThreaded=false&pageSize=50&orderBy=newest&showSwitches=true"
+    val apiUrl = s"$apiRoot/discussion/$key?displayThreaded=false&pageSize=50&page=$page&orderBy=newest&showSwitches=true"
 
     getJsonOrError(apiUrl, onError) map {
       json => DiscussionComments(json)
