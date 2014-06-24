@@ -36,14 +36,16 @@ define([
         ophanRecord: function(playerEl) {
             var id = playerEl.getAttribute('data-media-id');
             return function(event) {
-                require('ophan/ng', function (ophan) {
-                    ophan.record({
-                        'video': {
-                            id: id,
-                            eventType: event.type
-                        }
+                if(id) {
+                    require('ophan/ng', function (ophan) {
+                        ophan.record({
+                            'video': {
+                                id: id,
+                                eventType: event.type
+                            }
+                        });
                     });
-                });
+                }
             };
         },
 
@@ -131,7 +133,7 @@ define([
                     }
                 }
             };
-            
+
             if(instant) {
                 events.ready();
             } else {
