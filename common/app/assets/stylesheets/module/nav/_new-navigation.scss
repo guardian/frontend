@@ -372,9 +372,6 @@ $c-new-navigation-signposting-action: guss-colour(neutral-1) !default;
     &.new-navigation--has-no-local-navigation {
         .global-navigation {
             border-left: 0;
-            @include rem((
-                margin-left: -$gs-gutter
-            ));
         }
         .global-navigation__section:first-child {
             @include rem((
