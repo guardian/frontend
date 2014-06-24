@@ -318,19 +318,9 @@ object Switches extends Collections {
 
   // A/B Tests
 
-  val ABHideSupportingLinks = Switch("A/B Tests", "ab-hide-supporting-links",
-    "If this switch is turned on, run the HideSupportingLinks A/B test.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 6, 24)
-  )
-
   val ABAcrossTheGuardian = Switch("A/B Tests", "ab-across-the-guardian",
     "If this switch is turned on, run the AcrossTheGuardian A/B/C/D test.",
     safeState = Off, sellByDate = new DateMidnight(2014, 6, 25)
-  )
-
-  val ABDisplaySociallyReferredBurners = Switch("A/B Tests", "ab-display-socially-referred-burners",
-    "If this switch is turned on, run the DisplayReferredContent A/B test",
-    safeState = Off, sellByDate = new DateMidnight(2014, 6, 24)
   )
 
   val ABSentry = Switch("A/B Tests", "ab-sentry",
@@ -505,9 +495,7 @@ object Switches extends Collections {
     IncludeBuildNumberInMemcachedKey,
     GeoMostPopular,
     TagLinkingSwitch,
-    ABHideSupportingLinks,
     ABAcrossTheGuardian,
-    ABDisplaySociallyReferredBurners,
     ABSentry,
     ABLargerMobileMpu,
     SmartBannerSwitch,

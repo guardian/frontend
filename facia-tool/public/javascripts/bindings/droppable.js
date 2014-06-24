@@ -159,17 +159,11 @@ define([
                     targetList.items.splice(insertAt, 0, newItems[0]);
 
                     opts.newItemsValidator(newItems)
-                    .fail(function() {
+                    .fail(function(err) {
                         _.each(newItems, function(item) { targetList.items.remove(item); });
-                        alertBadContent(id);
+                        alertBadContent(id, err);
                     })
-                    .done(function(reject, msg) {
-                        if (reject) {
-                            _.each(newItems, function(item) { targetList.items.remove(item); });
-                            alertBadContent(id, msg);
-                            return;
-                        }
-
+                    .done(function() {
                         if (_.isFunction(targetList.reflow)) {
                             targetList.reflow();
                         }
@@ -186,7 +180,7 @@ define([
     }
 
     function alertBadContent(id, msg) {
-        window.alert(msg || 'Sorry, but you can\'t add' + (id ? ': ' + id : ' that'));
+        window.alert(msg ? msg + '. ' + id : 'Sorry, but you can\'t add' + (id ? ': ' + id : ' that'));
     }
 
     return droppable;

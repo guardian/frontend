@@ -1,5 +1,6 @@
 {
   "name": "videojs-contrib-ads",
+  "version": "0.2.0",
   "homepage": "https://github.com/videojs/videojs-contrib-ads",
   "authors": [
     "Brightcove"
@@ -23,14 +24,5 @@
     "bower_components",
     "test",
     "tests"
-  ],
-  "_release": "e7c14b3478",
-  "_resolution": {
-    "type": "branch",
-    "branch": "master",
-    "commit": "e7c14b34781742dc6a7ed41234ea1e7f9fa18c9e"
-  },
-  "_source": "git://github.com/guardian/videojs-contrib-ads.git",
-  "_target": "master",
-  "_originalSource": "guardian/videojs-contrib-ads"
+  ]
 }

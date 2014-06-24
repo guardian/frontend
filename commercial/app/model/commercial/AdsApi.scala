@@ -1,12 +1,14 @@
 package model.commercial
 
-import scala.concurrent.Future
-import play.api.libs.json.{Json, JsValue}
-import play.api.libs.ws.WS
-import common.{ExecutionContexts, Logging}
-import scala.xml.{XML, Elem}
 import com.ning.http.util.AsyncHttpProviderUtils
+import common.{ExecutionContexts, Logging}
 import conf.Switch
+import model.diagnostics.CloudWatch
+import play.api.libs.json.{JsValue, Json}
+import play.api.libs.ws.WS
+
+import scala.concurrent.Future
+import scala.xml.{Elem, XML}
 
 trait AdsApi[F, T <: Ad] extends ExecutionContexts with Logging {
 
@@ -25,9 +27,16 @@ trait AdsApi[F, T <: Ad] extends ExecutionContexts with Logging {
 
   def parse(feed: F): Seq[T]
 
+  private def recordLoad(duration: Long) {
+    val feedName = adTypeName.toLowerCase.replaceAll("\\s+", "-")
+    val key = s"$feedName-feed-load-time"
+    CloudWatch.put("Commercial", Map(s"$key" -> duration.toDouble))
+  }
+
   def loadAds(): Future[Seq[T]] = doIfSwitchedOn {
     url map {
       u =>
+        val start = System.currentTimeMillis
         val fads = WS.url(u) withRequestTimeout loadTimeout get() map {
           response => {
             val body = {
@@ -43,10 +52,14 @@ trait AdsApi[F, T <: Ad] extends ExecutionContexts with Logging {
         }
 
         fads onSuccess {
-          case ads => log.info(s"Loaded ${ads.size} $adTypeName from $u")
+          case ads =>
+            log.info(s"Loaded ${ads.size} $adTypeName from $u")
+            recordLoad(System.currentTimeMillis - start)
         }
         fads onFailure {
-          case e: Exception => log.error(s"Loading $adTypeName ads from $u failed: ${e.getMessage}")
+          case e: Exception =>
+            log.error(s"Loading $adTypeName ads from $u failed: ${e.getMessage}")
+            recordLoad(-1)
         }
 
         fads
