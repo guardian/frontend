@@ -910,7 +910,7 @@ $c-new-navigation-signposting-action: guss-colour(neutral-1) !default;
         padding-left: $gs-gutter,
         padding-bottom: 8px
     ));
-    font-weight: 300;
+    font-weight: bold;
     color: rgba(#ffffff, .5);
 
     @include mq(tablet) {
