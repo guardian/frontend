@@ -1,42 +1,42 @@
 /**
- * CSS3 animated version of our loading gif
+ * pamplemousse - CSS3 animated version of our loading gif
  */
 
-$loader-dot-size-small: 5px;
-$loader-dot-size-large: 15px;
-$loader-dot-spacing: 17px;
-$loader-dot-margin-small: ($loader-dot-spacing - $loader-dot-size-small) / 2;
-$loader-dot-margin-large: ($loader-dot-spacing - $loader-dot-size-large) / 2;
+$pamplemousse-dot-size-small: 5px;
+$pamplemousse-dot-size-large: 15px;
+$pamplemousse-dot-spacing: 17px;
+$pamplemousse-dot-margin-small: ($pamplemousse-dot-spacing - $pamplemousse-dot-size-small) / 2;
+$pamplemousse-dot-margin-large: ($pamplemousse-dot-spacing - $pamplemousse-dot-size-large) / 2;
 
 @include keyframes(pulsate) {
     25% {
-        width: $loader-dot-size-large;
-        height: $loader-dot-size-large;
-        margin: $loader-dot-margin-large;
+        width: $pamplemousse-dot-size-large;
+        height: $pamplemousse-dot-size-large;
+        margin: $pamplemousse-dot-margin-large;
     }
     50% {
-        width: $loader-dot-size-small;
-        height: $loader-dot-size-small;
-        margin: $loader-dot-margin-small;
+        width: $pamplemousse-dot-size-small;
+        height: $pamplemousse-dot-size-small;
+        margin: $pamplemousse-dot-margin-small;
     }
 }
 
-.loading-wrapper {
+.pamplemousse {
     position: relative;
 }
 
-.loading-dot {
+.pamplemousse__pip {
     background-color: $c-neutral2;
     border-radius: 100px;
-    width: $loader-dot-size-small;
-    height: $loader-dot-size-small;
-    margin: $loader-dot-margin-small;
+    width: $pamplemousse-dot-size-small;
+    height: $pamplemousse-dot-size-small;
+    margin: $pamplemousse-dot-margin-small;
     display: block;
     @include animation(pulsate 2s ease-in-out infinite);
     border: 1px solid lighten($c-neutral2, 15%);
     float: left;
 }
 
-.loading-dot:nth-child(1) { @include animation-delay(0s); }
-.loading-dot:nth-child(2) { @include animation-delay(.33s); }
-.loading-dot:nth-child(3) { @include animation-delay(.66s); }
+.pamplemousse__pip:nth-child(1) { @include animation-delay(0s); }
+.pamplemousse__pip:nth-child(2) { @include animation-delay(.33s); }
+.pamplemousse__pip:nth-child(3) { @include animation-delay(.66s); }

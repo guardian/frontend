@@ -158,10 +158,10 @@ define([
                         });
 
                         player.loadingSpinner.contentEl().innerHTML =
-                            '<div class="loading-wrapper">' +
-                                '<div class="loading-dot"></div>' +
-                                '<div class="loading-dot"></div>' +
-                                '<div class="loading-dot"></div>' +
+                            '<div class="pamplemousse">' +
+                                '<div class="pamplemousse__pip"></div>' +
+                                '<div class="pamplemousse__pip"></div>' +
+                                '<div class="pamplemousse__pip"></div>' +
                             '</div>';
 
                     });
