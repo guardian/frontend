@@ -5,8 +5,11 @@ import conf.AdminConfiguration
 import conf.Configuration.commercial.{dfpAdvertisementFeatureTagsDataKey, dfpSponsoredTagsDataKey, dfpPageSkinnedAdUnitsKey, dfpLineItemsKey}
 import services.S3
 import play.api.libs.json.Json
+import dfp.{SponsorshipReport, SponsorshipReportParser}
+import org.joda.time.DateTime
+import implicits.Dates
 
-trait Store extends Logging {
+trait Store extends Logging with Dates {
   lazy val configKey = AdminConfiguration.configKey
   lazy val switchesKey = AdminConfiguration.switchesKey
   lazy val topStoriesKey = AdminConfiguration.topStoriesKey
@@ -37,8 +40,10 @@ trait Store extends Logging {
     S3.putPublic(dfpLineItemsKey, everything, defaultJsonEncoding)
   }
 
-  def getDfpSponsoredTags() = S3.get(dfpSponsoredTagsDataKey)
-  def getDfpAdvertisementTags() = S3.get(dfpAdvertisementFeatureTagsDataKey)
+  val now: String = DateTime.now().toHttpDateTimeString
+
+  def getDfpSponsoredTags() = S3.get(dfpSponsoredTagsDataKey).flatMap(SponsorshipReportParser(_)) getOrElse(SponsorshipReport(now, Nil))
+  def getDfpAdvertisementTags() = S3.get(dfpAdvertisementFeatureTagsDataKey).flatMap(SponsorshipReportParser(_)) getOrElse(SponsorshipReport(now, Nil))
   def getDfpPageSkinnedAdUnits() = S3.get(dfpPageSkinnedAdUnitsKey)
   def getDfpLineItemsReport() = S3.get(dfpLineItemsKey)
 }

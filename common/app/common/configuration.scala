@@ -201,9 +201,9 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val travel_url = configuration.getMandatoryStringProperty("commercial.travel_url")
 
     lazy val dfpSponsoredTagsDataKey =
-      s"${environment.stage.toUpperCase}/commercial/dfp/sponsored-tags.json"
+      s"${environment.stage.toUpperCase}/commercial/dfp/sponsored-tags-v2.json"
     lazy val dfpAdvertisementFeatureTagsDataKey =
-      s"${environment.stage.toUpperCase}/commercial/dfp/advertisement-feature-tags.json"
+      s"${environment.stage.toUpperCase}/commercial/dfp/advertisement-feature-tags-v2.json"
     lazy val dfpPageSkinnedAdUnitsKey =
       s"${environment.stage.toUpperCase}/commercial/dfp/pageskinned-adunits.json"
     lazy val dfpLineItemsKey =

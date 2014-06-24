@@ -10,13 +10,13 @@ define([
 
     var gatewayUrl = '//pq-direct.revsci.net/pql',
         sectionPlacements = {
-            sport:        ['FKSWod', '2xivTZ'],
-            football:     ['6FaXJO', 'ORE2W-'],
-            lifeandstyle: ['TQV1_5', 'J0tykU', 'kLC9nW'],
-            technology:   ['9a9VRE', 'TL3gqK'],
-            fashion:      ['TQV1_5', 'J0tykU', 'kLC9nW'],
-            news:         ['eMdl6Y', 'mMYVrM'],
-            'default':    ['c7Zrhu', 'Y1C40a', 'LtKGsC', 'MTLELH']
+            sport:        ['FKSWod', '2xivTZ', 'MTLELH'],
+            football:     ['6FaXJO', 'ORE2W-', 'MTLELH'],
+            lifeandstyle: ['TQV1_5', 'J0tykU', 'kLC9nW', 'MTLELH'],
+            technology:   ['9a9VRE', 'TL3gqK', 'MTLELH'],
+            fashion:      ['TQV1_5', 'J0tykU', 'kLC9nW', 'MTLELH'],
+            news:         ['eMdl6Y', 'mMYVrM', 'MTLELH'],
+            'default':    ['c7Zrhu', 'Y1C40a', 'LtKGsC']
         },
         segments = [],
         load = once(function() {

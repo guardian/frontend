@@ -178,6 +178,7 @@ Comments.prototype.ready = function() {
     if (this.options.commentId) {
         var comment = $('#comment-'+ this.options.commentId);
         this.showHiddenComments();
+        $('.d-discussion__show-all-comments').addClass('u-h');
         if (comment.attr('hidden')) {
             bean.fire($(this.getClass('showReplies'), comment.parent())[0], 'click');
         }
@@ -589,6 +590,7 @@ Comments.prototype.setOrder = function(e) {
     return this.fetchComments({
         page: 1
     }).then(function() {
+        this.showHiddenComments();
         this.loaded();
     }.bind(this));
 };

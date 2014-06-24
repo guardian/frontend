@@ -24,6 +24,15 @@ trait ProfileActivityController extends DiscussionController {
     }
   }
 
+  def profileSearch(userId: String, q: String) = Action.async { implicit request =>
+    val page = request.getQueryString("page") getOrElse "1"
+    discussionApi.profileSearch(userId, q, page) map { comments =>
+      Cached(60) {
+        JsonComponent("html" -> views.html.profileActivity.comments(comments))
+      }
+    }
+  }
+
   def profilePicks(userId: String) = Action.async { implicit request =>
     val page = request.getQueryString("page") getOrElse "1"
     discussionApi.profileComments(userId, page, picks = true) map { picks =>

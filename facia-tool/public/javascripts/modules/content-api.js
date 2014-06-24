@@ -3,6 +3,7 @@ define([
     'modules/authed-ajax',
     'modules/vars',
     'modules/cache',
+    'utils/internal-content-code',
     'utils/url-abs-path',
     'utils/snap'
 ],
@@ -10,6 +11,7 @@ function (
     authedAjax,
     vars,
     cache,
+    internalContentCode,
     urlAbsPath,
     snap
 ){
@@ -29,35 +31,45 @@ function (
 
         } else if (data) {
             item.id(capiId);
-            populate(data, item);
+            populate(item, data);
             defer.resolve();
 
         } else {
             fetchContentByIds([capiId])
-            .done(function(result) {
+            .done(function(results) {
+                var capiItem,
+                    icc,
+                    err;
+
                 // ContentApi item
-                if (result.length === 1) {
-                    item.id(capiId);
-                    cache.put('contentApi', capiId, result[0]);
-                    populate(result[0], item);
-                    defer.resolve();
+                if (results.length === 1) {
+                    capiItem = results[0];
+                    icc = internalContentCode(capiItem);
+                    if (icc) {
+                        populate(item, capiItem);
+                        cache.put('contentApi', icc, capiItem);
+                        item.id(icc);
+                    } else {
+                        err = 'Sorry, that article is malformed (has no internalContentCode)';
+                    }
 
                 // Snap, but they're disabled
                 } else if (!vars.model.switches()['facia-tool-snaps']) {
-                    defer.resolve(true, 'Sorry, that link wasn\'t recognised. It cannot be added to a front.');
+                    err = 'Sorry, that link wasn\'t recognised. It cannot be added to a front';
 
                 // Snap, but cannot be added in live mode if it has no headline
                 } else if (vars.model.liveMode() &&
                     item.parentType !== 'Clipboard' &&
                     !item.fields.headline() &&
                     !item.meta.headline()) {
-                    defer.resolve(true, 'Sorry, snaps without headlines can\'t be added in live mode.');
+                    err = 'Sorry, snaps without headlines can\'t be added in live mode';
 
                 // Snap!
                 } else {
                     item.convertToSnap();
-                    defer.resolve();
                 }
+
+                defer[err ? 'reject' : 'resolve'](err);
             });
         }
 
@@ -78,7 +90,7 @@ function (
         articles.forEach(function(article){
             var data = cache.get('contentApi', article.id());
             if(data) {
-                populate(data, article);
+                populate(article, data);
             } else {
                 ids.push(article.id());
             }
@@ -87,12 +99,17 @@ function (
         fetchContentByIds(ids)
         .done(function(results){
             results.forEach(function(result) {
-                cache.put('contentApi', result.id, result);
-                _.filter(articles, function(article){
-                    return article.id() === result.id;
-                }).forEach(function(article){
-                    populate(result, article);
-                });
+                var icc = internalContentCode(result);
+
+                if(icc) {
+                    cache.put('contentApi', icc, result);
+
+                    _.filter(articles, function(article) {
+                        return article.id() === icc || article.id() === result.id; // TODO: remove 2nd clause after full transition to internal-code/content/ ids
+                    }).forEach(function(article) {
+                        populate(article, result);
+                    });
+                }
             });
 
            _.chain(articles)
@@ -103,7 +120,7 @@ function (
         });
     }
 
-    function populate(opts, article) {
+    function populate(article, opts) {
         article.populate(opts, true);
     }
 

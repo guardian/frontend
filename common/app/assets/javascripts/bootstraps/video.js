@@ -150,8 +150,6 @@ define([
                         modules.bindPrerollEvents(player, el);
 
                         player.adCountDown();
-
-                        // Init vast adverts.
                         player.ads({
                             timeout: 3000
                         });
