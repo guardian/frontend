@@ -37,4 +37,9 @@ public class NetworkFrontDate {
         return dayOfWeek;
     }
 
+    @Override
+    public String toString() {
+        return "NetworkFrontDate [dayOfWeek=" + dayOfWeek + ", dayOfMonth=" + dayOfMonth + ", month=" + month
+                + ", year=" + year + "]";
+    }
 }

@@ -30,10 +30,6 @@ import com.gu.fronts.integration.test.common.util.IoUtils;
 public class WiremockStubPressedJsonBuilder {
 
     private static Log LOG = LogFactory.getLog(WiremockStubPressedJsonBuilder.class);
-
-    // stubPath("/uk").withResponse("NetworkStartPage-pressed.json");
-    // @Value("${fronts.env}")
-    // protected String frontsEnv;
     private MappingBuilder mappingBuilder;
     private String path;
 
