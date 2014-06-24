@@ -5,6 +5,8 @@
 # For dev machines
 GET        /assets/*path                                             dev.DevAssetsController.at(path)
 
+GET         /commercial/creative                                    controllers.Assets.at(path="/public", file="creative.html")
+
 # Travel offers
 GET        /commercial/travel/offers                                 controllers.commercial.TravelOffers.travelOffersLowHtml
 GET        /commercial/travel/offers.json                            controllers.commercial.TravelOffers.travelOffersLowJson
