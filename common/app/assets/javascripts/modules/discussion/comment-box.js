@@ -308,15 +308,12 @@ CommentBox.prototype.setFormState = function(disabled) {
     disabled = typeof disabled === 'boolean' ? disabled : false;
 
     var commentBody = this.getElem('body'),
-        submitButton = this.getElem('submit'),
-        previewSubmitButton = this.getElem('preview-submit');
+        submitButton = this.getElem('submit');
 
     if (disabled || commentBody.value.length === 0) {
         submitButton.setAttribute('disabled', 'disabled');
-        previewSubmitButton.setAttribute('disabled', 'disabled');
     } else {
         submitButton.removeAttribute('disabled');
-        previewSubmitButton.removeAttribute('disabled');
     }
 };
 
