@@ -42,7 +42,7 @@ class HealthcheckPage(urls: String*) extends UrlPagesHealthcheckManagementPage(u
 
 object HealthcheckPage extends HealthcheckPage("/world/2012/sep/11/barcelona-march-catalan-independence") {
 
-  // the preview typo server has an nginx running on port 80
+  // the preview server has an nginx running on port 80
   override val base = "http://localhost"
 }
 
