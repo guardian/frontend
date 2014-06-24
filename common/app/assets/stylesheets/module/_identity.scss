@@ -445,11 +445,14 @@
 
     .membership-tab__update-button--muted {
         background: none;
+        color: $c-newsDefault;
         &:hover,
-        &:active,
         &:focus {
             background: none;
             text-decoration: underline;
+        }
+        &:active {
+            color: $c-newsAccent;
         }
     }
 }

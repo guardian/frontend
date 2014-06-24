@@ -147,14 +147,14 @@ define(['common/$',
     Membership.prototype.openFormAndUpdate = function () {
         var self = this;
         self.form.$cont.removeClass(self.getClass('ANIM_CLOSE', true) + ' ' + self.getClass('ANIM_CLOSED', true)).addClass(self.getClass('ANIM_OPEN', true));
-        self.form.$button.addClass('membership-tab__update-button--muted u-fauxlink')
+        self.form.$button.addClass('membership-tab__update-button--muted')
             .text('Cancel');
     };
 
     Membership.prototype.closeFormAndUpdate = function () {
         var self = this;
         self.form.$cont.removeClass(self.getClass('ANIM_OPEN', true) + ' ' + self.getClass('ANIM_OPENED', true)).addClass(self.getClass('ANIM_CLOSE', true));
-        self.form.$button.removeClass('membership-tab__update-button--muted u-fauxlink')
+        self.form.$button.removeClass('membership-tab__update-button--muted')
             .text('Change');
     };
 
@@ -173,7 +173,7 @@ define(['common/$',
             self.paymentForm = new PaymentForm().init(self.getElem('CC_CHANGE_FORM_CONT'), function (resp) {
                 // hide form
                 self.changeCCFormIsOpen = false;
-                self.closeFormAndUpdate.bind(self)();
+                self.closeFormAndUpdate();
 
                 // update cc last4 with new details
                 $(self.getElem('CC_LAST4')).text(resp.last4);
@@ -193,11 +193,11 @@ define(['common/$',
 
                 if (!self.changeCCFormIsOpen) { // open
                     self.changeCCFormIsOpen = true;
-                    self.openFormAndUpdate.bind(self)();
+                    self.openFormAndUpdate();
                     self.removeSuccessMessage();
                 } else { // close
                     self.changeCCFormIsOpen = false;
-                    self.closeFormAndUpdate.bind(self)();
+                    self.closeFormAndUpdate();
                 }
             });
 
