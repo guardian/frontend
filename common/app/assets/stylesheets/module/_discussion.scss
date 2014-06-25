@@ -1093,7 +1093,7 @@ $avatarSize: 44px;
 .d-actions__link:focus {
     display: block;
     @include rem((
-        padding-right: $gutter*2,
+        padding-right: $gs-gutter,
         margin: ($gs-baseline/3)*4 0
     ));
     @include fs-textsans(1);
@@ -1124,7 +1124,7 @@ $avatarSize: 44px;
     @include rem((
         height: 50px,
         margin: ($gs-baseline/3)*2 0,
-        padding: ($gs-baseline/3)*2 $gutter/2
+        padding: ($gs-baseline/3)*2 $gs-gutter/2
     ));
     resize: vertical;
     width: 100%;
@@ -1303,7 +1303,7 @@ $avatarSize: 44px;
         @include fs-textsans(1);
         color: $c-neutral2;
         @include rem((
-            margin: $gutter 0
+            margin: $gs-gutter 0
         ));
     }
     .d-comment-box--preview-visible & {
