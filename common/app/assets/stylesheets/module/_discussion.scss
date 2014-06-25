@@ -1183,7 +1183,7 @@ $avatarSize: 44px;
 .d-comment-box__preview {
     @include fs-textsans(1);
     color: $c-neutral2;
-    font-weight:bold;
+    font-weight: bold;
 }
 .d-comment-box__hide-parent,
 .d-comment-box__show-parent {
@@ -1313,7 +1313,7 @@ $avatarSize: 44px;
     display: none;
     .d-comment-box__preview-block {
         background-color: $c-neutral7;
-        display:block;
+        display: block;
         @include rem((
             padding: $gs-baseline $gs-gutter,
         ));
