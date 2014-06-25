@@ -152,15 +152,15 @@ $avatarSize: 44px;
     display: inline-block;
 }
 .d-discussion__show-all-comments {
-    position: relative;
-    display: none;
-    padding-left: 55px;
     @include fs-textsans(4);
     @include rem((
         height: 40px,
         line-height: 40px
     ));
+    display: none;
     font-weight: bold;
+    padding-left: 55px;
+    position: relative;
 
     .i-show-all-comments {
         position: absolute;
@@ -169,7 +169,9 @@ $avatarSize: 44px;
     .i-arrow-blue-down {
         margin-left: ($gs-baseline/3)*2;
     }
-    &.d-discussion__show-all-comments-visible {
+
+    .d-discussion--partial &,
+    .d-discussion--shut & {
         display: inline-block;
     }
 }
