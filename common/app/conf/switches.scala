@@ -318,11 +318,6 @@ object Switches extends Collections {
 
   // A/B Tests
 
-  val ABAcrossTheGuardian = Switch("A/B Tests", "ab-across-the-guardian",
-    "If this switch is turned on, run the AcrossTheGuardian A/B/C/D test.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 6, 25)
-  )
-
   val ABSentry = Switch("A/B Tests", "ab-sentry",
     "If this switch is turned on, users JavaScript errors will be beaconed back to the Sentry server.",
     safeState = Off, sellByDate = new DateMidnight(2014, 6, 27)
@@ -495,7 +490,6 @@ object Switches extends Collections {
     IncludeBuildNumberInMemcachedKey,
     GeoMostPopular,
     TagLinkingSwitch,
-    ABAcrossTheGuardian,
     ABSentry,
     ABLargerMobileMpu,
     SmartBannerSwitch,

@@ -27,6 +27,7 @@ Provides Sass mixins for the most frequently used CSS3 features.
 
 .element {
     @include animation(fadeIn 5s ease-out);
+    @include animation-delay(1s);
     @include background-size(100% 60%);
     @include border-radius(30px);
     @include box-shadow(none);

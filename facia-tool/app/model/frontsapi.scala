@@ -8,10 +8,9 @@ import scala.util.{Success, Failure, Try}
 import common.Logging
 import conf.Configuration
 
-case class Config(
-  fronts: Map[String, Front],
-  collections: Map[String, Collection]
-)
+object Front {
+  implicit val jsonFormat = Json.format[Front]
+}
 
 case class Front(
                   collections: List[String],
@@ -21,6 +20,13 @@ case class Front(
                   description: Option[String],
                   priority: Option[String]
                   )
+
+object Collection {
+  implicit val jsonFormat = Json.format[Collection]
+
+  /** TODO emulate the current IDs as generated in the JavaScript */
+  def nextId = java.util.UUID.randomUUID().toString
+}
 
 case class Collection(
                   displayName: Option[String],
@@ -32,6 +38,31 @@ case class Collection(
                   showTags: Option[Boolean],
                   showSections: Option[Boolean]
                   )
+
+object Config {
+  implicit val jsonFormat = Json.format[Config]
+
+  def empty = Config(Map.empty, Map.empty)
+}
+
+case class Config(
+  fronts: Map[String, Front],
+  collections: Map[String, Collection]
+)
+
+object Trail {
+  implicit val jsonFormat = Json.format[Trail]
+}
+
+case class Trail(
+  id: String,
+  frontPublicationDate: Option[DateTime],
+  meta: Option[Map[String, JsValue]]
+)
+
+object Block {
+  implicit val jsonFormat = Json.format[Block]
+}
 
 case class Block(
                   name: Option[String],
@@ -57,14 +88,24 @@ case class Block(
 
 }
 
-case class Trail(
-                  id: String,
-                  frontPublicationDate: Option[DateTime],
-                  meta: Option[Map[String, JsValue]]
-                  )
+object UpdateList {
+  implicit val jsonFormat = Json.format[UpdateList]
+}
 
+case class UpdateList(
+  id: String,
+  item: String,
+  position: Option[String],
+  after: Option[Boolean],
+  itemMeta: Option[Map[String, JsValue]],
+  live: Boolean,
+  draft: Boolean
+)
 
-case class UpdateList(id: String, item: String, position: Option[String], after: Option[Boolean], itemMeta: Option[Map[String, JsValue]], live: Boolean, draft: Boolean)
+object CollectionMetaUpdate {
+  implicit val jsonFormat = Json.format[CollectionMetaUpdate]
+}
+
 case class CollectionMetaUpdate(
   displayName: Option[String],
   href: Option[String]
