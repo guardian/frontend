@@ -81,7 +81,7 @@ object Switches extends Collections {
 
   val CssFromStorageSwitch = Switch("Performance Switches", "css-from-storage",
     "If this switch is on CSS will be cached in users localStorage and read from there on subsequent requests.",
-    safeState = Off, sellByDate = never
+    safeState = On, sellByDate = never
   )
 
   val ShowAllArticleEmbedsSwitch = Switch("Performance Switches", "show-all-embeds",
@@ -230,7 +230,7 @@ object Switches extends Collections {
 
   val FontSwitch = Switch("Feature Switches", "web-fonts",
     "If this is switched on then the custom Guardian web font will load.",
-    safeState = Off, sellByDate = never
+    safeState = On, sellByDate = never
   )
 
   val SearchSwitch = Switch("Feature Switches", "google-search",
