@@ -126,11 +126,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 6, 30)
   )
 
-  val SurveyBannerSwitch = Switch("Advertising", "survey-banner",
-    "Display survey banner on all devices",
-    safeState = Off, sellByDate = new DateMidnight(2014, 7, 1)
-  )
-
   // Ad Targeting
   /*
     These switches are to control length of request to DFP
@@ -289,11 +284,6 @@ object Switches extends Collections {
   val TagLinkingSwitch = Switch("Feature Switches", "tag-linking",
     "If this switch is turned on then tags will be 'auto' linked to where possible in article bodies",
     safeState = On, sellByDate = new DateMidnight(2014, 6, 30)
-  )
-
-  val NewNavigationSwitch = Switch("Feature Switches", "new-navigation",
-    "If this switch is turned on then the new navigation will be displayed on mobiles and tablets",
-    safeState = Off, sellByDate = new DateMidnight(2014, 7, 8)
   )
 
   val EnhanceTweetsSwitch = Switch("Feature Switches", "enhance-tweets",
@@ -480,7 +470,6 @@ object Switches extends Collections {
     FaciaToolContainerTagsSwitch,
     RssLinkSwitch,
     EnhanceTweetsSwitch,
-    NewNavigationSwitch,
     WorldCupWallchartEmbedSwitch,
     WorldCupArticleContainerSwitch,
     ProfileCommentsSearchSwitch,
@@ -493,7 +482,6 @@ object Switches extends Collections {
     ABSentry,
     ABLargerMobileMpu,
     SmartBannerSwitch,
-    SurveyBannerSwitch,
     ParameterlessImagesSwitch,
     FreshnessLoggingSwitch,
     SeoOptimisedContentImageSwitch,
