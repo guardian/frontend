@@ -292,8 +292,6 @@ CommentBox.prototype.fail = function(xhr) {
 CommentBox.prototype.previewCommentSuccess = function(comment, resp) {
     this.getElem('preview-body').innerHTML = resp.commentBody;
     this.setState('preview-visible');
-    $(this.getClass('hide-preview'), this.elem).removeClass('u-h');
-    $(this.getClass('preview'), this.elem).addClass('u-h');
 };
 
 /**
@@ -394,13 +392,9 @@ CommentBox.prototype.cancelComment = function() {
 };
 
 
-/**
- * @param {Event=} e (optional)
- */
-CommentBox.prototype.resetPreviewComment = function(e) {
+
+CommentBox.prototype.resetPreviewComment = function() {
     this.removeState('preview-visible');
-    $(this.getClass('hide-preview'), this.elem).addClass('u-h');
-    $(this.getClass('preview'), this.elem).removeClass('u-h');
     this.getElem('preview-body').innerHTML = '';
 };
 
