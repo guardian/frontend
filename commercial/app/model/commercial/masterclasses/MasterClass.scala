@@ -1,15 +1,15 @@
 package model.commercial.masterclasses
 
-import model.commercial.lastPart
-import model.commercial.{Segment, Ad}
+import model.ImageContainer
+import model.commercial.{Ad, Segment, lastPart}
 import org.apache.commons.lang.StringUtils
 import org.joda.time.DateTime
-import org.joda.time.format.{DateTimeFormatter, DateTimeFormat}
+import org.joda.time.format.{DateTimeFormat, DateTimeFormatter}
 import org.jsoup.Jsoup
-import org.jsoup.nodes.{Element, Document}
+import org.jsoup.nodes.{Document, Element}
 import play.api.libs.json.JsValue
 
-case class MasterClass(eventBriteEvent: EventbriteMasterClass, imageElement: Option[model.ImageElement]) extends Ad {
+case class MasterClass(eventBriteEvent: EventbriteMasterClass, mainPicture: Option[ImageContainer]) extends Ad {
 
   def isTargetedAt(segment: Segment) = eventBriteEvent.isTargetedAt(segment)
 }
