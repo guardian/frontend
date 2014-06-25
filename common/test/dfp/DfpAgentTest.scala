@@ -18,7 +18,7 @@ class DfpAgentTest extends FlatSpec with Matchers {
       Sponsorship(Seq("film"), None)
     )
 
-    override protected def pageskinnedAdUnits: Seq[String] = Seq("theguardian.com/business/front")
+    override protected def pageskinnedAdUnits: Seq[PageSkinSponsorship] = Seq(PageSkinSponsorship("lineItemName", 1234L, Seq("theguardian.com/business/front")))
   }
 
   def apiQuery(apiQuery: String) = {

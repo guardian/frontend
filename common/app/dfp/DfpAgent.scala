@@ -16,7 +16,7 @@ trait DfpAgent {
 
   protected def sponsoredTags: Seq[Sponsorship]
   protected def advertisementFeatureTags: Seq[Sponsorship]
-  protected def pageskinnedAdUnits: Seq[String]
+  protected def pageskinnedAdUnits: Seq[PageSkinSponsorship]
 
   private def containerSponsoredTags(config: Config, p: String => Boolean): Option[String] = {
     config.contentApiQuery.flatMap { encodedQuery =>
@@ -67,20 +67,15 @@ object DfpAgent extends DfpAgent with ExecutionContexts {
 
   private lazy val sponsoredTagsAgent = AkkaAgent[Seq[Sponsorship]](Nil)
   private lazy val advertisementFeatureTagsAgent = AkkaAgent[Seq[Sponsorship]](Nil)
-  private lazy val pageskinnedAdUnitAgent = AkkaAgent[Seq[String]](Nil)
+  private lazy val pageskinnedAdUnitAgent = AkkaAgent[Seq[PageSkinSponsorship]](Nil)
 
   protected def sponsoredTags: Seq[Sponsorship] = sponsoredTagsAgent get()
   protected def advertisementFeatureTags: Seq[Sponsorship] = advertisementFeatureTagsAgent get()
-  protected def pageskinnedAdUnits: Seq[String] = pageskinnedAdUnitAgent get()
+  protected def pageskinnedAdUnits: Seq[PageSkinSponsorship] = pageskinnedAdUnitAgent get()
 
   def refresh() {
 
     def stringFromS3(key: String) = S3.get(key)(UTF8)
-    def json(key: String) =  stringFromS3(key) map parse
-
-    def grabListFromStore(key: String): Seq[String] = {
-      json(key).fold(Seq[String]())(_.as[Seq[String]])
-    }
 
     def grabSponsorshipsFromStore(key: String): Seq[Sponsorship] = {
       val reportOption: Option[SponsorshipReport] = for {
@@ -89,6 +84,15 @@ object DfpAgent extends DfpAgent with ExecutionContexts {
       } yield report
       
       reportOption.fold(Seq[Sponsorship]())(_.sponsorships)
+    }
+
+    def   grabPageSkinSponsorshipsFromStore(key: String): Seq[PageSkinSponsorship] = {
+      val reportOption: Option[PageSkinSponsorshipReport] = for {
+        jsonString <- stringFromS3(key)
+        report <- PageSkinSponsorshipReportParser(jsonString)
+      } yield report
+
+      reportOption.fold(Seq[PageSkinSponsorship]())(_.sponsorships)
     }
 
     def update[T](agent: Agent[Seq[T]], freshData: Seq[T]) = {
@@ -103,7 +107,7 @@ object DfpAgent extends DfpAgent with ExecutionContexts {
 
     update(sponsoredTagsAgent, grabSponsorshipsFromStore(dfpSponsoredTagsDataKey))
     update(advertisementFeatureTagsAgent, grabSponsorshipsFromStore(dfpAdvertisementFeatureTagsDataKey))
-    update(pageskinnedAdUnitAgent, grabListFromStore(dfpPageSkinnedAdUnitsKey))
+    update(pageskinnedAdUnitAgent, grabPageSkinSponsorshipsFromStore(dfpPageSkinnedAdUnitsKey))
   }
 
   def stop() {
