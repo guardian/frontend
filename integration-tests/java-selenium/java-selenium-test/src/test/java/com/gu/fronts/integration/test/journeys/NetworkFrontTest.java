@@ -1,8 +1,5 @@
 package com.gu.fronts.integration.test.journeys;
 
-import static com.github.tomakehurst.wiremock.client.WireMock.getRequestedFor;
-import static com.github.tomakehurst.wiremock.client.WireMock.urlMatching;
-import static com.github.tomakehurst.wiremock.client.WireMock.verify;
 import static com.gu.fronts.integration.test.page.nwfront.NetworkFrontPage.IN_PICTURES_CONTAINER_ID;
 import static com.gu.fronts.integration.test.page.nwfront.NetworkFrontPage.SPORT_CONTAINER_ID;
 import static com.gu.fronts.integration.test.page.nwfront.NetworkFrontPage.TOP_STORIES_CONTAINER_ID;
@@ -13,14 +10,10 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import org.junit.runner.RunWith;
 import org.openqa.selenium.WebElement;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.gu.fronts.integration.test.categories.Stubbed;
-import com.gu.fronts.integration.test.common.StubbedFrontsIntegrationTestCase;
-import com.gu.fronts.integration.test.config.SpringTestConfig;
+import com.gu.fronts.integration.test.common.FrontsIntegrationTestCase;
 import com.gu.fronts.integration.test.page.common.Article;
 import com.gu.fronts.integration.test.page.common.FaciaArticle;
 import com.gu.fronts.integration.test.page.common.FaciaContainer;
@@ -28,15 +21,11 @@ import com.gu.fronts.integration.test.page.common.FaciaGalleryItem;
 import com.gu.fronts.integration.test.page.common.GalleryOverlay;
 import com.gu.fronts.integration.test.page.nwfront.NetworkFrontPage;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = SpringTestConfig.class)
-public class NetworkFrontTest extends StubbedFrontsIntegrationTestCase {
+public class NetworkFrontTest extends FrontsIntegrationTestCase {
 
     @Test
     @Category(Stubbed.class)
     public void networkStartPageBasicJourney() throws Exception {
-        pressedStub.path("/uk").withResponse("NetworkStartPage-pressed.json");
-        pressedStub.path("/uk/sport").withResponse("sports-pressed-small.json");
 
         networkFrontPage = openNetworkFrontPage().isDisplayed();
         networkFrontPage = checkHeaderAndFooter();
@@ -48,16 +37,11 @@ public class NetworkFrontTest extends StubbedFrontsIntegrationTestCase {
                 .isDisplayed();
         FaciaContainer standaloneSports = sportsContainer.clickHeader();
         standaloneSports.isDisplayed();
-
-        // not really neccessary to do this, because the test would have failed anyway if the stub was not properly
-        // returning responses, but just to illustrate how it works
-        verify(getRequestedFor(urlMatching(".*/uk/.*")));
     }
 
     @Test
     @Category(Stubbed.class)
     public void networkFrontPageClickThroughArticleJourney() throws Exception {
-        pressedStub.path("/uk").withResponse("NetworkStartPageSmall-pressed.json");
         networkFrontPage = openNetworkFrontPage();
         networkFrontPage = networkFrontPage.isDisplayed();
 
@@ -77,7 +61,6 @@ public class NetworkFrontTest extends StubbedFrontsIntegrationTestCase {
     @Test
     @Category(Stubbed.class)
     public void networkFrontPageClickThroughPictureGallery() throws Exception {
-        pressedStub.path("/uk").withResponse("NetworkStartPage-pressed.json");
         networkFrontPage = openNetworkFrontPage();
 
         FaciaContainer inPicturesContainer = networkFrontPage.containers().containerWithId(IN_PICTURES_CONTAINER_ID)

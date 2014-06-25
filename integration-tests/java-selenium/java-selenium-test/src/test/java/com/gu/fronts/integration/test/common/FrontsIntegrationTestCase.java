@@ -1,13 +1,11 @@
 package com.gu.fronts.integration.test.common;
 
-import org.junit.After;
-import org.junit.BeforeClass;
-import org.openqa.selenium.WebDriver;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
+import static com.gu.fronts.integration.test.config.PropertyLoader.getProperty;
 
-import com.gu.fronts.integration.test.config.EnvironmentConfigurer;
+import org.junit.After;
+import org.openqa.selenium.WebDriver;
+
+import com.gu.fronts.integration.test.config.WebdriverFactory;
 import com.gu.fronts.integration.test.page.nwfront.NetworkFrontPage;
 import com.gu.fronts.integration.test.page.util.CustomPageFactory;
 
@@ -17,20 +15,13 @@ import com.gu.fronts.integration.test.page.util.CustomPageFactory;
  */
 public class FrontsIntegrationTestCase {
 
-    @Autowired
-    @Qualifier("firefox")
-    protected WebDriver webDriver;
-    @Value("${fronts.base.url}")
-    private String frontsBaseUrl;
-    @Autowired
-    protected CustomPageFactory pageFactoryHelper;
+    protected WebDriver webDriver = WebdriverFactory.getDefaultWebDriver();
+
+    private String frontsBaseUrl = getProperty("fronts.base.url");
+
+    protected CustomPageFactory pageFactoryHelper = new CustomPageFactory();
 
     protected NetworkFrontPage networkFrontPage;
-
-    @BeforeClass
-    public static void testClassSetup() {
-        EnvironmentConfigurer.setupEnvironmentProperty();
-    }
 
     @After
     public void cleanSlate() {

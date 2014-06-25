@@ -10,12 +10,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.ElementLocatorFactory;
-import org.springframework.stereotype.Component;
 
 import com.gu.fronts.integration.test.fw.selenium.CustomElementLocatorFactory;
 import com.gu.fronts.integration.test.fw.selenium.CustomFieldDecorator;
 
-@Component
 public class CustomPageFactory {
 
     /**

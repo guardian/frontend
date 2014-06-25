@@ -11,14 +11,6 @@
 	<artifactId>java-selenium-test</artifactId>
 	<dependencies>
 		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-test</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 		</dependency>
@@ -38,22 +30,6 @@
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
 			<version>2.4</version>
-		</dependency>
-
- 		<dependency>
-			<groupId>com.github.tomakehurst</groupId>
-			<artifactId>wiremock</artifactId>
-			<version>1.46</version>
-			<exclusions>
-				<exclusion>
-					<groupId>junit</groupId>
-					<artifactId>junit-dep</artifactId>
-				</exclusion>
-				<exclusion>
-					<artifactId>httpclient</artifactId>
-					<groupId>org.apache.httpcomponents</groupId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 	</dependencies>
 </project>
