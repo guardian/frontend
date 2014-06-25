@@ -208,6 +208,14 @@ define([
                         player.vast({
                             url: modules.getVastUrl()
                         });
+
+                        player.loadingSpinner.contentEl().innerHTML =
+                            '<div class="pamplemousse">' +
+                                '<div class="pamplemousse__pip"></div>' +
+                                '<div class="pamplemousse__pip"></div>' +
+                                '<div class="pamplemousse__pip"></div>' +
+                            '</div>';
+
                     });
 
                     // built in vjs-user-active is buggy so using custom implementation
