@@ -3,8 +3,9 @@ package model
 import com.gu.openplatform.contentapi.model.{Asset, Content => ApiContent, Element => ApiElement, Tag => ApiTag}
 import common.{LinkCounts, LinkTo, Reference}
 import conf.Configuration.facebook
-import implicits.Dates
 import org.joda.time.DateTime
+import org.scala_tools.time.Imports._
+import common.{LinkCounts, LinkTo, Reference}
 import org.jsoup.Jsoup
 import org.jsoup.safety.Whitelist
 import org.scala_tools.time.Imports._
@@ -13,7 +14,7 @@ import views.support.{ImgSrc, Naked, StripHtmlTagsAndUnescapeEntities}
 
 import scala.collection.JavaConversions._
 
-class Content protected (val apiContent: ApiContentWithMeta) extends Trail with MetaData with Dates {
+class Content protected (val apiContent: ApiContentWithMeta) extends Trail with MetaData {
 
   lazy val delegate: ApiContent = apiContent.delegate
 
@@ -56,10 +57,6 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   }
 
   lazy val shouldHideAdverts: Boolean = fields.get("shouldHideAdverts").exists(_.toBoolean)
-
-  lazy val shouldHidePublicationDate: Boolean = {
-    isAdvertisementFeature && webPublicationDate.isOlderThan(2.weeks)
-  }
 
   lazy val witnessAssignment = delegate.references.find(_.`type` == "witness-assignment")
     .map(_.id).map(Reference(_)).map(_._2)
