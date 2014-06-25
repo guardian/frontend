@@ -1,0 +1,778 @@
+@()
+
+<!DOCTYPE html>
+<html id="js-context" class="js-off id--signed-out" lang="en-GB">
+<head>
+<meta charset="utf-8" />
+<title>All the commercial components | The Guardian</title>
+<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="HandheldFriendly" content="True" />
+<link rel="dns-prefetch" href="http://i.guim.co.uk" />
+<link rel="dns-prefetch" href="" />
+<link rel="dns-prefetch" href="//hits.theguardian.com" />
+<link rel="dns-prefetch" href="//j.ophan.co.uk" />
+<link rel="dns-prefetch" href="//ophan.theguardian.com" />
+<link rel="dns-prefetch" href="//oas.theguardian.com" />
+<link rel="dns-prefetch" href="//beacon.www.theguardian.com" />
+<!--[if lt IE 9]>
+    <script src="/assets/javascripts/components/html5shiv/dist/html5shiv.js"></script>
+<![endif]-->
+<style class="initial" data-cache-name="WebEgyptian" data-cache-file-woff="/assets/fonts/WebEgyptian.woff.json" data-cache-file-ttf="/assets/fonts/WebEgyptian.ttf.json"></style>
+<style class="initial" data-cache-name="WebAgateSans" data-min-width="980" data-cache-file-woff="/assets/fonts/WebAgateSans.woff.json" data-cache-file-ttf="/assets/fonts/WebAgateSans.ttf.json"></style>
+<style class="initial" data-cache-name="TextSans" data-min-width="980" data-cache-file-woff="/assets/fonts/WebTextSans.woff.json" data-cache-file-ttf="/assets/fonts/WebTextSans.ttf.json"></style>
+<style class="initial" data-cache-name="WebHeadlineSans" data-min-width="980" data-advertisement-feature data-cache-file-woff="/assets/fonts/WebHeadlineSans.woff.json" data-cache-file-ttf="/assets/fonts/WebHeadlineSans.ttf.json"></style>
+<script id="gu">
+    if (!Function.prototype.bind) {
+        Function.prototype.bind = function (oThis) {
+            if (typeof this !== "function") {
+                // closest thing possible to the ECMAScript 5
+                // internal IsCallable function
+                throw new TypeError("Function.prototype.bind - what is trying to be bound is not callable");
+            }
+
+            var aArgs = Array.prototype.slice.call(arguments, 1),
+                    fToBind = this,
+                    fNOP = function () {},
+                    fBound = function () {
+                        return fToBind.apply(this instanceof fNOP && oThis
+                                        ? this
+                                        : oThis,
+                                aArgs.concat(Array.prototype.slice.call(arguments)));
+                    };
+
+            fNOP.prototype = this.prototype;
+            fBound.prototype = new fNOP();
+
+            return fBound;
+        };
+    }
+
+    var guardian = {
+        isModernBrowser: (
+            'querySelector' in document
+            && 'addEventListener' in window
+            && 'localStorage' in window
+            && 'sessionStorage' in window
+            && 'bind' in Function
+            && (
+                ('XMLHttpRequest' in window && 'withCredentials' in new XMLHttpRequest())
+                || 'XDomainRequest' in window
+            )
+        ),
+        css: {
+            loaded: false
+        },
+        config: 
+
+{
+    "page": {
+        "headline": "Peugeot RCZ R: car review","author": "Martin Love","series": "Wheels","pageId": "technology/2014/jun/22/peugeot-rcz-r-car-review","hasStoryPackage": true,"inBodyInternalLinkCount": "1","inBodyExternalLinkCount": "11","isFront": false,"pageCode": "2112402","tones": "Features,Reviews","buildNumber": "DEV","sectionName": "Technology","analyticsName": "GFE:technology:Article:peugeot-rcz-r-car-review","seriesId": "technology/series/wheels","wordCount": "673","blogs": "","section": "technology","shortUrl": "http://gu.com/p/3q8t3","thumbnail": "http://i.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/6/19/1403173905546/RCZ-R-006.jpg?width=-&height=-&quality=95","references": [],"commentable": true,"webPublicationDate": "2014-06-22T15:00:18.000+10:00","keywordIds": "technology/motoring,technology/technology","contentType": "Article","adUnitSuffix": "technology","keywords": "Motoring,Technology","webTitle": "Peugeot RCZ R: car review | Martin Love","isLive": false,"isLiveBlog": false,"publication": "The Observer","shouldHideAdverts": false,"blockVideoAds": false,
+        "idWebAppUrl":"https://id.thegulocal.com","googleSearchUrl":"http://www.google.co.uk/cse/cse.js","dfpAdUnitRoot":"theguardian.com","dfpAccountId":"59666047","secureDiscussionApiRoot":"https://discussion.code.dev-guardianapis.com/discussion-api","discussionApiClientHeader":"nextgen-dev","googleSearchId":"007466294097402385199:m2ealvuxh1i","sentryHost":"frontend-SentryLo-35H427X3SDHB-2122817448.eu-west-1.elb.amazonaws.com/2","idApiJsClientToken":"frontend-dev-js-client-token","fbAppId":"232588266837342","ophanJsUrl":"http://j.ophan.co.uk/ophan.ng","sentryApiKey":"1b006169a5a64dc18e33105b259e81db","discussionApiRoot":"http://discussion.code.dev-guardianapis.com/discussion-api","onwardWebSocket":"wss://frontend-OnwardLo-G3SS42I4G3PN-384008737.eu-west-1.elb.amazonaws.com/recently-published","omnitureAccount":"guardiangu-frontend-dev","googletagJsUrl":"//www.googletagservices.com/tag/js/gpt.js","idApiUrl":"https://idapi.thegulocal.com",
+        "edition": "UK",
+        "ajaxUrl": "",
+        "isDev": true,
+        "oasHost": "oas.theguardian.com",
+        "oasUrl": "http://oas.theguardian.com/RealMedia/ads/",
+        "oasSiteIdHost": "www.theguardian-alpha.com",
+        "dfpHost": "pubads.g.doubleclick.net",
+        "idUrl": "https://profile.thegulocal.com",
+        "beaconUrl": "",
+        "renderTime": "2014-06-24T01:33:06+10:00",
+        "isSSL": false,
+        "assetsPath": "/assets/",
+        "hasPageSkin": false,
+        "shouldHideAdverts": false
+    },
+    "switches" : { "autoRefresh":true,"doubleCacheTimes":false,"relatedContent":true,"standardAdverts":true,"commercialComponents":true,"videoAdverts":true,"sponsored":true,"audienceScience":true,"audienceScienceGateway":false,"criteo":true,"discussion":true,"openCta":true,"webFonts":true,"googleSearch":true,"releaseMessage":false,"integrationTestSwitch":true,"clientSideErrors":true,"idProfileNavigation":true,"cssFromStorage":true,"facebookAutosignin":false,"idFormstack":true,"idAvatarUpload":false,"faciaToolDisable":false,"faciaToolConfigurationDisable":false,"faciaToolCheckPressLastmodified":false,"faciaToolSnaps":true,"faciaToolImageOverride":true,"faciaToolSparklines":true,"ophan":true,"scrollDepth":false,"faciaToolContentapiPut":true,"effectiveMeasure":false,"imrWorldwide":false,"foresee":true,"mediaMath":false,"enableDiagnosticsLogging":false,"guTravelOffers":true,"guJobs":true,"guMasterclasses":true,"guSoulmates":true,"moneysupermarket":true,"lcMortgages":true,"guBookshop":true,"networkFrontOptIn":false,"imageServer":true,"faciaToolPressFront":true,"showAllEmbeds":true,"frontPressJobSwitch":false,"faciaToolTags":false,"rssLink":false,"enhanceTweets":true,"newNavigation":true,"worldcupWallchartEmbed":true,"worldcupArticleContainer":false,"indiaRegion":false,"memcachedAction":false,"memcachedFallback":true,"memcachedBuildNumber":true,"geoMostPopular":false,"tagLinking":true,"abHideSupportingLinks":false,"abAcrossTheGuardian":false,"abDisplaySociallyReferredBurners":false,"abSentry":true,"abLargerMobileMpu":false,"smartBanner":true,"surveyBanner":false,"parameterlessImages":false,"freshness":true,"seoOptimisedArticleImage":true,"faciaToolCachedCapiRequests":true,"faciaToolZipcachedCapiRequests":false,"faciaToolPressDraftFront":false
+    },
+    "modules": { }
+}
+
+    };
+
+    (function(isModern) {
+
+        // must always be set before the Omniture file is parsed
+        window.s_account = guardian.config.page.omnitureAccount;
+
+        if (!isModern) { return false; }
+
+        
+        var htmlClassNames = "";
+
+        
+        function hasSvgSupport() {
+            var ns = {'svg': 'http://www.w3.org/2000/svg'};
+            return !!document.createElementNS && !!document.createElementNS(ns.svg, 'svg').createSVGRect;
+        }
+        if (hasSvgSupport()) {
+            htmlClassNames += " svg";
+        }
+        document.documentElement.className = document.documentElement.className.replace(/\bjs-off\b/g, '') + ' js-on ' + htmlClassNames;
+
+    })(guardian.isModernBrowser);
+
+</script>
+<style>
+    .i,.caption:before,figcaption:before,blockquote.quoted:before { background-image: url(/assets/images/global/sprite.png); }
+    .svg .i,.svg .caption:before,.svg figcaption:before,.svg blockquote.quoted:before { background-image: none; }
+    .is-updating { background-image: url(/assets/images/auto-update-activity.gif); }
+    .is-updating--dark { background-image: url(/assets/images/auto-update-activity-dark.gif); }
+    .tweet { background-image: url(/assets/images/twitter/bird.png); }
+    .svg .tweet { background-image: url(/assets/images/twitter/bird.svg); }
+    .svg .stars, .svg .stars:after { background-image: url(/assets/images/star-sprite.svg); }
+    .stars, .stars:after { background-image: url(/assets/images/star-sprite.png); }
+</style>
+<!--[if (gt IE 9)|(IEMobile)]><!-->
+
+    <link rel="stylesheet" type="text/css" href="/assets/stylesheets/head.default.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/stylesheets/head.facia.css" />
+
+<!--<![endif]-->
+
+<!--[if (lt IE 9)&(!IEMobile)]>
+    <link rel="stylesheet" type="text/css" href="/assets/stylesheets/webfonts.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/stylesheets/old-ie.head.default.css" />
+<![endif]-->
+
+<!--[if (IE 9)&(!IEMobile)]>
+    <link rel="stylesheet" type="text/css" href="/assets/stylesheets/ie9.head.default.css" />
+<![endif]-->
+
+
+<!--[if (IE 9)&(!IEMobile)]>
+    <link rel="stylesheet" type="text/css" href="/assets/stylesheets/ie9.global.css" />
+<![endif]-->
+
+
+<!--[if (lt IE 9)&(!IEMobile)]>
+    <link rel="stylesheet" type="text/css" href="/assets/stylesheets/old-ie.global.css" />
+<![endif]-->
+
+
+<!--[if IEMobile]>
+    <link rel="stylesheet" type="text/css" href="/assets/stylesheets/global.css" />
+<![endif]-->
+<script>
+
+    var modules = [],
+        redefine = function(modules) {
+            modules.forEach(function(module) {
+                define.apply(null, module);
+            });
+        },
+        define = function() {
+            modules.push(arguments);
+        };
+    define.amd = true;
+
+    var curl = {
+        baseUrl: '/assets/javascripts',
+        apiName: 'require',
+        overwriteApi: true,
+        paths: {
+            
+            facebook: '//connect.facebook.net/en_US/all.js',
+            swipe: '/assets/javascripts/components/swipe/swipe.js',
+            zxcvbn: '/assets/javascripts/components/zxcvbn/index.js',
+            'ophan/ng': 'http://j.ophan.co.uk/ophan.ng',
+            foresee: '/assets/javascripts/vendor/foresee/foresee-trigger.js',
+            googletag: '//www.googletagservices.com/tag/js/gpt.js',
+            raven: '/assets/javascripts/components/raven-js/dist/raven.js',
+            'bootstraps/video-player': '/assets/javascripts/bootstraps/video-player.js'
+        }
+    };
+
+    (function(isModern) {
+
+        if (!isModern) { return false; }
+
+        function loadFontsAsynchronously() {
+            
+            var f, x;
+
+            x = document.getElementById('gu');
+            f = document.createElement('link');
+            f.rel = 'stylesheet';
+            f.href = '/assets/stylesheets/webfonts.css';
+            window.setTimeout(function() {
+                x.parentNode.insertBefore(f, x);
+            }, 0);
+        }
+
+        function loadFontsFromStorage(prefs, key) {
+
+            var showFonts = false,
+                fontPreference = localStorage['gu.prefs.switch.font-family'],
+                fontSwitch = (fontPreference) ? JSON.parse(fontPreference).value : undefined;
+
+            
+                showFonts = true;
+            
+
+            if (fontSwitch === true) {
+                showFonts = true;
+            } else if (fontSwitch === false && fontPreference) {
+                showFonts = false;
+            }
+
+            if (showFonts) {
+                var styleNodes = document.querySelectorAll('[data-cache-name]');
+                for (var i = 0, j = styleNodes.length; i<j; ++i) {
+                    var style = styleNodes[i],
+                        nameAndCacheKey = style.getAttribute('data-cache-file-woff').match(/fonts\/(.*)\.woff(?:\.(.*))?\.json$/),
+                        cachedCss = localStorage.getItem('gu.fonts.' + nameAndCacheKey[1] + '.' + nameAndCacheKey[2]);
+                        
+                        try {
+                            cachedCss = JSON.parse(cachedCss).value;
+                        } catch(e) {}
+                    if (cachedCss) {
+                        style.innerHTML = cachedCss;
+                        style.setAttribute('data-cache-full', 'true');
+                    }
+                }
+            }
+        }
+
+        
+        var loadsHintedFonts = /Windows/;
+        
+        var loadsNonHintedFonts = /W(indows Phone|PDesktop)/;
+
+        guardian.shouldLoadFontsAsynchronously = loadsHintedFonts.test(navigator.userAgent)
+                                                 && !loadsNonHintedFonts.test(navigator.userAgent);
+
+        if (guardian.shouldLoadFontsAsynchronously) {
+            loadFontsAsynchronously();
+        } else {
+            loadFontsFromStorage();
+        }
+
+        
+
+    })(guardian.isModernBrowser);
+
+</script>
+
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script>
+jQuery(function($) {
+    $("#switchFronts").click(function() {
+        $('.facia-container').removeClass("facia-container--layout-article").addClass("facia-container--layout-front");
+        $('#switchArticles').removeClass('current');        
+        $(this).addClass('current');
+        return false;
+    });
+    $("#switchArticles").click(function() {
+        $('.facia-container').removeClass("facia-container--layout-front").addClass("facia-container--layout-article");
+        $('#switchFronts').removeClass('current');
+        $(this).addClass('current');
+        return false;
+    });
+    
+    $(".codeContainer pre").hide();
+    $(".codeContainer").click(function() {
+        $(this).children().slideToggle();
+        return false;
+    });
+});
+</script>
+
+<script async="async" src="/assets/javascripts/bootstraps/app.js"></script>
+
+<style>
+.facia-container {
+    margin-top: 12px;
+}
+pre {
+    font-size: 10px;
+}
+#dfp-ad--merchandising-high {
+    display: block;
+}
+.facia-switch-wrapper {
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 1000;
+    background: #fff;
+    padding: 12px 10px;
+    border: 1px solid #ccc;
+}
+</style>
+
+</head>
+<body id="top" class="has-new-navigation" >
+<div class="facia-container__inner">
+    <h1>All the components</h1>
+    
+    <div class="facia-switch-wrapper">
+        <a id="switchFronts" href="#">Fronts</a>
+        <a id="switchArticles" href="#" class="current">Articles</a>
+    </div>
+    
+    <h2>DFP Templates</h2>
+</div>
+<div class="facia-container facia-container--layout-article facia-container--commercial">
+    
+    <div id="dfp-ad--merchandising-high" class="ad-slot ad-slot--dfp ad-slot--merchandising-high ad-slot--commercial-component-high" data-link-name="ad slot merchandising-high" data-name="merchandising-high" data-desktop="888,88" data-refresh="false" data-label="false" data-node-uid="9"><style type="text/css">
+        .commercial--dfp-single.commercial--dfp-987654321 .commercial__title,
+        .commercial--dfp-single.commercial--dfp-987654321 .commercial__home-link  {
+            color: #651981;
+        }
+        .commercial--dfp-single.commercial--dfp-987654321 .commercial__home-link .commercial__home-link__cta,
+        .commercial--dfp-single.commercial--dfp-987654321 .lineitem__link .i.i-arrow-white-down {
+            background-color: #651981;
+        }
+        .commercial--dfp-single.commercial--dfp-987654321 .commercial__title span {
+            color: #c07ed6;
+        }
+        </style><div class="commercial commercial--dfp commercial--dfp-single commercial--dfp-987654321" role="complementary">
+            <div class="facia-container__inner">
+                <div class="commercial__head container__title">
+                    <h3 class="commercial__title"><a href="http://adclick.g.doubleclick.net/aclk%253Fsa%253DL%2526ai%253DBDvlRxPynU7H8DsemigaNqoAY1-KQgQUAAAAQASDvlN8hOABYj_mvwJkBYLu-roPQCrIBE3d3dy50aGVndWFyZGlhbi5jb226AQlnZnBfaW1hZ2XIAQnaAR1odHRwOi8vd3d3LnRoZWd1YXJkaWFuLmNvbS91a6kCvf7VQMKSvD7AAgLgAgDqAiIvNTk2NjYwNDcvdGhlZ3VhcmRpYW4uY29tL3VrL2Zyb250-AKE0h6QA4wGmAOMBqgDAdAEkE7gBAGgBh8%2526num%253D0%2526sig%253DAOD64_2_QKWMAmDnio0_QSa63hkhhQV6cg%2526client%253Dca-pub-4830087483992392%2526adurl%253Dhttp://www.austinharris.co.uk" data-link-name="merchandising-Guardian%20%3Cspan%3Evintage%3C%2Fspan%3E-987654321-high-title">Guardian <span>vintage</span></a></h3>
+                    <p class="commercial__explainer">Another old car</p>
+                </div>
+                <div class="container__body commercial__body">
+                    <a class="lineitem__link-image" href="http://adclick.g.doubleclick.net/aclk%253Fsa%253DL%2526ai%253DBDvlRxPynU7H8DsemigaNqoAY1-KQgQUAAAAQASDvlN8hOABYj_mvwJkBYLu-roPQCrIBE3d3dy50aGVndWFyZGlhbi5jb226AQlnZnBfaW1hZ2XIAQnaAR1odHRwOi8vd3d3LnRoZWd1YXJkaWFuLmNvbS91a6kCvf7VQMKSvD7AAgLgAgDqAiIvNTk2NjYwNDcvdGhlZ3VhcmRpYW4uY29tL3VrL2Zyb250-AKE0h6QA4wGmAOMBqgDAdAEkE7gBAGgBh8%2526num%253D0%2526sig%253DAOD64_2_QKWMAmDnio0_QSa63hkhhQV6cg%2526client%253Dca-pub-4830087483992392%2526adurl%253Dhttp://www.austinharris.co.uk" data-link-name="merchandising-Guardian%20%3Cspan%3Evintage%3C%2Fspan%3E-987654321-high-Nice%20long%20title%20for%20this%20element">
+                        <img class="lineitem__image" src="http://pagead2.googlesyndication.com/pagead/imgad?id=CICAgKDj37aTvQEQARgBMggn21vgyxz-YQ" alt="">
+                    </a>
+                    <div class="lineitem__offer">
+                        <a class="lineitem__link commercial--generic__description__link" href="http://adclick.g.doubleclick.net/aclk%253Fsa%253DL%2526ai%253DBDvlRxPynU7H8DsemigaNqoAY1-KQgQUAAAAQASDvlN8hOABYj_mvwJkBYLu-roPQCrIBE3d3dy50aGVndWFyZGlhbi5jb226AQlnZnBfaW1hZ2XIAQnaAR1odHRwOi8vd3d3LnRoZWd1YXJkaWFuLmNvbS91a6kCvf7VQMKSvD7AAgLgAgDqAiIvNTk2NjYwNDcvdGhlZ3VhcmRpYW4uY29tL3VrL2Zyb250-AKE0h6QA4wGmAOMBqgDAdAEkE7gBAGgBh8%2526num%253D0%2526sig%253DAOD64_2_QKWMAmDnio0_QSa63hkhhQV6cg%2526client%253Dca-pub-4830087483992392%2526adurl%253Dhttp://www.austinharris.co.uk" data-link-name="merchandising-Guardian%20%3Cspan%3Evintage%3C%2Fspan%3E-987654321-high-Nice long title for this element-link">
+                            <h4 class="lineitem__title">Nice long title for this element</h4>
+                            <p class="lineitem__meta">Weddepohl makes the point that sharing involves not just less waste but more social interaction. It’s a lesson he had to learn by fire.</p>
+                        </a>
+                        <p class="lineitem__description commercial--generic__item__description">
+                            <a class="lineitem__link commercial--generic__description__link" href="http://adclick.g.doubleclick.net/aclk%253Fsa%253DL%2526ai%253DBDvlRxPynU7H8DsemigaNqoAY1-KQgQUAAAAQASDvlN8hOABYj_mvwJkBYLu-roPQCrIBE3d3dy50aGVndWFyZGlhbi5jb226AQlnZnBfaW1hZ2XIAQnaAR1odHRwOi8vd3d3LnRoZWd1YXJkaWFuLmNvbS91a6kCvf7VQMKSvD7AAgLgAgDqAiIvNTk2NjYwNDcvdGhlZ3VhcmRpYW4uY29tL3VrL2Zyb250-AKE0h6QA4wGmAOMBqgDAdAEkE7gBAGgBh8%2526num%253D0%2526sig%253DAOD64_2_QKWMAmDnio0_QSa63hkhhQV6cg%2526client%253Dca-pub-4830087483992392%2526adurl%253Dhttp://www.austinharris.co.uk" data-link-name="merchandising-Guardian%20%3Cspan%3Evintage%3C%2Fspan%3E-987654321-high-Nice long title for this element-link"><i class="i i-arrow-white-down"></i>This is nice long link, in design appears to be sentence length</a>
+                        </p>
+                    </div>
+                </div>
+                <div class="commercial__footer">
+                    <div class="commercial__footer-inner">
+                        <a class="commercial__home-link" href="http://adclick.g.doubleclick.net/aclk%253Fsa%253DL%2526ai%253DBDvlRxPynU7H8DsemigaNqoAY1-KQgQUAAAAQASDvlN8hOABYj_mvwJkBYLu-roPQCrIBE3d3dy50aGVndWFyZGlhbi5jb226AQlnZnBfaW1hZ2XIAQnaAR1odHRwOi8vd3d3LnRoZWd1YXJkaWFuLmNvbS91a6kCvf7VQMKSvD7AAgLgAgDqAiIvNTk2NjYwNDcvdGhlZ3VhcmRpYW4uY29tL3VrL2Zyb250-AKE0h6QA4wGmAOMBqgDAdAEkE7gBAGgBh8%2526num%253D0%2526sig%253DAOD64_2_QKWMAmDnio0_QSa63hkhhQV6cg%2526client%253Dca-pub-4830087483992392%2526adurl%253Dhttp://www.austinharris.co.uk" data-link-name="merchandising-Guardian%20%3Cspan%3Evintage%3C%2Fspan%3E-987654321-high-viewall">See more cars
+                            <span class="commercial__home-link__cta">
+                                <span class="i i-filter-arrow-down"></span>
+                            </span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="codeContainer facia-container__inner">
+    Show code for DFP >
+    <pre>
+    <code>
+        &lt;div class="breakout__html"&gt;
+            &lt;style type="text/css"&gt;
+            .commercial--dfp-single.commercial--dfp-[%URI_ENCODE:commercial__omnitureid%] .commercial__title,
+            .commercial--dfp-single.commercial--dfp-[%URI_ENCODE:commercial__omnitureid%] .commercial__home-link  {
+                color: #[%commercial__colour1%];
+            }
+            .commercial--dfp-single.commercial--dfp-[%URI_ENCODE:commercial__omnitureid%] .commercial__home-link .commercial__home-link__cta,
+            .commercial--dfp-single.commercial--dfp-[%URI_ENCODE:commercial__omnitureid%] .lineitem__link .i.i-arrow-white-down {
+                background-color: #[%commercial__colour1%];
+            }
+            .commercial--dfp-single.commercial--dfp-[%URI_ENCODE:commercial__omnitureid%] .commercial__title span {
+                color: #[%commercial__colour2%];
+            }
+            &lt;/style&gt;
+            &lt;div class="commercial commercial--dfp commercial--dfp-single commercial--dfp-[%URI_ENCODE:commercial__omnitureid%]" role="complementary"&gt;
+                &lt;div class="facia-container__inner"&gt;
+                    &lt;div class="commercial__head container__title"&gt;
+                        &lt;h3 class="commercial__title"&gt;&lt;a href="%%CLICK_URL_ESC%%[%commercial__base__url%]" data-link-name="merchandising-[%URI_ENCODE:commercial__title%]-[%commercial__omnitureid%]-[%URI_ENCODE:commercial__relevance%]-title"&gt;[%commercial__title%]&lt;/a&gt;&lt;/h3&gt;
+                        &lt;p class="commercial__explainer"&gt;[%commercial__explainer%]&lt;/p&gt;
+                    &lt;/div&gt;
+                    &lt;div class="container__body commercial__body"&gt;
+                        &lt;a class="lineitem__link-image" href="%%CLICK_URL_ESC%%[%commercial__base__url%]" data-link-name="merchandising-[%URI_ENCODE:commercial__title%]-[%commercial__omnitureid%]-[%URI_ENCODE:commercial__relevance%]-[%URI_ENCODE:commercial__offertitle%]"&gt;
+                            &lt;img class="lineitem__image" src="[%commercial__offerimage%]" alt="" /&gt;
+                        &lt;/a&gt;
+                        &lt;div class="lineitem__offer"&gt;
+                            &lt;a class="lineitem__link commercial--generic__description__link" href="%%CLICK_URL_ESC%%[%commercial__base__url%]" data-link-name="merchandising-[%URI_ENCODE:commercial__title%]-[%commercial__omnitureid%]-[%URI_ENCODE:commercial__relevance%]-[%commercial__offertitle%]-link"&gt;
+                                &lt;h4 class="lineitem__title"&gt;[%commercial__offertitle%]&lt;/h4&gt;
+                                &lt;p class="lineitem__meta"&gt;[%commercial__offertext%]&lt;/p&gt;
+                            &lt;/a&gt;
+                            &lt;p class="lineitem__description commercial--generic__item__description"&gt;
+                                &lt;a class="lineitem__link commercial--generic__description__link" href="%%CLICK_URL_ESC%%[%commercial__base__url%]" data-link-name="merchandising-[%URI_ENCODE:commercial__title%]-[%commercial__omnitureid%]-[%URI_ENCODE:commercial__relevance%]-[%commercial__offertitle%]-link"&gt;&lt;i class="i i-arrow-white-down"&gt;&lt;/i&gt;[%commercial__offerlinktext%]&lt;/a&gt;
+                            &lt;/p&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                    &lt;div class="commercial__footer"&gt;
+                        &lt;div class="commercial__footer-inner"&gt;
+                            &lt;a class="commercial__home-link" href="%%CLICK_URL_ESC%%[%commercial__base__url%]" data-link-name="merchandising-[%URI_ENCODE:commercial__title%]-[%commercial__omnitureid%]-[%URI_ENCODE:commercial__relevance%]-viewall"&gt;[%commercial__viewalltext%]
+                                &lt;span class="commercial__home-link__cta"&gt;
+                                    &lt;span class="i i-filter-arrow-down"&gt;&lt;/span&gt;
+                                &lt;/span&gt;
+                            &lt;/a&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        
+
+    </code>
+    </pre>
+</div>
+
+
+<div class="facia-container facia-container--layout-article facia-container--commercial">
+    <div class="commercial commercial--dfp commercial--dfp-1234567890" role="complementary">
+            <div class="facia-container__inner">
+                <div class="commercial__head container__title">
+                    <h3 class="commercial__title"><a href="http://adclick.g.doubleclick.net/aclk%253Fsa%253Dl%2526ai%253DCo1twsHepU67hA4uqigaZkYD4AQEAexABILlgKASIAQGQAQDAAQLIAQngAgGoAwGqBFZP0IbDEPgmJHGYVSwrSb4z26WzvCIJ4wmR_N3AZZsMQa-JKzk3BJIpFNYAeDJQQEMzOl8dovGgMhaV05qF4WpNLrcHKxnVbht2QdbeCuaZVmGtWon6mbgEAQ%2526preview%253D%2526num%253D1%2526sig%253DAOD64_3NtMlSz_KmriClXxDamaqCHWYnyg%2526client%253Dca-gfp-rama1%2526adurl%253Dhttp://www.guardian.co.uk" data-link-name="merchandising-Guardian%20Vintage%20Motoring-1234567890-high-title">Guardian Vintage Motoring</a></h3>
+                    <p class="commercial__explainer">For all of your old car needs</p>
+                    <a class="commercial__home-link" href="http://adclick.g.doubleclick.net/aclk%253Fsa%253Dl%2526ai%253DCo1twsHepU67hA4uqigaZkYD4AQEAexABILlgKASIAQGQAQDAAQLIAQngAgGoAwGqBFZP0IbDEPgmJHGYVSwrSb4z26WzvCIJ4wmR_N3AZZsMQa-JKzk3BJIpFNYAeDJQQEMzOl8dovGgMhaV05qF4WpNLrcHKxnVbht2QdbeCuaZVmGtWon6mbgEAQ%2526preview%253D%2526num%253D1%2526sig%253DAOD64_3NtMlSz_KmriClXxDamaqCHWYnyg%2526client%253Dca-gfp-rama1%2526adurl%253Dhttp://www.guardian.co.uk" data-link-name="merchandising-Guardian%20Vintage%20Motoring-1234567890-high-viewall">See all our classic car deals
+                        <span class="commercial__home-link__cta">
+                            <span class="i i-filter-arrow-down"></span>
+                        </span>
+                    </a>
+                </div>
+                <div class="container__body commercial__body">
+                    <ul class="lineitems">
+                        <li class="lineitem">
+                            <div>
+                                <a class="lineitem__link" href="http://adclick.g.doubleclick.net/aclk%253Fsa%253Dl%2526ai%253DCo1twsHepU67hA4uqigaZkYD4AQEAexABILlgKASIAQGQAQDAAQLIAQngAgGoAwGqBFZP0IbDEPgmJHGYVSwrSb4z26WzvCIJ4wmR_N3AZZsMQa-JKzk3BJIpFNYAeDJQQEMzOl8dovGgMhaV05qF4WpNLrcHKxnVbht2QdbeCuaZVmGtWon6mbgEAQ%2526preview%253D%2526num%253D1%2526sig%253DAOD64_3NtMlSz_KmriClXxDamaqCHWYnyg%2526client%253Dca-gfp-rama1%2526adurl%253Dhttp://www.guardian.co.uk/offer1" data-link-name="merchandising-Guardian%20Vintage%20Motoring-1234567890-high-Austin%207%20Chummy">
+                                    <img class="lineitem__image" src="http://pagead2.googlesyndication.com/pagead/imgad?id=CICAgKDjjfmxuQEQARgBMghESIArhcWi2g" alt="" />
+                                    <div class="lineitem__offer">
+                                        <h4 class="lineitem__title">Austin 7 Chummy</h4>
+                                        <p class="lineitem__meta">Lovely 1930 car<br/>in blue</p>
+                                    </div>
+                                </a>
+                                <p class="lineitem__description commercial--generic__item__description">
+                                    <a class="lineitem__link commercial--generic__description__link" href="http://adclick.g.doubleclick.net/aclk%253Fsa%253Dl%2526ai%253DCo1twsHepU67hA4uqigaZkYD4AQEAexABILlgKASIAQGQAQDAAQLIAQngAgGoAwGqBFZP0IbDEPgmJHGYVSwrSb4z26WzvCIJ4wmR_N3AZZsMQa-JKzk3BJIpFNYAeDJQQEMzOl8dovGgMhaV05qF4WpNLrcHKxnVbht2QdbeCuaZVmGtWon6mbgEAQ%2526preview%253D%2526num%253D1%2526sig%253DAOD64_3NtMlSz_KmriClXxDamaqCHWYnyg%2526client%253Dca-gfp-rama1%2526adurl%253Dhttp://www.guardian.co.uk/offer1" data-link-name="merchandising-Guardian%20Vintage%20Motoring-1234567890-high-Austin 7 Chummy-link"><i class="i i-arrow-white-down"></i>Buy now</a>
+                                </p>
+                            </div>
+                        </li>
+                        <li class="lineitem">
+                            <div>
+                                <a class="lineitem__link" href="http://adclick.g.doubleclick.net/aclk%253Fsa%253Dl%2526ai%253DCo1twsHepU67hA4uqigaZkYD4AQEAexABILlgKASIAQGQAQDAAQLIAQngAgGoAwGqBFZP0IbDEPgmJHGYVSwrSb4z26WzvCIJ4wmR_N3AZZsMQa-JKzk3BJIpFNYAeDJQQEMzOl8dovGgMhaV05qF4WpNLrcHKxnVbht2QdbeCuaZVmGtWon6mbgEAQ%2526preview%253D%2526num%253D1%2526sig%253DAOD64_3NtMlSz_KmriClXxDamaqCHWYnyg%2526client%253Dca-gfp-rama1%2526adurl%253Dhttp://www.guardian.co.uk/offer2" data-link-name="merchandising-Guardian%20Vintage%20Motoring-1234567890-high-Austin 7 Ulster">
+                                    <img class="lineitem__image" src="http://pagead2.googlesyndication.com/pagead/imgad?id=CICAgKDjn-CZIhABGAEyCP9JNYGznnPG" alt="" />
+                                    <div class="lineitem__offer">
+                                        <h4 class="lineitem__title">Austin 7 Ulster</h4>
+                                        <p class="lineitem__meta">Fast and noisy, no roof!</p>
+                                    </div>
+                                </a>
+                                <p class="lineitem__description commercial--generic__item__description">
+                                    <a class="lineitem__link commercial--generic__description__link" href="http://adclick.g.doubleclick.net/aclk%253Fsa%253Dl%2526ai%253DCo1twsHepU67hA4uqigaZkYD4AQEAexABILlgKASIAQGQAQDAAQLIAQngAgGoAwGqBFZP0IbDEPgmJHGYVSwrSb4z26WzvCIJ4wmR_N3AZZsMQa-JKzk3BJIpFNYAeDJQQEMzOl8dovGgMhaV05qF4WpNLrcHKxnVbht2QdbeCuaZVmGtWon6mbgEAQ%2526preview%253D%2526num%253D1%2526sig%253DAOD64_3NtMlSz_KmriClXxDamaqCHWYnyg%2526client%253Dca-gfp-rama1%2526adurl%253Dhttp://www.guardian.co.uk/offer2" data-link-name="merchandising-Guardian%20Vintage%20Motoring-1234567890-high-Austin 7 Ulster-link"><i class="i i-arrow-white-down"></i>Buy now</a>
+                                </p>
+                            </div>
+                        </li>
+                        <li class="lineitem">
+                            <div>
+                                <a class="lineitem__link" href="http://adclick.g.doubleclick.net/aclk%253Fsa%253Dl%2526ai%253DCo1twsHepU67hA4uqigaZkYD4AQEAexABILlgKASIAQGQAQDAAQLIAQngAgGoAwGqBFZP0IbDEPgmJHGYVSwrSb4z26WzvCIJ4wmR_N3AZZsMQa-JKzk3BJIpFNYAeDJQQEMzOl8dovGgMhaV05qF4WpNLrcHKxnVbht2QdbeCuaZVmGtWon6mbgEAQ%2526preview%253D%2526num%253D1%2526sig%253DAOD64_3NtMlSz_KmriClXxDamaqCHWYnyg%2526client%253Dca-gfp-rama1%2526adurl%253Dhttp://www.guardian.co.uk/offer3" data-link-name="merchandising-Guardian%20Vintage%20Motoring-1234567890-high-Austin 7 trials saloon">
+                                    <img class="lineitem__image" src="http://pagead2.googlesyndication.com/pagead/imgad?id=CICAgKDjn-CPBRABGAEyCNsEiR2LKclz" alt="" />
+                                    <div class="lineitem__offer">
+                                        <h4 class="lineitem__title">Austin 7 trials saloon</h4>
+                                        <p class="lineitem__meta">Goes up muddy hills with ease</p>
+                                    </div>
+                                </a>
+                                <p class="lineitem__description commercial--generic__item__description">
+                                    <a class="lineitem__link commercial--generic__description__link" href="http://adclick.g.doubleclick.net/aclk%253Fsa%253Dl%2526ai%253DCo1twsHepU67hA4uqigaZkYD4AQEAexABILlgKASIAQGQAQDAAQLIAQngAgGoAwGqBFZP0IbDEPgmJHGYVSwrSb4z26WzvCIJ4wmR_N3AZZsMQa-JKzk3BJIpFNYAeDJQQEMzOl8dovGgMhaV05qF4WpNLrcHKxnVbht2QdbeCuaZVmGtWon6mbgEAQ%2526preview%253D%2526num%253D1%2526sig%253DAOD64_3NtMlSz_KmriClXxDamaqCHWYnyg%2526client%253Dca-gfp-rama1%2526adurl%253Dhttp://www.guardian.co.uk/offer3" data-link-name="merchandising-Guardian%20Vintage%20Motoring-1234567890-high-Austin 7 trials saloon-link"><i class="i i-arrow-white-down"></i>Buy now</a>
+                                </p>
+                            </div>
+                        </li>
+                        <li class="lineitem">
+                            <div>
+                                <a class="lineitem__link" href="http://adclick.g.doubleclick.net/aclk%253Fsa%253Dl%2526ai%253DCo1twsHepU67hA4uqigaZkYD4AQEAexABILlgKASIAQGQAQDAAQLIAQngAgGoAwGqBFZP0IbDEPgmJHGYVSwrSb4z26WzvCIJ4wmR_N3AZZsMQa-JKzk3BJIpFNYAeDJQQEMzOl8dovGgMhaV05qF4WpNLrcHKxnVbht2QdbeCuaZVmGtWon6mbgEAQ%2526preview%253D%2526num%253D1%2526sig%253DAOD64_3NtMlSz_KmriClXxDamaqCHWYnyg%2526client%253Dca-gfp-rama1%2526adurl%253Dhttp://www.guardian.co.uk/offer4" data-link-name="merchandising-Guardian%20Vintage%20Motoring-1234567890-high-Austin 7 racing slaoon">
+                                    <img class="lineitem__image" src="http://pagead2.googlesyndication.com/pagead/imgad?id=CICAgKDjn5DgJBABGAEyCAJR0OYCo4Bt" alt="" />
+                                    <div class="lineitem__offer">
+                                        <h4 class="lineitem__title">Austin 7 racing slaoon</h4>
+                                        <p class="lineitem__meta">Supercharged and not for the feint hearted</p>
+                                    </div>
+                                </a>
+                                <p class="lineitem__description commercial--generic__item__description">
+                                    <a class="lineitem__link commercial--generic__description__link" href="http://adclick.g.doubleclick.net/aclk%253Fsa%253Dl%2526ai%253DCo1twsHepU67hA4uqigaZkYD4AQEAexABILlgKASIAQGQAQDAAQLIAQngAgGoAwGqBFZP0IbDEPgmJHGYVSwrSb4z26WzvCIJ4wmR_N3AZZsMQa-JKzk3BJIpFNYAeDJQQEMzOl8dovGgMhaV05qF4WpNLrcHKxnVbht2QdbeCuaZVmGtWon6mbgEAQ%2526preview%253D%2526num%253D1%2526sig%253DAOD64_3NtMlSz_KmriClXxDamaqCHWYnyg%2526client%253Dca-gfp-rama1%2526adurl%253Dhttp://www.guardian.co.uk/offer4" data-link-name="merchandising-Guardian%20Vintage%20Motoring-1234567890-high-Austin 7 racing slaoon-link"><i class="i i-arrow-white-down"></i>Buy now</a>
+                                </p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="codeContainer facia-container__inner">
+    Show code for DFP >
+    <pre>
+        <code>
+            &lt;div class="breakout__html"&gt;
+                &lt;style type="text/css"&gt;
+                    [%commercial__css%]
+                &lt;/style&gt;
+                &lt;div class="commercial commercial--dfp commercial--dfp-[%URI_ENCODE:commercial__omnitureid%]" role="complementary"&gt;
+                    &lt;div class="facia-container__inner"&gt;
+                        &lt;div class="commercial__head container__title"&gt;
+                            &lt;h3 class="commercial__title"&gt;&lt;a href="%%CLICK_URL_ESC%%[%commercial__base__url%]" data-link-name="merchandising-[%URI_ENCODE:commercial__title%]-[%commercial__omnitureid%]-[%URI_ENCODE:commercial__relevance%]-title"&gt;[%commercial__title%]&lt;/a&gt;&lt;/h3&gt;
+                            &lt;p class="commercial__explainer"&gt;[%commercial__explainer%]&lt;/p&gt;
+                            &lt;a class="commercial__home-link" href="%%CLICK_URL_ESC%%[%commercial__base__url%]" data-link-name="merchandising-[%URI_ENCODE:commercial__title%]-[%commercial__omnitureid%]-[%URI_ENCODE:commercial__relevance%]-viewall"&gt;[%commercial__viewalltext%]
+                                &lt;span class="commercial__home-link__cta"&gt;
+                                    &lt;span class="i i-filter-arrow-down"&gt;&lt;/span&gt;
+                                &lt;/span&gt;
+                            &lt;/a&gt;
+                        &lt;/div&gt;
+                        &lt;div class="container__body commercial__body"&gt;
+                            &lt;ul class="lineitems"&gt;
+                                &lt;li class="lineitem"&gt;
+                                    &lt;div&gt;
+                                        &lt;a class="lineitem__link" href="%%CLICK_URL_ESC%%[%commercial__offer1url%]" data-link-name="merchandising-[%URI_ENCODE:commercial__title%]-[%commercial__omnitureid%]-[%URI_ENCODE:commercial__relevance%]-[%URI_ENCODE:commercial__offer1title%]"&gt;
+                                            &lt;img class="lineitem__image" src="[%commercial__offer1image%]" alt="" /&gt;
+                                            &lt;div class="lineitem__offer"&gt;
+                                                &lt;h4 class="lineitem__title"&gt;[%commercial__offer1title%]&lt;/h4&gt;
+                                                &lt;p class="lineitem__meta"&gt;[%commercial__offer1meta%]&lt;/p&gt;
+                                            &lt;/div&gt;
+                                        &lt;/a&gt;
+                                        &lt;p class="lineitem__description commercial--generic__item__description"&gt;
+                                            &lt;a class="lineitem__link commercial--generic__description__link" href="%%CLICK_URL_ESC%%[%commercial__offer1url%]" data-link-name="merchandising-[%URI_ENCODE:commercial__title%]-[%commercial__omnitureid%]-[%URI_ENCODE:commercial__relevance%]-[%commercial__offer1title%]-link"&gt;&lt;i class="i i-arrow-white-down"&gt;&lt;/i&gt;[%commercial__offerlinktext%]&lt;/a&gt;
+                                        &lt;/p&gt;
+                                    &lt;/div&gt;
+                                &lt;/li&gt;
+                                &lt;li class="lineitem"&gt;
+                                    &lt;div&gt;
+                                        &lt;a class="lineitem__link" href="%%CLICK_URL_ESC%%[%commercial__offer2url%]" data-link-name="merchandising-[%URI_ENCODE:commercial__title%]-[%commercial__omnitureid%]-[%URI_ENCODE:commercial__relevance%]-[%commercial__offer2title%]"&gt;
+                                            &lt;img class="lineitem__image" src="[%commercial__offer2image%]" alt="" /&gt;
+                                            &lt;div class="lineitem__offer"&gt;
+                                                &lt;h4 class="lineitem__title"&gt;[%commercial__offer2title%]&lt;/h4&gt;
+                                                &lt;p class="lineitem__meta"&gt;[%commercial__offer2meta%]&lt;/p&gt;
+                                            &lt;/div&gt;
+                                        &lt;/a&gt;
+                                        &lt;p class="lineitem__description commercial--generic__item__description"&gt;
+                                            &lt;a class="lineitem__link commercial--generic__description__link" href="%%CLICK_URL_ESC%%[%commercial__offer2url%]" data-link-name="merchandising-[%URI_ENCODE:commercial__title%]-[%commercial__omnitureid%]-[%URI_ENCODE:commercial__relevance%]-[%commercial__offer2title%]-link"&gt;&lt;i class="i i-arrow-white-down"&gt;&lt;/i&gt;[%commercial__offerlinktext%]&lt;/a&gt;
+                                        &lt;/p&gt;
+                                    &lt;/div&gt;
+                                &lt;/li&gt;
+                                &lt;li class="lineitem"&gt;
+                                    &lt;div&gt;
+                                        &lt;a class="lineitem__link" href="%%CLICK_URL_ESC%%[%commercial__offer3url%]" data-link-name="merchandising-[%URI_ENCODE:commercial__title%]-[%commercial__omnitureid%]-[%URI_ENCODE:commercial__relevance%]-[%commercial__offer3title%]"&gt;
+                                            &lt;img class="lineitem__image" src="[%commercial__offer3image%]" alt="" /&gt;
+                                            &lt;div class="lineitem__offer"&gt;
+                                                &lt;h4 class="lineitem__title"&gt;[%commercial__offer3title%]&lt;/h4&gt;
+                                                &lt;p class="lineitem__meta"&gt;[%commercial__offer3meta%]&lt;/p&gt;
+                                            &lt;/div&gt;
+                                        &lt;/a&gt;
+                                        &lt;p class="lineitem__description commercial--generic__item__description"&gt;
+                                            &lt;a class="lineitem__link commercial--generic__description__link" href="%%CLICK_URL_ESC%%[%commercial__offer3url%]" data-link-name="merchandising-[%URI_ENCODE:commercial__title%]-[%commercial__omnitureid%]-[%URI_ENCODE:commercial__relevance%]-[%commercial__offer3title%]-link"&gt;&lt;i class="i i-arrow-white-down"&gt;&lt;/i&gt;[%commercial__offerlinktext%]&lt;/a&gt;
+                                        &lt;/p&gt;
+                                    &lt;/div&gt;
+                                &lt;/li&gt;
+                                &lt;li class="lineitem"&gt;
+                                    &lt;div&gt;
+                                        &lt;a class="lineitem__link" href="%%CLICK_URL_ESC%%[%commercial__offer4url%]" data-link-name="merchandising-[%URI_ENCODE:commercial__title%]-[%commercial__omnitureid%]-[%URI_ENCODE:commercial__relevance%]-[%commercial__offer4title%]"&gt;
+                                            &lt;img class="lineitem__image" src="[%commercial__offer4image%]" alt="" /&gt;
+                                            &lt;div class="lineitem__offer"&gt;
+                                                &lt;h4 class="lineitem__title"&gt;[%commercial__offer4title%]&lt;/h4&gt;
+                                                &lt;p class="lineitem__meta"&gt;[%commercial__offer4meta%]&lt;/p&gt;
+                                            &lt;/div&gt;
+                                        &lt;/a&gt;
+                                        &lt;p class="lineitem__description commercial--generic__item__description"&gt;
+                                            &lt;a class="lineitem__link commercial--generic__description__link" href="%%CLICK_URL_ESC%%[%commercial__offer4url%]" data-link-name="merchandising-[%URI_ENCODE:commercial__title%]-[%commercial__omnitureid%]-[%URI_ENCODE:commercial__relevance%]-[%commercial__offer4title%]-link"&gt;&lt;i class="i i-arrow-white-down"&gt;&lt;/i&gt;[%commercial__offerlinktext%]&lt;/a&gt;
+                                        &lt;/p&gt;
+                                    &lt;/div&gt;
+                                &lt;/li&gt;
+                            &lt;/ul&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        
+        </code>
+    </pre>
+</div>
+
+<div class="facia-container__inner">
+    <h2>Travel</h2>
+    <h3>Low relevance</h3>
+</div>
+
+<div class="facia-container facia-container--layout-article">
+    <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-travel-low ad-slot ad-slot--merchandising ad-slot--commercial-component">
+        <script>
+            $.getJSON( "/commercial/travel/offers.json", function( json ) {
+            $('.dfp-ad--merchandising-travel-low').html(json.html);
+         });
+        </script>
+    </div>
+</div>
+
+<div class="facia-container__inner">
+    <h3>High relevance</h3>
+</div>
+
+<div class="facia-container facia-container--layout-article">
+    <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-travel-high ad-slot ad-slot--merchandising ad-slot--commercial-component">
+        <script>
+            $.getJSON( "/commercial/travel/offers-high.json", function( json ) {
+            $('.dfp-ad--merchandising-travel-high').html(json.html);
+         });
+        </script>
+    </div>
+</div>
+
+<div class="facia-container__inner">
+    <h2>Jobs</h2>
+    <h3>Low relevance</h3>
+</div>
+
+<div class="facia-container facia-container--layout-article">
+    <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-jobs-low ad-slot ad-slot--merchandising ad-slot--commercial-component">
+        <script>
+            $.getJSON( "/commercial/jobs.json", function( json ) {
+            $('.dfp-ad--merchandising-jobs-low').html(json.html);
+         });
+        </script>
+    </div>
+</div>
+
+<div class="facia-container__inner">
+    <h3>High relevance</h3>
+</div>
+
+<div class="facia-container facia-container--layout-article">
+    <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-jobs-high ad-slot ad-slot--merchandising ad-slot--commercial-component">
+        <script>
+            $.getJSON( "/commercial/jobs-high.json", function( json ) {
+            $('.dfp-ad--merchandising-jobs-high').html(json.html);
+         });
+        </script>
+    </div>
+</div>
+
+<div class="facia-container__inner">
+    <h2>Masterclasses</h2>
+    <h3>Low relevance</h3>
+</div>
+
+<div class="facia-container facia-container--layout-article">
+    <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-masterclasses-low ad-slot ad-slot--merchandising ad-slot--commercial-component">
+        <script>
+            $.getJSON( "/commercial/masterclasses.json", function( json ) {
+            $('.dfp-ad--merchandising-masterclasses-low').html(json.html);
+         });
+        </script>
+    </div>
+</div>
+
+<div class="facia-container__inner">
+    <h3>High relevance</h3>
+</div>
+
+<div class="facia-container facia-container--layout-article">
+    <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-masterclasses-high ad-slot ad-slot--merchandising ad-slot--commercial-component">
+        <script>
+            $.getJSON( "/commercial/masterclasses-high.json", function( json ) {
+            $('.dfp-ad--merchandising-masterclasses-high').html(json.html);
+         });
+        </script>
+    </div>
+</div>
+
+<div class="facia-container__inner">
+    <h2>Soulmates</h2>
+    <h3>Low relevance</h3>
+</div>
+
+<div class="facia-container facia-container--layout-article">
+    <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-soulmates-low ad-slot ad-slot--merchandising ad-slot--commercial-component">
+        <script>
+            $.getJSON( "/commercial/soulmates/mixed.json", function( json ) {
+            $('.dfp-ad--merchandising-soulmates-low').html(json.html);
+         });
+        </script>
+    </div>
+</div>
+
+<div class="facia-container__inner">
+    <h3>High relevance</h3>
+</div>
+
+<div class="facia-container facia-container--layout-article">
+    <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-soulmates-high ad-slot ad-slot--merchandising ad-slot--commercial-component">
+        <script>
+            $.getJSON( "/commercial/soulmates/mixed-high.json", function( json ) {
+            $('.dfp-ad--merchandising-soulmates-high').html(json.html);
+         });
+        </script>
+    </div>
+</div>
+
+<div class="facia-container__inner">
+    <h2>Bestbuy</h2>
+    <h3>Low relevance</h3>
+</div>
+
+<div class="facia-container facia-container--layout-article">
+    <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-bestbuy-low ad-slot ad-slot--merchandising ad-slot--commercial-component">
+        <script>
+            $.getJSON( "/commercial/money/bestbuys.json", function( json ) {
+            $('.dfp-ad--merchandising-bestbuy-low').html(json.html);
+         });
+        </script>
+    </div>
+</div>
+
+<div class="facia-container__inner">
+    <h3>High relevance</h3>
+</div>
+
+<div class="facia-container facia-container--layout-article">
+    <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-bestbuy-high ad-slot ad-slot--merchandising ad-slot--commercial-component">
+        <script>
+            $.getJSON( "/commercial/money/bestbuys-high.json", function( json ) {
+            $('.dfp-ad--merchandising-bestbuy-high').html(json.html);
+         });
+        </script>
+    </div>
+</div>
+
+<div class="facia-container__inner">
+    <h2>Books</h2>
+    <h3>Low relevance</h3>
+</div>
+
+<div class="facia-container facia-container--layout-article">
+    <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-books-low ad-slot ad-slot--merchandising ad-slot--commercial-component">
+        <script>
+            $.getJSON( "/commercial/books/bestsellers.json", function( json ) {
+            $('.dfp-ad--merchandising-books-low').html(json.html);
+         });
+        </script>
+    </div>
+</div>
+
+<div class="facia-container__inner">
+    <h3>Medium relevance</h3>
+</div>
+
+<div class="facia-container facia-container--layout-article">
+    <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-books-medium ad-slot ad-slot--merchandising ad-slot--commercial-component">
+        <script>
+            $.getJSON( "/commercial/books/bestsellers-medium.json", function( json ) {
+            $('.dfp-ad--merchandising-books-medium').html(json.html);
+         });
+        </script>
+    </div>
+</div>
+
+<div class="facia-container__inner">
+    <h3>High relevance</h3>
+</div>
+
+<div class="facia-container facia-container--layout-article">
+    <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-books-high ad-slot ad-slot--merchandising ad-slot--commercial-component">
+        <script>
+            $.getJSON( "/commercial/books/bestsellers-high.json", function( json ) {
+            $('.dfp-ad--merchandising-books-high').html(json.html);
+         });
+        </script>
+    </div>
+</div>
+
+<link rel="stylesheet" id="global-css" type="text/css" href="/assets/stylesheets/global.css">
+</body>
+</html>
