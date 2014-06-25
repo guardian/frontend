@@ -1,15 +1,13 @@
 @(page: CommentPage, blankComment: Comment = null, isTopComments: Boolean = false)(implicit request: RequestHeader)
-
 <div
-    class="d-discussion d-discussion--not-staff@if(!page.isClosedForRecommendation){ d-discussion--recommendations-open}"
-    data-comment-count="@page.commentCount"
+    class="d-discussion d-discussion--not-staff @if(!page.isClosedForRecommendation){d-discussion--recommendations-open} u-cf"
     @page.switches.map{ switch =>
         data-@switch.name="@switch.state"
     }>
     <div class="d-discussion__header d-discussion__comment-count">
         <div class="d-discussion__meta d-dicussion__meta--counts d-meta-item">
             @if(page.commentCount > 0){
-                @page.commentCount comment@if(page.commentCount != 1){s} in @page.topLevelCommentCount thread@if(page.topLevelCommentCount != 1){s}. 
+                @page.commentCount comment@if(page.commentCount != 1){s} in @page.topLevelCommentCount thread@if(page.topLevelCommentCount != 1){s}.
             }
         </div>
 
