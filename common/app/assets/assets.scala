@@ -9,7 +9,7 @@ import collection.mutable.{ Map => MutableMap }
 
 case class Asset(path: String) {
   val asModulePath = path.replace(".js", "")
-  lazy val md5Key = path.split('.').dropRight(1).last
+  lazy val md5Key = path.split('/').dropRight(1).last
 
   override def toString = path
 }
