@@ -210,6 +210,8 @@ define([
             droppable.init();
 
             fetchSettings(function (config, switches) {
+                var fronts;
+
                 if (switches['facia-tool-disable']) {
                     terminate();
                     return;
@@ -218,17 +220,19 @@ define([
 
                 vars.state.config = config;
 
-                model.fronts(
-                    getFront() === 'testcard' ? ['testcard'] :
-                       _.chain(config.fronts)
-                        .map(function(front, path) {
-                            return front.priority === vars.priority ? path : undefined;
-                        })
-                        .without(undefined)
-                        .without('testcard')
-                        .sortBy(function(path) { return path; })
-                        .value()
-                );
+                fronts = getFront() === 'testcard' ? ['testcard'] :
+                   _.chain(config.fronts)
+                    .map(function(front, path) {
+                        return front.priority === vars.priority ? path : undefined;
+                    })
+                    .without(undefined)
+                    .without('testcard')
+                    .sortBy(function(path) { return path; })
+                    .value();
+
+                if (!_.isEqual(model.fronts(), fronts)) {
+                   model.fronts(fronts);
+                }
             }, vars.CONST.configSettingsPollMs, true)
             .done(function() {
                 var wasPopstate = false;
