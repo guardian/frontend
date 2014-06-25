@@ -4,7 +4,7 @@
 
 GET         /humans.txt                                                                                              controllers.Assets.at(path="/public", file="humans.txt")
 
-GET         /commercial/creative                                                                                    controllers.Assets.at(path="/public", file="creative.html")
+GET         /commercial/creative                                                                                     controllers.commercial.CreativeDebugController.allComponents
 
 # For dev machines
 GET         /assets/internal/*file                                                                                   controllers.Assets.at(path="/public", file)
