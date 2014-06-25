@@ -1,6 +1,6 @@
-@(discussion: DiscussionComments)(implicit request: RequestHeader)
+@(page: Page, discussion: DiscussionComments)(implicit request: RequestHeader)
 
-<div class="activity-stream activity-stream--replies" itemprop itemtype="http://schema.org/UserComments">
+<div class="activity-stream activity-stream--unthreaded js-activity-stream" itemprop itemtype="http://schema.org/UserComments">
     @discussion.comments.map{ c =>
         <div class="activity-stream__item activity-item" itemprop itemtype="http://schema.org/Comment">
             <div class="activity-item__content activity-item__content--boosted">
@@ -14,4 +14,7 @@
             </div>
         </div>
     }
+    <div class="activity-stream__pagination u-cf">
+        @fragments.pagination(page, discussion.pagination, Some("js-activity-stream-page-change"))
+    </div>
 </div>

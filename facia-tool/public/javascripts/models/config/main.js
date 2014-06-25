@@ -13,7 +13,8 @@ define([
     'models/group',
     'models/config/droppable',
     'models/config/front',
-    'models/config/collection'
+    'models/config/collection',
+    'models/config/persistence'
 ], function(
     pageConfig,
     ko,
@@ -28,10 +29,10 @@ define([
     Group,
     droppable,
     Front,
-    Collection
+    Collection,
+    persistence
 ) {
     return function() {
-
         var model = vars.model = {};
 
         model.switches = ko.observable();
@@ -79,81 +80,6 @@ define([
             collection.toggleOpen();
             model.collections.unshift(collection);
         };
-
-        model.save = function(affectedCollections) {
-            var serialized = serialize(model);
-
-            if(!_.isEqual(serialized, vars.state.config)) {
-                model.pending(true);
-                authedAjax.request({
-                    url: vars.CONST.apiBase + '/config',
-                    type: 'post',
-                    data: JSON.stringify(serialized)
-                })
-                .then(function() {
-                    bootstrap({ force: true })
-                    .done(function() {
-                        model.pending(false);
-                        if (affectedCollections) {
-                            _.each([].concat(affectedCollections), pressCollection);
-                        }
-                    });
-                });
-            }
-        };
-
-        function pressCollection(collection) {
-            return authedAjax.request({
-                url: vars.CONST.apiBase + '/collection/update/' + collection.id,
-                type: 'post'
-            });
-        }
-
-        function serialize(model) {
-            return {
-                fronts:
-                   _.chain(model.fronts())
-                    .filter(function(front) { return front.id() && front.collections.items().length > 0; })
-                    .reduce(function(fronts, front) {
-                        var collections = _.chain(front.collections.items())
-                             .filter(function(collection) {
-                                return model.collections.indexOf(collection) > -1;
-                             })
-                             .map(function(collection) {
-                                return collection.id;
-                             })
-                             .value();
-
-                        if (collections.length > 0) {
-                            fronts[front.id()] = _.reduce(front.props, function(obj, val, key) {
-                                if (val()) {
-                                    obj[key] = val();
-                                }
-                                return obj;
-                            }, {collections: collections});
-                        }
-                        return fronts;
-                    }, {})
-                    .value(),
-
-                collections:
-                   _.chain(model.collections())
-                    .filter(function(collection) { return collection.id; })
-                    .filter(function(collection) { return collection.parents().length > 0; })
-                    .reduce(function(collections, collection) {
-                        collections[collection.id] =
-                           _.reduce(collection.meta, function(acc, val, key) {
-                                var v = _.isFunction(val) ? val() : val;
-                                if(v) {
-                                    acc[key] = v;
-                                }
-                                return acc;
-                            }, {});
-                        return collections;
-                    }, {})
-                    .value()
-            };
-        }
 
         function containerUsage() {
             return _.reduce(model.collections(), function(m, col) {
@@ -216,6 +142,14 @@ define([
 
         this.init = function() {
             droppable.init();
+
+            persistence.registerCallback(function () {
+                bootstrap({
+                    force: true
+                }).done(function () {
+                    vars.model.pending(false);
+                });
+            });
 
             bootstrap({
                 pollingMs: vars.CONST.configSettingsPollMs,

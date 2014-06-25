@@ -1,6 +1,7 @@
 package discussion.model
 
 import play.api.libs.json.{JsObject, JsArray, JsValue}
+import common.Pagination
 
 trait Comments {
   val comments: Seq[Comment]
@@ -16,6 +17,7 @@ case class DiscussionComments(
   topLevelCommentCount: Int,
   commenterCount: Int,
   isClosedForRecommendation: Boolean,
+  orderBy: String,
   switches: Seq[Switch]
 ) extends Comments
 
@@ -27,12 +29,13 @@ object DiscussionComments {
     DiscussionComments(
       discussion = discussion,
       comments = comments,
-      pagination = Pagination(json),
+      pagination = DiscussionPagination(json),
       commentCount = (json \ "discussion" \ "commentCount").as[Int],
       topLevelCommentCount = (json \ "discussion" \ "topLevelCommentCount").as[Option[Int]] getOrElse 0,
       commenterCount =  (json \ "discussion" \ "commenterCount").as[Option[Int]] getOrElse 0,
-      switches = (json \ "switches").as[Seq[JsObject]] map {Switch(_)},
-      isClosedForRecommendation = (json \ "isClosedForRecommendation").as[Option[Boolean]] getOrElse true
+      isClosedForRecommendation = (json \ "isClosedForRecommendation").as[Option[Boolean]] getOrElse true,
+      orderBy = (json \ "orderBy").as[String],
+      switches = (json \ "switches").as[Seq[JsObject]] map {Switch(_)}
     )
   }
 }
@@ -51,7 +54,7 @@ object ProfileComments {
     ProfileComments(
       profile = profile,
       comments = comments,
-      pagination = Pagination(json)
+      pagination = DiscussionPagination(json)
     )
   }
 }
@@ -63,14 +66,15 @@ object ProfileReplies {
     ProfileComments(
       profile = Profile(json),
       comments = comments,
-      pagination = Pagination(json)
+      pagination = DiscussionPagination(json)
     )
   }
 }
 
 case class ProfileDiscussions(
   profile: Profile,
-  discussions: Seq[DiscussionComments]
+  discussions: Seq[DiscussionComments],
+  pagination: Pagination
 )
 object ProfileDiscussions {
 
@@ -81,31 +85,30 @@ object ProfileDiscussions {
       DiscussionComments(
         discussion = discussion,
         comments = (d \ "comments").as[JsArray].value.map { Comment(_, Some(profile), Some(discussion)) },
-        pagination = Pagination(json),
+        pagination = DiscussionPagination(json),
         commentCount = 0,
         topLevelCommentCount = 0,
         commenterCount = 0,
         isClosedForRecommendation = (d \ "isClosedForRecommendation").as[Boolean],
+        orderBy = (json \ "orderBy").as[String],
         switches = Seq()
       )
     }
     ProfileDiscussions(
       profile = profile,
-      discussions = discussions
+      discussions = discussions,
+      DiscussionPagination(json)
     )
   }
 }
 
-case class Pagination(currentPage: Int, pages: Int, pageSize: Int, orderBy: String){
-  lazy val hasMore: Boolean = currentPage < pages
-}
+object DiscussionPagination {
 
-object Pagination {
-
-  def apply(json: JsValue): Pagination = Pagination(
-    (json \ "currentPage").as[Int],
-    (json \ "pages").as[Option[Int]] getOrElse -1,
-    (json \ "pageSize").as[Option[Int]] getOrElse -1,
-    (json \ "orderBy").as[String]
-  )
+  def apply(json: JsValue): Pagination = {
+    Pagination(
+      (json \ "currentPage").as[Int],
+      (json \ "pages").as[Option[Int]] getOrElse 100,
+      (json \ "discussion" \ "commentCount").as[Option[Int]] getOrElse 10000
+    )
+  }
 }

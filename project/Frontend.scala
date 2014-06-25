@@ -42,6 +42,8 @@ object Frontend extends Build with Prototypes {
   def withTests(project: Project) = project % "test->test;compile->compile"
 
   val commonWithTests = withTests(common)
+  
+  val sanityTest = application("sanity-tests")
 
   val facia = application("facia").dependsOn(commonWithTests).aggregate(common)
   val article = application("article").dependsOn(commonWithTests).aggregate(common)

@@ -4,6 +4,7 @@ define([
     'bean',
     'common/utils/config',
     'common/utils/context',
+    'common/utils/url',
     'common/modules/component',
     'common/modules/discussion/api',
     'common/modules/discussion/activity-stream',
@@ -15,6 +16,7 @@ function(
     bean,
     config,
     context,
+    url,
     component,
     discussionApi,
     ActivityStream,
@@ -43,12 +45,17 @@ function(
 
     function setupActivityStreamChanger(activityStream) {
         bean.on(context(), 'click', '.js-activity-stream-change', function(e) {
+            var el = e.currentTarget,
+                streamType = el.getAttribute('data-stream-type');
             e.preventDefault();
-            var el = e.currentTarget;
             selectTab(el);
 
             activityStream.change({
-                streamType: el.getAttribute('data-stream-type')
+                page: 1,
+                streamType: streamType
+            }).then(function() {
+                url.pushUrl({}, null,
+                    '/user/id/'+ activityStream.options.userId+(streamType!=='discussions' ? '/'+streamType : ''), true);
             });
         });
     }
