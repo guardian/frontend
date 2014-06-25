@@ -126,11 +126,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 6, 30)
   )
 
-  val SurveyBannerSwitch = Switch("Advertising", "survey-banner",
-    "Display survey banner on all devices",
-    safeState = Off, sellByDate = new DateMidnight(2014, 7, 1)
-  )
-
   // Ad Targeting
   /*
     These switches are to control length of request to DFP
@@ -493,7 +488,6 @@ object Switches extends Collections {
     ABSentry,
     ABLargerMobileMpu,
     SmartBannerSwitch,
-    SurveyBannerSwitch,
     ParameterlessImagesSwitch,
     FreshnessLoggingSwitch,
     SeoOptimisedContentImageSwitch,
