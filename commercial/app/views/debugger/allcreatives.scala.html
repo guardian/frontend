@@ -64,7 +64,7 @@
         css: {
             loaded: false
         },
-        config: 
+        config:
 
 {
     "page": {
@@ -99,10 +99,10 @@
 
         if (!isModern) { return false; }
 
-        
+
         var htmlClassNames = "";
 
-        
+
         function hasSvgSupport() {
             var ns = {'svg': 'http://www.w3.org/2000/svg'};
             return !!document.createElementNS && !!document.createElementNS(ns.svg, 'svg').createSVGRect;
@@ -173,7 +173,7 @@
         apiName: 'require',
         overwriteApi: true,
         paths: {
-            
+
             facebook: '//connect.facebook.net/en_US/all.js',
             swipe: '/assets/javascripts/components/swipe/swipe.js',
             zxcvbn: '/assets/javascripts/components/zxcvbn/index.js',
@@ -190,7 +190,7 @@
         if (!isModern) { return false; }
 
         function loadFontsAsynchronously() {
-            
+
             var f, x;
 
             x = document.getElementById('gu');
@@ -208,9 +208,9 @@
                 fontPreference = localStorage['gu.prefs.switch.font-family'],
                 fontSwitch = (fontPreference) ? JSON.parse(fontPreference).value : undefined;
 
-            
+
                 showFonts = true;
-            
+
 
             if (fontSwitch === true) {
                 showFonts = true;
@@ -224,7 +224,7 @@
                     var style = styleNodes[i],
                         nameAndCacheKey = style.getAttribute('data-cache-file-woff').match(/fonts\/(.*)\.woff(?:\.(.*))?\.json$/),
                         cachedCss = localStorage.getItem('gu.fonts.' + nameAndCacheKey[1] + '.' + nameAndCacheKey[2]);
-                        
+
                         try {
                             cachedCss = JSON.parse(cachedCss).value;
                         } catch(e) {}
@@ -236,9 +236,9 @@
             }
         }
 
-        
+
         var loadsHintedFonts = /Windows/;
-        
+
         var loadsNonHintedFonts = /W(indows Phone|PDesktop)/;
 
         guardian.shouldLoadFontsAsynchronously = loadsHintedFonts.test(navigator.userAgent)
@@ -250,7 +250,7 @@
             loadFontsFromStorage();
         }
 
-        
+
 
     })(guardian.isModernBrowser);
 
@@ -262,7 +262,7 @@
 jQuery(function($) {
     $("#switchFronts").click(function() {
         $('.facia-container').removeClass("facia-container--layout-article").addClass("facia-container--layout-front");
-        $('#switchArticles').removeClass('current');        
+        $('#switchArticles').removeClass('current');
         $(this).addClass('current');
         return false;
     });
@@ -272,7 +272,7 @@ jQuery(function($) {
         $(this).addClass('current');
         return false;
     });
-    
+
     $(".codeContainer pre").hide();
     $(".codeContainer").click(function() {
         $(this).children().slideToggle();
@@ -308,16 +308,16 @@ pre {
 <body id="top" class="has-new-navigation" >
 <div class="facia-container__inner">
     <h1>All the components</h1>
-    
+
     <div class="facia-switch-wrapper">
         <a id="switchFronts" href="#">Fronts</a>
         <a id="switchArticles" href="#" class="current">Articles</a>
     </div>
-    
+
     <h2>DFP Templates</h2>
 </div>
 <div class="facia-container facia-container--layout-article facia-container--commercial">
-    
+
     <div id="dfp-ad--merchandising-high" class="ad-slot ad-slot--dfp ad-slot--merchandising-high ad-slot--commercial-component-high" data-link-name="ad slot merchandising-high" data-name="merchandising-high" data-desktop="888,88" data-refresh="false" data-label="false" data-node-uid="9"><style type="text/css">
         .commercial--dfp-single.commercial--dfp-987654321 .commercial__title,
         .commercial--dfp-single.commercial--dfp-987654321 .commercial__home-link  {
@@ -414,7 +414,7 @@ pre {
                 &lt;/div&gt;
             &lt;/div&gt;
         &lt;/div&gt;
-        
+
 
     </code>
     </pre>
@@ -580,7 +580,7 @@ pre {
                     &lt;/div&gt;
                 &lt;/div&gt;
             &lt;/div&gt;
-        
+
         </code>
     </pre>
 </div>

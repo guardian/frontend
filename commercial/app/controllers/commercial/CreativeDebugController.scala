@@ -8,8 +8,11 @@ import conf.Configuration
 
 object CreativeDebugController extends Controller {
   def allComponents = Action{
-    if(Configuration.environment.stage == "dev") {Ok(views.html.debugger.allcreatives())}
-    NotFound
+    if(Configuration.environment.stage == "dev") {
+      Ok(views.html.debugger.allcreatives())
+    } else {
+      NotFound
+    }
   }
 }
 
