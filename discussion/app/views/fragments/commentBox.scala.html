@@ -31,6 +31,7 @@
         <textarea name="body" class="textarea d-comment-box__body" placeholder="Join the discussion…"></textarea>
         <button type="submit" class="submit-input d-comment-box__submit">Post your comment</button>
         <span class="u-fauxlink d-comment-box__preview" role="button">Preview</span>
+        <span class="u-fauxlink d-comment-box__hide-preview u-h" role="button">Hide preview</span>
         <span class="u-fauxlink d-comment-box__cancel" role="button">Cancel</span>
         <ul class="d-comment-box__formatting-controls">
             <li class="d-comment-box__formatting-bold" title="Bold">B</li>
@@ -38,9 +39,11 @@
             <li class="d-comment-box__formatting-quote" title="Quote">&#8221;</li>
             <li class="d-comment-box__formatting-link" title="Link">http://</li>
         </ul>
-        <div class="d-comment-box__preview-spout"></div>
         <div class="d-comment-box__preview-wrapper">
-            <div class="d-comment-box__preview-body"></div>
+            <div class="d-comment-box__preview-spout"></div>
+            <div class="d-comment-box__preview-block">
+                <div class="d-comment-box__preview-body"></div>
+            </div>
         </div>
     </div>
 </form>
