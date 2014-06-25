@@ -4,7 +4,7 @@
 
 @defining(Edition(request).navigation) { navigation =>
     @defining(Navigation.topLevelItem(navigation, metaData)) { topLevelSelected =>
-        <div class="new-navigation new-navigation--collapsed @if(topLevelSelected.size == 0){new-navigation--has-no-local-navigation} @if(NewNavAccordionSwitch.isSwitchedOn){js-accordion}">
+        <div class="new-navigation new-navigation--two-levels-at-wide-breakpoint new-navigation--collapsed @if(topLevelSelected.size == 0){new-navigation--has-no-local-navigation} @if(NewNavAccordionSwitch.isSwitchedOn){js-accordion}">
             <div class="gs-container">
                 <div class="new-navigation__inner">
                     <div class="new-navigation__scroll">

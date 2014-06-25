@@ -283,7 +283,6 @@ $c-new-navigation-signposting-action: guss-colour(neutral-1) !default;
     }
 }
 
-
 /* State: collapsed
    ========================================================================== */
 
@@ -372,11 +371,53 @@ $c-new-navigation-signposting-action: guss-colour(neutral-1) !default;
     &.new-navigation--has-no-local-navigation {
         .global-navigation {
             border-left: 0;
+            @include rem((
+                margin-left: -$gs-gutter
+            ));
         }
         .global-navigation__section:first-child {
             @include rem((
                 padding-left: $gs-gutter
             ));
+        }
+    }
+
+    @include mq(wide) {
+        &.new-navigation--two-levels-at-wide-breakpoint {
+            @include rem((
+                height: (gs-height(1)*2)
+            ));
+
+            &:after {
+                content: '';
+                position: absolute;
+                @include rem((
+                    top: gs-height(1)
+                ));
+                display: block;
+                width: 100%;
+                border-top: 1px solid rgba(255, 255, 255, .5);
+            }
+
+            .new-navigation__container {
+                display: block;
+            }
+            .local-navigation {
+                @include rem((
+                    width: gs-span(16) + $gs-gutter*2,
+                    margin-top: gs-height(1)
+                ));
+            }
+            .local-navigation__children {
+                width: 100%;
+            }
+            .global-navigation {
+                position: relative;
+                @include rem((
+                    top: -(gs-height(1)*2),
+                    margin-left: -$new-navigation-h-space-between-items
+                ));
+            }
         }
     }
 }
@@ -675,6 +716,7 @@ $c-new-navigation-signposting-action: guss-colour(neutral-1) !default;
 
 /* Home button
    ========================================================================== */
+
 .i-home {
     display: inline-block;
     background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAgCAYAAAAIXrg4AAAAi0lEQVR42u2WwQ2AMAgAGcERHKEjOAojOFI3whEcwQ1QanwYHmgKxgeX8OSuH5LCU5gZ+WQ7poAjIp/4znrM4CUv7dWaRSK98lHJvSKy2AQ2tVvuHpEFfk/1l2vQks/cDxqH5ALqQ/KlXbs6pJCIkjtHgIPJQAY+CIBBBjKQgZ8EKDBA1y+OAgIk7h02tXtYwgpPngAAAABJRU5ErkJggg==
@@ -685,6 +727,8 @@ $c-new-navigation-signposting-action: guss-colour(neutral-1) !default;
         height: 16px
     ));
 }
+
+
 /* Toggle button
    ========================================================================== */
 
