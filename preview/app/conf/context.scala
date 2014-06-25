@@ -40,7 +40,11 @@ class HealthcheckPage(urls: String*) extends UrlPagesHealthcheckManagementPage(u
   def isOk = status.get
 }
 
-object HealthcheckPage extends HealthcheckPage("/world/2012/sep/11/barcelona-march-catalan-independence")
+object HealthcheckPage extends HealthcheckPage("/world/2012/sep/11/barcelona-march-catalan-independence") {
+
+  // the previwe server has an nginx running on port 80
+  override val base = "http://localhost"
+}
 
 
 object Management extends GuManagement {
