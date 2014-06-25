@@ -7,8 +7,7 @@ module.exports = function (grunt) {
         staticTargetDir = './static/target/',
         staticHashDir = './static/hash/',
         testConfDir = './common/test/assets/javascripts/conf/',
-        tmpDir = './tmp',
-        tmpCoreJsDir = tmpDir+'/javascripts',
+        requirejsDir = './static/requirejs',
         propertiesFile = (isDev) ? process.env.HOME + '/.gu/frontend.properties' : '/etc/gu/frontend.properties';
 
     if (isDev) {
@@ -64,7 +63,7 @@ module.exports = function (grunt) {
             common: {
                 options: {
                     baseUrl: 'common/app/assets/javascripts',
-                    dir: tmpCoreJsDir,
+                    dir: requirejsDir,
                     keepBuildDir: false,
                     shim: {
                         imager: {
@@ -89,7 +88,6 @@ module.exports = function (grunt) {
                     name: 'bootstraps/facia',
                     out: staticTargetDir + 'javascripts/bootstraps/facia.js',
                     exclude: ['../../../../common/app/assets/javascripts/bootstraps/app'],
-                    keepBuildDir: true
                 }
             },
             ophan: {
@@ -97,9 +95,6 @@ module.exports = function (grunt) {
                     baseUrl: 'common/app/assets/javascripts',
                     name: 'common/bootstraps/ophan',
                     out: staticTargetDir + 'javascripts/bootstraps/ophan.js',
-                    wrap: {
-                        startFile: 'common/app/assets/javascripts/components/curl/curl.js'
-                    }
                 }
             },
             admin: {
@@ -394,18 +389,6 @@ module.exports = function (grunt) {
                     stderr: true,
                     failOnError: true
                 }
-            },
-
-            videojs: {
-                command: 'npm install',
-                options: {
-                    stdout: true,
-                    stderr: true,
-                    failOnError: true,
-                    execOptions: {
-                        cwd: 'common/app/assets/javascripts/components/videojs'
-                    }
-                }
             }
         },
 
@@ -419,8 +402,7 @@ module.exports = function (grunt) {
         },
 
         copy: {
-            // 3rd party javascript applications
-            'javascript-common': {
+            'javascript': {
                 files: [
                     {
                         expand: true,
@@ -446,23 +428,20 @@ module.exports = function (grunt) {
                     },
                     {
                         expand: true,
-                        cwd: tmpCoreJsDir,
+                        cwd: requirejsDir,
                         src: [
-                            'utils.js',
-                            'utils.js.map',
                             'app.js',
                             'app.js.map'
                         ],
-                        dest: staticTargetDir + 'javascripts'
-                    }
-                ]
-            },
-            'javascript-admin': {
-                files: [
+                        dest: staticTargetDir + 'javascripts/bootstraps'
+                    },
                     {
                         expand: true,
-                        cwd: 'common/app/assets/javascripts',
-                        src: 'components/curl/curl-domReady.js',
+                        cwd: requirejsDir,
+                        src: [
+                            'utils.js',
+                            'utils.js.map'
+                        ],
                         dest: staticTargetDir + 'javascripts'
                     }
                 ]
@@ -545,13 +524,12 @@ module.exports = function (grunt) {
         },
 
         uglify: {
-            components: {
+            javascript: {
                 files: [{
                     expand: true,
                     cwd: staticTargetDir + 'javascripts',
                     src: [
                         '**/*.js',
-                        '!components/curl/**/*.js',
                         '!components/zxcvbn/**/*.js'
                     ],
                     dest: staticTargetDir + 'javascripts'
@@ -761,7 +739,7 @@ module.exports = function (grunt) {
 
         // Clean stuff up
         clean: {
-            js         : [staticTargetDir + 'javascripts', staticHashDir + 'javascripts', tmpCoreJsDir],
+            js         : [staticTargetDir + 'javascripts', staticHashDir + 'javascripts', requirejsDir],
             css        : [staticTargetDir + 'stylesheets', staticHashDir + 'stylesheets'],
             images     : [staticTargetDir + 'images', staticHashDir + 'images'],
             flash      : [staticTargetDir + 'flash', staticHashDir + 'flash'],
@@ -835,9 +813,12 @@ module.exports = function (grunt) {
             }
         },
 
-        grunt: {
-            videojs: {
-                gruntfile: 'common/app/assets/javascripts/components/videojs/Gruntfile.js'
+        concat: {
+            application: {
+                src: [requirejsDir + '/utils.js',
+                      'common/app/assets/javascripts/components/curl/curl.js',
+                      'common/app/assets/javascripts/bootstraps/app.js'],
+                dest: requirejsDir + '/utils.js'
             }
         }
     });
@@ -864,8 +845,8 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-asset-monitor');
     grunt.loadNpmTasks('grunt-text-replace');
     grunt.loadNpmTasks('grunt-reloadlet');
-    grunt.loadNpmTasks('grunt-grunt');
     grunt.loadNpmTasks('grunt-pagespeed');
+    grunt.loadNpmTasks('grunt-contrib-concat');
 
     // Default task
     grunt.registerTask('default', ['clean', 'validate', 'compile', 'test', 'analyse']);
@@ -888,29 +869,13 @@ module.exports = function (grunt) {
      */
     grunt.registerTask('compile:images', ['copy:images', 'shell:spriteGeneration', 'imagemin']);
     grunt.registerTask('compile:css', ['sass:compile', 'replace:cssSourceMaps', 'copy:css']);
-    grunt.registerTask('compile:js', function() {
-        // pull out copy targets that start with 'javascript-'
-        var tasks = Object.keys(grunt.config('copy'))
-                .filter(function(copyTask) {
-                    return copyTask.indexOf('javascript') === 0;
-                })
-                .map(function(copyTask) {
-                    return 'copy:' + copyTask;
-                });
-        tasks.unshift('requirejs');
-        grunt.task.run(tasks);
-        if (!isDev) {
-            grunt.task.run('uglify:components');
-        }
-    });
+    grunt.registerTask('compile:js', ['requirejs', 'concat', 'copy:javascript', 'uglify:javascript']);
     grunt.registerTask('compile:fonts', ['mkdir:fontsTarget', 'webfontjson']);
     grunt.registerTask('compile:flash', ['copy:flash']);
     grunt.registerTask('compile:conf', ['copy:headCss', 'copy:assetMap']);
-    grunt.registerTask('compile:videojs', ['shell:videojs', 'grunt:videojs']);
     grunt.registerTask('compile', [
         'compile:images',
         'compile:css',
-        'compile:videojs',
         'compile:js',
         'compile:fonts',
         'compile:flash',
