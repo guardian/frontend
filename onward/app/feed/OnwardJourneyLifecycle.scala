@@ -21,7 +21,6 @@ trait OnwardJourneyLifecycle extends GlobalSettings {
       // fire every hour
       Jobs.schedule("OnwardJourneyAgentsRefreshHourlyJob", "0 0 * * * ?") {
         DayMostPopularAgent.refresh()
-        SociallyReferredContentAgent.update()
       }
 
       AkkaAsync {
@@ -34,7 +33,6 @@ trait OnwardJourneyLifecycle extends GlobalSettings {
       AkkaAsync{
         // kick off refresh now, as this happens hourly
         DayMostPopularAgent.refresh()
-        SociallyReferredContentAgent.update()
       }
   }
 
@@ -47,7 +45,6 @@ trait OnwardJourneyLifecycle extends GlobalSettings {
     MostPopularExpandableAgent.stop()
     GeoMostPopularAgent.stop()
     DayMostPopularAgent.stop()
-    SociallyReferredContentAgent.stop()
 
     super.onStop(app)
   }
