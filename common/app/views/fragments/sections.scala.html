@@ -7,17 +7,16 @@
     @if(isFooter){ data-link-name="global navigation: footer : sections"} else {
         data-link-name="global navigation: header : sections"}>
     <ul class="nav nav--columns u-cf nav--additional-sections nav--top-border-off @if(isFooter){nav--footer}">
-        @* <!-- TODO delete site after switch to single domain --> *@
-            @Edition(request).navigation.map{ section =>
-                <li class="nav__item@if(section.name.newWindow && !isFooter){ mobile-only}">
-                    <a href="@LinkTo{@section.name.href}"
-                        data-link-name="@section.name.title"
-                        class="nav__link@if("/" + page.id == section.name.href) { is-active}"
-                        @if(section.name.newWindow){ target="_blank" }>
-                            @HtmlFormat.raw(section.name.title)
-                    </a>
-                </li>
-            }
+        @Edition(request).navigation.map{ section =>
+            <li class="nav__item@if(section.name.newWindow && !isFooter){ mobile-only}">
+                <a href="@LinkTo{@section.name.href}"
+                    data-link-name="@section.name.title"
+                    class="nav__link@if("/" + page.id == section.name.href) { is-active}"
+                    @if(section.name.newWindow){ target="_blank" }>
+                        @HtmlFormat.raw(section.name.title)
+                </a>
+            </li>
+        }
         <li class="nav__item"><a class="nav__link" data-link-name="all sections" href="@LinkTo("/sections")">All sections</a></li>
     </ul>
     <ul class="nav nav--columns nav--guardian-services u-cf @if(isFooter){nav--footer}">
