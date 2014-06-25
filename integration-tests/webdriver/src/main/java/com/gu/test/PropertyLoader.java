@@ -3,10 +3,13 @@ package com.gu.test;
 import static org.apache.commons.lang3.StringUtils.isBlank;
 
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  * Loads properties from file specified by environment variable of value {@link #PROP_FILE_PATH_ENV_KEY} which can be
@@ -15,26 +18,53 @@ import org.apache.commons.io.IOUtils;
  */
 public class PropertyLoader {
 
+    private static final Log LOG = LogFactory.getLog(PropertyLoader.class);
+    private static final String DEFAULT_PROPERTIES_FILE = "base.properties";
     static final String DEFAULT_PROP_FILE_PATH = "src/main/resources/local-config.properties";
     static final String PROP_FILE_PATH_ENV_KEY = "env.test-property-file";
 
     public static String getProperty(String name) {
-        String propertyFilePath = getPropertyFilePath();
+        return loadProperties().getProperty(name);
+    }
+
+    public static Properties loadProperties() {
+        Properties loadedProperties = new Properties();
+        try {
+            loadedProperties.load(PropertyLoader.class.getClassLoader().getResourceAsStream(DEFAULT_PROPERTIES_FILE));
+        } catch (IOException e) {
+            throw new RuntimeException("Could not load base property file", e);
+        }
+
+        addOverridePropertiesIfExists(loadedProperties);
+
+        return loadedProperties;
+    }
+
+    private static void addOverridePropertiesIfExists(Properties loadedProperties) {
+        try {
+            loadedProperties.putAll(loadOverrideProperties());
+        } catch (Exception e) {
+            LOG.info("Could not load override properties so will use the base properties only: ", e);
+        }
+    }
+
+    private static Properties loadOverrideProperties() {
+        String propertyFilePath = getOverridePropertyFilePath();
 
         InputStream propertyStream = null;
         try {
             propertyStream = new FileInputStream(propertyFilePath);
-            Properties loadedProperties = new Properties();
-            loadedProperties.load(propertyStream);
-            return loadedProperties.getProperty(name);
+            Properties overrideProperties = new Properties();
+            overrideProperties.load(propertyStream);
+            return overrideProperties;
         } catch (Exception e) {
-            throw new RuntimeException("Could not load property file: " + propertyFilePath, e);
+            throw new RuntimeException("Could not load override property file: " + propertyFilePath, e);
         } finally {
             IOUtils.closeQuietly(propertyStream);
         }
     }
 
-    private static String getPropertyFilePath() {
+    private static String getOverridePropertyFilePath() {
         String propertyFilePath = System.getProperty(PROP_FILE_PATH_ENV_KEY);
         if (isBlank(propertyFilePath)) {
             return DEFAULT_PROP_FILE_PATH;

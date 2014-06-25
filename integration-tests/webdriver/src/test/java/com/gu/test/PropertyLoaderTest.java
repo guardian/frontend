@@ -8,15 +8,15 @@ import org.junit.Test;
 public class PropertyLoaderTest {
 
     @Test
-    public void shouldLoadDefaultPropertyFile() {
-        System.clearProperty(PROP_FILE_PATH_ENV_KEY);
+    public void shouldLoadBasePropertyFile() {
+        System.setProperty(PROP_FILE_PATH_ENV_KEY, "src/test/resources/test-override.properties");
         assertEquals("http://m.code.dev-theguardian.com", PropertyLoader.getProperty("baseUrl"));
     }
 
     @Test
     public void shouldLoadSpecifiedPropertyFile() {
-        System.setProperty(PROP_FILE_PATH_ENV_KEY, "src/test/resources/test-config.properties");
-        assertEquals("http://www.theguardian.com/uk", PropertyLoader.getProperty("baseUrl"));
+        System.setProperty(PROP_FILE_PATH_ENV_KEY, "src/test/resources/test-override.properties");
+        assertEquals("overriden", PropertyLoader.getProperty("saucelabs.remotedriver.url"));
     }
 
 }

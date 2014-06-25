@@ -4,6 +4,9 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
+/**
+ * @deprecated Use {@link PropertyLoader} instead
+ */
 public class Config {
 
     Properties prop = config("config.properties");

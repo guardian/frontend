@@ -1,16 +1,18 @@
 package com.gu.test.helpers;
 
-import com.gu.test.Config;
+import static com.gu.test.PropertyLoader.getProperty;
+
+import org.openqa.selenium.WebDriver;
+
 import com.gu.test.pages.Article;
 import com.gu.test.pages.FrontPage;
 import com.gu.test.pages.LiveBlog;
-import org.openqa.selenium.WebDriver;
 
 public class PageHelper {
     private WebDriver driver;
 
-    protected final String BASE_URL = new Config().getBaseUrl();
-    protected final String TEST_CARD = new Config().getTestCard();
+    protected final String BASE_URL = getProperty("baseUrl");
+    protected final String TEST_CARD = getProperty("testCard");
     protected final String liveSite = "http://www.theguardian.com/uk?view=mobile";
 
     public PageHelper(WebDriver driver) {

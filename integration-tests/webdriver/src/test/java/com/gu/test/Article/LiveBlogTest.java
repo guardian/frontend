@@ -1,18 +1,22 @@
 package com.gu.test.Article;
 
-import com.gu.test.Config;
-import com.gu.test.helpers.PageHelper;
-import com.gu.test.pages.LiveBlog;
-import org.junit.*;
+import static com.gu.test.PropertyLoader.getProperty;
+import static com.gu.test.WebDriverFactory.createWebDriver;
+
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 
-import static com.gu.test.WebDriverFactory.createWebDriver;
+import com.gu.test.helpers.PageHelper;
+import com.gu.test.pages.LiveBlog;
 
 public class LiveBlogTest {
     WebDriver driver;
     private PageHelper pageHelper;
     private LiveBlog testBlog;
-    private String ARTICLE_WITH_LIVEBLOG = new Config().getArticleLiveBlog();
+    private String ARTICLE_WITH_LIVEBLOG = getProperty("articleLiveBlog");
 
     @Before
     public void setUp() throws Exception {

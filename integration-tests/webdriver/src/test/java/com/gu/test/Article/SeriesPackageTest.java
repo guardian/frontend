@@ -1,8 +1,9 @@
 package com.gu.test.Article;
 
 
-import com.gu.test.Config;
-import com.gu.test.helpers.PageHelper;
+import static com.gu.test.PropertyLoader.getProperty;
+import static com.gu.test.WebDriverFactory.createWebDriver;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -10,12 +11,12 @@ import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-import static com.gu.test.WebDriverFactory.createWebDriver;
+import com.gu.test.helpers.PageHelper;
 
 public class SeriesPackageTest {
     WebDriver driver;
     private PageHelper pageHelper;
-    private String seriesArticle = new Config().getArticleWithSeries();
+    private String seriesArticle = getProperty("articleWithSeries");
 
     @Before
     public void setUp() throws Exception {

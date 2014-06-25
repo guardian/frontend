@@ -1,18 +1,22 @@
 package com.gu.test.Article;
 
-import com.gu.test.Config;
-import com.gu.test.helpers.PageHelper;
-import com.gu.test.pages.Article;
-import org.junit.*;
+import static com.gu.test.PropertyLoader.getProperty;
+import static com.gu.test.WebDriverFactory.createWebDriver;
+
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 
-import static com.gu.test.WebDriverFactory.createWebDriver;
+import com.gu.test.helpers.PageHelper;
+import com.gu.test.pages.Article;
 
 public class ArticleComponentTest {
     WebDriver driver;
     private PageHelper pageHelper;
     private Article testArticle;
-    private String ARTICLE_WITH_TWEETS = new Config().getArticleWithTweets();
+    private String ARTICLE_WITH_TWEETS = getProperty("articleWithTweets");
 
     @Before
     public void setUp() throws Exception {
