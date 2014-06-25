@@ -27,7 +27,7 @@ class GoogleBotIntegrityTests extends FunSpec with Matchers {
             page.getTitleText() should not be (empty)
           }
         case Rss(page: XmlPage) => println("No Rss specific tests yet")
-        case SiteMap(page: XmlPage) => println("No sitemap specific tests")
+        case SiteMap(page: XmlPage) => println("No sitemap specific tests yet")
       }
 
       //general purpose tests
