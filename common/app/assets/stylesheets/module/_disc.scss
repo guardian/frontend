@@ -228,6 +228,13 @@ $disc-avatar-size: 44px;
     ));
     text-align: center;
 }
+.activity-stream__pagination {
+    border: 0 none;
+
+    .pagination_legend {
+        display: none !important;
+    }
+}
 .activity-stream--discussions {
     .activity-item__content {
         @include rem((
@@ -238,6 +245,37 @@ $disc-avatar-size: 44px;
 
     .activity-item__content--no-border {
         border-top: 0 none;
+        margin-top: 0;
         padding-top: 0;
+    }
+}
+
+.activity-stream-search {
+    @include rem((
+        margin-top: $gs-baseline/2
+    ));
+}
+.activity-stream-search__label {
+    float: left;
+}
+.activity-stream-search__q-container {
+    @include rem((
+        padding-left: $gs-gutter
+    ));
+}
+.activity-stream-search__q {
+    @include box-sizing(border-box);
+    @include fs-textsans(2);
+    @include rem((
+        padding-bottom: $gs-baseline/6,
+        padding-left: $gs-gutter/5,
+        padding-top: $gs-baseline/3
+    ));
+    border: 0 none;
+    color: $c-neutral2-contrasted;
+    vertical-align: bottom;
+    width: 100%;
+    &:focus {
+        outline-color: $c-newsAccent;
     }
 }

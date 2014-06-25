@@ -52,7 +52,8 @@ module.exports = function (grunt) {
                     imager:       '../../../../common/app/assets/javascripts/components/imager.js/src/strategies/container',
                     omniture:     '../../../../common/app/assets/javascripts/components/omniture/omniture',
                     fence:        '../../../../common/app/assets/javascripts/components/fence/fence',
-                    enhancer:     '../../../../common/app/assets/javascripts/components/enhancer/enhancer'
+                    enhancer:     '../../../../common/app/assets/javascripts/components/enhancer/enhancer',
+                    stripe:       '../../../../common/app/assets/javascripts/components/stripe/stripe.min'
                 },
                 optimize: 'uglify2',
                 generateSourceMaps: true,
@@ -85,6 +86,15 @@ module.exports = function (grunt) {
                     baseUrl: 'facia/app/assets/javascripts',
                     name: 'bootstraps/facia',
                     out: staticTargetDir + 'javascripts/bootstraps/facia.js',
+                    exclude: ['../../../../common/app/assets/javascripts/bootstraps/app'],
+                    keepBuildDir: true
+                }
+            },
+            identity: {
+                options: {
+                    baseUrl: 'identity/app/assets/javascripts',
+                    name: 'bootstraps/membership',
+                    out: staticTargetDir + 'javascripts/bootstraps/membership.js',
                     exclude: ['../../../../common/app/assets/javascripts/bootstraps/app'],
                     keepBuildDir: true
                 }
@@ -508,24 +518,23 @@ module.exports = function (grunt) {
             }
         },
 
-        hash: {
+        asset_hash: {
             options: {
-                mapping: staticHashDir + 'assets/assets.map',
-                srcBasePath: staticTargetDir,
-                destBasePath: staticHashDir,
-                flatten: false,
+                assetMap: staticHashDir + 'assets/assets.map',
+                srcBasePath: 'static/target/',
+                destBasePath: 'static/hash/',
                 hashLength: (isDev) ? 0 : 32
             },
-            files: {
-                expand: true,
-                cwd: staticTargetDir,
-                src: '**/*',
-                filter: 'isFile',
-                dest: staticHashDir,
-                rename: function(dest, src) {
-                    // remove .. when hash length is 0
-                    return dest + src.split('/').slice(0, -1).join('/');
-                }
+            all: {
+                options: {
+                    preserveSourceMaps: true
+                },
+                files: [
+                    {
+                        src: [staticTargetDir + '**/*'],
+                        dest: staticHashDir
+                    }
+                ]
             }
         },
 
@@ -535,7 +544,7 @@ module.exports = function (grunt) {
                     expand: true,
                     cwd: staticTargetDir + 'javascripts',
                     src: [
-                        '**/*.js',
+                        '{components,vendor}/**/*.js',
                         '!components/curl/**/*.js',
                         '!components/zxcvbn/**/*.js'
                     ],
@@ -622,10 +631,7 @@ module.exports = function (grunt) {
             common: {
                 src: [
                     staticTargetDir + 'javascripts/bootstraps/*.js',
-                    staticTargetDir + 'stylesheets/*.css',
-                    // ignore hashed files
-                    '!' + '**/*.<%= Array(1 + hash.options.hashLength).join("?") %>.js',
-                    '!' + '**/*.<%= Array(1 + hash.options.hashLength).join("?") %>.css'
+                    staticTargetDir + 'stylesheets/*.css'
                 ],
                 options: {
                     credentials: propertiesFile
@@ -685,7 +691,7 @@ module.exports = function (grunt) {
             },
             css: {
                 files: ['common/app/assets/stylesheets/**/*.scss'],
-                tasks: ['compile:css', 'hash'],
+                tasks: ['compile:css', 'asset_hash'],
                 options: {
                     spawn: false
                 }
@@ -756,7 +762,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-shell');
     grunt.loadNpmTasks('grunt-mkdir');
     grunt.loadNpmTasks('grunt-contrib-imagemin');
-    grunt.loadNpmTasks('grunt-hash');
+    grunt.loadNpmTasks('grunt-asset-hash');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-uglify');
@@ -813,7 +819,7 @@ module.exports = function (grunt) {
         'compile:js',
         'compile:fonts',
         'compile:flash',
-        'hash',
+        'asset_hash',
         'compile:conf'
     ]);
 
@@ -849,8 +855,7 @@ module.exports = function (grunt) {
             // compile just the project
             var project = filepath.split('/').shift();
             grunt.task.run('requirejs:' + project);
-            // TODO: decouple moving of files from hashing
-            grunt.task.run('hash');
+            grunt.task.run('asset_hash');
         }
     });
 

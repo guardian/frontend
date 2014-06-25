@@ -534,6 +534,7 @@ define([
     var ready = function (config, context) {
         if (!this.initialised) {
             this.initialised = true;
+            modules.loadTags(config);
             modules.displayOnboardMessage(config);
             modules.windowEventListeners();
             modules.checkIframe();
@@ -554,7 +555,6 @@ define([
             modules.logReadingHistory();
             modules.unshackleParagraphs(config, context);
             modules.initAutoSignin(config);
-            modules.loadTags(config);
             modules.augmentInteractive();
             modules.runForseeSurvey(config);
             modules.startRegister(config);

@@ -22,7 +22,8 @@ define([
     'common/bootstraps/article',
     'common/bootstraps/video',
     'common/bootstraps/gallery',
-    'common/bootstraps/identity'
+    'common/bootstraps/identity',
+    'common/bootstraps/profile'
 ], function (
     qwery,
     mediator,
@@ -46,7 +47,8 @@ define([
     Article,
     Video,
     Gallery,
-    Identity
+    Identity,
+    Profile
 ) {
 
     var modules = {
@@ -137,8 +139,11 @@ define([
             }
 
             if (config.page.section === 'football') {
-                // Kick it all off
                 Football.init();
+            }
+
+            if (config.page.section === 'identity') {
+                Profile.init();
             }
         };
 

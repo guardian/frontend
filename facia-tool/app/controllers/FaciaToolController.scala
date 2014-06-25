@@ -1,35 +1,24 @@
 package controllers
 
+import play.api.libs.ws.Response
 import util.SanitizeInput
 import frontsapi.model._
 import frontsapi.model.UpdateList
-import jobs.FrontPressJob
 import play.api.mvc.{AnyContent, Action, Controller}
 import play.api.libs.json._
 import common.{FaciaToolMetrics, ExecutionContexts, Logging}
 import conf.{Switches, Configuration}
+import Switches.ContentApiPutSwitch
 import tools.FaciaApi
-import services.{ContentApiRefresh, ConfigAgent, ContentApiWrite, S3FrontsApi}
-import play.api.libs.ws.Response
-import scala.concurrent.Future
-import conf.Switches.ContentApiPutSwitch
+import services.{ContentApiWrite, ContentApiRefresh, ConfigAgent, S3FrontsApi}
 import model.{NoCache, Cached}
+import scala.concurrent.Future
 import scala.util.{Failure, Success}
 import play.api.libs.Comet
+import frontpress.PressCommand
+import frontpress.CollectionPressing.pressCollectionIds
 
 object FaciaToolController extends Controller with Logging with ExecutionContexts {
-  implicit val collectionRead = Json.reads[Collection]
-  implicit val frontRead = Json.reads[Front]
-  implicit val configRead = Json.reads[Config]
-  implicit val collectionWrite = Json.writes[Collection]
-  implicit val frontWrite= Json.writes[Front]
-  implicit val configWrite = Json.writes[Config]
-
-  implicit val updateListRead = Json.reads[UpdateList]
-  implicit val collectionMetaRead = Json.reads[CollectionMetaUpdate]
-  implicit val trailWrite = Json.writes[Trail]
-  implicit val blockWrite = Json.writes[Block]
-
   def priorities() = ExpiringAuthentication { request =>
     val identity = Identity(request).get
     Cached(60) { Ok(views.html.priority(Configuration.environment.stage, "", Option(identity))) }
@@ -106,7 +95,7 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
     val block = FaciaApi.publishBlock(id, identity)
     block.foreach{ b =>
       UpdateActions.archivePublishBlock(id, b, identity)
-      pressCollectionId(id)
+      pressCollectionIds(PressCommand.forOneId(id).withPressDraft().withPressLive())
     }
     notifyContentApi(id)
     NoCache(Ok)
@@ -117,6 +106,7 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
     val block = FaciaApi.discardBlock(id, identity)
     block.foreach { b =>
       UpdateActions.archiveDiscardBlock(id, b, identity)
+      pressCollectionIds(PressCommand.forOneId(id).withPressDraft())
     }
     NoCache(Ok)
   }
@@ -149,7 +139,17 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
               UpdateActions.updateCollectionFilter(updateList.id, updateList, identity).map(updateList.id -> _)
           }.flatten.toMap
 
-          pressCollectionIds(updatedCollections.keySet)
+          val shouldUpdateLive: Boolean = update.exists(_._2.live)
+
+          val pressCommand: PressCommand =
+            PressCommand(
+              updatedCollections.keySet,
+              live = shouldUpdateLive,
+              draft = (updatedCollections.values.exists(_.draft.isEmpty) && shouldUpdateLive) || update.exists(_._2.draft)
+            )
+
+          pressCollectionIds(pressCommand)
+
           updatedCollections.keys.foreach(notifyContentApi)
 
           if (updatedCollections.nonEmpty)
@@ -161,7 +161,7 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
   }
 
   def updateCollection(id: String) = AjaxExpiringAuthentication { request =>
-    pressCollectionId(id)
+    pressCollectionIds(PressCommand.forOneId(id).withPressDraft().withPressLive())
     notifyContentApi(id)
     NoCache(Ok)
   }
@@ -171,12 +171,6 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
       ConfigAgent.getConfig(id)
         .map {config => ContentApiWrite.writeToContentapi(config)}
     else None
-
-  def pressCollectionId(id: String): Unit = pressCollectionIds(Set(id))
-  def pressCollectionIds(ids: Set[String]): Unit =
-    if (Switches.FaciaToolPressSwitch.isSwitchedOn) {
-      FrontPressJob.pressByCollectionIds(ids)
-    }
 
   def getLastModified(path: String) = AjaxExpiringAuthentication { request =>
     val now: Option[String] = S3FrontsApi.getPressedLastModified(path)

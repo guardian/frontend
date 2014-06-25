@@ -1,31 +1,35 @@
-@(profileDiscussions: discussion.model.ProfileDiscussions)(implicit request: RequestHeader)
+@(page: Page, profileDiscussions: discussion.model.ProfileDiscussions)(implicit request: RequestHeader)
 
 <div class="activity-stream activity-stream--discussions" itemprop itemtype="http://schema.org/UserComments">
-    @profileDiscussions.discussions.zipWithRowInfo.map{ case(disc, discRow) =>
-        <div class="activity-stream__item activity-item @if(discRow.isFirst){activity-item--first}">
-            <div class="activity-item__title">
-                <a href="@disc.discussion.webUrl#comments">@disc.discussion.title</a>
-            </div>
-
-            @disc.comments.zipWithRowInfo.map{ case (c, cRow) =>
-                <div class="activity-item__content @if(cRow.isFirst){activity-item__content--no-border}" itemprop itemtype="http://schema.org/Comment">
-                    <div class="activity-item__content-meta">
-                        <time class="disc-comment__date-published"
-                              itemprop="datePublished"
-                              datetime="@c.date.toString("yyyy-MM-dd'T'HH:mm:ss'Z'")"
-                              data-timestamp="@c.date.getMillis">
-                            <a class="disc-comment__permalink" href="@Configuration.discussion.url/comment-permalink/@c.id" itemprop="url">@c.date.toString("d MMM y HH:mm")</a>
-                        </time>
-                    </div>
-
-                    <div class="activity-item__content-body">
-                        @comment(c, c.discussion.isClosedForRecommendation)
-                    </div>
-                </div>
-            }
-        </div>
-    }
     @if(profileDiscussions.discussions.isEmpty){
-        <p class="activity-stream__empty">It looks like @profileDiscussions.profile.displayName has no comments.</p>
+        <p class="activity-stream__empty">Nothing to see here at the moment.</p>
+    } else {
+        @profileDiscussions.discussions.zipWithRowInfo.map{ case(disc, discRow) =>
+            <div class="activity-stream__item activity-item @if(discRow.isFirst){activity-item--first}">
+                <div class="activity-item__title">
+                    <a href="@disc.discussion.webUrl#comments">@disc.discussion.title</a>
+                </div>
+
+                @disc.comments.zipWithRowInfo.map{ case (c, cRow) =>
+                    <div class="activity-item__content @if(cRow.isFirst){activity-item__content--no-border}" itemprop itemtype="http://schema.org/Comment">
+                        <div class="activity-item__content-meta">
+                            <time class="disc-comment__date-published"
+                                  itemprop="datePublished"
+                                  datetime="@c.date.toString("yyyy-MM-dd'T'HH:mm:ss'Z'")"
+                                  data-timestamp="@c.date.getMillis">
+                                <a class="disc-comment__permalink" href="@Configuration.discussion.url/comment-permalink/@c.id" itemprop="url">@c.date.toString("d MMM y HH:mm")</a>
+                            </time>
+                        </div>
+
+                        <div class="activity-item__content-body">
+                            @comment(c, c.discussion.isClosedForRecommendation)
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+        <div class="activity-stream__pagination u-cf">
+            @fragments.pagination(page, profileDiscussions.pagination, Some("js-activity-stream-page-change"))
+        </div>
     }
 </div>
