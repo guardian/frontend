@@ -179,6 +179,12 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
     width <- imageSrcWidth
     height <- imageSrcHeight
   } yield ImageOverride.createElementWithOneAsset(src, width, height)
+
+  override lazy val adUnitSuffix: String = {
+    val prioritisedTagList: List[Tag] = blogs.toList ::: primaryKeyWordTag.toList
+    val prioritisedPossibleAdUnits: List[String] = prioritisedTagList.map{_.id} ::: section :: Nil
+    prioritisedPossibleAdUnits.headOption.getOrElse("")
+  }
 }
 
 object Content {

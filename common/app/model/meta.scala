@@ -28,7 +28,7 @@ trait MetaData extends Tags {
   lazy val isFront = false
   lazy val contentType = ""
 
-  lazy val adUnitSuffix = keywords.head.id
+  def adUnitSuffix = section
 
   lazy val hasPageSkin = false
 
