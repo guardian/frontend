@@ -284,8 +284,11 @@ jQuery(function($) {
 .facia-container {
     margin-top: 12px;
 }
-.pre {
+pre {
     font-size: 10px;
+}
+#dfp-ad--merchandising-high {
+    display: block;
 }
 </style>
 
@@ -347,7 +350,7 @@ jQuery(function($) {
     </div>
 </div>
 
-<div class="codeContainer">
+<div class="codeContainer facia-container__inner">
     Show code for DFP >
     <pre>
     <code>
@@ -481,7 +484,7 @@ jQuery(function($) {
     </div>
 </div>
 
-<div class="codeContainer">
+<div class="codeContainer facia-container__inner">
     Show code for DFP >
     <pre>
         <code>
@@ -567,8 +570,15 @@ jQuery(function($) {
         </code>
     </pre>
 </div>
-
-
+<div class="facia-container facia-container--layout-article">
+    <div id="dfp-ad--merchandising-travel-low" class="ad-slot ad-slot--merchandising ad-slot--commercial-component lazyloaded" data-link-name="ad slot merchandising" data-name="merchandising" data-label="false" data-refresh="false" data-mobile="888,88" style="display: block;">
+        <script>
+            $.getJSON( "/commercial/travel/offers.json", function( json ) {
+            $('#dfp-ad--merchandising-travel-low').html(json.html);
+         });
+        </script>
+    </div>
+</div>
 <link rel="stylesheet" id="global-css" type="text/css" href="/assets/stylesheets/global.css">
 </body>
 </html>
