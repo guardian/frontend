@@ -126,6 +126,7 @@
 <!--[if (gt IE 9)|(IEMobile)]><!-->
 
     <link rel="stylesheet" type="text/css" href="/assets/stylesheets/head.default.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/stylesheets/head.facia.css" />
 
 <!--<![endif]-->
 
@@ -290,16 +291,27 @@ pre {
 #dfp-ad--merchandising-high {
     display: block;
 }
+.facia-switch-wrapper {
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 1000;
+    background: #fff;
+    padding: 12px 10px;
+    border: 1px solid #ccc;
+}
 </style>
 
 </head>
 <body id="top" class="has-new-navigation" >
 <div class="facia-container__inner">
     <h1>All the components</h1>
-
-    <a id="switchFronts" href="#">Fronts</a>
-    <a id="switchArticles" href="#" class="current">Articles</a>
-
+    
+    <div class="facia-switch-wrapper">
+        <a id="switchFronts" href="#">Fronts</a>
+        <a id="switchArticles" href="#" class="current">Articles</a>
+    </div>
+    
     <h2>DFP Templates</h2>
 </div>
 <div class="facia-container facia-container--layout-article facia-container--commercial">
@@ -570,15 +582,195 @@ pre {
         </code>
     </pre>
 </div>
+
+<div class="facia-container__inner">
+    <h2>Travel</h2>
+    <h3>Low relevance</h3>
+</div>
+
 <div class="facia-container facia-container--layout-article">
-    <div id="dfp-ad--merchandising-travel-low" class="ad-slot ad-slot--merchandising ad-slot--commercial-component lazyloaded" data-link-name="ad slot merchandising" data-name="merchandising" data-label="false" data-refresh="false" data-mobile="888,88" style="display: block;">
+    <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-travel-low ad-slot ad-slot--merchandising ad-slot--commercial-component">
         <script>
             $.getJSON( "/commercial/travel/offers.json", function( json ) {
-            $('#dfp-ad--merchandising-travel-low').html(json.html);
+            $('.dfp-ad--merchandising-travel-low').html(json.html);
          });
         </script>
     </div>
 </div>
+
+<div class="facia-container__inner">
+    <h3>High relevance</h3>
+</div>
+
+<div class="facia-container facia-container--layout-article">
+    <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-travel-high ad-slot ad-slot--merchandising ad-slot--commercial-component">
+        <script>
+            $.getJSON( "/commercial/travel/offers-high.json", function( json ) {
+            $('.dfp-ad--merchandising-travel-high').html(json.html);
+         });
+        </script>
+    </div>
+</div>
+
+<div class="facia-container__inner">
+    <h2>Jobs</h2>
+    <h3>Low relevance</h3>
+</div>
+
+<div class="facia-container facia-container--layout-article">
+    <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-jobs-low ad-slot ad-slot--merchandising ad-slot--commercial-component">
+        <script>
+            $.getJSON( "/commercial/jobs.json", function( json ) {
+            $('.dfp-ad--merchandising-jobs-low').html(json.html);
+         });
+        </script>
+    </div>
+</div>
+
+<div class="facia-container__inner">
+    <h3>High relevance</h3>
+</div>
+
+<div class="facia-container facia-container--layout-article">
+    <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-jobs-high ad-slot ad-slot--merchandising ad-slot--commercial-component">
+        <script>
+            $.getJSON( "/commercial/jobs-high.json", function( json ) {
+            $('.dfp-ad--merchandising-jobs-high').html(json.html);
+         });
+        </script>
+    </div>
+</div>
+
+<div class="facia-container__inner">
+    <h2>Masterclasses</h2>
+    <h3>Low relevance</h3>
+</div>
+
+<div class="facia-container facia-container--layout-article">
+    <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-masterclasses-low ad-slot ad-slot--merchandising ad-slot--commercial-component">
+        <script>
+            $.getJSON( "/commercial/masterclasses.json", function( json ) {
+            $('.dfp-ad--merchandising-masterclasses-low').html(json.html);
+         });
+        </script>
+    </div>
+</div>
+
+<div class="facia-container__inner">
+    <h3>High relevance</h3>
+</div>
+
+<div class="facia-container facia-container--layout-article">
+    <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-masterclasses-high ad-slot ad-slot--merchandising ad-slot--commercial-component">
+        <script>
+            $.getJSON( "/commercial/masterclasses-high.json", function( json ) {
+            $('.dfp-ad--merchandising-masterclasses-high').html(json.html);
+         });
+        </script>
+    </div>
+</div>
+
+<div class="facia-container__inner">
+    <h2>Soulmates</h2>
+    <h3>Low relevance</h3>
+</div>
+
+<div class="facia-container facia-container--layout-article">
+    <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-soulmates-low ad-slot ad-slot--merchandising ad-slot--commercial-component">
+        <script>
+            $.getJSON( "/commercial/soulmates/mixed.json", function( json ) {
+            $('.dfp-ad--merchandising-soulmates-low').html(json.html);
+         });
+        </script>
+    </div>
+</div>
+
+<div class="facia-container__inner">
+    <h3>High relevance</h3>
+</div>
+
+<div class="facia-container facia-container--layout-article">
+    <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-soulmates-high ad-slot ad-slot--merchandising ad-slot--commercial-component">
+        <script>
+            $.getJSON( "/commercial/soulmates/mixed-high.json", function( json ) {
+            $('.dfp-ad--merchandising-soulmates-high').html(json.html);
+         });
+        </script>
+    </div>
+</div>
+
+<div class="facia-container__inner">
+    <h2>Bestbuy</h2>
+    <h3>Low relevance</h3>
+</div>
+
+<div class="facia-container facia-container--layout-article">
+    <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-bestbuy-low ad-slot ad-slot--merchandising ad-slot--commercial-component">
+        <script>
+            $.getJSON( "/commercial/money/bestbuys.json", function( json ) {
+            $('.dfp-ad--merchandising-bestbuy-low').html(json.html);
+         });
+        </script>
+    </div>
+</div>
+
+<div class="facia-container__inner">
+    <h3>High relevance</h3>
+</div>
+
+<div class="facia-container facia-container--layout-article">
+    <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-bestbuy-high ad-slot ad-slot--merchandising ad-slot--commercial-component">
+        <script>
+            $.getJSON( "/commercial/money/bestbuys-high.json", function( json ) {
+            $('.dfp-ad--merchandising-bestbuy-high').html(json.html);
+         });
+        </script>
+    </div>
+</div>
+
+<div class="facia-container__inner">
+    <h2>Books</h2>
+    <h3>Low relevance</h3>
+</div>
+
+<div class="facia-container facia-container--layout-article">
+    <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-books-low ad-slot ad-slot--merchandising ad-slot--commercial-component">
+        <script>
+            $.getJSON( "/commercial/books/bestsellers.json", function( json ) {
+            $('.dfp-ad--merchandising-books-low').html(json.html);
+         });
+        </script>
+    </div>
+</div>
+
+<div class="facia-container__inner">
+    <h3>Medium relevance</h3>
+</div>
+
+<div class="facia-container facia-container--layout-article">
+    <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-books-medium ad-slot ad-slot--merchandising ad-slot--commercial-component">
+        <script>
+            $.getJSON( "/commercial/books/bestsellers-medium.json", function( json ) {
+            $('.dfp-ad--merchandising-books-medium').html(json.html);
+         });
+        </script>
+    </div>
+</div>
+
+<div class="facia-container__inner">
+    <h3>High relevance</h3>
+</div>
+
+<div class="facia-container facia-container--layout-article">
+    <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-books-high ad-slot ad-slot--merchandising ad-slot--commercial-component">
+        <script>
+            $.getJSON( "/commercial/books/bestsellers-high.json", function( json ) {
+            $('.dfp-ad--merchandising-books-high').html(json.html);
+         });
+        </script>
+    </div>
+</div>
+
 <link rel="stylesheet" id="global-css" type="text/css" href="/assets/stylesheets/global.css">
 </body>
 </html>
