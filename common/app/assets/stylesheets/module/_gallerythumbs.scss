@@ -102,9 +102,3 @@
         margin-right: 8px;
     }
 }
-
-.gallery-launch-cta--dark {
-    @include transparent-background(#000000, .9);
-    color: #f9af41 !important;
-    padding-left: $gutter;
-}
