@@ -16,7 +16,10 @@
    ========================================================================== */
 
 @import 'base/_tables';
-@import 'base/_forms';
+@import 'components/guss-forms/_forms';
+@if $old-ie {
+    @include fix-ie8-password-field-webfonts-display;
+}
 @import 'base/_buttons';
 
 
