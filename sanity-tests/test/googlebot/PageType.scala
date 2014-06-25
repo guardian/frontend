@@ -4,7 +4,7 @@ import com.gargoylesoftware.htmlunit.Page
 import com.gargoylesoftware.htmlunit.html.HtmlPage
 import com.gargoylesoftware.htmlunit.xml.XmlPage
 
-trait PageType
+sealed trait PageType
 case class Html(page: HtmlPage) extends PageType
 case class Rss(page: XmlPage) extends PageType
 case class SiteMap(page: XmlPage) extends PageType
