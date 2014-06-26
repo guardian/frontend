@@ -1,18 +1,29 @@
-@(interactive: Interactive)(implicit request: RequestHeader)
+@(page: InteractivePage)(implicit request: RequestHeader)
 @import conf.Switches.DiscussionSwitch
 
-<article class="content content--interactive tone-@interactive.visualTone"
+@defining((page.interactive, page.storyPackage)) { case (interactive, storyPackage) =>
+
+    <article class="content content--interactive tone-@interactive.visualTone"
     itemprop="mainContentOfPage" itemscope itemtype="@interactive.schemaType" role="main">
 
-    @fragments.headDefault(interactive)
+        @fragments.headDefault(interactive)
+
+    <div class="gs-container u-cf">
+        @fragments.contentMeta(interactive)
+    </div>
 
     <div class="gs-container">
         <div class="content__main-column content__main-column--interactive">
-            @interactive.body.map { body =>
-                @HtmlFormat.raw(body)
-            }.getOrElse {
-                <figure class="interactive" data-interactive="@conf.Configuration.interactive.url@request.path.drop(1)/boot.js"></figure>
-            }
+
+        @interactive.body.map { body =>
+            @HtmlFormat.raw(body)
+        }.getOrElse {
+            <figure class="interactive" data-interactive="@conf.Configuration.interactive.url @request.path.drop(1)/boot.js"></figure>
+        }
         </div>
     </div>
-</article>
+    </article>
+
+    @fragments.contentFooter(interactive, storyPackage)
+
+}
