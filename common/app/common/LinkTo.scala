@@ -7,6 +7,7 @@ import model.{Snap, Trail, MetaData}
 import org.jsoup.Jsoup
 import scala.collection.JavaConversions._
 import conf.Configuration.environment
+import dev.HttpSwitch
 
 
 /*
@@ -23,7 +24,7 @@ trait LinkTo extends Logging {
   def apply(html: Html)(implicit request: RequestHeader): String = this(html.toString(), Edition(request), Region(request))
   def apply(link: String)(implicit request: RequestHeader): String = this(link, Edition(request), Region(request))
 
-  def apply(url: String, edition: Edition, region: Option[Region] = None): String = (url match {
+  def apply(url: String, edition: Edition, region: Option[Region] = None)(implicit request : RequestHeader): String = (url match {
     case "http://www.theguardian.com" => homeLink(edition, region)
     case "/" => homeLink(edition, region)
     case protocolRelative if protocolRelative.startsWith("//") => protocolRelative
@@ -32,7 +33,7 @@ trait LinkTo extends Logging {
     case RssPath(path, format) => urlFor(path, edition) + "/rss"
     case AbsolutePath(path) => urlFor(path, edition)
     case otherUrl => otherUrl
-  }).trim
+  }).trim + HttpSwitch.queryString
 
   def apply(trail: Trail)(implicit request: RequestHeader): Option[String] = trail match {
     case snap: Snap => snap.snapUrl.filter(_.nonEmpty)
