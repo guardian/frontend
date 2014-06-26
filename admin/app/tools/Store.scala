@@ -5,7 +5,7 @@ import conf.AdminConfiguration
 import conf.Configuration.commercial.{dfpAdvertisementFeatureTagsDataKey, dfpSponsoredTagsDataKey, dfpPageSkinnedAdUnitsKey, dfpLineItemsKey}
 import services.S3
 import play.api.libs.json.Json
-import dfp.{SponsorshipReport, SponsorshipReportParser}
+import dfp.{PageSkinSponsorshipReportParser, PageSkinSponsorshipReport, SponsorshipReport, SponsorshipReportParser}
 import org.joda.time.DateTime
 import implicits.Dates
 
@@ -44,7 +44,7 @@ trait Store extends Logging with Dates {
 
   def getDfpSponsoredTags() = S3.get(dfpSponsoredTagsDataKey).flatMap(SponsorshipReportParser(_)) getOrElse(SponsorshipReport(now, Nil))
   def getDfpAdvertisementTags() = S3.get(dfpAdvertisementFeatureTagsDataKey).flatMap(SponsorshipReportParser(_)) getOrElse(SponsorshipReport(now, Nil))
-  def getDfpPageSkinnedAdUnits() = S3.get(dfpPageSkinnedAdUnitsKey)
+  def getDfpPageSkinnedAdUnits() = S3.get(dfpPageSkinnedAdUnitsKey).flatMap(PageSkinSponsorshipReportParser(_)) getOrElse(PageSkinSponsorshipReport(now, Nil))
   def getDfpLineItemsReport() = S3.get(dfpLineItemsKey)
 }
 

@@ -6,7 +6,7 @@ import dfp.DfpAgent
 case class FaciaPage(
                       id: String,
                       seoData: SeoData,
-                      collections: List[(Config, Collection)]) extends MetaData  {
+                      collections: List[(Config, Collection)]) extends MetaData with AdSuffixHandlingForFronts {
 
   override lazy val description: Option[String] = seoData.description
   override lazy val section: String = seoData.navSection
