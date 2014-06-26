@@ -26,7 +26,7 @@
                 click: setModeLive,
                 css: {active: liveMode}">Live Front</a>
 
-            <a class="tool" target="preview" data-bind="
+            <a class="tool tool--preview" target="preview" data-bind="
                 attr: {href: previewUrl},
                 text: 'View ' + (liveMode() ? 'Live' : 'Draft'),
                 visible: front"></a>
@@ -56,19 +56,17 @@
         <div data-bind="with: latestArticles">
             <div class="search-tools">
                 <a class="tool tool-draft-content tool-left-half" data-bind="
-                    click: toggleShowDrafts,
+                    click: showDraftsToggle,
                     css: {active: showDrafts}">Draft Content</a
                ><a class="tool tool-live-content tool-right-half" data-bind="
-                    click: toggleShowDrafts,
+                    click: showDraftsToggle,
                     css: {active: !showDrafts()}">Live Content</a>
 
                 <a class="tool"><i class="icon-refresh icon-white" data-bind="click: refresh"></i></a>
                 <a class="tool"><i class="icon-remove icon-white" data-bind="click: reset"></i></a>
             </div>
 
-            <div class="title">
-                Latest Articles
-            </div>
+            <div class="title">Latest</div>
 
             <div class="search-form">
                 <div class="search-term">
@@ -388,7 +386,7 @@
                             text: meta.snapCss() || 'snap'"></span>
 
                         <span class="is is--draft" data-bind="
-                            visible: !fields.isLive(),
+                            visible: state.isLoaded() && !fields.isLive(),
                             click: open">Draft</span>
 
                         <span class="is is--breaking" data-bind="

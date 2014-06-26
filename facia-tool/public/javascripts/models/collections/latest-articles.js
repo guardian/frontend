@@ -28,35 +28,25 @@ define([
             counter = 0,
             container = document.querySelector('.latest-articles');
 
-        this.articles   = ko.observableArray();
+        this.articles = ko.observableArray();
 
-        this.term       = ko.observable(queryParams().q || '');
-
-        this.suggestions= ko.observableArray();
+        this.term = ko.observable(queryParams().q || '');
+        this.term.subscribe(function() { self.search(); });
+        this.isTermAnItem = function() { return (self.term() || '').match(/\//); };
 
         this.filter     = ko.observable();
         this.filterType = ko.observable();
         this.filterTypes= ko.observableArray(_.values(opts.filterTypes) || []);
 
-        this.page       = ko.observable(1);
-
-        this.isTermAnItem = function() {
-            return (self.term() || '').match(/\//);
-        };
-
-        this.term.subscribe(function(){
-            self.search();
-        });
-
         this.showDrafts = ko.observable(false);
-
-        this.showDrafts.subscribe(function(){
-            self.search();
-        });
-
-        this.toggleShowDrafts = function() {
+        this.showDrafts.subscribe(function() { self.search(); });
+        this.showDraftsToggle = function() {
             self.showDrafts(!self.showDrafts());
         };
+
+        this.suggestions = ko.observableArray();
+
+        this.page = ko.observable(1);
 
         this.setFilter = function(item) {
             self.filter(item && item.id ? item.id : item);
@@ -77,11 +67,6 @@ define([
 
         this.clearTerm = function() {
             self.term('');
-        };
-
-        this.reset = function() {
-            this.clearTerm();
-            this.clearFilter();
         };
 
         this.autoComplete = function() {
@@ -152,6 +137,12 @@ define([
         this.refresh = function() {
             self.page(1);
             self.search();
+        };
+
+        this.reset = function() {
+            self.page(1);
+            this.clearTerm();
+            this.clearFilter();
         };
 
         this.pageNext = function() {

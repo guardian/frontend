@@ -663,7 +663,7 @@ button {
 .tool {
     display: inline-block;
     padding: 0 10px;
-    background: #dbd8c9;
+    background: #dbd5b8;
     font-size: 12px;
     line-height: 20px;
     color: #FFFFFF;
@@ -729,6 +729,10 @@ button {
 
 .tool-live-content.active {
     background: #46c430;
+}
+
+.tool--preview {
+    width: 57px;
 }
 
 .collection .tools {
@@ -956,6 +960,7 @@ button {
     line-height: 14px;
     width: 300px;
     margin: 0 0 2px 0;
+    border: 1px solid #dbd5b8;
 }
 
 .cnf-form select {
