@@ -435,6 +435,7 @@
             width: 120px,
             margin: $gs-baseline/2 0 0 0
         ));
+
         @include mq(tablet) {
             float: right;
             margin: 0;
@@ -483,6 +484,7 @@
     }
     &.membership-tab__change-cc-form-cont--open {
         display: block;
+
         @include mq(tablet) {
             @include rem((max-height: 350px));
         }
@@ -517,6 +519,7 @@
     100% {
         opacity: 1;
         @include rem((max-height: 424px));
+
         @include mq(tablet) {
             @include rem((max-height: 350px));
         }
@@ -526,6 +529,7 @@
 @include keyframes('mem-tab-to-closed') {
     0% {
         @include rem((max-height: 424px));
+
         @include mq(tablet) {
             @include rem((max-height: 350px));
         }
