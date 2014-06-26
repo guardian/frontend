@@ -333,11 +333,39 @@ object FaciaToolMetrics {
     "Number of times facia-tool has successfully pressed"
   )
 
+  object FrontPressLiveSuccess extends SimpleCountMetric(
+    "facia-front-press",
+    "facia-front-press-live-success",
+    "Facia front press live success count",
+    "Number of times facia-tool has successfully pressed live"
+  )
+
+  object FrontPressLiveFailure extends SimpleCountMetric(
+    "facia-front-press",
+    "facia-front-press-live-failure",
+    "Facia front press live success count",
+    "Number of times facia-tool has had a failure in pressing live"
+  )
+
   object FrontPressFailure extends SimpleCountMetric(
     "facia-front-press",
     "facia-front-press-failure",
     "Facia front press failue count",
     "Number of times facia-tool has had a failure in pressing"
+  )
+
+  object FrontPressDraftSuccess extends SimpleCountMetric(
+    "facia-front-press",
+    "facia-front-press-draft-success",
+    "Facia front press draft success count",
+    "Number of times facia-tool has successfully pressed draft"
+  )
+
+  object FrontPressDraftFailure extends SimpleCountMetric(
+    "facia-front-press",
+    "facia-front-press-draft-failure",
+    "Facia front press draft failure count",
+    "Number of times facia-tool has had a failure in pressing draft"
   )
 
   object FrontPressCronSuccess extends SimpleCountMetric(
@@ -386,6 +414,7 @@ object FaciaToolMetrics {
     ApiUsageCount, ProxyCount, ExpiredRequestCount,
     DraftPublishCount, ContentApiPutSuccess, ContentApiPutFailure,
     FrontPressSuccess, FrontPressFailure, FrontPressCronSuccess,
+    FrontPressLiveSuccess, FrontPressDraftFailure,
     FrontPressCronFailure, InvalidContentExceptionMetric,
     ContentApiSeoRequestSuccess, ContentApiSeoRequestFailure, MemcachedFallbackMetric
   ) ++ ContentApiMetrics.all ++ S3Metrics.all
