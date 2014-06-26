@@ -18,7 +18,7 @@
         @interactive.body.map { body =>
             @HtmlFormat.raw(body)
         }.getOrElse {
-            <figure class="interactive" data-interactive="@conf.Configuration.interactive.url @request.path.drop(1)/boot.js"></figure>
+            <figure class="interactive" data-interactive="@{conf.Configuration.interactive.url}@{request.path.drop(1)}/boot.js"></figure>
         }
         </div>
     </div>
