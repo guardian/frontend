@@ -1187,6 +1187,7 @@ $avatarSize: 44px;
 }
 .d-comment-box__hide-preview {
     display: none;
+
     .d-comment-box--preview-visible & {
         display: inline-block;
     }
@@ -1332,7 +1333,7 @@ $avatarSize: 44px;
 }
 .d-comment-box__preview-body {
     @include rem((
-        margin: $gutter 0
+        margin: $gs-baseline 0
     ));
 }
 
