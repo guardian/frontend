@@ -78,9 +78,14 @@ define([
                 return !!snap.validateId(this.id());
             }, this);
 
-            // Computeds
             this.webPublicationTime = ko.computed(function(){
                 return humanTime(this.props.webPublicationDate());
+            }, this);
+
+            this.viewUrl = ko.computed(function() {
+                return this.fields.isLive() === 'true' ?
+                    (this.meta.href() || this.props.webUrl()) :
+                    'http://preview.gutools.co.uk/' + this.id();
             }, this);
 
             this.headlineInput  = this.overrider('headline');

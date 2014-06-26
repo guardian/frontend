@@ -100,7 +100,7 @@ define([
                     propName = 'content';
                 } else {
                     url  = vars.CONST.apiSearchBase + '/search?show-fields=all&format=json';
-                    url += '&content-set=' + (self.showDrafts() ? 'preview' : 'web-live');
+                    url += '&content-set=' + (self.showDrafts() ? 'preview&use-date=last-modified' : 'web-live');
                     url += '&page-size=' + (vars.CONST.searchPageSize || 25);
                     url += '&page=' + self.page();
                     url += self.term() ? '&q=' + encodeURIComponent(self.term()) : '';

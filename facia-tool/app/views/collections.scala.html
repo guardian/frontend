@@ -353,7 +353,7 @@
                 </a>
 
                 <a class="tool tool--small tool--small--href" target="_blank" data-bind="
-                    attr: {href: meta.href() || props.webUrl()}">
+                    attr: {href: viewUrl}">
                     <i class="icon-share-alt"></i>
                 </a>
 
@@ -386,7 +386,7 @@
                             text: meta.snapCss() || 'snap'"></span>
 
                         <span class="is is--draft" data-bind="
-                            visible: state.isLoaded() && !fields.isLive(),
+                            visible: fields.isLive() !== 'true',
                             click: open">Draft</span>
 
                         <span class="is is--breaking" data-bind="
