@@ -28,14 +28,14 @@
             <img data-bind="attr: {src: frontSparkUrl}" /></a>
 
         <span class="tool-label">Mode</span>
-        <a class="tool pref-draft" data-bind="
+        <a class="tool tool-draft-mode tool-left-half" data-bind="
             click: setModeDraft,
             css: {active: !liveMode()}">Draft</a
-        ><a class="tool pref-live" data-bind="
+       ><a class="tool tool-live-mode tool-right-half" data-bind="
             click: setModeLive,
             css: {active: liveMode}">Live</a>
 
-        <a class="tool preview" target="preview" data-bind="
+        <a class="tool tool-preview" target="preview" data-bind="
             attr: {href: previewUrl},
             visible: front">View Live</a>
     </div>
@@ -52,7 +52,21 @@
         </div>
 
         <div data-bind="with: latestArticles">
-            <div class="title">Latest Articles</div>
+            <div class="search-tools">
+                <a class="tool tool-left-half" data-bind="
+                    click: toggleShowDrafts,
+                    css: {active: showDrafts}">Unlaunched</a
+               ><a class="tool tool-right-half" data-bind="
+                    click: toggleShowDrafts,
+                    css: {active: !showDrafts()}">Launched</a>
+
+                <a class="tool"><i class="icon-refresh icon-white" data-bind="click: refresh"></i></a>
+                <a class="tool"><i class="icon-remove icon-white" data-bind="click: reset"></i></a>
+            </div>
+
+            <div class="title">
+                Latest Articles
+            </div>
 
             <div class="search-form">
                 <div class="search-term">
@@ -84,8 +98,6 @@
                         <!-- /ko -->
                     </div>
                 </div>
-
-                <button class="search-submit"><i class="icon-refresh" data-bind="click: refresh"></i></button>
             </div>
 
             <div data-bind="template: {name: 'template_search_controls'}"></div>

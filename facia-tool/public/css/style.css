@@ -533,6 +533,10 @@ button {
     text-transform: uppercase;
 }
 
+.search-tools {
+    float: right;
+}
+
 .search-form {
     position: relative;
     height: 35px;
@@ -544,7 +548,7 @@ button {
     box-sizing: border-box;
     position: absolute;
     display: inline-block;
-    width: 35%;
+    width: 40%;
     padding: 0 15px 0 0;
 }
 
@@ -554,23 +558,26 @@ button {
 
 .autocompleter {
     position: absolute;
-    left: 37%;
+    right: 0;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     display: inline-block;
-    width: 50%;
+    width: 60%;
 }
 
 .autocompleter select {
-    width: 40%;
+    float: left;
+    width: 35%;
 }
 
 .autocompleter input {
-    width: 55%;
+    float: right;
+    width: 64%;
 }
 
 .autocompleter .suggestions {
     position: absolute;
+    top: 27px;
     z-index: 1;
 }
 
@@ -655,6 +662,7 @@ button {
     border-radius: 2px;
     border: 0;
     cursor: pointer;
+    text-decoration: none;
 }
 
 .tool--rhs {
@@ -663,9 +671,12 @@ button {
 }
 
 .tool:hover {
-    text-decoration: none;
-    color: #ffffff;
-    background: #AAAAAA;
+    background: #BBBBBB;
+    color: #FFFFFF;
+}
+
+.tool.active {
+    background: #999999;
 }
 
 .tool-label {
@@ -690,6 +701,34 @@ button {
 
 .tools .tool:first-child:hover {
     background: #376ABF;
+}
+
+
+.tool-left-half {
+    font-weight: bold;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.tool-right-half {
+    font-weight: bold;
+    margin-left: 0;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.tool-left-half.tool-draft-mode.active {
+    cursor: default;
+    background: #3279F1;
+}
+
+.tool-right-half.tool-live-mode.active {
+    cursor: default;
+    background: #46c430;
+}
+
+.tool-preview {
+    margin-left: 10px;
 }
 
 .log-in-out {
@@ -739,33 +778,6 @@ button {
     display: none !important;
 }
 
-.preview {
-    margin-left: 10px;
-}
-
-.pref-draft {
-    font-weight: bold;
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-}
-
-.pref-live {
-    font-weight: bold;
-    margin-left: 0;
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-}
-
-.pref-draft.active {
-    cursor: default;
-    background: #3279F1;
-}
-
-.pref-live.active {
-    cursor: default;
-    background: #46c430;
-}
-
 .supporting {
     margin: 0 -2px -4px -4px;
 }
@@ -774,6 +786,15 @@ button {
     font-size: 12px;
     line-height: 14px;
     color: #999999;
+}
+
+.selected {
+    font-weight: bold;
+    color: #000000;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+    margin-top: 0;
 }
 
 /*****************************************/

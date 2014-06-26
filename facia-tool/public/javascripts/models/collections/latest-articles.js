@@ -31,6 +31,7 @@ define([
         this.articles   = ko.observableArray();
 
         this.term       = ko.observable(queryParams().q || '');
+
         this.suggestions= ko.observableArray();
 
         this.filter     = ko.observable();
@@ -46,6 +47,16 @@ define([
         this.term.subscribe(function(){
             self.search();
         });
+
+        this.showDrafts = ko.observable(false);
+
+        this.showDrafts.subscribe(function(){
+            self.search();
+        });
+
+        this.toggleShowDrafts = function() {
+            self.showDrafts(!self.showDrafts());
+        };
 
         this.setFilter = function(item) {
             self.filter(item && item.id ? item.id : item);
@@ -66,6 +77,11 @@ define([
 
         this.clearTerm = function() {
             self.term('');
+        };
+
+        this.reset = function() {
+            this.clearTerm();
+            this.clearFilter();
         };
 
         this.autoComplete = function() {
@@ -99,6 +115,7 @@ define([
                     propName = 'content';
                 } else {
                     url  = vars.CONST.apiSearchBase + '/search?show-fields=all&format=json';
+                    url += '&content-set=' + (self.showDrafts() ? 'preview' : 'web-live');
                     url += '&page-size=' + (vars.CONST.searchPageSize || 25);
                     url += '&page=' + self.page();
                     url += self.term() ? '&q=' + encodeURIComponent(self.term()) : '';
