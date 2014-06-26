@@ -206,11 +206,6 @@ object Switches extends Collections {
     safeState = Off, never
   )
 
-  val FreshnessLoggingSwitch = Switch("Diagnostics", "freshness",
-    "If this switch is on, page freshness will be logged.",
-    safeState = On, new DateMidnight(2014, 6, 30)
-  )
-
   val ScrollDepthSwitch = Switch("Analytics", "scroll-depth",
     "Enables tracking and measurement of scroll depth",
     safeState = Off, never
@@ -284,6 +279,11 @@ object Switches extends Collections {
   val TagLinkingSwitch = Switch("Feature Switches", "tag-linking",
     "If this switch is turned on then tags will be 'auto' linked to where possible in article bodies",
     safeState = On, sellByDate = new DateMidnight(2014, 6, 30)
+  )
+
+  val ResponsiveNavSwitch = Switch("Feature Switches", "responsive-nav",
+    "If this switch is turned on then the new responsive navigation will be displayed.",
+    safeState = Off, sellByDate = new DateMidnight(2014, 7, 22)
   )
 
   val EnhanceTweetsSwitch = Switch("Feature Switches", "enhance-tweets",
@@ -473,11 +473,11 @@ object Switches extends Collections {
     MemcachedFallbackSwitch,
     IncludeBuildNumberInMemcachedKey,
     GeoMostPopular,
+    ResponsiveNavSwitch,
     TagLinkingSwitch,
     ABLargerMobileMpu,
     SmartBannerSwitch,
     ParameterlessImagesSwitch,
-    FreshnessLoggingSwitch,
     SeoOptimisedContentImageSwitch,
     FaciaToolCachedContentApiSwitch,
     FaciaToolCachedZippingContentApiSwitch,

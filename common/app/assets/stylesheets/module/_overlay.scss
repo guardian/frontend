@@ -48,15 +48,15 @@
 
 .overlay__cta {
     height: $gs-baseline*4;
-    padding: 0 $gutter / 2;
+    padding: 0 $gs-gutter / 2;
     color: #ffffff;
     float: left;
     border: 0;
     background: transparent;
-    margin-left: $gutter / 2;
+    margin-left: $gs-gutter / 2;
 }
 
 .overlay__cta--close {
     float: right;
-    margin-right: $gutter / 2;
+    margin-right: $gs-gutter / 2;
 }
