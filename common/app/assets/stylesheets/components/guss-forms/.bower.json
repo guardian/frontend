@@ -1,0 +1,24 @@
+{
+  "name": "guss-forms",
+  "version": "1.0.1",
+  "main": [
+    "_forms.scss"
+  ],
+  "ignore": [
+    "CHANGELOG.md",
+    "demo"
+  ],
+  "dependencies": {
+    "guss": "~1"
+  },
+  "homepage": "https://github.com/guardian/guss-forms",
+  "_release": "1.0.1",
+  "_resolution": {
+    "type": "version",
+    "tag": "v1.0.1",
+    "commit": "0845694fbac33105dff5e81939c8ac9d97487cc0"
+  },
+  "_source": "git://github.com/guardian/guss-forms.git",
+  "_target": "~1",
+  "_originalSource": "guss-forms"
+}

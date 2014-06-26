@@ -1,6 +1,6 @@
 {
   "name": "guss",
-  "version": "1.1.0",
+  "version": "1.3.0",
   "ignore": [
     "CHANGELOG.md"
   ],
@@ -10,6 +10,7 @@
     "guss-typography": "~1",
     "guss-layout": "~1",
     "guss-css3": "~2",
-    "guss-colours": "~1"
+    "guss-colours": "~1",
+    "guss-forms": "~1"
   }
 }

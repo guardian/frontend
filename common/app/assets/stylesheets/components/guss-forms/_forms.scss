@@ -1,12 +1,70 @@
-/* Base form styles
+/* ==========================================================================
+   Guss: forms
    ========================================================================== */
 
-@if $old-ie {
+// ============================================================================
+// Configuration
+// ============================================================================
+
+// Fieldset
+// ============================================================================
+
+$guss-forms-fieldset-border-top: 1px solid guss-colour(neutral-7) !default;
+
+
+// Text field (eg: textarea and text fields)
+// ============================================================================
+
+$guss-forms-fields-font-family: $text-sans !default;
+$guss-forms-fields-color: guss-colour(neutral-1) !default;
+$guss-forms-fields-border-color: guss-colour(neutral-4) !default;
+$guss-forms-fields-border-color-focus: guss-colour(neutral-2) !default;
+
+
+// Error
+// ============================================================================
+
+$guss-forms-error-color: guss-colour(error) !default;
+$guss-forms-error-background: #fdf4f3 !default;
+$guss-forms-error-border-color: lighten($guss-forms-error-color, 35%) !default;
+$guss-forms-error-field-border-color: $guss-forms-error-color !default;
+
+
+// Success
+// ============================================================================
+
+$guss-forms-success-color: guss-colour(success) !default;
+$guss-forms-success-background: lighten($guss-forms-success-color, 70%)  !default;
+$guss-forms-success-border-color: lighten($guss-forms-success-color, 35%) !default;
+
+
+// Submit
+// ============================================================================
+
+$guss-forms-submit-background: guss-colour(tone-news-1) !default;
+$guss-forms-submit-background-focus: darken($guss-forms-submit-background, 5%) !default;
+$guss-forms-submit-background-active: guss-colour(neutral-1) !default;
+$guss-forms-submit-background-disabled: guss-colour(neutral-5) !default;
+
+
+// ============================================================================
+// Submit
+// ============================================================================
+
+@mixin fix-ie8-password-field-webfonts-display {
     // IE 8 won't display webfonts in password fields…
     [type=password] {
         font-family: sans-serif !important;
     }
 }
+
+
+// ============================================================================
+// Styles
+// ============================================================================
+
+/* Base form styles
+   ========================================================================== */
 
 .form {
     @include rem((
@@ -23,7 +81,7 @@
 
 .form__note,
 .form-field__note {
-    font-family: $text-sans;
+    font-family: $guss-forms-fields-font-family;
     @include rem((
         font-size: 14px,
         margin-bottom: 8px
@@ -32,7 +90,7 @@
 
 .fieldset {
     border: 0;
-    border-top: 1px solid $c-neutral7;
+    border-top: $guss-forms-fieldset-border-top;
     display: table;
     @include rem((
         padding: (($gs-baseline/3)*4 - 1) 0 ($gs-baseline*2)
@@ -71,7 +129,6 @@
     padding: 0;
 }
 
-
 .form-field__submit {
     .form-field__note {
         @include rem((
@@ -91,21 +148,21 @@
 
 .form-field--error {
     .label {
-        color: $newsRed;
+        color: $guss-forms-error-color;
     }
 
     .text-input,
     .text-input:focus {
-        border-color: $newsRed;
+        border-color: $guss-forms-error-field-border-color;
     }
 }
 
 .form__error {
     @include fs-data(4);
-    background-color: #fdf4f3;
-    border-bottom: 1px solid lighten($newsRed, 35%);
-    border-top: 1px solid lighten($newsRed, 35%);
-    color: $newsRed;
+    background-color: $guss-forms-error-background;
+    border-bottom: 1px solid $guss-forms-error-border-color;
+    border-top: 1px solid $guss-forms-error-border-color;
+    color: $guss-forms-error-color;
     @include rem((
         margin-top: 6px,
         padding: 7px ($gs-baseline/3)*2
@@ -114,10 +171,10 @@
 
 .form__success {
     @include fs-data(4);
-    background-color: lighten($environmentGreen, 70%);
-    border-bottom: 1px solid lighten($environmentGreen, 35%);
-    border-top: 1px solid lighten($environmentGreen, 35%);
-    color: $environmentGreen;
+    background-color: $guss-forms-success-background;
+    border-bottom: 1px solid $guss-forms-success-border-color;
+    border-top: 1px solid $guss-forms-success-border-color;
+    color: $guss-forms-success-color;
     @include rem((
         margin-top: $gs-baseline/2,
         padding: 7px ($gs-baseline/3)*2
@@ -125,7 +182,7 @@
 }
 
 .form-field__error {
-    color: $newsRed;
+    color: $guss-forms-error-color;
     @include rem((
         margin-top: $gs-baseline/2
     ));
@@ -184,12 +241,12 @@
 
 .text-input,
 .textarea {
-    border: 1px solid $c-neutral4;
+    border: 1px solid $guss-forms-fields-border-color;
     @include box-shadow(none);
     @include box-sizing(border-box);
-    color: $c-neutral1;
+    color: $guss-forms-fields-color;
     display: inline-block;
-    font-family: $text-sans;
+    font-family: $guss-forms-fields-font-family;
     @include rem((
         font-size: 16px,
         padding: 8px 8px 7px
@@ -201,7 +258,7 @@
     -webkit-appearance: none;
 
     &:focus {
-        border-color: $c-neutral2;
+        border-color: $guss-forms-fields-border-color-focus;
     }
 
     @include mq(tablet) {
@@ -235,7 +292,7 @@
 }
 
 .submit-input {
-    background: $c-newsDefault;
+    background: $guss-forms-submit-background;
     border: 0 none;
     color: #ffffff;
     cursor: pointer;
@@ -244,29 +301,29 @@
         font-size: 14px,
         margin: 0 $gs-gutter 0 0,
         min-width: gs-span(2),
-        padding: 11px $gutter/2
+        padding: 11px $gs-gutter/2
     ));
     outline: none;
     text-align: center;
 
     &:hover,
     &:focus {
-        background: darken($c-newsDefault, 5%);
+        background: $guss-forms-submit-background-focus;
     }
 
     &:active {
-        background: #000000;
+        background: $guss-forms-submit-background-active;
     }
 }
 
 .submit-input[disabled] {
-    background: $c-neutral5;
+    background: $guss-forms-submit-background-disabled;
 }
 
 .check-label,
 .radio-label {
     display: block;
-    font-family: $text-sans;
+    font-family: $guss-forms-fields-font-family;
     @include rem((
         font-size: 14px,
         margin-bottom: $gs-baseline/3,
@@ -288,5 +345,4 @@
         margin-top: 2px,
         width: 13px
     ));
-
 }
