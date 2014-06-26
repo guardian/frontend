@@ -9,9 +9,8 @@ define(['common/$',
 'common/modules/component',
 'membership/paymentForm'], function ($, bean, bonzo, ajax, config, Component, PaymentForm) {
 
-    function Membership (context, config, options) {
+    function Membership (context, options) {
 
-        this.config = config;
         this.context = context || document;
 
         options = options || {};
@@ -170,7 +169,7 @@ define(['common/$',
             $(self.getClass('TAB_CONTAINER'), self.context).removeClass('is-hidden');
             $('.js-account-profile-forms').addClass('identity-wrapper--with-membership');
 
-            self.paymentForm = new PaymentForm(self.config).init(self.getElem('CC_CHANGE_FORM_CONT'), function (resp) {
+            self.paymentForm = new PaymentForm().init(self.getElem('CC_CHANGE_FORM_CONT'), function (resp) {
                 // hide form
                 self.changeCCFormIsOpen = false;
                 self.closeFormAndUpdate();

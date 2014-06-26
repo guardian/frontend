@@ -44,7 +44,7 @@ define([
         self.unsavedFields = [];
 
         return {
-            init: function (context, config) {
+            init: function (context) {
 
                 self.accountProfileForms = context.querySelector(self.classes.forms);
 
@@ -58,7 +58,7 @@ define([
                     var tabs = self.accountProfileForms.querySelector(self.classes.tabs);
 
                     require(['bootstraps/membership'], function (MembershipTab) {
-                        self.membershipTab = new MembershipTab(context, config);
+                        self.membershipTab = new MembershipTab(context);
                         self.membershipTab.fetch($(self.classes.memberShipContainer));
                     });
 

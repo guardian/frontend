@@ -5,13 +5,13 @@ define([
     'membership/masker',
     'stripe',
     'common/utils/ajax',
-    'membership/stripeErrorMessages'
-], function ($, bean, userUtil, masker, stripe, ajax, stripeErrorMessages) {
+    'membership/stripeErrorMessages',
+    'common/utils/config'
+], function ($, bean, userUtil, masker, stripe, ajax, stripeErrorMessages, config) {
     'use strict';
 
-    function StripePaymentForm (config) {
-        this.guConfig = config;
-        this.PUBLIC_STRIPE_KEY = this.guConfig.page.stripePublicToken;
+    function StripePaymentForm () {
+        this.PUBLIC_STRIPE_KEY = config.page.stripePublicToken;
 
         return this;
     }
@@ -84,7 +84,7 @@ define([
             var token = response.id;
 
             ajax({
-                url: self.guConfig.page.membershipUrl + '/subscription/update',
+                url: config.page.membershipUrl + '/subscription/update',
                 crossOrigin: true,
                 withCredentials: true,
                 method: 'post',

@@ -26,3 +26,12 @@ if (!Function.prototype.bind) {
     return fBound;
   };
 }
+
+// Membership setup
+var guardian = {
+    config: {
+        page: {
+            stripePublicToken: "testToken123"
+        }
+    }
+};

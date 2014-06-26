@@ -47,15 +47,6 @@ define([
                 }
             };
 
-
-        // PhantomJS doesn't support bind yet
-        Function.prototype.bind = Function.prototype.bind || function (context) {
-            var fn = this;
-            return function () {
-                return fn.apply(context, arguments);
-            };
-        };
-
         function triggerEvent (element, eventType) {
             var event;
             event = document.createEvent("HTMLEvents");
