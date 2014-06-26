@@ -102,7 +102,7 @@ module.exports = function (grunt) {
                 options: {
                     baseUrl: 'common/app/assets/javascripts',
                     name: 'common/bootstraps/ophan',
-                    out: staticTargetDir + 'javascripts/bootstraps/ophan.js',
+                    out: staticTargetDir + 'javascripts/bootstraps/ophan.js'
                 }
             },
             admin: {
