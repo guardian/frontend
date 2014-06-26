@@ -353,6 +353,13 @@
         border-top: 1px dotted $c-neutral5;
     }
 }
+.ad-slot--paid-for-badge--live-blog {
+    @include mq(rightCol) {
+        @include rem((
+            padding-top: 24px
+        ));
+    }
+}
 .ad-slot--paid-for-badge--front {
     @include clearfix;
     position: relative;
