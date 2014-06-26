@@ -5,10 +5,10 @@
 @import views.support.Format
 
 @paginated(url: String, pageNum: Int) = {@common.LinkTo(url)@if(pageNum > 1){?page=@pageNum}}
-@paginationItemInner(pageNo: Option[Int], dir: String, url: String) = {
+@paginationPointer(pageNo: Option[Int], dir: String, url: String) = {
     <li class="pagination__item pagination__item--@dir">
         @pageNo.map { p =>
-            <a class="pagination__item-inner @actionClass" data-page="@p" rel="@dir" href="@paginated(url, p)">
+            <a class="pagination__item-inner pagination__action @actionClass" data-page="@p" rel="@dir" href="@paginated(url, p)">
                 <span class="u-h">@dir.capitalize(0)</span>
             </a>
         }.getOrElse{
@@ -26,14 +26,14 @@
 
         <ol class="u-unstyled pagination__links">
             @if(showExtremes){
-                @paginationItemInner(Some(pagination.pages.length), "last", page.url)
+                @paginationPointer(Some(pagination.pages.length), "last", page.url)
             }
-            @paginationItemInner(pagination.next, "next", page.url)
+            @paginationPointer(pagination.next, "next", page.url)
 
             @if(showExtremes){
-                @paginationItemInner(pagination.previous.map(_ => 1), "first", page.url)
+                @paginationPointer(pagination.previous.map(_ => 1), "first", page.url)
             }
-            @paginationItemInner(pagination.previous, "prev", page.url)
+            @paginationPointer(pagination.previous, "prev", page.url)
 
             @pagination.pages.map{ pageNum =>
                 <li class="pagination__item">
