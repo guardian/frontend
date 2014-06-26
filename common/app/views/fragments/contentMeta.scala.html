@@ -28,13 +28,7 @@
     @if(content.hasShowcaseMainPicture){ content__meta-container--showcase}
     @if(!content.hasMainPicture && !content.hasMainVideo && !content.hasMainEmbed){ content__meta-container--float}">
 
-    @if(content.isSponsored) {
-        @fragments.commercial.badge(name="spbadge")
-    } else {
-        @if(content.isAdvertisementFeature) {
-            @fragments.commercial.badge(name="adbadge")
-        }
-    }
+    @fragments.commercial.badge(content)
 
     @if(content.hasLargeContributorImage && content.contributors.length == 1 && !content.hasTonalHeaderByline) {
         <div class="media__img meta__image">
