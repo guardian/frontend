@@ -3,7 +3,7 @@ package football.controllers
 import common.Edition
 import feed.Competitions
 import football.model._
-import model.{Competition, _}
+import model._
 import org.joda.time.DateMidnight
 import pa.FootballTeam
 import play.api.mvc.{Action, AnyContent}
