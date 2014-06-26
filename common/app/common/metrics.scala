@@ -505,7 +505,7 @@ case class SimpleCountMetric(
 
   def getAndReset = currentCount.getAndSet(0)
   val getValue: () => Long = count.get
-  val getResettingValue: () => Long = count.get
+  val getResettingValue: () => Long = currentCount.get
 
   override def asJson: StatusMetric = super.asJson.copy(count = Some(getValue().toString))
 
