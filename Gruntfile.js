@@ -75,10 +75,10 @@ module.exports = function (grunt) {
                         }
                     },
                     modules: [{
-                        name: 'utils'
+                        name: 'core'
                     }, {
-                        name: 'app',
-                        exclude: ['utils']
+                        name: 'bootstraps/app',
+                        exclude: ['core']
                     }]
                 }
             },
@@ -430,17 +430,17 @@ module.exports = function (grunt) {
                         expand: true,
                         cwd: requirejsDir,
                         src: [
-                            'app.js',
-                            'app.js.map'
+                            'bootstraps/app.js',
+                            'bootstraps/app.js.map'
                         ],
-                        dest: staticTargetDir + 'javascripts/bootstraps'
+                        dest: staticTargetDir + 'javascripts'
                     },
                     {
                         expand: true,
                         cwd: requirejsDir,
                         src: [
-                            'utils.js',
-                            'utils.js.map'
+                            'core.js',
+                            'core.js.map'
                         ],
                         dest: staticTargetDir + 'javascripts'
                     }
@@ -815,10 +815,9 @@ module.exports = function (grunt) {
 
         concat: {
             application: {
-                src: [requirejsDir + '/utils.js',
-                      'common/app/assets/javascripts/components/curl/curl.js',
-                      'common/app/assets/javascripts/bootstraps/app.js'],
-                dest: requirejsDir + '/utils.js'
+                src: ['common/app/assets/javascripts/components/curl/curl-domReady.js',
+                      'common/app/assets/javascripts/bootstraps/go.js'],
+                dest: staticTargetDir + 'javascripts/bootstraps/go.js'
             }
         }
     });
@@ -869,7 +868,7 @@ module.exports = function (grunt) {
      */
     grunt.registerTask('compile:images', ['copy:images', 'shell:spriteGeneration', 'imagemin']);
     grunt.registerTask('compile:css', ['sass:compile', 'replace:cssSourceMaps', 'copy:css']);
-    grunt.registerTask('compile:js', ['requirejs', 'concat', 'copy:javascript', 'uglify:javascript']);
+    grunt.registerTask('compile:js', ['requirejs', 'copy:javascript', 'concat', 'uglify:javascript']);
     grunt.registerTask('compile:fonts', ['mkdir:fontsTarget', 'webfontjson']);
     grunt.registerTask('compile:flash', ['copy:flash']);
     grunt.registerTask('compile:conf', ['copy:headCss', 'copy:assetMap']);
