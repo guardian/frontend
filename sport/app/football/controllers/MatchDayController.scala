@@ -21,7 +21,7 @@ object MatchDayController extends MatchListController with CompetitionLiveFilter
 
   private def renderLiveMatches(date: DateMidnight) = Action { implicit request =>
     val matches = new MatchDayList(Competitions(), date)
-    val webTitle = if (date == DateMidnight.now) "Live matches" else "Matches"
+    val webTitle = if (date == DateMidnight.now(Edition.defaultEdition.timezone)) "Live matches" else "Matches"
     val page = new Page("football/live", "football", webTitle, "GFE:Football:automatic:live matches")
     renderMatchList(page, matches, filters)
   }

@@ -1,12 +1,12 @@
 package football.controllers
 
+import common.Edition
 import feed.Competitions
-import play.api.mvc.{AnyContent, Action}
-import org.joda.time.DateMidnight
-import model._
 import football.model._
+import model.{Competition, _}
+import org.joda.time.DateMidnight
 import pa.FootballTeam
-import model.Competition
+import play.api.mvc.{Action, AnyContent}
 
 
 object FixturesController extends MatchListController with CompetitionFixtureFilters {
@@ -17,7 +17,7 @@ object FixturesController extends MatchListController with CompetitionFixtureFil
 
   def allFixturesJson() = allFixtures()
   def allFixtures(): Action[AnyContent] =
-    renderAllFixtures(DateMidnight.now)
+    renderAllFixtures(DateMidnight.now(Edition.defaultEdition.timezone))
 
   private def renderAllFixtures(date: DateMidnight) = Action { implicit request =>
     val fixtures = new FixturesList(date, Competitions())
@@ -27,7 +27,7 @@ object FixturesController extends MatchListController with CompetitionFixtureFil
 
   def tagFixturesJson(tag: String) = tagFixtures(tag)
   def tagFixtures(tag: String): Action[AnyContent] =
-    renderTagFixtures(DateMidnight.now, tag)
+    renderTagFixtures(DateMidnight.now(Edition.defaultEdition.timezone), tag)
 
   def tagFixturesForJson(year: String, month: String, day: String, tag: String) = tagFixturesFor(year, month, day, tag)
   def tagFixturesFor(year: String, month: String, day: String, tag: String): Action[AnyContent] =
@@ -58,7 +58,7 @@ object FixturesController extends MatchListController with CompetitionFixtureFil
   def teamFixturesComponentJson(teamId: String) = teamFixturesComponent(teamId)
   def teamFixturesComponent(teamId: String) = Action { implicit request =>
     Competitions().findTeam(teamId).map { team =>
-      val date = DateMidnight.now
+      val date = DateMidnight.now(Edition.defaultEdition.timezone)
       val fixtures = new TeamFixturesList(date, Competitions(), teamId, 2)
       val page = new Page(
         s"football/${team.id}/fixtures",
