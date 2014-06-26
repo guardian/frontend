@@ -3,7 +3,6 @@
 # ~~~~
 
 GET         /humans.txt                                                                                              controllers.Assets.at(path="/public", file="humans.txt")
-
 GET         /commercial/creative                                                                                     controllers.commercial.CreativeDebugController.allComponents
 
 # For dev machines
