@@ -55,16 +55,16 @@
         line-height: 20px
     ));
     .pagination__item--first & {
-        content: '\00ab';
+        content: '«';
     }
     .pagination__item--last & {
-        content: '\00bb';
+        content: '»';
     }
     .pagination__item--next & {
-        content: '\203A';
+        content: '›';
     }
     .pagination__item--prev & {
-        content: '\2039';
+        content: '‹';
     }
 }
 .pagination__item--first {
