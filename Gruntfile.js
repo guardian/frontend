@@ -438,16 +438,10 @@ module.exports = function (grunt) {
                         cwd: requirejsDir,
                         src: [
                             'bootstraps/app.js',
-                            'bootstraps/app.js.map'
-                        ],
-                        dest: staticTargetDir + 'javascripts'
-                    },
-                    {
-                        expand: true,
-                        cwd: requirejsDir,
-                        src: [
+                            'bootstraps/app.js.map',
                             'core.js',
-                            'core.js.map'
+                            'core.js.map',
+                            'components/curl/curl-domReady.js'
                         ],
                         dest: staticTargetDir + 'javascripts'
                     }
