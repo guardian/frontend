@@ -6,7 +6,7 @@ import implicits.Strings
 import play.api.mvc._
 import play.api.libs.ws.WS
 import model.Cached
-import conf.Switches._
+import implicits.WSRequests.WsWithAuth
 
 object FaciaContentApiProxy extends Controller with Logging with AuthLogging with ExecutionContexts with Strings {
 
@@ -22,7 +22,7 @@ object FaciaContentApiProxy extends Controller with Logging with AuthLogging wit
 
     log("Proxying tag API query to: %s" format url, request)
 
-    WS.url(url).get().map { response =>
+    WS.url(url).withPreviewAuth.get().map { response =>
       Cached(60) {
         Ok(response.body).as("application/javascript")
       }
@@ -33,7 +33,7 @@ object FaciaContentApiProxy extends Controller with Logging with AuthLogging wit
     FaciaToolMetrics.ProxyCount.increment()
     log("Proxying json request to: %s" format url, request)
 
-    WS.url(url).get().map { response =>
+    WS.url(url).withPreviewAuth.get().map { response =>
       Cached(60) {
         Ok(response.body).as("application/json")
       }
