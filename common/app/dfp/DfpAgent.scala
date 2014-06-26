@@ -16,7 +16,7 @@ trait DfpAgent {
 
   protected def sponsoredTags: Seq[Sponsorship]
   protected def advertisementFeatureTags: Seq[Sponsorship]
-  protected def pageskinnedAdUnits: Seq[PageSkinSponsorship]
+  protected def pageSkinSponsorships: Seq[PageSkinSponsorship]
 
   private def containerSponsoredTags(config: Config, p: String => Boolean): Option[String] = {
     config.contentApiQuery.flatMap { encodedQuery =>
@@ -38,6 +38,11 @@ trait DfpAgent {
   def isAdvertisementFeature(tagId: String): Boolean = advertisementFeatureTags exists (_.hasTag(tagId))
   def isAdvertisementFeature(config: Config): Boolean = isSponsoredContainer(config, isAdvertisementFeature)
 
+  def isPageSkinned(adUnitWithoutRoot: String) = {
+    val adUnitWithRoot: String = s"$dfpAdUnitRoot/$adUnitWithoutRoot"
+    pageSkinSponsorships exists (_.adUnits contains adUnitWithRoot)
+  }
+
   def sponsorshipTag(config: Config): Option[String] = {
     containerSponsoredTags(config, isSponsored) orElse {
       containerSponsoredTags(config, isAdvertisementFeature)
@@ -55,11 +60,6 @@ trait DfpAgent {
     def sponsor(tags: Seq[Sponsorship]) = tags.find(_.hasTag(tagId)).flatMap(_.sponsor)
     sponsor(sponsoredTags) orElse sponsor(advertisementFeatureTags)
   }
-
-  def isPageSkinned(adUnitWithoutRoot: String) = {
-    val adUnitWithRoot: String = s"$dfpAdUnitRoot/$adUnitWithoutRoot"
-    pageskinnedAdUnits contains adUnitWithRoot
-  }
 }
 
 
@@ -71,7 +71,7 @@ object DfpAgent extends DfpAgent with ExecutionContexts {
 
   protected def sponsoredTags: Seq[Sponsorship] = sponsoredTagsAgent get()
   protected def advertisementFeatureTags: Seq[Sponsorship] = advertisementFeatureTagsAgent get()
-  protected def pageskinnedAdUnits: Seq[PageSkinSponsorship] = pageskinnedAdUnitAgent get()
+  protected def pageSkinSponsorships: Seq[PageSkinSponsorship] = pageskinnedAdUnitAgent get()
 
   def refresh() {
 
@@ -86,7 +86,7 @@ object DfpAgent extends DfpAgent with ExecutionContexts {
       reportOption.fold(Seq[Sponsorship]())(_.sponsorships)
     }
 
-    def   grabPageSkinSponsorshipsFromStore(key: String): Seq[PageSkinSponsorship] = {
+    def grabPageSkinSponsorshipsFromStore(key: String): Seq[PageSkinSponsorship] = {
       val reportOption: Option[PageSkinSponsorshipReport] = for {
         jsonString <- stringFromS3(key)
         report <- PageSkinSponsorshipReportParser(jsonString)
