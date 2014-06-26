@@ -1,7 +1,5 @@
 package com.gu.test;
 
-import static org.apache.commons.lang3.StringUtils.isBlank;
-
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -12,15 +10,14 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 /**
- * Loads properties from file specified by environment variable of value {@link #PROP_FILE_PATH_ENV_KEY} which can be
- * set by providing a VM arguments like: -Denv.test-property-file="/home/shahin/local-config.properties"<br>
- * If not set then the file specified by {@link #DEFAULT_PROP_FILE_PATH} will be used
+ * Loads properties from a fixed file but can be overriden by specifying the environment variable of value
+ * {@link #PROP_FILE_PATH_ENV_KEY} which can be set by providing a VM arguments like:
+ * -Denv.test-property-file="/home/shahin/local-config.properties"<br>
  */
 public class PropertyLoader {
 
     private static final Log LOG = LogFactory.getLog(PropertyLoader.class);
     private static final String DEFAULT_PROPERTIES_FILE = "base.properties";
-    static final String DEFAULT_PROP_FILE_PATH = "src/main/resources/local-config.properties";
     static final String PROP_FILE_PATH_ENV_KEY = "env.test-property-file";
 
     public static String getProperty(String name) {
@@ -44,7 +41,8 @@ public class PropertyLoader {
         try {
             loadedProperties.putAll(loadOverrideProperties());
         } catch (Exception e) {
-            LOG.info("Could not load override properties so will use the base properties only: ", e);
+            LOG.info("Could not load override properties so will use the base properties only. Reason:  "
+                    + e.getMessage());
         }
     }
 
@@ -65,12 +63,7 @@ public class PropertyLoader {
     }
 
     private static String getOverridePropertyFilePath() {
-        String propertyFilePath = System.getProperty(PROP_FILE_PATH_ENV_KEY);
-        if (isBlank(propertyFilePath)) {
-            return DEFAULT_PROP_FILE_PATH;
-        } else {
-            return propertyFilePath;
-        }
+        return System.getProperty(PROP_FILE_PATH_ENV_KEY);
     }
 
 }
