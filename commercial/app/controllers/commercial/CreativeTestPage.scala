@@ -6,10 +6,10 @@ import play.api.mvc._
 import conf.Configuration
 
 
-object CreativeDebugController extends Controller {
+object CreativeTestPage extends Controller {
   def allComponents = Action{
     if(Configuration.environment.stage == "dev") {
-      Ok(views.html.debugger.allcreatives())
+      Ok(views.html.debugger.allCreatives())
     } else {
       NotFound
     }
