@@ -12,7 +12,7 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.openqa.selenium.WebElement;
 
-import com.gu.fronts.integration.test.categories.Stubbed;
+import com.gu.fronts.integration.test.categories.ProductionOnly;
 import com.gu.fronts.integration.test.common.FrontsIntegrationTestCase;
 import com.gu.fronts.integration.test.page.common.Article;
 import com.gu.fronts.integration.test.page.common.FaciaArticle;
@@ -24,7 +24,7 @@ import com.gu.fronts.integration.test.page.nwfront.NetworkFrontPage;
 public class NetworkFrontTest extends FrontsIntegrationTestCase {
 
     @Test
-    @Category(Stubbed.class)
+    @Category(ProductionOnly.class)
     public void networkStartPageBasicJourney() throws Exception {
 
         networkFrontPage = openNetworkFrontPage().isDisplayed();
@@ -40,7 +40,7 @@ public class NetworkFrontTest extends FrontsIntegrationTestCase {
     }
 
     @Test
-    @Category(Stubbed.class)
+    @Category(ProductionOnly.class)
     public void networkFrontPageClickThroughArticleJourney() throws Exception {
         networkFrontPage = openNetworkFrontPage();
         networkFrontPage = networkFrontPage.isDisplayed();
@@ -59,7 +59,7 @@ public class NetworkFrontTest extends FrontsIntegrationTestCase {
     }
 
     @Test
-    @Category(Stubbed.class)
+    @Category(ProductionOnly.class)
     public void networkFrontPageClickThroughPictureGallery() throws Exception {
         networkFrontPage = openNetworkFrontPage();
 

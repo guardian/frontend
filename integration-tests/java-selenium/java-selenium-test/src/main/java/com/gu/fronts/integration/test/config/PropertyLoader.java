@@ -41,7 +41,8 @@ public class PropertyLoader {
         try {
             loadedProperties.putAll(loadOverrideProperties());
         } catch (Exception e) {
-            LOG.info("Could not load override properties so will use the base properties only: ", e);
+            LOG.info("Could not load override properties so will use the base properties only. Reason:  "
+                    + e.getMessage());
         }
     }
 
