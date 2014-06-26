@@ -1,4 +1,4 @@
-@(page: MetaData, position: String = "bottom")(implicit request: RequestHeader)
+@(page: model.Content, position: String = "bottom")(implicit request: RequestHeader)
 
 @defining(s"http://${request.host}${request.path}"){ url =>
     <ul class="social u-unstyled u-cf" data-component="social" data-link-name="social">
@@ -25,7 +25,7 @@
         <li class="social__item" data-link-name="twitter">
             <a  class="social__action social-icon-wrapper"
                 data-link-name="@position"
-                href="https://twitter.com/intent/tweet?text=@helper.urlEncode(page.webTitle)&amp;url=@helper.urlEncode(url)">
+                href="https://twitter.com/intent/tweet?text=@helper.urlEncode(page.webTitle)&amp;url=@helper.urlEncode(page.shortUrl + "/tw")">
                 <span class="u-h">Share on Twitter</span>
                 <span class="social-icon">
                     <i class="i-share-twitter i"></i>

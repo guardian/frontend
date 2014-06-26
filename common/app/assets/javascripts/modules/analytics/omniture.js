@@ -85,9 +85,12 @@ define([
             s.prop37 = 'D=v37';
 
             if(/social/.test(tag)) {
-                s.linkTrackVars += ',eVar12';
+                s.linkTrackVars += ',eVar12,prop4,prop9,prop10';
                 s.linkTrackEvents += ',event16';
                 s.eVar12 = tag;
+                s.prop4     = config.page.keywords || '';
+                s.prop9     = config.page.contentType || '';
+                s.prop10    = config.page.tones || '';
                 s.events = s.apl(s.events, 'event16', ',');
             }
         };
@@ -141,7 +144,7 @@ define([
             s.prop20 = tpA[2] + ':' + tpA[1];
             s.eVar20 = 'D=c20';
 
-            
+
             s.prop25    = config.page.blogs || '';
 
             s.prop14    = config.page.buildNumber || '';
