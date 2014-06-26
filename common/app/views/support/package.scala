@@ -357,7 +357,7 @@ object BulletCleaner {
   def apply(body: String): String = body.replace("•", """<span class="bullet">•</span>""")
 }
 
-case class InBodyLinkCleaner(dataLinkName: String)(implicit val edition: Edition) extends HtmlCleaner {
+case class InBodyLinkCleaner(dataLinkName: String)(implicit val edition: Edition, implicit val request: RequestHeader) extends HtmlCleaner {
   def clean(body: Document): Document = {
     val links = body.getElementsByAttribute("href")
 
@@ -450,7 +450,7 @@ object TweetCleaner extends HtmlCleaner {
   }
 }
 
-class TagLinker(article: Article)(implicit val edition: Edition) extends HtmlCleaner{
+class TagLinker(article: Article)(implicit val edition: Edition, implicit val request: RequestHeader) extends HtmlCleaner{
 
   private val group1 = "$1"
   private val group2 = "$2"
@@ -670,7 +670,7 @@ object Format {
 }
 
 object cleanTrailText {
-  def apply(text: String)(implicit edition: Edition): Html = {
+  def apply(text: String)(implicit edition: Edition, request: RequestHeader): Html = {
     withJsoup(RemoveOuterParaHtml(BulletCleaner(text)))(InBodyLinkCleaner("in trail text link"))
   }
 }
