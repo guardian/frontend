@@ -1,8 +1,8 @@
 package model.commercial.masterclasses
 
 import common.{AkkaAgent, ExecutionContexts, Logging}
-import model.ImageElement
-import model.commercial.{Segment, AdAgent, Lookup}
+import model.commercial.{AdAgent, Lookup, Segment}
+
 import scala.concurrent.Future
 import scala.concurrent.duration._
 
@@ -27,19 +27,18 @@ object MasterClassAgent extends AdAgent[MasterClass] with ExecutionContexts {
   }
 
   def wrapEventbriteWithContentApi(eventbriteEvents: Seq[EventbriteMasterClass]): Future[Seq[MasterClass]] = {
-    val seqThumbs: Seq[Future[MasterClass]] = eventbriteEvents.map {
-      event =>
-        val contentId: String = event.guardianUrl.replace("http://www.theguardian.com/", "")
-        val thumbnail: Future[Option[ImageElement]] = Lookup.thumbnail(contentId)
 
-        thumbnail.map {
-          thumb => MasterClass(event, thumb)
-        } recover {
-          // This is just in case the Future doesn't pan out.
-          case _: Exception => MasterClass(event, None)
-        }
+    val futureMasterclasses = eventbriteEvents map { event =>
+      val contentId = event.guardianUrl.replace("http://www.theguardian.com/", "")
+      Lookup.mainPicture(contentId) map { imageContainer =>
+        MasterClass(event, imageContainer)
+      } recover {
+        // This is just in case the Future doesn't pan out.
+        case _: Exception => MasterClass(event, None)
+      }
     }
-    Future.sequence(seqThumbs)
+
+    Future.sequence(futureMasterclasses)
   }
 
   def refresh() {
