@@ -602,6 +602,13 @@ module.exports = function (grunt) {
                     cwd: 'facia-tool/public/javascripts/',
                     src: ['**/*.js', '!components/**', '!omniture.js']
                 }]
+            },
+            membership: {
+                files: [{
+                    expand: true,
+                    cwd: 'identity/app/assets/javascripts/',
+                    src: ['**/*.js']
+                }]
             }
         },
 
