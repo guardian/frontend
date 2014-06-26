@@ -1,13 +1,17 @@
 package com.gu.test.helpers;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
 
-public class RetryTest implements TestRule {
+public class RetryRule implements TestRule {
         private int retryCount;
+    private static final Log LOG = LogFactory.getLog(RetryRule.class);
 
-        public RetryTest(int retryCount) {
+
+        public RetryRule(int retryCount) {
             this.retryCount = retryCount;
         }
 
@@ -29,10 +33,10 @@ public class RetryTest implements TestRule {
                             return;
                         } catch (Throwable t) {
                             caughtThrowable = t;
-                            System.err.println(description.getDisplayName() + ": run " + (i+1) + " failed");
+                            LOG.warn(description.getDisplayName() + ": run " + (i+1) + " failed");
                         }
                     }
-                    System.err.println(description.getDisplayName() + ": giving up after " + retryCount + " failures");
+                    LOG.warn(description.getDisplayName() + ": giving up after " + retryCount + " failures");
                     throw caughtThrowable;
                 }
             };

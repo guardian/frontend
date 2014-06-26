@@ -1,7 +1,7 @@
 package com.gu.test.Common;
 
 import com.gu.test.helpers.PageHelper;
-import com.gu.test.helpers.RetryTest;
+import com.gu.test.helpers.RetryRule;
 import com.gu.test.shared.NavigationBar;
 import org.junit.*;
 import org.openqa.selenium.WebDriver;
@@ -22,7 +22,7 @@ public class NavigationBarTest {
     }
 
     @Rule
-    public RetryTest retryTest = new RetryTest(2);
+    public RetryRule retryRule = new RetryRule(2);
 
     @Test
     public void changingFromUKtoUSEdition() throws Exception {
