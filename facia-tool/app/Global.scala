@@ -47,7 +47,7 @@ object Global extends WithFilters(Gzipper)
     FaciaToolMetrics.FrontPressLiveSuccess.getResettingValue() + FaciaToolMetrics.FrontPressDraftSuccess.getResettingValue()
 
   private def getTotalPressFailureCount: Long =
-    FaciaToolMetrics.FrontPressLiveFailure.getValue() + FaciaToolMetrics.FrontPressDraftFailure.getValue()
+    FaciaToolMetrics.FrontPressLiveFailure.getResettingValue() + FaciaToolMetrics.FrontPressDraftFailure.getResettingValue()
 
   override def onLoadConfig(config: Configuration, path: File, classloader: ClassLoader, mode: Mode.Mode): Configuration = {
     val newConfig: Configuration = if (mode == Mode.Dev) config ++ devConfig else config
