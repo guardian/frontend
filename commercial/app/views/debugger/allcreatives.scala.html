@@ -272,6 +272,10 @@ jQuery(function($) {
         $(this).addClass('current');
         return false;
     });
+    $("#pageSkin").click(function() {
+        $('body').toggleClass('has-page-skin');
+       return false; 
+    });
 
     $(".codeContainer pre").hide();
     $(".codeContainer").click(function() {
@@ -302,6 +306,13 @@ pre {
     padding: 12px 10px;
     border: 1px solid #ccc;
 }
+
+.has-page-skin {
+    background-image: url(http://adimage.guardian.co.uk/pageskins/M34681-Guardian-takeover-Skin-1600x1200-6_1.gif);
+    background-attachment: fixed;
+    background-position: 50% 0;    
+}
+
 </style>
 
 </head>
@@ -312,6 +323,7 @@ pre {
     <div class="facia-switch-wrapper">
         <a id="switchFronts" href="#">Fronts</a>
         <a id="switchArticles" href="#" class="current">Articles</a>
+        <a id="pageSkin" href="#">Page skin?</a>
     </div>
 
     <h2>DFP Templates</h2>
