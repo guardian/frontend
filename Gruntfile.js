@@ -529,7 +529,9 @@ module.exports = function (grunt) {
                     expand: true,
                     cwd: staticTargetDir + 'javascripts',
                     src: [
-                        '**/*.js'
+                        '{components,vendor}/**/*.js',
+                        '!components/curl/**/*.js',
+                        '!components/zxcvbn/**/*.js'
                     ],
                     dest: staticTargetDir + 'javascripts'
                 }]
