@@ -12,7 +12,8 @@
                 @config.sponsorshipKeyword.map { keyword =>
                     data-keywords="@keyword"
                 }
-                data-component="@FaciaComponentName(config, collection)">
+                data-component="@FaciaComponentName(config, collection)"
+                data-test-id="@FaciaComponentName(config, collection)">
                 <div class="facia-container__inner">
                     <div class="container__border tone-@style.tone tone-accent-border"></div>
 
@@ -20,7 +21,7 @@
                         @title.map { title =>
                             <h2 class="container__title tone-@style.tone tone-background">
                                 @href.map { href =>
-                                    <a class="container__title__label u-text-hyphenate" data-link-name="section heading" href="@LinkTo{/@href}">@Html(title)</a>
+                                    <a class="container__title__label u-text-hyphenate" data-link-name="section heading" href="@LinkTo{/@href}" data-test-id="@FaciaComponentName(config, collection)headerlink">@Html(title)</a>
                                 }.getOrElse{
                                     <span class="container__title__label u-text-hyphenate">@Html(title)</span>
                                 }

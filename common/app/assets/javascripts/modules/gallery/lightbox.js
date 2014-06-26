@@ -257,10 +257,10 @@ define([
 
         // Overlay methods
         this.setupOverlayHeader = function() {
-            var toolbar = '<button class="overlay__cta js-gallery-grid" data-link-name="Gallery grid mode">' +
+            var toolbar = '<button class="overlay__cta js-gallery-grid" data-link-name="Gallery grid mode" data-test-id="gallery-grid">' +
                           '  <i class="i i-gallery-thumb-icon"></i> ' +
                           '</button>' +
-                          '<button class="overlay__cta js-gallery-full" data-link-name="Gallery full image mode">' +
+                          '<button class="overlay__cta js-gallery-full" data-link-name="Gallery full image mode" data-test-id="gallery-full">' +
                           '  <i class="i i-gallery-fullimage-icon"></i> ' +
                           '</button>' +
                           '<button class="overlay__cta js-start-slideshow" data-link-name="Gallery start slideshow">' +

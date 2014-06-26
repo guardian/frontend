@@ -38,6 +38,7 @@ RUNNING_PID
 
 local.sbt
 build.sbt
+sbt-idea-*.pom
 
 node_modules
 screenshots
