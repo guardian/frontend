@@ -2,8 +2,7 @@
 @import conf.Switches._
 
 <div class="content-footer">
-    @if((content.isArticle || content.isLiveBlog || content.isImageContent ) &&
-        DiscussionSwitch.isSwitchedOn && content.isCommentable) {
+    @if(DiscussionSwitch.isSwitchedOn && content.isCommentable) {
         <div class="gs-container js-comments">
             <div class="content__main-column" data-component="discussion">
             @fragments.discussionFooter(content.isClosedForComments, content.shortUrlId)
