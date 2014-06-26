@@ -121,6 +121,10 @@
     @include fs-data(4, $size-only: true);
     color: #ffffff;
 
+    .facia-container--advertisement &,
+    .container--advertisement-feature & {
+        border-left-width: 0;
+    }
     i {
         @include transform(rotate(180deg));
         position: absolute;
