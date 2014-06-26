@@ -44,7 +44,7 @@ object Global extends WithFilters(Gzipper)
   )
 
   private def getTotalPressSuccessCount: Long =
-    FaciaToolMetrics.FrontPressLiveSuccess.getValue() + FaciaToolMetrics.FrontPressDraftSuccess.getValue()
+    FaciaToolMetrics.FrontPressLiveSuccess.getResettingValue() + FaciaToolMetrics.FrontPressDraftSuccess.getResettingValue()
 
   private def getTotalPressFailureCount: Long =
     FaciaToolMetrics.FrontPressLiveFailure.getValue() + FaciaToolMetrics.FrontPressDraftFailure.getValue()
