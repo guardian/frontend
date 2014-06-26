@@ -1,10 +1,23 @@
-@(page: MetaData, pagination: Pagination, actionClass: Option[String] = None)(implicit request: RequestHeader)
+@(page: MetaData, pagination: Pagination, actionClass: Option[String] = None, showExtremes: Boolean = false)(implicit request: RequestHeader)
 @import model._
 @import common._
 
 @import views.support.Format
 
 @paginated(url: String, pageNum: Int) = {@common.LinkTo(url)@if(pageNum > 1){?page=@pageNum}}
+@paginationPointer(pageNo: Option[Int], dir: String, url: String) = {
+    <li class="pagination__item pagination__item--@dir">
+        @pageNo.map { p =>
+            <a class="pagination__item-inner pagination__action @actionClass" data-page="@p" rel="@dir" href="@paginated(url, p)">
+                <span class="u-h">@dir.capitalize(0)</span>
+            </a>
+        }.getOrElse{
+            <span class="pagination__item-inner">
+                <span class="u-h">@dir.capitalize(0)</span>
+            </span>
+        }
+    </li>
+}
 
 @* don't show pagination if this is the only page *@
 @if(pagination.lastPage > 1) {
@@ -12,17 +25,15 @@
         <div class="pagination_legend hide-on-mobile-inline">About @Format(pagination.totalContent) results for @Html(page.webTitle)</div>
 
         <ol class="u-unstyled pagination__links">
-            <li class="pagination__item pagination__item--next">
-                @pagination.next.map { next =>
-                    <a class="@actionClass" data-page="@next" rel="next" href="@paginated(page.url, next)">Next</a>
-                }.getOrElse{ Next }
-            </li>
+            @if(showExtremes){
+                @paginationPointer(Some(pagination.pages.length), "last", page.url)
+            }
+            @paginationPointer(pagination.next, "next", page.url)
 
-            <li class="pagination__item pagination__item--prev">
-                @pagination.previous.map{ prev =>
-                    <a class="@actionClass" data-page="@prev" rel="prev" href="@paginated(page.url, prev)">Previous</a>
-                }.getOrElse{ Previous }
-            </li>
+            @if(showExtremes){
+                @paginationPointer(pagination.previous.map(_ => 1), "first", page.url)
+            }
+            @paginationPointer(pagination.previous, "prev", page.url)
 
             @pagination.pages.map{ pageNum =>
                 <li class="pagination__item">
