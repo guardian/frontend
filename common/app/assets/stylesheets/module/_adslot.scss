@@ -356,7 +356,7 @@
 .ad-slot--paid-for-badge--live-blog {
     @include mq(rightCol) {
         @include rem((
-            padding-top: 24px
+            padding-top: $gs-baseline*2
         ));
     }
 }
