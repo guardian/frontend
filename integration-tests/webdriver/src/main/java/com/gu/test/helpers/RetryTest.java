@@ -24,6 +24,7 @@ public class RetryTest implements TestRule {
                     // implement retry logic here
                     for (int i = 0; i < retryCount; i++) {
                         try {
+                            Thread.sleep(1000);
                             base.evaluate();
                             return;
                         } catch (Throwable t) {
