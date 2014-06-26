@@ -12,7 +12,9 @@
     @if(!content.hasTonalHeaderByline) {
         @byline(content)
     }
-    @fragments.meta.dateline(content.webPublicationDate, secondary=true)
+    @if(!content.shouldHidePublicationDate) {
+        @fragments.meta.dateline(content.webPublicationDate, secondary = true)
+    }
     <div class="js-comment-count"></div>
     <div class="social-wrapper social-wrapper--aside" data-component="share">
         <h2 class="social__head">Share this article</h2>
