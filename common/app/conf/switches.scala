@@ -206,11 +206,6 @@ object Switches extends Collections {
     safeState = Off, never
   )
 
-  val FreshnessLoggingSwitch = Switch("Diagnostics", "freshness",
-    "If this switch is on, page freshness will be logged.",
-    safeState = On, new DateMidnight(2014, 6, 30)
-  )
-
   val ScrollDepthSwitch = Switch("Analytics", "scroll-depth",
     "Enables tracking and measurement of scroll depth",
     safeState = Off, never
@@ -477,7 +472,6 @@ object Switches extends Collections {
     ABLargerMobileMpu,
     SmartBannerSwitch,
     ParameterlessImagesSwitch,
-    FreshnessLoggingSwitch,
     SeoOptimisedContentImageSwitch,
     FaciaToolCachedContentApiSwitch,
     FaciaToolCachedZippingContentApiSwitch,
