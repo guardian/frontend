@@ -1,6 +1,5 @@
 package dfp
 
-
 case class Target(name: String, op: String, values: Seq[String]) {
 
   def isPositive(targetName: String) = name == targetName && op == "IS"
@@ -33,10 +32,4 @@ case class LineItem(id: Long, sponsor: Option[String], targetSets: Seq[TargetSet
   val sponsoredTags = targetSets.flatMap(_.sponsoredTags).distinct
 
   val advertisementFeatureTags = targetSets.flatMap(_.advertisementFeatureTags).distinct
-}
-
-
-case class Sponsorship(tags: Seq[String], sponsor: Option[String]) {
-
-  def hasTag(tagId: String): Boolean = tags contains (tagId.split('/').last)
 }

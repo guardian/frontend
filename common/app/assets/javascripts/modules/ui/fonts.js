@@ -77,7 +77,7 @@ define([
         };
 
         function getNameAndCacheKey(style) {
-            var nameAndCacheKey = style.getAttribute('data-cache-file-woff').match(/fonts\/(.*)\.woff(?:\.(.*))?\.json$/);
+            var nameAndCacheKey = style.getAttribute('data-cache-file-woff').match(/fonts\/(.*)\/(.*)\.woff.json$/);
             nameAndCacheKey.shift();
             return nameAndCacheKey;
         }
@@ -87,7 +87,7 @@ define([
             // Because it would be horrible if people downloaded fonts and then couldn't cache them.
             if (storage.local.isAvailable()) {
                 var nameAndCacheKey =  getNameAndCacheKey(style);
-                var cachedValue = storage.local.get(storagePrefix + nameAndCacheKey[0] + '.' + nameAndCacheKey[1]);
+                var cachedValue = storage.local.get(storagePrefix + nameAndCacheKey[1] + '.' + nameAndCacheKey[0]);
 
                 var widthMatches = true;
                 var minWidth = style.getAttribute('data-min-width');

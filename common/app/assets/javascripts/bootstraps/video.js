@@ -6,8 +6,8 @@ define([
     'common/utils/config',
     'common/modules/adverts/query-string',
     'common/modules/adverts/dfp',
-    'bean',
-    'bonzo'
+    'lodash/functions/throttle',
+    'bean'
 ], function(
     $,
     ajax,
@@ -15,34 +15,50 @@ define([
     config,
     queryString,
     dfp,
-    bean,
-    bonzo
+    _throttle,
+    bean
 ) {
 
     var autoplay = config.page.contentType === 'Video' && /desktop|wide/.test(detect.getBreakpoint());
-
-    var secsToNiceString = function(val) {
-        var secs = val % 60;
-        var mins = Math.floor(val / 60);
-        var hours = Math.floor(mins / 60);
-
-        return (hours ? hours+'h ' : '') +
-               (mins ? mins+'m ' : '') +
-               (secs ? secs+'s ' : '');
-    };
+    var QUARTILES = [25, 50, 75];
+    // Advert and content events used by analytics. The expected order of bean events is:
+    var EVENTS = [
+        'video:preroll:ready',
+        'video:preroll:play',
+        'video:preroll:end',
+        'video:content:ready',
+        'video:content:play',
+        'video:content:end'
+    ];
 
     var modules = {
 
+        ophanRecord: function(playerEl) {
+            var id = playerEl.getAttribute('data-media-id');
+            return function(event) {
+                if(id) {
+                    require('ophan/ng', function (ophan) {
+                        ophan.record({
+                            'video': {
+                                id: id,
+                                eventType: event.type
+                            }
+                        });
+                    });
+                }
+            };
+        },
+
+        initOphanTracking: function(playerEl) {
+            modules.ophanRecord = modules.ophanRecord(playerEl);
+            EVENTS.concat(QUARTILES.map(function(q) {
+                return 'video:play:' + q;
+            })).forEach(function(event) {
+                bean.one(playerEl, event, modules.ophanRecord);
+            });
+        },
+
         bindPrerollEvents: function(player, videoEl) {
-
-            // Bind advert and content events used by analytics. The expected order of bean events is:
-            // video:preroll:ready,
-            // video:preroll:play,
-            // video:preroll:end,
-            // video:content:ready,
-            // video:content:play,
-            // video:content:end
-
             var playCount = 0;
             var events = {
                 end: function() {
@@ -71,9 +87,14 @@ define([
                 }
             };
             player.one('adsready', events.ready);
+
+            //If no preroll avaliable or preroll fails, still init content tracking
+            player.one('adtimeout', function() {
+                modules.bindContentEvents(player, videoEl, true);
+            });
         },
 
-        bindContentEvents: function(player, videoEl) {
+        bindContentEvents: function(player, videoEl, instant) {
             var playCount = 0;
             var events = {
                 end: function() {
@@ -81,18 +102,30 @@ define([
                 },
                 playWithDuration: function() {
                     // Only fire the play event when the duration is known.
-                    if (playCount > 0) {
+                    if (playCount > 0 || player.duration()) {
                         bean.fire(videoEl, 'video:content:play');
                         playCount = 0;
                     } else {
                         playCount++;
                     }
                 },
+                timeupdate: function() {
+                    var progress = Math.round(parseInt(player.currentTime()/player.duration()*100, 10));
+                    QUARTILES.reverse().some(function(quart) {
+                        if (progress >= quart) {
+                            bean.fire(videoEl, 'video:play:' + quart);
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    });
+                },
                 ready: function() {
                     bean.fire(videoEl, 'video:content:ready');
 
                     player.one('play', events.playWithDuration);
                     player.one('durationchange', events.playWithDuration);
+                    player.on('timeupdate', _throttle(events.timeupdate, 1000));
                     player.one('ended', events.end);
 
                     if (autoplay) {
@@ -100,7 +133,12 @@ define([
                     }
                 }
             };
-            player.one('loadstart', events.ready);
+
+            if(instant) {
+                events.ready();
+            } else {
+                player.one('loadstart', events.ready);
+            }
         },
 
         getVastUrl: function() {
@@ -115,13 +153,16 @@ define([
         },
 
         countDown: function() {
-            var tmp = '<div class="vjs-ads-overlay js-ads-overlay">Your video will start in <span class="vjs-ads-overlay__remaining js-remaining-time"></span>' +
+            var player = this,
+                tmp = '<div class="vjs-ads-overlay js-ads-overlay">Your video will start in <span class="vjs-ads-overlay__remaining js-remaining-time"></span>' +
                       ' seconds <span class="vjs-ads-overlay__label">Advertisement</span></div>',
                 events =  {
                     destroy: function() {
-                        $('.js-ads-overlay', this.el()).remove();
-                        this.off('timeupdate', events.update);
-                        this.off('ended', events.destroy);
+                        if(this.hasAdCountdown) {
+                            $('.js-ads-overlay', this.el()).remove();
+                            this.off('timeupdate', events.update);
+                            this.off('ended', events.destroy);
+                        }
                     },
                     update: function() {
                         $('.js-remaining-time', this.el()).text(parseInt(this.duration() - this.currentTime(), 10).toFixed());
@@ -129,37 +170,15 @@ define([
                     init: function() {
                         this.on('timeupdate', events.update.bind(this));
                         this.one('ended', events.destroy.bind(this));
+                        this.one('adtimeout', events.destroy.bind(this));
                         $(this.el()).append($.create(tmp));
+                        this.hasAdCountdown = true;
                     }
                 };
-
-            this.one('firstplay', events.init.bind(this));
-        },
-
-        initOverlays: function(el) {
-            var title = el.getAttribute('data-title');
-            if (title) {
-                var vjs = videojs(el),
-                    vjsContainer = vjs.el(),
-                    duration = el.getAttribute('data-duration'),
-                    durationHTML = duration ? '<div class="vjs-overlay__duration">' + secsToNiceString(duration) + '</div>' : '',
-                    bigTitleHTML = '<div class="vjs-overlay__title">' + title + '</div>',
-                    bigTitleEl = bonzo(document.createElement('div'))
-                        .appendTo(vjsContainer)
-                        .addClass('vjs-overlay')
-                        .addClass('vjs-overlay--big-title')
-                        .html(bigTitleHTML + durationHTML),
-                    smallTitleEl = bonzo(document.createElement('div'))
-                        .addClass('vjs-overlay')
-                        .addClass('vjs-overlay--small-title')
-                        .html(title);
-
-                vjs.one('play', function() {
-                    bigTitleEl.remove();
-                    bigTitleEl = undefined;
-                    smallTitleEl.appendTo(vjsContainer);
-                });
-            }
+            this.hasAdCountdown = false;
+            this.one('readyforpreroll', function() {
+                player.one('firstplay', events.init.bind(player));
+            });
         },
 
         initPlayer: function() {
@@ -178,17 +197,25 @@ define([
                     vjs.ready(function () {
                         var player = this;
 
+                        modules.initOphanTracking(el);
                         modules.bindPrerollEvents(player, el);
 
+                        // Init plugins
                         player.adCountDown();
-
-                        // Init vast adverts.
                         player.ads({
                             timeout: 3000
                         });
                         player.vast({
                             url: modules.getVastUrl()
                         });
+
+                        player.loadingSpinner.contentEl().innerHTML =
+                            '<div class="pamplemousse">' +
+                                '<div class="pamplemousse__pip"></div>' +
+                                '<div class="pamplemousse__pip"></div>' +
+                                '<div class="pamplemousse__pip"></div>' +
+                            '</div>';
+
                     });
 
                     // built in vjs-user-active is buggy so using custom implementation

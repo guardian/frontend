@@ -50,8 +50,6 @@ trait CommentsController extends DiscussionController {
           if (request.isJson)
             JsonComponent(
               "html" -> views.html.fragments.commentsBody(page, BlankComment(), isTopComments).toString,
-              "hasMore" -> page.hasMore,
-              "currentPage" -> page.currentPage,
               "currentCommentCount" -> page.comments.length
             )
           else

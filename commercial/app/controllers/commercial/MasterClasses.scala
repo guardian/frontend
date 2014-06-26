@@ -1,10 +1,10 @@
 package controllers.commercial
 
 import model.commercial.masterclasses.{MasterClass, MasterClassAgent}
-import model.{NoCache, Cached}
+import model.{Cached, NoCache}
 import performance.MemcachedAction
 import play.api.mvc._
-import play.api.templates.Html
+
 import scala.concurrent.Future
 
 object MasterClasses extends Controller {
@@ -12,19 +12,17 @@ object MasterClasses extends Controller {
   implicit val codec = Codec.utf_8
 
   object lowRelevance extends Relevance[MasterClass] {
-    def view(masterclasses: Seq[MasterClass])(implicit request: RequestHeader): Html =
-      views.html.masterclasses(masterclasses)
+    def view(classes: Seq[MasterClass])(implicit request: RequestHeader) = views.html.masterclasses(classes)
   }
 
   object highRelevance extends Relevance[MasterClass] {
-    def view(masterclasses: Seq[MasterClass])(implicit request: RequestHeader): Html =
-      views.html.masterclassesHigh(masterclasses)
+    def view(classes: Seq[MasterClass])(implicit request: RequestHeader) = views.html.masterclassesHigh(classes)
   }
 
   private def renderMasterclasses(relevance: Relevance[MasterClass], format: Format) =
     MemcachedAction { implicit request =>
       Future.successful {
-        MasterClassAgent.adsTargetedAt(segment) match {
+        (MasterClassAgent.specificClasses(specificIds) ++ MasterClassAgent.adsTargetedAt(segment)).distinct match {
           case Nil => NoCache(format.nilResult)
           case masterclasses => Cached(componentMaxAge) {
             format.result(relevance.view(masterclasses take 4))

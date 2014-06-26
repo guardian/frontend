@@ -37,7 +37,8 @@
 
         <a class="tool preview" target="preview" data-bind="
             attr: {href: previewUrl},
-            visible: front">View Live</a>
+            text: 'View ' + (liveMode() ? 'Live' : 'Draft'),
+            visible: front"></a>
     </div>
 
     <div class="left-col">
@@ -230,7 +231,7 @@
             </div>
 
             <a class="article__lhs" target="article" data-bind="
-                attr: {href: 'http://www.theguardian.com/' + id()},
+                attr: {href: id},
                 click: open">
                 <img class="thumb" draggable="false" data-bind="
                     attr: {src: meta.imageSrc() || fields.thumbnail(), title: id}"/>
@@ -323,7 +324,7 @@
             <div class="closed" data-bind="if: !state.isOpen()">
                 <a class="spark" target="ophan" title="Dark blue: Guardian. Green: Google. Light blue: Other." data-bind="
                     visible: state.sparkUrl,
-                    attr: {href: 'http://dashboard.ophan.co.uk/graph/breakdown?path=/' + id()}">
+                    attr: {href: state.ophanUrl}">
                     <img data-bind="attr: {src: state.sparkUrl}" />
                 </a>
 
@@ -341,14 +342,13 @@
                 </a>
 
                 <a class="tool tool--small tool--small--href" target="_blank" data-bind="
-                    attr: {href: isSnap() ? meta.href() : 'http://www.theguardian.com/' + id()}">
+                    attr: {href: meta.href() || props.webUrl()}">
                     <i class="icon-share-alt"></i>
                 </a>
 
                 <div class="article_content is-empty" data-bind="if: state.isEmpty">
-                    <a target="article" class="is-empty__url" data-bind="
-                        attr: {href: 'http://www.theguardian.com/' + id()},
-                        text: id"></a>
+                    <span target="article" class="is-empty__url" data-bind="
+                        text: id"></span>
                     This content is unavailable, deleted, or has a new URL
                 </div>
 

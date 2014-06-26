@@ -3,7 +3,6 @@ module.exports = function (grunt) {
 
     var isDev = (grunt.option('dev') !== undefined) ? Boolean(grunt.option('dev')) : process.env.GRUNT_ISDEV === '1',
         singleRun = grunt.option('single-run') !== false,
-        screenshotsDir = './screenshots',
         staticTargetDir = './static/target/',
         staticHashDir = './static/hash/',
         testConfDir = './common/test/assets/javascripts/conf/',
@@ -54,7 +53,8 @@ module.exports = function (grunt) {
                     imager:       '../../../../common/app/assets/javascripts/components/imager.js/container',
                     omniture:     '../../../../common/app/assets/javascripts/components/omniture/omniture',
                     fence:        '../../../../common/app/assets/javascripts/components/fence/fence',
-                    enhancer:     '../../../../common/app/assets/javascripts/components/enhancer/enhancer'
+                    enhancer:     '../../../../common/app/assets/javascripts/components/enhancer/enhancer',
+                    stripe:       '../../../../common/app/assets/javascripts/components/stripe/stripe.min'
                 },
                 optimize: 'uglify2',
                 generateSourceMaps: true,
@@ -87,7 +87,15 @@ module.exports = function (grunt) {
                     baseUrl: 'facia/app/assets/javascripts',
                     name: 'bootstraps/facia',
                     out: staticTargetDir + 'javascripts/bootstraps/facia.js',
-                    exclude: ['../../../../common/app/assets/javascripts/bootstraps/app'],
+                    exclude: ['../../../../common/app/assets/javascripts/bootstraps/app']
+                }
+            },
+            identity: {
+                options: {
+                    baseUrl: 'identity/app/assets/javascripts',
+                    name: 'bootstraps/membership',
+                    out: staticTargetDir + 'javascripts/bootstraps/membership.js',
+                    exclude: ['../../../../common/app/assets/javascripts/bootstraps/app']                    
                 }
             },
             ophan: {
@@ -411,8 +419,7 @@ module.exports = function (grunt) {
                             'html5shiv/dist/html5shiv.js',
                             'raven-js/dist/raven.js',
                             'swipe/swipe.js',
-                            'zxcvbn/index.js',
-                            'curl/curl-domReady.js'
+                            'zxcvbn/index.js'
                         ],
                         dest: staticTargetDir + 'javascripts/components'
                     },
@@ -502,24 +509,23 @@ module.exports = function (grunt) {
             }
         },
 
-        hash: {
+        asset_hash: {
             options: {
-                mapping: staticHashDir + 'assets/assets.map',
-                srcBasePath: staticTargetDir,
-                destBasePath: staticHashDir,
-                flatten: false,
+                assetMap: staticHashDir + 'assets/assets.map',
+                srcBasePath: 'static/target/',
+                destBasePath: 'static/hash/',
                 hashLength: (isDev) ? 0 : 32
             },
-            files: {
-                expand: true,
-                cwd: staticTargetDir,
-                src: '**/*',
-                filter: 'isFile',
-                dest: staticHashDir,
-                rename: function(dest, src) {
-                    // remove .. when hash length is 0
-                    return dest + src.split('/').slice(0, -1).join('/');
-                }
+            all: {
+                options: {
+                    preserveSourceMaps: true
+                },
+                files: [
+                    {
+                        src: [staticTargetDir + '**/*'],
+                        dest: staticHashDir
+                    }
+                ]
             }
         },
 
@@ -529,8 +535,7 @@ module.exports = function (grunt) {
                     expand: true,
                     cwd: staticTargetDir + 'javascripts',
                     src: [
-                        '**/*.js',
-                        '!components/zxcvbn/**/*.js'
+                        '**/*.js'
                     ],
                     dest: staticTargetDir + 'javascripts'
                 }]
@@ -598,67 +603,6 @@ module.exports = function (grunt) {
             }
         },
 
-        // Much of the CasperJS setup borrowed from smlgbl/grunt-casperjs-extra
-        env: {
-            casperjs: {
-                ENVIRONMENT : (process.env.ENVIRONMENT) ? process.env.ENVIRONMENT : (isDev) ? 'dev' : 'code',
-                PHANTOMJS_EXECUTABLE : 'node_modules/casperjs/node_modules/.bin/phantomjs',
-                extend: {
-                    PATH: {
-                        value: 'node_modules/.bin',
-                        delimiter: ':'
-                    }
-                }
-            }
-        },
-
-        casperjsLogFile: 'results.xml',
-        casperjs: {
-            options: {
-                casperjsOptions: [
-                    '--verbose',
-                    '--log-level=warning',
-                    '--ignore-ssl-errors=yes',
-                    '--includes=integration-tests/casper/tests/shared.js',
-                    '--xunit=integration-tests/target/casper/<%= casperjsLogFile %>'
-                ]
-            },
-            screenshot: {
-                src: ['tools/screenshots/screenshot.js']
-            },
-            all: {
-                src: ['integration-tests/casper/tests/**/*.spec.js']
-            },
-            admin: {
-                src: ['integration-tests/casper/tests/admin/*.spec.js']
-            },
-            article: {
-                src: ['integration-tests/casper/tests/article/*.spec.js']
-            },
-            applications: {
-                src: ['integration-tests/casper/tests/applications/*.spec.js']
-            },
-            common : {
-                src: ['integration-tests/casper/tests/common/*.spec.js']
-            },
-            discussion: {
-                src: ['integration-tests/casper/tests/discussion/*.spec.js']
-            },
-            facia: {
-                src: ['integration-tests/casper/tests/facia/*.spec.js']
-            },
-            identity: {
-                src: ['integration-tests/casper/tests/identity/*.spec.js']
-            },
-            open: {
-                src: ['integration-tests/casper/tests/open/*.spec.js']
-            },
-            commercial: {
-                src: ['integration-tests/casper/tests/commercial/*.spec.js']
-            }
-        },
-
-
         /*
          * Analyse
          */
@@ -676,10 +620,7 @@ module.exports = function (grunt) {
             common: {
                 src: [
                     staticTargetDir + 'javascripts/bootstraps/*.js',
-                    staticTargetDir + 'stylesheets/*.css',
-                    // ignore hashed files
-                    '!' + '**/*.<%= Array(1 + hash.options.hashLength).join("?") %>.js',
-                    '!' + '**/*.<%= Array(1 + hash.options.hashLength).join("?") %>.css'
+                    staticTargetDir + 'stylesheets/*.css'
                 ],
                 options: {
                     credentials: propertiesFile
@@ -709,11 +650,6 @@ module.exports = function (grunt) {
          * Miscellaneous
          */
         mkdir: {
-            screenshots: {
-                options: {
-                    create: [screenshotsDir]
-                }
-            },
             fontsTarget: {
                 options: {
                     create: [staticTargetDir + 'fonts']
@@ -721,33 +657,16 @@ module.exports = function (grunt) {
             }
         },
 
-        s3: {
-            options: {
-                bucket: 'aws-frontend-store',
-                access: 'public-read',
-                //encodePaths: true,
-                gzip: true
-            },
-            screenshots: {
-                upload: [{
-                    src: screenshotsDir + '/**/*.png',
-                    dest: '<%= env.casperjs.ENVIRONMENT.toUpperCase() %>/screenshots/',
-                    rel : screenshotsDir
-                }]
-            }
-        },
-
         // Clean stuff up
         clean: {
-            js         : [staticTargetDir + 'javascripts', staticHashDir + 'javascripts', requirejsDir],
+            js         : [staticTargetDir + 'javascripts', staticHashDir + 'javascripts'],
             css        : [staticTargetDir + 'stylesheets', staticHashDir + 'stylesheets'],
             images     : [staticTargetDir + 'images', staticHashDir + 'images'],
             flash      : [staticTargetDir + 'flash', staticHashDir + 'flash'],
             fonts      : [staticTargetDir + 'fonts', staticHashDir + 'fonts'],
             // Clean any pre-commit hooks in .git/hooks directory
             hooks      : ['.git/hooks/pre-commit'],
-            assets     : ['common/conf/assets'],
-            screenshots: [screenshotsDir]
+            assets     : ['common/conf/assets']
         },
 
         // Recompile on change
@@ -761,7 +680,7 @@ module.exports = function (grunt) {
             },
             css: {
                 files: ['common/app/assets/stylesheets/**/*.scss'],
-                tasks: ['compile:css', 'hash'],
+                tasks: ['compile:css', 'asset_hash'],
                 options: {
                     spawn: false
                 }
@@ -832,12 +751,9 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-webfontjson');
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-shell');
-    grunt.loadNpmTasks('grunt-casperjs');
-    grunt.loadNpmTasks('grunt-env');
     grunt.loadNpmTasks('grunt-mkdir');
-    grunt.loadNpmTasks('grunt-s3');
     grunt.loadNpmTasks('grunt-contrib-imagemin');
-    grunt.loadNpmTasks('grunt-hash');
+    grunt.loadNpmTasks('grunt-asset-hash');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-uglify');
@@ -878,24 +794,19 @@ module.exports = function (grunt) {
         'compile:js',
         'compile:fonts',
         'compile:flash',
-        'hash',
+        'asset_hash',
         'compile:conf'
     ]);
 
     /**
      * Test tasks
      */
-    grunt.registerTask('test:integration', function(app) {
-        var target = app || 'all';
-        grunt.config('casperjsLogFile', app + '.xml');
-        grunt.task.run(['env:casperjs', 'casperjs:' + target]);
-    });
     grunt.registerTask('test:unit', function(app) {
         var target = app ? ':' + app : '';
         grunt.config.set('karma.options.singleRun', (singleRun === false) ? false : true);
         grunt.task.run('karma' + target);
     });
-    grunt.registerTask('test', ['test:unit', 'test:integration:all']);
+    grunt.registerTask('test', ['test:unit']);
 
     /**
      * Analyse tasks
@@ -912,7 +823,6 @@ module.exports = function (grunt) {
      * Miscellaneous tasks
      */
     grunt.registerTask('hookmeup', ['clean:hooks', 'shell:copyHooks']);
-    grunt.registerTask('snap', ['clean:screenshots', 'mkdir:screenshots', 'env:casperjs', 'casperjs:screenshot', 's3:screenshots']);
     grunt.registerTask('emitAbTestInfo', 'shell:abTestInfo');
 
     grunt.event.on('watch', function(action, filepath, target) {
@@ -920,8 +830,7 @@ module.exports = function (grunt) {
             // compile just the project
             var project = filepath.split('/').shift();
             grunt.task.run('requirejs:' + project);
-            // TODO: decouple moving of files from hashing
-            grunt.task.run('hash');
+            grunt.task.run('asset_hash');
         }
     });
 

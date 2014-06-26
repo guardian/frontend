@@ -78,6 +78,7 @@ Comments.prototype.classes = {
     showMoreOlder: 'd-discussion__show-more--older',
     showMoreLoading: 'd-discussion__show-more-loading',
     showHidden: 'd-discussion__show-hidden',
+    showAllComments: 'd-discussion__show-all-comments',
     reply: 'd-comment--response',
     showReplies: 'd-show-more-replies',
     header: 'd-discussion__header',
@@ -150,6 +151,10 @@ Comments.prototype.prerender = function() {
         }
     }
 
+    if(commentCount>2) {
+        $(this.getClass('showAllComments')).addClass('d-discussion__show-all-comments-visible');
+    }
+
     if (this.options.state) {
         this.setState(this.options.state);
     }
@@ -173,6 +178,7 @@ Comments.prototype.ready = function() {
     if (this.options.commentId) {
         var comment = $('#comment-'+ this.options.commentId);
         this.showHiddenComments();
+        $('.d-discussion__show-all-comments').addClass('u-h');
         if (comment.attr('hidden')) {
             bean.fire($(this.getClass('showReplies'), comment.parent())[0], 'click');
         }
@@ -584,6 +590,7 @@ Comments.prototype.setOrder = function(e) {
     return this.fetchComments({
         page: 1
     }).then(function() {
+        this.showHiddenComments();
         this.loaded();
     }.bind(this));
 };

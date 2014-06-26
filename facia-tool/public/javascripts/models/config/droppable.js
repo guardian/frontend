@@ -31,7 +31,7 @@ define([
                     newItems[0].parents.push(targetList.parent);
                 }
 
-                vars.model.save(newItems[0]);
+                targetList.parent.saveProps();
             }
         });
     }

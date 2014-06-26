@@ -1,16 +1,25 @@
 define([
     'qwery',
     'bean',
+    'bonzo',
     'lodash/collections/where',
     'common/utils/$',
-    'common/utils/ajax'
+    'common/utils/ajax',
+    'common/utils/url'
 ], function(
     qwery,
     bean,
+    bonzo,
     where,
     $,
-    ajax
+    ajax,
+    urlUtils
 ) {
+
+    function getHours() {
+        var hours =  /[?&]hours=([^&]*)/.exec(window.location.search);
+        return hours ? hours[1] : 24;
+    };
 
     function init() {
 
@@ -21,15 +30,15 @@ define([
             .removeClass('ajax-failed')
             .addClass('ajax-loading');
         ajax({
-            url: '/ophan/ads/render-time?platform=next-gen',
+            url: '/ophan/ads/render-time?' + urlUtils.constructQuery({ platform: 'next-gen', hours: getHours() }),
             type: 'json'
         }).then(function(nextGenData) {
             ajax({
-                url: '/ophan/ads/render-time?platform=r2',
+                url: '/ophan/ads/render-time?' + urlUtils.constructQuery({ platform: 'r2', hours: getHours() }),
                 type: 'json'
             }).then(function(r2Data) {
                 var r2Buckets = r2Data.buckets,
-                    graphData = [['Time', 'Next-Gen', 'R2']].concat(nextGenData.buckets.map(function(bucket) {
+                    graphData = [['Time', 'Next Gen', 'R2']].concat(nextGenData.buckets.map(function(bucket) {
                         var r2Bucket = where(r2Buckets, {time: bucket.time});
                         return [
                             new Date(bucket.time),
@@ -58,13 +67,17 @@ define([
                 .addClass('ajax-failed');
         });
 
-        function daramAdRenderTime(adSlotName) {
+        function drawAdRenderTime(adSlotName) {
 
             $adRenderTime
                 .removeClass('ajax-failed')
                 .addClass('ajax-loading');
             ajax({
-                url: '/ophan/ads/render-time/dfp-ad--' + adSlotName + '?platform=next-gen',
+                url: '/ophan/ads/render-time?' + urlUtils.constructQuery({
+                    'ad-slot': 'dfp-ad--' + adSlotName,
+                    platform: 'next-gen',
+                    hours: getHours()
+                }),
                 type: 'json'
             }).then(function(data) {
                 var graphData = [['Time', 'Next-Gen']].concat(data.buckets.map(function(bucket) {
@@ -78,7 +91,7 @@ define([
                     .draw(google.visualization.arrayToDataTable(graphData), {
                         fontName: 'Georgia',
                         legend: 'none',
-                        title: 'Average render time for a particular ad slot (secs)',
+                        title: 'Average render time for a particular ad slot on Next Gen (secs)',
                         titleTextStyle: {fontName: 'Georgia', color: '#222', italic: true, bold: false},
                         hAxis: {format: 'HH:mm'},
                         trendlines: {0: {color: 'green'}}
@@ -90,6 +103,15 @@ define([
             })
         };
 
+        // Update filter
+        qwery('.ad-render-filter__time .dropdown-menu a').forEach(function(opt) {
+            var $opt = bonzo(opt);
+            if ($opt.attr('href') === '?hours=' + getHours()) {
+                $opt.parent().addClass('active');
+            }
+        });
+
+        // Add ad slot selection
         var adSlot = /[?&]ad-slot=([^&]+)/.exec(document.location.search),
             $select = $.create('<select></select>')
                 .addClass('render-time--ad__form__select'),
@@ -120,12 +142,12 @@ define([
 
         bean.on($select[0], 'change', function(e) {
             var adSlot = e.target.value;
-            window.history.pushState({}, '', '?ad-slot=' + adSlot);
+            window.history.pushState({}, '', '?ad-slot=' + adSlot + '&hours=' + getHours());
             $('#render-time--ad__graph').html('');
-            daramAdRenderTime(adSlot);
+            drawAdRenderTime(adSlot);
         });
 
-        daramAdRenderTime($select.val());
+        drawAdRenderTime($select.val());
 
     };
 

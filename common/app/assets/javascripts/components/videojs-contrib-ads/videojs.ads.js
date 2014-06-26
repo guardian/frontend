@@ -143,6 +143,7 @@ var
       snapshot = {
         src: player.currentSrc(),
         currentTime: player.currentTime(),
+        techName: player.techName,
 
         // on slow connections, player.paused() may be true when starting and
         // stopping ads even though play has been requested. Hard-coding the
@@ -212,6 +213,10 @@ var
           setTimeout(tryToResume, 50);
         }
       };
+
+    if (snapshot.techName !== player.techName) {
+      player.loadTech(snapshot.techName);
+    }
 
     if (snapshot.nativePoster) {
       tech.poster = snapshot.nativePoster;
@@ -464,7 +469,7 @@ var
       // events emitted by third party ad implementors
       'adsready',
       'adstart',  // startLinearAdMode()
-      'adend',    // endLinearAdMode()
+      'adend'     // endLinearAdMode()
     ]), fsmHandler);
     
     // implement 'contentupdate' event.

@@ -17,35 +17,19 @@ public class ArticleOnwardJourneyTest {
     public void setUp() throws Exception {
         driver = createWebDriver();
         pageHelper = new PageHelper(driver);
-        testArticle = pageHelper.goToArticle("/film/filmblog/2014/may/20/lost-river-reviews-cannes-scorn-ryan-gosling");
+        testArticle = pageHelper
+                .goToArticle("/commentisfree/2014/jun/06/britain-fight-europe-beaches-d-day-eu-heroic-conflict");
     }
 
-    @Ignore //test failing on teamcity
-    @Test
-    public void goToFirstLinkInSidebarPopular() throws Exception {
-        String linkText = testArticle.getFirstArticleInMostPopularRight();
-        Article popularArticle = testArticle.goToFirstArticleInMostPopularRight();
-        WaitHelper.waitForArticleLoad(driver);
-        String popularH1 = popularArticle.getArticleHeadline();
-        Assert.assertTrue("Article headline did not match the top link in Most Popular", linkText.contentEquals(popularH1));
-    }
 
     @Test
     public void goToFirstLinkInRelatedContent() throws Exception {
-        String linkText = testArticle.getFirstRelatedArticle();
+        String articleLink = testArticle.getFirstRelatedArticleHref();
         Article relatedArticle = testArticle.goToFirstRelatedArticle();
         WaitHelper.waitForArticleLoad(driver);
-        String relatedH1 = relatedArticle.getArticleHeadline();
-        Assert.assertTrue("Article headline did not match the top link in Related Content", linkText.contentEquals(relatedH1));
-    }
-
-    @Test
-    public void goToFirstLinkInBelowArticlePopular() throws Exception {
-        String linkText = testArticle.getFirstArticleInMostPopularBelow();
-        Article popularBottomArticle = testArticle.goToFirstArticleInMostPopularBottom();
-        WaitHelper.waitForArticleLoad(driver);
-        String popularH1 = popularBottomArticle.getArticleHeadline();
-        Assert.assertTrue("Article headline did not match the top link in Most Popular", linkText.contentEquals(popularH1));
+        String articleURL = relatedArticle.getCurrentURL();
+        Assert.assertTrue("Article headline did not match the top link in Related Content",
+                articleURL.contentEquals(articleLink));
     }
 
 

@@ -217,7 +217,7 @@ Loader.prototype.initUnthreaded = function() {
 
             $el.data('loaded', true);
             $loader.removeClass('u-h');
-            activityStream.endpoint = '/discussion/non-threaded'+ this.getDiscussionId() + '.json';
+            activityStream.endpoint = '/discussion/non-threaded'+ this.getDiscussionId() + '.json?page=:page';
             activityStream
                 .fetch($nonThreadedContainer[0])
                 .then(function() {

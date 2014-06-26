@@ -40,21 +40,23 @@
             <div class="commercial__body">
                 <ul class="u-unstyled lineitems">
                 @books.map { book =>
-                    <li class="lineitem u-cf">
+                    <li class="lineitem u-cf" itemscope itemtype="http://schema.org/Book">
                         <a href="@AdLink{@book.buyUrl}" class="lineitem__link" data-link-name="merchandising-bookshop-v@{version}_@{date}-low-@{book.isbn}-@{book.author}-@{book.title}">
-                        @book.jacketUrl.map { url =>
-                            <div class="lineitem__img js-image-upgrade" data-src="@url"></div>
-                        }
-                            <h4 class="lineitem__title">@book.title</h4>
+                            @book.jacketUrl.map { url =>
+                            <img itemprop="image" class="lineitem__img" src="@url" alt="" />
+                            }
+                            <h4 class="lineitem__title" itemprop="name">@book.title</h4>
                         @if(book.author) {
-                            <p class="lineitem__meta">By @book.author</p>
+                            <p class="lineitem__meta" itemprop="author">By @book.author</p>
                         }
-                            <p class="commercial--books__price">
+                            <meta itemprop="isbn" content="@{book.isbn}" />
+                            <p class="commercial--books__price" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
                             @book.price.map { price =>
                                 <span class="commercial--books__price__rrp">RRP &pound;@("%.2f".format(price))</span>
                             }
                             @book.offerPrice.map { price =>
-                                <span class="commercial--books__price__our">Our price: &pound;@("%.2f".format(price))</span>
+                                <span class="commercial--books__price__our">Our price: <span itemprop="price">&pound;@("%.2f".format(price))</span></span>
+                                <meta itemprop="priceCurrency" content="GBP" />
                             }
                             </p>
                         </a>

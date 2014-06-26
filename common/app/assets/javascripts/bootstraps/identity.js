@@ -8,7 +8,6 @@ define([
     'common/modules/identity/validation-email',
     'common/modules/identity/api',
     'common/modules/identity/account-profile',
-    'common/modules/identity/public-profile',
     'common/modules/adverts/userAdTargeting',
     'common/modules/discussion/user-avatars',
     'common/utils/mediator',
@@ -23,7 +22,6 @@ define([
     ValidationEmail,
     Id,
     AccountProfile,
-    PublicProfile,
     UserAdTargeting,
     UserAvatars,
     mediator,
@@ -110,12 +108,6 @@ define([
             mediator.on('page:identity:ready', function(config, context) {
                 accountProfile.init(context);
             });
-        },
-
-        publicProfile: function() {
-            mediator.on('page:identity:ready', function() {
-                PublicProfile.init();
-            });
         }
     };
 
@@ -133,7 +125,6 @@ define([
             modules.validationEmail();
             modules.tabs();
             modules.accountProfile();
-            modules.publicProfile();
         }
         mediator.emit('page:identity:ready', config, context);
     };

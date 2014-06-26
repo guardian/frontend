@@ -6,6 +6,7 @@ define([
     'modules/content-api',
     'models/group',
     'models/config/collection',
+    'models/config/persistence',
     'utils/as-observable-props',
     'utils/populate-observables',
     'utils/find-first-by-id'
@@ -16,6 +17,7 @@ define([
     contentApi,
     Group,
     Collection,
+    persistence,
     asObservableProps,
     populateObservables,
     findFirstById
@@ -34,7 +36,7 @@ define([
             'description',
             'priority']);
 
-        populateObservables(this.props,  opts);
+        populateObservables(this.props, opts);
 
         this.capiProps = asObservableProps([
             'section',
@@ -144,7 +146,7 @@ define([
     };
 
     Front.prototype.saveProps = function() {
-        vars.model.save();
+        persistence.front.update(this);
         this.state.isOpenProps(false);
     };
 
@@ -161,11 +163,13 @@ define([
         collection.state.isOpen(false);
         collection.parents.remove(this);
         this.collections.items.remove(collection);
-        vars.model.save(collection);
+        this.saveProps();
     };
 
     function toTitleCase(str) {
-        return (str + '').replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+        return (str + '').replace(/\w\S*/g, function(txt) {
+            return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+        });
     }
 
     function asPath(str) {

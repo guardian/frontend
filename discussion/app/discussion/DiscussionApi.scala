@@ -1,5 +1,7 @@
 package discussion
 
+import java.net.URLEncoder
+
 import common.{ExecutionContexts, Logging}
 import scala.concurrent.Future
 import discussion.model._
@@ -43,7 +45,7 @@ trait DiscussionApi extends Http with ExecutionContexts with Logging {
   }
 
   def topCommentsFor(key: DiscussionKey): Future[CommentPage] = {
-    getJsonForUri(key, s"$apiRoot/discussion/$key/topcomments?pageSize=$pageSize&page=1&orderBy=newest&showSwitches=true")
+    getJsonForUri(key, s"$apiRoot/discussion/$key/topcomments?page=1&orderBy=newest&showSwitches=true")
   }
 
   def commentContext(id: Int, orderBy: String = "newest"): Future[(DiscussionKey, String)] = {
@@ -90,6 +92,17 @@ trait DiscussionApi extends Http with ExecutionContexts with Logging {
     }
   }
 
+  def profileSearch(userId: String, q: String, page: String): Future[ProfileComments] = {
+    def onError(r: Response) =
+      s"Discussion API: Error loading search User $userId, Query: $q. status: ${r.status}, message: ${r.statusText}, response: ${r.body}"
+    val urlQ = URLEncoder.encode(q, "UTF-8")
+    val apiUrl = s"$apiRoot/search/profile/$userId?q=$urlQ&page=$page&pageSize=50"
+
+    getJsonOrError(apiUrl, onError) map {
+      json => ProfileComments(json)
+    }
+  }
+
   def profileDiscussions(userId: String, page: String): Future[ProfileDiscussions] = {
     def onError(r: Response) =
       s"Discussion API: Error loading discussions for User $userId, status: ${r.status}, message: ${r.statusText}, response: ${r.body}"
@@ -100,10 +113,10 @@ trait DiscussionApi extends Http with ExecutionContexts with Logging {
     }
   }
 
-  def discussion(key: DiscussionKey): Future[DiscussionComments] = {
+  def discussion(key: DiscussionKey, page: String): Future[DiscussionComments] = {
     def onError(r: Response) =
-      s"Get back in the past"
-    val apiUrl = s"$apiRoot/discussion/$key?displayThreaded=false&pageSize=50&orderBy=newest&showSwitches=true"
+      s"Discussion API: Error loading discussion: $key. status: ${r.status}, message: ${r.statusText}, response: ${r.body}"
+    val apiUrl = s"$apiRoot/discussion/$key?displayThreaded=false&pageSize=50&page=$page&orderBy=newest&showSwitches=true"
 
     getJsonOrError(apiUrl, onError) map {
       json => DiscussionComments(json)

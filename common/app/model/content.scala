@@ -179,6 +179,12 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
     width <- imageSrcWidth
     height <- imageSrcHeight
   } yield ImageOverride.createElementWithOneAsset(src, width, height)
+
+  override lazy val adUnitSuffix: String = {
+    val prioritisedTagList: List[Tag] = blogs.toList ::: primaryKeyWordTag.toList
+    val prioritisedPossibleAdUnits: List[String] = prioritisedTagList.map{_.id} ::: section :: Nil
+    prioritisedPossibleAdUnits.headOption.getOrElse("")
+  }
 }
 
 object Content {
@@ -410,6 +416,7 @@ class Video(content: ApiContentWithMeta) extends Content(content) {
   override def mainPicture: Option[ImageContainer] = (images ++ videos).find(_.isMain)
 
   lazy val duration: Int = videoAssets.headOption.map(_.duration).getOrElse(0)
+  lazy val mediaId: Option[String] = mainVideo.map(_.id)
 
   override lazy val contentType = "Video"
   lazy val source: Option[String] = videoAssets.headOption.flatMap(_.source)

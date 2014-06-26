@@ -11,8 +11,14 @@
                 ],
 
                 base = {
-                    code: 'http://m.code.dev-theguardian.com',
-                    prod: 'http://www.theguardian.com'
+                    code: {
+                        draft: 'http://m.code.dev-theguardian.com',
+                        live:  'http://m.code.dev-theguardian.com'
+                    },
+                    prod: {
+                        draft: 'http://preview.gutools.co.uk',
+                        live:  'http://www.theguardian.com'
+                    }
                 };
         </script>
         <style>
@@ -53,6 +59,19 @@
 
         <div class="frames"></div>
         <script>
+            var updateIframeHeights = (function() {
+                var height = 0;
+
+                return function() {
+                    if (height !== window.innerHeight) {
+                        height = window.innerHeight;
+                        Array.prototype.forEach.call(document.querySelectorAll('iframe'), function(el) {
+                            el.style.height = Math.max(100, height - el.getBoundingClientRect().top) - 25 + "px";
+                        });
+                    }
+                };
+            })();
+
             function toggle(id) {
                 var el = document.getElementById(id);
 
@@ -69,25 +88,19 @@
                 return obj;
             }
 
-            function updateScrollables() {
-                var height = window.innerHeight;
-
-                Array.prototype.forEach.call(document.querySelectorAll('iframe'), function(el) {
-                    el.style.height = Math.max(100, height - el.getBoundingClientRect().top) - 25 + "px";
-                });
-            }
-
             function init() {
                 var sbWidth = 15, // scrollbar width
                     html = '',
-                    leftAcc = 0;
+                    leftAcc = 0,
+                    env = hashArgs().env === 'code' ? 'code' : 'prod',
+                    mode = hashArgs().mode === 'draft' ? 'draft' : 'live';
 
                 breakpoints.forEach(function(bp) {
                     html +=
                         '<div style="left:' + leftAcc + 'px">' +
                             '<h2>' + bp.name + '</h2>' +
                             '<iframe frameBorder="0" sandbox="allow-same-origin allow-forms allow-scripts" seamless ' +
-                                'src="' + (base[hashArgs().env] || base['prod']) + '/' + (hashArgs().url || '').replace(/^(\/|https?:\/\/)/, '') + '" ' +
+                                'src="' + base[env][mode] + '/' + hashArgs().url + '" ' +
                                 'width="' + (bp.width + sbWidth) + '"></iframe>' +
                         '</div>';
                     leftAcc += bp.width + sbWidth + 15;
@@ -97,10 +110,9 @@
             }
 
             init();
-            updateScrollables();
-
             window.onhashchange = init;
-            window.onresize = updateScrollables;
+
+            setInterval(updateIframeHeights, 1000);
 
             if(window.chrome) {
                 toggle('chrome-instructions');

@@ -29,7 +29,7 @@ public class SeriesPackageTest {
     }
 
     @Test
-    public void articleHasSeriesComponent() throws Exception{
+    public void articleHasSeriesComponent() throws Exception {
         Assert.assertTrue("Failure: Series component not found", driver.findElement(By.cssSelector(".container--series")).isDisplayed());
     }
 

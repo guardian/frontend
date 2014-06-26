@@ -8,7 +8,6 @@ import java.util.concurrent.TimeUnit;
 public class WebDriverFactory {
 
 
-
     public static WebDriver createWebDriver() {
         FirefoxDriver firefoxDriver = new FirefoxDriver();
         firefoxDriver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);

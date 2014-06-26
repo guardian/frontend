@@ -14,14 +14,13 @@
     "reqwest": "~1.1.0",
     "domready": "~1.0.4",
     "enhancer": "0.1.1",
-    "videojs": "~4.6.3",
-    "videojs-contrib-ads": "~0.2.0",
-    "videojs-vast": "~0.1.6",
+    "videojs": "git://github.com/guardian/video.js.git#1272601954b4931ffb70c096f7fa183aebefe1fe",
+    "videojs-contrib-ads": "guardian/videojs-contrib-ads#master",
+    "videojs-vast": "~0.1.5",
     "videojs-persistvolume": "~0.1.0"
   },
   "resolutions": {
-    "videojs": "~4.6.3",
-    "videojs-contrib-ads": "~0.2.0"
+    "videojs": "1272601954b4931ffb70c096f7fa183aebefe1fe"
   },
   "install": {
     "path": "components",
