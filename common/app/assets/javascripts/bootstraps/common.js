@@ -23,7 +23,6 @@ define([
     'common/modules/ui/images',
     'common/modules/navigation/profile',
     'common/modules/navigation/sections',
-    'common/modules/navigation/newNavigation',
     'common/modules/navigation/search',
     'common/modules/ui/tabs',
     'common/modules/ui/toggles',
@@ -56,7 +55,6 @@ define([
     'common/modules/identity/api',
     'common/modules/onward/more-tags',
     'common/modules/ui/smartAppBanner',
-    'common/modules/ui/surveyBanner',
     'common/modules/adverts/badges'
 ], function (
     $,
@@ -80,7 +78,6 @@ define([
     images,
     Profile,
     Sections,
-    NewNavigation,
     Search,
 
     Tabs,
@@ -114,7 +111,6 @@ define([
     id,
     MoreTags,
     smartAppBanner,
-    surveyBanner,
     badges
 ) {
 
@@ -141,10 +137,6 @@ define([
 
             sections.init(document);
             search.init(header);
-        },
-
-        initialiseNewNavigation: function (config) {
-            NewNavigation.init(config);
         },
 
         transcludeRelated: function (config, context) {
@@ -501,12 +493,6 @@ define([
             if(config.switches.smartBanner) {
                 smartAppBanner.init();
             }
-        },
-
-        showSurveyBanner: function(config) {
-            if(config.switches.surveyBanner) {
-                surveyBanner.init();
-            }
         }
     };
 
@@ -540,11 +526,7 @@ define([
             modules.checkIframe();
             modules.upgradeImages();
             modules.showTabs();
-            if(config.switches.newNavigation){
-                modules.initialiseNewNavigation(config);
-            } else {
-                modules.initialiseNavigation(config);
-            }
+            modules.initialiseNavigation(config);
             modules.showToggles();
             modules.showRelativeDates();
             modules.initClickstream();
@@ -561,7 +543,6 @@ define([
             modules.repositionComments();
             modules.showMoreTagsLink();
             modules.showSmartBanner(config);
-            modules.showSurveyBanner(config);
         }
         mediator.emit('page:common:ready', config, context);
     };
