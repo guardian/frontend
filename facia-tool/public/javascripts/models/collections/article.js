@@ -46,6 +46,7 @@ define([
                 'webPublicationDate']);
 
             this.fields = asObservableProps([
+                'isLive',
                 'headline',
                 'trailText',
                 'thumbnail']);
@@ -168,7 +169,6 @@ define([
             if (validateMe) {
                  missingProps = [
                     'webUrl',
-                    'webPublicationDate',
                     'fields',
                     'fields.headline'
                  ].filter(function(prop) {return !deepGet(opts, prop);});

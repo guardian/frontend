@@ -18,6 +18,19 @@
     </div>
 
     <div class="toolbar" data-bind="visible: true" style="display: none">
+        <div class="toolbar--rhs">
+            <a class="tool tool-draft-mode tool-left-half" data-bind="
+                click: setModeDraft,
+                css: {active: !liveMode()}">Draft Front</a
+           ><a class="tool tool-live-mode tool-right-half" data-bind="
+                click: setModeLive,
+                css: {active: liveMode}">Live Front</a>
+
+            <a class="tool" target="preview" data-bind="
+                attr: {href: previewUrl},
+                text: 'View ' + (liveMode() ? 'Live' : 'Draft'),
+                visible: front"></a>
+        </div>
 
         <span class="tool-label">Front</span>
         <select class="tool-select" data-bind="options: fronts, value: front, optionsCaption: 'choose...'"></select>
@@ -27,17 +40,6 @@
             attr: {href: 'http://dashboard.ophan.co.uk/graph/breakdown?path=/' + front()}">
             <img data-bind="attr: {src: frontSparkUrl}" /></a>
 
-        <span class="tool-label">Mode</span>
-        <a class="tool tool-draft-mode tool-left-half" data-bind="
-            click: setModeDraft,
-            css: {active: !liveMode()}">Draft</a
-       ><a class="tool tool-live-mode tool-right-half" data-bind="
-            click: setModeLive,
-            css: {active: liveMode}">Live</a>
-
-        <a class="tool tool-preview" target="preview" data-bind="
-            attr: {href: previewUrl},
-            visible: front">View Live</a>
     </div>
 
     <div class="left-col">
@@ -53,12 +55,12 @@
 
         <div data-bind="with: latestArticles">
             <div class="search-tools">
-                <a class="tool tool-left-half" data-bind="
+                <a class="tool tool-draft-content tool-left-half" data-bind="
                     click: toggleShowDrafts,
-                    css: {active: showDrafts}">Unlaunched</a
-               ><a class="tool tool-right-half" data-bind="
+                    css: {active: showDrafts}">Draft Content</a
+               ><a class="tool tool-live-content tool-right-half" data-bind="
                     click: toggleShowDrafts,
-                    css: {active: !showDrafts()}">Launched</a>
+                    css: {active: !showDrafts()}">Live Content</a>
 
                 <a class="tool"><i class="icon-refresh icon-white" data-bind="click: refresh"></i></a>
                 <a class="tool"><i class="icon-remove icon-white" data-bind="click: reset"></i></a>
@@ -123,11 +125,11 @@
                         <a class="draft-warning" data-bind="
                             click: $root.setModeDraft,
                             visible: $root.liveMode">
-                            <span class="tool draft-publish draft-warning">!</span>Draft Exists</a>
+                            <span class="tool draft-warning">View Draft</a>
 
                         <span data-bind="visible: !$root.liveMode()">
                             <a class="tool draft-publish" data-bind="
-                                click: publishDraft">Publish</a>
+                                click: publishDraft">Go Live</a>
 
                             <a class="tool draft-discard" data-bind="
                                 click: discardDraft">Discard</a>
@@ -384,6 +386,10 @@
                             attr: {class: 'is' + (meta.snapCss() ? ' is--' + meta.snapCss() : '')},
                             click: open,
                             text: meta.snapCss() || 'snap'"></span>
+
+                        <span class="is is--draft" data-bind="
+                            visible: !fields.isLive(),
+                            click: open">Draft</span>
 
                         <span class="is is--breaking" data-bind="
                             visible: meta.isBreaking,

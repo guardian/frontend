@@ -323,6 +323,10 @@ a:hover {
     font-weight: bold;
 }
 
+.is--draft {
+    color: #e8bd39;
+}
+
 .is--football {
     color: #65b045;
 }
@@ -626,6 +630,10 @@ button {
     background: #ffffff;
 }
 
+.toolbar--rhs {
+    float: right;
+}
+
 .toolbar > * {
     margin-bottom: 20px;
 }
@@ -686,15 +694,6 @@ button {
     color: #999999;
 }
 
-.collection .tools {
-    margin: 0 0 2px 4px;
-}
-
-.tool.draft-warning {
-    font-weight: bold;
-    margin-right: 4px;
-}
-
 .tools .tool:first-child {
     background: #3279F1;
 }
@@ -702,7 +701,6 @@ button {
 .tools .tool:first-child:hover {
     background: #376ABF;
 }
-
 
 .tool-left-half {
     font-weight: bold;
@@ -717,18 +715,33 @@ button {
     border-bottom-left-radius: 0;
 }
 
-.tool-left-half.tool-draft-mode.active {
-    cursor: default;
-    background: #3279F1;
+.tool-draft-mode.active {
+    background: #e8bd39;
 }
 
-.tool-right-half.tool-live-mode.active {
-    cursor: default;
+.tool-live-mode.active {
     background: #46c430;
 }
 
-.tool-preview {
-    margin-left: 10px;
+.tool-draft-content.active {
+    background: #e8bd39;
+}
+
+.tool-live-content.active {
+    background: #46c430;
+}
+
+.collection .tools {
+    margin: 0 0 2px 4px;
+}
+
+.tools .tool.draft-publish {
+    background: #46c430;
+}
+
+.tools .tool.draft-warning {
+    background: #e8bd39;
+    margin-right: 4px;
 }
 
 .log-in-out {
