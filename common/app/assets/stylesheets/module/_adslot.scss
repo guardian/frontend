@@ -371,9 +371,7 @@
         ));
     }
     @include mq(desktop) {
-        @include rem((
-            padding-left: $gs-gutter/2
-        ));
+        margin-left: 62%;
     }
     @include mq(tablet, $to: faciaLeftCol) {
         .container--has-toggle & {
