@@ -20,7 +20,8 @@
     "videojs-persistvolume": "~0.1.0"
   },
   "resolutions": {
-    "videojs": "1272601954b4931ffb70c096f7fa183aebefe1fe"
+    "videojs": "1272601954b4931ffb70c096f7fa183aebefe1fe",
+    "videojs-contrib-ads": "master"
   },
   "install": {
     "path": "components",

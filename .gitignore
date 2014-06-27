@@ -66,4 +66,4 @@ ivy-sbt
 .classpath
 .springBeans
 .cache
-bower-components
+bower_components
