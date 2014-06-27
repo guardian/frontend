@@ -271,6 +271,19 @@ $c-commercial-books-dark: #630d4c;
             ));
             margin-right: 0;
         }
+        &.commercial--high {
+            .has-page-skin & {
+                .commercial__home-link {
+                    width: auto;
+                    @include rem((
+                        top: $gs-baseline
+                    ));
+                    right: 0;
+                    left: auto;
+                    bottom: auto;
+                }
+            }
+        }
     }
 }
 

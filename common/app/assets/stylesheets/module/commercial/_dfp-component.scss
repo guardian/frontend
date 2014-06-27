@@ -325,6 +325,19 @@
             position: relative;
         }
     }
+    @include mq(wide) {
+        .has-page-skin & {
+            .commercial__home-link {
+                width: auto;
+                @include rem((
+                    top: $gs-baseline
+                ));
+                right: 0;
+                left: auto;
+                bottom: auto;
+            }
+        }
+    }
 }
 
 .facia-container--layout-article .commercial--dfp,
