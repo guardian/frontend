@@ -1,5 +1,5 @@
 define([
-    'common/$',
+    'common/utils/$',
     'common/modules/onward/more-tags',
     'helpers/fixtures'
     ], function(

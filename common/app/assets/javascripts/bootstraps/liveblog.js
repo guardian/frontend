@@ -1,11 +1,11 @@
 define([
     'common/utils/mediator',
-    'common/$',
+    'common/utils/$',
     'qwery',
     'bonzo',
     'bean',
     'lodash/functions/throttle',
-    'common/_',
+    'common/utils/_',
     'common/utils/scroller',
     'common/utils/detect',
     'common/modules/ui/autoupdate',

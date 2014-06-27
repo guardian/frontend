@@ -1,5 +1,5 @@
 define([
-    'common/common',
+    'common/utils/common',
     'common/utils/ajax',
     'common/modules/discussion/comment-count',
     'fixtures/commentcounts'], function(

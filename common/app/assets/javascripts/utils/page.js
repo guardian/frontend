@@ -1,5 +1,5 @@
 define([
-    'common/$',
+    'common/utils/$',
     'common/utils/config',
     'lodash/objects/assign',
     'lodash/collections/find'

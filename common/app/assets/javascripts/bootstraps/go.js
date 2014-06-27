@@ -1,11 +1,9 @@
-/*global guardian, redefine, modules*/
-redefine(modules);
+/*global guardian:true */
 require([
-    'common/bootstraps/app',
+    'core',
+    'bootstraps/app',
     'domReady!'
-], function(
-    bootstrap
-) {
+], function (core, bootstrap) {
     if (guardian.isModernBrowser) {
         bootstrap.go();
     }
