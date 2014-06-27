@@ -271,11 +271,6 @@ object Switches extends Collections {
     sellByDate = new DateMidnight(2014, 10, 30)
   )
 
-  val RssLinkSwitch = Switch("Feature Switches", "rss-link",
-    "If this switch is on a link to the RSS is rendered in the HTML",
-    safeState = Off, sellByDate = new DateMidnight(2014, 6, 30)
-  )
-
   val ResponsiveNavSwitch = Switch("Feature Switches", "responsive-nav",
     "If this switch is turned on then the new responsive navigation will be displayed.",
     safeState = Off, sellByDate = new DateMidnight(2014, 7, 22)
@@ -458,7 +453,6 @@ object Switches extends Collections {
     ShowAllArticleEmbedsSwitch,
     FrontPressJobSwitch,
     FaciaToolContainerTagsSwitch,
-    RssLinkSwitch,
     EnhanceTweetsSwitch,
     WorldCupWallchartEmbedSwitch,
     WorldCupArticleContainerSwitch,
