@@ -45,11 +45,11 @@ public class PropertyLoader {
     private static void addOverridePropertiesIfExists(Properties loadedProperties) {
         try {
             loadedProperties.putAll(loadOverrideProperties());
+            LOG.info("Successfully loaded property override file");
         } catch (Exception e) {
             LOG.info("Could not load override properties so will use the base properties only. Reason:  "
-                    + e.getMessage());
+                    + e.getMessage(), e);
         }
-        LOG.info("Successfully loaded property override file");
     }
 
     private static Properties loadOverrideProperties() {
