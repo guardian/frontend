@@ -21,14 +21,14 @@
         <div class="toolbar--rhs">
             <a class="tool tool-draft-mode tool-left-half" data-bind="
                 click: setModeDraft,
-                css: {active: !liveMode()}">Draft Front</a
+                css: {active: !liveMode()}">Draft front</a
            ><a class="tool tool-live-mode tool-right-half" data-bind="
                 click: setModeLive,
-                css: {active: liveMode}">Live Front</a>
+                css: {active: liveMode}">Live front</a>
 
             <a class="tool tool--preview" target="preview" data-bind="
                 attr: {href: previewUrl},
-                text: 'View ' + (liveMode() ? 'Live' : 'Draft'),
+                text: 'View ' + (liveMode() ? 'live' : 'draft'),
                 visible: front"></a>
         </div>
 
@@ -57,10 +57,10 @@
             <div class="search-tools">
                 <a class="tool tool-draft-content tool-left-half" data-bind="
                     click: showDrafts,
-                    css: {active: showingDrafts}">Draft Content</a
+                    css: {active: showingDrafts}">Draft content</a
                ><a class="tool tool-live-content tool-right-half" data-bind="
                     click: showLive,
-                    css: {active: !showingDrafts()}">Live Content</a>
+                    css: {active: !showingDrafts()}">Live content</a>
 
                 <a class="tool"><i class="icon-refresh icon-white" data-bind="click: refresh"></i></a>
                 <a class="tool"><i class="icon-remove icon-white" data-bind="click: reset"></i></a>

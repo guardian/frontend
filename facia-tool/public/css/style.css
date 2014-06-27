@@ -473,6 +473,12 @@ a:hover {
     top: 30px;
 }
 
+input[type="text"],
+textarea,
+select{
+    border-color: #dbd8c9;
+}
+
 select,
 input[type="text"] {
     -moz-box-sizing: border-box;
