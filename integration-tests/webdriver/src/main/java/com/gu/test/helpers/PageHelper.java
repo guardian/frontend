@@ -48,7 +48,6 @@ public class PageHelper {
 
     public void endTest() {
         if (driver != null) {
-            driver.close();
             driver.quit();
         }
     }
