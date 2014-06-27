@@ -8,7 +8,7 @@ import org.junit.Test;
 public class RetryRuleTest {
 
     @Rule
-    public RetryRule retry = new RetryRule();
+    public RetryRule retry = new RetryRule(2);
 
     private static int failCount = 0;
 
