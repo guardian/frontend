@@ -123,7 +123,7 @@ object Switches extends Collections {
 
   val SmartBannerSwitch = Switch("Advertising", "smart-banner",
     "Display smart app banner onboarding message to iOS and Android users",
-    safeState = Off, sellByDate = new DateMidnight(2014, 6, 30)
+    safeState = Off, sellByDate = new DateMidnight(2014, 8, 31)
   )
 
   // Ad Targeting
