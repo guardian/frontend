@@ -114,7 +114,7 @@ a:hover {
     top: 49px;
     width: 50%;
     padding: 10px 15px 0 12px;
-    border-right: 1px solid #dbd8c9;
+    border-right: 3px solid #dbd8c9;
     border-top: 1px solid #dbd8c9;
 }
 
@@ -522,7 +522,6 @@ button {
     position: relative;
     margin: 0px 0 5px 0;
     padding: 5px 0 5px 0;
-    border-bottom: 1px solid #dbd8c9;
 }
 
 .collection-overrides {
@@ -630,8 +629,8 @@ button {
     white-space: nowrap;
     overflow: hidden;
     border-bottom: 1px solid #dbd8c9;
-    border-left: 1px solid #dbd8c9;
-    margin-left: -1px;
+    border-left: 3px solid #dbd8c9;
+    margin-left: -3px;
     z-index: 1;
     background: #ffffff;
 }

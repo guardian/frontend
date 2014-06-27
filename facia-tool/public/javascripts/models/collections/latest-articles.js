@@ -48,7 +48,6 @@ define([
             self.search();
         };
 
-
         this.suggestions = ko.observableArray();
 
         this.page = ko.observable(1);
