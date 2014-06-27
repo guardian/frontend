@@ -1,9 +1,13 @@
 package com.gu.fronts.integration.test.config;
 
+import static com.gu.fronts.integration.test.config.PropertyLoader.SAUCELABS_REMOTEDRIVER_URL;
+import static com.gu.fronts.integration.test.config.PropertyLoader.getProperty;
 import static java.util.concurrent.TimeUnit.SECONDS;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.Dimension;
@@ -15,8 +19,12 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 public class WebdriverFactory {
+
+    public static final String SAUCE_LABS_FIREFOX_VERSION = "30";
+    public static final String SAUCE_LABS_OS_VERSION = "Windows 7";
 
     public static WebDriver getDefaultWebDriver() {
         return getFirefoxWebdriver();
@@ -28,9 +36,20 @@ public class WebdriverFactory {
         return setGlobalWebdriverConf(new FirefoxDriver(), desiredCap);
     }
 
-    public WebDriver getSauceLabsWebdriver() {
-        // TODO
-        return null;
+    public static WebDriver getSauceLabsWebdriver() {
+        DesiredCapabilities capabilities = DesiredCapabilities.firefox();
+        capabilities.setCapability("version", SAUCE_LABS_FIREFOX_VERSION);
+        capabilities.setCapability("platform", SAUCE_LABS_OS_VERSION);
+
+        String sauceLabsUrl = getProperty(SAUCELABS_REMOTEDRIVER_URL);
+        // Create the connection to Sauce Labs to run the tests
+        try {
+            WebDriver driver = new RemoteWebDriver(new URL(sauceLabsUrl), capabilities);
+            setGlobalWebdriverConf(driver, capabilities);
+            return driver;
+        } catch (MalformedURLException e) {
+            throw new RuntimeException("Sauce Labs URL was malformed", e);
+        }
     }
 
     /**

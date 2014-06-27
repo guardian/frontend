@@ -22,6 +22,8 @@ public class PropertyLoader {
     private static final Log LOG = LogFactory.getLog(PropertyLoader.class);
     private static final String DEFAULT_PROPERTIES_FILE = "base.properties";
     static final String PROP_FILE_PATH_ENV_KEY = "TEST_PROPERTY_OVERRIDE_PATH";
+    // prop names
+    public static final String SAUCELABS_REMOTEDRIVER_URL = "saucelabs.remotedriver.url";
 
     public static String getProperty(String name) {
         String property = loadProperties().getProperty(name);
