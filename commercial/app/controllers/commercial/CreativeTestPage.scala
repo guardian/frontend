@@ -1,6 +1,5 @@
 package controllers.commercial
 
-import model.commercial.jobs.{Job, JobsAgent}
 import model.{NoCache, Cached}
 import play.api.mvc._
 import conf.Configuration

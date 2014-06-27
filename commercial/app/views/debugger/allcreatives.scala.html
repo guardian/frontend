@@ -1,5 +1,11 @@
 @()
 
+@** @(page: FaciaPage)
+
+@main(page, projectName = Option("facia"), Map("bootstraps/facia" -> "javascripts/bootstraps/facia.js")){ }{
+    @fragments.frontBody(page)
+}
+**@
 <!DOCTYPE html>
 <html id="js-context" class="js-off id--signed-out" lang="en-GB">
 <head>
