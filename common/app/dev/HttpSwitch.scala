@@ -17,16 +17,16 @@ object HttpSwitch {
   private val switchesOn = "switchesOn"
   private val switchesOff = "switchesOff"
 
-  def queryString(implicit request: RequestHeader) = {
+  def queryString(url: String)(implicit request: RequestHeader) = {
     lazy val on = onSwitches
     lazy val off = offSwitches
-    if(on.nonEmpty || off.nonEmpty)
-      (if(request.uri.contains("?")) "&" else "?") +
+    url + (if(on.nonEmpty || off.nonEmpty)
+      (if(url.contains("?")) "&" else "?") +
       List(
         if(on.nonEmpty){switchesOn + "=" + on} else {""},
         if(off.nonEmpty){switchesOff + "switchesOff=" + off} else {""}
       ).filter(_.nonEmpty).mkString("&")
-    else ""
+    else "")
   }
 
   def onSwitches(implicit request: RequestHeader) = queryParameter(switchesOn)
