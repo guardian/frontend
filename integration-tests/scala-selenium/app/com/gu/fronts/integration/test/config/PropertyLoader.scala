@@ -1,6 +1,6 @@
 package com.gu.fronts.integration.test.config
 
-import java.io.{FileInputStream, InputStream}
+import java.io.{ FileInputStream, InputStream }
 import java.util.Properties
 import org.apache.commons.logging.LogFactory
 import org.apache.commons.io.IOUtils
@@ -19,6 +19,8 @@ object PropertyLoader {
   private val DEFAULT_PROPERTIES_FILE = "resources/base.properties"
 
   val PROP_FILE_PATH_ENV_KEY = "TEST_PROPERTY_OVERRIDE_PATH"
+  // prop names
+  val SAUCELABS_REMOTEDRIVER_URL = "saucelabs.remotedriver.url";
 
   def getProperty(name: String): String = {
     val property = loadProperties().getProperty(name)
