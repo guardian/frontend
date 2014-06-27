@@ -1,10 +1,19 @@
 package com.gu.test;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
 
 public class RetryRule implements TestRule {
+    private int retryCount;
+    private static final Log LOG = LogFactory.getLog(RetryRule.class);
+
+
+    public RetryRule(int retryCount) {
+        this.retryCount = retryCount;
+    }
 
     public Statement apply(Statement base, Description description) {
         return statement(base, description);
@@ -16,19 +25,20 @@ public class RetryRule implements TestRule {
             public void evaluate() throws Throwable {
                 Throwable caughtThrowable = null;
 
-                for (int i = 0; i < 2; i++) {
+                // implement retry logic here
+                for (int i = 0; i < retryCount; i++) {
                     try {
+                        Thread.sleep(1000);
                         base.evaluate();
                         return;
                     } catch (Throwable t) {
                         caughtThrowable = t;
-                        System.err.println(description.getDisplayName() + ": run " + (i + 1) + " failed");
+                        LOG.warn(description.getDisplayName() + ": run " + (i+1) + " failed");
                     }
                 }
-                System.err.println(description.getDisplayName() + ": giving up after " + 2 + " failures");
+                LOG.warn(description.getDisplayName() + ": giving up after " + retryCount + " failures");
                 throw caughtThrowable;
             }
         };
     }
-
 }
