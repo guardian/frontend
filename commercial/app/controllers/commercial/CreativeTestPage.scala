@@ -4,7 +4,7 @@ import model.{NoCache, Cached}
 import play.api.mvc._
 import conf.Configuration
 
-object Page extends model.MetaData  {
+object TestPage extends model.MetaData  {
 
   override lazy val id: String = "1234567"
   override lazy val description: Option[String] = None
@@ -33,7 +33,7 @@ object Page extends model.MetaData  {
 object CreativeTestPage extends Controller {
   def allComponents() = Action{ implicit request =>
     if(Configuration.environment.stage == "dev") {
-      Ok(views.html.debugger.allCreatives(Page))
+      Ok(views.html.debugger.allcreatives(TestPage))
     } else {
       NotFound
     }
