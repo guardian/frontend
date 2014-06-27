@@ -251,7 +251,8 @@ $c-commercial-travel-dark: #002b6c;
         }
         .commercial__body {
             @include rem((
-                padding-top: $comercial-comp-baseline
+                padding-top: $gs-baseline,
+                padding-left: $gs-gutter
             ));
         }
         .lineitem {
@@ -270,6 +271,9 @@ $c-commercial-travel-dark: #002b6c;
             @include rem((
                width: gs-span(2) + $gs-gutter
             ));
+        }
+        .commercial__body {
+            padding-left: 0;
         }
         .lineitems {
             @include rem((
