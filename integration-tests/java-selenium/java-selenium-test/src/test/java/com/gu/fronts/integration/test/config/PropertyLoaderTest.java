@@ -3,8 +3,10 @@ package com.gu.fronts.integration.test.config;
 import static com.gu.fronts.integration.test.config.PropertyLoader.PROP_FILE_PATH_ENV_KEY;
 import static org.junit.Assert.assertEquals;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
+@Ignore("Only run as single test as otherwise the set of system property might interfer with other tests")
 public class PropertyLoaderTest {
 
     @Test
