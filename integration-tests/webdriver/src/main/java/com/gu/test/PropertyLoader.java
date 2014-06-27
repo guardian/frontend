@@ -12,7 +12,10 @@ import org.apache.commons.logging.LogFactory;
 /**
  * Loads properties from a fixed file but can be overriden by specifying the environment variable of value
  * {@link #PROP_FILE_PATH_ENV_KEY} which can be set by providing a VM arguments like:
- * -Denv.test-property-file="/home/shahin/local-config.properties"<br>
+ * 
+ * <pre>
+ * -Denv.test-property-file="/home/shahin/local-config.properties"
+ * </pre>
  */
 public class PropertyLoader {
 
@@ -21,8 +24,9 @@ public class PropertyLoader {
     static final String PROP_FILE_PATH_ENV_KEY = "env.test-property-file";
 
     public static String getProperty(String name) {
-        LOG.info("Getting property by name: " + name);
-        return loadProperties().getProperty(name);
+        String property = loadProperties().getProperty(name);
+        LOG.info("Getting property by name/value: " + name + "/" + property);
+        return property;
     }
 
     public static Properties loadProperties() {
