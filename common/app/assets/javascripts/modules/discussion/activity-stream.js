@@ -1,7 +1,7 @@
 define([
     'bonzo',
     'bean',
-    'common/$',
+    'common/utils/$',
     'common/modules/component',
     'common/modules/discussion/api'
 ], function(

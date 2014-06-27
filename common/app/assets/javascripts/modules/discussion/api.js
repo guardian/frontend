@@ -1,5 +1,5 @@
 define([
-    'common/common',
+    'common/utils/common',
     'common/utils/ajax',
     'common/utils/cookies'
 ], function(

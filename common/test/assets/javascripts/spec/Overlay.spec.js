@@ -1,4 +1,4 @@
-define(['common/common', 'common/modules/ui/overlay', 'bean'], function(common, Overlay, bean) {
+define(['common/utils/common', 'common/modules/ui/overlay', 'bean'], function(common, Overlay, bean) {
 
     describe("Overlay", function() {
 

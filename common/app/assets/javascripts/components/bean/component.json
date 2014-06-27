@@ -1,9 +1,0 @@
-{
-  "name": "bean",
-  "description": "A small, fast, framework-agnostic event manager",
-  "version": "1.0.14",
-  "keywords": [ "ender", "events", "event", "dom" ]
-  , "main":     "bean.js"
-  , "scripts": ["bean.js"]
-  , "repo": "https://github.com/fat/bean"
-}
