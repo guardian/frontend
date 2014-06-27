@@ -56,7 +56,7 @@ define([
     'common/modules/onward/more-tags',
     'common/modules/ui/smartAppBanner',
     'common/modules/adverts/badges',
-    'common/modules/discussion/loader',
+    'common/modules/discussion/loader'
 ], function (
     $,
     mediator,
