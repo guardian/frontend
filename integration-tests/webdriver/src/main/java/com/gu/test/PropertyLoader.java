@@ -14,14 +14,14 @@ import org.apache.commons.logging.LogFactory;
  * {@link #PROP_FILE_PATH_ENV_KEY} which can be set by providing a VM arguments like:
  * 
  * <pre>
- * -Denv.test-property-file="/home/shahin/local-config.properties"
+ * -DTEST_PROPERTY_OVERRIDE_PATH="/home/shahin/local-config.properties"
  * </pre>
  */
 public class PropertyLoader {
 
     private static final Log LOG = LogFactory.getLog(PropertyLoader.class);
     private static final String DEFAULT_PROPERTIES_FILE = "base.properties";
-    static final String PROP_FILE_PATH_ENV_KEY = "env.test-property-file";
+    static final String PROP_FILE_PATH_ENV_KEY = "TEST_PROPERTY_OVERRIDE_PATH";
 
     public static String getProperty(String name) {
         String property = loadProperties().getProperty(name);
@@ -47,8 +47,9 @@ public class PropertyLoader {
             loadedProperties.putAll(loadOverrideProperties());
             LOG.info("Successfully loaded property override file");
         } catch (Exception e) {
-            LOG.info("Could not load override properties so will use the base properties only. Reason:  "
-                    + e.getMessage(), e);
+            LOG.info(
+                    "Could not load override properties so will use the base properties only. Reason:  "
+                            + e.getMessage(), e);
         }
     }
 
@@ -62,14 +63,14 @@ public class PropertyLoader {
             overrideProperties.load(propertyStream);
             return overrideProperties;
         } catch (Exception e) {
-            throw new RuntimeException("Could not load override property file: " + propertyFilePath, e);
+            throw new RuntimeException("Could not load property override file: " + propertyFilePath, e);
         } finally {
             IOUtils.closeQuietly(propertyStream);
         }
     }
 
     private static String getOverridePropertyFilePath() {
-        return System.getProperty(PROP_FILE_PATH_ENV_KEY);
+        return System.getenv(PROP_FILE_PATH_ENV_KEY);
     }
 
 }
