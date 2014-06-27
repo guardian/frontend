@@ -1,4 +1,5 @@
 @(env: String, pageSkinnedAdUnits: dfp.PageSkinSponsorshipReport)
+@import tools.DfpLink
 
 @admin_main("Commercial", env, isAuthed = true, hasCharts = true) {
 
@@ -13,7 +14,7 @@
 
     <ol>
         @for(sponsorship <- pageSkinnedAdUnits.sponsorships) {
-            <li>@sponsorship.lineItemName (@sponsorship.lineItemId)
+            <li>@sponsorship.lineItemName (<a href="@DfpLink.lineItem(sponsorship.lineItemId)">@sponsorship.lineItemId</a>)
             <ul>
                 @for(adunit <- sponsorship.adUnits) {
                 <li>@adunit</li>
