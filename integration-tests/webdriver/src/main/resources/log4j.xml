@@ -10,6 +10,16 @@
 		</layout>
 	</appender>
 
+	<!-- Do NOT set this to DEBUG as that will print out the stubbed data files 
+		and that can crash your IDE as they can be very large -->
+	<logger name="org.apache.http.wire">
+		<level value="INFO" />
+	</logger>
+
+	<logger name="org.apache">
+		<level value="INFO" />
+	</logger>
+
 	<!-- Root Logger -->
 	<root>
 		<priority value="DEBUG" />
