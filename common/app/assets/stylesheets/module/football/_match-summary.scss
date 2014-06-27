@@ -97,8 +97,10 @@ $football-crest--large: 60px;
     @include fs-data(5);
 
     dd {
-        margin: 0;
-        padding: 0;
+        @include rem((
+            margin: 0 56px 0 10px,
+            padding: 0
+        ));
     }
 }
 
