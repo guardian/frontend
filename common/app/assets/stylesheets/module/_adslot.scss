@@ -353,6 +353,13 @@
         border-top: 1px dotted $c-neutral5;
     }
 }
+.ad-slot--paid-for-badge--live-blog {
+    @include mq(rightCol) {
+        @include rem((
+            padding-top: $gs-baseline*2
+        ));
+    }
+}
 .ad-slot--paid-for-badge--front {
     @include clearfix;
     position: relative;
@@ -371,9 +378,7 @@
         ));
     }
     @include mq(desktop) {
-        @include rem((
-            padding-left: $gs-gutter/2
-        ));
+        margin-left: 62%;
     }
     @include mq(tablet, $to: faciaLeftCol) {
         .container--has-toggle & {

@@ -17,8 +17,7 @@
         id="top"
         class="@RenderClasses(Map(
             ("has-page-skin", metaData.hasPageSkin),
-            ("has-new-navigation", NewNavigationSwitch.isSwitchedOn),
-            ("has-localnav", NewNavigationSwitch.isSwitchedOff && Navigation.topLevelItem(Edition(request).navigation, metaData).filter(_.links.nonEmpty).nonEmpty)))"
+            ("has-localnav", Navigation.topLevelItem(Edition(request).navigation, metaData).filter(_.links.nonEmpty).nonEmpty)))"
         itemscope itemtype="http://schema.org/WebPage">
 
         @fragments.message(metaData)
@@ -33,9 +32,7 @@
             @fragments.commercial.topBannerMobile()
         }
 
-        @if(NewNavigationSwitch.isSwitchedOff){
-            @fragments.localNav(metaData)
-        }
+        @fragments.localNav(metaData)
 
         @body
 

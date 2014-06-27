@@ -81,7 +81,7 @@ object Switches extends Collections {
 
   val CssFromStorageSwitch = Switch("Performance Switches", "css-from-storage",
     "If this switch is on CSS will be cached in users localStorage and read from there on subsequent requests.",
-    safeState = Off, sellByDate = never
+    safeState = On, sellByDate = never
   )
 
   val ShowAllArticleEmbedsSwitch = Switch("Performance Switches", "show-all-embeds",
@@ -124,11 +124,6 @@ object Switches extends Collections {
   val SmartBannerSwitch = Switch("Advertising", "smart-banner",
     "Display smart app banner onboarding message to iOS and Android users",
     safeState = Off, sellByDate = new DateMidnight(2014, 6, 30)
-  )
-
-  val SurveyBannerSwitch = Switch("Advertising", "survey-banner",
-    "Display survey banner on all devices",
-    safeState = Off, sellByDate = new DateMidnight(2014, 7, 1)
   )
 
   // Ad Targeting
@@ -211,11 +206,6 @@ object Switches extends Collections {
     safeState = Off, never
   )
 
-  val FreshnessLoggingSwitch = Switch("Diagnostics", "freshness",
-    "If this switch is on, page freshness will be logged.",
-    safeState = On, new DateMidnight(2014, 6, 30)
-  )
-
   val ScrollDepthSwitch = Switch("Analytics", "scroll-depth",
     "Enables tracking and measurement of scroll depth",
     safeState = Off, never
@@ -235,7 +225,7 @@ object Switches extends Collections {
 
   val FontSwitch = Switch("Feature Switches", "web-fonts",
     "If this is switched on then the custom Guardian web font will load.",
-    safeState = Off, sellByDate = never
+    safeState = On, sellByDate = never
   )
 
   val SearchSwitch = Switch("Feature Switches", "google-search",
@@ -291,9 +281,9 @@ object Switches extends Collections {
     safeState = On, sellByDate = new DateMidnight(2014, 6, 30)
   )
 
-  val NewNavigationSwitch = Switch("Feature Switches", "new-navigation",
-    "If this switch is turned on then the new navigation will be displayed on mobiles and tablets",
-    safeState = Off, sellByDate = new DateMidnight(2014, 7, 8)
+  val ResponsiveNavSwitch = Switch("Feature Switches", "responsive-nav",
+    "If this switch is turned on then the new responsive navigation will be displayed.",
+    safeState = Off, sellByDate = new DateMidnight(2014, 7, 22)
   )
 
   val EnhanceTweetsSwitch = Switch("Feature Switches", "enhance-tweets",
@@ -317,11 +307,6 @@ object Switches extends Collections {
   )
 
   // A/B Tests
-
-  val ABSentry = Switch("A/B Tests", "ab-sentry",
-    "If this switch is turned on, users JavaScript errors will be beaconed back to the Sentry server.",
-    safeState = Off, sellByDate = new DateMidnight(2014, 6, 27)
-  )
 
   val ABLargerMobileMpu = Switch("A/B Tests", "ab-larger-mobile-mpu",
     "If this switch is turned on, run the LargerMobileMpu A/B test",
@@ -480,7 +465,6 @@ object Switches extends Collections {
     FaciaToolContainerTagsSwitch,
     RssLinkSwitch,
     EnhanceTweetsSwitch,
-    NewNavigationSwitch,
     WorldCupWallchartEmbedSwitch,
     WorldCupArticleContainerSwitch,
     ProfileCommentsSearchSwitch,
@@ -489,13 +473,11 @@ object Switches extends Collections {
     MemcachedFallbackSwitch,
     IncludeBuildNumberInMemcachedKey,
     GeoMostPopular,
+    ResponsiveNavSwitch,
     TagLinkingSwitch,
-    ABSentry,
     ABLargerMobileMpu,
     SmartBannerSwitch,
-    SurveyBannerSwitch,
     ParameterlessImagesSwitch,
-    FreshnessLoggingSwitch,
     SeoOptimisedContentImageSwitch,
     FaciaToolCachedContentApiSwitch,
     FaciaToolCachedZippingContentApiSwitch,

@@ -1,17 +1,25 @@
 package model.commercial
 
-import com.gu.openplatform.contentapi
 import com.gu.openplatform.contentapi.model.Tag
-import common.{Edition, Logging, ExecutionContexts}
+import common.Edition.defaultEdition
+import common.{ExecutionContexts, Logging}
 import conf.LiveContentApi
-import model.{ImageElement, Content}
+import model.{Content, ImageContainer}
+
 import scala.concurrent.Future
 
 object Lookup extends ExecutionContexts with Logging {
-  def thumbnail(contentId: String): Future[Option[ImageElement]] = {
-    LiveContentApi.item(contentId, Edition.defaultEdition).response.map { response =>
-      val option: Option[contentapi.model.Content] = response.content
-      option.flatMap(Content(_).thumbnail)
+
+  def mainPicture(contentId: String): Future[Option[ImageContainer]] = {
+    for {
+      response <- LiveContentApi.item(contentId, defaultEdition).response
+    } yield {
+      for {
+        content <- response.content
+        mainPicture <- Content(content).mainPicture
+      } yield {
+        mainPicture
+      }
     }
   }
 

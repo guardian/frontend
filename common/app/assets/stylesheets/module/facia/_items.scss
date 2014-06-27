@@ -143,6 +143,10 @@
         text-align: right;
         color: $c-neutral2;
 
+        .facia-container--advertisement &,
+        .container--advertisement-feature & {
+            border-left-width: 0;
+        }
         &:hover,
         &:focus {
             color: $c-neutral1;

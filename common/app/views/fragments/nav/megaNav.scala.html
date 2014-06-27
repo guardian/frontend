@@ -1,0 +1,29 @@
+@(metaData: model.MetaData)(implicit request: RequestHeader)
+@import common._
+
+@defining(Edition(request).navigation) { navigation =>
+    @defining(Navigation.topLevelItem(navigation, metaData)) { topLevelSelected =>
+        <ul class="">
+            @navigation.map { nav =>
+                <li class="">
+                    <a class="" href="@LinkTo(nav.name.href)" >
+                        @if(nav.currentFor(metaData)){&raquo;}
+                        @Html(nav.name.title)
+                    </a>
+                    @if(nav.links.nonEmpty) {
+                        <ul class="">
+                            @nav.links.map{ link =>
+                                <li class="">
+                                    <a class="" href="@LinkTo(link.href)">
+                                        @if(link.currentFor(metaData)){&raquo;}
+                                        @Html(link.title)
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    }
+                </li>
+            }
+        </ul>
+    }
+}

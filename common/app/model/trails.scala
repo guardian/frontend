@@ -1,10 +1,11 @@
 package model
 
-import org.joda.time.{DateTimeZone, DateTime}
 import common.Edition
+import implicits.Dates
+import org.scala_tools.time.Imports._
 
 
-trait Trail extends Elements with Tags with FaciaFields {
+trait Trail extends Elements with Tags with FaciaFields with Dates {
   def webPublicationDate: DateTime
   def webPublicationDate(edition: Edition): DateTime = webPublicationDate(edition.timezone)
   def webPublicationDate(zone: DateTimeZone): DateTime = webPublicationDate.withZone(zone)
@@ -24,6 +25,10 @@ trait Trail extends Elements with Tags with FaciaFields {
   def leadingParagraphs: List[org.jsoup.nodes.Element] = Nil
   def byline: Option[String] = None
   def trailType: Option[String] = None
+
+  lazy val shouldHidePublicationDate: Boolean = {
+    isAdvertisementFeature && webPublicationDate.isOlderThan(2.weeks)
+  }
 }
 
 //Facia tool values

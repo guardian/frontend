@@ -23,7 +23,6 @@ define([
     'common/modules/ui/images',
     'common/modules/navigation/profile',
     'common/modules/navigation/sections',
-    'common/modules/navigation/newNavigation',
     'common/modules/navigation/search',
     'common/modules/ui/tabs',
     'common/modules/ui/toggles',
@@ -56,7 +55,6 @@ define([
     'common/modules/identity/api',
     'common/modules/onward/more-tags',
     'common/modules/ui/smartAppBanner',
-    'common/modules/ui/surveyBanner',
     'common/modules/adverts/badges'
 ], function (
     $,
@@ -80,7 +78,6 @@ define([
     images,
     Profile,
     Sections,
-    NewNavigation,
     Search,
 
     Tabs,
@@ -114,7 +111,6 @@ define([
     id,
     MoreTags,
     smartAppBanner,
-    surveyBanner,
     badges
 ) {
 
@@ -141,10 +137,6 @@ define([
 
             sections.init(document);
             search.init(header);
-        },
-
-        initialiseNewNavigation: function (config) {
-            NewNavigation.init(config);
         },
 
         transcludeRelated: function (config, context) {
@@ -308,8 +300,8 @@ define([
         },
 
         cleanupCookies: function() {
-            Cookies.cleanUp(['mmcore.pd', 'mmcore.srv', 'mmid', 'GU_ABFACIA', 'GU_FACIA']);
-            Cookies.cleanUpDuplicates(['GU_ALPHA','GU_VIEW']);
+            Cookies.cleanUp(['mmcore.pd', 'mmcore.srv', 'mmid', 'GU_ABFACIA', 'GU_FACIA', 'GU_ALPHA']);
+            Cookies.cleanUpDuplicates(['GU_VIEW']);
         },
 
         // opt-in to the responsive alpha
@@ -353,11 +345,9 @@ define([
             if(window.location.hash === '#opt-in-message' && config.switches.networkFrontOptIn && detect.getBreakpoint() !== 'mobile') {
                 bean.on(document, 'click', '.js-site-message-close', function() {
                     Cookies.add('GU_VIEW', 'responsive', 365);
-                    Cookies.add('GU_ALPHA', '2', 365);
                 });
                 bean.on(document, 'click', '.js-site-message', function() {
                     Cookies.add('GU_VIEW', 'responsive', 365);
-                    Cookies.add('GU_ALPHA', '2', 365);
                 });
                 var message = new Message('onboard', { type: 'modal' }),
                     path = (document.location.pathname) ? document.location.pathname : '/',
@@ -501,12 +491,6 @@ define([
             if(config.switches.smartBanner) {
                 smartAppBanner.init();
             }
-        },
-
-        showSurveyBanner: function(config) {
-            if(config.switches.surveyBanner) {
-                surveyBanner.init();
-            }
         }
     };
 
@@ -540,11 +524,7 @@ define([
             modules.checkIframe();
             modules.upgradeImages();
             modules.showTabs();
-            if(config.switches.newNavigation){
-                modules.initialiseNewNavigation(config);
-            } else {
-                modules.initialiseNavigation(config);
-            }
+            modules.initialiseNavigation(config);
             modules.showToggles();
             modules.showRelativeDates();
             modules.initClickstream();
@@ -561,7 +541,6 @@ define([
             modules.repositionComments();
             modules.showMoreTagsLink();
             modules.showSmartBanner(config);
-            modules.showSurveyBanner(config);
         }
         mediator.emit('page:common:ready', config, context);
     };
