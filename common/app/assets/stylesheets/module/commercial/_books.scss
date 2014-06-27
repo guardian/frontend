@@ -275,12 +275,12 @@ $c-commercial-books-dark: #630d4c;
             .has-page-skin & {
                 .commercial__home-link {
                     width: auto;
-                    @include rem((
-                        top: $gs-baseline
-                    ));
                     right: 0;
                     left: auto;
                     bottom: auto;
+                    @include rem((
+                        top: $gs-baseline
+                    ));
                 }
             }
         }
