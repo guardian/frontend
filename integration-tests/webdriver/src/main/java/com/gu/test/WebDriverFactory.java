@@ -26,7 +26,6 @@ public class WebDriverFactory {
 
         String sauceLabsUrl = getProperty("saucelabs.remotedriver.url");
         // Create the connection to Sauce Labs to run the tests
-        LOG.info("Creating Sauce Labs Webdriver towards: " + sauceLabsUrl);
         WebDriver driver = new RemoteWebDriver(new URL(sauceLabsUrl), capabilities);
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         return driver;

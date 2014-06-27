@@ -14,7 +14,7 @@ import org.apache.commons.logging.LogFactory;
  * {@link #PROP_FILE_PATH_ENV_KEY} which can be set by providing a VM arguments like:
  * 
  * <pre>
- * -DTEST_PROPERTY_OVERRIDE_PATH="/home/shahin/local-config.properties"
+ * -DTEST_PROPERTY_OVERRIDE_PATH=/home/shahin/local-config.properties
  * </pre>
  */
 public class PropertyLoader {
@@ -70,7 +70,7 @@ public class PropertyLoader {
     }
 
     private static String getOverridePropertyFilePath() {
-        return System.getenv(PROP_FILE_PATH_ENV_KEY);
+        return System.getProperty(PROP_FILE_PATH_ENV_KEY);
     }
 
 }
