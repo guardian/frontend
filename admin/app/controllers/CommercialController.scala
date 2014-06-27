@@ -24,11 +24,21 @@ object CommercialController extends Controller with Logging with AuthLogging {
   }
 
   def renderCommercial = Authenticated { implicit request =>
+    NoCache(Ok(views.html.commercial.commercial(Configuration.environment.stage)))
+  }
+
+  def renderSponsorships = Authenticated { implicit request =>
     val sponsoredTags = Store.getDfpSponsoredTags()
     val advertisementTags = Store.getDfpAdvertisementTags()
-    val pageskinnedAdUnits: Seq[String] = convertJsonToStringList(Store.getDfpPageSkinnedAdUnits()).sorted
 
-    NoCache(Ok(views.html.commercial(Configuration.environment.stage, sponsoredTags, advertisementTags, pageskinnedAdUnits)))
+    NoCache(Ok(views.html.commercial.sponsorships(Configuration.environment.stage, sponsoredTags, advertisementTags)))
   }
+
+  def renderPageskins = Authenticated { implicit request =>
+    val pageskinnedAdUnits = Store.getDfpPageSkinnedAdUnits()
+
+    NoCache(Ok(views.html.commercial.pageskins(Configuration.environment.stage, pageskinnedAdUnits)))
+  }
+
 
 }

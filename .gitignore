@@ -29,6 +29,7 @@ logs
 tmp
 old
 target
+.target
 /*/bin/
 
 RUNNING_PID
@@ -64,3 +65,4 @@ ivy-sbt
 .metadata
 .classpath
 .springBeans
+.cache

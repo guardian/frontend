@@ -1,12 +1,14 @@
 @(trail: Trail)(implicit request: RequestHeader)
 
 <div class="item__meta">
-    <time
-        class="item__timestamp js-item__timestamp"
-        datetime="@trail.webPublicationDate.toString("yyyy-MM-dd'T'HH:mm:ssZ")"
-        data-timestamp="@trail.webPublicationDate.getMillis"
-        data-relativeformat="short">
-        <i class="i i-clock-light-grey"></i>
-        <span class="timestamp__text"><span class="u-h">Published: </span>@Format(trail.webPublicationDate, "d MMM y")</span>
-    </time>
+    @if(!trail.shouldHidePublicationDate) {
+        <time
+            class="item__timestamp js-item__timestamp"
+            datetime="@trail.webPublicationDate.toString("yyyy-MM-dd'T'HH:mm:ssZ")"
+            data-timestamp="@trail.webPublicationDate.getMillis"
+            data-relativeformat="short">
+            <i class="i i-clock-light-grey"></i>
+            <span class="timestamp__text"><span class="u-h">Published: </span>@Format(trail.webPublicationDate, "d MMM y")</span>
+        </time>
+    }
 </div>

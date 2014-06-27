@@ -32,6 +32,7 @@ trait Dates {
 
   implicit class DateTimeWithExpiry(d: DateTime) {
     def age: Long = DateTime.now.getMillis - d.getMillis
+    def isOlderThan(period: Period): Boolean = d.plus(period).isBeforeNow
   }
 
   //http://www.w3.org/Protocols/rfc2616/rfc2616-sec3.html#sec3.3.1

@@ -3,6 +3,8 @@ package model.commercial.masterclasses
 import org.scalatest.Matchers
 import org.scalatest.FlatSpec
 import play.api.libs.json._
+import play.api.test.Helpers._
+import play.api.test.FakeApplication
 
 class EventbriteMasterClassFeedParsingTest extends FlatSpec with Matchers {
   val rawEventBriteFeed = """{ "events" : [ { "event" : { "background_color" : "FFFFFF",
@@ -192,7 +194,7 @@ class EventbriteMasterClassFeedParsingTest extends FlatSpec with Matchers {
 
 
 
-  "MasterClassFeedParser" should "parse out a list of Event JsValues" in {
+  "MasterClassFeedParser" should "parse out a list of Event JsValues" in running(FakeApplication()) {
     val eventBriteFeed: JsValue = Json.parse(rawEventBriteFeed)
   
     val events: Seq[JsValue] = EventbriteApi.extractEventsFromFeed(eventBriteFeed)

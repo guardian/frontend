@@ -5,7 +5,7 @@ import common.Pagination
 import common.Reference
 import views.support.{Contributor, ImgSrc, Item140}
 
-case class Tag(private val delegate: ApiTag, override val pagination: Option[Pagination] = None) extends MetaData {
+case class Tag(private val delegate: ApiTag, override val pagination: Option[Pagination] = None) extends MetaData with AdSuffixHandlingForFronts {
   lazy val name: String = webTitle
   lazy val tagType: String = delegate.`type`
 
@@ -29,6 +29,8 @@ case class Tag(private val delegate: ApiTag, override val pagination: Option[Pag
   lazy val bio: String = delegate.bio.getOrElse("")
   lazy val isSeries: Boolean = delegate.tagType == "series"
   lazy val isBlog: Boolean = delegate.tagType == "blog"
+
+  override lazy val isFront = true
 
   lazy val isSectionTag: Boolean = {
     val idParts = id.split("/")

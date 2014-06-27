@@ -53,7 +53,8 @@ object DfpDataCacheJob extends ExecutionContexts with Dates{
         val advertisementTags: Seq[Sponsorship] = DfpApi.filterOutAdvertisementFeatureTagsFrom(lineItems)
         Store.putDfpAdvertisementFeatureTags(stringify(SponsorshipReport(now, advertisementTags).toJson))
 
-        Store.putDfpPageSkinAdUnits(stringify(toJson(DfpApi.fetchAdUnitsThatAreTargettedByPageSkins(dfpLineItems))))
+        val pageSkinSponsorships: Seq[PageSkinSponsorship] = DfpApi.fetchAdUnitsThatAreTargettedByPageSkins(dfpLineItems)
+        Store.putDfpPageSkinAdUnits(stringify(PageSkinSponsorshipReport(now, pageSkinSponsorships).toJson))
 
         Store.putDfpLineItemsReport(stringify(toJson(lineItems)))
       }

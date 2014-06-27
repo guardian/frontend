@@ -1,10 +1,12 @@
 define([
     'bonzo',
+    'bean',
     'common/$',
     'common/modules/component',
     'common/modules/discussion/api'
 ], function(
     bonzo,
+    bean,
     $,
     component,
     discussionApi
@@ -24,6 +26,7 @@ define([
         this.removeState('loading');
         this.on('click', '.js-disc-recommend-comment', this.recommendComment);
         $('.js-disc-recommend-comment').addClass('disc-comment__recommend--open');
+        pagination(this);
     };
     ActivityStream.prototype.recommendComment = function(e) {
         var el = e.currentTarget;
@@ -39,12 +42,22 @@ define([
         this.setOptions(opts);
         return this._fetch().then(function(resp) {
             $.create(resp.html).each(function(el) {
-                this.elem = el;
-                $el.replaceWith(this.elem);
+                $el.html($(el).html());
             }.bind(this));
             this.removeState('loading');
         }.bind(this));
     };
+
+    function pagination(activityStream) {
+        bean.on(activityStream.elem, 'click', '.js-activity-stream-page-change', function(e) {
+            var page = e.currentTarget.getAttribute('data-page');
+            e.preventDefault();
+
+            activityStream.change({
+                page: page
+            });
+        });
+    }
 
     return ActivityStream;
 });

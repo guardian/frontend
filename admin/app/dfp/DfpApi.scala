@@ -8,6 +8,7 @@ import com.google.api.ads.dfp.lib.client.DfpSession
 import common.Logging
 import conf.AdminConfiguration
 import implicits.Collections
+import java.lang
 
 object DfpApi extends Logging with Collections{
 
@@ -63,23 +64,33 @@ object DfpApi extends Logging with Collections{
     )
   }
 
-  def fetchAdUnitsThatAreTargettedByPageSkins(lineItems: Seq[DfpApiLineItem]): Seq[String] = dfpSession.fold(Seq[String]()) { session =>
+  def fetchAdUnitsThatAreTargettedByPageSkins(lineItems: Seq[DfpApiLineItem]): Seq[PageSkinSponsorship] = dfpSession.fold(Seq[PageSkinSponsorship]()) { session =>
+    val interimPageSkinSponsorships: Seq[(String, lang.Long, List[String])] = onlyWithPageSkins(lineItems).map { lineitem =>
+       val adUnitIds: List[String] = lineitem.getTargeting
+         .getInventoryTargeting.getTargetedAdUnits.toList.map(item => item.getAdUnitId)
 
-    val idsForAdUnitsWithPageSkins: Seq[String] = onlyWithPageSkins(lineItems).flatMap { item =>
-      item.getTargeting.getInventoryTargeting.getTargetedAdUnits.toList.map(item => item.getAdUnitId)
+       (lineitem.getName, lineitem.getId, adUnitIds)
+    }
+
+    val justTheAdUnitIds: Seq[String] = interimPageSkinSponsorships.flatMap { case (name, id, adUnitIds) =>
+      adUnitIds
     }.distinct
 
-    val adUnits: Seq[AdUnit] = getAdUnitsForTheseIds(idsForAdUnitsWithPageSkins)
+    val hydratedAdUnits: Seq[AdUnit] = getAdUnitsForTheseIds(justTheAdUnitIds)
 
-    // we don't serve pageskins to anything other than fronts.
-    val validAdUnits: Seq[AdUnit] = adUnits.filter(_.getName == "front")
-
-    validAdUnits.map(unit => {
+    val mapOfAdUnits: Map[String, String] = hydratedAdUnits.map { adUnit =>
       def removeDfpCustomerIdentifierFromPath(i: AdUnit) = i.getParentPath.tail
 
-      val adUnitPathElements = removeDfpCustomerIdentifierFromPath(unit).map(_.getName) :+ unit.getName
-      adUnitPathElements.mkString("/")
-    })
+      val adUnitPathElements = removeDfpCustomerIdentifierFromPath(adUnit).map(_.getName) :+ adUnit.getName
+      val adUnitFullPath = adUnitPathElements.mkString("/")
+
+      (adUnit.getId, adUnitFullPath)
+    }.toMap
+
+    interimPageSkinSponsorships.map { case (name, id, adUnitIds) =>
+      val path: List[String] = adUnitIds.flatMap { id => mapOfAdUnits.get(id)}
+      PageSkinSponsorship(name, id, path)
+    }
   }
 
   def getAdUnitsForTheseIds(adUnitIds: Seq[String]): Seq[AdUnit] = dfpSession.fold(Seq[AdUnit]()) { session =>
@@ -89,39 +100,40 @@ object DfpApi extends Logging with Collections{
     DfpApiWrapper.fetchAdUnitTargetingObjects(session, adUnitTargetingQuery)
   }
 
-  def hydrateWithUsefulValues(lineItems: Seq[DfpApiLineItem]): Seq[LineItem] = dfpSession.fold(Seq[LineItem]()) { session =>
-    val namesOfRelevantTargetingKeys: List[String] = List("Keywords", "Slot", "Series")
-    val getRelevantTargetingKeyObjects = new StatementBuilder()
-      .where("displayName IN " + namesOfRelevantTargetingKeys.toStringWithRoundBrackets)
+  def hydrateWithUsefulValues(lineItems: Seq[DfpApiLineItem]): Seq[LineItem] = dfpSession.fold(Seq[LineItem]()) {
+    session =>
+      val namesOfRelevantTargetingKeys: List[String] = List("Keywords", "Slot", "Series")
+      val getRelevantTargetingKeyObjects = new StatementBuilder()
+        .where("displayName IN " + namesOfRelevantTargetingKeys.toStringWithRoundBrackets)
 
-    val relevantTargetingKeys = DfpApiWrapper.fetchCustomTargetingKeys(session, getRelevantTargetingKeyObjects).map { k =>
-      k.getId.longValue() -> k.getName
-    }.toMap
+      val relevantTargetingKeys = DfpApiWrapper.fetchCustomTargetingKeys(session, getRelevantTargetingKeyObjects).map { k =>
+        k.getId.longValue() -> k.getName
+      }.toMap
 
-    val idsOfRelevantTargetingKeys: Seq[String] = relevantTargetingKeys.map(_._1.toString).toSeq
+      val idsOfRelevantTargetingKeys: Seq[String] = relevantTargetingKeys.map(_._1.toString).toSeq
 
-    val getAllRelevantCustomTargetingValues = new StatementBuilder()
-      .where("customTargetingKeyId IN " + idsOfRelevantTargetingKeys.toStringWithRoundBrackets)
+      val getAllRelevantCustomTargetingValues = new StatementBuilder()
+        .where("customTargetingKeyId IN " + idsOfRelevantTargetingKeys.toStringWithRoundBrackets)
 
-    val relevantTargetingValues = DfpApiWrapper.fetchCustomTargetingValues(session, getAllRelevantCustomTargetingValues).map { v =>
-      v.getId.longValue() -> v.getName
-    }.toMap
+      val relevantTargetingValues = DfpApiWrapper.fetchCustomTargetingValues(session, getAllRelevantCustomTargetingValues).map { v =>
+        v.getId.longValue() -> v.getName
+      }.toMap
 
-    val sponsorFieldId: Option[Long] = {
-      val sponsorField = DfpApiWrapper.fetchCustomFields(session,
-        new StatementBuilder().where("name = :name").withBindVariableValue("name", "Sponsor")).headOption
-      sponsorField map (_.getId)
-    }
+      val sponsorFieldId: Option[Long] = {
+        val sponsorField = DfpApiWrapper.fetchCustomFields(session,
+          new StatementBuilder().where("name = :name").withBindVariableValue("name", "Sponsor")).headOption
+        sponsorField map (_.getId)
+      }
 
-    for {
-      lineItem <- lineItems
-      targeting <- Option(lineItem.getTargeting)
-      customTargeting <- Option(targeting.getCustomTargeting)
-      currTargetSets = targetSets(lineItem, relevantTargetingKeys, relevantTargetingValues)
-      if currTargetSets.nonEmpty
-    } yield {
-      LineItem(lineItem.getId, sponsor(lineItem, sponsorFieldId), currTargetSets)
-    }
+      for {
+        lineItem <- lineItems
+        targeting <- Option(lineItem.getTargeting)
+        customTargeting <- Option(targeting.getCustomTargeting)
+        currTargetSets = targetSets(lineItem, relevantTargetingKeys, relevantTargetingValues)
+        if currTargetSets.nonEmpty
+      } yield {
+        LineItem(lineItem.getId, sponsor(lineItem, sponsorFieldId), currTargetSets)
+      }
   }
 
   private def sponsor(lineItem: DfpApiLineItem, optSponsorFieldId: Option[Long]) = {

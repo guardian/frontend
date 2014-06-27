@@ -47,8 +47,8 @@ define([
             common.mediator.on('page:article:ready', function(config, context) {
                 if (config.switches.openCta && config.page.commentable) {
                     var openCta = new OpenCta(context, common.mediator, {
-                            discussionKey: config.page.shortUrl.replace('http://gu.com/', '')
-                        });
+                        discussionKey: config.page.shortUrl.replace('http://gu.com/', '')
+                    });
 
                     $.create('<div class="open-cta"></div>').each(function(el) {
                         openCta.fetch(el);

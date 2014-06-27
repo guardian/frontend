@@ -1,36 +1,32 @@
 package controllers
 
 import model.{Page, Cached}
-import scala.concurrent.Future
 import common.JsonComponent
-import play.api.mvc.{ Action, RequestHeader, SimpleResult }
-import discussion.model.{BlankComment, DiscussionKey}
+import play.api.mvc.Action
+import discussion.model.DiscussionKey
 
 trait NonThreadedController extends DiscussionController {
-  def page(key: String, title: String, page: String) = Page(
-    id = key,
-    section = "Global",
-    webTitle = title,
-    analyticsName = s"GFE:Article:Comment discussion unthreaded page $page"
+  def unthreadedPage(key: String, title: String) = Page(
+    id = s"discussion/non-threaded/$key",
+    section = "Discussion",
+    webTitle = s"$title",
+    analyticsName = s"GFE:Article:Profile activity page"
   )
 
   def commentsListJson(key: DiscussionKey) = commentsList(key)
   def commentsList(key: DiscussionKey) = Action.async { implicit request =>
-    discussionApi.discussion(key).map { discussionComments =>
-      if (request.isJson)
-        Cached(60){
-          JsonComponent(
-            "html" -> views.html.unthreaded.commentsComponent(discussionComments)
-          )
-        }
-      else
-        Cached(60){
-          Ok(views.html.unthreaded.commentsPage(page(
+    val pageNo = request.getQueryString("page") getOrElse "1"
+    discussionApi.discussion(key, pageNo).map { discussionComments =>
+      val page: Page = unthreadedPage(
             discussionComments.discussion.key,
-            discussionComments.discussion.title,
-            discussionComments.pagination.currentPage.toString
-          ), discussionComments))
-        }
+            discussionComments.discussion.title)
+
+      Cached(60) {
+        if (request.isJson)
+          JsonComponent("html" -> views.html.unthreaded.commentsComponent(page, discussionComments))
+        else
+          Ok(views.html.unthreaded.commentsPage(page, discussionComments))
+      }
     }
   }
 }

@@ -1,4 +1,5 @@
 define([
+    'common/$',
     'bean',
     'bonzo',
     'common/utils/context',
@@ -9,6 +10,7 @@ define([
     'common/modules/discussion/user-avatars',
     'common/modules/identity/validation-email'
 ], function(
+    $,
     bean,
     bonzo,
     context,
@@ -154,6 +156,7 @@ CommentBox.prototype.ready = function() {
     bean.on(this.context, 'change keyup', [commentBody], this.setFormState.bind(this));
     bean.on(commentBody, 'focus', this.setExpanded.bind(this)); // this isn't delegated as bean doesn't support it
     this.on('click', this.getClass('preview'), this.previewComment);
+    this.on('click', this.getClass('hide-preview'), this.resetPreviewComment);
     this.on('click', this.getClass('cancel'), this.cancelComment);
     this.on('click', this.getClass('show-parent'), this.setState.bind(this, 'parent-visible', false));
     this.on('click', this.getClass('hide-parent'), this.removeState.bind(this, 'parent-visible', false));
@@ -254,8 +257,7 @@ CommentBox.prototype.error = function(type, message) {
 CommentBox.prototype.postCommentSuccess = function(comment, resp) {
     comment.id = parseInt(resp.message, 10);
     this.getElem('body').value = '';
-    this.removeState('preview-visible');
-    this.getElem('preview-body').innerHTML = '';
+    this.resetPreviewComment();
     this.setFormState();
     this.emit('post:success', comment);
     this.mediator.emit('discussion:commentbox:post:success', comment);
@@ -308,15 +310,12 @@ CommentBox.prototype.setFormState = function(disabled) {
     disabled = typeof disabled === 'boolean' ? disabled : false;
 
     var commentBody = this.getElem('body'),
-        submitButton = this.getElem('submit'),
-        previewSubmitButton = this.getElem('preview-submit');
+        submitButton = this.getElem('submit');
 
     if (disabled || commentBody.value.length === 0) {
         submitButton.setAttribute('disabled', 'disabled');
-        previewSubmitButton.setAttribute('disabled', 'disabled');
     } else {
         submitButton.removeAttribute('disabled');
-        previewSubmitButton.removeAttribute('disabled');
     }
 };
 
@@ -362,8 +361,7 @@ CommentBox.prototype.previewComment = function(e) {
     self.clearErrors();
 
     if (comment.body === '') {
-        this.getElem('preview-body').innerHTML = '';
-        this.removeState('preview-visible');
+        this.resetPreviewComment();
         self.error('EMPTY_COMMENT_BODY');
     }
 
@@ -386,12 +384,18 @@ CommentBox.prototype.cancelComment = function() {
     if (this.options.state === 'response') {
         this.destroy();
     } else {
-        this.getElem('preview-body').innerHTML = '';
-        this.removeState('preview-visible');
+        this.resetPreviewComment();
         this.getElem('body').value = '';
         this.setFormState();
         this.removeState('expanded');
     }
+};
+
+
+
+CommentBox.prototype.resetPreviewComment = function() {
+    this.removeState('preview-visible');
+    this.getElem('preview-body').innerHTML = '';
 };
 
 /**

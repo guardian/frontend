@@ -3,6 +3,7 @@
 # ~~~~
 
 GET         /humans.txt                                                                                              controllers.Assets.at(path="/public", file="humans.txt")
+GET         /commercial/test-page                                                                                    controllers.commercial.CreativeTestPage.allComponents
 
 # For dev machines
 GET         /assets/internal/*file                                                                                   controllers.Assets.at(path="/public", file)
@@ -12,8 +13,6 @@ GET         /assets/*path                                                       
 GET         /ab.gif                                                                                                  controllers.DiagnosticsController.ab
 GET         /js.gif                                                                                                  controllers.DiagnosticsController.js
 GET         /count/$prefix<.+>.gif                                                                                   controllers.DiagnosticsController.analytics(prefix)
-GET         /freshness/front/*timestamp                                                                              controllers.FreshnessController.freshnessFront(timestamp)
-GET         /freshness/*timestamp                                                                                    controllers.FreshnessController.freshness(timestamp)
 
 # Discussion
 GET         /discussion/comment-box.json                                                                             controllers.DiscussionApp.commentBox()
