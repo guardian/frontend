@@ -27,7 +27,7 @@
                 css: {active: liveMode}">Live front</a>
 
             <a class="tool tool--preview" target="preview" data-bind="
-                attr: {href: previewUrl},
+                attr: { href: previewUrl },
                 text: 'View ' + (liveMode() ? 'live' : 'draft'),
                 visible: front"></a>
         </div>
@@ -364,7 +364,7 @@
 
                 <div class="article_content" data-bind="if: !state.isEmpty()">
                     <a class="headline" target="article" data-bind="
-                        text: meta.headline() || fields.headline() || (isSnap() ? 'Add link text!' : id),
+                        html: meta.headline() || fields.headline() || (isSnap() ? 'Add link text!' : id),
                         css: {'is-empty': isSnap() && !meta.headline()},
                         attr: {href: id},
                         click: open"></a>
