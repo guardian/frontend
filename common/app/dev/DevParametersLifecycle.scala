@@ -26,8 +26,8 @@ trait DevParametersLifecycle extends GlobalSettings with implicits.Requests {
     "googfc",
     "shortUrl", // Used by series component in onwards journeys
     "t", // specific item targetting
-    "switchesOn", // turn switched on for non-prod, http requests
-    "switchesOff" // turn switched off for non-prod, http requests
+    "switchesOn", // turn switches on for non-prod, http requests
+    "switchesOff" // turn switches off for non-prod, http requests
   )
 
   val allowedParams = CanonicalLink.significantParams ++ insignificantParams
