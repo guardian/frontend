@@ -2,7 +2,7 @@
 require([
     'core',
     'domReady!'
-], function (core) {
+], function () {
 
     require(['bootstraps/app'], function(bootstrap) {
         if (guardian.isModernBrowser) {
