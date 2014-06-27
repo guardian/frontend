@@ -45,7 +45,10 @@ object Frontend extends Build with Prototypes {
   
   val sanityTest = application("sanity-tests")
 
-  val scalaSelenium = application("scala-selenium", Option("integration-tests/scala-selenium"))
+  val scalaSelenium = application("scala-selenium", Option("integration-tests/scala-selenium")).settings(
+    libraryDependencies ++= Seq(
+      "org.seleniumhq.selenium" % "selenium-java" % "2.42.0"
+    ))
 
   val facia = application("facia").dependsOn(commonWithTests).aggregate(common)
   val article = application("article").dependsOn(commonWithTests).aggregate(common)
@@ -122,8 +125,8 @@ object Frontend extends Build with Prototypes {
       "info.cukes" % "cucumber-junit" % "1.1.5",
       "org.apache.velocity" % "velocity" % "1.7",
       "info.cukes" % "cucumber-picocontainer" % "1.1.5",
-      "org.seleniumhq.selenium" % "selenium-java" % "2.39.0",
-      "org.seleniumhq.selenium" % "selenium-server" % "2.39.0",
+      "org.seleniumhq.selenium" % "selenium-java" % "2.42.0",
+      "org.seleniumhq.selenium" % "selenium-server" % "2.42.0",
       "junit" % "junit" % "4.11" % "test",
       "com.novocode" % "junit-interface" % "0.10" % "test->default"
     ),

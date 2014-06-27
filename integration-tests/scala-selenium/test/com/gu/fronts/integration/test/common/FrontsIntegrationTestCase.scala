@@ -25,8 +25,12 @@ class FrontsIntegrationTestCase {
   protected def openNetworkFrontPage(): NetworkFrontPage = {
     // need to do this because selenium need to first go to a page before setting the cookie
     webDriver.get(frontsBaseUrl + "/pagenotfound");
-    webDriver.manage().addCookie(new Cookie("GU_VIEW", "responsive"));
+    webDriver.manage().addCookie(betaSiteCookie);
     webDriver.get(frontsBaseUrl)
     pageFactoryHelper.initPage(webDriver, classOf[NetworkFrontPage])
+  }
+  
+  private def betaSiteCookie: Cookie = {
+    new Cookie("GU_VIEW", "responsive")
   }
 }
