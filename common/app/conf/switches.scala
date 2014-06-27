@@ -215,7 +215,7 @@ object Switches extends Collections {
 
   val ReleaseMessageSwitch = Switch("Feature Switches", "release-message",
     "If this is switched on users will be messaged that they are inside the beta release",
-    safeState = Off, sellByDate = new DateMidnight(2014, 6, 30)
+    safeState = Off, sellByDate = new DateMidnight(2014, 8, 31)
   )
 
   val GeoMostPopular = Switch("Feature Switches", "geo-most-popular",
@@ -260,7 +260,7 @@ object Switches extends Collections {
 
   val NetworkFrontOptIn = Switch("Feature Switches", "network-front-opt-in",
     "If this is switched on then an opt-in message will be displayed to users coming from the R2 network front",
-    safeState = Off, sellByDate = new DateMidnight(2014, 6, 30)
+    safeState = Off, sellByDate = new DateMidnight(2014, 8, 31)
   )
 
   val IndiaRegionSwitch = Switch("Feature Switches", "india-region",
