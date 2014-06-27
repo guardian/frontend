@@ -276,11 +276,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 6, 30)
   )
 
-  val TagLinkingSwitch = Switch("Feature Switches", "tag-linking",
-    "If this switch is turned on then tags will be 'auto' linked to where possible in article bodies",
-    safeState = On, sellByDate = new DateMidnight(2014, 6, 30)
-  )
-
   val ResponsiveNavSwitch = Switch("Feature Switches", "responsive-nav",
     "If this switch is turned on then the new responsive navigation will be displayed.",
     safeState = Off, sellByDate = new DateMidnight(2014, 7, 22)
@@ -474,7 +469,6 @@ object Switches extends Collections {
     IncludeBuildNumberInMemcachedKey,
     GeoMostPopular,
     ResponsiveNavSwitch,
-    TagLinkingSwitch,
     ABLargerMobileMpu,
     SmartBannerSwitch,
     ParameterlessImagesSwitch,

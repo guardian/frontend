@@ -1,7 +1,7 @@
 package views.support
 
 import common._
-import conf.Switches.{ ShowAllArticleEmbedsSwitch, TagLinkingSwitch }
+import conf.Switches.ShowAllArticleEmbedsSwitch
 import model._
 
 import java.net.URLEncoder._
@@ -467,7 +467,7 @@ class TagLinker(article: Article)(implicit val edition: Edition) extends HtmlCle
 
   def clean(doc: Document): Document = {
 
-    if (TagLinkingSwitch.isSwitchedOn && article.showInRelated) {
+    if (article.showInRelated) {
 
       val paragraphs = doc.getElementsByTag("p")
 
@@ -478,7 +478,7 @@ class TagLinker(article: Article)(implicit val edition: Edition) extends HtmlCle
         // don't link again in paragraphs that already have links
         val unlinkedParas = paragraphs.filterNot(_.html.contains("<a"))
 
-        // pre-filter paragraphs so we do not do multiple regexes on every single paragraph in every single article
+        // pre-filter paragraphMake tag linking permanents so we do not do multiple regexes on every single paragraph in every single article
         val candidateParagraphs = unlinkedParas.filter(_.html.contains(keyword.name))
 
         if (candidateParagraphs.nonEmpty) {
