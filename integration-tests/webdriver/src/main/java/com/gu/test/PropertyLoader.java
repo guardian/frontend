@@ -21,6 +21,7 @@ public class PropertyLoader {
     static final String PROP_FILE_PATH_ENV_KEY = "env.test-property-file";
 
     public static String getProperty(String name) {
+        LOG.info("Getting property by name: " + name);
         return loadProperties().getProperty(name);
     }
 
@@ -44,6 +45,7 @@ public class PropertyLoader {
             LOG.info("Could not load override properties so will use the base properties only. Reason:  "
                     + e.getMessage());
         }
+        LOG.info("Successfully loaded property override file");
     }
 
     private static Properties loadOverrideProperties() {
