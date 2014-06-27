@@ -541,12 +541,12 @@ case class DropCaps(isFeature: Boolean) extends HtmlCleaner {
 
   private def setDropCap(p: Element): String = {
     val html = p.html
-    val len = html.length
-    val span = if (html.length > 325) "drop-cap drop-cap--wide" else "drop-cap"
-    if ( html.matches("^[\"a-hj-zA-HJ-Z].*") && html.split("\\s+").head.length >= 3 )
-      s"""<span class="${span}"><span class="drop-cap__inner">${html.head}</span></span>${html.tail}"""
-    else
+    if ( html.length > 200 && html.matches("^[\"a-hj-zA-HJ-Z].*") && html.split("\\s+").head.length >= 3 ) {
+      val classes = if (html.length > 325) "drop-cap drop-cap--wide" else "drop-cap"
+      s"""<span class="${classes}"><span class="drop-cap__inner">${html.head}</span></span>${html.tail}"""
+    } else {
       html
+    }
   }
 
   override def clean(document: Document): Document = {
