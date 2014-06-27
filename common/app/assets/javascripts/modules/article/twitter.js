@@ -2,7 +2,7 @@
 
 define([
     'qwery',
-    'common/$',
+    'common/utils/$',
     'common/utils/context',
     'common/utils/detect',
     'common/utils/config'

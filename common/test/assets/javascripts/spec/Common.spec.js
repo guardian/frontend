@@ -1,4 +1,4 @@
-define(['common/common', 'EventEmitter'], function (common, EventEmitter) {
+define(['common/utils/common', 'EventEmitter'], function (common, EventEmitter) {
     
     describe("Common", function() {
         

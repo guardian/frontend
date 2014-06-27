@@ -1,5 +1,5 @@
 define([
-    'common/common',
+    'common/utils/common',
     'common/modules/lazyload',
     'common/utils/mediator'
 ], function (

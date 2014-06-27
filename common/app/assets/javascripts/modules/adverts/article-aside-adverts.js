@@ -1,5 +1,5 @@
 define([
-    'common/$',
+    'common/utils/$',
     'common/utils/detect',
     'lodash/objects/assign',
     'common/modules/adverts/dfp'

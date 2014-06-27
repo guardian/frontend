@@ -4,7 +4,7 @@
 */
 define([
     'bonzo',
-    'common/$',
+    'common/utils/$',
     'common/utils/mediator',
     'common/utils/storage',
     'common/modules/lazyload',

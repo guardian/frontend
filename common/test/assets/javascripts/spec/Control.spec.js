@@ -1,4 +1,4 @@
-define([ 'common/common',
+define([ 'common/utils/common',
          'bean',
          'common/modules/ui/toggles',
          'helpers/fixtures'], function(common, bean, Toggles, fixtures) {
