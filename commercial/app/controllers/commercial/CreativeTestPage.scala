@@ -1,6 +1,5 @@
 package controllers.commercial
 
-import model.commercial
 import model.{NoCache, Cached}
 import play.api.mvc._
 import conf.Configuration
