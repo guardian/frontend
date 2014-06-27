@@ -1,0 +1,24 @@
+{
+  "name": "jasmine-sinon",
+  "version": "0.3.1",
+  "main": "lib/jasmine-sinon.js",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "components"
+  ],
+  "dependencies": {
+    "jasmine": "~1.3.1",
+    "sinonjs": "~1.7.1"
+  },
+  "homepage": "https://github.com/froots/jasmine-sinon",
+  "_release": "0.3.1",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.3.1",
+    "commit": "ce1f18865cbcc120f8454761173cd0642e7e9261"
+  },
+  "_source": "git://github.com/froots/jasmine-sinon.git",
+  "_target": "0.3.1",
+  "_originalSource": "jasmine-sinon"
+}

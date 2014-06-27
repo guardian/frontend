@@ -26,7 +26,7 @@
 
         <ol class="u-unstyled pagination__links">
             @if(showExtremes){
-                @paginationPointer(Some(pagination.pages.length), "last", page.url)
+                @paginationPointer(if(pagination.currentPage == pagination.lastPage) None else Some(pagination.lastPage), "last", page.url)
             }
             @paginationPointer(pagination.next, "next", page.url)
 

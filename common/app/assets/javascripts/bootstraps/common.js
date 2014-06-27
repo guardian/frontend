@@ -300,8 +300,8 @@ define([
         },
 
         cleanupCookies: function() {
-            Cookies.cleanUp(['mmcore.pd', 'mmcore.srv', 'mmid', 'GU_ABFACIA', 'GU_FACIA']);
-            Cookies.cleanUpDuplicates(['GU_ALPHA','GU_VIEW']);
+            Cookies.cleanUp(['mmcore.pd', 'mmcore.srv', 'mmid', 'GU_ABFACIA', 'GU_FACIA', 'GU_ALPHA']);
+            Cookies.cleanUpDuplicates(['GU_VIEW']);
         },
 
         // opt-in to the responsive alpha
@@ -345,11 +345,9 @@ define([
             if(window.location.hash === '#opt-in-message' && config.switches.networkFrontOptIn && detect.getBreakpoint() !== 'mobile') {
                 bean.on(document, 'click', '.js-site-message-close', function() {
                     Cookies.add('GU_VIEW', 'responsive', 365);
-                    Cookies.add('GU_ALPHA', '2', 365);
                 });
                 bean.on(document, 'click', '.js-site-message', function() {
                     Cookies.add('GU_VIEW', 'responsive', 365);
-                    Cookies.add('GU_ALPHA', '2', 365);
                 });
                 var message = new Message('onboard', { type: 'modal' }),
                     path = (document.location.pathname) ? document.location.pathname : '/',

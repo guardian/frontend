@@ -8,7 +8,8 @@ define([
     'common/utils/cookies',
     'omniture',
     'common/modules/analytics/mvt-cookie',
-    'common/modules/analytics/beacon'
+    'common/modules/analytics/beacon',
+    'common/utils/pad'
 ], function(
     common,
     detect,
@@ -18,7 +19,8 @@ define([
     Cookies,
     s,
     mvtCookie,
-    beacon
+    beacon,
+    pad
     ) {
 
     // https://developer.omniture.com/en_US/content_page/sitecatalyst-tagging/c-tagging-overview
@@ -117,6 +119,15 @@ define([
 
             s.prop1     = config.page.headline || '';
 
+            // eVar1 contains today's date
+            // in the Omniture backend it only ever holds the first
+            // value a user gets, so in effect it is the first time
+            // we saw this user
+            var now = new Date();
+            s.eVar1 = now.getFullYear() + '/' +
+                pad(now.getMonth() + 1, 2) + '/' +
+                pad(now.getDate(), 2);
+
             if(id.getUserFromCookie()) {
                 s.prop2 = 'GUID:' + id.getUserFromCookie().id;
                 s.eVar2 = 'GUID:' + id.getUserFromCookie().id;
@@ -160,22 +171,12 @@ define([
             s.prop51  = mvt;
             s.eVar51  = mvt;
 
-            var alphaTag = 'notAlpha,';
-
-            // prefix all the MVT tests with the alpha user tag if present
-            if (Cookies.get('GU_ALPHA') === '2') {
-                // This tag allows us to easily segment phase one, phase two, or phase one and two.
-                alphaTag = 'r2alph2,';
-
-                s.prop51  = alphaTag + s.prop51;
-                s.eVar51  = alphaTag + s.eVar51;
-
-            } else if (Cookies.get('GU_ALPHA') === 'true') {
-                // A value of true means phase one.
-                alphaTag = 'r2alpha,';
-
-                s.prop51  = alphaTag + s.prop51;
-                s.eVar51  = alphaTag + s.eVar51;
+            // cookie used for user migration
+            var gu_shift = Cookies.get('GU_SHIFT');
+            if (gu_shift) {
+                var shiftValue = 'gu_shift,' + gu_shift + ',';
+                s.prop51  = shiftValue + s.prop51;
+                s.eVar51  = shiftValue + s.eVar51;
             }
 
             if (s.prop51) {
