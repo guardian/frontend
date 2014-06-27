@@ -568,14 +568,14 @@ case class DropCaps(isFeature: Boolean) extends HtmlCleaner {
 // (results in spaces after author names before commas)
 // so don't add any, fool.
 object ContributorLinks {
-  def apply(text: String, tags: Seq[Tag]): Html = Html {
+  def apply(text: String, tags: Seq[Tag])(implicit request: RequestHeader): Html = Html {
     tags.foldLeft(text) {
       case (t, tag) =>
         t.replaceFirst(tag.name,
-          <span itemscope=" " itemtype="http://schema.org/Person" itemprop="author"><a rel="author" class="tone-colour" itemprop="url name" data-link-name="auto tag link" href={s"/${tag.id}"}>{tag.name}</a></span>.toString())
+          <span itemscope=" " itemtype="http://schema.org/Person" itemprop="author"><a rel="author" class="tone-colour" itemprop="url name" data-link-name="auto tag link" href={s"${LinkTo("/"+tag.id)}"}>{tag.name}</a></span>.toString())
     }
   }
-  def apply(html: Html, tags: Seq[Tag]): Html = apply(html.body, tags)
+  def apply(html: Html, tags: Seq[Tag])(implicit request: RequestHeader): Html = apply(html.body, tags)
 }
 
 object OmnitureAnalyticsData {

@@ -1,4 +1,4 @@
-@(id: String, name: String, cls: List[String] = Nil)
+@(id: String, name: String, cls: List[String] = Nil)(implicit request: RequestHeader)
 
 <dl class="content-meta@cls.map{ cls => content-meta--@cls}">
     <dt class="content-meta__label">Series</dt>

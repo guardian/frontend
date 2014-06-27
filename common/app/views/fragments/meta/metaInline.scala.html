@@ -1,4 +1,4 @@
-@(content: model.Content)
+@(content: model.Content)(implicit request: RequestHeader)
 
 @if(content.isSeries) {
     @content.series.headOption.map { series =>
