@@ -1,7 +1,7 @@
 package views.support
 
 import common._
-import conf.Switches.{ ShowAllArticleEmbedsSwitch, TagLinkingSwitch }
+import conf.Switches.ShowAllArticleEmbedsSwitch
 import model._
 
 import java.net.URLEncoder._
@@ -467,7 +467,7 @@ class TagLinker(article: Article)(implicit val edition: Edition) extends HtmlCle
 
   def clean(doc: Document): Document = {
 
-    if (TagLinkingSwitch.isSwitchedOn && article.showInRelated) {
+    if (article.showInRelated) {
 
       val paragraphs = doc.getElementsByTag("p")
 
