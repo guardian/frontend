@@ -94,11 +94,6 @@ $commercial-cta-diameter: (
                 }
             }
         }
-        @include mq(wide) {
-            .commercial__head {
-                padding: 0;
-            }
-        }
     }
 }
 
