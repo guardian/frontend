@@ -47,9 +47,8 @@ public class PropertyLoader {
             loadedProperties.putAll(loadOverrideProperties());
             LOG.info("Successfully loaded property override file");
         } catch (Exception e) {
-            LOG.info(
-                    "Could not load override properties so will use the base properties only. Reason:  "
-                            + e.getMessage(), e);
+            LOG.info("Could not load override properties so will use the base properties only. Reason:  "
+                    + e.getMessage());
         }
     }
 
@@ -63,7 +62,8 @@ public class PropertyLoader {
             overrideProperties.load(propertyStream);
             return overrideProperties;
         } catch (Exception e) {
-            throw new RuntimeException("Could not load property override file: " + propertyFilePath, e);
+            throw new RuntimeException("Could not load property override file: " + propertyFilePath + " due to "
+                    + e.getMessage(), e);
         } finally {
             IOUtils.closeQuietly(propertyStream);
         }
