@@ -1,5 +1,5 @@
 define([
-    'common/utils/common',
+    'common/common',
     'common/utils/ajax',
     'bonzo'
 ], function (

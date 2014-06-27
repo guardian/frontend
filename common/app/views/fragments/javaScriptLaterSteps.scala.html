@@ -7,6 +7,17 @@
 
 <script>
 
+    var modules = [],
+        redefine = function(modules) {
+            modules.forEach(function(module) {
+                define.apply(null, module);
+            });
+        },
+        define = function() {
+            modules.push(arguments);
+        };
+    define.amd = true;
+
     var curl = {
         baseUrl: '@{Configuration.assets.path}javascripts',
         apiName: 'require',
@@ -22,9 +33,7 @@
             foresee: '@Static("javascripts/vendor/foresee/foresee-trigger.js")',
             googletag: '@{Configuration.javascript.config("googletagJsUrl")}',
             raven: '@Static("javascripts/components/raven-js/dist/raven.js")',
-            'bootstraps/video-player': '@Static("javascripts/bootstraps/video-player.js")',
-            core: '@Static("javascripts/core.js")',
-            'bootstraps/app' : '@Static("javascripts/bootstraps/app.js")'
+            'bootstraps/video-player': '@Static("javascripts/bootstraps/video-player.js")'
         }
     };
 
@@ -115,4 +124,4 @@
 
 </script>
 
-<script async="async" src="@Static("javascripts/bootstraps/go.js")"></script>
+<script async="async" src="@Static("javascripts/bootstraps/app.js")"></script>

@@ -1,5 +1,5 @@
-define([ 'common/utils/common',
-         'common/utils/$',
+define([ 'common/common',
+         'common/$',
          'bean',
          'bonzo',
          'common/modules/adverts/article-body-adverts',

@@ -1,0 +1,47 @@
+<!doctype html>
+<html dir="ltr" lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Imager.js</title>
+        <link rel="stylesheet" href="Assets/Styles/base.css">
+    </head>
+    <body>
+        <h1>Imager.js</h1>
+
+        <p>Directly below is our main image, we load this regardless of JavaScript support (it hasn't been set-up to work with Imager.js)</p>
+        <p>Because it isn't affected by Imager.js you'll notice that the size of the image changes when the screen dimensions change (because of our CSS: <code>img { max-width: 100%; }</code>) but the image isn't actually replaced.</p>
+        <img src="http://placehold.it/340">
+
+        <p>Below are three <code>&lt;div&gt;</code> elements that are enhanced using Imager.js and so they will lazy-load more images (as long as JavaScript is enabled).</p>
+
+        <div class="strategy-replacer">
+            <h2>BBC Strategy</h2>
+            <div class="delayed-image-load" data-src="http://placehold.it/{width}/000.jpg" data-width="340"></div>
+            <div class="delayed-image-load" data-src="http://placehold.it/{width}/555" data-width="340"></div>
+            <div class="delayed-image-load" data-src="http://placehold.it/{width}" data-width="340"></div>
+        </div>
+
+        <div class="strategy-container">
+            <h2>Enclosing DIV Strategy</h2>
+            <div class="delayed-image-load" data-src="http://placehold.it/{width}/000.jpg"></div>
+            <div class="delayed-image-load" data-src="http://placehold.it/{width}/555"></div>
+            <div class="delayed-image-load" data-src="http://placehold.it/{width}"></div>
+        </div>
+
+
+        <script src="../src/imager.js"></script>
+        <script src="../src/strategies/replacer.js"></script>
+        <script src="../src/strategies/container.js"></script>
+        <script>
+            ['replacer', 'container'].forEach(function(strategy){
+                var elements = document.querySelectorAll('.strategy-'+strategy+' .delayed-image-load'),
+                    imager = Imager.init(elements, { strategy: strategy }),
+                    replace = (function(imgr){ return function(){ imgr.process(); }; })(imager);
+
+                window.addEventListener('resize', replace);
+                window.addEventListener('orientationchange', replace);
+            });
+        </script>
+    </body>
+</html>

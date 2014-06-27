@@ -1,0 +1,24 @@
+{
+  "name": "video.js",
+  "description": "An HTML5 and Flash video player with a common API and skin for both.",
+  "main": [
+    "dist/video-js/video.js",
+    "dist/video-js/video-js.css"
+  ],
+  "keywords": [
+    "videojs",
+    "html5",
+    "flash",
+    "video",
+    "player"
+  ],
+  "homepage": "https://github.com/guardian/video.js",
+  "_release": "1272601954",
+  "_resolution": {
+    "type": "commit",
+    "commit": "1272601954b4931ffb70c096f7fa183aebefe1fe"
+  },
+  "_source": "git://github.com/guardian/video.js.git",
+  "_target": "1272601954b4931ffb70c096f7fa183aebefe1fe",
+  "_originalSource": "git://github.com/guardian/video.js.git"
+}

@@ -3,7 +3,7 @@ define([
     'bean',
     'bonzo',
     'lodash/collections/where',
-    'common/utils/$',
+    'common/$',
     'common/utils/ajax',
     'common/utils/url'
 ], function(

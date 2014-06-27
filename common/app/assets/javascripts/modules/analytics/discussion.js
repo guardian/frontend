@@ -1,5 +1,5 @@
 define([
-    'common/utils/$',
+    'common/$',
     'bonzo',
     'common/utils/mediator',
     'common/modules/identity/api'

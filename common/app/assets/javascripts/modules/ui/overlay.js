@@ -1,6 +1,6 @@
 define([
     'bean',
-    'common/utils/common',
+    'common/common',
     'bonzo'
 ], function (
     bean,

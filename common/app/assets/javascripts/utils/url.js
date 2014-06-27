@@ -1,7 +1,7 @@
 define([
     'lodash/objects/pairs',
     'common/utils/detect',
-    'common/utils/common'
+    'common/common'
 ], function(
     pairs,
     detect,

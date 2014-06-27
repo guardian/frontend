@@ -1,5 +1,5 @@
 define([
-    'common/utils/common',
+    'common/common',
     'bonzo',
     'bean'
 ], function (

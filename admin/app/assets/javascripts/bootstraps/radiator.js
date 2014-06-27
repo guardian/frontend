@@ -1,6 +1,6 @@
 define([
     'common/utils/ajax',
-    'common/utils/$',
+    'common/$',
     'lodash/main'
 ], function(
     ajax,

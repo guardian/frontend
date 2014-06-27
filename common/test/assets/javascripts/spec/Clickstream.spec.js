@@ -1,4 +1,4 @@
-define(['analytics/clickstream', 'bean', 'common/utils/common', 'helpers/fixtures'], function(Clickstream, bean, common, fixtures) {
+define(['analytics/clickstream', 'bean', 'common/common', 'helpers/fixtures'], function(Clickstream, bean, common, fixtures) {
 
     var fixtureId = 'clickstream-fixture',
         clickIds = ['click-me', 'click-me-ancestor', 'click-me-descendant', 'click-me-quick', 'click-me-internal', 'click-me-external'];
