@@ -77,6 +77,7 @@
 				<version>2.17</version>
 				<configuration>
 					<systemPropertyVariables>
+						<!-- Dont change and commit/push this value as TeamCity relies on it -->
 						<TEST_PROPERTY_OVERRIDE_PATH>/etc/gu/frontend-webdriver-tests.properties</TEST_PROPERTY_OVERRIDE_PATH>
 					</systemPropertyVariables>
 				</configuration>
