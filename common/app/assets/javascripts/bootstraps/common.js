@@ -55,7 +55,8 @@ define([
     'common/modules/identity/api',
     'common/modules/onward/more-tags',
     'common/modules/ui/smartAppBanner',
-    'common/modules/adverts/badges'
+    'common/modules/adverts/badges',
+    'common/modules/discussion/loader',
 ], function (
     $,
     mediator,
@@ -111,7 +112,8 @@ define([
     id,
     MoreTags,
     smartAppBanner,
-    badges
+    badges,
+    DiscussionLoader
 ) {
 
     var modules = {
@@ -491,6 +493,15 @@ define([
             if(config.switches.smartBanner) {
                 smartAppBanner.init();
             }
+        },
+
+        initDiscussion: function() {
+            mediator.on('page:common:ready', function(config, context) {
+                if (config.page.commentable && config.switches.discussion) {
+                    var discussionLoader = new DiscussionLoader(context, mediator, { 'switches': config.switches });
+                    discussionLoader.attachTo($('.discussion')[0]);
+                }
+            });
         }
     };
 
@@ -541,6 +552,7 @@ define([
             modules.repositionComments();
             modules.showMoreTagsLink();
             modules.showSmartBanner(config);
+            modules.initDiscussion();
         }
         mediator.emit('page:common:ready', config, context);
     };
