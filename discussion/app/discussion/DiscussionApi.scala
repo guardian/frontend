@@ -96,7 +96,7 @@ trait DiscussionApi extends Http with ExecutionContexts with Logging {
     def onError(r: Response) =
       s"Discussion API: Error loading search User $userId, Query: $q. status: ${r.status}, message: ${r.statusText}, response: ${r.body}"
     val urlQ = URLEncoder.encode(q, "UTF-8")
-    val apiUrl = s"$apiRoot/search/profile/$userId?q=$urlQ&page=$page&pageSize=50"
+    val apiUrl = s"$apiRoot/search/profile/$userId?q=$urlQ&page=$page"
 
     getJsonOrError(apiUrl, onError) map {
       json => ProfileComments(json)
