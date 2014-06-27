@@ -3,10 +3,8 @@ package com.gu.test.Article;
 import static com.gu.test.PropertyLoader.getProperty;
 import static com.gu.test.WebDriverFactory.createWebDriver;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import com.gu.test.RetryRule;
+import org.junit.*;
 import org.openqa.selenium.WebDriver;
 
 import com.gu.test.helpers.PageHelper;
@@ -25,6 +23,9 @@ public class ArticleOnwardJourneyTest {
         pageHelper = new PageHelper(driver);
         testArticle = pageHelper.goToArticle(ARTICLE_WITH_SERIES);
     }
+
+    @Rule
+    public RetryRule retry = new RetryRule(2);
 
     @Test
     public void goToFirstLinkInSidebarPopular() throws Exception {

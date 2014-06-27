@@ -1,13 +1,9 @@
 package com.gu.test.Common;
 
+import com.gu.test.RetryRule;
 import com.gu.test.helpers.PageHelper;
-import com.gu.test.pages.FrontPage;
-import com.gu.test.pages.SectionFront;
 import com.gu.test.shared.NavigationBar;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 import org.openqa.selenium.WebDriver;
 
 import static com.gu.test.WebDriverFactory.createWebDriver;
@@ -16,6 +12,9 @@ public class NavigationBarTest {
     WebDriver driver;
     private PageHelper pageHelper;
     private NavigationBar navigationBar;
+
+    @Rule
+    public RetryRule retry = new RetryRule(2);
 
     @Before
     public void setUp() throws Exception {

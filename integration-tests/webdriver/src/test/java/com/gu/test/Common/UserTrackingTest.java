@@ -2,12 +2,10 @@ package com.gu.test.Common;
 
 import com.github.tomakehurst.wiremock.verification.LoggedRequest;
 import com.gu.test.HttpMock;
+import com.gu.test.RetryRule;
 import com.gu.test.helpers.PageHelper;
 import com.gu.test.pages.FrontPage;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -44,6 +42,9 @@ public class UserTrackingTest {
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         return driver;
     }
+
+    @Rule
+    public RetryRule retry = new RetryRule(2);
 
     @Test
     public void theCorrectTrackingInformationShouldBeSentForSportArticle() throws Exception {

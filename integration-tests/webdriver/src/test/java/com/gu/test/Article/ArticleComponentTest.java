@@ -3,10 +3,8 @@ package com.gu.test.Article;
 import static com.gu.test.PropertyLoader.getProperty;
 import static com.gu.test.WebDriverFactory.createWebDriver;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import com.gu.test.RetryRule;
+import org.junit.*;
 import org.openqa.selenium.WebDriver;
 
 import com.gu.test.helpers.PageHelper;
@@ -17,6 +15,9 @@ public class ArticleComponentTest {
     private PageHelper pageHelper;
     private Article testArticle;
     private String ARTICLE_WITH_TWEETS = getProperty("articleWithTweets");
+
+    @Rule
+    public RetryRule retry = new RetryRule(2);
 
     @Before
     public void setUp() throws Exception {
