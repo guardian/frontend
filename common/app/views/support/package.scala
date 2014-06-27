@@ -478,7 +478,7 @@ class TagLinker(article: Article)(implicit val edition: Edition) extends HtmlCle
         // don't link again in paragraphs that already have links
         val unlinkedParas = paragraphs.filterNot(_.html.contains("<a"))
 
-        // pre-filter paragraphMake tag linking permanents so we do not do multiple regexes on every single paragraph in every single article
+        // pre-filter paragraphs so we do not do multiple regexes on every single paragraph in every single article
         val candidateParagraphs = unlinkedParas.filter(_.html.contains(keyword.name))
 
         if (candidateParagraphs.nonEmpty) {
