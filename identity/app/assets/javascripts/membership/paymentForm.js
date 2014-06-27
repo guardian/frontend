@@ -1,5 +1,5 @@
 define([
-    'common/$',
+    'common/utils/$',
     'bean',
     'common/modules/identity/api',
     'membership/masker',

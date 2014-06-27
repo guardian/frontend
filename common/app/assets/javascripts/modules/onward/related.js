@@ -1,12 +1,12 @@
 define([
-    'common/common',
+    'common/utils/common',
     'common/modules/lazyload',
     'common/modules/ui/expandable',
     'common/modules/ui/images',
     'common/modules/onward/history',
     'qwery',
     'bonzo',
-    'common/$',
+    'common/utils/$',
     'common/modules/analytics/register',
     'lodash/arrays/intersection'
 ], function (

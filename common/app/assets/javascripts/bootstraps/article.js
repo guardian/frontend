@@ -1,7 +1,7 @@
 define([
-    'common/common',
+    'common/utils/common',
     'common/utils/mediator',
-    'common/$',
+    'common/utils/$',
     'fence',
     'common/modules/ui/rhc',
     'common/modules/article/truncate',

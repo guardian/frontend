@@ -1,4 +1,4 @@
-define(['common/$', 'bonzo', 'lodash/collections/filter'], function($, bonzo, _filter) {
+define(['common/utils/$', 'bonzo', 'lodash/collections/filter'], function($, bonzo, _filter) {
     var $rhc = $('.js-components-container');
 
     /**
