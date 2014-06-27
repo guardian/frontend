@@ -45,6 +45,8 @@ object Frontend extends Build with Prototypes {
   
   val sanityTest = application("sanity-tests")
 
+  val scalaSelenium = application("scala-selenium", Option("integration-tests/scala-selenium"))
+
   val facia = application("facia").dependsOn(commonWithTests).aggregate(common)
   val article = application("article").dependsOn(commonWithTests).aggregate(common)
   val applications = application("applications").dependsOn(commonWithTests).aggregate(common)
