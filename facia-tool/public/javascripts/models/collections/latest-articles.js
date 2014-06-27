@@ -38,11 +38,16 @@ define([
         this.filterType = ko.observable();
         this.filterTypes= ko.observableArray(_.values(opts.filterTypes) || []);
 
-        this.showDrafts = ko.observable(false);
-        this.showDrafts.subscribe(function() { self.search(); });
-        this.showDraftsToggle = function() {
-            self.showDrafts(!self.showDrafts());
+        this.showingDrafts = ko.observable(false);
+        this.showDrafts = function() {
+            self.showingDrafts(true);
+            self.search();
         };
+        this.showLive = function() {
+            self.showingDrafts(false);
+            self.search();
+        };
+
 
         this.suggestions = ko.observableArray();
 
@@ -100,7 +105,7 @@ define([
                     propName = 'content';
                 } else {
                     url  = vars.CONST.apiSearchBase + '/search?show-fields=all&format=json';
-                    url += '&content-set=' + (self.showDrafts() ? 'preview&use-date=last-modified' : 'web-live');
+                    url += '&content-set=' + (self.showingDrafts() ? 'preview&use-date=last-modified' : 'web-live');
                     url += '&page-size=' + (vars.CONST.searchPageSize || 25);
                     url += '&page=' + self.page();
                     url += self.term() ? '&q=' + encodeURIComponent(self.term()) : '';
@@ -117,10 +122,14 @@ define([
 
                     self.flush(rawArticles.length === 0 ? '...sorry, no articles were found.' : '');
 
-                    ([].concat(rawArticles)).forEach(function(article) {
-                        article.id = internalContentCode(article);
+                   _.chain(rawArticles)
+                    .filter(function(article) { return article.fields && article.fields.headline; })
+                    .each(function(article) {
+                        var icc = internalContentCode(article);
+
+                        article.id = icc;
+                        cache.put('contentApi', icc, article);
                         self.articles.push(new Article(article));
-                        cache.put('contentApi', article.id, article);
                     });
                 });
             }, 300);
