@@ -1,6 +1,6 @@
 define([
     'modules/ui/container-toggle',
-    'common/utils/$',
+    'common/$',
     'bonzo',
     'bean',
     'common/modules/userPrefs',

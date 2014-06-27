@@ -1,4 +1,4 @@
-define(['common/utils/common', 'common/modules/userPrefs'], function(common, userPrefs) {
+define(['common/common', 'common/modules/userPrefs'], function(common, userPrefs) {
 
     describe("userPrefs - Client-side preferences", function() {
    

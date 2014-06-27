@@ -1,0 +1,36 @@
+{
+  "name": "videojs-contrib-ads",
+  "homepage": "https://github.com/videojs/videojs-contrib-ads",
+  "authors": [
+    "Brightcove"
+  ],
+  "description": "A plugin that provides common functionality needed by video advertisement libraries working with video.js",
+  "main": "src/videojs.ads.js",
+  "moduleType": [
+    "globals"
+  ],
+  "keywords": [
+    "videojs",
+    "html5",
+    "video",
+    "ads",
+    "advertisements"
+  ],
+  "license": "Apache-2.0",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "_release": "e7c14b3478",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "e7c14b34781742dc6a7ed41234ea1e7f9fa18c9e"
+  },
+  "_source": "git://github.com/guardian/videojs-contrib-ads.git",
+  "_target": "master",
+  "_originalSource": "guardian/videojs-contrib-ads"
+}

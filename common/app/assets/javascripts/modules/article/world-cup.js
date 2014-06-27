@@ -1,5 +1,5 @@
 define([
-    'common/utils/$',
+    'common/$',
     'qwery',
     'common/modules/lazyload',
     'common/utils/mediator'

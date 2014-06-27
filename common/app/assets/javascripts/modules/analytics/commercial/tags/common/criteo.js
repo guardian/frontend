@@ -1,6 +1,6 @@
 define([
     'qwery',
-    'common/utils/$',
+    'common/$',
     'common/utils/cookies',
     'common/utils/config',
     'lodash/objects/defaults'

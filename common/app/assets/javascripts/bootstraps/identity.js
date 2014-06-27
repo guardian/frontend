@@ -1,5 +1,5 @@
 define([
-	'common/utils/$',
+	'common/$',
     'common/modules/identity/forms',
     'common/modules/identity/formstack', // oldskool inside
     'common/modules/identity/formstack-iframe', // oldskool outside

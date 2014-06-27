@@ -1,0 +1,10 @@
+{
+  "name": "lodash-amd",
+  "version": "2.4.1",
+  "main": "compat/main.js",
+  "ignore": [
+    ".*",
+    "*.md",
+    "node_modules"
+  ]
+}

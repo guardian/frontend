@@ -1,4 +1,4 @@
-define([ 'common/utils/common',
+define([ 'common/common',
          'bean',
          'common/modules/ui/notification-counter',
        ], function(common, bean, NotificationCounter) {

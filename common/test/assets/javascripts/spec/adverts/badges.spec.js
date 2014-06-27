@@ -1,6 +1,6 @@
 define([
     'common/modules/adverts/badges',
-    'common/utils/$',
+    'common/$',
     'qwery',
     'helpers/fixtures'
 ], function(

@@ -1,5 +1,5 @@
 define([
-    'common/utils/$',
+    'common/$',
     'lodash/arrays/zipObject',
     'common/modules/analytics/commercial/tags/common/criteo'
 ], function(

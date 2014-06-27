@@ -1,0 +1,23 @@
+{
+  "name": "fence",
+  "version": "0.2.11",
+  "main": "fence.js",
+  "ignore": [
+    "**/.*",
+    "TODO",
+    "NOTES",
+    "node_modules",
+    "examples",
+    "tests"
+  ],
+  "homepage": "https://github.com/guardian/fence",
+  "_release": "0.2.11",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.2.11",
+    "commit": "de184dfb10c625ed2575b594407db58fcd83c3f2"
+  },
+  "_source": "git://github.com/guardian/fence.git",
+  "_target": "~0.2.11",
+  "_originalSource": "fence"
+}

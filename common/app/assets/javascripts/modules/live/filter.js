@@ -3,7 +3,7 @@
     Description: Filter displayed events depending on their type
 */
 define([
-    'common/utils/$',
+    'common/$',
     'common/modules/component',
     'common/utils/mediator',
     'lodash/collections/toArray'

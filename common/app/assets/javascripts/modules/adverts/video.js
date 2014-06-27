@@ -1,5 +1,5 @@
 define([
-    'common/utils/$',
+    'common/$',
     'common/utils/mediator',
     'common/utils/to-array',
     'bean',

@@ -1,4 +1,4 @@
-define(['common/utils/common', 'common/modules/ui/expandable', 'bonzo', 'helpers/fixtures'], function(common, Expandable, bonzo, fixtures) {
+define(['common/common', 'common/modules/ui/expandable', 'bonzo', 'helpers/fixtures'], function(common, Expandable, bonzo, fixtures) {
 
     describe("Expandable", function() {
 

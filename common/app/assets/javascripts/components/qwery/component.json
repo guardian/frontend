@@ -1,0 +1,14 @@
+{
+  "name": "qwery",
+  "repo": "ded/qwery",
+  "description": "blazing fast CSS3 query selector engine",
+  "version": "3.4.1",
+  "keywords": ["ender", "query", "css", "selector engine"],
+  "dependencies": {},
+  "development": {},
+  "license": "MIT",
+  "main": "qwery.js",
+  "scripts": [
+    "qwery.js"
+  ]
+}

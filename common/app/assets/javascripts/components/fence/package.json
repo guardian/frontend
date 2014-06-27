@@ -1,0 +1,31 @@
+{
+  "name": "fence",
+  "version": "0.2.11",
+  "description": "Utility to render fenced embeds in iframes",
+  "main": "fence.js",
+  "directories": {
+    "examples": "examples"
+  },
+  "scripts": {
+    "test": "grunt test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:guardian/fence.git"
+  },
+  "keywords": [
+    "iframe",
+    "embed"
+  ],
+  "author": "Sébastien Cevey",
+  "license": "Apache",
+  "bugs": {
+    "url": "https://github.com/guardian/fence/issues"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-connect": "~0.3.0",
+    "load-grunt-tasks": "~0.1.0",
+    "grunt-contrib-jshint": "~0.6.3"
+  }
+}

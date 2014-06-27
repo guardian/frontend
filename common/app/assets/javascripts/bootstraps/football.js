@@ -1,5 +1,5 @@
 define([
-    'common/utils/$',
+    'common/$',
     'bonzo',
     'bean',
     'common/utils/ajax',
@@ -34,7 +34,6 @@ define([
 
     function renderNav(match, callback) {
         var matchInfo;
-
         return (matchInfo = new MatchInfo(match, config.page.pageId)).fetch().then(function(resp) {
             var $nav;
             if (resp.nav && resp.nav.trim().length > 0) {

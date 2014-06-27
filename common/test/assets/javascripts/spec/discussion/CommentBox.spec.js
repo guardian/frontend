@@ -1,5 +1,5 @@
 define([
-    'common/utils/common',
+    'common/common',
     'common/modules/identity/api',
     'common/utils/ajax',
     'common/utils/context',

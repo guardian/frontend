@@ -1,6 +1,6 @@
 define([
-    'common/utils/$',
-    'common/utils/common',
+    'common/$',
+    'common/common',
     'bean'
 ], function (
     $,

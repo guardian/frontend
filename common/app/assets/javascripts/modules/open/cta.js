@@ -1,5 +1,5 @@
 define([
-    'common/utils/$',
+    'common/$',
     'common/utils/clamp',
     'common/modules/component'
 ], function(

@@ -1,5 +1,5 @@
 define([
-    'common/utils/$',
+    'common/$',
     'bonzo',
     'bean',
     'common/modules/userPrefs'

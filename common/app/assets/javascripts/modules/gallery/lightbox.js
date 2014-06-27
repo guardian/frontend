@@ -1,5 +1,5 @@
 define([
-    'common/utils/$',
+    'common/$',
     'bean',
     'common/utils/mediator',
     'lodash/functions/debounce',

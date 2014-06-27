@@ -1,6 +1,6 @@
 define([
     'common/modules/component',
-    'common/utils/$',
+    'common/$',
     'bonzo'
 ], function(
     component,

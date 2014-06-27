@@ -1,7 +1,7 @@
 define([
     'common/utils/ajax',
     'bonzo',
-    'common/utils/common',
+    'common/common',
     'common/modules/identity/api',
     'common/modules/identity/facebook-authorizer',
     'common/modules/navigation/profile',

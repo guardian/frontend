@@ -1,6 +1,6 @@
 define([
     'bonzo',
-    'common/utils/$',
+    'common/$',
     'lodash/functions/once',
     'common/modules/adverts/dfp'
 ], function (

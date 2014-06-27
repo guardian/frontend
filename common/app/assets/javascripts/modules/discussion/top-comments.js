@@ -6,7 +6,7 @@ define([
 'common/modules/identity/api',
 'common/modules/discussion/comment-box',
 'common/modules/discussion/recommend-comments',
-'common/utils/$'
+'common/$'
 ], function(
 ajax,
 bonzo,

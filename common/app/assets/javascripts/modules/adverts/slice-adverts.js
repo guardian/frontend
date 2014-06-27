@@ -1,5 +1,5 @@
 define([
-    'common/utils/$',
+    'common/$',
     'bonzo',
     'qwery',
     'lodash/objects/defaults',

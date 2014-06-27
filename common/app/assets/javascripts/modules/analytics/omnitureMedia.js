@@ -1,5 +1,5 @@
 define([
-    'common/utils/common',
+    'common/common',
     'common/utils/config',
     'bean'
 ], function(

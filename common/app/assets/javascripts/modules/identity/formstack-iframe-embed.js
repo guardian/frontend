@@ -14,8 +14,8 @@
 */
 
 define([
-    'common/utils/$',
-    'common/utils/common',
+    'common/$',
+    'common/common',
     'bean',
     'common/modules/identity/api'
 ], function (
