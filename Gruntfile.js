@@ -655,7 +655,7 @@ module.exports = function (grunt) {
 
         // Clean stuff up
         clean: {
-            js         : [staticTargetDir + 'javascripts', staticHashDir + 'javascripts'],
+            js         : [staticTargetDir + 'javascripts', staticHashDir + 'javascripts', requirejsDir],
             css        : [staticTargetDir + 'stylesheets', staticHashDir + 'stylesheets'],
             images     : [staticTargetDir + 'images', staticHashDir + 'images'],
             flash      : [staticTargetDir + 'flash', staticHashDir + 'flash'],
