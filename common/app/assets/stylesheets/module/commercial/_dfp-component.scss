@@ -256,6 +256,10 @@
             @include rem((
                 left: gs-span(12) + ($gs-gutter/2)
             ));
+            .has-page-skin & {
+                right: 0;
+                left: auto;
+            }
         }
     }
 }
