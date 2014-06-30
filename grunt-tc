@@ -4,6 +4,13 @@ set -o xtrace
 set -o nounset
 set -o errexit
 
+# Try newer ruby for newer sass
+eval "$(rbenv init -)"
+rbenv install -s 2.1.2
+rbenv local 2.1.2
+
+ruby --version
+
 export PATH=dev/gems/bin:$PATH
 
 bundle install --binstubs dev/gems/bin --path dev/gems --without development
