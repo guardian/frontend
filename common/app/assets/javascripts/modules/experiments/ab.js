@@ -2,18 +2,15 @@ define([
     'common/utils/common',
     'common/utils/storage',
     'common/utils/mediator',
-    'common/modules/analytics/mvt-cookie',
-    'common/modules/experiments/tests/larger-mobile-mpu'
+    'common/modules/analytics/mvt-cookie'
 ], function (
     common,
     store,
     mediator,
-    mvtCookie,
-    ABLargerMobileMpu
+    mvtCookie
     ) {
 
     var TESTS = [
-            new ABLargerMobileMpu()
         ],
         participationsKey = 'gu.ab.participations';
 
