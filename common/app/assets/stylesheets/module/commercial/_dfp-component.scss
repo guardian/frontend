@@ -261,6 +261,13 @@
                 left: auto;
             }
         }
+        .has-page-skin & {
+            .commercial__home-link {
+                @include rem((
+                    top: $gs-baseline/2
+                ));
+            }
+        }
     }
 }
 
@@ -334,7 +341,7 @@
             .commercial__home-link {
                 width: auto;
                 @include rem((
-                    top: $gs-baseline
+                    top: $gs-baseline*2
                 ));
                 right: 0;
                 left: auto;

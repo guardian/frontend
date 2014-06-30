@@ -244,6 +244,15 @@
                 margin-right: $gs-gutter/2
             ));
         }
+        .has-page-skin & {
+            .commercial__home-link {
+                width: auto;
+                top: auto;
+                right: 0;
+                left: auto;
+                bottom: auto;
+            }
+        }
     }
 }
 /* article */
