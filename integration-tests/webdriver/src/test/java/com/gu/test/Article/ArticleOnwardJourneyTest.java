@@ -17,15 +17,15 @@ public class ArticleOnwardJourneyTest {
     private Article testArticle;
     private String ARTICLE_WITH_SERIES = getProperty("articleWithSeries");
 
+    @Rule
+    public RetryRule retry = new RetryRule(2);
+
     @Before
     public void setUp() throws Exception {
         driver = createWebDriver();
         pageHelper = new PageHelper(driver);
         testArticle = pageHelper.goToArticle(ARTICLE_WITH_SERIES);
     }
-
-    @Rule
-    public RetryRule retry = new RetryRule(2);
 
     @Test
     public void goToFirstLinkInSidebarPopular() throws Exception {
